@@ -614,7 +614,7 @@ check_file() {
         fi
         record_hit "$file" "$lineno" "no-hardcoded-color" \
           "Hardcoded color — use SemanticColors, AccentColors, ChartColors, or context.* theme extensions" "error"
-      done < <(grep -nE '(^|[^a-zA-Z])Colors\.(red|blue|green|orange|yellow|purple|pink|teal|indigo|amber|cyan|lime|brown|grey|deepOrange|deepPurple|lightBlue|lightGreen)' "$file" 2>/dev/null || true)
+      done < <(grep -nE '(^|[^a-zA-Z])Colors\.(red|redAccent|blue|blueGrey|green|orange|yellow|purple|pink|teal|indigo|amber|cyan|lime|brown|grey|deepOrange|deepPurple|lightBlue|lightGreen)' "$file" 2>/dev/null || true)
     fi
   fi
 

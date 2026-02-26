@@ -50,7 +50,7 @@ class _WorldMeshFilterSheetState extends ConsumerState<WorldMeshFilterSheet> {
               height: 4,
               margin: const EdgeInsets.symmetric(vertical: 12),
               decoration: BoxDecoration(
-                color: Colors.grey[600],
+                color: SemanticColors.muted,
                 borderRadius: BorderRadius.circular(AppTheme.radius2),
               ),
             ),
@@ -341,14 +341,19 @@ class _WorldMeshFilterSheetState extends ConsumerState<WorldMeshFilterSheet> {
                     width: 36,
                     height: 36,
                     decoration: BoxDecoration(
-                      color: (activeCount > 0 ? accentColor : Colors.grey)
-                          .withAlpha(30),
+                      color:
+                          (activeCount > 0
+                                  ? accentColor
+                                  : SemanticColors.disabled)
+                              .withAlpha(30),
                       borderRadius: BorderRadius.circular(AppTheme.radius10),
                     ),
                     child: Icon(
                       icon,
                       size: 18,
-                      color: activeCount > 0 ? accentColor : Colors.grey,
+                      color: activeCount > 0
+                          ? accentColor
+                          : SemanticColors.disabled,
                     ),
                   ),
                   SizedBox(width: AppTheme.spacing12),
@@ -430,7 +435,7 @@ class _WorldMeshFilterSheetState extends ConsumerState<WorldMeshFilterSheet> {
         _buildStatusChip(
           label: 'Fading (2-10m)',
           count: options.fadingCount,
-          color: Colors.amber,
+          color: AppTheme.warningYellow,
           isSelected: filters.statusFilter.contains(PresenceConfidence.fading),
           onTap: () => ref
               .read(worldMeshFiltersProvider.notifier)
@@ -593,15 +598,14 @@ class _WorldMeshFilterSheetState extends ConsumerState<WorldMeshFilterSheet> {
                 width: 36,
                 height: 36,
                 decoration: BoxDecoration(
-                  color: (value != null ? accentColor : Colors.grey).withAlpha(
-                    30,
-                  ),
+                  color: (value != null ? accentColor : SemanticColors.disabled)
+                      .withAlpha(30),
                   borderRadius: BorderRadius.circular(AppTheme.radius10),
                 ),
                 child: Icon(
                   icon,
                   size: 18,
-                  color: value != null ? accentColor : Colors.grey,
+                  color: value != null ? accentColor : SemanticColors.disabled,
                 ),
               ),
               SizedBox(width: AppTheme.spacing12),

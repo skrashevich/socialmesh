@@ -84,10 +84,13 @@ class _TriggerSelectorState extends State<TriggerSelector> {
                   width: 44,
                   height: 44,
                   decoration: BoxDecoration(
-                    color: Colors.amber.withValues(alpha: 0.2),
+                    color: AppTheme.warningYellow.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(AppTheme.radius12),
                   ),
-                  child: Icon(widget.trigger.type.icon, color: Colors.amber),
+                  child: Icon(
+                    widget.trigger.type.icon,
+                    color: AppTheme.warningYellow,
+                  ),
                 ),
                 const SizedBox(width: AppTheme.spacing12),
                 Expanded(
@@ -102,14 +105,14 @@ class _TriggerSelectorState extends State<TriggerSelector> {
                       Text(
                         widget.trigger.type.category,
                         style: const TextStyle(
-                          color: Colors.grey,
+                          color: SemanticColors.disabled,
                           fontSize: 13,
                         ),
                       ),
                     ],
                   ),
                 ),
-                const Icon(Icons.chevron_right, color: Colors.grey),
+                const Icon(Icons.chevron_right, color: SemanticColors.disabled),
               ],
             ),
           ),
@@ -273,7 +276,10 @@ class _TriggerSelectorState extends State<TriggerSelector> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(label, style: const TextStyle(color: Colors.grey)),
+              Text(
+                label,
+                style: const TextStyle(color: SemanticColors.disabled),
+              ),
               Text(
                 '${value.round()}$suffix',
                 style: TextStyle(
@@ -306,7 +312,10 @@ class _TriggerSelectorState extends State<TriggerSelector> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Keyword to match', style: TextStyle(color: Colors.grey)),
+          const Text(
+            'Keyword to match',
+            style: TextStyle(color: SemanticColors.disabled),
+          ),
           const SizedBox(height: AppTheme.spacing8),
           TextField(
             maxLength: 100,
@@ -353,12 +362,12 @@ class _TriggerSelectorState extends State<TriggerSelector> {
         children: [
           const Text(
             'Sensor name filter (optional)',
-            style: TextStyle(color: Colors.grey),
+            style: TextStyle(color: SemanticColors.disabled),
           ),
           const SizedBox(height: AppTheme.spacing4),
           Text(
             'Leave empty to trigger for any sensor',
-            style: TextStyle(color: Colors.grey[600], fontSize: 12),
+            style: TextStyle(color: SemanticColors.muted, fontSize: 12),
           ),
           const SizedBox(height: AppTheme.spacing8),
           TextFormField(
@@ -392,7 +401,7 @@ class _TriggerSelectorState extends State<TriggerSelector> {
           const SizedBox(height: AppTheme.spacing16),
           const Text(
             'Trigger when sensor is',
-            style: TextStyle(color: Colors.grey),
+            style: TextStyle(color: SemanticColors.disabled),
           ),
           const SizedBox(height: AppTheme.spacing8),
           SegmentedButton<bool?>(
@@ -446,12 +455,12 @@ class _TriggerSelectorState extends State<TriggerSelector> {
         children: [
           Text(
             'Filter by node (optional)',
-            style: TextStyle(color: Colors.grey),
+            style: TextStyle(color: SemanticColors.disabled),
           ),
           const SizedBox(height: AppTheme.spacing4),
           Text(
             'Leave empty to trigger for any node',
-            style: TextStyle(color: Colors.grey[600], fontSize: 12),
+            style: TextStyle(color: SemanticColors.muted, fontSize: 12),
           ),
           const SizedBox(height: AppTheme.spacing12),
           BouncyTap(
@@ -470,14 +479,16 @@ class _TriggerSelectorState extends State<TriggerSelector> {
                     height: 36,
                     decoration: BoxDecoration(
                       color: selectedNode != null
-                          ? Colors.blue.withValues(alpha: 0.2)
-                          : Colors.grey.withValues(alpha: 0.2),
+                          ? AccentColors.blue.withValues(alpha: 0.2)
+                          : SemanticColors.disabled.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(AppTheme.radius8),
                     ),
                     child: Icon(
                       selectedNode != null ? Icons.router : Icons.all_inclusive,
                       size: 18,
-                      color: selectedNode != null ? Colors.blue : Colors.grey,
+                      color: selectedNode != null
+                          ? AccentColors.blue
+                          : SemanticColors.disabled,
                     ),
                   ),
                   const SizedBox(width: AppTheme.spacing12),
@@ -493,14 +504,14 @@ class _TriggerSelectorState extends State<TriggerSelector> {
                             fontWeight: FontWeight.w500,
                             color: selectedNode != null
                                 ? context.textPrimary
-                                : Colors.grey,
+                                : SemanticColors.disabled,
                           ),
                         ),
                         if (selectedNode != null)
                           Text(
                             '!${selectedNode.nodeNum.toRadixString(16)}',
                             style: TextStyle(
-                              color: Colors.grey[600],
+                              color: SemanticColors.muted,
                               fontSize: 12,
                             ),
                           ),
@@ -524,12 +535,15 @@ class _TriggerSelectorState extends State<TriggerSelector> {
                         child: Icon(
                           Icons.close,
                           size: 18,
-                          color: Colors.grey[600],
+                          color: SemanticColors.muted,
                         ),
                       ),
                     )
                   else
-                    const Icon(Icons.chevron_right, color: Colors.grey),
+                    const Icon(
+                      Icons.chevron_right,
+                      color: SemanticColors.disabled,
+                    ),
                 ],
               ),
             ),
@@ -569,9 +583,12 @@ class _TriggerSelectorState extends State<TriggerSelector> {
         children: [
           Row(
             children: [
-              Icon(Icons.location_on, size: 18, color: Colors.grey),
+              Icon(Icons.location_on, size: 18, color: SemanticColors.disabled),
               SizedBox(width: AppTheme.spacing8),
-              Text('Geofence Center', style: TextStyle(color: Colors.grey)),
+              Text(
+                'Geofence Center',
+                style: TextStyle(color: SemanticColors.disabled),
+              ),
             ],
           ),
           const SizedBox(height: AppTheme.spacing8),
@@ -646,7 +663,10 @@ class _TriggerSelectorState extends State<TriggerSelector> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Radius', style: TextStyle(color: Colors.grey)),
+              const Text(
+                'Radius',
+                style: TextStyle(color: SemanticColors.disabled),
+              ),
               Text(
                 '${widget.trigger.geofenceRadius.round()}m',
                 style: TextStyle(
@@ -728,7 +748,10 @@ class _TriggerSelectorState extends State<TriggerSelector> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Schedule Type', style: TextStyle(color: Colors.grey)),
+          const Text(
+            'Schedule Type',
+            style: TextStyle(color: SemanticColors.disabled),
+          ),
           const SizedBox(height: AppTheme.spacing8),
           SegmentedButton<String>(
             segments: [
@@ -763,7 +786,10 @@ class _TriggerSelectorState extends State<TriggerSelector> {
 
           // Time picker for daily/weekly
           if (scheduleType == 'daily' || scheduleType == 'weekly') ...[
-            const Text('Time', style: TextStyle(color: Colors.grey)),
+            const Text(
+              'Time',
+              style: TextStyle(color: SemanticColors.disabled),
+            ),
             const SizedBox(height: AppTheme.spacing8),
             BouncyTap(
               onTap: () async {
@@ -804,7 +830,10 @@ class _TriggerSelectorState extends State<TriggerSelector> {
                       TimeOfDay(hour: hour, minute: minute).format(context),
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
-                    const Icon(Icons.access_time, color: Colors.grey),
+                    const Icon(
+                      Icons.access_time,
+                      color: SemanticColors.disabled,
+                    ),
                   ],
                 ),
               ),
@@ -814,7 +843,10 @@ class _TriggerSelectorState extends State<TriggerSelector> {
           // Days of week picker for weekly
           if (scheduleType == 'weekly') ...[
             const SizedBox(height: AppTheme.spacing16),
-            const Text('Days', style: TextStyle(color: Colors.grey)),
+            const Text(
+              'Days',
+              style: TextStyle(color: SemanticColors.disabled),
+            ),
             const SizedBox(height: AppTheme.spacing8),
             Wrap(
               spacing: 8,
@@ -889,7 +921,7 @@ class _TriggerSelectorState extends State<TriggerSelector> {
             const SizedBox(height: AppTheme.spacing8),
             Text(
               _formatInterval(intervalMinutes),
-              style: TextStyle(color: Colors.grey[600], fontSize: 12),
+              style: TextStyle(color: SemanticColors.muted, fontSize: 12),
             ),
           ],
         ],
@@ -942,12 +974,12 @@ class _TriggerSelectorState extends State<TriggerSelector> {
         children: [
           const Text(
             'Channel (optional)',
-            style: TextStyle(color: Colors.grey),
+            style: TextStyle(color: SemanticColors.disabled),
           ),
           const SizedBox(height: AppTheme.spacing4),
           Text(
             'Leave empty to trigger for any channel activity',
-            style: TextStyle(color: Colors.grey[600], fontSize: 12),
+            style: TextStyle(color: SemanticColors.muted, fontSize: 12),
           ),
           const SizedBox(height: AppTheme.spacing8),
           DropdownButtonFormField<int?>(
@@ -998,7 +1030,7 @@ class _TriggerSelectorState extends State<TriggerSelector> {
         children: [
           Row(
             children: [
-              Icon(Icons.info_outline, color: Colors.blue[400], size: 20),
+              Icon(Icons.info_outline, color: AccentColors.blue, size: 20),
               const SizedBox(width: AppTheme.spacing8),
               const Text(
                 'Manual Trigger',
@@ -1013,7 +1045,7 @@ class _TriggerSelectorState extends State<TriggerSelector> {
             '• Siri Shortcuts\n'
             '• Widgets',
             style: TextStyle(
-              color: Colors.grey[400],
+              color: SemanticColors.disabled,
               fontSize: 13,
               height: 1.5,
             ),
@@ -1045,7 +1077,7 @@ class _TriggerSelectorState extends State<TriggerSelector> {
                 height: 4,
                 margin: const EdgeInsets.symmetric(vertical: 12),
                 decoration: BoxDecoration(
-                  color: Colors.grey[600],
+                  color: SemanticColors.muted,
                   borderRadius: BorderRadius.circular(AppTheme.radius2),
                 ),
               ),
@@ -1101,7 +1133,7 @@ class _TriggerSelectorState extends State<TriggerSelector> {
           child: Text(
             category,
             style: const TextStyle(
-              color: Colors.grey,
+              color: SemanticColors.disabled,
               fontWeight: FontWeight.w600,
               fontSize: 12,
             ),
@@ -1128,7 +1160,7 @@ class _TriggerSelectorState extends State<TriggerSelector> {
                 size: 20,
                 color: type == widget.trigger.type
                     ? Theme.of(context).colorScheme.primary
-                    : Colors.grey,
+                    : SemanticColors.disabled,
               ),
             ),
             title: Text(type.displayName),

@@ -433,10 +433,10 @@ class _ReachabilityNodeCard extends StatelessWidget {
     final colors = [
       const Color(0xFF5B4FCE),
       const Color(0xFFD946A6),
-      const Color(0xFF3B82F6),
+      AppTheme.graphBlue,
       const Color(0xFFF59E0B),
-      const Color(0xFFEF4444),
-      const Color(0xFF10B981),
+      AppTheme.errorRed,
+      AccentColors.emerald,
     ];
     return colors[nodeData.node.nodeNum % colors.length];
   }
@@ -650,13 +650,13 @@ class _ScoreIndicator extends StatelessWidget {
 /// (no green checkmarks or success indicators).
 class _ReachabilityColors {
   // Amber for high - warm but not green (not implying success)
-  static const high = Color(0xFFFBBF24);
+  static const high = AppTheme.warningYellow;
 
   // Orange for medium - neutral caution
-  static const medium = Color(0xFFF97316);
+  static const medium = AccentColors.orange;
 
   // Gray-blue for low - indicates uncertainty
-  static const low = Color(0xFF9CA3AF);
+  static const low = AppTheme.textTertiary;
 
   static Color forLikelihood(ReachLikelihood likelihood) {
     switch (likelihood) {

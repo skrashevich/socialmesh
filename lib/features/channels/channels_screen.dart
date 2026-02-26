@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../providers/app_providers.dart';
@@ -111,7 +112,10 @@ class _ChannelsScreenState extends ConsumerState<ChannelsScreen>
                 label: 'All',
                 count: channels.length,
                 isSelected: _activeFilter == ChannelFilter.all,
-                onTap: () => setState(() => _activeFilter = ChannelFilter.all),
+                onTap: () {
+                  HapticFeedback.lightImpact();
+                  setState(() => _activeFilter = ChannelFilter.all);
+                },
               ),
               SectionFilterChip(
                 label: 'Primary',

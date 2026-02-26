@@ -891,7 +891,7 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection>
                   onPressed: () => Navigator.pop(context, false),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
-                    side: BorderSide(color: Colors.grey.shade700),
+                    side: BorderSide(color: SemanticColors.divider),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
@@ -1936,7 +1936,7 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet>
     if (!isOnline) {
       safeShowSnackBar(
         'Uploading avatars requires an internet connection.',
-        backgroundColor: Colors.red,
+        backgroundColor: AppTheme.errorRed,
       );
       return;
     }
@@ -1976,7 +1976,7 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet>
         } else {
           safeShowSnackBar(
             'Failed to upload avatar: $e',
-            backgroundColor: Colors.red,
+            backgroundColor: AppTheme.errorRed,
           );
         }
       } finally {
@@ -1990,7 +1990,7 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet>
     if (!isOnline) {
       safeShowSnackBar(
         'Removing avatars requires an internet connection.',
-        backgroundColor: Colors.red,
+        backgroundColor: AppTheme.errorRed,
       );
       return;
     }
@@ -2009,7 +2009,7 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet>
     } catch (e) {
       safeShowSnackBar(
         'Failed to remove avatar: $e',
-        backgroundColor: Colors.red,
+        backgroundColor: AppTheme.errorRed,
       );
     } finally {
       safeSetState(() => _isRemovingAvatar = false);
@@ -2021,7 +2021,7 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet>
     if (!isOnline) {
       safeShowSnackBar(
         'Uploading banners requires an internet connection.',
-        backgroundColor: Colors.red,
+        backgroundColor: AppTheme.errorRed,
       );
       return;
     }
@@ -2060,7 +2060,7 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet>
         } else {
           safeShowSnackBar(
             'Failed to upload banner: $e',
-            backgroundColor: Colors.red,
+            backgroundColor: AppTheme.errorRed,
           );
         }
       } finally {
@@ -2074,7 +2074,7 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet>
     if (!isOnline) {
       safeShowSnackBar(
         'Removing banners requires an internet connection.',
-        backgroundColor: Colors.red,
+        backgroundColor: AppTheme.errorRed,
       );
       return;
     }
@@ -2093,7 +2093,7 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet>
     } catch (e) {
       safeShowSnackBar(
         'Failed to remove banner: $e',
-        backgroundColor: Colors.red,
+        backgroundColor: AppTheme.errorRed,
       );
     } finally {
       safeSetState(() => _isRemovingBanner = false);
@@ -2107,7 +2107,7 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet>
     if (!isOnline) {
       safeShowSnackBar(
         'Saving your profile requires an internet connection.',
-        backgroundColor: Colors.red,
+        backgroundColor: AppTheme.errorRed,
       );
       return;
     }
@@ -2402,14 +2402,17 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet>
 
       // Use safe navigation methods from LifecycleSafeMixin
       safeNavigatorPop(true);
-      safeShowSnackBar('Profile updated', backgroundColor: Colors.green);
+      safeShowSnackBar(
+        'Profile updated',
+        backgroundColor: AppTheme.successGreen,
+      );
     } on DisplayNameTakenException catch (e) {
-      safeShowSnackBar(e.toString(), backgroundColor: Colors.red);
+      safeShowSnackBar(e.toString(), backgroundColor: AppTheme.errorRed);
     } catch (e) {
       AppErrorHandler.addBreadcrumb('Profile save failed: $e');
       safeShowSnackBar(
         'Failed to save profile: $e',
-        backgroundColor: Colors.red,
+        backgroundColor: AppTheme.errorRed,
       );
     } finally {
       safeSetState(() => _isLoading = false);

@@ -59,8 +59,7 @@ import 'holographic_effect.dart';
 /// ```dart
 /// FilledSlot(
 ///   entry: entry,
-///   onTap: () => openGallery(entry),
-///   animate: !reduceMotion,
+///   onTap: () { HapticFeedback.lightImpact(); openGallery(entry); },///   animate: !reduceMotion,
 /// )
 /// ```
 class FilledSlot extends ConsumerWidget {
@@ -107,7 +106,7 @@ class FilledSlot extends ConsumerWidget {
           decoration: BoxDecoration(
             color: context.isDarkMode
                 ? const Color(0xFF1E2430)
-                : const Color(0xFFF5F7FA),
+                : AppTheme.lightBackground,
             borderRadius: BorderRadius.circular(
               AlbumConstants.slotBorderRadius,
             ),

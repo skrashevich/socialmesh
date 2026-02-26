@@ -343,7 +343,7 @@ class _TextEditorSheetState extends State<_TextEditorSheet> {
     Colors.black,
     Color(0xFFFF3B30), // Red
     Color(0xFFFF9500), // Orange
-    Color(0xFFFFCC00), // Yellow
+    AccentColors.goldDarkYellow, // Yellow
     Color(0xFF34C759), // Green
     Color(0xFF007AFF), // Blue
     Color(0xFF5856D6), // Purple

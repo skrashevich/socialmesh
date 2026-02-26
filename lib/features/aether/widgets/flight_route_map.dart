@@ -82,7 +82,7 @@ class FlightRouteMap extends StatelessWidget {
               interactionOptions: const InteractionOptions(
                 flags: InteractiveFlag.none,
               ),
-              backgroundColor: const Color(0xFF1F2633),
+              backgroundColor: AppTheme.darkBackground,
             ),
             children: [
               // Dark tile layer (same as mesh map)
@@ -224,7 +224,7 @@ class FlightRouteMap extends StatelessWidget {
             decoration: BoxDecoration(
               color: color,
               shape: BoxShape.circle,
-              border: Border.all(color: const Color(0xFF1F2633), width: 1.5),
+              border: Border.all(color: AppTheme.darkBackground, width: 1.5),
               boxShadow: isActive
                   ? [
                       BoxShadow(

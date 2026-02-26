@@ -17,9 +17,21 @@ class TapbackStorageService {
     return allTapbacks.where((t) => t.messageId == messageId).toList();
   }
 
-  /// Add a tapback to a message (accumulates — same user can react multiple times)
+  /// Add a tapback to a message.
+  ///
+  /// Deduplicates by (messageId, fromNodeNum, emoji) so that device
+  /// message replays on reconnect do not create duplicate reactions.
   Future<void> addTapback(MessageTapback tapback) async {
     final tapbacks = await _getAllTapbacks();
+
+    final alreadyExists = tapbacks.any(
+      (t) =>
+          t.messageId == tapback.messageId &&
+          t.fromNodeNum == tapback.fromNodeNum &&
+          t.emoji == tapback.emoji,
+    );
+    if (alreadyExists) return;
+
     tapbacks.add(tapback);
     await _saveTapbacks(tapbacks);
   }

@@ -279,13 +279,13 @@ class MeshMapWidget extends StatelessWidget {
       baseColor = accentColor;
       size = 40;
     } else if (count < 100) {
-      baseColor = Colors.orange;
+      baseColor = AccentColors.orange;
       size = 44;
     } else if (count < 1000) {
-      baseColor = Colors.deepOrange;
+      baseColor = AccentColors.coral;
       size = 48;
     } else {
-      baseColor = Colors.red;
+      baseColor = AppTheme.errorRed;
       size = 52;
     }
 

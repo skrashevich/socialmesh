@@ -29,6 +29,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../models/nodedex_entry.dart';
+import 'package:socialmesh/core/theme.dart';
 
 /// Discrete trust classification derived from computed score.
 enum TrustLevel {
@@ -75,8 +76,8 @@ enum TrustLevel {
       TrustLevel.unknown => const Color(0xFF6B7280), // gray-500
       TrustLevel.observed => const Color(0xFF94A3B8), // slate-400
       TrustLevel.familiar => const Color(0xFF38BDF8), // sky-400
-      TrustLevel.trusted => const Color(0xFF4ADE80), // green-400
-      TrustLevel.established => const Color(0xFFFBBF24), // amber-400
+      TrustLevel.trusted => AppTheme.successGreen, // green-400
+      TrustLevel.established => AppTheme.warningYellow, // amber-400
     };
   }
 

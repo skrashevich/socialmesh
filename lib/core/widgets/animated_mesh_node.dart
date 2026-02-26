@@ -374,8 +374,8 @@ class _AnimatedMeshNodeState extends State<AnimatedMeshNode>
       widget.gradientColors ??
       const [
         Color(0xFFFF6B4A), // Orange/coral (left side)
-        Color(0xFFE91E8C), // Magenta/pink (middle)
-        Color(0xFF4F6AF6), // Blue (right side)
+        AppTheme.primaryMagenta, // Magenta/pink (middle)
+        AppTheme.primaryBlue, // Blue (right side)
       ];
 
   @override

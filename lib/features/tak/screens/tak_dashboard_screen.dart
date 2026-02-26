@@ -353,7 +353,9 @@ class _StatusSummaryCard extends StatelessWidget {
           // Connection status
           _StatusRow(
             icon: dashboard.isConnected ? Icons.link : Icons.link_off,
-            iconColor: dashboard.isConnected ? Colors.green : Colors.grey,
+            iconColor: dashboard.isConnected
+                ? AppTheme.successGreen
+                : SemanticColors.disabled,
             label: 'Connection',
             value: dashboard.isConnected ? 'Connected' : 'Disconnected',
           ),
@@ -392,7 +394,9 @@ class _StatusSummaryCard extends StatelessWidget {
             icon: dashboard.staleCount > 0
                 ? Icons.warning_amber_rounded
                 : Icons.check_circle_outline,
-            iconColor: dashboard.staleCount > 0 ? Colors.orange : Colors.green,
+            iconColor: dashboard.staleCount > 0
+                ? AccentColors.orange
+                : AppTheme.successGreen,
             label: 'Stale entities',
             value: '${dashboard.staleCount}',
           ),
@@ -401,7 +405,7 @@ class _StatusSummaryCard extends StatelessWidget {
           _StatusRow(
             icon: Icons.publish,
             iconColor: dashboard.isPublishing
-                ? Colors.green
+                ? AppTheme.successGreen
                 : context.textTertiary,
             label: 'Position publishing',
             value: dashboard.isPublishing

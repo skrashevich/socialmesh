@@ -232,7 +232,7 @@ class _FavoriteProductCard extends ConsumerWidget {
       background: Container(
         margin: const EdgeInsets.only(bottom: 12),
         decoration: BoxDecoration(
-          color: Colors.red,
+          color: AppTheme.errorRed,
           borderRadius: BorderRadius.circular(AppTheme.radius12),
         ),
         alignment: Alignment.centerRight,
@@ -316,7 +316,7 @@ class _FavoriteProductCard extends ConsumerWidget {
                                 vertical: 2,
                               ),
                               decoration: BoxDecoration(
-                                color: Colors.red,
+                                color: AppTheme.errorRed,
                                 borderRadius: BorderRadius.circular(
                                   AppTheme.radius4,
                                 ),
@@ -340,8 +340,8 @@ class _FavoriteProductCard extends ConsumerWidget {
                             ),
                             decoration: BoxDecoration(
                               color: product.isInStock
-                                  ? Colors.green.withValues(alpha: 0.2)
-                                  : Colors.red.withValues(alpha: 0.2),
+                                  ? AppTheme.successGreen.withValues(alpha: 0.2)
+                                  : AppTheme.errorRed.withValues(alpha: 0.2),
                               borderRadius: BorderRadius.circular(
                                 AppTheme.radius4,
                               ),
@@ -350,8 +350,8 @@ class _FavoriteProductCard extends ConsumerWidget {
                               product.isInStock ? 'In Stock' : 'Out of Stock',
                               style: TextStyle(
                                 color: product.isInStock
-                                    ? Colors.green
-                                    : Colors.red,
+                                    ? AppTheme.successGreen
+                                    : AppTheme.errorRed,
                                 fontSize: 10,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -364,7 +364,11 @@ class _FavoriteProductCard extends ConsumerWidget {
                         const SizedBox(height: AppTheme.spacing6),
                         Row(
                           children: [
-                            Icon(Icons.star, color: Colors.amber, size: 14),
+                            Icon(
+                              Icons.star,
+                              color: AppTheme.warningYellow,
+                              size: 14,
+                            ),
                             const SizedBox(width: AppTheme.spacing4),
                             Text(
                               product.rating.toStringAsFixed(1),
@@ -390,7 +394,7 @@ class _FavoriteProductCard extends ConsumerWidget {
 
                 // Remove button
                 IconButton(
-                  icon: const Icon(Icons.favorite, color: Colors.red),
+                  icon: const Icon(Icons.favorite, color: AppTheme.errorRed),
                   onPressed: () => _removeFavorite(ref),
                 ),
               ],

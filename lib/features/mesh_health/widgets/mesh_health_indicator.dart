@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// lint-allow: haptic-feedback — onTap delegates to parent callback
 // Compact Mesh Health Indicator Widget
 //
 // A small, embeddable widget showing mesh health at a glance.
@@ -45,14 +46,14 @@ class MeshHealthIndicator extends ConsumerWidget {
           children: [
             const Icon(
               Icons.monitor_heart_outlined,
-              color: Colors.grey,
+              color: SemanticColors.disabled,
               size: 16,
             ),
             if (showLabel) ...[
               const SizedBox(width: AppTheme.spacing6),
               const Text(
                 'Health',
-                style: TextStyle(color: Colors.grey, fontSize: 12),
+                style: TextStyle(color: SemanticColors.disabled, fontSize: 12),
               ),
             ],
           ],
@@ -113,7 +114,7 @@ class MeshHealthIndicator extends ConsumerWidget {
   }
 
   Color _getHealthColor(MeshHealthSnapshot snapshot) {
-    if (snapshot.hasCriticalIssues) return const Color(0xFFFF1744);
+    if (snapshot.hasCriticalIssues) return AppTheme.errorRed;
     if (!snapshot.isHealthy) return const Color(0xFFFFAB00);
     return const Color(0xFF00FF88);
   }
@@ -163,7 +164,7 @@ class MeshUtilizationBar extends ConsumerWidget {
   }
 
   Color _getColor(double utilization) {
-    if (utilization >= 75) return const Color(0xFFFF1744);
+    if (utilization >= 75) return AppTheme.errorRed;
     if (utilization >= 50) return const Color(0xFFFFAB00);
     return const Color(0xFF00E5FF);
   }
@@ -180,9 +181,7 @@ class MeshIssueBadge extends ConsumerWidget {
     if (issues.isEmpty) return const SizedBox.shrink();
 
     final hasCritical = issues.any((i) => i.severity == IssueSeverity.critical);
-    final color = hasCritical
-        ? const Color(0xFFFF1744)
-        : const Color(0xFFFFAB00);
+    final color = hasCritical ? AppTheme.errorRed : const Color(0xFFFFAB00);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),

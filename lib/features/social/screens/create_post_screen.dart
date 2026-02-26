@@ -1046,7 +1046,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
                   onPressed: () => Navigator.pop(context),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
-                    side: BorderSide(color: Colors.grey.shade700),
+                    side: BorderSide(color: SemanticColors.divider),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),

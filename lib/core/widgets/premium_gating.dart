@@ -76,8 +76,8 @@ class PremiumPreviewBanner extends ConsumerWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Colors.grey.shade700.withValues(alpha: 0.9),
-              Colors.grey.shade800.withValues(alpha: 0.9),
+              SemanticColors.divider.withValues(alpha: 0.9),
+              SemanticColors.placeholder.withValues(alpha: 0.9),
             ],
           ),
         ),
@@ -208,12 +208,12 @@ class _LockBadge extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Colors.grey.shade500, Colors.grey.shade700],
+          colors: [SemanticColors.muted, SemanticColors.divider],
         ),
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.3),
+            color: SemanticColors.disabled.withValues(alpha: 0.3),
             blurRadius: 6,
             spreadRadius: 1,
           ),
@@ -270,7 +270,7 @@ class DisabledControlWithLock extends ConsumerWidget {
           Opacity(opacity: 0.5, child: IgnorePointer(child: child)),
           if (showInlineLock) ...[
             const SizedBox(width: AppTheme.spacing6),
-            Icon(Icons.lock, size: 14, color: Colors.grey.shade500),
+            Icon(Icons.lock, size: 14, color: SemanticColors.muted),
           ],
         ],
       ),
@@ -325,9 +325,9 @@ class PremiumButton extends ConsumerWidget {
               );
             },
             style: style?.copyWith(
-              backgroundColor: WidgetStateProperty.all(Colors.grey.shade600),
+              backgroundColor: WidgetStateProperty.all(SemanticColors.muted),
             ),
-            icon: Icon(Icons.lock, size: 16, color: Colors.grey.shade300),
+            icon: Icon(Icons.lock, size: 16, color: SemanticColors.disabled),
             label: child,
           )
         : OutlinedButton.icon(
@@ -340,7 +340,7 @@ class PremiumButton extends ConsumerWidget {
               );
             },
             style: style,
-            icon: Icon(Icons.lock, size: 16, color: Colors.grey.shade500),
+            icon: Icon(Icons.lock, size: 16, color: SemanticColors.muted),
             label: Opacity(opacity: 0.7, child: child),
           );
   }
@@ -381,7 +381,7 @@ class PremiumSwitch extends ConsumerWidget {
               child: ThemedSwitch(value: false, onChanged: (_) {}),
             ),
           ),
-          Icon(Icons.lock, size: 14, color: Colors.grey.shade500),
+          Icon(Icons.lock, size: 14, color: SemanticColors.muted),
         ],
       ),
     );
@@ -436,7 +436,7 @@ class PremiumTextField extends ConsumerWidget {
               suffixIcon: Icon(
                 Icons.lock,
                 size: 18,
-                color: Colors.grey.shade500,
+                color: SemanticColors.muted,
               ),
             ),
             maxLines: maxLines,
@@ -729,7 +729,7 @@ class _PremiumInfoSheetState extends ConsumerState<PremiumInfoSheet>
               height: 4,
               margin: const EdgeInsets.symmetric(vertical: 12),
               decoration: BoxDecoration(
-                color: Colors.grey[600],
+                color: SemanticColors.muted,
                 borderRadius: BorderRadius.circular(AppTheme.radius2),
               ),
             ),

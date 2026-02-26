@@ -119,7 +119,7 @@ class RemoteBadge extends StatelessWidget {
 
   /// Amber for mixed-source nodes — signals dual discovery without
   /// alarm. Distinct from warning yellow by being slightly cooler.
-  static const Color _mixedColor = Color(0xFFFBBF24);
+  static const Color _mixedColor = AppTheme.warningYellow;
 }
 
 /// A larger badge variant for the NodeDex detail screen header.

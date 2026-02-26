@@ -182,211 +182,214 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
     return HelpTourController(
       topicId: 'radio_config_overview',
       stepKeys: const {},
-      child: GlassScaffold(
-        title: 'Radio',
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.help_outline),
-            onPressed: () => ref
-                .read(helpProvider.notifier)
-                .startTour('radio_config_overview'),
-            tooltip: 'Help',
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: TextButton(
-              onPressed: (_isLoading || _isSaving) ? null : _saveConfig,
-              child: _isSaving
-                  ? LoadingIndicator(size: 20)
-                  : Text(
-                      'Save',
-                      style: TextStyle(
-                        color: context.accentColor,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: GlassScaffold(
+          title: 'Radio',
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.help_outline),
+              onPressed: () => ref
+                  .read(helpProvider.notifier)
+                  .startTour('radio_config_overview'),
+              tooltip: 'Help',
             ),
-          ),
-        ],
-        slivers: [
-          if (_isLoading)
-            const SliverFillRemaining(child: ScreenLoadingIndicator())
-          else
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              sliver: SliverList.list(
-                children: [
-                  const _SectionHeader(title: 'REGION'),
-                  _buildRegionSelector(),
-                  SizedBox(height: AppTheme.spacing16),
-                  const _SectionHeader(title: 'MODEM PRESET'),
-                  _buildModemPresetSelector(),
-                  SizedBox(height: AppTheme.spacing16),
-                  const _SectionHeader(title: 'TRANSMISSION'),
-                  _SettingsTile(
-                    icon: Icons.cell_tower,
-                    iconColor: _txEnabled ? context.accentColor : null,
-                    title: 'Transmission Enabled',
-                    subtitle: 'Allow device to transmit',
-                    trailing: ThemedSwitch(
-                      value: _txEnabled,
-                      onChanged: (value) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _txEnabled = value);
-                      },
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 2,
-                    ),
-                    padding: const EdgeInsets.all(AppTheme.spacing16),
-                    decoration: BoxDecoration(
-                      color: context.card,
-                      borderRadius: BorderRadius.circular(AppTheme.radius12),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Hop Limit',
-                              style: TextStyle(
-                                color: context.textPrimary,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 4,
-                              ),
-                              decoration: BoxDecoration(
-                                color: context.accentColor.withValues(
-                                  alpha: 0.15,
-                                ),
-                                borderRadius: BorderRadius.circular(
-                                  AppTheme.radius6,
-                                ),
-                              ),
-                              child: Text(
-                                '$_hopLimit',
-                                style: TextStyle(
-                                  color: context.accentColor,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 13,
-                                ),
-                              ),
-                            ),
-                          ],
+            Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: TextButton(
+                onPressed: (_isLoading || _isSaving) ? null : _saveConfig,
+                child: _isSaving
+                    ? LoadingIndicator(size: 20)
+                    : Text(
+                        'Save',
+                        style: TextStyle(
+                          color: context.accentColor,
+                          fontWeight: FontWeight.w600,
                         ),
-                        SizedBox(height: AppTheme.spacing4),
-                        Text(
-                          'Number of times messages can be relayed',
-                          style: TextStyle(
-                            color: context.textSecondary,
-                            fontSize: 13,
-                          ),
-                        ),
-                        SizedBox(height: AppTheme.spacing8),
-                        SliderTheme(
-                          data: SliderThemeData(
-                            inactiveTrackColor: context.border,
-                            thumbColor: context.accentColor,
-                            overlayColor: context.accentColor.withValues(
-                              alpha: 0.2,
-                            ),
-                            trackHeight: 4,
-                          ),
-                          child: Slider(
-                            value: _hopLimit.toDouble(),
-                            min: 0,
-                            max: 7,
-                            divisions: 7,
-                            onChanged: (value) {
-                              setState(() => _hopLimit = value.toInt());
-                            },
-                          ),
-                        ),
-                        Divider(height: 24, color: context.border),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'TX Power Override',
-                              style: TextStyle(
-                                color: context.textPrimary,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 4,
-                              ),
-                              decoration: BoxDecoration(
-                                color: context.accentColor.withValues(
-                                  alpha: 0.15,
-                                ),
-                                borderRadius: BorderRadius.circular(
-                                  AppTheme.radius6,
-                                ),
-                              ),
-                              child: Text(
-                                _txPower == 0 ? 'Default' : '${_txPower}dBm',
-                                style: TextStyle(
-                                  color: context.accentColor,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 13,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: AppTheme.spacing4),
-                        Text(
-                          'Override transmit power (0 = use default)',
-                          style: TextStyle(
-                            color: context.textSecondary,
-                            fontSize: 13,
-                          ),
-                        ),
-                        SizedBox(height: AppTheme.spacing8),
-                        SliderTheme(
-                          data: SliderThemeData(
-                            inactiveTrackColor: context.border,
-                            thumbColor: context.accentColor,
-                            overlayColor: context.accentColor.withValues(
-                              alpha: 0.2,
-                            ),
-                            trackHeight: 4,
-                          ),
-                          child: Slider(
-                            value: _txPower.toDouble(),
-                            min: 0,
-                            max: 30,
-                            divisions: 30,
-                            onChanged: (value) {
-                              setState(() => _txPower = value.toInt());
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: AppTheme.spacing16),
-                  const _SectionHeader(title: 'ADVANCED'),
-                  _buildAdvancedSettings(),
-                  const SizedBox(height: AppTheme.spacing16),
-                  _buildInfoCard(),
-                  const SizedBox(height: AppTheme.spacing32),
-                ],
+                      ),
               ),
             ),
-        ],
+          ],
+          slivers: [
+            if (_isLoading)
+              const SliverFillRemaining(child: ScreenLoadingIndicator())
+            else
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                sliver: SliverList.list(
+                  children: [
+                    const _SectionHeader(title: 'REGION'),
+                    _buildRegionSelector(),
+                    SizedBox(height: AppTheme.spacing16),
+                    const _SectionHeader(title: 'MODEM PRESET'),
+                    _buildModemPresetSelector(),
+                    SizedBox(height: AppTheme.spacing16),
+                    const _SectionHeader(title: 'TRANSMISSION'),
+                    _SettingsTile(
+                      icon: Icons.cell_tower,
+                      iconColor: _txEnabled ? context.accentColor : null,
+                      title: 'Transmission Enabled',
+                      subtitle: 'Allow device to transmit',
+                      trailing: ThemedSwitch(
+                        value: _txEnabled,
+                        onChanged: (value) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _txEnabled = value);
+                        },
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 2,
+                      ),
+                      padding: const EdgeInsets.all(AppTheme.spacing16),
+                      decoration: BoxDecoration(
+                        color: context.card,
+                        borderRadius: BorderRadius.circular(AppTheme.radius12),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Hop Limit',
+                                style: TextStyle(
+                                  color: context.textPrimary,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: context.accentColor.withValues(
+                                    alpha: 0.15,
+                                  ),
+                                  borderRadius: BorderRadius.circular(
+                                    AppTheme.radius6,
+                                  ),
+                                ),
+                                child: Text(
+                                  '$_hopLimit',
+                                  style: TextStyle(
+                                    color: context.accentColor,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: AppTheme.spacing4),
+                          Text(
+                            'Number of times messages can be relayed',
+                            style: TextStyle(
+                              color: context.textSecondary,
+                              fontSize: 13,
+                            ),
+                          ),
+                          SizedBox(height: AppTheme.spacing8),
+                          SliderTheme(
+                            data: SliderThemeData(
+                              inactiveTrackColor: context.border,
+                              thumbColor: context.accentColor,
+                              overlayColor: context.accentColor.withValues(
+                                alpha: 0.2,
+                              ),
+                              trackHeight: 4,
+                            ),
+                            child: Slider(
+                              value: _hopLimit.toDouble(),
+                              min: 0,
+                              max: 7,
+                              divisions: 7,
+                              onChanged: (value) {
+                                setState(() => _hopLimit = value.toInt());
+                              },
+                            ),
+                          ),
+                          Divider(height: 24, color: context.border),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'TX Power Override',
+                                style: TextStyle(
+                                  color: context.textPrimary,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: context.accentColor.withValues(
+                                    alpha: 0.15,
+                                  ),
+                                  borderRadius: BorderRadius.circular(
+                                    AppTheme.radius6,
+                                  ),
+                                ),
+                                child: Text(
+                                  _txPower == 0 ? 'Default' : '${_txPower}dBm',
+                                  style: TextStyle(
+                                    color: context.accentColor,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: AppTheme.spacing4),
+                          Text(
+                            'Override transmit power (0 = use default)',
+                            style: TextStyle(
+                              color: context.textSecondary,
+                              fontSize: 13,
+                            ),
+                          ),
+                          SizedBox(height: AppTheme.spacing8),
+                          SliderTheme(
+                            data: SliderThemeData(
+                              inactiveTrackColor: context.border,
+                              thumbColor: context.accentColor,
+                              overlayColor: context.accentColor.withValues(
+                                alpha: 0.2,
+                              ),
+                              trackHeight: 4,
+                            ),
+                            child: Slider(
+                              value: _txPower.toDouble(),
+                              min: 0,
+                              max: 30,
+                              divisions: 30,
+                              onChanged: (value) {
+                                setState(() => _txPower = value.toInt());
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: AppTheme.spacing16),
+                    const _SectionHeader(title: 'ADVANCED'),
+                    _buildAdvancedSettings(),
+                    const SizedBox(height: AppTheme.spacing16),
+                    _buildInfoCard(),
+                    const SizedBox(height: AppTheme.spacing32),
+                  ],
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }

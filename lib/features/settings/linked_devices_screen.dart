@@ -592,10 +592,10 @@ class _LinkedDeviceCard extends StatelessWidget {
     final colors = [
       const Color(0xFF5B4FCE),
       const Color(0xFFD946A6),
-      const Color(0xFF3B82F6),
+      AppTheme.graphBlue,
       const Color(0xFFF59E0B),
-      const Color(0xFFEF4444),
-      const Color(0xFF10B981),
+      AppTheme.errorRed,
+      AccentColors.emerald,
     ];
     return colors[nodeNum % colors.length];
   }

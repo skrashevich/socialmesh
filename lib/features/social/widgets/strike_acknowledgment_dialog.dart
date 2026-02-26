@@ -102,13 +102,13 @@ class _StrikeAcknowledgmentDialogState
 
     switch (strike.type) {
       case 'strike':
-        typeColor = Colors.orange;
+        typeColor = AccentColors.orange;
         typeIcon = Icons.warning_amber_rounded;
       case 'suspension':
-        typeColor = Colors.red;
+        typeColor = AppTheme.errorRed;
         typeIcon = Icons.block_rounded;
       default: // warning
-        typeColor = Colors.amber;
+        typeColor = AppTheme.warningYellow;
         typeIcon = Icons.info_outline;
     }
 
@@ -137,7 +137,7 @@ class _StrikeAcknowledgmentDialogState
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: isDone
-                          ? Colors.green
+                          ? AppTheme.successGreen
                           : (isActive
                                 ? typeColor
                                 : Colors.white.withValues(alpha: 0.2)),
@@ -263,14 +263,14 @@ class _StrikeAcknowledgmentDialogState
                   vertical: 12,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.red.withValues(alpha: 0.1),
+                  color: AppTheme.errorRed.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(AppTheme.radius10),
                 ),
                 child: Row(
                   children: [
                     const Icon(
                       Icons.error_outline,
-                      color: Colors.red,
+                      color: AppTheme.errorRed,
                       size: 18,
                     ),
                     const SizedBox(width: AppTheme.spacing10),
@@ -278,7 +278,7 @@ class _StrikeAcknowledgmentDialogState
                       child: Text(
                         '3 strikes result in account suspension',
                         style: TextStyle(
-                          color: Colors.red.withValues(alpha: 0.9),
+                          color: AppTheme.errorRed.withValues(alpha: 0.9),
                           fontSize: 13,
                         ),
                       ),
@@ -317,7 +317,7 @@ class _StrikeAcknowledgmentDialogState
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: _isAcknowledging
-                          ? [Colors.grey, Colors.grey.shade700]
+                          ? [SemanticColors.disabled, SemanticColors.divider]
                           : [typeColor, typeColor.withValues(alpha: 0.8)],
                     ),
                     borderRadius: BorderRadius.circular(AppTheme.radius12),

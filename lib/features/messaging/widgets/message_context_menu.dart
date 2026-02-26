@@ -563,8 +563,8 @@ class _EmojiPickerSheet extends StatelessWidget {
                 ),
                 skinToneConfig: const SkinToneConfig(
                   enabled: true,
-                  dialogBackgroundColor: Color(0xFF303030),
-                  indicatorColor: Colors.grey,
+                  dialogBackgroundColor: AppTheme.darkSurface,
+                  indicatorColor: SemanticColors.disabled,
                 ),
                 categoryViewConfig: CategoryViewConfig(
                   initCategory: Category.RECENT,

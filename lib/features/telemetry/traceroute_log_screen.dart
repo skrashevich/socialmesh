@@ -575,7 +575,9 @@ class _TraceRouteCard extends StatelessWidget {
                   children: [
                     Text(
                       'To',
-                      style: context.captionStyle?.copyWith(color: Colors.grey),
+                      style: context.captionStyle?.copyWith(
+                        color: SemanticColors.disabled,
+                      ),
                     ),
                     Text(
                       destName,

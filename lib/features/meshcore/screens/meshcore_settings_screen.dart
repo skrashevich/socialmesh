@@ -161,7 +161,7 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
     if (state == null || state.voltageMillivolts == null) {
       displayValue = 'Unknown';
       icon = Icons.battery_unknown_rounded;
-      iconColor = Colors.grey;
+      iconColor = SemanticColors.disabled;
     } else if (_showBatteryVoltage) {
       displayValue =
           '${(state.voltageMillivolts! / 1000.0).toStringAsFixed(2)}V';
@@ -170,8 +170,8 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
       displayValue = '${state.percentage}%';
       if (state.percentage! <= 15) {
         icon = Icons.battery_alert_rounded;
-        iconColor = Colors.orange;
-        valueColor = Colors.orange;
+        iconColor = AccentColors.orange;
+        valueColor = AccentColors.orange;
       } else {
         icon = Icons.battery_full_rounded;
       }
@@ -307,7 +307,7 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
           _buildDivider(),
           _buildSettingsTile(
             icon: Icons.restart_alt_rounded,
-            iconColor: Colors.orange,
+            iconColor: AccentColors.orange,
             title: 'Reboot Device',
             subtitle: 'Restart the MeshCore device',
             enabled: isConnected,
@@ -320,7 +320,7 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
 
   Widget _buildDebugCard(BuildContext context) {
     return GradientBorderContainer(
-      accentColor: Colors.grey,
+      accentColor: SemanticColors.disabled,
       borderRadius: 16,
       borderWidth: 1,
       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -331,12 +331,15 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
             padding: const EdgeInsets.fromLTRB(AppTheme.spacing16, 8, 16, 8),
             child: Row(
               children: [
-                const Icon(Icons.bug_report_outlined, color: Colors.grey),
+                const Icon(
+                  Icons.bug_report_outlined,
+                  color: SemanticColors.disabled,
+                ),
                 const SizedBox(width: AppTheme.spacing8),
                 Text(
                   'Debug',
                   style: TextStyle(
-                    color: Colors.grey[400],
+                    color: SemanticColors.disabled,
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
@@ -357,13 +360,13 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
 
   Widget _buildAboutCard(BuildContext context) {
     return GradientBorderContainer(
-      accentColor: Colors.blueGrey,
+      accentColor: AccentColors.slate,
       borderRadius: 16,
       borderWidth: 1,
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: ListTile(
         contentPadding: EdgeInsets.zero,
-        leading: Icon(Icons.info_outline_rounded, color: Colors.blueGrey[300]),
+        leading: Icon(Icons.info_outline_rounded, color: AccentColors.slate),
         title: const Text('About', style: TextStyle(color: Colors.white)),
         subtitle: Text(
           'SocialMesh v${_appVersion.isEmpty ? '...' : _appVersion}',
@@ -492,6 +495,7 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
           ),
           const SizedBox(height: AppTheme.spacing16),
           TextField(
+            onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
             controller: controller,
             autofocus: true,
             maxLength: 31,
@@ -869,8 +873,8 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
                       Navigator.pop(context);
                     },
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: Colors.orange,
-                      side: const BorderSide(color: Colors.orange),
+                      foregroundColor: AccentColors.orange,
+                      side: const BorderSide(color: AccentColors.orange),
                     ),
                     child: const Text('Clear'),
                   ),

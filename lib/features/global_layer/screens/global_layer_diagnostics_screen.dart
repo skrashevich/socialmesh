@@ -547,17 +547,17 @@ class _OverallResultBanner extends StatelessWidget {
     final String message;
 
     if (allPassed) {
-      color = const Color(0xFF4ADE80);
+      color = AppTheme.successGreen;
       icon = Icons.check_circle_outline;
       title = 'All Clear';
       message = 'All ${report.passedCount} checks passed';
     } else if (hasWarning) {
-      color = const Color(0xFFFBBF24);
+      color = AppTheme.warningYellow;
       icon = Icons.warning_amber;
       title = 'Warnings Found';
       message = 'All checks passed but with warnings to review';
     } else {
-      color = const Color(0xFFEF4444);
+      color = AppTheme.errorRed;
       icon = Icons.error_outline;
       title = 'Issues Found';
       message =
@@ -692,7 +692,7 @@ class _DiagnosticCheckTile extends StatelessWidget {
                     vertical: 6,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFBBF24).withValues(alpha: 0.08),
+                    color: AppTheme.warningYellow.withValues(alpha: 0.08),
                     borderRadius: BorderRadius.circular(AppTheme.radius6),
                   ),
                   child: Row(
@@ -703,7 +703,7 @@ class _DiagnosticCheckTile extends StatelessWidget {
                         child: Icon(
                           Icons.lightbulb_outline,
                           size: 14,
-                          color: Color(0xFFFBBF24),
+                          color: AppTheme.warningYellow,
                         ),
                       ),
                       const SizedBox(width: AppTheme.spacing6),
@@ -712,7 +712,7 @@ class _DiagnosticCheckTile extends StatelessWidget {
                           result.suggestion!,
                           style: Theme.of(context).textTheme.labelSmall
                               ?.copyWith(
-                                color: const Color(0xFFFBBF24),
+                                color: AppTheme.warningYellow,
                                 fontWeight: FontWeight.w500,
                               ),
                         ),
@@ -730,8 +730,8 @@ class _DiagnosticCheckTile extends StatelessWidget {
 
   Color _borderColor(DiagnosticStatus status) {
     return switch (status) {
-      DiagnosticStatus.passed => const Color(0xFF4ADE80).withValues(alpha: 0.2),
-      DiagnosticStatus.failed => const Color(0xFFEF4444).withValues(alpha: 0.3),
+      DiagnosticStatus.passed => AppTheme.successGreen.withValues(alpha: 0.2),
+      DiagnosticStatus.failed => AppTheme.errorRed.withValues(alpha: 0.3),
       DiagnosticStatus.warning => const Color(
         0xFFFBBF24,
       ).withValues(alpha: 0.3),
@@ -749,12 +749,12 @@ class _DiagnosticCheckTile extends StatelessWidget {
 
   Color _messageColor(DiagnosticStatus status) {
     return switch (status) {
-      DiagnosticStatus.passed => const Color(0xFF4ADE80),
-      DiagnosticStatus.failed => const Color(0xFFEF4444),
-      DiagnosticStatus.warning => const Color(0xFFFBBF24),
-      DiagnosticStatus.skipped => const Color(0xFF9CA3AF),
-      DiagnosticStatus.running => const Color(0xFFFBBF24),
-      DiagnosticStatus.pending => const Color(0xFF9CA3AF),
+      DiagnosticStatus.passed => AppTheme.successGreen,
+      DiagnosticStatus.failed => AppTheme.errorRed,
+      DiagnosticStatus.warning => AppTheme.warningYellow,
+      DiagnosticStatus.skipped => AppTheme.textTertiary,
+      DiagnosticStatus.running => AppTheme.warningYellow,
+      DiagnosticStatus.pending => AppTheme.textTertiary,
     };
   }
 }
@@ -787,22 +787,22 @@ class _StatusIndicator extends StatelessWidget {
       DiagnosticStatus.passed => const Icon(
         Icons.check_circle,
         size: 18,
-        color: Color(0xFF4ADE80),
+        color: AppTheme.successGreen,
       ),
       DiagnosticStatus.warning => const Icon(
         Icons.warning_amber,
         size: 18,
-        color: Color(0xFFFBBF24),
+        color: AppTheme.warningYellow,
       ),
       DiagnosticStatus.failed => const Icon(
         Icons.cancel,
         size: 18,
-        color: Color(0xFFEF4444),
+        color: AppTheme.errorRed,
       ),
       DiagnosticStatus.skipped => const Icon(
         Icons.skip_next,
         size: 18,
-        color: Color(0xFF9CA3AF),
+        color: AppTheme.textTertiary,
       ),
     };
   }

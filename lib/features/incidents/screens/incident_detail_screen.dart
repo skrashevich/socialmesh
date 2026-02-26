@@ -261,22 +261,22 @@ class _IncidentHeader extends StatelessWidget {
 
   static Color _stateColor(IncidentState state) {
     return switch (state) {
-      IncidentState.draft => Colors.grey,
-      IncidentState.open => Colors.blue,
-      IncidentState.assigned => Colors.orange,
-      IncidentState.escalated => Colors.red,
-      IncidentState.resolved => Colors.green,
-      IncidentState.closed => Colors.blueGrey,
-      IncidentState.cancelled => Colors.brown,
+      IncidentState.draft => SemanticColors.disabled,
+      IncidentState.open => AccentColors.blue,
+      IncidentState.assigned => AccentColors.orange,
+      IncidentState.escalated => AppTheme.errorRed,
+      IncidentState.resolved => AppTheme.successGreen,
+      IncidentState.closed => AccentColors.slate,
+      IncidentState.cancelled => AccentColors.slate,
     };
   }
 
   static Color _priorityColor(IncidentPriority priority) {
     return switch (priority) {
-      IncidentPriority.routine => Colors.teal,
-      IncidentPriority.priority => Colors.amber.shade700,
-      IncidentPriority.immediate => Colors.deepOrange,
-      IncidentPriority.flash => Colors.red.shade800,
+      IncidentPriority.routine => AccentColors.teal,
+      IncidentPriority.priority => AppTheme.warningYellow,
+      IncidentPriority.immediate => AccentColors.coral,
+      IncidentPriority.flash => AppTheme.errorRed,
     };
   }
 }
@@ -432,7 +432,7 @@ class _ActionButtons extends ConsumerWidget {
                   onPressed: () => Navigator.of(context).pop(),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
-                    side: BorderSide(color: Colors.grey.shade700),
+                    side: BorderSide(color: SemanticColors.divider),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
@@ -499,7 +499,7 @@ class _ActionButtons extends ConsumerWidget {
                   onPressed: () => Navigator.of(context).pop(),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
-                    side: BorderSide(color: Colors.grey.shade700),
+                    side: BorderSide(color: SemanticColors.divider),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
@@ -539,7 +539,7 @@ class _ActionButtons extends ConsumerWidget {
           target: IncidentState.open,
           permission: Permission.submitIncident,
           icon: Icons.send_outlined,
-          color: Colors.blue,
+          color: AccentColors.blue,
           roleHint: 'Operator or above',
         ),
         _ActionDef(
@@ -547,7 +547,7 @@ class _ActionButtons extends ConsumerWidget {
           target: IncidentState.cancelled,
           permission: Permission.cancelIncident,
           icon: Icons.cancel_outlined,
-          color: Colors.brown,
+          color: AccentColors.slate,
           roleHint: 'Operator or above',
         ),
       ],
@@ -557,7 +557,7 @@ class _ActionButtons extends ConsumerWidget {
           target: IncidentState.assigned,
           permission: Permission.assignIncident,
           icon: Icons.person_add_outlined,
-          color: Colors.orange,
+          color: AccentColors.orange,
           roleHint: 'Supervisor or Admin',
         ),
         _ActionDef(
@@ -565,7 +565,7 @@ class _ActionButtons extends ConsumerWidget {
           target: IncidentState.escalated,
           permission: Permission.escalateIncident,
           icon: Icons.priority_high,
-          color: Colors.red,
+          color: AppTheme.errorRed,
           roleHint: 'Supervisor or Admin',
         ),
         _ActionDef(
@@ -573,7 +573,7 @@ class _ActionButtons extends ConsumerWidget {
           target: IncidentState.resolved,
           permission: Permission.resolveIncident,
           icon: Icons.check_circle_outline,
-          color: Colors.green,
+          color: AppTheme.successGreen,
           roleHint: 'Assigned Operator',
         ),
         _ActionDef(
@@ -581,7 +581,7 @@ class _ActionButtons extends ConsumerWidget {
           target: IncidentState.cancelled,
           permission: Permission.cancelIncident,
           icon: Icons.cancel_outlined,
-          color: Colors.brown,
+          color: AccentColors.slate,
           roleHint: 'Operator or above',
         ),
       ],
@@ -591,7 +591,7 @@ class _ActionButtons extends ConsumerWidget {
           target: IncidentState.assigned,
           permission: Permission.assignIncident,
           icon: Icons.person_add_outlined,
-          color: Colors.orange,
+          color: AccentColors.orange,
           roleHint: 'Supervisor or Admin',
         ),
         _ActionDef(
@@ -599,7 +599,7 @@ class _ActionButtons extends ConsumerWidget {
           target: IncidentState.cancelled,
           permission: Permission.cancelIncident,
           icon: Icons.cancel_outlined,
-          color: Colors.brown,
+          color: AccentColors.slate,
           roleHint: 'Operator or above',
         ),
       ],
@@ -609,7 +609,7 @@ class _ActionButtons extends ConsumerWidget {
           target: IncidentState.resolved,
           permission: Permission.resolveIncident,
           icon: Icons.check_circle_outline,
-          color: Colors.green,
+          color: AppTheme.successGreen,
           roleHint: 'Assigned Operator',
         ),
         _ActionDef(
@@ -617,7 +617,7 @@ class _ActionButtons extends ConsumerWidget {
           target: IncidentState.cancelled,
           permission: Permission.cancelIncident,
           icon: Icons.cancel_outlined,
-          color: Colors.brown,
+          color: AccentColors.slate,
           roleHint: 'Operator or above',
         ),
       ],
@@ -627,7 +627,7 @@ class _ActionButtons extends ConsumerWidget {
           target: IncidentState.closed,
           permission: Permission.closeIncident,
           icon: Icons.done_all,
-          color: Colors.blueGrey,
+          color: AccentColors.slate,
           roleHint: 'Supervisor or Admin',
         ),
       ],

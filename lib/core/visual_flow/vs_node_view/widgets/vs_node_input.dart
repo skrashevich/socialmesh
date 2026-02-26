@@ -7,6 +7,7 @@
 // to reduce accidental disconnects on mobile.
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../common.dart';
 import '../data/vs_interface.dart';
@@ -86,6 +87,7 @@ class _VSNodeInputState extends State<VSNodeInput> {
                     return GestureDetector(
                       // Tap to disconnect — uses the enlarged parent hit area.
                       onTap: () {
+                        HapticFeedback.lightImpact();
                         updateConnectedNode(null);
                       },
                       behavior: HitTestBehavior.opaque,

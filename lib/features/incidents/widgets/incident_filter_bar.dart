@@ -140,13 +140,13 @@ class IncidentFilterBar extends ConsumerWidget {
 
   static Color _stateColor(IncidentState state) {
     return switch (state) {
-      IncidentState.draft => Colors.grey,
-      IncidentState.open => Colors.blue,
-      IncidentState.assigned => Colors.orange,
-      IncidentState.escalated => Colors.red,
-      IncidentState.resolved => Colors.green,
-      IncidentState.closed => Colors.blueGrey,
-      IncidentState.cancelled => Colors.brown,
+      IncidentState.draft => SemanticColors.disabled,
+      IncidentState.open => AccentColors.blue,
+      IncidentState.assigned => AccentColors.orange,
+      IncidentState.escalated => AppTheme.errorRed,
+      IncidentState.resolved => AppTheme.successGreen,
+      IncidentState.closed => AccentColors.slate,
+      IncidentState.cancelled => AccentColors.slate,
     };
   }
 
@@ -161,10 +161,10 @@ class IncidentFilterBar extends ConsumerWidget {
 
   static Color _priorityColor(IncidentPriority priority) {
     return switch (priority) {
-      IncidentPriority.routine => Colors.teal,
-      IncidentPriority.priority => Colors.amber.shade700,
-      IncidentPriority.immediate => Colors.deepOrange,
-      IncidentPriority.flash => Colors.red.shade800,
+      IncidentPriority.routine => AccentColors.teal,
+      IncidentPriority.priority => AppTheme.warningYellow,
+      IncidentPriority.immediate => AccentColors.coral,
+      IncidentPriority.flash => AppTheme.errorRed,
     };
   }
 }

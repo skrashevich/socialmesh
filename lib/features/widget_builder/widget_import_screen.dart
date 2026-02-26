@@ -305,7 +305,7 @@ class _WidgetImportScreenState extends ConsumerState<WidgetImportScreen>
                             Text(
                               widgetSchema.description!,
                               style: Theme.of(context).textTheme.bodyMedium
-                                  ?.copyWith(color: Colors.grey[400]),
+                                  ?.copyWith(color: SemanticColors.disabled),
                             ),
                         ],
                       ),

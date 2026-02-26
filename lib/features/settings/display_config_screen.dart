@@ -172,7 +172,7 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
           child: Text(
             'Save',
             style: TextStyle(
-              color: _isLoading ? Colors.grey : context.accentColor,
+              color: _isLoading ? SemanticColors.disabled : context.accentColor,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -238,7 +238,7 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
           ),
           SliderTheme(
             data: SliderThemeData(
-              inactiveTrackColor: Colors.grey.shade700,
+              inactiveTrackColor: SemanticColors.divider,
               thumbColor: context.accentColor,
               overlayColor: context.accentColor.withAlpha(30),
             ),
@@ -270,7 +270,7 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
           ),
           SliderTheme(
             data: SliderThemeData(
-              inactiveTrackColor: Colors.grey.shade700,
+              inactiveTrackColor: SemanticColors.divider,
               thumbColor: context.accentColor,
               overlayColor: context.accentColor.withAlpha(30),
             ),
@@ -552,7 +552,9 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
                         isSelected
                             ? Icons.radio_button_checked
                             : Icons.radio_button_unchecked,
-                        color: isSelected ? context.accentColor : Colors.grey,
+                        color: isSelected
+                            ? context.accentColor
+                            : SemanticColors.disabled,
                       ),
                       SizedBox(width: AppTheme.spacing12),
                       Expanded(
@@ -685,7 +687,7 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
               isSelected
                   ? Icons.radio_button_checked
                   : Icons.radio_button_unchecked,
-              color: isSelected ? context.accentColor : Colors.grey,
+              color: isSelected ? context.accentColor : SemanticColors.disabled,
             ),
             SizedBox(width: AppTheme.spacing12),
             Icon(

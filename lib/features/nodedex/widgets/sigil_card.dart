@@ -67,20 +67,20 @@ extension CardRarityVisuals on CardRarity {
   Color get borderColor {
     return switch (this) {
       CardRarity.common => const Color(0xFF6B7280),
-      CardRarity.uncommon => const Color(0xFF10B981),
-      CardRarity.rare => const Color(0xFF3B82F6),
-      CardRarity.epic => const Color(0xFF8B5CF6),
-      CardRarity.legendary => const Color(0xFFD4AF37),
+      CardRarity.uncommon => AccentColors.emerald,
+      CardRarity.rare => AppTheme.graphBlue,
+      CardRarity.epic => AppTheme.primaryPurple,
+      CardRarity.legendary => AccentColors.goldMetallic,
     };
   }
 
   Color get glowColor {
     return switch (this) {
       CardRarity.common => const Color(0xFF6B7280),
-      CardRarity.uncommon => const Color(0xFF10B981),
-      CardRarity.rare => const Color(0xFF3B82F6),
-      CardRarity.epic => const Color(0xFF8B5CF6),
-      CardRarity.legendary => const Color(0xFFFFCC00),
+      CardRarity.uncommon => AccentColors.emerald,
+      CardRarity.rare => AppTheme.graphBlue,
+      CardRarity.epic => AppTheme.primaryPurple,
+      CardRarity.legendary => AccentColors.goldDarkYellow,
     };
   }
 

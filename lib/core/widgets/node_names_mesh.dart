@@ -48,8 +48,8 @@ class NodeNamesMeshNode extends ConsumerStatefulWidget {
     this.nodeSize = 0.8,
     this.gradientColors = const [
       Color(0xFFFF6B4A),
-      Color(0xFFE91E8C),
-      Color(0xFF4F6AF6),
+      AppTheme.primaryMagenta,
+      AppTheme.primaryBlue,
     ],
     this.showNodeNames = true,
     this.maxVisibleNames = 6,

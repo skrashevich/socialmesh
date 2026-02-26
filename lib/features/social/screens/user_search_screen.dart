@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme.dart';
@@ -57,7 +58,10 @@ class _UserSearchScreenState extends ConsumerState<UserSearchScreen> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        HapticFeedback.lightImpact();
+        FocusScope.of(context).unfocus();
+      },
       child: GlassScaffold(
         resizeToAvoidBottomInset: false,
         title: 'Search',

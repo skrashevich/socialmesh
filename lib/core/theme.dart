@@ -1354,6 +1354,50 @@ class SemanticColors {
   /// Semi-transparent white for glows, gradients, and visual effects
   static Color glow([double opacity = 0.5]) =>
       Colors.white.withValues(alpha: opacity);
+
+  // ---------------------------------------------------------------------------
+  // Neutral / disabled / muted state colors
+  // ---------------------------------------------------------------------------
+
+  /// Neutral grey for disabled, unknown, or inactive states (icons, badges, chips).
+  /// Use instead of Colors.grey.
+  static const Color disabled = Color(0xFF9CA3AF);
+
+  /// Muted grey for secondary/tertiary icons and decorative elements.
+  /// Use instead of Colors.grey.shade600 / Colors.grey[600].
+  static const Color muted = Color(0xFF6B7280);
+
+  /// Subtle grey for borders, dividers, and separators.
+  /// Use instead of Colors.grey.shade700 / Colors.grey[700].
+  static const Color divider = Color(0xFF4B5563);
+
+  /// Faint grey for placeholder backgrounds and shimmer base.
+  /// Use instead of Colors.grey.shade800 / Colors.grey[800].
+  static const Color placeholder = Color(0xFF374151);
+
+  /// Overlay scrim for modals and bottom sheets.
+  /// Use instead of Colors.black.withOpacity(0.5).
+  static const Color scrim = Color(0x80000000);
+
+  // ---------------------------------------------------------------------------
+  // Status colors (context-free — no BuildContext needed)
+  // ---------------------------------------------------------------------------
+
+  /// Success / healthy / online / approved.
+  /// Alias for AppTheme.successGreen — use in non-widget contexts.
+  static const Color success = Color(0xFF4ADE80);
+
+  /// Warning / caution / moderate / pending.
+  /// Alias for AppTheme.warningYellow.
+  static const Color warning = Color(0xFFFBBF24);
+
+  /// Error / danger / offline / rejected.
+  /// Alias for AppTheme.errorRed.
+  static const Color error = Color(0xFFEF4444);
+
+  /// Informational / neutral-positive.
+  /// Use for info banners, tooltips, help text.
+  static const Color info = Color(0xFF60A5FA);
 }
 
 /// Semantic text style extension for consistent text styling throughout the app.

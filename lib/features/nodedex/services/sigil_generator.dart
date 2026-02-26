@@ -21,6 +21,7 @@
 import 'dart:ui';
 
 import '../models/nodedex_entry.dart';
+import 'package:socialmesh/core/theme.dart';
 
 /// Generates deterministic sigil data from a node's numeric identity.
 ///
@@ -37,21 +38,21 @@ class SigilGenerator {
   /// with enough saturation to feel distinct but not garish. Each color
   /// works well as a primary, secondary, or tertiary element.
   static const List<Color> _palette = [
-    Color(0xFF0EA5E9), // sky
-    Color(0xFF8B5CF6), // purple
-    Color(0xFFF97316), // orange
-    Color(0xFF10B981), // emerald
-    Color(0xFFEF4444), // red
-    Color(0xFFFBBF24), // amber
-    Color(0xFF06B6D4), // cyan
-    Color(0xFFEC4899), // pink
-    Color(0xFF14B8A6), // teal
-    Color(0xFF6366F1), // indigo
-    Color(0xFF84CC16), // lime
-    Color(0xFFA78BFA), // lavender
-    Color(0xFFE91E8C), // magenta
-    Color(0xFF22C55E), // green
-    Color(0xFFF43F5E), // rose
+    AccentColors.sky, // sky
+    AppTheme.primaryPurple, // purple
+    AccentColors.orange, // orange
+    AccentColors.emerald, // emerald
+    AppTheme.errorRed, // red
+    AppTheme.warningYellow, // amber
+    AccentColors.cyan, // cyan
+    AccentColors.pink, // pink
+    AccentColors.teal, // teal
+    AccentColors.indigo, // indigo
+    AccentColors.lime, // lime
+    AccentColors.lavender, // lavender
+    AppTheme.primaryMagenta, // magenta
+    AccentColors.green, // green
+    AccentColors.rose, // rose
     Color(0xFF0369A1), // deep sky
   ];
 

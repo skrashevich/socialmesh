@@ -266,7 +266,7 @@ class _CoverBackgroundPainter extends CustomPainter {
 
     // Base fill.
     final basePaint = Paint()
-      ..color = isDark ? const Color(0xFF181D28) : const Color(0xFFF0F2F5);
+      ..color = isDark ? const Color(0xFF181D28) : AppTheme.lightCardAlt;
     canvas.drawRect(rect, basePaint);
 
     // Subtle radial glow from top-right corner.

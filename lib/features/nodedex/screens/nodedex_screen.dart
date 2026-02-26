@@ -702,10 +702,10 @@ class _SocialTagFilterChip extends StatelessWidget {
 
   Color get _color {
     return switch (tag) {
-      NodeSocialTag.contact => const Color(0xFF0EA5E9),
-      NodeSocialTag.trustedNode => const Color(0xFF10B981),
-      NodeSocialTag.knownRelay => const Color(0xFFF97316),
-      NodeSocialTag.frequentPeer => const Color(0xFF8B5CF6),
+      NodeSocialTag.contact => AccentColors.sky,
+      NodeSocialTag.trustedNode => AccentColors.emerald,
+      NodeSocialTag.knownRelay => AccentColors.orange,
+      NodeSocialTag.frequentPeer => AppTheme.primaryPurple,
     };
   }
 

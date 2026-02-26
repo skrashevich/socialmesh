@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../providers/tak_filter_provider.dart';
@@ -41,7 +42,10 @@ class _TakFilterBarState extends ConsumerState<TakFilterBar> {
     final filter = ref.watch(takFilterProvider);
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        HapticFeedback.lightImpact();
+        FocusScope.of(context).unfocus();
+      },
       behavior: HitTestBehavior.translucent,
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16),

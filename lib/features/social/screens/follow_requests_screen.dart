@@ -279,7 +279,7 @@ class _RequestTileState extends ConsumerState<_RequestTile>
               onPressed: _isProcessing ? null : _handleDecline,
               style: FilledButton.styleFrom(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
-                backgroundColor: Colors.grey,
+                backgroundColor: SemanticColors.disabled,
                 foregroundColor: Colors.white,
               ),
               child: _isDeclining

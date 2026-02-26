@@ -292,7 +292,7 @@ class _MeshCoreQrScannerScreenState
               height: 280,
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: _isProcessing ? Colors.green : accentColor,
+                  color: _isProcessing ? AppTheme.successGreen : accentColor,
                   width: 3,
                 ),
                 borderRadius: BorderRadius.circular(AppTheme.radius16),

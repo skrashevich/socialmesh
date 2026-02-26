@@ -33,7 +33,7 @@ class ShopAdminDashboard extends ConsumerWidget {
                       Icon(
                         Icons.lock,
                         size: 64,
-                        color: Colors.red.withValues(alpha: 0.5),
+                        color: AppTheme.errorRed.withValues(alpha: 0.5),
                       ),
                       const SizedBox(height: AppTheme.spacing16),
                       const Text(
@@ -165,49 +165,51 @@ class _AdminDashboardContent extends ConsumerWidget {
           value: stats.totalProducts.toString(),
           subtitle: '${stats.activeProducts} active',
           icon: Icons.inventory_2,
-          color: Colors.blue,
+          color: AccentColors.blue,
         ),
         _StatCard(
           title: 'Total Sellers',
           value: stats.totalSellers.toString(),
           icon: Icons.store,
-          color: Colors.green,
+          color: AppTheme.successGreen,
         ),
         _StatCard(
           title: 'Total Sales',
           value: stats.totalSales.toString(),
           icon: Icons.shopping_cart,
-          color: Colors.orange,
+          color: AccentColors.orange,
         ),
         _StatCard(
           title: 'Total Views',
           value: _formatNumber(stats.totalViews),
           icon: Icons.visibility,
-          color: Colors.purple,
+          color: AccentColors.purple,
         ),
         _StatCard(
           title: 'Reviews',
           value: stats.totalReviews.toString(),
           icon: Icons.star,
-          color: Colors.amber,
+          color: AppTheme.warningYellow,
         ),
         _StatCard(
           title: 'Est. Revenue',
           value: '\$${_formatNumber(stats.estimatedRevenue.round())}',
           icon: Icons.attach_money,
-          color: Colors.teal,
+          color: AccentColors.teal,
         ),
         _StatCard(
           title: 'Out of Stock',
           value: stats.outOfStockProducts.toString(),
           icon: Icons.warning,
-          color: stats.outOfStockProducts > 0 ? Colors.red : Colors.grey,
+          color: stats.outOfStockProducts > 0
+              ? AppTheme.errorRed
+              : SemanticColors.disabled,
         ),
         _StatCard(
           title: 'Inactive',
           value: stats.inactiveProducts.toString(),
           icon: Icons.pause_circle,
-          color: Colors.grey,
+          color: SemanticColors.disabled,
         ),
       ],
     );
@@ -244,7 +246,7 @@ class _AdminDashboardContent extends ConsumerWidget {
           child: _ActionButton(
             icon: Icons.store,
             label: 'Add Seller',
-            color: Colors.green,
+            color: AppTheme.successGreen,
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(

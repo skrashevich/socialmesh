@@ -1856,7 +1856,11 @@ class _SignalDetailLoader extends ConsumerWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(Icons.error_outline, size: 48, color: Colors.red),
+                  const Icon(
+                    Icons.error_outline,
+                    size: 48,
+                    color: AppTheme.errorRed,
+                  ),
                   const SizedBox(height: AppTheme.spacing16),
                   Text('Error loading signal: ${snapshot.error}'),
                   const SizedBox(height: AppTheme.spacing16),
@@ -1934,7 +1938,11 @@ class _AetherFlightDeepLinkLoader extends ConsumerWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(Icons.error_outline, size: 48, color: Colors.red),
+                  const Icon(
+                    Icons.error_outline,
+                    size: 48,
+                    color: AppTheme.errorRed,
+                  ),
                   const SizedBox(height: AppTheme.spacing16),
                   Text(
                     snapshot.hasError
@@ -1995,7 +2003,11 @@ class _ChannelImportLoader extends ConsumerWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(Icons.error_outline, size: 48, color: Colors.red),
+                  const Icon(
+                    Icons.error_outline,
+                    size: 48,
+                    color: AppTheme.errorRed,
+                  ),
                   const SizedBox(height: AppTheme.spacing16),
                   Text('Error loading channel: ${snapshot.error}'),
                   const SizedBox(height: AppTheme.spacing16),
@@ -2370,7 +2382,11 @@ class _WidgetDetailLoaderState extends ConsumerState<_WidgetDetailLoader>
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.error_outline, size: 48, color: Colors.red),
+              const Icon(
+                Icons.error_outline,
+                size: 48,
+                color: AppTheme.errorRed,
+              ),
               const SizedBox(height: AppTheme.spacing16),
               Text(_error!),
               const SizedBox(height: AppTheme.spacing16),
@@ -2485,7 +2501,7 @@ class _ProfileDisplayNameLoader extends ConsumerWidget {
                         const Icon(
                           Icons.error_outline,
                           size: 48,
-                          color: Colors.red,
+                          color: AppTheme.errorRed,
                         ),
                         const SizedBox(height: AppTheme.spacing16),
                         Text('Error looking up user: ${snapshot.error}'),
@@ -2569,10 +2585,10 @@ class _BlockedRouteScreen extends ConsumerWidget {
     final iconData = isInvalidated
         ? Icons.error_outline
         : Icons.bluetooth_disabled;
-    final iconColor = isInvalidated ? Colors.red : Colors.orange;
+    final iconColor = isInvalidated ? AppTheme.errorRed : AccentColors.orange;
     final bgColor = isInvalidated
-        ? Colors.red.withValues(alpha: 0.1)
-        : Colors.orange.withValues(alpha: 0.1);
+        ? AppTheme.errorRed.withValues(alpha: 0.1)
+        : AccentColors.orange.withValues(alpha: 0.1);
     final title = isInvalidated ? 'Device Reset' : 'Device Not Connected';
     final description = isInvalidated
         ? 'Your device was factory reset or replaced.\n\nGo to Settings → Bluetooth, forget the Meshtastic device, then scan again.'
@@ -3834,7 +3850,11 @@ class _ErrorScreen extends ConsumerWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.error_outline, size: 64, color: Colors.red),
+              const Icon(
+                Icons.error_outline,
+                size: 64,
+                color: AppTheme.errorRed,
+              ),
               const SizedBox(height: AppTheme.spacing24),
               Text(
                 'Something went wrong',

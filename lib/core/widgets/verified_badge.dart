@@ -6,12 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../providers/subscription_providers.dart';
+import 'package:socialmesh/core/theme.dart';
 
 /// Gold colors for verified badges
 const Color kGoldBadgeColor = Color(0xFFFFD700);
 const Color _goldLight = Color(0xFFFFE55C);
 const Color _goldMid = Color(0xFFFFD700);
-const Color _goldDark = Color(0xFFB8860B);
+const Color _goldDark = AccentColors.goldDarkGoldenrod;
 
 /// A verified badge widget that displays differently based on badge type:
 /// - Gold badge for users with all premium features (Authorised)

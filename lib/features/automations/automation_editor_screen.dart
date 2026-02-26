@@ -316,7 +316,7 @@ class _AutomationEditorScreenState extends ConsumerState<AutomationEditorScreen>
                     context,
                     'WHEN',
                     icon: Icons.bolt,
-                    color: Colors.amber,
+                    color: AppTheme.warningYellow,
                   ),
                   const SizedBox(height: AppTheme.spacing8),
                   TriggerSelector(
@@ -494,13 +494,13 @@ class _AutomationEditorScreenState extends ConsumerState<AutomationEditorScreen>
     return Row(
       children: [
         if (icon != null) ...[
-          Icon(icon, size: 18, color: color ?? Colors.grey),
+          Icon(icon, size: 18, color: color ?? SemanticColors.disabled),
           const SizedBox(width: AppTheme.spacing6),
         ],
         Text(
           title,
           style: Theme.of(context).textTheme.titleSmall?.copyWith(
-            color: color ?? Colors.grey,
+            color: color ?? SemanticColors.disabled,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -529,7 +529,7 @@ class _AutomationEditorScreenState extends ConsumerState<AutomationEditorScreen>
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: isFirst
-                        ? [Colors.amber, AppTheme.successGreen]
+                        ? [AppTheme.warningYellow, AppTheme.successGreen]
                         : [
                             AppTheme.successGreen.withValues(alpha: 0.6),
                             AppTheme.successGreen,
@@ -564,7 +564,7 @@ class _AutomationEditorScreenState extends ConsumerState<AutomationEditorScreen>
           Text(
             isFirst ? 'then do...' : 'then...',
             style: TextStyle(
-              color: Colors.grey[500],
+              color: SemanticColors.muted,
               fontSize: 12,
               fontStyle: FontStyle.italic,
             ),
@@ -742,7 +742,7 @@ class _ActionTypeSelector extends StatelessWidget {
               height: 4,
               margin: const EdgeInsets.only(bottom: 16),
               decoration: BoxDecoration(
-                color: Colors.grey[600],
+                color: SemanticColors.muted,
                 borderRadius: BorderRadius.circular(AppTheme.radius2),
               ),
             ),

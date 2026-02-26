@@ -6,9 +6,9 @@ import '../theme.dart';
 
 /// Default brand gradient colors (used when no accent color specified)
 const _defaultGradientColors = [
-  Color(0xFFE91E8C), // Pink/Magenta
-  Color(0xFF8B5CF6), // Purple
-  Color(0xFF4F6AF6), // Blue
+  AppTheme.primaryMagenta, // Pink/Magenta
+  AppTheme.primaryPurple, // Purple
+  AppTheme.primaryBlue, // Blue
 ];
 
 /// Characters for split-flap display cycling - includes lowercase

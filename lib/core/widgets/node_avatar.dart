@@ -93,11 +93,11 @@ class NodeAvatar extends StatelessWidget {
   }
 
   Color _getBatteryColor() {
-    if (batteryLevel == null) return Colors.grey;
+    if (batteryLevel == null) return SemanticColors.disabled;
     if (batteryLevel! > 100) return AccentColors.green; // Charging
     if (batteryLevel! > 50) return AccentColors.green;
-    if (batteryLevel! > 20) return Colors.orange;
-    return Colors.red;
+    if (batteryLevel! > 20) return AccentColors.orange;
+    return AppTheme.errorRed;
   }
 
   @override
@@ -269,7 +269,7 @@ class _BatteryRingPainter extends CustomPainter {
 
     // Background track (gray)
     final trackPaint = Paint()
-      ..color = Colors.grey.withValues(alpha: 0.2)
+      ..color = SemanticColors.disabled.withValues(alpha: 0.2)
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth
       ..strokeCap = StrokeCap.round;
@@ -314,11 +314,11 @@ class _OnlineStatusIndicator extends StatelessWidget {
       case OnlineStatus.online:
         return AccentColors.green;
       case OnlineStatus.idle:
-        return Colors.orange;
+        return AccentColors.orange;
       case OnlineStatus.offline:
-        return Colors.grey;
+        return SemanticColors.disabled;
       case OnlineStatus.pending:
-        return Colors.yellow;
+        return AppTheme.warningYellow;
     }
   }
 

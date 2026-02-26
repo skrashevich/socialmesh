@@ -328,6 +328,8 @@ class _AdminPostsScreenState extends State<AdminPostsScreen>
             ),
             const SizedBox(height: AppTheme.spacing8),
             TextField(
+              onTapOutside: (_) =>
+                  FocusManager.instance.primaryFocus?.unfocus(),
               maxLength: 100,
               onChanged: (value) => setSheetState(() => input = value.trim()),
               decoration: const InputDecoration(
@@ -343,7 +345,7 @@ class _AdminPostsScreenState extends State<AdminPostsScreen>
                     onPressed: () => Navigator.of(ctx).pop(null),
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
-                      side: BorderSide(color: Colors.grey.shade700),
+                      side: BorderSide(color: SemanticColors.divider),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(AppTheme.radius12),
                       ),
@@ -564,7 +566,7 @@ class _AdminPostCard extends StatelessWidget {
                     IconButton(
                       tooltip: 'Delete post',
                       icon: const Icon(Icons.delete_outline),
-                      color: Colors.redAccent,
+                      color: AppTheme.errorRed,
                       onPressed: onDelete,
                     ),
                   ],

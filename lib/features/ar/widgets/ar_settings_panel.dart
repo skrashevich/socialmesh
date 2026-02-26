@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:socialmesh/core/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../ar_state.dart';
 
@@ -101,7 +102,10 @@ class ARSettingsPanel extends StatelessWidget {
 
     return Expanded(
       child: GestureDetector(
-        onTap: () => onViewModeChanged(mode),
+        onTap: () {
+          HapticFeedback.lightImpact();
+          onViewModeChanged(mode);
+        },
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 12),
           decoration: BoxDecoration(

@@ -264,7 +264,7 @@ class _RemoteAdminSelectorSheetState
           Padding(
             padding: const EdgeInsets.all(AppTheme.spacing16),
             child: StatusBanner.custom(
-              color: Colors.orange,
+              color: AccentColors.orange,
               title:
                   'Remote admin requires the target node to have your public key in its Admin Keys.',
               borderRadius: 8,
@@ -407,10 +407,10 @@ class _NodeAdminTile extends StatelessWidget {
     final colors = [
       const Color(0xFF5B4FCE),
       const Color(0xFFD946A6),
-      const Color(0xFF3B82F6),
+      AppTheme.graphBlue,
       const Color(0xFFF59E0B),
-      const Color(0xFFEF4444),
-      const Color(0xFF10B981),
+      AppTheme.errorRed,
+      AccentColors.emerald,
     ];
     return colors[node.nodeNum % colors.length];
   }

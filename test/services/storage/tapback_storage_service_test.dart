@@ -157,5 +157,60 @@ void main() {
       expect(tapbacks2.length, 1);
       expect(tapbacks2.first.emoji, '❤️');
     });
+
+    test(
+      'addTapback deduplicates same emoji from same user on same message',
+      () async {
+        final tapback = MessageTapback(
+          messageId: 'message1',
+          fromNodeNum: 12345,
+          emoji: '👍',
+        );
+
+        // Simulate device replay: add the exact same reaction twice
+        await service.addTapback(tapback);
+        await service.addTapback(
+          MessageTapback(
+            messageId: 'message1',
+            fromNodeNum: 12345,
+            emoji: '👍',
+          ),
+        );
+
+        final tapbacks = await service.getTapbacksForMessage('message1');
+        expect(
+          tapbacks.length,
+          1,
+          reason: 'duplicate tapback should be ignored',
+        );
+      },
+    );
+
+    test('dedup allows same emoji from different users', () async {
+      await service.addTapback(
+        MessageTapback(messageId: 'msg1', fromNodeNum: 111, emoji: '👍'),
+      );
+      await service.addTapback(
+        MessageTapback(messageId: 'msg1', fromNodeNum: 222, emoji: '👍'),
+      );
+
+      final tapbacks = await service.getTapbacksForMessage('msg1');
+      expect(tapbacks.length, 2);
+    });
+
+    test(
+      'dedup allows same user with different emojis on same message',
+      () async {
+        await service.addTapback(
+          MessageTapback(messageId: 'msg1', fromNodeNum: 111, emoji: '👍'),
+        );
+        await service.addTapback(
+          MessageTapback(messageId: 'msg1', fromNodeNum: 111, emoji: '❤️'),
+        );
+
+        final tapbacks = await service.getTapbacksForMessage('msg1');
+        expect(tapbacks.length, 2);
+      },
+    );
   });
 }

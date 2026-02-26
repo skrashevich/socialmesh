@@ -246,7 +246,7 @@ class _CannedMessageModuleConfigScreenState
             'Save',
             style: TextStyle(
               color: (_isLoading || _isSaving)
-                  ? Colors.grey
+                  ? SemanticColors.disabled
                   : context.accentColor,
               fontWeight: FontWeight.w600,
             ),
@@ -370,6 +370,7 @@ class _CannedMessageModuleConfigScreenState
           ),
           const SizedBox(height: AppTheme.spacing12),
           TextField(
+            onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
             controller: _messagesController,
             maxLines: 4,
             maxLength: 198,
@@ -464,7 +465,9 @@ class _CannedMessageModuleConfigScreenState
                         isSelected
                             ? Icons.radio_button_checked
                             : Icons.radio_button_unchecked,
-                        color: isSelected ? context.accentColor : Colors.grey,
+                        color: isSelected
+                            ? context.accentColor
+                            : SemanticColors.disabled,
                       ),
                       SizedBox(width: AppTheme.spacing12),
                       Expanded(

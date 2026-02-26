@@ -897,8 +897,8 @@ class AnimatedProgressRing extends StatelessWidget {
     required this.progress,
     this.size = 48,
     this.strokeWidth = 4,
-    this.progressColor = const Color(0xFFE91E8C),
-    this.backgroundColor = const Color(0xFF414A5A),
+    this.progressColor = AppTheme.primaryMagenta,
+    this.backgroundColor = AppTheme.darkBorder,
     this.duration = const Duration(milliseconds: 500),
     this.child,
   });
@@ -1033,8 +1033,8 @@ class ThemedSwitch extends StatelessWidget {
       onChanged: onChanged,
       activeThumbColor: SemanticColors.onAccent,
       activeTrackColor: accentColor,
-      inactiveThumbColor: Colors.grey.shade400,
-      inactiveTrackColor: Colors.grey.shade700,
+      inactiveThumbColor: SemanticColors.disabled,
+      inactiveTrackColor: SemanticColors.divider,
     );
   }
 }
@@ -1256,8 +1256,8 @@ class ShimmerEffect extends StatefulWidget {
   const ShimmerEffect({
     super.key,
     required this.child,
-    this.baseColor = const Color(0xFF29303D),
-    this.highlightColor = const Color(0xFF414A5A),
+    this.baseColor = AppTheme.darkSurface,
+    this.highlightColor = AppTheme.darkBorder,
     this.duration = const Duration(milliseconds: 1500),
   });
 

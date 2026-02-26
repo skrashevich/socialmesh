@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// lint-allow: haptic-feedback — onTap delegates to parent callback
 import 'package:flutter/material.dart';
 
 import '../theme.dart';
@@ -327,7 +328,7 @@ class StatusBanner extends StatelessWidget {
   Color _getColor(BuildContext context) {
     switch (type) {
       case StatusBannerType.info:
-        return Colors.blue;
+        return AccentColors.blue;
       case StatusBannerType.success:
         return AppTheme.successGreen;
       case StatusBannerType.warning:
@@ -337,7 +338,7 @@ class StatusBanner extends StatelessWidget {
       case StatusBannerType.accent:
         return context.accentColor;
       case StatusBannerType.custom:
-        return color ?? Colors.grey;
+        return color ?? SemanticColors.disabled;
     }
   }
 

@@ -120,6 +120,7 @@ class _WidgetApprovalScreenState extends ConsumerState<WidgetApprovalScreen>
           ),
           const SizedBox(height: AppTheme.spacing16),
           TextField(
+            onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
             maxLength: 500,
             controller: controller,
             maxLines: 3,
@@ -144,7 +145,7 @@ class _WidgetApprovalScreenState extends ConsumerState<WidgetApprovalScreen>
                   onPressed: () => Navigator.pop(context),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
-                    side: BorderSide(color: Colors.grey.shade700),
+                    side: BorderSide(color: SemanticColors.divider),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),

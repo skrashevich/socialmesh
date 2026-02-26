@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// lint-allow: keyboard-dismissal — text inputs are only in bottom sheet sub-widget
 import 'dart:io';
 import 'dart:async';
 

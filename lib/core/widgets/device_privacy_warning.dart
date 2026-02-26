@@ -94,7 +94,7 @@ class _DevicePrivacyWarningContent extends StatelessWidget {
                 width: 64,
                 height: 64,
                 decoration: BoxDecoration(
-                  color: Colors.blue.withAlpha(30),
+                  color: AccentColors.blue.withAlpha(30),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
@@ -102,7 +102,9 @@ class _DevicePrivacyWarningContent extends StatelessWidget {
                       ? Icons.location_on
                       : Icons.location_off_outlined,
                   size: 32,
-                  color: sharesLocation ? Colors.blue : Colors.grey,
+                  color: sharesLocation
+                      ? AccentColors.blue
+                      : SemanticColors.disabled,
                 ),
               ),
               const SizedBox(height: AppTheme.spacing16),
@@ -137,7 +139,11 @@ class _DevicePrivacyWarningContent extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.info_outline, size: 18, color: Colors.blue),
+                    Icon(
+                      Icons.info_outline,
+                      size: 18,
+                      color: AccentColors.blue,
+                    ),
                     const SizedBox(width: AppTheme.spacing8),
                     Text(
                       'What This Means',
@@ -186,12 +192,12 @@ class _DevicePrivacyWarningContent extends StatelessWidget {
             padding: const EdgeInsets.all(AppTheme.spacing12),
             decoration: BoxDecoration(
               color: sharesLocation
-                  ? Colors.blue.withAlpha(20)
+                  ? AccentColors.blue.withAlpha(20)
                   : theme.colorScheme.surfaceContainerHighest,
               borderRadius: BorderRadius.circular(AppTheme.radius12),
               border: Border.all(
                 color: sharesLocation
-                    ? Colors.blue.withAlpha(50)
+                    ? AccentColors.blue.withAlpha(50)
                     : Colors.transparent,
               ),
             ),
@@ -202,7 +208,9 @@ class _DevicePrivacyWarningContent extends StatelessWidget {
                       ? Icons.privacy_tip_outlined
                       : Icons.check_circle_outline,
                   size: 20,
-                  color: sharesLocation ? Colors.blue : Colors.green,
+                  color: sharesLocation
+                      ? AccentColors.blue
+                      : AppTheme.successGreen,
                 ),
                 const SizedBox(width: AppTheme.spacing12),
                 Expanded(
@@ -274,7 +282,7 @@ class _DevicePrivacyWarningContent extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, size: 16, color: Colors.blue.shade300),
+        Icon(icon, size: 16, color: AccentColors.blue),
         const SizedBox(width: AppTheme.spacing8),
         Expanded(
           child: Column(

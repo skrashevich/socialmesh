@@ -348,7 +348,7 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
                                 color: context.textSecondary,
                               ),
                               hintText: 'mqtt.meshtastic.org',
-                              hintStyle: TextStyle(color: Colors.grey.shade600),
+                              hintStyle: TextStyle(color: SemanticColors.muted),
                               filled: true,
                               fillColor: context.background,
                               border: OutlineInputBorder(
@@ -392,7 +392,7 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
                                 color: context.textSecondary,
                               ),
                               hintText: 'msh',
-                              hintStyle: TextStyle(color: Colors.grey.shade600),
+                              hintStyle: TextStyle(color: SemanticColors.muted),
                               filled: true,
                               fillColor: context.background,
                               border: OutlineInputBorder(
@@ -464,7 +464,7 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
                                 color: context.textSecondary,
                               ),
                               hintText: 'Optional',
-                              hintStyle: TextStyle(color: Colors.grey.shade600),
+                              hintStyle: TextStyle(color: SemanticColors.muted),
                               filled: true,
                               fillColor: context.background,
                               border: OutlineInputBorder(
@@ -509,7 +509,7 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
                                 color: context.textSecondary,
                               ),
                               hintText: 'Optional',
-                              hintStyle: TextStyle(color: Colors.grey.shade600),
+                              hintStyle: TextStyle(color: SemanticColors.muted),
                               filled: true,
                               fillColor: context.background,
                               border: OutlineInputBorder(

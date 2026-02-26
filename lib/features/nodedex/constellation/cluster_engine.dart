@@ -15,6 +15,7 @@ import 'dart:ui';
 
 import '../providers/nodedex_providers.dart';
 import '../services/sigil_generator.dart';
+import 'package:socialmesh/core/theme.dart';
 
 /// A cluster of nearby constellation nodes.
 ///
@@ -252,7 +253,7 @@ class ClusterEngine {
 
   /// Compute a blended average color from all nodes in a cluster.
   static Color _blendColors(List<ConstellationNode> nodes) {
-    if (nodes.isEmpty) return const Color(0xFF9CA3AF);
+    if (nodes.isEmpty) return AppTheme.textTertiary;
     if (nodes.length == 1) {
       final sigil =
           nodes.first.sigil ?? SigilGenerator.generate(nodes.first.nodeNum);

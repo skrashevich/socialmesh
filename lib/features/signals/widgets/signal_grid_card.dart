@@ -403,11 +403,11 @@ class SignalGridCard extends ConsumerWidget {
 
   Widget _buildPlaceholder(BuildContext? context) {
     return Container(
-      color: context?.card ?? Colors.grey[900],
+      color: context?.card ?? SemanticColors.placeholder,
       child: Icon(
         Icons.sensors,
         size: 32,
-        color: context?.textTertiary ?? Colors.grey,
+        color: context?.textTertiary ?? SemanticColors.disabled,
       ),
     );
   }

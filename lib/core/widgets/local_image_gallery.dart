@@ -87,7 +87,10 @@ class _LocalImageGalleryState extends State<LocalImageGallery> {
             },
             itemBuilder: (context, index) {
               return GestureDetector(
-                onTap: () => Navigator.of(context).pop(),
+                onTap: () {
+                  HapticFeedback.lightImpact();
+                  Navigator.of(context).pop();
+                },
                 child: InteractiveViewer(
                   minScale: 0.5,
                   maxScale: 4.0,

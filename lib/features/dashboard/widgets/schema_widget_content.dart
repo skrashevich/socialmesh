@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/logging.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
@@ -104,7 +105,10 @@ class _SchemaWidgetContentState extends ConsumerState<SchemaWidgetContent>
     // Add tap-to-navigate for GPS widgets (detect by tags or name)
     if (_isGpsWidget(_schema!)) {
       content = GestureDetector(
-        onTap: () => _navigateToMap(context, myNodeNum),
+        onTap: () {
+          HapticFeedback.lightImpact();
+          _navigateToMap(context, myNodeNum);
+        },
         child: content,
       );
     }

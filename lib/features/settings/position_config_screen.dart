@@ -546,7 +546,7 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                                 ),
                                 hintText: 'e.g., 37.7749',
                                 hintStyle: TextStyle(
-                                  color: Colors.grey.shade600,
+                                  color: SemanticColors.muted,
                                 ),
                                 filled: true,
                                 fillColor: context.background,
@@ -594,7 +594,7 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                                 ),
                                 hintText: 'e.g., -122.4194',
                                 hintStyle: TextStyle(
-                                  color: Colors.grey.shade600,
+                                  color: SemanticColors.muted,
                                 ),
                                 filled: true,
                                 fillColor: context.background,
@@ -641,7 +641,7 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                                 ),
                                 hintText: 'e.g., 100',
                                 hintStyle: TextStyle(
-                                  color: Colors.grey.shade600,
+                                  color: SemanticColors.muted,
                                 ),
                                 filled: true,
                                 fillColor: context.background,

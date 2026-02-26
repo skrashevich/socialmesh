@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// lint-allow: haptic-feedback — onTap delegates to parent callback
 import 'package:socialmesh/core/theme.dart';
 import 'dart:math' as math;
 

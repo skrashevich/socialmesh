@@ -46,6 +46,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme.dart';
@@ -170,6 +171,7 @@ List<Widget> buildAlbumSlivers({
                     entry: entry,
                     animate: animate,
                     onTap: () {
+                      HapticFeedback.lightImpact();
                       onCardTap?.call(entry, flatIndex);
                     },
                     onLongPress: () {

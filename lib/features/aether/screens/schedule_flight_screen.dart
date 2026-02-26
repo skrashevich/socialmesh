@@ -1852,22 +1852,22 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
 
     switch (result.status) {
       case FlightValidationStatus.active:
-        color = Colors.green;
+        color = AppTheme.successGreen;
         icon = Icons.flight_takeoff;
       case FlightValidationStatus.verified:
-        color = Colors.green;
+        color = AppTheme.successGreen;
         icon = Icons.verified;
       case FlightValidationStatus.pending:
-        color = Colors.blue;
+        color = AccentColors.blue;
         icon = Icons.schedule;
       case FlightValidationStatus.notFound:
-        color = Colors.orange;
+        color = AccentColors.orange;
         icon = Icons.help_outline;
       case FlightValidationStatus.rateLimited:
-        color = Colors.red;
+        color = AppTheme.errorRed;
         icon = Icons.timer_off;
       case FlightValidationStatus.error:
-        color = Colors.red;
+        color = AppTheme.errorRed;
         icon = Icons.error_outline;
     }
 
@@ -2302,7 +2302,9 @@ class _LiveFlightStickyHeaderState extends State<_LiveFlightStickyHeader>
                             vertical: 2,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.green.withValues(alpha: 0.15),
+                            color: AppTheme.successGreen.withValues(
+                              alpha: 0.15,
+                            ),
                             borderRadius: BorderRadius.circular(
                               AppTheme.radius6,
                             ),
@@ -2310,7 +2312,7 @@ class _LiveFlightStickyHeaderState extends State<_LiveFlightStickyHeader>
                           child: Text(
                             pos.onGround ? 'On Ground' : 'In Flight',
                             style: const TextStyle(
-                              color: Colors.green,
+                              color: AppTheme.successGreen,
                               fontSize: 10,
                               fontWeight: FontWeight.w600,
                             ),

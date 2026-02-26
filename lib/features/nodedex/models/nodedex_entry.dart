@@ -11,6 +11,7 @@
 
 import 'dart:convert';
 import 'dart:ui';
+import 'package:socialmesh/core/theme.dart';
 
 /// Social classification a user can assign to a node.
 ///
@@ -112,15 +113,15 @@ enum NodeTrait {
   /// Accent color associated with this trait for UI rendering.
   Color get color {
     return switch (this) {
-      NodeTrait.wanderer => const Color(0xFF0EA5E9),
-      NodeTrait.beacon => const Color(0xFFFBBF24),
-      NodeTrait.ghost => const Color(0xFF8B5CF6),
-      NodeTrait.sentinel => const Color(0xFF10B981),
-      NodeTrait.relay => const Color(0xFFF97316),
-      NodeTrait.courier => const Color(0xFF06B6D4),
-      NodeTrait.anchor => const Color(0xFF6366F1),
-      NodeTrait.drifter => const Color(0xFFEC4899),
-      NodeTrait.unknown => const Color(0xFF9CA3AF),
+      NodeTrait.wanderer => AccentColors.sky,
+      NodeTrait.beacon => AppTheme.warningYellow,
+      NodeTrait.ghost => AppTheme.primaryPurple,
+      NodeTrait.sentinel => AccentColors.emerald,
+      NodeTrait.relay => AccentColors.orange,
+      NodeTrait.courier => AccentColors.cyan,
+      NodeTrait.anchor => AccentColors.indigo,
+      NodeTrait.drifter => AccentColors.pink,
+      NodeTrait.unknown => AppTheme.textTertiary,
     };
   }
 }

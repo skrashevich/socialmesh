@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/logging.dart';
@@ -281,6 +282,7 @@ class _AmbientLightingConfigScreenState
                   final isSelected = _currentColor == color;
                   return GestureDetector(
                     onTap: () {
+                      HapticFeedback.lightImpact();
                       setState(() {
                         _currentColor = color;
                         _red = (color >> 16) & 0xFF;
@@ -320,7 +322,7 @@ class _AmbientLightingConfigScreenState
               _ColorSlider(
                 label: 'Red',
                 value: _red,
-                color: Colors.red,
+                color: AppTheme.errorRed,
                 onChanged: (value) {
                   setState(() {
                     _red = value;
@@ -332,7 +334,7 @@ class _AmbientLightingConfigScreenState
               _ColorSlider(
                 label: 'Green',
                 value: _green,
-                color: Colors.green,
+                color: AppTheme.successGreen,
                 onChanged: (value) {
                   setState(() {
                     _green = value;
@@ -344,7 +346,7 @@ class _AmbientLightingConfigScreenState
               _ColorSlider(
                 label: 'Blue',
                 value: _blue,
-                color: Colors.blue,
+                color: AccentColors.blue,
                 onChanged: (value) {
                   setState(() {
                     _blue = value;

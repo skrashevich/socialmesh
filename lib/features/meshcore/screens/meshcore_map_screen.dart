@@ -209,7 +209,7 @@ class _MeshCoreMapScreenState extends ConsumerState<MeshCoreMapScreen> {
                             height: 40,
                             child: Icon(
                               Icons.location_on_outlined,
-                              color: Colors.red[600],
+                              color: AppTheme.errorRed,
                               size: 34,
                             ),
                           ),
@@ -340,15 +340,15 @@ class _MeshCoreMapScreenState extends ConsumerState<MeshCoreMapScreen> {
   Color _getContactColor(int type) {
     switch (type) {
       case 1: // Chat
-        return Colors.blue;
+        return AccentColors.blue;
       case 2: // Repeater
-        return Colors.green;
+        return AppTheme.successGreen;
       case 3: // Room
-        return Colors.purple;
+        return AccentColors.purple;
       case 4: // Sensor
-        return Colors.orange;
+        return AccentColors.orange;
       default:
-        return Colors.grey;
+        return SemanticColors.disabled;
     }
   }
 
@@ -399,14 +399,14 @@ class _MeshCoreMapScreenState extends ConsumerState<MeshCoreMapScreen> {
                 ),
               ),
               const SizedBox(height: AppTheme.spacing8),
-              _buildLegendItem(Icons.person, 'Chat', Colors.blue),
+              _buildLegendItem(Icons.person, 'Chat', AccentColors.blue),
               _buildLegendItem(
                 Icons.cell_tower_rounded,
                 'Repeater',
-                Colors.green,
+                AppTheme.successGreen,
               ),
-              _buildLegendItem(Icons.meeting_room, 'Room', Colors.purple),
-              _buildLegendItem(Icons.sensors, 'Sensor', Colors.orange),
+              _buildLegendItem(Icons.meeting_room, 'Room', AccentColors.purple),
+              _buildLegendItem(Icons.sensors, 'Sensor', AccentColors.orange),
             ],
           ),
         ),
@@ -607,7 +607,7 @@ class _MeshCoreMapScreenState extends ConsumerState<MeshCoreMapScreen> {
                 setSheetState,
                 'Chat Nodes',
                 Icons.person,
-                Colors.blue,
+                AccentColors.blue,
                 _showChatNodes,
                 (value) {
                   setSheetState(() => _showChatNodes = value);
@@ -619,7 +619,7 @@ class _MeshCoreMapScreenState extends ConsumerState<MeshCoreMapScreen> {
                 setSheetState,
                 'Repeaters',
                 Icons.cell_tower_rounded,
-                Colors.green,
+                AppTheme.successGreen,
                 _showRepeaters,
                 (value) {
                   setSheetState(() => _showRepeaters = value);
@@ -631,7 +631,7 @@ class _MeshCoreMapScreenState extends ConsumerState<MeshCoreMapScreen> {
                 setSheetState,
                 'Other Nodes',
                 Icons.device_unknown,
-                Colors.grey,
+                SemanticColors.disabled,
                 _showOtherNodes,
                 (value) {
                   setSheetState(() => _showOtherNodes = value);

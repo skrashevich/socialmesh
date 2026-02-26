@@ -396,10 +396,10 @@ class _StrikeWarningDialogState extends ConsumerState<StrikeWarningDialog>
               : Icons.error_outline,
           size: 48,
           color: isSuspension
-              ? Colors.red
+              ? AppTheme.errorRed
               : isWarning
-              ? Colors.orange
-              : Colors.red.shade700,
+              ? AccentColors.orange
+              : AppTheme.errorRed,
         ),
         const SizedBox(height: AppTheme.spacing16),
         Text(
@@ -561,10 +561,10 @@ class ContentBlockedSheet extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(AppTheme.spacing16),
             decoration: BoxDecoration(
-              color: Colors.red.withValues(alpha: 0.1),
+              color: AppTheme.errorRed.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
-            child: const Icon(Icons.block, size: 40, color: Colors.red),
+            child: const Icon(Icons.block, size: 40, color: AppTheme.errorRed),
           ),
           const SizedBox(height: AppTheme.spacing16),
           Text(
@@ -622,16 +622,16 @@ class ModerationStatusBanner extends ConsumerWidget {
         IconData icon;
 
         if (status.isPermanentlyBanned) {
-          bannerColor = Colors.red;
+          bannerColor = AppTheme.errorRed;
           icon = Icons.block;
         } else if (status.isSuspended) {
-          bannerColor = Colors.red.shade700;
+          bannerColor = AppTheme.errorRed;
           icon = Icons.pause_circle_outline;
         } else if (status.activeStrikes > 0) {
-          bannerColor = Colors.orange.shade700;
+          bannerColor = AccentColors.orange;
           icon = Icons.warning_amber_rounded;
         } else {
-          bannerColor = Colors.amber.shade700;
+          bannerColor = AppTheme.warningYellow;
           icon = Icons.info_outline;
         }
 
@@ -810,7 +810,7 @@ class _StatusRow extends StatelessWidget {
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w600,
-              color: isWarning ? Colors.red : context.textPrimary,
+              color: isWarning ? AppTheme.errorRed : context.textPrimary,
             ),
           ),
         ],

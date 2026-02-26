@@ -893,7 +893,7 @@ class _OwnerStoryFooter extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(Icons.favorite, color: Colors.redAccent, size: 18),
+                const Icon(Icons.favorite, color: AppTheme.errorRed, size: 18),
                 const SizedBox(width: AppTheme.spacing8),
                 Text(
                   '${story.likeCount}',
@@ -937,12 +937,12 @@ class _ViewerStoryFooter extends ConsumerWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
             decoration: BoxDecoration(
               color: isLiked
-                  ? Colors.redAccent.withValues(alpha: 0.3)
+                  ? AppTheme.errorRed.withValues(alpha: 0.3)
                   : Colors.black38,
               borderRadius: BorderRadius.circular(AppTheme.radius28),
               border: isLiked
                   ? Border.all(
-                      color: Colors.redAccent.withValues(alpha: 0.5),
+                      color: AppTheme.errorRed.withValues(alpha: 0.5),
                       width: 1,
                     )
                   : null,
@@ -957,7 +957,7 @@ class _ViewerStoryFooter extends ConsumerWidget {
                   child: Icon(
                     isLiked ? Icons.favorite : Icons.favorite_border,
                     key: ValueKey(isLiked),
-                    color: isLiked ? Colors.redAccent : Colors.white,
+                    color: isLiked ? AppTheme.errorRed : Colors.white,
                     size: 22,
                   ),
                 ),
@@ -965,7 +965,7 @@ class _ViewerStoryFooter extends ConsumerWidget {
                 Text(
                   isLiked ? 'Liked' : 'Like',
                   style: TextStyle(
-                    color: isLiked ? Colors.redAccent : Colors.white,
+                    color: isLiked ? AppTheme.errorRed : Colors.white,
                     fontWeight: FontWeight.w600,
                     fontSize: 15,
                   ),

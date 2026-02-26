@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// lint-allow: haptic-feedback — onTap delegates to parent callback
 import 'package:flutter/material.dart';
 
 import '../../../core/theme.dart';
@@ -61,7 +62,7 @@ class AutomationCard extends StatelessWidget {
                     trigger.type.icon,
                     color: isEnabled
                         ? Theme.of(context).colorScheme.primary
-                        : Colors.grey,
+                        : SemanticColors.disabled,
                     size: 22,
                   ),
                 ),
@@ -77,16 +78,15 @@ class AutomationCard extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleMedium
                             ?.copyWith(
                               fontWeight: FontWeight.w600,
-                              color: isEnabled ? null : Colors.grey,
+                              color: isEnabled ? null : SemanticColors.disabled,
                             ),
                       ),
                       if (automation.description != null) ...[
                         const SizedBox(height: AppTheme.spacing2),
                         Text(
                           automation.description!,
-                          style: Theme.of(
-                            context,
-                          ).textTheme.bodySmall?.copyWith(color: Colors.grey),
+                          style: Theme.of(context).textTheme.bodySmall
+                              ?.copyWith(color: SemanticColors.disabled),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -113,14 +113,18 @@ class AutomationCard extends StatelessWidget {
                     context,
                     icon: Icons.bolt,
                     label: trigger.type.displayName,
-                    color: Colors.amber,
+                    color: AppTheme.warningYellow,
                   ),
                 ),
 
                 const SizedBox(width: AppTheme.spacing8),
 
                 // Arrow
-                const Icon(Icons.arrow_forward, size: 16, color: Colors.grey),
+                const Icon(
+                  Icons.arrow_forward,
+                  size: 16,
+                  color: SemanticColors.disabled,
+                ),
 
                 const SizedBox(width: AppTheme.spacing8),
 
@@ -142,21 +146,29 @@ class AutomationCard extends StatelessWidget {
             Row(
               children: [
                 if (automation.triggerCount > 0) ...[
-                  Icon(Icons.trending_up, size: 14, color: Colors.grey[600]),
+                  Icon(
+                    Icons.trending_up,
+                    size: 14,
+                    color: SemanticColors.muted,
+                  ),
                   const SizedBox(width: AppTheme.spacing4),
                   Text(
                     '${automation.triggerCount} runs',
-                    style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                    style: TextStyle(color: SemanticColors.muted, fontSize: 12),
                   ),
                 ],
                 if (automation.lastTriggered != null) ...[
                   if (automation.triggerCount > 0)
                     const SizedBox(width: AppTheme.spacing16),
-                  Icon(Icons.access_time, size: 14, color: Colors.grey[600]),
+                  Icon(
+                    Icons.access_time,
+                    size: 14,
+                    color: SemanticColors.muted,
+                  ),
                   const SizedBox(width: AppTheme.spacing4),
                   Text(
                     _formatLastTriggered(automation.lastTriggered!),
-                    style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                    style: TextStyle(color: SemanticColors.muted, fontSize: 12),
                   ),
                 ],
                 const Spacer(),

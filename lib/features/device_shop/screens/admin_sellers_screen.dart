@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// lint-allow: keyboard-dismissal — edit screen uses GestureDetector for unfocus below
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -175,7 +176,7 @@ class _SellerListItem extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 12),
       color: seller.isActive
           ? Colors.white.withValues(alpha: 0.05)
-          : Colors.red.withValues(alpha: 0.1),
+          : AppTheme.errorRed.withValues(alpha: 0.1),
       child: InkWell(
         onTap: onEdit,
         borderRadius: BorderRadius.circular(AppTheme.radius12),
@@ -220,11 +221,11 @@ class _SellerListItem extends StatelessWidget {
                       runSpacing: 4,
                       children: [
                         if (!seller.isActive)
-                          _buildBadge('INACTIVE', Colors.red),
+                          _buildBadge('INACTIVE', AppTheme.errorRed),
                         if (seller.isOfficialPartner)
-                          _buildBadge('PARTNER', Colors.green),
+                          _buildBadge('PARTNER', AppTheme.successGreen),
                         if (seller.isVerified)
-                          _buildBadge('VERIFIED', Colors.blue),
+                          _buildBadge('VERIFIED', AccentColors.blue),
                       ],
                     ),
                     const SizedBox(height: AppTheme.spacing4),
@@ -316,10 +317,10 @@ class _SellerListItem extends StatelessWidget {
       width: 56,
       height: 56,
       decoration: BoxDecoration(
-        color: Colors.grey.withValues(alpha: 0.3),
+        color: SemanticColors.disabled.withValues(alpha: 0.3),
         borderRadius: BorderRadius.circular(AppTheme.radius8),
       ),
-      child: const Icon(Icons.store, color: Colors.grey),
+      child: const Icon(Icons.store, color: SemanticColors.disabled),
     );
   }
 
@@ -433,217 +434,223 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
 
   @override
   Widget build(BuildContext context) {
-    return GlassScaffold(
-      title: _isEditing ? 'Edit Seller' : 'Add Seller',
-      actions: [
-        if (_isEditing)
-          IconButton(
-            icon: const Icon(Icons.delete, color: Colors.red),
-            onPressed: _confirmDelete,
-            tooltip: 'Delete Seller',
-          ),
-      ],
-      slivers: [
-        SliverToBoxAdapter(
-          child: Form(
-            key: _formKey,
-            child: Padding(
-              padding: const EdgeInsets.all(AppTheme.spacing16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Logo Section
-                  _buildSectionTitle('Seller Logo'),
-                  _buildLogoSection(),
-                  const SizedBox(height: AppTheme.spacing24),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: GlassScaffold(
+        title: _isEditing ? 'Edit Seller' : 'Add Seller',
+        actions: [
+          if (_isEditing)
+            IconButton(
+              icon: const Icon(Icons.delete, color: AppTheme.errorRed),
+              onPressed: _confirmDelete,
+              tooltip: 'Delete Seller',
+            ),
+        ],
+        slivers: [
+          SliverToBoxAdapter(
+            child: Form(
+              key: _formKey,
+              child: Padding(
+                padding: const EdgeInsets.all(AppTheme.spacing16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Logo Section
+                    _buildSectionTitle('Seller Logo'),
+                    _buildLogoSection(),
+                    const SizedBox(height: AppTheme.spacing24),
 
-                  // Basic Info
-                  _buildSectionTitle('Basic Information'),
-                  TextFormField(
-                    maxLength: 100,
-                    controller: _nameController,
-                    decoration: const InputDecoration(
-                      labelText: 'Seller Name *',
-                      hintText: 'e.g., LilyGO, RAK Wireless',
-                      counterText: '',
+                    // Basic Info
+                    _buildSectionTitle('Basic Information'),
+                    TextFormField(
+                      maxLength: 100,
+                      controller: _nameController,
+                      decoration: const InputDecoration(
+                        labelText: 'Seller Name *',
+                        hintText: 'e.g., LilyGO, RAK Wireless',
+                        counterText: '',
+                      ),
+                      validator: (v) => v?.isEmpty == true ? 'Required' : null,
                     ),
-                    validator: (v) => v?.isEmpty == true ? 'Required' : null,
-                  ),
-                  const SizedBox(height: AppTheme.spacing16),
+                    const SizedBox(height: AppTheme.spacing16),
 
-                  TextFormField(
-                    maxLength: 500,
-                    controller: _descriptionController,
-                    decoration: const InputDecoration(
-                      labelText: 'Description',
-                      hintText: 'Brief description of the seller',
-                      counterText: '',
+                    TextFormField(
+                      maxLength: 500,
+                      controller: _descriptionController,
+                      decoration: const InputDecoration(
+                        labelText: 'Description',
+                        hintText: 'Brief description of the seller',
+                        counterText: '',
+                      ),
+                      maxLines: 3,
                     ),
-                    maxLines: 3,
-                  ),
-                  const SizedBox(height: AppTheme.spacing24),
+                    const SizedBox(height: AppTheme.spacing24),
 
-                  // Contact Info
-                  _buildSectionTitle('Contact Information'),
-                  TextFormField(
-                    maxLength: 100,
-                    controller: _websiteUrlController,
-                    decoration: const InputDecoration(
-                      labelText: 'Website URL *',
-                      hintText: 'https://...',
-                      prefixIcon: Icon(Icons.link),
-                      counterText: '',
+                    // Contact Info
+                    _buildSectionTitle('Contact Information'),
+                    TextFormField(
+                      maxLength: 100,
+                      controller: _websiteUrlController,
+                      decoration: const InputDecoration(
+                        labelText: 'Website URL *',
+                        hintText: 'https://...',
+                        prefixIcon: Icon(Icons.link),
+                        counterText: '',
+                      ),
+                      keyboardType: TextInputType.url,
+                      validator: (v) => v?.isEmpty == true ? 'Required' : null,
                     ),
-                    keyboardType: TextInputType.url,
-                    validator: (v) => v?.isEmpty == true ? 'Required' : null,
-                  ),
-                  const SizedBox(height: AppTheme.spacing16),
+                    const SizedBox(height: AppTheme.spacing16),
 
-                  TextFormField(
-                    maxLength: 100,
-                    controller: _contactEmailController,
-                    decoration: const InputDecoration(
-                      labelText: 'Contact Email',
-                      hintText: 'support@example.com',
-                      prefixIcon: Icon(Icons.email),
-                      counterText: '',
+                    TextFormField(
+                      maxLength: 100,
+                      controller: _contactEmailController,
+                      decoration: const InputDecoration(
+                        labelText: 'Contact Email',
+                        hintText: 'support@example.com',
+                        prefixIcon: Icon(Icons.email),
+                        counterText: '',
+                      ),
+                      keyboardType: TextInputType.emailAddress,
                     ),
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                  const SizedBox(height: AppTheme.spacing24),
+                    const SizedBox(height: AppTheme.spacing24),
 
-                  // Shipping Countries
-                  _buildSectionTitle('Shipping Countries'),
-                  TextFormField(
-                    maxLength: 100,
-                    controller: _countriesController,
-                    decoration: const InputDecoration(
-                      labelText: 'Countries',
-                      hintText: 'US, CA, UK, DE (comma separated)',
-                      counterText: '',
-                    ),
-                  ),
-                  const SizedBox(height: AppTheme.spacing24),
-
-                  // Discount Code Section
-                  _buildSectionTitle('Partner Discount Code'),
-                  _buildDiscountCodeSection(),
-                  const SizedBox(height: AppTheme.spacing24),
-
-                  // Status Toggles
-                  _buildSectionTitle('Status & Verification'),
-                  ListTile(
-                    title: const Text('Verified'),
-                    subtitle: const Text('Seller identity has been verified'),
-                    trailing: ThemedSwitch(
-                      value: _isVerified,
-                      onChanged: (v) => setState(() => _isVerified = v),
-                    ),
-                  ),
-                  ListTile(
-                    title: const Text('Official Partner'),
-                    subtitle: const Text(
-                      'Display as official Meshtastic partner',
-                    ),
-                    trailing: ThemedSwitch(
-                      value: _isOfficialPartner,
-                      onChanged: (v) => setState(() => _isOfficialPartner = v),
-                    ),
-                  ),
-                  ListTile(
-                    title: const Text('Active'),
-                    subtitle: const Text('Seller is visible in the shop'),
-                    trailing: ThemedSwitch(
-                      value: _isActive,
-                      onChanged: (v) => setState(() => _isActive = v),
-                    ),
-                  ),
-
-                  const SizedBox(height: AppTheme.spacing32),
-
-                  // Save Button
-                  ConstrainedBox(
-                    constraints: const BoxConstraints(minHeight: 50),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: _isLoading ? null : _save,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: context.accentColor,
-                          foregroundColor: Colors.white,
-                        ),
-                        child: _isLoading
-                            ? const SizedBox(
-                                width: 24,
-                                height: 24,
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                  strokeWidth: 2,
-                                ),
-                              )
-                            : Text(
-                                _isEditing ? 'Save Changes' : 'Create Seller',
-                              ),
+                    // Shipping Countries
+                    _buildSectionTitle('Shipping Countries'),
+                    TextFormField(
+                      maxLength: 100,
+                      controller: _countriesController,
+                      decoration: const InputDecoration(
+                        labelText: 'Countries',
+                        hintText: 'US, CA, UK, DE (comma separated)',
+                        counterText: '',
                       ),
                     ),
-                  ),
-
-                  // Delete Section for existing sellers
-                  if (_isEditing) ...[
                     const SizedBox(height: AppTheme.spacing24),
-                    const Divider(),
-                    const SizedBox(height: AppTheme.spacing16),
-                    _buildSectionTitle('Danger Zone'),
-                    Card(
-                      color: Colors.red.withValues(alpha: 0.1),
-                      child: Padding(
-                        padding: const EdgeInsets.all(AppTheme.spacing16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Row(
-                              children: [
-                                Icon(Icons.warning, color: Colors.red),
-                                SizedBox(width: AppTheme.spacing8),
-                                Text(
-                                  'Delete Seller',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.red,
+
+                    // Discount Code Section
+                    _buildSectionTitle('Partner Discount Code'),
+                    _buildDiscountCodeSection(),
+                    const SizedBox(height: AppTheme.spacing24),
+
+                    // Status Toggles
+                    _buildSectionTitle('Status & Verification'),
+                    ListTile(
+                      title: const Text('Verified'),
+                      subtitle: const Text('Seller identity has been verified'),
+                      trailing: ThemedSwitch(
+                        value: _isVerified,
+                        onChanged: (v) => setState(() => _isVerified = v),
+                      ),
+                    ),
+                    ListTile(
+                      title: const Text('Official Partner'),
+                      subtitle: const Text(
+                        'Display as official Meshtastic partner',
+                      ),
+                      trailing: ThemedSwitch(
+                        value: _isOfficialPartner,
+                        onChanged: (v) =>
+                            setState(() => _isOfficialPartner = v),
+                      ),
+                    ),
+                    ListTile(
+                      title: const Text('Active'),
+                      subtitle: const Text('Seller is visible in the shop'),
+                      trailing: ThemedSwitch(
+                        value: _isActive,
+                        onChanged: (v) => setState(() => _isActive = v),
+                      ),
+                    ),
+
+                    const SizedBox(height: AppTheme.spacing32),
+
+                    // Save Button
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(minHeight: 50),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: _isLoading ? null : _save,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: context.accentColor,
+                            foregroundColor: Colors.white,
+                          ),
+                          child: _isLoading
+                              ? const SizedBox(
+                                  width: 24,
+                                  height: 24,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 2,
+                                  ),
+                                )
+                              : Text(
+                                  _isEditing ? 'Save Changes' : 'Create Seller',
+                                ),
+                        ),
+                      ),
+                    ),
+
+                    // Delete Section for existing sellers
+                    if (_isEditing) ...[
+                      const SizedBox(height: AppTheme.spacing24),
+                      const Divider(),
+                      const SizedBox(height: AppTheme.spacing16),
+                      _buildSectionTitle('Danger Zone'),
+                      Card(
+                        color: AppTheme.errorRed.withValues(alpha: 0.1),
+                        child: Padding(
+                          padding: const EdgeInsets.all(AppTheme.spacing16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Row(
+                                children: [
+                                  Icon(Icons.warning, color: AppTheme.errorRed),
+                                  SizedBox(width: AppTheme.spacing8),
+                                  Text(
+                                    'Delete Seller',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: AppTheme.errorRed,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: AppTheme.spacing8),
+                              Text(
+                                'Permanently delete this seller and deactivate all their products. '
+                                'This action cannot be undone.',
+                                style: TextStyle(
+                                  color: context.textSecondary,
+                                  fontSize: 13,
+                                ),
+                              ),
+                              const SizedBox(height: AppTheme.spacing16),
+                              OutlinedButton(
+                                onPressed: _confirmDelete,
+                                style: OutlinedButton.styleFrom(
+                                  foregroundColor: AppTheme.errorRed,
+                                  side: const BorderSide(
+                                    color: AppTheme.errorRed,
                                   ),
                                 ),
-                              ],
-                            ),
-                            const SizedBox(height: AppTheme.spacing8),
-                            Text(
-                              'Permanently delete this seller and deactivate all their products. '
-                              'This action cannot be undone.',
-                              style: TextStyle(
-                                color: context.textSecondary,
-                                fontSize: 13,
+                                child: const Text('Delete Seller Permanently'),
                               ),
-                            ),
-                            const SizedBox(height: AppTheme.spacing16),
-                            OutlinedButton(
-                              onPressed: _confirmDelete,
-                              style: OutlinedButton.styleFrom(
-                                foregroundColor: Colors.red,
-                                side: const BorderSide(color: Colors.red),
-                              ),
-                              child: const Text('Delete Seller Permanently'),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
+                    ],
+                    const SizedBox(height: AppTheme.spacing32),
                   ],
-                  const SizedBox(height: AppTheme.spacing32),
-                ],
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -670,8 +677,8 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
     return Card(
       color: hasDiscount
           ? (isExpired
-                ? Colors.orange.withValues(alpha: 0.1)
-                : Colors.green.withValues(alpha: 0.1))
+                ? AccentColors.orange.withValues(alpha: 0.1)
+                : AppTheme.successGreen.withValues(alpha: 0.1))
           : Colors.white.withValues(alpha: 0.05),
       child: Padding(
         padding: const EdgeInsets.all(AppTheme.spacing16),
@@ -683,17 +690,20 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
                 margin: const EdgeInsets.only(bottom: 12),
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: Colors.orange.withValues(alpha: 0.2),
+                  color: AccentColors.orange.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(AppTheme.radius4),
                 ),
                 child: const Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.warning, color: Colors.orange, size: 16),
+                    Icon(Icons.warning, color: AccentColors.orange, size: 16),
                     SizedBox(width: AppTheme.spacing4),
                     Text(
                       'Discount code has expired',
-                      style: TextStyle(color: Colors.orange, fontSize: 12),
+                      style: TextStyle(
+                        color: AccentColors.orange,
+                        fontSize: 12,
+                      ),
                     ),
                   ],
                 ),
@@ -769,7 +779,7 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
                 onPressed: _clearDiscountCode,
                 icon: const Icon(Icons.clear, size: 18),
                 label: const Text('Clear Discount Code'),
-                style: TextButton.styleFrom(foregroundColor: Colors.red),
+                style: TextButton.styleFrom(foregroundColor: AppTheme.errorRed),
               ),
             ],
           ],
@@ -840,7 +850,7 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
                 onPressed: () => setState(() => _logoUrl = null),
                 child: const Text(
                   'Remove',
-                  style: TextStyle(color: Colors.red),
+                  style: TextStyle(color: AppTheme.errorRed),
                 ),
               ),
           ],
@@ -854,10 +864,10 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
       width: 80,
       height: 80,
       decoration: BoxDecoration(
-        color: Colors.grey.withValues(alpha: 0.3),
+        color: SemanticColors.disabled.withValues(alpha: 0.3),
         borderRadius: BorderRadius.circular(AppTheme.radius12),
       ),
-      child: const Icon(Icons.store, color: Colors.grey, size: 32),
+      child: const Icon(Icons.store, color: SemanticColors.disabled, size: 32),
     );
   }
 
@@ -998,17 +1008,17 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
             Container(
               padding: const EdgeInsets.all(AppTheme.spacing12),
               decoration: BoxDecoration(
-                color: Colors.orange.withValues(alpha: 0.1),
+                color: AccentColors.orange.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(AppTheme.radius8),
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.warning, color: Colors.orange),
+                  const Icon(Icons.warning, color: AccentColors.orange),
                   const SizedBox(width: AppTheme.spacing8),
                   Expanded(
                     child: Text(
                       '$productCount product(s) will be deactivated.',
-                      style: const TextStyle(color: Colors.orange),
+                      style: const TextStyle(color: AccentColors.orange),
                     ),
                   ),
                 ],
@@ -1028,7 +1038,7 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
                   onPressed: () => Navigator.pop(context, false),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
-                    side: BorderSide(color: Colors.grey.shade700),
+                    side: BorderSide(color: SemanticColors.divider),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),

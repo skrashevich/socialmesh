@@ -137,17 +137,17 @@ class _FeaturedProductsScreenState extends ConsumerState<FeaturedProductsScreen>
             child: Padding(
               padding: const EdgeInsets.all(AppTheme.spacing16),
               child: Card(
-                color: Colors.amber.withValues(alpha: 0.1),
+                color: AppTheme.warningYellow.withValues(alpha: 0.1),
                 child: Padding(
                   padding: const EdgeInsets.all(AppTheme.spacing12),
                   child: Row(
                     children: [
-                      const Icon(Icons.warning, color: Colors.amber),
+                      const Icon(Icons.warning, color: AppTheme.warningYellow),
                       const SizedBox(width: AppTheme.spacing8),
                       const Expanded(
                         child: Text(
                           'You have unsaved changes',
-                          style: TextStyle(color: Colors.amber),
+                          style: TextStyle(color: AppTheme.warningYellow),
                         ),
                       ),
                       TextButton(
@@ -349,7 +349,7 @@ class _FeaturedProductItem extends StatelessWidget {
             // Remove button
             IconButton(
               icon: const Icon(Icons.remove_circle_outline),
-              color: Colors.red.withValues(alpha: 0.7),
+              color: AppTheme.errorRed.withValues(alpha: 0.7),
               onPressed: onRemove,
               tooltip: 'Remove from featured',
             ),
@@ -366,8 +366,8 @@ class _FeaturedProductItem extends StatelessWidget {
     return Container(
       width: 50,
       height: 50,
-      color: Colors.grey.withValues(alpha: 0.3),
-      child: const Icon(Icons.image, color: Colors.grey),
+      color: SemanticColors.disabled.withValues(alpha: 0.3),
+      child: const Icon(Icons.image, color: SemanticColors.disabled),
     );
   }
 }

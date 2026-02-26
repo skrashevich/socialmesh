@@ -177,11 +177,11 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen>
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppTheme.radius12),
-        borderSide: const BorderSide(color: Colors.red),
+        borderSide: const BorderSide(color: AppTheme.errorRed),
       ),
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppTheme.radius12),
-        borderSide: const BorderSide(color: Colors.red),
+        borderSide: const BorderSide(color: AppTheme.errorRed),
       ),
       counterText: '',
     );
@@ -244,7 +244,7 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen>
     if (_locationLat != null && _locationLon != null) {
       return Row(
         children: [
-          Icon(Icons.location_on, size: 16, color: Colors.green),
+          Icon(Icons.location_on, size: 16, color: AppTheme.successGreen),
           const SizedBox(width: AppTheme.spacing6),
           Text(
             '${_locationLat!.toStringAsFixed(5)}, '
@@ -440,10 +440,10 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen>
 
   static Color _priorityColor(IncidentPriority priority) {
     return switch (priority) {
-      IncidentPriority.routine => Colors.teal,
-      IncidentPriority.priority => Colors.amber.shade700,
-      IncidentPriority.immediate => Colors.deepOrange,
-      IncidentPriority.flash => Colors.red.shade800,
+      IncidentPriority.routine => AccentColors.teal,
+      IncidentPriority.priority => AppTheme.warningYellow,
+      IncidentPriority.immediate => AccentColors.coral,
+      IncidentPriority.flash => AppTheme.errorRed,
     };
   }
 

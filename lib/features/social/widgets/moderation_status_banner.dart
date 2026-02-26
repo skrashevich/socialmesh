@@ -36,15 +36,15 @@ class ModerationStatusBanner extends ConsumerWidget {
         String message;
 
         if (hasActiveStrikes) {
-          backgroundColor = Colors.orange.withValues(alpha: 0.15);
-          textColor = Colors.orange;
+          backgroundColor = AccentColors.orange.withValues(alpha: 0.15);
+          textColor = AccentColors.orange;
           icon = Icons.warning_amber_rounded;
           message = hasUnacknowledged
               ? 'You have ${status.activeStrikes} strike${status.activeStrikes > 1 ? 's' : ''} - tap to review'
               : '${status.activeStrikes} active strike${status.activeStrikes > 1 ? 's' : ''} on your account';
         } else if (hasActiveWarnings) {
-          backgroundColor = Colors.amber.withValues(alpha: 0.15);
-          textColor = Colors.amber.shade700;
+          backgroundColor = AppTheme.warningYellow.withValues(alpha: 0.15);
+          textColor = AppTheme.warningYellow;
           icon = Icons.info_outline;
           message = hasUnacknowledged
               ? 'You have ${status.activeWarnings} warning${status.activeWarnings > 1 ? 's' : ''} - tap to review'

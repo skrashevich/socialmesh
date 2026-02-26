@@ -341,7 +341,7 @@ class _FlightSearchSheetState extends State<FlightSearchSheet> {
                   Icon(
                     Icons.error_outline,
                     size: 48,
-                    color: Colors.red.withValues(alpha: 0.7),
+                    color: AppTheme.errorRed.withValues(alpha: 0.7),
                   ),
                   const SizedBox(height: AppTheme.spacing16),
                   Text(

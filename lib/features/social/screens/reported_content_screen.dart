@@ -147,7 +147,7 @@ class _TabWithBadge extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
               decoration: BoxDecoration(
-                color: Colors.red,
+                color: AppTheme.errorRed,
                 borderRadius: BorderRadius.circular(AppTheme.radius10),
               ),
               child: Text(
@@ -427,8 +427,8 @@ class _ModerationCard extends StatelessWidget {
         Icons.comment_outlined,
       ),
       'story' => (
-        Colors.orange.withAlpha(30),
-        Colors.orange,
+        AccentColors.orange.withAlpha(30),
+        AccentColors.orange,
         Icons.auto_stories_outlined,
       ),
       _ => (
@@ -445,13 +445,13 @@ class _ModerationCard extends StatelessWidget {
       IconData decisionIcon,
     ) = switch (decision) {
       'reject' || 'auto_reject' => (
-        Colors.red.withAlpha(40),
-        Colors.red,
+        AppTheme.errorRed.withAlpha(40),
+        AppTheme.errorRed,
         Icons.dangerous_outlined,
       ),
       'review' || 'flag' || 'flag_for_review' => (
-        Colors.orange.withAlpha(40),
-        Colors.orange,
+        AccentColors.orange.withAlpha(40),
+        AccentColors.orange,
         Icons.warning_outlined,
       ),
       _ => (
@@ -591,17 +591,19 @@ class _ModerationCard extends StatelessWidget {
                             vertical: 4,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.red.withAlpha(20),
+                            color: AppTheme.errorRed.withAlpha(20),
                             borderRadius: BorderRadius.circular(
                               AppTheme.radius4,
                             ),
-                            border: Border.all(color: Colors.red.withAlpha(50)),
+                            border: Border.all(
+                              color: AppTheme.errorRed.withAlpha(50),
+                            ),
                           ),
                           child: Text(
                             '$name ($likelihood)',
                             style: TextStyle(
                               fontSize: 11,
-                              color: Colors.red.shade700,
+                              color: AppTheme.errorRed,
                             ),
                           ),
                         );
@@ -669,8 +671,8 @@ class _ModerationCard extends StatelessWidget {
                     icon: const Icon(Icons.check_circle_outline, size: 18),
                     label: const Text('Approve'),
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: Colors.green.shade700,
-                      side: BorderSide(color: Colors.green.shade300),
+                      foregroundColor: AppTheme.successGreen,
+                      side: BorderSide(color: AppTheme.successGreen),
                     ),
                   ),
                 ),
@@ -732,8 +734,12 @@ class _UserModerationCard extends StatelessWidget {
 
     // Styling based on action type
     final (Color bgColor, Color fgColor, IconData icon) = isSuspension
-        ? (Colors.red.withAlpha(30), Colors.red, Icons.block)
-        : (Colors.orange.withAlpha(30), Colors.orange, Icons.warning_amber);
+        ? (AppTheme.errorRed.withAlpha(30), AppTheme.errorRed, Icons.block)
+        : (
+            AccentColors.orange.withAlpha(30),
+            AccentColors.orange,
+            Icons.warning_amber,
+          );
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -884,7 +890,7 @@ class _UserModerationCard extends StatelessWidget {
                       icon: const Icon(Icons.lock_open, size: 18),
                       label: const Text('Unsuspend'),
                       style: FilledButton.styleFrom(
-                        backgroundColor: Colors.green,
+                        backgroundColor: AppTheme.successGreen,
                       ),
                     ),
                   ),
@@ -1356,18 +1362,18 @@ class _ReportCard extends StatelessWidget {
         Icons.comment_outlined,
       ),
       'signal_comment' => (
-        Colors.teal.withAlpha(30),
-        Colors.teal,
+        AccentColors.teal.withAlpha(30),
+        AccentColors.teal,
         Icons.chat_outlined,
       ),
       'user' => (
-        Colors.purple.withAlpha(30),
-        Colors.purple,
+        AccentColors.purple.withAlpha(30),
+        AccentColors.purple,
         Icons.person_outlined,
       ),
       'story' => (
-        Colors.orange.withAlpha(30),
-        Colors.orange,
+        AccentColors.orange.withAlpha(30),
+        AccentColors.orange,
         Icons.auto_stories_outlined,
       ),
       _ => (
@@ -1524,8 +1530,8 @@ class _ReportCard extends StatelessWidget {
                 icon: const Icon(Icons.block, size: 18),
                 label: const Text('Ban User & Delete'),
                 style: OutlinedButton.styleFrom(
-                  foregroundColor: Colors.red.shade700,
-                  side: BorderSide(color: Colors.red.shade300),
+                  foregroundColor: AppTheme.errorRed,
+                  side: BorderSide(color: AppTheme.errorRed),
                 ),
               ),
             ),
@@ -1576,10 +1582,14 @@ class _BanUserSheetState extends State<_BanUserSheet> {
               Container(
                 padding: const EdgeInsets.all(AppTheme.spacing10),
                 decoration: BoxDecoration(
-                  color: Colors.red.withAlpha(30),
+                  color: AppTheme.errorRed.withAlpha(30),
                   borderRadius: BorderRadius.circular(AppTheme.radius10),
                 ),
-                child: const Icon(Icons.block, color: Colors.red, size: 24),
+                child: const Icon(
+                  Icons.block,
+                  color: AppTheme.errorRed,
+                  size: 24,
+                ),
               ),
               const SizedBox(width: AppTheme.spacing12),
               Expanded(
@@ -1741,7 +1751,9 @@ class _BanUserSheetState extends State<_BanUserSheet> {
                           'reason': _selectedReason,
                           'sendEmail': _sendEmail,
                         }),
-                  style: FilledButton.styleFrom(backgroundColor: Colors.red),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: AppTheme.errorRed,
+                  ),
                   child: const Text('Ban User'),
                 ),
               ),
@@ -2010,7 +2022,7 @@ class _StoryPreviewContent extends StatelessWidget {
                   vertical: 5,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.orange.withAlpha(30),
+                  color: AccentColors.orange.withAlpha(30),
                   borderRadius: BorderRadius.circular(AppTheme.radius6),
                 ),
                 child: const Row(
@@ -2019,7 +2031,7 @@ class _StoryPreviewContent extends StatelessWidget {
                     Icon(
                       Icons.auto_stories_outlined,
                       size: 14,
-                      color: Colors.orange,
+                      color: AccentColors.orange,
                     ),
                     SizedBox(width: AppTheme.spacing6),
                     Text(
@@ -2027,7 +2039,7 @@ class _StoryPreviewContent extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.bold,
-                        color: Colors.orange,
+                        color: AccentColors.orange,
                       ),
                     ),
                   ],
@@ -2251,20 +2263,20 @@ class _SignalCommentPreviewContent extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(
-                color: Colors.teal.withAlpha(30),
+                color: AccentColors.teal.withAlpha(30),
                 borderRadius: BorderRadius.circular(AppTheme.radius6),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.chat_outlined, size: 14, color: Colors.teal),
+                  Icon(Icons.chat_outlined, size: 14, color: AccentColors.teal),
                   const SizedBox(width: AppTheme.spacing6),
                   Text(
                     'SIGNAL COMMENT',
                     style: TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.bold,
-                      color: Colors.teal,
+                      color: AccentColors.teal,
                     ),
                   ),
                 ],

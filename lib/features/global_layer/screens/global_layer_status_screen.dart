@@ -265,8 +265,11 @@ class _GlobalLayerStatusScreenState
             const PopupMenuItem(
               value: 'reset',
               child: ListTile(
-                leading: Icon(Icons.delete_outline, color: Colors.red),
-                title: Text('Reset', style: TextStyle(color: Colors.red)),
+                leading: Icon(Icons.delete_outline, color: AppTheme.errorRed),
+                title: Text(
+                  'Reset',
+                  style: TextStyle(color: AppTheme.errorRed),
+                ),
                 dense: true,
                 contentPadding: EdgeInsets.zero,
               ),
@@ -494,7 +497,7 @@ class _BrokerInfoCard extends StatelessWidget {
             _InfoRow(
               label: 'TLS',
               value: config.useTls ? 'Enabled' : 'Disabled',
-              valueColor: config.useTls ? const Color(0xFF4ADE80) : null,
+              valueColor: config.useTls ? AppTheme.successGreen : null,
             ),
             if (config.username.isNotEmpty) ...[
               const SizedBox(height: AppTheme.spacing6),
@@ -619,8 +622,8 @@ class _QuickActionsSection extends StatelessWidget {
                   label: connectionState.isActive ? 'Disconnect' : 'Connect',
                   onTap: allowsActions ? onConnectDisconnect : null,
                   color: connectionState.isActive
-                      ? const Color(0xFFEF4444)
-                      : const Color(0xFF4ADE80),
+                      ? AppTheme.errorRed
+                      : AppTheme.successGreen,
                 ),
               ),
               const SizedBox(width: AppTheme.spacing8),
@@ -632,7 +635,7 @@ class _QuickActionsSection extends StatelessWidget {
                       : Icons.play_circle_outline,
                   label: isEnabled ? 'Pause' : 'Resume',
                   onTap: isEnabled ? onPause : onResume,
-                  color: const Color(0xFFFBBF24),
+                  color: AppTheme.warningYellow,
                 ),
               ),
               const SizedBox(width: AppTheme.spacing8),
@@ -835,10 +838,10 @@ class _HealthMetricsCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(AppTheme.spacing10),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFEF4444).withValues(alpha: 0.1),
+                  color: AppTheme.errorRed.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(AppTheme.radius8),
                   border: Border.all(
-                    color: const Color(0xFFEF4444).withValues(alpha: 0.2),
+                    color: AppTheme.errorRed.withValues(alpha: 0.2),
                   ),
                 ),
                 child: Row(
@@ -846,7 +849,7 @@ class _HealthMetricsCard extends StatelessWidget {
                     const Icon(
                       Icons.warning_amber,
                       size: 18,
-                      color: Color(0xFFEF4444),
+                      color: AppTheme.errorRed,
                     ),
                     const SizedBox(width: AppTheme.spacing8),
                     Expanded(
@@ -854,7 +857,7 @@ class _HealthMetricsCard extends StatelessWidget {
                         '${metrics.activeErrorCount} active '
                         '${metrics.activeErrorCount == 1 ? 'error' : 'errors'}',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: const Color(0xFFEF4444),
+                          color: AppTheme.errorRed,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -890,7 +893,7 @@ class _HealthBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isHealthy ? const Color(0xFF4ADE80) : const Color(0xFFEF4444);
+    final color = isHealthy ? AppTheme.successGreen : AppTheme.errorRed;
     final label = isHealthy ? 'Healthy' : 'Unhealthy';
 
     return Container(
@@ -998,16 +1001,16 @@ class _PrivacySummaryCard extends StatelessWidget {
                       vertical: 3,
                     ),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF4ADE80).withValues(alpha: 0.15),
+                      color: AppTheme.successGreen.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(AppTheme.radius8),
                       border: Border.all(
-                        color: const Color(0xFF4ADE80).withValues(alpha: 0.3),
+                        color: AppTheme.successGreen.withValues(alpha: 0.3),
                       ),
                     ),
                     child: Text(
                       'All Off',
                       style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                        color: const Color(0xFF4ADE80),
+                        color: AppTheme.successGreen,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -1053,8 +1056,8 @@ class _PrivacyToggleRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final statusColor = isEnabled
-        ? const Color(0xFFFBBF24)
-        : const Color(0xFF4ADE80);
+        ? AppTheme.warningYellow
+        : AppTheme.successGreen;
     final statusLabel = isEnabled ? 'ON' : 'OFF';
 
     return Row(
@@ -1183,7 +1186,7 @@ class _TransitionTile extends StatelessWidget {
                     Text(
                       transition.errorMessage!,
                       style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                        color: const Color(0xFFEF4444),
+                        color: AppTheme.errorRed,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,

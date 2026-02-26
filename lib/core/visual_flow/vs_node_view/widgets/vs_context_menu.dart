@@ -9,6 +9,7 @@
 // Modified: Constrained width for mobile readability.
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../data/vs_node_data_provider.dart';
 import 'package:socialmesh/core/theme.dart';
@@ -167,6 +168,7 @@ class _VSContextMenuState extends State<VSContextMenu> {
         children.add(
           _ContextMenuItem(
             onTap: () {
+              HapticFeedback.lightImpact();
               final dataProvider = VSNodeDataProvider.of(context);
               dataProvider.createNodeFromContext(entry.value);
               dataProvider.closeContextMenu();

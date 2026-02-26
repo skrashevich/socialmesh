@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -61,7 +62,10 @@ class CommentTile extends ConsumerWidget {
             children: [
               // Avatar
               GestureDetector(
-                onTap: () => onAuthorTap?.call(comment.comment.authorId),
+                onTap: () {
+                  HapticFeedback.lightImpact();
+                  onAuthorTap?.call(comment.comment.authorId);
+                },
                 child: UserAvatar(
                   imageUrl: comment.author?.avatarUrl,
                   initials: (comment.author?.displayName ?? 'U')[0],

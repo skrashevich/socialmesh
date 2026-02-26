@@ -149,10 +149,10 @@ mixin LifecycleSafeMixin<T extends ConsumerStatefulWidget> on ConsumerState<T> {
     Color? backgroundColor,
     SnackBarType type = SnackBarType.info,
   }) {
-    if (backgroundColor == Colors.green ||
+    if (backgroundColor == AppTheme.successGreen ||
         backgroundColor == AppTheme.successGreen) {
       showSuccessSnackBar(context, message, duration: duration);
-    } else if (backgroundColor == Colors.red ||
+    } else if (backgroundColor == AppTheme.errorRed ||
         backgroundColor == AppTheme.errorRed) {
       showErrorSnackBar(context, message, duration: duration);
     } else {
@@ -310,10 +310,10 @@ mixin StatefulLifecycleSafeMixin<T extends StatefulWidget> on State<T> {
     Color? backgroundColor,
     SnackBarType type = SnackBarType.info,
   }) {
-    if (backgroundColor == Colors.green ||
+    if (backgroundColor == AppTheme.successGreen ||
         backgroundColor == AppTheme.successGreen) {
       showSuccessSnackBar(context, message, duration: duration);
-    } else if (backgroundColor == Colors.red ||
+    } else if (backgroundColor == AppTheme.errorRed ||
         backgroundColor == AppTheme.errorRed) {
       showErrorSnackBar(context, message, duration: duration);
     } else {

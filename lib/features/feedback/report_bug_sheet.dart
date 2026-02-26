@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../core/logging.dart';
 import '../../core/theme.dart';
@@ -203,7 +202,10 @@ class _ReportBugSheetState extends State<ReportBugSheet> {
       expand: false,
       builder: (context, scrollController) {
         return GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+          onTap: () {
+            HapticFeedback.lightImpact();
+            FocusScope.of(context).unfocus();
+          },
           child: Container(
             decoration: BoxDecoration(
               color: context.card,

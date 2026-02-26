@@ -314,6 +314,8 @@ class _DetectionSensorConfigScreenState
             Padding(
               padding: const EdgeInsets.all(AppTheme.spacing16),
               child: TextField(
+                onTapOutside: (_) =>
+                    FocusManager.instance.primaryFocus?.unfocus(),
                 maxLength: 100,
                 controller: _nameController,
                 style: TextStyle(color: context.textPrimary),
@@ -379,6 +381,8 @@ class _DetectionSensorConfigScreenState
                 SizedBox(
                   width: 80,
                   child: TextField(
+                    onTapOutside: (_) =>
+                        FocusManager.instance.primaryFocus?.unfocus(),
                     maxLength: 100,
                     controller: _pinController,
                     style: TextStyle(color: context.textPrimary),

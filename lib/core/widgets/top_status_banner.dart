@@ -350,7 +350,7 @@ class _TopStatusBannerState extends ConsumerState<TopStatusBanner>
         ? AppTheme.errorRed
         : isReconnecting
         ? context.accentColor
-        : (isFailed ? AppTheme.errorRed : Colors.orange);
+        : (isFailed ? AppTheme.errorRed : AccentColors.orange);
 
     final icon = isTerminalInvalidated
         ? Icons.error_outline_rounded

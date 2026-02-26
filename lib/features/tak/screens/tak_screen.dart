@@ -222,10 +222,10 @@ class _TakScreenState extends ConsumerState<TakScreen> with LifecycleSafeMixin {
                   ? Icons.link
                   : Icons.link_off,
               color: connectionState == TakConnectionState.connected
-                  ? Colors.green
+                  ? AppTheme.successGreen
                   : isSignedIn
-                  ? Colors.grey
-                  : Colors.grey.withValues(alpha: 0.4),
+                  ? SemanticColors.disabled
+                  : SemanticColors.disabled.withValues(alpha: 0.4),
             ),
             onPressed: isSignedIn ? _toggleConnection : null,
             tooltip: !isSignedIn

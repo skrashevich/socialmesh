@@ -381,7 +381,7 @@ class _SnapSwipeableSignalItemState extends State<SnapSwipeableSignalItem>
 
     final rightGradient = AccentColors.gradientFor(context.accentColor);
     final rightColor = rightGradient.first;
-    final leftColor = Colors.grey;
+    final leftColor = SemanticColors.disabled;
     final radius = BorderRadius.circular(widget.borderRadius);
 
     // Only fade action backgrounds when snapping, not the whole thing

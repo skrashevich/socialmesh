@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
@@ -137,6 +138,7 @@ class _GlobeScreenState extends ConsumerState<GlobeScreen>
               top: 16,
               child: GestureDetector(
                 onTap: () async {
+                  HapticFeedback.lightImpact();
                   final selection = await NodeSelectorSheet.show(
                     context,
                     title: 'Select Node',

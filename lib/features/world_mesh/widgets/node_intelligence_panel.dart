@@ -227,19 +227,19 @@ class NodeIntelligencePanel extends StatelessWidget {
                   icon: Icons.people,
                   label: '${intelligence.neighborCount} neighbors',
                   color: intelligence.neighborCount > 5
-                      ? Colors.green
+                      ? AppTheme.successGreen
                       : intelligence.neighborCount > 0
-                      ? Colors.amber
-                      : Colors.grey,
+                      ? AppTheme.warningYellow
+                      : SemanticColors.disabled,
                 ),
                 _IntelligenceChip(
                   icon: Icons.wifi_tethering,
                   label: '${intelligence.gatewayCount} gateways',
                   color: intelligence.gatewayCount > 2
-                      ? Colors.green
+                      ? AppTheme.successGreen
                       : intelligence.gatewayCount > 0
-                      ? Colors.amber
-                      : Colors.grey,
+                      ? AppTheme.warningYellow
+                      : SemanticColors.disabled,
                 ),
                 _ActivityChip(activity: intelligence.activityLevel),
               ],
@@ -314,13 +314,13 @@ class NodeIntelligencePanel extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
           decoration: BoxDecoration(
-            color: Colors.cyan.withValues(alpha: 0.2),
+            color: AccentColors.cyan.withValues(alpha: 0.2),
             borderRadius: BorderRadius.circular(AppTheme.radius4),
           ),
           child: Text(
             'DERIVED',
             style: TextStyle(
-              color: Colors.cyan,
+              color: AccentColors.cyan,
               fontSize: 9,
               fontWeight: FontWeight.bold,
             ),
@@ -331,16 +331,16 @@ class NodeIntelligencePanel extends StatelessWidget {
   }
 
   Color _getHealthColor(double score) {
-    if (score >= 0.8) return Colors.green;
-    if (score >= 0.5) return Colors.amber;
-    if (score >= 0.3) return Colors.orange;
-    return Colors.red;
+    if (score >= 0.8) return AppTheme.successGreen;
+    if (score >= 0.5) return AppTheme.warningYellow;
+    if (score >= 0.3) return AccentColors.orange;
+    return AppTheme.errorRed;
   }
 
   Color _getConnectivityColor(double score) {
-    if (score >= 0.7) return Colors.green;
-    if (score >= 0.4) return Colors.amber;
-    return Colors.orange;
+    if (score >= 0.7) return AppTheme.successGreen;
+    if (score >= 0.4) return AppTheme.warningYellow;
+    return AccentColors.orange;
   }
 
   IconData _getMobilityIcon(String mobility) {
@@ -363,17 +363,17 @@ class NodeIntelligencePanel extends StatelessWidget {
   Color _getMobilityColor(String mobility) {
     switch (mobility) {
       case 'Infrastructure':
-        return Colors.purple;
+        return AccentColors.purple;
       case 'Mobile':
-        return Colors.teal;
+        return AccentColors.teal;
       case 'Tracker':
-        return Colors.orange;
+        return AccentColors.orange;
       case 'Elevated':
-        return Colors.blue;
+        return AccentColors.blue;
       case 'Stationary':
-        return Colors.blueGrey;
+        return AccentColors.slate;
       default:
-        return Colors.grey;
+        return SemanticColors.disabled;
     }
   }
 }
@@ -581,15 +581,15 @@ class _ActivityChip extends StatelessWidget {
   (IconData, Color) _getActivityConfig() {
     switch (activity) {
       case 'Hot':
-        return (Icons.local_fire_department, Colors.red);
+        return (Icons.local_fire_department, AppTheme.errorRed);
       case 'Active':
-        return (Icons.bolt, Colors.orange);
+        return (Icons.bolt, AccentColors.orange);
       case 'Quiet':
-        return (Icons.nights_stay, Colors.blue);
+        return (Icons.nights_stay, AccentColors.blue);
       case 'Cold':
-        return (Icons.ac_unit, Colors.blueGrey);
+        return (Icons.ac_unit, AccentColors.slate);
       default:
-        return (Icons.help_outline, Colors.grey);
+        return (Icons.help_outline, SemanticColors.disabled);
     }
   }
 }
@@ -607,10 +607,10 @@ class _ChannelUtilizationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = utilization > 50
-        ? Colors.red
+        ? AppTheme.errorRed
         : utilization > 25
-        ? Colors.orange
-        : Colors.green;
+        ? AccentColors.orange
+        : AppTheme.successGreen;
 
     return Container(
       padding: const EdgeInsets.all(AppTheme.spacing10),

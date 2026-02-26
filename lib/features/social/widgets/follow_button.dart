@@ -6,6 +6,7 @@ import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../providers/auth_providers.dart';
 import '../../../providers/social_providers.dart';
 import '../../../utils/snackbar.dart';
+import 'package:socialmesh/core/theme.dart';
 
 /// A button that toggles follow/unfollow state for a user.
 ///
@@ -172,7 +173,7 @@ class _FollowButtonState extends ConsumerState<FollowButton>
             style: FilledButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               minimumSize: const Size(buttonWidth, 32),
-              backgroundColor: Colors.grey,
+              backgroundColor: SemanticColors.disabled,
               foregroundColor: Colors.white,
             ),
             child: const Text('Following'),
@@ -186,7 +187,7 @@ class _FollowButtonState extends ConsumerState<FollowButton>
             style: FilledButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               minimumSize: const Size(buttonWidth, 32),
-              backgroundColor: Colors.grey,
+              backgroundColor: SemanticColors.disabled,
               foregroundColor: Colors.white,
             ),
             child: const Text('Requested'),
@@ -225,7 +226,7 @@ class _FollowButtonState extends ConsumerState<FollowButton>
           label: const Text('Requested'),
           style: OutlinedButton.styleFrom(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            foregroundColor: Colors.grey,
+            foregroundColor: SemanticColors.disabled,
           ),
         );
       case FollowButtonState.notFollowing:
@@ -345,9 +346,9 @@ class _FollowTextButtonState extends ConsumerState<FollowTextButton>
   Color _getButtonColor(BuildContext context, FollowButtonState state) {
     switch (state) {
       case FollowButtonState.following:
-        return Colors.grey;
+        return SemanticColors.disabled;
       case FollowButtonState.requested:
-        return Colors.orange;
+        return AccentColors.orange;
       case FollowButtonState.notFollowing:
         return Theme.of(context).colorScheme.primary;
     }

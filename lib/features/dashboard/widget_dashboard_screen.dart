@@ -384,7 +384,7 @@ class _WidgetDashboardScreenState extends ConsumerState<WidgetDashboardScreen>
               child: Center(
                 child: Text(
                   'Failed to load widget',
-                  style: TextStyle(color: Colors.grey),
+                  style: TextStyle(color: SemanticColors.disabled),
                 ),
               ),
             ),
@@ -420,7 +420,10 @@ class _WidgetDashboardScreenState extends ConsumerState<WidgetDashboardScreen>
       case DashboardWidgetType.custom:
         // If no schemaId, show error
         return const Center(
-          child: Text('Widget not found', style: TextStyle(color: Colors.grey)),
+          child: Text(
+            'Widget not found',
+            style: TextStyle(color: SemanticColors.disabled),
+          ),
         );
     }
   }

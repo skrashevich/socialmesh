@@ -445,6 +445,7 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
           ),
           SizedBox(height: AppTheme.spacing8),
           TextFormField(
+            onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
             maxLength: 64,
             key: ValueKey('privateKey_${_privateKey.hashCode}'),
             initialValue: _privateKey,
@@ -789,6 +790,7 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
         ),
         const SizedBox(height: AppTheme.spacing6),
         TextFormField(
+          onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
           maxLength: 64,
           key: ValueKey('adminKey_${value.hashCode}'),
           initialValue: value,

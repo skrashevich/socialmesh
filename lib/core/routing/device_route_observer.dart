@@ -129,13 +129,13 @@ class _BlockedRouteScreen extends StatelessWidget {
                 width: 80,
                 height: 80,
                 decoration: BoxDecoration(
-                  color: Colors.orange.withValues(alpha: 0.1),
+                  color: AccentColors.orange.withValues(alpha: 0.1),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
                   Icons.lock_outline,
                   size: 40,
-                  color: Colors.orange,
+                  color: AccentColors.orange,
                 ),
               ),
               const SizedBox(height: AppTheme.spacing24),

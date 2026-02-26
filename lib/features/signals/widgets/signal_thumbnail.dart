@@ -116,7 +116,7 @@ class SignalThumbnail extends StatelessWidget {
           fit: BoxFit.cover,
           placeholder: showLoadingIndicator
               ? Container(
-                  color: Colors.grey.shade800,
+                  color: SemanticColors.placeholder,
                   child: const Center(
                     child: SizedBox(
                       width: 16,
@@ -211,7 +211,7 @@ class SignalMapMarker extends StatelessWidget {
                       width: size,
                       height: size,
                       fit: BoxFit.cover,
-                      placeholder: Container(color: Colors.grey.shade800),
+                      placeholder: Container(color: SemanticColors.placeholder),
                       errorWidget: Container(
                         color: markerColor,
                         child: Icon(

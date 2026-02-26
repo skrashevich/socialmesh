@@ -612,6 +612,8 @@ class _RegionSelectionScreenState extends ConsumerState<RegionSelectionScreen>
                   border: Border.all(color: context.border),
                 ),
                 child: TextField(
+                  onTapOutside: (_) =>
+                      FocusManager.instance.primaryFocus?.unfocus(),
                   maxLength: 100,
                   enabled: !isApplying,
                   style: TextStyle(color: context.textPrimary),

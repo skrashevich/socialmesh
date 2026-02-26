@@ -136,10 +136,10 @@ class _SuspensionNotice extends StatelessWidget {
                     padding: const EdgeInsets.all(AppTheme.spacing24),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.red.withValues(alpha: 0.15),
+                      color: AppTheme.errorRed.withValues(alpha: 0.15),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.red.withValues(alpha: 0.3),
+                          color: AppTheme.errorRed.withValues(alpha: 0.3),
                           blurRadius: 30,
                           spreadRadius: 10,
                         ),
@@ -148,7 +148,7 @@ class _SuspensionNotice extends StatelessWidget {
                     child: const Icon(
                       Icons.block_rounded,
                       size: 64,
-                      color: Colors.red,
+                      color: AppTheme.errorRed,
                     ),
                   ),
                   const SizedBox(height: AppTheme.spacing32),
@@ -174,10 +174,10 @@ class _SuspensionNotice extends StatelessWidget {
                       vertical: 12,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.red.withValues(alpha: 0.2),
+                      color: AppTheme.errorRed.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                       border: Border.all(
-                        color: Colors.red.withValues(alpha: 0.3),
+                        color: AppTheme.errorRed.withValues(alpha: 0.3),
                       ),
                     ),
                     child: Row(
@@ -185,7 +185,7 @@ class _SuspensionNotice extends StatelessWidget {
                       children: [
                         const Icon(
                           Icons.timer_outlined,
-                          color: Colors.red,
+                          color: AppTheme.errorRed,
                           size: 20,
                         ),
                         const SizedBox(width: AppTheme.spacing8),
@@ -194,7 +194,7 @@ class _SuspensionNotice extends StatelessWidget {
                               ? 'Indefinite suspension'
                               : 'Remaining: ${_formatDuration(suspendedUntil)}',
                           style: const TextStyle(
-                            color: Colors.red,
+                            color: AppTheme.errorRed,
                             fontWeight: FontWeight.w600,
                             fontSize: 15,
                           ),
@@ -249,14 +249,14 @@ class _SuspensionNotice extends StatelessWidget {
                             children: [
                               const Icon(
                                 Icons.warning_amber_rounded,
-                                color: Colors.orange,
+                                color: AccentColors.orange,
                                 size: 16,
                               ),
                               const SizedBox(width: AppTheme.spacing8),
                               Text(
                                 '$strikeCount strike${strikeCount > 1 ? 's' : ''} on your account',
                                 style: const TextStyle(
-                                  color: Colors.orange,
+                                  color: AccentColors.orange,
                                   fontSize: 13,
                                   fontWeight: FontWeight.w500,
                                 ),

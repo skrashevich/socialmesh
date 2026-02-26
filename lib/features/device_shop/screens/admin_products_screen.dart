@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// lint-allow: keyboard-dismissal — text fields use SearchFilterHeader which dismisses on scroll/filter
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -43,115 +44,119 @@ class _AdminProductsScreenState extends ConsumerState<AdminProductsScreen>
   Widget build(BuildContext context) {
     final productsAsync = ref.watch(adminAllProductsProvider);
 
-    return GlassScaffold(
-      resizeToAvoidBottomInset: false,
-      title: 'Manage Products',
-      actions: [
-        IconButton(
-          icon: Icon(
-            _showInactive ? Icons.visibility : Icons.visibility_off,
-            color: _showInactive ? context.accentColor : null,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: GlassScaffold(
+        resizeToAvoidBottomInset: false,
+        title: 'Manage Products',
+        actions: [
+          IconButton(
+            icon: Icon(
+              _showInactive ? Icons.visibility : Icons.visibility_off,
+              color: _showInactive ? context.accentColor : null,
+            ),
+            onPressed: () => setState(() => _showInactive = !_showInactive),
+            tooltip: _showInactive ? 'Hide inactive' : 'Show inactive',
           ),
-          onPressed: () => setState(() => _showInactive = !_showInactive),
-          tooltip: _showInactive ? 'Hide inactive' : 'Show inactive',
-        ),
-        IconButton(
-          icon: Icon(Icons.add),
-          onPressed: () => _navigateToEdit(null),
-          tooltip: 'Add Product',
-        ),
-      ],
-      slivers: [
-        // Pinned search header with category filter
-        SliverPersistentHeader(
-          pinned: true,
-          delegate: SearchFilterHeaderDelegate(
-            searchController: _searchController,
-            searchQuery: _searchQuery,
-            onSearchChanged: (value) => setState(() => _searchQuery = value),
-            hintText: 'Search products...',
-            textScaler: MediaQuery.textScalerOf(context),
-            trailingControls: [
-              PopupMenuButton<DeviceCategory?>(
-                icon: Icon(
-                  Icons.filter_list,
-                  color: _filterCategory != null ? context.accentColor : null,
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () => _navigateToEdit(null),
+            tooltip: 'Add Product',
+          ),
+        ],
+        slivers: [
+          // Pinned search header with category filter
+          SliverPersistentHeader(
+            pinned: true,
+            delegate: SearchFilterHeaderDelegate(
+              searchController: _searchController,
+              searchQuery: _searchQuery,
+              onSearchChanged: (value) => setState(() => _searchQuery = value),
+              hintText: 'Search products...',
+              textScaler: MediaQuery.textScalerOf(context),
+              trailingControls: [
+                PopupMenuButton<DeviceCategory?>(
+                  icon: Icon(
+                    Icons.filter_list,
+                    color: _filterCategory != null ? context.accentColor : null,
+                  ),
+                  tooltip: 'Filter by category',
+                  onSelected: (category) =>
+                      setState(() => _filterCategory = category),
+                  itemBuilder: (context) => [
+                    const PopupMenuItem(
+                      value: null,
+                      child: Text('All Categories'),
+                    ),
+                    ...DeviceCategory.values.map(
+                      (cat) =>
+                          PopupMenuItem(value: cat, child: Text(cat.label)),
+                    ),
+                  ],
                 ),
-                tooltip: 'Filter by category',
-                onSelected: (category) =>
-                    setState(() => _filterCategory = category),
-                itemBuilder: (context) => [
-                  const PopupMenuItem(
-                    value: null,
-                    child: Text('All Categories'),
-                  ),
-                  ...DeviceCategory.values.map(
-                    (cat) => PopupMenuItem(value: cat, child: Text(cat.label)),
-                  ),
-                ],
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
 
-        // Products List
-        productsAsync.when(
-          data: (products) {
-            var filtered = products.where((p) {
-              if (!_showInactive && !p.isActive) return false;
-              if (_filterCategory != null && p.category != _filterCategory) {
-                return false;
-              }
-              if (_searchQuery.isNotEmpty) {
-                final query = _searchQuery.toLowerCase();
-                return p.name.toLowerCase().contains(query) ||
-                    p.sellerName.toLowerCase().contains(query) ||
-                    p.description.toLowerCase().contains(query);
-              }
-              return true;
-            }).toList();
+          // Products List
+          productsAsync.when(
+            data: (products) {
+              var filtered = products.where((p) {
+                if (!_showInactive && !p.isActive) return false;
+                if (_filterCategory != null && p.category != _filterCategory) {
+                  return false;
+                }
+                if (_searchQuery.isNotEmpty) {
+                  final query = _searchQuery.toLowerCase();
+                  return p.name.toLowerCase().contains(query) ||
+                      p.sellerName.toLowerCase().contains(query) ||
+                      p.description.toLowerCase().contains(query);
+                }
+                return true;
+              }).toList();
 
-            if (filtered.isEmpty) {
-              return SliverFillRemaining(
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.inventory_2_outlined,
-                        size: 64,
-                        color: context.textTertiary,
-                      ),
-                      const SizedBox(height: AppTheme.spacing16),
-                      const Text('No products found'),
-                    ],
+              if (filtered.isEmpty) {
+                return SliverFillRemaining(
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.inventory_2_outlined,
+                          size: 64,
+                          color: context.textTertiary,
+                        ),
+                        const SizedBox(height: AppTheme.spacing16),
+                        const Text('No products found'),
+                      ],
+                    ),
                   ),
+                );
+              }
+
+              return SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                sliver: SliverList(
+                  delegate: SliverChildBuilderDelegate((context, index) {
+                    final product = filtered[index];
+                    return _ProductListItem(
+                      product: product,
+                      onEdit: () => _navigateToEdit(product),
+                      onToggleActive: () => _toggleActive(product),
+                      onDelete: () => _confirmDelete(product),
+                    );
+                  }, childCount: filtered.length),
                 ),
               );
-            }
-
-            return SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              sliver: SliverList(
-                delegate: SliverChildBuilderDelegate((context, index) {
-                  final product = filtered[index];
-                  return _ProductListItem(
-                    product: product,
-                    onEdit: () => _navigateToEdit(product),
-                    onToggleActive: () => _toggleActive(product),
-                    onDelete: () => _confirmDelete(product),
-                  );
-                }, childCount: filtered.length),
-              ),
-            );
-          },
-          loading: () => SliverFillRemaining(
-            child: Center(child: CircularProgressIndicator()),
+            },
+            loading: () => SliverFillRemaining(
+              child: Center(child: CircularProgressIndicator()),
+            ),
+            error: (e, _) =>
+                SliverFillRemaining(child: Center(child: Text('Error: $e'))),
           ),
-          error: (e, _) =>
-              SliverFillRemaining(child: Center(child: Text('Error: $e'))),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -237,7 +242,7 @@ class _ProductListItem extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 12),
       color: product.isActive
           ? Colors.white.withValues(alpha: 0.05)
-          : Colors.red.withValues(alpha: 0.1),
+          : AppTheme.errorRed.withValues(alpha: 0.1),
       child: InkWell(
         onTap: onEdit,
         borderRadius: BorderRadius.circular(AppTheme.radius12),
@@ -283,7 +288,7 @@ class _ProductListItem extends StatelessWidget {
                               vertical: 2,
                             ),
                             decoration: BoxDecoration(
-                              color: Colors.red.withValues(alpha: 0.2),
+                              color: AppTheme.errorRed.withValues(alpha: 0.2),
                               borderRadius: BorderRadius.circular(
                                 AppTheme.radius4,
                               ),
@@ -292,7 +297,7 @@ class _ProductListItem extends StatelessWidget {
                               'INACTIVE',
                               style: TextStyle(
                                 fontSize: 10,
-                                color: Colors.red,
+                                color: AppTheme.errorRed,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -305,7 +310,9 @@ class _ProductListItem extends StatelessWidget {
                               vertical: 2,
                             ),
                             decoration: BoxDecoration(
-                              color: Colors.amber.withValues(alpha: 0.2),
+                              color: AppTheme.warningYellow.withValues(
+                                alpha: 0.2,
+                              ),
                               borderRadius: BorderRadius.circular(
                                 AppTheme.radius4,
                               ),
@@ -314,7 +321,7 @@ class _ProductListItem extends StatelessWidget {
                               'FEATURED',
                               style: TextStyle(
                                 fontSize: 10,
-                                color: Colors.amber,
+                                color: AppTheme.warningYellow,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -418,9 +425,12 @@ class _ProductListItem extends StatelessWidget {
                     value: 'delete',
                     child: Row(
                       children: [
-                        Icon(Icons.delete, size: 20, color: Colors.red),
+                        Icon(Icons.delete, size: 20, color: AppTheme.errorRed),
                         SizedBox(width: AppTheme.spacing8),
-                        Text('Delete', style: TextStyle(color: Colors.red)),
+                        Text(
+                          'Delete',
+                          style: TextStyle(color: AppTheme.errorRed),
+                        ),
                       ],
                     ),
                   ),
@@ -437,8 +447,8 @@ class _ProductListItem extends StatelessWidget {
     return Container(
       width: 60,
       height: 60,
-      color: Colors.grey.withValues(alpha: 0.3),
-      child: const Icon(Icons.image, color: Colors.grey),
+      color: SemanticColors.disabled.withValues(alpha: 0.3),
+      child: const Icon(Icons.image, color: SemanticColors.disabled),
     );
   }
 }
@@ -557,7 +567,7 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
       actions: [
         if (_isEditing)
           IconButton(
-            icon: const Icon(Icons.delete, color: Colors.red),
+            icon: const Icon(Icons.delete, color: AppTheme.errorRed),
             onPressed: _confirmDelete,
             tooltip: 'Delete',
           ),
@@ -914,7 +924,7 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
                   _buildSectionTitle('Vendor Verification'),
                   Card(
                     color: _vendorVerified
-                        ? Colors.green.withValues(alpha: 0.1)
+                        ? AppTheme.successGreen.withValues(alpha: 0.1)
                         : Colors.white.withValues(alpha: 0.05),
                     child: ListTile(
                       title: const Text('Vendor Verified Specs'),
@@ -927,12 +937,12 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
                         _vendorVerified
                             ? Icons.verified
                             : Icons.verified_outlined,
-                        color: _vendorVerified ? Colors.green : null,
+                        color: _vendorVerified ? AppTheme.successGreen : null,
                       ),
                       trailing: ThemedSwitch(
                         value: _vendorVerified,
                         onChanged: (v) => setState(() => _vendorVerified = v),
-                        activeColor: Colors.green,
+                        activeColor: AppTheme.successGreen,
                       ),
                     ),
                   ),
@@ -1024,7 +1034,7 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
                               Container(
                                 width: 100,
                                 height: 100,
-                                color: Colors.grey,
+                                color: SemanticColors.disabled,
                                 child: const Icon(Icons.broken_image),
                               ),
                         ),
@@ -1039,7 +1049,7 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
                           child: Container(
                             padding: const EdgeInsets.all(AppTheme.spacing4),
                             decoration: BoxDecoration(
-                              color: Colors.red,
+                              color: AppTheme.errorRed,
                               shape: BoxShape.circle,
                             ),
                             child: const Icon(
@@ -1100,7 +1110,7 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
             child: Text(
               'At least one image is required',
               style: TextStyle(
-                color: Colors.red.withValues(alpha: 0.7),
+                color: AppTheme.errorRed.withValues(alpha: 0.7),
                 fontSize: 12,
               ),
             ),

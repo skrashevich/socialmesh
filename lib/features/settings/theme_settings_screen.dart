@@ -346,7 +346,7 @@ class _ThemeSettingsScreenState extends ConsumerState<ThemeSettingsScreen>
                       data: 'socialmesh://preview',
                       size: 120,
                       style: styles[currentStyleIndex].$1,
-                      foregroundColor: const Color(0xFF1F2633),
+                      foregroundColor: AppTheme.darkBackground,
                       backgroundColor: Colors.white,
                     ),
                   ),

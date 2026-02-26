@@ -104,10 +104,10 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
     final colors = [
       const Color(0xFF5B4FCE),
       const Color(0xFFD946A6),
-      const Color(0xFF3B82F6),
+      AppTheme.graphBlue,
       const Color(0xFFF59E0B),
-      const Color(0xFFEF4444),
-      const Color(0xFF10B981),
+      AppTheme.errorRed,
+      AccentColors.emerald,
     ];
     return colors[node.nodeNum % colors.length];
   }
@@ -575,7 +575,7 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
   }
 
   Color _signalColor(int? snr) {
-    if (snr == null) return Colors.grey;
+    if (snr == null) return SemanticColors.disabled;
     if (snr >= 10) return AccentColors.green;
     if (snr >= 5) return AccentColors.green;
     if (snr >= 0) return AppTheme.warningYellow;

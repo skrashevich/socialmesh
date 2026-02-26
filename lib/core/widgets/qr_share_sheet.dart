@@ -516,7 +516,7 @@ class _AccentGradientQrContainer extends ConsumerWidget {
           data: qrData,
           size: 220,
           style: style,
-          foregroundColor: const Color(0xFF1F2633),
+          foregroundColor: AppTheme.darkBackground,
           backgroundColor: Colors.white,
         ),
       );

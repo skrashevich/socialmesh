@@ -9,6 +9,7 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:socialmesh/core/theme.dart';
 
 /// The connection state of the Global Layer broker link.
 ///
@@ -99,14 +100,14 @@ enum GlobalLayerConnectionState {
   /// These are intentionally static values rather than theme-dependent
   /// because they carry semantic meaning (green = good, red = bad).
   Color get statusColor => switch (this) {
-    disabled => const Color(0xFF9CA3AF), // grey
-    disconnected => const Color(0xFF9CA3AF), // grey
-    connecting => const Color(0xFFFBBF24), // amber
-    connected => const Color(0xFF4ADE80), // green
-    degraded => const Color(0xFFFF9D6E), // orange
-    reconnecting => const Color(0xFFFBBF24), // amber
-    disconnecting => const Color(0xFF9CA3AF), // grey
-    error => const Color(0xFFEF4444), // red
+    disabled => AppTheme.textTertiary, // grey
+    disconnected => AppTheme.textTertiary, // grey
+    connecting => AppTheme.warningYellow, // amber
+    connected => AppTheme.successGreen, // green
+    degraded => AppTheme.accentOrange, // orange
+    reconnecting => AppTheme.warningYellow, // amber
+    disconnecting => AppTheme.textTertiary, // grey
+    error => AppTheme.errorRed, // red
   };
 
   // ---------------------------------------------------------------------------

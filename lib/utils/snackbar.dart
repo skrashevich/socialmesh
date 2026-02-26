@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dart:ui';
 
 import '../core/widgets/loading_indicator.dart';
@@ -10,8 +11,8 @@ import 'package:socialmesh/core/theme.dart';
 enum SnackBarType {
   success(
     icon: Icons.check_circle_rounded,
-    backgroundColor: Color(0xFF1B5E20),
-    iconColor: Color(0xFF4CAF50),
+    backgroundColor: AppTheme.successGreen,
+    iconColor: ChartColors.green,
   ),
   error(
     icon: Icons.error_rounded,
@@ -237,7 +238,10 @@ void _showStyledSnackBar(
                   ),
                   const SizedBox(width: AppTheme.spacing8),
                   GestureDetector(
-                    onTap: () => messenger.hideCurrentSnackBar(),
+                    onTap: () {
+                      HapticFeedback.lightImpact();
+                      messenger.hideCurrentSnackBar();
+                    },
                     behavior: HitTestBehavior.opaque,
                     child: Container(
                       padding: const EdgeInsets.all(AppTheme.spacing4),

@@ -400,7 +400,7 @@ class _SellerProfileScreenState extends ConsumerState<SellerProfileScreen>
                     ),
                     if (seller.isVerified) ...[
                       const SizedBox(width: AppTheme.spacing8),
-                      Icon(Icons.verified, color: Colors.blue, size: 20),
+                      Icon(Icons.verified, color: AccentColors.blue, size: 20),
                     ],
                     if (seller.isOfficialPartner) ...[
                       const SizedBox(width: AppTheme.spacing4),
@@ -410,13 +410,13 @@ class _SellerProfileScreenState extends ConsumerState<SellerProfileScreen>
                           vertical: 2,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.amber.withValues(alpha: 0.2),
+                          color: AppTheme.warningYellow.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(AppTheme.radius4),
                         ),
                         child: Text(
                           'Official Partner',
                           style: TextStyle(
-                            color: Colors.amber,
+                            color: AppTheme.warningYellow,
                             fontSize: 10,
                             fontWeight: FontWeight.bold,
                           ),
@@ -454,7 +454,7 @@ class _SellerStats extends StatelessWidget {
         children: [
           _StatItem(
             icon: Icons.star,
-            iconColor: Colors.amber,
+            iconColor: AppTheme.warningYellow,
             value: seller.rating.toStringAsFixed(1),
             label: '${seller.reviewCount} reviews',
           ),
@@ -468,7 +468,7 @@ class _SellerStats extends StatelessWidget {
           _StatDivider(),
           _StatItem(
             icon: Icons.shopping_bag,
-            iconColor: Colors.green,
+            iconColor: AppTheme.successGreen,
             value: '${seller.salesCount}',
             label: 'Sales',
           ),

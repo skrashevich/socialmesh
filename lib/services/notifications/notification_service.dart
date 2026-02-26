@@ -5,6 +5,7 @@ import 'dart:io';
 import 'dart:ui' show Color;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import '../../models/mesh_models.dart';
+import 'package:socialmesh/core/theme.dart';
 
 /// Represents a pending message notification for batching
 class PendingMessageNotification {
@@ -398,7 +399,7 @@ class NotificationService {
           ? const Color(0xFFE53935) // Red for errors
           : isWarning
           ? const Color(0xFFFFA000) // Amber for warnings
-          : const Color(0xFF1E88E5), // Blue for info
+          : AccentColors.blue, // Blue for info
     );
 
     final iosDetails = DarwinNotificationDetails(
@@ -460,7 +461,7 @@ class NotificationService {
       groupKey: 'detection_sensors',
       playSound: playSound,
       enableVibration: vibrate,
-      color: detected ? const Color(0xFFFF6B6B) : const Color(0xFF4ECB71),
+      color: detected ? AccentColors.coral : const Color(0xFF4ECB71),
     );
 
     final iosDetails = DarwinNotificationDetails(

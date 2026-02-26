@@ -2122,12 +2122,12 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
                     width: 40,
                     height: 40,
                     decoration: BoxDecoration(
-                      color: Colors.red.withValues(alpha: 0.15),
+                      color: AppTheme.errorRed.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(AppTheme.radius10),
                     ),
                     child: Icon(
                       Icons.warning_rounded,
-                      color: Colors.red,
+                      color: AppTheme.errorRed,
                       size: 20,
                     ),
                   ),
@@ -2141,7 +2141,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
-                            color: Colors.red,
+                            color: AppTheme.errorRed,
                           ),
                         ),
                         const SizedBox(height: AppTheme.spacing2),

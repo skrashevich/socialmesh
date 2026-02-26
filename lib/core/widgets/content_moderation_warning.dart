@@ -105,13 +105,14 @@ class _ContentModerationWarningContent extends StatelessWidget {
                 width: 64,
                 height: 64,
                 decoration: BoxDecoration(
-                  color: (isBlocked ? Colors.red : Colors.orange).withAlpha(30),
+                  color: (isBlocked ? AppTheme.errorRed : AccentColors.orange)
+                      .withAlpha(30),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
                   isBlocked ? Icons.block : Icons.warning_amber_rounded,
                   size: 32,
-                  color: isBlocked ? Colors.red : Colors.orange,
+                  color: isBlocked ? AppTheme.errorRed : AccentColors.orange,
                 ),
               ),
               const SizedBox(height: AppTheme.spacing16),
@@ -283,8 +284,8 @@ class _ContentModerationWarningContent extends StatelessWidget {
                           onProceedAnyway?.call();
                         },
                         style: OutlinedButton.styleFrom(
-                          foregroundColor: Colors.orange.shade700,
-                          side: BorderSide(color: Colors.orange.shade300),
+                          foregroundColor: AccentColors.orange,
+                          side: BorderSide(color: AccentColors.orange),
                           padding: const EdgeInsets.symmetric(vertical: 14),
                         ),
                         child: const Text('Post Anyway'),

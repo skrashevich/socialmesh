@@ -1126,10 +1126,10 @@ class _NodeCard extends StatelessWidget {
     final colors = [
       const Color(0xFF5B4FCE), // Purple like 29a9
       const Color(0xFFD946A6), // Pink like 2d94
-      const Color(0xFF3B82F6), // Blue
+      AppTheme.graphBlue, // Blue
       const Color(0xFFF59E0B), // Orange
-      const Color(0xFFEF4444), // Red
-      const Color(0xFF10B981), // Green
+      AppTheme.errorRed, // Red
+      AccentColors.emerald, // Green
     ];
     return colors[node.nodeNum % colors.length];
   }

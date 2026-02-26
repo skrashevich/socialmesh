@@ -1593,18 +1593,18 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
                                                       .border
                                                       .withValues(alpha: 0.2),
                                                   color: _remainingChars < 0
-                                                      ? Colors.red
+                                                      ? AppTheme.errorRed
                                                       : _remainingChars < 20
-                                                      ? Colors.orange
+                                                      ? AccentColors.orange
                                                       : context.accentColor,
                                                 ),
                                                 Text(
                                                   '$_remainingChars',
                                                   style: TextStyle(
                                                     color: _remainingChars < 0
-                                                        ? Colors.red
+                                                        ? AppTheme.errorRed
                                                         : _remainingChars < 20
-                                                        ? Colors.orange
+                                                        ? AccentColors.orange
                                                         : context.textTertiary,
                                                     fontSize: 10,
                                                     fontWeight: FontWeight.w600,
@@ -2515,7 +2515,9 @@ class _ShortStatusField extends StatelessWidget {
             child: Text(
               '$remaining',
               style: TextStyle(
-                color: remaining < 10 ? Colors.orange : context.textTertiary,
+                color: remaining < 10
+                    ? AccentColors.orange
+                    : context.textTertiary,
                 fontSize: 11,
                 fontWeight: FontWeight.w500,
               ),

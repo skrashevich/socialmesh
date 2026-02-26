@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
+import 'package:socialmesh/core/theme.dart';
 
 /// Utility functions for signal-related UI components.
 ///
@@ -20,13 +21,13 @@ import 'package:flutter/material.dart';
 Color getSignalAgeColor(DateTime createdAt) {
   final age = DateTime.now().difference(createdAt);
   if (age.inMinutes < 5) {
-    return Colors.green;
+    return AppTheme.successGreen;
   } else if (age.inMinutes < 30) {
-    return Colors.amber;
+    return AppTheme.warningYellow;
   } else if (age.inHours < 2) {
-    return Colors.orange;
+    return AccentColors.orange;
   } else {
-    return Colors.red.shade300;
+    return AppTheme.errorRed;
   }
 }
 
@@ -37,10 +38,10 @@ Color getSignalAgeColor(DateTime createdAt) {
 /// - Amber: 1-2 hops (nearby)
 /// - Orange: 3+ hops (distant)
 Color getHopCountColor(int? hopCount) {
-  if (hopCount == null) return Colors.grey;
-  if (hopCount == 0) return Colors.green;
-  if (hopCount <= 2) return Colors.amber;
-  return Colors.orange;
+  if (hopCount == null) return SemanticColors.disabled;
+  if (hopCount == 0) return AppTheme.successGreen;
+  if (hopCount <= 2) return AppTheme.warningYellow;
+  return AccentColors.orange;
 }
 
 // =============================================================================
@@ -105,9 +106,9 @@ String formatTtlRemaining(DateTime? expiresAt, {bool compact = false}) {
 Color getTtlColor(DateTime? expiresAt) {
   if (expiresAt == null) return Colors.white38;
   final remaining = expiresAt.difference(DateTime.now());
-  if (remaining.isNegative) return Colors.red.shade300;
-  if (remaining.inMinutes < 30) return Colors.red.shade300;
-  if (remaining.inHours < 2) return Colors.orange;
+  if (remaining.isNegative) return AppTheme.errorRed;
+  if (remaining.inMinutes < 30) return AppTheme.errorRed;
+  if (remaining.inHours < 2) return AccentColors.orange;
   return Colors.white38;
 }
 

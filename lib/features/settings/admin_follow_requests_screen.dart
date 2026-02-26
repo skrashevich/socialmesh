@@ -776,13 +776,13 @@ class _SeedDataTabState extends State<_SeedDataTab>
                     Icon(
                       Icons.terminal,
                       size: 14,
-                      color: Colors.green.shade400,
+                      color: AppTheme.successGreen,
                     ),
                     const SizedBox(width: AppTheme.spacing6),
                     Text(
                       'Log',
                       style: TextStyle(
-                        color: Colors.green.shade400,
+                        color: AppTheme.successGreen,
                         fontSize: 11,
                         fontWeight: FontWeight.w600,
                       ),
@@ -794,7 +794,7 @@ class _SeedDataTabState extends State<_SeedDataTab>
                         height: 12,
                         child: CircularProgressIndicator(
                           strokeWidth: 1.5,
-                          color: Colors.green.shade400,
+                          color: AppTheme.successGreen,
                         ),
                       ),
                   ],
@@ -807,7 +807,7 @@ class _SeedDataTabState extends State<_SeedDataTab>
                     itemBuilder: (context, index) => Text(
                       _log[index],
                       style: TextStyle(
-                        color: Colors.green.shade300,
+                        color: AppTheme.successGreen,
                         fontSize: 11,
                         fontFamily: 'monospace',
                       ),

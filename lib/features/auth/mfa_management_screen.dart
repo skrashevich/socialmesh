@@ -439,16 +439,18 @@ class _MFAManagementScreenState extends ConsumerState<MFAManagementScreen>
                 Container(
                   padding: const EdgeInsets.all(AppTheme.spacing12),
                   decoration: BoxDecoration(
-                    color: Colors.orange.withOpacity(0.1),
+                    color: AccentColors.orange.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(AppTheme.radius12),
-                    border: Border.all(color: Colors.orange.withOpacity(0.3)),
+                    border: Border.all(
+                      color: AccentColors.orange.withOpacity(0.3),
+                    ),
                   ),
                   child: Row(
                     children: [
                       const Icon(
                         Icons.wifi_off,
                         size: 20,
-                        color: Colors.orange,
+                        color: AccentColors.orange,
                       ),
                       const SizedBox(width: AppTheme.spacing12),
                       Expanded(
@@ -479,7 +481,9 @@ class _MFAManagementScreenState extends ConsumerState<MFAManagementScreen>
                     Icon(
                       hasMFA ? Icons.security : Icons.security_outlined,
                       size: 48,
-                      color: hasMFA ? Colors.green : context.textSecondary,
+                      color: hasMFA
+                          ? AppTheme.successGreen
+                          : context.textSecondary,
                     ),
                     const SizedBox(width: AppTheme.spacing16),
                     Expanded(
@@ -560,7 +564,7 @@ class _MFAManagementScreenState extends ConsumerState<MFAManagementScreen>
                       trailing: IconButton(
                         icon: const Icon(
                           Icons.delete_outline,
-                          color: Colors.red,
+                          color: AppTheme.errorRed,
                         ),
                         onPressed: () => _removeFactor(factor),
                       ),

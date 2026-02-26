@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/animations.dart';
@@ -238,6 +239,7 @@ class _MeshBrainEmotionTestScreenState
 
     return GestureDetector(
       onTap: () {
+        HapticFeedback.lightImpact();
         setState(() {
           _selectedMood = mood;
         });

@@ -780,9 +780,10 @@ class _ProfileSocialScreenState extends ConsumerState<ProfileSocialScreen>
                                                   gradientColors: hasUnviewed
                                                       ? gradientColors
                                                       : [
-                                                          Colors.grey.shade500,
-                                                          Colors.grey.shade400,
-                                                          Colors.grey.shade500,
+                                                          SemanticColors.muted,
+                                                          SemanticColors
+                                                              .disabled,
+                                                          SemanticColors.muted,
                                                         ],
                                                   ringWidth: ringWidth,
                                                   backgroundColor:
@@ -817,11 +818,11 @@ class _ProfileSocialScreenState extends ConsumerState<ProfileSocialScreen>
                                                     )
                                                   : SweepGradient(
                                                       colors: [
-                                                        Colors.grey.shade500,
-                                                        Colors.grey.shade400,
-                                                        Colors.grey.shade500,
-                                                        Colors.grey.shade400,
-                                                        Colors.grey.shade500,
+                                                        SemanticColors.muted,
+                                                        SemanticColors.disabled,
+                                                        SemanticColors.muted,
+                                                        SemanticColors.disabled,
+                                                        SemanticColors.muted,
                                                       ],
                                                       stops: const [
                                                         0.0,
@@ -1643,10 +1644,13 @@ class _ProfileSocialScreenState extends ConsumerState<ProfileSocialScreen>
             ),
             if (profile.bannerUrl != null)
               ListTile(
-                leading: const Icon(Icons.delete_outline, color: Colors.red),
+                leading: const Icon(
+                  Icons.delete_outline,
+                  color: AppTheme.errorRed,
+                ),
                 title: const Text(
                   'Remove banner',
-                  style: TextStyle(color: Colors.red),
+                  style: TextStyle(color: AppTheme.errorRed),
                 ),
                 onTap: () {
                   Navigator.pop(context);
@@ -2131,7 +2135,7 @@ class _ActivityBadge extends ConsumerWidget {
           context,
         ).textTheme.labelSmall?.copyWith(fontWeight: FontWeight.bold),
       ),
-      backgroundColor: Colors.red,
+      backgroundColor: AppTheme.errorRed,
       child: child,
     );
   }

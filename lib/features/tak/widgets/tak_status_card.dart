@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// lint-allow: haptic-feedback — onTap delegates to parent callback
 import 'package:flutter/material.dart';
 
 import '../services/tak_gateway_client.dart';
@@ -64,7 +65,7 @@ class TakStatusCard extends StatelessWidget {
               Text(
                 'TAK Gateway',
                 style: theme.textTheme.labelSmall?.copyWith(
-                  color: Colors.orange.shade400,
+                  color: AccentColors.orange,
                   letterSpacing: 1.0,
                 ),
               ),
@@ -102,7 +103,7 @@ class TakStatusCard extends StatelessWidget {
             Text(
               lastError!,
               style: theme.textTheme.bodySmall?.copyWith(
-                color: Colors.red.shade300,
+                color: AppTheme.errorRed,
                 fontSize: 11,
               ),
               maxLines: 2,
@@ -137,12 +138,12 @@ class TakStatusCard extends StatelessWidget {
   Color get _stateColor {
     switch (connectionState) {
       case TakConnectionState.connected:
-        return Colors.green;
+        return AppTheme.successGreen;
       case TakConnectionState.connecting:
       case TakConnectionState.reconnecting:
-        return Colors.orange;
+        return AccentColors.orange;
       case TakConnectionState.disconnected:
-        return Colors.grey;
+        return SemanticColors.disabled;
     }
   }
 

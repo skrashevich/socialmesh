@@ -1044,6 +1044,7 @@ class _ConstellationSearchBarState extends State<_ConstellationSearchBar> {
         ),
       ),
       child: TextField(
+        onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
         maxLength: 100,
         controller: _controller,
         autofocus: true,

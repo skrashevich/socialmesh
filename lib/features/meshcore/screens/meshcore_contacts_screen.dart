@@ -384,6 +384,7 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
             title: 'Scan QR Code',
             subtitle: "Scan a contact's QR code",
             onTap: () {
+              HapticFeedback.lightImpact();
               Navigator.pop(context);
               _scanContactQr();
             },
@@ -653,6 +654,7 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
           ),
           const SizedBox(height: AppTheme.spacing16),
           TextField(
+            onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
             maxLength: 100,
             controller: controller,
             autofocus: true,
@@ -681,7 +683,7 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
                   onPressed: () => Navigator.pop(context),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
-                    side: BorderSide(color: Colors.grey.shade700),
+                    side: BorderSide(color: SemanticColors.divider),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),

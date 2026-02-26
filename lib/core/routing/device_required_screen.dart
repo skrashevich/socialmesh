@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/connection_providers.dart';
 import '../../utils/snackbar.dart';
@@ -89,13 +90,13 @@ class _DefaultDisconnectedOverlay extends StatelessWidget {
                   width: 80,
                   height: 80,
                   decoration: BoxDecoration(
-                    color: Colors.orange.withValues(alpha: 0.1),
+                    color: AccentColors.orange.withValues(alpha: 0.1),
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(
                     Icons.bluetooth_disabled,
                     size: 40,
-                    color: Colors.orange,
+                    color: AccentColors.orange,
                   ),
                 ),
                 const SizedBox(height: AppTheme.spacing24),
@@ -163,7 +164,10 @@ class DeviceRequiredInteraction extends ConsumerWidget {
 
     if (showDisabled) {
       return GestureDetector(
-        onTap: () => _showBlockedMessage(context),
+        onTap: () {
+          HapticFeedback.lightImpact();
+          _showBlockedMessage(context);
+        },
         behavior: HitTestBehavior.opaque,
         child: IgnorePointer(
           child: Opacity(opacity: disabledOpacity, child: child),
@@ -222,7 +226,7 @@ class DeviceRequiredButton extends ConsumerWidget {
           style ??
           (isConnected
               ? null
-              : FilledButton.styleFrom(backgroundColor: Colors.grey.shade600)),
+              : FilledButton.styleFrom(backgroundColor: SemanticColors.muted)),
       child: child,
     );
   }

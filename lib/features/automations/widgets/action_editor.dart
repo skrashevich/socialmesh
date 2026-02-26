@@ -167,7 +167,7 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
                         const Icon(
                           Icons.unfold_more,
                           size: 16,
-                          color: Colors.grey,
+                          color: SemanticColors.disabled,
                         ),
                       ],
                     ),
@@ -176,7 +176,7 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
                 if (widget.onDelete != null)
                   IconButton(
                     icon: const Icon(Icons.close, size: 18),
-                    color: Colors.grey,
+                    color: SemanticColors.disabled,
                     onPressed: widget.onDelete,
                     padding: EdgeInsets.zero,
                     constraints: const BoxConstraints(
@@ -631,12 +631,12 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
                     width: 36,
                     height: 36,
                     decoration: BoxDecoration(
-                      color: Colors.orange.withValues(alpha: 0.15),
+                      color: AccentColors.orange.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(AppTheme.radius10),
                     ),
                     child: Icon(
                       Icons.music_note,
-                      color: Colors.orange,
+                      color: AccentColors.orange,
                       size: 20,
                     ),
                   ),
@@ -680,9 +680,9 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
                     icon: const Icon(Icons.play_arrow, size: 18),
                     label: const Text('Preview'),
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: Colors.orange,
+                      foregroundColor: AccentColors.orange,
                       side: BorderSide(
-                        color: Colors.orange.withValues(alpha: 0.5),
+                        color: AccentColors.orange.withValues(alpha: 0.5),
                       ),
                     ),
                   ),
@@ -806,14 +806,14 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
                     height: 32,
                     decoration: BoxDecoration(
                       color: hasCustomSound
-                          ? Colors.orange.withValues(alpha: 0.15)
+                          ? AccentColors.orange.withValues(alpha: 0.15)
                           : context.card,
                       borderRadius: BorderRadius.circular(AppTheme.radius8),
                     ),
                     child: Icon(
                       Icons.music_note,
                       color: hasCustomSound
-                          ? Colors.orange
+                          ? AccentColors.orange
                           : context.textTertiary,
                       size: 18,
                     ),
@@ -937,12 +937,16 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
             ),
             child: Row(
               children: [
-                const Icon(Icons.info_outline, size: 16, color: Colors.grey),
+                const Icon(
+                  Icons.info_outline,
+                  size: 16,
+                  color: SemanticColors.disabled,
+                ),
                 const SizedBox(width: AppTheme.spacing8),
                 Expanded(
                   child: Text(
                     'Uses your IFTTT Webhook key from Settings',
-                    style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                    style: TextStyle(color: SemanticColors.muted, fontSize: 12),
                   ),
                 ),
               ],
@@ -1004,7 +1008,7 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
           children: [
             Row(
               children: [
-                Icon(Icons.lightbulb_outline, color: Colors.amber),
+                Icon(Icons.lightbulb_outline, color: AppTheme.warningYellow),
                 SizedBox(width: AppTheme.spacing8),
                 Text(
                   'Using Shortcuts',
@@ -1117,7 +1121,7 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
               style: TextStyle(
                 fontSize: 11,
                 fontFamily: AppTheme.fontFamily,
-                color: Colors.green[300],
+                color: AppTheme.successGreen,
               ),
             ),
           ),
@@ -1127,7 +1131,7 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
               description,
               style: Theme.of(
                 context,
-              ).textTheme.labelSmall?.copyWith(color: Colors.grey[400]),
+              ).textTheme.labelSmall?.copyWith(color: SemanticColors.disabled),
             ),
           ),
         ],
@@ -1154,7 +1158,7 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
                 height: 4,
                 margin: const EdgeInsets.only(bottom: 16),
                 decoration: BoxDecoration(
-                  color: Colors.grey[600],
+                  color: SemanticColors.muted,
                   borderRadius: BorderRadius.circular(AppTheme.radius2),
                 ),
               ),
@@ -1352,7 +1356,7 @@ class _SoundPickerSheetState extends State<_SoundPickerSheet>
               height: 4,
               margin: const EdgeInsets.only(top: 12, bottom: 8),
               decoration: BoxDecoration(
-                color: Colors.grey[600],
+                color: SemanticColors.muted,
                 borderRadius: BorderRadius.circular(AppTheme.radius2),
               ),
             ),
@@ -1366,10 +1370,10 @@ class _SoundPickerSheetState extends State<_SoundPickerSheet>
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: Colors.orange.withValues(alpha: 0.15),
+                    color: AccentColors.orange.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(AppTheme.radius12),
                   ),
-                  child: Icon(Icons.library_music, color: Colors.orange),
+                  child: Icon(Icons.library_music, color: AccentColors.orange),
                 ),
                 const SizedBox(width: AppTheme.spacing12),
                 Text(
@@ -1440,12 +1444,12 @@ class _SoundPickerSheetState extends State<_SoundPickerSheet>
                         Icon(
                           Icons.search_off,
                           size: 48,
-                          color: Colors.grey[600],
+                          color: SemanticColors.muted,
                         ),
                         const SizedBox(height: AppTheme.spacing12),
                         Text(
                           'No sounds found',
-                          style: TextStyle(color: Colors.grey[500]),
+                          style: TextStyle(color: SemanticColors.muted),
                         ),
                       ],
                     ),
@@ -1470,14 +1474,14 @@ class _SoundPickerSheetState extends State<_SoundPickerSheet>
                             ),
                             decoration: BoxDecoration(
                               color: isSelected
-                                  ? Colors.orange.withValues(alpha: 0.15)
+                                  ? AccentColors.orange.withValues(alpha: 0.15)
                                   : context.card,
                               borderRadius: BorderRadius.circular(
                                 AppTheme.radius12,
                               ),
                               border: Border.all(
                                 color: isSelected
-                                    ? Colors.orange
+                                    ? AccentColors.orange
                                     : context.border,
                               ),
                             ),
@@ -1488,7 +1492,9 @@ class _SoundPickerSheetState extends State<_SoundPickerSheet>
                                   height: 36,
                                   decoration: BoxDecoration(
                                     color: isSelected
-                                        ? Colors.orange.withValues(alpha: 0.2)
+                                        ? AccentColors.orange.withValues(
+                                            alpha: 0.2,
+                                          )
                                         : context.background,
                                     borderRadius: BorderRadius.circular(
                                       AppTheme.radius10,
@@ -1497,7 +1503,7 @@ class _SoundPickerSheetState extends State<_SoundPickerSheet>
                                   child: Icon(
                                     Icons.music_note,
                                     color: isSelected
-                                        ? Colors.orange
+                                        ? AccentColors.orange
                                         : context.textSecondary,
                                     size: 20,
                                   ),
@@ -1513,7 +1519,7 @@ class _SoundPickerSheetState extends State<_SoundPickerSheet>
                                         style: TextStyle(
                                           fontWeight: FontWeight.w500,
                                           color: isSelected
-                                              ? Colors.orange
+                                              ? AccentColors.orange
                                               : context.textPrimary,
                                         ),
                                       ),
@@ -1535,14 +1541,14 @@ class _SoundPickerSheetState extends State<_SoundPickerSheet>
                                       : Icon(
                                           Icons.play_circle_outline,
                                           color: isSelected
-                                              ? Colors.orange
+                                              ? AccentColors.orange
                                               : context.textSecondary,
                                         ),
                                 ),
                                 if (isSelected)
                                   const Icon(
                                     Icons.check_circle,
-                                    color: Colors.orange,
+                                    color: AccentColors.orange,
                                   ),
                               ],
                             ),

@@ -3259,7 +3259,7 @@ class _TakEntityListItem extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: isStale
                                 ? context.textTertiary
-                                : Colors.green,
+                                : AppTheme.successGreen,
                             shape: BoxShape.circle,
                           ),
                         ),
@@ -3432,15 +3432,20 @@ class _TakEntityInfoCard extends StatelessWidget {
                           vertical: 2,
                         ),
                         decoration: BoxDecoration(
-                          color: (isStale ? Colors.red : Colors.green)
-                              .withValues(alpha: 0.15),
+                          color:
+                              (isStale
+                                      ? AppTheme.errorRed
+                                      : AppTheme.successGreen)
+                                  .withValues(alpha: 0.15),
                           borderRadius: BorderRadius.circular(AppTheme.radius6),
                         ),
                         child: Text(
                           isStale ? 'STALE' : 'ACTIVE',
                           style: TextStyle(
                             fontSize: 10,
-                            color: isStale ? Colors.red : Colors.green,
+                            color: isStale
+                                ? AppTheme.errorRed
+                                : AppTheme.successGreen,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

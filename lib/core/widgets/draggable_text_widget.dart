@@ -210,7 +210,7 @@ class _StoryTextEditorState extends State<StoryTextEditor> {
     Colors.black,
     Color(0xFFFF3B30), // Red
     Color(0xFFFF9500), // Orange
-    Color(0xFFFFCC00), // Yellow
+    AccentColors.goldDarkYellow, // Yellow
     Color(0xFF34C759), // Green
     Color(0xFF00C7BE), // Teal
     Color(0xFF007AFF), // Blue

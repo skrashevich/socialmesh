@@ -743,7 +743,7 @@ class _PartnersSection extends ConsumerWidget {
               ),
               child: Row(
                 children: [
-                  Icon(Icons.verified, color: Colors.blue, size: 20),
+                  Icon(Icons.verified, color: AccentColors.blue, size: 20),
                   const SizedBox(width: AppTheme.spacing8),
                   Text(
                     'Official Partners',
@@ -1064,7 +1064,7 @@ class _OnSaleSection extends ConsumerWidget {
           titleIcon: Icons.local_offer,
           products: onSale.take(10).toList(),
           onSeeAll: null,
-          highlightColor: Colors.red,
+          highlightColor: AppTheme.errorRed,
         );
       },
     );
@@ -1211,7 +1211,7 @@ class _ProductCardState extends ConsumerState<ProductCard>
               borderRadius: BorderRadius.circular(AppTheme.radius12),
               border: Border.all(
                 color: widget.product.isOnSale
-                    ? (widget.highlightColor ?? Colors.red).withValues(
+                    ? (widget.highlightColor ?? AppTheme.errorRed).withValues(
                         alpha: 0.5,
                       )
                     : context.border,
@@ -1298,7 +1298,7 @@ class _ProductCardState extends ConsumerState<ProductCard>
                             vertical: 2,
                           ),
                           decoration: BoxDecoration(
-                            color: widget.highlightColor ?? Colors.red,
+                            color: widget.highlightColor ?? AppTheme.errorRed,
                             borderRadius: BorderRadius.circular(
                               AppTheme.radius4,
                             ),
@@ -1324,7 +1324,9 @@ class _ProductCardState extends ConsumerState<ProductCard>
                             isFavorite
                                 ? Icons.favorite
                                 : Icons.favorite_outline,
-                            color: isFavorite ? Colors.red : Colors.white,
+                            color: isFavorite
+                                ? AppTheme.errorRed
+                                : Colors.white,
                             size: 20,
                           ),
                           onPressed: () => _toggleFavorite(user?.uid),
@@ -1412,7 +1414,11 @@ class _ProductCardState extends ConsumerState<ProductCard>
                           SizedBox(height: AppTheme.spacing4),
                           Row(
                             children: [
-                              Icon(Icons.star, color: Colors.amber, size: 14),
+                              Icon(
+                                Icons.star,
+                                color: AppTheme.warningYellow,
+                                size: 14,
+                              ),
                               const SizedBox(width: AppTheme.spacing2),
                               Text(
                                 widget.product.rating.toStringAsFixed(1),

@@ -661,6 +661,8 @@ class _MeshCoreChatScreenState extends ConsumerState<MeshCoreChatScreen>
         children: [
           Expanded(
             child: TextField(
+              onTapOutside: (_) =>
+                  FocusManager.instance.primaryFocus?.unfocus(),
               maxLength: 500,
               controller: _messageController,
               focusNode: _focusNode,

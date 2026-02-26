@@ -216,6 +216,8 @@ class _ReviewModerationCardState extends ConsumerState<_ReviewModerationCard>
             ),
             const SizedBox(height: AppTheme.spacing16),
             TextField(
+              onTapOutside: (_) =>
+                  FocusManager.instance.primaryFocus?.unfocus(),
               controller: reasonController,
               decoration: const InputDecoration(
                 labelText: 'Reason for rejection',
@@ -234,7 +236,7 @@ class _ReviewModerationCardState extends ConsumerState<_ReviewModerationCard>
                     onPressed: () => Navigator.pop(sheetContext),
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
-                      side: BorderSide(color: Colors.grey.shade700),
+                      side: BorderSide(color: SemanticColors.divider),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(AppTheme.radius12),
                       ),
@@ -453,7 +455,7 @@ class _ReviewModerationCardState extends ConsumerState<_ReviewModerationCard>
                       i < widget.review.rating
                           ? Icons.star
                           : Icons.star_outline,
-                      color: Colors.amber,
+                      color: AppTheme.warningYellow,
                       size: 16,
                     ),
                   ),
@@ -497,8 +499,8 @@ class _ReviewModerationCardState extends ConsumerState<_ReviewModerationCard>
                       icon: const Icon(Icons.close),
                       label: const Text('Reject'),
                       style: OutlinedButton.styleFrom(
-                        foregroundColor: Colors.red,
-                        side: const BorderSide(color: Colors.red),
+                        foregroundColor: AppTheme.errorRed,
+                        side: const BorderSide(color: AppTheme.errorRed),
                       ),
                     ),
                   ),
@@ -509,7 +511,7 @@ class _ReviewModerationCardState extends ConsumerState<_ReviewModerationCard>
                       icon: const Icon(Icons.check),
                       label: const Text('Approve'),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
+                        backgroundColor: AppTheme.successGreen,
                         foregroundColor: Colors.white,
                       ),
                     ),
@@ -518,7 +520,7 @@ class _ReviewModerationCardState extends ConsumerState<_ReviewModerationCard>
                   IconButton(
                     onPressed: _delete,
                     icon: const Icon(Icons.delete_outline),
-                    color: Colors.red,
+                    color: AppTheme.errorRed,
                   ),
                 ],
               )
@@ -534,12 +536,12 @@ class _ReviewModerationCardState extends ConsumerState<_ReviewModerationCard>
                     ),
                     decoration: BoxDecoration(
                       color: widget.review.status == 'approved'
-                          ? Colors.green.withValues(alpha: 0.2)
+                          ? AppTheme.successGreen.withValues(alpha: 0.2)
                           : widget.review.status == 'rejected'
-                          ? Colors.red.withValues(alpha: 0.2)
+                          ? AppTheme.errorRed.withValues(alpha: 0.2)
                           : widget.review.status == 'legacy'
-                          ? Colors.orange.withValues(alpha: 0.2)
-                          : Colors.grey.withValues(alpha: 0.2),
+                          ? AccentColors.orange.withValues(alpha: 0.2)
+                          : SemanticColors.disabled.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(AppTheme.radius8),
                     ),
                     child: Text(
@@ -550,12 +552,12 @@ class _ReviewModerationCardState extends ConsumerState<_ReviewModerationCard>
                         fontSize: 11,
                         fontWeight: FontWeight.w600,
                         color: widget.review.status == 'approved'
-                            ? Colors.green
+                            ? AppTheme.successGreen
                             : widget.review.status == 'rejected'
-                            ? Colors.red
+                            ? AppTheme.errorRed
                             : widget.review.status == 'legacy'
-                            ? Colors.orange
-                            : Colors.grey,
+                            ? AccentColors.orange
+                            : SemanticColors.disabled,
                       ),
                     ),
                   ),
@@ -565,7 +567,7 @@ class _ReviewModerationCardState extends ConsumerState<_ReviewModerationCard>
                     icon: const Icon(Icons.delete_outline),
                     label: const Text('Delete'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
+                      backgroundColor: AppTheme.errorRed,
                       foregroundColor: Colors.white,
                     ),
                   ),

@@ -19,6 +19,7 @@
 // wire flows through them left-to-right.
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../../features/automations/models/automation.dart';
 import '../interfaces/event_signal_interface.dart';
@@ -763,7 +764,10 @@ class _DayOfWeekSelectorState extends State<_DayOfWeekSelector> {
       children: List.generate(7, (index) {
         final isSelected = _selected.contains(index);
         return GestureDetector(
-          onTap: () => _toggle(index),
+          onTap: () {
+            HapticFeedback.lightImpact();
+            _toggle(index);
+          },
           child: Container(
             width: _chipSize,
             height: _chipSize,

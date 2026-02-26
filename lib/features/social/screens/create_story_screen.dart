@@ -1320,7 +1320,7 @@ class _CreateStoryScreenState extends ConsumerState<CreateStoryScreen>
     Colors.black,
     Color(0xFFFF3B30),
     Color(0xFFFF9500),
-    Color(0xFFFFCC00),
+    AccentColors.goldDarkYellow,
     Color(0xFF34C759),
     Color(0xFF00C7BE),
     Color(0xFF007AFF),
@@ -1395,14 +1395,14 @@ class _CreateStoryScreenState extends ConsumerState<CreateStoryScreen>
           children: [
             Icon(
               icon,
-              color: isDestructive ? Colors.red : Colors.white,
+              color: isDestructive ? AppTheme.errorRed : Colors.white,
               size: 20,
             ),
             const SizedBox(width: AppTheme.spacing8),
             Text(
               label,
               style: TextStyle(
-                color: isDestructive ? Colors.red : Colors.white,
+                color: isDestructive ? AppTheme.errorRed : Colors.white,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -1503,7 +1503,7 @@ class _CreateStoryScreenState extends ConsumerState<CreateStoryScreen>
                     gradient: _isUploading
                         ? null
                         : AppTheme.brandGradientHorizontal,
-                    color: _isUploading ? Colors.grey : null,
+                    color: _isUploading ? SemanticColors.disabled : null,
                     borderRadius: BorderRadius.circular(AppTheme.radius24),
                   ),
                   child: _isUploading
@@ -1641,7 +1641,7 @@ class _MediaThumbnailState extends State<_MediaThumbnail>
           if (_thumbnailData != null)
             Image.memory(_thumbnailData!, fit: BoxFit.cover)
           else
-            Container(color: Colors.grey[900]),
+            Container(color: SemanticColors.placeholder),
 
           // Video indicator
           if (widget.asset.type == AssetType.video)
@@ -1756,7 +1756,7 @@ class _AlbumListTileState extends State<_AlbumListTile>
           child: _thumbnailData != null
               ? Image.memory(_thumbnailData!, fit: BoxFit.cover)
               : Container(
-                  color: Colors.grey[800],
+                  color: SemanticColors.placeholder,
                   child: const Icon(Icons.photo_album, color: Colors.white54),
                 ),
         ),

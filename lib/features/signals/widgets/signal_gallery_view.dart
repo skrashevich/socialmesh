@@ -880,7 +880,7 @@ class _BottomInfoOverlay extends ConsumerWidget {
       return const _InfoBadge(
         icon: Icons.timer_off,
         label: 'Expired',
-        color: Colors.red,
+        color: AppTheme.errorRed,
       );
     }
 
@@ -892,7 +892,7 @@ class _BottomInfoOverlay extends ConsumerWidget {
 
     if (minutes < 5) {
       label = '${remaining.inMinutes}m left';
-      color = Colors.red;
+      color = AppTheme.errorRed;
     } else if (minutes < 30) {
       label = '${minutes}m left';
       color = AppTheme.warningYellow;

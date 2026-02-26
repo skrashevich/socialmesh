@@ -268,8 +268,8 @@ class _CardBack extends StatelessWidget {
       height: height,
       decoration: BoxDecoration(
         color: context.isDarkMode
-            ? const Color(0xFF1A1F2E)
-            : const Color(0xFFF0F2F5),
+            ? AppTheme.textPrimaryLight
+            : AppTheme.lightCardAlt,
         borderRadius: BorderRadius.circular(AlbumConstants.slotBorderRadius),
         border: Border.all(
           color: rarity.borderColor,

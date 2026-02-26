@@ -671,14 +671,20 @@ class _TimelineActivityTile extends ConsumerWidget {
   /// Returns the appropriate icon and color for the activity type
   Widget _buildActivityIcon(BuildContext context) {
     final (IconData icon, Color color) = switch (activity.type) {
-      SocialActivityType.signalLike => (Icons.favorite, Colors.redAccent),
-      SocialActivityType.signalComment => (Icons.chat_bubble, Colors.blue),
+      SocialActivityType.signalLike => (Icons.favorite, AppTheme.errorRed),
+      SocialActivityType.signalComment => (
+        Icons.chat_bubble,
+        AccentColors.blue,
+      ),
       SocialActivityType.signalCommentReply => (
         Icons.chat_bubble_outline,
-        Colors.blue,
+        AccentColors.blue,
       ),
-      SocialActivityType.signalResponseVote => (Icons.thumb_up, Colors.green),
-      _ => (Icons.notifications, Colors.grey),
+      SocialActivityType.signalResponseVote => (
+        Icons.thumb_up,
+        AppTheme.successGreen,
+      ),
+      _ => (Icons.notifications, SemanticColors.disabled),
     };
 
     return Container(
@@ -756,8 +762,8 @@ class _TimelineActivityTile extends ConsumerWidget {
       background: Container(
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.only(right: 20),
-        color: Colors.red.withValues(alpha: 0.2),
-        child: const Icon(Icons.delete_outline, color: Colors.red),
+        color: AppTheme.errorRed.withValues(alpha: 0.2),
+        child: const Icon(Icons.delete_outline, color: AppTheme.errorRed),
       ),
       onDismissed: (_) => onDismiss(),
       child: InkWell(

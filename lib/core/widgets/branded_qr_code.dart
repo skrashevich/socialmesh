@@ -44,7 +44,7 @@ class BrandedQrCode extends StatelessWidget {
     required this.data,
     this.size = 200,
     this.backgroundColor = Colors.white,
-    this.foregroundColor = const Color(0xFF1F2633),
+    this.foregroundColor = AppTheme.darkBackground,
     this.style = QrStyle.dots,
     this.showLogo = true,
   });

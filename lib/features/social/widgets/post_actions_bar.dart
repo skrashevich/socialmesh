@@ -206,7 +206,7 @@ class _LikeButtonState extends ConsumerState<_LikeButton>
             onTap: () => _handleLike(isLiked),
             iconSize: widget.iconSize,
             color: isLiked
-                ? Colors.red
+                ? AppTheme.errorRed
                 : theme.colorScheme.onSurface.withAlpha(180),
           ),
         );

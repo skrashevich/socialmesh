@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:socialmesh/core/theme.dart';
 
 /// A wrapper that detects double-taps and shows a heart burst animation
 class DoubleTapLikeWrapper extends StatefulWidget {
@@ -176,7 +177,7 @@ class _HeartBurstState extends State<_HeartBurst>
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.red.withValues(alpha: 0.6),
+                          color: AppTheme.errorRed.withValues(alpha: 0.6),
                           blurRadius: 20,
                           spreadRadius: 5,
                         ),
@@ -184,7 +185,7 @@ class _HeartBurstState extends State<_HeartBurst>
                     ),
                     child: const Icon(
                       Icons.favorite,
-                      color: Colors.red,
+                      color: AppTheme.errorRed,
                       size: 50,
                     ),
                   ),
@@ -209,7 +210,7 @@ class _HeartBurstState extends State<_HeartBurst>
                     opacity: opacity * _opacityAnimation.value,
                     child: Icon(
                       Icons.favorite,
-                      color: Colors.red.shade300,
+                      color: AppTheme.errorRed,
                       size: particle.size,
                     ),
                   ),

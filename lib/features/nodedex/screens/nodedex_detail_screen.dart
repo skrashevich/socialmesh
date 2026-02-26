@@ -850,7 +850,7 @@ class _SigilHeroSectionState extends ConsumerState<_SigilHeroSection> {
                       result: widget.patinaResult!,
                       accentColor:
                           widget.entry.sigil?.primaryColor ??
-                          const Color(0xFF9CA3AF),
+                          AppTheme.textTertiary,
                     ),
                   ],
 
@@ -2010,9 +2010,9 @@ class _EncounterBarChart extends StatelessWidget {
   static Color _signalColor(BuildContext context, String level) {
     switch (level) {
       case 'good':
-        return const Color(0xFF4ADE80); // green
+        return AppTheme.successGreen; // green
       case 'mid':
-        return const Color(0xFFFBBF24); // amber
+        return AppTheme.warningYellow; // amber
       case 'weak':
         return const Color(0xFFF87171); // red
       default:
@@ -2102,12 +2102,12 @@ class _SingleDaySummary extends StatelessWidget {
                   if (strong > 0)
                     Expanded(
                       flex: strong,
-                      child: Container(color: const Color(0xFF4ADE80)),
+                      child: Container(color: AppTheme.successGreen),
                     ),
                   if (fair > 0)
                     Expanded(
                       flex: fair,
-                      child: Container(color: const Color(0xFFFBBF24)),
+                      child: Container(color: AppTheme.warningYellow),
                     ),
                   if (weak > 0)
                     Expanded(
@@ -2131,11 +2131,11 @@ class _SingleDaySummary extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               if (strong > 0) ...[
-                _LegendDot(color: const Color(0xFF4ADE80), label: '$strong'),
+                _LegendDot(color: AppTheme.successGreen, label: '$strong'),
                 const SizedBox(width: AppTheme.spacing10),
               ],
               if (fair > 0) ...[
-                _LegendDot(color: const Color(0xFFFBBF24), label: '$fair'),
+                _LegendDot(color: AppTheme.warningYellow, label: '$fair'),
                 const SizedBox(width: AppTheme.spacing10),
               ],
               if (weak > 0) ...[
@@ -2422,8 +2422,8 @@ class _CompactEncounterRow extends StatelessWidget {
     if (encounter.snr == null) {
       return context.textTertiary.withValues(alpha: 0.4);
     }
-    if (encounter.snr! >= 5) return const Color(0xFF4ADE80);
-    if (encounter.snr! >= -5) return const Color(0xFFFBBF24);
+    if (encounter.snr! >= 5) return AppTheme.successGreen;
+    if (encounter.snr! >= -5) return AppTheme.warningYellow;
     return const Color(0xFFF87171);
   }
 

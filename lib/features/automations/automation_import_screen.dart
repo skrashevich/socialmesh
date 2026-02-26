@@ -300,7 +300,7 @@ class _AutomationImportScreenState extends ConsumerState<AutomationImportScreen>
                               Text(
                                 automation.description!,
                                 style: Theme.of(context).textTheme.bodyMedium
-                                    ?.copyWith(color: Colors.grey[400]),
+                                    ?.copyWith(color: SemanticColors.disabled),
                               ),
                           ],
                         ),
@@ -334,7 +334,7 @@ class _AutomationImportScreenState extends ConsumerState<AutomationImportScreen>
                           Icon(
                             action.type.icon,
                             size: 16,
-                            color: Colors.grey[400],
+                            color: SemanticColors.disabled,
                           ),
                           const SizedBox(width: AppTheme.spacing8),
                           Expanded(

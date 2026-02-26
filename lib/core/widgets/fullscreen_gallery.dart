@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // lint-allow: scaffold — immersive fullscreen black gallery overlay
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../safety/safe_image.dart';
 import 'package:socialmesh/core/theme.dart';
@@ -75,7 +76,10 @@ class _FullscreenGalleryState extends State<FullscreenGallery> {
         children: [
           // Image PageView — fills the entire screen
           GestureDetector(
-            onTap: () => Navigator.of(context).pop(),
+            onTap: () {
+              HapticFeedback.lightImpact();
+              Navigator.of(context).pop();
+            },
             child: PageView.builder(
               controller: _controller,
               itemCount: widget.images.length,

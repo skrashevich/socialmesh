@@ -417,7 +417,7 @@ class _GlyphTestScreenState extends ConsumerState<GlyphTestScreen>
           icon: Icon(
             Icons.power_settings_new,
             color: _matrixState.any((row) => row.any((v) => v > 0))
-                ? Colors.redAccent
+                ? AppTheme.errorRed
                 : Colors.white30,
           ),
           onPressed: _turnOff,
@@ -468,7 +468,7 @@ class _GlyphTestScreenState extends ConsumerState<GlyphTestScreen>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.error_outline, size: 64, color: Colors.redAccent),
+            Icon(Icons.error_outline, size: 64, color: AppTheme.errorRed),
             SizedBox(height: AppTheme.spacing16),
             Text(
               'INIT FAILED',
@@ -1491,7 +1491,7 @@ class _GlyphMatrixPainter extends CustomPainter {
           final ledPaint = Paint()
             ..color = Color.lerp(
               const Color(0xFF1C1C1C),
-              const Color(0xFFFFFFFF),
+              Colors.white,
               brightness,
             )!;
           canvas.drawCircle(ledCenter, ledRadius, ledPaint);

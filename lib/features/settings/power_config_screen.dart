@@ -305,6 +305,10 @@ class _PowerConfigScreenState extends ConsumerState<PowerConfigScreen>
                                 SizedBox(
                                   width: 80,
                                   child: TextFormField(
+                                    onTapOutside: (_) => FocusManager
+                                        .instance
+                                        .primaryFocus
+                                        ?.unfocus(),
                                     maxLength: 10,
                                     key: ValueKey(
                                       'adc_${_adcMultiplier.toStringAsFixed(2)}',

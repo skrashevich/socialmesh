@@ -223,17 +223,17 @@ class _PortalViewState extends ConsumerState<PortalView>
 
   Color _localColor(GlobalLayerConnectionState state) {
     return switch (state) {
-      GlobalLayerConnectionState.connected => const Color(0xFF4ADE80),
-      GlobalLayerConnectionState.degraded => const Color(0xFFFF9D6E),
-      _ => const Color(0xFF9CA3AF),
+      GlobalLayerConnectionState.connected => AppTheme.successGreen,
+      GlobalLayerConnectionState.degraded => AppTheme.accentOrange,
+      _ => AppTheme.textTertiary,
     };
   }
 
   Color _remoteColor(GlobalLayerConnectionState state) {
     return switch (state) {
       GlobalLayerConnectionState.connected => const Color(0xFF60A5FA),
-      GlobalLayerConnectionState.degraded => const Color(0xFFFBBF24),
-      _ => const Color(0xFF9CA3AF),
+      GlobalLayerConnectionState.degraded => AppTheme.warningYellow,
+      _ => AppTheme.textTertiary,
     };
   }
 }

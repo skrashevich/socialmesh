@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -208,7 +209,10 @@ class _PostImages extends StatelessWidget {
 
     if (imageUrls.length == 1) {
       return GestureDetector(
-        onTap: () => FullscreenGallery.show(context, images: imageUrls),
+        onTap: () {
+          HapticFeedback.lightImpact();
+          FullscreenGallery.show(context, images: imageUrls);
+        },
         child: ClipRRect(
           borderRadius: BorderRadius.circular(AppTheme.radius12),
           child: AspectRatio(

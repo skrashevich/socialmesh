@@ -193,7 +193,9 @@ class TakEventDetailScreen extends ConsumerWidget {
                 event.isStale ? 'STALE' : 'ACTIVE',
                 dimStyle,
                 valueStyle?.copyWith(
-                  color: event.isStale ? Colors.red : Colors.green,
+                  color: event.isStale
+                      ? AppTheme.errorRed
+                      : AppTheme.successGreen,
                 ),
               ),
             ], helpKey: 'timestamps'),
@@ -385,15 +387,14 @@ class _HeaderCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
-              color: (isStale ? Colors.red : Colors.green).withValues(
-                alpha: 0.15,
-              ),
+              color: (isStale ? AppTheme.errorRed : AppTheme.successGreen)
+                  .withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(AppTheme.radius8),
             ),
             child: Text(
               isStale ? 'STALE' : 'ACTIVE',
               style: theme.textTheme.labelSmall?.copyWith(
-                color: isStale ? Colors.red : Colors.green,
+                color: isStale ? AppTheme.errorRed : AppTheme.successGreen,
                 fontWeight: FontWeight.bold,
               ),
             ),

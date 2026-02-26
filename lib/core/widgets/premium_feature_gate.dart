@@ -78,12 +78,12 @@ class PremiumBadge extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Colors.amber.shade400, Colors.orange.shade600],
+          colors: [AppTheme.warningYellow, AccentColors.orange],
         ),
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(
-            color: Colors.amber.withValues(alpha: 0.3),
+            color: AppTheme.warningYellow.withValues(alpha: 0.3),
             blurRadius: 4,
             spreadRadius: 1,
           ),
@@ -108,7 +108,7 @@ class PremiumChip extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.amber.shade400, Colors.orange.shade600],
+            colors: [AppTheme.warningYellow, AccentColors.orange],
           ),
           borderRadius: BorderRadius.circular(AppTheme.radius8),
         ),
@@ -120,7 +120,7 @@ class PremiumChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [Colors.amber.shade400, Colors.orange.shade600],
+          colors: [AppTheme.warningYellow, AccentColors.orange],
         ),
         borderRadius: BorderRadius.circular(AppTheme.radius12),
       ),

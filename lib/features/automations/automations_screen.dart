@@ -327,7 +327,7 @@ class AutomationsScreen extends ConsumerWidget {
           padding: const EdgeInsets.only(left: 4),
           child: Row(
             children: [
-              Icon(Icons.flash_on, size: 18, color: Colors.amber),
+              Icon(Icons.flash_on, size: 18, color: AppTheme.warningYellow),
               const SizedBox(width: AppTheme.spacing6),
               Text(
                 'Quick Start Templates',
@@ -418,17 +418,17 @@ class AutomationsScreen extends ConsumerWidget {
   Color _getTemplateColor(String templateId) {
     switch (templateId) {
       case 'low_battery_alert':
-        return Colors.amber;
+        return AppTheme.warningYellow;
       case 'node_offline_alert':
-        return Colors.red;
+        return AppTheme.errorRed;
       case 'geofence_exit':
-        return Colors.purple;
+        return AccentColors.purple;
       case 'sos_response':
-        return Colors.red.shade700;
+        return AppTheme.errorRed;
       case 'dead_mans_switch':
-        return Colors.orange;
+        return AccentColors.orange;
       default:
-        return Colors.blue;
+        return AccentColors.blue;
     }
   }
 
@@ -590,23 +590,23 @@ class AutomationsScreen extends ConsumerWidget {
   Color _categoryColor(BuildContext context, String category) {
     switch (category) {
       case 'Node Status':
-        return Colors.blue;
+        return AccentColors.blue;
       case 'Battery':
-        return Colors.amber;
+        return AppTheme.warningYellow;
       case 'Messages':
-        return Colors.green;
+        return AppTheme.successGreen;
       case 'Location':
-        return Colors.purple;
+        return AccentColors.purple;
       case 'Time':
-        return Colors.cyan;
+        return AccentColors.cyan;
       case 'Signal':
-        return Colors.orange;
+        return AccentColors.orange;
       case 'Sensors':
-        return Colors.red;
+        return AppTheme.errorRed;
       case 'Manual':
         return Theme.of(context).colorScheme.primary;
       default:
-        return Colors.grey;
+        return SemanticColors.disabled;
     }
   }
 
@@ -700,7 +700,7 @@ class AutomationsScreen extends ConsumerWidget {
   }) {
     return Column(
       children: [
-        Icon(icon, size: 24, color: color ?? Colors.grey),
+        Icon(icon, size: 24, color: color ?? SemanticColors.disabled),
         const SizedBox(height: AppTheme.spacing4),
         Text(
           value,
@@ -713,7 +713,7 @@ class AutomationsScreen extends ConsumerWidget {
           label,
           style: Theme.of(
             context,
-          ).textTheme.bodySmall?.copyWith(color: Colors.grey),
+          ).textTheme.bodySmall?.copyWith(color: SemanticColors.disabled),
         ),
       ],
     );
@@ -898,7 +898,7 @@ class AutomationsScreen extends ConsumerWidget {
                 height: 4,
                 margin: const EdgeInsets.symmetric(vertical: 12),
                 decoration: BoxDecoration(
-                  color: Colors.grey[600],
+                  color: SemanticColors.muted,
                   borderRadius: BorderRadius.circular(AppTheme.radius2),
                 ),
               ),
@@ -930,7 +930,7 @@ class AutomationsScreen extends ConsumerWidget {
                     ? const Center(
                         child: Text(
                           'No executions yet',
-                          style: TextStyle(color: Colors.grey),
+                          style: TextStyle(color: SemanticColors.disabled),
                         ),
                       )
                     : ListView.builder(
@@ -954,7 +954,7 @@ class AutomationsScreen extends ConsumerWidget {
                             trailing: Text(
                               _formatTime(entry.timestamp),
                               style: const TextStyle(
-                                color: Colors.grey,
+                                color: SemanticColors.disabled,
                                 fontSize: 12,
                               ),
                             ),
@@ -1031,7 +1031,7 @@ class _AddAutomationSheet extends ConsumerWidget {
               height: 4,
               margin: const EdgeInsets.symmetric(vertical: 12),
               decoration: BoxDecoration(
-                color: Colors.grey[600],
+                color: SemanticColors.muted,
                 borderRadius: BorderRadius.circular(AppTheme.radius2),
               ),
             ),
@@ -1162,7 +1162,7 @@ class _AddAutomationSheet extends ConsumerWidget {
           padding: const EdgeInsets.only(left: 4),
           child: Row(
             children: [
-              Icon(Icons.flash_on, size: 18, color: Colors.amber),
+              Icon(Icons.flash_on, size: 18, color: AppTheme.warningYellow),
               const SizedBox(width: AppTheme.spacing6),
               Text(
                 'Quick Start Templates',
@@ -1253,17 +1253,17 @@ class _AddAutomationSheet extends ConsumerWidget {
   Color _getTemplateColor(String templateId) {
     switch (templateId) {
       case 'low_battery_alert':
-        return Colors.amber;
+        return AppTheme.warningYellow;
       case 'node_offline_alert':
-        return Colors.red;
+        return AppTheme.errorRed;
       case 'geofence_exit':
-        return Colors.purple;
+        return AccentColors.purple;
       case 'sos_response':
-        return Colors.red.shade700;
+        return AppTheme.errorRed;
       case 'dead_mans_switch':
-        return Colors.orange;
+        return AccentColors.orange;
       default:
-        return Colors.blue;
+        return AccentColors.blue;
     }
   }
 
@@ -1401,23 +1401,23 @@ class _AddAutomationSheet extends ConsumerWidget {
   Color _categoryColor(BuildContext context, String category) {
     switch (category) {
       case 'Node Status':
-        return Colors.blue;
+        return AccentColors.blue;
       case 'Battery':
-        return Colors.amber;
+        return AppTheme.warningYellow;
       case 'Messages':
-        return Colors.green;
+        return AppTheme.successGreen;
       case 'Location':
-        return Colors.purple;
+        return AccentColors.purple;
       case 'Time':
-        return Colors.cyan;
+        return AccentColors.cyan;
       case 'Signal':
-        return Colors.orange;
+        return AccentColors.orange;
       case 'Sensors':
-        return Colors.red;
+        return AppTheme.errorRed;
       case 'Manual':
         return Theme.of(context).colorScheme.primary;
       default:
-        return Colors.grey;
+        return SemanticColors.disabled;
     }
   }
 }

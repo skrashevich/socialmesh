@@ -462,10 +462,13 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen>
           children: [
             if (isOwnPost)
               ListTile(
-                leading: const Icon(Icons.delete_outline, color: Colors.red),
+                leading: const Icon(
+                  Icons.delete_outline,
+                  color: AppTheme.errorRed,
+                ),
                 title: const Text(
                   'Delete Post',
-                  style: TextStyle(color: Colors.red),
+                  style: TextStyle(color: AppTheme.errorRed),
                 ),
                 onTap: () {
                   Navigator.pop(ctx);
@@ -637,7 +640,7 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen>
                     onPressed: () => Navigator.pop(sheetContext),
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
-                      side: BorderSide(color: Colors.grey.shade700),
+                      side: BorderSide(color: SemanticColors.divider),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(AppTheme.radius12),
                       ),
@@ -939,7 +942,9 @@ class _CommentTileState extends ConsumerState<_CommentTile>
                 child: Icon(
                   _isLiked ? Icons.favorite : Icons.favorite_border,
                   size: isReply ? 14 : 16,
-                  color: _isLiked ? Colors.red : theme.hintColor.withAlpha(150),
+                  color: _isLiked
+                      ? AppTheme.errorRed
+                      : theme.hintColor.withAlpha(150),
                 ),
               ),
             ),
@@ -1509,7 +1514,7 @@ Future<String?> _showReportReasonSheet(BuildContext context) {
                     onPressed: () => Navigator.pop(context),
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
-                      side: BorderSide(color: Colors.grey.shade700),
+                      side: BorderSide(color: SemanticColors.divider),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(AppTheme.radius12),
                       ),

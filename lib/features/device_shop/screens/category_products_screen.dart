@@ -507,7 +507,7 @@ class _ProductGridCard extends ConsumerWidget {
                           vertical: 2,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.red,
+                          color: AppTheme.errorRed,
                           borderRadius: BorderRadius.circular(AppTheme.radius4),
                         ),
                         child: Text(
@@ -601,7 +601,11 @@ class _ProductGridCard extends ConsumerWidget {
                       SizedBox(height: AppTheme.spacing4),
                       Row(
                         children: [
-                          Icon(Icons.star, color: Colors.amber, size: 12),
+                          Icon(
+                            Icons.star,
+                            color: AppTheme.warningYellow,
+                            size: 12,
+                          ),
                           const SizedBox(width: AppTheme.spacing2),
                           Text(
                             '${product.rating.toStringAsFixed(1)} (${product.reviewCount})',

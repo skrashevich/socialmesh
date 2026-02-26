@@ -204,11 +204,11 @@ class MeshHealthDashboard extends ConsumerWidget {
     IconData statusIcon;
 
     if (!state.isMonitoring) {
-      statusColor = Colors.grey;
+      statusColor = SemanticColors.disabled;
       statusText = 'Monitoring Paused';
       statusIcon = Icons.pause_circle_outline;
     } else if (isCritical) {
-      statusColor = const Color(0xFFFF1744);
+      statusColor = AppTheme.errorRed;
       statusText = 'Critical Issues Detected';
       statusIcon = Icons.error;
     } else if (!isHealthy) {
@@ -460,13 +460,13 @@ class MeshHealthDashboard extends ConsumerWidget {
   }
 
   Color _getUtilizationColor(double utilization) {
-    if (utilization >= 75) return const Color(0xFFFF1744);
+    if (utilization >= 75) return AppTheme.errorRed;
     if (utilization >= 50) return const Color(0xFFFFAB00);
     return const Color(0xFF00E5FF);
   }
 
   Color _getReliabilityColor(double reliability) {
-    if (reliability < 0.5) return const Color(0xFFFF1744);
+    if (reliability < 0.5) return AppTheme.errorRed;
     if (reliability < 0.8) return const Color(0xFFFFAB00);
     return const Color(0xFF00FF88);
   }
@@ -627,7 +627,7 @@ class _IssueCard extends StatelessWidget {
   Color _getSeverityColor(IssueSeverity severity) {
     switch (severity) {
       case IssueSeverity.critical:
-        return const Color(0xFFFF1744);
+        return AppTheme.errorRed;
       case IssueSeverity.warning:
         return const Color(0xFFFFAB00);
       case IssueSeverity.info:
@@ -734,13 +734,13 @@ class _NodeContributorRow extends StatelessWidget {
                           vertical: 1,
                         ),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFFF1744).withValues(alpha: 0.2),
+                          color: AppTheme.errorRed.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(AppTheme.radius3),
                         ),
                         child: const Text(
                           'FLOOD',
                           style: TextStyle(
-                            color: Color(0xFFFF1744),
+                            color: AppTheme.errorRed,
                             fontSize: 8,
                             fontWeight: FontWeight.bold,
                           ),

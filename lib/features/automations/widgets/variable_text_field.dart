@@ -243,7 +243,7 @@ class _VariableTextController extends TextEditingController {
       if (isMarked) {
         color = AppTheme.errorRed;
       } else if (isTriggerContext) {
-        color = Colors.amber;
+        color = AppTheme.warningYellow;
       } else {
         color = AppTheme.successGreen;
       }
@@ -515,7 +515,7 @@ class VariableChipPicker extends StatelessWidget {
             isActive
                 ? 'Tap to insert at cursor:'
                 : 'Tap a field, then tap a variable:',
-            style: TextStyle(color: Colors.grey[600], fontSize: 11),
+            style: TextStyle(color: SemanticColors.muted, fontSize: 11),
           ),
           const SizedBox(height: AppTheme.spacing6),
           Wrap(
@@ -529,7 +529,7 @@ class VariableChipPicker extends StatelessWidget {
             const SizedBox(height: AppTheme.spacing8),
             Text(
               'Trigger context:',
-              style: TextStyle(color: Colors.grey[600], fontSize: 10),
+              style: TextStyle(color: SemanticColors.muted, fontSize: 10),
             ),
             const SizedBox(height: AppTheme.spacing4),
             Wrap(
@@ -545,12 +545,12 @@ class VariableChipPicker extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(Icons.info_outline, size: 12, color: Colors.grey[500]),
+                Icon(Icons.info_outline, size: 12, color: SemanticColors.muted),
                 const SizedBox(width: AppTheme.spacing4),
                 Expanded(
                   child: Text(
                     'Tap a variable to select it (turns red), then press backspace to remove',
-                    style: TextStyle(color: Colors.grey[500], fontSize: 10),
+                    style: TextStyle(color: SemanticColors.muted, fontSize: 10),
                   ),
                 ),
               ],
@@ -580,14 +580,14 @@ class VariableChipPicker extends StatelessWidget {
           decoration: BoxDecoration(
             color: isActive
                 ? (isTriggerSpecific
-                      ? Colors.amber.withValues(alpha: 0.15)
+                      ? AppTheme.warningYellow.withValues(alpha: 0.15)
                       : AppTheme.successGreen.withValues(alpha: 0.15))
                 : context.card,
             borderRadius: BorderRadius.circular(AppTheme.radius8),
             border: Border.all(
               color: isActive
                   ? (isTriggerSpecific
-                        ? Colors.amber.withValues(alpha: 0.4)
+                        ? AppTheme.warningYellow.withValues(alpha: 0.4)
                         : AppTheme.successGreen.withValues(alpha: 0.4))
                   : context.border,
             ),
@@ -599,8 +599,10 @@ class VariableChipPicker extends StatelessWidget {
               fontSize: 12,
               fontWeight: FontWeight.w500,
               color: isActive
-                  ? (isTriggerSpecific ? Colors.amber : AppTheme.successGreen)
-                  : Colors.grey[400],
+                  ? (isTriggerSpecific
+                        ? AppTheme.warningYellow
+                        : AppTheme.successGreen)
+                  : SemanticColors.disabled,
             ),
           ),
         ),

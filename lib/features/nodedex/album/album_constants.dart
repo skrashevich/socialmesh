@@ -15,6 +15,7 @@
 //   - Gallery uses horizontal PageView with peek at adjacent cards
 
 import 'package:flutter/material.dart';
+import 'package:socialmesh/core/theme.dart';
 
 /// Layout, timing, and visual constants for the Collector Album.
 ///
@@ -242,13 +243,13 @@ class AlbumConstants {
 
   /// The rainbow colors used in the holographic shimmer gradient.
   static const List<Color> holoColors = [
-    Color(0xFFFF6B6B), // red
+    AccentColors.coral, // red
     Color(0xFFFFE66D), // yellow
     Color(0xFF4ECDC4), // teal
     Color(0xFF45B7D1), // sky
     Color(0xFFA06CD5), // purple
     Color(0xFFFF6B9D), // pink
-    Color(0xFFFF6B6B), // red (wrap)
+    AccentColors.coral, // red (wrap)
   ];
 
   // ---------------------------------------------------------------------------

@@ -987,6 +987,7 @@ class _AddTopicSheetState extends ConsumerState<_AddTopicSheet> {
 
           // Label field
           TextField(
+            onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
             maxLength: 100,
             controller: _labelController,
             decoration: InputDecoration(
@@ -1005,6 +1006,7 @@ class _AddTopicSheetState extends ConsumerState<_AddTopicSheet> {
 
           // Topic field
           TextField(
+            onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
             maxLength: 256,
             controller: _topicController,
             decoration: InputDecoration(
@@ -1114,6 +1116,8 @@ class _TemplatePickerSheetState extends State<_TemplatePickerSheet> {
             children: [
               Expanded(
                 child: TextField(
+                  onTapOutside: (_) =>
+                      FocusManager.instance.primaryFocus?.unfocus(),
                   maxLength: 32,
                   controller: _channelController,
                   decoration: InputDecoration(
@@ -1137,6 +1141,8 @@ class _TemplatePickerSheetState extends State<_TemplatePickerSheet> {
               const SizedBox(width: AppTheme.spacing12),
               Expanded(
                 child: TextField(
+                  onTapOutside: (_) =>
+                      FocusManager.instance.primaryFocus?.unfocus(),
                   maxLength: 100,
                   controller: _nodeIdController,
                   decoration: InputDecoration(

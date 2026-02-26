@@ -315,10 +315,10 @@ class _TimelineEventTile extends StatelessWidget {
   Color _eventColor(BuildContext context) {
     return switch (event) {
       EncounterActivityEvent() => accentColor,
-      MessageActivityEvent() => const Color(0xFF0EA5E9),
-      PresenceChangeActivityEvent() => const Color(0xFFF97316),
-      SignalActivityEvent() => const Color(0xFF8B5CF6),
-      MilestoneActivityEvent() => const Color(0xFFFBBF24),
+      MessageActivityEvent() => AccentColors.sky,
+      PresenceChangeActivityEvent() => AccentColors.orange,
+      SignalActivityEvent() => AppTheme.primaryPurple,
+      MilestoneActivityEvent() => AppTheme.warningYellow,
     };
   }
 

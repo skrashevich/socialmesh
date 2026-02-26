@@ -509,7 +509,7 @@ class _ProgressIndicator extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               gradient: const LinearGradient(
-                colors: [Color(0xFFFF6B4A), Color(0xFFE91E8C)],
+                colors: [Color(0xFFFF6B4A), AppTheme.primaryMagenta],
               ),
               borderRadius: BorderRadius.circular(AppTheme.radius2),
             ),

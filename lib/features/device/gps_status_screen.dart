@@ -256,7 +256,11 @@ class GpsStatusScreen extends ConsumerWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        _buildSatelliteLabel(context, 'No Fix', Colors.grey),
+                        _buildSatelliteLabel(
+                          context,
+                          'No Fix',
+                          SemanticColors.disabled,
+                        ),
                         _buildSatelliteLabel(
                           context,
                           'Poor',
@@ -524,7 +528,7 @@ class GpsStatusScreen extends ConsumerWidget {
   }
 
   Color _getSatelliteColor(int? sats) {
-    if (sats == null || sats == 0) return Colors.grey;
+    if (sats == null || sats == 0) return SemanticColors.disabled;
     if (sats < 4) return AppTheme.errorRed;
     if (sats < 6) return AppTheme.warningYellow;
     return AppTheme.successGreen;

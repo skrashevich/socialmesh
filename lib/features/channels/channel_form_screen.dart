@@ -879,12 +879,14 @@ class _ChannelFormScreenState extends ConsumerState<ChannelFormScreen>
                   decoration: BoxDecoration(
                     color: _preciseLocation
                         ? accentColor.withValues(alpha: 0.15)
-                        : Colors.grey.withValues(alpha: 0.15),
+                        : SemanticColors.disabled.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(AppTheme.radius10),
                   ),
                   child: Icon(
                     Icons.my_location,
-                    color: _preciseLocation ? accentColor : Colors.grey,
+                    color: _preciseLocation
+                        ? accentColor
+                        : SemanticColors.disabled,
                     size: 20,
                   ),
                 ),

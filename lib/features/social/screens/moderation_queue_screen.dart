@@ -241,7 +241,7 @@ class _QueueItemCard extends ConsumerWidget {
                       icon: const Icon(Icons.check, size: 18),
                       label: const Text('Approve'),
                       style: OutlinedButton.styleFrom(
-                        foregroundColor: Colors.green,
+                        foregroundColor: AppTheme.successGreen,
                       ),
                     ),
                   ),
@@ -252,7 +252,7 @@ class _QueueItemCard extends ConsumerWidget {
                       icon: const Icon(Icons.close, size: 18),
                       label: const Text('Reject'),
                       style: FilledButton.styleFrom(
-                        backgroundColor: Colors.red,
+                        backgroundColor: AppTheme.errorRed,
                       ),
                     ),
                   ),
@@ -333,19 +333,19 @@ class _ContentTypeChip extends StatelessWidget {
     switch (contentType) {
       case 'story':
         icon = Icons.auto_stories;
-        color = Colors.purple;
+        color = AccentColors.purple;
       case 'post':
         icon = Icons.article;
-        color = Colors.blue;
+        color = AccentColors.blue;
       case 'comment':
         icon = Icons.comment;
-        color = Colors.teal;
+        color = AccentColors.teal;
       case 'profile':
         icon = Icons.person;
-        color = Colors.orange;
+        color = AccentColors.orange;
       default:
         icon = Icons.help_outline;
-        color = Colors.grey;
+        color = SemanticColors.disabled;
     }
 
     return Container(
@@ -384,13 +384,13 @@ class _StatusChip extends StatelessWidget {
 
     switch (status) {
       case 'pending':
-        color = Colors.orange;
+        color = AccentColors.orange;
       case 'approved':
-        color = Colors.green;
+        color = AppTheme.successGreen;
       case 'rejected':
-        color = Colors.red;
+        color = AppTheme.errorRed;
       default:
-        color = Colors.grey;
+        color = SemanticColors.disabled;
     }
 
     return Container(
@@ -507,6 +507,7 @@ class _RejectNotesSheetState extends State<_RejectNotesSheet> {
           ),
           const SizedBox(height: AppTheme.spacing12),
           TextField(
+            onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
             maxLength: 500,
             controller: _controller,
             decoration: const InputDecoration(

@@ -278,7 +278,7 @@ class _PremiumUpsellSheetState extends ConsumerState<PremiumUpsellSheet>
               height: 4,
               margin: const EdgeInsets.symmetric(vertical: 12),
               decoration: BoxDecoration(
-                color: Colors.grey[600],
+                color: SemanticColors.muted,
                 borderRadius: BorderRadius.circular(AppTheme.radius2),
               ),
             ),
@@ -298,12 +298,12 @@ class _PremiumUpsellSheetState extends ConsumerState<PremiumUpsellSheet>
                       gradient: LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
-                        colors: [Colors.amber.shade400, Colors.orange.shade600],
+                        colors: [AppTheme.warningYellow, AccentColors.orange],
                       ),
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.amber.withValues(alpha: 0.3),
+                          color: AppTheme.warningYellow.withValues(alpha: 0.3),
                           blurRadius: 20,
                           spreadRadius: 4,
                         ),
@@ -432,12 +432,12 @@ class _PremiumUpsellSheetState extends ConsumerState<PremiumUpsellSheet>
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [Colors.amber.shade400, Colors.orange.shade600],
+                        colors: [AppTheme.warningYellow, AccentColors.orange],
                       ),
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.amber.withValues(alpha: 0.3),
+                          color: AppTheme.warningYellow.withValues(alpha: 0.3),
                           blurRadius: 12,
                           offset: const Offset(0, 4),
                         ),

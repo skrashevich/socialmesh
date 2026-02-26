@@ -452,6 +452,7 @@ class _GalleryTopBar extends StatelessWidget {
           _GlassButton(
             icon: Icons.flip_rounded,
             onTap: () {
+              HapticFeedback.lightImpact();
               // Hint — visual only, actual flip is on card tap.
             },
             semanticLabel: 'Tap card to flip',

@@ -1371,7 +1371,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         // Premium feature tiles - order matches drawer
         _PremiumFeatureTile(
           icon: Icons.palette_outlined,
-          iconColor: Colors.purple.shade400,
+          iconColor: AccentColors.purple,
           title:
               storeProducts[RevenueCatConfig.themePackProductId]?.title ??
               'Theme Pack',
@@ -1398,7 +1398,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _PremiumFeatureTile(
           icon: Icons.music_note_outlined,
-          iconColor: Colors.pink.shade300,
+          iconColor: AccentColors.pink,
           title:
               storeProducts[RevenueCatConfig.ringtonePackProductId]?.title ??
               'Ringtone Pack',
@@ -1425,7 +1425,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _PremiumFeatureTile(
           icon: Icons.widgets_outlined,
-          iconColor: Colors.deepOrange.shade400,
+          iconColor: AccentColors.coral,
           title:
               storeProducts[RevenueCatConfig.widgetPackProductId]?.title ??
               'Widget Pack',
@@ -1452,7 +1452,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _PremiumFeatureTile(
           icon: Icons.auto_awesome,
-          iconColor: Colors.yellow.shade700,
+          iconColor: AppTheme.warningYellow,
           title:
               storeProducts[RevenueCatConfig.automationsPackProductId]?.title ??
               'Automations Pack',
@@ -1479,7 +1479,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _PremiumFeatureTile(
           icon: Icons.webhook_outlined,
-          iconColor: Colors.blue.shade300,
+          iconColor: AccentColors.blue,
           title:
               storeProducts[RevenueCatConfig.iftttPackProductId]?.title ??
               'IFTTT Pack',
@@ -1642,17 +1642,17 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                   child: Container(
                     padding: const EdgeInsets.all(AppTheme.spacing12),
                     decoration: BoxDecoration(
-                      color: Colors.orange.withValues(alpha: 0.1),
+                      color: AccentColors.orange.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(AppTheme.radius8),
                       border: Border.all(
-                        color: Colors.orange.withValues(alpha: 0.3),
+                        color: AccentColors.orange.withValues(alpha: 0.3),
                       ),
                     ),
                     child: Row(
                       children: [
                         const Icon(
                           Icons.info_outline,
-                          color: Colors.orange,
+                          color: AccentColors.orange,
                           size: 20,
                         ),
                         const SizedBox(width: AppTheme.spacing8),
@@ -1660,7 +1660,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           child: Text(
                             'Remote admin requires the target node to have your public key in its Admin Keys list.',
                             style: Theme.of(context).textTheme.labelSmall
-                                ?.copyWith(color: Colors.orange.shade200),
+                                ?.copyWith(color: AccentColors.orange),
                           ),
                         ),
                       ],
@@ -1741,7 +1741,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           Icon(
                             Icons.error_outline,
                             size: 48,
-                            color: Colors.red,
+                            color: AppTheme.errorRed,
                           ),
                           const SizedBox(height: AppTheme.spacing16),
                           Text(
@@ -2061,7 +2061,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                             icon: Icons.auto_awesome_outlined,
                             title: "What's New",
                             subtitle: 'Browse recent features and updates',
-                            iconColor: Colors.amber.shade400,
+                            iconColor: AppTheme.warningYellow,
                             onTap: () => WhatsNewSheet.showHistory(context),
                           ),
 
@@ -2326,9 +2326,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.refresh,
-                            iconColor: Colors.orange,
+                            iconColor: AccentColors.orange,
                             title: 'Reset local data',
-                            titleColor: Colors.orange,
+                            titleColor: AccentColors.orange,
                             subtitle: 'Clear messages and nodes, keep settings',
                             onTap: () => _confirmResetLocalData(context, ref),
                           ),
@@ -2375,7 +2375,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                                               .UNSET,
                                     ) ==
                                     true
-                                ? Colors.orange
+                                ? AccentColors.orange
                                 : null,
                             title: 'Region / Frequency',
                             subtitle: regionSubtitle,
@@ -2388,7 +2388,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                                               .UNSET,
                                     ) ==
                                     true
-                                ? Colors.orange
+                                ? AccentColors.orange
                                 : null,
                             onTap: () => Navigator.push(
                               context,
@@ -3468,7 +3468,7 @@ class _PremiumFeatureTile extends ConsumerWidget {
                     color: hasFeature
                         ? accentColor.withValues(alpha: 0.2)
                         : upsellEnabled
-                        ? Colors.amber.withValues(alpha: 0.2)
+                        ? AppTheme.warningYellow.withValues(alpha: 0.2)
                         : context.textTertiary.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(AppTheme.radius12),
                   ),
@@ -3488,13 +3488,17 @@ class _PremiumFeatureTile extends ConsumerWidget {
                         ),
                       ] else if (!hasFeature && upsellEnabled) ...[
                         // Show "TRY IT" badge when upsell is enabled but not owned
-                        Icon(Icons.star, size: 12, color: Colors.amber),
+                        Icon(
+                          Icons.star,
+                          size: 12,
+                          color: AppTheme.warningYellow,
+                        ),
                         SizedBox(width: AppTheme.spacing4),
                         Text(
                           'TRY IT',
                           style: context.captionStyle!.copyWith(
                             fontWeight: FontWeight.bold,
-                            color: Colors.amber,
+                            color: AppTheme.warningYellow,
                           ),
                         ),
                       ] else ...[

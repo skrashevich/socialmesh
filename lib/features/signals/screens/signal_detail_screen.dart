@@ -1387,7 +1387,7 @@ class _ResponseTile extends StatelessWidget {
                         icon: Icons.arrow_upward_rounded,
                         isActive: myVote == 1,
                         onTap: onUpvote,
-                        activeColor: Colors.orange,
+                        activeColor: AccentColors.orange,
                       ),
                       if (response.score != 0)
                         Padding(
@@ -1398,9 +1398,9 @@ class _ResponseTile extends StatelessWidget {
                                 : '${response.score}',
                             style: TextStyle(
                               color: response.score > 0
-                                  ? Colors.orange
+                                  ? AccentColors.orange
                                   : response.score < 0
-                                  ? Colors.blue
+                                  ? AccentColors.blue
                                   : context.textTertiary,
                               fontSize: 12,
                               fontWeight: FontWeight.w600,
@@ -1411,7 +1411,7 @@ class _ResponseTile extends StatelessWidget {
                         icon: Icons.arrow_downward_rounded,
                         isActive: myVote == -1,
                         onTap: onDownvote,
-                        activeColor: Colors.blue,
+                        activeColor: AccentColors.blue,
                       ),
                       const SizedBox(width: AppTheme.spacing12),
                       GestureDetector(

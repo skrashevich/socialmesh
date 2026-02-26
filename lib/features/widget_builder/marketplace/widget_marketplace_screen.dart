@@ -718,7 +718,7 @@ class _WidgetDetailsScreenState extends ConsumerState<WidgetDetailsScreen>
                           backgroundColor: isAlreadyInstalled
                               ? context.textSecondary.withValues(alpha: 0.3)
                               : isLocked
-                              ? Colors.grey.shade600
+                              ? SemanticColors.muted
                               : context.accentColor,
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(

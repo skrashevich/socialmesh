@@ -59,8 +59,8 @@ class MeshGlobe extends StatefulWidget {
     this.enabled = true,
     this.initialLatitude,
     this.initialLongitude,
-    this.markerColor = const Color(0xFF42A5F5),
-    this.connectionColor = const Color(0xFF42A5F5),
+    this.markerColor = AccentColors.blue,
+    this.connectionColor = AccentColors.blue,
     this.presenceMap,
     // Legacy parameters for API compatibility
     this.initialPhi = 0.0,

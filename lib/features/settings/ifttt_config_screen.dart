@@ -283,7 +283,11 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
                 ref: ref,
                 feature: PremiumFeature.iftttIntegration,
               ),
-              icon: const Icon(Icons.lock, size: 14, color: Colors.grey),
+              icon: const Icon(
+                Icons.lock,
+                size: 14,
+                color: SemanticColors.disabled,
+              ),
               label: Text(
                 'Save',
                 style: TextStyle(color: context.textSecondary),
@@ -409,7 +413,7 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
                   labelText: 'Webhook Key',
                   labelStyle: TextStyle(color: context.textSecondary),
                   hintText: 'e.g., cMcOnB_zaJTrZwsVvzVTHY',
-                  hintStyle: TextStyle(color: Colors.grey.shade600),
+                  hintStyle: TextStyle(color: SemanticColors.muted),
                   helperText: 'Copy from IFTTT Webhooks URL after /use/',
                   helperStyle: TextStyle(color: context.textTertiary),
                   border: OutlineInputBorder(
@@ -771,7 +775,7 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
                     labelText: 'Geofence Radius',
                     labelStyle: TextStyle(color: context.textSecondary),
                     hintText: '1000',
-                    hintStyle: TextStyle(color: Colors.grey.shade600),
+                    hintStyle: TextStyle(color: SemanticColors.muted),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(AppTheme.radius8),
                       borderSide: BorderSide(color: context.border),
@@ -806,7 +810,7 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
                     labelText: 'Center Latitude',
                     labelStyle: TextStyle(color: context.textSecondary),
                     hintText: '-33.8688',
-                    hintStyle: TextStyle(color: Colors.grey.shade600),
+                    hintStyle: TextStyle(color: SemanticColors.muted),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(AppTheme.radius8),
                       borderSide: BorderSide(color: context.border),
@@ -843,7 +847,7 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
                     labelText: 'Center Longitude',
                     labelStyle: TextStyle(color: context.textSecondary),
                     hintText: '151.2093',
-                    hintStyle: TextStyle(color: Colors.grey.shade600),
+                    hintStyle: TextStyle(color: SemanticColors.muted),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(AppTheme.radius8),
                       borderSide: BorderSide(color: context.border),

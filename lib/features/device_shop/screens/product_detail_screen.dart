@@ -255,7 +255,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
       actions: [
         _buildStyledIconButton(
           icon: isFavorite ? Icons.favorite : Icons.favorite_outline,
-          iconColor: isFavorite ? Colors.red : null,
+          iconColor: isFavorite ? AppTheme.errorRed : null,
           onPressed: () {
             if (userId != null) {
               toggleFavoriteQueued(ref, userId: userId, productId: product.id);
@@ -354,7 +354,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
                     vertical: 6,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.red,
+                    color: AppTheme.errorRed,
                     borderRadius: BorderRadius.circular(AppTheme.radius4),
                   ),
                   child: Text(
@@ -452,7 +452,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
           Row(
             children: [
               if (product.reviewCount > 0) ...[
-                Icon(Icons.star, color: Colors.amber, size: 20),
+                Icon(Icons.star, color: AppTheme.warningYellow, size: 20),
                 const SizedBox(width: AppTheme.spacing4),
                 Text(
                   product.rating.toStringAsFixed(1),
@@ -528,7 +528,9 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
                 height: 8,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: product.isInStock ? Colors.green : Colors.red,
+                  color: product.isInStock
+                      ? AppTheme.successGreen
+                      : AppTheme.errorRed,
                 ),
               ),
               const SizedBox(width: AppTheme.spacing8),
@@ -537,7 +539,9 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
                     ? 'In Stock (${product.stockQuantity} available)'
                     : 'Out of Stock',
                 style: TextStyle(
-                  color: product.isInStock ? Colors.green : Colors.red,
+                  color: product.isInStock
+                      ? AppTheme.successGreen
+                      : AppTheme.errorRed,
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                 ),
@@ -924,7 +928,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
                 padding: const EdgeInsets.only(bottom: 8),
                 child: Row(
                   children: [
-                    Icon(Icons.check, color: Colors.green, size: 18),
+                    Icon(Icons.check, color: AppTheme.successGreen, size: 18),
                     const SizedBox(width: AppTheme.spacing8),
                     Text(acc, style: TextStyle(color: context.textSecondary)),
                   ],
@@ -1257,7 +1261,7 @@ Price: ${product.formattedPrice}${product.purchaseUrl != null ? '\n\n${product.p
                   onPressed: () => Navigator.pop(context),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
-                    side: BorderSide(color: Colors.grey.shade700),
+                    side: BorderSide(color: SemanticColors.divider),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
@@ -1704,7 +1708,9 @@ class _ReviewCard extends StatelessWidget {
                               vertical: 2,
                             ),
                             decoration: BoxDecoration(
-                              color: Colors.green.withValues(alpha: 0.2),
+                              color: AppTheme.successGreen.withValues(
+                                alpha: 0.2,
+                              ),
                               borderRadius: BorderRadius.circular(
                                 AppTheme.radius4,
                               ),
@@ -1712,7 +1718,7 @@ class _ReviewCard extends StatelessWidget {
                             child: Text(
                               'Verified',
                               style: TextStyle(
-                                color: Colors.green,
+                                color: AppTheme.successGreen,
                                 fontSize: 10,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -1727,7 +1733,7 @@ class _ReviewCard extends StatelessWidget {
                           5,
                           (i) => Icon(
                             i < review.rating ? Icons.star : Icons.star_outline,
-                            color: Colors.amber,
+                            color: AppTheme.warningYellow,
                             size: 14,
                           ),
                         ),
@@ -1935,7 +1941,7 @@ class _WriteReviewSheetState extends ConsumerState<_WriteReviewSheet>
                   (i) => IconButton(
                     icon: Icon(
                       i < _rating ? Icons.star : Icons.star_outline,
-                      color: Colors.amber,
+                      color: AppTheme.warningYellow,
                       size: 32,
                     ),
                     onPressed: () => setState(() => _rating = i + 1),
@@ -1946,6 +1952,8 @@ class _WriteReviewSheetState extends ConsumerState<_WriteReviewSheet>
 
               // Title
               TextField(
+                onTapOutside: (_) =>
+                    FocusManager.instance.primaryFocus?.unfocus(),
                 maxLength: 100,
                 controller: _titleController,
                 style: TextStyle(color: context.textPrimary),
@@ -1965,6 +1973,8 @@ class _WriteReviewSheetState extends ConsumerState<_WriteReviewSheet>
 
               // Body
               TextFormField(
+                onTapOutside: (_) =>
+                    FocusManager.instance.primaryFocus?.unfocus(),
                 maxLength: 1000,
                 controller: _bodyController,
                 focusNode: _bodyFocusNode,

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// lint-allow: haptic-feedback — onTap delegates to parent callback
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -288,7 +289,7 @@ class WidgetMarketplaceStats extends StatelessWidget {
             child: Icon(
               isFavorited ? Icons.favorite : Icons.favorite_border,
               size: 18,
-              color: isFavorited ? Colors.redAccent : context.textTertiary,
+              color: isFavorited ? AppTheme.errorRed : context.textTertiary,
             ),
           ),
         ],

@@ -221,7 +221,7 @@ class _ActionSelectorSheetState extends State<_ActionSelectorSheet> {
           icon: Icons.send,
           title: 'Send Message',
           description: 'Open message composer to send a message',
-          color: Colors.blue,
+          color: AccentColors.blue,
         ),
         const SizedBox(height: AppTheme.spacing8),
         _buildActionTile(
@@ -229,7 +229,7 @@ class _ActionSelectorSheetState extends State<_ActionSelectorSheet> {
           icon: Icons.location_on,
           title: 'Share Location',
           description: 'Share your current GPS position',
-          color: Colors.green,
+          color: AppTheme.successGreen,
         ),
 
         const SizedBox(height: AppTheme.spacing16),
@@ -240,7 +240,7 @@ class _ActionSelectorSheetState extends State<_ActionSelectorSheet> {
           icon: Icons.timeline,
           title: 'Traceroute',
           description: 'Trace the route to a node',
-          color: Colors.orange,
+          color: AccentColors.orange,
         ),
         const SizedBox(height: AppTheme.spacing8),
         _buildActionTile(
@@ -248,7 +248,7 @@ class _ActionSelectorSheetState extends State<_ActionSelectorSheet> {
           icon: Icons.refresh,
           title: 'Request Positions',
           description: 'Ask all nodes to report their position',
-          color: Colors.purple,
+          color: AccentColors.purple,
         ),
 
         const SizedBox(height: AppTheme.spacing16),
@@ -259,7 +259,7 @@ class _ActionSelectorSheetState extends State<_ActionSelectorSheet> {
           icon: Icons.warning_amber,
           title: 'SOS Alert',
           description: 'Send emergency alert to all nodes',
-          color: Colors.red,
+          color: AppTheme.errorRed,
         ),
 
         // Configuration options based on selected type

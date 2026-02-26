@@ -139,21 +139,21 @@ class _BindingSelectorContentState extends State<_BindingSelectorContent> {
   Color _categoryColor(BindingCategory category) {
     switch (category) {
       case BindingCategory.node:
-        return const Color(0xFF4F6AF6);
+        return AppTheme.primaryBlue;
       case BindingCategory.device:
-        return const Color(0xFF06B6D4);
+        return AccentColors.cyan;
       case BindingCategory.network:
-        return const Color(0xFF8B5CF6);
+        return AppTheme.primaryPurple;
       case BindingCategory.environment:
-        return const Color(0xFFF97316);
+        return AccentColors.orange;
       case BindingCategory.power:
-        return const Color(0xFF4ADE80);
+        return AppTheme.successGreen;
       case BindingCategory.airQuality:
-        return const Color(0xFF64748B);
+        return AccentColors.slate;
       case BindingCategory.gps:
-        return const Color(0xFFEF4444);
+        return AppTheme.errorRed;
       case BindingCategory.messaging:
-        return const Color(0xFFFBBF24);
+        return AppTheme.warningYellow;
     }
   }
 

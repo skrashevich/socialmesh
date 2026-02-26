@@ -66,7 +66,7 @@ class NodeComparisonScreen extends StatelessWidget {
   Widget _buildNodeHeaders(BuildContext context) {
     return Row(
       children: [
-        Expanded(child: _buildNodeCard(context, nodeA, Colors.blue)),
+        Expanded(child: _buildNodeCard(context, nodeA, AccentColors.blue)),
         SizedBox(width: AppTheme.spacing12),
         Container(
           width: 32,
@@ -88,7 +88,7 @@ class NodeComparisonScreen extends StatelessWidget {
           ),
         ),
         const SizedBox(width: AppTheme.spacing12),
-        Expanded(child: _buildNodeCard(context, nodeB, Colors.orange)),
+        Expanded(child: _buildNodeCard(context, nodeB, AccentColors.orange)),
       ],
     );
   }
@@ -129,6 +129,7 @@ class NodeComparisonScreen extends StatelessWidget {
           const SizedBox(height: AppTheme.spacing4),
           GestureDetector(
             onTap: () {
+              HapticFeedback.lightImpact();
               Clipboard.setData(ClipboardData(text: '!$nodeId'));
               showSuccessSnackBar(context, 'Node ID copied');
             },

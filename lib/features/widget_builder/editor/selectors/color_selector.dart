@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../../../core/theme.dart';
 import '../../../../core/widgets/app_bottom_sheet.dart' as app_sheets;
 
@@ -188,6 +189,7 @@ class InlineColorSelector extends StatelessWidget {
 
     return InkWell(
       onTap: () async {
+        HapticFeedback.lightImpact();
         final color = await ColorSelector.show(
           context,
           currentColor: displayColor,

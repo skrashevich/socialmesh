@@ -681,6 +681,8 @@ class _VisualFlowEditorScreenState extends ConsumerState<VisualFlowEditorScreen>
           const SizedBox(width: AppTheme.spacing8),
           Expanded(
             child: TextField(
+              onTapOutside: (_) =>
+                  FocusManager.instance.primaryFocus?.unfocus(),
               maxLength: 100,
               controller: _nameController,
               textCapitalization: TextCapitalization.sentences,

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// lint-allow: haptic-feedback — onTap delegates to parent callback
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -179,11 +180,11 @@ class _StoryAvatarState extends State<StoryAvatar>
                               shape: BoxShape.circle,
                               gradient: SweepGradient(
                                 colors: [
-                                  Colors.grey.shade500,
-                                  Colors.grey.shade400,
-                                  Colors.grey.shade500,
-                                  Colors.grey.shade400,
-                                  Colors.grey.shade500,
+                                  SemanticColors.muted,
+                                  SemanticColors.disabled,
+                                  SemanticColors.muted,
+                                  SemanticColors.disabled,
+                                  SemanticColors.muted,
                                 ],
                                 stops: const [0.0, 0.25, 0.5, 0.75, 1.0],
                               ),

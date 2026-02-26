@@ -98,12 +98,12 @@ class _ModerationStatusScreenState extends ConsumerState<ModerationStatusScreen>
               padding: const EdgeInsets.all(AppTheme.spacing24),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.green.withValues(alpha: 0.15),
+                color: AppTheme.successGreen.withValues(alpha: 0.15),
               ),
               child: const Icon(
                 Icons.verified_rounded,
                 size: 64,
-                color: Colors.green,
+                color: AppTheme.successGreen,
               ),
             ),
             const SizedBox(height: AppTheme.spacing24),
@@ -235,19 +235,19 @@ class _StatusOverviewCard extends StatelessWidget {
     String statusText;
 
     if (isSuspended) {
-      statusColor = Colors.red;
+      statusColor = AppTheme.errorRed;
       statusIcon = Icons.block_rounded;
       statusText = 'Suspended';
     } else if (hasStrikes) {
-      statusColor = Colors.orange;
+      statusColor = AccentColors.orange;
       statusIcon = Icons.warning_amber_rounded;
       statusText = 'Warning: Strikes Active';
     } else if (hasWarnings) {
-      statusColor = Colors.amber;
+      statusColor = AppTheme.warningYellow;
       statusIcon = Icons.info_outline;
       statusText = 'Warnings Active';
     } else {
-      statusColor = Colors.green;
+      statusColor = AppTheme.successGreen;
       statusIcon = Icons.check_circle_outline;
       statusText = 'Good Standing';
     }
@@ -317,17 +317,17 @@ class _StatusOverviewCard extends StatelessWidget {
                 _StatItem(
                   label: 'Warnings',
                   value: '${status.activeWarnings}',
-                  color: Colors.amber,
+                  color: AppTheme.warningYellow,
                 ),
                 _StatItem(
                   label: 'Strikes',
                   value: '${status.activeStrikes}',
-                  color: Colors.orange,
+                  color: AccentColors.orange,
                 ),
                 _StatItem(
                   label: 'Max Strikes',
                   value: '3',
-                  color: Colors.red.withValues(alpha: 0.5),
+                  color: AppTheme.errorRed.withValues(alpha: 0.5),
                 ),
               ],
             ),
@@ -393,7 +393,11 @@ class _StrikeMeterCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.trending_up, color: Colors.orange, size: 20),
+              const Icon(
+                Icons.trending_up,
+                color: AccentColors.orange,
+                size: 20,
+              ),
               const SizedBox(width: AppTheme.spacing8),
               const Text(
                 'Strike Meter',
@@ -409,7 +413,7 @@ class _StrikeMeterCard extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
-                  color: Colors.orange,
+                  color: AccentColors.orange,
                 ),
               ),
             ],
@@ -428,7 +432,9 @@ class _StrikeMeterCard extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(AppTheme.radius4),
                     color: isActive
-                        ? (index == maxStrikes - 1 ? Colors.red : Colors.orange)
+                        ? (index == maxStrikes - 1
+                              ? AppTheme.errorRed
+                              : AccentColors.orange)
                         : Colors.white.withValues(alpha: 0.1),
                   ),
                 ),
@@ -443,7 +449,7 @@ class _StrikeMeterCard extends StatelessWidget {
             style: TextStyle(
               fontSize: 13,
               color: strikeCount >= maxStrikes
-                  ? Colors.red.withValues(alpha: 0.9)
+                  ? AppTheme.errorRed.withValues(alpha: 0.9)
                   : Colors.white.withValues(alpha: 0.6),
             ),
           ),
@@ -547,16 +553,16 @@ class _HistoryItemCard extends StatelessWidget {
 
     switch (item.type) {
       case ModerationActionType.warning:
-        typeColor = Colors.amber;
+        typeColor = AppTheme.warningYellow;
         typeIcon = Icons.info_outline;
       case ModerationActionType.strike:
-        typeColor = Colors.orange;
+        typeColor = AccentColors.orange;
         typeIcon = Icons.warning_amber_rounded;
       case ModerationActionType.suspension:
-        typeColor = Colors.red;
+        typeColor = AppTheme.errorRed;
         typeIcon = Icons.block_rounded;
       case ModerationActionType.cleared:
-        typeColor = Colors.green;
+        typeColor = AppTheme.successGreen;
         typeIcon = Icons.check_circle_outline;
     }
 

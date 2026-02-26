@@ -527,7 +527,10 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
                     label: 'Active (<1h)',
                   ),
                   SizedBox(width: AppTheme.spacing16),
-                  _StatusLegendItem(color: Colors.amber, label: 'Idle (1-24h)'),
+                  _StatusLegendItem(
+                    color: AppTheme.warningYellow,
+                    label: 'Idle (1-24h)',
+                  ),
                   const SizedBox(width: AppTheme.spacing16),
                   _StatusLegendItem(
                     color: context.textTertiary,
@@ -685,7 +688,9 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
                                   ? accentColor
                                   : node.isRecentlySeen
                                   ? accentColor.withValues(alpha: 0.8)
-                                  : Colors.grey.withValues(alpha: 0.5),
+                                  : SemanticColors.disabled.withValues(
+                                      alpha: 0.5,
+                                    ),
                               border: Border.all(
                                 color: isSelected
                                     ? Colors.white
@@ -1224,7 +1229,7 @@ class _SearchResultTile extends StatelessWidget {
       case PresenceConfidence.active:
         return AppTheme.successGreen;
       case PresenceConfidence.fading:
-        return Colors.amber;
+        return AppTheme.warningYellow;
       case PresenceConfidence.stale:
         return context.textSecondary;
       case PresenceConfidence.unknown:
@@ -1588,19 +1593,19 @@ class _WorldNodeInfoCardState extends ConsumerState<WorldNodeInfoCard> {
                         _MetricChip(
                           icon: Icons.electric_bolt,
                           value: '${node.voltage!.toStringAsFixed(2)}V',
-                          color: Colors.amber,
+                          color: AppTheme.warningYellow,
                         ),
                       if (node.chUtil != null)
                         _MetricChip(
                           icon: Icons.show_chart,
                           value: '${node.chUtil!.toStringAsFixed(1)}% Ch',
-                          color: Colors.blue,
+                          color: AccentColors.blue,
                         ),
                       if (node.airUtilTx != null)
                         _MetricChip(
                           icon: Icons.cell_tower,
                           value: '${node.airUtilTx!.toStringAsFixed(1)}% Tx',
-                          color: Colors.purple,
+                          color: AccentColors.purple,
                         ),
                     ]),
                     if (node.uptimeString != null)
@@ -1630,27 +1635,27 @@ class _WorldNodeInfoCardState extends ConsumerState<WorldNodeInfoCard> {
                         _MetricChip(
                           icon: Icons.thermostat,
                           value: '${node.temperature!.toStringAsFixed(1)}°C',
-                          color: Colors.orange,
+                          color: AccentColors.orange,
                         ),
                       if (node.relativeHumidity != null)
                         _MetricChip(
                           icon: Icons.water_drop,
                           value:
                               '${node.relativeHumidity!.toStringAsFixed(0)}%',
-                          color: Colors.cyan,
+                          color: AccentColors.cyan,
                         ),
                       if (node.barometricPressure != null)
                         _MetricChip(
                           icon: Icons.speed,
                           value:
                               '${node.barometricPressure!.toStringAsFixed(0)}hPa',
-                          color: Colors.teal,
+                          color: AccentColors.teal,
                         ),
                       if (node.lux != null)
                         _MetricChip(
                           icon: Icons.light_mode,
                           value: '${node.lux!.toStringAsFixed(0)} lux',
-                          color: Colors.yellow,
+                          color: AppTheme.warningYellow,
                         ),
                     ]),
                     if (node.windSpeed != null || node.windDirection != null)
@@ -1662,14 +1667,14 @@ class _WorldNodeInfoCardState extends ConsumerState<WorldNodeInfoCard> {
                               icon: Icons.air,
                               value:
                                   '${node.windSpeed!.toStringAsFixed(1)} m/s',
-                              color: Colors.blueGrey,
+                              color: AccentColors.slate,
                             ),
                           if (node.windGust != null)
                             _MetricChip(
                               icon: Icons.storm,
                               value:
                                   '${node.windGust!.toStringAsFixed(1)} gust',
-                              color: Colors.blueGrey,
+                              color: AccentColors.slate,
                             ),
                         ]),
                       ),
@@ -1902,7 +1907,7 @@ class _WorldNodeInfoCardState extends ConsumerState<WorldNodeInfoCard> {
   Color _getBatteryColor(int level) {
     if (level > 100) return AppTheme.successGreen; // Plugged in
     if (level > 60) return AppTheme.successGreen;
-    if (level > 30) return Colors.orange;
+    if (level > 30) return AccentColors.orange;
     return AppTheme.errorRed;
   }
 

@@ -304,6 +304,8 @@ class _MFAEnrollmentScreenState extends ConsumerState<MFAEnrollmentScreen>
               const SizedBox(height: AppTheme.spacing32),
               if (!_isCodeSent) ...[
                 TextFormField(
+                  onTapOutside: (_) =>
+                      FocusManager.instance.primaryFocus?.unfocus(),
                   controller: _phoneController,
                   keyboardType: TextInputType.phone,
                   enabled: !_isLoading,
@@ -361,6 +363,8 @@ class _MFAEnrollmentScreenState extends ConsumerState<MFAEnrollmentScreen>
                 ),
               ] else ...[
                 TextFormField(
+                  onTapOutside: (_) =>
+                      FocusManager.instance.primaryFocus?.unfocus(),
                   controller: _codeController,
                   keyboardType: TextInputType.number,
                   enabled: !_isLoading,

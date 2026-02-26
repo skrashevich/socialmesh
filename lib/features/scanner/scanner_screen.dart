@@ -1593,7 +1593,7 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
                 // Info banner when saved device wasn't found
                 if (_savedDeviceNotFoundName != null)
                   StatusBanner.custom(
-                    color: Colors.orange,
+                    color: AccentColors.orange,
                     title: '$_savedDeviceNotFoundName not found',
                     subtitle:
                         'If another app is connected to this device, disconnect from it first. Only one app can use Bluetooth at a time.',
@@ -1791,7 +1791,7 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
                         showAllBleDevicesProvider,
                       );
                       return StatusBanner.custom(
-                        color: Colors.purple,
+                        color: AccentColors.purple,
                         title: 'Show all BLE devices',
                         subtitle: showAllDevices
                             ? 'Scanning all devices (dev mode)'
@@ -1993,7 +1993,7 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.warning_amber, color: Colors.orange),
+              Icon(Icons.warning_amber, color: AccentColors.orange),
               const SizedBox(width: AppTheme.spacing12),
               Text(
                 'Unknown Protocol',
@@ -2097,7 +2097,7 @@ class _DeviceCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppTheme.radius12),
               border: Border.all(
                 color: isUnknown && showDebugInfo
-                    ? Colors.orange.withValues(alpha: 0.5)
+                    ? AccentColors.orange.withValues(alpha: 0.5)
                     : context.border,
               ),
             ),
@@ -2116,7 +2116,7 @@ class _DeviceCard extends StatelessWidget {
                         ? Icons.bluetooth
                         : Icons.usb,
                     color: isUnknown && showDebugInfo
-                        ? Colors.orange
+                        ? AccentColors.orange
                         : context.accentColor,
                     size: 24,
                   ),
@@ -2207,9 +2207,9 @@ class _ProtocolBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final (label, color) = switch (protocolType) {
-      MeshProtocolType.meshtastic => ('Meshtastic', Colors.green),
-      MeshProtocolType.meshcore => ('MeshCore', Colors.blue),
-      MeshProtocolType.unknown => ('Unknown', Colors.orange),
+      MeshProtocolType.meshtastic => ('Meshtastic', AppTheme.successGreen),
+      MeshProtocolType.meshcore => ('MeshCore', AccentColors.blue),
+      MeshProtocolType.unknown => ('Unknown', AccentColors.orange),
     };
 
     return Container(

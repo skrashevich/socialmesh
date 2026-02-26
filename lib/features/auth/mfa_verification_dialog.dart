@@ -236,7 +236,7 @@ class _MFAVerificationDialogState extends ConsumerState<MFAVerificationDialog>
           const SizedBox(height: AppTheme.spacing12),
           Text(
             _errorMessage!,
-            style: const TextStyle(color: Colors.red, fontSize: 13),
+            style: const TextStyle(color: AppTheme.errorRed, fontSize: 13),
             textAlign: TextAlign.center,
           ),
         ],
@@ -248,7 +248,7 @@ class _MFAVerificationDialogState extends ConsumerState<MFAVerificationDialog>
                 onPressed: _isVerifying ? null : () => Navigator.pop(context),
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  side: BorderSide(color: Colors.grey.shade700),
+                  side: BorderSide(color: SemanticColors.divider),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(AppTheme.radius12),
                   ),

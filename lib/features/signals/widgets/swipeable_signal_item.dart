@@ -212,7 +212,7 @@ class _SwipeableSignalItemState extends State<SwipeableSignalItem>
     final leftProgress = (-progress).clamp(0.0, 1.0);
 
     final rightColor = widget.rightActionColor ?? AccentColors.yellow;
-    final leftColor = widget.leftActionColor ?? Colors.grey;
+    final leftColor = widget.leftActionColor ?? SemanticColors.disabled;
     final radius = BorderRadius.circular(widget.borderRadius);
 
     return GestureDetector(

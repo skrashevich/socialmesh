@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// lint-allow: haptic-feedback — onTap delegates to parent callback
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -102,9 +103,9 @@ class _SignalTTLFooterState extends ConsumerState<SignalTTLFooter>
     ref.watch(signalFeedProvider.select((state) => state.lastRefresh));
     _setupPulseIfNeeded();
     final urgencyColor = _isExpiringVerySoon
-        ? Colors.red
+        ? AppTheme.errorRed
         : _isExpiringSoon
-        ? Colors.orange
+        ? AccentColors.orange
         : context.textTertiary;
 
     return Padding(

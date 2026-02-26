@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// lint-allow: haptic-feedback — onTap delegates to parent callback
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/connection_providers.dart';
@@ -230,7 +231,7 @@ class CommandButton extends ConsumerWidget {
           style ??
           (isConnected
               ? null
-              : FilledButton.styleFrom(backgroundColor: Colors.grey.shade600)),
+              : FilledButton.styleFrom(backgroundColor: SemanticColors.muted)),
       child: child,
     );
   }

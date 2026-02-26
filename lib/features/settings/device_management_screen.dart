@@ -85,7 +85,7 @@ class _DeviceManagementScreenState extends ConsumerState<DeviceManagementScreen>
                     onPressed: () => Navigator.pop(context, false),
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
-                      side: BorderSide(color: Colors.grey.shade700),
+                      side: BorderSide(color: SemanticColors.divider),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(AppTheme.radius12),
                       ),
@@ -325,7 +325,7 @@ class _DeviceManagementScreenState extends ConsumerState<DeviceManagementScreen>
                 const SizedBox(height: AppTheme.spacing8),
                 _ActionCard(
                   icon: Icons.cleaning_services,
-                  iconColor: Colors.orange,
+                  iconColor: AccentColors.orange,
                   title: 'Reset Node Database',
                   subtitle: 'Clear all known nodes from device and app',
                   enabled: isConnected,
@@ -365,7 +365,7 @@ class _DeviceManagementScreenState extends ConsumerState<DeviceManagementScreen>
                 const SizedBox(height: AppTheme.spacing8),
                 _ActionCard(
                   icon: Icons.settings_backup_restore,
-                  iconColor: Colors.deepOrange,
+                  iconColor: AccentColors.coral,
                   title: 'Factory Reset Config',
                   subtitle: 'Reset everything except the node database',
                   enabled: isConnected,
@@ -570,7 +570,7 @@ class _DeviceManagementScreenState extends ConsumerState<DeviceManagementScreen>
                 const SizedBox(height: AppTheme.spacing8),
                 _ActionCard(
                   icon: Icons.system_update,
-                  iconColor: Colors.indigo,
+                  iconColor: AccentColors.indigo,
                   title: 'Enter DFU Mode',
                   subtitle: 'Boot into firmware update mode',
                   enabled: isConnected,

@@ -10,6 +10,7 @@
 // snap-preview feedback and grid-aligned node positioning on mobile.
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../data/vs_node_data.dart';
 import '../data/vs_node_data_provider.dart';
@@ -134,6 +135,7 @@ class _VSNodeState extends State<VSNode> {
       behavior: HitTestBehavior.opaque,
 
       onTap: () {
+        HapticFeedback.lightImpact();
         // Toggle selection on tap.
         if (isSelected) {
           nodeProvider.removeSelectedNodes({widget.data.id});

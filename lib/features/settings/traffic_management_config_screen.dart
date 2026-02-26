@@ -195,7 +195,7 @@ class _TrafficManagementConfigScreenState
             'Save',
             style: TextStyle(
               color: (_isLoading || _isSaving)
-                  ? Colors.grey
+                  ? SemanticColors.disabled
                   : context.accentColor,
               fontWeight: FontWeight.w600,
             ),
@@ -306,7 +306,7 @@ class _TrafficManagementConfigScreenState
             ),
             SliderTheme(
               data: SliderThemeData(
-                inactiveTrackColor: Colors.grey.shade700,
+                inactiveTrackColor: SemanticColors.divider,
                 thumbColor: context.accentColor,
                 overlayColor: context.accentColor.withAlpha(30),
               ),
@@ -337,7 +337,7 @@ class _TrafficManagementConfigScreenState
             ),
             SliderTheme(
               data: SliderThemeData(
-                inactiveTrackColor: Colors.grey.shade700,
+                inactiveTrackColor: SemanticColors.divider,
                 thumbColor: context.accentColor,
                 overlayColor: context.accentColor.withAlpha(30),
               ),
@@ -401,7 +401,7 @@ class _TrafficManagementConfigScreenState
             ),
             SliderTheme(
               data: SliderThemeData(
-                inactiveTrackColor: Colors.grey.shade700,
+                inactiveTrackColor: SemanticColors.divider,
                 thumbColor: context.accentColor,
                 overlayColor: context.accentColor.withAlpha(30),
               ),
@@ -467,7 +467,7 @@ class _TrafficManagementConfigScreenState
             ),
             SliderTheme(
               data: SliderThemeData(
-                inactiveTrackColor: Colors.grey.shade700,
+                inactiveTrackColor: SemanticColors.divider,
                 thumbColor: context.accentColor,
                 overlayColor: context.accentColor.withAlpha(30),
               ),
@@ -498,7 +498,7 @@ class _TrafficManagementConfigScreenState
             ),
             SliderTheme(
               data: SliderThemeData(
-                inactiveTrackColor: Colors.grey.shade700,
+                inactiveTrackColor: SemanticColors.divider,
                 thumbColor: context.accentColor,
                 overlayColor: context.accentColor.withAlpha(30),
               ),
@@ -562,7 +562,7 @@ class _TrafficManagementConfigScreenState
             ),
             SliderTheme(
               data: SliderThemeData(
-                inactiveTrackColor: Colors.grey.shade700,
+                inactiveTrackColor: SemanticColors.divider,
                 thumbColor: context.accentColor,
                 overlayColor: context.accentColor.withAlpha(30),
               ),

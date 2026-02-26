@@ -545,7 +545,11 @@ class _SearchResultCard extends StatelessWidget {
                         ],
                         const Spacer(),
                         if (product.reviewCount > 0) ...[
-                          Icon(Icons.star, color: Colors.amber, size: 14),
+                          Icon(
+                            Icons.star,
+                            color: AppTheme.warningYellow,
+                            size: 14,
+                          ),
                           SizedBox(width: AppTheme.spacing2),
                           Text(
                             product.rating.toStringAsFixed(1),
@@ -569,13 +573,13 @@ class _SearchResultCard extends StatelessWidget {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.red.withValues(alpha: 0.2),
+                    color: AppTheme.errorRed.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(AppTheme.radius4),
                   ),
                   child: Text(
                     'Out of Stock',
                     style: TextStyle(
-                      color: Colors.red,
+                      color: AppTheme.errorRed,
                       fontSize: 10,
                       fontWeight: FontWeight.w600,
                     ),

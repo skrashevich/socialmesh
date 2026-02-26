@@ -115,16 +115,16 @@ class _SignalMapViewState extends ConsumerState<SignalMapView>
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.location_off, size: 64, color: Colors.grey.shade600),
+            Icon(Icons.location_off, size: 64, color: SemanticColors.muted),
             const SizedBox(height: AppTheme.spacing16),
             Text(
               'No signals with location',
-              style: TextStyle(color: Colors.grey.shade500, fontSize: 16),
+              style: TextStyle(color: SemanticColors.muted, fontSize: 16),
             ),
             const SizedBox(height: AppTheme.spacing8),
             Text(
               'Signals will appear here when they include GPS coordinates',
-              style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
+              style: TextStyle(color: SemanticColors.muted, fontSize: 12),
               textAlign: TextAlign.center,
             ),
           ],
@@ -237,13 +237,13 @@ class _SignalMapViewState extends ConsumerState<SignalMapView>
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                _LegendItem(color: Colors.green, label: '< 5 min'),
+                _LegendItem(color: AppTheme.successGreen, label: '< 5 min'),
                 const SizedBox(height: AppTheme.spacing4),
-                _LegendItem(color: Colors.amber, label: '< 30 min'),
+                _LegendItem(color: AppTheme.warningYellow, label: '< 30 min'),
                 const SizedBox(height: AppTheme.spacing4),
-                _LegendItem(color: Colors.orange, label: '< 2 hrs'),
+                _LegendItem(color: AccentColors.orange, label: '< 2 hrs'),
                 const SizedBox(height: AppTheme.spacing4),
-                _LegendItem(color: Colors.red.shade300, label: '> 2 hrs'),
+                _LegendItem(color: AppTheme.errorRed, label: '> 2 hrs'),
               ],
             ),
           ),
@@ -514,7 +514,7 @@ class _SignalPreviewCard extends StatelessWidget {
                         Text(
                           '📡 Signal',
                           style: TextStyle(
-                            color: Colors.grey.shade400,
+                            color: SemanticColors.disabled,
                             fontSize: 14,
                             fontStyle: FontStyle.italic,
                           ),
@@ -551,7 +551,7 @@ class _SignalPreviewCard extends StatelessWidget {
                 IconButton(
                   onPressed: onClose,
                   icon: const Icon(Icons.close),
-                  color: Colors.grey.shade500,
+                  color: SemanticColors.muted,
                   iconSize: 20,
                   visualDensity: VisualDensity.compact,
                   padding: EdgeInsets.zero,
@@ -576,10 +576,10 @@ class _SignalPreviewCard extends StatelessWidget {
                       label:
                           '${signal.hopCount} ${signal.hopCount == 1 ? 'hop' : 'hops'}',
                       color: signal.hopCount == 0
-                          ? Colors.green
+                          ? AppTheme.successGreen
                           : signal.hopCount! <= 2
-                          ? Colors.amber
-                          : Colors.orange,
+                          ? AppTheme.warningYellow
+                          : AccentColors.orange,
                     ),
                     const SizedBox(width: AppTheme.spacing12),
                   ],
@@ -614,7 +614,7 @@ class _SignalPreviewCard extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: signal.origin == SignalOrigin.mesh
                         ? AccentColors.cyan.withValues(alpha: 0.2)
-                        : Colors.purple.withValues(alpha: 0.2),
+                        : AccentColors.purple.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(AppTheme.radius4),
                   ),
                   child: Row(
@@ -627,7 +627,7 @@ class _SignalPreviewCard extends StatelessWidget {
                         size: 12,
                         color: signal.origin == SignalOrigin.mesh
                             ? AccentColors.cyan
-                            : Colors.purple.shade300,
+                            : AccentColors.purple,
                       ),
                       const SizedBox(width: AppTheme.spacing4),
                       Text(
@@ -636,7 +636,7 @@ class _SignalPreviewCard extends StatelessWidget {
                           fontSize: 11,
                           color: signal.origin == SignalOrigin.mesh
                               ? AccentColors.cyan
-                              : Colors.purple.shade300,
+                              : AccentColors.purple,
                         ),
                       ),
                     ],
@@ -650,7 +650,7 @@ class _SignalPreviewCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 11,
                       fontFamily: 'monospace',
-                      color: Colors.grey.shade600,
+                      color: SemanticColors.muted,
                     ),
                   ),
                 const Spacer(),
@@ -662,14 +662,14 @@ class _SignalPreviewCard extends StatelessWidget {
                       'Tap to view',
                       style: TextStyle(
                         fontSize: 11,
-                        color: Colors.grey.shade600,
+                        color: SemanticColors.muted,
                       ),
                     ),
                     const SizedBox(width: AppTheme.spacing4),
                     Icon(
                       Icons.arrow_forward_ios,
                       size: 10,
-                      color: Colors.grey.shade600,
+                      color: SemanticColors.muted,
                     ),
                   ],
                 ),

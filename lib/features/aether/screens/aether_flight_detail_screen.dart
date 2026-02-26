@@ -1234,15 +1234,19 @@ class _ReportBottomSheetState extends ConsumerState<_ReportBottomSheet>
               Container(
                 padding: const EdgeInsets.all(AppTheme.spacing16),
                 decoration: BoxDecoration(
-                  color: Colors.orange.withValues(alpha: 0.1),
+                  color: AccentColors.orange.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(AppTheme.radius12),
                   border: Border.all(
-                    color: Colors.orange.withValues(alpha: 0.3),
+                    color: AccentColors.orange.withValues(alpha: 0.3),
                   ),
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.wifi_off, color: Colors.orange, size: 20),
+                    const Icon(
+                      Icons.wifi_off,
+                      color: AccentColors.orange,
+                      size: 20,
+                    ),
                     const SizedBox(width: AppTheme.spacing12),
                     Expanded(
                       child: Text(
