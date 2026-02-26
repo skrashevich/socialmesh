@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// lint-allow: haptic-feedback — shared animation widgets delegate onTap to parent callbacks
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:socialmesh/core/theme.dart';
