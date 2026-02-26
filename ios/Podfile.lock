@@ -1632,13 +1632,13 @@ PODS:
   - PromisesObjC (2.4.0)
   - PromisesSwift (2.4.0):
     - PromisesObjC (= 2.4.0)
-  - purchases_flutter (9.12.0):
+  - purchases_flutter (9.12.2):
     - Flutter
-    - PurchasesHybridCommon (= 17.36.0)
-  - PurchasesHybridCommon (17.36.0):
-    - RevenueCat (= 5.58.0)
+    - PurchasesHybridCommon (= 17.41.0)
+  - PurchasesHybridCommon (17.41.0):
+    - RevenueCat (= 5.59.2)
   - RecaptchaInterop (101.0.0)
-  - RevenueCat (5.58.0)
+  - RevenueCat (5.59.2)
   - SDWebImage (5.21.6):
     - SDWebImage/Core (= 5.21.6)
   - SDWebImage/Core (5.21.6)
@@ -1852,7 +1852,7 @@ SPEC CHECKSUMS:
   audio_session: 9bb7f6c970f21241b19f5a3658097ae459681ba0
   background_fetch: 7457cb2c7be3086b37d87207866f30bed2f9fb58
   BoringSSL-GRPC: dded2a44897e45f28f08ae87a55ee4bcd19bc508
-  camera_avfoundation: 5675ca25298b6f81fa0a325188e7df62cc217741
+  camera_avfoundation: 968a9a5323c79a99c166ad9d7866bfd2047b5a9b
   cloud_firestore: 4bd00c3464706d9e09dabac0bb8e9610456109f5
   cloud_functions: 20f0d60aa8a30d7bb3dc3c796665e2d9de828b61
   connectivity_plus: cb623214f4e1f6ef8fe7403d580fdad517d2f7dd
@@ -1918,10 +1918,10 @@ SPEC CHECKSUMS:
   photo_manager: fe4cbb0808b96f8be4af7ce6ae18dcd9c9b983c6
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   PromisesSwift: 9d77319bbe72ebf6d872900551f7eeba9bce2851
-  purchases_flutter: 9d559f16095fbcdb7b4def4cbc60e4a9fbd0ee1b
-  PurchasesHybridCommon: 4767776bf65153d7a43f284439e7560c42d0c80a
+  purchases_flutter: 4d1eb4df39dc92f573069226fc6e2bafcfe3e929
+  PurchasesHybridCommon: 0fc10b0328a4dca5c607f845130e59f7427f4b69
   RecaptchaInterop: 11e0b637842dfb48308d242afc3f448062325aba
-  RevenueCat: 88bb4229115b2badcce0e5a97f3dd8cc952b38c8
+  RevenueCat: f352b3661288080bd8bf30bbb96e331940e73c88
   SDWebImage: 1bb6a1b84b6fe87b972a102bdc77dd589df33477
   sensors_plus: 6a11ed0c2e1d0bd0b20b4029d3bad27d96e0c65b
   share_plus: 50da8cb520a8f0f65671c6c6a99b3617ed10a58a

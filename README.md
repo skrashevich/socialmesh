@@ -5,13 +5,13 @@
 <h1 align="center">Socialmesh</h1>
 
 <p align="center">
-  <strong>Resilient Field Operations Platform</strong><br>
-  Structured workflows, team coordination, and situational awareness over mesh radio networks — fully offline.
+  <strong>Mesh Radio Companion App</strong><br>
+  Connect to your Meshtastic radio, message off-grid, map your nodes, and explore the mesh — no internet required.
 </p>
 
 <p align="center">
   <a href="#status">Status</a> •
-  <a href="#operational-coordination-enterprise-focus">Enterprise</a> •
+
   <a href="#features">Features</a> •
   <a href="#nodedex">NodeDex</a> •
   <a href="#signals">Signals</a> •
@@ -36,35 +36,17 @@
 
 ---
 
-Connect to your mesh radio, coordinate field teams, track assets, and maintain situational awareness — **all without internet**.
+Connect to your mesh radio, message off-grid, discover nodes, and explore the mesh — **all without internet**.
 
-Socialmesh works fully offline over BLE and USB. Firebase is optional for cloud sync, fleet telemetry, and team coordination.
+Socialmesh works fully offline over BLE and USB. Firebase is optional for cloud sync and social features.
 
 ---
 
 ## Status
 
 - The **iOS and Android releases** on the App Store and Play Store are the current stable builds. All features listed in the [Features](#features) section below are available in these releases.
-- **Enterprise operational workflows** — including incident lifecycle management, RBAC, append-only audit trails, task systems, and structured reporting — are under active development on the `main` branch and are not yet present in the store releases.
 - The offline-first architecture, mesh communication, NodeDex, Signals, TAK integration, and all companion-app capabilities are **shipped and stable**.
 - See [Architecture Overview](docs/ARCHITECTURE.md) for the current system design and [Releasing](docs/RELEASING.md) for the release process.
-
----
-
-## Operational Coordination (Enterprise Focus)
-
-Socialmesh is evolving from a mesh companion app into a resilient field operations platform for remote industrial and infrastructure teams. The following describes both shipped capabilities and the enterprise direction:
-
-- **Offline-first coordination** — All mesh communication, node tracking, and situational awareness works without internet. Six local SQLite databases with conflict resolution and sync outbox. *(Shipped)*
-- **Structured operational persistence** — Signals provides time-bounded, location-stamped situation reports, status updates, and hazard markers across the mesh. *(Shipped)*
-- **Mesh asset registry** — NodeDex catalogues every discovered node with deterministic identity, behavioral classification, and progressive disclosure. *(Shipped)*
-- **TAK interoperability** — Bidirectional CoT exchange with ATAK/WinTAK via the TAK Gateway, including entity tracking and video streaming. *(Shipped)*
-- **Cloud optionality** — Firebase enables cloud sync, fleet telemetry, and team coordination when available. The app is fully functional without it.
-- **Incident lifecycle workflows** — Append-only state machine for operational incidents with deterministic conflict resolution. *In development (main branch)*
-- **Role-based access control** — Org-scoped permission enforcement with offline claims caching. *In development (main branch)*
-- **Append-only audit trails and structured reporting** — Field report templates (SPOTREP, SITREP) with PDF export and SHA-256 integrity hashing. *In development (main branch)*
-
-> Socialmesh supports **mesh companion mode** today — full Meshtastic compatibility for individual and team use. Enterprise operational workflows are being built on top of this foundation. Cloud features remain optional.
 
 ---
 
@@ -419,7 +401,7 @@ socialmesh://node/<base64>      # Import node information
 
 ## Project Status
 
-Socialmesh is a fully functional Meshtastic field operations platform available on iOS and Android. The codebase is stable and actively maintained.
+Socialmesh is a fully functional Meshtastic companion app available on iOS and Android. The codebase is stable and actively maintained.
 
 ### Contributions Welcome
 
@@ -488,5 +470,5 @@ For repository maintainers:
 ---
 
 <p align="center">
-  <strong>Built for the mesh. Built for field operations.</strong>
+  <strong>Built for the mesh. Built for the field.</strong>
 </p>
