@@ -269,6 +269,20 @@ int _extractRawPortnum(pb.Data data) {
   return value;
 }
 
+/// Ephemeral PKC admin session obtained from a remote node's admin response.
+///
+/// The firmware returns a session passkey in [AdminMessage.sessionPasskey].
+/// This passkey authenticates subsequent SET/ACTION admin operations on the
+/// remote node. Sessions expire after 5 minutes (firmware default).
+class _AdminSession {
+  final List<int> passkey;
+  final DateTime expiration;
+
+  const _AdminSession({required this.passkey, required this.expiration});
+
+  bool get isExpired => DateTime.now().isAfter(expiration);
+}
+
 /// Protocol service for handling Meshtastic protocol
 class ProtocolService {
   final DeviceTransport _transport;
@@ -393,6 +407,15 @@ class ProtocolService {
   final SmMetrics _smMetrics;
   final SmRateLimiter _smRateLimiter;
   final SmIdentityRateLimiter _smIdentityRateLimiter;
+
+  /// Per-node session passkeys for PKC remote admin authentication.
+  ///
+  /// The firmware returns a session passkey in admin responses (especially
+  /// getDeviceMetadataResponse). This passkey must be included in subsequent
+  /// SET/ACTION admin messages for the session to be accepted. Sessions
+  /// expire after [_sessionPasskeyTtl] (matching the firmware's 300s default).
+  final Map<int, _AdminSession> _adminSessions = {};
+  static const Duration _sessionPasskeyTtl = Duration(minutes: 5);
 
   /// Public accessors for SM binary protocol components.
   SmCapabilityStore get smCapabilityStore => _smCapabilityStore;
@@ -1600,6 +1623,13 @@ class ProtocolService {
       // not overwrite the local device's cached config.
       final isLocalResponse = _myNodeNum != null && packet.from == _myNodeNum;
 
+      // Extract and store session passkey from remote admin responses.
+      // The firmware includes a session passkey in admin responses when PKC
+      // is enabled. Store it for subsequent SET/ACTION operations.
+      if (!isLocalResponse && adminMsg.hasSessionPasskey()) {
+        _storeSessionPasskey(packet.from, adminMsg.sessionPasskey);
+      }
+
       if (adminMsg.hasGetConfigResponse()) {
         final config = adminMsg.getConfigResponse;
 
@@ -1909,6 +1939,30 @@ class ProtocolService {
           _nodes[_myNodeNum!] = updatedNode;
           _nodeController.add(updatedNode);
           AppLogging.protocol('Updated node $_myNodeNum with device metadata');
+        } else if (!isLocalResponse && _nodes.containsKey(packet.from)) {
+          // Remote metadata response — update the remote node's metadata
+          // without polluting the local device's cache. This mirrors the
+          // iOS app's pattern of storing metadata per-node.
+          final remoteNode = _nodes[packet.from]!;
+
+          String? hwModelName;
+          if (metadata.hwModel != pb.HardwareModel.UNSET) {
+            hwModelName = _formatHardwareModel(metadata.hwModel);
+          }
+
+          final updatedRemote = remoteNode.copyWith(
+            firmwareVersion: metadata.firmwareVersion.isNotEmpty
+                ? metadata.firmwareVersion
+                : null,
+            hasWifi: metadata.hasWifi,
+            hasBluetooth: metadata.hasBluetooth,
+            hardwareModel: hwModelName ?? remoteNode.hardwareModel,
+          );
+          _nodes[packet.from] = updatedRemote;
+          _nodeController.add(updatedRemote);
+          AppLogging.protocol(
+            'Updated remote node ${packet.from.toRadixString(16)} with device metadata',
+          );
         }
       } else if (adminMsg.hasGetOwnerResponse()) {
         // Handle response to getOwnerRequest - contains remote node's User info
@@ -3960,6 +4014,47 @@ class ProtocolService {
     return target.resolve(_myNodeNum!);
   }
 
+  /// Apply the stored session passkey to an admin message when targeting a
+  /// remote node.
+  ///
+  /// Matches the iOS app's pattern: `if fromUser != toUser { adminPacket.sessionPasskey = ... }`.
+  /// Only applied to SET/ACTION operations, not GET/request operations.
+  void _applySessionPasskey(admin.AdminMessage adminMsg, int dest) {
+    if (dest == _myNodeNum) return; // Local admin — no passkey needed.
+
+    final session = _adminSessions[dest];
+    if (session == null || session.isExpired) {
+      AppLogging.protocol(
+        'Remote admin to ${dest.toRadixString(16)}: '
+        '${session == null ? "no session passkey" : "session expired"} '
+        '— sending without passkey',
+      );
+      return;
+    }
+
+    adminMsg.sessionPasskey = session.passkey;
+    AppLogging.protocol(
+      'Remote admin to ${dest.toRadixString(16)}: '
+      'attached session passkey (${session.passkey.length} bytes, '
+      'expires ${session.expiration.toIso8601String()})',
+    );
+  }
+
+  /// Store a session passkey received from a remote node's admin response.
+  void _storeSessionPasskey(int nodeNum, List<int> passkey) {
+    if (passkey.isEmpty) return;
+    if (nodeNum == _myNodeNum) return; // Local node — ignore.
+
+    _adminSessions[nodeNum] = _AdminSession(
+      passkey: passkey,
+      expiration: DateTime.now().add(_sessionPasskeyTtl),
+    );
+    AppLogging.protocol(
+      'Stored session passkey for node ${nodeNum.toRadixString(16)} '
+      '(${passkey.length} bytes, TTL ${_sessionPasskeyTtl.inSeconds}s)',
+    );
+  }
+
   int _generatePacketId() {
     return _random.nextInt(0x7FFFFFFF);
   }
@@ -4435,10 +4530,11 @@ class ProtocolService {
         );
       }
 
+      _applySessionPasskey(adminMsg, dest);
+
       final data = pb.Data()
         ..portnum = pn.PortNum.ADMIN_APP
-        ..payload = adminMsg.writeToBuffer()
-        ..wantResponse = true;
+        ..payload = adminMsg.writeToBuffer();
 
       final packet = MeshPacketBuilder.admin(
         myNodeNum: _myNodeNum!,
@@ -4685,6 +4781,7 @@ class ProtocolService {
     );
 
     final adminMsg = admin.AdminMessage()..rebootSeconds = delaySeconds;
+    _applySessionPasskey(adminMsg, dest);
 
     final data = pb.Data()
       ..portnum = pn.PortNum.ADMIN_APP
@@ -4720,6 +4817,7 @@ class ProtocolService {
     );
 
     final adminMsg = admin.AdminMessage()..shutdownSeconds = delaySeconds;
+    _applySessionPasskey(adminMsg, dest);
 
     final data = pb.Data()
       ..portnum = pn.PortNum.ADMIN_APP
@@ -4759,6 +4857,7 @@ class ProtocolService {
     );
 
     final adminMsg = admin.AdminMessage()..factoryResetConfig = delaySeconds;
+    _applySessionPasskey(adminMsg, dest);
 
     final data = pb.Data()
       ..portnum = pn.PortNum.ADMIN_APP
@@ -4798,6 +4897,7 @@ class ProtocolService {
     );
 
     final adminMsg = admin.AdminMessage()..factoryResetDevice = delaySeconds;
+    _applySessionPasskey(adminMsg, dest);
 
     final data = pb.Data()
       ..portnum = pn.PortNum.ADMIN_APP
@@ -4834,6 +4934,7 @@ class ProtocolService {
     );
 
     final adminMsg = admin.AdminMessage()..nodedbReset = true;
+    _applySessionPasskey(adminMsg, dest);
 
     final data = pb.Data()
       ..portnum = pn.PortNum.ADMIN_APP
@@ -4884,6 +4985,7 @@ class ProtocolService {
     AppLogging.protocol('Entering DFU mode');
 
     final adminMsg = admin.AdminMessage()..enterDfuModeRequest = true;
+    _applySessionPasskey(adminMsg, dest);
 
     final data = pb.Data()
       ..portnum = pn.PortNum.ADMIN_APP
@@ -5234,6 +5336,7 @@ class ProtocolService {
       ..frequency = frequency;
 
     final adminMsg = admin.AdminMessage()..setHamMode = hamParams;
+    _applySessionPasskey(adminMsg, dest);
 
     final data = pb.Data()
       ..portnum = pn.PortNum.ADMIN_APP
@@ -5324,12 +5427,12 @@ class ProtocolService {
     }
 
     final adminMsg = admin.AdminMessage()..setConfig = config;
+    _applySessionPasskey(adminMsg, dest);
     final adminBytes = adminMsg.writeToBuffer();
 
     final data = pb.Data()
       ..portnum = pn.PortNum.ADMIN_APP
-      ..payload = adminBytes
-      ..wantResponse = true;
+      ..payload = adminBytes;
 
     final packetId = _generatePacketId();
     final packet = MeshPacketBuilder.admin(
@@ -5823,11 +5926,11 @@ class ProtocolService {
     }
 
     final adminMsg = admin.AdminMessage()..setModuleConfig = moduleConfig;
+    _applySessionPasskey(adminMsg, dest);
 
     final data = pb.Data()
       ..portnum = pn.PortNum.ADMIN_APP
-      ..payload = adminMsg.writeToBuffer()
-      ..wantResponse = true;
+      ..payload = adminMsg.writeToBuffer();
 
     final packet = MeshPacketBuilder.admin(
       myNodeNum: _myNodeNum!,
@@ -6519,6 +6622,7 @@ class ProtocolService {
 
     final adminMsg = admin.AdminMessage()
       ..setCannedMessageModuleMessages = messages;
+    _applySessionPasskey(adminMsg, dest);
 
     final data = pb.Data()
       ..portnum = pn.PortNum.ADMIN_APP
@@ -6584,6 +6688,7 @@ class ProtocolService {
     AppLogging.protocol('Setting ringtone');
 
     final adminMsg = admin.AdminMessage()..setRingtoneMessage = rtttl;
+    _applySessionPasskey(adminMsg, dest);
 
     final data = pb.Data()
       ..portnum = pn.PortNum.ADMIN_APP
@@ -6785,6 +6890,7 @@ class ProtocolService {
   /// Dispose resources
   Future<void> dispose() async {
     _adminAckTracker.cancelAll();
+    _adminSessions.clear();
     await _dataSubscription?.cancel();
     await _messageController.close();
     await _nodeController.close();

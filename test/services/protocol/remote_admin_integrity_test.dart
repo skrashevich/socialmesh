@@ -887,4 +887,231 @@ void main() {
       await sub.cancel();
     });
   });
+
+  // ===========================================================================
+  // wantResponse parity: SET operations must NOT set wantResponse
+  // ===========================================================================
+
+  group('wantResponse parity with iOS', () {
+    test(
+      'setConfig does not set wantResponse (parity with iOS save*)',
+      () async {
+        transport.clear();
+        final config = config_pb.Config()
+          ..device = (config_pb.Config_DeviceConfig()
+            ..role = config_pbenum.Config_DeviceConfig_Role.CLIENT);
+
+        await protocol.setConfig(config, target: const AdminTarget.local());
+
+        final packet = transport.lastPacket;
+        // wantResponse must NOT be set on SET operations per iOS parity
+        expect(packet.decoded.wantResponse, isFalse);
+      },
+    );
+
+    test('setModuleConfig does not set wantResponse', () async {
+      transport.clear();
+      final moduleConfig = module_pb.ModuleConfig()
+        ..mqtt = (module_pb.ModuleConfig_MQTTConfig()..enabled = true);
+
+      await protocol.setModuleConfig(moduleConfig);
+
+      final packet = transport.lastPacket;
+      expect(packet.decoded.wantResponse, isFalse);
+    });
+
+    test('getConfig DOES set wantResponse', () async {
+      transport.clear();
+      await protocol.getConfig(admin.AdminMessage_ConfigType.DEVICE_CONFIG);
+
+      final packet = transport.lastPacket;
+      expect(packet.decoded.wantResponse, isTrue);
+    });
+
+    test('getModuleConfig DOES set wantResponse', () async {
+      transport.clear();
+      await protocol.getModuleConfig(
+        admin.AdminMessage_ModuleConfigType.MQTT_CONFIG,
+      );
+
+      final packet = transport.lastPacket;
+      expect(packet.decoded.wantResponse, isTrue);
+    });
+  });
+
+  // ===========================================================================
+  // Session passkey: extraction from remote admin responses
+  // ===========================================================================
+
+  group('session passkey handling', () {
+    test('stores session passkey from remote admin response', () async {
+      await _injectNodeInfo(
+        protocol,
+        _remoteNodeNum,
+        longName: 'Remote',
+        shortName: 'RM',
+      );
+
+      // Inject a remote admin response WITH session passkey
+      final metadata = pb.DeviceMetadata()
+        ..firmwareVersion = '2.5.0'
+        ..hwModel = pb.HardwareModel.HELTEC_V3
+        ..hasBluetooth = true;
+
+      final adminMsg = admin.AdminMessage()
+        ..getDeviceMetadataResponse = metadata
+        ..sessionPasskey = [1, 2, 3, 4, 5];
+
+      final data = pb.Data()
+        ..portnum = pn.PortNum.ADMIN_APP
+        ..payload = adminMsg.writeToBuffer();
+
+      final packet = pb.MeshPacket()
+        ..from = _remoteNodeNum
+        ..to = _myNodeNum
+        ..decoded = data
+        ..id = 55555;
+
+      final fromRadio = pb.FromRadio()..packet = packet;
+      await protocol.handleIncomingPacket(fromRadio.writeToBuffer());
+      await Future<void>.delayed(Duration.zero);
+
+      // Now send a setConfig to the remote node and verify passkey is attached
+      transport.clear();
+      final config = config_pb.Config()
+        ..device = (config_pb.Config_DeviceConfig()
+          ..role = config_pbenum.Config_DeviceConfig_Role.CLIENT);
+
+      await protocol.setConfig(
+        config,
+        target: const AdminTarget.remote(_remoteNodeNum),
+      );
+
+      final sentAdminMsg = transport.lastAdminMessage;
+      expect(sentAdminMsg.hasSessionPasskey(), isTrue);
+      expect(sentAdminMsg.sessionPasskey, [1, 2, 3, 4, 5]);
+    });
+
+    test('local admin does not attach session passkey', () async {
+      transport.clear();
+      final config = config_pb.Config()
+        ..device = (config_pb.Config_DeviceConfig()
+          ..role = config_pbenum.Config_DeviceConfig_Role.CLIENT);
+
+      await protocol.setConfig(config, target: const AdminTarget.local());
+
+      final sentAdminMsg = transport.lastAdminMessage;
+      expect(sentAdminMsg.hasSessionPasskey(), isFalse);
+    });
+
+    test('session passkey applies to action methods (reboot)', () async {
+      await _injectNodeInfo(
+        protocol,
+        _remoteNodeNum,
+        longName: 'Remote',
+        shortName: 'RM',
+      );
+
+      // Store a session passkey via admin response
+      final adminMsg = admin.AdminMessage()
+        ..getDeviceMetadataResponse = (pb.DeviceMetadata()
+          ..firmwareVersion = '2.5.0'
+          ..hwModel = pb.HardwareModel.HELTEC_V3)
+        ..sessionPasskey = [10, 20, 30];
+
+      final data = pb.Data()
+        ..portnum = pn.PortNum.ADMIN_APP
+        ..payload = adminMsg.writeToBuffer();
+
+      final packet = pb.MeshPacket()
+        ..from = _remoteNodeNum
+        ..to = _myNodeNum
+        ..decoded = data
+        ..id = 66666;
+
+      final fromRadio = pb.FromRadio()..packet = packet;
+      await protocol.handleIncomingPacket(fromRadio.writeToBuffer());
+      await Future<void>.delayed(Duration.zero);
+
+      // Send a reboot to the remote node
+      transport.clear();
+      await protocol.reboot(target: const AdminTarget.remote(_remoteNodeNum));
+
+      final sentAdminMsg = transport.lastAdminMessage;
+      expect(sentAdminMsg.hasSessionPasskey(), isTrue);
+      expect(sentAdminMsg.sessionPasskey, [10, 20, 30]);
+    });
+  });
+
+  // ===========================================================================
+  // Remote metadata: responses update remote node, not local
+  // ===========================================================================
+
+  group('remote metadata response handling', () {
+    test('remote metadata updates remote node entry', () async {
+      await _injectNodeInfo(
+        protocol,
+        _remoteNodeNum,
+        longName: 'Remote Node',
+        shortName: 'RN',
+      );
+
+      // Verify the node exists but has no firmware version
+      final nodeBefore = protocol.nodes[_remoteNodeNum];
+      expect(nodeBefore, isNotNull);
+      expect(nodeBefore!.firmwareVersion, isNull);
+
+      // Inject metadata response from remote node
+      await _injectMetadataResponse(
+        protocol,
+        _remoteNodeNum,
+        firmwareVersion: '2.5.6',
+        hasWifi: true,
+      );
+
+      // Verify remote node was updated
+      final nodeAfter = protocol.nodes[_remoteNodeNum];
+      expect(nodeAfter, isNotNull);
+      expect(nodeAfter!.firmwareVersion, '2.5.6');
+      expect(nodeAfter.hasWifi, isTrue);
+    });
+
+    test('remote metadata does not pollute local node', () async {
+      // Inject local node info first
+      await _injectNodeInfo(
+        protocol,
+        _myNodeNum,
+        longName: 'Local Device',
+        shortName: 'LD',
+      );
+
+      // Set local metadata
+      await _injectMetadataResponse(
+        protocol,
+        _myNodeNum,
+        firmwareVersion: '2.5.0',
+        hasWifi: false,
+      );
+
+      // Inject remote node and its metadata
+      await _injectNodeInfo(
+        protocol,
+        _remoteNodeNum,
+        longName: 'Remote',
+        shortName: 'RM',
+      );
+
+      await _injectMetadataResponse(
+        protocol,
+        _remoteNodeNum,
+        firmwareVersion: '2.5.6',
+        hasWifi: true,
+      );
+
+      // Verify local node was NOT modified by remote metadata
+      final localNode = protocol.nodes[_myNodeNum];
+      expect(localNode!.firmwareVersion, '2.5.0');
+      expect(localNode.hasWifi, isFalse);
+    });
+  });
 }

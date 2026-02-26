@@ -3026,8 +3026,11 @@ class MessagesNotifier extends Notifier<List<Message>> {
 
     final messageId = _packetToMessageId[update.packetId];
     if (messageId == null) {
-      AppLogging.debug(
-        '📨 ❌ Delivery update for unknown packet ${update.packetId}',
+      // Protocol-internal packets (position requests, admin ops) generate
+      // routing reports but are not tracked in the chat delivery map.
+      // Log at protocol level to avoid cluttering debug output.
+      AppLogging.protocol(
+        'Delivery update for untracked packet ${update.packetId}',
       );
       return;
     }
@@ -4102,7 +4105,29 @@ class RemoteAdminState {
 /// Notifier for managing remote administration target
 class RemoteAdminNotifier extends Notifier<RemoteAdminState> {
   @override
-  RemoteAdminState build() => const RemoteAdminState();
+  RemoteAdminState build() {
+    // Auto-clear remote target when BLE connection drops.
+    // This prevents stale remote targets from surviving across
+    // disconnect/reconnect cycles, matching the iOS app's behavior
+    // where the Settings picker resets on disconnect.
+    ref.listen<AsyncValue<DeviceConnectionState>>(connectionStateProvider, (
+      previous,
+      next,
+    ) {
+      final wasConnected =
+          previous?.asData?.value == DeviceConnectionState.connected;
+      final isDisconnected =
+          next.asData?.value != DeviceConnectionState.connected;
+      if (wasConnected && isDisconnected && state.isRemote) {
+        AppLogging.protocol(
+          'BLE disconnected — clearing remote admin target '
+          '${state.targetNodeNum?.toRadixString(16)}',
+        );
+        state = const RemoteAdminState();
+      }
+    });
+    return const RemoteAdminState();
+  }
 
   /// Set the target node for remote configuration
   void setTarget(int nodeNum, String? nodeName) {

@@ -412,8 +412,9 @@ class _SocialmeshAppState extends ConsumerState<SocialmeshApp>
       ref.read(userPresenceServiceProvider).setOnline();
       // Process any due scheduled automations on resume
       _processScheduledAutomationsOnResume();
-      // Resume RSSI polling (paused on background to save battery).
+      // Resume RSSI polling and GPS location updates (paused on background).
       _resumeProtocolPolling();
+      _resumeLocationUpdates();
     } else if (state == AppLifecycleState.paused) {
       // Only trigger background handoff when the app is *truly* paused
       // (i.e. no longer visible). `inactive` (notification shade, system
@@ -432,11 +433,18 @@ class _SocialmeshAppState extends ConsumerState<SocialmeshApp>
       // wakes the Bluetooth stack and triggers Live Activity UserDefaults
       // writes — ~14,400 unnecessary BLE round-trips over an 8-hour night.
       _pauseProtocolPolling();
+      _pauseLocationUpdates();
     } else if (state == AppLifecycleState.inactive ||
         state == AppLifecycleState.detached) {
       // Mark lifecycle as inactive but do NOT enable the background message
       // processor — the foreground ProtocolService is still handling data.
       ref.read(lifecycleCommandManagerProvider).setAppActive(false);
+      // Pause RSSI polling and GPS location updates even on `inactive`.
+      // iOS sends `inactive` before `paused`, and sometimes never reaches
+      // `paused` at all (app switcher, notification shade). Without this,
+      // BLE readRssi() every 2s and GPS every 30s keep firing.
+      _pauseProtocolPolling();
+      _pauseLocationUpdates();
     }
   }
 
@@ -455,6 +463,40 @@ class _SocialmeshAppState extends ConsumerState<SocialmeshApp>
       ref.read(protocolServiceProvider).resumeRssiPolling();
     } catch (_) {
       // Protocol service may not be initialized yet — safe to ignore.
+    }
+  }
+
+  /// Pause GPS location timer when the app is backgrounded.
+  ///
+  /// The location service sends the phone's GPS position to the mesh every
+  /// 30 seconds. Each tick wakes the GPS radio, computes a fix, serializes a
+  /// protobuf, and sends it over BLE — all for a position update that nobody
+  /// is looking at. Pausing eliminates this entirely; the mesh retains the
+  /// last-known position on the lock screen / Live Activity.
+  void _pauseLocationUpdates() {
+    try {
+      final locationService = ref.read(locationServiceProvider);
+      if (!locationService.isRunning) return; // Already stopped — skip noise.
+      locationService.stopLocationUpdates();
+      AppLogging.debug('🔋 Location updates paused (app backgrounded)');
+    } catch (_) {
+      // Location service may not be initialized yet — safe to ignore.
+    }
+  }
+
+  /// Resume GPS location timer when the app returns to the foreground.
+  void _resumeLocationUpdates() {
+    try {
+      final locationService = ref.read(locationServiceProvider);
+      // Only restart if the service was previously running (i.e. we're
+      // connected to a device that expects position updates).
+      final isConnected = ref.read(isLinkConnectedProvider);
+      if (isConnected) {
+        locationService.startLocationUpdates();
+        AppLogging.debug('🔋 Location updates resumed (app foregrounded)');
+      }
+    } catch (_) {
+      // Location service may not be initialized yet — safe to ignore.
     }
   }
 

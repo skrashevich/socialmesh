@@ -13,6 +13,9 @@ class LocationService {
   Position? _lastPosition;
   bool _isRunning = false;
 
+  /// Whether periodic location updates are currently active.
+  bool get isRunning => _isRunning;
+
   /// Guards against concurrent permission requests which cause
   /// "A request for location permissions is already running" crashes.
   Completer<bool>? _permissionCompleter;
