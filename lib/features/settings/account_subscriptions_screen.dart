@@ -56,62 +56,66 @@ class _AccountSubscriptionsScreenState
     final authState = ref.watch(authStateProvider);
     final profileAsync = ref.watch(userProfileProvider);
 
-    return GlassScaffold(
-      title: 'Account',
-      actions: const [IcoHelpAppBarButton(topicId: 'cloud_sync_overview')],
-      slivers: [
-        SliverPadding(
-          padding: const EdgeInsets.all(AppTheme.spacing16),
-          sliver: SliverList(
-            delegate: SliverChildListDelegate([
-              // ═══════════════════════════════════════════════════════════════
-              // PROFILE CARD - Quick access to edit profile
-              // ═══════════════════════════════════════════════════════════════
-              _buildProfileCard(profileAsync, accentColor),
+    return HelpTourController(
+      topicId: 'cloud_sync_overview',
+      stepKeys: const {},
+      child: GlassScaffold(
+        title: 'Account',
+        actions: const [IcoHelpAppBarButton(topicId: 'cloud_sync_overview')],
+        slivers: [
+          SliverPadding(
+            padding: const EdgeInsets.all(AppTheme.spacing16),
+            sliver: SliverList(
+              delegate: SliverChildListDelegate([
+                // ═══════════════════════════════════════════════════════════════
+                // PROFILE CARD - Quick access to edit profile
+                // ═══════════════════════════════════════════════════════════════
+                _buildProfileCard(profileAsync, accentColor),
 
-              const SizedBox(height: AppTheme.spacing24),
+                const SizedBox(height: AppTheme.spacing24),
 
-              // ═══════════════════════════════════════════════════════════════
-              // ACCOUNT SECTION - Sign in/out, linked accounts
-              // ═══════════════════════════════════════════════════════════════
-              _buildSectionHeader('ACCOUNT'),
-              const SizedBox(height: AppTheme.spacing8),
-              authState.when(
-                data: (user) => user != null
-                    ? _buildSignedInAccountCard(user)
-                    : _buildSignedOutAccountCard(),
-                loading: () => const _LoadingCard(),
-                error: (e, _) => _buildSignedOutAccountCard(),
-              ),
+                // ═══════════════════════════════════════════════════════════════
+                // ACCOUNT SECTION - Sign in/out, linked accounts
+                // ═══════════════════════════════════════════════════════════════
+                _buildSectionHeader('ACCOUNT'),
+                const SizedBox(height: AppTheme.spacing8),
+                authState.when(
+                  data: (user) => user != null
+                      ? _buildSignedInAccountCard(user)
+                      : _buildSignedOutAccountCard(),
+                  loading: () => const _LoadingCard(),
+                  error: (e, _) => _buildSignedOutAccountCard(),
+                ),
 
-              const SizedBox(height: AppTheme.spacing24),
+                const SizedBox(height: AppTheme.spacing24),
 
-              // ═══════════════════════════════════════════════════════════════
-              // PREMIUM SECTION - Cloud Sync (subscription) + Feature Packs (one-time)
-              // ═══════════════════════════════════════════════════════════════
-              _buildSectionHeader('PREMIUM'),
-              const SizedBox(height: AppTheme.spacing8),
+                // ═══════════════════════════════════════════════════════════════
+                // PREMIUM SECTION - Cloud Sync (subscription) + Feature Packs (one-time)
+                // ═══════════════════════════════════════════════════════════════
+                _buildSectionHeader('PREMIUM'),
+                const SizedBox(height: AppTheme.spacing8),
 
-              // Cloud Sync subscription card (monthly/yearly)
-              _buildCloudSyncCard(),
+                // Cloud Sync subscription card (monthly/yearly)
+                _buildCloudSyncCard(),
 
-              const SizedBox(height: AppTheme.spacing12),
+                const SizedBox(height: AppTheme.spacing12),
 
-              // Feature packs card (one-time purchases)
-              _buildFeaturePacksCard(),
+                // Feature packs card (one-time purchases)
+                _buildFeaturePacksCard(),
 
-              const SizedBox(height: AppTheme.spacing24),
+                const SizedBox(height: AppTheme.spacing24),
 
-              // ═══════════════════════════════════════════════════════════════
-              // MANAGE SECTION - Restore, Terms, Privacy
-              // ═══════════════════════════════════════════════════════════════
-              _buildSectionHeader('MANAGE'),
-              const SizedBox(height: AppTheme.spacing8),
-              _buildManageCard(),
-            ]),
+                // ═══════════════════════════════════════════════════════════════
+                // MANAGE SECTION - Restore, Terms, Privacy
+                // ═══════════════════════════════════════════════════════════════
+                _buildSectionHeader('MANAGE'),
+                const SizedBox(height: AppTheme.spacing8),
+                _buildManageCard(),
+              ]),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

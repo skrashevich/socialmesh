@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../help/help_content.dart';
 import '../theme.dart';
 import '../../features/onboarding/widgets/mesh_node_brain.dart';
+import '../../features/settings/screens/help_center_screen.dart';
 import '../../providers/help_providers.dart';
 
 // ============================================================================
@@ -1217,6 +1218,27 @@ class _IcoSpeechBubbleWithArrowState
                               ),
                               child: Row(
                                 children: [
+                                  // Help Center link
+                                  GestureDetector(
+                                    onTap: () {
+                                      HapticFeedback.lightImpact();
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) =>
+                                              const HelpCenterScreen(),
+                                        ),
+                                      );
+                                    },
+                                    child: Icon(
+                                      Icons.menu_book_rounded,
+                                      size: 18,
+                                      color: context.accentColor.withValues(
+                                        alpha: 0.7,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: AppTheme.spacing12),
                                   // Back button
                                   if (widget.showBack && widget.onBack != null)
                                     GestureDetector(

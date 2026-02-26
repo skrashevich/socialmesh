@@ -200,65 +200,69 @@ class _ConstellationScreenState extends ConsumerState<ConstellationScreen>
         ? 0
         : constellation.weightAtPercentile(_edgeDensity.percentile);
 
-    return GlassScaffold.body(
-      resizeToAvoidBottomInset: false,
-      physics: const NeverScrollableScrollPhysics(),
-      title: 'Constellation',
-      actions: [
-        if (constellation.nodeCount > 0) ...[
-          // Search
-          IconButton(
-            icon: Icon(_searchOpen ? Icons.close : Icons.search, size: 20),
-            tooltip: _searchOpen ? 'Close search' : 'Search nodes',
-            onPressed: _toggleSearch,
-          ),
-          // Density cycle
-          IconButton(
-            icon: Icon(_edgeDensity.icon, size: 20),
-            tooltip: 'Edge density: ${_edgeDensity.label}',
-            onPressed: _cycleDensity,
-          ),
-          // Reset view
-          IconButton(
-            icon: const Icon(Icons.center_focus_strong_outlined, size: 20),
-            tooltip: 'Reset view',
-            onPressed: _resetView,
-          ),
-        ],
-        const IcoHelpAppBarButton(topicId: 'nodedex_constellation'),
-      ],
-      body: constellation.isEmpty
-          ? _buildEmptyState(context)
-          : Column(
-              children: [
-                // Search bar (animated slide-down)
-                _buildSearchBar(context, constellation),
-
-                // Main canvas
-                Expanded(
-                  child: _buildCanvas(
-                    context,
-                    constellation,
-                    isDark,
-                    weightThreshold,
-                  ),
-                ),
-
-                // Bottom info panel
-                ConstellationDetailPanel(
-                  selectedNodeNum: _selectedNodeNum,
-                  nodeCount: constellation.nodeCount,
-                  edgeCount: constellation.edgeCount,
-                  density: _edgeDensity,
-                  onClear: _selectedNodeNum != null
-                      ? () => safeSetState(() => _selectedNodeNum = null)
-                      : null,
-                  onOpenDetail: _selectedNodeNum != null
-                      ? () => _openDetail(_selectedNodeNum!)
-                      : null,
-                ),
-              ],
+    return HelpTourController(
+      topicId: 'nodedex_constellation',
+      stepKeys: const {},
+      child: GlassScaffold.body(
+        resizeToAvoidBottomInset: false,
+        physics: const NeverScrollableScrollPhysics(),
+        title: 'Constellation',
+        actions: [
+          if (constellation.nodeCount > 0) ...[
+            // Search
+            IconButton(
+              icon: Icon(_searchOpen ? Icons.close : Icons.search, size: 20),
+              tooltip: _searchOpen ? 'Close search' : 'Search nodes',
+              onPressed: _toggleSearch,
             ),
+            // Density cycle
+            IconButton(
+              icon: Icon(_edgeDensity.icon, size: 20),
+              tooltip: 'Edge density: ${_edgeDensity.label}',
+              onPressed: _cycleDensity,
+            ),
+            // Reset view
+            IconButton(
+              icon: const Icon(Icons.center_focus_strong_outlined, size: 20),
+              tooltip: 'Reset view',
+              onPressed: _resetView,
+            ),
+          ],
+          const IcoHelpAppBarButton(topicId: 'nodedex_constellation'),
+        ],
+        body: constellation.isEmpty
+            ? _buildEmptyState(context)
+            : Column(
+                children: [
+                  // Search bar (animated slide-down)
+                  _buildSearchBar(context, constellation),
+
+                  // Main canvas
+                  Expanded(
+                    child: _buildCanvas(
+                      context,
+                      constellation,
+                      isDark,
+                      weightThreshold,
+                    ),
+                  ),
+
+                  // Bottom info panel
+                  ConstellationDetailPanel(
+                    selectedNodeNum: _selectedNodeNum,
+                    nodeCount: constellation.nodeCount,
+                    edgeCount: constellation.edgeCount,
+                    density: _edgeDensity,
+                    onClear: _selectedNodeNum != null
+                        ? () => safeSetState(() => _selectedNodeNum = null)
+                        : null,
+                    onOpenDetail: _selectedNodeNum != null
+                        ? () => _openDetail(_selectedNodeNum!)
+                        : null,
+                  ),
+                ],
+              ),
+      ),
     );
   }
 

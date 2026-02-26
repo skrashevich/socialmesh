@@ -95,107 +95,114 @@ class _NodeDexConstellationScreenState
         ? 0
         : constellation.weightAtPercentile(_edgeDensity.percentile);
 
-    return GlassScaffold.body(
-      title: 'Constellation',
-      actions: [
-        if (constellation.nodeCount > 0) ...[
-          // Density cycle button
-          IconButton(
-            icon: Icon(_edgeDensity.icon, size: 20),
-            tooltip: 'Edge density: ${_edgeDensity.label}',
-            onPressed: _cycleDensity,
-          ),
-          // Reset view
-          IconButton(
-            icon: const Icon(Icons.center_focus_strong_outlined, size: 20),
-            tooltip: 'Reset view',
-            onPressed: _resetView,
-          ),
+    return HelpTourController(
+      topicId: 'nodedex_constellation',
+      stepKeys: const {},
+      child: GlassScaffold.body(
+        title: 'Constellation',
+        actions: [
+          if (constellation.nodeCount > 0) ...[
+            // Density cycle button
+            IconButton(
+              icon: Icon(_edgeDensity.icon, size: 20),
+              tooltip: 'Edge density: ${_edgeDensity.label}',
+              onPressed: _cycleDensity,
+            ),
+            // Reset view
+            IconButton(
+              icon: const Icon(Icons.center_focus_strong_outlined, size: 20),
+              tooltip: 'Reset view',
+              onPressed: _resetView,
+            ),
+          ],
+          const IcoHelpAppBarButton(topicId: 'nodedex_constellation'),
         ],
-        const IcoHelpAppBarButton(topicId: 'nodedex_constellation'),
-      ],
-      body: constellation.isEmpty
-          ? _buildEmptyState(context)
-          : Column(
-              children: [
-                // Main canvas — takes all available space
-                Expanded(
-                  child: Stack(
-                    children: [
-                      // Background
-                      Positioned.fill(
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            gradient: RadialGradient(
-                              center: Alignment.center,
-                              radius: 1.2,
-                              colors: isDark
-                                  ? const [Color(0xFF0F1320), Color(0xFF060810)]
-                                  : [
-                                      context.background,
-                                      const Color(0xFFF0F2F8),
-                                    ],
+        body: constellation.isEmpty
+            ? _buildEmptyState(context)
+            : Column(
+                children: [
+                  // Main canvas — takes all available space
+                  Expanded(
+                    child: Stack(
+                      children: [
+                        // Background
+                        Positioned.fill(
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              gradient: RadialGradient(
+                                center: Alignment.center,
+                                radius: 1.2,
+                                colors: isDark
+                                    ? const [
+                                        Color(0xFF0F1320),
+                                        Color(0xFF060810),
+                                      ]
+                                    : [
+                                        context.background,
+                                        const Color(0xFFF0F2F8),
+                                      ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
 
-                      // Interactive graph
-                      Positioned.fill(
-                        child: InteractiveViewer(
-                          transformationController: _transformController,
-                          minScale: 0.3,
-                          maxScale: 5.0,
-                          boundaryMargin: const EdgeInsets.all(
-                            AppTheme.spacing200,
-                          ),
-                          child: LayoutBuilder(
-                            builder: (context, constraints) {
-                              final size = Size(
-                                math.max(constraints.maxWidth, 300),
-                                math.max(constraints.maxHeight, 300),
-                              );
-                              return GestureDetector(
-                                onTapUp: (d) =>
-                                    _handleTap(d, size, constellation),
-                                onLongPressStart: (d) =>
-                                    _handleLongPress(d, size, constellation),
-                                child: RepaintBoundary(
-                                  child: CustomPaint(
-                                    size: size,
-                                    painter: _ConstellationPainter(
-                                      data: constellation,
-                                      isDark: isDark,
-                                      selectedNodeNum: _selectedNodeNum,
-                                      accentColor: context.accentColor,
-                                      weightThreshold: weightThreshold,
+                        // Interactive graph
+                        Positioned.fill(
+                          child: InteractiveViewer(
+                            transformationController: _transformController,
+                            minScale: 0.3,
+                            maxScale: 5.0,
+                            boundaryMargin: const EdgeInsets.all(
+                              AppTheme.spacing200,
+                            ),
+                            child: LayoutBuilder(
+                              builder: (context, constraints) {
+                                final size = Size(
+                                  math.max(constraints.maxWidth, 300),
+                                  math.max(constraints.maxHeight, 300),
+                                );
+                                return GestureDetector(
+                                  onTapUp: (d) =>
+                                      _handleTap(d, size, constellation),
+                                  onLongPressStart: (d) =>
+                                      _handleLongPress(d, size, constellation),
+                                  child: RepaintBoundary(
+                                    child: CustomPaint(
+                                      size: size,
+                                      painter: _ConstellationPainter(
+                                        data: constellation,
+                                        isDark: isDark,
+                                        selectedNodeNum: _selectedNodeNum,
+                                        accentColor: context.accentColor,
+                                        weightThreshold: weightThreshold,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              );
-                            },
+                                );
+                              },
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
 
-                // Fixed bottom bar — always present, content changes
-                _BottomInfoBar(
-                  selectedNodeNum: _selectedNodeNum,
-                  nodeCount: constellation.nodeCount,
-                  edgeCount: constellation.edgeCount,
-                  density: _edgeDensity,
-                  onClear: _selectedNodeNum != null
-                      ? () => setState(() => _selectedNodeNum = null)
-                      : null,
-                  onOpenDetail: _selectedNodeNum != null
-                      ? () => _openDetail(_selectedNodeNum!)
-                      : null,
-                ),
-              ],
-            ),
+                  // Fixed bottom bar — always present, content changes
+                  _BottomInfoBar(
+                    selectedNodeNum: _selectedNodeNum,
+                    nodeCount: constellation.nodeCount,
+                    edgeCount: constellation.edgeCount,
+                    density: _edgeDensity,
+                    onClear: _selectedNodeNum != null
+                        ? () => setState(() => _selectedNodeNum = null)
+                        : null,
+                    onOpenDetail: _selectedNodeNum != null
+                        ? () => _openDetail(_selectedNodeNum!)
+                        : null,
+                  ),
+                ],
+              ),
+      ),
     );
   }
 
