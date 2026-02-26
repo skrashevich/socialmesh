@@ -739,7 +739,7 @@ check_file() {
 
     # ERROR: TextField/TextFormField without maxLength
     # Only check non-comment lines (grep -v strips // and /// lines)
-    if grep -vE '^\s*//' "$file" | grep -qE '(TextField|TextFormField)[[:space:]]*\(' 2>/dev/null; then
+    if grep -vE '^\s*//' "$file" 2>/dev/null | grep -qE '(TextField|TextFormField)[[:space:]]*\(' 2>/dev/null; then
       if ! grep -q 'maxLength' "$file" 2>/dev/null; then
         record_hit "$file" "1" "textfield-maxlength" \
           "TextField/TextFormField without maxLength — all text inputs must be bounded" "error"
@@ -753,7 +753,7 @@ check_file() {
     # HelpTourController wrapping its scaffold. Without the controller
     # the help button toggles state but no overlay appears.
     # ------------------------------------------------------------------
-    if grep -vE '^\s*//' "$file" | grep -q 'IcoHelpAppBarButton' 2>/dev/null; then
+    if grep -vE '^\s*//' "$file" 2>/dev/null | grep -q 'IcoHelpAppBarButton' 2>/dev/null; then
       if ! grep -q 'HelpTourController' "$file" 2>/dev/null; then
         record_hit "$file" "1" "help-button-needs-controller" \
           "IcoHelpAppBarButton without HelpTourController — the tour overlay will not render" "error"
@@ -876,7 +876,7 @@ check_file() {
     # Honors // lint-allow: keyboard-dismissal exemption.
     # ------------------------------------------------------------------
     if grep -qE 'class[[:space:]]+[A-Za-z_]+Screen[[:space:]]+extends' "$file" 2>/dev/null; then
-      if grep -vE '^\s*//' "$file" | grep -qE '(TextField|TextFormField)[[:space:]]*\(' 2>/dev/null; then
+      if grep -vE '^\s*//' "$file" 2>/dev/null | grep -qE '(TextField|TextFormField)[[:space:]]*\(' 2>/dev/null; then
         if ! grep -qE '(FocusScope\.of|FocusManager\.|unfocus|onTapOutside)' "$file" 2>/dev/null; then
           if ! grep -q 'lint-allow:.*keyboard-dismissal' "$file" 2>/dev/null; then
             record_hit "$file" "1" "keyboard-dismissal" \
@@ -895,8 +895,8 @@ check_file() {
     # Honors // lint-allow: haptic-feedback exemption.
     # ------------------------------------------------------------------
     if [[ "$file" != test/* ]]; then
-      if grep -vE '^\s*//' "$file" | grep -q 'GestureDetector' 2>/dev/null; then
-        if grep -vE '^\s*//' "$file" | grep -q 'onTap' 2>/dev/null; then
+      if grep -vE '^\s*//' "$file" 2>/dev/null | grep -q 'GestureDetector' 2>/dev/null; then
+        if grep -vE '^\s*//' "$file" 2>/dev/null | grep -q 'onTap' 2>/dev/null; then
           if ! grep -qE '(HapticFeedback\.|HapticService|haptics\.)' "$file" 2>/dev/null; then
             if ! grep -q 'lint-allow:.*haptic-feedback' "$file" 2>/dev/null; then
               record_hit "$file" "1" "haptic-feedback" \
