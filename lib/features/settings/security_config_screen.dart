@@ -13,6 +13,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../core/logging.dart';
 import '../../core/theme.dart';
 import '../../providers/app_providers.dart';
+import '../../providers/countdown_providers.dart';
 import '../../providers/splash_mesh_provider.dart';
 import '../../utils/snackbar.dart';
 import '../../generated/meshtastic/config.pb.dart' as config_pb;
@@ -228,6 +229,11 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
 
       if (!mounted) return;
       showSuccessSnackBar(context, 'Security configuration saved');
+      if (target.isLocal) {
+        ref
+            .read(countdownProvider.notifier)
+            .startDeviceRebootCountdown(reason: 'security config saved');
+      }
       Navigator.pop(context);
     } catch (e) {
       showErrorSnackBar(context, 'Failed to save: $e');

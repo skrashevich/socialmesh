@@ -9,6 +9,7 @@ import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/logging.dart';
 import '../../core/theme.dart';
 import '../../providers/app_providers.dart';
+import '../../providers/countdown_providers.dart';
 import '../../services/protocol/admin_target.dart';
 import '../../providers/help_providers.dart';
 import '../../providers/splash_mesh_provider.dart';
@@ -161,6 +162,11 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
 
       if (!mounted) return;
       showSuccessSnackBar(context, 'Radio configuration saved');
+      if (target.isLocal) {
+        ref
+            .read(countdownProvider.notifier)
+            .startDeviceRebootCountdown(reason: 'radio config saved');
+      }
       navigator.pop();
     } catch (e) {
       if (mounted) {

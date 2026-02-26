@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/theme.dart';
 import '../../providers/app_providers.dart';
+import '../../providers/countdown_providers.dart';
 import '../../providers/splash_mesh_provider.dart';
 import '../../utils/snackbar.dart';
 import '../../generated/meshtastic/config.pb.dart' as config_pb;
@@ -284,6 +285,11 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
 
       if (mounted) {
         showSuccessSnackBar(context, 'Position configuration saved');
+        if (target.isLocal) {
+          ref
+              .read(countdownProvider.notifier)
+              .startDeviceRebootCountdown(reason: 'position config saved');
+        }
         safeNavigatorPop();
       }
     } catch (e) {

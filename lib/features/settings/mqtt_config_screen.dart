@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/theme.dart';
 import '../../providers/app_providers.dart';
+import '../../providers/countdown_providers.dart';
 import '../../providers/splash_mesh_provider.dart';
 import '../../utils/snackbar.dart';
 import '../../generated/meshtastic/module_config.pb.dart' as module_pb;
@@ -152,6 +153,11 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
 
       if (mounted) {
         showSuccessSnackBar(context, 'MQTT configuration saved');
+        if (target.isLocal) {
+          ref
+              .read(countdownProvider.notifier)
+              .startDeviceRebootCountdown(reason: 'MQTT config saved');
+        }
         safeNavigatorPop();
       }
     } catch (e) {

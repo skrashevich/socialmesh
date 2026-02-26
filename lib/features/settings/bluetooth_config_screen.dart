@@ -10,6 +10,7 @@ import '../../core/theme.dart';
 import '../../providers/splash_mesh_provider.dart';
 import '../../utils/snackbar.dart';
 import '../../providers/app_providers.dart';
+import '../../providers/countdown_providers.dart';
 import '../../generated/meshtastic/config.pb.dart' as config_pb;
 import '../../generated/meshtastic/config.pbenum.dart' as config_pbenum;
 import '../../generated/meshtastic/admin.pbenum.dart' as admin_pbenum;
@@ -126,6 +127,11 @@ class _BluetoothConfigScreenState extends ConsumerState<BluetoothConfigScreen>
 
       if (mounted) {
         showSuccessSnackBar(context, 'Bluetooth configuration saved');
+        if (target.isLocal) {
+          ref
+              .read(countdownProvider.notifier)
+              .startDeviceRebootCountdown(reason: 'Bluetooth config saved');
+        }
         safeNavigatorPop();
       }
     } catch (e) {

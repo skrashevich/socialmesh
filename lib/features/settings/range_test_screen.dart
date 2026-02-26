@@ -14,6 +14,7 @@ import '../../generated/meshtastic/module_config.pb.dart' as module_pb;
 import '../../providers/splash_mesh_provider.dart';
 import '../../utils/snackbar.dart';
 import '../../providers/app_providers.dart';
+import '../../providers/countdown_providers.dart';
 import '../../services/protocol/admin_target.dart';
 import '../../models/mesh_models.dart';
 import '../../models/presence_confidence.dart';
@@ -121,6 +122,11 @@ class _RangeTestScreenState extends ConsumerState<RangeTestScreen>
 
       if (mounted) {
         showSuccessSnackBar(context, 'Range test configuration saved');
+        if (target.isLocal) {
+          ref
+              .read(countdownProvider.notifier)
+              .startDeviceRebootCountdown(reason: 'range test config saved');
+        }
       }
     } catch (e) {
       if (mounted) {

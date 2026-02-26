@@ -11,6 +11,7 @@ import '../../core/widgets/glass_scaffold.dart';
 import '../../providers/splash_mesh_provider.dart';
 import '../../utils/snackbar.dart';
 import '../../providers/app_providers.dart';
+import '../../providers/countdown_providers.dart';
 import '../../generated/meshtastic/admin.pbenum.dart' as admin_pbenum;
 import '../../generated/meshtastic/module_config.pb.dart' as module_pb;
 import '../../generated/meshtastic/module_config.pbenum.dart' as module_pbenum;
@@ -156,6 +157,13 @@ class _DetectionSensorConfigScreenState
 
       if (mounted) {
         showSuccessSnackBar(context, 'Detection Sensor configuration saved');
+        if (target.isLocal) {
+          ref
+              .read(countdownProvider.notifier)
+              .startDeviceRebootCountdown(
+                reason: 'detection sensor config saved',
+              );
+        }
       }
     } catch (e) {
       if (mounted) {

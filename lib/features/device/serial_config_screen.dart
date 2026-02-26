@@ -6,6 +6,7 @@ import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/glass_scaffold.dart';
 import '../../providers/app_providers.dart';
+import '../../providers/countdown_providers.dart';
 import '../../providers/splash_mesh_provider.dart';
 import '../../utils/snackbar.dart';
 import '../../generated/meshtastic/module_config.pb.dart' as module_pb;
@@ -175,6 +176,11 @@ class _SerialConfigScreenState extends ConsumerState<SerialConfigScreen>
       safeSetState(() => _hasChanges = false);
       if (mounted) {
         showSuccessSnackBar(context, 'Serial configuration saved');
+        if (target.isLocal) {
+          ref
+              .read(countdownProvider.notifier)
+              .startDeviceRebootCountdown(reason: 'serial config saved');
+        }
       }
     } catch (e) {
       if (mounted) {

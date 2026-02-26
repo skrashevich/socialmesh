@@ -381,6 +381,9 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
     try {
       await protocol.reboot();
       if (!mounted) return;
+      ref
+          .read(countdownProvider.notifier)
+          .startDeviceRebootCountdown(reason: 'reboot');
       if (context.mounted) {
         Navigator.pop(context);
         showInfoSnackBar(context, 'Device is rebooting...');

@@ -12,6 +12,7 @@ import '../../core/widgets/auto_scroll_text.dart';
 import '../../models/mesh_device.dart';
 import '../../providers/app_providers.dart';
 import '../../providers/connection_providers.dart';
+import '../../providers/countdown_providers.dart';
 import '../../providers/meshcore_providers.dart';
 import '../../utils/snackbar.dart';
 import 'package:socialmesh/core/navigation.dart';
@@ -460,6 +461,9 @@ class _DeviceSheetContentState extends ConsumerState<_DeviceSheetContent>
         // Clear local nodes from the app's state and storage
         if (!mounted) return;
         ref.read(nodesProvider.notifier).clearNodes();
+        ref
+            .read(countdownProvider.notifier)
+            .startDeviceRebootCountdown(reason: 'node database reset');
 
         if (context.mounted) {
           showSuccessSnackBar(context, 'Node database reset successfully');

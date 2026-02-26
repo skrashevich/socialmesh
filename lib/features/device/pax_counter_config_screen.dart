@@ -7,6 +7,7 @@ import '../../core/theme.dart';
 import '../../core/widgets/animations.dart';
 import '../../core/widgets/glass_scaffold.dart';
 import '../../providers/app_providers.dart';
+import '../../providers/countdown_providers.dart';
 import '../../providers/splash_mesh_provider.dart';
 import '../../utils/snackbar.dart';
 import '../../core/widgets/loading_indicator.dart';
@@ -108,6 +109,11 @@ class _PaxCounterConfigScreenState extends ConsumerState<PaxCounterConfigScreen>
       safeSetState(() => _hasChanges = false);
       if (mounted) {
         showSuccessSnackBar(context, 'PAX counter config saved');
+        if (target.isLocal) {
+          ref
+              .read(countdownProvider.notifier)
+              .startDeviceRebootCountdown(reason: 'PAX counter config saved');
+        }
       }
     } catch (e) {
       if (mounted) {

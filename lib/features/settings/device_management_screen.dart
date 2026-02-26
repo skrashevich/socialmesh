@@ -6,6 +6,7 @@ import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
 import '../../providers/app_providers.dart';
 import '../../providers/connection_providers.dart' as conn;
+import '../../providers/countdown_providers.dart';
 import '../../providers/splash_mesh_provider.dart';
 import '../../services/protocol/admin_target.dart';
 import '../../utils/snackbar.dart';
@@ -240,6 +241,9 @@ class _DeviceManagementScreenState extends ConsumerState<DeviceManagementScreen>
                           'expecting disconnect in ~2s, '
                           'autoReconnectState set to idle for reconnect',
                         );
+                        ref
+                            .read(countdownProvider.notifier)
+                            .startDeviceRebootCountdown(reason: 'reboot');
                       } else {
                         AppLogging.connection(
                           '🔧 Remote Admin: Sending reboot to remote device',
@@ -347,6 +351,11 @@ class _DeviceManagementScreenState extends ConsumerState<DeviceManagementScreen>
                           '🔧 DeviceManagement: clearing local nodes cache',
                         );
                         nodesNotifier.clearNodes();
+                        ref
+                            .read(countdownProvider.notifier)
+                            .startDeviceRebootCountdown(
+                              reason: 'node database reset',
+                            );
                       }
                     },
                     warningMessage:
@@ -411,6 +420,11 @@ class _DeviceManagementScreenState extends ConsumerState<DeviceManagementScreen>
                           'to idle (cleared stale manualConnecting '
                           'for reconnect)',
                         );
+                        ref
+                            .read(countdownProvider.notifier)
+                            .startDeviceRebootCountdown(
+                              reason: 'factory reset config',
+                            );
                       }
                     },
                     warningMessage:

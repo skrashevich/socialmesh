@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/theme.dart';
 import '../../providers/app_providers.dart';
+import '../../providers/countdown_providers.dart';
 import '../../providers/splash_mesh_provider.dart';
 import '../../utils/snackbar.dart';
 import '../../generated/meshtastic/config.pb.dart' as config_pb;
@@ -145,6 +146,11 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
 
       if (mounted) {
         showSuccessSnackBar(context, 'Display configuration saved');
+        if (target.isLocal) {
+          ref
+              .read(countdownProvider.notifier)
+              .startDeviceRebootCountdown(reason: 'display config saved');
+        }
         safeNavigatorPop();
       }
     } catch (e) {

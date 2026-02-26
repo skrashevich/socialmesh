@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/glass_scaffold.dart';
 import '../../providers/app_providers.dart';
+import '../../providers/countdown_providers.dart';
 import '../../providers/splash_mesh_provider.dart';
 import '../../utils/snackbar.dart';
 import '../../generated/meshtastic/config.pb.dart' as config_pb;
@@ -133,6 +134,11 @@ class _PowerConfigScreenState extends ConsumerState<PowerConfigScreen>
 
       if (mounted) {
         showSuccessSnackBar(context, 'Power configuration saved');
+        if (target.isLocal) {
+          ref
+              .read(countdownProvider.notifier)
+              .startDeviceRebootCountdown(reason: 'power config saved');
+        }
         safeNavigatorPop();
       }
     } catch (e) {

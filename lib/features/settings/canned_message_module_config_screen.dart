@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/theme.dart';
 import '../../providers/app_providers.dart';
+import '../../providers/countdown_providers.dart';
 import '../../providers/splash_mesh_provider.dart';
 import '../../utils/snackbar.dart';
 import '../../generated/meshtastic/admin.pb.dart' as admin;
@@ -183,6 +184,13 @@ class _CannedMessageModuleConfigScreenState
 
       if (mounted) {
         showSuccessSnackBar(context, 'Canned message configuration saved');
+        if (target.isLocal) {
+          ref
+              .read(countdownProvider.notifier)
+              .startDeviceRebootCountdown(
+                reason: 'canned message config saved',
+              );
+        }
         safeNavigatorPop();
       }
     } catch (e) {

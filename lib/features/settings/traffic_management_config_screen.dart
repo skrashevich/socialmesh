@@ -9,6 +9,7 @@ import '../../core/theme.dart';
 import '../../core/widgets/animations.dart';
 import '../../core/widgets/glass_scaffold.dart';
 import '../../providers/app_providers.dart';
+import '../../providers/countdown_providers.dart';
 import '../../providers/splash_mesh_provider.dart';
 import '../../utils/snackbar.dart';
 import '../../generated/meshtastic/module_config.pb.dart' as module_pb;
@@ -165,6 +166,13 @@ class _TrafficManagementConfigScreenState
 
       if (mounted) {
         showSuccessSnackBar(context, 'Traffic management configuration saved');
+        if (target.isLocal) {
+          ref
+              .read(countdownProvider.notifier)
+              .startDeviceRebootCountdown(
+                reason: 'traffic management config saved',
+              );
+        }
         safeNavigatorPop();
       }
     } catch (e) {

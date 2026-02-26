@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/theme.dart';
 import '../../providers/app_providers.dart';
+import '../../providers/countdown_providers.dart';
 import '../../providers/splash_mesh_provider.dart';
 import '../../utils/snackbar.dart';
 import '../../generated/meshtastic/config.pb.dart' as config_pb;
@@ -138,6 +139,11 @@ class _NetworkConfigScreenState extends ConsumerState<NetworkConfigScreen>
 
       if (mounted) {
         showSuccessSnackBar(context, 'Network configuration saved');
+        if (target.isLocal) {
+          ref
+              .read(countdownProvider.notifier)
+              .startDeviceRebootCountdown(reason: 'network config saved');
+        }
         safeNavigatorPop();
       }
     } catch (e) {

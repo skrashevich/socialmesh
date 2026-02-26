@@ -2225,6 +2225,11 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
         await protocol.factoryResetDevice(target: target);
         AppLogging.protocol('DeviceConfig: factoryResetDevice command sent');
         if (mounted) {
+          if (target.isLocal) {
+            ref
+                .read(countdownProvider.notifier)
+                .startDeviceRebootCountdown(reason: 'factory reset');
+          }
           showSuccessSnackBar(
             context,
             'Factory reset initiated - device will restart',

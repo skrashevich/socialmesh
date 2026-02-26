@@ -11,6 +11,7 @@ import '../../generated/meshtastic/admin.pbenum.dart' as admin_pbenum;
 import '../../generated/meshtastic/module_config.pb.dart' as module_pb;
 import '../../services/protocol/admin_target.dart';
 import '../../providers/app_providers.dart';
+import '../../providers/countdown_providers.dart';
 import '../../providers/splash_mesh_provider.dart';
 import '../../utils/snackbar.dart';
 import '../../core/widgets/status_banner.dart';
@@ -167,6 +168,11 @@ class _TelemetryConfigScreenState extends ConsumerState<TelemetryConfigScreen>
       safeSetState(() => _hasChanges = false);
       if (mounted) {
         showSuccessSnackBar(context, 'Telemetry config saved');
+        if (target.isLocal) {
+          ref
+              .read(countdownProvider.notifier)
+              .startDeviceRebootCountdown(reason: 'telemetry config saved');
+        }
       }
     } catch (e) {
       if (mounted) {
