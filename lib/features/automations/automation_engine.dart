@@ -48,6 +48,14 @@ class AutomationEngine {
   final Future<bool> Function(int channelIndex, String message)?
   onSendToChannel;
 
+  /// Callback to resolve the local device's node number.
+  /// Used to enrich scheduled events with the connected radio's telemetry.
+  final int? Function()? onGetMyNodeNum;
+
+  /// Callback to get the phone's current GPS position (lat, lon).
+  /// Used to enrich scheduled events with the phone's location.
+  final Future<(double, double)?> Function()? onGetPhonePosition;
+
   // Track node states for change detection
   final Map<int, PresenceConfidence> _nodePresence = {};
   final Map<int, int> _nodeBatteryLevels = {};
@@ -74,6 +82,8 @@ class AutomationEngine {
     Scheduler? scheduler,
     this.onSendMessage,
     this.onSendToChannel,
+    this.onGetMyNodeNum,
+    this.onGetPhonePosition,
   }) : _repository = repository,
        _iftttService = iftttService,
        _notifications = notifications,
@@ -123,19 +133,65 @@ class AutomationEngine {
     _scheduler?.stop();
   }
 
-  /// Process a scheduled fire event from the scheduler
+  /// Process a scheduled fire event from the scheduler.
+  ///
+  /// Enriches the event with the connected radio's last-known battery level
+  /// and the phone's current GPS position so that {{battery}} and
+  /// {{location}} template variables resolve to real values.
   Future<void> processScheduledEvent(ScheduledFireEvent event) async {
     AppLogging.automations(
       'AutomationEngine: Processing scheduled event ${event.slotKey}'
       '${event.isCatchUp ? " (catch-up)" : ""}',
     );
 
+    // Resolve the local radio's battery from cached telemetry
+    int? batteryLevel;
+    final myNodeNum = onGetMyNodeNum?.call();
+    if (myNodeNum != null) {
+      batteryLevel = _nodeBatteryLevels[myNodeNum];
+    }
+
+    // Resolve the phone's current GPS position
+    double? latitude;
+    double? longitude;
+    try {
+      final pos = await onGetPhonePosition?.call();
+      if (pos != null) {
+        latitude = pos.$1;
+        longitude = pos.$2;
+      }
+    } catch (e) {
+      AppLogging.automations(
+        'AutomationEngine: Failed to get phone position: $e',
+      );
+    }
+
+    // Fall back to the local radio's last-known position
+    if (latitude == null && myNodeNum != null) {
+      final nodePos = _nodePositions[myNodeNum];
+      if (nodePos != null) {
+        latitude = nodePos.$1;
+        longitude = nodePos.$2;
+      }
+    }
+
+    AppLogging.automations(
+      'AutomationEngine: Scheduled event enrichment — '
+      'battery=$batteryLevel, lat=$latitude, lon=$longitude',
+    );
+
     await _processEvent(
-      AutomationEvent.scheduledFire(
+      AutomationEvent(
+        type: TriggerType.scheduled,
         scheduleId: event.scheduleId,
         slotKey: event.slotKey,
         scheduledFor: event.scheduledFor,
         isCatchUp: event.isCatchUp,
+        batteryLevel: batteryLevel,
+        latitude: latitude,
+        longitude: longitude,
+        nodeNum: myNodeNum,
+        nodeName: myNodeNum != null ? _nodeNames[myNodeNum] : null,
       ),
     );
   }

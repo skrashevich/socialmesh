@@ -3,6 +3,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
@@ -304,7 +305,10 @@ class _MeshCoreMapScreenState extends ConsumerState<MeshCoreMapScreen> {
           width: 80,
           height: 80,
           child: GestureDetector(
-            onTap: () => _showContactInfo(contact),
+            onTap: () {
+              HapticFeedback.lightImpact();
+              _showContactInfo(contact);
+            },
             child: Column(
               children: [
                 Container(

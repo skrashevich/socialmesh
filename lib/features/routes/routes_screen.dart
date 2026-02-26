@@ -3,6 +3,8 @@
 import 'dart:io';
 import 'dart:async';
 
+import 'package:flutter/services.dart';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -704,7 +706,10 @@ class _NewRouteSheetState extends State<_NewRouteSheet> {
           children: _colors.map((color) {
             final isSelected = color == _selectedColor;
             return GestureDetector(
-              onTap: () => setState(() => _selectedColor = color),
+              onTap: () {
+                HapticFeedback.lightImpact();
+                setState(() => _selectedColor = color);
+              },
               child: Container(
                 width: 40,
                 height: 40,

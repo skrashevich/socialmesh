@@ -114,6 +114,19 @@ final automationEngineProvider = Provider<AutomationEngine>((ref) {
     iftttService: iftttService,
     notifications: notifications,
     glyphService: glyphService,
+    onGetMyNodeNum: () => ref.read(myNodeNumProvider),
+    onGetPhonePosition: () async {
+      try {
+        final locationService = ref.read(locationServiceProvider);
+        final position = await locationService.getCurrentPosition();
+        if (position != null) {
+          return (position.latitude, position.longitude);
+        }
+      } catch (e) {
+        AppLogging.automations('Failed to get phone GPS position: $e');
+      }
+      return null;
+    },
     onSendMessage: (nodeNum, message) async {
       try {
         await protocol.sendMessage(

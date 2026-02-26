@@ -45,7 +45,10 @@ final tapbackStorageProvider = FutureProvider<TapbackStorageService>((
   ref,
 ) async {
   final prefs = await ref.watch(sharedPreferencesProvider.future);
-  return TapbackStorageService(prefs);
+  final service = TapbackStorageService(prefs);
+  // One-time cleanup of duplicates that accumulated before the write guard
+  await service.purgeExistingDuplicates();
+  return service;
 });
 
 // Traceroute repository (SQLite-backed, persists across restarts)

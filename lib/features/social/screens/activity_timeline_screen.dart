@@ -2,6 +2,7 @@
 // lint-allow: scaffold — FutureBuilder loading/error placeholders, main build uses GlassScaffold
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -814,6 +815,7 @@ class _TimelineActivityTile extends ConsumerWidget {
                 child: GestureDetector(
                   onTap: isMeshActor
                       ? () {
+                          HapticFeedback.lightImpact();
                           Navigator.of(context).push(
                             MaterialPageRoute<void>(
                               builder: (_) =>

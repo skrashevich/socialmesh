@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/safety/safe_image.dart';
@@ -217,6 +218,7 @@ class SignalGridCard extends ConsumerWidget {
                           if (isMeshSignal)
                             GestureDetector(
                               onTap: () {
+                                HapticFeedback.lightImpact();
                                 Navigator.of(context).push(
                                   MaterialPageRoute<void>(
                                     builder: (_) => NodeDexDetailScreen(

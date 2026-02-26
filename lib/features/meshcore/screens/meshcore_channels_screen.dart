@@ -888,7 +888,10 @@ class _ChannelCard extends StatelessWidget {
     final isPublic = channel.isPublic;
 
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {
+        HapticFeedback.lightImpact();
+        onTap();
+      },
       onLongPress: onLongPress,
       child: Container(
         margin: const EdgeInsets.only(bottom: 8),

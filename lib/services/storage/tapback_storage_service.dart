@@ -6,15 +6,48 @@ import '../../models/tapback.dart';
 /// Storage service for message tapbacks
 class TapbackStorageService {
   static const _tapbacksKey = 'tapbacks';
+  static const _dedupCleanupDoneKey = 'tapbacks_dedup_cleanup_done';
 
   final SharedPreferences _prefs;
 
   TapbackStorageService(this._prefs);
 
-  /// Get all tapbacks for a message
+  /// One-time cleanup: remove duplicate tapbacks that accumulated
+  /// before the write-side dedup was added. Safe to call multiple
+  /// times — it no-ops after the first successful run.
+  Future<void> purgeExistingDuplicates() async {
+    if (_prefs.getBool(_dedupCleanupDoneKey) == true) return;
+
+    final tapbacks = await _getAllTapbacks();
+    final seen = <String>{};
+    final deduped = <MessageTapback>[];
+    for (final t in tapbacks) {
+      final key = '${t.messageId}|${t.fromNodeNum}|${t.emoji}';
+      if (seen.add(key)) {
+        deduped.add(t);
+      }
+    }
+
+    if (deduped.length < tapbacks.length) {
+      await _saveTapbacks(deduped);
+    }
+    await _prefs.setBool(_dedupCleanupDoneKey, true);
+  }
+
+  /// Get all tapbacks for a message (deduplicated at read time).
   Future<List<MessageTapback>> getTapbacksForMessage(String messageId) async {
     final allTapbacks = await _getAllTapbacks();
-    return allTapbacks.where((t) => t.messageId == messageId).toList();
+    final matching = allTapbacks
+        .where((t) => t.messageId == messageId)
+        .toList();
+
+    // Deduplicate by (messageId, fromNodeNum, emoji) to handle any
+    // pre-existing duplicates that slipped through before the write guard.
+    final seen = <String>{};
+    return matching.where((t) {
+      final key = '${t.fromNodeNum}|${t.emoji}';
+      return seen.add(key);
+    }).toList();
   }
 
   /// Add a tapback to a message.

@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+import 'dart:convert';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socialmesh/models/tapback.dart';
@@ -212,5 +214,69 @@ void main() {
         expect(tapbacks.length, 2);
       },
     );
+
+    test('getTapbacksForMessage deduplicates at read time', () async {
+      // Manually inject duplicate records into SharedPreferences to simulate
+      // pre-existing duplicates from before the write guard.
+      final t1 = MessageTapback(
+        messageId: 'msg1',
+        fromNodeNum: 111,
+        emoji: '👍',
+      );
+      final t2 = MessageTapback(
+        messageId: 'msg1',
+        fromNodeNum: 111,
+        emoji: '👍',
+      );
+      final t3 = MessageTapback(
+        messageId: 'msg1',
+        fromNodeNum: 222,
+        emoji: '👍',
+      );
+      await prefs.setStringList('tapbacks', [
+        jsonEncode(t1.toJson()),
+        jsonEncode(t2.toJson()),
+        jsonEncode(t3.toJson()),
+      ]);
+
+      final tapbacks = await service.getTapbacksForMessage('msg1');
+      expect(tapbacks.length, 2, reason: 'read-time dedup removes duplicate');
+      expect(tapbacks[0].fromNodeNum, 111);
+      expect(tapbacks[1].fromNodeNum, 222);
+    });
+
+    test('purgeExistingDuplicates removes stored duplicates', () async {
+      // Inject duplicates directly
+      final t1 = MessageTapback(
+        messageId: 'msg1',
+        fromNodeNum: 111,
+        emoji: '👍',
+      );
+      final t2 = MessageTapback(
+        messageId: 'msg1',
+        fromNodeNum: 111,
+        emoji: '👍',
+      );
+      final t3 = MessageTapback(
+        messageId: 'msg1',
+        fromNodeNum: 111,
+        emoji: '❤️',
+      );
+      await prefs.setStringList('tapbacks', [
+        jsonEncode(t1.toJson()),
+        jsonEncode(t2.toJson()),
+        jsonEncode(t3.toJson()),
+      ]);
+
+      await service.purgeExistingDuplicates();
+
+      // Verify stored data is now clean
+      final raw = prefs.getStringList('tapbacks')!;
+      expect(raw.length, 2, reason: 'duplicate removed from storage');
+
+      // Second call is a no-op (flag set)
+      await service.purgeExistingDuplicates();
+      expect(prefs.getStringList('tapbacks')!.length, 2);
+    });
   });
 }
