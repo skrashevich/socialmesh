@@ -939,7 +939,7 @@ class _SocialmeshAppState extends ConsumerState<SocialmeshApp>
         );
         ref
             .read(autoReconnectStateProvider.notifier)
-            .setState(AutoReconnectState.idle);
+            .setState(AutoReconnectState.failed);
         return;
       }
 
@@ -966,7 +966,7 @@ class _SocialmeshAppState extends ConsumerState<SocialmeshApp>
       AppLogging.connection('📱 RECONNECT ON RESUME: MeshCore failed: $e');
       ref
           .read(autoReconnectStateProvider.notifier)
-          .setState(AutoReconnectState.idle);
+          .setState(AutoReconnectState.failed);
     }
   }
 
@@ -1094,13 +1094,13 @@ class _SocialmeshAppState extends ConsumerState<SocialmeshApp>
         );
         ref
             .read(autoReconnectStateProvider.notifier)
-            .setState(AutoReconnectState.idle);
+            .setState(AutoReconnectState.failed);
       }
     } catch (e) {
       AppLogging.connection('📱 RECONNECT ON RESUME: Failed: $e');
       ref
           .read(autoReconnectStateProvider.notifier)
-          .setState(AutoReconnectState.idle);
+          .setState(AutoReconnectState.failed);
     }
   }
 

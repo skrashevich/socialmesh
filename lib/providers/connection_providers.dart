@@ -933,11 +933,18 @@ class DeviceConnectionNotifier extends Notifier<DeviceConnectionState2> {
               AppLogging.connection(
                 '🔌 startBackgroundConnection: Retry timer fired, attempt $_reconnectAttempt',
               );
+              // Reset state so the scanning guard at the top of
+              // startBackgroundConnection does not block this retry.
+              ref
+                  .read(autoReconnectStateProvider.notifier)
+                  .setState(AutoReconnectState.idle);
               startBackgroundConnection();
             }
           });
 
-          // Keep state as scanning during retry
+          // Keep state as scanning during retry delay so the banner
+          // stays visible. The timer callback resets to idle right
+          // before re-entering startBackgroundConnection.
           ref
               .read(autoReconnectStateProvider.notifier)
               .setState(AutoReconnectState.scanning);
