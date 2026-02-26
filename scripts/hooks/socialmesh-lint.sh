@@ -15,7 +15,6 @@
 #
 # Output format (one line per rule per file):
 #   ERROR file:line [rule] message (N occurrences)
-#   WARN  file:line [rule] message
 #
 # The first occurrence's line number is preserved so VS Code's problem
 # matcher can create a clickable entry in the Problems panel.
@@ -152,12 +151,11 @@ line_in_scope() {
 
 declare -A HIT_FIRST_LINE   # key="file|rule" -> first line number
 declare -A HIT_COUNT        # key="file|rule" -> occurrence count
-declare -A HIT_SEVERITY     # key="file|rule" -> "error" or "warn"
+declare -A HIT_SEVERITY     # key="file|rule" -> "error"
 declare -A HIT_MESSAGE      # key="file|rule" -> message text
 HIT_KEYS=()                 # ordered list of unique keys
 
 TOTAL_VIOLATIONS=0
-TOTAL_WARNINGS=0
 FILES_WITH_HITS=0
 
 record_hit() {
@@ -195,13 +193,8 @@ flush_file_hits() {
       suffix=" ${DIM}(${count} occurrences)${NC}"
     fi
 
-    if [ "$severity" = "error" ]; then
-      TOTAL_VIOLATIONS=$((TOTAL_VIOLATIONS + 1))
-      echo -e "${RED}${BOLD}ERROR${NC} ${kfile}:${first_line} [${rule}] ${msg}${suffix}" >&2
-    else
-      TOTAL_WARNINGS=$((TOTAL_WARNINGS + 1))
-      echo -e "${YELLOW}WARN${NC}  ${kfile}:${first_line} [${rule}] ${msg}${suffix}" >&2
-    fi
+    TOTAL_VIOLATIONS=$((TOTAL_VIOLATIONS + 1))
+    echo -e "${RED}${BOLD}ERROR${NC} ${kfile}:${first_line} [${rule}] ${msg}${suffix}" >&2
 
     unset "HIT_FIRST_LINE[$key]"
     unset "HIT_COUNT[$key]"
@@ -301,6 +294,12 @@ check_file() {
   local is_painter=false
   local is_onboarding=false
   local is_help_system=false
+  local is_visual_flow=false
+  local is_ar=false
+  local is_intro_anim=false
+  local is_mesh3d=false
+  local is_whats_new=false
+  local is_splash=false
 
   case "$file" in
     lib/generated/*) in_lib_generated=true; in_lib=true ;;
@@ -316,6 +315,24 @@ check_file() {
   esac
   case "$file" in
     *ico_help_system*) is_help_system=true ;;
+  esac
+  case "$file" in
+    lib/core/visual_flow/*|*visual_flow*) is_visual_flow=true ;;
+  esac
+  case "$file" in
+    lib/features/ar/*) is_ar=true ;;
+  esac
+  case "$file" in
+    lib/features/intro/*) is_intro_anim=true ;;
+  esac
+  case "$file" in
+    lib/features/mesh3d/*) is_mesh3d=true ;;
+  esac
+  case "$file" in
+    lib/core/whats_new/*) is_whats_new=true ;;
+  esac
+  case "$file" in
+    lib/providers/splash_mesh_provider.dart) is_splash=true ;;
   esac
 
   case "$file" in
@@ -521,16 +538,30 @@ check_file() {
   # ------------------------------------------------------------------
   # ERROR: Hardcoded colors — use SemanticColors / theme extensions
   #
-  # Catches Color(0xFF...) hex literals and named Colors.xxx (except
-  # white, black, transparent which are universal).
-  # Exempt: theme.dart (defines constants), painters (need raw colors),
-  # onboarding widgets (pre-theme), help system overlay, accessibility
-  # adapter, and admin-only screens.
+  # Two sub-checks:
+  #
+  # 1. Named Colors.xxx (e.g. Colors.red, Colors.grey[700]) — these
+  #    ALWAYS have a semantic equivalent and must be replaced.
+  #    Exempt: white, black, transparent (universal).
+  #
+  # 2. Color(0xFF...) hex literals — only flagged when the hex value
+  #    exactly matches a known theme constant (brand colors, accent
+  #    colors, status colors, surface colors, text colors). One-off
+  #    decorative hex values (gradients, glows, third-party brand
+  #    colors like Google blue) are allowed.
+  #
+  # Exempt files: theme.dart (defines constants), painters, onboarding
+  # (pre-theme), help system overlay, visual flow engine, AR overlays,
+  # intro animations, mesh3d, whats_new, splash provider, accessibility
+  # adapter, admin screens, mesh_node_brain.
   # Contributors can add // lint-allow: hardcoded-color for edge cases.
   # ------------------------------------------------------------------
   if [ "$is_dart" = true ] && [ "$in_lib" = true ] && [ "$in_lib_generated" = false ] \
      && [ "$in_theme" = false ] && [ "$is_painter" = false ] \
      && [ "$is_onboarding" = false ] && [ "$is_help_system" = false ] \
+     && [ "$is_visual_flow" = false ] && [ "$is_ar" = false ] \
+     && [ "$is_intro_anim" = false ] && [ "$is_mesh3d" = false ] \
+     && [ "$is_whats_new" = false ] && [ "$is_splash" = false ] \
      && [[ "$file" != *"accessibility_theme_adapter"* ]] \
      && [[ "$file" != *"admin/"* ]] \
      && [[ "$file" != *"mesh_node_brain"* ]]; then
@@ -538,15 +569,32 @@ check_file() {
     # Skip if file has a blanket exemption
     if ! grep -q 'lint-allow:.*hardcoded-color' "$file" 2>/dev/null; then
 
-      # Color(0xFF...) hex literals
+      # Color(0xFF...) hex literals — only flag known theme constants.
+      # One-off decorative/gradient/brand hex values are fine.
+      #
+      # Known hex values that MUST use their named constant:
+      #   Brand:    E91E8C (magenta), 8B5CF6 (purple), 4F6AF6 (blue)
+      #   Accent:   6366F1 (indigo), 0EA5E9 (sky), 06B6D4 (cyan),
+      #             14B8A6 (teal), 10B981 (emerald), 22C55E (green),
+      #             84CC16 (lime), EAB308 (yellow), F97316 (orange),
+      #             FF6B6B (coral), EF4444 (red), EC4899 (pink),
+      #             F43F5E (rose), A78BFA (lavender), 64748B (slate)
+      #   Status:   4ADE80 (success), FBBF24 (warning), EF4444 (error)
+      #   Semantic: F97BBD (secondaryPink), FF9D6E (accentOrange)
+      #   Gold:     FFCC00, D4AF37, B8860B, 996515
+      #   Surface:  1F2633 (darkBg), 29303D (darkSurface), 414A5A (darkBorder),
+      #             F5F7FA (lightBg), F0F2F5 (lightCardAlt), E0E4EA (lightBorder)
+      #   Text:     1A1F2E, 4B5563, 9CA3AF, D1D5DB
+      #   Graph:    3B82F6 (graphBlue)
+      local known_hex_pattern='Color\(0xFF(E91E8C|8B5CF6|4F6AF6|6366F1|0EA5E9|06B6D4|14B8A6|10B981|22C55E|84CC16|EAB308|F97316|FF6B6B|EF4444|EC4899|F43F5E|A78BFA|64748B|4ADE80|FBBF24|F97BBD|FF9D6E|FFCC00|D4AF37|B8860B|996515|1F2633|29303D|414A5A|F5F7FA|F0F2F5|E0E4EA|1A1F2E|4B5563|9CA3AF|D1D5DB|3B82F6)\)'
       while IFS=: read -r lineno matched_line; do
         line_in_scope "$file" "$lineno" || continue
         local trimmed="${matched_line#"${matched_line%%[![:space:]]*}"}"
         [[ "$trimmed" == //* ]] && continue
         [[ "$matched_line" == import* ]] && continue
         record_hit "$file" "$lineno" "no-hardcoded-color" \
-          "Hardcoded color — use SemanticColors, AccentColors, ChartColors, or context.* theme extensions" "warn"
-      done < <(grep -nE 'Color\(0x[0-9a-fA-F]' "$file" 2>/dev/null || true)
+          "Hardcoded color hex — use the named constant from AppTheme/AccentColors" "error"
+      done < <(grep -nE "$known_hex_pattern" "$file" 2>/dev/null || true)
 
       # Named Colors.xxx (but NOT Colors.white, Colors.black, Colors.transparent)
       while IFS=: read -r lineno matched_line; do
@@ -565,13 +613,13 @@ check_file() {
           fi
         fi
         record_hit "$file" "$lineno" "no-hardcoded-color" \
-          "Hardcoded color — use SemanticColors, AccentColors, ChartColors, or context.* theme extensions" "warn"
+          "Hardcoded color — use SemanticColors, AccentColors, ChartColors, or context.* theme extensions" "error"
       done < <(grep -nE '(^|[^a-zA-Z])Colors\.(red|blue|green|orange|yellow|purple|pink|teal|indigo|amber|cyan|lime|brown|grey|deepOrange|deepPurple|lightBlue|lightGreen)' "$file" 2>/dev/null || true)
     fi
   fi
 
   # ------------------------------------------------------------------
-  # WARN: Async safety -- context/ref/setState after await without
+  # ERROR: Async safety -- context/ref/setState after await without
   # mounted check.  Uses an awk state machine (10x faster than bash
   # while-read on large files):
   #   idle       -> post_await  (on seeing `await`)
@@ -678,7 +726,7 @@ check_file() {
   # ------------------------------------------------------------------
   if [ "$is_dart" = true ] && [ "$in_lib" = true ] && [ "$in_lib_generated" = false ]; then
 
-    # WARN: Screen class without GlassScaffold
+    # ERROR: Screen class without GlassScaffold
     # Honors // lint-allow: scaffold exemption (same as no-bare-scaffold)
     if grep -qE 'class[[:space:]]+[A-Za-z_]+Screen[[:space:]]+extends[[:space:]]+(ConsumerStatefulWidget|ConsumerWidget|StatefulWidget|StatelessWidget)' "$file" 2>/dev/null; then
       if ! grep -q 'GlassScaffold' "$file" 2>/dev/null; then
@@ -689,7 +737,7 @@ check_file() {
       fi
     fi
 
-    # WARN: TextField/TextFormField without maxLength
+    # ERROR: TextField/TextFormField without maxLength
     # Only check non-comment lines (grep -v strips // and /// lines)
     if grep -vE '^\s*//' "$file" | grep -qE '(TextField|TextFormField)[[:space:]]*\(' 2>/dev/null; then
       if ! grep -q 'maxLength' "$file" 2>/dev/null; then
@@ -820,34 +868,40 @@ check_file() {
     fi
 
     # ------------------------------------------------------------------
-    # WARN: Screen with TextField but no keyboard dismissal
+    # ERROR: Screen with TextField but no keyboard dismissal
     #
     # Screens (class name ending in Screen) that contain TextField or
     # TextFormField should have FocusScope.of or FocusManager to
     # dismiss the keyboard on outside taps.
+    # Honors // lint-allow: keyboard-dismissal exemption.
     # ------------------------------------------------------------------
     if grep -qE 'class[[:space:]]+[A-Za-z_]+Screen[[:space:]]+extends' "$file" 2>/dev/null; then
       if grep -vE '^\s*//' "$file" | grep -qE '(TextField|TextFormField)[[:space:]]*\(' 2>/dev/null; then
         if ! grep -qE '(FocusScope\.of|FocusManager\.|unfocus|onTapOutside)' "$file" 2>/dev/null; then
-          record_hit "$file" "1" "keyboard-dismissal" \
-            "Screen with text input but no keyboard dismissal — add GestureDetector + FocusScope.unfocus or onTapOutside" "warn"
+          if ! grep -q 'lint-allow:.*keyboard-dismissal' "$file" 2>/dev/null; then
+            record_hit "$file" "1" "keyboard-dismissal" \
+              "Screen with text input but no keyboard dismissal — add GestureDetector + FocusScope.unfocus or onTapOutside" "error"
+          fi
         fi
       fi
     fi
 
     # ------------------------------------------------------------------
-    # WARN: GestureDetector onTap without haptic feedback
+    # ERROR: GestureDetector onTap without haptic feedback
     #
     # Interactive elements using GestureDetector.onTap should provide
     # haptic feedback via HapticFeedback or HapticService.
     # Only checks non-comment lines. Exempt test files.
+    # Honors // lint-allow: haptic-feedback exemption.
     # ------------------------------------------------------------------
     if [[ "$file" != test/* ]]; then
       if grep -vE '^\s*//' "$file" | grep -q 'GestureDetector' 2>/dev/null; then
         if grep -vE '^\s*//' "$file" | grep -q 'onTap' 2>/dev/null; then
           if ! grep -qE '(HapticFeedback\.|HapticService|haptics\.)' "$file" 2>/dev/null; then
-            record_hit "$file" "1" "haptic-feedback" \
-              "GestureDetector onTap without haptic feedback — add HapticFeedback.lightImpact() or use HapticService" "warn"
+            if ! grep -q 'lint-allow:.*haptic-feedback' "$file" 2>/dev/null; then
+              record_hit "$file" "1" "haptic-feedback" \
+                "GestureDetector onTap without haptic feedback — add HapticFeedback.lightImpact() or use HapticService" "error"
+            fi
           fi
         fi
       fi
@@ -955,14 +1009,10 @@ fi
 # Summary
 # ---------------------------------------------------------------------------
 
-if [ $TOTAL_VIOLATIONS -gt 0 ] || [ $TOTAL_WARNINGS -gt 0 ]; then
+if [ $TOTAL_VIOLATIONS -gt 0 ]; then
   echo "" >&2
   local_summary="${FILES_WITH_HITS} file(s)"
-  if [ $TOTAL_VIOLATIONS -gt 0 ]; then
-    echo -e "${local_summary}, ${RED}${BOLD}${TOTAL_VIOLATIONS} error(s)${NC}, ${YELLOW}${TOTAL_WARNINGS} warning(s)${NC}" >&2
-  else
-    echo -e "${local_summary}, ${GREEN}0 errors${NC}, ${YELLOW}${TOTAL_WARNINGS} warning(s)${NC}" >&2
-  fi
+  echo -e "${local_summary}, ${RED}${BOLD}${TOTAL_VIOLATIONS} error(s)${NC}" >&2
 fi
 
 if [ $TOTAL_VIOLATIONS -gt 0 ]; then
