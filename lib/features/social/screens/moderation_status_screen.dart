@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../../../core/widgets/animations.dart';
@@ -20,8 +21,8 @@ class ModerationStatusScreen extends ConsumerStatefulWidget {
       _ModerationStatusScreenState();
 }
 
-class _ModerationStatusScreenState
-    extends ConsumerState<ModerationStatusScreen> {
+class _ModerationStatusScreenState extends ConsumerState<ModerationStatusScreen>
+    with LifecycleSafeMixin<ModerationStatusScreen> {
   @override
   void initState() {
     super.initState();
@@ -44,6 +45,7 @@ class _ModerationStatusScreenState
     );
 
     if (await canLaunchUrl(uri)) {
+      if (!canUpdateUI) return;
       await launchUrl(uri);
     }
   }

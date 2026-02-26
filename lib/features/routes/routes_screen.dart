@@ -273,7 +273,8 @@ class _ActiveRouteBanner extends ConsumerStatefulWidget {
   ConsumerState<_ActiveRouteBanner> createState() => _ActiveRouteBannerState();
 }
 
-class _ActiveRouteBannerState extends ConsumerState<_ActiveRouteBanner> {
+class _ActiveRouteBannerState extends ConsumerState<_ActiveRouteBanner>
+    with LifecycleSafeMixin<_ActiveRouteBanner> {
   Timer? _timer;
 
   @override
@@ -281,9 +282,7 @@ class _ActiveRouteBannerState extends ConsumerState<_ActiveRouteBanner> {
     super.initState();
     // Update every second to show live elapsed time
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      if (mounted) {
-        setState(() {});
-      }
+      safeSetState(() {});
     });
   }
 

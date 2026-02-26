@@ -54,6 +54,9 @@ The following are hard errors. The linter will catch them, but you should know w
 | `SwitchListTile(` | Same reason. | `ListTile` with `ThemedSwitch` as `trailing` |
 | Railway-provided domains | Infrastructure hosting domains must never appear in user-facing code. | `socialmesh.app` custom domains |
 | Hardcoded spacing/sizing numbers | Magic numbers make the UI inconsistent. | `AppTheme.spacing*` and `AppTheme.radius*` constants |
+| `IcoHelpAppBarButton` without `HelpTourController` | The help button sets tour state but without the controller wrapper the overlay never renders. The button appears to work (icon animates) but nothing happens. | Wrap the screen's `GlassScaffold` in `HelpTourController(topicId: '...', stepKeys: const {}, child: ...)` |
+| `ConsumerStatefulWidget` with `await` but no `LifecycleSafeMixin` | Manual `mounted` checks are error-prone and inconsistent. The mixin provides `safeSetState`, `canUpdateUI`, and safe async patterns. | Add `with LifecycleSafeMixin<YourWidget>` to your `ConsumerState` class. |
+| `StreamSubscription` field without `.cancel()` | Uncanceled subscriptions leak memory and fire callbacks on disposed widgets. | Call `_subscription?.cancel()` in `dispose()`. Every subscription field must have a matching cancel. |
 
 ### Required Patterns
 
@@ -63,9 +66,32 @@ The following are hard errors. The linter will catch them, but you should know w
 | **GlassScaffold** | Every screen class (a widget whose name ends in `Screen`) must use `GlassScaffold`. If you have a legitimate exception (immersive overlay, navigation shell), add `// lint-allow: scaffold` with a reason. |
 | **TextField maxLength** | Every `TextField` and `TextFormField` must set `maxLength`. Unbounded text inputs are a crash and abuse vector. |
 | **Async safety** | After any `await`, check `mounted` before using `context`, `ref.read`, `ref.watch`, or `setState`. Use `safeSetState()` from `LifecycleSafeMixin` where possible. |
-| **LifecycleSafeMixin** | All `ConsumerStatefulWidget` classes with async operations must use `LifecycleSafeMixin`. |
-| **Haptic feedback** | Interactive actions should provide haptic feedback via `HapticService`. |
-| **Keyboard dismissal** | Screens with text inputs must wrap content in `GestureDetector` + `FocusScope.of(context).unfocus()`. |
+| **LifecycleSafeMixin** | All `ConsumerStatefulWidget` classes with async operations must use `LifecycleSafeMixin`. The linter checks this per-class, not per-file. |
+| **StreamSubscription cancel** | Every `StreamSubscription` field must have a corresponding `.cancel()` call in `dispose()`. The linter checks for the presence of `.cancel()` in any file that declares a `StreamSubscription`. |
+| **HelpTourController pairing** | Every screen that uses `IcoHelpAppBarButton` must wrap its scaffold in `HelpTourController` with the same `topicId`. Without it the help button toggles state but the tour overlay never appears. |
+| **Haptic feedback** | Interactive actions using `GestureDetector` with `onTap` should provide haptic feedback via `HapticFeedback.lightImpact()` or `HapticService`. The linter warns when haptics are absent. |
+| **Keyboard dismissal** | Screens with text inputs must dismiss the keyboard on outside taps. Use `GestureDetector` + `FocusScope.of(context).unfocus()` or `onTapOutside` on the `TextField`. The linter warns when neither is present. |
+
+### Warnings vs Errors
+
+The linter emits two severity levels:
+
+- **ERROR** — blocks commits. These are hard rules (banned patterns, missing mixin, missing controller, missing cancel, missing SPDX header, etc.). Zero tolerance.
+- **WARN** — advisory. These flag patterns that should be fixed but do not block commits. Currently: hardcoded colors, missing haptics, missing keyboard dismissal.
+
+### Hardcoded Colors (Warning)
+
+Do not use `Color(0xFF...)` hex literals or named `Colors.red`, `Colors.blue`, etc. in feature code. Use the project's semantic color system instead:
+
+| Need | Use |
+|------|-----|
+| Accent-derived colors | `context.accentColor`, `AccentColors.*` |
+| Semantic foreground | `SemanticColors.onAccent`, `SemanticColors.onBrand` |
+| Chart/graph colors | `ChartColors.*` |
+| Theme-aware text/surface | `context.textPrimary`, `context.card`, `context.background`, etc. |
+| Status indicators | Define constants in `lib/core/theme.dart`, not inline |
+
+`Colors.white`, `Colors.black`, and `Colors.transparent` are allowed everywhere. Theme files (`lib/core/theme.dart`), `CustomPainter` classes, and onboarding widgets are exempt. For legitimate edge cases, add `// lint-allow: hardcoded-color` to the file.
 
 ---
 

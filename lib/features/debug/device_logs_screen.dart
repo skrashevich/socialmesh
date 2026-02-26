@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'dart:async';
+
+import '../../core/safety/lifecycle_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -160,7 +162,8 @@ class DeviceLogsScreen extends ConsumerStatefulWidget {
   ConsumerState<DeviceLogsScreen> createState() => _DeviceLogsScreenState();
 }
 
-class _DeviceLogsScreenState extends ConsumerState<DeviceLogsScreen> {
+class _DeviceLogsScreenState extends ConsumerState<DeviceLogsScreen>
+    with LifecycleSafeMixin<DeviceLogsScreen> {
   final ScrollController _scrollController = ScrollController();
   bool _autoScroll = true;
   String _searchQuery = '';
@@ -175,7 +178,7 @@ class _DeviceLogsScreenState extends ConsumerState<DeviceLogsScreen> {
   void _handleNewLogRecord(pb.LogRecord logRecord) {
     final logger = ref.read(deviceLoggerProvider);
     logger.addFromLogRecord(logRecord);
-    if (mounted) setState(() {});
+    safeSetState(() {});
 
     // Auto-scroll if enabled
     if (_autoScroll && _scrollController.hasClients) {
@@ -306,9 +309,9 @@ class _DeviceLogsScreenState extends ConsumerState<DeviceLogsScreen> {
       confirmLabel: 'Clear',
       isDestructive: true,
     );
-    if (confirmed == true && mounted) {
+    if (confirmed == true && canUpdateUI) {
       ref.read(deviceLoggerProvider).clear();
-      setState(() {});
+      safeSetState(() {});
     }
   }
 

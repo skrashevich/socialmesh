@@ -185,43 +185,48 @@ class ConformanceContext {
     );
     await Future<void>.delayed(const Duration(seconds: 3));
 
-    // ── Phase 3: Admin probe ──
-    // Don't trust configurationComplete — it may be stale from a previous
-    // connection. Send a real admin request and verify we get a response.
-    AppLogging.adminDiag(
-      'Phase 3 [${elapsed()}]: Probing admin pipeline — '
-      'isConnected=$isConnected, '
-      'configComplete=${protocolService.configurationComplete}, '
-      'myNodeNum=${protocolService.myNodeNum}',
-    );
-    final probeOk = await _probeFirmwareReady(deadline);
-    if (probeOk) {
-      AppLogging.adminDiag(
-        'Phase 3 OK [${elapsed()}]: Admin pipeline verified — done',
-      );
-      return true;
-    }
-    AppLogging.adminDiag(
-      'Phase 3 FAILED [${elapsed()}]: All admin probes failed — '
-      'isConnected=$isConnected, '
-      'configComplete=${protocolService.configurationComplete}',
-    );
+    // ── Phase 3: Admin probe (or direct restart if stale) ──
+    // configurationComplete being true here means the auto-reconnect
+    // manager's stale guard skipped protocol.start() — the fromNum BLE
+    // subscription is dead and probes will always timeout (~20 s wasted).
+    // Skip directly to protocol restart in that case.
+    final staleState = protocolService.configurationComplete;
 
-    // ── Phase 4: Protocol restart fallback ──
-    // The probe failed despite BLE being connected. This happens when the
-    // auto-reconnect manager's stale guard in
-    // _initializeProtocolAfterAutoReconnect() skips protocol.start() because
-    // configurationComplete/myNodeNum are still set from the previous
-    // session. Without start(), enableNotifications() is never called so the
-    // fromNum BLE subscription is dead — no data flows to the protocol layer.
-    //
-    // Fix: force protocol.stop() (clears stale state, cancels old
-    // subscriptions) + protocol.start() (re-subscribes to transport data
-    // stream, re-enables BLE notifications, does full config exchange).
-    //
-    // Use a FRESH 30 s deadline — the initial probes may have consumed most
-    // of the original budget, but the restart is the actual fix and deserves
-    // its own time window.
+    if (!staleState) {
+      // Fresh state — protocol.start() was called by the reconnect manager.
+      // Verify the pipeline is actually functional with an admin probe.
+      AppLogging.adminDiag(
+        'Phase 3 [${elapsed()}]: Probing admin pipeline — '
+        'isConnected=$isConnected, '
+        'configComplete=${protocolService.configurationComplete}, '
+        'myNodeNum=${protocolService.myNodeNum}',
+      );
+      final probeOk = await _probeFirmwareReady(deadline);
+      if (probeOk) {
+        AppLogging.adminDiag(
+          'Phase 3 OK [${elapsed()}]: Admin pipeline verified — done',
+        );
+        return true;
+      }
+      AppLogging.adminDiag(
+        'Phase 3 FAILED [${elapsed()}]: All admin probes failed — '
+        'isConnected=$isConnected, '
+        'configComplete=${protocolService.configurationComplete}',
+      );
+    } else {
+      AppLogging.adminDiag(
+        'Phase 3 [${elapsed()}]: SKIPPED — '
+        'configComplete=true is stale (dead fromNum subscription), '
+        'proceeding directly to protocol restart',
+      );
+    }
+
+    // ── Phase 4: Protocol restart ──
+    // Either the probes failed (Phase 3) or we skipped them because
+    // configComplete was stale. Force protocol.stop() (clears stale state,
+    // cancels old subscriptions) + protocol.start() (re-subscribes to
+    // transport data stream, re-enables BLE notifications, does full config
+    // exchange).
     if (!isConnected) {
       AppLogging.adminDiag(
         'Phase 4 SKIPPED [${elapsed()}]: BLE disconnected during probing',

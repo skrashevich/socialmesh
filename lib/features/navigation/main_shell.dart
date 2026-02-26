@@ -1,7 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // lint-allow: scaffold — navigation shell root scaffold with drawer and bottom nav
-import 'dart:ui';
-
 import '../../core/constants.dart';
 import '../../core/logging.dart';
 import 'package:flutter/material.dart';
@@ -9,14 +7,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/theme.dart';
 import '../../core/transport.dart';
-import '../../core/widgets/admin_pin_dialog.dart';
 import '../../core/widgets/countdown_banner.dart';
 import '../../core/widgets/top_status_banner.dart';
 import '../../core/widgets/user_avatar.dart';
-import '../../core/widgets/animations.dart';
+
 import '../../core/widgets/legal_document_sheet.dart';
 import '../../generated/meshtastic/mesh.pbenum.dart';
-import '../nodedex/widgets/sigil_painter.dart';
 import '../../models/subscription_models.dart';
 import '../../providers/app_providers.dart';
 import '../../providers/countdown_providers.dart';
@@ -64,18 +60,17 @@ import '../aether/screens/aether_screen.dart';
 import '../aether/providers/aether_flight_matcher_provider.dart';
 import '../aether/providers/aether_flight_lifecycle_provider.dart';
 import '../aether/widgets/aether_flight_detected_overlay.dart';
-import '../../core/auth/permission.dart';
-import '../../core/auth/permission_provider.dart';
-import '../../core/auth/role.dart';
-import '../../core/widgets/permission_gate.dart';
-import '../../core/widgets/role_gate.dart';
 // import '../global_layer/screens/global_layer_hub_screen.dart';
 import '../tak/screens/tak_screen.dart';
 import '../../providers/activity_providers.dart';
 import '../../providers/whats_new_providers.dart';
 import '../../core/whats_new/whats_new_sheet.dart';
-import '../admin/screens/admin_screen.dart';
-import '../incidents/screens/incident_list_screen.dart';
+import 'widgets/drawer_admin_section.dart';
+import 'widgets/drawer_enterprise_section.dart';
+import 'widgets/drawer_menu_tile.dart';
+import 'widgets/drawer_node_header.dart';
+import 'widgets/drawer_sticky_header.dart';
+import 'widgets/nav_bar_item.dart';
 
 /// Combined admin notification count provider
 /// Uses FutureProvider to properly handle the async stream states
@@ -171,7 +166,7 @@ class HamburgerMenuButton extends ConsumerWidget {
         label: Text(
           totalBadgeCount > 99 ? '99+' : '$totalBadgeCount',
           style: const TextStyle(
-            color: Colors.white,
+            color: SemanticColors.onAccent,
             fontSize: 10,
             fontWeight: FontWeight.bold,
           ),
@@ -271,53 +266,11 @@ class DeviceStatusButton extends ConsumerWidget {
   }
 }
 
-/// Drawer menu item data for quick access screens
-class _DrawerMenuItem {
-  final IconData icon;
-  final String label;
-
-  /// Screen to push when tapped. Null when [tabIndex] is used instead.
-  final Widget? screen;
-
-  /// When non-null, tapping this item switches the bottom-nav to this
-  /// tab index instead of pushing a new screen.
-  final int? tabIndex;
-
-  final PremiumFeature? premiumFeature;
-  final String? sectionHeader;
-  final Color? iconColor;
-  final bool requiresConnection;
-
-  /// Provider key for badge count - use 'activity' for activity count
-  final String? badgeProviderKey;
-
-  /// Key that links this item to a What's New payload badge.
-  /// When a matching key is in the unseen badge keys set, a NEW chip
-  /// is shown next to this drawer item.
-  final String? whatsNewBadgeKey;
-
-  /// When true and [tabIndex] is set, the map tab activates TAK layer.
-  final bool requestsTakMode;
-
-  const _DrawerMenuItem({
-    required this.icon,
-    required this.label,
-    this.screen,
-    this.tabIndex,
-    this.premiumFeature,
-    this.sectionHeader,
-    this.iconColor,
-    this.requiresConnection = false,
-    this.badgeProviderKey,
-    this.whatsNewBadgeKey,
-    this.requestsTakMode = false,
-  });
-}
-
 /// Helper to navigate from drawer items.
 /// Closes drawer first, then navigates after a brief delay to ensure
 /// the drawer close animation completes smoothly.
-void _navigateFromDrawer(BuildContext context, Widget screen) {
+@visibleForTesting
+void navigateFromDrawer(BuildContext context, Widget screen) {
   Navigator.of(context).pop(); // Close drawer
   // Use post-frame callback to ensure drawer animation completes
   WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -413,199 +366,199 @@ class _MainShellState extends ConsumerState<MainShell> {
 
   /// Drawer menu items for quick access screens not in bottom nav
   /// Organized into logical sections with headers
-  final List<_DrawerMenuItem> _drawerMenuItems = [
+  final List<DrawerMenuItem> _drawerMenuItems = [
     // Social section — Signals switches to bottom-nav tab 2
-    _DrawerMenuItem(
+    DrawerMenuItem(
       icon: Icons.sensors,
       label: 'Signals',
       tabIndex: 2,
       sectionHeader: 'SOCIAL',
-      iconColor: Colors.purple.shade300,
+      iconColor: AccentColors.lavender,
     ),
     if (AppFeatureFlags.isSocialEnabled)
-      _DrawerMenuItem(
+      DrawerMenuItem(
         icon: Icons.forum_outlined,
         label: 'Social',
         screen: const SocialHubScreen(),
-        iconColor: Colors.pink.shade300,
+        iconColor: AccentColors.pink,
         requiresConnection: false,
       ),
-    _DrawerMenuItem(
+    DrawerMenuItem(
       icon: Icons.auto_stories_outlined,
       label: 'NodeDex',
       screen: const NodeDexScreen(),
-      iconColor: Colors.amber.shade400,
+      iconColor: AccentColors.yellow,
       requiresConnection: false,
       whatsNewBadgeKey: 'nodedex',
     ),
     if (AppFeatureFlags.isAetherEnabled)
-      _DrawerMenuItem(
+      DrawerMenuItem(
         icon: Icons.flight_takeoff_outlined,
         label: 'Aether',
         screen: const AetherScreen(),
-        iconColor: Colors.lightBlue.shade400,
+        iconColor: AccentColors.sky,
         requiresConnection: false,
         whatsNewBadgeKey: 'aether',
       ),
     if (AppFeatureFlags.isTakGatewayEnabled)
-      _DrawerMenuItem(
+      DrawerMenuItem(
         icon: Icons.gps_fixed,
         label: 'TAK Gateway',
         screen: const TakScreen(),
-        iconColor: Colors.orange.shade400,
+        iconColor: AccentColors.orange,
         requiresConnection: false,
         whatsNewBadgeKey: 'tak',
       ),
     if (AppFeatureFlags.isTakGatewayEnabled)
-      _DrawerMenuItem(
+      DrawerMenuItem(
         icon: Icons.military_tech,
         label: 'TAK Map',
         tabIndex: 1,
         requestsTakMode: true,
-        iconColor: Colors.orange.shade400,
+        iconColor: AccentColors.orange,
         requiresConnection: false,
       ),
-    _DrawerMenuItem(
+    DrawerMenuItem(
       icon: Icons.favorite_border,
       label: 'Activity',
       screen: const ActivityTimelineScreen(),
-      iconColor: Colors.red.shade400,
+      iconColor: AccentColors.red,
       requiresConnection: false,
       badgeProviderKey: 'activity',
     ),
-    _DrawerMenuItem(
+    DrawerMenuItem(
       icon: Icons.people_alt_outlined,
       label: 'Presence',
       screen: const PresenceScreen(),
-      iconColor: Colors.green.shade400,
+      iconColor: AccentColors.green,
       requiresConnection: true,
     ),
-    _DrawerMenuItem(
+    DrawerMenuItem(
       icon: Icons.timeline,
       label: 'Timeline',
       screen: const TimelineScreen(),
       sectionHeader: 'MESH',
-      iconColor: Colors.indigo.shade400,
+      iconColor: AccentColors.indigo,
     ),
-    _DrawerMenuItem(
+    DrawerMenuItem(
       icon: Icons.public,
       label: 'World Map',
       screen: const WorldMeshScreen(),
-      iconColor: Colors.blue.shade400,
+      iconColor: AccentColors.blue,
       requiresConnection: false, // Shows global mesh data from server
     ),
-    _DrawerMenuItem(
+    DrawerMenuItem(
       icon: Icons.view_in_ar,
       label: '3D Mesh View',
       screen: const Mesh3DScreen(),
-      iconColor: Colors.cyan.shade400,
+      iconColor: AccentColors.cyan,
     ),
-    _DrawerMenuItem(
+    DrawerMenuItem(
       icon: Icons.route,
       label: 'Routes',
       screen: const RoutesScreen(),
-      iconColor: Colors.purple.shade400,
+      iconColor: AccentColors.purple,
     ),
-    _DrawerMenuItem(
+    DrawerMenuItem(
       icon: Icons.wifi_find,
       label: 'Reachability',
       screen: const MeshReachabilityScreen(),
-      iconColor: Colors.teal.shade400,
+      iconColor: AccentColors.teal,
       requiresConnection: true,
     ),
-    _DrawerMenuItem(
+    DrawerMenuItem(
       icon: Icons.monitor_heart_outlined,
       label: 'Mesh Health',
       screen: const MeshHealthDashboard(),
-      iconColor: Colors.pink.shade400,
+      iconColor: AccentColors.pink,
       requiresConnection: true,
     ),
-    _DrawerMenuItem(
+    DrawerMenuItem(
       icon: Icons.terminal,
       label: 'Device Logs',
       screen: const DeviceLogsScreen(),
-      iconColor: Colors.grey.shade500,
+      iconColor: AccentColors.slate,
       requiresConnection: true,
     ),
 
     // Global Layer — between MESH and PREMIUM
-    // _DrawerMenuItem(
+    // DrawerMenuItem(
     //   icon: Icons.cloud_sync_outlined,
     //   label: 'Global Layer',
     //   screen: const GlobalLayerHubScreen(),
     //   sectionHeader: 'GLOBAL',
-    //   iconColor: Colors.teal.shade300,
+    //   iconColor: AccentColors.teal,
     //   requiresConnection: false,
     //   whatsNewBadgeKey: 'global_layer',
     // ),
 
     // Shop - below MESH section
-    // _DrawerMenuItem(
+    // DrawerMenuItem(
     //   icon: Icons.store_outlined,
     //   label: 'Device Shop',
     //   screen: const DeviceShopScreen(),
     //   sectionHeader: 'SHOP',
-    //   iconColor: Colors.amber.shade600,
+    //   iconColor: AccentColors.yellow,
     //   requiresConnection: false,
     // ),
 
     // Premium Features - mixed requirements
-    _DrawerMenuItem(
+    DrawerMenuItem(
       icon: Icons.palette_outlined,
       label: 'Theme Pack',
       screen: const ThemeSettingsScreen(),
       premiumFeature: PremiumFeature.premiumThemes,
       sectionHeader: 'PREMIUM',
-      iconColor: Colors.purple.shade400,
+      iconColor: AccentColors.purple,
     ),
-    _DrawerMenuItem(
+    DrawerMenuItem(
       icon: Icons.music_note_outlined,
       label: 'Ringtone Pack',
       screen: const RingtoneScreen(),
       premiumFeature: PremiumFeature.customRingtones,
-      iconColor: Colors.pink.shade300,
+      iconColor: AccentColors.pink,
     ),
-    _DrawerMenuItem(
+    DrawerMenuItem(
       icon: Icons.widgets_outlined,
       label: 'Widgets',
       screen: const WidgetBuilderScreen(),
       premiumFeature: PremiumFeature.homeWidgets,
-      iconColor: Colors.deepOrange.shade400,
+      iconColor: AccentColors.coral,
     ),
-    _DrawerMenuItem(
+    DrawerMenuItem(
       icon: Icons.auto_awesome,
       label: 'Automations',
       screen: const AutomationsScreen(),
       premiumFeature: PremiumFeature.automations,
-      iconColor: Colors.yellow.shade700,
+      iconColor: AccentColors.yellow,
     ),
-    _DrawerMenuItem(
+    DrawerMenuItem(
       icon: Icons.webhook_outlined,
       label: 'IFTTT Integration',
       screen: const IftttConfigScreen(),
       premiumFeature: PremiumFeature.iftttIntegration,
-      iconColor: Colors.blue.shade300,
+      iconColor: AccentColors.sky,
     ),
   ];
 
-  final List<_NavItem> _navItems = [
-    _NavItem(
+  final List<NavItem> _navItems = [
+    NavItem(
       icon: Icons.chat_bubble_outline,
       activeIcon: Icons.chat_bubble,
       label: 'Messages',
     ),
-    _NavItem(icon: Icons.map_outlined, activeIcon: Icons.map, label: 'Map'),
-    _NavItem(
+    NavItem(icon: Icons.map_outlined, activeIcon: Icons.map, label: 'Map'),
+    NavItem(
       icon: Icons.sensors_outlined,
       activeIcon: Icons.sensors,
       label: 'Signals',
     ),
-    _NavItem(
+    NavItem(
       icon: Icons.people_outline,
       activeIcon: Icons.people,
       label: 'Nodes',
     ),
-    _NavItem(
+    NavItem(
       icon: Icons.dashboard_outlined,
       activeIcon: Icons.dashboard,
       label: 'Dashboard',
@@ -658,8 +611,8 @@ class _MainShellState extends ConsumerState<MainShell> {
     slivers.add(const SliverPadding(padding: EdgeInsets.only(top: 8)));
 
     // Group items by section
-    final sections = <_DrawerMenuSection>[];
-    _DrawerMenuSection? currentSection;
+    final sections = <DrawerMenuSection>[];
+    DrawerMenuSection? currentSection;
 
     for (var i = 0; i < _drawerMenuItems.length; i++) {
       final item = _drawerMenuItems[i];
@@ -669,17 +622,17 @@ class _MainShellState extends ConsumerState<MainShell> {
         if (currentSection != null) {
           sections.add(currentSection);
         }
-        currentSection = _DrawerMenuSection(item.sectionHeader!, []);
+        currentSection = DrawerMenuSection(item.sectionHeader!, []);
       }
 
       if (currentSection != null) {
-        currentSection.items.add(_DrawerMenuItemWithIndex(item, i));
+        currentSection.items.add(DrawerMenuItemWithIndex(item, i));
       } else {
         // Items before any section header go in a special section
         if (sections.isEmpty || sections.last.title.isNotEmpty) {
-          sections.add(_DrawerMenuSection('', []));
+          sections.add(DrawerMenuSection('', []));
         }
-        sections.last.items.add(_DrawerMenuItemWithIndex(item, i));
+        sections.last.items.add(DrawerMenuItemWithIndex(item, i));
       }
     }
 
@@ -698,7 +651,7 @@ class _MainShellState extends ConsumerState<MainShell> {
         slivers.add(
           SliverPersistentHeader(
             pinned: true,
-            delegate: _DrawerStickyHeaderDelegate(
+            delegate: DrawerStickyHeaderDelegate(
               title: section.title,
               theme: theme,
             ),
@@ -747,7 +700,7 @@ class _MainShellState extends ConsumerState<MainShell> {
 
               return Column(
                 children: [
-                  _DrawerMenuTile(
+                  DrawerMenuTile(
                     icon: item.icon,
                     label: item.label,
                     isSelected: false, // Never selected, items push new screens
@@ -781,14 +734,14 @@ class _MainShellState extends ConsumerState<MainShell> {
                                   .setIndex(item.tabIndex!);
                             } else if (isPremium && !allowNavigation) {
                               // Upsell disabled - redirect to subscription screen
-                              _navigateFromDrawer(
+                              navigateFromDrawer(
                                 context,
                                 const SubscriptionScreen(),
                               );
                             } else if (item.screen != null) {
                               // Push screen with back button for consistent navigation
                               // If upsell is enabled, the screen handles gating on actions
-                              _navigateFromDrawer(context, item.screen!);
+                              navigateFromDrawer(context, item.screen!);
                             }
                           },
                   ),
@@ -883,15 +836,16 @@ class _MainShellState extends ConsumerState<MainShell> {
     }
 
     return Material(
-      color: Colors.transparent,
+      color: Colors
+          .transparent, // lint-allow: no-hardcoded-color — transparent is not a color literal
       child: InkWell(
         onTap: () {
           ref.haptics.tabChange();
           // Navigate to Account screen if not signed in, Profile screen otherwise
           if (isSignedIn) {
-            _navigateFromDrawer(context, const ProfileScreen());
+            navigateFromDrawer(context, const ProfileScreen());
           } else {
-            _navigateFromDrawer(context, const AccountSubscriptionsScreen());
+            navigateFromDrawer(context, const AccountSubscriptionsScreen());
           }
         },
         borderRadius: BorderRadius.circular(AppTheme.radius12),
@@ -968,8 +922,8 @@ class _MainShellState extends ConsumerState<MainShell> {
   }
 
   Widget _buildDrawer(BuildContext context) {
+    // lint-allow: no-hardcoded-color — Colors.transparent is not a color literal
     final theme = Theme.of(context);
-    // Use themeModeProvider for brightness to stay in sync with toggle button
     final currentMode = ref.watch(themeModeProvider);
     final isDark =
         currentMode == ThemeMode.dark ||
@@ -989,7 +943,7 @@ class _MainShellState extends ConsumerState<MainShell> {
         child: Column(
           children: [
             // Node Info Header
-            const _DrawerNodeHeader(),
+            const DrawerNodeHeader(),
 
             // Divider after header
             Padding(
@@ -1018,18 +972,18 @@ class _MainShellState extends ConsumerState<MainShell> {
 
                   // Enterprise section (only visible to org members)
                   SliverToBoxAdapter(
-                    child: _DrawerEnterpriseSection(
+                    child: DrawerEnterpriseSection(
                       onNavigate: (screen) {
-                        _navigateFromDrawer(context, screen);
+                        navigateFromDrawer(context, screen);
                       },
                     ),
                   ),
 
                   // Admin section (only visible to shop admins)
                   SliverToBoxAdapter(
-                    child: _DrawerAdminSection(
+                    child: DrawerAdminSection(
                       onNavigate: (screen) {
-                        _navigateFromDrawer(context, screen);
+                        navigateFromDrawer(context, screen);
                       },
                     ),
                   ),
@@ -1053,11 +1007,11 @@ class _MainShellState extends ConsumerState<MainShell> {
                   SliverToBoxAdapter(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
-                      child: _DrawerMenuTile(
+                      child: DrawerMenuTile(
                         icon: Icons.help_outline,
                         label: 'Help & Support',
                         isSelected: false,
-                        iconColor: Colors.blue.shade400,
+                        iconColor: AccentColors.blue,
                         onTap: () {
                           ref.haptics.tabChange();
                           Navigator.of(context).pop();
@@ -1090,7 +1044,7 @@ class _MainShellState extends ConsumerState<MainShell> {
                 alignment: Alignment.centerLeft,
                 child: _SettingsButton(
                   onTap: () {
-                    _navigateFromDrawer(context, const SettingsScreen());
+                    navigateFromDrawer(context, const SettingsScreen());
                   },
                 ),
               ),
@@ -1377,7 +1331,7 @@ class _MainShellState extends ConsumerState<MainShell> {
               ),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.05),
+                  color: AppTheme.darkBackground.withValues(alpha: 0.05),
                   blurRadius: 10,
                   offset: const Offset(0, -2),
                 ),
@@ -1409,7 +1363,7 @@ class _MainShellState extends ConsumerState<MainShell> {
                     }
 
                     return Expanded(
-                      child: _NavBarItem(
+                      child: NavBarItem(
                         icon: isSelected ? item.activeIcon : item.icon,
                         label: item.label,
                         isSelected: isSelected,
@@ -1435,695 +1389,6 @@ class _MainShellState extends ConsumerState<MainShell> {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _NavItem {
-  final IconData icon;
-  final IconData activeIcon;
-  final String label;
-
-  const _NavItem({
-    required this.icon,
-    required this.activeIcon,
-    required this.label,
-  });
-}
-
-class _NavBarItem extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final bool isSelected;
-  final int badgeCount;
-  final bool showWarningBadge;
-  final bool showReconnectingBadge;
-  final VoidCallback onTap;
-
-  const _NavBarItem({
-    required this.icon,
-    required this.label,
-    required this.isSelected,
-    this.badgeCount = 0,
-    this.showWarningBadge = false,
-    this.showReconnectingBadge = false,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    // Determine icon color
-    final accentColor = theme.colorScheme.primary;
-    Color iconColor;
-    if (isSelected) {
-      iconColor = accentColor;
-    } else if (showReconnectingBadge) {
-      iconColor = Colors.amber;
-    } else if (showWarningBadge) {
-      iconColor = Colors.orange;
-    } else {
-      iconColor = theme.colorScheme.onSurface.withValues(alpha: 0.6);
-    }
-
-    // Determine label color
-    Color labelColor;
-    if (isSelected) {
-      labelColor = accentColor;
-    } else if (showReconnectingBadge) {
-      labelColor = Colors.amber;
-    } else if (showWarningBadge) {
-      labelColor = Colors.orange;
-    } else {
-      labelColor = theme.colorScheme.onSurface.withValues(alpha: 0.6);
-    }
-
-    return BouncyTap(
-      onTap: onTap,
-      scaleFactor: 0.9,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        curve: AppCurves.overshoot,
-        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
-        decoration: BoxDecoration(
-          color: isSelected
-              ? accentColor.withValues(alpha: 0.15)
-              : Colors.transparent,
-          borderRadius: BorderRadius.circular(AppTheme.radius16),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Stack(
-              clipBehavior: Clip.none,
-              children: [
-                AnimatedScale(
-                  scale: isSelected ? 1.15 : 1.0,
-                  duration: const Duration(milliseconds: 350),
-                  curve: AppCurves.overshoot,
-                  child: isSelected
-                      ? ShaderMask(
-                          shaderCallback: (bounds) {
-                            final gradientColors = AccentColors.gradientFor(
-                              accentColor,
-                            );
-                            return LinearGradient(
-                              colors: [
-                                gradientColors.first,
-                                gradientColors.last,
-                              ],
-                            ).createShader(bounds);
-                          },
-                          child: AnimatedMorphIcon(
-                            icon: icon,
-                            size: 24,
-                            color: Colors.white,
-                          ),
-                        )
-                      : AnimatedMorphIcon(
-                          icon: icon,
-                          size: 24,
-                          color: iconColor,
-                        ),
-                ),
-                if (badgeCount > 0)
-                  Positioned(
-                    right: -6,
-                    top: -6,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: badgeCount > 9 ? 4 : 0,
-                        vertical: 0,
-                      ),
-                      constraints: const BoxConstraints(
-                        minWidth: 16,
-                        minHeight: 16,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(AppTheme.radius8),
-                        border: Border.all(
-                          color: theme.scaffoldBackgroundColor,
-                          width: 2,
-                        ),
-                      ),
-                      child: Center(
-                        child: Text(
-                          badgeCount > 99 ? '99+' : '$badgeCount',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 9,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                if (showReconnectingBadge)
-                  Positioned(
-                    right: -4,
-                    top: -4,
-                    child: _PulsingDot(color: Colors.amber),
-                  )
-                else if (showWarningBadge)
-                  Positioned(
-                    right: -4,
-                    top: -4,
-                    child: Container(
-                      width: 10,
-                      height: 10,
-                      decoration: BoxDecoration(
-                        color: Colors.orange,
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: theme.scaffoldBackgroundColor,
-                          width: 2,
-                        ),
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-            const SizedBox(height: AppTheme.spacing4),
-            isSelected
-                ? ShaderMask(
-                    shaderCallback: (bounds) {
-                      final gradientColors = AccentColors.gradientFor(
-                        accentColor,
-                      );
-                      return LinearGradient(
-                        colors: [gradientColors.first, gradientColors.last],
-                      ).createShader(bounds);
-                    },
-                    child: Text(
-                      label,
-                      style: TextStyle(
-                        fontSize: 11,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                        fontFamily: AppTheme.fontFamily,
-                      ),
-                    ),
-                  )
-                : AnimatedDefaultTextStyle(
-                    duration: const Duration(milliseconds: 300),
-                    curve: AppCurves.overshoot,
-                    style: TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.normal,
-                      color: labelColor,
-                      fontFamily: AppTheme.fontFamily,
-                    ),
-                    child: Text(label),
-                  ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/// Menu tile for the navigation drawer
-class _DrawerMenuTile extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final bool isSelected;
-  final bool isPremium;
-  final bool isLocked;
-  final bool showTryIt;
-  final bool isDisabled;
-  final VoidCallback? onTap;
-  final int? badgeCount;
-  final Color? iconColor;
-  final bool showNewChip;
-
-  const _DrawerMenuTile({
-    required this.icon,
-    required this.label,
-    required this.isSelected,
-    required this.onTap,
-    this.isPremium = false,
-    this.isLocked = false,
-    this.showTryIt = false,
-    this.isDisabled = false,
-    this.badgeCount,
-    this.iconColor,
-    this.showNewChip = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final accentColor = theme.colorScheme.primary;
-    final lockedColor = Colors.grey.shade600;
-    final disabledAlpha = 0.35;
-
-    return BouncyTap(
-      onTap: onTap,
-      enabled: !isDisabled,
-      scaleFactor: 0.98,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        curve: Curves.easeOutCubic,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        decoration: BoxDecoration(
-          color: isSelected
-              ? accentColor.withValues(alpha: 0.15)
-              : isLocked
-              ? lockedColor.withValues(alpha: 0.05)
-              : Colors.transparent,
-          borderRadius: BorderRadius.circular(AppTheme.radius16),
-          border: isSelected
-              ? Border.all(color: accentColor.withValues(alpha: 0.3))
-              : isLocked
-              ? Border.all(color: lockedColor.withValues(alpha: 0.15))
-              : null,
-        ),
-        child: Opacity(
-          opacity: isDisabled ? disabledAlpha : 1.0,
-          child: Row(
-            children: [
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                padding: const EdgeInsets.all(AppTheme.spacing10),
-                decoration: BoxDecoration(
-                  color: isSelected
-                      ? accentColor.withValues(alpha: 0.2)
-                      : isLocked
-                      ? lockedColor.withValues(alpha: 0.1)
-                      : theme.colorScheme.surface,
-                  borderRadius: BorderRadius.circular(AppTheme.radius12),
-                ),
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    Icon(
-                      icon,
-                      size: 22,
-                      color: isSelected
-                          ? accentColor
-                          : isLocked
-                          ? lockedColor
-                          : iconColor ??
-                                theme.colorScheme.onSurface.withValues(
-                                  alpha: 0.6,
-                                ),
-                    ),
-                    // Badge overlay on icon
-                    if (badgeCount != null && badgeCount! > 0)
-                      Positioned(
-                        right: -6,
-                        top: -4,
-                        child: Container(
-                          padding: const EdgeInsets.all(AppTheme.spacing4),
-                          decoration: BoxDecoration(
-                            color: Colors.red,
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: theme.scaffoldBackgroundColor,
-                              width: 2,
-                            ),
-                          ),
-                          constraints: const BoxConstraints(
-                            minWidth: 16,
-                            minHeight: 16,
-                          ),
-                          child: Center(
-                            child: Text(
-                              badgeCount! > 99 ? '99+' : '$badgeCount',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 9,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    // NEW dot indicator on icon (shown when no count badge)
-                    if (showNewChip && (badgeCount == null || badgeCount! <= 0))
-                      Positioned(
-                        right: -3,
-                        top: -3,
-                        child: Container(
-                          width: 10,
-                          height: 10,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                AccentColors.gradientFor(accentColor).first,
-                                AccentColors.gradientFor(accentColor).last,
-                              ],
-                            ),
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: theme.scaffoldBackgroundColor,
-                              width: 1.5,
-                            ),
-                          ),
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: AppTheme.spacing14),
-              Expanded(
-                child: Row(
-                  children: [
-                    Flexible(
-                      child: Text(
-                        label,
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: isSelected
-                              ? FontWeight.w600
-                              : FontWeight.w500,
-                          fontFamily: AppTheme.fontFamily,
-                          color: isSelected
-                              ? accentColor
-                              : isLocked
-                              ? theme.colorScheme.onSurface.withValues(
-                                  alpha: 0.5,
-                                )
-                              : theme.colorScheme.onSurface.withValues(
-                                  alpha: 0.8,
-                                ),
-                        ),
-                      ),
-                    ),
-                    if (showNewChip) ...[
-                      const SizedBox(width: AppTheme.spacing8),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 6,
-                          vertical: 2,
-                        ),
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              AccentColors.gradientFor(accentColor).first,
-                              AccentColors.gradientFor(accentColor).last,
-                            ],
-                          ),
-                          borderRadius: BorderRadius.circular(AppTheme.radius6),
-                          boxShadow: [
-                            BoxShadow(
-                              color: accentColor.withValues(alpha: 0.3),
-                              blurRadius: 4,
-                              offset: const Offset(0, 1),
-                            ),
-                          ],
-                        ),
-                        child: Text(
-                          'NEW',
-                          style: TextStyle(
-                            fontSize: 9,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: AppTheme.fontFamily,
-                            color: SemanticColors.onAccent,
-                            letterSpacing: 0.8,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
-              ),
-              // Show lock icon and PRO badge for locked premium features
-              if (isLocked) ...[
-                const SizedBox(width: AppTheme.spacing8),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [lockedColor, lockedColor.withValues(alpha: 0.8)],
-                    ),
-                    borderRadius: BorderRadius.circular(AppTheme.radius8),
-                    boxShadow: [
-                      BoxShadow(
-                        color: lockedColor.withValues(alpha: 0.3),
-                        blurRadius: 4,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(
-                        Icons.lock_rounded,
-                        size: 12,
-                        color: Colors.white,
-                      ),
-                      const SizedBox(width: AppTheme.spacing4),
-                      Text(
-                        'PRO',
-                        style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: AppTheme.fontFamily,
-                          color: Colors.white,
-                          letterSpacing: 0.5,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ] else if (showTryIt) ...[
-                // Show "TRY IT" badge when upsell is enabled but not owned
-                const SizedBox(width: AppTheme.spacing8),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.amber.withValues(alpha: 0.2),
-                    borderRadius: BorderRadius.circular(AppTheme.radius8),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.star, size: 12, color: Colors.amber),
-                      const SizedBox(width: AppTheme.spacing4),
-                      Text(
-                        'TRY IT',
-                        style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: AppTheme.fontFamily,
-                          color: Colors.amber,
-                          letterSpacing: 0.5,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ] else if (isPremium) ...[
-                // Show unlocked badge for purchased premium features
-                Icon(
-                  Icons.verified_rounded,
-                  size: 18,
-                  color: Colors.green.shade400,
-                ),
-              ] else if (isSelected) ...[
-                Icon(
-                  Icons.chevron_right,
-                  size: 20,
-                  color: accentColor.withValues(alpha: 0.6),
-                ),
-              ],
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// Node info header for the drawer - shows current node details
-class _DrawerNodeHeader extends ConsumerWidget {
-  const _DrawerNodeHeader();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
-    final myNodeNum = ref.watch(myNodeNumProvider);
-    final nodes = ref.watch(nodesProvider);
-    final myNode = myNodeNum != null ? nodes[myNodeNum] : null;
-    final connectionStateAsync = ref.watch(connectionStateProvider);
-
-    final isConnected = connectionStateAsync.when(
-      data: (state) => state == DeviceConnectionState.connected,
-      loading: () => false,
-      error: (e, s) => false,
-    );
-
-    // Get node display info
-    final nodeName = myNode?.longName ?? 'Not Connected';
-    final nodeId = myNodeNum != null ? '!${myNodeNum.toRadixString(16)}' : '';
-
-    return Container(
-      padding: const EdgeInsets.fromLTRB(AppTheme.spacing20, 20, 20, 16),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Node sigil avatar — matches NodeDex list style
-          SigilAvatar(
-            nodeNum: myNodeNum ?? 0,
-            size: 56,
-            badge: Container(
-              width: 14,
-              height: 14,
-              decoration: BoxDecoration(
-                color: isConnected ? AppTheme.successGreen : AppTheme.errorRed,
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: theme.scaffoldBackgroundColor,
-                  width: 2,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: AppTheme.spacing12),
-          // Node info - flexible column
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Node name — full width, no competing chip
-                Text(
-                  nodeName,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: AppTheme.fontFamily,
-                    color: theme.colorScheme.onSurface,
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: AppTheme.spacing4),
-                // Node ID + connection status chip on same row
-                Row(
-                  children: [
-                    if (nodeId.isNotEmpty)
-                      Text(
-                        nodeId,
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontFamily: AppTheme.fontFamily,
-                          color: theme.colorScheme.onSurface.withValues(
-                            alpha: 0.6,
-                          ),
-                        ),
-                      ),
-                    if (nodeId.isNotEmpty)
-                      const SizedBox(width: AppTheme.spacing8),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 3,
-                      ),
-                      decoration: BoxDecoration(
-                        color: isConnected
-                            ? AppTheme.successGreen.withValues(alpha: 0.15)
-                            : AppTheme.errorRed.withValues(alpha: 0.15),
-                        borderRadius: BorderRadius.circular(AppTheme.radius12),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            width: 6,
-                            height: 6,
-                            decoration: BoxDecoration(
-                              color: isConnected
-                                  ? AppTheme.successGreen
-                                  : AppTheme.errorRed,
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                          const SizedBox(width: AppTheme.spacing4),
-                          Text(
-                            isConnected ? 'Online' : 'Offline',
-                            style: TextStyle(
-                              fontSize: 11,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: AppTheme.fontFamily,
-                              color: isConnected
-                                  ? AppTheme.successGreen
-                                  : AppTheme.errorRed,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _PulsingDot extends StatefulWidget {
-  final Color color;
-
-  const _PulsingDot({required this.color});
-
-  @override
-  State<_PulsingDot> createState() => _PulsingDotState();
-}
-
-class _PulsingDotState extends State<_PulsingDot>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animation;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 800),
-    )..repeat(reverse: true);
-    _animation = Tween<double>(begin: 0.4, end: 1.0).animate(_controller);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _animation,
-      builder: (context, child) {
-        return Container(
-          width: 10,
-          height: 10,
-          decoration: BoxDecoration(
-            color: widget.color.withValues(alpha: _animation.value),
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: Theme.of(context).scaffoldBackgroundColor,
-              width: 2,
-            ),
-          ),
-        );
-      },
     );
   }
 }
@@ -2162,358 +1427,3 @@ class _SettingsButton extends StatelessWidget {
     );
   }
 }
-
-/// Admin section in the drawer - visible to shop admins with PIN protection
-///
-/// Enterprise (RBAC) section in the drawer - visible only to org members.
-///
-/// Consumer users (no orgId/role) see nothing. Org members see items gated
-/// by their role using [PermissionGate] and [RoleGate].
-///
-/// Spec: RBAC.md (Sprint 007), Sprint 008/W2.2.
-class _DrawerEnterpriseSection extends ConsumerWidget {
-  final void Function(Widget screen) onNavigate;
-
-  const _DrawerEnterpriseSection({required this.onNavigate});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final service = ref.watch(permissionServiceProvider);
-
-    // Consumer users see nothing — no orgId means no enterprise section.
-    if (service.currentOrgId == null) {
-      return const SizedBox.shrink();
-    }
-
-    final theme = Theme.of(context);
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Section header
-        Padding(
-          padding: const EdgeInsets.only(left: 24, bottom: 8, top: 8),
-          child: Row(
-            children: [
-              Icon(
-                Icons.business,
-                size: 14,
-                color: Colors.teal.withValues(alpha: 0.7),
-              ),
-              const SizedBox(width: AppTheme.spacing6),
-              Text(
-                'ENTERPRISE',
-                style: TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 1.2,
-                  color: Colors.teal.withValues(alpha: 0.7),
-                ),
-              ),
-            ],
-          ),
-        ),
-
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: Column(
-            children: [
-              // View team incidents — all org roles (observer+)
-              RoleGate(
-                minRole: Role.observer,
-                child: _DrawerMenuTile(
-                  icon: Icons.warning_amber_outlined,
-                  label: 'Incidents',
-                  isSelected: false,
-                  iconColor: Colors.red.shade400,
-                  onTap: () {
-                    ref.haptics.tabChange();
-                    onNavigate(const IncidentListScreen());
-                  },
-                ),
-              ),
-
-              const SizedBox(height: AppTheme.spacing4),
-
-              // View team tasks — all org roles (observer+)
-              RoleGate(
-                minRole: Role.observer,
-                child: _DrawerMenuTile(
-                  icon: Icons.task_alt_outlined,
-                  label: 'Tasks',
-                  isSelected: false,
-                  iconColor: Colors.blue.shade400,
-                  onTap: () {
-                    ref.haptics.tabChange();
-                    // Placeholder: enterprise screens not yet built (W4.3)
-                  },
-                ),
-              ),
-
-              const SizedBox(height: AppTheme.spacing4),
-
-              // Create field report — operator+
-              PermissionGate(
-                permission: Permission.createFieldReport,
-                child: _DrawerMenuTile(
-                  icon: Icons.description_outlined,
-                  label: 'Field Reports',
-                  isSelected: false,
-                  iconColor: Colors.green.shade400,
-                  onTap: () {
-                    ref.haptics.tabChange();
-                    // Placeholder: enterprise screens not yet built (W5.1)
-                  },
-                ),
-              ),
-
-              const SizedBox(height: AppTheme.spacing4),
-
-              // Export reports — supervisor+
-              PermissionGate(
-                permission: Permission.exportReports,
-                mode: PermissionGateMode.disabled,
-                deniedTooltip: 'Requires Supervisor or Admin role',
-                child: _DrawerMenuTile(
-                  icon: Icons.summarize_outlined,
-                  label: 'Reports',
-                  isSelected: false,
-                  iconColor: Colors.indigo.shade400,
-                  onTap: () {
-                    ref.haptics.tabChange();
-                    // Placeholder: enterprise screens not yet built (W5.3)
-                  },
-                ),
-              ),
-
-              const SizedBox(height: AppTheme.spacing4),
-
-              // Manage users — admin only
-              RoleGate(
-                minRole: Role.admin,
-                child: _DrawerMenuTile(
-                  icon: Icons.people_outline,
-                  label: 'User Management',
-                  isSelected: false,
-                  iconColor: Colors.orange.shade400,
-                  onTap: () {
-                    ref.haptics.tabChange();
-                    // Placeholder: enterprise screens not yet built (W6.3)
-                  },
-                ),
-              ),
-
-              const SizedBox(height: AppTheme.spacing4),
-
-              // Manage devices — admin only
-              RoleGate(
-                minRole: Role.admin,
-                child: _DrawerMenuTile(
-                  icon: Icons.devices_outlined,
-                  label: 'Device Management',
-                  isSelected: false,
-                  iconColor: Colors.grey.shade500,
-                  onTap: () {
-                    ref.haptics.tabChange();
-                    // Placeholder: enterprise screens not yet built (W6.3)
-                  },
-                ),
-              ),
-
-              const SizedBox(height: AppTheme.spacing4),
-
-              // Configure org settings — admin only
-              RoleGate(
-                minRole: Role.admin,
-                child: _DrawerMenuTile(
-                  icon: Icons.settings_outlined,
-                  label: 'Org Settings',
-                  isSelected: false,
-                  iconColor: Colors.purple.shade400,
-                  onTap: () {
-                    ref.haptics.tabChange();
-                    // Placeholder: enterprise screens not yet built
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-
-        // Divider after enterprise section
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: Divider(
-            color: theme.dividerColor.withValues(
-              alpha: theme.brightness == Brightness.dark ? 0.1 : 0.2,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _DrawerAdminSection extends ConsumerStatefulWidget {
-  final void Function(Widget screen) onNavigate;
-
-  const _DrawerAdminSection({required this.onNavigate});
-
-  @override
-  ConsumerState<_DrawerAdminSection> createState() =>
-      _DrawerAdminSectionState();
-}
-
-class _DrawerAdminSectionState extends ConsumerState<_DrawerAdminSection> {
-  Future<void> _handleAdminTap() async {
-    ref.haptics.tabChange();
-
-    // Show PIN verification dialog
-    final verified = await AdminPinDialog.show(context);
-    if (!mounted) return;
-
-    if (verified) {
-      widget.onNavigate(const AdminScreen());
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final isAdminAsync = ref.watch(isShopAdminProvider);
-
-    return isAdminAsync.when(
-      data: (isAdmin) {
-        if (!isAdmin) return const SizedBox.shrink();
-
-        final theme = Theme.of(context);
-
-        // Combined badge count for admin notifications
-        final badgeCount = ref.watch(adminNotificationCountProvider);
-
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Admin section
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Section header
-                  Padding(
-                    padding: const EdgeInsets.only(left: 12, bottom: 8, top: 8),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.admin_panel_settings,
-                          size: 14,
-                          color: Colors.orange.withValues(alpha: 0.7),
-                        ),
-                        const SizedBox(width: AppTheme.spacing6),
-                        Text(
-                          'ADMIN',
-                          style: TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: 1.2,
-                            color: Colors.orange.withValues(alpha: 0.7),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  // Single Admin entry with PIN protection
-                  _DrawerMenuTile(
-                    icon: Icons.shield_outlined,
-                    label: 'Admin Dashboard',
-                    isSelected: false,
-                    iconColor: Colors.orange.shade400,
-                    badgeCount: badgeCount > 0 ? badgeCount : null,
-                    onTap: _handleAdminTap,
-                  ),
-                ],
-              ),
-            ),
-
-            // Divider after admin section
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Divider(
-                color: theme.dividerColor.withValues(
-                  alpha: theme.brightness == Brightness.dark ? 0.1 : 0.2,
-                ),
-              ),
-            ),
-          ],
-        );
-      },
-      loading: () => const SizedBox.shrink(),
-      error: (error, stackTrace) => const SizedBox.shrink(),
-    );
-  }
-}
-
-/// Helper class for grouping drawer menu items into sections
-class _DrawerMenuSection {
-  final String title;
-  final List<_DrawerMenuItemWithIndex> items;
-
-  _DrawerMenuSection(this.title, this.items);
-}
-
-/// Helper class to track menu item with its original index
-class _DrawerMenuItemWithIndex {
-  final _DrawerMenuItem item;
-  final int index;
-
-  _DrawerMenuItemWithIndex(this.item, this.index);
-}
-
-/// Sticky header delegate for drawer section headers
-class _DrawerStickyHeaderDelegate extends SliverPersistentHeaderDelegate {
-  final String title;
-  final ThemeData theme;
-
-  _DrawerStickyHeaderDelegate({required this.title, required this.theme});
-
-  @override
-  Widget build(
-    BuildContext context,
-    double shrinkOffset,
-    bool overlapsContent,
-  ) {
-    return ClipRect(
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-        child: Container(
-          color: theme.scaffoldBackgroundColor.withValues(alpha: 0.8),
-          padding: const EdgeInsets.only(left: 24, top: 8, bottom: 8),
-          child: Text(
-            title,
-            style: TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 1.2,
-              color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  @override
-  double get maxExtent => 32;
-
-  @override
-  double get minExtent => 32;
-
-  @override
-  bool shouldRebuild(covariant _DrawerStickyHeaderDelegate oldDelegate) {
-    return title != oldDelegate.title;
-  }
-}
-
-// Replaced by `TopStatusBanner` in `lib/core/widgets/top_status_banner.dart`.
-// The global banner is now centralized; this legacy class was removed to avoid duplication.

@@ -298,10 +298,24 @@ check_file() {
   local in_prohibited_spdx_dir=false
   local is_dart=false
 
+  local is_painter=false
+  local is_onboarding=false
+  local is_help_system=false
+
   case "$file" in
     lib/generated/*) in_lib_generated=true; in_lib=true ;;
-    lib/core/theme/*) in_theme=true; in_lib=true ;;
+    lib/core/theme.dart|lib/core/theme/*) in_theme=true; in_lib=true ;;
     lib/*) in_lib=true ;;
+  esac
+
+  case "$file" in
+    *painter*.dart|*_painter.dart) is_painter=true ;;
+  esac
+  case "$file" in
+    *onboarding*) is_onboarding=true ;;
+  esac
+  case "$file" in
+    *ico_help_system*) is_help_system=true ;;
   esac
 
   case "$file" in
@@ -505,6 +519,58 @@ check_file() {
   fi
 
   # ------------------------------------------------------------------
+  # ERROR: Hardcoded colors — use SemanticColors / theme extensions
+  #
+  # Catches Color(0xFF...) hex literals and named Colors.xxx (except
+  # white, black, transparent which are universal).
+  # Exempt: theme.dart (defines constants), painters (need raw colors),
+  # onboarding widgets (pre-theme), help system overlay, accessibility
+  # adapter, and admin-only screens.
+  # Contributors can add // lint-allow: hardcoded-color for edge cases.
+  # ------------------------------------------------------------------
+  if [ "$is_dart" = true ] && [ "$in_lib" = true ] && [ "$in_lib_generated" = false ] \
+     && [ "$in_theme" = false ] && [ "$is_painter" = false ] \
+     && [ "$is_onboarding" = false ] && [ "$is_help_system" = false ] \
+     && [[ "$file" != *"accessibility_theme_adapter"* ]] \
+     && [[ "$file" != *"admin/"* ]] \
+     && [[ "$file" != *"mesh_node_brain"* ]]; then
+
+    # Skip if file has a blanket exemption
+    if ! grep -q 'lint-allow:.*hardcoded-color' "$file" 2>/dev/null; then
+
+      # Color(0xFF...) hex literals
+      while IFS=: read -r lineno matched_line; do
+        line_in_scope "$file" "$lineno" || continue
+        local trimmed="${matched_line#"${matched_line%%[![:space:]]*}"}"
+        [[ "$trimmed" == //* ]] && continue
+        [[ "$matched_line" == import* ]] && continue
+        record_hit "$file" "$lineno" "no-hardcoded-color" \
+          "Hardcoded color — use SemanticColors, AccentColors, ChartColors, or context.* theme extensions" "warn"
+      done < <(grep -nE 'Color\(0x[0-9a-fA-F]' "$file" 2>/dev/null || true)
+
+      # Named Colors.xxx (but NOT Colors.white, Colors.black, Colors.transparent)
+      while IFS=: read -r lineno matched_line; do
+        line_in_scope "$file" "$lineno" || continue
+        local trimmed="${matched_line#"${matched_line%%[![:space:]]*}"}"
+        [[ "$trimmed" == //* ]] && continue
+        [[ "$matched_line" == import* ]] && continue
+        # Allow white, black, transparent
+        if [[ "$matched_line" =~ Colors\.(white|black|transparent) ]]; then
+          # Only skip if ONLY white/black/transparent appear on this line
+          local stripped="${matched_line//Colors.white/}"
+          stripped="${stripped//Colors.black/}"
+          stripped="${stripped//Colors.transparent/}"
+          if [[ ! "$stripped" =~ Colors\.[a-z] ]]; then
+            continue
+          fi
+        fi
+        record_hit "$file" "$lineno" "no-hardcoded-color" \
+          "Hardcoded color — use SemanticColors, AccentColors, ChartColors, or context.* theme extensions" "warn"
+      done < <(grep -nE '(^|[^a-zA-Z])Colors\.(red|blue|green|orange|yellow|purple|pink|teal|indigo|amber|cyan|lime|brown|grey|deepOrange|deepPurple|lightBlue|lightGreen)' "$file" 2>/dev/null || true)
+    fi
+  fi
+
+  # ------------------------------------------------------------------
   # WARN: Async safety -- context/ref/setState after await without
   # mounted check.  Uses an awk state machine (10x faster than bash
   # while-read on large files):
@@ -582,7 +648,8 @@ check_file() {
       state == "post_await" {
         # mounted check clears the danger zone.
         # safeSetState() checks mounted internally, so treat it the same.
-        if (/mounted/ || /safeSetState/) { state = "idle"; next }
+        # canUpdateUI is the LifecycleSafeMixin equivalent of mounted.
+        if (/mounted/ || /safeSetState/ || /canUpdateUI/) { state = "idle"; next }
 
         # Dangerous usage after the await line itself
         if (NR > await_ln) {
@@ -630,6 +697,162 @@ check_file() {
           "TextField/TextFormField without maxLength — all text inputs must be bounded" "error"
       fi
     fi
+
+    # ------------------------------------------------------------------
+    # ERROR: IcoHelpAppBarButton without HelpTourController
+    #
+    # If a file uses IcoHelpAppBarButton, it MUST also have a
+    # HelpTourController wrapping its scaffold. Without the controller
+    # the help button toggles state but no overlay appears.
+    # ------------------------------------------------------------------
+    if grep -vE '^\s*//' "$file" | grep -q 'IcoHelpAppBarButton' 2>/dev/null; then
+      if ! grep -q 'HelpTourController' "$file" 2>/dev/null; then
+        record_hit "$file" "1" "help-button-needs-controller" \
+          "IcoHelpAppBarButton without HelpTourController — the tour overlay will not render" "error"
+      fi
+    fi
+
+    # ------------------------------------------------------------------
+    # ERROR: ConsumerStatefulWidget with async but no LifecycleSafeMixin
+    #
+    # Any ConsumerStatefulWidget whose State class uses await must mix
+    # in LifecycleSafeMixin for safe mounted checks and safeSetState.
+    # Uses awk to analyse per-class scope so that await in unrelated
+    # classes, static methods, or provider functions in the same file
+    # does not trigger a false positive.
+    # Skip provider/service files entirely — ref lifecycle is framework-
+    # managed and widget subclasses in those files are typically inert.
+    # ------------------------------------------------------------------
+    if [[ "$file" != */providers/* ]] && [[ "$file" != */services/* ]] \
+       && [[ "$file" != *_providers.dart ]] && [[ "$file" != *_service.dart ]] \
+       && [[ "$file" != *_provider.dart ]]; then
+
+      while IFS= read -r hit_lineno; do
+        [ -n "$hit_lineno" ] || continue
+        record_hit "$file" "$hit_lineno" "require-lifecycle-mixin" \
+          "ConsumerStatefulWidget with async but no LifecycleSafeMixin — add LifecycleSafeMixin for safe async" "error"
+      done < <(awk '
+        # Track when we enter a ConsumerState class body.
+        # We look for "extends ConsumerState<" and then check whether
+        # LifecycleSafeMixin appears on the same declaration line (the
+        # "with" clause can span multiple lines, so we also scan until
+        # the opening brace).
+        #
+        # Once inside the class body, we check for "await ".  If we
+        # reach the end of the class (next top-level class or EOF)
+        # having seen await but no LifecycleSafeMixin, we emit the
+        # starting line number.
+
+        BEGIN {
+          in_consumer = 0; has_await = 0; has_mixin = 0
+          class_line = 0; brace_depth = 0; in_decl = 0
+        }
+
+        # Detect the start of a ConsumerState class (declaration line).
+        /extends[[:space:]]+ConsumerState</ {
+          # Flush any previous class that was still open
+          if (in_consumer && has_await && !has_mixin) print class_line
+
+          in_consumer = 1; has_await = 0; has_mixin = 0
+          class_line = NR; brace_depth = 0; in_decl = 1
+        }
+
+        # While still in the declaration (before opening brace),
+        # check for LifecycleSafeMixin on "with" line(s).
+        in_decl {
+          if (/LifecycleSafeMixin/) has_mixin = 1
+          if (/{/) { in_decl = 0 }
+        }
+
+        # Track brace depth inside the class body.
+        in_consumer && !in_decl {
+          n = split($0, chars, "")
+          for (i = 1; i <= n; i++) {
+            if (chars[i] == "{") brace_depth++
+            if (chars[i] == "}") {
+              brace_depth--
+              if (brace_depth <= 0) {
+                # End of class body
+                if (has_await && !has_mixin) print class_line
+                in_consumer = 0; has_await = 0; has_mixin = 0
+                break
+              }
+            }
+          }
+        }
+
+        # Detect await inside the class body (skip comments)
+        in_consumer && !in_decl {
+          line = $0; sub(/^[[:space:]]+/, "", line)
+          if (line !~ /^\/\//) {
+            if (/await[[:space:]]/ || /await;/) has_await = 1
+          }
+        }
+
+        # Also catch LifecycleSafeMixin if added later (e.g. via a
+        # separate "with" block or late mixin application — unlikely
+        # but defensive).
+        in_consumer && /LifecycleSafeMixin/ { has_mixin = 1 }
+
+        END {
+          if (in_consumer && has_await && !has_mixin) print class_line
+        }
+      ' "$file" 2>/dev/null)
+    fi
+
+    # ------------------------------------------------------------------
+    # ERROR: StreamSubscription field without cancel in dispose
+    #
+    # Every StreamSubscription declared as a field must have a
+    # corresponding .cancel() call, typically in dispose(). This
+    # prevents memory leaks and orphaned listeners.
+    # Skip provider/service files where subscriptions are managed
+    # by the framework lifecycle (ref.onDispose, etc.).
+    # ------------------------------------------------------------------
+    if [[ "$file" != */providers/* ]] && [[ "$file" != */services/* ]] \
+       && [[ "$file" != *_providers.dart ]] && [[ "$file" != *_service.dart ]]; then
+      if grep -qE 'StreamSubscription[<\?]' "$file" 2>/dev/null; then
+        if ! grep -q '\.cancel()' "$file" 2>/dev/null; then
+          record_hit "$file" "1" "stream-subscription-cancel" \
+            "StreamSubscription without .cancel() — cancel in dispose() to prevent leaks" "error"
+        fi
+      fi
+    fi
+
+    # ------------------------------------------------------------------
+    # WARN: Screen with TextField but no keyboard dismissal
+    #
+    # Screens (class name ending in Screen) that contain TextField or
+    # TextFormField should have FocusScope.of or FocusManager to
+    # dismiss the keyboard on outside taps.
+    # ------------------------------------------------------------------
+    if grep -qE 'class[[:space:]]+[A-Za-z_]+Screen[[:space:]]+extends' "$file" 2>/dev/null; then
+      if grep -vE '^\s*//' "$file" | grep -qE '(TextField|TextFormField)[[:space:]]*\(' 2>/dev/null; then
+        if ! grep -qE '(FocusScope\.of|FocusManager\.|unfocus|onTapOutside)' "$file" 2>/dev/null; then
+          record_hit "$file" "1" "keyboard-dismissal" \
+            "Screen with text input but no keyboard dismissal — add GestureDetector + FocusScope.unfocus or onTapOutside" "warn"
+        fi
+      fi
+    fi
+
+    # ------------------------------------------------------------------
+    # WARN: GestureDetector onTap without haptic feedback
+    #
+    # Interactive elements using GestureDetector.onTap should provide
+    # haptic feedback via HapticFeedback or HapticService.
+    # Only checks non-comment lines. Exempt test files.
+    # ------------------------------------------------------------------
+    if [[ "$file" != test/* ]]; then
+      if grep -vE '^\s*//' "$file" | grep -q 'GestureDetector' 2>/dev/null; then
+        if grep -vE '^\s*//' "$file" | grep -q 'onTap' 2>/dev/null; then
+          if ! grep -qE '(HapticFeedback\.|HapticService|haptics\.)' "$file" 2>/dev/null; then
+            record_hit "$file" "1" "haptic-feedback" \
+              "GestureDetector onTap without haptic feedback — add HapticFeedback.lightImpact() or use HapticService" "warn"
+          fi
+        fi
+      fi
+    fi
+
   fi # end whole-file checks
 
   # Flush grouped output for this file

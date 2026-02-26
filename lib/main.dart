@@ -2078,8 +2078,8 @@ class _ChannelInviteRedeemer extends ConsumerStatefulWidget {
       _ChannelInviteRedeemerState();
 }
 
-class _ChannelInviteRedeemerState
-    extends ConsumerState<_ChannelInviteRedeemer> {
+class _ChannelInviteRedeemerState extends ConsumerState<_ChannelInviteRedeemer>
+    with LifecycleSafeMixin<_ChannelInviteRedeemer> {
   late Future<void> _redeemFuture;
   String? _error;
 
@@ -2097,7 +2097,7 @@ class _ChannelInviteRedeemerState
         inviteSecret: widget.inviteSecret,
       );
 
-      if (!mounted) return;
+      if (!canUpdateUI) return;
 
       if (result.alreadyMember) {
         // Check if the channel actually exists locally — user may have
@@ -2129,7 +2129,7 @@ class _ChannelInviteRedeemerState
       final cryptoService = ref.read(channelCryptoServiceProvider);
       final channel = await cryptoService.fetchSecureChannel(result.channelId);
 
-      if (!mounted) return;
+      if (!canUpdateUI) return;
 
       if (channel == null) {
         setState(() => _error = 'Could not decrypt channel key');
@@ -2155,6 +2155,7 @@ class _ChannelInviteRedeemerState
       });
     } catch (e) {
       AppLogging.channels('[ChannelInvite] Redemption failed: $e');
+      if (!canUpdateUI) return;
       setState(() => _error = _friendlyError(e));
     }
   }
@@ -2274,7 +2275,8 @@ class _WidgetDetailLoader extends ConsumerStatefulWidget {
       _WidgetDetailLoaderState();
 }
 
-class _WidgetDetailLoaderState extends ConsumerState<_WidgetDetailLoader> {
+class _WidgetDetailLoaderState extends ConsumerState<_WidgetDetailLoader>
+    with LifecycleSafeMixin<_WidgetDetailLoader> {
   bool _isLoading = true;
   String? _error;
   MarketplaceWidget? _marketplaceWidget;

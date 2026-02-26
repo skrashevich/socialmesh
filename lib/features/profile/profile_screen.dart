@@ -46,7 +46,8 @@ class ProfileScreen extends ConsumerStatefulWidget {
   ConsumerState<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends ConsumerState<ProfileScreen> {
+class _ProfileScreenState extends ConsumerState<ProfileScreen>
+    with LifecycleSafeMixin<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final profileAsync = ref.watch(userProfileProvider);
@@ -133,7 +134,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     );
 
     // Force refresh after sheet closes - always refresh to be safe
-    if (!mounted) return;
+    if (!canUpdateUI) return;
     ref.invalidate(userProfileProvider);
     // Wait for the provider to reload so any errors surface here.
     await ref.read(userProfileProvider.future);
@@ -466,7 +467,8 @@ class _CloudBackupSection extends ConsumerStatefulWidget {
       _CloudBackupSectionState();
 }
 
-class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection> {
+class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection>
+    with LifecycleSafeMixin<_CloudBackupSection> {
   bool _isExpanded = false;
   bool _isSigningIn = false;
 

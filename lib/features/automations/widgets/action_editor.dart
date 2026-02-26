@@ -49,7 +49,8 @@ class ActionEditor extends ConsumerStatefulWidget {
   ConsumerState<ActionEditor> createState() => _ActionEditorState();
 }
 
-class _ActionEditorState extends ConsumerState<ActionEditor> {
+class _ActionEditorState extends ConsumerState<ActionEditor>
+    with LifecycleSafeMixin<ActionEditor> {
   late TextEditingController _webhookEventController;
   late TextEditingController _shortcutNameController;
 

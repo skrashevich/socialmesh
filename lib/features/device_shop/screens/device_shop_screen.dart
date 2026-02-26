@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/auto_scroll_text.dart';
 import '../../../core/widgets/edge_fade.dart';
@@ -1159,7 +1160,7 @@ class ProductCard extends ConsumerStatefulWidget {
 }
 
 class _ProductCardState extends ConsumerState<ProductCard>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, LifecycleSafeMixin<ProductCard> {
   late AnimationController _heartController;
   late Animation<double> _heartScale;
 

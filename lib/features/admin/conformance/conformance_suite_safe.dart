@@ -165,6 +165,34 @@ class ConformanceSuiteSafe {
         phase: 'after_save',
       );
 
+      // Post-write connectivity check: many config writes trigger a firmware
+      // reboot. If the device disconnected after the write, recover BEFORE
+      // attempting the readback rather than failing and recovering after.
+      if (!_ctx.isConnected) {
+        AppLogging.adminDiag(
+          '$testName: device disconnected after write — '
+          'waiting for reconnection before readback...',
+        );
+        notes.add('Post-write reboot detected');
+        final recovered = await _ctx.awaitReconnection(
+          maxWait: const Duration(seconds: 45),
+        );
+        if (!recovered) {
+          AppLogging.adminDiag(
+            '$testName: FAIL — device did not recover after post-write reboot',
+          );
+          return ConformanceTestResult(
+            name: testName,
+            domain: adapter.domainName,
+            outcome: ConformanceOutcome.fail,
+            durationMs: sw.elapsedMilliseconds,
+            error: 'Device did not recover after config write reboot',
+            notes: notes,
+          );
+        }
+        notes.add('Post-write recovery complete');
+      }
+
       // Step 3: Read back
       AppLogging.adminDiag('$testName: reading back');
       final readback = await adapter.load(_ctx.protocolService, _ctx.target);

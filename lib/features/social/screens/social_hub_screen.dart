@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/safety/lifecycle_mixin.dart';
+
 import '../../../core/theme.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../../../providers/auth_providers.dart';
@@ -86,7 +88,8 @@ class _AuthenticatedSocialHub extends ConsumerStatefulWidget {
 }
 
 class _AuthenticatedSocialHubState
-    extends ConsumerState<_AuthenticatedSocialHub> {
+    extends ConsumerState<_AuthenticatedSocialHub>
+    with LifecycleSafeMixin<_AuthenticatedSocialHub> {
   bool _hasShownStrikeDialog = false;
 
   @override
@@ -103,7 +106,7 @@ class _AuthenticatedSocialHubState
 
     final strikesAsync = ref.read(unacknowledgedStrikesProvider);
     strikesAsync.whenData((strikes) async {
-      if (strikes.isNotEmpty && mounted) {
+      if (strikes.isNotEmpty && canUpdateUI) {
         _hasShownStrikeDialog = true;
         await StrikeAcknowledgmentDialog.show(context, strikes);
         // Refresh moderation status after acknowledging
