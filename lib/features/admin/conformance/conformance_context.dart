@@ -157,7 +157,11 @@ class ConformanceContext {
     );
 
     // ── Phase 1: Wait for BLE transport ──
-    if (!isConnected) {
+    // Track whether BLE was disconnected on entry — this indicates a
+    // reboot/reconnect cycle where configComplete may be stale.
+    final bleWasDisconnected = !isConnected;
+
+    if (bleWasDisconnected) {
       AppLogging.adminDiag(
         'Phase 1 [${elapsed()}]: BLE disconnected — polling for reconnect...',
       );
@@ -185,18 +189,21 @@ class ConformanceContext {
     );
     await Future<void>.delayed(const Duration(seconds: 3));
 
-    // ── Phase 3: Admin probe (or direct restart if stale) ──
-    // configurationComplete being true here means the auto-reconnect
-    // manager's stale guard skipped protocol.start() — the fromNum BLE
-    // subscription is dead and probes will always timeout (~20 s wasted).
-    // Skip directly to protocol restart in that case.
-    final staleState = protocolService.configurationComplete;
+    // ── Phase 3: Admin probe ──
+    // When BLE was disconnected on entry AND configComplete is still true,
+    // the auto-reconnect manager's stale guard skipped protocol.start().
+    // The fromNum BLE subscription is dead and probes will always timeout
+    // (~20 s wasted). Skip directly to protocol restart.
+    //
+    // When BLE stayed connected (no reboot detected), configComplete=true
+    // is legitimate — always try probing first.
+    final suspectStale =
+        bleWasDisconnected && protocolService.configurationComplete;
 
-    if (!staleState) {
-      // Fresh state — protocol.start() was called by the reconnect manager.
-      // Verify the pipeline is actually functional with an admin probe.
+    if (!suspectStale) {
       AppLogging.adminDiag(
         'Phase 3 [${elapsed()}]: Probing admin pipeline — '
+        'bleReconnected=$bleWasDisconnected, '
         'isConnected=$isConnected, '
         'configComplete=${protocolService.configurationComplete}, '
         'myNodeNum=${protocolService.myNodeNum}',
@@ -216,7 +223,7 @@ class ConformanceContext {
     } else {
       AppLogging.adminDiag(
         'Phase 3 [${elapsed()}]: SKIPPED — '
-        'configComplete=true is stale (dead fromNum subscription), '
+        'BLE was disconnected + configComplete=true (stale guard), '
         'proceeding directly to protocol restart',
       );
     }

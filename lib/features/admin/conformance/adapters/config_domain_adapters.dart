@@ -64,7 +64,7 @@ class DeviceConfigAdapter
       target: target,
     );
     try {
-      return await completer.future.timeout(const Duration(seconds: 8));
+      return await completer.future.timeout(const Duration(seconds: 12));
     } finally {
       await sub.cancel();
     }
@@ -107,7 +107,7 @@ class LoRaConfigAdapter
       target: target,
     );
     try {
-      return await completer.future.timeout(const Duration(seconds: 8));
+      return await completer.future.timeout(const Duration(seconds: 12));
     } finally {
       await sub.cancel();
     }
@@ -148,7 +148,7 @@ class PositionConfigAdapter
       target: target,
     );
     try {
-      return await completer.future.timeout(const Duration(seconds: 8));
+      return await completer.future.timeout(const Duration(seconds: 12));
     } finally {
       await sub.cancel();
     }
@@ -192,7 +192,7 @@ class PowerConfigAdapter
       target: target,
     );
     try {
-      return await completer.future.timeout(const Duration(seconds: 8));
+      return await completer.future.timeout(const Duration(seconds: 12));
     } finally {
       await sub.cancel();
     }
@@ -235,7 +235,7 @@ class NetworkConfigAdapter
       target: target,
     );
     try {
-      return await completer.future.timeout(const Duration(seconds: 8));
+      return await completer.future.timeout(const Duration(seconds: 12));
     } finally {
       await sub.cancel();
     }
@@ -278,7 +278,7 @@ class BluetoothConfigAdapter
       target: target,
     );
     try {
-      return await completer.future.timeout(const Duration(seconds: 8));
+      return await completer.future.timeout(const Duration(seconds: 12));
     } finally {
       await sub.cancel();
     }
@@ -324,7 +324,7 @@ class DisplayConfigAdapter
       target: target,
     );
     try {
-      return await completer.future.timeout(const Duration(seconds: 8));
+      return await completer.future.timeout(const Duration(seconds: 12));
     } finally {
       await sub.cancel();
     }
@@ -367,7 +367,7 @@ class SecurityConfigAdapter
       target: target,
     );
     try {
-      return await completer.future.timeout(const Duration(seconds: 8));
+      return await completer.future.timeout(const Duration(seconds: 12));
     } finally {
       await sub.cancel();
     }
@@ -415,7 +415,7 @@ class MqttConfigAdapter
       target: target,
     );
     try {
-      return await completer.future.timeout(const Duration(seconds: 8));
+      return await completer.future.timeout(const Duration(seconds: 12));
     } finally {
       await sub.cancel();
     }
@@ -461,7 +461,7 @@ class TelemetryConfigAdapter
       target: target,
     );
     try {
-      return await completer.future.timeout(const Duration(seconds: 8));
+      return await completer.future.timeout(const Duration(seconds: 12));
     } finally {
       await sub.cancel();
     }
@@ -508,7 +508,7 @@ class PaxCounterConfigAdapter
       target: target,
     );
     try {
-      return await completer.future.timeout(const Duration(seconds: 8));
+      return await completer.future.timeout(const Duration(seconds: 12));
     } finally {
       await sub.cancel();
     }
@@ -555,7 +555,7 @@ class SerialConfigAdapter
       target: target,
     );
     try {
-      return await completer.future.timeout(const Duration(seconds: 8));
+      return await completer.future.timeout(const Duration(seconds: 12));
     } finally {
       await sub.cancel();
     }
@@ -601,7 +601,7 @@ class RangeTestConfigAdapter
       target: target,
     );
     try {
-      return await completer.future.timeout(const Duration(seconds: 8));
+      return await completer.future.timeout(const Duration(seconds: 12));
     } finally {
       await sub.cancel();
     }
@@ -650,7 +650,7 @@ class ExtNotifConfigAdapter
       target: target,
     );
     try {
-      return await completer.future.timeout(const Duration(seconds: 8));
+      return await completer.future.timeout(const Duration(seconds: 12));
     } finally {
       await sub.cancel();
     }
@@ -697,7 +697,7 @@ class StoreForwardConfigAdapter
       target: target,
     );
     try {
-      return await completer.future.timeout(const Duration(seconds: 8));
+      return await completer.future.timeout(const Duration(seconds: 12));
     } finally {
       await sub.cancel();
     }
@@ -744,7 +744,7 @@ class CannedMsgConfigAdapter
       target: target,
     );
     try {
-      return await completer.future.timeout(const Duration(seconds: 8));
+      return await completer.future.timeout(const Duration(seconds: 12));
     } finally {
       await sub.cancel();
     }
@@ -791,7 +791,7 @@ class AmbientLightingConfigAdapter
       target: target,
     );
     try {
-      return await completer.future.timeout(const Duration(seconds: 8));
+      return await completer.future.timeout(const Duration(seconds: 12));
     } finally {
       await sub.cancel();
     }
@@ -838,7 +838,7 @@ class DetectionSensorConfigAdapter
       target: target,
     );
     try {
-      return await completer.future.timeout(const Duration(seconds: 8));
+      return await completer.future.timeout(const Duration(seconds: 12));
     } finally {
       await sub.cancel();
     }
@@ -887,7 +887,7 @@ class TrafficManagementConfigAdapter
       target: target,
     );
     try {
-      return await completer.future.timeout(const Duration(seconds: 8));
+      return await completer.future.timeout(const Duration(seconds: 12));
     } finally {
       await sub.cancel();
     }
@@ -940,7 +940,7 @@ class ChannelConfigAdapter extends ConfigDomainAdapter<ChannelConfig> {
     });
     await protocol.getChannel(channelIndex);
     try {
-      return await completer.future.timeout(const Duration(seconds: 8));
+      return await completer.future.timeout(const Duration(seconds: 12));
     } finally {
       await sub.cancel();
     }
