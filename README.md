@@ -11,7 +11,6 @@
 
 <p align="center">
   <a href="#status">Status</a> •
-
   <a href="#features">Features</a> •
   <a href="#nodedex">NodeDex</a> •
   <a href="#signals">Signals</a> •
