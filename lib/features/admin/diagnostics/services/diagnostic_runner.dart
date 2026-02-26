@@ -88,14 +88,18 @@ class DiagnosticRunner {
       ProbeResult result;
 
       try {
+        // Use probe-specific maxDuration if provided (e.g. stress probes
+        // that send multiple requests), otherwise fall back to the
+        // context's per-request timeout.
+        final outerTimeout = probe.maxDuration ?? _context.timeout;
         result = await probe
             .run(_context)
             .timeout(
-              _context.timeout,
+              outerTimeout,
               onTimeout: () => ProbeResult(
                 outcome: ProbeOutcome.fail,
                 durationMs: stopwatch.elapsedMilliseconds,
-                error: 'Timeout after ${_context.timeout.inSeconds}s',
+                error: 'Timeout after ${outerTimeout.inSeconds}s',
               ),
             );
       } catch (e, stack) {

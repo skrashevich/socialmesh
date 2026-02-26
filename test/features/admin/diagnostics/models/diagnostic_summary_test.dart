@@ -190,6 +190,46 @@ void main() {
         summary.suspectedCauses.any((c) => c.signal == 'all_probes_failed'),
         true,
       );
+      // 100% timeout → zombie_connection, not multiple_timeouts
+      expect(
+        summary.suspectedCauses.any((c) => c.signal == 'zombie_connection'),
+        true,
+      );
+      expect(
+        summary.suspectedCauses.any((c) => c.signal == 'multiple_timeouts'),
+        false,
+      );
+    });
+
+    test('fromRun with >80% timeouts produces zombie_connection signal', () {
+      final run = createTestRun();
+      // 9/10 = 90% timeouts → zombie signature
+      final probes = [
+        const ProbeSummaryEntry(
+          name: 'GetMyNodeInfo',
+          status: 'pass',
+          durationMs: 0,
+        ),
+        for (var i = 1; i <= 9; i++)
+          ProbeSummaryEntry(
+            name: 'Probe$i',
+            status: 'fail',
+            durationMs: 6000,
+            errorExcerpt: 'Timeout after 6s',
+          ),
+      ];
+
+      final summary = DiagnosticSummary.fromRun(run, probes);
+
+      expect(
+        summary.suspectedCauses.any((c) => c.signal == 'zombie_connection'),
+        true,
+      );
+      // zombie_connection replaces multiple_timeouts
+      expect(
+        summary.suspectedCauses.any((c) => c.signal == 'multiple_timeouts'),
+        false,
+      );
     });
 
     test('single timeout does not produce timeout signal', () {

@@ -57,6 +57,13 @@ abstract class DiagnosticProbe {
   /// Human-readable name of this probe.
   String get name;
 
+  /// Optional maximum wall-clock duration for the runner's outer timeout.
+  ///
+  /// When `null` (default) the runner uses [DiagnosticContext.timeout].
+  /// Override this in probes that send multiple requests and need more
+  /// time than a single request/response cycle (e.g. stress probes).
+  Duration? get maxDuration => null;
+
   /// Whether this probe requires write access.
   bool get requiresWrite => false;
 

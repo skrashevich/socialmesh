@@ -85,7 +85,22 @@ class DiagnosticSummary {
           (p.errorExcerpt?.contains('timeout') == true ||
               p.errorExcerpt?.contains('Timeout') == true),
     );
-    if (timeouts.length >= 2) {
+
+    // Zombie connection: BLE link connected but GATT notifications stopped.
+    // Signature: >80% of probes timeout — only GetMyNodeInfo (cached data,
+    // no BLE round-trip) passes.
+    final timeoutRatio = probes.isEmpty ? 0.0 : timeouts.length / probes.length;
+    if (timeoutRatio > 0.8) {
+      causes.add(
+        SuspectedCause(
+          signal: 'zombie_connection',
+          evidence:
+              '${timeouts.length}/${probes.length} probes timed out '
+              '\u2014 BLE link may be connected but GATT notifications are '
+              'stale. Restart the app or toggle Bluetooth to recover.',
+        ),
+      );
+    } else if (timeouts.length >= 2) {
       causes.add(
         SuspectedCause(
           signal: 'multiple_timeouts',

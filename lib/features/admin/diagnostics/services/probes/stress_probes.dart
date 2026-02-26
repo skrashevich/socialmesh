@@ -24,6 +24,15 @@ class BurstReadConfigsProbe extends DiagnosticProbe {
   @override
   bool get isStressTest => true;
 
+  /// Burst probes send [burstCount] sequential requests with [pacing]
+  /// delays, each waiting up to [DiagnosticContext.timeout]. The outer
+  /// runner timeout must accommodate the full burst.
+  @override
+  Duration get maxDuration => Duration(
+    seconds:
+        burstCount * 7 + 5, // ~7s per request (6s timeout + pacing) + buffer
+  );
+
   @override
   Future<ProbeResult> run(DiagnosticContext ctx) async {
     final sw = Stopwatch()..start();
