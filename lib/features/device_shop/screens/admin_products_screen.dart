@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/safety/lifecycle_mixin.dart';
@@ -1044,6 +1045,7 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
                         right: 4,
                         child: GestureDetector(
                           onTap: () {
+                            HapticFeedback.lightImpact();
                             setState(() => _imageUrls.removeAt(index));
                           },
                           child: Container(

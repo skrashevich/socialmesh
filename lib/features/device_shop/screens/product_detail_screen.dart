@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // lint-allow: scaffold — CustomScrollView with image gallery sliver
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import '../../../core/logging.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -281,7 +282,10 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
                 },
                 itemBuilder: (context, index) {
                   return GestureDetector(
-                    onTap: () => _showFullscreenImage(product.imageUrls, index),
+                    onTap: () {
+                      HapticFeedback.lightImpact();
+                      _showFullscreenImage(product.imageUrls, index);
+                    },
                     child: Image.network(
                       product.imageUrls[index],
                       fit: BoxFit.cover,
@@ -380,13 +384,16 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
         children: [
           // Category badge
           GestureDetector(
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) =>
-                    CategoryProductsScreen(category: product.category),
-              ),
-            ),
+            onTap: () {
+              HapticFeedback.lightImpact();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) =>
+                      CategoryProductsScreen(category: product.category),
+                ),
+              );
+            },
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
@@ -421,12 +428,16 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
 
           // Seller
           GestureDetector(
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => SellerProfileScreen(sellerId: product.sellerId),
-              ),
-            ),
+            onTap: () {
+              HapticFeedback.lightImpact();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) =>
+                      SellerProfileScreen(sellerId: product.sellerId),
+                ),
+              );
+            },
             child: Row(
               children: [
                 Text(

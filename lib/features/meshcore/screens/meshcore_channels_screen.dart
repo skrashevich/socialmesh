@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// lint-allow: keyboard-dismissal — TextFields are in bottom-sheet sub-widgets, not the main screen
 import '../../../core/safety/lifecycle_mixin.dart';
 
 import 'package:flutter/material.dart';

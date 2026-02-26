@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
@@ -363,6 +364,7 @@ class _SerialConfigScreenState extends ConsumerState<SerialConfigScreen>
                         final isSelected = _baudRate == rate;
                         return GestureDetector(
                           onTap: () {
+                            HapticFeedback.lightImpact();
                             setState(() => _baudRate = rate);
                             _markChanged();
                           },

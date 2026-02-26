@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// lint-allow: haptic-feedback — onTap delegates to parent callback
 // lint-allow: keyboard-dismissal — edit screen uses GestureDetector for unfocus below
 import 'dart:io';
 

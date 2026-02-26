@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// lint-allow: haptic-feedback — onTap delegates to parent callback
 
 // Card Flip Widget — 3D Y-axis flip animation for collectible cards.
 //

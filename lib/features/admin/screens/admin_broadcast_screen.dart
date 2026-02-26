@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// lint-allow: haptic-feedback — most GestureDetectors are keyboard dismissal or conditional function refs
 
 import 'dart:async';
 

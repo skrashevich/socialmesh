@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// lint-allow: haptic-feedback — GestureDetector onTap forwards to parent callbacks
 import 'dart:async';
 
 import 'package:flutter/material.dart';

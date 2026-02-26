@@ -626,6 +626,7 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
     final isSelected = _privacyLevel == level;
     return GestureDetector(
       onTap: () {
+        HapticFeedback.lightImpact();
         setState(() {
           _privacyLevel = level;
         });

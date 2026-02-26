@@ -443,7 +443,12 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
       _seenNodeIds.addAll(newNodeIds);
     }
 
-    if (!_showSectionHeaders) {
+    // Disable section headers when viewing favorites filter since all
+    // visible nodes are already favorites — status grouping is misleading.
+    final showHeaders =
+        _showSectionHeaders && _activeFilter != NodeFilter.favorites;
+
+    if (!showHeaders) {
       // Simple list without headers
       return [
         SliverList(
@@ -594,16 +599,23 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
     Map<int, NodePresence> presenceMap,
   ) {
     final myNode = nodes.where((n) => n.nodeNum == myNodeNum).toList();
-    // final linkedNodes = nodes
-    //     .where(
-    //       (n) => n.nodeNum != myNodeNum && linkedNodeIds.contains(n.nodeNum),
-    //     )
-    //     .toList();
+    // Promote favorited nodes into their own section so they appear right
+    // after "Your Device" instead of being buried in status groups.
+    final favorites = nodes
+        .where(
+          (n) =>
+              n.nodeNum != myNodeNum &&
+              !linkedNodeIds.contains(n.nodeNum) &&
+              n.isFavorite,
+        )
+        .toList();
+    final favoriteNums = favorites.map((n) => n.nodeNum).toSet();
     final active = nodes
         .where(
           (n) =>
               n.nodeNum != myNodeNum &&
               !linkedNodeIds.contains(n.nodeNum) &&
+              !favoriteNums.contains(n.nodeNum) &&
               _presenceForNode(presenceMap, n).isActive,
         )
         .toList();
@@ -612,6 +624,7 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
           (n) =>
               n.nodeNum != myNodeNum &&
               !linkedNodeIds.contains(n.nodeNum) &&
+              !favoriteNums.contains(n.nodeNum) &&
               _presenceForNode(presenceMap, n).isFading,
         )
         .toList();
@@ -620,6 +633,7 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
           (n) =>
               n.nodeNum != myNodeNum &&
               !linkedNodeIds.contains(n.nodeNum) &&
+              !favoriteNums.contains(n.nodeNum) &&
               _presenceForNode(presenceMap, n).isStale,
         )
         .toList();
@@ -628,13 +642,14 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
           (n) =>
               n.nodeNum != myNodeNum &&
               !linkedNodeIds.contains(n.nodeNum) &&
+              !favoriteNums.contains(n.nodeNum) &&
               _presenceForNode(presenceMap, n).isUnknown,
         )
         .toList();
 
     return [
       if (myNode.isNotEmpty) _NodeSection('Your Device', myNode),
-      // if (linkedNodes.isNotEmpty) _NodeSection('Linked Devices', linkedNodes),
+      _NodeSection('Favorites', favorites),
       _NodeSection('Active', active),
       _NodeSection('Seen Recently', fading),
       _NodeSection('Inactive', inactive),
