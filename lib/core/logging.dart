@@ -61,6 +61,7 @@ class AppLogging {
   static bool? _incidentsLoggingEnabled;
   static bool? _incidentSyncLoggingEnabled;
   static bool? _incidentUILoggingEnabled;
+  static bool? _adminDiagLoggingEnabled;
   static bool? _forceEmptyStates;
   static Logger? _bleLogger;
   static Logger? _mapLogger;
@@ -496,6 +497,18 @@ class AppLogging {
     if (incidentUILoggingEnabled) debugPrint('IncidentUI: $message');
   }
 
+  /// Admin diagnostic harness logging.
+  /// Always enabled — diagnostic sessions are explicit user actions.
+  static bool get adminDiagLoggingEnabled {
+    _adminDiagLoggingEnabled ??=
+        _safeGetEnv('ADMIN_DIAG_LOGGING_ENABLED')?.toLowerCase() != 'false';
+    return _adminDiagLoggingEnabled!;
+  }
+
+  static void adminDiag(String message) {
+    if (adminDiagLoggingEnabled) debugPrint('AdminDiag: $message');
+  }
+
   static void reset() {
     _bleLoggingEnabled = null;
     _protocolLoggingEnabled = null;
@@ -534,6 +547,7 @@ class AppLogging {
     _incidentsLoggingEnabled = null;
     _incidentSyncLoggingEnabled = null;
     _incidentUILoggingEnabled = null;
+    _adminDiagLoggingEnabled = null;
     _bleLogger = null;
     _noOpLogger = null;
   }

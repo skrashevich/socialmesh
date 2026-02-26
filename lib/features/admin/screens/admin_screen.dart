@@ -14,6 +14,7 @@ import '../../social/screens/reported_content_screen.dart';
 import '../../settings/admin_follow_requests_screen.dart';
 import '../../widget_builder/marketplace/widget_approval_screen.dart';
 import 'admin_broadcast_screen.dart';
+import 'admin_diagnostics_screen.dart';
 import 'qr_style_preview_screen.dart';
 import 'user_purchases_admin_screen.dart';
 
@@ -120,6 +121,16 @@ class AdminScreen extends ConsumerWidget {
                 subtitle: 'Preview branded QR code designs',
                 iconColor: Colors.cyan.shade400,
                 onTap: () => _navigateTo(context, const QrStylePreviewScreen()),
+              ),
+              const SizedBox(height: AppTheme.spacing16),
+              const _SectionHeader(title: 'DEVICE DIAGNOSTICS'),
+              _AdminTile(
+                icon: Icons.biotech,
+                label: 'Diagnostic Harness',
+                subtitle: 'Run protocol probes and export debug bundle',
+                iconColor: Colors.lime.shade400,
+                onTap: () =>
+                    _navigateTo(context, const AdminDiagnosticsScreen()),
               ),
               // Bottom padding
               SizedBox(height: MediaQuery.of(context).padding.bottom + 16),
