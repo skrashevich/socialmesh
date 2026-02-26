@@ -11,6 +11,7 @@ import '../models/data_binding.dart';
 import '../renderer/widget_renderer.dart';
 import '../../../core/logging.dart';
 import '../../../core/theme.dart';
+import '../../../core/widgets/animations.dart';
 import '../../../core/widgets/premium_feature_gate.dart';
 import '../../../models/subscription_models.dart';
 import '../../../providers/app_providers.dart';
@@ -2085,11 +2086,7 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
               ],
             ),
           ),
-          Switch.adaptive(
-            value: value,
-            onChanged: onChanged,
-            activeTrackColor: context.accentColor,
-          ),
+          ThemedSwitch(value: value, onChanged: onChanged),
         ],
       ),
     );
@@ -2426,10 +2423,9 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
                 ],
               ),
             ),
-            Switch.adaptive(
+            ThemedSwitch(
               value: _mergeCharts,
               onChanged: (value) => _setMergeCharts(value),
-              activeTrackColor: context.accentColor,
             ),
           ],
         ),
@@ -3181,7 +3177,7 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
                           ),
                         ),
                       ),
-                      Switch.adaptive(
+                      ThemedSwitch(
                         value: config.enabled,
                         onChanged: (value) {
                           setState(() {
@@ -3192,8 +3188,7 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
                             _seriesGradients[bindingPath] = current;
                           });
                         },
-                        activeTrackColor: color,
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        activeColor: color,
                       ),
                     ],
                   ),

@@ -364,7 +364,7 @@ class PremiumSwitch extends ConsumerWidget {
     final hasPremium = ref.watch(hasFeatureProvider(feature));
 
     if (hasPremium) {
-      return Switch.adaptive(value: value, onChanged: onChanged);
+      return ThemedSwitch(value: value, onChanged: onChanged);
     }
 
     return GestureDetector(
@@ -378,7 +378,7 @@ class PremiumSwitch extends ConsumerWidget {
           Opacity(
             opacity: 0.5,
             child: IgnorePointer(
-              child: Switch.adaptive(value: false, onChanged: (_) {}),
+              child: ThemedSwitch(value: false, onChanged: (_) {}),
             ),
           ),
           Icon(Icons.lock, size: 14, color: Colors.grey.shade500),

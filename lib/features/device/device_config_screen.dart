@@ -1601,11 +1601,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
               ],
             ),
           ),
-          Switch.adaptive(
-            value: value,
-            onChanged: onChanged,
-            activeColor: context.accentColor,
-          ),
+          ThemedSwitch(value: value, onChanged: onChanged),
         ],
       ),
     );

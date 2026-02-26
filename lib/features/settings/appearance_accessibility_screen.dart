@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
+import '../../core/widgets/animations.dart';
 import '../../core/widgets/glass_scaffold.dart';
 import '../../utils/snackbar.dart';
 import '../../core/widgets/app_bottom_sheet.dart';
@@ -596,7 +597,7 @@ class _ContrastToggle extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppTheme.radius12),
         border: Border.all(color: context.border),
       ),
-      child: SwitchListTile(
+      child: ListTile(
         title: Text(
           'High Contrast',
           style: Theme.of(context).textTheme.titleSmall,
@@ -605,8 +606,7 @@ class _ContrastToggle extends StatelessWidget {
           'Enhanced visibility for text and UI elements',
           style: Theme.of(context).textTheme.bodySmall,
         ),
-        value: isHighContrast,
-        onChanged: onChanged,
+        trailing: ThemedSwitch(value: isHighContrast, onChanged: onChanged),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppTheme.radius12),
         ),
@@ -640,7 +640,7 @@ class _AtmosphereToggle extends ConsumerWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppTheme.radius12),
       ),
-      child: SwitchListTile(
+      child: ListTile(
         title: Text(
           'Elemental Atmosphere',
           style: Theme.of(context).textTheme.titleSmall,
@@ -651,7 +651,7 @@ class _AtmosphereToggle extends ConsumerWidget {
               : 'Ambient particle effects driven by mesh activity',
           style: Theme.of(context).textTheme.bodySmall,
         ),
-        secondary: Icon(
+        leading: Icon(
           Icons.auto_awesome_outlined,
           color: reduceMotionActive
               ? context.textTertiary
@@ -659,15 +659,17 @@ class _AtmosphereToggle extends ConsumerWidget {
               ? context.accentColor
               : context.textSecondary,
         ),
-        value: reduceMotionActive ? false : atmosphereEnabled,
-        onChanged: reduceMotionActive
-            ? null
-            : (enabled) {
-                HapticFeedback.selectionClick();
-                ref
-                    .read(atmosphereEnabledProvider.notifier)
-                    .setEnabled(enabled);
-              },
+        trailing: ThemedSwitch(
+          value: reduceMotionActive ? false : atmosphereEnabled,
+          onChanged: reduceMotionActive
+              ? null
+              : (enabled) {
+                  HapticFeedback.selectionClick();
+                  ref
+                      .read(atmosphereEnabledProvider.notifier)
+                      .setEnabled(enabled);
+                },
+        ),
       ),
     );
   }
@@ -690,7 +692,7 @@ class _ReduceMotionToggle extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppTheme.radius12),
         border: Border.all(color: context.border),
       ),
-      child: SwitchListTile(
+      child: ListTile(
         title: Text(
           'Reduce Motion',
           style: Theme.of(context).textTheme.titleSmall,
@@ -699,8 +701,7 @@ class _ReduceMotionToggle extends StatelessWidget {
           'Minimize animations throughout the app',
           style: Theme.of(context).textTheme.bodySmall,
         ),
-        value: reduceMotion,
-        onChanged: onChanged,
+        trailing: ThemedSwitch(value: reduceMotion, onChanged: onChanged),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppTheme.radius12),
         ),

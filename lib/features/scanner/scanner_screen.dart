@@ -18,6 +18,7 @@ import '../../core/transport.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/connecting_content.dart';
 import '../../core/widgets/app_bottom_sheet.dart';
+import '../../core/widgets/animations.dart';
 import '../../core/widgets/glass_scaffold.dart';
 import '../../core/widgets/ico_help_system.dart';
 import '../../core/widgets/status_banner.dart';
@@ -1648,9 +1649,8 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
                           ),
                         ),
                         const SizedBox(width: AppTheme.spacing8),
-                        Switch.adaptive(
+                        ThemedSwitch(
                           value: false,
-                          activeColor: context.accentColor,
                           onChanged: (value) async {
                             if (value) {
                               // Ask for confirmation before enabling
@@ -1798,7 +1798,7 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
                             : 'Filtering by Meshtastic UUID',
                         icon: Icons.developer_mode,
                         margin: const EdgeInsets.only(bottom: 16),
-                        trailing: Switch.adaptive(
+                        trailing: ThemedSwitch(
                           value: showAllDevices,
                           onChanged: _scanning
                               ? null
@@ -1812,7 +1812,6 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
                                     _startScan();
                                   }
                                 },
-                          activeColor: Colors.purple,
                         ),
                       );
                     },

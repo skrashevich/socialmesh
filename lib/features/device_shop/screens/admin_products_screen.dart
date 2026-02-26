@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
+import '../../../core/widgets/animations.dart';
 import '../../../core/widgets/app_bar_overflow_menu.dart';
 import '../../../core/widgets/app_bottom_sheet.dart';
 import '../../../core/widgets/glass_scaffold.dart';
@@ -869,34 +870,20 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
                   ),
                   const SizedBox(height: AppTheme.spacing16),
 
-                  SwitchListTile(
+                  ListTile(
                     title: const Text('In Stock'),
-                    value: _isInStock,
-                    onChanged: (v) => setState(() => _isInStock = v),
-                    activeTrackColor: context.accentColor.withValues(
-                      alpha: 0.5,
+                    trailing: ThemedSwitch(
+                      value: _isInStock,
+                      onChanged: (v) => setState(() => _isInStock = v),
                     ),
-                    thumbColor: WidgetStateProperty.resolveWith((states) {
-                      if (states.contains(WidgetState.selected)) {
-                        return context.accentColor;
-                      }
-                      return null;
-                    }),
                   ),
-                  SwitchListTile(
+                  ListTile(
                     title: const Text('Featured'),
                     subtitle: const Text('Show in featured products section'),
-                    value: _isFeatured,
-                    onChanged: (v) => setState(() => _isFeatured = v),
-                    activeTrackColor: context.accentColor.withValues(
-                      alpha: 0.5,
+                    trailing: ThemedSwitch(
+                      value: _isFeatured,
+                      onChanged: (v) => setState(() => _isFeatured = v),
                     ),
-                    thumbColor: WidgetStateProperty.resolveWith((states) {
-                      if (states.contains(WidgetState.selected)) {
-                        return context.accentColor;
-                      }
-                      return null;
-                    }),
                   ),
                   if (_isFeatured)
                     Padding(
@@ -913,20 +900,13 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
                       ),
                     ),
                   const SizedBox(height: AppTheme.spacing8),
-                  SwitchListTile(
+                  ListTile(
                     title: const Text('Active'),
                     subtitle: const Text('Product is visible in the shop'),
-                    value: _isActive,
-                    onChanged: (v) => setState(() => _isActive = v),
-                    activeTrackColor: context.accentColor.withValues(
-                      alpha: 0.5,
+                    trailing: ThemedSwitch(
+                      value: _isActive,
+                      onChanged: (v) => setState(() => _isActive = v),
                     ),
-                    thumbColor: WidgetStateProperty.resolveWith((states) {
-                      if (states.contains(WidgetState.selected)) {
-                        return context.accentColor;
-                      }
-                      return null;
-                    }),
                   ),
                   const SizedBox(height: AppTheme.spacing24),
 
@@ -936,28 +916,24 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
                     color: _vendorVerified
                         ? Colors.green.withValues(alpha: 0.1)
                         : Colors.white.withValues(alpha: 0.05),
-                    child: SwitchListTile(
+                    child: ListTile(
                       title: const Text('Vendor Verified Specs'),
                       subtitle: Text(
                         _vendorVerified
                             ? 'Specifications have been verified by the vendor'
                             : 'Mark when vendor confirms all specs are accurate',
                       ),
-                      value: _vendorVerified,
-                      onChanged: (v) => setState(() => _vendorVerified = v),
-                      secondary: Icon(
+                      leading: Icon(
                         _vendorVerified
                             ? Icons.verified
                             : Icons.verified_outlined,
                         color: _vendorVerified ? Colors.green : null,
                       ),
-                      activeTrackColor: Colors.green.withValues(alpha: 0.5),
-                      thumbColor: WidgetStateProperty.resolveWith((states) {
-                        if (states.contains(WidgetState.selected)) {
-                          return Colors.green;
-                        }
-                        return null;
-                      }),
+                      trailing: ThemedSwitch(
+                        value: _vendorVerified,
+                        onChanged: (v) => setState(() => _vendorVerified = v),
+                        activeColor: Colors.green,
+                      ),
                     ),
                   ),
 

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/logging.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
+import '../../core/widgets/animations.dart';
 import '../../core/widgets/glass_scaffold.dart';
 import '../../generated/meshtastic/admin.pbenum.dart' as admin_pbenum;
 import '../../generated/meshtastic/module_config.pb.dart' as module_pb;
@@ -445,15 +446,14 @@ class _ExternalNotificationConfigScreenState
     required IconData icon,
     required ValueChanged<bool>? onChanged,
   }) {
-    return SwitchListTile(
+    return ListTile(
       title: Text(title),
       subtitle: Text(
         subtitle,
         style: TextStyle(color: context.textSecondary, fontSize: 12),
       ),
-      secondary: Icon(icon, color: context.accentColor),
-      value: value,
-      onChanged: onChanged,
+      leading: Icon(icon, color: context.accentColor),
+      trailing: ThemedSwitch(value: value, onChanged: onChanged),
     );
   }
 

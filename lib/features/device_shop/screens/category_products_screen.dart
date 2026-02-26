@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme.dart';
+import '../../../core/widgets/animations.dart';
 import '../../../core/widgets/app_bar_overflow_menu.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../models/shop_models.dart';
@@ -319,28 +320,18 @@ class _CategoryProductsScreenState
                     const SizedBox(height: AppTheme.spacing24),
 
                     // In Stock Only
-                    SwitchListTile(
+                    ListTile(
                       title: Text(
                         'In Stock Only',
                         style: TextStyle(color: context.textPrimary),
                       ),
-                      value: _inStockOnly,
-                      onChanged: (v) {
-                        setSheetState(() => _inStockOnly = v);
-                        setState(() => _inStockOnly = v);
-                      },
-                      thumbColor: WidgetStateProperty.resolveWith((states) {
-                        if (states.contains(WidgetState.selected)) {
-                          return context.accentColor;
-                        }
-                        return null;
-                      }),
-                      trackColor: WidgetStateProperty.resolveWith((states) {
-                        if (states.contains(WidgetState.selected)) {
-                          return context.accentColor.withValues(alpha: 0.5);
-                        }
-                        return null;
-                      }),
+                      trailing: ThemedSwitch(
+                        value: _inStockOnly,
+                        onChanged: (v) {
+                          setSheetState(() => _inStockOnly = v);
+                          setState(() => _inStockOnly = v);
+                        },
+                      ),
                     ),
                     SizedBox(height: AppTheme.spacing16),
 

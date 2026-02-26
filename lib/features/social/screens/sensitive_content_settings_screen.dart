@@ -5,6 +5,7 @@ import 'package:socialmesh/core/safety/lifecycle_mixin.dart';
 import 'package:socialmesh/utils/snackbar.dart';
 
 import '../../../core/theme.dart';
+import '../../../core/widgets/animations.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../../../core/widgets/app_bottom_sheet.dart';
 import '../../../providers/social_providers.dart';
@@ -129,17 +130,19 @@ class _SensitiveContentSettingsScreenState
                 _buildSection(
                   title: 'Display Options',
                   children: [
-                    SwitchListTile(
+                    ListTile(
                       title: const Text('Blur Sensitive Media'),
                       subtitle: const Text(
                         'Blur potentially sensitive images and videos until tapped',
                       ),
-                      value: settings.blurSensitiveMedia,
-                      onChanged: _isSaving
-                          ? null
-                          : (value) => _saveSettings(
-                              settings.copyWith(blurSensitiveMedia: value),
-                            ),
+                      trailing: ThemedSwitch(
+                        value: settings.blurSensitiveMedia,
+                        onChanged: _isSaving
+                            ? null
+                            : (value) => _saveSettings(
+                                settings.copyWith(blurSensitiveMedia: value),
+                              ),
+                      ),
                     ),
                   ],
                 ),

@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 import '../../../core/map_config.dart';
 import '../../../core/theme.dart';
+import '../../../core/widgets/animations.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../../../models/meshcore_contact.dart';
 import '../../../providers/app_providers.dart';
@@ -673,14 +674,7 @@ class _MeshCoreMapScreenState extends ConsumerState<MeshCoreMapScreen> {
               style: context.bodyStyle?.copyWith(color: context.textPrimary),
             ),
           ),
-          Switch.adaptive(
-            value: value,
-            onChanged: onChanged,
-            activeColor: context.accentColor,
-            activeTrackColor: context.accentColor.withValues(alpha: 0.5),
-            inactiveThumbColor: Colors.grey.shade400,
-            inactiveTrackColor: Colors.grey.shade700,
-          ),
+          ThemedSwitch(value: value, onChanged: onChanged),
         ],
       ),
     );

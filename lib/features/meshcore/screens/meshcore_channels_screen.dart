@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme.dart';
+import '../../../core/widgets/animations.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../../../core/widgets/app_bar_overflow_menu.dart';
 import '../../../core/widgets/gradient_border_container.dart';
@@ -380,7 +381,7 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
               style: const TextStyle(color: Colors.white),
             ),
             const SizedBox(height: AppTheme.spacing16),
-            SwitchListTile(
+            ListTile(
               title: const Text(
                 'Public Hashtag Channel',
                 style: TextStyle(color: Colors.white, fontSize: 14),
@@ -394,9 +395,10 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
                   fontSize: 12,
                 ),
               ),
-              value: isHashtag,
-              activeColor: AccentColors.purple,
-              onChanged: (v) => setSheetState(() => isHashtag = v),
+              trailing: ThemedSwitch(
+                value: isHashtag,
+                onChanged: (v) => setSheetState(() => isHashtag = v),
+              ),
               contentPadding: EdgeInsets.zero,
             ),
             const SizedBox(height: AppTheme.spacing24),

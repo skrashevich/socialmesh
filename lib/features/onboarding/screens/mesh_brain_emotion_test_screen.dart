@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme.dart';
+import '../../../core/widgets/animations.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../../../providers/splash_mesh_provider.dart';
 import '../widgets/mesh_node_brain.dart';
@@ -529,15 +530,7 @@ class _MeshBrainEmotionTestScreenState
             color: isDark ? Colors.white70 : Colors.black87,
           ),
         ),
-        Switch.adaptive(
-          value: value,
-          onChanged: onChanged,
-          activeTrackColor: (isDark ? Colors.cyan : Colors.blue).withValues(
-            alpha: 0.5,
-          ),
-          activeColor: isDark ? Colors.cyan : Colors.blue,
-          thumbColor: WidgetStateProperty.all(Colors.white),
-        ),
+        ThemedSwitch(value: value, onChanged: onChanged),
       ],
     );
   }

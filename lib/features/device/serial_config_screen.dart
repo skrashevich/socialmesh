@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
+import '../../core/widgets/animations.dart';
 import '../../core/widgets/glass_scaffold.dart';
 import '../../providers/app_providers.dart';
 import '../../providers/countdown_providers.dart';
@@ -658,11 +659,7 @@ class _SerialConfigScreenState extends ConsumerState<SerialConfigScreen>
               ],
             ),
           ),
-          Switch.adaptive(
-            value: value,
-            onChanged: onChanged,
-            activeThumbColor: context.accentColor,
-          ),
+          ThemedSwitch(value: value, onChanged: onChanged),
         ],
       ),
     );

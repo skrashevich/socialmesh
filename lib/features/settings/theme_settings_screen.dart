@@ -537,15 +537,13 @@ class _ThemeSettingsScreenState extends ConsumerState<ThemeSettingsScreen>
                       color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
                     )
                   else
-                    Switch.adaptive(
+                    ThemedSwitch(
                       value: usesAccentColor,
                       onChanged: (value) async {
                         HapticFeedback.selectionClick();
                         await settingsService.setQrUsesAccentColor(value);
                         safeSetState(() {});
                       },
-                      activeTrackColor: accentColor,
-                      thumbColor: WidgetStateProperty.all(Colors.white),
                     ),
                 ],
               ),
@@ -626,11 +624,10 @@ class _ThemeSettingsScreenState extends ConsumerState<ThemeSettingsScreen>
           const SizedBox(height: AppTheme.spacing12),
           Row(
             children: [
-              Switch.adaptive(
+              ThemedSwitch(
                 value: true,
                 onChanged: (_) {},
-                activeTrackColor: accentColor,
-                thumbColor: WidgetStateProperty.all(Colors.white),
+                activeColor: accentColor,
               ),
               const SizedBox(width: AppTheme.spacing16),
               Checkbox(

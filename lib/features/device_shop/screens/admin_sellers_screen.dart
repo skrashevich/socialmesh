@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
+import '../../../core/widgets/animations.dart';
 import '../../../core/widgets/app_bottom_sheet.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../../../core/widgets/search_filter_header.dart';
@@ -531,52 +532,31 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
 
                   // Status Toggles
                   _buildSectionTitle('Status & Verification'),
-                  SwitchListTile(
+                  ListTile(
                     title: const Text('Verified'),
                     subtitle: const Text('Seller identity has been verified'),
-                    value: _isVerified,
-                    onChanged: (v) => setState(() => _isVerified = v),
-                    activeTrackColor: context.accentColor.withValues(
-                      alpha: 0.5,
+                    trailing: ThemedSwitch(
+                      value: _isVerified,
+                      onChanged: (v) => setState(() => _isVerified = v),
                     ),
-                    thumbColor: WidgetStateProperty.resolveWith((states) {
-                      if (states.contains(WidgetState.selected)) {
-                        return context.accentColor;
-                      }
-                      return null;
-                    }),
                   ),
-                  SwitchListTile(
+                  ListTile(
                     title: const Text('Official Partner'),
                     subtitle: const Text(
                       'Display as official Meshtastic partner',
                     ),
-                    value: _isOfficialPartner,
-                    onChanged: (v) => setState(() => _isOfficialPartner = v),
-                    activeTrackColor: context.accentColor.withValues(
-                      alpha: 0.5,
+                    trailing: ThemedSwitch(
+                      value: _isOfficialPartner,
+                      onChanged: (v) => setState(() => _isOfficialPartner = v),
                     ),
-                    thumbColor: WidgetStateProperty.resolveWith((states) {
-                      if (states.contains(WidgetState.selected)) {
-                        return context.accentColor;
-                      }
-                      return null;
-                    }),
                   ),
-                  SwitchListTile(
+                  ListTile(
                     title: const Text('Active'),
                     subtitle: const Text('Seller is visible in the shop'),
-                    value: _isActive,
-                    onChanged: (v) => setState(() => _isActive = v),
-                    activeTrackColor: context.accentColor.withValues(
-                      alpha: 0.5,
+                    trailing: ThemedSwitch(
+                      value: _isActive,
+                      onChanged: (v) => setState(() => _isActive = v),
                     ),
-                    thumbColor: WidgetStateProperty.resolveWith((states) {
-                      if (states.contains(WidgetState.selected)) {
-                        return context.accentColor;
-                      }
-                      return null;
-                    }),
                   ),
 
                   const SizedBox(height: AppTheme.spacing32),
