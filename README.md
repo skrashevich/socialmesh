@@ -423,7 +423,9 @@ The following are intentionally excluded from this repository:
 
 ## Contributing
 
-We welcome contributions! Please read our [Contributing Guide](CONTRIBUTING.md) before submitting a PR.
+We welcome contributions. Please read our [Contributing Guide](CONTRIBUTING.md) before submitting a PR.
+
+All code must pass the project linter (`scripts/hooks/socialmesh-lint.sh`) with zero errors. The linter enforces banned patterns, required headers, async safety, and UI consistency rules automatically. PRs that fail the linter will not be accepted. See the [Contributing Guide](CONTRIBUTING.md) for the full list of enforced rules.
 
 See [SECURITY.md](SECURITY.md) for reporting vulnerabilities.
 
