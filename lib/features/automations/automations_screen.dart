@@ -679,6 +679,9 @@ class AutomationsScreen extends ConsumerWidget {
                   onTap: () => _editAutomation(context, ref, automation),
                   onDelete: () => _confirmDelete(context, ref, automation),
                   onShare: () => _shareAutomation(context, ref, automation),
+                  onRun: automation.enabled
+                      ? () => _runAutomation(context, ref, automation)
+                      : null,
                 ),
               ),
             );
@@ -849,6 +852,28 @@ class AutomationsScreen extends ConsumerWidget {
     Automation automation,
   ) {
     showAutomationShareSheet(context, automation, ref: ref);
+  }
+
+  Future<void> _runAutomation(
+    BuildContext context,
+    WidgetRef ref,
+    Automation automation,
+  ) async {
+    final engine = ref.read(automationEngineProvider);
+    final event = AutomationEvent(type: TriggerType.manual);
+    showLoadingSnackBar(context, 'Running "${automation.name}"...');
+    try {
+      await engine.executeAutomationManually(automation, event);
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        showSuccessSnackBar(context, 'Ran "${automation.name}" successfully');
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        showErrorSnackBar(context, 'Failed to run: $e');
+      }
+    }
   }
 
   Future<void> _confirmDelete(

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // lint-allow: haptic-feedback — onTap delegates to parent callback
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../core/theme.dart';
 import '../../../core/widgets/animations.dart';
@@ -13,6 +14,7 @@ class AutomationCard extends StatelessWidget {
   final VoidCallback onTap;
   final VoidCallback onDelete;
   final VoidCallback? onShare;
+  final VoidCallback? onRun;
 
   const AutomationCard({
     super.key,
@@ -21,6 +23,7 @@ class AutomationCard extends StatelessWidget {
     required this.onTap,
     required this.onDelete,
     this.onShare,
+    this.onRun,
   });
 
   @override
@@ -172,6 +175,29 @@ class AutomationCard extends StatelessWidget {
                   ),
                 ],
                 const Spacer(),
+                // Run button — visible for manual-trigger automations
+                if (onRun != null) ...[
+                  GestureDetector(
+                    onTap: () {
+                      HapticFeedback.mediumImpact();
+                      onRun!();
+                    },
+                    child: Container(
+                      width: 28,
+                      height: 28,
+                      decoration: BoxDecoration(
+                        color: AppTheme.successGreen.withValues(alpha: 0.15),
+                        borderRadius: BorderRadius.circular(AppTheme.radius8),
+                      ),
+                      child: const Icon(
+                        Icons.play_arrow_rounded,
+                        color: AppTheme.successGreen,
+                        size: 18,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: AppTheme.spacing12),
+                ],
                 // Share button
                 if (onShare != null) ...[
                   GestureDetector(
