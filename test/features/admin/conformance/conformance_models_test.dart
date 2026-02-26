@@ -275,7 +275,7 @@ void main() {
       expect(summary.skipped, 1);
     });
 
-    test('timeoutCount aggregates from latency stats', () {
+    test('timeoutCount uses explicit value', () {
       final summary = ConformanceSummary(
         runId: 'r',
         startedAt: DateTime(2024),
