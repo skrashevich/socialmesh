@@ -135,17 +135,23 @@ class ConformanceContext {
   ///      handler → stream) is functional.
   ///   4. If the probe fails but BLE is still connected, force a protocol
   ///      restart (`stop()` + `start()`) to re-establish the data pipeline,
-  ///      then re-probe.
+  ///      then re-probe with a **fresh** 30 s deadline (the initial probes
+  ///      may have consumed the original deadline).
   ///
   /// Returns `true` if reconnected and responsive, `false` if timed out.
   Future<bool> awaitReconnection({
     Duration maxWait = const Duration(seconds: 60),
     Duration pollInterval = const Duration(milliseconds: 500),
   }) async {
-    final deadline = DateTime.now().add(maxWait);
+    final startTime = DateTime.now();
+    final deadline = startTime.add(maxWait);
+
+    String elapsed() =>
+        '${DateTime.now().difference(startTime).inMilliseconds}ms';
 
     AppLogging.adminDiag(
-      'awaitReconnection: isConnected=$isConnected, '
+      'awaitReconnection [${elapsed()}]: START — '
+      'isConnected=$isConnected, '
       'configComplete=${protocolService.configurationComplete}, '
       'myNodeNum=${protocolService.myNodeNum}',
     );
@@ -153,101 +159,136 @@ class ConformanceContext {
     // ── Phase 1: Wait for BLE transport ──
     if (!isConnected) {
       AppLogging.adminDiag(
-        'Device disconnected — waiting for BLE reconnect...',
+        'Phase 1 [${elapsed()}]: BLE disconnected — polling for reconnect...',
       );
       while (DateTime.now().isBefore(deadline)) {
         await Future<void>.delayed(pollInterval);
-        if (isConnected) {
-          AppLogging.adminDiag('BLE reconnected');
-          break;
-        }
+        if (isConnected) break;
       }
       if (!isConnected) {
         AppLogging.adminDiag(
-          'Reconnection timed out (BLE) after ${maxWait.inSeconds}s',
+          'Phase 1 FAILED [${elapsed()}]: '
+          'BLE did not reconnect within ${maxWait.inSeconds}s',
         );
         return false;
       }
+      AppLogging.adminDiag('Phase 1 OK [${elapsed()}]: BLE reconnected');
+    } else {
+      AppLogging.adminDiag('Phase 1 OK [${elapsed()}]: BLE already connected');
     }
 
     // ── Phase 2: Settle delay ──
-    // BLE reports connected before service discovery completes and before
-    // the auto-reconnect manager has a chance to call protocol.start().
-    // Give the stack a moment to stabilize.
+    // BLE reports connected before service discovery and the auto-reconnect
+    // manager have finished. Give the stack time to stabilize.
     AppLogging.adminDiag(
-      'BLE connected — settling 3s for service discovery...',
+      'Phase 2 [${elapsed()}]: Settling 3 s for BLE service discovery...',
     );
     await Future<void>.delayed(const Duration(seconds: 3));
 
     // ── Phase 3: Admin probe ──
     // Don't trust configurationComplete — it may be stale from a previous
-    // connection. Instead, send a real admin request and verify we get a
-    // response on the stream. This is the only reliable readiness signal.
-    AppLogging.adminDiag('Probing admin pipeline...');
+    // connection. Send a real admin request and verify we get a response.
+    AppLogging.adminDiag(
+      'Phase 3 [${elapsed()}]: Probing admin pipeline — '
+      'isConnected=$isConnected, '
+      'configComplete=${protocolService.configurationComplete}, '
+      'myNodeNum=${protocolService.myNodeNum}',
+    );
     final probeOk = await _probeFirmwareReady(deadline);
     if (probeOk) {
-      AppLogging.adminDiag('Device reconnected and admin pipeline verified');
+      AppLogging.adminDiag(
+        'Phase 3 OK [${elapsed()}]: Admin pipeline verified — done',
+      );
       return true;
     }
+    AppLogging.adminDiag(
+      'Phase 3 FAILED [${elapsed()}]: All admin probes failed — '
+      'isConnected=$isConnected, '
+      'configComplete=${protocolService.configurationComplete}',
+    );
 
     // ── Phase 4: Protocol restart fallback ──
     // The probe failed despite BLE being connected. This happens when the
     // auto-reconnect manager's stale guard in
     // _initializeProtocolAfterAutoReconnect() skips protocol.start() because
     // configurationComplete/myNodeNum are still set from the previous
-    // session. Without start(), enableNotifications() is never called and
-    // the fromNum subscription is dead.
+    // session. Without start(), enableNotifications() is never called so the
+    // fromNum BLE subscription is dead — no data flows to the protocol layer.
     //
-    // Fix: force protocol.stop() (clears stale state) + protocol.start()
-    // (re-subscribes to transport data stream, re-enables BLE notifications,
-    // does full config exchange).
-    if (isConnected && DateTime.now().isBefore(deadline)) {
+    // Fix: force protocol.stop() (clears stale state, cancels old
+    // subscriptions) + protocol.start() (re-subscribes to transport data
+    // stream, re-enables BLE notifications, does full config exchange).
+    //
+    // Use a FRESH 30 s deadline — the initial probes may have consumed most
+    // of the original budget, but the restart is the actual fix and deserves
+    // its own time window.
+    if (!isConnected) {
       AppLogging.adminDiag(
-        'Admin probe failed — forcing protocol restart '
-        '(stop + start) to re-establish data pipeline...',
+        'Phase 4 SKIPPED [${elapsed()}]: BLE disconnected during probing',
       );
-      try {
-        protocolService.stop();
-        AppLogging.adminDiag('protocol.stop() complete — starting...');
-        await protocolService.start();
-        AppLogging.adminDiag(
-          'protocol.start() complete — '
-          'configComplete=${protocolService.configurationComplete}, '
-          'myNodeNum=${protocolService.myNodeNum}',
-        );
-      } catch (e) {
-        AppLogging.adminDiag('Protocol restart failed: $e');
-        return false;
-      }
-
-      // Wait for configurationComplete after restart
-      while (DateTime.now().isBefore(deadline)) {
-        if (_isProtocolReady) {
-          AppLogging.adminDiag('Protocol ready after restart — re-probing...');
-          break;
-        }
-        await Future<void>.delayed(pollInterval);
-      }
-
-      if (!_isProtocolReady) {
-        AppLogging.adminDiag(
-          'Protocol did not become ready after restart — giving up',
-        );
-        return false;
-      }
-
-      // Re-probe after protocol restart
-      final retryOk = await _probeFirmwareReady(deadline);
-      if (retryOk) {
-        AppLogging.adminDiag(
-          'Device reconnected after protocol restart — admin pipeline verified',
-        );
-        return true;
-      }
+      return false;
     }
 
     AppLogging.adminDiag(
-      'awaitReconnection failed — isConnected=$isConnected, '
+      'Phase 4 [${elapsed()}]: Forcing protocol restart (stop + start)...',
+    );
+    final restartDeadline = DateTime.now().add(const Duration(seconds: 30));
+    try {
+      protocolService.stop();
+      AppLogging.adminDiag(
+        'Phase 4 [${elapsed()}]: stop() done — '
+        'configComplete=${protocolService.configurationComplete}, '
+        'myNodeNum=${protocolService.myNodeNum}',
+      );
+      await protocolService.start();
+      AppLogging.adminDiag(
+        'Phase 4 [${elapsed()}]: start() done — '
+        'configComplete=${protocolService.configurationComplete}, '
+        'myNodeNum=${protocolService.myNodeNum}',
+      );
+    } catch (e) {
+      AppLogging.adminDiag(
+        'Phase 4 FAILED [${elapsed()}]: Protocol restart threw: $e',
+      );
+      return false;
+    }
+
+    // protocol.start() awaits the full config exchange so
+    // _isProtocolReady should be true. If not, poll briefly.
+    if (!_isProtocolReady) {
+      AppLogging.adminDiag(
+        'Phase 4 [${elapsed()}]: Waiting for protocol ready...',
+      );
+      while (DateTime.now().isBefore(restartDeadline)) {
+        if (_isProtocolReady) break;
+        await Future<void>.delayed(pollInterval);
+      }
+    }
+    if (!_isProtocolReady) {
+      AppLogging.adminDiag(
+        'Phase 4 FAILED [${elapsed()}]: Protocol not ready after restart — '
+        'configComplete=${protocolService.configurationComplete}, '
+        'myNodeNum=${protocolService.myNodeNum}',
+      );
+      return false;
+    }
+
+    // Re-probe with the fresh deadline to verify the pipeline end-to-end.
+    AppLogging.adminDiag(
+      'Phase 4 [${elapsed()}]: Protocol ready — re-probing admin pipeline...',
+    );
+    final retryOk = await _probeFirmwareReady(restartDeadline);
+    if (retryOk) {
+      AppLogging.adminDiag(
+        'Phase 4 OK [${elapsed()}]: Admin pipeline verified after restart — done',
+      );
+      return true;
+    }
+
+    AppLogging.adminDiag(
+      'awaitReconnection FAILED [${elapsed()}]: '
+      'All recovery attempts exhausted — '
+      'isConnected=$isConnected, '
       'configComplete=${protocolService.configurationComplete}, '
       'myNodeNum=${protocolService.myNodeNum}',
     );
@@ -257,11 +298,25 @@ class ConformanceContext {
   /// Probe the firmware admin handler by requesting DEVICE_CONFIG.
   ///
   /// Tries up to 3 times with 5-second timeouts (or until [deadline]).
+  /// Each attempt logs transport state and categorizes failure (timeout
+  /// vs "not connected" vs unexpected error) for diagnostics.
+  ///
   /// Returns `true` if any attempt gets a response, proving the full
-  /// admin pipeline is functional.
+  /// admin pipeline (BLE → transport → data subscription → protocol
+  /// handler → stream controller) is functional.
   Future<bool> _probeFirmwareReady(DateTime deadline) async {
     for (var attempt = 1; attempt <= 3; attempt++) {
-      if (DateTime.now().isAfter(deadline)) return false;
+      if (DateTime.now().isAfter(deadline)) {
+        AppLogging.adminDiag('Probe $attempt/3: SKIPPED — deadline exceeded');
+        return false;
+      }
+
+      AppLogging.adminDiag(
+        'Probe $attempt/3: sending DEVICE_CONFIG — '
+        'isConnected=$isConnected, '
+        'configComplete=${protocolService.configurationComplete}',
+      );
+
       try {
         final completer = Completer<bool>();
         final sub = protocolService.deviceConfigStream.listen((_) {
@@ -276,16 +331,29 @@ class ConformanceContext {
             const Duration(seconds: 5),
           );
           if (ready) {
-            AppLogging.adminDiag('Admin probe attempt $attempt/3 succeeded');
+            AppLogging.adminDiag('Probe $attempt/3: PASS');
             return true;
           }
         } finally {
           await sub.cancel();
         }
       } on TimeoutException {
-        AppLogging.adminDiag('Admin probe attempt $attempt/3 timed out');
+        AppLogging.adminDiag(
+          'Probe $attempt/3: TIMEOUT — '
+          'getConfig sent but no stream response in 5 s '
+          '(dead fromNum subscription?)',
+        );
       } catch (e) {
-        AppLogging.adminDiag('Admin probe attempt $attempt/3 failed: $e');
+        // Categorize the error for diagnostics
+        final msg = e.toString();
+        if (msg.contains('not connected')) {
+          AppLogging.adminDiag(
+            'Probe $attempt/3: NOT CONNECTED — '
+            'getConfig guard rejected (isConnected=$isConnected)',
+          );
+        } else {
+          AppLogging.adminDiag('Probe $attempt/3: ERROR — $e');
+        }
       }
       if (attempt < 3) {
         await Future<void>.delayed(const Duration(seconds: 2));
