@@ -16,6 +16,7 @@ import '../../generated/meshtastic/admin.pbenum.dart' as admin_pbenum;
 import '../../services/protocol/admin_target.dart';
 import '../../core/widgets/loading_indicator.dart';
 import '../../core/widgets/glass_scaffold.dart';
+import '../../core/widgets/app_bottom_sheet.dart';
 
 class NetworkConfigScreen extends ConsumerStatefulWidget {
   const NetworkConfigScreen({super.key});
@@ -114,6 +115,19 @@ class _NetworkConfigScreenState extends ConsumerState<NetworkConfigScreen>
     }
   }
 
+  /// Returns true if target device reports WiFi hardware support.
+  /// Falls back to false when metadata is unavailable.
+  bool _targetDeviceHasWifi() {
+    final remoteTarget = ref.read(remoteAdminTargetProvider);
+    final nodes = ref.read(nodesProvider);
+    if (remoteTarget != null) {
+      return nodes[remoteTarget]?.hasWifi ?? false;
+    }
+    final myNodeNum = ref.read(myNodeNumProvider);
+    if (myNodeNum == null) return false;
+    return nodes[myNodeNum]?.hasWifi ?? false;
+  }
+
   Future<void> _saveConfig() async {
     final protocol = ref.read(protocolServiceProvider);
     final target = AdminTarget.fromNullable(
@@ -121,6 +135,25 @@ class _NetworkConfigScreenState extends ConsumerState<NetworkConfigScreen>
     );
 
     safeSetState(() => _saving = true);
+
+    // Guard: block WiFi on devices without WiFi hardware
+    if (_wifiEnabled && !_targetDeviceHasWifi()) {
+      final confirmed = await AppBottomSheet.showConfirm(
+        context: context,
+        title: 'No WiFi Hardware',
+        message:
+            'This device does not have WiFi hardware. '
+            'Enabling WiFi may make the device unreachable via Bluetooth '
+            'and require reflashing to recover.\n\n'
+            'Are you sure you want to save this configuration?',
+        confirmLabel: 'Save Anyway',
+        isDestructive: true,
+      );
+      if (confirmed != true) {
+        safeSetState(() => _saving = false);
+        return;
+      }
+    }
 
     try {
       final ntp = _ntpController.text.trim();
@@ -188,6 +221,48 @@ class _NetworkConfigScreenState extends ConsumerState<NetworkConfigScreen>
                 children: [
                   // WiFi Section
                   const _SectionHeader(title: 'WI-FI'),
+
+                  // Show warning if device lacks WiFi hardware
+                  if (!_targetDeviceHasWifi())
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppTheme.warningYellow.withValues(alpha: 0.15),
+                        borderRadius: BorderRadius.circular(AppTheme.radius12),
+                        border: Border.all(
+                          color: AppTheme.warningYellow.withValues(alpha: 0.4),
+                        ),
+                      ),
+                      padding: const EdgeInsets.all(AppTheme.spacing12),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.warning_amber_rounded,
+                            color: AppTheme.warningYellow.withValues(
+                              alpha: 0.9,
+                            ),
+                            size: 20,
+                          ),
+                          const SizedBox(width: AppTheme.spacing10),
+                          Expanded(
+                            child: Text(
+                              'This device does not have WiFi hardware. '
+                              'Enabling WiFi will make the device '
+                              'unreachable via Bluetooth and may require '
+                              'reflashing to recover.',
+                              style: TextStyle(
+                                color: context.textSecondary,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
 
                   _SettingsTile(
                     icon: Icons.wifi,

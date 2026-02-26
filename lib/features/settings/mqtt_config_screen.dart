@@ -127,8 +127,33 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
     }
   }
 
+  /// Returns true if target device reports WiFi hardware support.
+  /// Falls back to false when metadata is unavailable.
+  bool _targetDeviceHasWifi() {
+    final remoteTarget = ref.read(remoteAdminTargetProvider);
+    final nodes = ref.read(nodesProvider);
+    if (remoteTarget != null) {
+      return nodes[remoteTarget]?.hasWifi ?? false;
+    }
+    final myNodeNum = ref.read(myNodeNumProvider);
+    if (myNodeNum == null) return false;
+    return nodes[myNodeNum]?.hasWifi ?? false;
+  }
+
   Future<void> _saveConfig() async {
     safeSetState(() => _isSaving = true);
+
+    // Guard: MQTT on non-WiFi device requires client proxy
+    if (_enabled && !_proxyToClientEnabled && !_targetDeviceHasWifi()) {
+      safeSetState(() => _proxyToClientEnabled = true);
+      if (mounted) {
+        showInfoSnackBar(
+          context,
+          'MQTT Client Proxy auto-enabled — this device has no WiFi hardware',
+        );
+      }
+    }
+
     try {
       final protocol = ref.read(protocolServiceProvider);
       final target = AdminTarget.fromNullable(
@@ -241,11 +266,62 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
                       value: _enabled,
                       onChanged: (value) {
                         HapticFeedback.selectionClick();
-                        setState(() => _enabled = value);
+                        setState(() {
+                          _enabled = value;
+                          // Auto-enable proxy for non-WiFi devices
+                          if (value && !_targetDeviceHasWifi()) {
+                            _proxyToClientEnabled = true;
+                          }
+                        });
                       },
                     ),
                   ),
                   if (_enabled) ...[
+                    // Show warning if device lacks WiFi hardware
+                    if (!_targetDeviceHasWifi())
+                      Container(
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppTheme.warningYellow.withValues(alpha: 0.15),
+                          borderRadius: BorderRadius.circular(
+                            AppTheme.radius12,
+                          ),
+                          border: Border.all(
+                            color: AppTheme.warningYellow.withValues(
+                              alpha: 0.4,
+                            ),
+                          ),
+                        ),
+                        padding: const EdgeInsets.all(AppTheme.spacing12),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.warning_amber_rounded,
+                              color: AppTheme.warningYellow.withValues(
+                                alpha: 0.9,
+                              ),
+                              size: 20,
+                            ),
+                            const SizedBox(width: AppTheme.spacing10),
+                            Expanded(
+                              child: Text(
+                                'This device has no WiFi hardware. '
+                                'MQTT Client Proxy has been auto-enabled '
+                                'so the app relays messages on behalf of '
+                                'the device. Do not disable it.',
+                                style: TextStyle(
+                                  color: context.textSecondary,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     SizedBox(height: AppTheme.spacing16),
                     const _SectionHeader(title: 'SERVER'),
                     Container(
@@ -520,6 +596,15 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
                       trailing: ThemedSwitch(
                         value: _proxyToClientEnabled,
                         onChanged: (value) {
+                          // Prevent disabling proxy on non-WiFi devices
+                          if (!value && _enabled && !_targetDeviceHasWifi()) {
+                            HapticFeedback.heavyImpact();
+                            showInfoSnackBar(
+                              context,
+                              'Client proxy is required — device has no WiFi hardware',
+                            );
+                            return;
+                          }
                           HapticFeedback.selectionClick();
                           setState(() {
                             _proxyToClientEnabled = value;
