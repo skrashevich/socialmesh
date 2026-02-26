@@ -13,6 +13,7 @@ import '../../device_shop/providers/admin_shop_providers.dart';
 import '../../social/screens/reported_content_screen.dart';
 import '../../settings/admin_follow_requests_screen.dart';
 import '../../widget_builder/marketplace/widget_approval_screen.dart';
+import '../conformance/ui/admin_conformance_screen.dart';
 import 'admin_broadcast_screen.dart';
 import 'admin_diagnostics_screen.dart';
 import 'qr_style_preview_screen.dart';
@@ -131,6 +132,14 @@ class AdminScreen extends ConsumerWidget {
                 iconColor: Colors.lime.shade400,
                 onTap: () =>
                     _navigateTo(context, const AdminDiagnosticsScreen()),
+              ),
+              _AdminTile(
+                icon: Icons.verified,
+                label: 'Conformance Harness',
+                subtitle: 'Provider-bound device conformance & stress tests',
+                iconColor: Colors.amber.shade400,
+                onTap: () =>
+                    _navigateTo(context, const AdminConformanceScreen()),
               ),
               // Bottom padding
               SizedBox(height: MediaQuery.of(context).padding.bottom + 16),
