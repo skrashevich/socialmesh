@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import '../../../../../core/logging.dart';
+import '../../../../../models/mesh_models.dart';
 import '../../../diagnostics/models/diagnostic_event.dart';
 import '../diagnostic_probe.dart';
 
@@ -70,6 +71,113 @@ class GetChannelProbe extends DiagnosticProbe {
       } finally {
         await sub.cancel();
       }
+    } catch (e) {
+      AppLogging.adminDiag('$name error: $e');
+      return ProbeResult(
+        outcome: ProbeOutcome.fail,
+        durationMs: sw.elapsedMilliseconds,
+        error: e.toString(),
+      );
+    }
+  }
+}
+
+/// Write probe: read channel 0, write the same config back (no-op),
+/// then read back and verify the round-trip preserves all fields.
+///
+/// Channel 0 is always PRIMARY and safe to write back unchanged.
+/// The extended timeout accounts for three sequential BLE round-trips
+/// plus the firmware's internal 500 ms verify delay after setChannel.
+class WriteChannelReadbackProbe extends DiagnosticProbe {
+  @override
+  String get name => 'WriteChannel_0_NoOp';
+
+  @override
+  bool get requiresWrite => true;
+
+  @override
+  Duration? get maxDuration => const Duration(seconds: 20);
+
+  @override
+  Future<ProbeResult> run(DiagnosticContext ctx) async {
+    final sw = Stopwatch()..start();
+
+    try {
+      // Step 1: Read current channel 0
+      final readCompleter = Completer<ChannelConfig>();
+      var sub = ctx.protocolService.channelStream.listen((ch) {
+        if (ch.index == 0 && !readCompleter.isCompleted) {
+          readCompleter.complete(ch);
+        }
+      });
+
+      await ctx.protocolService.getChannel(0);
+      final original = await readCompleter.future.timeout(ctx.timeout);
+      await sub.cancel();
+
+      ctx.capture.recordInternal(
+        phase: DiagnosticPhase.probe,
+        probeName: name,
+        notes: 'Read channel 0: "${original.name}" role=${original.role}',
+      );
+
+      // Step 2: Write same channel config back (no-op)
+      await ctx.protocolService.setChannel(original);
+
+      ctx.capture.recordInternal(
+        phase: DiagnosticPhase.probe,
+        probeName: name,
+        notes: 'Wrote same channel 0 back (no-op)',
+      );
+
+      // Step 3: Read back — setChannel already requests a verify read
+      // after 500 ms, but we need to listen for it explicitly.
+      final verifyCompleter = Completer<ChannelConfig>();
+      sub = ctx.protocolService.channelStream.listen((ch) {
+        if (ch.index == 0 && !verifyCompleter.isCompleted) {
+          verifyCompleter.complete(ch);
+        }
+      });
+
+      // Wait for the verify read that setChannel triggers internally
+      final readback = await verifyCompleter.future.timeout(ctx.timeout);
+      await sub.cancel();
+
+      // Compare key fields (ChannelConfig doesn't implement ==)
+      final matches =
+          readback.name == original.name &&
+          readback.role == original.role &&
+          readback.uplink == original.uplink &&
+          readback.downlink == original.downlink &&
+          readback.positionPrecision == original.positionPrecision;
+
+      if (matches) {
+        ctx.capture.recordInternal(
+          phase: DiagnosticPhase.assert_,
+          probeName: name,
+          notes: 'Write-readback verified: channel 0 matches',
+        );
+
+        return ProbeResult(
+          outcome: ProbeOutcome.pass,
+          durationMs: sw.elapsedMilliseconds,
+        );
+      } else {
+        return ProbeResult(
+          outcome: ProbeOutcome.fail,
+          durationMs: sw.elapsedMilliseconds,
+          error:
+              'Readback mismatch for channel 0: '
+              'name="${readback.name}" vs "${original.name}", '
+              'role=${readback.role} vs ${original.role}',
+        );
+      }
+    } on TimeoutException {
+      return ProbeResult(
+        outcome: ProbeOutcome.fail,
+        durationMs: sw.elapsedMilliseconds,
+        error: 'Timeout during channel 0 write-readback cycle',
+      );
     } catch (e) {
       AppLogging.adminDiag('$name error: $e');
       return ProbeResult(

@@ -5,6 +5,7 @@ import '../../../../generated/meshtastic/module_config.pb.dart' as module_pb;
 import 'diagnostic_probe.dart';
 import 'probes/channel_probes.dart';
 import 'probes/config_probes.dart';
+import 'probes/data_plane_probes.dart';
 import 'probes/env_probes.dart';
 import 'probes/payload_probes.dart';
 import 'probes/stress_probes.dart';
@@ -108,9 +109,20 @@ class DiagnosticProbeRegistry {
       GetCannedMessagesProbe(),
       GetRingtoneProbe(),
 
-      // Channel probes — primary + first secondary
+      // Channel probes — all 8 slots (0 = PRIMARY, 1–7 = SECONDARY/DISABLED)
       GetChannelProbe(channelIndex: 0),
       GetChannelProbe(channelIndex: 1),
+      GetChannelProbe(channelIndex: 2),
+      GetChannelProbe(channelIndex: 3),
+      GetChannelProbe(channelIndex: 4),
+      GetChannelProbe(channelIndex: 5),
+      GetChannelProbe(channelIndex: 6),
+      GetChannelProbe(channelIndex: 7),
+
+      // Data-plane probes (read-only, no side effects)
+      GetOwnerInfoProbe(),
+      PositionRequestSelfProbe(),
+      SignalQualityProbe(),
     ];
   }
 
@@ -121,13 +133,23 @@ class DiagnosticProbeRegistry {
 
   /// Build write test probes (optional, gated).
   ///
-  /// Includes payload write probes (ringtone, canned messages) and
-  /// config/module-config write-readback probes for all supported types.
+  /// Includes payload write probes (ringtone, canned messages),
+  /// config/module-config write-readback probes for all supported types,
+  /// channel write-readback, and data-plane write probes (self-message,
+  /// delivery ack, traceroute).
   static List<DiagnosticProbe> buildWriteProbes() {
     return [
       // Payload write probes
       WriteRingtoneProbe(),
       WriteCannedMessagesProbe(),
+
+      // Channel write-readback
+      WriteChannelReadbackProbe(),
+
+      // Data-plane write probes (send packets)
+      SelfMessageLoopbackProbe(),
+      MessageDeliveryAckProbe(),
+      TracerouteSelfProbe(),
 
       // Config write probes — all 8 types
       WriteConfigProbe(

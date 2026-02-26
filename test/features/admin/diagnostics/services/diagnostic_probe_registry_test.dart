@@ -8,8 +8,9 @@ void main() {
     test('buildReadOnlyProbes returns expected probe count', () {
       final probes = DiagnosticProbeRegistry.buildReadOnlyProbes();
 
-      // 2 env + 8 config + 11 module config + 2 payload + 2 channel = 25
-      expect(probes.length, 25);
+      // 2 env + 8 config + 11 module config + 2 payload
+      // + 8 channel + 3 data-plane = 34
+      expect(probes.length, 34);
     });
 
     test('buildReadOnlyProbes starts with env probes', () {
@@ -58,12 +59,22 @@ void main() {
       expect(names, contains('GetRingtone'));
     });
 
-    test('buildReadOnlyProbes includes channel probes', () {
+    test('buildReadOnlyProbes includes all 8 channel probes', () {
       final probes = DiagnosticProbeRegistry.buildReadOnlyProbes();
       final names = probes.map((p) => p.name).toList();
 
-      expect(names, contains('GetChannel_0'));
-      expect(names, contains('GetChannel_1'));
+      for (var i = 0; i < 8; i++) {
+        expect(names, contains('GetChannel_$i'));
+      }
+    });
+
+    test('buildReadOnlyProbes includes data-plane probes', () {
+      final probes = DiagnosticProbeRegistry.buildReadOnlyProbes();
+      final names = probes.map((p) => p.name).toList();
+
+      expect(names, contains('GetOwnerInfo'));
+      expect(names, contains('PositionRequestSelf'));
+      expect(names, contains('SignalQuality'));
     });
 
     test('buildReadOnlyProbes has no write probes', () {
@@ -82,9 +93,9 @@ void main() {
       expect(probes.every((p) => p.isStressTest), true);
     });
 
-    test('buildWriteProbes returns 21 probes', () {
+    test('buildWriteProbes returns 25 probes', () {
       final probes = DiagnosticProbeRegistry.buildWriteProbes();
-      expect(probes.length, 21);
+      expect(probes.length, 25);
       expect(probes.every((p) => p.requiresWrite), true);
     });
 
@@ -127,19 +138,35 @@ void main() {
       expect(names, contains('WriteCannedMessages_NoOp'));
     });
 
+    test('buildWriteProbes includes channel write probe', () {
+      final probes = DiagnosticProbeRegistry.buildWriteProbes();
+      final names = probes.map((p) => p.name).toList();
+
+      expect(names, contains('WriteChannel_0_NoOp'));
+    });
+
+    test('buildWriteProbes includes data-plane write probes', () {
+      final probes = DiagnosticProbeRegistry.buildWriteProbes();
+      final names = probes.map((p) => p.name).toList();
+
+      expect(names, contains('SelfMessageLoopback'));
+      expect(names, contains('MessageDeliveryAck'));
+      expect(names, contains('TracerouteSelf'));
+    });
+
     test('build with no options returns read-only only', () {
       final probes = DiagnosticProbeRegistry.build();
-      expect(probes.length, 25);
+      expect(probes.length, 34);
     });
 
     test('build with stress tests includes stress probes', () {
       final probes = DiagnosticProbeRegistry.build(includeStressTests: true);
-      expect(probes.length, 27);
+      expect(probes.length, 36);
     });
 
     test('build with write tests includes write probes', () {
       final probes = DiagnosticProbeRegistry.build(includeWriteTests: true);
-      expect(probes.length, 46);
+      expect(probes.length, 59);
     });
 
     test('build with all options includes all probes', () {
@@ -147,49 +174,53 @@ void main() {
         includeStressTests: true,
         includeWriteTests: true,
       );
-      expect(probes.length, 48);
+      expect(probes.length, 61);
     });
 
-    test(
-      'build order is env, config, module, payload, channel, stress, write',
-      () {
-        final probes = DiagnosticProbeRegistry.build(
-          includeStressTests: true,
-          includeWriteTests: true,
-        );
+    test('build order is env, config, module, payload, channel, data-plane, '
+        'stress, write', () {
+      final probes = DiagnosticProbeRegistry.build(
+        includeStressTests: true,
+        includeWriteTests: true,
+      );
 
-        // First 2: env
-        expect(probes[0].name, contains('NodeInfo'));
-        expect(probes[1].name, contains('Metadata'));
+      // First 2: env
+      expect(probes[0].name, contains('NodeInfo'));
+      expect(probes[1].name, contains('Metadata'));
 
-        // Next 8: config (GetConfig_*)
-        for (var i = 2; i < 10; i++) {
-          expect(probes[i].name, startsWith('GetConfig_'));
-        }
+      // Next 8: config (GetConfig_*)
+      for (var i = 2; i < 10; i++) {
+        expect(probes[i].name, startsWith('GetConfig_'));
+      }
 
-        // Next 11: module config (GetModuleConfig_*)
-        for (var i = 10; i < 21; i++) {
-          expect(probes[i].name, startsWith('GetModuleConfig_'));
-        }
+      // Next 11: module config (GetModuleConfig_*)
+      for (var i = 10; i < 21; i++) {
+        expect(probes[i].name, startsWith('GetModuleConfig_'));
+      }
 
-        // Next 2: payload
-        expect(probes[21].name, contains('CannedMessages'));
-        expect(probes[22].name, contains('Ringtone'));
+      // Next 2: payload
+      expect(probes[21].name, contains('CannedMessages'));
+      expect(probes[22].name, contains('Ringtone'));
 
-        // Next 2: channel
-        expect(probes[23].name, startsWith('GetChannel_'));
-        expect(probes[24].name, startsWith('GetChannel_'));
+      // Next 8: channels
+      for (var i = 23; i < 31; i++) {
+        expect(probes[i].name, startsWith('GetChannel_'));
+      }
 
-        // Stress (2)
-        expect(probes[25].isStressTest, true);
-        expect(probes[26].isStressTest, true);
+      // Next 3: data-plane (read-only)
+      expect(probes[31].name, 'GetOwnerInfo');
+      expect(probes[32].name, 'PositionRequestSelf');
+      expect(probes[33].name, 'SignalQuality');
 
-        // Write (21)
-        for (var i = 27; i < 48; i++) {
-          expect(probes[i].requiresWrite, true);
-        }
-      },
-    );
+      // Stress (2)
+      expect(probes[34].isStressTest, true);
+      expect(probes[35].isStressTest, true);
+
+      // Write (25)
+      for (var i = 36; i < 61; i++) {
+        expect(probes[i].requiresWrite, true);
+      }
+    });
 
     test('all probe names are unique', () {
       final probes = DiagnosticProbeRegistry.build(
@@ -236,6 +267,37 @@ void main() {
           reason: '${probe.name} needs enough time for 3 BLE round-trips',
         );
       }
+    });
+
+    test('data-plane write probes have extended maxDuration', () {
+      final probes = DiagnosticProbeRegistry.buildWriteProbes();
+      final dataPlaneProbes = probes.where(
+        (p) =>
+            p.name == 'SelfMessageLoopback' ||
+            p.name == 'MessageDeliveryAck' ||
+            p.name == 'TracerouteSelf',
+      );
+      for (final probe in dataPlaneProbes) {
+        expect(
+          probe.maxDuration,
+          isNotNull,
+          reason: '${probe.name} should have maxDuration set',
+        );
+        expect(
+          probe.maxDuration!.inSeconds,
+          greaterThanOrEqualTo(12),
+          reason: '${probe.name} needs time for firmware round-trip',
+        );
+      }
+    });
+
+    test('channel write probe has extended maxDuration', () {
+      final probes = DiagnosticProbeRegistry.buildWriteProbes();
+      final channelWrite = probes.firstWhere(
+        (p) => p.name == 'WriteChannel_0_NoOp',
+      );
+      expect(channelWrite.maxDuration, isNotNull);
+      expect(channelWrite.maxDuration!.inSeconds, greaterThanOrEqualTo(18));
     });
   });
 }
