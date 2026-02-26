@@ -62,9 +62,9 @@ class ConformanceSuiteSafe {
         break;
       }
 
-      // Connection health gate: if disconnected, wait for reconnect.
-      // If reconnection fails, skip remaining tests.
-      if (!_ctx.isConnected) {
+      // Connection health gate: if not fully ready (BLE + protocol config
+      // exchange), wait for reconnect. If reconnection fails, skip remaining.
+      if (!_ctx.isReady) {
         final reconnected = await _ctx.awaitReconnection();
         if (!reconnected) {
           AppLogging.adminDiag(
@@ -82,6 +82,30 @@ class ConformanceSuiteSafe {
       _results.add(result);
 
       onProgress?.call(result.name, i + 1, totalTests, result.outcome);
+
+      // After a timeout failure, the device may be rebooting with BLE
+      // still technically connected. Probe firmware readiness before
+      // continuing to the next test to avoid a cascade of timeouts.
+      if (result.error != null &&
+          (result.error!.contains('timeout') ||
+              result.error!.contains('Timeout') ||
+              result.error!.contains('not connected'))) {
+        AppLogging.adminDiag(
+          'Test failure suggests device instability — '
+          'probing firmware readiness before next test...',
+        );
+        final ready = await _ctx.awaitReconnection(
+          maxWait: const Duration(seconds: 45),
+        );
+        if (!ready) {
+          AppLogging.adminDiag(
+            'Device unresponsive — skipping remaining '
+            '${adapters.length - i - 1} tests',
+          );
+          _skipRemaining(adapters, i + 1, reason: 'Device unresponsive');
+          break;
+        }
+      }
 
       // Inter-test settling delay to reduce rapid-fire config writes
       // that can trigger device reboots.

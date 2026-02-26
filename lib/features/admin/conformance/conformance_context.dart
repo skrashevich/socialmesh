@@ -42,8 +42,12 @@ class ConformanceContext {
     this.destructiveMode = false,
   });
 
-  /// Whether the device is currently connected.
+  /// Whether the device is currently connected at the BLE transport level.
   bool get isConnected => protocolService.isConnected;
+
+  /// Whether the device is connected AND the protocol service has completed
+  /// its config exchange — the device is ready to accept admin requests.
+  bool get isReady => isConnected && _isProtocolReady;
 
   /// Node number of the target being tested.
   int get targetNodeNum => target.resolve(myNodeNum);
@@ -117,29 +121,74 @@ class ConformanceContext {
   /// Wait for the device to reconnect after a disconnect.
   ///
   /// Polls [isConnected] every [pollInterval] up to [maxWait].
-  /// Returns `true` if reconnected, `false` if timed out.
+  /// Once BLE reports connected, waits for the protocol service to
+  /// complete its config exchange (`configurationComplete` + `myNodeNum`
+  /// set), which is the authoritative signal that the device firmware
+  /// is ready to accept admin requests.
+  /// Returns `true` if reconnected and responsive, `false` if timed out.
   Future<bool> awaitReconnection({
-    Duration maxWait = const Duration(seconds: 30),
+    Duration maxWait = const Duration(seconds: 60),
     Duration pollInterval = const Duration(milliseconds: 500),
   }) async {
-    if (isConnected) return true;
+    // Fast path — already fully connected and configured
+    if (isConnected && _isProtocolReady) {
+      AppLogging.adminDiag('Device already connected and protocol ready');
+      return true;
+    }
 
     AppLogging.adminDiag('Device disconnected — waiting for reconnection...');
     final deadline = DateTime.now().add(maxWait);
 
+    // Phase 1: Wait for BLE transport to reconnect
     while (DateTime.now().isBefore(deadline)) {
       await Future<void>.delayed(pollInterval);
       if (isConnected) {
-        AppLogging.adminDiag('Device reconnected');
-        // Brief settle after reconnect
-        await Future<void>.delayed(const Duration(seconds: 1));
-        return true;
+        AppLogging.adminDiag('BLE reconnected — waiting for protocol init...');
+        break;
       }
     }
 
-    AppLogging.adminDiag('Reconnection timed out after ${maxWait.inSeconds}s');
+    if (!isConnected) {
+      AppLogging.adminDiag(
+        'Reconnection timed out (BLE) after ${maxWait.inSeconds}s',
+      );
+      return false;
+    }
+
+    // Phase 2: Wait for protocol.start() to complete config exchange.
+    // After BLE reconnects, the auto-reconnect manager calls protocol.start()
+    // which clears _myNodeNum, re-subscribes to the transport data stream,
+    // re-enables BLE notifications, and does a full config exchange. Only
+    // when configurationComplete is true is the data pipeline active and
+    // admin requests will actually get responses.
+    while (DateTime.now().isBefore(deadline)) {
+      if (_isProtocolReady) {
+        AppLogging.adminDiag(
+          'Protocol re-initialized — '
+          'myNodeNum=${protocolService.myNodeNum}, configComplete=true',
+        );
+        // Brief settle for any remaining firmware init
+        await Future<void>.delayed(const Duration(seconds: 2));
+        AppLogging.adminDiag('Device reconnected and firmware responsive');
+        return true;
+      }
+      await Future<void>.delayed(pollInterval);
+    }
+
+    AppLogging.adminDiag(
+      'Reconnection timed out (protocol init) after ${maxWait.inSeconds}s '
+      '— isConnected=$isConnected, '
+      'configComplete=${protocolService.configurationComplete}, '
+      'myNodeNum=${protocolService.myNodeNum}',
+    );
     return false;
   }
+
+  /// Whether the protocol service has completed its config exchange
+  /// and is ready to accept admin requests.
+  bool get _isProtocolReady =>
+      protocolService.configurationComplete &&
+      protocolService.myNodeNum != null;
 
   /// Serialize a protobuf message to JSON for state capture.
   Map<String, dynamic>? serializeProtobuf(dynamic proto) {

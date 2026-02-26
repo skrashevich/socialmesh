@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -7,6 +9,7 @@ import '../../../../core/safety/lifecycle_mixin.dart';
 import '../../../../core/theme.dart';
 import '../../../../core/widgets/animations.dart';
 import '../../../../core/widgets/glass_scaffold.dart';
+import '../../../../core/widgets/remote_admin_selector_sheet.dart';
 import '../../../../providers/app_providers.dart';
 import '../../../../services/haptic_service.dart';
 import '../../../../services/protocol/admin_target.dart';
@@ -39,17 +42,25 @@ class _AdminConformanceScreenState extends ConsumerState<AdminConformanceScreen>
   int _passCount = 0;
   int _failCount = 0;
 
+  /// Local target selection — independent of global remoteAdminProvider.
+  int? _selectedNodeNum;
+  String? _selectedNodeName;
+
   ConformanceRunner? _runner;
   ConformanceRunResult? _runResult;
+
+  /// Whether the conformance run targets a remote node.
+  bool get _isRemoteTarget => _selectedNodeNum != null;
+
+  /// Human-readable label for the current target.
+  String get _targetLabel => _isRemoteTarget
+      ? '0x${_selectedNodeNum!.toRadixString(16).toUpperCase()}'
+            '${_selectedNodeName != null ? ' ($_selectedNodeName)' : ''}'
+      : 'Local device';
 
   @override
   Widget build(BuildContext context) {
     final myNodeNum = ref.watch(myNodeNumProvider);
-    final remoteTarget = ref.watch(remoteAdminTargetProvider);
-    final isRemote = remoteTarget != null;
-    final targetLabel = isRemote
-        ? 'Remote: 0x${remoteTarget.toRadixString(16).toUpperCase()}'
-        : 'Local device';
 
     return GlassScaffold(
       title: 'Conformance Harness',
@@ -59,8 +70,14 @@ class _AdminConformanceScreenState extends ConsumerState<AdminConformanceScreen>
           sliver: SliverList(
             delegate: SliverChildListDelegate([
               // Description
-              _buildInfoCard(context, targetLabel),
+              _buildInfoCard(context),
               const SizedBox(height: AppTheme.spacing16),
+
+              // Target selector
+              if (!_isRunning && !_hasResults) ...[
+                _buildTargetSelector(context),
+                const SizedBox(height: AppTheme.spacing16),
+              ],
 
               // Options
               if (!_isRunning && !_hasResults) ...[
@@ -92,7 +109,7 @@ class _AdminConformanceScreenState extends ConsumerState<AdminConformanceScreen>
     );
   }
 
-  Widget _buildInfoCard(BuildContext context, String targetLabel) {
+  Widget _buildInfoCard(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(AppTheme.spacing12),
       decoration: BoxDecoration(
@@ -100,38 +117,151 @@ class _AdminConformanceScreenState extends ConsumerState<AdminConformanceScreen>
         borderRadius: BorderRadius.circular(AppTheme.radius12),
         border: Border.all(color: context.border),
       ),
+      child: Row(
+        children: [
+          Icon(Icons.verified, color: context.accentColor, size: 20),
+          const SizedBox(width: AppTheme.spacing8),
+          Expanded(
+            child: Text(
+              'Provider-bound device conformance testing. '
+              'All mutations flow through the same provider '
+              'entrypoints used by the actual screens.',
+              style: TextStyle(fontSize: 13, color: context.textSecondary),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTargetSelector(BuildContext context) {
+    final nodes = ref.watch(nodesProvider);
+    final myNodeNum = ref.watch(myNodeNumProvider);
+
+    // Filter to nodes with public keys (PKI-capable for remote admin)
+    final adminableNodes = nodes.values.where((node) {
+      if (node.nodeNum == myNodeNum) return false;
+      return node.hasPublicKey;
+    }).toList();
+
+    return Container(
+      padding: const EdgeInsets.all(AppTheme.spacing12),
+      decoration: BoxDecoration(
+        color: _isRemoteTarget
+            ? context.accentColor.withValues(alpha: 0.08)
+            : context.card,
+        borderRadius: BorderRadius.circular(AppTheme.radius12),
+        border: Border.all(
+          color: _isRemoteTarget
+              ? context.accentColor.withValues(alpha: 0.4)
+              : context.border,
+        ),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Icon(Icons.verified, color: context.accentColor, size: 20),
-              const SizedBox(width: AppTheme.spacing8),
-              Expanded(
-                child: Text(
-                  'Provider-bound device conformance testing. '
-                  'All mutations flow through the same provider '
-                  'entrypoints used by the actual screens.',
-                  style: TextStyle(fontSize: 13, color: context.textSecondary),
-                ),
-              ),
-            ],
+          Text(
+            'Target Device',
+            style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+              color: context.textPrimary,
+            ),
           ),
           const SizedBox(height: AppTheme.spacing8),
-          Row(
-            children: [
-              Icon(Icons.device_hub, size: 16, color: context.textSecondary),
-              const SizedBox(width: AppTheme.spacing4),
-              Text(
-                targetLabel,
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                  color: context.textPrimary,
+          InkWell(
+            onTap: adminableNodes.isNotEmpty
+                ? () => _showNodePicker(context)
+                : null,
+            borderRadius: BorderRadius.circular(AppTheme.radius8),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: AppTheme.spacing4),
+              child: Row(
+                children: [
+                  Icon(
+                    _isRemoteTarget
+                        ? Icons.admin_panel_settings
+                        : Icons.bluetooth_connected,
+                    size: 20,
+                    color: _isRemoteTarget
+                        ? context.accentColor
+                        : context.textSecondary,
+                  ),
+                  const SizedBox(width: AppTheme.spacing8),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          _isRemoteTarget
+                              ? 'Remote: $_targetLabel'
+                              : 'Local device',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: context.textPrimary,
+                          ),
+                        ),
+                        if (!_isRemoteTarget && adminableNodes.isNotEmpty)
+                          Text(
+                            '${adminableNodes.length} remote node(s) available',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: context.textSecondary,
+                            ),
+                          ),
+                        if (_isRemoteTarget)
+                          Text(
+                            'Over-the-air admin via PKI',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: context.textSecondary,
+                            ),
+                          ),
+                        if (adminableNodes.isEmpty)
+                          Text(
+                            'No PKI-capable remote nodes',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: context.textTertiary,
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                  if (adminableNodes.isNotEmpty)
+                    Icon(
+                      Icons.chevron_right,
+                      size: 20,
+                      color: context.textSecondary,
+                    ),
+                ],
+              ),
+            ),
+          ),
+          if (_isRemoteTarget) ...[
+            const SizedBox(height: AppTheme.spacing8),
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton.icon(
+                onPressed: () {
+                  ref.haptics.buttonTap();
+                  safeSetState(() {
+                    _selectedNodeNum = null;
+                    _selectedNodeName = null;
+                  });
+                },
+                icon: const Icon(Icons.close, size: 16),
+                label: const Text('Switch to Local'),
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: AppTheme.spacing4,
+                  ),
+                  textStyle: const TextStyle(fontSize: 13),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ],
       ),
     );
@@ -198,16 +328,20 @@ class _AdminConformanceScreenState extends ConsumerState<AdminConformanceScreen>
   }
 
   Widget _buildRunButton(BuildContext context, int? myNodeNum) {
+    final label = _isRemoteTarget
+        ? _destructiveMode
+              ? 'Run Remote Conformance (Destructive)'
+              : 'Run Remote Conformance (Safe)'
+        : _destructiveMode
+        ? 'Run Conformance (Destructive)'
+        : 'Run Conformance (Safe)';
+
     return SizedBox(
       width: double.infinity,
       child: FilledButton.icon(
         onPressed: myNodeNum != null ? () => _startRun(myNodeNum) : null,
-        icon: const Icon(Icons.play_arrow),
-        label: Text(
-          _destructiveMode
-              ? 'Run Conformance (Destructive)'
-              : 'Run Conformance (Safe)',
-        ),
+        icon: Icon(_isRemoteTarget ? Icons.cell_tower : Icons.play_arrow),
+        label: Text(label),
         style: FilledButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: AppTheme.spacing12),
           backgroundColor: _destructiveMode ? Colors.red : context.accentColor,
@@ -472,8 +606,7 @@ class _AdminConformanceScreenState extends ConsumerState<AdminConformanceScreen>
 
   Future<void> _startRun(int myNodeNum) async {
     final protocol = ref.read(protocolServiceProvider);
-    final remoteTarget = ref.read(remoteAdminTargetProvider);
-    final target = AdminTarget.fromNullable(remoteTarget);
+    final target = AdminTarget.fromNullable(_selectedNodeNum);
 
     safeSetState(() {
       _isRunning = true;
@@ -555,6 +688,26 @@ class _AdminConformanceScreenState extends ConsumerState<AdminConformanceScreen>
     } catch (e) {
       AppLogging.adminDiag('Export failed: $e');
     }
+  }
+
+  Future<void> _showNodePicker(BuildContext context) async {
+    unawaited(ref.haptics.buttonTap());
+
+    final selection = await RemoteAdminSelectorSheet.show(
+      context,
+      currentTarget: _selectedNodeNum,
+    );
+    if (!mounted || selection == null) return;
+
+    safeSetState(() {
+      if (selection.isLocal) {
+        _selectedNodeNum = null;
+        _selectedNodeName = null;
+      } else {
+        _selectedNodeNum = selection.nodeNum;
+        _selectedNodeName = selection.nodeName;
+      }
+    });
   }
 
   void _resetResults() {

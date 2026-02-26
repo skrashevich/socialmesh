@@ -76,8 +76,8 @@ class ConformanceSuiteDestructive {
         break;
       }
 
-      // Connection health gate
-      if (!_ctx.isConnected) {
+      // Connection health gate: BLE connected + protocol config exchange
+      if (!_ctx.isReady) {
         final reconnected = await _ctx.awaitReconnection();
         if (!reconnected) {
           for (var j = i; j < tests.length; j++) {
@@ -99,6 +99,31 @@ class ConformanceSuiteDestructive {
       _results.add(result);
 
       onProgress?.call(result.name, i + 1, totalTests, result.outcome);
+
+      // After a timeout/disconnect failure, probe firmware readiness
+      // before continuing (device may be mid-reboot).
+      if (result.error != null &&
+          (result.error!.contains('timeout') ||
+              result.error!.contains('Timeout') ||
+              result.error!.contains('not connected'))) {
+        final ready = await _ctx.awaitReconnection(
+          maxWait: const Duration(seconds: 45),
+        );
+        if (!ready) {
+          for (var j = i + 1; j < tests.length; j++) {
+            _results.add(
+              const ConformanceTestResult(
+                name: 'Unresponsive',
+                domain: 'SYSTEM',
+                outcome: ConformanceOutcome.skipped,
+                durationMs: 0,
+                error: 'Device unresponsive',
+              ),
+            );
+          }
+          break;
+        }
+      }
 
       // Inter-test settling delay
       if (i < tests.length - 1) {
