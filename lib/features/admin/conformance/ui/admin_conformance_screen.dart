@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/logging.dart';
 import '../../../../core/safety/lifecycle_mixin.dart';
 import '../../../../core/theme.dart';
+import '../../../../core/widgets/animations.dart';
 import '../../../../core/widgets/glass_scaffold.dart';
 import '../../../../providers/app_providers.dart';
 import '../../../../services/haptic_service.dart';
@@ -156,20 +157,40 @@ class _AdminConformanceScreenState extends ConsumerState<AdminConformanceScreen>
             ),
           ),
           const SizedBox(height: AppTheme.spacing8),
-          SwitchListTile(
-            title: Text(
-              'Destructive Tests',
-              style: TextStyle(fontSize: 14, color: context.textPrimary),
-            ),
-            subtitle: Text(
-              'Randomized mutations, burst stress, node DB reset. '
-              'May temporarily change device config.',
-              style: TextStyle(fontSize: 12, color: context.textSecondary),
-            ),
-            value: _destructiveMode,
-            onChanged: (v) => safeSetState(() => _destructiveMode = v),
-            activeColor: context.accentColor,
-            contentPadding: EdgeInsets.zero,
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Destructive Tests',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: context.textPrimary,
+                      ),
+                    ),
+                    const SizedBox(height: AppTheme.spacing2),
+                    Text(
+                      'Randomized mutations, burst stress, node DB reset. '
+                      'May temporarily change device config.',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: context.textSecondary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              ThemedSwitch(
+                value: _destructiveMode,
+                onChanged: (v) {
+                  ref.haptics.buttonTap();
+                  safeSetState(() => _destructiveMode = v);
+                },
+              ),
+            ],
           ),
         ],
       ),

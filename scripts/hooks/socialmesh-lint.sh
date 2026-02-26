@@ -427,6 +427,39 @@ check_file() {
   fi
 
   # ------------------------------------------------------------------
+  # BLOCK: Bare Switch / SwitchListTile (use ThemedSwitch instead)
+  # Exempt animations.dart which IS the ThemedSwitch implementation.
+  # ------------------------------------------------------------------
+  if [ "$in_lib" = true ] && [ "$in_lib_generated" = false ] \
+     && [[ "$file" != *"animations.dart" ]]; then
+    # Switch.adaptive(
+    grep_check "$file" \
+      'Switch\.adaptive[[:space:]]*\(' \
+      "no-bare-switch" \
+      "Bare Switch.adaptive — use ThemedSwitch instead" \
+      "error" true true
+
+    # Raw Switch( — but not ThemedSwitch( or SwitchListTile(
+    while IFS=: read -r lineno matched_line; do
+      line_in_scope "$file" "$lineno" || continue
+      local trimmed="${matched_line#"${matched_line%%[![:space:]]*}"}"
+      [[ "$trimmed" == //* ]] && continue
+      [[ "$matched_line" == import* ]] && continue
+      if [[ ! "$matched_line" =~ ThemedSwitch ]] && [[ ! "$matched_line" =~ SwitchListTile ]]; then
+        record_hit "$file" "$lineno" "no-bare-switch" \
+          "Bare Switch — use ThemedSwitch instead" "error"
+      fi
+    done < <(grep -nE '\bSwitch\(' "$file" 2>/dev/null || true)
+
+    # SwitchListTile(
+    grep_check "$file" \
+      'SwitchListTile[[:space:]]*\(' \
+      "no-switch-list-tile" \
+      "SwitchListTile — use ListTile with ThemedSwitch trailing instead" \
+      "error" true true
+  fi
+
+  # ------------------------------------------------------------------
   # BLOCK: // ignore: directives outside lib/generated/
   # Only check Dart files -- markdown and yaml mention ignore: as documentation
   # ------------------------------------------------------------------

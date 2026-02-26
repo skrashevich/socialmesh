@@ -10,6 +10,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import '../../../core/logging.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
+import '../../../core/widgets/animations.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../../../providers/app_providers.dart';
 import '../../../services/haptic_service.dart';
@@ -244,7 +245,7 @@ class _AdminDiagnosticsScreenState extends ConsumerState<AdminDiagnosticsScreen>
               ],
             ),
           ),
-          Switch.adaptive(value: value, onChanged: enabled ? onChanged : null),
+          ThemedSwitch(value: value, onChanged: enabled ? onChanged : null),
         ],
       ),
     );

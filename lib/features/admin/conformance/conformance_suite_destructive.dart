@@ -76,10 +76,34 @@ class ConformanceSuiteDestructive {
         break;
       }
 
+      // Connection health gate
+      if (!_ctx.isConnected) {
+        final reconnected = await _ctx.awaitReconnection();
+        if (!reconnected) {
+          for (var j = i; j < tests.length; j++) {
+            _results.add(
+              const ConformanceTestResult(
+                name: 'Disconnected',
+                domain: 'SYSTEM',
+                outcome: ConformanceOutcome.skipped,
+                durationMs: 0,
+                error: 'Device disconnected',
+              ),
+            );
+          }
+          break;
+        }
+      }
+
       final result = await tests[i]();
       _results.add(result);
 
       onProgress?.call(result.name, i + 1, totalTests, result.outcome);
+
+      // Inter-test settling delay
+      if (i < tests.length - 1) {
+        await Future<void>.delayed(const Duration(seconds: 1));
+      }
     }
 
     return _results;

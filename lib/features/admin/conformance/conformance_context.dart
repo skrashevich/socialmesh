@@ -42,6 +42,9 @@ class ConformanceContext {
     this.destructiveMode = false,
   });
 
+  /// Whether the device is currently connected.
+  bool get isConnected => protocolService.isConnected;
+
   /// Node number of the target being tested.
   int get targetNodeNum => target.resolve(myNodeNum);
 
@@ -109,6 +112,33 @@ class ConformanceContext {
         if (!completer.isCompleted) sub.cancel();
       },
     );
+  }
+
+  /// Wait for the device to reconnect after a disconnect.
+  ///
+  /// Polls [isConnected] every [pollInterval] up to [maxWait].
+  /// Returns `true` if reconnected, `false` if timed out.
+  Future<bool> awaitReconnection({
+    Duration maxWait = const Duration(seconds: 30),
+    Duration pollInterval = const Duration(milliseconds: 500),
+  }) async {
+    if (isConnected) return true;
+
+    AppLogging.adminDiag('Device disconnected — waiting for reconnection...');
+    final deadline = DateTime.now().add(maxWait);
+
+    while (DateTime.now().isBefore(deadline)) {
+      await Future<void>.delayed(pollInterval);
+      if (isConnected) {
+        AppLogging.adminDiag('Device reconnected');
+        // Brief settle after reconnect
+        await Future<void>.delayed(const Duration(seconds: 1));
+        return true;
+      }
+    }
+
+    AppLogging.adminDiag('Reconnection timed out after ${maxWait.inSeconds}s');
+    return false;
   }
 
   /// Serialize a protobuf message to JSON for state capture.

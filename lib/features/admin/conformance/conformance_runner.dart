@@ -190,6 +190,20 @@ class ConformanceRunner {
     if (restoreFailureCount > 0) {
       anomalies.add('$restoreFailureCount config restore(s) failed');
     }
+    final disconnectCount = results
+        .where(
+          (r) =>
+              r.error != null &&
+              (r.error!.contains('not connected') ||
+                  r.error!.contains('disconnected') ||
+                  r.error!.contains('Device disconnected')),
+        )
+        .length;
+    if (disconnectCount > 0) {
+      anomalies.add(
+        '$disconnectCount test(s) failed due to device disconnection',
+      );
+    }
     final failedDomains = results
         .where((r) => r.outcome == ConformanceOutcome.fail)
         .map((r) => r.domain)

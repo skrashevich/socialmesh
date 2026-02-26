@@ -62,6 +62,19 @@ class ConformanceSuiteSafe {
         break;
       }
 
+      // Connection health gate: if disconnected, wait for reconnect.
+      // If reconnection fails, skip remaining tests.
+      if (!_ctx.isConnected) {
+        final reconnected = await _ctx.awaitReconnection();
+        if (!reconnected) {
+          AppLogging.adminDiag(
+            'Connection lost — skipping remaining ${adapters.length - i} tests',
+          );
+          _skipRemaining(adapters, i, reason: 'Device disconnected');
+          break;
+        }
+      }
+
       final adapter = adapters[i];
       onProgress?.call('NoOp_${adapter.domainName}', i, totalTests, null);
 
@@ -69,6 +82,12 @@ class ConformanceSuiteSafe {
       _results.add(result);
 
       onProgress?.call(result.name, i + 1, totalTests, result.outcome);
+
+      // Inter-test settling delay to reduce rapid-fire config writes
+      // that can trigger device reboots.
+      if (i < adapters.length - 1) {
+        await Future<void>.delayed(const Duration(seconds: 1));
+      }
     }
 
     return _results;
@@ -192,8 +211,9 @@ class ConformanceSuiteSafe {
 
   void _skipRemaining(
     List<ConfigDomainAdapter<dynamic>> adapters,
-    int startIndex,
-  ) {
+    int startIndex, {
+    String reason = 'Suite cancelled',
+  }) {
     for (var j = startIndex; j < adapters.length; j++) {
       _results.add(
         ConformanceTestResult(
@@ -201,7 +221,7 @@ class ConformanceSuiteSafe {
           domain: adapters[j].domainName,
           outcome: ConformanceOutcome.skipped,
           durationMs: 0,
-          error: 'Suite cancelled',
+          error: reason,
         ),
       );
     }
