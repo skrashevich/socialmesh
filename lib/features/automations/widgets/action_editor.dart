@@ -745,7 +745,12 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
         widget.action.notificationSoundName!.isNotEmpty;
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(AppTheme.spacing12, 0, 12, 12),
+      padding: const EdgeInsets.fromLTRB(
+        AppTheme.spacing4,
+        0,
+        AppTheme.spacing4,
+        AppTheme.spacing12,
+      ),
       child: Column(
         children: [
           VariableTextField(

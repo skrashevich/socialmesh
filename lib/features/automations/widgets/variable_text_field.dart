@@ -332,16 +332,32 @@ class VariableTextField extends StatefulWidget {
   State<VariableTextField> createState() => VariableTextFieldState();
 }
 
-class VariableTextFieldState extends State<VariableTextField> {
+class VariableTextFieldState extends State<VariableTextField>
+    with SingleTickerProviderStateMixin {
   late _VariableTextController _controller;
   late FocusNode _focusNode;
   bool _ownsFocusNode = false;
   bool _hasFocus = false;
   int? _markedVariableStart;
+  late AnimationController _shakeController;
+  late Animation<double> _shakeAnimation;
 
   @override
   void initState() {
     super.initState();
+    _shakeController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 400),
+    );
+    _shakeAnimation = TweenSequence<double>(
+      [
+        TweenSequenceItem(tween: Tween(begin: 0, end: -6), weight: 1),
+        TweenSequenceItem(tween: Tween(begin: -6, end: 6), weight: 2),
+        TweenSequenceItem(tween: Tween(begin: 6, end: -4), weight: 2),
+        TweenSequenceItem(tween: Tween(begin: -4, end: 2), weight: 2),
+        TweenSequenceItem(tween: Tween(begin: 2, end: 0), weight: 1),
+      ],
+    ).animate(CurvedAnimation(parent: _shakeController, curve: Curves.easeOut));
     _controller = _VariableTextController(text: widget.value);
     _controller.addListener(_onSelectionChange);
 
@@ -370,11 +386,17 @@ class VariableTextFieldState extends State<VariableTextField> {
 
   @override
   void dispose() {
+    _shakeController.dispose();
     _controller.removeListener(_onSelectionChange);
     _focusNode.removeListener(_onFocusChange);
     if (_ownsFocusNode) _focusNode.dispose();
     _controller.dispose();
     super.dispose();
+  }
+
+  void _triggerShake() {
+    _shakeController.forward(from: 0);
+    HapticFeedback.heavyImpact();
   }
 
   void _onFocusChange() {
@@ -444,7 +466,6 @@ class VariableTextFieldState extends State<VariableTextField> {
   void insertVariable(String variable) {
     final availableVars = getValidVariables(widget.triggerType);
     if (!availableVars.contains(variable)) return;
-    HapticFeedback.lightImpact();
 
     final text = _controller.text;
     final selection = _controller.selection;
@@ -460,6 +481,14 @@ class VariableTextFieldState extends State<VariableTextField> {
     final insertText = '$variable ';
     final newText =
         text.substring(0, insertAt) + insertText + text.substring(insertAt);
+
+    // Enforce maxLength — don't insert if it would exceed the limit
+    if (newText.length > widget.maxLength) {
+      _triggerShake();
+      return;
+    }
+
+    HapticFeedback.lightImpact();
     _controller.text = newText;
     _controller.selection = TextSelection.collapsed(
       offset: insertAt + insertText.length,
@@ -476,43 +505,66 @@ class VariableTextFieldState extends State<VariableTextField> {
     final invalidVars = validateVariables(widget.value);
     final hasError = invalidVars.isNotEmpty;
 
-    return TextField(
-      maxLength: widget.maxLength,
-      controller: _controller,
-      focusNode: _focusNode,
-      onChanged: (value) {
-        _clearMarkedVariable();
-        widget.onChanged(value);
+    final currentLength = _controller.text.length;
+    final isNearLimit = currentLength > widget.maxLength * 0.8;
+
+    return AnimatedBuilder(
+      animation: _shakeAnimation,
+      builder: (context, child) {
+        return Transform.translate(
+          offset: Offset(_shakeAnimation.value, 0),
+          child: child,
+        );
       },
-      inputFormatters: [_VariableProtectionFormatter(this)],
-      minLines: 2,
-      maxLines: 5,
-      style: Theme.of(context).textTheme.bodyMedium,
-      decoration: InputDecoration(
-        labelText: widget.labelText,
-        hintText: widget.hintText,
-        isDense: true,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppTheme.radius8),
+      child: TextField(
+        maxLength: widget.maxLength,
+        controller: _controller,
+        focusNode: _focusNode,
+        onChanged: (value) {
+          _clearMarkedVariable();
+          widget.onChanged(value);
+          setState(() {}); // Refresh counter
+        },
+        inputFormatters: [_VariableProtectionFormatter(this)],
+        minLines: widget.maxLines,
+        maxLines: widget.maxLines > 1 ? 5 : 1,
+        style: Theme.of(context).textTheme.bodyMedium,
+        decoration: InputDecoration(
+          labelText: widget.labelText,
+          hintText: widget.hintText,
+          isDense: true,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(AppTheme.radius8),
+          ),
+          enabledBorder: hasError
+              ? OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(AppTheme.radius8),
+                  borderSide: BorderSide(color: AppTheme.errorRed),
+                )
+              : null,
+          focusedBorder: hasError
+              ? OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(AppTheme.radius8),
+                  borderSide: BorderSide(color: AppTheme.errorRed, width: 2),
+                )
+              : null,
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 12,
+            vertical: 12,
+          ),
+          errorText: hasError ? 'Invalid: ${invalidVars.join(", ")}' : null,
+          counterText: _hasFocus || isNearLimit
+              ? '$currentLength / ${widget.maxLength}'
+              : '',
+          counterStyle: TextStyle(
+            fontSize: 11,
+            color: currentLength >= widget.maxLength
+                ? AppTheme.errorRed
+                : isNearLimit
+                ? AppTheme.warningYellow
+                : SemanticColors.muted,
+          ),
         ),
-        enabledBorder: hasError
-            ? OutlineInputBorder(
-                borderRadius: BorderRadius.circular(AppTheme.radius8),
-                borderSide: BorderSide(color: AppTheme.errorRed),
-              )
-            : null,
-        focusedBorder: hasError
-            ? OutlineInputBorder(
-                borderRadius: BorderRadius.circular(AppTheme.radius8),
-                borderSide: BorderSide(color: AppTheme.errorRed, width: 2),
-              )
-            : null,
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 12,
-          vertical: 12,
-        ),
-        errorText: hasError ? 'Invalid: ${invalidVars.join(", ")}' : null,
-        counterText: '',
       ),
     );
   }
