@@ -917,15 +917,21 @@ class AutomationEngine {
               errorMessage: 'Notifications not initialized',
             );
           }
-          final title = _interpolateVariables(
-            action.notificationTitle ?? automation.name,
-            event,
-            trigger: automation.trigger,
+          final title = _truncateForNotification(
+            _interpolateVariables(
+              action.notificationTitle ?? automation.name,
+              event,
+              trigger: automation.trigger,
+            ),
+            _maxNotificationTitleLength,
           );
-          final body = _interpolateVariables(
-            action.notificationBody ?? '',
-            event,
-            trigger: automation.trigger,
+          final body = _truncateForNotification(
+            _interpolateVariables(
+              action.notificationBody ?? '',
+              event,
+              trigger: automation.trigger,
+            ),
+            _maxNotificationBodyLength,
           );
 
           // Prepare custom notification sound if configured
@@ -1261,6 +1267,35 @@ class AutomationEngine {
         }
       }
     }
+  }
+
+  /// Max lengths for notification content after variable interpolation.
+  ///
+  /// Template fields allow 500 chars of raw text with variable placeholders,
+  /// but placeholders expand unpredictably: {{location}} (14 template chars)
+  /// becomes "-37.710180, 145.009415" (22 resolved chars), {{message}} (11
+  /// template chars) can resolve to hundreds of chars, etc.
+  ///
+  /// Measured on-device: iOS expanded notification renders exactly ~256 chars
+  /// before silently truncating with no indicator. Android BigTextStyle
+  /// renders ~450-500 chars. Neither platform documents a hard API limit for
+  /// local notification body text.
+  ///
+  /// Body is capped at 250 chars (under the measured 256 iOS display limit)
+  /// so the "…" suffix is always visible instead of iOS silently chopping
+  /// mid-word. Title is capped at 100 chars (1-2 rendered lines on both
+  /// platforms).
+  static const _maxNotificationTitleLength = 100;
+  static const _maxNotificationBodyLength = 250;
+
+  /// Truncate text to [maxLength], appending ellipsis if truncated.
+  /// Tries to break at the last word boundary before the limit.
+  static String _truncateForNotification(String text, int maxLength) {
+    if (text.length <= maxLength) return text;
+    // Find last space before the limit to avoid cutting a word
+    final truncateAt = text.lastIndexOf(' ', maxLength - 1);
+    final breakPoint = truncateAt > maxLength ~/ 2 ? truncateAt : maxLength - 1;
+    return '${text.substring(0, breakPoint)}…';
   }
 
   /// Interpolate variables in message text
