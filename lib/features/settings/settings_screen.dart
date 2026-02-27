@@ -1451,7 +1451,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           },
         ),
         _PremiumFeatureTile(
-          icon: Icons.auto_awesome,
+          icon: Icons.bolt,
           iconColor: AppTheme.warningYellow,
           title:
               storeProducts[RevenueCatConfig.automationsPackProductId]?.title ??

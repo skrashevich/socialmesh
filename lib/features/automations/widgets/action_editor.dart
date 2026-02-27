@@ -746,9 +746,9 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(
-        AppTheme.spacing4,
+        AppTheme.spacing12,
         0,
-        AppTheme.spacing4,
+        AppTheme.spacing12,
         AppTheme.spacing12,
       ),
       child: Column(
