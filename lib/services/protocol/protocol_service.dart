@@ -2256,6 +2256,7 @@ class ProtocolService {
         hopCount: _computeHopCount(packet),
         rxSnr: packet.hasRxSnr() ? packet.rxSnr.toDouble() : null,
         rxRssi: packet.hasRxRssi() ? packet.rxRssi : null,
+        viaMqtt: packet.hasViaMqtt() ? packet.viaMqtt : null,
         senderLongName: senderLongName,
         senderShortName: senderShortName,
         senderAvatarColor: senderAvatarColor,

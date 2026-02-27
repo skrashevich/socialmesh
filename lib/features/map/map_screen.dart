@@ -34,6 +34,7 @@ import '../navigation/main_shell.dart';
 import '../../core/widgets/loading_indicator.dart';
 import '../../core/constants.dart';
 import '../../core/logging.dart';
+import '../../core/los_analysis.dart';
 import '../../models/telemetry_log.dart';
 import '../../providers/telemetry_providers.dart';
 import '../tak/models/tak_event.dart';
@@ -115,6 +116,10 @@ class _MapScreenState extends ConsumerState<MapScreen>
   // Measurement points
   LatLng? _measureStart;
   LatLng? _measureEnd;
+
+  // Measurement node references (populated when user taps a node in measure mode)
+  MeshNode? _measureNodeA;
+  MeshNode? _measureNodeB;
 
   // Waypoints dropped by user
   final List<_Waypoint> _waypoints = [];
@@ -217,6 +222,14 @@ class _MapScreenState extends ConsumerState<MapScreen>
         zoomTween.evaluate(animation),
         rotationTween.evaluate(animation),
       );
+      // Keep compass state in sync during programmatic moves
+      final currentRotation = rotationTween.evaluate(animation);
+      if (currentRotation != _mapRotation) {
+        setState(() {
+          _currentZoom = zoomTween.evaluate(animation);
+          _mapRotation = currentRotation;
+        });
+      }
     });
 
     _animationController!.forward();
@@ -733,6 +746,8 @@ class _MapScreenState extends ConsumerState<MapScreen>
                     _measureMode = !_measureMode;
                     _measureStart = null;
                     _measureEnd = null;
+                    _measureNodeA = null;
+                    _measureNodeB = null;
                   });
                   break;
                 case 'tak_layer':
@@ -1257,10 +1272,14 @@ class _MapScreenState extends ConsumerState<MapScreen>
                               child: GestureDetector(
                                 onTap: () {
                                   HapticFeedback.selectionClick();
-                                  setState(() {
-                                    _selectedNode = n.node;
-                                    _selectedTakEntity = null;
-                                  });
+                                  if (_measureMode) {
+                                    _handleMeasureNodeTap(n);
+                                  } else {
+                                    setState(() {
+                                      _selectedNode = n.node;
+                                      _selectedTakEntity = null;
+                                    });
+                                  }
                                 },
                                 child: _NodeMarker(
                                   node: n.node,
@@ -1448,9 +1467,13 @@ class _MapScreenState extends ConsumerState<MapScreen>
                       child: _MeasurementCard(
                         start: _measureStart!,
                         end: _measureEnd!,
+                        nodeA: _measureNodeA,
+                        nodeB: _measureNodeB,
                         onClear: () => setState(() {
                           _measureStart = null;
                           _measureEnd = null;
+                          _measureNodeA = null;
+                          _measureNodeB = null;
                         }),
                         onShare: () => _shareLocation(
                           _measureStart!,
@@ -1461,7 +1484,36 @@ class _MapScreenState extends ConsumerState<MapScreen>
                           _measureMode = false;
                           _measureStart = null;
                           _measureEnd = null;
+                          _measureNodeA = null;
+                          _measureNodeB = null;
                         }),
+                        onSwap: () => setState(() {
+                          final tmpStart = _measureStart;
+                          final tmpEnd = _measureEnd;
+                          final tmpNodeA = _measureNodeA;
+                          final tmpNodeB = _measureNodeB;
+                          _measureStart = tmpEnd;
+                          _measureEnd = tmpStart;
+                          _measureNodeA = tmpNodeB;
+                          _measureNodeB = tmpNodeA;
+                        }),
+                        onCopyCoordinates: () {
+                          final a = _measureStart!;
+                          final b = _measureEnd!;
+                          Clipboard.setData(
+                            ClipboardData(
+                              text:
+                                  'A: ${a.latitude.toStringAsFixed(6)}, '
+                                  '${a.longitude.toStringAsFixed(6)}\n'
+                                  'B: ${b.latitude.toStringAsFixed(6)}, '
+                                  '${b.longitude.toStringAsFixed(6)}',
+                            ),
+                          );
+                          showSuccessSnackBar(
+                            context,
+                            'Coordinates copied to clipboard',
+                          );
+                        },
                       ),
                     ),
                   // Mode indicator (centered at top)
@@ -1469,8 +1521,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
                       (_measureStart == null || _measureEnd == null))
                     Positioned(
                       top: _mapPadding,
-                      left:
-                          _mapPadding + 140, // Leave room for node count badge
+                      left: _mapPadding,
                       right: _mapPadding + _controlSize + _controlSpacing,
                       child: Center(
                         child: Container(
@@ -1495,14 +1546,17 @@ class _MapScreenState extends ConsumerState<MapScreen>
                                 color: Colors.black,
                               ),
                               const SizedBox(width: AppTheme.spacing8),
-                              Text(
-                                _measureStart == null
-                                    ? 'Tap to set start point'
-                                    : 'Tap to set end point',
-                                style: const TextStyle(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black,
+                              Flexible(
+                                child: Text(
+                                  _measureStart == null
+                                      ? 'Tap node or map for point A'
+                                      : 'Tap node or map for point B',
+                                  style: const TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ),
                               const SizedBox(width: AppTheme.spacing8),
@@ -1800,11 +1854,37 @@ class _MapScreenState extends ConsumerState<MapScreen>
       if (_measureStart == null) {
         _measureStart = point;
         _measureEnd = null;
+        _measureNodeA = null;
+        _measureNodeB = null;
       } else if (_measureEnd == null) {
         _measureEnd = point;
+        _measureNodeB = null;
       } else {
         _measureStart = point;
         _measureEnd = null;
+        _measureNodeA = null;
+        _measureNodeB = null;
+      }
+    });
+    HapticFeedback.selectionClick();
+  }
+
+  void _handleMeasureNodeTap(_NodeWithPosition n) {
+    final point = LatLng(n.latitude, n.longitude);
+    setState(() {
+      if (_measureStart == null) {
+        _measureStart = point;
+        _measureEnd = null;
+        _measureNodeA = n.node;
+        _measureNodeB = null;
+      } else if (_measureEnd == null) {
+        _measureEnd = point;
+        _measureNodeB = n.node;
+      } else {
+        _measureStart = point;
+        _measureEnd = null;
+        _measureNodeA = n.node;
+        _measureNodeB = null;
       }
     });
     HapticFeedback.selectionClick();
@@ -2935,25 +3015,43 @@ class _FilterBar extends StatelessWidget {
   }
 }
 
-/// Measurement card showing distance between two points
-class _MeasurementCard extends StatelessWidget {
+/// Measurement card showing distance, bearing, altitude, and LOS between two points.
+///
+/// Long-press the card to open an actions sheet with LOS analysis,
+/// copy coordinates, copy summary, open in external maps, and swap endpoints.
+class _MeasurementCard extends StatefulWidget {
   final LatLng start;
   final LatLng end;
+  final MeshNode? nodeA;
+  final MeshNode? nodeB;
   final VoidCallback onClear;
   final VoidCallback onShare;
   final VoidCallback onExitMeasureMode;
+  final VoidCallback? onSwap;
+  final VoidCallback? onCopyCoordinates;
 
   const _MeasurementCard({
     required this.start,
     required this.end,
+    this.nodeA,
+    this.nodeB,
     required this.onClear,
     required this.onShare,
     required this.onExitMeasureMode,
+    this.onSwap,
+    this.onCopyCoordinates,
   });
+
+  @override
+  State<_MeasurementCard> createState() => _MeasurementCardState();
+}
+
+class _MeasurementCardState extends State<_MeasurementCard> {
+  bool _showLos = false;
 
   String _formatDistance(double km) {
     if (km < 1) {
-      return '${(km * 1000).round()} meters';
+      return '${(km * 1000).round()} m';
     } else if (km < 10) {
       return '${km.toStringAsFixed(2)} km';
     } else {
@@ -2961,91 +3059,390 @@ class _MeasurementCard extends StatelessWidget {
     }
   }
 
-  double _calculateDistance() {
-    return const Distance().as(LengthUnit.Kilometer, start, end);
+  double _calculateDistanceKm() {
+    return const Distance().as(LengthUnit.Kilometer, widget.start, widget.end);
+  }
+
+  String _pointLabel(LatLng point, MeshNode? node, String prefix) {
+    if (node != null) {
+      final name = node.displayName;
+      final alt = node.altitude != null ? ' · ${node.altitude}m' : '';
+      return '$prefix: $name$alt';
+    }
+    return '$prefix: ${point.latitude.toStringAsFixed(4)}, '
+        '${point.longitude.toStringAsFixed(4)}';
+  }
+
+  String _buildSummary({
+    required double distanceKm,
+    required double bearing,
+    required String cardinal,
+    int? elevDelta,
+  }) {
+    final buf = StringBuffer();
+    buf.write(
+      '${_formatDistance(distanceKm)} · '
+      '${bearing.toStringAsFixed(0)}° $cardinal',
+    );
+    if (elevDelta != null) {
+      buf.write(' · ${elevDelta >= 0 ? '+' : ''}${elevDelta}m');
+    }
+    buf.writeln();
+    buf.writeln(_pointLabel(widget.start, widget.nodeA, 'A'));
+    buf.write(_pointLabel(widget.end, widget.nodeB, 'B'));
+    return buf.toString();
+  }
+
+  void _showActionsSheet(BuildContext context) {
+    final distanceKm = _calculateDistanceKm();
+    final distanceM = distanceKm * 1000;
+    final bearing = calculateBearing(
+      widget.start.latitude,
+      widget.start.longitude,
+      widget.end.latitude,
+      widget.end.longitude,
+    );
+    final cardinal = formatBearingCardinal(bearing);
+    final altA = widget.nodeA?.altitude;
+    final altB = widget.nodeB?.altitude;
+    final hasElevation = altA != null && altB != null;
+    final elevDelta = hasElevation ? altB - altA : null;
+
+    HapticFeedback.selectionClick();
+    AppBottomSheet.showActions<String>(
+      context: context,
+      header: Padding(
+        padding: const EdgeInsets.only(bottom: AppTheme.spacing4),
+        child: Text(
+          'Measurement Actions',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: context.textPrimary,
+          ),
+        ),
+      ),
+      actions: [
+        if (hasElevation)
+          BottomSheetAction(
+            icon: Icons.visibility,
+            label: 'LOS Analysis',
+            subtitle: 'Earth curvature + Fresnel zone check',
+            onTap: () => setState(() => _showLos = !_showLos),
+          ),
+        BottomSheetAction(
+          icon: Icons.share,
+          label: 'Share Measurement',
+          subtitle: 'Share via system share sheet',
+          onTap: widget.onShare,
+        ),
+        BottomSheetAction(
+          icon: Icons.copy,
+          label: 'Copy Summary',
+          subtitle: _formatDistance(distanceKm),
+          onTap: () {
+            Clipboard.setData(
+              ClipboardData(
+                text: _buildSummary(
+                  distanceKm: distanceKm,
+                  bearing: bearing,
+                  cardinal: cardinal,
+                  elevDelta: elevDelta,
+                ),
+              ),
+            );
+            if (context.mounted) {
+              showSuccessSnackBar(context, 'Measurement copied to clipboard');
+            }
+          },
+        ),
+        if (widget.onCopyCoordinates != null)
+          BottomSheetAction(
+            icon: Icons.pin_drop,
+            label: 'Copy Coordinates',
+            subtitle: 'Both A and B coordinates',
+            onTap: widget.onCopyCoordinates,
+          ),
+        BottomSheetAction(
+          icon: Icons.open_in_new,
+          label: 'Open Midpoint in Maps',
+          subtitle: 'Open in external map app',
+          onTap: () {
+            final midLat = (widget.start.latitude + widget.end.latitude) / 2.0;
+            final midLon =
+                (widget.start.longitude + widget.end.longitude) / 2.0;
+            launchUrl(
+              Uri.parse('https://maps.apple.com/?ll=$midLat,$midLon&z=14'),
+              mode: LaunchMode.externalApplication,
+            );
+          },
+        ),
+        if (widget.onSwap != null)
+          BottomSheetAction(
+            icon: Icons.swap_horiz,
+            label: 'Swap A \u2194 B',
+            subtitle: 'Reverse measurement direction',
+            onTap: widget.onSwap,
+          ),
+        if (hasElevation)
+          BottomSheetAction(
+            icon: Icons.terrain,
+            label: 'RF Link Budget',
+            subtitle:
+                'Estimated path loss: '
+                '${_estimatePathLoss(distanceM, 906.0).toStringAsFixed(0)} dB '
+                '(free-space)',
+            onTap: () {
+              final fspl = _estimatePathLoss(distanceM, 906.0);
+              Clipboard.setData(
+                ClipboardData(
+                  text:
+                      'RF Link Budget (free-space path loss)\n'
+                      'Distance: ${_formatDistance(distanceKm)}\n'
+                      'Frequency: 906 MHz\n'
+                      'FSPL: ${fspl.toStringAsFixed(1)} dB\n'
+                      'Alt A: ${altA}m · Alt B: ${altB}m\n'
+                      'Bearing: ${bearing.toStringAsFixed(0)}° $cardinal',
+                ),
+              );
+              if (context.mounted) {
+                showSuccessSnackBar(context, 'Link budget copied to clipboard');
+              }
+            },
+          ),
+      ],
+    );
+  }
+
+  /// Free-space path loss in dB: FSPL = 20log10(d) + 20log10(f) - 27.55
+  /// where d is in meters and f is in MHz.
+  static double _estimatePathLoss(double distanceM, double freqMhz) {
+    if (distanceM <= 0) return 0;
+    return 20 * math.log(distanceM) / math.ln10 +
+        20 * math.log(freqMhz) / math.ln10 -
+        27.55;
   }
 
   @override
   Widget build(BuildContext context) {
-    final distance = _calculateDistance();
+    final distanceKm = _calculateDistanceKm();
+    final distanceM = distanceKm * 1000;
+    final bearing = calculateBearing(
+      widget.start.latitude,
+      widget.start.longitude,
+      widget.end.latitude,
+      widget.end.longitude,
+    );
+    final cardinal = formatBearingCardinal(bearing);
 
-    return Container(
-      padding: const EdgeInsets.all(AppTheme.spacing12),
-      decoration: BoxDecoration(
-        color: context.card.withValues(alpha: 0.95),
-        borderRadius: BorderRadius.circular(AppTheme.radius12),
-        border: Border.all(
-          color: AppTheme.warningYellow.withValues(alpha: 0.5),
+    // Elevation delta
+    final altA = widget.nodeA?.altitude;
+    final altB = widget.nodeB?.altitude;
+    final hasElevation = altA != null && altB != null;
+    final elevDelta = hasElevation ? altB - altA : null;
+
+    return GestureDetector(
+      onLongPress: () => _showActionsSheet(context),
+      child: Container(
+        padding: const EdgeInsets.all(AppTheme.spacing12),
+        decoration: BoxDecoration(
+          color: context.card.withValues(alpha: 0.95),
+          borderRadius: BorderRadius.circular(AppTheme.radius12),
+          border: Border.all(
+            color: AppTheme.warningYellow.withValues(alpha: 0.5),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.2),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
+            ),
+          ],
         ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.2),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 36,
-            height: 36,
-            decoration: BoxDecoration(
-              color: AppTheme.warningYellow.withValues(alpha: 0.2),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              Icons.straighten,
-              size: 18,
-              color: AppTheme.warningYellow,
-            ),
-          ),
-          const SizedBox(width: AppTheme.spacing12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
               children: [
-                Text(
-                  _formatDistance(distance),
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
+                Container(
+                  width: 36,
+                  height: 36,
+                  decoration: BoxDecoration(
+                    color: AppTheme.warningYellow.withValues(alpha: 0.2),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.straighten,
+                    size: 18,
                     color: AppTheme.warningYellow,
                   ),
                 ),
-                Text(
-                  'A: ${start.latitude.toStringAsFixed(4)}, ${start.longitude.toStringAsFixed(4)}',
-                  style: context.captionStyle?.copyWith(
-                    color: context.textTertiary,
+                const SizedBox(width: AppTheme.spacing12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            _formatDistance(distanceKm),
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                              color: AppTheme.warningYellow,
+                            ),
+                          ),
+                          const SizedBox(width: AppTheme.spacing8),
+                          Text(
+                            '${bearing.toStringAsFixed(0)}° $cardinal',
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: context.textSecondary,
+                            ),
+                          ),
+                          if (elevDelta != null) ...[
+                            const SizedBox(width: AppTheme.spacing8),
+                            Icon(
+                              elevDelta >= 0
+                                  ? Icons.trending_up
+                                  : Icons.trending_down,
+                              size: 14,
+                              color: context.textSecondary,
+                            ),
+                            const SizedBox(width: AppTheme.spacing2),
+                            Text(
+                              '${elevDelta >= 0 ? '+' : ''}${elevDelta}m',
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: context.textSecondary,
+                              ),
+                            ),
+                          ],
+                        ],
+                      ),
+                      Text(
+                        _pointLabel(widget.start, widget.nodeA, 'A'),
+                        style: context.captionStyle?.copyWith(
+                          color: context.textTertiary,
+                        ),
+                      ),
+                      Text(
+                        _pointLabel(widget.end, widget.nodeB, 'B'),
+                        style: context.captionStyle?.copyWith(
+                          color: context.textTertiary,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                Text(
-                  'B: ${end.latitude.toStringAsFixed(4)}, ${end.longitude.toStringAsFixed(4)}',
-                  style: context.captionStyle?.copyWith(
-                    color: context.textTertiary,
-                  ),
+                IconButton(
+                  icon: Icon(Icons.refresh, size: 20),
+                  color: context.textTertiary,
+                  onPressed: widget.onClear,
+                  tooltip: 'New measurement',
+                ),
+                IconButton(
+                  icon: const Icon(Icons.close, size: 20),
+                  color: AppTheme.errorRed,
+                  onPressed: widget.onExitMeasureMode,
+                  tooltip: 'Exit measure mode',
                 ),
               ],
             ),
+            // Long-press hint
+            const SizedBox(height: AppTheme.spacing4),
+            Text(
+              'Long-press for actions',
+              style: TextStyle(fontSize: 10, color: context.textTertiary),
+            ),
+            // LOS result panel (toggled from actions sheet)
+            if (_showLos && hasElevation) ...[
+              const SizedBox(height: AppTheme.spacing8),
+              _LosResultPanel(
+                altA: altA,
+                altB: altB,
+                distanceMeters: distanceM,
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Compact LOS result panel shown inside _MeasurementCard.
+class _LosResultPanel extends StatelessWidget {
+  final int altA;
+  final int altB;
+  final double distanceMeters;
+
+  const _LosResultPanel({
+    required this.altA,
+    required this.altB,
+    required this.distanceMeters,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final result = evaluateLos(
+      altA: altA,
+      altB: altB,
+      distanceMeters: distanceMeters,
+    );
+
+    Color verdictColor;
+    IconData verdictIcon;
+    switch (result.verdict) {
+      case LosVerdict.clear:
+        verdictColor = AppTheme.successGreen;
+        verdictIcon = Icons.check_circle;
+      case LosVerdict.marginal:
+        verdictColor = AppTheme.warningYellow;
+        verdictIcon = Icons.warning;
+      case LosVerdict.obstructed:
+        verdictColor = AppTheme.errorRed;
+        verdictIcon = Icons.cancel;
+      case LosVerdict.unknown:
+        verdictColor = context.textTertiary;
+        verdictIcon = Icons.help_outline;
+    }
+
+    return Container(
+      padding: const EdgeInsets.all(AppTheme.spacing8),
+      decoration: BoxDecoration(
+        color: verdictColor.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(AppTheme.radius8),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              Icon(verdictIcon, size: 16, color: verdictColor),
+              const SizedBox(width: AppTheme.spacing4),
+              Text(
+                'LOS: ${result.verdict.label}',
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: verdictColor,
+                ),
+              ),
+              const Spacer(),
+              Text(
+                'Bulge: ${result.earthBulgeMeters.toStringAsFixed(1)}m '
+                '· F1: ${result.fresnelRadiusMeters.toStringAsFixed(1)}m',
+                style: TextStyle(fontSize: 11, color: context.textTertiary),
+              ),
+            ],
           ),
-          IconButton(
-            icon: Icon(Icons.share, size: 20),
-            color: context.textSecondary,
-            onPressed: onShare,
-            tooltip: 'Share',
-          ),
-          IconButton(
-            icon: Icon(Icons.refresh, size: 20),
-            color: context.textTertiary,
-            onPressed: onClear,
-            tooltip: 'New measurement',
-          ),
-          IconButton(
-            icon: const Icon(Icons.close, size: 20),
-            color: AppTheme.errorRed,
-            onPressed: onExitMeasureMode,
-            tooltip: 'Exit measure mode',
+          const SizedBox(height: AppTheme.spacing4),
+          Text(
+            result.explanation,
+            style: TextStyle(fontSize: 11, color: context.textSecondary),
           ),
         ],
       ),

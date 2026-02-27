@@ -9,6 +9,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- RF vs MQTT transport indicator on message context menu (cloud icon for MQTT, cell tower icon for RF)
+- RF vs MQTT transport chip on node info card with hop count display
+- `TransportPath` enum and `classifyTransport()` helper (`lib/core/transport_path.dart`)
+- `viaMqtt` field on `Message` model, populated from protobuf `via_mqtt` (tag 14)
+- Node-to-node measurement mode: tap node markers on map to measure between named nodes
+- Bearing display (degrees + 16-point cardinal direction) on measurement card
+- Altitude display per measurement endpoint when node altitude is known
+- Elevation delta with trending icon between measurement endpoints
+- Line-of-sight analysis engine using earth curvature (4/3 refraction model) and Fresnel zone clearance at 906 MHz (`lib/core/los_analysis.dart`)
+- LOS verdict panel (Clear/Marginal/Obstructed/Unknown) toggleable from measurement card actions
+- Long-press actions sheet on measurement card: LOS Analysis, Share, Copy Summary, Copy Coordinates, Open Midpoint in Maps, Swap A/B, RF Link Budget (FSPL)
+- Free-space path loss (FSPL) estimation at 906 MHz, copyable from measurement actions
+- Unit tests for transport path classification (9 tests)
+- Unit tests for LOS analysis, bearing calculation, and cardinal formatting (31 tests)
+- Engineering documentation (`docs/engineering/TRANSPORT_PATH.md`)
+
+### Changed
+
+- Measurement card upgraded from `StatelessWidget` to `StatefulWidget` to support expandable LOS panel and actions sheet
+- Measurement mode indicator now uses `Flexible` text with ellipsis overflow to prevent clipping on narrow screens
+- Measurement mode indicator positioning adjusted (removed hardcoded 140px left inset) for better centering
+- Share button moved from inline measurement card to long-press actions sheet, reducing visual clutter
+
+### Fixed
+
+- Compass widget now updates in real-time during programmatic "tap-to-north" animation (was frozen until manual gesture)
+- Measurement mode indicator text no longer clips on smaller screens
 - Appearance & Accessibility settings screen with live preview
 - Font mode selection: Branded (JetBrainsMono), System, or Accessibility (Inter)
 - Text size presets: System Default, Default, Large (15%), Extra Large (30%)

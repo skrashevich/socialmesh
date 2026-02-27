@@ -138,6 +138,10 @@ class Message {
   /// Typical range: -120 (weak) to -40 (strong). null if unavailable.
   final int? rxRssi;
 
+  /// Whether this packet passed through an MQTT gateway. true = MQTT,
+  /// false = RF-only, null = unknown (legacy data or sent messages).
+  final bool? viaMqtt;
+
   // Cached sender info - populated when message is received/created
   // This ensures sender info is always available even if node hasn't loaded yet
   final String? senderLongName;
@@ -165,6 +169,7 @@ class Message {
     this.hopCount,
     this.rxSnr,
     this.rxRssi,
+    this.viaMqtt,
     this.senderLongName,
     this.senderShortName,
     this.senderAvatarColor,
@@ -192,6 +197,7 @@ class Message {
     int? hopCount,
     double? rxSnr,
     int? rxRssi,
+    bool? viaMqtt,
     String? senderLongName,
     String? senderShortName,
     int? senderAvatarColor,
@@ -217,6 +223,7 @@ class Message {
       hopCount: hopCount ?? this.hopCount,
       rxSnr: rxSnr ?? this.rxSnr,
       rxRssi: rxRssi ?? this.rxRssi,
+      viaMqtt: viaMqtt ?? this.viaMqtt,
       senderLongName: senderLongName ?? this.senderLongName,
       senderShortName: senderShortName ?? this.senderShortName,
       senderAvatarColor: senderAvatarColor ?? this.senderAvatarColor,

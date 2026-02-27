@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'dart:async';
+import 'dart:io';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,20 +8,28 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../core/map_config.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
+import '../../core/widgets/app_bar_overflow_menu.dart';
+import '../../core/widgets/app_bottom_sheet.dart';
 import '../../core/widgets/datetime_picker_sheet.dart';
 import '../../core/widgets/glass_scaffold.dart';
+import '../../core/widgets/ico_help_system.dart';
 import '../../core/widgets/mesh_map_widget.dart';
 import '../../core/widgets/map_controls.dart';
 import '../../core/widgets/map_node_drawer.dart';
 import '../../core/widgets/search_filter_header.dart';
 import '../../core/widgets/section_header.dart';
 import '../../models/telemetry_log.dart';
+import '../../providers/help_providers.dart';
 import '../../providers/splash_mesh_provider.dart';
 import '../../providers/telemetry_providers.dart';
 import '../../providers/app_providers.dart';
+import '../../utils/share_utils.dart';
+import '../../utils/snackbar.dart';
 
 // ---------------------------------------------------------------------------
 // Filter enum
@@ -72,6 +81,7 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
 
   bool _showMap = false;
   MapTileStyle _mapStyle = MapTileStyle.dark;
+  bool _isExporting = false;
 
   @override
   void initState() {
@@ -294,6 +304,114 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
   // Build
   // -----------------------------------------------------------------------
 
+  // -----------------------------------------------------------------------
+  // Export CSV
+  // -----------------------------------------------------------------------
+
+  Future<void> _exportCsv() async {
+    safeSetState(() => _isExporting = true);
+
+    try {
+      final logs = await ref.read(positionLogsProvider.future);
+      if (!mounted) return;
+
+      if (logs.isEmpty) {
+        showInfoSnackBar(context, 'No position data to export');
+        return;
+      }
+
+      final nodes = ref.read(nodesProvider);
+      final buffer = StringBuffer();
+      buffer.writeln(
+        'timestamp,node_num,node_name,latitude,longitude,altitude,sats_in_view,ground_speed,ground_track',
+      );
+
+      for (final log in logs) {
+        final nodeName =
+            nodes[log.nodeNum]?.displayName ??
+            '!${log.nodeNum.toRadixString(16).toUpperCase()}';
+        buffer.writeln(
+          '${log.timestamp.toIso8601String()},'
+          '${log.nodeNum},'
+          '"$nodeName",'
+          '${log.latitude},'
+          '${log.longitude},'
+          '${log.altitude ?? ""},'
+          '${log.satsInView ?? ""},'
+          '${log.speed ?? ""},'
+          '${log.heading ?? ""}',
+        );
+      }
+
+      if (!mounted) return;
+
+      final timestamp = DateTime.now()
+          .toIso8601String()
+          .replaceAll(':', '-')
+          .split('.')
+          .first;
+      final fileName = 'position_export_$timestamp.csv';
+
+      final tempDir = await getTemporaryDirectory();
+      final file = File('${tempDir.path}/$fileName');
+      await file.writeAsString(buffer.toString());
+
+      if (!mounted) return;
+
+      await shareFiles(
+        [XFile(file.path)],
+        subject: 'Socialmesh Position Export',
+        context: context,
+      );
+
+      if (!mounted) return;
+      showSuccessSnackBar(context, 'Exported ${logs.length} positions');
+    } catch (e) {
+      showErrorSnackBar(context, 'Export failed: $e');
+    } finally {
+      if (mounted) {
+        safeSetState(() => _isExporting = false);
+      }
+    }
+  }
+
+  // -----------------------------------------------------------------------
+  // Clear data
+  // -----------------------------------------------------------------------
+
+  Future<void> _confirmClearData() async {
+    final messenger = ScaffoldMessenger.of(context);
+
+    final confirmed = await AppBottomSheet.showConfirm(
+      context: context,
+      title: 'Clear Position Data',
+      message:
+          'This will permanently delete all position history for all nodes. This cannot be undone.',
+      confirmLabel: 'Clear',
+      isDestructive: true,
+    );
+
+    if (confirmed != true || !mounted) return;
+
+    try {
+      final storage = await ref.read(telemetryStorageProvider.future);
+      if (!mounted) return;
+      await storage.clearPositionLogs();
+      ref.invalidate(positionLogsProvider);
+
+      if (!mounted) return;
+      messenger.showSnackBar(
+        const SnackBar(content: Text('Position data cleared')),
+      );
+    } catch (e) {
+      showErrorSnackBar(context, 'Failed to clear data: $e');
+    }
+  }
+
+  // -----------------------------------------------------------------------
+  // Build
+  // -----------------------------------------------------------------------
+
   @override
   Widget build(BuildContext context) {
     final logsAsync = ref.watch(positionLogsProvider);
@@ -301,210 +419,318 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
 
     return GestureDetector(
       onTap: _dismissKeyboard,
-      child: GlassScaffold(
-        resizeToAvoidBottomInset: false,
-        title: 'Position',
-        actions: [
-          // Map style (only in map mode)
-          if (_showMap)
-            PopupMenuButton<MapTileStyle>(
-              icon: Icon(Icons.map, color: context.textSecondary),
-              tooltip: 'Map style',
-              onSelected: (style) {
-                safeSetState(() => _mapStyle = style);
-                unawaited(_saveMapStyle(style));
+      child: HelpTourController(
+        topicId: 'position_overview',
+        stepKeys: const {},
+        child: GlassScaffold(
+          resizeToAvoidBottomInset: false,
+          title: 'Position',
+          actions: [
+            // Date range selector
+            IconButton(
+              icon: Badge(
+                isLabelVisible:
+                    _customStartDate != null || _customEndDate != null,
+                child: const Icon(Icons.date_range),
+              ),
+              tooltip: 'Date range',
+              onPressed: _selectDateRange,
+            ),
+            // Overflow menu with all secondary actions
+            AppBarOverflowMenu<String>(
+              onSelected: (value) {
+                switch (value) {
+                  case 'toggle_view':
+                    HapticFeedback.selectionClick();
+                    safeSetState(() => _showMap = !_showMap);
+                  case 'export':
+                    _exportCsv();
+                  case 'clear':
+                    _confirmClearData();
+                  case 'help':
+                    ref
+                        .read(helpProvider.notifier)
+                        .startTour('position_overview');
+                  case 'settings':
+                    Navigator.of(context).pushNamed('/settings');
+                  default:
+                    // Map style selections
+                    if (value.startsWith('map_style_')) {
+                      final index = int.tryParse(
+                        value.replaceFirst('map_style_', ''),
+                      );
+                      if (index != null &&
+                          index >= 0 &&
+                          index < MapTileStyle.values.length) {
+                        final style = MapTileStyle.values[index];
+                        safeSetState(() => _mapStyle = style);
+                        unawaited(_saveMapStyle(style));
+                      }
+                    }
+                }
               },
-              itemBuilder: (context) => MapTileStyle.values.map((style) {
-                return PopupMenuItem(
-                  value: style,
+              itemBuilder: (context) => [
+                // Map / list toggle
+                PopupMenuItem<String>(
+                  value: 'toggle_view',
                   child: Row(
                     children: [
                       Icon(
-                        _mapStyle == style ? Icons.check : Icons.map_outlined,
-                        size: 18,
-                        color: _mapStyle == style
-                            ? context.accentColor
-                            : context.textSecondary,
+                        _showMap ? Icons.list : Icons.map,
+                        size: 20,
+                        color: context.textSecondary,
                       ),
-                      const SizedBox(width: AppTheme.spacing8),
-                      Text(style.label),
+                      const SizedBox(width: AppTheme.spacing12),
+                      Text(_showMap ? 'List view' : 'Map view'),
                     ],
                   ),
-                );
-              }).toList(),
-            ),
-          // Date range selector
-          IconButton(
-            icon: Badge(
-              isLabelVisible:
-                  _customStartDate != null || _customEndDate != null,
-              child: const Icon(Icons.date_range),
-            ),
-            tooltip: 'Date range',
-            onPressed: _selectDateRange,
-          ),
-          // Map / list toggle
-          IconButton(
-            icon: Icon(_showMap ? Icons.list : Icons.map),
-            tooltip: _showMap ? 'List view' : 'Map view',
-            onPressed: () {
-              HapticFeedback.selectionClick();
-              safeSetState(() => _showMap = !_showMap);
-            },
-          ),
-        ],
-        slivers: [
-          logsAsync.when(
-            loading: () =>
-                const SliverFillRemaining(child: ScreenLoadingIndicator()),
-            error: (e, s) =>
-                SliverFillRemaining(child: Center(child: Text('Error: $e'))),
-            data: (logs) {
-              final filtered = _filterLogs(logs)
-                ..sort((a, b) => b.timestamp.compareTo(a.timestamp));
-
-              // Build the list of slivers for the data state
-              return SliverMainAxisGroup(
-                slivers: [
-                  // Pinned search + filter chips
-                  SliverPersistentHeader(
-                    pinned: true,
-                    delegate: SearchFilterHeaderDelegate(
-                      searchController: _searchController,
-                      searchQuery: _searchQuery,
-                      onSearchChanged: (value) =>
-                          safeSetState(() => _searchQuery = value),
-                      hintText: 'Search by node name',
-                      textScaler: MediaQuery.textScalerOf(context),
-                      rebuildKey: Object.hashAll([
-                        _activeFilter,
-                        _customStartDate,
-                        _customEndDate,
-                        logs.length,
-                        _searchQuery,
-                      ]),
-                      filterChips: _buildFilterChips(context, logs),
+                ),
+                // Map style submenu (only in map mode)
+                if (_showMap) ...[
+                  const PopupMenuDivider(),
+                  PopupMenuItem<String>(
+                    enabled: false,
+                    height: 32,
+                    child: Text(
+                      'Map Style',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: context.textTertiary,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
+                  ...MapTileStyle.values.map((style) {
+                    final isSelected = _mapStyle == style;
+                    return PopupMenuItem<String>(
+                      value: 'map_style_${style.index}',
+                      child: Row(
+                        children: [
+                          Icon(
+                            isSelected ? Icons.check : Icons.map_outlined,
+                            size: 18,
+                            color: isSelected
+                                ? context.accentColor
+                                : context.textSecondary,
+                          ),
+                          const SizedBox(width: AppTheme.spacing8),
+                          Text(style.label),
+                        ],
+                      ),
+                    );
+                  }),
+                ],
+                const PopupMenuDivider(),
+                // Export
+                PopupMenuItem<String>(
+                  value: 'export',
+                  enabled: !_isExporting,
+                  child: Row(
+                    children: [
+                      Icon(
+                        _isExporting ? Icons.hourglass_top : Icons.ios_share,
+                        size: 20,
+                        color: context.textSecondary,
+                      ),
+                      const SizedBox(width: AppTheme.spacing12),
+                      Text(_isExporting ? 'Exporting...' : 'Export CSV'),
+                    ],
+                  ),
+                ),
+                // Clear data
+                PopupMenuItem<String>(
+                  value: 'clear',
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.delete_outline,
+                        size: 20,
+                        color: AppTheme.errorRed,
+                      ),
+                      const SizedBox(width: AppTheme.spacing12),
+                      Text(
+                        'Clear Data',
+                        style: TextStyle(color: AppTheme.errorRed),
+                      ),
+                    ],
+                  ),
+                ),
+                const PopupMenuDivider(),
+                // Help
+                const PopupMenuItem<String>(
+                  value: 'help',
+                  child: ListTile(
+                    leading: Icon(Icons.help_outline),
+                    title: Text('Help'),
+                    contentPadding: EdgeInsets.zero,
+                  ),
+                ),
+                // Settings
+                const PopupMenuItem<String>(
+                  value: 'settings',
+                  child: ListTile(
+                    leading: Icon(Icons.settings_outlined),
+                    title: Text('Settings'),
+                    contentPadding: EdgeInsets.zero,
+                  ),
+                ),
+              ],
+            ),
+          ],
+          slivers: [
+            logsAsync.when(
+              loading: () =>
+                  const SliverFillRemaining(child: ScreenLoadingIndicator()),
+              error: (e, s) =>
+                  SliverFillRemaining(child: Center(child: Text('Error: $e'))),
+              data: (logs) {
+                final filtered = _filterLogs(logs)
+                  ..sort((a, b) => b.timestamp.compareTo(a.timestamp));
 
-                  // Date range indicator (when custom range is active)
-                  if (_customStartDate != null || _customEndDate != null)
-                    SliverToBoxAdapter(
-                      child: _DateRangeBanner(
-                        startDate: _customStartDate,
-                        endDate: _customEndDate,
-                        onClear: () {
-                          HapticFeedback.selectionClick();
-                          safeSetState(() {
-                            _customStartDate = null;
-                            _customEndDate = null;
-                          });
-                        },
+                // Build the list of slivers for the data state
+                return SliverMainAxisGroup(
+                  slivers: [
+                    // Pinned search + filter chips
+                    SliverPersistentHeader(
+                      pinned: true,
+                      delegate: SearchFilterHeaderDelegate(
+                        searchController: _searchController,
+                        searchQuery: _searchQuery,
+                        onSearchChanged: (value) =>
+                            safeSetState(() => _searchQuery = value),
+                        hintText: 'Search by node name',
+                        textScaler: MediaQuery.textScalerOf(context),
+                        rebuildKey: Object.hashAll([
+                          _activeFilter,
+                          _customStartDate,
+                          _customEndDate,
+                          logs.length,
+                          _searchQuery,
+                        ]),
+                        filterChips: _buildFilterChips(context, logs),
                       ),
                     ),
 
-                  // Empty state
-                  if (filtered.isEmpty)
-                    SliverFillRemaining(
-                      hasScrollBody: false,
-                      child: Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.location_off,
-                              size: 64,
-                              color: context.textTertiary,
-                            ),
-                            const SizedBox(height: AppTheme.spacing16),
-                            Text(
-                              _hasActiveFilters
-                                  ? 'No positions match filters'
-                                  : 'No position history',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: context.textSecondary,
-                              ),
-                            ),
-                            if (_hasActiveFilters) ...[
-                              const SizedBox(height: AppTheme.spacing12),
-                              TextButton.icon(
-                                onPressed: _clearFilters,
-                                icon: const Icon(
-                                  Icons.filter_alt_off,
-                                  size: 18,
-                                ),
-                                label: const Text('Clear all filters'),
-                              ),
-                            ],
-                          ],
+                    // Date range indicator (when custom range is active)
+                    if (_customStartDate != null || _customEndDate != null)
+                      SliverToBoxAdapter(
+                        child: _DateRangeBanner(
+                          startDate: _customStartDate,
+                          endDate: _customEndDate,
+                          onClear: () {
+                            HapticFeedback.selectionClick();
+                            safeSetState(() {
+                              _customStartDate = null;
+                              _customEndDate = null;
+                            });
+                          },
                         ),
                       ),
-                    )
-                  // Map view
-                  else if (_showMap)
-                    SliverFillRemaining(
-                      child: _PositionMapView(
-                        logs: filtered,
-                        nodes: nodes,
-                        mapStyle: _mapStyle,
-                      ),
-                    )
-                  // List view
-                  else ...[
-                    SliverPadding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: AppTheme.spacing16,
-                        vertical: AppTheme.spacing8,
-                      ),
-                      sliver: SliverList.separated(
-                        itemCount: filtered.length,
-                        separatorBuilder: (_, _) =>
-                            const SizedBox(height: AppTheme.spacing8),
-                        itemBuilder: (context, index) {
-                          final log = filtered[index];
-                          // Only show distance from the previous log if it
-                          // belongs to the same node — otherwise the delta
-                          // is a phantom jump between unrelated nodes.
-                          final prevLog = index < filtered.length - 1
-                              ? filtered[index + 1]
-                              : null;
-                          final distance =
-                              prevLog != null && prevLog.nodeNum == log.nodeNum
-                              ? _calculateDistance(
-                                  log.latitude,
-                                  log.longitude,
-                                  prevLog.latitude,
-                                  prevLog.longitude,
-                                )
-                              : null;
 
-                          final nodeName =
-                              nodes[log.nodeNum]?.displayName ??
-                              '!${log.nodeNum.toRadixString(16).toUpperCase()}';
+                    // Empty state
+                    if (filtered.isEmpty)
+                      SliverFillRemaining(
+                        hasScrollBody: false,
+                        child: Center(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                Icons.location_off,
+                                size: 64,
+                                color: context.textTertiary,
+                              ),
+                              const SizedBox(height: AppTheme.spacing16),
+                              Text(
+                                _hasActiveFilters
+                                    ? 'No positions match filters'
+                                    : 'No position history',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: context.textSecondary,
+                                ),
+                              ),
+                              if (_hasActiveFilters) ...[
+                                const SizedBox(height: AppTheme.spacing12),
+                                TextButton.icon(
+                                  onPressed: _clearFilters,
+                                  icon: const Icon(
+                                    Icons.filter_alt_off,
+                                    size: 18,
+                                  ),
+                                  label: const Text('Clear all filters'),
+                                ),
+                              ],
+                            ],
+                          ),
+                        ),
+                      )
+                    // Map view
+                    else if (_showMap)
+                      SliverFillRemaining(
+                        child: _PositionMapView(
+                          logs: filtered,
+                          nodes: nodes,
+                          mapStyle: _mapStyle,
+                        ),
+                      )
+                    // List view
+                    else ...[
+                      SliverPadding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppTheme.spacing16,
+                          vertical: AppTheme.spacing8,
+                        ),
+                        sliver: SliverList.separated(
+                          itemCount: filtered.length,
+                          separatorBuilder: (_, _) =>
+                              const SizedBox(height: AppTheme.spacing8),
+                          itemBuilder: (context, index) {
+                            final log = filtered[index];
+                            // Only show distance from the previous log if it
+                            // belongs to the same node — otherwise the delta
+                            // is a phantom jump between unrelated nodes.
+                            final prevLog = index < filtered.length - 1
+                                ? filtered[index + 1]
+                                : null;
+                            final distance =
+                                prevLog != null &&
+                                    prevLog.nodeNum == log.nodeNum
+                                ? _calculateDistance(
+                                    log.latitude,
+                                    log.longitude,
+                                    prevLog.latitude,
+                                    prevLog.longitude,
+                                  )
+                                : null;
 
-                          return _PositionCard(
-                            log: log,
-                            nodeName: nodeName,
-                            distanceFromPrev: distance,
-                          );
-                        },
+                            final nodeName =
+                                nodes[log.nodeNum]?.displayName ??
+                                '!${log.nodeNum.toRadixString(16).toUpperCase()}';
+
+                            return _PositionCard(
+                              log: log,
+                              nodeName: nodeName,
+                              distanceFromPrev: distance,
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                    // Bottom safe area
-                    SliverToBoxAdapter(
-                      child: SizedBox(
-                        height:
-                            MediaQuery.of(context).padding.bottom +
-                            AppTheme.spacing16,
+                      // Bottom safe area
+                      SliverToBoxAdapter(
+                        child: SizedBox(
+                          height:
+                              MediaQuery.of(context).padding.bottom +
+                              AppTheme.spacing16,
+                        ),
                       ),
-                    ),
+                    ],
                   ],
-                ],
-              );
-            },
-          ),
-        ],
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

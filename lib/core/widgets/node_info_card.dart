@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../models/mesh_models.dart';
+import '../transport_path.dart';
 import '../widgets/gradient_border_container.dart';
 import '../../models/presence_confidence.dart';
 import '../../providers/app_providers.dart';
@@ -400,6 +401,19 @@ class NodeInfoCard extends ConsumerWidget {
                 NodeStatChip(
                   icon: Icons.terrain,
                   value: '${node.altitude}m',
+                  color: context.textSecondary,
+                ),
+              if (node.viaMqtt)
+                NodeStatChip(
+                  icon: Icons.cloud,
+                  value: classifyTransport(node.viaMqtt).label,
+                  color: context.textSecondary,
+                ),
+              if (node.hopCount != null && node.hopCount! > 0)
+                NodeStatChip(
+                  icon: Icons.route,
+                  value:
+                      '${node.hopCount} ${node.hopCount == 1 ? 'hop' : 'hops'}',
                   color: context.textSecondary,
                 ),
               if (node.hardwareModel != null)

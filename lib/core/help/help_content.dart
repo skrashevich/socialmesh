@@ -987,6 +987,64 @@ class HelpContent {
   );
 
   // ============================================================================
+  // POSITION HISTORY HELP
+  // ============================================================================
+
+  static final HelpTopic positionOverview = HelpTopic(
+    id: 'position_overview',
+    title: 'Position History',
+    description: 'GPS position logs for all nodes on your mesh',
+    icon: Icons.location_on,
+    category: catNetwork,
+    priority: 9,
+    steps: [
+      HelpStep(
+        id: 'position_intro',
+        bubbleText:
+            "**Position History** records every GPS position broadcast by nodes on your mesh. Think of it as a flight recorder for location data!",
+        icoMood: MeshBrainMood.speaking,
+        canGoBack: false,
+      ),
+      HelpStep(
+        id: 'position_list_map',
+        bubbleText:
+            "Switch between **list view** and **map view** using the overflow menu. The map draws colour-coded trails per node so you can visualise movement over time.",
+        icoMood: MeshBrainMood.curious,
+      ),
+      HelpStep(
+        id: 'position_filters',
+        bubbleText:
+            "Use **filter chips** to narrow results: today, this week, good GPS fix, or just your own node. Combine with a **custom date range** for precise slicing.",
+        icoMood: MeshBrainMood.thinking,
+      ),
+      HelpStep(
+        id: 'position_search',
+        bubbleText:
+            "The **search bar** filters by node name. Handy when you have dozens of nodes and want to track a specific one.",
+        icoMood: MeshBrainMood.approving,
+      ),
+      HelpStep(
+        id: 'position_map_nodes',
+        bubbleText:
+            "In map view, tap the **node list** button to pick a single node. Each node gets its own colour trail with distance calculations between points.",
+        icoMood: MeshBrainMood.speaking,
+      ),
+      HelpStep(
+        id: 'position_export',
+        bubbleText:
+            "**Export as CSV** from the overflow menu for analysis in spreadsheets or GIS tools. Great for documenting coverage tests!",
+        icoMood: MeshBrainMood.excited,
+      ),
+      HelpStep(
+        id: 'position_good_fix',
+        bubbleText:
+            "The **Good Fix** filter shows only positions with 6+ satellites. This helps you ignore noisy indoor fixes and focus on reliable outdoor data.",
+        icoMood: MeshBrainMood.approving,
+      ),
+    ],
+  );
+
+  // ============================================================================
   // SETTINGS HELP
   // ============================================================================
 
@@ -2277,6 +2335,7 @@ class HelpContent {
     signalDetail,
     worldMeshOverview,
     routesOverview,
+    positionOverview,
     settingsOverview,
     profileOverview,
     mesh3dOverview,

@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
+import '../../../core/transport_path.dart';
 import '../../../models/mesh_models.dart';
 import '../../../models/tapback.dart';
 import '../../../core/theme.dart';
@@ -364,6 +365,13 @@ class _MessageContextMenuState extends ConsumerState<MessageContextMenu>
                     _DetailChip(
                       icon: Icons.cell_tower,
                       label: 'RSSI ${widget.message.rxRssi} dBm',
+                    ),
+                  if (widget.message.viaMqtt != null)
+                    _DetailChip(
+                      icon: widget.message.viaMqtt == true
+                          ? Icons.cloud
+                          : Icons.cell_tower,
+                      label: classifyTransport(widget.message.viaMqtt).label,
                     ),
                 ],
               ),
