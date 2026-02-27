@@ -53,6 +53,9 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
   @override
   void initState() {
     super.initState();
+    // Seed fields with the default icon's title/body
+    _titleController.text = _selectedIcon.defaultTitle;
+    _bodyController.text = _selectedIcon.defaultBody;
     // Add listeners to update preview live
     _titleController.addListener(_onTextChanged);
     _bodyController.addListener(_onTextChanged);
@@ -265,12 +268,12 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
 
   void _clearForm() {
     ref.read(hapticServiceProvider).trigger(HapticType.light);
-    _titleController.clear();
-    _bodyController.clear();
     safeSetState(() {
       _selectedIcon = _NotificationIcon.announcement;
       _selectedDeepLink = null;
     });
+    _titleController.text = _selectedIcon.defaultTitle;
+    _bodyController.text = _selectedIcon.defaultBody;
   }
 
   void _showDeepLinkPicker() {
