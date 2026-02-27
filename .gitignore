@@ -76,7 +76,10 @@ firebase-service-account.json
 /scripts/tak/
 /scripts/notification-icons/
 /scripts/hooks/*
+/scripts/railway-up.sh
+/scripts/security_audit_socialmesh.py
 !/scripts/hooks/socialmesh-lint.sh
+/artifacts/
 
 # IntelliJ related
 *.iml
