@@ -6,6 +6,8 @@ import 'dart:convert';
 import 'dart:io' show Platform;
 import 'dart:math' as math;
 
+import 'package:intl/intl.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -197,6 +199,10 @@ class AutomationEngine {
   }
 
   /// Execute an automation manually (e.g., from Siri Shortcuts)
+  ///
+  /// Enriches the event with the connected radio's last-known battery level,
+  /// node name, and the phone's current GPS position so that {{battery}},
+  /// {{node.name}}, and {{location}} template variables resolve to real values.
   Future<void> executeAutomationManually(
     Automation automation,
     AutomationEvent event,
@@ -204,7 +210,71 @@ class AutomationEngine {
     AppLogging.automations(
       'AutomationEngine: Manual execution of "${automation.name}"',
     );
-    await _executeAutomation(automation, event);
+
+    // Enrich event with current device context if not already provided
+    int? batteryLevel = event.batteryLevel;
+    int? nodeNum = event.nodeNum;
+    String? nodeName = event.nodeName;
+    double? latitude = event.latitude;
+    double? longitude = event.longitude;
+
+    // Resolve local radio's battery and name from cached telemetry
+    final myNodeNum = onGetMyNodeNum?.call();
+    if (myNodeNum != null) {
+      nodeNum ??= myNodeNum;
+      nodeName ??= _nodeNames[myNodeNum];
+      batteryLevel ??= _nodeBatteryLevels[myNodeNum];
+    }
+
+    // Resolve the phone's current GPS position
+    if (latitude == null) {
+      try {
+        final pos = await onGetPhonePosition?.call();
+        if (pos != null) {
+          latitude = pos.$1;
+          longitude = pos.$2;
+        }
+      } catch (e) {
+        AppLogging.automations(
+          'AutomationEngine: Failed to get phone position for manual exec: $e',
+        );
+      }
+
+      // Fall back to the local radio's last-known position
+      if (latitude == null && myNodeNum != null) {
+        final nodePos = _nodePositions[myNodeNum];
+        if (nodePos != null) {
+          latitude = nodePos.$1;
+          longitude = nodePos.$2;
+        }
+      }
+    }
+
+    AppLogging.automations(
+      'AutomationEngine: Manual event enrichment — '
+      'battery=$batteryLevel, node=$nodeName, lat=$latitude, lon=$longitude',
+    );
+
+    final enrichedEvent = AutomationEvent(
+      type: event.type,
+      nodeNum: nodeNum,
+      nodeName: nodeName,
+      batteryLevel: batteryLevel,
+      latitude: latitude,
+      longitude: longitude,
+      messageText: event.messageText,
+      channelIndex: event.channelIndex,
+      snr: event.snr,
+      sensorName: event.sensorName,
+      sensorDetected: event.sensorDetected,
+      timestamp: event.timestamp,
+      scheduleId: event.scheduleId,
+      slotKey: event.slotKey,
+      scheduledFor: event.scheduledFor,
+      isCatchUp: event.isCatchUp,
+    );
+
+    await _executeAutomation(automation, enrichedEvent);
   }
 
   /// Process a node update event
@@ -260,12 +330,15 @@ class AutomationEngine {
             '🔋 Battery crossed threshold $threshold: $previousBattery -> ${node.batteryLevel} (firing ${automation.name})',
           );
           _firedBatteryLowAlerts[hysteresisKey] = true;
+          final pos = _nodePositions[node.nodeNum];
           await _processEvent(
             AutomationEvent(
               type: TriggerType.batteryLow,
               nodeNum: node.nodeNum,
               nodeName: node.displayName,
               batteryLevel: node.batteryLevel,
+              latitude: pos?.$1,
+              longitude: pos?.$2,
             ),
           );
         }
@@ -275,12 +348,15 @@ class AutomationEngine {
       if (previousBattery != null &&
           previousBattery < 100 &&
           node.batteryLevel == 100) {
+        final fullPos = _nodePositions[node.nodeNum];
         await _processEvent(
           AutomationEvent(
             type: TriggerType.batteryFull,
             nodeNum: node.nodeNum,
             nodeName: node.displayName,
             batteryLevel: node.batteryLevel,
+            latitude: fullPos?.$1,
+            longitude: fullPos?.$2,
           ),
         );
       }
@@ -299,6 +375,7 @@ class AutomationEngine {
             type: TriggerType.positionChanged,
             nodeNum: node.nodeNum,
             nodeName: node.displayName,
+            batteryLevel: _nodeBatteryLevels[node.nodeNum],
             latitude: node.latitude,
             longitude: node.longitude,
           ),
@@ -311,12 +388,16 @@ class AutomationEngine {
 
     // Check signal strength
     if (node.snr != null) {
+      final snrPos = _nodePositions[node.nodeNum];
       await _processEvent(
         AutomationEvent(
           type: TriggerType.signalWeak,
           nodeNum: node.nodeNum,
           nodeName: node.displayName,
+          batteryLevel: _nodeBatteryLevels[node.nodeNum],
           snr: node.snr,
+          latitude: snrPos?.$1,
+          longitude: snrPos?.$2,
         ),
       );
     }
@@ -386,6 +467,9 @@ class AutomationEngine {
           type: TriggerType.nodeOffline,
           nodeNum: node.nodeNum,
           nodeName: node.displayName,
+          batteryLevel: _nodeBatteryLevels[node.nodeNum],
+          latitude: node.latitude,
+          longitude: node.longitude,
         ),
       );
     }
@@ -397,6 +481,10 @@ class AutomationEngine {
     required String senderName,
     String? channelName,
   }) async {
+    // Enrich message events with cached node data
+    final msgBattery = _nodeBatteryLevels[message.from];
+    final msgPos = _nodePositions[message.from];
+
     // Message received trigger
     await _processEvent(
       AutomationEvent(
@@ -405,6 +493,9 @@ class AutomationEngine {
         nodeName: senderName,
         messageText: message.text,
         channelIndex: message.channel,
+        batteryLevel: msgBattery,
+        latitude: msgPos?.$1,
+        longitude: msgPos?.$2,
       ),
     );
 
@@ -416,6 +507,9 @@ class AutomationEngine {
         nodeName: senderName,
         messageText: message.text,
         channelIndex: message.channel,
+        batteryLevel: msgBattery,
+        latitude: msgPos?.$1,
+        longitude: msgPos?.$2,
       ),
     );
 
@@ -428,6 +522,9 @@ class AutomationEngine {
           nodeName: senderName,
           messageText: message.text,
           channelIndex: message.channel,
+          batteryLevel: msgBattery,
+          latitude: msgPos?.$1,
+          longitude: msgPos?.$2,
         ),
       );
     }
@@ -443,6 +540,7 @@ class AutomationEngine {
       'AutomationEngine: Detection sensor event from $nodeNum: $sensorName = $detected',
     );
 
+    final sensorPos = _nodePositions[nodeNum];
     await _processEvent(
       AutomationEvent(
         type: TriggerType.detectionSensor,
@@ -451,6 +549,9 @@ class AutomationEngine {
             _nodeNames[nodeNum] ?? NodeDisplayNameResolver.defaultName(nodeNum),
         sensorName: sensorName,
         sensorDetected: detected,
+        batteryLevel: _nodeBatteryLevels[nodeNum],
+        latitude: sensorPos?.$1,
+        longitude: sensorPos?.$2,
       ),
     );
   }
@@ -1098,6 +1199,7 @@ class AutomationEngine {
             type: TriggerType.geofenceEnter,
             nodeNum: node.nodeNum,
             nodeName: node.displayName,
+            batteryLevel: _nodeBatteryLevels[node.nodeNum],
             latitude: currentPos.$1,
             longitude: currentPos.$2,
           ),
@@ -1110,6 +1212,7 @@ class AutomationEngine {
             type: TriggerType.geofenceExit,
             nodeNum: node.nodeNum,
             nodeName: node.displayName,
+            batteryLevel: _nodeBatteryLevels[node.nodeNum],
             latitude: currentPos.$1,
             longitude: currentPos.$2,
           ),
@@ -1144,11 +1247,15 @@ class AutomationEngine {
         if (trigger.nodeNum != null && trigger.nodeNum != nodeNum) continue;
 
         if (DateTime.now().difference(lastHeard) > silentDuration) {
+          final silentPos = _nodePositions[nodeNum];
           await _processEvent(
             AutomationEvent(
               type: TriggerType.nodeSilent,
               nodeNum: nodeNum,
               nodeName: _nodeNames[nodeNum],
+              batteryLevel: _nodeBatteryLevels[nodeNum],
+              latitude: silentPos?.$1,
+              longitude: silentPos?.$2,
             ),
           );
         }
@@ -1157,23 +1264,30 @@ class AutomationEngine {
   }
 
   /// Interpolate variables in message text
+  /// Format a human-readable timestamp for notification display
+  static final DateFormat _notificationTimeFormat = DateFormat('MMM d, h:mm a');
+
   String _interpolateVariables(
     String text,
     AutomationEvent event, {
     AutomationTrigger? trigger,
   }) {
+    // Format location with reasonable precision (6 decimal places ≈ 0.1m)
+    final locationStr = event.latitude != null && event.longitude != null
+        ? '${event.latitude!.toStringAsFixed(6)}, '
+              '${event.longitude!.toStringAsFixed(6)}'
+        : 'Unknown';
+
     var result = text
         .replaceAll('{{node.name}}', event.nodeName ?? 'Unknown')
         .replaceAll('{{node.num}}', event.nodeNum?.toRadixString(16) ?? '')
         .replaceAll('{{battery}}', '${event.batteryLevel ?? '?'}%')
+        .replaceAll('{{location}}', locationStr)
         .replaceAll(
-          '{{location}}',
-          event.latitude != null && event.longitude != null
-              ? '${event.latitude}, ${event.longitude}'
-              : 'Unknown',
+          '{{message}}',
+          event.messageText?.isNotEmpty == true ? event.messageText! : '',
         )
-        .replaceAll('{{message}}', event.messageText ?? '')
-        .replaceAll('{{time}}', DateTime.now().toIso8601String())
+        .replaceAll('{{time}}', _notificationTimeFormat.format(DateTime.now()))
         .replaceAll('{{sensor.name}}', event.sensorName ?? 'Unknown')
         .replaceAll(
           '{{sensor.state}}',

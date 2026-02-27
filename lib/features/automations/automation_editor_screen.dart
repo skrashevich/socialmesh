@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/theme.dart';
+import '../../core/widgets/app_bottom_sheet.dart';
 import '../../core/widgets/bottom_action_bar.dart';
 import '../../core/widgets/glass_scaffold.dart';
 import '../../core/widgets/premium_gating.dart';
+import '../../services/haptic_service.dart';
 import '../../models/subscription_models.dart';
 import '../../providers/subscription_providers.dart';
 import '../../utils/snackbar.dart';
@@ -232,11 +234,17 @@ class _AutomationEditorScreenState extends ConsumerState<AutomationEditorScreen>
     return GlassScaffold(
       title: _isEditing ? 'Edit Automation' : 'New Automation',
       actions: [
-        if (_isEditing)
+        if (_isEditing) ...[
+          IconButton(
+            icon: const Icon(Icons.delete_outline),
+            tooltip: 'Delete',
+            onPressed: _deleteAutomation,
+          ),
           ThemedSwitch(
             value: _enabled,
             onChanged: (value) => setState(() => _enabled = value),
           ),
+        ],
       ],
       bottomNavigationBar: _buildSaveButton(),
       slivers: [
@@ -380,38 +388,81 @@ class _AutomationEditorScreenState extends ConsumerState<AutomationEditorScreen>
                   const SizedBox(height: AppTheme.spacing8),
 
                   // Actions list with flow connectors
-                  ..._actions.asMap().entries.map((entry) {
-                    final index = entry.key;
-                    final action = entry.value;
-                    // Get nodes and channels for action editor
-                    final nodes = ref.watch(nodesProvider);
-                    final channels = ref.watch(channelsProvider);
-                    final myNodeNum = ref.watch(myNodeNumProvider);
-                    return Column(
-                      children: [
-                        ActionEditor(
-                          action: action,
-                          index: index,
-                          totalActions: _actions.length,
-                          triggerType: _trigger.type,
-                          availableNodes: nodes.values.toList(),
-                          availableChannels: channels,
-                          myNodeNum: myNodeNum,
-                          onChanged: (updated) {
-                            setState(() {
-                              _actions[index] = updated;
-                            });
-                          },
-                          onDelete: _actions.length > 1
-                              ? () => setState(() => _actions.removeAt(index))
-                              : null,
+                  if (_actions.isEmpty)
+                    BouncyTap(
+                      onTap: _addAction,
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(
+                          vertical: AppTheme.spacing24,
+                          horizontal: AppTheme.spacing16,
                         ),
-                        // Show connector between actions (not after the last one)
-                        if (index < _actions.length - 1)
-                          _buildFlowConnector(context, stepNumber: index + 2),
-                      ],
-                    );
-                  }),
+                        decoration: BoxDecoration(
+                          color: context.card,
+                          borderRadius: BorderRadius.circular(
+                            AppTheme.radius12,
+                          ),
+                          border: Border.all(color: context.border),
+                        ),
+                        child: Column(
+                          children: [
+                            Icon(
+                              Icons.bolt_outlined,
+                              size: 32,
+                              color: SemanticColors.disabled,
+                            ),
+                            const SizedBox(height: AppTheme.spacing8),
+                            Text(
+                              'No actions configured',
+                              style: TextStyle(
+                                color: SemanticColors.disabled,
+                                fontSize: 14,
+                              ),
+                            ),
+                            const SizedBox(height: AppTheme.spacing4),
+                            Text(
+                              'Tap "+ Add Action" to add one',
+                              style: TextStyle(
+                                color: SemanticColors.disabled,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  else
+                    ..._actions.asMap().entries.map((entry) {
+                      final index = entry.key;
+                      final action = entry.value;
+                      // Get nodes and channels for action editor
+                      final nodes = ref.watch(nodesProvider);
+                      final channels = ref.watch(channelsProvider);
+                      final myNodeNum = ref.watch(myNodeNumProvider);
+                      return Column(
+                        children: [
+                          ActionEditor(
+                            action: action,
+                            index: index,
+                            totalActions: _actions.length,
+                            triggerType: _trigger.type,
+                            availableNodes: nodes.values.toList(),
+                            availableChannels: channels,
+                            myNodeNum: myNodeNum,
+                            onChanged: (updated) {
+                              setState(() {
+                                _actions[index] = updated;
+                              });
+                            },
+                            onDelete: () =>
+                                setState(() => _actions.removeAt(index)),
+                          ),
+                          // Show connector between actions (not after the last one)
+                          if (index < _actions.length - 1)
+                            _buildFlowConnector(context, stepNumber: index + 2),
+                        ],
+                      );
+                    }),
 
                   const SizedBox(
                     height: AppTheme.spacing100,
@@ -428,10 +479,11 @@ class _AutomationEditorScreenState extends ConsumerState<AutomationEditorScreen>
   /// Build the save button
   Widget _buildSaveButton() {
     final theme = Theme.of(context);
-    final gradientColors = _isSaving
+    final canSave = !_isSaving && _actions.isNotEmpty;
+    final gradientColors = !canSave
         ? [
-            theme.colorScheme.primary.withValues(alpha: 0.5),
-            theme.colorScheme.primary.withValues(alpha: 0.4),
+            theme.colorScheme.primary.withValues(alpha: 0.3),
+            theme.colorScheme.primary.withValues(alpha: 0.2),
           ]
         : [
             theme.colorScheme.primary,
@@ -441,46 +493,50 @@ class _AutomationEditorScreenState extends ConsumerState<AutomationEditorScreen>
     return BottomActionBar(
       horizontalPadding: AppTheme.spacing16,
       child: BouncyTap(
-        onTap: _isSaving ? null : _save,
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(colors: gradientColors),
-            borderRadius: BorderRadius.circular(AppTheme.radius12),
-          ),
-          child: _isSaving
-              ? const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: 18,
-                      height: 18,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: Colors.white,
+        onTap: canSave ? _save : null,
+        child: AnimatedOpacity(
+          opacity: canSave ? 1.0 : 0.5,
+          duration: const Duration(milliseconds: 200),
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(colors: gradientColors),
+              borderRadius: BorderRadius.circular(AppTheme.radius12),
+            ),
+            child: _isSaving
+                ? const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 18,
+                        height: 18,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                    SizedBox(width: AppTheme.spacing10),
-                    Text(
-                      'Saving...',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
+                      SizedBox(width: AppTheme.spacing10),
+                      Text(
+                        'Saving...',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                        ),
                       ),
+                    ],
+                  )
+                : Text(
+                    _isEditing ? 'Save Changes' : 'Create Automation',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
                     ),
-                  ],
-                )
-              : Text(
-                  _isEditing ? 'Save Changes' : 'Create Automation',
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
                   ),
-                ),
+          ),
         ),
       ),
     );
@@ -610,6 +666,42 @@ class _AutomationEditorScreenState extends ConsumerState<AutomationEditorScreen>
         },
       ),
     );
+  }
+
+  Future<void> _deleteAutomation() async {
+    final automation = widget.automation;
+    if (automation == null) return;
+
+    ref.read(hapticServiceProvider).trigger(HapticType.warning);
+
+    final confirmed = await AppBottomSheet.showConfirm(
+      context: context,
+      title: 'Delete Automation',
+      message: 'Are you sure you want to delete "${automation.name}"?',
+      confirmLabel: 'Delete',
+      isDestructive: true,
+    );
+
+    if (confirmed != true || !mounted) return;
+
+    final automationsNotifier = ref.read(automationsProvider.notifier);
+    final navigator = Navigator.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+
+    showLoadingSnackBar(context, 'Deleting "${automation.name}"...');
+
+    try {
+      await automationsNotifier.deleteAutomation(automation.id);
+      messenger.hideCurrentSnackBar();
+      if (!mounted) return;
+      navigator.pop();
+      showGlobalSuccessSnackBar('Deleted "${automation.name}"');
+    } catch (e) {
+      messenger.hideCurrentSnackBar();
+      if (mounted) {
+        showErrorSnackBar(context, 'Failed to delete automation');
+      }
+    }
   }
 
   Future<void> _save() async {

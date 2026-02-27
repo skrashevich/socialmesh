@@ -413,7 +413,12 @@ void _showLoadingSnackBar(
                       color: SnackBarType.info.iconColor.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(AppTheme.radius10),
                     ),
-                    child: const Center(child: LoadingIndicator(size: 24)),
+                    child: Center(
+                      child: LoadingIndicator(
+                        size: 24,
+                        color: SnackBarType.info.iconColor,
+                      ),
+                    ),
                   ),
                   const SizedBox(width: AppTheme.spacing12),
                   Expanded(

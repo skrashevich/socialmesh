@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../core/theme.dart';
+import '../../../core/widgets/app_bottom_sheet.dart';
 import '../models/automation.dart';
 
 /// Universal variables available in all automations
 const _universalVariables = [
   '{{node.name}}',
+  '{{node.num}}',
   '{{battery}}',
   '{{location}}',
   '{{message}}',
@@ -24,6 +26,7 @@ const _triggerVariables = <TriggerType, List<String>>{
   TriggerType.nodeSilent: ['{{silent.duration}}'],
   TriggerType.signalWeak: ['{{signal.threshold}}'],
   TriggerType.channelActivity: ['{{channel.name}}'],
+  TriggerType.detectionSensor: ['{{sensor.name}}', '{{sensor.state}}'],
 };
 
 /// Get all valid variables for a given trigger type
@@ -38,6 +41,7 @@ List<String> getValidVariables(TriggerType? triggerType) {
 /// Display names for variables (without braces)
 const _variableDisplayNames = {
   '{{node.name}}': 'node.name',
+  '{{node.num}}': 'node.num',
   '{{battery}}': 'battery',
   '{{location}}': 'location',
   '{{message}}': 'message',
@@ -48,26 +52,49 @@ const _variableDisplayNames = {
   '{{silent.duration}}': 'silent.duration',
   '{{signal.threshold}}': 'signal.threshold',
   '{{channel.name}}': 'channel.name',
+  '{{sensor.name}}': 'sensor.name',
+  '{{sensor.state}}': 'sensor.state',
 };
 
 /// Variable descriptions for tooltips
 const _variableDescriptions = {
   '{{node.name}}': 'Name of the triggering node',
+  '{{node.num}}': 'Node number in hex (e.g. a1b2)',
   '{{battery}}': 'Current battery percentage',
-  '{{location}}': 'GPS coordinates',
+  '{{location}}': 'GPS coordinates (lat, lon)',
   '{{message}}': 'Message content',
-  '{{time}}': 'Current timestamp',
+  '{{time}}': 'Current timestamp (ISO 8601)',
   '{{threshold}}': 'Configured trigger threshold',
   '{{keyword}}': 'Matched keyword',
   '{{zone.radius}}': 'Geofence radius in meters',
   '{{silent.duration}}': 'Silent duration setting',
-  '{{signal.threshold}}': 'Signal threshold (SNR)',
+  '{{signal.threshold}}': 'Signal threshold in dB (SNR)',
   '{{channel.name}}': 'Channel name',
+  '{{sensor.name}}': 'Detection sensor name',
+  '{{sensor.state}}': 'Sensor state (detected / clear)',
+};
+
+/// Variable category icons for the picker sheet
+const _variableIcons = {
+  '{{node.name}}': Icons.person_outline,
+  '{{node.num}}': Icons.tag,
+  '{{battery}}': Icons.battery_std,
+  '{{location}}': Icons.location_on_outlined,
+  '{{message}}': Icons.chat_bubble_outline,
+  '{{time}}': Icons.schedule,
+  '{{threshold}}': Icons.tune,
+  '{{keyword}}': Icons.text_fields,
+  '{{zone.radius}}': Icons.radar,
+  '{{silent.duration}}': Icons.timer_outlined,
+  '{{signal.threshold}}': Icons.signal_cellular_alt,
+  '{{channel.name}}': Icons.forum_outlined,
+  '{{sensor.name}}': Icons.sensors,
+  '{{sensor.state}}': Icons.toggle_on_outlined,
 };
 
 /// Regex to match all valid variables (universal + trigger-specific)
 final _variableRegex = RegExp(
-  r'\{\{(node\.name|battery|location|message|time|threshold|keyword|zone\.radius|silent\.duration|signal\.threshold|channel\.name)\}\}',
+  r'\{\{(node\.name|node\.num|battery|location|message|time|threshold|keyword|zone\.radius|silent\.duration|signal\.threshold|channel\.name|sensor\.name|sensor\.state)\}\}',
 );
 
 /// Legacy export for backwards compatibility
@@ -196,6 +223,8 @@ const _allTriggerVariableNames = [
   '{{silent.duration}}',
   '{{signal.threshold}}',
   '{{channel.name}}',
+  '{{sensor.name}}',
+  '{{sensor.state}}',
 ];
 
 /// Custom controller that styles variables with colored text.
@@ -349,11 +378,21 @@ class VariableTextFieldState extends State<VariableTextField> {
   }
 
   void _onFocusChange() {
-    setState(() => _hasFocus = _focusNode.hasFocus);
-    if (!_focusNode.hasFocus) {
-      _clearMarkedVariable();
-    }
+    setState(() {
+      _hasFocus = _focusNode.hasFocus;
+      if (!_focusNode.hasFocus) {
+        _markedVariableStart = null;
+        _controller.setMarkedVariable(null, null);
+      }
+    });
     widget.onFocusChange?.call();
+
+    // When gaining focus, check if cursor landed on a variable.
+    // _onSelectionChange may have fired before focus was established,
+    // so re-check now that focus is confirmed.
+    if (_focusNode.hasFocus) {
+      _onSelectionChange();
+    }
   }
 
   void _markVariableForDeletion(int start, int end) {
@@ -370,6 +409,8 @@ class VariableTextFieldState extends State<VariableTextField> {
   }
 
   void _onSelectionChange() {
+    if (!_focusNode.hasFocus) return;
+
     final text = _controller.text;
     final selection = _controller.selection;
 
@@ -492,9 +533,101 @@ class VariableChipPicker extends StatelessWidget {
     this.showDeleteHint = false,
   });
 
+  /// Number of quick-access chips to show inline before the "All" button
+  static const _quickChipCount = 4;
+
   @override
   Widget build(BuildContext context) {
     final availableVars = getValidVariables(triggerType);
+    final quickVars = availableVars.take(_quickChipCount).toList();
+    final hasMore = availableVars.length > _quickChipCount;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Wrap(
+          spacing: 6,
+          runSpacing: 6,
+          children: [
+            ...quickVars.map((v) => _buildChip(context, v)),
+            if (hasMore)
+              GestureDetector(
+                onTap: isActive && targetField != null
+                    ? () => _showVariablePickerSheet(context, availableVars)
+                    : null,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: isActive
+                        ? Theme.of(
+                            context,
+                          ).colorScheme.primary.withValues(alpha: 0.15)
+                        : context.card,
+                    borderRadius: BorderRadius.circular(AppTheme.radius8),
+                    border: Border.all(
+                      color: isActive
+                          ? Theme.of(
+                              context,
+                            ).colorScheme.primary.withValues(alpha: 0.4)
+                          : context.border,
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.data_object,
+                        size: 13,
+                        color: isActive
+                            ? Theme.of(context).colorScheme.primary
+                            : SemanticColors.disabled,
+                      ),
+                      const SizedBox(width: AppTheme.spacing4),
+                      Text(
+                        'All variables',
+                        style: TextStyle(
+                          fontFamily: AppTheme.fontFamily,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: isActive
+                              ? Theme.of(context).colorScheme.primary
+                              : SemanticColors.disabled,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+          ],
+        ),
+        if (showDeleteHint) ...[
+          const SizedBox(height: AppTheme.spacing6),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(Icons.info_outline, size: 12, color: SemanticColors.muted),
+              const SizedBox(width: AppTheme.spacing4),
+              Expanded(
+                child: Text(
+                  'Tap a variable to select it, then backspace to remove',
+                  style: TextStyle(color: SemanticColors.muted, fontSize: 10),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ],
+    );
+  }
+
+  void _showVariablePickerSheet(
+    BuildContext context,
+    List<String> availableVars,
+  ) {
+    HapticFeedback.lightImpact();
     final universalVars = availableVars
         .where((v) => _universalVariables.contains(v))
         .toList();
@@ -502,107 +635,282 @@ class VariableChipPicker extends StatelessWidget {
         .where((v) => !_universalVariables.contains(v))
         .toList();
 
-    return Container(
-      padding: const EdgeInsets.all(AppTheme.spacing8),
-      decoration: BoxDecoration(
-        color: context.background,
-        borderRadius: BorderRadius.circular(AppTheme.radius8),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            isActive
-                ? 'Tap to insert at cursor:'
-                : 'Tap a field, then tap a variable:',
-            style: TextStyle(color: SemanticColors.muted, fontSize: 11),
-          ),
-          const SizedBox(height: AppTheme.spacing6),
-          Wrap(
-            spacing: 8,
-            runSpacing: 6,
-            children: universalVars
-                .map((v) => _buildChip(context, v, false))
-                .toList(),
-          ),
-          if (triggerVars.isNotEmpty) ...[
-            const SizedBox(height: AppTheme.spacing8),
-            Text(
-              'Trigger context:',
-              style: TextStyle(color: SemanticColors.muted, fontSize: 10),
-            ),
-            const SizedBox(height: AppTheme.spacing4),
-            Wrap(
-              spacing: 8,
-              runSpacing: 6,
-              children: triggerVars
-                  .map((v) => _buildChip(context, v, true))
-                  .toList(),
-            ),
-          ],
-          if (showDeleteHint) ...[
-            const SizedBox(height: AppTheme.spacing8),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Icon(Icons.info_outline, size: 12, color: SemanticColors.muted),
-                const SizedBox(width: AppTheme.spacing4),
-                Expanded(
-                  child: Text(
-                    'Tap a variable to select it (turns red), then press backspace to remove',
-                    style: TextStyle(color: SemanticColors.muted, fontSize: 10),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ],
+    AppBottomSheet.showScrollable(
+      context: context,
+      title: 'Insert Variable',
+      initialChildSize: 0.55,
+      minChildSize: 0.35,
+      maxChildSize: 0.85,
+      builder: (scrollController) => _VariablePickerSheetContent(
+        universalVars: universalVars,
+        triggerVars: triggerVars,
+        scrollController: scrollController,
+        isActive: isActive,
+        onSelect: (variable) {
+          Navigator.pop(context);
+          if (targetField != null) {
+            targetField!.insertVariable(variable);
+          }
+        },
       ),
     );
   }
 
-  Widget _buildChip(
+  Widget _buildChip(BuildContext context, String variable) {
+    final displayName = _variableDisplayNames[variable] ?? variable;
+    final isTriggerSpecific = _allTriggerVariableNames.contains(variable);
+
+    return GestureDetector(
+      onTap: isActive && targetField != null
+          ? () => targetField!.insertVariable(variable)
+          : null,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+        decoration: BoxDecoration(
+          color: isActive
+              ? (isTriggerSpecific
+                    ? AppTheme.warningYellow.withValues(alpha: 0.15)
+                    : AppTheme.successGreen.withValues(alpha: 0.15))
+              : context.card,
+          borderRadius: BorderRadius.circular(AppTheme.radius8),
+          border: Border.all(
+            color: isActive
+                ? (isTriggerSpecific
+                      ? AppTheme.warningYellow.withValues(alpha: 0.4)
+                      : AppTheme.successGreen.withValues(alpha: 0.4))
+                : context.border,
+          ),
+        ),
+        child: Text(
+          displayName,
+          style: TextStyle(
+            fontFamily: AppTheme.fontFamily,
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+            color: isActive
+                ? (isTriggerSpecific
+                      ? AppTheme.warningYellow
+                      : AppTheme.successGreen)
+                : SemanticColors.disabled,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Searchable content for the variable picker bottom sheet
+class _VariablePickerSheetContent extends StatefulWidget {
+  final List<String> universalVars;
+  final List<String> triggerVars;
+  final ScrollController scrollController;
+  final bool isActive;
+  final ValueChanged<String> onSelect;
+
+  const _VariablePickerSheetContent({
+    required this.universalVars,
+    required this.triggerVars,
+    required this.scrollController,
+    required this.isActive,
+    required this.onSelect,
+  });
+
+  @override
+  State<_VariablePickerSheetContent> createState() =>
+      _VariablePickerSheetContentState();
+}
+
+class _VariablePickerSheetContentState
+    extends State<_VariablePickerSheetContent> {
+  String _search = '';
+
+  List<String> _filter(List<String> vars) {
+    if (_search.isEmpty) return vars;
+    final query = _search.toLowerCase();
+    return vars.where((v) {
+      final display = (_variableDisplayNames[v] ?? v).toLowerCase();
+      final desc = (_variableDescriptions[v] ?? '').toLowerCase();
+      return display.contains(query) || desc.contains(query);
+    }).toList();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final filteredUniversal = _filter(widget.universalVars);
+    final filteredTrigger = _filter(widget.triggerVars);
+    final hasResults =
+        filteredUniversal.isNotEmpty || filteredTrigger.isNotEmpty;
+
+    return Column(
+      children: [
+        // Search field
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppTheme.spacing16),
+          child: TextField(
+            maxLength: 50,
+            onChanged: (v) => setState(() => _search = v),
+            autofocus: false,
+            decoration: InputDecoration(
+              hintText: 'Search variables...',
+              prefixIcon: const Icon(Icons.search, size: 20),
+              isDense: true,
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 10,
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(AppTheme.radius10),
+                borderSide: BorderSide(color: context.border),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(AppTheme.radius10),
+                borderSide: BorderSide(color: context.border),
+              ),
+              filled: true,
+              fillColor: context.background,
+              counterText: '',
+            ),
+          ),
+        ),
+        const SizedBox(height: AppTheme.spacing8),
+        Expanded(
+          child: hasResults
+              ? ListView(
+                  controller: widget.scrollController,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppTheme.spacing16,
+                  ),
+                  children: [
+                    if (filteredUniversal.isNotEmpty) ...[
+                      _buildSectionHeader(context, 'Universal'),
+                      ...filteredUniversal.map(
+                        (v) => _buildVariableTile(context, v, false),
+                      ),
+                    ],
+                    if (filteredTrigger.isNotEmpty) ...[
+                      const SizedBox(height: AppTheme.spacing12),
+                      _buildSectionHeader(context, 'Trigger context'),
+                      ...filteredTrigger.map(
+                        (v) => _buildVariableTile(context, v, true),
+                      ),
+                    ],
+                    const SizedBox(height: AppTheme.spacing16),
+                  ],
+                )
+              : Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.search_off,
+                        size: 32,
+                        color: SemanticColors.disabled,
+                      ),
+                      const SizedBox(height: AppTheme.spacing8),
+                      Text(
+                        'No matching variables',
+                        style: TextStyle(
+                          color: SemanticColors.muted,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSectionHeader(BuildContext context, String title) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        bottom: AppTheme.spacing6,
+        top: AppTheme.spacing4,
+      ),
+      child: Text(
+        title.toUpperCase(),
+        style: TextStyle(
+          fontSize: 11,
+          fontWeight: FontWeight.w600,
+          color: SemanticColors.muted,
+          letterSpacing: 1,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildVariableTile(
     BuildContext context,
     String variable,
     bool isTriggerSpecific,
   ) {
     final displayName = _variableDisplayNames[variable] ?? variable;
-    final description = _variableDescriptions[variable];
+    final description = _variableDescriptions[variable] ?? '';
+    final icon = _variableIcons[variable] ?? Icons.code;
+    final accentColor = isTriggerSpecific
+        ? AppTheme.warningYellow
+        : AppTheme.successGreen;
 
-    return Tooltip(
-      message: description ?? displayName,
-      child: GestureDetector(
-        onTap: isActive && targetField != null
-            ? () => targetField!.insertVariable(variable)
-            : null,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-          decoration: BoxDecoration(
-            color: isActive
-                ? (isTriggerSpecific
-                      ? AppTheme.warningYellow.withValues(alpha: 0.15)
-                      : AppTheme.successGreen.withValues(alpha: 0.15))
-                : context.card,
-            borderRadius: BorderRadius.circular(AppTheme.radius8),
-            border: Border.all(
-              color: isActive
-                  ? (isTriggerSpecific
-                        ? AppTheme.warningYellow.withValues(alpha: 0.4)
-                        : AppTheme.successGreen.withValues(alpha: 0.4))
-                  : context.border,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 6),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(AppTheme.radius10),
+          onTap: () {
+            HapticFeedback.lightImpact();
+            widget.onSelect(variable);
+          },
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            decoration: BoxDecoration(
+              color: context.background,
+              borderRadius: BorderRadius.circular(AppTheme.radius10),
+              border: Border.all(color: context.border),
             ),
-          ),
-          child: Text(
-            displayName,
-            style: TextStyle(
-              fontFamily: AppTheme.fontFamily,
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-              color: isActive
-                  ? (isTriggerSpecific
-                        ? AppTheme.warningYellow
-                        : AppTheme.successGreen)
-                  : SemanticColors.disabled,
+            child: Row(
+              children: [
+                Container(
+                  width: 32,
+                  height: 32,
+                  decoration: BoxDecoration(
+                    color: accentColor.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(AppTheme.radius8),
+                  ),
+                  child: Icon(icon, color: accentColor, size: 16),
+                ),
+                const SizedBox(width: AppTheme.spacing12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        displayName,
+                        style: TextStyle(
+                          fontFamily: AppTheme.fontFamily,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: accentColor,
+                        ),
+                      ),
+                      if (description.isNotEmpty)
+                        Text(
+                          description,
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: SemanticColors.muted,
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+                Icon(
+                  Icons.add_circle_outline,
+                  size: 18,
+                  color: accentColor.withValues(alpha: 0.6),
+                ),
+              ],
             ),
           ),
         ),

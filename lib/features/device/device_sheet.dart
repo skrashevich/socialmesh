@@ -234,21 +234,25 @@ class _DeviceSheetContentState extends ConsumerState<_DeviceSheetContent>
                 const MeshCoreConsole(),
               ],
               const SizedBox(height: AppTheme.spacing24),
-
-              // Connection Actions
-              if (isConnected) ...[
-                _buildSectionTitle(context, 'Connection'),
-                const SizedBox(height: AppTheme.spacing12),
-                _buildDisconnectButton(context),
-              ] else if (!isReconnecting) ...[
-                _buildSectionTitle(context, 'Connection'),
-                const SizedBox(height: AppTheme.spacing12),
-                _buildScanButton(context),
-              ],
-              const SizedBox(height: AppTheme.spacing32),
             ],
           ),
         ),
+
+        // Fixed bottom connection button
+        if (isConnected || !isReconnecting) ...[
+          Divider(color: context.border.withValues(alpha: 0.2), height: 1),
+          Padding(
+            padding: EdgeInsets.fromLTRB(
+              AppTheme.spacing20,
+              AppTheme.spacing12,
+              AppTheme.spacing20,
+              AppTheme.spacing12 + MediaQuery.of(context).padding.bottom,
+            ),
+            child: isConnected
+                ? _buildDisconnectButton(context)
+                : _buildScanButton(context),
+          ),
+        ],
       ],
     );
   }

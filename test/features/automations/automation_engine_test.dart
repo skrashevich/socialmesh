@@ -2787,4 +2787,545 @@ void main() {
       expect(log.isNotEmpty, isTrue);
     });
   });
+
+  // ---------------------------------------------------------------------------
+  // Comprehensive Variable Resolution Tests
+  //
+  // Validates that EVERY template variable resolves to real values (not
+  // fallbacks like "Unknown", "?", "") for every trigger type that could
+  // plausibly have that data available.
+  // ---------------------------------------------------------------------------
+  group('AutomationEngine - Comprehensive Variable Resolution', () {
+    /// Helper: creates an automation with a sendMessage action using all
+    /// event-based variables, and returns the resolved message text.
+    Future<String?> resolveVariablesVia({
+      required TriggerType triggerType,
+      required Future<void> Function() triggerAction,
+      Map<String, dynamic> triggerConfig = const {},
+    }) async {
+      sentMessages.clear();
+      mockRepository.clearTestAutomations();
+      final automation = Automation(
+        id: 'var-test-${triggerType.name}',
+        name: 'Var Test ${triggerType.name}',
+        trigger: AutomationTrigger(type: triggerType, config: triggerConfig),
+        actions: const [
+          AutomationAction(
+            type: ActionType.sendMessage,
+            config: {
+              'targetNodeNum': 999,
+              'messageText':
+                  '|name={{node.name}}|num={{node.num}}|bat={{battery}}|loc={{location}}|msg={{message}}|sensor={{sensor.name}}|state={{sensor.state}}|',
+            },
+          ),
+        ],
+      );
+      mockRepository.addTestAutomation(automation);
+
+      await triggerAction();
+
+      if (sentMessages.isEmpty) return null;
+      return sentMessages.first.$2;
+    }
+
+    test(
+      'batteryLow resolves node.name, node.num, battery, and location',
+      () async {
+        // Pre-populate position cache via a position update
+        final nodeWithPos = MeshNode(
+          nodeNum: 0xABCD,
+          longName: 'BatNode',
+          batteryLevel: 50,
+          latitude: -33.87,
+          longitude: 151.21,
+          lastHeard: DateTime.now(),
+        );
+        // Dummy automation so processNodeUpdate doesn't short-circuit
+        mockRepository.addTestAutomation(
+          Automation(
+            id: 'dummy',
+            name: 'Dummy',
+            trigger: const AutomationTrigger(
+              type: TriggerType.batteryLow,
+              config: {'batteryThreshold': 30},
+            ),
+            actions: const [
+              AutomationAction(type: ActionType.logEvent, config: {}),
+            ],
+          ),
+        );
+        await engine.processNodeUpdate(nodeWithPos);
+
+        // Now set up the real test
+        final msg = await resolveVariablesVia(
+          triggerType: TriggerType.batteryLow,
+          triggerConfig: {'batteryThreshold': 30},
+          triggerAction: () async {
+            // Cross the threshold
+            final nodeLow = MeshNode(
+              nodeNum: 0xABCD,
+              longName: 'BatNode',
+              batteryLevel: 25,
+              latitude: -33.87,
+              longitude: 151.21,
+              lastHeard: DateTime.now(),
+            );
+            // Need to first see battery above threshold for hysteresis
+            final nodeHigh = MeshNode(
+              nodeNum: 0xABCD,
+              longName: 'BatNode',
+              batteryLevel: 50,
+              latitude: -33.87,
+              longitude: 151.21,
+              lastHeard: DateTime.now(),
+            );
+            await engine.processNodeUpdate(nodeHigh);
+            await engine.processNodeUpdate(nodeLow);
+          },
+        );
+
+        expect(msg, isNotNull, reason: 'batteryLow should fire');
+        expect(
+          msg,
+          contains('name=BatNode'),
+          reason: 'node.name should resolve',
+        );
+        expect(msg, contains('num=abcd'), reason: 'node.num should resolve');
+        expect(msg, contains('bat=25%'), reason: 'battery should resolve');
+        expect(
+          msg,
+          contains('loc=-33.870000, 151.210000'),
+          reason: 'location should resolve from cache',
+        );
+      },
+    );
+
+    test(
+      'positionChanged resolves node.name, node.num, battery, and location',
+      () async {
+        final msg = await resolveVariablesVia(
+          triggerType: TriggerType.positionChanged,
+          triggerAction: () async {
+            // First update: establish baseline
+            final node1 = MeshNode(
+              nodeNum: 0x1234,
+              longName: 'PosNode',
+              batteryLevel: 80,
+              latitude: -33.0,
+              longitude: 151.0,
+              lastHeard: DateTime.now(),
+            );
+            await engine.processNodeUpdate(node1);
+
+            // Second: position changes
+            final node2 = MeshNode(
+              nodeNum: 0x1234,
+              longName: 'PosNode',
+              batteryLevel: 80,
+              latitude: -33.87,
+              longitude: 151.21,
+              lastHeard: DateTime.now(),
+            );
+            await engine.processNodeUpdate(node2);
+          },
+        );
+
+        expect(msg, isNotNull, reason: 'positionChanged should fire');
+        expect(msg, contains('name=PosNode'));
+        expect(msg, contains('num=1234'));
+        expect(
+          msg,
+          contains('bat=80%'),
+          reason: 'battery should resolve from cache',
+        );
+        expect(msg, contains('loc=-33.870000, 151.210000'));
+      },
+    );
+
+    test(
+      'signalWeak resolves node.name, node.num, battery, and location',
+      () async {
+        final msg = await resolveVariablesVia(
+          triggerType: TriggerType.signalWeak,
+          triggerAction: () async {
+            // Pre-populate caches
+            final node = MeshNode(
+              nodeNum: 0x5678,
+              longName: 'SigNode',
+              batteryLevel: 60,
+              snr: -15,
+              latitude: -33.87,
+              longitude: 151.21,
+              lastHeard: DateTime.now(),
+            );
+            await engine.processNodeUpdate(node);
+          },
+        );
+
+        expect(msg, isNotNull, reason: 'signalWeak should fire');
+        expect(msg, contains('name=SigNode'));
+        expect(msg, contains('num=5678'));
+        expect(
+          msg,
+          contains('bat=60%'),
+          reason: 'battery should resolve from cache',
+        );
+        expect(
+          msg,
+          contains('loc=-33.870000, 151.210000'),
+          reason: 'location should resolve from cache',
+        );
+      },
+    );
+
+    test(
+      'nodeOffline resolves node.name, node.num, battery, and location',
+      () async {
+        final msg = await resolveVariablesVia(
+          triggerType: TriggerType.nodeOffline,
+          triggerAction: () async {
+            // Online first
+            final nodeOn = MeshNode(
+              nodeNum: 0x9999,
+              longName: 'OffNode',
+              batteryLevel: 45,
+              latitude: -33.87,
+              longitude: 151.21,
+              lastHeard: DateTime.now(),
+            );
+            await engine.processNodeUpdate(nodeOn);
+
+            // Goes offline
+            final nodeOff = MeshNode(
+              nodeNum: 0x9999,
+              longName: 'OffNode',
+              batteryLevel: 45,
+              latitude: -33.87,
+              longitude: 151.21,
+              lastHeard: DateTime.now().subtract(const Duration(hours: 3)),
+            );
+            await engine.processNodeUpdate(nodeOff);
+          },
+        );
+
+        expect(msg, isNotNull, reason: 'nodeOffline should fire');
+        expect(msg, contains('name=OffNode'));
+        expect(msg, contains('num=9999'));
+        expect(
+          msg,
+          contains('bat=45%'),
+          reason: 'battery should resolve from cache',
+        );
+        expect(
+          msg,
+          contains('loc=-33.870000, 151.210000'),
+          reason: 'location should resolve',
+        );
+      },
+    );
+
+    test(
+      'nodeOnline resolves node.name, node.num, battery, and location',
+      () async {
+        final msg = await resolveVariablesVia(
+          triggerType: TriggerType.nodeOnline,
+          triggerAction: () async {
+            // Offline first
+            final nodeOff = MeshNode(
+              nodeNum: 0x7777,
+              longName: 'OnNode',
+              batteryLevel: 90,
+              latitude: -33.87,
+              longitude: 151.21,
+              lastHeard: DateTime.now().subtract(const Duration(hours: 3)),
+            );
+            await engine.processNodeUpdate(nodeOff);
+
+            // Comes online
+            final nodeOn = MeshNode(
+              nodeNum: 0x7777,
+              longName: 'OnNode',
+              batteryLevel: 90,
+              latitude: -33.87,
+              longitude: 151.21,
+              lastHeard: DateTime.now(),
+            );
+            await engine.processNodeUpdate(nodeOn);
+          },
+        );
+
+        expect(msg, isNotNull, reason: 'nodeOnline should fire');
+        expect(msg, contains('name=OnNode'));
+        expect(msg, contains('num=7777'));
+        expect(msg, contains('bat=90%'));
+        expect(msg, contains('loc=-33.870000, 151.210000'));
+      },
+    );
+
+    test(
+      'messageReceived resolves node.name, battery, location, and message',
+      () async {
+        // Pre-seed node cache
+        final node = MeshNode(
+          nodeNum: 0x4444,
+          longName: 'MsgSender',
+          batteryLevel: 55,
+          latitude: -33.87,
+          longitude: 151.21,
+          lastHeard: DateTime.now(),
+        );
+        mockRepository.addTestAutomation(
+          Automation(
+            id: 'dummy',
+            name: 'Dummy',
+            trigger: const AutomationTrigger(type: TriggerType.nodeOnline),
+            actions: const [
+              AutomationAction(type: ActionType.logEvent, config: {}),
+            ],
+          ),
+        );
+        await engine.processNodeUpdate(node);
+
+        final msg = await resolveVariablesVia(
+          triggerType: TriggerType.messageReceived,
+          triggerAction: () async {
+            await engine.processMessage(
+              AutomationMessage(from: 0x4444, text: 'Hello world'),
+              senderName: 'MsgSender',
+            );
+          },
+        );
+
+        expect(msg, isNotNull, reason: 'messageReceived should fire');
+        expect(msg, contains('name=MsgSender'));
+        expect(
+          msg,
+          contains('bat=55%'),
+          reason: 'battery should resolve from cache',
+        );
+        expect(
+          msg,
+          contains('loc=-33.870000, 151.210000'),
+          reason: 'location should resolve from cache',
+        );
+        expect(msg, contains('msg=Hello world'));
+      },
+    );
+
+    test(
+      'detectionSensor resolves sensor.name, sensor.state, battery, location',
+      () async {
+        // Pre-seed node cache
+        final node = MeshNode(
+          nodeNum: 0x3333,
+          longName: 'SensorNode',
+          batteryLevel: 70,
+          latitude: -33.87,
+          longitude: 151.21,
+          lastHeard: DateTime.now(),
+        );
+        mockRepository.addTestAutomation(
+          Automation(
+            id: 'dummy',
+            name: 'Dummy',
+            trigger: const AutomationTrigger(type: TriggerType.nodeOnline),
+            actions: const [
+              AutomationAction(type: ActionType.logEvent, config: {}),
+            ],
+          ),
+        );
+        await engine.processNodeUpdate(node);
+
+        final msg = await resolveVariablesVia(
+          triggerType: TriggerType.detectionSensor,
+          triggerAction: () async {
+            await engine.processDetectionSensorEvent(
+              nodeNum: 0x3333,
+              sensorName: 'Motion',
+              detected: true,
+            );
+          },
+        );
+
+        expect(msg, isNotNull, reason: 'detectionSensor should fire');
+        expect(msg, contains('sensor=Motion'));
+        expect(msg, contains('state=detected'));
+        expect(
+          msg,
+          contains('bat=70%'),
+          reason: 'battery should resolve from cache',
+        );
+        expect(
+          msg,
+          contains('loc=-33.870000, 151.210000'),
+          reason: 'location should resolve from cache',
+        );
+      },
+    );
+
+    test(
+      'manual trigger enriches battery and node from cached device data',
+      () async {
+        // Create engine with onGetMyNodeNum callback
+        engine.stop();
+        engine = AutomationEngine(
+          repository: mockRepository,
+          iftttService: mockIftttService,
+          onSendMessage: (nodeNum, message) async {
+            sentMessages.add((nodeNum, message));
+            return true;
+          },
+          onSendToChannel: (channelIndex, message) async {
+            sentChannelMessages.add((channelIndex, message));
+            return true;
+          },
+          onGetMyNodeNum: () => 0xBEEF,
+          onGetPhonePosition: () async => (-33.87, 151.21),
+        );
+
+        // Pre-populate the battery and name caches by processing a node update
+        mockRepository.addTestAutomation(
+          Automation(
+            id: 'dummy',
+            name: 'Dummy',
+            trigger: const AutomationTrigger(type: TriggerType.nodeOnline),
+            actions: const [
+              AutomationAction(type: ActionType.logEvent, config: {}),
+            ],
+          ),
+        );
+        final myNode = MeshNode(
+          nodeNum: 0xBEEF,
+          longName: 'MyRadio',
+          batteryLevel: 84,
+          lastHeard: DateTime.now(),
+        );
+        await engine.processNodeUpdate(myNode);
+
+        // Now run a manual trigger with a bare event (no data)
+        final automation = Automation(
+          id: 'manual-var-test',
+          name: 'Manual Var Test',
+          trigger: const AutomationTrigger(type: TriggerType.manual),
+          actions: const [
+            AutomationAction(
+              type: ActionType.sendMessage,
+              config: {
+                'targetNodeNum': 999,
+                'messageText':
+                    '|name={{node.name}}|num={{node.num}}|bat={{battery}}|loc={{location}}|',
+              },
+            ),
+          ],
+        );
+
+        // Bare event — no pre-populated fields (like the real UI does)
+        final event = AutomationEvent(type: TriggerType.manual);
+        await engine.executeAutomationManually(automation, event);
+
+        expect(sentMessages, isNotEmpty, reason: 'manual should send message');
+        final msg = sentMessages.first.$2;
+        expect(
+          msg,
+          contains('name=MyRadio'),
+          reason: 'node.name should enrich from cache',
+        );
+        expect(
+          msg,
+          contains('num=beef'),
+          reason: 'node.num should enrich from cache',
+        );
+        expect(
+          msg,
+          contains('bat=84%'),
+          reason: 'battery should enrich from cache',
+        );
+        expect(
+          msg,
+          contains('loc=-33.870000, 151.210000'),
+          reason: 'location should enrich from phone GPS',
+        );
+      },
+    );
+
+    test(
+      'manual trigger without onGetMyNodeNum still provides fallbacks',
+      () async {
+        // Default engine has no onGetMyNodeNum/onGetPhonePosition
+        final automation = Automation(
+          id: 'manual-no-device',
+          name: 'No Device Manual',
+          trigger: const AutomationTrigger(type: TriggerType.manual),
+          actions: const [
+            AutomationAction(
+              type: ActionType.sendMessage,
+              config: {
+                'targetNodeNum': 999,
+                'messageText':
+                    '|name={{node.name}}|bat={{battery}}|loc={{location}}|',
+              },
+            ),
+          ],
+        );
+
+        final event = AutomationEvent(type: TriggerType.manual);
+        await engine.executeAutomationManually(automation, event);
+
+        expect(sentMessages, isNotEmpty);
+        final msg = sentMessages.first.$2;
+        // Without device context, should get fallback values
+        expect(msg, contains('name=Unknown'));
+        expect(msg, contains('bat=?%'));
+        expect(msg, contains('loc=Unknown'));
+      },
+    );
+
+    test('messageContains resolves battery and location from cache', () async {
+      // Pre-seed node cache
+      final node = MeshNode(
+        nodeNum: 0x5555,
+        longName: 'KeySender',
+        batteryLevel: 42,
+        latitude: -33.87,
+        longitude: 151.21,
+        lastHeard: DateTime.now(),
+      );
+      mockRepository.addTestAutomation(
+        Automation(
+          id: 'dummy',
+          name: 'Dummy',
+          trigger: const AutomationTrigger(type: TriggerType.nodeOnline),
+          actions: const [
+            AutomationAction(type: ActionType.logEvent, config: {}),
+          ],
+        ),
+      );
+      await engine.processNodeUpdate(node);
+
+      final msg = await resolveVariablesVia(
+        triggerType: TriggerType.messageContains,
+        triggerConfig: {'keyword': 'hello'},
+        triggerAction: () async {
+          await engine.processMessage(
+            AutomationMessage(from: 0x5555, text: 'say hello'),
+            senderName: 'KeySender',
+          );
+        },
+      );
+
+      expect(msg, isNotNull, reason: 'messageContains should fire');
+      expect(msg, contains('name=KeySender'));
+      expect(
+        msg,
+        contains('bat=42%'),
+        reason: 'battery should resolve from cache',
+      );
+      expect(
+        msg,
+        contains('loc=-33.870000, 151.210000'),
+        reason: 'location should resolve from cache',
+      );
+      expect(msg, contains('msg=say hello'));
+    });
+  });
 }
