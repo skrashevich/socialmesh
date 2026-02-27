@@ -426,23 +426,21 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
           resizeToAvoidBottomInset: false,
           title: 'Position',
           actions: [
-            // Date range selector
+            // Map / list toggle
             IconButton(
-              icon: Badge(
-                isLabelVisible:
-                    _customStartDate != null || _customEndDate != null,
-                child: const Icon(Icons.date_range),
-              ),
-              tooltip: 'Date range',
-              onPressed: _selectDateRange,
+              icon: Icon(_showMap ? Icons.list : Icons.map),
+              tooltip: _showMap ? 'List view' : 'Map view',
+              onPressed: () {
+                HapticFeedback.selectionClick();
+                safeSetState(() => _showMap = !_showMap);
+              },
             ),
             // Overflow menu with all secondary actions
             AppBarOverflowMenu<String>(
               onSelected: (value) {
                 switch (value) {
-                  case 'toggle_view':
-                    HapticFeedback.selectionClick();
-                    safeSetState(() => _showMap = !_showMap);
+                  case 'date_range':
+                    _selectDateRange();
                   case 'export':
                     _exportCsv();
                   case 'clear':
@@ -470,18 +468,22 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
                 }
               },
               itemBuilder: (context) => [
-                // Map / list toggle
+                // Date range selector
                 PopupMenuItem<String>(
-                  value: 'toggle_view',
+                  value: 'date_range',
                   child: Row(
                     children: [
-                      Icon(
-                        _showMap ? Icons.list : Icons.map,
-                        size: 20,
-                        color: context.textSecondary,
+                      Badge(
+                        isLabelVisible:
+                            _customStartDate != null || _customEndDate != null,
+                        child: Icon(
+                          Icons.date_range,
+                          size: 20,
+                          color: context.textSecondary,
+                        ),
                       ),
                       const SizedBox(width: AppTheme.spacing12),
-                      Text(_showMap ? 'List view' : 'Map view'),
+                      const Text('Date range'),
                     ],
                   ),
                 ),
