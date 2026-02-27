@@ -1743,10 +1743,11 @@ class _MapScreenState extends ConsumerState<MapScreen>
                         },
                       ),
                     ),
-                  // Node count indicator - hide in location only mode
+                  // Node count indicator - hide in location only mode and measure mode
                   if (!_showNodeList &&
                       !_showFilters &&
-                      !widget.locationOnlyMode)
+                      !widget.locationOnlyMode &&
+                      !_measureMode)
                     Positioned(
                       left: _mapPadding,
                       top: _mapPadding,

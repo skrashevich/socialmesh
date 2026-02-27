@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// lint-allow: haptic-feedback — GestureDetector is for keyboard dismissal, not user interaction
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
