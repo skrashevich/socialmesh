@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../core/logging.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/widgets/animations.dart';
+import '../../core/widgets/app_bottom_sheet.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/theme.dart';
@@ -143,14 +144,22 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
   Future<void> _saveConfig() async {
     safeSetState(() => _isSaving = true);
 
-    // Guard: MQTT on non-WiFi device requires client proxy
+    // Warn: MQTT on non-WiFi device without client proxy
     if (_enabled && !_proxyToClientEnabled && !_targetDeviceHasWifi()) {
-      safeSetState(() => _proxyToClientEnabled = true);
-      if (mounted) {
-        showInfoSnackBar(
-          context,
-          'MQTT Client Proxy auto-enabled — this device has no WiFi hardware',
-        );
+      final confirmed = await AppBottomSheet.showConfirm(
+        context: context,
+        title: 'No WiFi Hardware',
+        message:
+            'This device does not have WiFi hardware. '
+            'Without MQTT Client Proxy enabled, the device cannot reach '
+            'an MQTT broker on its own.\n\n'
+            'Save anyway without proxy?',
+        confirmLabel: 'Save Anyway',
+        isDestructive: true,
+      );
+      if (confirmed != true) {
+        safeSetState(() => _isSaving = false);
+        return;
       }
     }
 
@@ -266,19 +275,13 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
                       value: _enabled,
                       onChanged: (value) {
                         HapticFeedback.selectionClick();
-                        setState(() {
-                          _enabled = value;
-                          // Auto-enable proxy for non-WiFi devices
-                          if (value && !_targetDeviceHasWifi()) {
-                            _proxyToClientEnabled = true;
-                          }
-                        });
+                        setState(() => _enabled = value);
                       },
                     ),
                   ),
                   if (_enabled) ...[
-                    // Show warning if device lacks WiFi hardware
-                    if (!_targetDeviceHasWifi())
+                    // Show advisory if device lacks WiFi hardware
+                    if (!_targetDeviceHasWifi() && !_proxyToClientEnabled)
                       Container(
                         margin: const EdgeInsets.symmetric(
                           horizontal: 16,
@@ -310,9 +313,9 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
                             Expanded(
                               child: Text(
                                 'This device has no WiFi hardware. '
-                                'MQTT Client Proxy has been auto-enabled '
-                                'so the app relays messages on behalf of '
-                                'the device. Do not disable it.',
+                                'Enable MQTT Client Proxy below so the '
+                                'app can relay messages on behalf of '
+                                'the device.',
                                 style: TextStyle(
                                   color: context.textSecondary,
                                   fontSize: 12,
@@ -596,15 +599,6 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
                       trailing: ThemedSwitch(
                         value: _proxyToClientEnabled,
                         onChanged: (value) {
-                          // Prevent disabling proxy on non-WiFi devices
-                          if (!value && _enabled && !_targetDeviceHasWifi()) {
-                            HapticFeedback.heavyImpact();
-                            showInfoSnackBar(
-                              context,
-                              'Client proxy is required — device has no WiFi hardware',
-                            );
-                            return;
-                          }
                           HapticFeedback.selectionClick();
                           setState(() {
                             _proxyToClientEnabled = value;

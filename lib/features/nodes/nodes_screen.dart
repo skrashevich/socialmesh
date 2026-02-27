@@ -1196,7 +1196,9 @@ class _NodeCard extends StatelessWidget {
                 Positioned.fill(
                   child: Container(
                     decoration: BoxDecoration(
-                      color: isMyNode ? null : context.card,
+                      color: (isMyNode || node.isFavorite)
+                          ? null
+                          : context.card,
                       gradient: isMyNode
                           ? LinearGradient(
                               begin: Alignment.topLeft,
@@ -1204,6 +1206,15 @@ class _NodeCard extends StatelessWidget {
                               colors: [
                                 context.accentColor.withValues(alpha: 0.12),
                                 context.accentColor.withValues(alpha: 0.03),
+                              ],
+                            )
+                          : node.isFavorite
+                          ? LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                AccentColors.yellow.withValues(alpha: 0.12),
+                                AccentColors.yellow.withValues(alpha: 0.03),
                               ],
                             )
                           : null,
