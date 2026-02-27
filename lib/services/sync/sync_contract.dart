@@ -53,6 +53,13 @@ enum SyncType {
   /// deterministic 5-field chain: priorityRank > timestamp >
   /// actorRoleRank > actorId > transitionId.
   incidentTransition,
+
+  /// Task transition records — per-document sync via outbox pattern.
+  ///
+  /// Each transition is synced individually. Conflict resolution uses
+  /// 4 deterministic rules: dual-ack (first timestamp), COMPLETED beats
+  /// CANCELLED, reassignment coexistence, duplicate creation survival.
+  taskTransition,
 }
 
 /// Configuration for a single syncable entity type.
@@ -205,6 +212,18 @@ const Map<SyncType, SyncTypeConfig> syncTypeConfigs = {
         'Deterministic 5-field chain: priorityRank > timestamp > '
         'actorRoleRank > actorId > transitionId. '
         'Losing transitions marked superseded, never deleted.',
+  ),
+  SyncType.taskTransition: SyncTypeConfig(
+    displayName: 'Task Transitions',
+    entityTypeKey: 'taskTransition',
+    cloudCollectionPath: 'tasks_sync',
+    usesOutbox: true,
+    supportsTombstone: false,
+    conflictPolicy:
+        '4 deterministic rules: (1) dual-ack first-timestamp-wins, '
+        '(2) COMPLETED beats CANCELLED, (3) reassignment coexistence, '
+        '(4) duplicate creation survival. '
+        'All transitions preserved append-only.',
   ),
 };
 

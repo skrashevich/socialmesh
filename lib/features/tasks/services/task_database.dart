@@ -20,6 +20,7 @@ import 'package:sqflite/sqflite.dart';
 import '../../../core/logging.dart';
 import '../models/task.dart';
 import '../models/task_transition.dart';
+import 'task_conflict_resolver.dart';
 
 /// Schema version for the tasks SQLite database.
 ///
@@ -321,5 +322,191 @@ class TaskDatabase {
   ) async {
     final db = database;
     await db.update('tasks', updates, where: 'id = ?', whereArgs: [taskId]);
+  }
+
+  /// Updates the [syncedAt] timestamp for a task after a successful push.
+  Future<void> markSynced(String taskId, DateTime syncedAt) async {
+    final db = database;
+    await db.update(
+      'tasks',
+      {'syncedAt': syncedAt.millisecondsSinceEpoch},
+      where: 'id = ?',
+      whereArgs: [taskId],
+    );
+  }
+
+  /// Returns all tasks that have unsynchronised local changes.
+  ///
+  /// A task is considered unsynced if [syncedAt] is null or
+  /// [updatedAt] > [syncedAt].
+  Future<List<Task>> getUnsyncedTasks() async {
+    final db = database;
+    final rows = await db.query(
+      'tasks',
+      where: 'syncedAt IS NULL OR updatedAt > syncedAt',
+      orderBy: 'updatedAt ASC',
+    );
+    return rows.map(Task.fromMap).toList();
+  }
+
+  /// Returns all transitions for [taskId] that have not yet been synced.
+  ///
+  /// Transitions are considered unsynced if their timestamp is after
+  /// the task's [syncedAt].
+  Future<List<TaskTransition>> getUnsyncedTransitions(String taskId) async {
+    final db = database;
+    final taskRows = await db.query(
+      'tasks',
+      columns: ['syncedAt'],
+      where: 'id = ?',
+      whereArgs: [taskId],
+      limit: 1,
+    );
+    if (taskRows.isEmpty) return [];
+
+    final syncedAt = taskRows.first['syncedAt'] as int?;
+
+    if (syncedAt == null) {
+      // Never synced — return all transitions.
+      return getTransitionsByTaskId(taskId);
+    }
+
+    final rows = await db.query(
+      'task_transitions',
+      where: 'taskId = ? AND timestamp > ?',
+      whereArgs: [taskId, syncedAt],
+      orderBy: 'timestamp ASC, id ASC',
+    );
+    return rows.map(TaskTransition.fromMap).toList();
+  }
+
+  // -------------------------------------------------------------------------
+  // Remote transition reconciliation
+  // -------------------------------------------------------------------------
+
+  /// Rebuilds the task projection state by replaying all transitions.
+  ///
+  /// Returns the computed final [TaskState] after replay.
+  /// Updates the `tasks.state` and `tasks.updatedAt` columns.
+  Future<TaskState> rebuildProjection(String taskId) async {
+    final db = database;
+    final transitions = await getTransitionsByTaskId(taskId);
+
+    if (transitions.isEmpty) {
+      return TaskState.created;
+    }
+
+    // Replay transitions in order to derive final state.
+    var currentState = transitions.first.fromState;
+    final now = DateTime.now();
+
+    final updates = <String, dynamic>{'updatedAt': now.millisecondsSinceEpoch};
+
+    for (final t in transitions) {
+      currentState = t.toState;
+
+      // Carry forward relevant fields from transitions.
+      if (t.toState == TaskState.completed && t.note != null) {
+        updates['completionNote'] = t.note;
+      }
+      if (t.toState == TaskState.failed && t.note != null) {
+        updates['failureReason'] = t.note;
+      }
+    }
+
+    updates['state'] = currentState.dbValue;
+
+    await db.update('tasks', updates, where: 'id = ?', whereArgs: [taskId]);
+
+    AppLogging.taskSync(
+      'projection rebuilt $taskId: final state=${currentState.name}',
+    );
+
+    return currentState;
+  }
+
+  /// Applies a batch of remote transitions received during the sync drain
+  /// cycle.
+  ///
+  /// For each remote transition:
+  /// 1. Inserts the transition (skips duplicates via primary key constraint).
+  /// 2. Loads the local task and its transitions.
+  /// 3. Runs [TaskConflictResolver.resolve] to determine the outcome.
+  /// 4. Updates the task projection based on the resolution.
+  ///
+  /// Both local and remote transitions are preserved (append-only).
+  /// This method is idempotent — calling it again with the same transitions
+  /// produces the same result.
+  ///
+  /// Spec: TASK_SYSTEM.md — Reconciliation Rules, Sprint 008/W4.2.
+  Future<void> applyRemoteTransitions({
+    required List<TaskTransition> remoteTransitions,
+    TaskConflictResolver resolver = const TaskConflictResolver(),
+  }) async {
+    final db = database;
+
+    // Group remote transitions by taskId for batch processing.
+    final groupedByTask = <String, List<TaskTransition>>{};
+    for (final rt in remoteTransitions) {
+      groupedByTask.putIfAbsent(rt.taskId, () => []).add(rt);
+    }
+
+    for (final entry in groupedByTask.entries) {
+      final taskId = entry.key;
+      final taskRemoteTransitions = entry.value
+        ..sort(
+          (a, b) => a.timestamp.millisecondsSinceEpoch.compareTo(
+            b.timestamp.millisecondsSinceEpoch,
+          ),
+        );
+
+      for (final rt in taskRemoteTransitions) {
+        // 1. Load local state BEFORE inserting, so the resolver
+        //    does not see the incoming transition as a duplicate.
+        final localTask = await getTaskById(taskId);
+        final localTransitions = await getTransitionsByTaskId(taskId);
+
+        // 2. Insert remote transition (ignore duplicates).
+        await db.insert(
+          'task_transitions',
+          rt.toMap(),
+          conflictAlgorithm: ConflictAlgorithm.ignore,
+        );
+
+        // 3. Resolve conflict.
+        final result = resolver.resolve(
+          localTask: localTask,
+          localTransitions: localTransitions,
+          remoteTransition: rt,
+        );
+
+        AppLogging.taskSync(
+          'resolved ${rt.taskId}: '
+          '${result.outcome.name} — ${result.reason}',
+        );
+
+        // 4. Update projection if resolution changed the state.
+        if (result.resolvedState != null &&
+            localTask != null &&
+            result.resolvedState != localTask.state) {
+          final updates = <String, dynamic>{
+            'state': result.resolvedState!.dbValue,
+            'updatedAt': DateTime.now().millisecondsSinceEpoch,
+          };
+
+          // Carry forward completion note or failure reason from the
+          // winning transition.
+          if (result.winningTransition?.note != null) {
+            if (result.resolvedState == TaskState.completed) {
+              updates['completionNote'] = result.winningTransition!.note;
+            } else if (result.resolvedState == TaskState.failed) {
+              updates['failureReason'] = result.winningTransition!.note;
+            }
+          }
+
+          await updateTaskProjection(taskId, updates);
+        }
+      }
+    }
   }
 }
