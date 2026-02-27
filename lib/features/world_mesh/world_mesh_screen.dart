@@ -1016,7 +1016,7 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
           Positioned(
             left: 16,
             right: 16,
-            bottom: 80,
+            bottom: 16 + 56 + MediaQuery.of(context).padding.bottom,
             child: _WorldMeasurementCard(
               start: _measureStart!,
               end: _measureEnd!,
