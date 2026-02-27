@@ -1178,11 +1178,11 @@ class _NodeCard extends StatelessWidget {
       case PresenceConfidence.active:
         return AccentColors.green;
       case PresenceConfidence.fading:
-        return AppTheme.warningYellow;
+        return AccentColors.orange;
       case PresenceConfidence.stale:
-        return context.textTertiary;
+        return AccentColors.slate;
       case PresenceConfidence.unknown:
-        return context.textTertiary;
+        return AccentColors.purple;
     }
   }
 
