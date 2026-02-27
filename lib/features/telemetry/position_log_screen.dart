@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import 'dart:async';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,6 +14,7 @@ import '../../core/widgets/datetime_picker_sheet.dart';
 import '../../core/widgets/glass_scaffold.dart';
 import '../../core/widgets/mesh_map_widget.dart';
 import '../../core/widgets/map_controls.dart';
+import '../../core/widgets/map_node_drawer.dart';
 import '../../core/widgets/search_filter_header.dart';
 import '../../core/widgets/section_header.dart';
 import '../../models/telemetry_log.dart';
@@ -92,12 +94,19 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
     }
   }
 
+  Future<void> _saveMapStyle(MapTileStyle style) async {
+    final settings = await ref.read(settingsServiceProvider.future);
+    if (!mounted) return;
+    unawaited(settings.setMapTileStyleIndex(style.index));
+  }
+
   // -----------------------------------------------------------------------
   // Filtering
   // -----------------------------------------------------------------------
 
   List<PositionLog> _filterLogs(List<PositionLog> logs) {
     final now = DateTime.now();
+    final myNodeNum = ref.read(myNodeNumProvider);
 
     return logs.where((log) {
       // ---- enum-based filter ----
@@ -117,7 +126,6 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
             return false;
           }
         case _PositionFilter.myNode:
-          final myNodeNum = ref.read(myNodeNumProvider);
           if (myNodeNum == null || log.nodeNum != myNodeNum) return false;
         case _PositionFilter.all:
           break;
@@ -297,6 +305,34 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
         resizeToAvoidBottomInset: false,
         title: 'Position',
         actions: [
+          // Map style (only in map mode)
+          if (_showMap)
+            PopupMenuButton<MapTileStyle>(
+              icon: Icon(Icons.map, color: context.textSecondary),
+              tooltip: 'Map style',
+              onSelected: (style) {
+                safeSetState(() => _mapStyle = style);
+                unawaited(_saveMapStyle(style));
+              },
+              itemBuilder: (context) => MapTileStyle.values.map((style) {
+                return PopupMenuItem(
+                  value: style,
+                  child: Row(
+                    children: [
+                      Icon(
+                        _mapStyle == style ? Icons.check : Icons.map_outlined,
+                        size: 18,
+                        color: _mapStyle == style
+                            ? context.accentColor
+                            : context.textSecondary,
+                      ),
+                      const SizedBox(width: AppTheme.spacing8),
+                      Text(style.label),
+                    ],
+                  ),
+                );
+              }).toList(),
+            ),
           // Date range selector
           IconButton(
             icon: Badge(
@@ -385,8 +421,10 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
                               _hasActiveFilters
                                   ? 'No positions match filters'
                                   : 'No position history',
-                              style: Theme.of(context).textTheme.bodyLarge
-                                  ?.copyWith(color: context.textSecondary),
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: context.textSecondary,
+                              ),
                             ),
                             if (_hasActiveFilters) ...[
                               const SizedBox(height: AppTheme.spacing12),
@@ -413,19 +451,26 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
                       ),
                     )
                   // List view
-                  else
+                  else ...[
                     SliverPadding(
-                      padding: const EdgeInsets.all(AppTheme.spacing16),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AppTheme.spacing16,
+                        vertical: AppTheme.spacing8,
+                      ),
                       sliver: SliverList.separated(
                         itemCount: filtered.length,
                         separatorBuilder: (_, _) =>
                             const SizedBox(height: AppTheme.spacing8),
                         itemBuilder: (context, index) {
                           final log = filtered[index];
+                          // Only show distance from the previous log if it
+                          // belongs to the same node — otherwise the delta
+                          // is a phantom jump between unrelated nodes.
                           final prevLog = index < filtered.length - 1
                               ? filtered[index + 1]
                               : null;
-                          final distance = prevLog != null
+                          final distance =
+                              prevLog != null && prevLog.nodeNum == log.nodeNum
                               ? _calculateDistance(
                                   log.latitude,
                                   log.longitude,
@@ -446,6 +491,15 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
                         },
                       ),
                     ),
+                    // Bottom safe area
+                    SliverToBoxAdapter(
+                      child: SizedBox(
+                        height:
+                            MediaQuery.of(context).padding.bottom +
+                            AppTheme.spacing16,
+                      ),
+                    ),
+                  ],
                 ],
               );
             },
@@ -518,7 +572,10 @@ class _DateRangeBanner extends StatelessWidget {
             ),
             const Spacer(),
             GestureDetector(
-              onTap: onClear,
+              onTap: () {
+                HapticFeedback.selectionClick();
+                onClear();
+              },
               child: Icon(Icons.close, size: 16, color: context.accentColor),
             ),
           ],
@@ -529,7 +586,7 @@ class _DateRangeBanner extends StatelessWidget {
 }
 
 // ---------------------------------------------------------------------------
-// Map view (preserved from original)
+// Map view — compact node picker, auto-fit bounds, proper controls layout
 // ---------------------------------------------------------------------------
 
 class _PositionMapView extends StatefulWidget {
@@ -549,9 +606,13 @@ class _PositionMapView extends StatefulWidget {
 
 class _PositionMapViewState extends State<_PositionMapView> {
   final MapController _mapController = MapController();
-  bool _showTrail = true;
+  final TextEditingController _nodeSearchController = TextEditingController();
+  String _nodeSearchQuery = '';
+  bool _showNodeList = false;
   int? _selectedNodeNum;
+  PositionLog? _selectedLog;
   double _currentZoom = 14.0;
+  bool _didInitialFit = false;
 
   List<int> get _nodeNums => widget.logs.map((l) => l.nodeNum).toSet().toList();
 
@@ -559,21 +620,64 @@ class _PositionMapViewState extends State<_PositionMapView> {
       ? widget.logs
       : widget.logs.where((l) => l.nodeNum == _selectedNodeNum).toList();
 
-  void _fitAllPositions() {
-    final lats = widget.logs.map((l) => l.latitude).toList();
-    final lons = widget.logs.map((l) => l.longitude).toList();
-    if (lats.isNotEmpty) {
-      final bounds = LatLngBounds(
-        LatLng(lats.reduce(math.min), lons.reduce(math.min)),
-        LatLng(lats.reduce(math.max), lons.reduce(math.max)),
+  @override
+  void initState() {
+    super.initState();
+    // Auto-fit to bounds on first frame after map is ready
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!_didInitialFit && mounted) {
+        _didInitialFit = true;
+        _fitToVisible();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _nodeSearchController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(covariant _PositionMapView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (_selectedNodeNum != null) {
+      final stillPresent = widget.logs.any(
+        (l) => l.nodeNum == _selectedNodeNum,
       );
-      _mapController.fitCamera(
-        CameraFit.bounds(
-          bounds: bounds,
-          padding: const EdgeInsets.all(AppTheme.spacing50),
-        ),
-      );
+      if (!stillPresent) {
+        _selectedNodeNum = null;
+      }
     }
+  }
+
+  void _fitToVisible() {
+    final visibleLogs = _filteredLogs;
+    if (visibleLogs.isEmpty) return;
+    final lats = visibleLogs.map((l) => l.latitude).toList();
+    final lons = visibleLogs.map((l) => l.longitude).toList();
+    final bounds = LatLngBounds(
+      LatLng(lats.reduce(math.min), lons.reduce(math.min)),
+      LatLng(lats.reduce(math.max), lons.reduce(math.max)),
+    );
+    _mapController.fitCamera(
+      CameraFit.bounds(
+        bounds: bounds,
+        padding: const EdgeInsets.all(AppTheme.spacing50),
+      ),
+    );
+  }
+
+  Color _getNodeColor(int nodeNum) {
+    const colors = [
+      AppTheme.primaryMagenta,
+      AppTheme.primaryPurple,
+      AppTheme.primaryBlue,
+      AccentColors.cyan,
+      AccentColors.green,
+      AccentColors.orange,
+    ];
+    return colors[nodeNum % colors.length];
   }
 
   @override
@@ -598,19 +702,43 @@ class _PositionMapViewState extends State<_PositionMapView> {
     // Calculate bounds
     final lats = logs.map((l) => l.latitude).toList();
     final lons = logs.map((l) => l.longitude).toList();
-    final minLat = lats.reduce(math.min);
-    final maxLat = lats.reduce(math.max);
-    final minLon = lons.reduce(math.min);
-    final maxLon = lons.reduce(math.max);
+    final center = LatLng(
+      (lats.reduce(math.min) + lats.reduce(math.max)) / 2,
+      (lons.reduce(math.min) + lons.reduce(math.max)) / 2,
+    );
 
-    final center = LatLng((minLat + maxLat) / 2, (minLon + maxLon) / 2);
-
-    // Group logs by node for trails
+    // Group logs by node for trails (downsampled to max 300 points per node)
     final nodeTrails = <int, List<LatLng>>{};
+    final rawByNode = <int, List<LatLng>>{};
     for (final log in logs) {
-      nodeTrails.putIfAbsent(log.nodeNum, () => []);
-      nodeTrails[log.nodeNum]!.add(LatLng(log.latitude, log.longitude));
+      rawByNode.putIfAbsent(log.nodeNum, () => []);
+      rawByNode[log.nodeNum]!.add(LatLng(log.latitude, log.longitude));
     }
+    for (final entry in rawByNode.entries) {
+      final pts = entry.value;
+      if (pts.length <= 300) {
+        nodeTrails[entry.key] = pts;
+      } else {
+        final sampled = <LatLng>[pts.first];
+        final step = (pts.length - 1) / 299;
+        for (int i = 1; i < 299; i++) {
+          sampled.add(pts[(i * step).round()]);
+        }
+        sampled.add(pts.last);
+        nodeTrails[entry.key] = sampled;
+      }
+    }
+
+    // Downsample markers (max 500 total)
+    final cappedLogs = logs.length > 500
+        ? [
+            for (int i = 0; i < 500; i++)
+              logs[(i * (logs.length - 1) / 499).round()],
+          ]
+        : logs;
+
+    // Count unique nodes for stats
+    final uniqueNodes = logs.map((l) => l.nodeNum).toSet().length;
 
     return Stack(
       children: [
@@ -619,38 +747,63 @@ class _PositionMapViewState extends State<_PositionMapView> {
           mapStyle: widget.mapStyle,
           initialCenter: center,
           initialZoom: _currentZoom,
-          onPositionChanged: (camera, hasGesture) {
-            if (camera.zoom != _currentZoom) {
-              setState(() => _currentZoom = camera.zoom);
+          onTap: (_, _) {
+            if (_selectedLog != null) {
+              setState(() => _selectedLog = null);
             }
           },
+          onPositionChanged: (camera, hasGesture) {
+            _currentZoom = camera.zoom;
+          },
           additionalLayers: [
-            // Draw trails
-            if (_showTrail)
-              PolylineLayer(
-                polylines: nodeTrails.entries.map((entry) {
-                  final color = _getNodeColor(entry.key);
-                  return Polyline(
-                    points: entry.value,
-                    strokeWidth: 3,
-                    color: color.withValues(alpha: 0.7),
-                  );
-                }).toList(),
-              ),
+            // Trails per node
+            PolylineLayer(
+              polylines: nodeTrails.entries.map((entry) {
+                final color = _getNodeColor(entry.key);
+                return Polyline(
+                  points: entry.value,
+                  strokeWidth: 3,
+                  color: color.withValues(alpha: 0.7),
+                );
+              }).toList(),
+            ),
 
-            // Draw markers for positions
+            // Position markers (tappable)
             MarkerLayer(
-              markers: logs.map((log) {
+              markers: cappedLogs.map((log) {
                 final color = _getNodeColor(log.nodeNum);
+                final isSelected = _selectedLog == log;
                 return Marker(
                   point: LatLng(log.latitude, log.longitude),
-                  width: 12,
-                  height: 12,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: color,
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.white, width: 2),
+                  width: isSelected ? 24 : 16,
+                  height: isSelected ? 24 : 16,
+                  child: GestureDetector(
+                    onTap: () {
+                      HapticFeedback.selectionClick();
+                      setState(() {
+                        _selectedLog = _selectedLog == log ? null : log;
+                      });
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: color,
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: isSelected
+                              ? Colors.white
+                              : Colors.white.withValues(alpha: 0.8),
+                          width: isSelected ? 3 : 2,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: color.withValues(
+                              alpha: isSelected ? 0.7 : 0.4,
+                            ),
+                            blurRadius: isSelected ? 8 : 4,
+                            spreadRadius: isSelected ? 2 : 1,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );
@@ -659,64 +812,120 @@ class _PositionMapViewState extends State<_PositionMapView> {
           ],
         ),
 
-        // Controls
-        Positioned(
-          top: 16,
-          right: 16,
-          child: Column(
-            children: [
-              // Node filter
-              if (_nodeNums.length > 1)
-                Container(
-                  decoration: BoxDecoration(
-                    color: context.card,
-                    borderRadius: BorderRadius.circular(AppTheme.radius8),
-                  ),
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<int?>(
-                      value: _selectedNodeNum,
-                      hint: const Text('All nodes'),
-                      items: [
-                        const DropdownMenuItem(
-                          value: null,
-                          child: Text('All nodes'),
-                        ),
-                        ..._nodeNums.map((n) {
-                          final name =
-                              widget.nodes[n]?.displayName ??
-                              '!${n.toRadixString(16).toUpperCase()}';
-                          return DropdownMenuItem(value: n, child: Text(name));
-                        }),
-                      ],
-                      onChanged: (v) => setState(() => _selectedNodeNum = v),
-                    ),
-                  ),
+        // ----- Node list drawer (slides from left, matching world map) -----
+        AnimatedPositioned(
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.easeOutCubic,
+          left: _showNodeList ? 0 : -300,
+          top: 0,
+          bottom: 0,
+          width: 300,
+          child: _PositionNodeListPanel(
+            nodeNums: _nodeNums,
+            nodes: widget.nodes,
+            logs: widget.logs,
+            selectedNodeNum: _selectedNodeNum,
+            getNodeColor: _getNodeColor,
+            searchController: _nodeSearchController,
+            searchQuery: _nodeSearchQuery,
+            onSearchChanged: (q) => setState(() => _nodeSearchQuery = q),
+            onNodeSelected: (nodeNum) {
+              setState(() {
+                _selectedNodeNum = nodeNum;
+                _selectedLog = null;
+                _showNodeList = false;
+                _nodeSearchQuery = '';
+                _nodeSearchController.clear();
+              });
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if (mounted) _fitToVisible();
+              });
+            },
+            onShowAll: () {
+              setState(() {
+                _selectedNodeNum = null;
+                _selectedLog = null;
+                _showNodeList = false;
+                _nodeSearchQuery = '';
+                _nodeSearchController.clear();
+              });
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if (mounted) _fitToVisible();
+              });
+            },
+            onClose: () => setState(() => _showNodeList = false),
+          ),
+        ),
+
+        // ----- Node count pill (top-left, opens drawer) -----
+        if (!_showNodeList && _nodeNums.length > 1)
+          Positioned(
+            top: AppTheme.spacing8,
+            left: AppTheme.spacing8,
+            child: GestureDetector(
+              onTap: () => setState(() {
+                _showNodeList = true;
+                _selectedLog = null;
+              }),
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
                 ),
-
-              const SizedBox(height: AppTheme.spacing8),
-
-              // Toggle trail
-              Container(
                 decoration: BoxDecoration(
-                  color: context.card,
-                  borderRadius: BorderRadius.circular(AppTheme.radius8),
-                ),
-                child: IconButton(
-                  icon: Icon(
-                    _showTrail ? Icons.timeline : Icons.timeline_outlined,
-                    color: _showTrail
-                        ? Theme.of(context).colorScheme.primary
-                        : context.textSecondary,
+                  color: context.card.withValues(alpha: 0.9),
+                  borderRadius: BorderRadius.circular(AppTheme.radius20),
+                  border: Border.all(
+                    color: _selectedNodeNum != null
+                        ? context.accentColor.withValues(alpha: 0.5)
+                        : context.border.withValues(alpha: 0.5),
                   ),
-                  tooltip: 'Toggle trail',
-                  onPressed: () => setState(() => _showTrail = !_showTrail),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (_selectedNodeNum != null) ...[
+                      Container(
+                        width: 8,
+                        height: 8,
+                        decoration: BoxDecoration(
+                          color: _getNodeColor(_selectedNodeNum!),
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      const SizedBox(width: AppTheme.spacing6),
+                    ],
+                    Text(
+                      _selectedNodeNum != null
+                          ? (widget.nodes[_selectedNodeNum]?.displayName ??
+                                '!${_selectedNodeNum!.toRadixString(16).toUpperCase()}')
+                          : '${_nodeNums.length} nodes',
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                        color: _selectedNodeNum != null
+                            ? context.accentColor
+                            : context.textPrimary,
+                      ),
+                    ),
+                    const SizedBox(width: AppTheme.spacing4),
+                    Icon(
+                      Icons.chevron_right,
+                      size: 16,
+                      color: context.textTertiary,
+                    ),
+                  ],
                 ),
               ),
+            ),
+          ),
 
-              const SizedBox(height: AppTheme.spacing8),
-
-              // Zoom controls
+        // ----- Controls column (right edge) -----
+        Positioned(
+          top: AppTheme.spacing8,
+          right: AppTheme.spacing8,
+          child: Column(
+            children: [
               MapZoomControls(
                 currentZoom: _currentZoom,
                 minZoom: 3.0,
@@ -730,88 +939,523 @@ class _PositionMapViewState extends State<_PositionMapView> {
                   final newZoom = (_currentZoom - 1).clamp(3.0, 18.0);
                   _mapController.move(_mapController.camera.center, newZoom);
                 },
-                onFitAll: _fitAllPositions,
+                onFitAll: _fitToVisible,
               ),
             ],
           ),
         ),
 
-        // Stats overlay
-        Positioned(
-          bottom: 16,
-          left: 16,
-          right: 16,
-          child: Container(
-            padding: const EdgeInsets.all(AppTheme.spacing12),
-            decoration: BoxDecoration(
-              color: context.card.withValues(alpha: 0.9),
-              borderRadius: BorderRadius.circular(AppTheme.radius12),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _StatItem(
-                  label: 'Points',
-                  value: '${logs.length}',
-                  icon: Icons.location_on,
-                ),
-                _StatItem(
-                  label: 'Nodes',
-                  value: '${nodeTrails.length}',
-                  icon: Icons.device_hub,
-                ),
-                _StatItem(
-                  label: 'Distance',
-                  value: _formatDistance(_calculateTotalDistance(logs)),
-                  icon: Icons.straighten,
-                ),
-              ],
-            ),
+        // ----- Selected position info card OR stats bar (bottom) -----
+        if (!_showNodeList)
+          Positioned(
+            bottom: MediaQuery.of(context).padding.bottom + AppTheme.spacing12,
+            left: AppTheme.spacing12,
+            right: AppTheme.spacing12,
+            child: _selectedLog != null
+                ? _PositionInfoCard(
+                    log: _selectedLog!,
+                    nodeName:
+                        widget.nodes[_selectedLog!.nodeNum]?.displayName ??
+                        '!${_selectedLog!.nodeNum.toRadixString(16).toUpperCase()}',
+                    nodeColor: _getNodeColor(_selectedLog!.nodeNum),
+                    onClose: () => setState(() => _selectedLog = null),
+                  )
+                : Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppTheme.spacing16,
+                      vertical: AppTheme.spacing12,
+                    ),
+                    decoration: BoxDecoration(
+                      color: context.card.withValues(alpha: 0.95),
+                      borderRadius: BorderRadius.circular(AppTheme.radius12),
+                      border: Border.all(
+                        color: context.border.withValues(alpha: 0.5),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.2),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        _StatItem(
+                          label: 'Points',
+                          value: '${logs.length}',
+                          icon: Icons.location_on,
+                        ),
+                        _StatItem(
+                          label: 'Nodes',
+                          value: '$uniqueNodes',
+                          icon: Icons.device_hub,
+                        ),
+                        _StatItem(
+                          label: 'Distance',
+                          value: _formatDistance(_calculateTotalDistance(logs)),
+                          icon: Icons.straighten,
+                        ),
+                      ],
+                    ),
+                  ),
           ),
-        ),
       ],
     );
   }
 
-  Color _getNodeColor(int nodeNum) {
-    const colors = [
-      AppTheme.primaryMagenta,
-      AppTheme.primaryPurple,
-      AppTheme.primaryBlue,
-      AccentColors.cyan,
-      AccentColors.green,
-      AccentColors.orange,
-    ];
-    return colors[nodeNum % colors.length];
-  }
-
   double _calculateTotalDistance(List<PositionLog> logs) {
     if (logs.length < 2) return 0;
-
+    final byNode = <int, List<PositionLog>>{};
+    for (final log in logs) {
+      byNode.putIfAbsent(log.nodeNum, () => []).add(log);
+    }
     double total = 0;
-    for (int i = 1; i < logs.length; i++) {
-      const r = 6371000.0;
-      final lat1 = logs[i - 1].latitude * math.pi / 180;
-      final lat2 = logs[i].latitude * math.pi / 180;
-      final dLat = (logs[i].latitude - logs[i - 1].latitude) * math.pi / 180;
-      final dLon = (logs[i].longitude - logs[i - 1].longitude) * math.pi / 180;
-      final a =
-          math.sin(dLat / 2) * math.sin(dLat / 2) +
-          math.cos(lat1) *
-              math.cos(lat2) *
-              math.sin(dLon / 2) *
-              math.sin(dLon / 2);
-      final c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a));
-      total += r * c;
+    for (final nodeLogs in byNode.values) {
+      if (nodeLogs.length < 2) continue;
+      for (int i = 1; i < nodeLogs.length; i++) {
+        const r = 6371000.0;
+        final lat1 = nodeLogs[i - 1].latitude * math.pi / 180;
+        final lat2 = nodeLogs[i].latitude * math.pi / 180;
+        final dLat =
+            (nodeLogs[i].latitude - nodeLogs[i - 1].latitude) * math.pi / 180;
+        final dLon =
+            (nodeLogs[i].longitude - nodeLogs[i - 1].longitude) * math.pi / 180;
+        final a =
+            math.sin(dLat / 2) * math.sin(dLat / 2) +
+            math.cos(lat1) *
+                math.cos(lat2) *
+                math.sin(dLon / 2) *
+                math.sin(dLon / 2);
+        final c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a));
+        total += r * c;
+      }
     }
     return total;
   }
 
   String _formatDistance(double meters) {
-    if (meters < 1000) {
-      return '${meters.toStringAsFixed(0)}m';
-    }
+    if (meters < 1000) return '${meters.toStringAsFixed(0)}m';
     return '${(meters / 1000).toStringAsFixed(1)}km';
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Node list drawer panel — slides from left, matching world map pattern
+// ---------------------------------------------------------------------------
+
+class _PositionNodeListPanel extends StatelessWidget {
+  final List<int> nodeNums;
+  final Map<int, dynamic> nodes;
+  final List<PositionLog> logs;
+  final int? selectedNodeNum;
+  final Color Function(int) getNodeColor;
+  final TextEditingController searchController;
+  final String searchQuery;
+  final void Function(String) onSearchChanged;
+  final void Function(int) onNodeSelected;
+  final VoidCallback onShowAll;
+  final VoidCallback onClose;
+
+  const _PositionNodeListPanel({
+    required this.nodeNums,
+    required this.nodes,
+    required this.logs,
+    required this.selectedNodeNum,
+    required this.getNodeColor,
+    required this.searchController,
+    required this.searchQuery,
+    required this.onSearchChanged,
+    required this.onNodeSelected,
+    required this.onShowAll,
+    required this.onClose,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    // Build node entries with position counts, sorted by count descending.
+    final countByNode = <int, int>{};
+    for (final log in logs) {
+      countByNode[log.nodeNum] = (countByNode[log.nodeNum] ?? 0) + 1;
+    }
+
+    var sortedNums = List<int>.from(nodeNums);
+    sortedNums.sort((a, b) {
+      final countA = countByNode[a] ?? 0;
+      final countB = countByNode[b] ?? 0;
+      return countB.compareTo(countA);
+    });
+
+    // Apply search filter.
+    if (searchQuery.isNotEmpty) {
+      final q = searchQuery.toLowerCase();
+      sortedNums = sortedNums.where((nodeNum) {
+        final name =
+            nodes[nodeNum]?.displayName ??
+            '!${nodeNum.toRadixString(16).toUpperCase()}';
+        return name.toLowerCase().contains(q);
+      }).toList();
+    }
+
+    final bottomPadding = MediaQuery.of(context).padding.bottom;
+
+    return MapNodeDrawer(
+      title: 'Nodes',
+      headerIcon: Icons.hub,
+      itemCount: nodeNums.length,
+      onClose: onClose,
+      searchController: searchController,
+      onSearchChanged: onSearchChanged,
+      content: Expanded(
+        child: Column(
+          children: [
+            // "All Nodes" option.
+            Material(
+              color: selectedNodeNum == null
+                  ? context.accentColor.withValues(alpha: 0.15)
+                  : Colors.transparent,
+              child: InkWell(
+                onTap: () {
+                  HapticFeedback.selectionClick();
+                  onShowAll();
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 10,
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 36,
+                        height: 36,
+                        decoration: BoxDecoration(
+                          color: context.accentColor.withValues(alpha: 0.2),
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: context.accentColor.withValues(alpha: 0.6),
+                            width: 1.5,
+                          ),
+                        ),
+                        child: Icon(
+                          Icons.layers,
+                          size: 18,
+                          color: context.accentColor,
+                        ),
+                      ),
+                      const SizedBox(width: AppTheme.spacing10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'All Nodes',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: selectedNodeNum == null
+                                    ? context.accentColor
+                                    : context.textPrimary,
+                              ),
+                            ),
+                            const SizedBox(height: AppTheme.spacing2),
+                            Text(
+                              'Show positions from all nodes',
+                              style: TextStyle(
+                                fontSize: 11,
+                                color: context.textTertiary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      if (selectedNodeNum == null)
+                        Icon(
+                          Icons.check_circle,
+                          size: 18,
+                          color: context.accentColor,
+                        ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+
+            Divider(height: 1, color: context.border.withValues(alpha: 0.3)),
+
+            // Node list.
+            Expanded(
+              child: sortedNums.isEmpty
+                  ? const DrawerEmptyState()
+                  : ListView.builder(
+                      padding: EdgeInsets.only(
+                        top: 4,
+                        bottom: bottomPadding + 8,
+                      ),
+                      itemCount: sortedNums.length,
+                      itemBuilder: (context, index) {
+                        final nodeNum = sortedNums[index];
+                        final node = nodes[nodeNum];
+                        final nodeName =
+                            (node?.displayName as String?) ??
+                            '!${nodeNum.toRadixString(16).toUpperCase()}';
+                        final shortName = node?.shortName as String?;
+                        final color = getNodeColor(nodeNum);
+                        final count = countByNode[nodeNum] ?? 0;
+                        final isSelected = selectedNodeNum == nodeNum;
+
+                        return StaggeredDrawerTile(
+                          index: index,
+                          child: Material(
+                            color: isSelected
+                                ? context.accentColor.withValues(alpha: 0.15)
+                                : Colors.transparent,
+                            child: InkWell(
+                              onTap: () {
+                                HapticFeedback.selectionClick();
+                                onNodeSelected(nodeNum);
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 10,
+                                ),
+                                child: Row(
+                                  children: [
+                                    // Node color circle with initial.
+                                    Container(
+                                      width: 36,
+                                      height: 36,
+                                      decoration: BoxDecoration(
+                                        color: color.withValues(alpha: 0.2),
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: color.withValues(alpha: 0.6),
+                                          width: 1.5,
+                                        ),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          (shortName != null &&
+                                                      shortName.isNotEmpty
+                                                  ? shortName[0]
+                                                  : nodeNum
+                                                        .toRadixString(16)
+                                                        .substring(0, 1))
+                                              .toUpperCase(),
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                            color: color,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: AppTheme.spacing10),
+                                    // Node info.
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            nodeName,
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: isSelected
+                                                  ? context.accentColor
+                                                  : context.textPrimary,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          const SizedBox(
+                                            height: AppTheme.spacing2,
+                                          ),
+                                          Text(
+                                            '$count position${count == 1 ? '' : 's'}',
+                                            style: TextStyle(
+                                              fontSize: 11,
+                                              color: context.textTertiary,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    // Count badge.
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 8,
+                                        vertical: 4,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: context.background,
+                                        borderRadius: BorderRadius.circular(
+                                          AppTheme.radius12,
+                                        ),
+                                      ),
+                                      child: Text(
+                                        '$count',
+                                        style: TextStyle(
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w600,
+                                          color: color,
+                                          fontFamily: AppTheme.fontFamily,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Position info card — shown at bottom when a marker is tapped
+// ---------------------------------------------------------------------------
+
+class _PositionInfoCard extends StatelessWidget {
+  final PositionLog log;
+  final String nodeName;
+  final Color nodeColor;
+  final VoidCallback onClose;
+
+  const _PositionInfoCard({
+    required this.log,
+    required this.nodeName,
+    required this.nodeColor,
+    required this.onClose,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final timeFormat = DateFormat('HH:mm:ss');
+    final dateFormat = DateFormat('MMM d, yyyy');
+
+    return Container(
+      padding: const EdgeInsets.all(AppTheme.spacing12),
+      decoration: BoxDecoration(
+        color: context.card.withValues(alpha: 0.95),
+        borderRadius: BorderRadius.circular(AppTheme.radius12),
+        border: Border.all(color: context.border.withValues(alpha: 0.5)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.2),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header: color dot + node name + timestamp + close button
+          Row(
+            children: [
+              Container(
+                width: 10,
+                height: 10,
+                decoration: BoxDecoration(
+                  color: nodeColor,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: nodeColor.withValues(alpha: 0.5),
+                      blurRadius: 4,
+                      spreadRadius: 1,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: AppTheme.spacing8),
+              Expanded(
+                child: Text(
+                  nodeName,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: context.textPrimary,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              Text(
+                '${dateFormat.format(log.timestamp)}  ${timeFormat.format(log.timestamp)}',
+                style: TextStyle(
+                  fontSize: 11,
+                  color: context.textTertiary,
+                  fontFamily: AppTheme.fontFamily,
+                ),
+              ),
+              const SizedBox(width: AppTheme.spacing8),
+              GestureDetector(
+                onTap: () {
+                  HapticFeedback.selectionClick();
+                  onClose();
+                },
+                child: Icon(Icons.close, size: 16, color: context.textTertiary),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: AppTheme.spacing4),
+
+          // Coordinates
+          Padding(
+            padding: const EdgeInsets.only(left: 18),
+            child: Text(
+              '${log.latitude.toStringAsFixed(6)}, ${log.longitude.toStringAsFixed(6)}',
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                color: context.textSecondary,
+                fontFamily: AppTheme.fontFamily,
+              ),
+            ),
+          ),
+
+          const SizedBox(height: AppTheme.spacing8),
+
+          // Metric badges
+          Wrap(
+            spacing: AppTheme.spacing6,
+            runSpacing: AppTheme.spacing6,
+            children: [
+              if (log.altitude != null)
+                _InfoBadge(
+                  icon: Icons.terrain,
+                  value: '${log.altitude!.round()}m',
+                ),
+              if (log.satsInView != null)
+                _InfoBadge(
+                  icon: Icons.satellite_alt,
+                  value: '${log.satsInView} sats',
+                  color: log.satsInView! >= _kGoodFixMinSats
+                      ? AccentColors.green
+                      : null,
+                ),
+              if (log.speed != null && log.speed! > 0)
+                _InfoBadge(
+                  icon: Icons.speed,
+                  value: '${log.speed!.round()} km/h',
+                ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -835,22 +1479,32 @@ class _StatItem extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, size: 20, color: context.textTertiary),
+        Icon(icon, size: 16, color: context.textTertiary),
         const SizedBox(height: AppTheme.spacing4),
         Text(
           value,
-          style: Theme.of(
-            context,
-          ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+            color: context.textPrimary,
+            fontFamily: AppTheme.fontFamily,
+          ),
         ),
-        Text(label, style: Theme.of(context).textTheme.bodySmall),
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 11,
+            fontWeight: FontWeight.w500,
+            color: context.textTertiary,
+          ),
+        ),
       ],
     );
   }
 }
 
 // ---------------------------------------------------------------------------
-// Position card (list view)
+// Position card (list view) — matches NodeDex / Presence tile styling
 // ---------------------------------------------------------------------------
 
 class _PositionCard extends StatelessWidget {
@@ -866,117 +1520,140 @@ class _PositionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dateFormat = DateFormat('MMM d, yyyy');
     final timeFormat = DateFormat('HH:mm:ss');
+    final dateFormat = DateFormat('MMM d');
 
-    return Card(
-      margin: EdgeInsets.zero,
-      child: Padding(
-        padding: const EdgeInsets.all(AppTheme.spacing12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Header: node name + date
-            Row(
-              children: [
-                Icon(
-                  Icons.location_on,
-                  size: 16,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                const SizedBox(width: AppTheme.spacing8),
-                Expanded(
-                  child: Text(
-                    nodeName,
-                    style: Theme.of(context).textTheme.titleSmall,
-                    overflow: TextOverflow.ellipsis,
+    return Container(
+      decoration: BoxDecoration(
+        color: context.surface,
+        borderRadius: BorderRadius.circular(AppTheme.radius12),
+        border: Border.all(color: context.border.withValues(alpha: 0.3)),
+      ),
+      padding: const EdgeInsets.all(AppTheme.spacing12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header: node name + timestamp
+          Row(
+            children: [
+              Icon(Icons.location_on, size: 14, color: context.accentColor),
+              const SizedBox(width: AppTheme.spacing8),
+              Expanded(
+                child: Text(
+                  nodeName,
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                    color: context.textPrimary,
                   ),
+                  overflow: TextOverflow.ellipsis,
                 ),
-                Text(
-                  dateFormat.format(log.timestamp),
-                  style: Theme.of(context).textTheme.bodySmall,
+              ),
+              Text(
+                '${dateFormat.format(log.timestamp)}  ${timeFormat.format(log.timestamp)}',
+                style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w500,
+                  color: context.textTertiary,
+                  fontFamily: AppTheme.fontFamily,
                 ),
-              ],
+              ),
+            ],
+          ),
+
+          const SizedBox(height: AppTheme.spacing4),
+
+          // Coordinates (compact, mono)
+          Padding(
+            padding: const EdgeInsets.only(left: 22),
+            child: Text(
+              '${log.latitude.toStringAsFixed(6)}, ${log.longitude.toStringAsFixed(6)}',
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                color: context.textSecondary,
+                fontFamily: AppTheme.fontFamily,
+              ),
             ),
+          ),
 
-            const SizedBox(height: AppTheme.spacing8),
+          const SizedBox(height: AppTheme.spacing8),
 
-            // Coordinates
-            Row(
-              children: [
-                _MetricChip(
-                  icon: Icons.gps_fixed,
-                  value:
-                      '${log.latitude.toStringAsFixed(6)}, ${log.longitude.toStringAsFixed(6)}',
+          // Metrics
+          Wrap(
+            spacing: AppTheme.spacing6,
+            runSpacing: AppTheme.spacing6,
+            children: [
+              if (log.altitude != null)
+                _InfoBadge(
+                  icon: Icons.terrain,
+                  value: '${log.altitude!.round()}m',
                 ),
-              ],
-            ),
-
-            const SizedBox(height: AppTheme.spacing8),
-
-            // Metrics row
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: [
-                _MetricChip(
-                  icon: Icons.schedule,
-                  value: timeFormat.format(log.timestamp),
+              if (log.satsInView != null)
+                _InfoBadge(
+                  icon: Icons.satellite_alt,
+                  value: '${log.satsInView} sats',
+                  color: log.satsInView! >= _kGoodFixMinSats
+                      ? AccentColors.green
+                      : null,
                 ),
-                if (log.altitude != null)
-                  _MetricChip(icon: Icons.terrain, value: '${log.altitude}m'),
-                if (log.satsInView != null)
-                  _MetricChip(
-                    icon: Icons.satellite_alt,
-                    value: '${log.satsInView} sats',
-                  ),
-                if (log.speed != null)
-                  _MetricChip(icon: Icons.speed, value: '${log.speed} km/h'),
-                if (distanceFromPrev != null)
-                  _MetricChip(
-                    icon: Icons.straighten,
-                    value: distanceFromPrev! < 1000
-                        ? '${distanceFromPrev!.toStringAsFixed(0)}m'
-                        : '${(distanceFromPrev! / 1000).toStringAsFixed(2)}km',
-                    color: AppTheme.primaryBlue,
-                  ),
-              ],
-            ),
-          ],
-        ),
+              if (log.speed != null && log.speed! > 0)
+                _InfoBadge(
+                  icon: Icons.speed,
+                  value: '${log.speed!.round()} km/h',
+                ),
+              if (distanceFromPrev != null)
+                _InfoBadge(
+                  icon: Icons.straighten,
+                  value: distanceFromPrev! < 1000
+                      ? '${distanceFromPrev!.toStringAsFixed(0)}m'
+                      : '${(distanceFromPrev! / 1000).toStringAsFixed(1)}km',
+                  color: AppTheme.primaryBlue,
+                ),
+            ],
+          ),
+        ],
       ),
     );
   }
 }
 
 // ---------------------------------------------------------------------------
-// Metric chip
+// Info badge — matches InfoChip pattern from core/widgets
 // ---------------------------------------------------------------------------
 
-class _MetricChip extends StatelessWidget {
+class _InfoBadge extends StatelessWidget {
   final IconData icon;
   final String value;
   final Color? color;
 
-  const _MetricChip({required this.icon, required this.value, this.color});
+  const _InfoBadge({required this.icon, required this.value, this.color});
 
   @override
   Widget build(BuildContext context) {
+    final badgeColor = color ?? context.textTertiary;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppTheme.spacing8,
+        vertical: 3,
+      ),
       decoration: BoxDecoration(
-        color: (color ?? context.textTertiary).withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(AppTheme.radius6),
+        color: badgeColor.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(AppTheme.radius8),
+        border: Border.all(color: badgeColor.withValues(alpha: 0.2)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 14, color: color ?? context.textTertiary),
+          Icon(icon, size: 12, color: badgeColor),
           const SizedBox(width: AppTheme.spacing4),
           Text(
             value,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: color ?? context.textSecondary,
+            style: TextStyle(
+              fontSize: 11,
+              fontWeight: FontWeight.w500,
+              color: badgeColor,
+              fontFamily: AppTheme.fontFamily,
             ),
           ),
         ],

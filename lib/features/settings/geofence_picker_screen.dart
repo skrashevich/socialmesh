@@ -13,6 +13,7 @@ import '../../core/map_config.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/bottom_action_bar.dart';
 import '../../core/widgets/glass_scaffold.dart';
+import '../../core/widgets/map_node_drawer.dart';
 import '../../core/widgets/mesh_map_widget.dart';
 import '../../core/widgets/map_controls.dart';
 import '../../models/mesh_models.dart';
@@ -834,8 +835,8 @@ class _NodeMarker extends StatelessWidget {
       child: Center(
         child: Text(
           (node.shortName?.isNotEmpty == true)
-              ? node.shortName!.characters.first.toUpperCase()
-              : node.nodeNum.toString().characters.first,
+              ? node.shortName![0].toUpperCase()
+              : node.nodeNum.toString()[0],
           style: TextStyle(
             fontSize: isSelected ? 16 : 14,
             fontWeight: FontWeight.bold,
@@ -871,7 +872,7 @@ class _NodeListPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Sort: my node first, then alphabetically
+    // Sort: my node first, then alphabetically.
     final sortedNodes = List<_NodeWithPosition>.from(nodesWithPosition);
     sortedNodes.sort((a, b) {
       if (a.node.nodeNum == myNodeNum) return -1;
@@ -879,145 +880,46 @@ class _NodeListPanel extends StatelessWidget {
       return a.node.displayName.compareTo(b.node.displayName);
     });
 
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Container(
-        decoration: BoxDecoration(
-          color: context.card,
-          border: Border(
-            right: BorderSide(color: context.border.withAlpha(128)),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withAlpha(77),
-              blurRadius: 16,
-              offset: const Offset(4, 0),
-            ),
-          ],
-        ),
-        child: Column(
-          children: [
-            // Header
-            Container(
-              padding: const EdgeInsets.fromLTRB(AppTheme.spacing16, 12, 8, 12),
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(color: context.border.withAlpha(128)),
-                ),
-              ),
-              child: Row(
-                children: [
-                  Icon(Icons.list, size: 20, color: context.accentColor),
-                  SizedBox(width: AppTheme.spacing8),
-                  Expanded(
-                    child: Text(
-                      'Select Node',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: context.textPrimary,
-                      ),
-                    ),
-                  ),
-                  Text(
-                    '${sortedNodes.length}',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: context.textTertiary,
-                    ),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.close, size: 20),
-                    color: context.textTertiary,
-                    onPressed: onClose,
-                    visualDensity: VisualDensity.compact,
-                  ),
-                ],
-              ),
-            ),
-            // Search field
-            Padding(
-              padding: const EdgeInsets.all(AppTheme.spacing12),
-              child: TextField(
-                maxLength: 100,
-                controller: searchController,
-                style: TextStyle(color: context.textPrimary, fontSize: 14),
-                decoration: InputDecoration(
-                  hintText: 'Search nodes...',
-                  hintStyle: TextStyle(
-                    color: context.textTertiary,
-                    fontSize: 14,
-                  ),
-                  prefixIcon: Icon(
-                    Icons.search,
-                    size: 20,
-                    color: context.textSecondary,
-                  ),
-                  suffixIcon: searchController.text.isNotEmpty
-                      ? IconButton(
-                          icon: Icon(Icons.clear, size: 18),
-                          color: context.textSecondary,
-                          onPressed: () {
-                            searchController.clear();
-                            onSearchChanged('');
-                          },
-                        )
-                      : null,
-                  filled: true,
-                  fillColor: context.background,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 8,
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(AppTheme.radius10),
-                    borderSide: BorderSide.none,
-                  ),
-                  counterText: '',
-                ),
-                onChanged: onSearchChanged,
-              ),
-            ),
-            // Node list
-            Expanded(
-              child: sortedNodes.isEmpty
-                  ? Center(
-                      child: Text(
-                        'No nodes with GPS',
-                        style: TextStyle(color: context.textTertiary),
-                      ),
-                    )
-                  : ListView.builder(
-                      padding: const EdgeInsets.symmetric(vertical: 4),
-                      itemCount: sortedNodes.length,
-                      itemBuilder: (context, index) {
-                        final nodeWithPos = sortedNodes[index];
-                        final isMyNode = nodeWithPos.node.nodeNum == myNodeNum;
-                        final isMonitored =
-                            nodeWithPos.node.nodeNum == monitoredNodeNum;
+    final bottomPadding = MediaQuery.of(context).padding.bottom;
 
-                        final presence = presenceConfidenceFor(
-                          presenceMap,
-                          nodeWithPos.node,
-                        );
-                        return _NodeListItem(
-                          nodeWithPos: nodeWithPos,
-                          isMyNode: isMyNode,
-                          isMonitored: isMonitored,
-                          presence: presence,
-                          onTap: () => onNodeSelected(
-                            nodeWithPos,
-                            setAsMonitored: false,
-                          ),
-                          onSetMonitored: () =>
-                              onNodeSelected(nodeWithPos, setAsMonitored: true),
-                        );
-                      },
+    return MapNodeDrawer(
+      title: 'Select Node',
+      headerIcon: Icons.hub,
+      itemCount: sortedNodes.length,
+      onClose: onClose,
+      searchController: searchController,
+      onSearchChanged: onSearchChanged,
+      content: Expanded(
+        child: sortedNodes.isEmpty
+            ? const DrawerEmptyState(message: 'No nodes with GPS', hint: null)
+            : ListView.builder(
+                padding: EdgeInsets.only(top: 4, bottom: bottomPadding + 8),
+                itemCount: sortedNodes.length,
+                itemBuilder: (context, index) {
+                  final nodeWithPos = sortedNodes[index];
+                  final isMyNode = nodeWithPos.node.nodeNum == myNodeNum;
+                  final isMonitored =
+                      nodeWithPos.node.nodeNum == monitoredNodeNum;
+
+                  final presence = presenceConfidenceFor(
+                    presenceMap,
+                    nodeWithPos.node,
+                  );
+                  return StaggeredDrawerTile(
+                    index: index,
+                    child: _NodeListItem(
+                      nodeWithPos: nodeWithPos,
+                      isMyNode: isMyNode,
+                      isMonitored: isMonitored,
+                      presence: presence,
+                      onTap: () =>
+                          onNodeSelected(nodeWithPos, setAsMonitored: false),
+                      onSetMonitored: () =>
+                          onNodeSelected(nodeWithPos, setAsMonitored: true),
                     ),
-            ),
-          ],
-        ),
+                  );
+                },
+              ),
       ),
     );
   }
@@ -1073,8 +975,8 @@ class _NodeListItem extends StatelessWidget {
                 child: Center(
                   child: Text(
                     (node.shortName?.isNotEmpty == true)
-                        ? node.shortName!.characters.first.toUpperCase()
-                        : node.nodeNum.toString().characters.first,
+                        ? node.shortName![0].toUpperCase()
+                        : node.nodeNum.toString()[0],
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,

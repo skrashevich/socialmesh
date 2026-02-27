@@ -16,6 +16,7 @@ import '../../core/theme.dart';
 import '../../core/widgets/app_bar_overflow_menu.dart';
 import '../../core/widgets/ico_help_system.dart';
 import '../../core/widgets/map_controls.dart';
+import '../../core/widgets/map_node_drawer.dart';
 import '../../core/widgets/node_info_card.dart';
 import '../../utils/snackbar.dart';
 import '../../core/widgets/app_bottom_sheet.dart';
@@ -33,6 +34,8 @@ import '../navigation/main_shell.dart';
 import '../../core/widgets/loading_indicator.dart';
 import '../../core/constants.dart';
 import '../../core/logging.dart';
+import '../../models/telemetry_log.dart';
+import '../../providers/telemetry_providers.dart';
 import '../tak/models/tak_event.dart';
 import '../tak/providers/tak_filter_provider.dart';
 import '../tak/providers/tak_providers.dart';
@@ -93,6 +96,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
   bool _measureMode = false;
   bool _showRangeCircles = false;
   bool _showConnectionLines = false;
+  bool _showPositionHistory = false;
   bool _showTakLayer = true;
   double _connectionMaxDistance =
       15.0; // km - max distance for connection lines
@@ -537,6 +541,11 @@ class _MapScreenState extends ConsumerState<MapScreen>
     final presenceMap = ref.watch(presenceMapProvider);
     final myNodeNum = ref.watch(myNodeNumProvider);
 
+    // Load persisted position history when the trail layer is enabled
+    final positionLogs = _showPositionHistory
+        ? ref.watch(positionLogsProvider).asData?.value ?? <PositionLog>[]
+        : <PositionLog>[];
+
     // Get nodes with positions (current or cached)
     final allNodesWithPosition = _getNodesWithPositions(nodes, presenceMap);
     final nodesWithPosition = _filterNodes(
@@ -715,6 +724,9 @@ class _MapScreenState extends ConsumerState<MapScreen>
                   break;
                 case 'range':
                   setState(() => _showRangeCircles = !_showRangeCircles);
+                  break;
+                case 'history':
+                  setState(() => _showPositionHistory = !_showPositionHistory);
                   break;
                 case 'measure':
                   setState(() {
@@ -932,6 +944,26 @@ class _MapScreenState extends ConsumerState<MapScreen>
                     ],
                   ),
                 ),
+                PopupMenuItem(
+                  value: 'history',
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.route,
+                        size: 18,
+                        color: _showPositionHistory
+                            ? context.accentColor
+                            : context.textSecondary,
+                      ),
+                      SizedBox(width: AppTheme.spacing8),
+                      Text(
+                        _showPositionHistory
+                            ? 'Hide position history'
+                            : 'Show position history',
+                      ),
+                    ],
+                  ),
+                ),
               ], // End of node-related options
               PopupMenuItem(
                 value: 'measure',
@@ -1137,6 +1169,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
                           polylines: _buildNodeTrails(
                             nodesWithPosition,
                             myNodeNum,
+                            positionLogs,
                           ),
                         ),
                       // Connection lines (optional) - hide in location only mode
@@ -2018,28 +2051,90 @@ class _MapScreenState extends ConsumerState<MapScreen>
   List<Polyline> _buildNodeTrails(
     List<_NodeWithPosition> nodes,
     int? myNodeNum,
+    List<PositionLog> positionLogs,
   ) {
     final trails = <Polyline>[];
 
-    for (final node in nodes) {
-      final trail = _nodeTrails[node.node.nodeNum];
-      if (trail == null || trail.length < 2) continue;
+    if (_showPositionHistory && positionLogs.isNotEmpty) {
+      // Group persisted position logs by nodeNum
+      final logsByNode = <int, List<PositionLog>>{};
+      for (final log in positionLogs) {
+        logsByNode.putIfAbsent(log.nodeNum, () => []).add(log);
+      }
 
-      final isMyNode = node.node.nodeNum == myNodeNum;
-      final points = trail.map((t) => LatLng(t.latitude, t.longitude)).toList();
+      // Build a polyline per node from persisted history
+      for (final entry in logsByNode.entries) {
+        final nodeNum = entry.key;
+        final logs = entry.value;
+        if (logs.length < 2) continue;
 
-      trails.add(
-        Polyline(
-          points: points,
-          color: (isMyNode ? context.accentColor : AppTheme.primaryPurple)
-              .withValues(alpha: 0.4),
-          strokeWidth: 2,
-          pattern: const StrokePattern.dotted(spacingFactor: 1.5),
-        ),
-      );
+        // Sort chronologically
+        logs.sort((a, b) => a.timestamp.compareTo(b.timestamp));
+
+        // Downsample to avoid GPU stutter from dotted pattern on 1000+ pts
+        final points = _downsamplePoints(
+          logs.map((l) => LatLng(l.latitude, l.longitude)).toList(),
+          maxPoints: 200,
+        );
+        if (points.length < 2) continue;
+
+        // Resolve color from the node's avatar, or fall back to purple
+        final matchingNode = nodes
+            .where((n) => n.node.nodeNum == nodeNum)
+            .firstOrNull;
+        final isMyNode = nodeNum == myNodeNum;
+        final color = isMyNode
+            ? context.accentColor
+            : matchingNode?.node.avatarColor != null
+            ? Color(matchingNode!.node.avatarColor!)
+            : AppTheme.primaryPurple;
+
+        trails.add(
+          Polyline(
+            points: points,
+            color: color.withValues(alpha: 0.6),
+            strokeWidth: 3,
+            pattern: const StrokePattern.dotted(spacingFactor: 1.5),
+          ),
+        );
+      }
+    } else {
+      // Fall back to ephemeral in-session trails
+      for (final node in nodes) {
+        final trail = _nodeTrails[node.node.nodeNum];
+        if (trail == null || trail.length < 2) continue;
+
+        final isMyNode = node.node.nodeNum == myNodeNum;
+        final points = trail
+            .map((t) => LatLng(t.latitude, t.longitude))
+            .toList();
+
+        trails.add(
+          Polyline(
+            points: points,
+            color: (isMyNode ? context.accentColor : AppTheme.primaryPurple)
+                .withValues(alpha: 0.4),
+            strokeWidth: 2,
+            pattern: const StrokePattern.dotted(spacingFactor: 1.5),
+          ),
+        );
+      }
     }
 
     return trails;
+  }
+
+  /// Reduce a list of [LatLng] points to at most [maxPoints] by evenly
+  /// sampling, always keeping the first and last point for continuity.
+  List<LatLng> _downsamplePoints(List<LatLng> points, {int maxPoints = 200}) {
+    if (points.length <= maxPoints) return points;
+    final result = <LatLng>[points.first];
+    final step = (points.length - 1) / (maxPoints - 1);
+    for (int i = 1; i < maxPoints - 1; i++) {
+      result.add(points[(i * step).round()]);
+    }
+    result.add(points.last);
+    return result;
   }
 
   /// Build connection lines with visual distinction for uncertain connections
@@ -2292,12 +2387,8 @@ class _NodeMarker extends StatelessWidget {
         children: [
           Text(
             (node.shortName?.isNotEmpty == true
-                ? node.shortName!.characters.first.toUpperCase()
-                : node.nodeNum
-                      .toRadixString(16)
-                      .characters
-                      .first
-                      .toUpperCase()),
+                ? node.shortName![0].toUpperCase()
+                : node.nodeNum.toRadixString(16).substring(0, 1).toUpperCase()),
             style: TextStyle(
               fontSize: isSelected ? 16 : 14,
               fontWeight: FontWeight.bold,
@@ -2375,7 +2466,7 @@ class _NodeListPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Sort: my node first, then by distance from me, then alphabetically
+    // Sort: my node first, then by distance from me, then alphabetically.
     final sortedNodes = List<_NodeWithPosition>.from(nodesWithPosition);
     sortedNodes.sort((a, b) {
       if (a.node.nodeNum == myNodeNum) return -1;
@@ -2392,167 +2483,69 @@ class _NodeListPanel extends StatelessWidget {
       return a.node.displayName.compareTo(b.node.displayName);
     });
 
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Container(
-        decoration: BoxDecoration(
-          color: context.card,
-          border: Border(
-            right: BorderSide(color: context.border.withValues(alpha: 0.5)),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.3),
-              blurRadius: 16,
-              offset: const Offset(4, 0),
-            ),
-          ],
-        ),
-        child: Column(
-          children: [
-            // Header with close button
-            Container(
-              padding: const EdgeInsets.fromLTRB(AppTheme.spacing16, 12, 8, 0),
+    final bottomPadding = MediaQuery.of(context).padding.bottom;
+    final isEntityTab = activeTab == 1;
+
+    return MapNodeDrawer(
+      title: isEntityTab ? 'Entities' : 'Nodes',
+      headerIcon: Icons.hub,
+      itemCount: isEntityTab ? takEvents.length : sortedNodes.length,
+      onClose: onClose,
+      searchController: isEntityTab ? takSearchController : searchController,
+      onSearchChanged: isEntityTab ? onTakSearchChanged : onSearchChanged,
+      searchHintText: isEntityTab ? 'Search entities...' : 'Search nodes...',
+      headerExtra: showTakTab
+          ? Container(
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: context.border.withValues(alpha: 0.3),
+                  ),
+                ),
+              ),
               child: Row(
                 children: [
-                  Icon(Icons.list, size: 20, color: context.accentColor),
-                  SizedBox(width: AppTheme.spacing8),
-                  Expanded(
-                    child: Text(
-                      activeTab == 0 ? 'Nodes' : 'Entities',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: context.textPrimary,
-                      ),
-                    ),
+                  _PanelTab(
+                    label: 'Nodes',
+                    count: sortedNodes.length,
+                    isActive: activeTab == 0,
+                    onTap: () => onTabChanged(0),
                   ),
-                  Text(
-                    activeTab == 0
-                        ? '${sortedNodes.length}'
-                        : '${takEvents.length}',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: context.textTertiary,
-                    ),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.close, size: 20),
-                    color: context.textTertiary,
-                    onPressed: onClose,
-                    visualDensity: VisualDensity.compact,
+                  _PanelTab(
+                    label: 'Entities',
+                    count: takEvents.length,
+                    isActive: activeTab == 1,
+                    onTap: () => onTabChanged(1),
                   ),
                 ],
               ),
-            ),
-            // Tab bar (only when TAK tab is available)
-            if (showTakTab)
-              Container(
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      color: context.border.withValues(alpha: 0.5),
-                    ),
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    _PanelTab(
-                      label: 'Nodes',
-                      count: sortedNodes.length,
-                      isActive: activeTab == 0,
-                      onTap: () => onTabChanged(0),
-                    ),
-                    _PanelTab(
-                      label: 'Entities',
-                      count: takEvents.length,
-                      isActive: activeTab == 1,
-                      onTap: () => onTabChanged(1),
-                    ),
-                  ],
-                ),
-              ),
-            if (!showTakTab)
-              Container(
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      color: context.border.withValues(alpha: 0.5),
-                    ),
-                  ),
-                ),
-              ),
-            // Search field
-            if (activeTab == 0)
-              Padding(
-                padding: const EdgeInsets.all(AppTheme.spacing12),
-                child: TextField(
-                  controller: searchController,
-                  style: TextStyle(color: context.textPrimary, fontSize: 14),
-                  maxLength: 64,
-                  decoration: InputDecoration(
-                    hintText: 'Search nodes...',
-                    hintStyle: TextStyle(
-                      color: context.textTertiary,
-                      fontSize: 14,
-                    ),
-                    counterText: '',
-                    prefixIcon: Icon(
-                      Icons.search,
-                      size: 20,
-                      color: context.textSecondary,
-                    ),
-                    suffixIcon: searchController.text.isNotEmpty
-                        ? IconButton(
-                            icon: Icon(Icons.clear, size: 18),
-                            color: context.textSecondary,
-                            onPressed: () {
-                              searchController.clear();
-                              onSearchChanged('');
-                            },
-                          )
-                        : null,
-                    filled: true,
-                    fillColor: context.background,
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 8,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(AppTheme.radius10),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                  onChanged: onSearchChanged,
-                ),
-              ),
-            // Content: node list or TAK entity list
-            if (activeTab == 0)
-              Expanded(
-                child: sortedNodes.isEmpty
-                    ? Center(
-                        child: Text(
-                          'No nodes found',
-                          style: TextStyle(color: context.textTertiary),
-                        ),
-                      )
-                    : ListView.builder(
-                        padding: const EdgeInsets.symmetric(vertical: 4),
-                        itemCount: sortedNodes.length,
-                        itemBuilder: (context, index) {
-                          final nodeWithPos = sortedNodes[index];
-                          final isMyNode =
-                              nodeWithPos.node.nodeNum == myNodeNum;
-                          final isSelected =
-                              selectedNode?.nodeNum == nodeWithPos.node.nodeNum;
-                          final distance = calculateDistanceFromMe(nodeWithPos);
+            )
+          : null,
+      content: isEntityTab
+          ? Expanded(child: _buildTakEntityList(context, bottomPadding))
+          : Expanded(
+              child: sortedNodes.isEmpty
+                  ? const DrawerEmptyState()
+                  : ListView.builder(
+                      padding: EdgeInsets.only(
+                        top: 4,
+                        bottom: bottomPadding + 8,
+                      ),
+                      itemCount: sortedNodes.length,
+                      itemBuilder: (context, index) {
+                        final nodeWithPos = sortedNodes[index];
+                        final isMyNode = nodeWithPos.node.nodeNum == myNodeNum;
+                        final isSelected =
+                            selectedNode?.nodeNum == nodeWithPos.node.nodeNum;
+                        final distance = calculateDistanceFromMe(nodeWithPos);
 
-                          final presence = presenceConfidenceFor(
-                            presenceMap,
-                            nodeWithPos.node,
-                          );
-                          return _NodeListItem(
+                        final presence = presenceConfidenceFor(
+                          presenceMap,
+                          nodeWithPos.node,
+                        );
+                        return StaggeredDrawerTile(
+                          index: index,
+                          child: _NodeListItem(
                             nodeWithPos: nodeWithPos,
                             isMyNode: isMyNode,
                             isSelected: isSelected,
@@ -2563,109 +2556,46 @@ class _NodeListPanel extends StatelessWidget {
                               nodeWithPos.node,
                             ),
                             onTap: () => onNodeSelected(nodeWithPos),
-                          );
-                        },
-                      ),
-              ),
-            if (activeTab == 1)
-              Padding(
-                padding: const EdgeInsets.all(AppTheme.spacing12),
-                child: TextField(
-                  controller: takSearchController,
-                  style: TextStyle(color: context.textPrimary, fontSize: 14),
-                  maxLength: 64,
-                  decoration: InputDecoration(
-                    hintText: 'Search entities...',
-                    hintStyle: TextStyle(
-                      color: context.textTertiary,
-                      fontSize: 14,
-                    ),
-                    counterText: '',
-                    prefixIcon: Icon(
-                      Icons.search,
-                      size: 20,
-                      color: context.textSecondary,
-                    ),
-                    suffixIcon: takSearchController.text.isNotEmpty
-                        ? IconButton(
-                            icon: Icon(Icons.clear, size: 18),
-                            color: context.textSecondary,
-                            onPressed: () {
-                              takSearchController.clear();
-                              onTakSearchChanged('');
-                            },
-                          )
-                        : null,
-                    filled: true,
-                    fillColor: context.background,
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 8,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(AppTheme.radius10),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                  onChanged: onTakSearchChanged,
-                ),
-              ),
-            if (activeTab == 1)
-              Expanded(
-                child: () {
-                  final query = takSearchController.text.toLowerCase();
-                  final filtered = query.isEmpty
-                      ? takEvents
-                      : takEvents
-                            .where(
-                              (e) =>
-                                  e.displayName.toLowerCase().contains(query) ||
-                                  e.typeDescription.toLowerCase().contains(
-                                    query,
-                                  ) ||
-                                  e.uid.toLowerCase().contains(query),
-                            )
-                            .toList();
-                  if (filtered.isEmpty) {
-                    return Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.military_tech_outlined,
-                            size: 48,
-                            color: context.textTertiary.withValues(alpha: 0.5),
                           ),
-                          const SizedBox(height: AppTheme.spacing12),
-                          Text(
-                            query.isEmpty
-                                ? 'No entities'
-                                : 'No matching entities',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: context.textTertiary,
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  }
-                  return ListView.builder(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    itemCount: filtered.length,
-                    itemBuilder: (context, index) {
-                      final event = filtered[index];
-                      return _TakEntityListItem(
-                        event: event,
-                        onTap: () => onTakEntitySelected(event),
-                      );
-                    },
-                  );
-                }(),
-              ),
-          ],
-        ),
-      ),
+                        );
+                      },
+                    ),
+            ),
+    );
+  }
+
+  Widget _buildTakEntityList(BuildContext context, double bottomPadding) {
+    final query = takSearchController.text.toLowerCase();
+    final filtered = query.isEmpty
+        ? takEvents
+        : takEvents
+              .where(
+                (e) =>
+                    e.displayName.toLowerCase().contains(query) ||
+                    e.typeDescription.toLowerCase().contains(query) ||
+                    e.uid.toLowerCase().contains(query),
+              )
+              .toList();
+    if (filtered.isEmpty) {
+      return DrawerEmptyState(
+        icon: Icons.military_tech_outlined,
+        message: query.isEmpty ? 'No entities' : 'No matching entities',
+        hint: query.isEmpty ? null : 'Try a different search term',
+      );
+    }
+    return ListView.builder(
+      padding: EdgeInsets.only(top: 4, bottom: bottomPadding + 8),
+      itemCount: filtered.length,
+      itemBuilder: (context, index) {
+        final event = filtered[index];
+        return StaggeredDrawerTile(
+          index: index,
+          child: _TakEntityListItem(
+            event: event,
+            onTap: () => onTakEntitySelected(event),
+          ),
+        );
+      },
     );
   }
 }
@@ -2740,11 +2670,10 @@ class _NodeListItem extends StatelessWidget {
                   children: [
                     Text(
                       (node.shortName?.isNotEmpty == true
-                          ? node.shortName!.characters.first.toUpperCase()
+                          ? node.shortName![0].toUpperCase()
                           : node.nodeNum
                                 .toRadixString(16)
-                                .characters
-                                .first
+                                .substring(0, 1)
                                 .toUpperCase()),
                       style: TextStyle(
                         fontSize: 14,

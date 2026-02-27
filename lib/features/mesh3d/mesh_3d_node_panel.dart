@@ -2,20 +2,15 @@
 
 // Mesh 3D Node Panel
 //
-// A glass-styled slide-out panel that lists nodes visible in the 3D
-// visualization. Supports search filtering, presence-based sorting,
-// and staggered list animations matching the NodeDex visual language.
-//
-// The panel slides in from the left edge of the viewport and includes
-// proper SafeArea insets for notched / Dynamic Island devices.
-
-import 'dart:ui';
+// The node panel for the 3D mesh visualization. Uses [MapNodeDrawer] for
+// the glass-styled slide-out chrome and provides its own node-tile
+// rendering with presence-based coloring and SNR badges.
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../core/theme.dart';
-import '../../core/widgets/search_filter_header.dart';
+import '../../core/widgets/map_node_drawer.dart';
 import '../../models/mesh_models.dart';
 import '../../models/presence_confidence.dart';
 import '../../providers/presence_providers.dart';
@@ -108,219 +103,41 @@ class _Mesh3DNodePanelState extends State<Mesh3DNodePanel> {
   @override
   Widget build(BuildContext context) {
     final filteredNodes = _filteredSortedNodes();
-    final topPadding = MediaQuery.of(context).padding.top;
     final bottomPadding = MediaQuery.of(context).padding.bottom;
 
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: ClipRRect(
-        borderRadius: const BorderRadius.only(
-          topRight: Radius.circular(16),
-          bottomRight: Radius.circular(16),
-        ),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-          child: Container(
-            decoration: BoxDecoration(
-              color: context.card.withValues(alpha: 0.92),
-              borderRadius: const BorderRadius.only(
-                topRight: Radius.circular(16),
-                bottomRight: Radius.circular(16),
+    return MapNodeDrawer(
+      title: 'Nodes',
+      headerIcon: Icons.hub,
+      itemCount: filteredNodes.length,
+      onClose: widget.onClose,
+      searchController: _searchController,
+      onSearchChanged: (value) => setState(() => _searchQuery = value),
+      content: Expanded(
+        child: filteredNodes.isEmpty
+            ? const DrawerEmptyState()
+            : ListView.builder(
+                padding: EdgeInsets.only(top: 4, bottom: bottomPadding + 8),
+                itemCount: filteredNodes.length,
+                itemBuilder: (context, index) {
+                  final node = filteredNodes[index];
+                  final isMyNode = node.nodeNum == widget.myNodeNum;
+                  final isSelected = widget.selectedNodeNum == node.nodeNum;
+
+                  return StaggeredDrawerTile(
+                    index: index,
+                    child: _NodeListTile(
+                      node: node,
+                      isMyNode: isMyNode,
+                      isSelected: isSelected,
+                      presenceMap: widget.presenceMap,
+                      onTap: () {
+                        HapticFeedback.selectionClick();
+                        widget.onNodeSelected(node.nodeNum);
+                      },
+                    ),
+                  );
+                },
               ),
-              border: Border(
-                right: BorderSide(color: context.border.withValues(alpha: 0.2)),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.3),
-                  blurRadius: 24,
-                  offset: const Offset(4, 0),
-                ),
-              ],
-            ),
-            child: Column(
-              children: [
-                // Top safe area spacer.
-                SizedBox(height: topPadding),
-
-                // Header.
-                _PanelHeader(
-                  nodeCount: filteredNodes.length,
-                  accentColor: context.accentColor,
-                  onClose: widget.onClose,
-                ),
-
-                // Search field.
-                _PanelSearchField(
-                  controller: _searchController,
-                  onChanged: (value) => setState(() => _searchQuery = value),
-                ),
-
-                // Divider.
-                Container(
-                  height: 1,
-                  margin: const EdgeInsets.symmetric(horizontal: 12),
-                  color: context.border.withValues(alpha: 0.15),
-                ),
-
-                // Node list.
-                Expanded(
-                  child: filteredNodes.isEmpty
-                      ? _EmptyNodeList()
-                      : ListView.builder(
-                          padding: EdgeInsets.only(
-                            top: 4,
-                            bottom: bottomPadding + 8,
-                          ),
-                          itemCount: filteredNodes.length,
-                          itemBuilder: (context, index) {
-                            final node = filteredNodes[index];
-                            final isMyNode = node.nodeNum == widget.myNodeNum;
-                            final isSelected =
-                                widget.selectedNodeNum == node.nodeNum;
-
-                            return _StaggeredNodeTile(
-                              index: index,
-                              child: _NodeListTile(
-                                node: node,
-                                isMyNode: isMyNode,
-                                isSelected: isSelected,
-                                presenceMap: widget.presenceMap,
-                                onTap: () {
-                                  HapticFeedback.selectionClick();
-                                  widget.onNodeSelected(node.nodeNum);
-                                },
-                              ),
-                            );
-                          },
-                        ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-// ---------------------------------------------------------------------------
-// _PanelHeader
-// ---------------------------------------------------------------------------
-
-class _PanelHeader extends StatelessWidget {
-  final int nodeCount;
-  final Color accentColor;
-  final VoidCallback onClose;
-
-  const _PanelHeader({
-    required this.nodeCount,
-    required this.accentColor,
-    required this.onClose,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(AppTheme.spacing16, 12, 8, 8),
-      child: Row(
-        children: [
-          Icon(Icons.hub, size: 18, color: accentColor),
-          const SizedBox(width: AppTheme.spacing8),
-          Expanded(
-            child: Text(
-              'Nodes',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: context.textPrimary,
-                letterSpacing: -0.2,
-              ),
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-            decoration: BoxDecoration(
-              color: accentColor.withValues(alpha: 0.15),
-              borderRadius: BorderRadius.circular(AppTheme.radius10),
-            ),
-            child: Text(
-              '$nodeCount',
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w700,
-                color: accentColor,
-              ),
-            ),
-          ),
-          const SizedBox(width: AppTheme.spacing4),
-          IconButton(
-            icon: const Icon(Icons.close, size: 18),
-            color: context.textTertiary,
-            onPressed: onClose,
-            visualDensity: VisualDensity.compact,
-            tooltip: 'Close panel',
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// ---------------------------------------------------------------------------
-// _PanelSearchField
-// ---------------------------------------------------------------------------
-
-class _PanelSearchField extends StatelessWidget {
-  final TextEditingController controller;
-  final ValueChanged<String> onChanged;
-
-  const _PanelSearchField({required this.controller, required this.onChanged});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(AppTheme.spacing12, 0, 12, 8),
-      child: SizedBox(
-        height: 40,
-        child: TextField(
-          controller: controller,
-          maxLength: 64,
-          style: TextStyle(color: context.textPrimary, fontSize: 14),
-          decoration: InputDecoration(
-            counterText: '',
-            hintText: 'Search nodes...',
-            hintStyle: TextStyle(color: context.textTertiary, fontSize: 13),
-            prefixIcon: Icon(
-              Icons.search,
-              size: 18,
-              color: context.textTertiary,
-            ),
-            suffixIcon: controller.text.isNotEmpty
-                ? IconButton(
-                    icon: const Icon(Icons.clear, size: 16),
-                    color: context.textTertiary,
-                    onPressed: () {
-                      controller.clear();
-                      onChanged('');
-                    },
-                  )
-                : null,
-            filled: true,
-            fillColor: context.background.withValues(alpha: 0.6),
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 12,
-              vertical: 8,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(
-                SearchFilterLayout.searchFieldRadius,
-              ),
-              borderSide: BorderSide.none,
-            ),
-          ),
-          onChanged: onChanged,
-        ),
       ),
     );
   }
@@ -384,11 +201,10 @@ class _NodeListTile extends StatelessWidget {
                 child: Center(
                   child: Text(
                     node.shortName?.isNotEmpty == true
-                        ? node.shortName!.characters.first.toUpperCase()
+                        ? node.shortName![0].toUpperCase()
                         : node.nodeNum
                               .toRadixString(16)
-                              .characters
-                              .first
+                              .substring(0, 1)
                               .toUpperCase(),
                     style: TextStyle(
                       fontSize: 14,
@@ -518,110 +334,5 @@ class _NodeListTile extends StatelessWidget {
     if (snr >= 5) return AccentColors.cyan;
     if (snr >= 0) return AppTheme.warningYellow;
     return AppTheme.errorRed;
-  }
-}
-
-// ---------------------------------------------------------------------------
-// _EmptyNodeList
-// ---------------------------------------------------------------------------
-
-class _EmptyNodeList extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              Icons.search_off,
-              size: 36,
-              color: context.textTertiary.withValues(alpha: 0.5),
-            ),
-            const SizedBox(height: AppTheme.spacing8),
-            Text(
-              'No nodes found',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: context.textTertiary,
-              ),
-            ),
-            const SizedBox(height: AppTheme.spacing4),
-            Text(
-              'Try a different search term',
-              style: TextStyle(
-                fontSize: 12,
-                color: context.textTertiary.withValues(alpha: 0.7),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-// ---------------------------------------------------------------------------
-// _StaggeredNodeTile — staggered entrance animation for list tiles
-// ---------------------------------------------------------------------------
-
-class _StaggeredNodeTile extends StatefulWidget {
-  final int index;
-  final Widget child;
-
-  const _StaggeredNodeTile({required this.index, required this.child});
-
-  @override
-  State<_StaggeredNodeTile> createState() => _StaggeredNodeTileState();
-}
-
-class _StaggeredNodeTileState extends State<_StaggeredNodeTile>
-    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
-  late AnimationController _controller;
-  late Animation<double> _fade;
-  late Animation<Offset> _slide;
-  bool _hasAnimated = false;
-
-  @override
-  bool get wantKeepAlive => true;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 350),
-    );
-    _fade = CurvedAnimation(parent: _controller, curve: Curves.easeOut);
-    _slide = Tween<Offset>(
-      begin: const Offset(-0.15, 0),
-      end: Offset.zero,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
-
-    // Stagger the entrance: delay based on index, capped at 500ms.
-    final delay = Duration(milliseconds: (widget.index * 40).clamp(0, 500));
-    Future<void>.delayed(delay, () {
-      if (mounted && !_hasAnimated) {
-        _hasAnimated = true;
-        _controller.forward();
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    super.build(context);
-    return FadeTransition(
-      opacity: _fade,
-      child: SlideTransition(position: _slide, child: widget.child),
-    );
   }
 }

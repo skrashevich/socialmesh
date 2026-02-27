@@ -28,6 +28,9 @@ class NodeSelectorSheet extends ConsumerStatefulWidget {
   final String? broadcastLabel;
   final String? broadcastSubtitle;
 
+  /// When non-null, only nodes whose nodeNum is in this set are shown.
+  final Set<int>? allowedNodeNums;
+
   const NodeSelectorSheet({
     super.key,
     this.title = 'Select Node',
@@ -35,6 +38,7 @@ class NodeSelectorSheet extends ConsumerStatefulWidget {
     this.initialSelection,
     this.broadcastLabel,
     this.broadcastSubtitle,
+    this.allowedNodeNums,
   });
 
   /// Show the node selector and return the selection
@@ -45,6 +49,7 @@ class NodeSelectorSheet extends ConsumerStatefulWidget {
     int? initialSelection,
     String? broadcastLabel,
     String? broadcastSubtitle,
+    Set<int>? allowedNodeNums,
   }) {
     return AppBottomSheet.show<NodeSelection>(
       context: context,
@@ -55,6 +60,7 @@ class NodeSelectorSheet extends ConsumerStatefulWidget {
         initialSelection: initialSelection,
         broadcastLabel: broadcastLabel,
         broadcastSubtitle: broadcastSubtitle,
+        allowedNodeNums: allowedNodeNums,
       ),
     );
   }
@@ -78,16 +84,24 @@ class _NodeSelectorSheetState extends ConsumerState<NodeSelectorSheet> {
     final myNodeNum = ref.watch(myNodeNumProvider);
     final presenceMap = ref.watch(presenceMapProvider);
 
-    var nodeList = nodes.values.where((n) => n.nodeNum != myNodeNum).toList()
-      ..sort((a, b) {
-        // Active nodes first, then by name
-        final aActive = presenceConfidenceFor(presenceMap, a).isActive;
-        final bActive = presenceConfidenceFor(presenceMap, b).isActive;
-        if (aActive != bActive) return aActive ? -1 : 1;
-        final aName = a.longName ?? a.shortName ?? '';
-        final bName = b.longName ?? b.shortName ?? '';
-        return aName.compareTo(bName);
-      });
+    var nodeList = nodes.values.where((n) => n.nodeNum != myNodeNum).toList();
+
+    // When an allow-list is provided, only show those nodes.
+    if (widget.allowedNodeNums != null) {
+      nodeList = nodeList
+          .where((n) => widget.allowedNodeNums!.contains(n.nodeNum))
+          .toList();
+    }
+
+    nodeList.sort((a, b) {
+      // Active nodes first, then by name
+      final aActive = presenceConfidenceFor(presenceMap, a).isActive;
+      final bActive = presenceConfidenceFor(presenceMap, b).isActive;
+      if (aActive != bActive) return aActive ? -1 : 1;
+      final aName = a.longName ?? a.shortName ?? '';
+      final bName = b.longName ?? b.shortName ?? '';
+      return aName.compareTo(bName);
+    });
 
     if (_searchQuery.isNotEmpty) {
       final query = _searchQuery.toLowerCase();

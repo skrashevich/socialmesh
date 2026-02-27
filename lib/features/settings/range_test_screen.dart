@@ -284,101 +284,18 @@ class _RangeTestScreenState extends ConsumerState<RangeTestScreen>
     AppBottomSheet.show(
       context: context,
       padding: EdgeInsets.zero,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(AppTheme.spacing24, 16, 16, 0),
-            child: Row(
-              children: [
-                Text(
-                  'Select Target Node',
-                  style: TextStyle(
-                    color: context.textPrimary,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const Spacer(),
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Text(
-                    'Cancel',
-                    style: TextStyle(color: context.textSecondary),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Divider(height: 1, color: context.border),
-          ConstrainedBox(
-            constraints: BoxConstraints(
-              maxHeight: MediaQuery.of(context).size.height * 0.4,
-            ),
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: otherNodes.length,
-              itemBuilder: (context, index) {
-                final node = otherNodes[index];
-                final presence = presenceConfidenceFor(presenceMap, node);
-                final displayName =
-                    node.longName ??
-                    node.shortName ??
-                    '!${node.nodeNum.toRadixString(16)}';
-
-                return ListTile(
-                  leading: Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: presence.isActive
-                          ? context.accentColor.withValues(alpha: 0.15)
-                          : context.background,
-                      borderRadius: BorderRadius.circular(AppTheme.radius10),
-                    ),
-                    child: Center(
-                      child: Text(
-                        (node.shortName?.isNotEmpty == true)
-                            ? node.shortName!.characters.first.toUpperCase()
-                            : '?',
-                        style: TextStyle(
-                          color: presence.isActive
-                              ? context.accentColor
-                              : context.textTertiary,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ),
-                  title: Text(
-                    displayName,
-                    style: TextStyle(color: context.textPrimary),
-                  ),
-                  subtitle: Text(
-                    presenceStatusText(
-                      presence,
-                      lastHeardAgeFor(presenceMap, node),
-                    ),
-                    style: TextStyle(
-                      color: presence.isActive
-                          ? context.accentColor
-                          : context.textTertiary,
-                      fontSize: 12,
-                    ),
-                  ),
-                  trailing: _selectedTargetNode == node.nodeNum
-                      ? Icon(Icons.check_circle, color: context.accentColor)
-                      : null,
-                  onTap: () {
-                    setState(() => _selectedTargetNode = node.nodeNum);
-                    Navigator.pop(context);
-                  },
-                );
-              },
-            ),
-          ),
-          SizedBox(height: MediaQuery.of(context).padding.bottom),
-        ],
+      child: StatefulBuilder(
+        builder: (sheetContext, setSheetState) {
+          return _NodePickerContent(
+            otherNodes: otherNodes,
+            presenceMap: presenceMap,
+            selectedTargetNode: _selectedTargetNode,
+            onNodeSelected: (nodeNum) {
+              setState(() => _selectedTargetNode = nodeNum);
+              Navigator.pop(context);
+            },
+          );
+        },
       ),
     );
   }
@@ -545,7 +462,7 @@ class _RangeTestScreenState extends ConsumerState<RangeTestScreen>
                     backgroundColor: _isRunning
                         ? AppTheme.errorRed
                         : context.accentColor,
-                    foregroundColor: _isRunning ? Colors.white : Colors.black,
+                    foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(AppTheme.radius10),
@@ -777,6 +694,222 @@ class _RangeTestScreenState extends ConsumerState<RangeTestScreen>
           ),
         ],
       ),
+    );
+  }
+}
+
+/// Node picker content with search for the range test bottom sheet.
+class _NodePickerContent extends StatefulWidget {
+  final List<MeshNode> otherNodes;
+  final Map<int, NodePresence> presenceMap;
+  final int? selectedTargetNode;
+  final ValueChanged<int> onNodeSelected;
+
+  const _NodePickerContent({
+    required this.otherNodes,
+    required this.presenceMap,
+    required this.selectedTargetNode,
+    required this.onNodeSelected,
+  });
+
+  @override
+  State<_NodePickerContent> createState() => _NodePickerContentState();
+}
+
+class _NodePickerContentState extends State<_NodePickerContent> {
+  final _searchController = TextEditingController();
+  String _searchQuery = '';
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  List<MeshNode> get _filteredNodes {
+    if (_searchQuery.isEmpty) return widget.otherNodes;
+    final query = _searchQuery.toLowerCase();
+    return widget.otherNodes.where((node) {
+      final longName = node.longName?.toLowerCase() ?? '';
+      final shortName = node.shortName?.toLowerCase() ?? '';
+      final hexId = '!${node.nodeNum.toRadixString(16)}';
+      return longName.contains(query) ||
+          shortName.contains(query) ||
+          hexId.contains(query);
+    }).toList();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final filtered = _filteredNodes;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(AppTheme.spacing24, 16, 16, 0),
+          child: Row(
+            children: [
+              Text(
+                'Select Target Node',
+                style: TextStyle(
+                  color: context.textPrimary,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const Spacer(),
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(
+                  'Cancel',
+                  style: TextStyle(color: context.textSecondary),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(
+            AppTheme.spacing16,
+            AppTheme.spacing12,
+            AppTheme.spacing16,
+            AppTheme.spacing8,
+          ),
+          child: TextField(
+            controller: _searchController,
+            maxLength: 40,
+            style: TextStyle(color: context.textPrimary, fontSize: 14),
+            onTapOutside: (_) => FocusScope.of(context).unfocus(),
+            decoration: InputDecoration(
+              hintText: 'Search nodes…',
+              hintStyle: TextStyle(color: context.textTertiary),
+              prefixIcon: Icon(
+                Icons.search,
+                color: context.textTertiary,
+                size: 20,
+              ),
+              suffixIcon: _searchQuery.isNotEmpty
+                  ? IconButton(
+                      icon: Icon(
+                        Icons.clear,
+                        color: context.textTertiary,
+                        size: 18,
+                      ),
+                      onPressed: () {
+                        _searchController.clear();
+                        setState(() => _searchQuery = '');
+                      },
+                    )
+                  : null,
+              counterText: '',
+              filled: true,
+              fillColor: context.background.withValues(alpha: 0.6),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: AppTheme.spacing12,
+                vertical: AppTheme.spacing10,
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(AppTheme.radius12),
+                borderSide: BorderSide.none,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(AppTheme.radius12),
+                borderSide: BorderSide.none,
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(AppTheme.radius12),
+                borderSide: BorderSide(
+                  color: context.accentColor.withValues(alpha: 0.5),
+                ),
+              ),
+            ),
+            onChanged: (v) => setState(() => _searchQuery = v),
+          ),
+        ),
+        Divider(height: 1, color: context.border),
+        if (filtered.isEmpty)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: AppTheme.spacing50),
+            child: Column(
+              children: [
+                Icon(Icons.search_off, color: context.textTertiary, size: 32),
+                const SizedBox(height: AppTheme.spacing8),
+                Text(
+                  'No nodes match "$_searchQuery"',
+                  style: TextStyle(color: context.textTertiary, fontSize: 13),
+                ),
+              ],
+            ),
+          )
+        else
+          ConstrainedBox(
+            constraints: BoxConstraints(
+              maxHeight: MediaQuery.of(context).size.height * 0.35,
+            ),
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: filtered.length,
+              itemBuilder: (context, index) {
+                final node = filtered[index];
+                final presence = presenceConfidenceFor(
+                  widget.presenceMap,
+                  node,
+                );
+                final displayName =
+                    node.longName ??
+                    node.shortName ??
+                    '!${node.nodeNum.toRadixString(16)}';
+
+                return ListTile(
+                  leading: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: presence.isActive
+                          ? context.accentColor.withValues(alpha: 0.15)
+                          : context.background,
+                      borderRadius: BorderRadius.circular(AppTheme.radius10),
+                    ),
+                    child: Center(
+                      child: Text(
+                        (node.shortName?.isNotEmpty == true)
+                            ? node.shortName![0].toUpperCase()
+                            : '?',
+                        style: TextStyle(
+                          color: presence.isActive
+                              ? context.accentColor
+                              : context.textTertiary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                  title: Text(
+                    displayName,
+                    style: TextStyle(color: context.textPrimary),
+                  ),
+                  subtitle: Text(
+                    presenceStatusText(
+                      presence,
+                      lastHeardAgeFor(widget.presenceMap, node),
+                    ),
+                    style: TextStyle(
+                      color: presence.isActive
+                          ? context.accentColor
+                          : context.textTertiary,
+                      fontSize: 12,
+                    ),
+                  ),
+                  trailing: widget.selectedTargetNode == node.nodeNum
+                      ? Icon(Icons.check_circle, color: context.accentColor)
+                      : null,
+                  onTap: () => widget.onNodeSelected(node.nodeNum),
+                );
+              },
+            ),
+          ),
+        SizedBox(height: MediaQuery.of(context).padding.bottom),
+      ],
     );
   }
 }

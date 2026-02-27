@@ -475,7 +475,7 @@ class _WidgetDashboardScreenState extends ConsumerState<WidgetDashboardScreen>
               label: Text('Add Widgets'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: context.accentColor,
-                foregroundColor: Colors.black,
+                foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(
                   horizontal: 24,
                   vertical: 14,

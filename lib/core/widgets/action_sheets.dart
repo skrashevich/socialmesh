@@ -456,7 +456,7 @@ class _QuickMessageSheetContentState extends State<QuickMessageSheetContent>
                       : null,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: context.accentColor,
-                    foregroundColor: Colors.black,
+                    foregroundColor: Colors.white,
                     disabledBackgroundColor: context.border,
                     padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(
@@ -1106,7 +1106,7 @@ class _TracerouteSheetContentState extends ConsumerState<TracerouteSheetContent>
                           : null,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: context.accentColor,
-                        foregroundColor: Colors.black,
+                        foregroundColor: Colors.white,
                         disabledBackgroundColor: context.border,
                         padding: const EdgeInsets.symmetric(vertical: 14),
                         shape: RoundedRectangleBorder(
