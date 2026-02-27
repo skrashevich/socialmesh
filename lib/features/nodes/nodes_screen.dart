@@ -1171,10 +1171,26 @@ class _NodeCard extends StatelessWidget {
     return dateFormat.format(time);
   }
 
+  Color _blendColor(BuildContext context) {
+    if (isMyNode) return context.accentColor;
+    if (node.isFavorite) return AppTheme.warningYellow;
+    switch (presenceConfidence) {
+      case PresenceConfidence.active:
+        return AccentColors.green;
+      case PresenceConfidence.fading:
+        return AppTheme.warningYellow;
+      case PresenceConfidence.stale:
+        return context.textTertiary;
+      case PresenceConfidence.unknown:
+        return context.textTertiary;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final signalBars = _calculateSignalBars(node.rssi);
     final statusColor = _presenceColor(context, presenceConfidence);
+    final blendColor = _blendColor(context);
     final statusText = presenceStatusText(presenceConfidence, lastHeardAge);
     final cardOpacity = isMyNode ? 1.0 : presenceOpacity(presenceConfidence);
 
@@ -1192,37 +1208,23 @@ class _NodeCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppTheme.radius12),
             child: Stack(
               children: [
-                // Layer 1: Background fill only
+                // Layer 1: Background blend matching chip/status colour
                 Positioned.fill(
                   child: Container(
                     decoration: BoxDecoration(
-                      color: (isMyNode || node.isFavorite)
-                          ? null
-                          : context.card,
-                      gradient: isMyNode
-                          ? LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                context.accentColor.withValues(alpha: 0.12),
-                                context.accentColor.withValues(alpha: 0.03),
-                              ],
-                            )
-                          : node.isFavorite
-                          ? LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                AccentColors.yellow.withValues(alpha: 0.12),
-                                AccentColors.yellow.withValues(alpha: 0.03),
-                              ],
-                            )
-                          : null,
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          blendColor.withValues(alpha: 0.12),
+                          blendColor.withValues(alpha: 0.03),
+                        ],
+                      ),
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
                   ),
                 ),
-                // Layer 2: Border only (under the overlay)
+                // Layer 2: Border (owner + favorite nodes)
                 if (isMyNode)
                   Positioned.fill(
                     child: GradientBorderContainer(
@@ -1244,18 +1246,6 @@ class _NodeCard extends StatelessWidget {
                       defaultBorderColor: Colors.transparent,
                       backgroundColor: Colors.transparent,
                       child: const SizedBox.expand(),
-                    ),
-                  )
-                else
-                  Positioned.fill(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(AppTheme.radius12),
-                        border: Border(
-                          top: BorderSide(color: context.border, width: 1),
-                          left: BorderSide(color: context.border, width: 1),
-                        ),
-                      ),
                     ),
                   ),
                 // Layer 3: Bottom-right corner blend into background
