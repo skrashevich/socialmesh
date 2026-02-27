@@ -10,10 +10,12 @@ import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../core/los_analysis.dart';
 import '../../core/map_config.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/app_bar_overflow_menu.dart';
+import '../../core/widgets/app_bottom_sheet.dart';
 import '../../core/widgets/animations.dart';
 import '../../core/widgets/ico_help_system.dart';
 import '../../core/widgets/map_controls.dart';
@@ -51,6 +53,13 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
 
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
+
+  // Measurement state
+  bool _measureMode = false;
+  LatLng? _measureStart;
+  LatLng? _measureEnd;
+  WorldMeshNode? _measureNodeA;
+  WorldMeshNode? _measureNodeB;
 
   // Animation controller for smooth movements
   AnimationController? _animationController;
@@ -146,6 +155,47 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
 
   void _dismissKeyboard() {
     _searchFocusNode.unfocus();
+  }
+
+  void _handleMeasureTap(LatLng point) {
+    setState(() {
+      if (_measureStart == null) {
+        _measureStart = point;
+        _measureEnd = null;
+        _measureNodeA = null;
+        _measureNodeB = null;
+      } else if (_measureEnd == null) {
+        _measureEnd = point;
+        _measureNodeB = null;
+      } else {
+        _measureStart = point;
+        _measureEnd = null;
+        _measureNodeA = null;
+        _measureNodeB = null;
+      }
+    });
+    HapticFeedback.selectionClick();
+  }
+
+  void _handleMeasureNodeTap(WorldMeshNode node) {
+    final point = LatLng(node.latitudeDecimal, node.longitudeDecimal);
+    setState(() {
+      if (_measureStart == null) {
+        _measureStart = point;
+        _measureEnd = null;
+        _measureNodeA = node;
+        _measureNodeB = null;
+      } else if (_measureEnd == null) {
+        _measureEnd = point;
+        _measureNodeB = node;
+      } else {
+        _measureStart = point;
+        _measureEnd = null;
+        _measureNodeA = node;
+        _measureNodeB = null;
+      }
+    });
+    HapticFeedback.selectionClick();
   }
 
   @override
@@ -618,6 +668,10 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
                   setState(() => _showSearchResults = false);
                   return;
                 }
+                if (_measureMode) {
+                  _handleMeasureTap(point);
+                  return;
+                }
                 // Deselect node when tapping empty map areas
                 // (Marker taps are handled by GestureDetector on each marker)
                 if (_selectedNode != null) {
@@ -668,6 +722,10 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
                         behavior: HitTestBehavior.opaque,
                         onTap: () {
                           HapticFeedback.selectionClick();
+                          if (_measureMode) {
+                            _handleMeasureNodeTap(node);
+                            return;
+                          }
                           setState(() {
                             _isLoadingNodeInfo = true;
                             _selectedNode = node;
@@ -676,6 +734,21 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
                             if (mounted) {
                               setState(() => _isLoadingNodeInfo = false);
                             }
+                          });
+                        },
+                        onLongPress: () {
+                          HapticFeedback.heavyImpact();
+                          setState(() {
+                            _measureMode = true;
+                            _measureStart = LatLng(
+                              node.latitudeDecimal,
+                              node.longitudeDecimal,
+                            );
+                            _measureEnd = null;
+                            _measureNodeA = node;
+                            _measureNodeB = null;
+                            _selectedNode = null;
+                            _isLoadingNodeInfo = false;
                           });
                         },
                         child: Center(
@@ -753,6 +826,69 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
                   },
                 ),
               ),
+              // Measurement polyline
+              if (_measureStart != null && _measureEnd != null)
+                PolylineLayer(
+                  polylines: [
+                    Polyline(
+                      points: [_measureStart!, _measureEnd!],
+                      strokeWidth: 2.5,
+                      color: AppTheme.warningYellow,
+                      pattern: const StrokePattern.dotted(spacingFactor: 1.5),
+                    ),
+                  ],
+                ),
+              // Measurement markers
+              if (_measureStart != null)
+                MarkerLayer(
+                  markers: [
+                    Marker(
+                      point: _measureStart!,
+                      width: 24,
+                      height: 24,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: AppTheme.warningYellow,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.black, width: 2),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            'A',
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    if (_measureEnd != null)
+                      Marker(
+                        point: _measureEnd!,
+                        width: 24,
+                        height: 24,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: AppTheme.warningYellow,
+                            shape: BoxShape.circle,
+                            border: Border.all(color: Colors.black, width: 2),
+                          ),
+                          child: const Center(
+                            child: Text(
+                              'B',
+                              style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
             ],
           ),
         ),
@@ -785,7 +921,7 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
 
         // Node info card when selected (with loading indicator)
         // Position above the stats bar (which is ~60px) plus safe area
-        if (_selectedNode != null && !_showSearchResults)
+        if (_selectedNode != null && !_showSearchResults && !_measureMode)
           Positioned(
             left: 16,
             right: 16,
@@ -808,6 +944,107 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
                         );
                       },
                     ),
+            ),
+          ),
+
+        // Measurement mode indicator pill
+        if (_measureMode && (_measureStart == null || _measureEnd == null))
+          Positioned(
+            top: 16,
+            left: 16,
+            right: 68,
+            child: Center(
+              child: Container(
+                padding: const EdgeInsets.only(
+                  left: 16,
+                  top: 4,
+                  bottom: 4,
+                  right: 4,
+                ),
+                decoration: BoxDecoration(
+                  color: AppTheme.warningYellow,
+                  borderRadius: BorderRadius.circular(AppTheme.radius20),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.straighten, size: 16, color: Colors.black),
+                    const SizedBox(width: AppTheme.spacing8),
+                    Flexible(
+                      child: Text(
+                        _measureStart == null
+                            ? 'Tap node or map for point A'
+                            : 'Tap node or map for point B',
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    const SizedBox(width: AppTheme.spacing8),
+                    GestureDetector(
+                      onTap: () => setState(() {
+                        _measureMode = false;
+                        _measureStart = null;
+                        _measureEnd = null;
+                        _measureNodeA = null;
+                        _measureNodeB = null;
+                      }),
+                      child: Container(
+                        width: 28,
+                        height: 28,
+                        decoration: BoxDecoration(
+                          color: Colors.black.withValues(alpha: 0.2),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.close,
+                          size: 16,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        // Measurement card
+        if (_measureMode && _measureStart != null && _measureEnd != null)
+          Positioned(
+            left: 16,
+            right: 16,
+            bottom: 80,
+            child: _WorldMeasurementCard(
+              start: _measureStart!,
+              end: _measureEnd!,
+              nodeA: _measureNodeA,
+              nodeB: _measureNodeB,
+              onClear: () => setState(() {
+                _measureStart = null;
+                _measureEnd = null;
+                _measureNodeA = null;
+                _measureNodeB = null;
+              }),
+              onExitMeasureMode: () => setState(() {
+                _measureMode = false;
+                _measureStart = null;
+                _measureEnd = null;
+                _measureNodeA = null;
+                _measureNodeB = null;
+              }),
+              onSwap: () => setState(() {
+                final tmpStart = _measureStart;
+                final tmpEnd = _measureEnd;
+                final tmpNodeA = _measureNodeA;
+                final tmpNodeB = _measureNodeB;
+                _measureStart = tmpEnd;
+                _measureEnd = tmpStart;
+                _measureNodeA = tmpNodeB;
+                _measureNodeB = tmpNodeA;
+              }),
             ),
           ),
 
@@ -1947,4 +2184,433 @@ class _MetricChip {
     required this.value,
     required this.color,
   });
+}
+
+/// Measurement card for World Mesh map — shows distance, bearing, altitude,
+/// and LOS between two points/nodes. Long-press for actions sheet.
+class _WorldMeasurementCard extends StatefulWidget {
+  final LatLng start;
+  final LatLng end;
+  final WorldMeshNode? nodeA;
+  final WorldMeshNode? nodeB;
+  final VoidCallback onClear;
+  final VoidCallback onExitMeasureMode;
+  final VoidCallback? onSwap;
+
+  const _WorldMeasurementCard({
+    required this.start,
+    required this.end,
+    this.nodeA,
+    this.nodeB,
+    required this.onClear,
+    required this.onExitMeasureMode,
+    this.onSwap,
+  });
+
+  @override
+  State<_WorldMeasurementCard> createState() => _WorldMeasurementCardState();
+}
+
+class _WorldMeasurementCardState extends State<_WorldMeasurementCard> {
+  bool _showLos = false;
+
+  String _formatDist(double km) {
+    if (km < 1) {
+      return '${(km * 1000).round()} m';
+    } else if (km < 10) {
+      return '${km.toStringAsFixed(2)} km';
+    } else {
+      return '${km.toStringAsFixed(1)} km';
+    }
+  }
+
+  double _distanceKm() {
+    return const Distance().as(LengthUnit.Kilometer, widget.start, widget.end);
+  }
+
+  String _pointLabel(LatLng point, WorldMeshNode? node, String prefix) {
+    if (node != null) {
+      final name = node.displayName;
+      final alt = node.altitude != null ? ' · ${node.altitude}m' : '';
+      return '$prefix: $name$alt';
+    }
+    return '$prefix: ${point.latitude.toStringAsFixed(4)}, '
+        '${point.longitude.toStringAsFixed(4)}';
+  }
+
+  String _buildSummary({
+    required double distanceKm,
+    required double bearing,
+    required String cardinal,
+    int? elevDelta,
+  }) {
+    final buf = StringBuffer();
+    buf.write(
+      '${_formatDist(distanceKm)} · '
+      '${bearing.toStringAsFixed(0)}° $cardinal',
+    );
+    if (elevDelta != null) {
+      buf.write(' · ${elevDelta >= 0 ? '+' : ''}${elevDelta}m');
+    }
+    buf.writeln();
+    buf.writeln(_pointLabel(widget.start, widget.nodeA, 'A'));
+    buf.write(_pointLabel(widget.end, widget.nodeB, 'B'));
+    return buf.toString();
+  }
+
+  void _showActionsSheet(BuildContext context) {
+    final distanceKm = _distanceKm();
+    final distanceM = distanceKm * 1000;
+    final bearing = calculateBearing(
+      widget.start.latitude,
+      widget.start.longitude,
+      widget.end.latitude,
+      widget.end.longitude,
+    );
+    final cardinal = formatBearingCardinal(bearing);
+    final altA = widget.nodeA?.altitude;
+    final altB = widget.nodeB?.altitude;
+    final hasElevation = altA != null && altB != null;
+    final elevDelta = hasElevation ? altB - altA : null;
+
+    HapticFeedback.selectionClick();
+    AppBottomSheet.showActions<String>(
+      context: context,
+      header: Padding(
+        padding: const EdgeInsets.only(bottom: AppTheme.spacing4),
+        child: Text(
+          'Measurement Actions',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: context.textPrimary,
+          ),
+        ),
+      ),
+      actions: [
+        if (hasElevation)
+          BottomSheetAction(
+            icon: Icons.visibility,
+            label: 'LOS Analysis',
+            subtitle: 'Earth curvature + Fresnel zone check',
+            onTap: () => setState(() => _showLos = !_showLos),
+          ),
+        BottomSheetAction(
+          icon: Icons.copy,
+          label: 'Copy Summary',
+          subtitle: _formatDist(distanceKm),
+          onTap: () {
+            Clipboard.setData(
+              ClipboardData(
+                text: _buildSummary(
+                  distanceKm: distanceKm,
+                  bearing: bearing,
+                  cardinal: cardinal,
+                  elevDelta: elevDelta,
+                ),
+              ),
+            );
+            if (context.mounted) {
+              showSuccessSnackBar(context, 'Measurement copied to clipboard');
+            }
+          },
+        ),
+        BottomSheetAction(
+          icon: Icons.pin_drop,
+          label: 'Copy Coordinates',
+          subtitle: 'Both A and B coordinates',
+          onTap: () {
+            final a = widget.start;
+            final b = widget.end;
+            Clipboard.setData(
+              ClipboardData(
+                text:
+                    'A: ${a.latitude.toStringAsFixed(6)}, '
+                    '${a.longitude.toStringAsFixed(6)}\n'
+                    'B: ${b.latitude.toStringAsFixed(6)}, '
+                    '${b.longitude.toStringAsFixed(6)}',
+              ),
+            );
+            if (context.mounted) {
+              showSuccessSnackBar(context, 'Coordinates copied to clipboard');
+            }
+          },
+        ),
+        BottomSheetAction(
+          icon: Icons.open_in_new,
+          label: 'Open Midpoint in Maps',
+          subtitle: 'Open in external map app',
+          onTap: () {
+            final midLat = (widget.start.latitude + widget.end.latitude) / 2.0;
+            final midLon =
+                (widget.start.longitude + widget.end.longitude) / 2.0;
+            launchUrl(
+              Uri.parse('https://maps.apple.com/?ll=$midLat,$midLon&z=14'),
+              mode: LaunchMode.externalApplication,
+            );
+          },
+        ),
+        if (widget.onSwap != null)
+          BottomSheetAction(
+            icon: Icons.swap_horiz,
+            label: 'Swap A \u2194 B',
+            subtitle: 'Reverse measurement direction',
+            onTap: widget.onSwap,
+          ),
+        if (hasElevation)
+          BottomSheetAction(
+            icon: Icons.terrain,
+            label: 'RF Link Budget',
+            subtitle:
+                'FSPL: ${_pathLoss(distanceM, 906.0).toStringAsFixed(0)} dB',
+            onTap: () {
+              final fspl = _pathLoss(distanceM, 906.0);
+              Clipboard.setData(
+                ClipboardData(
+                  text:
+                      'RF Link Budget (free-space path loss)\n'
+                      'Distance: ${_formatDist(distanceKm)}\n'
+                      'Frequency: 906 MHz\n'
+                      'FSPL: ${fspl.toStringAsFixed(1)} dB\n'
+                      'Alt A: ${altA}m · Alt B: ${altB}m\n'
+                      'Bearing: ${bearing.toStringAsFixed(0)}° $cardinal',
+                ),
+              );
+              if (context.mounted) {
+                showSuccessSnackBar(context, 'Link budget copied to clipboard');
+              }
+            },
+          ),
+      ],
+    );
+  }
+
+  static double _pathLoss(double distanceM, double freqMhz) {
+    if (distanceM <= 0) return 0;
+    return 20 * math.log(distanceM) / math.ln10 +
+        20 * math.log(freqMhz) / math.ln10 -
+        27.55;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final distanceKm = _distanceKm();
+    final distanceM = distanceKm * 1000;
+    final bearing = calculateBearing(
+      widget.start.latitude,
+      widget.start.longitude,
+      widget.end.latitude,
+      widget.end.longitude,
+    );
+    final cardinal = formatBearingCardinal(bearing);
+    final altA = widget.nodeA?.altitude;
+    final altB = widget.nodeB?.altitude;
+    final hasElevation = altA != null && altB != null;
+    final elevDelta = hasElevation ? altB - altA : null;
+
+    return GestureDetector(
+      onLongPress: () => _showActionsSheet(context),
+      child: Container(
+        padding: const EdgeInsets.all(AppTheme.spacing12),
+        decoration: BoxDecoration(
+          color: context.card.withValues(alpha: 0.95),
+          borderRadius: BorderRadius.circular(AppTheme.radius12),
+          border: Border.all(
+            color: AppTheme.warningYellow.withValues(alpha: 0.5),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.2),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              children: [
+                Container(
+                  width: 36,
+                  height: 36,
+                  decoration: BoxDecoration(
+                    color: AppTheme.warningYellow.withValues(alpha: 0.2),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.straighten,
+                    size: 18,
+                    color: AppTheme.warningYellow,
+                  ),
+                ),
+                const SizedBox(width: AppTheme.spacing12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            _formatDist(distanceKm),
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                              color: AppTheme.warningYellow,
+                            ),
+                          ),
+                          const SizedBox(width: AppTheme.spacing8),
+                          Text(
+                            '${bearing.toStringAsFixed(0)}° $cardinal',
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: context.textSecondary,
+                            ),
+                          ),
+                          if (elevDelta != null) ...[
+                            const SizedBox(width: AppTheme.spacing8),
+                            Icon(
+                              elevDelta >= 0
+                                  ? Icons.trending_up
+                                  : Icons.trending_down,
+                              size: 14,
+                              color: context.textSecondary,
+                            ),
+                            const SizedBox(width: AppTheme.spacing2),
+                            Text(
+                              '${elevDelta >= 0 ? '+' : ''}${elevDelta}m',
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: context.textSecondary,
+                              ),
+                            ),
+                          ],
+                        ],
+                      ),
+                      Text(
+                        _pointLabel(widget.start, widget.nodeA, 'A'),
+                        style: context.captionStyle?.copyWith(
+                          color: context.textTertiary,
+                        ),
+                      ),
+                      Text(
+                        _pointLabel(widget.end, widget.nodeB, 'B'),
+                        style: context.captionStyle?.copyWith(
+                          color: context.textTertiary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.refresh, size: 20),
+                  color: context.textTertiary,
+                  onPressed: widget.onClear,
+                  tooltip: 'New measurement',
+                ),
+                IconButton(
+                  icon: const Icon(Icons.close, size: 20),
+                  color: AppTheme.errorRed,
+                  onPressed: widget.onExitMeasureMode,
+                  tooltip: 'Exit measure mode',
+                ),
+              ],
+            ),
+            const SizedBox(height: AppTheme.spacing4),
+            Text(
+              'Long-press for actions',
+              style: TextStyle(fontSize: 10, color: context.textTertiary),
+            ),
+            if (_showLos && hasElevation) ...[
+              const SizedBox(height: AppTheme.spacing8),
+              _WorldLosResultPanel(
+                altA: altA,
+                altB: altB,
+                distanceMeters: distanceM,
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// LOS result panel for World Mesh measurement card.
+class _WorldLosResultPanel extends StatelessWidget {
+  final int altA;
+  final int altB;
+  final double distanceMeters;
+
+  const _WorldLosResultPanel({
+    required this.altA,
+    required this.altB,
+    required this.distanceMeters,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final result = evaluateLos(
+      altA: altA,
+      altB: altB,
+      distanceMeters: distanceMeters,
+    );
+
+    Color verdictColor;
+    IconData verdictIcon;
+    switch (result.verdict) {
+      case LosVerdict.clear:
+        verdictColor = AppTheme.successGreen;
+        verdictIcon = Icons.check_circle;
+      case LosVerdict.marginal:
+        verdictColor = AppTheme.warningYellow;
+        verdictIcon = Icons.warning;
+      case LosVerdict.obstructed:
+        verdictColor = AppTheme.errorRed;
+        verdictIcon = Icons.cancel;
+      case LosVerdict.unknown:
+        verdictColor = context.textTertiary;
+        verdictIcon = Icons.help_outline;
+    }
+
+    return Container(
+      padding: const EdgeInsets.all(AppTheme.spacing8),
+      decoration: BoxDecoration(
+        color: verdictColor.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(AppTheme.radius8),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              Icon(verdictIcon, size: 16, color: verdictColor),
+              const SizedBox(width: AppTheme.spacing4),
+              Text(
+                'LOS: ${result.verdict.label}',
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: verdictColor,
+                ),
+              ),
+              const Spacer(),
+              Text(
+                'Bulge: ${result.earthBulgeMeters.toStringAsFixed(1)}m '
+                '· F1: ${result.fresnelRadiusMeters.toStringAsFixed(1)}m',
+                style: TextStyle(fontSize: 11, color: context.textTertiary),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppTheme.spacing4),
+          Text(
+            result.explanation,
+            style: TextStyle(fontSize: 11, color: context.textSecondary),
+          ),
+        ],
+      ),
+    );
+  }
 }

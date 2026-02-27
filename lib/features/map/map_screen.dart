@@ -1281,6 +1281,21 @@ class _MapScreenState extends ConsumerState<MapScreen>
                                     });
                                   }
                                 },
+                                onLongPress: () {
+                                  HapticFeedback.heavyImpact();
+                                  setState(() {
+                                    _measureMode = true;
+                                    _measureStart = LatLng(
+                                      n.latitude,
+                                      n.longitude,
+                                    );
+                                    _measureEnd = null;
+                                    _measureNodeA = n.node;
+                                    _measureNodeB = null;
+                                    _selectedNode = null;
+                                    _selectedTakEntity = null;
+                                  });
+                                },
                                 child: _NodeMarker(
                                   node: n.node,
                                   presence: presenceConfidenceFor(

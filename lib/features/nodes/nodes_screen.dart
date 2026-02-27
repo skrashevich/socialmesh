@@ -1227,7 +1227,7 @@ class _NodeCard extends StatelessWidget {
                   Positioned.fill(
                     child: GradientBorderContainer(
                       borderRadius: 12,
-                      borderWidth: 2,
+                      borderWidth: 1,
                       accentOpacity: 1.0,
                       accentColor: AccentColors.yellow,
                       defaultBorderColor: Colors.transparent,

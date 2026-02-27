@@ -7,10 +7,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:url_launcher/url_launcher.dart';
+import '../../../core/los_analysis.dart';
 import '../../../core/map_config.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/animations.dart';
+import '../../../core/widgets/app_bottom_sheet.dart';
 import '../../../core/widgets/glass_scaffold.dart';
+import '../../../utils/snackbar.dart';
 import '../../../models/meshcore_contact.dart';
 import '../../../providers/app_providers.dart';
 import '../../../providers/meshcore_providers.dart';
@@ -43,6 +47,13 @@ class _MeshCoreMapScreenState extends ConsumerState<MeshCoreMapScreen> {
   bool _showRepeaters = true;
   bool _showChatNodes = true;
   bool _showOtherNodes = true;
+
+  // Measurement state
+  bool _measureMode = false;
+  LatLng? _measureStart;
+  LatLng? _measureEnd;
+  MeshCoreContact? _measureContactA;
+  MeshCoreContact? _measureContactB;
 
   @override
   void initState() {
@@ -193,6 +204,11 @@ class _MeshCoreMapScreenState extends ConsumerState<MeshCoreMapScreen> {
                     interactionOptions: const InteractionOptions(
                       flags: ~InteractiveFlag.rotate,
                     ),
+                    onTap: (tapPos, point) {
+                      if (_measureMode) {
+                        _handleMeasureTap(point);
+                      }
+                    },
                   ),
                   children: [
                     TileLayer(
@@ -217,9 +233,189 @@ class _MeshCoreMapScreenState extends ConsumerState<MeshCoreMapScreen> {
                         ..._buildContactMarkers(contactsWithLocation),
                       ],
                     ),
+                    // Measurement polyline
+                    if (_measureStart != null && _measureEnd != null)
+                      PolylineLayer(
+                        polylines: [
+                          Polyline(
+                            points: [_measureStart!, _measureEnd!],
+                            strokeWidth: 2.5,
+                            color: AppTheme.warningYellow,
+                            pattern: const StrokePattern.dotted(
+                              spacingFactor: 1.5,
+                            ),
+                          ),
+                        ],
+                      ),
+                    // Measurement markers
+                    if (_measureStart != null)
+                      MarkerLayer(
+                        markers: [
+                          Marker(
+                            point: _measureStart!,
+                            width: 24,
+                            height: 24,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: AppTheme.warningYellow,
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: Colors.black,
+                                  width: 2,
+                                ),
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  'A',
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          if (_measureEnd != null)
+                            Marker(
+                              point: _measureEnd!,
+                              width: 24,
+                              height: 24,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: AppTheme.warningYellow,
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: Colors.black,
+                                    width: 2,
+                                  ),
+                                ),
+                                child: const Center(
+                                  child: Text(
+                                    'B',
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
                   ],
                 ),
-                _buildLegend(contactsWithLocation.length),
+                if (!_measureMode) _buildLegend(contactsWithLocation.length),
+                // Measurement mode indicator pill
+                if (_measureMode &&
+                    (_measureStart == null || _measureEnd == null))
+                  Positioned(
+                    top: 16,
+                    left: 16,
+                    right: 68,
+                    child: Center(
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                          left: 16,
+                          top: 4,
+                          bottom: 4,
+                          right: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppTheme.warningYellow,
+                          borderRadius: BorderRadius.circular(
+                            AppTheme.radius20,
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(
+                              Icons.straighten,
+                              size: 16,
+                              color: Colors.black,
+                            ),
+                            const SizedBox(width: AppTheme.spacing8),
+                            Flexible(
+                              child: Text(
+                                _measureStart == null
+                                    ? 'Tap node or map for point A'
+                                    : 'Tap node or map for point B',
+                                style: const TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            const SizedBox(width: AppTheme.spacing8),
+                            GestureDetector(
+                              onTap: () => setState(() {
+                                _measureMode = false;
+                                _measureStart = null;
+                                _measureEnd = null;
+                                _measureContactA = null;
+                                _measureContactB = null;
+                              }),
+                              child: Container(
+                                width: 28,
+                                height: 28,
+                                decoration: BoxDecoration(
+                                  color: Colors.black.withValues(alpha: 0.2),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Icon(
+                                  Icons.close,
+                                  size: 16,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                // Measurement card
+                if (_measureMode &&
+                    _measureStart != null &&
+                    _measureEnd != null)
+                  Positioned(
+                    left: 16,
+                    right: 16,
+                    bottom: 16,
+                    child: _MeshCoreMeasurementCard(
+                      start: _measureStart!,
+                      end: _measureEnd!,
+                      contactA: _measureContactA,
+                      contactB: _measureContactB,
+                      onClear: () => setState(() {
+                        _measureStart = null;
+                        _measureEnd = null;
+                        _measureContactA = null;
+                        _measureContactB = null;
+                      }),
+                      onExitMeasureMode: () => setState(() {
+                        _measureMode = false;
+                        _measureStart = null;
+                        _measureEnd = null;
+                        _measureContactA = null;
+                        _measureContactB = null;
+                      }),
+                      onSwap: () => setState(() {
+                        final tmpStart = _measureStart;
+                        final tmpEnd = _measureEnd;
+                        final tmpA = _measureContactA;
+                        final tmpB = _measureContactB;
+                        _measureStart = tmpEnd;
+                        _measureEnd = tmpStart;
+                        _measureContactA = tmpB;
+                        _measureContactB = tmpA;
+                      }),
+                    ),
+                  ),
               ],
             ),
     );
@@ -307,7 +503,21 @@ class _MeshCoreMapScreenState extends ConsumerState<MeshCoreMapScreen> {
           child: GestureDetector(
             onTap: () {
               HapticFeedback.lightImpact();
+              if (_measureMode) {
+                _handleMeasureContactTap(contact);
+                return;
+              }
               _showContactInfo(contact);
+            },
+            onLongPress: () {
+              HapticFeedback.heavyImpact();
+              setState(() {
+                _measureMode = true;
+                _measureStart = LatLng(contact.latitude!, contact.longitude!);
+                _measureEnd = null;
+                _measureContactA = contact;
+                _measureContactB = null;
+              });
             },
             child: Column(
               children: [
@@ -680,6 +890,303 @@ class _MeshCoreMapScreenState extends ConsumerState<MeshCoreMapScreen> {
           ),
           ThemedSwitch(value: value, onChanged: onChanged),
         ],
+      ),
+    );
+  }
+
+  void _handleMeasureTap(LatLng point) {
+    setState(() {
+      if (_measureStart == null) {
+        _measureStart = point;
+        _measureEnd = null;
+        _measureContactA = null;
+        _measureContactB = null;
+      } else if (_measureEnd == null) {
+        _measureEnd = point;
+        _measureContactB = null;
+      } else {
+        _measureStart = point;
+        _measureEnd = null;
+        _measureContactA = null;
+        _measureContactB = null;
+      }
+    });
+    HapticFeedback.selectionClick();
+  }
+
+  void _handleMeasureContactTap(MeshCoreContact contact) {
+    final point = LatLng(contact.latitude!, contact.longitude!);
+    setState(() {
+      if (_measureStart == null) {
+        _measureStart = point;
+        _measureEnd = null;
+        _measureContactA = contact;
+        _measureContactB = null;
+      } else if (_measureEnd == null) {
+        _measureEnd = point;
+        _measureContactB = contact;
+      } else {
+        _measureStart = point;
+        _measureEnd = null;
+        _measureContactA = contact;
+        _measureContactB = null;
+      }
+    });
+    HapticFeedback.selectionClick();
+  }
+}
+
+/// Measurement card for MeshCore map — distance + bearing between two points.
+/// Long-press for actions sheet.
+class _MeshCoreMeasurementCard extends StatelessWidget {
+  final LatLng start;
+  final LatLng end;
+  final MeshCoreContact? contactA;
+  final MeshCoreContact? contactB;
+  final VoidCallback onClear;
+  final VoidCallback onExitMeasureMode;
+  final VoidCallback? onSwap;
+
+  const _MeshCoreMeasurementCard({
+    required this.start,
+    required this.end,
+    this.contactA,
+    this.contactB,
+    required this.onClear,
+    required this.onExitMeasureMode,
+    this.onSwap,
+  });
+
+  String _formatDist(double km) {
+    if (km < 1) {
+      return '${(km * 1000).round()} m';
+    } else if (km < 10) {
+      return '${km.toStringAsFixed(2)} km';
+    } else {
+      return '${km.toStringAsFixed(1)} km';
+    }
+  }
+
+  String _pointLabel(LatLng point, MeshCoreContact? contact, String prefix) {
+    if (contact != null && contact.name.isNotEmpty) {
+      return '$prefix: ${contact.name}';
+    }
+    return '$prefix: ${point.latitude.toStringAsFixed(4)}, '
+        '${point.longitude.toStringAsFixed(4)}';
+  }
+
+  String _buildSummary({
+    required double distanceKm,
+    required double bearing,
+    required String cardinal,
+  }) {
+    final buf = StringBuffer();
+    buf.write(
+      '${_formatDist(distanceKm)} · '
+      '${bearing.toStringAsFixed(0)}° $cardinal',
+    );
+    buf.writeln();
+    buf.writeln(_pointLabel(start, contactA, 'A'));
+    buf.write(_pointLabel(end, contactB, 'B'));
+    return buf.toString();
+  }
+
+  void _showActionsSheet(BuildContext context) {
+    final distanceKm = const Distance().as(LengthUnit.Kilometer, start, end);
+    final bearing = calculateBearing(
+      start.latitude,
+      start.longitude,
+      end.latitude,
+      end.longitude,
+    );
+    final cardinal = formatBearingCardinal(bearing);
+
+    HapticFeedback.selectionClick();
+    AppBottomSheet.showActions<String>(
+      context: context,
+      header: Padding(
+        padding: const EdgeInsets.only(bottom: AppTheme.spacing4),
+        child: Text(
+          'Measurement Actions',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: context.textPrimary,
+          ),
+        ),
+      ),
+      actions: [
+        BottomSheetAction(
+          icon: Icons.copy,
+          label: 'Copy Summary',
+          subtitle: _formatDist(distanceKm),
+          onTap: () {
+            Clipboard.setData(
+              ClipboardData(
+                text: _buildSummary(
+                  distanceKm: distanceKm,
+                  bearing: bearing,
+                  cardinal: cardinal,
+                ),
+              ),
+            );
+            if (context.mounted) {
+              showSuccessSnackBar(context, 'Measurement copied to clipboard');
+            }
+          },
+        ),
+        BottomSheetAction(
+          icon: Icons.pin_drop,
+          label: 'Copy Coordinates',
+          subtitle: 'Both A and B coordinates',
+          onTap: () {
+            Clipboard.setData(
+              ClipboardData(
+                text:
+                    'A: ${start.latitude.toStringAsFixed(6)}, '
+                    '${start.longitude.toStringAsFixed(6)}\n'
+                    'B: ${end.latitude.toStringAsFixed(6)}, '
+                    '${end.longitude.toStringAsFixed(6)}',
+              ),
+            );
+            if (context.mounted) {
+              showSuccessSnackBar(context, 'Coordinates copied to clipboard');
+            }
+          },
+        ),
+        BottomSheetAction(
+          icon: Icons.open_in_new,
+          label: 'Open Midpoint in Maps',
+          subtitle: 'Open in external map app',
+          onTap: () {
+            final midLat = (start.latitude + end.latitude) / 2.0;
+            final midLon = (start.longitude + end.longitude) / 2.0;
+            launchUrl(
+              Uri.parse('https://maps.apple.com/?ll=$midLat,$midLon&z=14'),
+              mode: LaunchMode.externalApplication,
+            );
+          },
+        ),
+        if (onSwap != null)
+          BottomSheetAction(
+            icon: Icons.swap_horiz,
+            label: 'Swap A \u2194 B',
+            subtitle: 'Reverse measurement direction',
+            onTap: onSwap,
+          ),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final distanceKm = const Distance().as(LengthUnit.Kilometer, start, end);
+    final bearing = calculateBearing(
+      start.latitude,
+      start.longitude,
+      end.latitude,
+      end.longitude,
+    );
+    final cardinal = formatBearingCardinal(bearing);
+
+    return GestureDetector(
+      onLongPress: () => _showActionsSheet(context),
+      child: Container(
+        padding: const EdgeInsets.all(AppTheme.spacing12),
+        decoration: BoxDecoration(
+          color: context.card.withValues(alpha: 0.95),
+          borderRadius: BorderRadius.circular(AppTheme.radius12),
+          border: Border.all(
+            color: AppTheme.warningYellow.withValues(alpha: 0.5),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.2),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              children: [
+                Container(
+                  width: 36,
+                  height: 36,
+                  decoration: BoxDecoration(
+                    color: AppTheme.warningYellow.withValues(alpha: 0.2),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.straighten,
+                    size: 18,
+                    color: AppTheme.warningYellow,
+                  ),
+                ),
+                const SizedBox(width: AppTheme.spacing12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            _formatDist(distanceKm),
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                              color: AppTheme.warningYellow,
+                            ),
+                          ),
+                          const SizedBox(width: AppTheme.spacing8),
+                          Text(
+                            '${bearing.toStringAsFixed(0)}° $cardinal',
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: context.textSecondary,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Text(
+                        _pointLabel(start, contactA, 'A'),
+                        style: context.captionStyle?.copyWith(
+                          color: context.textTertiary,
+                        ),
+                      ),
+                      Text(
+                        _pointLabel(end, contactB, 'B'),
+                        style: context.captionStyle?.copyWith(
+                          color: context.textTertiary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.refresh, size: 20),
+                  color: context.textTertiary,
+                  onPressed: onClear,
+                  tooltip: 'New measurement',
+                ),
+                IconButton(
+                  icon: const Icon(Icons.close, size: 20),
+                  color: AppTheme.errorRed,
+                  onPressed: onExitMeasureMode,
+                  tooltip: 'Exit measure mode',
+                ),
+              ],
+            ),
+            const SizedBox(height: AppTheme.spacing4),
+            Text(
+              'Long-press for actions',
+              style: TextStyle(fontSize: 10, color: context.textTertiary),
+            ),
+          ],
+        ),
       ),
     );
   }
