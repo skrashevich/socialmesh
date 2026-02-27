@@ -1192,7 +1192,9 @@ class _NodeCard extends StatelessWidget {
     final statusColor = _presenceColor(context, presenceConfidence);
     final blendColor = _blendColor(context);
     final statusText = presenceStatusText(presenceConfidence, lastHeardAge);
-    final cardOpacity = isMyNode ? 1.0 : presenceOpacity(presenceConfidence);
+    final cardOpacity = isMyNode || node.isFavorite
+        ? 1.0
+        : presenceOpacity(presenceConfidence);
 
     return BouncyTap(
       onTap: onTap,

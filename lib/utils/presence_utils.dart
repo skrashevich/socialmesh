@@ -31,10 +31,10 @@ double presenceOpacity(PresenceConfidence confidence) {
     case PresenceConfidence.active:
       return 1.0;
     case PresenceConfidence.fading:
-      return 0.75;
+      return 0.85;
     case PresenceConfidence.stale:
-      return 0.55;
+      return 0.7;
     case PresenceConfidence.unknown:
-      return 0.4;
+      return 0.6;
   }
 }
