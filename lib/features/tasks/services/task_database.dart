@@ -1,0 +1,325 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+
+// Task Database — SQLite schema and lifecycle management.
+//
+// This file defines the database schema for the task system.
+// Tables: tasks, task_transitions.
+//
+// Database: tasks.db
+// Schema version: 1
+//
+// Spec: TASK_SYSTEM.md (Sprint 007/W3.1), Sprint 008/W4.1.
+
+import 'dart:async';
+import 'dart:io';
+
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
+import 'package:sqflite/sqflite.dart';
+
+import '../../../core/logging.dart';
+import '../models/task.dart';
+import '../models/task_transition.dart';
+
+/// Schema version for the tasks SQLite database.
+///
+/// v1: Initial schema (tasks, task_transitions).
+const int taskSchemaVersion = 1;
+
+/// Manages the tasks SQLite database lifecycle.
+///
+/// Handles opening, creating, upgrading, and corruption recovery.
+/// Follows the same resilient pattern used by IncidentDatabase.
+class TaskDatabase {
+  static const String _dbFileName = 'tasks.db';
+
+  final String? _dbPathOverride;
+  Database? _db;
+  Completer<Database?>? _initCompleter;
+  bool _initFailed = false;
+
+  TaskDatabase({String? dbPathOverride}) : _dbPathOverride = dbPathOverride;
+
+  /// The open database instance. Throws if not initialised.
+  Database get database {
+    if (_db == null || !_db!.isOpen) {
+      throw StateError('TaskDatabase not initialized. Call open() first.');
+    }
+    return _db!;
+  }
+
+  /// Whether the database is open and ready.
+  bool get isOpen => _db != null && _db!.isOpen;
+
+  /// Open the database, creating tables if needed.
+  ///
+  /// Safe to call multiple times. Uses a completer to prevent
+  /// concurrent initialisation.
+  Future<Database> open() async {
+    if (_db != null && _db!.isOpen) return _db!;
+    if (_initFailed) {
+      throw StateError('TaskDatabase init failed permanently.');
+    }
+
+    if (_initCompleter != null && !_initCompleter!.isCompleted) {
+      final result = await _initCompleter!.future;
+      if (result == null) {
+        throw StateError('TaskDatabase init failed.');
+      }
+      return result;
+    }
+
+    _initCompleter = Completer<Database?>();
+
+    try {
+      await _openSafe();
+      _initCompleter!.complete(_db);
+      return _db!;
+    } catch (e) {
+      _initCompleter!.complete(null);
+      _initFailed = true;
+      rethrow;
+    }
+  }
+
+  Future<void> _openSafe() async {
+    final path = _dbPathOverride ?? await _defaultPath();
+
+    try {
+      _db = await _attemptOpen(path);
+    } catch (e) {
+      AppLogging.tasks('TaskDatabase: First open failed: $e');
+      if (!await _attemptRecovery(path)) {
+        AppLogging.tasks('TaskDatabase: Recovery failed');
+        rethrow;
+      }
+    }
+  }
+
+  Future<Database> _attemptOpen(String path) async {
+    return openDatabase(
+      path,
+      version: taskSchemaVersion,
+      singleInstance: path != inMemoryDatabasePath,
+      onCreate: _onCreate,
+      onUpgrade: _onUpgrade,
+      onDowngrade: _onDowngrade,
+    );
+  }
+
+  /// Create all tables and indices for a fresh database.
+  Future<void> _onCreate(Database db, int version) async {
+    final batch = db.batch();
+
+    // -- tasks --
+    batch.execute('''
+      CREATE TABLE tasks (
+        id              TEXT PRIMARY KEY,
+        orgId           TEXT NOT NULL,
+        incidentId      TEXT,
+        title           TEXT NOT NULL,
+        description     TEXT,
+        state           TEXT NOT NULL DEFAULT 'created',
+        priority        TEXT NOT NULL DEFAULT 'routine',
+        createdBy       TEXT NOT NULL,
+        assigneeId      TEXT NOT NULL,
+        completionNote  TEXT,
+        failureReason   TEXT,
+        reassignedTo    TEXT,
+        reassignedFrom  TEXT,
+        locationLat     REAL,
+        locationLon     REAL,
+        dueAt           INTEGER,
+        createdAt       INTEGER NOT NULL,
+        updatedAt       INTEGER NOT NULL,
+        syncedAt        INTEGER
+      )
+    ''');
+
+    batch.execute('CREATE INDEX idx_tasks_orgId ON tasks(orgId)');
+    batch.execute('CREATE INDEX idx_tasks_state ON tasks(state)');
+    batch.execute('CREATE INDEX idx_tasks_assigneeId ON tasks(assigneeId)');
+    batch.execute('CREATE INDEX idx_tasks_incidentId ON tasks(incidentId)');
+    batch.execute('CREATE INDEX idx_tasks_priority ON tasks(priority)');
+    batch.execute('CREATE INDEX idx_tasks_createdAt ON tasks(createdAt)');
+    batch.execute('CREATE INDEX idx_tasks_dueAt ON tasks(dueAt)');
+
+    // -- task_transitions (append-only) --
+    batch.execute('''
+      CREATE TABLE task_transitions (
+        id              TEXT PRIMARY KEY,
+        taskId          TEXT NOT NULL,
+        fromState       TEXT NOT NULL,
+        toState         TEXT NOT NULL,
+        actorId         TEXT NOT NULL,
+        note            TEXT,
+        timestamp       INTEGER NOT NULL,
+        FOREIGN KEY (taskId) REFERENCES tasks(id)
+      )
+    ''');
+
+    batch.execute(
+      'CREATE INDEX idx_task_transitions_taskId '
+      'ON task_transitions(taskId)',
+    );
+    batch.execute(
+      'CREATE INDEX idx_task_transitions_timestamp '
+      'ON task_transitions(timestamp)',
+    );
+
+    await batch.commit(noResult: true);
+    AppLogging.tasks('TaskDatabase: created v$version');
+  }
+
+  /// Migrations for future schema versions.
+  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    AppLogging.tasks('TaskDatabase: upgrade v$oldVersion -> v$newVersion');
+    // Future migrations go here:
+    // if (oldVersion < 2) { ... }
+  }
+
+  /// Downgrade: drop and recreate.
+  Future<void> _onDowngrade(Database db, int oldVersion, int newVersion) async {
+    AppLogging.tasks(
+      'TaskDatabase: downgrade v$oldVersion -> v$newVersion — recreating',
+    );
+    await db.execute('DROP TABLE IF EXISTS task_transitions');
+    await db.execute('DROP TABLE IF EXISTS tasks');
+    await _onCreate(db, newVersion);
+  }
+
+  /// Attempt corruption recovery by deleting and recreating the database.
+  Future<bool> _attemptRecovery(String path) async {
+    try {
+      final file = File(path);
+      if (await file.exists()) await file.delete();
+
+      // Also clean up WAL / SHM journal files.
+      for (final suffix in ['-journal', '-wal', '-shm']) {
+        final journal = File('$path$suffix');
+        if (await journal.exists()) await journal.delete();
+      }
+
+      _db = await _attemptOpen(path);
+      AppLogging.tasks('TaskDatabase: recovered via recreate');
+      return true;
+    } catch (e) {
+      AppLogging.tasks('TaskDatabase: recovery error: $e');
+      return false;
+    }
+  }
+
+  Future<String> _defaultPath() async {
+    final dir = await getApplicationDocumentsDirectory();
+    return p.join(dir.path, _dbFileName);
+  }
+
+  /// Close the database.
+  Future<void> close() async {
+    await _db?.close();
+    _db = null;
+    _initCompleter = null;
+    _initFailed = false;
+  }
+
+  // -------------------------------------------------------------------------
+  // CRUD helpers
+  // -------------------------------------------------------------------------
+
+  /// Inserts a new task row.
+  Future<void> insertTask(Task task) async {
+    final db = database;
+    await db.insert('tasks', task.toMap());
+  }
+
+  /// Returns a single task by [id], or null if not found.
+  Future<Task?> getTaskById(String id) async {
+    final db = database;
+    final rows = await db.query(
+      'tasks',
+      where: 'id = ?',
+      whereArgs: [id],
+      limit: 1,
+    );
+    if (rows.isEmpty) return null;
+    return Task.fromMap(rows.first);
+  }
+
+  /// Returns all tasks for [orgId], ordered by [createdAt] descending
+  /// then [id] for stable ordering.
+  ///
+  /// Optionally filters by [states], [priorities], and [assigneeId].
+  Future<List<Task>> getTasksByOrgId(
+    String orgId, {
+    Set<TaskState>? states,
+    Set<TaskPriority>? priorities,
+    String? assigneeId,
+    String? incidentId,
+  }) async {
+    final db = database;
+
+    final where = StringBuffer('orgId = ?');
+    final whereArgs = <Object>[orgId];
+
+    if (states != null && states.isNotEmpty) {
+      final placeholders = List.filled(states.length, '?').join(', ');
+      where.write(' AND state IN ($placeholders)');
+      whereArgs.addAll(states.map((s) => s.dbValue));
+    }
+
+    if (priorities != null && priorities.isNotEmpty) {
+      final placeholders = List.filled(priorities.length, '?').join(', ');
+      where.write(' AND priority IN ($placeholders)');
+      whereArgs.addAll(priorities.map((p) => p.name));
+    }
+
+    if (assigneeId != null) {
+      where.write(' AND assigneeId = ?');
+      whereArgs.add(assigneeId);
+    }
+
+    if (incidentId != null) {
+      where.write(' AND incidentId = ?');
+      whereArgs.add(incidentId);
+    }
+
+    final rows = await db.query(
+      'tasks',
+      where: where.toString(),
+      whereArgs: whereArgs,
+      orderBy: 'createdAt DESC, id ASC',
+    );
+
+    return rows.map(Task.fromMap).toList();
+  }
+
+  /// Returns all transitions for [taskId], ordered by timestamp
+  /// ascending then id for stable ordering.
+  Future<List<TaskTransition>> getTransitionsByTaskId(String taskId) async {
+    final db = database;
+    final rows = await db.query(
+      'task_transitions',
+      where: 'taskId = ?',
+      whereArgs: [taskId],
+      orderBy: 'timestamp ASC, id ASC',
+    );
+    return rows.map(TaskTransition.fromMap).toList();
+  }
+
+  /// Inserts a transition record (append-only).
+  Future<void> insertTransition(TaskTransition transition) async {
+    final db = database;
+    await db.insert('task_transitions', transition.toMap());
+  }
+
+  /// Updates the task projection row after a state transition.
+  ///
+  /// This is called by [TaskStateMachine] after appending a transition.
+  Future<void> updateTaskProjection(
+    String taskId,
+    Map<String, dynamic> updates,
+  ) async {
+    final db = database;
+    await db.update('tasks', updates, where: 'id = ?', whereArgs: [taskId]);
+  }
+}

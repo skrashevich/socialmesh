@@ -62,6 +62,7 @@ class AppLogging {
   static bool? _incidentSyncLoggingEnabled;
   static bool? _incidentUILoggingEnabled;
   static bool? _adminDiagLoggingEnabled;
+  static bool? _tasksLoggingEnabled;
   static bool? _forceEmptyStates;
   static Logger? _bleLogger;
   static Logger? _mapLogger;
@@ -497,6 +498,18 @@ class AppLogging {
     if (incidentUILoggingEnabled) debugPrint('IncidentUI: $message');
   }
 
+  /// Task system logging.
+  /// Enable with TASKS_LOGGING_ENABLED=true in .env file.
+  static bool get tasksLoggingEnabled {
+    _tasksLoggingEnabled ??=
+        _safeGetEnv('TASKS_LOGGING_ENABLED')?.toLowerCase() == 'true';
+    return _tasksLoggingEnabled!;
+  }
+
+  static void tasks(String message) {
+    if (tasksLoggingEnabled) debugPrint('Tasks: $message');
+  }
+
   /// Admin diagnostic harness logging.
   /// Always enabled — diagnostic sessions are explicit user actions.
   static bool get adminDiagLoggingEnabled {
@@ -548,6 +561,7 @@ class AppLogging {
     _incidentSyncLoggingEnabled = null;
     _incidentUILoggingEnabled = null;
     _adminDiagLoggingEnabled = null;
+    _tasksLoggingEnabled = null;
     _bleLogger = null;
     _noOpLogger = null;
   }
