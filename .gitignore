@@ -51,9 +51,10 @@ CLAUDE.md
 !*.pem.example
 
 # Firebase app config files (contain API keys and OAuth client IDs)
+# Note: firebase_options.dart must stay tracked — it's compiled into the binary (GPL requirement).
+# Firebase API keys are not secrets; security is enforced by Firestore rules + App Check.
 **/google-services.json
 **/GoogleService-Info.plist
-lib/firebase_options.dart
 
 # Old root-level backend services (moved to backend/)
 /functions/
