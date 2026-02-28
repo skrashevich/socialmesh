@@ -127,11 +127,13 @@ class _UserPurchasesAdminScreenState
   bool get _hasExclusions => _excludedUserIds.isNotEmpty;
 
   /// Cutoff for "last 24 hours" calculations.
-  DateTime get _last24hCutoff => DateTime.now().subtract(const Duration(hours: 24));
+  DateTime get _last24hCutoff =>
+      DateTime.now().subtract(const Duration(hours: 24));
 
   /// New users in last 24 hours.
-  int get _newUsersLast24h =>
-      _users.where((u) => u.createdAt != null && u.createdAt!.isAfter(_last24hCutoff)).length;
+  int get _newUsersLast24h => _users
+      .where((u) => u.createdAt != null && u.createdAt!.isAfter(_last24hCutoff))
+      .length;
 
   /// New purchases in last 24 hours.
   int get _newPurchasesLast24h {
