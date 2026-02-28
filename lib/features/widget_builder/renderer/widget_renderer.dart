@@ -84,9 +84,11 @@ class WidgetRenderer extends ConsumerWidget {
         borderRadius: BorderRadius.circular(AppTheme.radius12),
         border: Border.all(color: context.border),
       ),
-      clipBehavior: Clip.antiAlias,
       alignment: Alignment.topLeft,
-      child: content,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(AppTheme.radius12 - 1),
+        child: content,
+      ),
     );
   }
 }

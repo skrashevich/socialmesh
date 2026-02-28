@@ -52,6 +52,7 @@ class FullscreenGallery extends StatefulWidget {
 class _FullscreenGalleryState extends State<FullscreenGallery> {
   late PageController _controller;
   late int _currentIndex;
+  bool _overlayVisible = true;
 
   bool get _isMultiImage => widget.images.length > 1;
 
@@ -68,6 +69,11 @@ class _FullscreenGalleryState extends State<FullscreenGallery> {
     super.dispose();
   }
 
+  void _toggleOverlay() {
+    HapticFeedback.lightImpact();
+    setState(() => _overlayVisible = !_overlayVisible);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,10 +82,7 @@ class _FullscreenGalleryState extends State<FullscreenGallery> {
         children: [
           // Image PageView — fills the entire screen
           GestureDetector(
-            onTap: () {
-              HapticFeedback.lightImpact();
-              Navigator.of(context).pop();
-            },
+            onTap: _toggleOverlay,
             child: PageView.builder(
               controller: _controller,
               itemCount: widget.images.length,
@@ -112,59 +115,69 @@ class _FullscreenGalleryState extends State<FullscreenGallery> {
             top: 0,
             left: 0,
             right: 0,
-            child: SafeArea(
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.black.withValues(alpha: 0.7),
-                      Colors.transparent,
-                    ],
-                  ),
-                ),
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                child: Row(
-                  children: [
-                    // Counter pill — only shown for multiple images
-                    if (_isMultiImage) ...[
-                      const Spacer(),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 6,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.black.withValues(alpha: 0.5),
-                          borderRadius: BorderRadius.circular(
-                            AppTheme.radius16,
-                          ),
-                        ),
-                        child: Text(
-                          '${_currentIndex + 1} / ${widget.images.length}',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ],
-                    const Spacer(),
-                    // Close button — top-right to avoid overlapping
-                    // navigation elements visible in screenshot content
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.black.withValues(alpha: 0.6),
-                        shape: BoxShape.circle,
-                      ),
-                      child: IconButton(
-                        icon: const Icon(Icons.close, color: Colors.white),
-                        onPressed: () => Navigator.of(context).pop(),
+            child: IgnorePointer(
+              ignoring: !_overlayVisible,
+              child: AnimatedOpacity(
+                opacity: _overlayVisible ? 1.0 : 0.0,
+                duration: const Duration(milliseconds: 200),
+                child: SafeArea(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.black.withValues(alpha: 0.7),
+                          Colors.transparent,
+                        ],
                       ),
                     ),
-                  ],
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 8,
+                    ),
+                    child: Row(
+                      children: [
+                        // Counter pill — only shown for multiple images
+                        if (_isMultiImage) ...[
+                          const Spacer(),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 6,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.black.withValues(alpha: 0.5),
+                              borderRadius: BorderRadius.circular(
+                                AppTheme.radius16,
+                              ),
+                            ),
+                            child: Text(
+                              '${_currentIndex + 1} / ${widget.images.length}',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ],
+                        const Spacer(),
+                        // Close button — top-right to avoid overlapping
+                        // navigation elements visible in screenshot content
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.black.withValues(alpha: 0.6),
+                            shape: BoxShape.circle,
+                          ),
+                          child: IconButton(
+                            icon: const Icon(Icons.close, color: Colors.white),
+                            onPressed: () => Navigator.of(context).pop(),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),

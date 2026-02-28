@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,6 +13,7 @@ import '../../../core/widgets/search_filter_header.dart';
 import '../../../core/widgets/status_filter_chip.dart';
 import '../../../core/widgets/fullscreen_gallery.dart';
 import '../../../core/widgets/glass_scaffold.dart';
+import '../../../core/widgets/screenshot_thumbnail.dart';
 import '../../../utils/snackbar.dart';
 import '../../feedback/bug_report_repository.dart';
 import 'admin_bug_report_providers.dart';
@@ -104,10 +107,10 @@ class _AdminBugReportsScreenState extends ConsumerState<AdminBugReportsScreen>
     return {
       _AdminBugFilter.all: reports.length,
       _AdminBugFilter.open: reports
-          .where((r) => r.status == BugReportStatus.open)
+          .where((r) => _effectiveStatus(r) == BugReportStatus.open)
           .length,
       _AdminBugFilter.userReplied: reports
-          .where((r) => r.status == BugReportStatus.userReplied)
+          .where((r) => _effectiveStatus(r) == BugReportStatus.userReplied)
           .length,
       _AdminBugFilter.responded: reports
           .where((r) => _effectiveStatus(r) == BugReportStatus.responded)
@@ -327,6 +330,12 @@ class _AdminBugReportsScreenState extends ConsumerState<AdminBugReportsScreen>
     } catch (e) {
       if (mounted) {
         showErrorSnackBar(context, 'Failed to update status: $e');
+        // Revert optimistic status on failure
+        setState(() => _optimisticStatuses.remove(reportId));
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _updatingStatus.remove(reportId));
       }
     }
   }
@@ -414,251 +423,229 @@ class _ReportCard extends StatelessWidget {
           width: report.hasUnreadUserReplies ? 1.5 : 1,
         ),
       ),
-      clipBehavior: Clip.antiAlias,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          // Header (always visible)
-          InkWell(
-            onTap: onToggle,
-            child: Padding(
-              padding: const EdgeInsets.all(AppTheme.spacing16),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          preview,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const SizedBox(height: AppTheme.spacing6),
-                        Wrap(
-                          spacing: 12,
-                          runSpacing: 4,
-                          children: [
-                            _MetaChip(
-                              icon: Icons.schedule,
-                              text: _formatDate(report.createdAt),
-                            ),
-                            if (report.deviceModel != null ||
-                                report.platform != null)
-                              _MetaChip(
-                                icon: Icons.devices,
-                                text: [
-                                  report.deviceModel ?? report.platform,
-                                  report.osVersion ?? report.platformVersion,
-                                ].whereType<String>().join(' · '),
-                              ),
-                            if (report.appVersion != null)
-                              _MetaChip(
-                                icon: Icons.label_outline,
-                                text:
-                                    'v${report.appVersion}${report.buildNumber != null ? ' (${report.buildNumber})' : ''}',
-                              ),
-                            if (report.responses.isNotEmpty)
-                              _MetaChip(
-                                icon: Icons.chat_bubble_outline,
-                                text: '${report.responses.length}',
-                              ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: AppTheme.spacing12),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(AppTheme.radius12 - 1),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Header (always visible)
+            InkWell(
+              borderRadius: BorderRadius.circular(AppTheme.radius12 - 1),
+              onTap: onToggle,
+              child: Padding(
+                padding: const EdgeInsets.all(AppTheme.spacing16),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          if (report.unreadUserReplyCount > 0)
-                            Container(
-                              margin: const EdgeInsets.only(
-                                right: AppTheme.spacing8,
+                          Text(
+                            preview,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const SizedBox(height: AppTheme.spacing6),
+                          Wrap(
+                            spacing: 12,
+                            runSpacing: 4,
+                            children: [
+                              _MetaChip(
+                                icon: Icons.schedule,
+                                text: _formatDate(report.createdAt),
                               ),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: AppTheme.spacing8,
-                                vertical: AppTheme.spacing2,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.pink,
-                                borderRadius: BorderRadius.circular(
-                                  AppTheme.radius11,
+                              if (report.deviceModel != null ||
+                                  report.platform != null)
+                                _MetaChip(
+                                  icon: Icons.devices,
+                                  text: [
+                                    report.deviceModel ?? report.platform,
+                                    report.osVersion ?? report.platformVersion,
+                                  ].whereType<String>().join(' · '),
                                 ),
-                              ),
-                              child: Text(
-                                '${report.unreadUserReplyCount}',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w700,
+                              if (report.appVersion != null)
+                                _MetaChip(
+                                  icon: Icons.label_outline,
+                                  text:
+                                      'v${report.appVersion}${report.buildNumber != null ? ' (${report.buildNumber})' : ''}',
                                 ),
-                              ),
-                            ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: AppTheme.spacing8,
-                              vertical: AppTheme.spacing3,
-                            ),
-                            decoration: BoxDecoration(
-                              color: statusColor.withValues(alpha: 0.15),
-                              borderRadius: BorderRadius.circular(
-                                AppTheme.radius8,
-                              ),
-                            ),
-                            child: Text(
-                              _statusLabel(),
-                              style: TextStyle(
-                                color: statusColor,
-                                fontSize: 10,
-                                fontWeight: FontWeight.w600,
-                                letterSpacing: 0.3,
-                              ),
-                            ),
+                              if (report.responses.isNotEmpty)
+                                _MetaChip(
+                                  icon: Icons.chat_bubble_outline,
+                                  text: '${report.responses.length}',
+                                ),
+                            ],
                           ),
                         ],
                       ),
-                      const SizedBox(height: AppTheme.spacing8),
-                      AnimatedRotation(
-                        turns: isExpanded ? 0.5 : 0,
-                        duration: const Duration(milliseconds: 200),
-                        child: Icon(
-                          Icons.expand_more,
-                          size: 20,
-                          color: context.textSecondary,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          // Expanded body
-          if (isExpanded) ...[
-            Divider(height: 1, color: Colors.white.withValues(alpha: 0.06)),
-
-            // Description
-            _Section(
-              label: 'DESCRIPTION',
-              child: SelectableText(
-                desc,
-                style: TextStyle(
-                  fontSize: 13,
-                  height: 1.6,
-                  color: context.textSecondary,
-                ),
-              ),
-            ),
-
-            // Screenshot
-            if (report.screenshotUrl != null)
-              _Section(
-                label: 'SCREENSHOT',
-                child: GestureDetector(
-                  onTap: () => _showScreenshot(context),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(AppTheme.radius8),
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(maxHeight: 300),
-                      child: Image.network(
-                        report.screenshotUrl!,
-                        fit: BoxFit.contain,
-                        loadingBuilder: (_, child, progress) {
-                          if (progress == null) return child;
-                          return const SizedBox(
-                            height: 200,
-                            child: Center(
-                              child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                    const SizedBox(width: AppTheme.spacing12),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            if (report.unreadUserReplyCount > 0)
+                              Container(
+                                margin: const EdgeInsets.only(
+                                  right: AppTheme.spacing8,
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: AppTheme.spacing8,
+                                  vertical: AppTheme.spacing2,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.pink,
+                                  borderRadius: BorderRadius.circular(
+                                    AppTheme.radius11,
+                                  ),
+                                ),
+                                child: Text(
+                                  '${report.unreadUserReplyCount}',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: AppTheme.spacing8,
+                                vertical: AppTheme.spacing3,
+                              ),
+                              decoration: BoxDecoration(
+                                color: statusColor.withValues(alpha: 0.15),
+                                borderRadius: BorderRadius.circular(
+                                  AppTheme.radius8,
+                                ),
+                              ),
+                              child: Text(
+                                _statusLabel(),
+                                style: TextStyle(
+                                  color: statusColor,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w600,
+                                  letterSpacing: 0.3,
+                                ),
+                              ),
                             ),
-                          );
-                        },
-                        errorBuilder: (_, _, _) => Container(
-                          height: 100,
-                          color: Colors.white.withValues(alpha: 0.05),
-                          child: const Center(
-                            child: Icon(Icons.broken_image_outlined),
+                          ],
+                        ),
+                        const SizedBox(height: AppTheme.spacing8),
+                        AnimatedRotation(
+                          turns: isExpanded ? 0.5 : 0,
+                          duration: const Duration(milliseconds: 200),
+                          child: Icon(
+                            Icons.expand_more,
+                            size: 20,
+                            color: context.textSecondary,
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                  ),
+                  ],
                 ),
-              ),
-
-            // Details grid
-            _Section(
-              label: 'DETAILS',
-              child: Wrap(
-                spacing: 16,
-                runSpacing: 10,
-                children: [
-                  _DetailItem(label: 'Report ID', value: report.id),
-                  _DetailItem(
-                    label: 'User ID',
-                    value: report.uid ?? 'anonymous',
-                  ),
-                  if (report.email != null)
-                    _DetailItem(label: 'Email', value: report.email!),
-                  if (report.deviceModel != null)
-                    _DetailItem(label: 'Device', value: report.deviceModel!),
-                  if (report.osVersion != null ||
-                      report.platformVersion != null)
-                    _DetailItem(
-                      label: 'OS Version',
-                      value: report.osVersion ?? report.platformVersion ?? '',
-                    ),
-                  if (report.appVersion != null)
-                    _DetailItem(
-                      label: 'App Version',
-                      value:
-                          'v${report.appVersion}${report.buildNumber != null ? ' (${report.buildNumber})' : ''}',
-                    ),
-                ],
               ),
             ),
 
-            // Conversation thread
-            if (report.responses.isNotEmpty)
+            // Expanded body
+            if (isExpanded) ...[
+              Divider(height: 1, color: Colors.white.withValues(alpha: 0.06)),
+
+              // Description
               _Section(
-                label: 'CONVERSATION',
-                child: Column(
-                  children: report.responses
-                      .map((r) => _ThreadBubble(response: r))
-                      .toList(),
+                label: 'DESCRIPTION',
+                child: SelectableText(
+                  desc,
+                  style: TextStyle(
+                    fontSize: 13,
+                    height: 1.6,
+                    color: context.textSecondary,
+                  ),
                 ),
               ),
 
-            // Reply box
-            if (!report.isAnonymous)
-              _ReplyBox(
-                controller: replyController,
-                isResolved: _effectiveStatus == BugReportStatus.resolved,
-                isStatusUpdating: isStatusUpdating,
-                isSendingReply: isSendingReply,
-                onSend: onSendReply,
-                onResolve: onResolve,
-                onReopen: onReopen,
-              )
-            else
-              _AnonymousReplyBox(
-                isResolved: _effectiveStatus == BugReportStatus.resolved,
-                isStatusUpdating: isStatusUpdating,
-                onResolve: onResolve,
-                onReopen: onReopen,
+              // Screenshot
+              if (report.screenshotUrl != null)
+                _Section(
+                  label: 'SCREENSHOT',
+                  child: ScreenshotThumbnail(
+                    imageUrl: report.screenshotUrl!,
+                    onTapOverride: () => _showScreenshot(context),
+                  ),
+                ),
+
+              // Details grid
+              _Section(
+                label: 'DETAILS',
+                child: Wrap(
+                  spacing: 16,
+                  runSpacing: 10,
+                  children: [
+                    _DetailItem(label: 'Report ID', value: report.id),
+                    _DetailItem(
+                      label: 'User ID',
+                      value: report.uid ?? 'anonymous',
+                    ),
+                    if (report.email != null)
+                      _DetailItem(label: 'Email', value: report.email!),
+                    if (report.deviceModel != null)
+                      _DetailItem(label: 'Device', value: report.deviceModel!),
+                    if (report.osVersion != null ||
+                        report.platformVersion != null)
+                      _DetailItem(
+                        label: 'OS Version',
+                        value: report.osVersion ?? report.platformVersion ?? '',
+                      ),
+                    if (report.appVersion != null)
+                      _DetailItem(
+                        label: 'App Version',
+                        value:
+                            'v${report.appVersion}${report.buildNumber != null ? ' (${report.buildNumber})' : ''}',
+                      ),
+                  ],
+                ),
               ),
+
+              // Conversation thread
+              if (report.responses.isNotEmpty)
+                _Section(
+                  label: 'CONVERSATION',
+                  child: Column(
+                    children: report.responses
+                        .map((r) => _ThreadBubble(response: r))
+                        .toList(),
+                  ),
+                ),
+
+              // Reply box
+              if (!report.isAnonymous)
+                _ReplyBox(
+                  controller: replyController,
+                  isResolved: _effectiveStatus == BugReportStatus.resolved,
+                  isStatusUpdating: isStatusUpdating,
+                  isSendingReply: isSendingReply,
+                  onSend: onSendReply,
+                  onResolve: onResolve,
+                  onReopen: onReopen,
+                )
+              else
+                _AnonymousReplyBox(
+                  isResolved: _effectiveStatus == BugReportStatus.resolved,
+                  isStatusUpdating: isStatusUpdating,
+                  onResolve: onResolve,
+                  onReopen: onReopen,
+                ),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }
@@ -831,7 +818,7 @@ class _ThreadBubble extends StatelessWidget {
   }
 }
 
-class _ReplyBox extends StatelessWidget {
+class _ReplyBox extends StatefulWidget {
   const _ReplyBox({
     required this.controller,
     required this.isResolved,
@@ -851,7 +838,104 @@ class _ReplyBox extends StatelessWidget {
   final VoidCallback onReopen;
 
   @override
+  State<_ReplyBox> createState() => _ReplyBoxState();
+}
+
+class _ReplyBoxState extends State<_ReplyBox> {
+  static const int _countdownSeconds = 3;
+
+  // Status action (resolve/reopen) countdown
+  Timer? _statusTimer;
+  int _statusCountdown = 0;
+  bool _isStatusCountingDown = false;
+  VoidCallback? _pendingStatusAction;
+
+  // Send action countdown
+  Timer? _sendTimer;
+  int _sendCountdown = 0;
+  bool _isSendCountingDown = false;
+
+  @override
+  void dispose() {
+    _statusTimer?.cancel();
+    _sendTimer?.cancel();
+    super.dispose();
+  }
+
+  void _startStatusCountdown(VoidCallback action) {
+    // Cancel any active send countdown first
+    _cancelSendCountdown(silent: true);
+    HapticFeedback.mediumImpact();
+    _pendingStatusAction = action;
+    setState(() {
+      _isStatusCountingDown = true;
+      _statusCountdown = _countdownSeconds;
+    });
+    _statusTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!mounted) {
+        timer.cancel();
+        return;
+      }
+      if (_statusCountdown <= 1) {
+        timer.cancel();
+        setState(() => _isStatusCountingDown = false);
+        _pendingStatusAction?.call();
+      } else {
+        setState(() => _statusCountdown--);
+      }
+    });
+  }
+
+  void _cancelStatusCountdown({bool silent = false}) {
+    _statusTimer?.cancel();
+    if (!silent) HapticFeedback.lightImpact();
+    setState(() {
+      _isStatusCountingDown = false;
+      _statusCountdown = 0;
+      _pendingStatusAction = null;
+    });
+  }
+
+  void _startSendCountdown() {
+    if (widget.controller.text.trim().isEmpty) {
+      widget.onSend(); // Let parent handle empty validation
+      return;
+    }
+    // Cancel any active status countdown first
+    _cancelStatusCountdown(silent: true);
+    HapticFeedback.mediumImpact();
+    setState(() {
+      _isSendCountingDown = true;
+      _sendCountdown = _countdownSeconds;
+    });
+    _sendTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!mounted) {
+        timer.cancel();
+        return;
+      }
+      if (_sendCountdown <= 1) {
+        timer.cancel();
+        setState(() => _isSendCountingDown = false);
+        widget.onSend();
+      } else {
+        setState(() => _sendCountdown--);
+      }
+    });
+  }
+
+  void _cancelSendCountdown({bool silent = false}) {
+    _sendTimer?.cancel();
+    if (!silent) HapticFeedback.lightImpact();
+    setState(() {
+      _isSendCountingDown = false;
+      _sendCountdown = 0;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final anyCountdown = _isStatusCountingDown || _isSendCountingDown;
+
     return Container(
       padding: const EdgeInsets.all(AppTheme.spacing14),
       decoration: BoxDecoration(
@@ -860,67 +944,160 @@ class _ReplyBox extends StatelessWidget {
         ),
         color: Colors.white.withValues(alpha: 0.02),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Expanded(
-            child: TextField(
-              controller: controller,
-              maxLines: 4,
-              minLines: 1,
-              maxLength: 2000,
-              style: const TextStyle(fontSize: 13),
-              decoration: InputDecoration(
-                hintText: 'Write a response...',
-                hintStyle: TextStyle(color: context.textSecondary),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(AppTheme.radius12),
-                  borderSide: BorderSide(
-                    color: Colors.white.withValues(alpha: 0.08),
-                  ),
+          TextField(
+            controller: widget.controller,
+            maxLines: 8,
+            minLines: 4,
+            maxLength: 2000,
+            enabled: !anyCountdown,
+            style: const TextStyle(fontSize: 14),
+            decoration: InputDecoration(
+              hintText: 'Write a response...',
+              hintStyle: TextStyle(color: context.textSecondary),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(AppTheme.radius12),
+                borderSide: BorderSide(
+                  color: Colors.white.withValues(alpha: 0.08),
                 ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(AppTheme.radius12),
-                  borderSide: BorderSide(
-                    color: Colors.white.withValues(alpha: 0.08),
-                  ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(AppTheme.radius12),
-                  borderSide: const BorderSide(color: Colors.pink),
-                ),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: AppTheme.spacing14,
-                  vertical: AppTheme.spacing10,
-                ),
-                counterText: '',
-                isDense: true,
               ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(AppTheme.radius12),
+                borderSide: BorderSide(
+                  color: Colors.white.withValues(alpha: 0.08),
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(AppTheme.radius12),
+                borderSide: const BorderSide(color: Colors.pink),
+              ),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: AppTheme.spacing14,
+                vertical: AppTheme.spacing12,
+              ),
+              counterText: '',
             ),
           ),
-          const SizedBox(width: AppTheme.spacing10),
-          Column(
-            mainAxisSize: MainAxisSize.min,
+          const SizedBox(height: AppTheme.spacing12),
+          Row(
             children: [
-              SizedBox(
-                width: 42,
-                height: 42,
-                child: isSendingReply
-                    ? const Center(
-                        child: SizedBox(
-                          width: AppTheme.spacing20,
-                          height: AppTheme.spacing20,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: Colors.pink,
+              Expanded(
+                child: _isStatusCountingDown
+                    ? OutlinedButton(
+                        onPressed: _cancelStatusCountdown,
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: AppTheme.errorRed,
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          side: const BorderSide(color: AppTheme.errorRed),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              AppTheme.radius12,
+                            ),
+                          ),
+                        ),
+                        child: Text('Cancel · $_statusCountdown'),
+                      )
+                    : widget.isResolved
+                    ? OutlinedButton(
+                        onPressed:
+                            widget.isStatusUpdating || _isSendCountingDown
+                            ? null
+                            : () => _startStatusCountdown(widget.onReopen),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: Colors.amber,
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          side: BorderSide(
+                            color: widget.isStatusUpdating
+                                ? Colors.amber.withAlpha(80)
+                                : Colors.amber,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              AppTheme.radius12,
+                            ),
+                          ),
+                        ),
+                        child: widget.isStatusUpdating
+                            ? const SizedBox(
+                                width: AppTheme.spacing16,
+                                height: AppTheme.spacing16,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: Colors.amber,
+                                ),
+                              )
+                            : const Text('Reopen'),
+                      )
+                    : OutlinedButton(
+                        onPressed:
+                            widget.isStatusUpdating || _isSendCountingDown
+                            ? null
+                            : () => _startStatusCountdown(widget.onResolve),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: Colors.green,
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          side: BorderSide(
+                            color: widget.isStatusUpdating
+                                ? Colors.green.withAlpha(80)
+                                : Colors.green,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              AppTheme.radius12,
+                            ),
+                          ),
+                        ),
+                        child: widget.isStatusUpdating
+                            ? const SizedBox(
+                                width: AppTheme.spacing16,
+                                height: AppTheme.spacing16,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: Colors.green,
+                                ),
+                              )
+                            : const Text('Resolve'),
+                      ),
+              ),
+              const SizedBox(width: AppTheme.spacing12),
+              Expanded(
+                child: _isSendCountingDown
+                    ? FilledButton.icon(
+                        onPressed: _cancelSendCountdown,
+                        icon: const Icon(Icons.close, size: 16),
+                        label: Text('Cancel · $_sendCountdown'),
+                        style: FilledButton.styleFrom(
+                          backgroundColor: AppTheme.errorRed,
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              AppTheme.radius12,
+                            ),
                           ),
                         ),
                       )
-                    : IconButton.filled(
-                        onPressed: onSend,
-                        icon: const Icon(Icons.send, size: 18),
-                        style: IconButton.styleFrom(
+                    : FilledButton.icon(
+                        onPressed:
+                            widget.isSendingReply || _isStatusCountingDown
+                            ? null
+                            : _startSendCountdown,
+                        icon: widget.isSendingReply
+                            ? const SizedBox(
+                                width: AppTheme.spacing16,
+                                height: AppTheme.spacing16,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : const Icon(Icons.send, size: 16),
+                        label: const Text('Send'),
+                        style: FilledButton.styleFrom(
                           backgroundColor: Colors.pink,
+                          disabledBackgroundColor: Colors.pink.withAlpha(120),
+                          padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
                               AppTheme.radius12,
@@ -929,21 +1106,6 @@ class _ReplyBox extends StatelessWidget {
                         ),
                       ),
               ),
-              const SizedBox(height: AppTheme.spacing6),
-              if (isResolved)
-                _SmallActionButton(
-                  label: 'Reopen',
-                  color: Colors.amber,
-                  isLoading: isStatusUpdating,
-                  onTap: onReopen,
-                )
-              else
-                _SmallActionButton(
-                  label: 'Resolve',
-                  color: Colors.green,
-                  isLoading: isStatusUpdating,
-                  onTap: onResolve,
-                ),
             ],
           ),
         ],
@@ -952,7 +1114,7 @@ class _ReplyBox extends StatelessWidget {
   }
 }
 
-class _AnonymousReplyBox extends StatelessWidget {
+class _AnonymousReplyBox extends StatefulWidget {
   const _AnonymousReplyBox({
     required this.isResolved,
     this.isStatusUpdating = false,
@@ -964,6 +1126,56 @@ class _AnonymousReplyBox extends StatelessWidget {
   final bool isStatusUpdating;
   final VoidCallback onResolve;
   final VoidCallback onReopen;
+
+  @override
+  State<_AnonymousReplyBox> createState() => _AnonymousReplyBoxState();
+}
+
+class _AnonymousReplyBoxState extends State<_AnonymousReplyBox> {
+  static const int _countdownSeconds = 3;
+
+  Timer? _timer;
+  int _countdown = 0;
+  bool _isCountingDown = false;
+  VoidCallback? _pendingAction;
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  void _startCountdown(VoidCallback action) {
+    HapticFeedback.mediumImpact();
+    _pendingAction = action;
+    setState(() {
+      _isCountingDown = true;
+      _countdown = _countdownSeconds;
+    });
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!mounted) {
+        timer.cancel();
+        return;
+      }
+      if (_countdown <= 1) {
+        timer.cancel();
+        setState(() => _isCountingDown = false);
+        _pendingAction?.call();
+      } else {
+        setState(() => _countdown--);
+      }
+    });
+  }
+
+  void _cancelCountdown() {
+    _timer?.cancel();
+    HapticFeedback.lightImpact();
+    setState(() {
+      _isCountingDown = false;
+      _countdown = 0;
+      _pendingAction = null;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -985,19 +1197,25 @@ class _AnonymousReplyBox extends StatelessWidget {
               style: TextStyle(fontSize: 12, color: Colors.orange.shade400),
             ),
           ),
-          if (isResolved)
+          if (_isCountingDown)
+            _SmallActionButton(
+              label: 'Cancel · $_countdown',
+              color: AppTheme.errorRed,
+              onTap: _cancelCountdown,
+            )
+          else if (widget.isResolved)
             _SmallActionButton(
               label: 'Reopen',
               color: Colors.amber,
-              isLoading: isStatusUpdating,
-              onTap: onReopen,
+              isLoading: widget.isStatusUpdating,
+              onTap: () => _startCountdown(widget.onReopen),
             )
           else
             _SmallActionButton(
               label: 'Resolve',
               color: Colors.green,
-              isLoading: isStatusUpdating,
-              onTap: onResolve,
+              isLoading: widget.isStatusUpdating,
+              onTap: () => _startCountdown(widget.onResolve),
             ),
         ],
       ),

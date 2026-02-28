@@ -49,6 +49,7 @@ import '../settings/subscription_screen.dart';
 import '../widget_builder/widget_builder_screen.dart';
 import '../reachability/mesh_reachability_screen.dart';
 import '../device_shop/providers/admin_shop_providers.dart';
+import '../admin/bug_reports/admin_bug_report_watcher.dart';
 import '../mesh_health/widgets/mesh_health_dashboard.dart';
 import '../signals/signals.dart';
 import '../profile/profile_screen.dart';
@@ -1066,6 +1067,10 @@ class _MainShellState extends ConsumerState<MainShell> {
     // Watch Firestore config for real-time updates (premium upsell, etc.)
     // This keeps the stream alive and syncs remote changes to local storage
     ref.watch(firestoreConfigWatcherProvider);
+
+    // Watch for new bug reports and fire local notifications (admin only).
+    // Non-admins get an inert stream that never emits.
+    ref.watch(adminBugReportWatcherProvider);
 
     // Auto-reconnect and live activity managers are now watched at app level in main.dart
 

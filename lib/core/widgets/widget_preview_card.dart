@@ -66,90 +66,92 @@ class WidgetPreviewCard extends ConsumerWidget {
           borderRadius: BorderRadius.circular(AppTheme.radius16),
           border: Border.all(color: context.border, width: 1),
         ),
-        clipBehavior: Clip.antiAlias,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Widget preview - auto-sizes to content
-            // This is the actual widget structure that goes on the dashboard
-            Padding(
-              padding: const EdgeInsets.all(AppTheme.spacing12),
-              child: WidgetRenderer(
-                schema: schema,
-                node: node,
-                allNodes: nodes,
-                accentColor: context.accentColor,
-                enableActions: false, // Only interactive on dashboard
-                isPreview: true,
-                usePlaceholderData: node == null,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(AppTheme.radius16 - 1),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Widget preview - auto-sizes to content
+              // This is the actual widget structure that goes on the dashboard
+              Padding(
+                padding: const EdgeInsets.all(AppTheme.spacing12),
+                child: WidgetRenderer(
+                  schema: schema,
+                  node: node,
+                  allNodes: nodes,
+                  accentColor: context.accentColor,
+                  enableActions: false, // Only interactive on dashboard
+                  isPreview: true,
+                  usePlaceholderData: node == null,
+                ),
               ),
-            ),
-            // Divider between widget and info
-            Container(height: 1, color: context.border),
-            // Info section inside the card
-            Padding(
-              padding: const EdgeInsets.all(AppTheme.spacing12),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Flexible(
-                              child: Text(
-                                title,
-                                style: TextStyle(
-                                  color: context.textPrimary,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
+              // Divider between widget and info
+              Container(height: 1, color: context.border),
+              // Info section inside the card
+              Padding(
+                padding: const EdgeInsets.all(AppTheme.spacing12),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  title,
+                                  style: TextStyle(
+                                    color: context.textPrimary,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                                overflow: TextOverflow.ellipsis,
                               ),
-                            ),
-                            if (titleLeading != null) ...[
-                              const SizedBox(width: AppTheme.spacing8),
-                              titleLeading!,
+                              if (titleLeading != null) ...[
+                                const SizedBox(width: AppTheme.spacing8),
+                                titleLeading!,
+                              ],
                             ],
-                          ],
-                        ),
-                        if (subtitle != null) ...[
-                          const SizedBox(height: AppTheme.spacing4),
-                          Text(
-                            subtitle!,
-                            style: TextStyle(
-                              color: context.textSecondary,
-                              fontSize: 12,
-                            ),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
                           ),
+                          if (subtitle != null) ...[
+                            const SizedBox(height: AppTheme.spacing4),
+                            Text(
+                              subtitle!,
+                              style: TextStyle(
+                                color: context.textSecondary,
+                                fontSize: 12,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
                         ],
-                      ],
-                    ),
-                  ),
-                  // QR code share button
-                  if (onShare != null) ...[
-                    GestureDetector(
-                      onTap: onShare,
-                      child: Padding(
-                        padding: const EdgeInsets.all(AppTheme.spacing4),
-                        child: Icon(
-                          Icons.qr_code_2,
-                          color: context.accentColor,
-                          size: 22,
-                        ),
                       ),
                     ),
-                    if (trailing != null)
-                      const SizedBox(width: AppTheme.spacing8),
+                    // QR code share button
+                    if (onShare != null) ...[
+                      GestureDetector(
+                        onTap: onShare,
+                        child: Padding(
+                          padding: const EdgeInsets.all(AppTheme.spacing4),
+                          child: Icon(
+                            Icons.qr_code_2,
+                            color: context.accentColor,
+                            size: 22,
+                          ),
+                        ),
+                      ),
+                      if (trailing != null)
+                        const SizedBox(width: AppTheme.spacing8),
+                    ],
+                    ?trailing,
                   ],
-                  ?trailing,
-                ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -183,63 +185,65 @@ class WidgetPreviewCardLoading extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppTheme.radius16),
         border: Border.all(color: context.border, width: 1),
       ),
-      clipBehavior: Clip.antiAlias,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Loading placeholder for widget preview
-          SizedBox(
-            width: double.infinity,
-            height: height,
-            child: const Center(
-              child: SizedBox(
-                width: 32,
-                height: 32,
-                child: CircularProgressIndicator(strokeWidth: 2),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(AppTheme.radius16 - 1),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Loading placeholder for widget preview
+            SizedBox(
+              width: double.infinity,
+              height: height,
+              child: const Center(
+                child: SizedBox(
+                  width: 32,
+                  height: 32,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                ),
               ),
             ),
-          ),
-          // Divider between widget and info
-          Container(height: 1, color: context.border),
-          // Show placeholder text if provided
-          if (title != null || subtitle != null)
-            Padding(
-              padding: const EdgeInsets.all(AppTheme.spacing12),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (title != null)
-                          Text(
-                            title!,
-                            style: TextStyle(
-                              color: context.textPrimary,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
+            // Divider between widget and info
+            Container(height: 1, color: context.border),
+            // Show placeholder text if provided
+            if (title != null || subtitle != null)
+              Padding(
+                padding: const EdgeInsets.all(AppTheme.spacing12),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (title != null)
+                            Text(
+                              title!,
+                              style: TextStyle(
+                                color: context.textPrimary,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        if (subtitle != null) ...[
-                          const SizedBox(height: AppTheme.spacing4),
-                          Text(
-                            subtitle!,
-                            style: TextStyle(
-                              color: context.textSecondary,
-                              fontSize: 12,
+                          if (subtitle != null) ...[
+                            const SizedBox(height: AppTheme.spacing4),
+                            Text(
+                              subtitle!,
+                              style: TextStyle(
+                                color: context.textSecondary,
+                                fontSize: 12,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                          ],
                         ],
-                      ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }

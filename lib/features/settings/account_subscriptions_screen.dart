@@ -903,93 +903,96 @@ class _AccountSubscriptionsScreenState
         borderRadius: BorderRadius.circular(AppTheme.radius16),
         border: Border.all(color: context.border),
       ),
-      clipBehavior: Clip.antiAlias,
-      child: Column(
-        children: [
-          _ManageListTile(
-            icon: Icons.restore,
-            title: 'Restore Purchases',
-            subtitle: 'Restore previously purchased items',
-            enabled: !_isRestoringPurchases,
-            loading: _isRestoringPurchases,
-            onTap: () async {
-              if (_isRestoringPurchases) return;
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(AppTheme.radius16 - 1),
+        child: Column(
+          children: [
+            _ManageListTile(
+              icon: Icons.restore,
+              title: 'Restore Purchases',
+              subtitle: 'Restore previously purchased items',
+              enabled: !_isRestoringPurchases,
+              loading: _isRestoringPurchases,
+              onTap: () async {
+                if (_isRestoringPurchases) return;
 
-              final online = ref.read(isOnlineProvider);
-              if (!online) {
-                AppLogging.subscriptions(
-                  '[ManageCard] Restore blocked — offline',
-                );
-                showErrorSnackBar(
-                  context,
-                  'Restoring purchases requires an internet connection.',
-                );
-                return;
-              }
-
-              safeSetState(() => _isRestoringPurchases = true);
-
-              try {
-                // Use canonical restore flow (includes RevenueCat + Firebase sync)
-                AppLogging.subscriptions(
-                  '🔄 User tapped restore from Manage Card',
-                );
-
-                // CRITICAL: Capture ALL providers before any await to prevent
-                // ref.read() on a disposed ConsumerStatefulElement.
-                final purchaseNotifier = ref.read(purchaseStateProvider);
-                final countBefore = purchaseNotifier.purchasedProductIds.length;
-                final cloudService = ref.read(
-                  cloudSyncEntitlementServiceProvider,
-                );
-
-                final success = await restorePurchases(ref);
-                if (!mounted) return;
-
-                // Refresh cloud entitlement service
-                await cloudService.refreshEntitlement();
-                if (!mounted) return;
-
-                ref.invalidate(cloudSyncEntitlementProvider);
-
-                // Check if new purchases were restored
-                final stateAfter = ref.read(purchaseStateProvider);
-                final countAfter = stateAfter.purchasedProductIds.length;
-                final restoredNew = countAfter > countBefore;
-
-                if (success && restoredNew) {
-                  showSuccessSnackBar(
-                    context,
-                    'Purchases restored successfully!',
+                final online = ref.read(isOnlineProvider);
+                if (!online) {
+                  AppLogging.subscriptions(
+                    '[ManageCard] Restore blocked — offline',
                   );
-                } else if (success) {
-                  showInfoSnackBar(
+                  showErrorSnackBar(
                     context,
-                    'Your purchases are already active',
+                    'Restoring purchases requires an internet connection.',
                   );
-                } else {
-                  showInfoSnackBar(context, 'No purchases found to restore');
+                  return;
                 }
-              } finally {
-                safeSetState(() => _isRestoringPurchases = false);
-              }
-            },
-            isFirst: true,
-          ),
-          Divider(height: 1, color: context.border),
-          _ManageListTile(
-            icon: Icons.description_outlined,
-            title: 'Terms of Service',
-            onTap: () => LegalDocumentSheet.showTerms(context),
-          ),
-          Divider(height: 1, color: context.border),
-          _ManageListTile(
-            icon: Icons.privacy_tip_outlined,
-            title: 'Privacy Policy',
-            onTap: () => LegalDocumentSheet.showPrivacy(context),
-            isLast: true,
-          ),
-        ],
+
+                safeSetState(() => _isRestoringPurchases = true);
+
+                try {
+                  // Use canonical restore flow (includes RevenueCat + Firebase sync)
+                  AppLogging.subscriptions(
+                    '🔄 User tapped restore from Manage Card',
+                  );
+
+                  // CRITICAL: Capture ALL providers before any await to prevent
+                  // ref.read() on a disposed ConsumerStatefulElement.
+                  final purchaseNotifier = ref.read(purchaseStateProvider);
+                  final countBefore =
+                      purchaseNotifier.purchasedProductIds.length;
+                  final cloudService = ref.read(
+                    cloudSyncEntitlementServiceProvider,
+                  );
+
+                  final success = await restorePurchases(ref);
+                  if (!mounted) return;
+
+                  // Refresh cloud entitlement service
+                  await cloudService.refreshEntitlement();
+                  if (!mounted) return;
+
+                  ref.invalidate(cloudSyncEntitlementProvider);
+
+                  // Check if new purchases were restored
+                  final stateAfter = ref.read(purchaseStateProvider);
+                  final countAfter = stateAfter.purchasedProductIds.length;
+                  final restoredNew = countAfter > countBefore;
+
+                  if (success && restoredNew) {
+                    showSuccessSnackBar(
+                      context,
+                      'Purchases restored successfully!',
+                    );
+                  } else if (success) {
+                    showInfoSnackBar(
+                      context,
+                      'Your purchases are already active',
+                    );
+                  } else {
+                    showInfoSnackBar(context, 'No purchases found to restore');
+                  }
+                } finally {
+                  safeSetState(() => _isRestoringPurchases = false);
+                }
+              },
+              isFirst: true,
+            ),
+            Divider(height: 1, color: context.border),
+            _ManageListTile(
+              icon: Icons.description_outlined,
+              title: 'Terms of Service',
+              onTap: () => LegalDocumentSheet.showTerms(context),
+            ),
+            Divider(height: 1, color: context.border),
+            _ManageListTile(
+              icon: Icons.privacy_tip_outlined,
+              title: 'Privacy Policy',
+              onTap: () => LegalDocumentSheet.showPrivacy(context),
+              isLast: true,
+            ),
+          ],
+        ),
       ),
     );
   }

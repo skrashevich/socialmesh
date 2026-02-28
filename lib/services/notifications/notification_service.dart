@@ -1021,4 +1021,69 @@ class NotificationService {
       '🔔 Showed batched node notification: $nodeCount nodes',
     );
   }
+
+  /// Fixed notification ID for admin bug report notifications
+  static const int _bugReportNotificationId = 3000004;
+
+  /// Show notification for a new bug report (admin only)
+  Future<void> showNewBugReportNotification({
+    required String reportId,
+    required String description,
+    String? email,
+    bool playSound = true,
+    bool vibrate = true,
+  }) async {
+    if (!_initialized) {
+      AppLogging.notifications(
+        '🔔 NotificationService not initialized, skipping bug report notification',
+      );
+      return;
+    }
+
+    final androidDetails = AndroidNotificationDetails(
+      'admin_bug_reports',
+      'Bug Reports',
+      channelDescription: 'Notifications for new user bug reports (admin only)',
+      importance: Importance.high,
+      priority: Priority.high,
+      icon: '@mipmap/ic_launcher',
+      groupKey: 'admin_bug_reports',
+      playSound: playSound,
+      enableVibration: vibrate,
+      color: const Color(0xFFE91E63),
+    );
+
+    final iosDetails = DarwinNotificationDetails(
+      presentAlert: true,
+      presentBadge: true,
+      presentSound: playSound,
+    );
+
+    final notificationDetails = NotificationDetails(
+      android: androidDetails,
+      iOS: iosDetails,
+      macOS: iosDetails,
+    );
+
+    // Truncate description for notification body
+    final truncated = description.length > 120
+        ? '${description.substring(0, 120)}...'
+        : description;
+
+    final subtitle = email != null && email.isNotEmpty
+        ? 'From: $email'
+        : 'Anonymous report';
+
+    await _notifications.show(
+      id: _bugReportNotificationId,
+      title: '🐛 New Bug Report',
+      body: '$subtitle\n$truncated',
+      notificationDetails: notificationDetails,
+      payload: 'bug_report|$reportId',
+    );
+
+    AppLogging.notifications(
+      '🔔 Showed bug report notification for report: $reportId',
+    );
+  }
 }

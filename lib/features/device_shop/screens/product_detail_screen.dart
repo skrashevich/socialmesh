@@ -325,22 +325,35 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
             // Page indicator
             if (product.imageUrls.length > 1)
               Positioned(
-                bottom: 16,
+                bottom: 0,
                 left: 0,
                 right: 0,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(
-                    product.imageUrls.length,
-                    (index) => Container(
-                      width: 8,
-                      height: 8,
-                      margin: const EdgeInsets.symmetric(horizontal: 4),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: index == _currentImageIndex
-                            ? context.accentColor
-                            : Colors.white.withValues(alpha: 0.5),
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                      colors: [
+                        Colors.black.withValues(alpha: 0.5),
+                        Colors.transparent,
+                      ],
+                    ),
+                  ),
+                  padding: const EdgeInsets.only(top: 24, bottom: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(
+                      product.imageUrls.length,
+                      (index) => Container(
+                        width: 8,
+                        height: 8,
+                        margin: const EdgeInsets.symmetric(horizontal: 4),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: index == _currentImageIndex
+                              ? context.accentColor
+                              : Colors.white.withValues(alpha: 0.5),
+                        ),
                       ),
                     ),
                   ),

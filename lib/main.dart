@@ -95,6 +95,7 @@ import 'features/routes/route_detail_screen.dart';
 import 'features/globe/globe_screen.dart';
 import 'features/reachability/mesh_reachability_screen.dart';
 import 'features/feedback/my_bug_reports_screen.dart';
+import 'features/admin/bug_reports/admin_bug_reports_screen.dart';
 import 'features/social/screens/post_detail_screen.dart';
 import 'features/social/screens/profile_social_screen.dart';
 import 'features/signals/screens/signal_detail_screen.dart';
@@ -1253,6 +1254,11 @@ class _SocialmeshAppState extends ConsumerState<SocialmeshApp>
           );
           break;
 
+        case 'bug_report':
+          // Navigate to Admin Bug Reports screen (admin tapped notification)
+          navigator.pushNamed('/admin-bug-reports');
+          break;
+
         case 'announcement':
           // Navigate using the deep link if provided
           if (nav.deepLink != null && nav.deepLink!.isNotEmpty) {
@@ -1628,6 +1634,11 @@ class _SocialmeshAppState extends ConsumerState<SocialmeshApp>
             return MaterialPageRoute(
               builder: (context) =>
                   MyBugReportsScreen(initialReportId: reportId),
+            );
+          }
+          if (settings.name == '/admin-bug-reports') {
+            return MaterialPageRoute(
+              builder: (context) => const AdminBugReportsScreen(),
             );
           }
           // Check route requirements before building
