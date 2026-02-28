@@ -128,3 +128,4 @@ assets/widget_templates/*.json
 /scripts/node_modules/
 /scripts/package-lock.json
 android/key.properties
+.sandbox/
