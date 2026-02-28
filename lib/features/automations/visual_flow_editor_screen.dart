@@ -79,6 +79,10 @@ class VisualFlowEditorScreen extends ConsumerStatefulWidget {
 
 class _VisualFlowEditorScreenState extends ConsumerState<VisualFlowEditorScreen>
     with LifecycleSafeMixin<VisualFlowEditorScreen> {
+  void _dismissKeyboard() {
+    FocusScope.of(context).unfocus();
+  }
+
   late final TextEditingController _nameController;
   late final TransformationController _transformController;
   VSNodeDataProvider? _nodeDataProvider;
@@ -550,85 +554,88 @@ class _VisualFlowEditorScreenState extends ConsumerState<VisualFlowEditorScreen>
     // Watch flow state for reactive updates.
     final flowState = ref.watch(visualFlowProvider);
 
-    return PopScope(
-      canPop: !flowState.isDirty,
-      onPopInvokedWithResult: (didPop, _) async {
-        if (didPop) return;
-        final navigator = Navigator.of(context);
-        final shouldPop = await _onWillPop();
-        if (shouldPop && mounted) {
-          navigator.pop();
-        }
-      },
-      child: GlassScaffold.body(
-        title: _isEditing ? 'Edit Flow' : 'New Flow',
-        actions: [
-          // Validation badge.
-          if (_errorCount > 0)
-            Padding(
-              padding: const EdgeInsets.only(right: 4),
-              child: IconButton(
-                icon: Badge(
-                  label: Text(
-                    '$_errorCount',
-                    style: const TextStyle(fontSize: 10),
+    return GestureDetector(
+      onTap: _dismissKeyboard,
+      child: PopScope(
+        canPop: !flowState.isDirty,
+        onPopInvokedWithResult: (didPop, _) async {
+          if (didPop) return;
+          final navigator = Navigator.of(context);
+          final shouldPop = await _onWillPop();
+          if (shouldPop && mounted) {
+            navigator.pop();
+          }
+        },
+        child: GlassScaffold.body(
+          title: _isEditing ? 'Edit Flow' : 'New Flow',
+          actions: [
+            // Validation badge.
+            if (_errorCount > 0)
+              Padding(
+                padding: const EdgeInsets.only(right: 4),
+                child: IconButton(
+                  icon: Badge(
+                    label: Text(
+                      '$_errorCount',
+                      style: const TextStyle(fontSize: 10),
+                    ),
+                    backgroundColor: AppTheme.errorRed,
+                    child: const Icon(Icons.warning_amber_rounded),
                   ),
-                  backgroundColor: AppTheme.errorRed,
-                  child: const Icon(Icons.warning_amber_rounded),
+                  tooltip: 'Validation issues',
+                  onPressed: () {
+                    final result = ref
+                        .read(visualFlowProvider)
+                        .lastCompilationResult;
+                    if (result != null) {
+                      _showCompilationErrors(result);
+                    } else {
+                      // Run compile to get errors.
+                      final compileResult = ref
+                          .read(visualFlowProvider.notifier)
+                          .compile();
+                      _showCompilationErrors(compileResult);
+                    }
+                  },
                 ),
-                tooltip: 'Validation issues',
-                onPressed: () {
-                  final result = ref
-                      .read(visualFlowProvider)
-                      .lastCompilationResult;
-                  if (result != null) {
-                    _showCompilationErrors(result);
-                  } else {
-                    // Run compile to get errors.
-                    final compileResult = ref
-                        .read(visualFlowProvider.notifier)
-                        .compile();
-                    _showCompilationErrors(compileResult);
-                  }
-                },
               ),
-            ),
-          // Save button.
-          _buildSaveAction(),
-        ],
-        body: _nodeDataProvider == null
-            ? const Center(child: CircularProgressIndicator())
-            : Stack(
-                children: [
-                  // Main canvas.
-                  _buildCanvas(),
+            // Save button.
+            _buildSaveAction(),
+          ],
+          body: _nodeDataProvider == null
+              ? const Center(child: CircularProgressIndicator())
+              : Stack(
+                  children: [
+                    // Main canvas.
+                    _buildCanvas(),
 
-                  // Bottom toolbar.
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    child: _buildBottomToolbar(),
-                  ),
-
-                  // Node palette overlay.
-                  if (_showNodePalette)
+                    // Bottom toolbar.
                     Positioned(
                       left: 0,
                       right: 0,
-                      bottom: 80,
-                      child: _buildNodePaletteOverlay(),
+                      bottom: 0,
+                      child: _buildBottomToolbar(),
                     ),
 
-                  // Flow name input (floating at top).
-                  Positioned(
-                    left: 16,
-                    right: 16,
-                    top: 8,
-                    child: _buildFlowNameField(),
-                  ),
-                ],
-              ),
+                    // Node palette overlay.
+                    if (_showNodePalette)
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        bottom: 80,
+                        child: _buildNodePaletteOverlay(),
+                      ),
+
+                    // Flow name input (floating at top).
+                    Positioned(
+                      left: 16,
+                      right: 16,
+                      top: 8,
+                      child: _buildFlowNameField(),
+                    ),
+                  ],
+                ),
+        ),
       ),
     );
   }

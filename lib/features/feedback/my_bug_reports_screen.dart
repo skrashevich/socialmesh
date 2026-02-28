@@ -11,7 +11,7 @@ import '../../core/theme.dart';
 import '../../core/widgets/fullscreen_gallery.dart';
 import '../../core/widgets/glass_scaffold.dart';
 import '../../core/widgets/search_filter_header.dart';
-import '../../core/widgets/section_header.dart';
+import '../../core/widgets/status_filter_chip.dart';
 import '../../utils/snackbar.dart';
 import 'bug_report_repository.dart';
 
@@ -119,21 +119,21 @@ class _MyBugReportsScreenState extends ConsumerState<MyBugReportsScreen>
         .length;
 
     return [
-      SectionFilterChip(
+      StatusFilterChip(
         label: 'All',
         count: reports.length,
         isSelected: _activeFilter == _BugReportFilter.all,
         color: _filterColor(context, _BugReportFilter.all),
         onTap: () => safeSetState(() => _activeFilter = _BugReportFilter.all),
       ),
-      SectionFilterChip(
+      StatusFilterChip(
         label: 'Open',
         count: openCount,
         isSelected: _activeFilter == _BugReportFilter.open,
         color: _filterColor(context, _BugReportFilter.open),
         onTap: () => safeSetState(() => _activeFilter = _BugReportFilter.open),
       ),
-      SectionFilterChip(
+      StatusFilterChip(
         label: 'Responded',
         count: respondedCount,
         isSelected: _activeFilter == _BugReportFilter.responded,
@@ -141,7 +141,7 @@ class _MyBugReportsScreenState extends ConsumerState<MyBugReportsScreen>
         onTap: () =>
             safeSetState(() => _activeFilter = _BugReportFilter.responded),
       ),
-      SectionFilterChip(
+      StatusFilterChip(
         label: 'Awaiting',
         count: awaitingCount,
         isSelected: _activeFilter == _BugReportFilter.awaiting,
@@ -149,7 +149,7 @@ class _MyBugReportsScreenState extends ConsumerState<MyBugReportsScreen>
         onTap: () =>
             safeSetState(() => _activeFilter = _BugReportFilter.awaiting),
       ),
-      SectionFilterChip(
+      StatusFilterChip(
         label: 'Resolved',
         count: resolvedCount,
         isSelected: _activeFilter == _BugReportFilter.resolved,

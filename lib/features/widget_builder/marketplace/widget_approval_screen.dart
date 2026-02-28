@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'widget_marketplace_service.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
@@ -21,6 +22,11 @@ class WidgetApprovalScreen extends ConsumerStatefulWidget {
 
 class _WidgetApprovalScreenState extends ConsumerState<WidgetApprovalScreen>
     with LifecycleSafeMixin<WidgetApprovalScreen> {
+  void _dismissKeyboard() {
+    HapticFeedback.selectionClick();
+    FocusScope.of(context).unfocus();
+  }
+
   final _marketplaceService = WidgetMarketplaceService();
   List<MarketplaceWidget> _pendingWidgets = [];
   bool _isLoading = true;
@@ -208,15 +214,18 @@ class _WidgetApprovalScreenState extends ConsumerState<WidgetApprovalScreen>
 
   @override
   Widget build(BuildContext context) {
-    return GlassScaffold(
-      title: 'Widget Approval',
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.refresh),
-          onPressed: _loadPendingWidgets,
-        ),
-      ],
-      slivers: _buildSlivers(),
+    return GestureDetector(
+      onTap: _dismissKeyboard,
+      child: GlassScaffold(
+        title: 'Widget Approval',
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: _loadPendingWidgets,
+          ),
+        ],
+        slivers: _buildSlivers(),
+      ),
     );
   }
 

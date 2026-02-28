@@ -18,6 +18,7 @@ import '../../core/widgets/ico_help_system.dart';
 import '../../core/widgets/node_avatar.dart';
 import '../../core/widgets/search_filter_header.dart';
 import '../../core/widgets/section_header.dart';
+import '../../core/widgets/status_filter_chip.dart';
 import '../../core/widgets/skeleton_config.dart';
 import '../../models/mesh_models.dart';
 import '../../models/presence_confidence.dart';
@@ -233,13 +234,13 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
                   mqttCount,
                 ]),
                 filterChips: [
-                  SectionFilterChip(
+                  StatusFilterChip(
                     label: 'All',
                     count: nodes.length,
                     isSelected: _activeFilter == NodeFilter.all,
                     onTap: () => setState(() => _activeFilter = NodeFilter.all),
                   ),
-                  SectionFilterChip(
+                  StatusFilterChip(
                     label: 'Active',
                     count: activeCount,
                     isSelected: _activeFilter == NodeFilter.active,
@@ -247,7 +248,7 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
                     onTap: () =>
                         setState(() => _activeFilter = NodeFilter.active),
                   ),
-                  SectionFilterChip(
+                  StatusFilterChip(
                     label: 'Favorites',
                     count: favoritesCount,
                     isSelected: _activeFilter == NodeFilter.favorites,
@@ -256,7 +257,7 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
                     onTap: () =>
                         setState(() => _activeFilter = NodeFilter.favorites),
                   ),
-                  SectionFilterChip(
+                  StatusFilterChip(
                     label: 'With Position',
                     count: withPositionCount,
                     isSelected: _activeFilter == NodeFilter.withPosition,
@@ -265,7 +266,7 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
                     onTap: () =>
                         setState(() => _activeFilter = NodeFilter.withPosition),
                   ),
-                  SectionFilterChip(
+                  StatusFilterChip(
                     label: 'Inactive',
                     count: inactiveCount,
                     isSelected: _activeFilter == NodeFilter.inactive,
@@ -273,7 +274,7 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
                     onTap: () =>
                         setState(() => _activeFilter = NodeFilter.inactive),
                   ),
-                  SectionFilterChip(
+                  StatusFilterChip(
                     label: 'New',
                     count: recentlyDiscoveredCount,
                     isSelected: _activeFilter == NodeFilter.recentlyDiscovered,
@@ -283,7 +284,7 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
                       () => _activeFilter = NodeFilter.recentlyDiscovered,
                     ),
                   ),
-                  SectionFilterChip(
+                  StatusFilterChip(
                     label: 'RF',
                     count: rfCount,
                     isSelected: _activeFilter == NodeFilter.rf,
@@ -291,7 +292,7 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
                     icon: Icons.cell_tower,
                     onTap: () => setState(() => _activeFilter = NodeFilter.rf),
                   ),
-                  SectionFilterChip(
+                  StatusFilterChip(
                     label: 'MQTT',
                     count: mqttCount,
                     isSelected: _activeFilter == NodeFilter.mqtt,

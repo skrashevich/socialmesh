@@ -45,6 +45,10 @@ class GlobalLayerTopicExplorerScreen extends ConsumerStatefulWidget {
 class _GlobalLayerTopicExplorerScreenState
     extends ConsumerState<GlobalLayerTopicExplorerScreen>
     with LifecycleSafeMixin<GlobalLayerTopicExplorerScreen> {
+  void _dismissKeyboard() {
+    FocusScope.of(context).unfocus();
+  }
+
   // ---------------------------------------------------------------------------
   // Actions
   // ---------------------------------------------------------------------------
@@ -171,167 +175,170 @@ class _GlobalLayerTopicExplorerScreenState
     final connectionState = ref.watch(globalLayerConnectionStateProvider);
     final metrics = ref.watch(globalLayerMetricsProvider);
 
-    return GlassScaffold(
-      title: 'Topic Explorer',
-      actions: [
-        PopupMenuButton<String>(
-          icon: const Icon(Icons.more_vert),
-          onSelected: (value) {
-            switch (value) {
-              case 'add_custom':
-                _addCustomTopic();
-              case 'add_template':
-                _addFromTemplate();
-            }
-          },
-          itemBuilder: (_) => [
-            const PopupMenuItem(
-              value: 'add_template',
-              child: ListTile(
-                leading: Icon(Icons.library_add_outlined),
-                title: Text('Add from Template'),
-                dense: true,
-                contentPadding: EdgeInsets.zero,
-              ),
-            ),
-            const PopupMenuItem(
-              value: 'add_custom',
-              child: ListTile(
-                leading: Icon(Icons.edit_outlined),
-                title: Text('Add Custom Topic'),
-                dense: true,
-                contentPadding: EdgeInsets.zero,
-              ),
-            ),
-          ],
-        ),
-      ],
-      slivers: [
-        // Portal visualization
-        const SliverToBoxAdapter(child: PortalView(height: 160)),
-
-        // Connection status pill
-        SliverToBoxAdapter(
-          child: _ConnectionStatusPill(connectionState: connectionState),
-        ),
-
-        // Subscription stats
-        configAsync.when(
-          data: (config) => SliverToBoxAdapter(
-            child: _SubscriptionStats(config: config, metrics: metrics),
-          ),
-          loading: () => const SliverToBoxAdapter(child: SizedBox.shrink()),
-          error: (_, _) => const SliverToBoxAdapter(child: SizedBox.shrink()),
-        ),
-
-        // Section header
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(AppTheme.spacing20, 16, 20, 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Subscriptions',
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    color: context.textSecondary,
-                    fontWeight: FontWeight.w600,
-                  ),
+    return GestureDetector(
+      onTap: _dismissKeyboard,
+      child: GlassScaffold(
+        title: 'Topic Explorer',
+        actions: [
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.more_vert),
+            onSelected: (value) {
+              switch (value) {
+                case 'add_custom':
+                  _addCustomTopic();
+                case 'add_template':
+                  _addFromTemplate();
+              }
+            },
+            itemBuilder: (_) => [
+              const PopupMenuItem(
+                value: 'add_template',
+                child: ListTile(
+                  leading: Icon(Icons.library_add_outlined),
+                  title: Text('Add from Template'),
+                  dense: true,
+                  contentPadding: EdgeInsets.zero,
                 ),
-                BouncyTap(
-                  onTap: _addFromTemplate,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 4,
+              ),
+              const PopupMenuItem(
+                value: 'add_custom',
+                child: ListTile(
+                  leading: Icon(Icons.edit_outlined),
+                  title: Text('Add Custom Topic'),
+                  dense: true,
+                  contentPadding: EdgeInsets.zero,
+                ),
+              ),
+            ],
+          ),
+        ],
+        slivers: [
+          // Portal visualization
+          const SliverToBoxAdapter(child: PortalView(height: 160)),
+
+          // Connection status pill
+          SliverToBoxAdapter(
+            child: _ConnectionStatusPill(connectionState: connectionState),
+          ),
+
+          // Subscription stats
+          configAsync.when(
+            data: (config) => SliverToBoxAdapter(
+              child: _SubscriptionStats(config: config, metrics: metrics),
+            ),
+            loading: () => const SliverToBoxAdapter(child: SizedBox.shrink()),
+            error: (_, _) => const SliverToBoxAdapter(child: SizedBox.shrink()),
+          ),
+
+          // Section header
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(AppTheme.spacing20, 16, 20, 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Subscriptions',
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      color: context.textSecondary,
+                      fontWeight: FontWeight.w600,
                     ),
-                    decoration: BoxDecoration(
-                      color: context.accentColor.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(AppTheme.radius8),
-                      border: Border.all(
-                        color: context.accentColor.withValues(alpha: 0.2),
+                  ),
+                  BouncyTap(
+                    onTap: _addFromTemplate,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: context.accentColor.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(AppTheme.radius8),
+                        border: Border.all(
+                          color: context.accentColor.withValues(alpha: 0.2),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.add, size: 14, color: context.accentColor),
+                          const SizedBox(width: AppTheme.spacing4),
+                          Text(
+                            'Add',
+                            style: Theme.of(context).textTheme.labelSmall
+                                ?.copyWith(
+                                  color: context.accentColor,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
+                        ],
                       ),
                     ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.add, size: 14, color: context.accentColor),
-                        const SizedBox(width: AppTheme.spacing4),
-                        Text(
-                          'Add',
-                          style: Theme.of(context).textTheme.labelSmall
-                              ?.copyWith(
-                                color: context.accentColor,
-                                fontWeight: FontWeight.w600,
-                              ),
-                        ),
-                      ],
-                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
 
-        // Topic list
-        configAsync.when(
-          data: (config) {
-            if (config.subscriptions.isEmpty) {
-              return SliverToBoxAdapter(
-                child: _EmptyTopicsState(
-                  onAddTemplate: _addFromTemplate,
-                  onAddCustom: _addCustomTopic,
-                ),
-              );
-            }
-
-            return SliverList(
-              delegate: SliverChildBuilderDelegate((context, index) {
-                final sub = config.subscriptions[index];
-                final topicMetrics = _metricsForTopic(metrics, sub.topic);
-
-                return _TopicSubscriptionTile(
-                  subscription: sub,
-                  index: index,
-                  metrics: topicMetrics,
-                  isConnected: connectionState.isActive,
-                  onToggle: (enabled) =>
-                      _toggleSubscription(index, enabled: enabled),
-                  onRemove: () => _removeSubscription(index),
+          // Topic list
+          configAsync.when(
+            data: (config) {
+              if (config.subscriptions.isEmpty) {
+                return SliverToBoxAdapter(
+                  child: _EmptyTopicsState(
+                    onAddTemplate: _addFromTemplate,
+                    onAddCustom: _addCustomTopic,
+                  ),
                 );
-              }, childCount: config.subscriptions.length),
-            );
-          },
-          loading: () => const SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.all(AppTheme.spacing48),
-              child: Center(child: CircularProgressIndicator()),
+              }
+
+              return SliverList(
+                delegate: SliverChildBuilderDelegate((context, index) {
+                  final sub = config.subscriptions[index];
+                  final topicMetrics = _metricsForTopic(metrics, sub.topic);
+
+                  return _TopicSubscriptionTile(
+                    subscription: sub,
+                    index: index,
+                    metrics: topicMetrics,
+                    isConnected: connectionState.isActive,
+                    onToggle: (enabled) =>
+                        _toggleSubscription(index, enabled: enabled),
+                    onRemove: () => _removeSubscription(index),
+                  );
+                }, childCount: config.subscriptions.length),
+              );
+            },
+            loading: () => const SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.all(AppTheme.spacing48),
+                child: Center(child: CircularProgressIndicator()),
+              ),
             ),
-          ),
-          error: (error, _) => SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(AppTheme.spacing24),
-              child: Center(
-                child: Text(
-                  'Failed to load topics: $error',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Theme.of(context).colorScheme.error,
+            error: (error, _) => SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.all(AppTheme.spacing24),
+                child: Center(
+                  child: Text(
+                    'Failed to load topics: $error',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(context).colorScheme.error,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
                 ),
               ),
             ),
           ),
-        ),
 
-        // Bottom safe area padding
-        SliverPadding(
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).padding.bottom + 24,
+          // Bottom safe area padding
+          SliverPadding(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).padding.bottom + 24,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

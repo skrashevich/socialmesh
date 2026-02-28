@@ -49,6 +49,10 @@ class MeshCoreChatScreen extends ConsumerStatefulWidget {
 
 class _MeshCoreChatScreenState extends ConsumerState<MeshCoreChatScreen>
     with LifecycleSafeMixin<MeshCoreChatScreen> {
+  void _dismissKeyboard() {
+    FocusScope.of(context).unfocus();
+  }
+
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   final FocusNode _focusNode = FocusNode();
@@ -451,54 +455,60 @@ class _MeshCoreChatScreenState extends ConsumerState<MeshCoreChatScreen>
     final linkStatus = ref.watch(linkStatusProvider);
     final isConnected = linkStatus.isConnected;
 
-    return GlassScaffold.body(
-      title: _title,
-      actions: [
-        IconButton(
-          icon: Icon(Icons.info_outline_rounded, color: _accentColor),
-          onPressed: _showChatInfo,
-        ),
-      ],
-      body: Column(
-        children: [
-          // Connection status banner
-          if (!isConnected)
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              color: AppTheme.errorRed.withValues(alpha: 0.2),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.link_off_rounded,
-                    size: 16,
-                    color: AppTheme.errorRed,
-                  ),
-                  const SizedBox(width: AppTheme.spacing8),
-                  Text(
-                    'Disconnected - Messages will queue',
-                    style: TextStyle(color: AppTheme.errorRed, fontSize: 12),
-                  ),
-                ],
+    return GestureDetector(
+      onTap: _dismissKeyboard,
+      child: GlassScaffold.body(
+        title: _title,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.info_outline_rounded, color: _accentColor),
+            onPressed: _showChatInfo,
+          ),
+        ],
+        body: Column(
+          children: [
+            // Connection status banner
+            if (!isConnected)
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
+                color: AppTheme.errorRed.withValues(alpha: 0.2),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.link_off_rounded,
+                      size: 16,
+                      color: AppTheme.errorRed,
+                    ),
+                    const SizedBox(width: AppTheme.spacing8),
+                    Text(
+                      'Disconnected - Messages will queue',
+                      style: TextStyle(color: AppTheme.errorRed, fontSize: 12),
+                    ),
+                  ],
+                ),
               ),
+
+            // Messages list
+            Expanded(
+              child: _messages.isEmpty
+                  ? _buildEmptyState()
+                  : ListView.builder(
+                      controller: _scrollController,
+                      padding: const EdgeInsets.all(AppTheme.spacing16),
+                      itemCount: _messages.length,
+                      itemBuilder: (context, index) {
+                        return _buildMessageBubble(_messages[index]);
+                      },
+                    ),
             ),
 
-          // Messages list
-          Expanded(
-            child: _messages.isEmpty
-                ? _buildEmptyState()
-                : ListView.builder(
-                    controller: _scrollController,
-                    padding: const EdgeInsets.all(AppTheme.spacing16),
-                    itemCount: _messages.length,
-                    itemBuilder: (context, index) {
-                      return _buildMessageBubble(_messages[index]);
-                    },
-                  ),
-          ),
-
-          // Message input
-          _buildMessageInput(),
-        ],
+            // Message input
+            _buildMessageInput(),
+          ],
+        ),
       ),
     );
   }

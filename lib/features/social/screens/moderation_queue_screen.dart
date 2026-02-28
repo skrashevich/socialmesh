@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/safety/lifecycle_mixin.dart';
@@ -22,6 +23,11 @@ class ModerationQueueScreen extends ConsumerStatefulWidget {
 
 class _ModerationQueueScreenState extends ConsumerState<ModerationQueueScreen>
     with SingleTickerProviderStateMixin, LifecycleSafeMixin {
+  void _dismissKeyboard() {
+    HapticFeedback.selectionClick();
+    FocusScope.of(context).unfocus();
+  }
+
   late final TabController _tabController;
 
   @override
@@ -38,29 +44,32 @@ class _ModerationQueueScreenState extends ConsumerState<ModerationQueueScreen>
 
   @override
   Widget build(BuildContext context) {
-    return GlassScaffold(
-      title: 'Moderation Queue',
-      bottom: TabBar(
-        controller: _tabController,
-        tabs: const [
-          Tab(text: 'Pending'),
-          Tab(text: 'Approved'),
-          Tab(text: 'Rejected'),
+    return GestureDetector(
+      onTap: _dismissKeyboard,
+      child: GlassScaffold(
+        title: 'Moderation Queue',
+        bottom: TabBar(
+          controller: _tabController,
+          tabs: const [
+            Tab(text: 'Pending'),
+            Tab(text: 'Approved'),
+            Tab(text: 'Rejected'),
+          ],
+        ),
+        slivers: [
+          SliverFillRemaining(
+            hasScrollBody: true,
+            child: TabBarView(
+              controller: _tabController,
+              children: const [
+                _QueueList(status: 'pending'),
+                _QueueList(status: 'approved'),
+                _QueueList(status: 'rejected'),
+              ],
+            ),
+          ),
         ],
       ),
-      slivers: [
-        SliverFillRemaining(
-          hasScrollBody: true,
-          child: TabBarView(
-            controller: _tabController,
-            children: const [
-              _QueueList(status: 'pending'),
-              _QueueList(status: 'approved'),
-              _QueueList(status: 'rejected'),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }

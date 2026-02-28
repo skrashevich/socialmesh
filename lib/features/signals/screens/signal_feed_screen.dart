@@ -14,7 +14,7 @@ import '../../../core/widgets/app_bar_overflow_menu.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../../../core/widgets/ico_help_system.dart';
 import '../../../core/widgets/search_filter_header.dart';
-import '../../../core/widgets/section_header.dart';
+import '../../../core/widgets/status_filter_chip.dart';
 import '../../../core/widgets/status_banner.dart';
 import '../../../core/widgets/animated_gradient_background.dart';
 import '../../../providers/help_providers.dart';
@@ -477,14 +477,14 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
                   hiddenCount,
                 ]),
                 filterChips: [
-                  SectionFilterChip(
+                  StatusFilterChip(
                     label: 'All',
                     count: allCount,
                     isSelected: _activeFilter == SignalFilter.all,
                     onTap: () =>
                         setState(() => _activeFilter = SignalFilter.all),
                   ),
-                  SectionFilterChip(
+                  StatusFilterChip(
                     label: 'Saved',
                     count: savedCount,
                     isSelected: _activeFilter == SignalFilter.saved,
@@ -493,7 +493,7 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
                     onTap: () =>
                         setState(() => _activeFilter = SignalFilter.saved),
                   ),
-                  SectionFilterChip(
+                  StatusFilterChip(
                     label: 'Nearby',
                     count: nearbyCount,
                     isSelected: _activeFilter == SignalFilter.nearby,
@@ -502,7 +502,7 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
                     onTap: () =>
                         setState(() => _activeFilter = SignalFilter.nearby),
                   ),
-                  SectionFilterChip(
+                  StatusFilterChip(
                     label: 'Mesh',
                     count: meshCount,
                     isSelected: _activeFilter == SignalFilter.meshOnly,
@@ -511,7 +511,7 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
                     onTap: () =>
                         setState(() => _activeFilter = SignalFilter.meshOnly),
                   ),
-                  SectionFilterChip(
+                  StatusFilterChip(
                     label: 'Media',
                     count: mediaCount,
                     isSelected: _activeFilter == SignalFilter.withMedia,
@@ -520,7 +520,7 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
                     onTap: () =>
                         setState(() => _activeFilter = SignalFilter.withMedia),
                   ),
-                  SectionFilterChip(
+                  StatusFilterChip(
                     label: 'Location',
                     count: withLocationCount,
                     isSelected: _activeFilter == SignalFilter.withLocation,
@@ -530,7 +530,7 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
                       () => _activeFilter = SignalFilter.withLocation,
                     ),
                   ),
-                  SectionFilterChip(
+                  StatusFilterChip(
                     label: 'Replies',
                     count: withCommentsCount,
                     isSelected: _activeFilter == SignalFilter.withComments,
@@ -540,7 +540,7 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
                       () => _activeFilter = SignalFilter.withComments,
                     ),
                   ),
-                  SectionFilterChip(
+                  StatusFilterChip(
                     label: 'Expiring',
                     count: expiringSoonCount,
                     isSelected: _activeFilter == SignalFilter.expiringSoon,
@@ -551,7 +551,7 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
                     ),
                   ),
                   if (hiddenCount > 0)
-                    SectionFilterChip(
+                    StatusFilterChip(
                       label: 'Hidden',
                       count: hiddenCount,
                       isSelected: _activeFilter == SignalFilter.hidden,

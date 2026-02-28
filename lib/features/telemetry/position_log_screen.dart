@@ -22,7 +22,7 @@ import '../../core/widgets/mesh_map_widget.dart';
 import '../../core/widgets/map_controls.dart';
 import '../../core/widgets/map_node_drawer.dart';
 import '../../core/widgets/search_filter_header.dart';
-import '../../core/widgets/section_header.dart';
+import '../../core/widgets/status_filter_chip.dart';
 import '../../models/telemetry_log.dart';
 import '../../providers/help_providers.dart';
 import '../../providers/splash_mesh_provider.dart';
@@ -243,7 +243,7 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
         : 0;
 
     return [
-      SectionFilterChip(
+      StatusFilterChip(
         label: _PositionFilter.all.label,
         count: allLogs.length,
         isSelected: _activeFilter == _PositionFilter.all,
@@ -252,7 +252,7 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
           safeSetState(() => _activeFilter = _PositionFilter.all);
         },
       ),
-      SectionFilterChip(
+      StatusFilterChip(
         label: _PositionFilter.today.label,
         count: todayCount,
         isSelected: _activeFilter == _PositionFilter.today,
@@ -263,7 +263,7 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
           safeSetState(() => _activeFilter = _PositionFilter.today);
         },
       ),
-      SectionFilterChip(
+      StatusFilterChip(
         label: _PositionFilter.thisWeek.label,
         count: weekCount,
         isSelected: _activeFilter == _PositionFilter.thisWeek,
@@ -274,7 +274,7 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
           safeSetState(() => _activeFilter = _PositionFilter.thisWeek);
         },
       ),
-      SectionFilterChip(
+      StatusFilterChip(
         label: _PositionFilter.goodFix.label,
         count: goodFixCount,
         isSelected: _activeFilter == _PositionFilter.goodFix,
@@ -286,7 +286,7 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
         },
       ),
       if (myNodeNum != null)
-        SectionFilterChip(
+        StatusFilterChip(
           label: _PositionFilter.myNode.label,
           count: myNodeCount,
           isSelected: _activeFilter == _PositionFilter.myNode,

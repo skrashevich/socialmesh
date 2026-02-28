@@ -32,6 +32,10 @@ class RangeTestScreen extends ConsumerStatefulWidget {
 
 class _RangeTestScreenState extends ConsumerState<RangeTestScreen>
     with LifecycleSafeMixin {
+  void _dismissKeyboard() {
+    FocusScope.of(context).unfocus();
+  }
+
   bool _enabled = false;
   int _senderInterval = 60; // seconds between messages
   bool _saveResults = false;
@@ -313,52 +317,55 @@ class _RangeTestScreenState extends ConsumerState<RangeTestScreen>
             ? '!${_selectedTargetNode!.toRadixString(16)}'
             : 'Select target');
 
-    return GlassScaffold(
-      title: 'Range Test',
-      actions: [
-        if (!_isRunning)
-          TextButton(
-            onPressed: _isSaving ? null : _saveConfig,
-            child: _isSaving
-                ? LoadingIndicator(size: 20)
-                : Text('Save', style: TextStyle(color: context.accentColor)),
-          ),
-      ],
-      slivers: [
-        if (_isLoading)
-          const SliverFillRemaining(child: ScreenLoadingIndicator())
-        else
-          SliverPadding(
-            padding: const EdgeInsets.all(AppTheme.spacing16),
-            sliver: SliverList(
-              delegate: SliverChildListDelegate([
-                // Test Status Card
-                _buildStatusCard(targetName),
-
-                const SizedBox(height: AppTheme.spacing16),
-
-                // Configuration Section
-                if (!_isRunning) ...[
-                  _buildSectionTitle('Configuration'),
-                  _buildConfigCard(),
-                  const SizedBox(height: AppTheme.spacing16),
-                ],
-
-                // Results Section
-                if (_results.isNotEmpty) ...[
-                  _buildSectionTitle('Results (${_results.length})'),
-                  _buildResultsCard(),
-                ],
-
-                // Info Section
-                if (!_isRunning && _results.isEmpty) ...[
-                  _buildSectionTitle('About Range Test'),
-                  _buildInfoCard(),
-                ],
-              ]),
+    return GestureDetector(
+      onTap: _dismissKeyboard,
+      child: GlassScaffold(
+        title: 'Range Test',
+        actions: [
+          if (!_isRunning)
+            TextButton(
+              onPressed: _isSaving ? null : _saveConfig,
+              child: _isSaving
+                  ? LoadingIndicator(size: 20)
+                  : Text('Save', style: TextStyle(color: context.accentColor)),
             ),
-          ),
-      ],
+        ],
+        slivers: [
+          if (_isLoading)
+            const SliverFillRemaining(child: ScreenLoadingIndicator())
+          else
+            SliverPadding(
+              padding: const EdgeInsets.all(AppTheme.spacing16),
+              sliver: SliverList(
+                delegate: SliverChildListDelegate([
+                  // Test Status Card
+                  _buildStatusCard(targetName),
+
+                  const SizedBox(height: AppTheme.spacing16),
+
+                  // Configuration Section
+                  if (!_isRunning) ...[
+                    _buildSectionTitle('Configuration'),
+                    _buildConfigCard(),
+                    const SizedBox(height: AppTheme.spacing16),
+                  ],
+
+                  // Results Section
+                  if (_results.isNotEmpty) ...[
+                    _buildSectionTitle('Results (${_results.length})'),
+                    _buildResultsCard(),
+                  ],
+
+                  // Info Section
+                  if (!_isRunning && _results.isEmpty) ...[
+                    _buildSectionTitle('About Range Test'),
+                    _buildInfoCard(),
+                  ],
+                ]),
+              ),
+            ),
+        ],
+      ),
     );
   }
 

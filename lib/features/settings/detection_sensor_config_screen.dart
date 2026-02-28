@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../core/logging.dart';
@@ -30,6 +31,11 @@ class DetectionSensorConfigScreen extends ConsumerStatefulWidget {
 class _DetectionSensorConfigScreenState
     extends ConsumerState<DetectionSensorConfigScreen>
     with LifecycleSafeMixin {
+  void _dismissKeyboard() {
+    HapticFeedback.selectionClick();
+    FocusScope.of(context).unfocus();
+  }
+
   bool _enabled = false;
   String _name = '';
   int _monitorPin = 0;
@@ -176,56 +182,59 @@ class _DetectionSensorConfigScreenState
 
   @override
   Widget build(BuildContext context) {
-    return GlassScaffold(
-      title: 'Detection Sensor',
-      actions: [
-        TextButton(
-          onPressed: _isSaving ? null : _saveConfig,
-          child: _isSaving
-              ? LoadingIndicator(size: 20)
-              : Text('Save', style: TextStyle(color: context.accentColor)),
-        ),
-      ],
-      slivers: [
-        if (_isLoading)
-          const SliverFillRemaining(child: ScreenLoadingIndicator())
-        else
-          SliverPadding(
-            padding: const EdgeInsets.all(AppTheme.spacing16),
-            sliver: SliverList(
-              delegate: SliverChildListDelegate([
-                // Info card
-                _buildInfoCard(),
-
-                const SizedBox(height: AppTheme.spacing16),
-
-                // Basic settings
-                _buildSectionTitle('Basic Settings'),
-                _buildBasicSettingsCard(),
-
-                const SizedBox(height: AppTheme.spacing16),
-
-                // Pin configuration (only shown if enabled)
-                if (_enabled) ...[
-                  _buildSectionTitle('Pin Configuration'),
-                  _buildPinConfigCard(),
-
-                  const SizedBox(height: AppTheme.spacing16),
-
-                  // Timing settings
-                  _buildSectionTitle('Timing'),
-                  _buildTimingCard(),
-
-                  const SizedBox(height: AppTheme.spacing16),
-
-                  // Client options (app-side settings)
-                  _buildSectionTitle('Client Options'),
-                  _buildClientOptionsCard(),
-                ],
-              ]),
-            ),
+    return GestureDetector(
+      onTap: _dismissKeyboard,
+      child: GlassScaffold(
+        title: 'Detection Sensor',
+        actions: [
+          TextButton(
+            onPressed: _isSaving ? null : _saveConfig,
+            child: _isSaving
+                ? LoadingIndicator(size: 20)
+                : Text('Save', style: TextStyle(color: context.accentColor)),
           ),
-      ],
+        ],
+        slivers: [
+          if (_isLoading)
+            const SliverFillRemaining(child: ScreenLoadingIndicator())
+          else
+            SliverPadding(
+              padding: const EdgeInsets.all(AppTheme.spacing16),
+              sliver: SliverList(
+                delegate: SliverChildListDelegate([
+                  // Info card
+                  _buildInfoCard(),
+
+                  const SizedBox(height: AppTheme.spacing16),
+
+                  // Basic settings
+                  _buildSectionTitle('Basic Settings'),
+                  _buildBasicSettingsCard(),
+
+                  const SizedBox(height: AppTheme.spacing16),
+
+                  // Pin configuration (only shown if enabled)
+                  if (_enabled) ...[
+                    _buildSectionTitle('Pin Configuration'),
+                    _buildPinConfigCard(),
+
+                    const SizedBox(height: AppTheme.spacing16),
+
+                    // Timing settings
+                    _buildSectionTitle('Timing'),
+                    _buildTimingCard(),
+
+                    const SizedBox(height: AppTheme.spacing16),
+
+                    // Client options (app-side settings)
+                    _buildSectionTitle('Client Options'),
+                    _buildClientOptionsCard(),
+                  ],
+                ]),
+              ),
+            ),
+        ],
+      ),
     );
   }
 

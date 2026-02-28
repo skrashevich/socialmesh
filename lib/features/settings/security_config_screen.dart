@@ -33,6 +33,10 @@ class SecurityConfigScreen extends ConsumerStatefulWidget {
 
 class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
     with LifecycleSafeMixin<SecurityConfigScreen> {
+  void _dismissKeyboard() {
+    FocusScope.of(context).unfocus();
+  }
+
   bool _isManaged = false;
   bool _serialEnabled = true;
   bool _debugLogEnabled = false;
@@ -244,122 +248,127 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
 
   @override
   Widget build(BuildContext context) {
-    return GlassScaffold(
-      title: 'Security',
-      actions: [
-        Padding(
-          padding: const EdgeInsets.only(right: 8),
-          child: TextButton(
-            onPressed: _saving ? null : _saveConfig,
-            child: _saving
-                ? LoadingIndicator(size: 20)
-                : Text(
-                    'Save',
-                    style: TextStyle(
-                      color: context.accentColor,
-                      fontWeight: FontWeight.w600,
+    return GestureDetector(
+      onTap: _dismissKeyboard,
+      child: GlassScaffold(
+        title: 'Security',
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: TextButton(
+              onPressed: _saving ? null : _saveConfig,
+              child: _saving
+                  ? LoadingIndicator(size: 20)
+                  : Text(
+                      'Save',
+                      style: TextStyle(
+                        color: context.accentColor,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                  ),
-          ),
-        ),
-      ],
-      slivers: [
-        if (_loading)
-          const SliverFillRemaining(child: ScreenLoadingIndicator())
-        else
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            sliver: SliverList(
-              delegate: SliverChildListDelegate([
-                // PKI Keys Section
-                const _SectionHeader(title: 'DIRECT MESSAGE KEY'),
-                _buildKeySection(),
-                SizedBox(height: AppTheme.spacing16),
-
-                // Admin Keys Section
-                const _SectionHeader(title: 'ADMIN KEYS'),
-                _buildAdminKeysSection(),
-                const SizedBox(height: AppTheme.spacing16),
-
-                // Managed Device
-                const _SectionHeader(title: 'DEVICE MANAGEMENT'),
-
-                _SettingsTile(
-                  icon: Icons.admin_panel_settings,
-                  iconColor: _isManaged ? context.accentColor : null,
-                  title: 'Managed Mode',
-                  subtitle: 'Device is managed by an external system',
-                  trailing: ThemedSwitch(
-                    value: _isManaged,
-                    onChanged: (value) {
-                      HapticFeedback.selectionClick();
-                      setState(() => _isManaged = value);
-                    },
-                  ),
-                ),
-                SizedBox(height: AppTheme.spacing16),
-
-                // Access Controls
-                const _SectionHeader(title: 'ACCESS CONTROLS'),
-
-                _SettingsTile(
-                  icon: Icons.usb,
-                  iconColor: _serialEnabled ? context.accentColor : null,
-                  title: 'Serial Console',
-                  subtitle: 'Enable USB serial console access',
-                  trailing: ThemedSwitch(
-                    value: _serialEnabled,
-                    onChanged: (value) {
-                      HapticFeedback.selectionClick();
-                      setState(() => _serialEnabled = value);
-                    },
-                  ),
-                ),
-                _SettingsTile(
-                  icon: Icons.bug_report,
-                  iconColor: _debugLogEnabled ? context.accentColor : null,
-                  title: 'Debug Logging',
-                  subtitle: 'Enable verbose debug log output',
-                  trailing: ThemedSwitch(
-                    value: _debugLogEnabled,
-                    onChanged: (value) {
-                      HapticFeedback.selectionClick();
-                      setState(() => _debugLogEnabled = value);
-                    },
-                  ),
-                ),
-                _SettingsTile(
-                  icon: Icons.security,
-                  iconColor: _adminChannelEnabled ? context.accentColor : null,
-                  title: 'Admin Channel',
-                  subtitle: 'Allow remote admin via admin channel',
-                  trailing: ThemedSwitch(
-                    value: _adminChannelEnabled,
-                    onChanged: (value) {
-                      HapticFeedback.selectionClick();
-                      setState(() => _adminChannelEnabled = value);
-                    },
-                  ),
-                ),
-                SizedBox(height: AppTheme.spacing16),
-
-                // Warning card
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 2,
-                  ),
-                  child: StatusBanner.error(
-                    title:
-                        'Disabling serial console or enabling managed mode may make it difficult to recover the device. Make sure you understand the implications before making changes.',
-                    margin: EdgeInsets.zero,
-                  ),
-                ),
-                const SizedBox(height: AppTheme.spacing32),
-              ]),
             ),
           ),
-      ],
+        ],
+        slivers: [
+          if (_loading)
+            const SliverFillRemaining(child: ScreenLoadingIndicator())
+          else
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              sliver: SliverList(
+                delegate: SliverChildListDelegate([
+                  // PKI Keys Section
+                  const _SectionHeader(title: 'DIRECT MESSAGE KEY'),
+                  _buildKeySection(),
+                  SizedBox(height: AppTheme.spacing16),
+
+                  // Admin Keys Section
+                  const _SectionHeader(title: 'ADMIN KEYS'),
+                  _buildAdminKeysSection(),
+                  const SizedBox(height: AppTheme.spacing16),
+
+                  // Managed Device
+                  const _SectionHeader(title: 'DEVICE MANAGEMENT'),
+
+                  _SettingsTile(
+                    icon: Icons.admin_panel_settings,
+                    iconColor: _isManaged ? context.accentColor : null,
+                    title: 'Managed Mode',
+                    subtitle: 'Device is managed by an external system',
+                    trailing: ThemedSwitch(
+                      value: _isManaged,
+                      onChanged: (value) {
+                        HapticFeedback.selectionClick();
+                        setState(() => _isManaged = value);
+                      },
+                    ),
+                  ),
+                  SizedBox(height: AppTheme.spacing16),
+
+                  // Access Controls
+                  const _SectionHeader(title: 'ACCESS CONTROLS'),
+
+                  _SettingsTile(
+                    icon: Icons.usb,
+                    iconColor: _serialEnabled ? context.accentColor : null,
+                    title: 'Serial Console',
+                    subtitle: 'Enable USB serial console access',
+                    trailing: ThemedSwitch(
+                      value: _serialEnabled,
+                      onChanged: (value) {
+                        HapticFeedback.selectionClick();
+                        setState(() => _serialEnabled = value);
+                      },
+                    ),
+                  ),
+                  _SettingsTile(
+                    icon: Icons.bug_report,
+                    iconColor: _debugLogEnabled ? context.accentColor : null,
+                    title: 'Debug Logging',
+                    subtitle: 'Enable verbose debug log output',
+                    trailing: ThemedSwitch(
+                      value: _debugLogEnabled,
+                      onChanged: (value) {
+                        HapticFeedback.selectionClick();
+                        setState(() => _debugLogEnabled = value);
+                      },
+                    ),
+                  ),
+                  _SettingsTile(
+                    icon: Icons.security,
+                    iconColor: _adminChannelEnabled
+                        ? context.accentColor
+                        : null,
+                    title: 'Admin Channel',
+                    subtitle: 'Allow remote admin via admin channel',
+                    trailing: ThemedSwitch(
+                      value: _adminChannelEnabled,
+                      onChanged: (value) {
+                        HapticFeedback.selectionClick();
+                        setState(() => _adminChannelEnabled = value);
+                      },
+                    ),
+                  ),
+                  SizedBox(height: AppTheme.spacing16),
+
+                  // Warning card
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 2,
+                    ),
+                    child: StatusBanner.error(
+                      title:
+                          'Disabling serial console or enabling managed mode may make it difficult to recover the device. Make sure you understand the implications before making changes.',
+                      margin: EdgeInsets.zero,
+                    ),
+                  ),
+                  const SizedBox(height: AppTheme.spacing32),
+                ]),
+              ),
+            ),
+        ],
+      ),
     );
   }
 

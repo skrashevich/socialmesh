@@ -13,6 +13,7 @@ import '../../../core/widgets/app_bottom_sheet.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../../../core/widgets/search_filter_header.dart';
 import '../../../core/widgets/section_header.dart';
+import '../../../core/widgets/status_filter_chip.dart';
 import '../../../features/onboarding/widgets/mesh_node_brain.dart';
 import '../../../providers/help_article_providers.dart';
 import '../../../providers/help_providers.dart';
@@ -159,7 +160,7 @@ class _HelpCenterScreenState extends ConsumerState<HelpCenterScreen>
               totalCount,
             ]),
             filterChips: [
-              SectionFilterChip(
+              StatusFilterChip(
                 label: 'All',
                 count: totalCount,
                 isSelected: _selectedCategory == null,
@@ -169,7 +170,7 @@ class _HelpCenterScreenState extends ConsumerState<HelpCenterScreen>
                 },
               ),
               ...HelpArticleCategory.values.map(
-                (category) => SectionFilterChip(
+                (category) => StatusFilterChip(
                   label: category.displayName,
                   count: _categoryCount(articles, category),
                   isSelected: _selectedCategory == category,

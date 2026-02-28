@@ -37,7 +37,7 @@ import '../../../core/widgets/ico_help_system.dart';
 import '../../../providers/help_providers.dart';
 import '../../../core/widgets/search_filter_header.dart';
 
-import '../../../core/widgets/section_header.dart';
+import '../../../core/widgets/status_filter_chip.dart';
 import '../../../core/widgets/skeleton_config.dart';
 import '../../../providers/accessibility_providers.dart';
 import '../../../providers/app_providers.dart';
@@ -561,20 +561,20 @@ class _FlightsTabContent extends StatelessWidget {
               stats.activeFlights,
             ]),
             filterChips: [
-              SectionFilterChip(
+              StatusFilterChip(
                 label: 'All',
                 count: allFlights.length,
                 isSelected: currentFilter == AetherFilter.all,
                 onTap: () => onFilterChanged(AetherFilter.all),
               ),
-              SectionFilterChip(
+              StatusFilterChip(
                 label: 'Active',
                 count: stats.activeFlights,
                 isSelected: currentFilter == AetherFilter.active,
                 color: AppTheme.successGreen,
                 onTap: () => onFilterChanged(AetherFilter.active),
               ),
-              SectionFilterChip(
+              StatusFilterChip(
                 label: 'Upcoming',
                 count: upcomingCount,
                 isSelected: currentFilter == AetherFilter.upcoming,
@@ -582,7 +582,7 @@ class _FlightsTabContent extends StatelessWidget {
                 icon: Icons.schedule,
                 onTap: () => onFilterChanged(AetherFilter.upcoming),
               ),
-              SectionFilterChip(
+              StatusFilterChip(
                 label: 'My Flights',
                 count: myFlightsCount,
                 isSelected: currentFilter == AetherFilter.myFlights,

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -9,7 +10,7 @@ import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../../../core/widgets/search_filter_header.dart';
-import '../../../core/widgets/section_header.dart';
+import '../../../core/widgets/status_filter_chip.dart';
 import '../../../core/widgets/user_avatar.dart';
 import '../../../core/widgets/status_banner.dart';
 import '../../../utils/snackbar.dart';
@@ -42,6 +43,8 @@ class UserPurchasesAdminScreen extends ConsumerStatefulWidget {
 class _UserPurchasesAdminScreenState
     extends ConsumerState<UserPurchasesAdminScreen>
     with LifecycleSafeMixin<UserPurchasesAdminScreen> {
+  static const _excludedIdsKey = 'admin_excluded_user_ids';
+
   final _searchController = TextEditingController();
   String _searchQuery = '';
   bool _isLoading = false;
@@ -56,6 +59,19 @@ class _UserPurchasesAdminScreenState
 
   /// User IDs excluded from revenue calculation via the toggle icon.
   final Set<String> _excludedUserIds = {};
+
+  Future<void> _loadExcludedIds() async {
+    final prefs = await SharedPreferences.getInstance();
+    final ids = prefs.getStringList(_excludedIdsKey);
+    if (ids != null && mounted) {
+      setState(() => _excludedUserIds.addAll(ids));
+    }
+  }
+
+  Future<void> _saveExcludedIds() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(_excludedIdsKey, _excludedUserIds.toList());
+  }
 
   /// Total paying users (before exclusions).
   int get _totalPayingUsers =>
@@ -110,6 +126,42 @@ class _UserPurchasesAdminScreenState
   /// Whether any exclusions are active.
   bool get _hasExclusions => _excludedUserIds.isNotEmpty;
 
+  /// Cutoff for "last 24 hours" calculations.
+  DateTime get _last24hCutoff => DateTime.now().subtract(const Duration(hours: 24));
+
+  /// New users in last 24 hours.
+  int get _newUsersLast24h =>
+      _users.where((u) => u.createdAt != null && u.createdAt!.isAfter(_last24hCutoff)).length;
+
+  /// New purchases in last 24 hours.
+  int get _newPurchasesLast24h {
+    int count = 0;
+    for (final user in _users) {
+      for (final purchase in user.purchases) {
+        if (purchase.purchasedAt != null &&
+            purchase.purchasedAt!.isAfter(_last24hCutoff)) {
+          count++;
+        }
+      }
+    }
+    return count;
+  }
+
+  /// Revenue from purchases in last 24 hours.
+  double get _revenueLast24h {
+    double total = 0;
+    for (final user in _users) {
+      if (_excludedUserIds.contains(user.userId)) continue;
+      for (final purchase in user.purchases) {
+        if (purchase.purchasedAt != null &&
+            purchase.purchasedAt!.isAfter(_last24hCutoff)) {
+          total += _productPricesAud[purchase.productId] ?? 0;
+        }
+      }
+    }
+    return total;
+  }
+
   /// Helper to build a stat card row with consistent padding.
   Widget _buildStatRow(List<Widget> children) {
     final spaced = <Widget>[];
@@ -133,6 +185,7 @@ class _UserPurchasesAdminScreenState
   @override
   void initState() {
     super.initState();
+    _loadExcludedIds();
     _loadUsers();
   }
 
@@ -426,6 +479,8 @@ class _UserPurchasesAdminScreenState
             Padding(
               padding: const EdgeInsets.only(top: 2),
               child: Text.rich(
+                softWrap: true,
+                maxLines: 3,
                 TextSpan(
                   style: const TextStyle(
                     fontSize: 10,
@@ -560,6 +615,30 @@ class _UserPurchasesAdminScreenState
           ]),
         ),
 
+        // Stats — Row 4: Last 24 hours
+        SliverToBoxAdapter(
+          child: _buildStatRow([
+            _StatCard(
+              label: 'New Users (24h)',
+              value: _newUsersLast24h.toString(),
+              icon: Icons.person_add,
+              color: Colors.blue,
+            ),
+            _StatCard(
+              label: 'Purchases (24h)',
+              value: _newPurchasesLast24h.toString(),
+              icon: Icons.shopping_cart,
+              color: Colors.deepPurple,
+            ),
+            _StatCard(
+              label: 'Revenue (24h)',
+              value: 'A\$${_revenueLast24h.toStringAsFixed(2)}',
+              icon: Icons.trending_up,
+              color: Colors.green,
+            ),
+          ]),
+        ),
+
         // Pinned search header with filter chips
         SliverPersistentHeader(
           pinned: true,
@@ -575,27 +654,27 @@ class _UserPurchasesAdminScreenState
               _excludedUserIds.length,
             ]),
             filterChips: [
-              SectionFilterChip(
+              StatusFilterChip(
                 label: 'All',
                 count: _countForFilter(_UserFilter.all),
                 isSelected: _activeFilter == _UserFilter.all,
                 onTap: () => setState(() => _activeFilter = _UserFilter.all),
               ),
-              SectionFilterChip(
+              StatusFilterChip(
                 label: 'Paying',
                 count: _countForFilter(_UserFilter.paying),
                 isSelected: _activeFilter == _UserFilter.paying,
                 color: AccentColors.green,
                 onTap: () => setState(() => _activeFilter = _UserFilter.paying),
               ),
-              SectionFilterChip(
+              StatusFilterChip(
                 label: 'Free',
                 count: _countForFilter(_UserFilter.free),
                 isSelected: _activeFilter == _UserFilter.free,
                 onTap: () => setState(() => _activeFilter = _UserFilter.free),
               ),
               if (_hasExclusions)
-                SectionFilterChip(
+                StatusFilterChip(
                   label: 'Excluded',
                   count: _countForFilter(_UserFilter.excluded),
                   isSelected: _activeFilter == _UserFilter.excluded,
@@ -603,7 +682,7 @@ class _UserPurchasesAdminScreenState
                   onTap: () =>
                       setState(() => _activeFilter = _UserFilter.excluded),
                 ),
-              SectionFilterChip(
+              StatusFilterChip(
                 label: 'Anonymous',
                 count: _countForFilter(_UserFilter.anonymous),
                 isSelected: _activeFilter == _UserFilter.anonymous,
@@ -611,7 +690,7 @@ class _UserPurchasesAdminScreenState
                     setState(() => _activeFilter = _UserFilter.anonymous),
               ),
               if (_users.any((u) => u.isDeleted))
-                SectionFilterChip(
+                StatusFilterChip(
                   label: 'Deleted',
                   count: _countForFilter(_UserFilter.deleted),
                   isSelected: _activeFilter == _UserFilter.deleted,
@@ -716,6 +795,7 @@ class _UserPurchasesAdminScreenState
                             _excludedUserIds.add(user.userId);
                           }
                         });
+                        _saveExcludedIds();
                       }
                     : null,
               );

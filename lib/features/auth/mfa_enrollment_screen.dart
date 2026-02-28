@@ -25,6 +25,10 @@ class MFAEnrollmentScreen extends ConsumerStatefulWidget {
 
 class _MFAEnrollmentScreenState extends ConsumerState<MFAEnrollmentScreen>
     with LifecycleSafeMixin {
+  void _dismissKeyboard() {
+    FocusScope.of(context).unfocus();
+  }
+
   final _phoneController = TextEditingController();
   final _codeController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -275,171 +279,179 @@ class _MFAEnrollmentScreenState extends ConsumerState<MFAEnrollmentScreen>
       'hasVerificationId=${_verificationId != null}',
     );
 
-    return GlassScaffold.body(
-      title: 'Enable Two-Factor Auth',
-      body: Padding(
-        padding: const EdgeInsets.all(AppTheme.spacing16),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Icon(Icons.security, size: 64, color: context.accentColor),
-              const SizedBox(height: AppTheme.spacing24),
-              Text(
-                'Add an extra layer of security',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: context.textPrimary,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: AppTheme.spacing8),
-              Text(
-                'You\'ll receive a verification code via SMS when signing in',
-                style: TextStyle(fontSize: 14, color: context.textSecondary),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: AppTheme.spacing32),
-              if (!_isCodeSent) ...[
-                TextFormField(
-                  onTapOutside: (_) =>
-                      FocusManager.instance.primaryFocus?.unfocus(),
-                  controller: _phoneController,
-                  keyboardType: TextInputType.phone,
-                  enabled: !_isLoading,
-                  style: TextStyle(color: context.textPrimary),
-                  decoration: InputDecoration(
-                    labelText: 'Phone Number',
-                    hintText: '+1 234 567 890',
-                    prefixIcon: Icon(Icons.phone, color: context.accentColor),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(AppTheme.radius12),
-                      borderSide: BorderSide(color: context.border),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(AppTheme.radius12),
-                      borderSide: BorderSide(color: context.border),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(AppTheme.radius12),
-                      borderSide: BorderSide(
-                        color: context.accentColor,
-                        width: 2,
-                      ),
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'Please enter your phone number';
-                    }
-                    if (!value.startsWith('+')) {
-                      return 'Phone number must include country code (+1, +44, etc.)';
-                    }
-                    return null;
-                  },
-                ),
+    return GestureDetector(
+      onTap: _dismissKeyboard,
+      child: GlassScaffold.body(
+        title: 'Enable Two-Factor Auth',
+        body: Padding(
+          padding: const EdgeInsets.all(AppTheme.spacing16),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Icon(Icons.security, size: 64, color: context.accentColor),
                 const SizedBox(height: AppTheme.spacing24),
-                FilledButton.icon(
-                  onPressed: _isLoading ? null : _sendCode,
-                  icon: _isLoading
-                      ? SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: SemanticColors.onAccent,
-                          ),
-                        )
-                      : const Icon(Icons.send),
-                  label: Text(_isLoading ? 'Sending...' : 'Send Code'),
-                  style: FilledButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(AppTheme.radius12),
-                    ),
-                  ),
-                ),
-              ] else ...[
-                TextFormField(
-                  onTapOutside: (_) =>
-                      FocusManager.instance.primaryFocus?.unfocus(),
-                  controller: _codeController,
-                  keyboardType: TextInputType.number,
-                  enabled: !_isLoading,
-                  maxLength: 6,
-                  style: TextStyle(
-                    color: context.textPrimary,
-                    fontSize: 24,
-                    letterSpacing: 8,
-                  ),
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                    labelText: 'Verification Code',
-                    hintText: '000000',
-                    counterText: '',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(AppTheme.radius12),
-                      borderSide: BorderSide(color: context.border),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(AppTheme.radius12),
-                      borderSide: BorderSide(color: context.border),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(AppTheme.radius12),
-                      borderSide: BorderSide(
-                        color: context.accentColor,
-                        width: 2,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: AppTheme.spacing16),
                 Text(
-                  'Enter the 6-digit code sent to ${_phoneController.text}',
-                  style: TextStyle(fontSize: 12, color: context.textSecondary),
+                  'Add an extra layer of security',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: context.textPrimary,
+                  ),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: AppTheme.spacing24),
-                FilledButton.icon(
-                  onPressed: _isLoading ? null : _verifyCode,
-                  icon: _isLoading
-                      ? SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: SemanticColors.onAccent,
-                          ),
-                        )
-                      : const Icon(Icons.verified_user),
-                  label: Text(_isLoading ? 'Verifying...' : 'Verify & Enable'),
-                  style: FilledButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(AppTheme.radius12),
+                const SizedBox(height: AppTheme.spacing8),
+                Text(
+                  'You\'ll receive a verification code via SMS when signing in',
+                  style: TextStyle(fontSize: 14, color: context.textSecondary),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: AppTheme.spacing32),
+                if (!_isCodeSent) ...[
+                  TextFormField(
+                    onTapOutside: (_) =>
+                        FocusManager.instance.primaryFocus?.unfocus(),
+                    controller: _phoneController,
+                    keyboardType: TextInputType.phone,
+                    enabled: !_isLoading,
+                    style: TextStyle(color: context.textPrimary),
+                    decoration: InputDecoration(
+                      labelText: 'Phone Number',
+                      hintText: '+1 234 567 890',
+                      prefixIcon: Icon(Icons.phone, color: context.accentColor),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(AppTheme.radius12),
+                        borderSide: BorderSide(color: context.border),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(AppTheme.radius12),
+                        borderSide: BorderSide(color: context.border),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(AppTheme.radius12),
+                        borderSide: BorderSide(
+                          color: context.accentColor,
+                          width: 2,
+                        ),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Please enter your phone number';
+                      }
+                      if (!value.startsWith('+')) {
+                        return 'Phone number must include country code (+1, +44, etc.)';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: AppTheme.spacing24),
+                  FilledButton.icon(
+                    onPressed: _isLoading ? null : _sendCode,
+                    icon: _isLoading
+                        ? SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: SemanticColors.onAccent,
+                            ),
+                          )
+                        : const Icon(Icons.send),
+                    label: Text(_isLoading ? 'Sending...' : 'Send Code'),
+                    style: FilledButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(AppTheme.radius12),
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: AppTheme.spacing12),
-                TextButton(
-                  onPressed: _isLoading
-                      ? null
-                      : () {
-                          AppLogging.mfa(
-                            '_changePhoneNumber — user tapped Change Phone Number',
-                          );
-                          safeSetState(() {
-                            _isCodeSent = false;
-                            _codeController.clear();
-                          });
-                        },
-                  child: const Text('Change Phone Number'),
-                ),
+                ] else ...[
+                  TextFormField(
+                    onTapOutside: (_) =>
+                        FocusManager.instance.primaryFocus?.unfocus(),
+                    controller: _codeController,
+                    keyboardType: TextInputType.number,
+                    enabled: !_isLoading,
+                    maxLength: 6,
+                    style: TextStyle(
+                      color: context.textPrimary,
+                      fontSize: 24,
+                      letterSpacing: 8,
+                    ),
+                    textAlign: TextAlign.center,
+                    decoration: InputDecoration(
+                      labelText: 'Verification Code',
+                      hintText: '000000',
+                      counterText: '',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(AppTheme.radius12),
+                        borderSide: BorderSide(color: context.border),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(AppTheme.radius12),
+                        borderSide: BorderSide(color: context.border),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(AppTheme.radius12),
+                        borderSide: BorderSide(
+                          color: context.accentColor,
+                          width: 2,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: AppTheme.spacing16),
+                  Text(
+                    'Enter the 6-digit code sent to ${_phoneController.text}',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: context.textSecondary,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: AppTheme.spacing24),
+                  FilledButton.icon(
+                    onPressed: _isLoading ? null : _verifyCode,
+                    icon: _isLoading
+                        ? SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: SemanticColors.onAccent,
+                            ),
+                          )
+                        : const Icon(Icons.verified_user),
+                    label: Text(
+                      _isLoading ? 'Verifying...' : 'Verify & Enable',
+                    ),
+                    style: FilledButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(AppTheme.radius12),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: AppTheme.spacing12),
+                  TextButton(
+                    onPressed: _isLoading
+                        ? null
+                        : () {
+                            AppLogging.mfa(
+                              '_changePhoneNumber — user tapped Change Phone Number',
+                            );
+                            safeSetState(() {
+                              _isCodeSent = false;
+                              _codeController.clear();
+                            });
+                          },
+                    child: const Text('Change Phone Number'),
+                  ),
+                ],
               ],
-            ],
+            ),
           ),
         ),
       ),

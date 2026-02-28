@@ -9,6 +9,7 @@ import '../../core/widgets/glass_scaffold.dart';
 import '../../core/widgets/ico_help_system.dart';
 import '../../core/widgets/search_filter_header.dart';
 import '../../core/widgets/section_header.dart';
+import '../../core/widgets/status_filter_chip.dart';
 import '../../core/logging.dart';
 import '../../dev/demo/demo_config.dart';
 
@@ -207,14 +208,14 @@ class _PresenceScreenState extends ConsumerState<PresenceScreen> {
                   _countForFilter(PresenceFilter.familiar, allPresences),
                 ]),
                 filterChips: [
-                  SectionFilterChip(
+                  StatusFilterChip(
                     label: 'All',
                     count: _countForFilter(PresenceFilter.all, allPresences),
                     isSelected: _filter == PresenceFilter.all,
                     color: PresenceFilter.all.color(context),
                     onTap: () => setState(() => _filter = PresenceFilter.all),
                   ),
-                  SectionFilterChip(
+                  StatusFilterChip(
                     label: 'Active',
                     count: _countForFilter(PresenceFilter.active, allPresences),
                     isSelected: _filter == PresenceFilter.active,
@@ -222,7 +223,7 @@ class _PresenceScreenState extends ConsumerState<PresenceScreen> {
                     onTap: () =>
                         setState(() => _filter = PresenceFilter.active),
                   ),
-                  SectionFilterChip(
+                  StatusFilterChip(
                     label: 'Seen recently',
                     count: _countForFilter(PresenceFilter.fading, allPresences),
                     isSelected: _filter == PresenceFilter.fading,
@@ -231,7 +232,7 @@ class _PresenceScreenState extends ConsumerState<PresenceScreen> {
                     onTap: () =>
                         setState(() => _filter = PresenceFilter.fading),
                   ),
-                  SectionFilterChip(
+                  StatusFilterChip(
                     label: 'Inactive',
                     count: _countForFilter(
                       PresenceFilter.inactive,
@@ -243,7 +244,7 @@ class _PresenceScreenState extends ConsumerState<PresenceScreen> {
                     onTap: () =>
                         setState(() => _filter = PresenceFilter.inactive),
                   ),
-                  SectionFilterChip(
+                  StatusFilterChip(
                     label: 'Unknown',
                     count: _countForFilter(
                       PresenceFilter.unknown,
@@ -255,7 +256,7 @@ class _PresenceScreenState extends ConsumerState<PresenceScreen> {
                     onTap: () =>
                         setState(() => _filter = PresenceFilter.unknown),
                   ),
-                  SectionFilterChip(
+                  StatusFilterChip(
                     label: 'Familiar',
                     count: _countForFilter(
                       PresenceFilter.familiar,

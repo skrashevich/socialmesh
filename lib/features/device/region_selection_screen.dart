@@ -164,6 +164,10 @@ class RegionSelectionScreen extends ConsumerStatefulWidget {
 
 class _RegionSelectionScreenState extends ConsumerState<RegionSelectionScreen>
     with LifecycleSafeMixin<RegionSelectionScreen> {
+  void _dismissKeyboard() {
+    FocusScope.of(context).unfocus();
+  }
+
   RegionCode? _selectedRegion;
   RegionCode? _currentRegion;
   String? _errorMessage;
@@ -568,169 +572,175 @@ class _RegionSelectionScreenState extends ConsumerState<RegionSelectionScreen>
         ? _errorMessage
         : null;
 
-    return HelpTourController(
-      topicId: 'region_selection',
-      stepKeys: const {},
-      child: GlassScaffold(
-        resizeToAvoidBottomInset: false,
-        title: widget.isInitialSetup ? 'Select Your Region' : 'Change Region',
-        leading: widget.isInitialSetup ? const SizedBox.shrink() : null,
-        automaticallyImplyLeading: !widget.isInitialSetup,
-        actions: [
-          if (!isApplying)
-            IcoHelpAppBarButton(
-              topicId: 'region_selection',
-              autoTrigger: widget.isInitialSetup,
-            ),
-        ],
-        slivers: [
-          if (widget.isInitialSetup)
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  AppTheme.spacing16,
-                  8,
-                  16,
-                  16,
-                ),
-                child: StatusBanner.accent(
-                  title: 'Important: Select Your Region',
-                  subtitle:
-                      'Choose the correct frequency for your location to comply with local regulations.',
-                ),
+    return GestureDetector(
+      onTap: _dismissKeyboard,
+      child: HelpTourController(
+        topicId: 'region_selection',
+        stepKeys: const {},
+        child: GlassScaffold(
+          resizeToAvoidBottomInset: false,
+          title: widget.isInitialSetup ? 'Select Your Region' : 'Change Region',
+          leading: widget.isInitialSetup ? const SizedBox.shrink() : null,
+          automaticallyImplyLeading: !widget.isInitialSetup,
+          actions: [
+            if (!isApplying)
+              IcoHelpAppBarButton(
+                topicId: 'region_selection',
+                autoTrigger: widget.isInitialSetup,
               ),
-            ),
-
-          // Search bar
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: context.card,
-                  borderRadius: BorderRadius.circular(AppTheme.radius12),
-                  border: Border.all(color: context.border),
-                ),
-                child: TextField(
-                  onTapOutside: (_) =>
-                      FocusManager.instance.primaryFocus?.unfocus(),
-                  maxLength: 100,
-                  enabled: !isApplying,
-                  style: TextStyle(color: context.textPrimary),
-                  decoration: InputDecoration(
-                    hintText: 'Search regions...',
-                    hintStyle: TextStyle(color: context.textTertiary),
-                    counterText: '',
-                    prefixIcon: Icon(Icons.search, color: context.textTertiary),
-                    border: InputBorder.none,
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 14,
-                    ),
-                  ),
-                  onChanged: (value) => setState(() => _searchQuery = value),
-                ),
-              ),
-            ),
-          ),
-
-          const SliverPadding(padding: EdgeInsets.only(top: 16)),
-
-          // Region list
-          SliverList(
-            delegate: SliverChildBuilderDelegate((context, index) {
-              final region = _filteredRegions[index];
-              final isSelected = _selectedRegion == region.code;
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: _buildRegionTile(region, isSelected, isApplying),
-              );
-            }, childCount: _filteredRegions.length),
-          ),
-
-          // Bottom padding so the last region tile isn't hidden
-          // behind the fixed bottom bar
-          const SliverPadding(padding: EdgeInsets.only(bottom: 16)),
-        ],
-        bottomNavigationBar: BottomActionBar(
-          horizontalPadding: 0,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Error message
-              if (statusText != null)
-                Padding(
+          ],
+          slivers: [
+            if (widget.isInitialSetup)
+              SliverToBoxAdapter(
+                child: Padding(
                   padding: const EdgeInsets.fromLTRB(
                     AppTheme.spacing16,
                     8,
                     16,
-                    0,
+                    16,
                   ),
-                  child: StatusBanner.error(title: statusText),
-                ),
-
-              // Pairing invalidation hint
-              if (_showPairingInvalidationHint) ...[_buildPairingHint()],
-
-              // Save / Continue button
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppTheme.spacing16,
-                ),
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(minHeight: 56),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      key: regionSelectionApplyButtonKey,
-                      onPressed: _selectedRegion != null && !isApplying
-                          ? _saveRegion
-                          : null,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: context.accentColor,
-                        foregroundColor: Colors.white,
-                        disabledBackgroundColor: context.card,
-                        disabledForegroundColor: context.textTertiary,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                            AppTheme.radius12,
-                          ),
-                        ),
-                      ),
-                      child: isApplying
-                          ? const Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  width: 18,
-                                  height: 18,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                SizedBox(width: AppTheme.spacing10),
-                                Text(
-                                  'Applying...',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ],
-                            )
-                          : Text(
-                              widget.isInitialSetup ? 'Continue' : 'Save',
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                    ),
+                  child: StatusBanner.accent(
+                    title: 'Important: Select Your Region',
+                    subtitle:
+                        'Choose the correct frequency for your location to comply with local regulations.',
                   ),
                 ),
               ),
-            ],
+
+            // Search bar
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: context.card,
+                    borderRadius: BorderRadius.circular(AppTheme.radius12),
+                    border: Border.all(color: context.border),
+                  ),
+                  child: TextField(
+                    onTapOutside: (_) =>
+                        FocusManager.instance.primaryFocus?.unfocus(),
+                    maxLength: 100,
+                    enabled: !isApplying,
+                    style: TextStyle(color: context.textPrimary),
+                    decoration: InputDecoration(
+                      hintText: 'Search regions...',
+                      hintStyle: TextStyle(color: context.textTertiary),
+                      counterText: '',
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: context.textTertiary,
+                      ),
+                      border: InputBorder.none,
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 14,
+                      ),
+                    ),
+                    onChanged: (value) => setState(() => _searchQuery = value),
+                  ),
+                ),
+              ),
+            ),
+
+            const SliverPadding(padding: EdgeInsets.only(top: 16)),
+
+            // Region list
+            SliverList(
+              delegate: SliverChildBuilderDelegate((context, index) {
+                final region = _filteredRegions[index];
+                final isSelected = _selectedRegion == region.code;
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: _buildRegionTile(region, isSelected, isApplying),
+                );
+              }, childCount: _filteredRegions.length),
+            ),
+
+            // Bottom padding so the last region tile isn't hidden
+            // behind the fixed bottom bar
+            const SliverPadding(padding: EdgeInsets.only(bottom: 16)),
+          ],
+          bottomNavigationBar: BottomActionBar(
+            horizontalPadding: 0,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Error message
+                if (statusText != null)
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      AppTheme.spacing16,
+                      8,
+                      16,
+                      0,
+                    ),
+                    child: StatusBanner.error(title: statusText),
+                  ),
+
+                // Pairing invalidation hint
+                if (_showPairingInvalidationHint) ...[_buildPairingHint()],
+
+                // Save / Continue button
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppTheme.spacing16,
+                  ),
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(minHeight: 56),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        key: regionSelectionApplyButtonKey,
+                        onPressed: _selectedRegion != null && !isApplying
+                            ? _saveRegion
+                            : null,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: context.accentColor,
+                          foregroundColor: Colors.white,
+                          disabledBackgroundColor: context.card,
+                          disabledForegroundColor: context.textTertiary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              AppTheme.radius12,
+                            ),
+                          ),
+                        ),
+                        child: isApplying
+                            ? const Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: 18,
+                                    height: 18,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  SizedBox(width: AppTheme.spacing10),
+                                  Text(
+                                    'Applying...',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : Text(
+                                widget.isInitialSetup ? 'Continue' : 'Save',
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

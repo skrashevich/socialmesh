@@ -31,6 +31,10 @@ class MeshCoreSettingsScreen extends ConsumerStatefulWidget {
 
 class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
     with LifecycleSafeMixin<MeshCoreSettingsScreen> {
+  void _dismissKeyboard() {
+    FocusScope.of(context).unfocus();
+  }
+
   String _appVersion = '';
   bool _showBatteryVoltage = false;
   bool _isSendingAdvert = false;
@@ -61,30 +65,33 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
     final contactsState = ref.watch(meshCoreContactsProvider);
     final channelsState = ref.watch(meshCoreChannelsProvider);
 
-    return GlassScaffold.body(
-      leading: const MeshCoreHamburgerMenuButton(),
-      title: 'Settings',
-      actions: [const MeshCoreDeviceStatusButton()],
-      body: ListView(
-        padding: const EdgeInsets.all(AppTheme.spacing16),
-        children: [
-          _buildDeviceInfoCard(
-            context,
-            isConnected: isConnected,
-            selfInfo: selfInfo,
-            batteryState: batteryState,
-            contactCount: contactsState.contacts.length,
-            channelCount: channelsState.channels.length,
-          ),
-          const SizedBox(height: AppTheme.spacing16),
-          _buildNodeSettingsCard(context, selfInfo),
-          const SizedBox(height: AppTheme.spacing16),
-          _buildActionsCard(context, isConnected),
-          const SizedBox(height: AppTheme.spacing16),
-          _buildDebugCard(context),
-          const SizedBox(height: AppTheme.spacing16),
-          _buildAboutCard(context),
-        ],
+    return GestureDetector(
+      onTap: _dismissKeyboard,
+      child: GlassScaffold.body(
+        leading: const MeshCoreHamburgerMenuButton(),
+        title: 'Settings',
+        actions: [const MeshCoreDeviceStatusButton()],
+        body: ListView(
+          padding: const EdgeInsets.all(AppTheme.spacing16),
+          children: [
+            _buildDeviceInfoCard(
+              context,
+              isConnected: isConnected,
+              selfInfo: selfInfo,
+              batteryState: batteryState,
+              contactCount: contactsState.contacts.length,
+              channelCount: channelsState.channels.length,
+            ),
+            const SizedBox(height: AppTheme.spacing16),
+            _buildNodeSettingsCard(context, selfInfo),
+            const SizedBox(height: AppTheme.spacing16),
+            _buildActionsCard(context, isConnected),
+            const SizedBox(height: AppTheme.spacing16),
+            _buildDebugCard(context),
+            const SizedBox(height: AppTheme.spacing16),
+            _buildAboutCard(context),
+          ],
+        ),
       ),
     );
   }

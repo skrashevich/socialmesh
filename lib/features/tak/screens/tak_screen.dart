@@ -17,7 +17,7 @@ import '../../../core/widgets/app_bottom_sheet.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../../../core/widgets/ico_help_system.dart';
 import '../../../core/widgets/search_filter_header.dart';
-import '../../../core/widgets/section_header.dart';
+import '../../../core/widgets/status_filter_chip.dart';
 import '../models/tak_event.dart';
 import '../providers/tak_filter_provider.dart';
 import '../providers/tak_providers.dart';
@@ -300,7 +300,7 @@ class _TakScreenState extends ConsumerState<TakScreen> with LifecycleSafeMixin {
                 },
                 hintText: 'Search callsign or UID',
                 filterChips: [
-                  SectionFilterChip(
+                  StatusFilterChip(
                     label: 'All',
                     count: allEvents.length,
                     isSelected: !filter.isActive,
@@ -310,7 +310,7 @@ class _TakScreenState extends ConsumerState<TakScreen> with LifecycleSafeMixin {
                     },
                   ),
                   for (final aff in _primaryAffiliations)
-                    SectionFilterChip(
+                    StatusFilterChip(
                       label: aff.label,
                       count: _countByAffiliation(allEvents, aff),
                       isSelected: filter.affiliations.contains(aff),
@@ -319,7 +319,7 @@ class _TakScreenState extends ConsumerState<TakScreen> with LifecycleSafeMixin {
                           .read(takFilterProvider.notifier)
                           .toggleAffiliation(aff),
                     ),
-                  SectionFilterChip(
+                  StatusFilterChip(
                     label: staleModeLabel,
                     count: staleModeCount,
                     isSelected: filter.staleMode != TakStaleMode.all,

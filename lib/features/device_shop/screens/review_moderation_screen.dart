@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -34,6 +35,11 @@ class ReviewModerationScreen extends ConsumerStatefulWidget {
 
 class _ReviewModerationScreenState extends ConsumerState<ReviewModerationScreen>
     with SingleTickerProviderStateMixin {
+  void _dismissKeyboard() {
+    HapticFeedback.selectionClick();
+    FocusScope.of(context).unfocus();
+  }
+
   late TabController _tabController;
 
   @override
@@ -50,24 +56,30 @@ class _ReviewModerationScreenState extends ConsumerState<ReviewModerationScreen>
 
   @override
   Widget build(BuildContext context) {
-    return GlassScaffold.body(
-      title: 'Review Management',
-      bottom: TabBar(
-        controller: _tabController,
-        indicatorColor: context.accentColor,
-        labelColor: context.accentColor,
-        unselectedLabelColor: context.textSecondary,
-        tabs: const [
-          Tab(text: 'Pending'),
-          Tab(text: 'All Reviews'),
-        ],
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          _ReviewList(reviewsProvider: pendingReviewsProvider, isPending: true),
-          _ReviewList(reviewsProvider: allReviewsProvider, isPending: false),
-        ],
+    return GestureDetector(
+      onTap: _dismissKeyboard,
+      child: GlassScaffold.body(
+        title: 'Review Management',
+        bottom: TabBar(
+          controller: _tabController,
+          indicatorColor: context.accentColor,
+          labelColor: context.accentColor,
+          unselectedLabelColor: context.textSecondary,
+          tabs: const [
+            Tab(text: 'Pending'),
+            Tab(text: 'All Reviews'),
+          ],
+        ),
+        body: TabBarView(
+          controller: _tabController,
+          children: [
+            _ReviewList(
+              reviewsProvider: pendingReviewsProvider,
+              isPending: true,
+            ),
+            _ReviewList(reviewsProvider: allReviewsProvider, isPending: false),
+          ],
+        ),
       ),
     );
   }

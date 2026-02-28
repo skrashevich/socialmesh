@@ -13,6 +13,8 @@ import '../../device_shop/providers/admin_shop_providers.dart';
 import '../../social/screens/reported_content_screen.dart';
 import '../../settings/admin_follow_requests_screen.dart';
 import '../../widget_builder/marketplace/widget_approval_screen.dart';
+import '../bug_reports/admin_bug_report_providers.dart';
+import '../bug_reports/admin_bug_reports_screen.dart';
 import '../conformance/ui/admin_conformance_screen.dart';
 import 'admin_broadcast_screen.dart';
 import 'admin_diagnostics_screen.dart';
@@ -52,6 +54,15 @@ class AdminScreen extends ConsumerWidget {
               ),
               const SizedBox(height: AppTheme.spacing16),
               const _SectionHeader(title: 'CONTENT MODERATION'),
+              _AdminTile(
+                icon: Icons.bug_report,
+                label: 'Bug Reports',
+                subtitle: 'View and respond to user bug reports',
+                iconColor: Colors.pink.shade400,
+                badgeCount: ref.watch(adminOpenBugReportCountProvider),
+                onTap: () =>
+                    _navigateTo(context, const AdminBugReportsScreen()),
+              ),
               _AdminTile(
                 icon: Icons.rate_review_outlined,
                 label: 'Review Moderation',

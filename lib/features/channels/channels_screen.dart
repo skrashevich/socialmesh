@@ -11,7 +11,7 @@ import '../../core/widgets/app_bar_overflow_menu.dart';
 import '../../core/widgets/animations.dart';
 import '../../core/widgets/glass_scaffold.dart';
 import '../../core/widgets/search_filter_header.dart';
-import '../../core/widgets/section_header.dart';
+import '../../core/widgets/status_filter_chip.dart';
 import '../../core/widgets/ico_help_system.dart';
 import '../messaging/messaging_screen.dart';
 import '../navigation/main_shell.dart';
@@ -108,7 +108,7 @@ class _ChannelsScreenState extends ConsumerState<ChannelsScreen>
               mqttCount,
             ]),
             filterChips: [
-              SectionFilterChip(
+              StatusFilterChip(
                 label: 'All',
                 count: channels.length,
                 isSelected: _activeFilter == ChannelFilter.all,
@@ -117,7 +117,7 @@ class _ChannelsScreenState extends ConsumerState<ChannelsScreen>
                   setState(() => _activeFilter = ChannelFilter.all);
                 },
               ),
-              SectionFilterChip(
+              StatusFilterChip(
                 label: 'Primary',
                 count: primaryCount,
                 isSelected: _activeFilter == ChannelFilter.primary,
@@ -126,7 +126,7 @@ class _ChannelsScreenState extends ConsumerState<ChannelsScreen>
                 onTap: () =>
                     setState(() => _activeFilter = ChannelFilter.primary),
               ),
-              SectionFilterChip(
+              StatusFilterChip(
                 label: 'Encrypted',
                 count: encryptedCount,
                 isSelected: _activeFilter == ChannelFilter.encrypted,
@@ -135,7 +135,7 @@ class _ChannelsScreenState extends ConsumerState<ChannelsScreen>
                 onTap: () =>
                     setState(() => _activeFilter = ChannelFilter.encrypted),
               ),
-              SectionFilterChip(
+              StatusFilterChip(
                 label: 'Position',
                 count: positionCount,
                 isSelected: _activeFilter == ChannelFilter.position,
@@ -144,7 +144,7 @@ class _ChannelsScreenState extends ConsumerState<ChannelsScreen>
                 onTap: () =>
                     setState(() => _activeFilter = ChannelFilter.position),
               ),
-              SectionFilterChip(
+              StatusFilterChip(
                 label: 'MQTT',
                 count: mqttCount,
                 isSelected: _activeFilter == ChannelFilter.mqtt,

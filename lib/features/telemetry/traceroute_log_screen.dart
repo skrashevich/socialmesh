@@ -15,7 +15,7 @@ import '../../core/widgets/app_bottom_sheet.dart';
 import '../../core/widgets/glass_scaffold.dart';
 import '../../core/widgets/ico_help_system.dart';
 import '../../core/widgets/search_filter_header.dart';
-import '../../core/widgets/section_header.dart';
+import '../../core/widgets/status_filter_chip.dart';
 import '../../models/telemetry_log.dart';
 import '../../providers/splash_mesh_provider.dart';
 import '../../providers/telemetry_providers.dart';
@@ -220,7 +220,7 @@ class _TraceRouteLogScreenState extends ConsumerState<TraceRouteLogScreen>
                   _countForFilter(logsAsync, _TracerouteFilter.noResponse),
                 ]),
                 filterChips: [
-                  SectionFilterChip(
+                  StatusFilterChip(
                     label: 'All',
                     count: _countForFilter(logsAsync, _TracerouteFilter.all),
                     isSelected: _activeFilter == _TracerouteFilter.all,
@@ -228,7 +228,7 @@ class _TraceRouteLogScreenState extends ConsumerState<TraceRouteLogScreen>
                       () => _activeFilter = _TracerouteFilter.all,
                     ),
                   ),
-                  SectionFilterChip(
+                  StatusFilterChip(
                     label: 'Response',
                     count: _countForFilter(
                       logsAsync,
@@ -241,7 +241,7 @@ class _TraceRouteLogScreenState extends ConsumerState<TraceRouteLogScreen>
                       () => _activeFilter = _TracerouteFilter.responded,
                     ),
                   ),
-                  SectionFilterChip(
+                  StatusFilterChip(
                     label: 'No Response',
                     count: _countForFilter(
                       logsAsync,

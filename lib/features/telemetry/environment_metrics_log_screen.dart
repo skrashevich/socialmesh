@@ -13,6 +13,7 @@ import '../../core/widgets/datetime_picker_sheet.dart';
 import '../../core/widgets/glass_scaffold.dart';
 import '../../core/widgets/search_filter_header.dart';
 import '../../core/widgets/section_header.dart';
+import '../../core/widgets/status_filter_chip.dart';
 import '../../models/telemetry_log.dart';
 import '../../providers/splash_mesh_provider.dart';
 import '../../providers/telemetry_providers.dart';
@@ -273,7 +274,7 @@ class _EnvironmentMetricsLogScreenState
                   rebuildKey: Object.hashAll([_activeFilter, ...counts.values]),
                   filterChips: [
                     for (final filter in _MetricFilter.values)
-                      SectionFilterChip(
+                      StatusFilterChip(
                         label: filter.label,
                         count: counts[filter],
                         isSelected: _activeFilter == filter,

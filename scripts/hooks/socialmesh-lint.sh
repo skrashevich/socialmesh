@@ -877,10 +877,23 @@ check_file() {
     # ------------------------------------------------------------------
     if grep -qE 'class[[:space:]]+[A-Za-z_]+Screen[[:space:]]+extends' "$file" 2>/dev/null; then
       if grep -vE '^\s*//' "$file" 2>/dev/null | grep -qE '(TextField|TextFormField)[[:space:]]*\(' 2>/dev/null; then
-        if ! grep -qE '(FocusScope\.of|FocusManager\.|unfocus|onTapOutside)' "$file" 2>/dev/null; then
-          if ! grep -q 'lint-allow:.*keyboard-dismissal' "$file" 2>/dev/null; then
+        if ! grep -q 'lint-allow:.*keyboard-dismissal' "$file" 2>/dev/null; then
+          # Strong check: Screen must wrap content in GestureDetector + unfocus.
+          # onTapOutside alone is insufficient — it only fires when the field
+          # is focused, not on general taps/scrolls elsewhere on screen.
+          local has_gesture_unfocus=false
+          if grep -qE 'GestureDetector' "$file" 2>/dev/null &&              grep -qE 'unfocus\(\)' "$file" 2>/dev/null; then
+            has_gesture_unfocus=true
+          fi
+          # Also accept SearchFilterHeaderDelegate which handles its own
+          # keyboard dismissal via the built-in search field.
+          local has_search_delegate=false
+          if grep -qE 'SearchFilterHeaderDelegate' "$file" 2>/dev/null &&              grep -qE '(GestureDetector|unfocus|onTapOutside)' "$file" 2>/dev/null; then
+            has_search_delegate=true
+          fi
+          if [ "$has_gesture_unfocus" = false ] && [ "$has_search_delegate" = false ]; then
             record_hit "$file" "1" "keyboard-dismissal" \
-              "Screen with text input but no keyboard dismissal — add GestureDetector + FocusScope.unfocus or onTapOutside" "error"
+              "Screen with text input but no keyboard dismissal — wrap scaffold in GestureDetector(onTap: () => FocusScope.of(context).unfocus())" "error"
           fi
         fi
       fi

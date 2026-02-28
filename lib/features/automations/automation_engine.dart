@@ -24,6 +24,7 @@ import 'models/automation.dart';
 import 'models/schedule_spec.dart';
 import 'automation_repository.dart';
 import 'scheduler_service.dart';
+import 'services/notification_renderer/notification_renderer_module.dart';
 
 /// Message model for automation processing (local to avoid import conflict)
 class AutomationMessage {
@@ -917,22 +918,31 @@ class AutomationEngine {
               errorMessage: 'Notifications not initialized',
             );
           }
-          final title = _truncateForNotification(
-            _interpolateVariables(
-              action.notificationTitle ?? automation.name,
-              event,
-              trigger: automation.trigger,
-            ),
-            _maxNotificationTitleLength,
+
+          // Build notification via the policy-driven renderer.
+          // This resolves variables, enforces per-field grapheme limits,
+          // and falls through template tiers if content exceeds the
+          // platform display budget.
+          final notifSpec = NotificationSpec.fromUserTemplate(
+            titleTemplate: action.notificationTitle ?? automation.name,
+            bodyTemplate: action.notificationBody ?? '',
+            fallbackTitle: automation.name,
+            fallbackBody: 'Automation triggered.',
           );
-          final body = _truncateForNotification(
-            _interpolateVariables(
-              action.notificationBody ?? '',
-              event,
-              trigger: automation.trigger,
-            ),
-            _maxNotificationBodyLength,
+          final renderResult = NotificationRenderer.render(
+            spec: notifSpec,
+            variables: _buildVariableMap(event, trigger: automation.trigger),
+            policy: NotificationPolicy.strictest,
           );
+          final title = renderResult.parts.title;
+          final body = renderResult.parts.body;
+
+          if (renderResult.reductionApplied) {
+            AppLogging.automations(
+              'Notification reduced: tier=${renderResult.tierUsed}, '
+              'fallback=${renderResult.usedFallback}',
+            );
+          }
 
           // Prepare custom notification sound if configured
           String? soundFileName;
@@ -1269,38 +1279,47 @@ class AutomationEngine {
     }
   }
 
-  /// Max lengths for notification content after variable interpolation.
-  ///
-  /// Template fields allow 500 chars of raw text with variable placeholders,
-  /// but placeholders expand unpredictably: {{location}} (14 template chars)
-  /// becomes "-37.710180, 145.009415" (22 resolved chars), {{message}} (11
-  /// template chars) can resolve to hundreds of chars, etc.
-  ///
-  /// Measured on-device: iOS expanded notification renders exactly ~256 chars
-  /// before silently truncating with no indicator. Android BigTextStyle
-  /// renders ~450-500 chars. Neither platform documents a hard API limit for
-  /// local notification body text.
-  ///
-  /// Body is capped at 250 chars (under the measured 256 iOS display limit)
-  /// so the "…" suffix is always visible instead of iOS silently chopping
-  /// mid-word. Title is capped at 100 chars (1-2 rendered lines on both
-  /// platforms).
-  static const _maxNotificationTitleLength = 100;
-  static const _maxNotificationBodyLength = 250;
-
-  /// Truncate text to [maxLength], appending ellipsis if truncated.
-  /// Tries to break at the last word boundary before the limit.
-  static String _truncateForNotification(String text, int maxLength) {
-    if (text.length <= maxLength) return text;
-    // Find last space before the limit to avoid cutting a word
-    final truncateAt = text.lastIndexOf(' ', maxLength - 1);
-    final breakPoint = truncateAt > maxLength ~/ 2 ? truncateAt : maxLength - 1;
-    return '${text.substring(0, breakPoint)}…';
-  }
-
-  /// Interpolate variables in message text
   /// Format a human-readable timestamp for notification display
   static final DateFormat _notificationTimeFormat = DateFormat('MMM d, h:mm a');
+
+  /// Build the runtime variable map from an [AutomationEvent].
+  ///
+  /// This is the single source of truth for variable resolution, shared
+  /// by both the legacy [_interpolateVariables] (for messages) and the
+  /// new [NotificationRenderer] pipeline.
+  Map<String, String> _buildVariableMap(
+    AutomationEvent event, {
+    AutomationTrigger? trigger,
+  }) {
+    final locationStr = event.latitude != null && event.longitude != null
+        ? '${event.latitude!.toStringAsFixed(6)}, '
+              '${event.longitude!.toStringAsFixed(6)}'
+        : 'Unknown';
+
+    final vars = <String, String>{
+      'node.name': event.nodeName ?? '',
+      'node.num': event.nodeNum?.toRadixString(16) ?? '',
+      'battery': '${event.batteryLevel ?? '?'}%',
+      'location': locationStr,
+      'message': event.messageText?.isNotEmpty == true
+          ? event.messageText!
+          : '',
+      'time': _notificationTimeFormat.format(DateTime.now()),
+      'sensor.name': event.sensorName ?? '',
+      'sensor.state': event.sensorDetected == true ? 'detected' : 'clear',
+    };
+
+    if (trigger != null) {
+      vars['threshold'] = '${trigger.batteryThreshold}%';
+      vars['keyword'] = trigger.keyword ?? '';
+      vars['zone.radius'] = '${trigger.geofenceRadius.round()}m';
+      vars['silent.duration'] = '${trigger.silentMinutes} min';
+      vars['signal.threshold'] = '${trigger.signalThreshold} dB';
+      vars['channel.name'] = 'Channel ${trigger.channelIndex ?? 0}';
+    }
+
+    return vars;
+  }
 
   String _interpolateVariables(
     String text,

@@ -31,6 +31,7 @@ import '../../../core/widgets/glass_scaffold.dart';
 import '../../../core/widgets/ico_help_system.dart';
 import '../../../core/widgets/search_filter_header.dart';
 import '../../../core/widgets/section_header.dart';
+import '../../../core/widgets/status_filter_chip.dart';
 import '../../../core/widgets/skeleton_config.dart';
 import '../../../models/mesh_models.dart';
 import '../../nodes/node_display_name_resolver.dart';
@@ -256,7 +257,7 @@ class _NodeDexScreenState extends ConsumerState<NodeDexScreen> {
             stats.socialTagDistribution,
           ]),
           filterChips: [
-            SectionFilterChip(
+            StatusFilterChip(
               label: 'All',
               count: stats.totalNodes,
               isSelected: currentFilter == NodeDexFilter.all,
@@ -264,7 +265,7 @@ class _NodeDexScreenState extends ConsumerState<NodeDexScreen> {
                   .read(nodeDexFilterProvider.notifier)
                   .setFilter(NodeDexFilter.all),
             ),
-            SectionFilterChip(
+            StatusFilterChip(
               label: 'Tagged',
               count: _taggedCount(stats),
               isSelected: currentFilter == NodeDexFilter.tagged,
@@ -312,7 +313,7 @@ class _NodeDexScreenState extends ConsumerState<NodeDexScreen> {
                   .read(nodeDexFilterProvider.notifier)
                   .setFilter(NodeDexFilter.tagFrequentPeer),
             ),
-            SectionFilterChip(
+            StatusFilterChip(
               label: 'Recent',
               count: 0,
               isSelected: currentFilter == NodeDexFilter.recent,

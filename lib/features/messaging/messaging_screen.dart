@@ -29,6 +29,7 @@ import '../../core/widgets/search_filter_header.dart';
 import '../../core/widgets/ico_help_system.dart';
 
 import '../../core/widgets/section_header.dart';
+import '../../core/widgets/status_filter_chip.dart';
 import '../../core/widgets/status_banner.dart';
 import '../../core/widgets/node_avatar.dart';
 import '../channels/channel_options_sheet.dart';
@@ -261,13 +262,13 @@ class _MessagingScreenState extends ConsumerState<MessagingScreen>
               ),
             ],
             filterChips: [
-              SectionFilterChip(
+              StatusFilterChip(
                 label: 'All',
                 count: contacts.length,
                 isSelected: _currentFilter == ContactFilter.all,
                 onTap: () => setState(() => _currentFilter = ContactFilter.all),
               ),
-              SectionFilterChip(
+              StatusFilterChip(
                 label: 'Active',
                 count: activeCount,
                 isSelected: _currentFilter == ContactFilter.active,
@@ -275,7 +276,7 @@ class _MessagingScreenState extends ConsumerState<MessagingScreen>
                 onTap: () =>
                     setState(() => _currentFilter = ContactFilter.active),
               ),
-              SectionFilterChip(
+              StatusFilterChip(
                 label: 'Unread',
                 count: unreadCount,
                 isSelected: _currentFilter == ContactFilter.unread,
@@ -284,7 +285,7 @@ class _MessagingScreenState extends ConsumerState<MessagingScreen>
                 onTap: () =>
                     setState(() => _currentFilter = ContactFilter.unread),
               ),
-              SectionFilterChip(
+              StatusFilterChip(
                 label: 'Messaged',
                 count: messagedCount,
                 isSelected: _currentFilter == ContactFilter.messaged,
@@ -293,7 +294,7 @@ class _MessagingScreenState extends ConsumerState<MessagingScreen>
                 onTap: () =>
                     setState(() => _currentFilter = ContactFilter.messaged),
               ),
-              SectionFilterChip(
+              StatusFilterChip(
                 label: 'Favorites',
                 count: favoritesCount,
                 isSelected: _currentFilter == ContactFilter.favorites,

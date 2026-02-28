@@ -8,7 +8,7 @@ import '../../core/widgets/animations.dart';
 import '../../core/widgets/glass_scaffold.dart';
 import '../../core/widgets/ico_help_system.dart';
 import '../../core/widgets/search_filter_header.dart';
-import '../../core/widgets/section_header.dart';
+import '../../core/widgets/status_filter_chip.dart';
 
 import '../../models/mesh_models.dart';
 import '../../models/presence_confidence.dart';
@@ -408,14 +408,14 @@ class _TimelineScreenState extends ConsumerState<TimelineScreen> {
                   _countForFilter(TimelineFilter.waypoints, allEvents),
                 ]),
                 filterChips: [
-                  SectionFilterChip(
+                  StatusFilterChip(
                     label: 'All',
                     count: _countForFilter(TimelineFilter.all, allEvents),
                     isSelected: _filter == TimelineFilter.all,
                     color: TimelineFilter.all.color(context),
                     onTap: () => setState(() => _filter = TimelineFilter.all),
                   ),
-                  SectionFilterChip(
+                  StatusFilterChip(
                     label: 'Messages',
                     count: _countForFilter(TimelineFilter.messages, allEvents),
                     isSelected: _filter == TimelineFilter.messages,
@@ -424,7 +424,7 @@ class _TimelineScreenState extends ConsumerState<TimelineScreen> {
                     onTap: () =>
                         setState(() => _filter = TimelineFilter.messages),
                   ),
-                  SectionFilterChip(
+                  StatusFilterChip(
                     label: 'Nodes',
                     count: _countForFilter(TimelineFilter.nodes, allEvents),
                     isSelected: _filter == TimelineFilter.nodes,
@@ -432,7 +432,7 @@ class _TimelineScreenState extends ConsumerState<TimelineScreen> {
                     icon: Icons.people,
                     onTap: () => setState(() => _filter = TimelineFilter.nodes),
                   ),
-                  SectionFilterChip(
+                  StatusFilterChip(
                     label: 'Signals',
                     count: _countForFilter(TimelineFilter.signals, allEvents),
                     isSelected: _filter == TimelineFilter.signals,
@@ -441,7 +441,7 @@ class _TimelineScreenState extends ConsumerState<TimelineScreen> {
                     onTap: () =>
                         setState(() => _filter = TimelineFilter.signals),
                   ),
-                  SectionFilterChip(
+                  StatusFilterChip(
                     label: 'Waypoints',
                     count: _countForFilter(TimelineFilter.waypoints, allEvents),
                     isSelected: _filter == TimelineFilter.waypoints,

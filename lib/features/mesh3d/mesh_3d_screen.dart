@@ -38,7 +38,7 @@ import '../../core/widgets/glass_scaffold.dart';
 import '../../core/widgets/ico_help_system.dart';
 import '../../core/widgets/node_info_card.dart';
 import '../../core/widgets/search_filter_header.dart';
-import '../../core/widgets/section_header.dart';
+import '../../core/widgets/status_filter_chip.dart';
 import '../../models/mesh_models.dart';
 import '../../models/presence_confidence.dart';
 import '../../providers/app_providers.dart';
@@ -584,7 +584,7 @@ class _Mesh3DScreenState extends ConsumerState<Mesh3DScreen>
               final isSelected = mode == _currentMode;
               return Padding(
                 padding: EdgeInsets.only(right: SearchFilterLayout.chipSpacing),
-                child: SectionFilterChip(
+                child: StatusFilterChip(
                   label: mode.label,
                   isSelected: isSelected,
                   icon: mode.icon,
@@ -613,7 +613,7 @@ class _Mesh3DScreenState extends ConsumerState<Mesh3DScreen>
               final count = counts[filter] ?? 0;
               return Padding(
                 padding: EdgeInsets.only(right: SearchFilterLayout.chipSpacing),
-                child: SectionFilterChip(
+                child: StatusFilterChip(
                   label: filter.label,
                   count: count,
                   isSelected: _nodeFilter == filter,
