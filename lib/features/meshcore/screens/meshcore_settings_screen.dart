@@ -32,6 +32,7 @@ class MeshCoreSettingsScreen extends ConsumerStatefulWidget {
 class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
     with LifecycleSafeMixin<MeshCoreSettingsScreen> {
   void _dismissKeyboard() {
+    HapticFeedback.selectionClick();
     FocusScope.of(context).unfocus();
   }
 

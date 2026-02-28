@@ -3,6 +3,7 @@ import '../../core/logging.dart';
 import 'dart:async';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
@@ -33,6 +34,7 @@ class RangeTestScreen extends ConsumerStatefulWidget {
 class _RangeTestScreenState extends ConsumerState<RangeTestScreen>
     with LifecycleSafeMixin {
   void _dismissKeyboard() {
+    HapticFeedback.selectionClick();
     FocusScope.of(context).unfocus();
   }
 
