@@ -17,8 +17,11 @@ abstract final class SmPortnum {
   /// NodeDex identity digest.
   static const int identity = 262;
 
+  /// File transfer packets (offer, chunk, nack, ack).
+  static const int fileTransfer = 263;
+
   /// All Socialmesh portnums for capability detection.
-  static const Set<int> all = {presence, signal, identity};
+  static const Set<int> all = {presence, signal, identity, fileTransfer};
 
   /// Returns true if the portnum is a Socialmesh extension portnum.
   static bool isSocialmesh(int portnum) => all.contains(portnum);
@@ -43,6 +46,18 @@ abstract final class SmPacketKind {
 
   /// SM_IDENTITY.
   static const int identity = 3;
+
+  /// SM_FILE_OFFER.
+  static const int fileOffer = 4;
+
+  /// SM_FILE_CHUNK.
+  static const int fileChunk = 5;
+
+  /// SM_FILE_NACK.
+  static const int fileNack = 6;
+
+  /// SM_FILE_ACK.
+  static const int fileAck = 7;
 }
 
 /// Rate limiting intervals for each packet type.
@@ -61,6 +76,21 @@ abstract final class SmRateLimit {
 
   /// Minimum interval between identity requests to the same node.
   static const Duration identityRequestInterval = Duration(minutes: 10);
+
+  /// Minimum interval between file transfer chunks.
+  static const Duration fileChunkInterval = Duration(seconds: 2);
+
+  /// Minimum interval between file offers.
+  static const Duration fileOfferInterval = Duration(seconds: 30);
+
+  /// Maximum concurrent outbound file transfers.
+  static const int maxConcurrentTransfers = 2;
+
+  /// Maximum retries per chunk.
+  static const int maxChunkRetries = 3;
+
+  /// Maximum NACK retransmission rounds.
+  static const int maxNackRounds = 3;
 }
 
 /// Transport parameters for each packet type.
@@ -79,6 +109,9 @@ abstract final class SmTransport {
 
   /// Hop limit for identity request/response (needs to reach specific node).
   static const int identityRequestHopLimit = 3;
+
+  /// Hop limit for file transfer packets.
+  static const int fileTransferHopLimit = 3;
 }
 
 /// Maximum payload sizes for validation.
@@ -95,4 +128,27 @@ abstract final class SmPayloadLimit {
   /// regulatory constraints. All SM packets enforce hard content caps well
   /// below this ceiling (presence: 63 B, signal: 140 B content).
   static const int loraMtu = 237;
+}
+
+/// Hard limits for file transfers to prevent mesh pollution.
+abstract final class SmFileTransferLimits {
+  /// Maximum total file size in bytes (default 8 KB, configurable for dev).
+  static const int maxFileSize = 8192;
+
+  /// Default chunk size in bytes (fits within LoRa MTU minus headers).
+  /// 23 bytes header overhead (1 header + 16 fileId + 2 index + 2 count + 2 len)
+  /// → ~200 bytes usable payload per chunk.
+  static const int defaultChunkSize = 200;
+
+  /// Maximum number of missing chunk indexes in a NACK.
+  static const int maxNackIndexes = 16;
+
+  /// Transfer TTL — partial transfers expire after this duration.
+  static const Duration transferTtl = Duration(hours: 24);
+
+  /// Maximum allowed filename length in bytes (UTF-8).
+  static const int maxFilenameBytes = 64;
+
+  /// Maximum allowed MIME type length in bytes (UTF-8).
+  static const int maxMimeTypeBytes = 64;
 }

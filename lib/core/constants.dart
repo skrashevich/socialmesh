@@ -271,6 +271,18 @@ class NodeDexConfig {
 class AppFeatureFlags {
   AppFeatureFlags._();
 
+  /// Whether the File Transfer feature is enabled.
+  /// Set `FILE_TRANSFER_ENABLED=true` in `.env` to enable.
+  /// Default: false — experimental mesh file transfer is hidden.
+  static bool get isFileTransferEnabled {
+    try {
+      final raw = dotenv.env['FILE_TRANSFER_ENABLED']?.toLowerCase().trim();
+      return raw == 'true' || raw == '1';
+    } catch (_) {
+      return false;
+    }
+  }
+
   /// Whether the Aether flight tracking feature is enabled.
   /// Set `AETHER_ENABLED=true` in `.env` to enable.
   static bool get isAetherEnabled {

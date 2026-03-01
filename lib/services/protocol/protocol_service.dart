@@ -26,6 +26,7 @@ import 'socialmesh/sm_capability_store.dart';
 import 'socialmesh/sm_codec.dart';
 import 'socialmesh/sm_constants.dart';
 import 'socialmesh/sm_feature_flag.dart';
+import 'socialmesh/sm_file_transfer.dart';
 import 'socialmesh/sm_identity.dart';
 import 'socialmesh/sm_metrics.dart';
 import 'socialmesh/sm_packet_router.dart';
@@ -1440,6 +1441,14 @@ class ProtocolService {
         _handleSmSignal(decoded.signal, packet.from, packet.id);
       case SmPacketType.identity:
         _handleSmIdentity(decoded.identity, packet.from);
+      case SmPacketType.fileOffer:
+        _handleSmFileOffer(decoded.fileOffer, packet.from);
+      case SmPacketType.fileChunk:
+        _handleSmFileChunk(decoded.fileChunk, packet.from);
+      case SmPacketType.fileNack:
+        _handleSmFileNack(decoded.fileNack, packet.from);
+      case SmPacketType.fileAck:
+        _handleSmFileAck(decoded.fileAck, packet.from);
     }
   }
 
@@ -1551,6 +1560,69 @@ class ProtocolService {
     required bool hashValid,
   })?
   onSmIdentityUpdate;
+
+  /// Callback for incoming file transfer packets. Set by providers to
+  /// route to the FileTransferEngine without importing it here.
+  void Function({
+    required SmPacketType type,
+    required Object packet,
+    required int senderNodeNum,
+  })?
+  onSmFileTransferPacket;
+
+  /// Handle incoming FILE_OFFER.
+  void _handleSmFileOffer(SmFileOffer offer, int senderNodeNum) {
+    AppLogging.protocol(
+      'SM_FILE_OFFER from ${senderNodeNum.toRadixString(16)}: '
+      'file=${offer.filename}, ${offer.totalBytes} bytes, '
+      '${offer.chunkCount} chunks',
+    );
+    onSmFileTransferPacket?.call(
+      type: SmPacketType.fileOffer,
+      packet: offer,
+      senderNodeNum: senderNodeNum,
+    );
+  }
+
+  /// Handle incoming FILE_CHUNK.
+  void _handleSmFileChunk(SmFileChunk chunk, int senderNodeNum) {
+    AppLogging.protocol(
+      'SM_FILE_CHUNK from ${senderNodeNum.toRadixString(16)}: '
+      'idx=${chunk.chunkIndex}/${chunk.chunkCount}, '
+      '${chunk.payload.length} bytes',
+    );
+    onSmFileTransferPacket?.call(
+      type: SmPacketType.fileChunk,
+      packet: chunk,
+      senderNodeNum: senderNodeNum,
+    );
+  }
+
+  /// Handle incoming FILE_NACK.
+  void _handleSmFileNack(SmFileNack nack, int senderNodeNum) {
+    AppLogging.protocol(
+      'SM_FILE_NACK from ${senderNodeNum.toRadixString(16)}: '
+      '${nack.missingIndexes.length} missing chunks',
+    );
+    onSmFileTransferPacket?.call(
+      type: SmPacketType.fileNack,
+      packet: nack,
+      senderNodeNum: senderNodeNum,
+    );
+  }
+
+  /// Handle incoming FILE_ACK.
+  void _handleSmFileAck(SmFileAck ack, int senderNodeNum) {
+    AppLogging.protocol(
+      'SM_FILE_ACK from ${senderNodeNum.toRadixString(16)}: '
+      'status=${ack.status.name}',
+    );
+    onSmFileTransferPacket?.call(
+      type: SmPacketType.fileAck,
+      packet: ack,
+      senderNodeNum: senderNodeNum,
+    );
+  }
 
   /// Handle detection sensor events (DETECTION_SENSOR_APP portnum)
   void _handleDetectionSensorMessage(pb.MeshPacket packet, pb.Data data) {
@@ -3743,6 +3815,47 @@ class ProtocolService {
 
     AppLogging.protocol('SM_PRESENCE broadcast: $presence, packetId=$packetId');
     return packetId;
+  }
+
+  /// Send a file transfer packet (portnum 263).
+  ///
+  /// The [payload] is the already-encoded binary packet (offer, chunk,
+  /// nack, or ack). [destinationNode] is the target node (0xFFFFFFFF for
+  /// broadcast). Returns true if the packet was queued for send.
+  Future<bool> sendSmFileTransferPacket(
+    Uint8List payload, {
+    int? destinationNode,
+    int hopLimit = 3,
+  }) async {
+    if (_myNodeNum == null || !_transport.isConnected) return false;
+
+    if (!_smRateLimiter.canSend(SmPortnum.fileTransfer)) {
+      AppLogging.protocol('SM_FILE_TRANSFER rate-limited');
+      return false;
+    }
+
+    final packetId = _generatePacketId();
+    final data = _createDataWithPortnum(SmPortnum.fileTransfer, payload);
+
+    final packet = MeshPacketBuilder.userPayload(
+      myNodeNum: _myNodeNum!,
+      to: destinationNode ?? 0xFFFFFFFF,
+      data: data,
+      packetId: packetId,
+    );
+    packet.hopLimit = hopLimit;
+
+    final toRadio = pb.ToRadio()..packet = packet;
+    await _transport.send(_prepareForSend(toRadio.writeToBuffer()));
+
+    _smRateLimiter.recordSend(SmPortnum.fileTransfer);
+
+    AppLogging.protocol(
+      'SM_FILE_TRANSFER sent: ${payload.length} bytes, '
+      'to=${(destinationNode ?? 0xFFFFFFFF).toRadixString(16)}, '
+      'packetId=$packetId',
+    );
+    return true;
   }
 
   /// Send an SM_IDENTITY request to a specific node (unicast).

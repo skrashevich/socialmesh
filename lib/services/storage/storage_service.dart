@@ -687,6 +687,33 @@ class SettingsService {
     await _preferences.remove('splash_mesh_touch_intensity');
     await _preferences.remove('splash_mesh_stretch_intensity');
   }
+
+  // File Transfer Settings
+  Future<void> setFileTransferEnabled(bool enabled) async {
+    await _preferences.setBool('file_transfer_enabled', enabled);
+  }
+
+  bool get fileTransferEnabled =>
+      _preferences.getBool('file_transfer_enabled') ?? true;
+
+  Future<void> setFileTransferAutoAccept(bool enabled) async {
+    await _preferences.setBool('file_transfer_auto_accept', enabled);
+  }
+
+  bool get fileTransferAutoAccept =>
+      _preferences.getBool('file_transfer_auto_accept') ?? true;
+
+  // Phone GPS Location Sharing
+  // Whether to send the phone's GPS position to the mesh on a periodic timer.
+  // Matches meshtastic-ios UserDefaults.provideLocation (default: false).
+  // When false, the 30-second position timer is a no-op — no POSITION_APP
+  // packets are emitted from the phone to the mesh.
+  Future<void> setProvidePhoneLocation(bool enabled) async {
+    await _preferences.setBool('provide_phone_location', enabled);
+  }
+
+  bool get providePhoneLocation =>
+      _preferences.getBool('provide_phone_location') ?? false;
 }
 
 /// Device favorites storage service - persists favorite node numbers

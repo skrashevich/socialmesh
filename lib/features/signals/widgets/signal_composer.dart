@@ -1,12 +1,19 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
+import '../../../providers/file_transfer_providers.dart';
 import '../../../providers/signal_providers.dart';
+import '../../../services/protocol/socialmesh/sm_constants.dart';
 import '../../../services/signal_service.dart';
+import '../../../utils/snackbar.dart';
+import '../../file_transfer/widgets/file_transfer_card.dart';
 import 'ttl_selector.dart';
 
 /// Inline signal composer widget (for embedding in other screens).
@@ -26,14 +33,21 @@ class _SignalComposerState extends ConsumerState<SignalComposer>
   int _ttlMinutes = SignalTTL.defaultTTL;
   bool _isSubmitting = false;
 
+  // File attachment state.
+  String? _attachedFilename;
+  String? _attachedMimeType;
+  Uint8List? _attachedFileBytes;
+
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
   }
 
+  bool get _hasAttachment => _attachedFileBytes != null;
+
   bool get _canSubmit =>
-      _controller.text.trim().isNotEmpty &&
+      (_controller.text.trim().isNotEmpty || _hasAttachment) &&
       _controller.text.length <= 140 &&
       !_isSubmitting;
 
@@ -43,17 +57,96 @@ class _SignalComposerState extends ConsumerState<SignalComposer>
     safeSetState(() => _isSubmitting = true);
 
     try {
-      final notifier = ref.read(signalFeedProvider.notifier);
-      await notifier.createSignal(
-        content: _controller.text.trim(),
-        ttlMinutes: _ttlMinutes,
-      );
+      // Send file attachment if present.
+      if (_hasAttachment) {
+        final ctx = context;
+        final transferNotifier = ref.read(fileTransferStateProvider.notifier);
+        final transfer = await transferNotifier.sendFile(
+          filename: _attachedFilename!,
+          mimeType: _attachedMimeType ?? 'application/octet-stream',
+          fileBytes: _attachedFileBytes!,
+        );
+
+        if (transfer == null && ctx.mounted) {
+          showErrorSnackBar(ctx, 'File transfer failed to start');
+          return;
+        }
+      }
+
+      // Send signal text if present.
+      if (_controller.text.trim().isNotEmpty) {
+        final notifier = ref.read(signalFeedProvider.notifier);
+        await notifier.createSignal(
+          content: _controller.text.trim(),
+          ttlMinutes: _ttlMinutes,
+        );
+      }
 
       _controller.clear();
+      safeSetState(() {
+        _attachedFilename = null;
+        _attachedMimeType = null;
+        _attachedFileBytes = null;
+      });
       widget.onSignalCreated?.call();
     } finally {
       safeSetState(() => _isSubmitting = false);
     }
+  }
+
+  Future<void> _pickFile() async {
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.any,
+      withData: true,
+    );
+
+    if (result == null || result.files.isEmpty) return;
+    final file = result.files.first;
+
+    Uint8List? bytes = file.bytes;
+    if (bytes == null && file.path != null) {
+      bytes = await File(file.path!).readAsBytes();
+    }
+    if (bytes == null) return;
+
+    if (bytes.length > SmFileTransferLimits.maxFileSize) {
+      if (!mounted) return;
+      showWarningSnackBar(
+        context,
+        'File too large. Mesh transfer is limited to '
+        '${SmFileTransferLimits.maxFileSize ~/ 1024} KB.',
+      );
+      return;
+    }
+
+    safeSetState(() {
+      _attachedFilename = file.name;
+      _attachedMimeType = _guessMimeType(file.name);
+      _attachedFileBytes = bytes;
+    });
+  }
+
+  void _removeAttachment() {
+    safeSetState(() {
+      _attachedFilename = null;
+      _attachedMimeType = null;
+      _attachedFileBytes = null;
+    });
+  }
+
+  String _guessMimeType(String filename) {
+    final ext = filename.split('.').last.toLowerCase();
+    return switch (ext) {
+      'txt' => 'text/plain',
+      'json' => 'application/json',
+      'csv' => 'text/csv',
+      'gpx' => 'application/gpx+xml',
+      'jpg' || 'jpeg' => 'image/jpeg',
+      'png' => 'image/png',
+      'pdf' => 'application/pdf',
+      'zip' => 'application/zip',
+      _ => 'application/octet-stream',
+    };
   }
 
   @override
@@ -91,6 +184,20 @@ class _SignalComposerState extends ConsumerState<SignalComposer>
               ),
               onChanged: (_) => setState(() {}),
             ),
+          ),
+          const SizedBox(width: AppTheme.spacing8),
+          IconButton(
+            onPressed: _isSubmitting ? null : _pickFile,
+            icon: Icon(
+              Icons.attach_file,
+              size: 20,
+              color: _hasAttachment
+                  ? context.accentColor
+                  : context.textTertiary,
+            ),
+            tooltip: 'Attach file',
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(),
           ),
           const SizedBox(width: AppTheme.spacing8),
           IconButton(
@@ -165,6 +272,62 @@ class _SignalComposerState extends ConsumerState<SignalComposer>
             onChanged: _isSubmitting
                 ? null
                 : (minutes) => setState(() => _ttlMinutes = minutes),
+          ),
+
+          // File attachment preview
+          if (_hasAttachment) ...[
+            const SizedBox(height: AppTheme.spacing12),
+            FileAttachmentPreview(
+              filename: _attachedFilename!,
+              mimeType: _attachedMimeType ?? 'application/octet-stream',
+              fileSize: _attachedFileBytes!.length,
+              chunkCount:
+                  (_attachedFileBytes!.length /
+                          SmFileTransferLimits.defaultChunkSize)
+                      .ceil(),
+              onRemove: _isSubmitting ? null : _removeAttachment,
+            ),
+          ],
+
+          const SizedBox(height: AppTheme.spacing12),
+
+          // Attach file button
+          Row(
+            children: [
+              TextButton.icon(
+                onPressed: _isSubmitting ? null : _pickFile,
+                icon: Icon(
+                  Icons.attach_file,
+                  size: 16,
+                  color: _isSubmitting
+                      ? context.textTertiary
+                      : context.accentColor,
+                ),
+                label: Text(
+                  'Attach file',
+                  style: TextStyle(
+                    color: _isSubmitting
+                        ? context.textTertiary
+                        : context.accentColor,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                style: TextButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppTheme.spacing8,
+                    vertical: AppTheme.spacing4,
+                  ),
+                  minimumSize: Size.zero,
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                ),
+              ),
+              const Spacer(),
+              Text(
+                'Max ${SmFileTransferLimits.maxFileSize ~/ 1024} KB',
+                style: TextStyle(color: context.textTertiary, fontSize: 10),
+              ),
+            ],
           ),
           const SizedBox(height: AppTheme.spacing16),
 

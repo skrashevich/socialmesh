@@ -7,8 +7,20 @@ import '../protocol/protocol_service.dart';
 
 /// Service that provides phone GPS location and can send it to the mesh.
 /// Phone GPS sharing is opt-in only and disabled by default for privacy.
+///
+/// The [isLocationSharingEnabled] callback is checked on every timer tick
+/// and before every manual send. When it returns `false`, no POSITION_APP
+/// packets are emitted — the timer keeps running but each tick is a no-op.
+/// This mirrors the meshtastic-ios pattern where
+/// `UserDefaults.provideLocation` is evaluated inside the 30-second loop.
 class LocationService {
   final ProtocolService _protocolService;
+
+  /// Callback that returns whether the user has opted in to sharing
+  /// their phone GPS position with the mesh. Evaluated on every tick.
+  /// When `null`, defaults to `false` (safe — no emission).
+  final bool Function()? isLocationSharingEnabled;
+
   Timer? _locationTimer;
   Position? _lastPosition;
   bool _isRunning = false;
@@ -23,7 +35,7 @@ class LocationService {
   /// How often to send position updates (in seconds)
   static const int positionUpdateIntervalSeconds = 30;
 
-  LocationService(this._protocolService);
+  LocationService(this._protocolService, {this.isLocationSharingEnabled});
 
   /// Current position
   Position? get lastPosition => _lastPosition;
@@ -79,7 +91,12 @@ class LocationService {
     return true;
   }
 
-  /// Get current position once
+  /// Get current position once.
+  ///
+  /// This does NOT check [isLocationSharingEnabled] — it only reads
+  /// the phone GPS. Callers that need a position for display (map,
+  /// incident form, etc.) can use this freely. The gate is enforced
+  /// only on the *send-to-mesh* path.
   Future<Position?> getCurrentPosition() async {
     try {
       final hasPermission = await checkPermissions();
@@ -102,7 +119,14 @@ class LocationService {
     }
   }
 
-  /// Start periodic location updates to the mesh
+  /// Start periodic location updates to the mesh.
+  ///
+  /// The timer fires every [positionUpdateIntervalSeconds] seconds.
+  /// On each tick, [isLocationSharingEnabled] is evaluated — if `false`,
+  /// the tick is silently skipped (no GPS wake, no packet). This matches
+  /// the meshtastic-ios `initializeLocationProvider` pattern where
+  /// `UserDefaults.provideLocation` gates the inner `sendPosition` call
+  /// while the outer Task loop keeps running.
   Future<void> startLocationUpdates() async {
     if (_isRunning) return;
 
@@ -115,7 +139,7 @@ class LocationService {
     _isRunning = true;
     AppLogging.nodes('Starting periodic location updates');
 
-    // Send initial position immediately
+    // Send initial position immediately (if sharing is enabled)
     await _sendCurrentPosition();
 
     // Then send every N seconds
@@ -133,8 +157,19 @@ class LocationService {
     AppLogging.nodes('Stopped location updates');
   }
 
-  /// Send current phone GPS position to the mesh
+  /// Send current phone GPS position to the mesh.
+  ///
+  /// Gated by [isLocationSharingEnabled] — when the user has not opted in,
+  /// this is a no-op. The gate is checked here (the last mile before
+  /// building and sending a POSITION_APP packet) so that no caller can
+  /// accidentally bypass it.
   Future<void> _sendCurrentPosition() async {
+    // Gate: check user opt-in on every tick, matching meshtastic-ios
+    // `if UserDefaults.provideLocation { sendPosition(...) }` pattern.
+    if (!(isLocationSharingEnabled?.call() ?? false)) {
+      return;
+    }
+
     try {
       final position = await getCurrentPosition();
       if (position == null) {
@@ -157,7 +192,10 @@ class LocationService {
     }
   }
 
-  /// Send position once (for manual requests or initial sync)
+  /// Send position once (for manual requests or initial sync).
+  ///
+  /// Also gated by [isLocationSharingEnabled]. If the user has not
+  /// opted in, this is a no-op.
   Future<void> sendPositionOnce() async {
     await _sendCurrentPosition();
   }

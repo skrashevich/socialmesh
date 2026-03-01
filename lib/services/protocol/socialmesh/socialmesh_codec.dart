@@ -13,6 +13,7 @@ export 'sm_capability_store.dart';
 export 'sm_codec.dart';
 export 'sm_constants.dart';
 export 'sm_feature_flag.dart';
+export 'sm_file_transfer.dart';
 export 'sm_identity.dart';
 export 'sm_metrics.dart';
 export 'sm_packet_router.dart';

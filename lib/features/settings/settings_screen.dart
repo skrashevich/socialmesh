@@ -361,6 +361,29 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
             ),
           ),
         ),
+        _SearchableSettingItem(
+          icon: Icons.my_location,
+          title: 'Provide phone location',
+          subtitle: 'Send phone GPS to mesh for devices without GPS hardware',
+          keywords: [
+            'gps',
+            'location',
+            'phone',
+            'position',
+            'provide',
+            'share',
+          ],
+          section: 'CONNECTION',
+          hasSwitch: true,
+          switchBuilder: (context, ref, settingsService) => ThemedSwitch(
+            value: settingsService.providePhoneLocation,
+            onChanged: (value) async {
+              HapticFeedback.selectionClick();
+              await settingsService.setProvidePhoneLocation(value);
+              ref.invalidate(settingsServiceProvider);
+            },
+          ),
+        ),
 
         // TAK Gateway (feature-gated)
         if (AppFeatureFlags.isTakGatewayEnabled)
@@ -538,6 +561,47 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
             MaterialPageRoute(
               builder: (_) => const CannedMessageModuleConfigScreen(),
             ),
+          ),
+        ),
+
+        // File Transfer
+        _SearchableSettingItem(
+          icon: Icons.swap_vert,
+          title: 'File transfer',
+          subtitle: 'Send and receive small files over mesh',
+          keywords: ['file', 'transfer', 'send', 'receive', 'share'],
+          section: 'FILE TRANSFER',
+          hasSwitch: true,
+          switchBuilder: (context, ref, settingsService) => ThemedSwitch(
+            value: settingsService.fileTransferEnabled,
+            onChanged: (value) async {
+              HapticFeedback.selectionClick();
+              await settingsService.setFileTransferEnabled(value);
+              safeSetState(() {});
+            },
+          ),
+        ),
+        _SearchableSettingItem(
+          icon: Icons.auto_awesome,
+          title: 'Auto-accept transfers',
+          subtitle: 'Automatically accept incoming file offers',
+          keywords: [
+            'auto',
+            'accept',
+            'file',
+            'transfer',
+            'receive',
+            'automatic',
+          ],
+          section: 'FILE TRANSFER',
+          hasSwitch: true,
+          switchBuilder: (context, ref, settingsService) => ThemedSwitch(
+            value: settingsService.fileTransferAutoAccept,
+            onChanged: (value) async {
+              HapticFeedback.selectionClick();
+              await settingsService.setFileTransferAutoAccept(value);
+              safeSetState(() {});
+            },
           ),
         ),
 
@@ -1990,6 +2054,22 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                                 builder: (_) =>
                                     const BackgroundConnectionScreen(),
                               ),
+                            ),
+                          ),
+                          _SettingsTile(
+                            icon: Icons.my_location,
+                            title: 'Provide phone location',
+                            subtitle:
+                                'Send phone GPS to mesh for devices without GPS hardware',
+                            trailing: ThemedSwitch(
+                              value: settingsService.providePhoneLocation,
+                              onChanged: (value) async {
+                                HapticFeedback.selectionClick();
+                                await settingsService.setProvidePhoneLocation(
+                                  value,
+                                );
+                                safeSetState(() {});
+                              },
                             ),
                           ),
 

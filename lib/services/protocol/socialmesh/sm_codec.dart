@@ -3,12 +3,21 @@
 import 'dart:typed_data';
 
 import 'sm_constants.dart';
+import 'sm_file_transfer.dart';
 import 'sm_identity.dart';
 import 'sm_presence.dart';
 import 'sm_signal.dart';
 
 /// Discriminator for decoded SM packet types.
-enum SmPacketType { presence, signal, identity }
+enum SmPacketType {
+  presence,
+  signal,
+  identity,
+  fileOffer,
+  fileChunk,
+  fileNack,
+  fileAck,
+}
 
 /// A decoded Socialmesh extension packet.
 ///
@@ -28,6 +37,18 @@ class SmPacket {
 
   /// Cast payload to [SmIdentity]. Only valid when [type] == identity.
   SmIdentity get identity => payload as SmIdentity;
+
+  /// Cast payload to [SmFileOffer]. Only valid when [type] == fileOffer.
+  SmFileOffer get fileOffer => payload as SmFileOffer;
+
+  /// Cast payload to [SmFileChunk]. Only valid when [type] == fileChunk.
+  SmFileChunk get fileChunk => payload as SmFileChunk;
+
+  /// Cast payload to [SmFileNack]. Only valid when [type] == fileNack.
+  SmFileNack get fileNack => payload as SmFileNack;
+
+  /// Cast payload to [SmFileAck]. Only valid when [type] == fileAck.
+  SmFileAck get fileAck => payload as SmFileAck;
 }
 
 /// Top-level codec for Socialmesh extension packets.
@@ -66,6 +87,9 @@ class SmCodec {
         if (i == null) return null;
         return SmPacket._(SmPacketType.identity, i);
 
+      case SmPortnum.fileTransfer:
+        return _decodeFileTransfer(data);
+
       default:
         return null;
     }
@@ -79,6 +103,44 @@ class SmCodec {
 
   /// Encode an identity packet to bytes, ready for `Data.payload`.
   static Uint8List? encodeIdentity(SmIdentity identity) => identity.encode();
+
+  /// Encode a file offer to bytes, ready for `Data.payload`.
+  static Uint8List? encodeFileOffer(SmFileOffer offer) => offer.encode();
+
+  /// Encode a file chunk to bytes, ready for `Data.payload`.
+  static Uint8List? encodeFileChunk(SmFileChunk chunk) => chunk.encode();
+
+  /// Encode a file NACK to bytes, ready for `Data.payload`.
+  static Uint8List? encodeFileNack(SmFileNack nack) => nack.encode();
+
+  /// Encode a file ACK to bytes, ready for `Data.payload`.
+  static Uint8List? encodeFileAck(SmFileAck ack) => ack.encode();
+
+  /// Decode file transfer sub-types by inspecting the header kind nibble.
+  static SmPacket? _decodeFileTransfer(Uint8List data) {
+    if (data.isEmpty) return null;
+    final kind = data[0] & 0x0F;
+    switch (kind) {
+      case SmPacketKind.fileOffer:
+        final o = SmFileOffer.decode(data);
+        if (o == null) return null;
+        return SmPacket._(SmPacketType.fileOffer, o);
+      case SmPacketKind.fileChunk:
+        final c = SmFileChunk.decode(data);
+        if (c == null) return null;
+        return SmPacket._(SmPacketType.fileChunk, c);
+      case SmPacketKind.fileNack:
+        final n = SmFileNack.decode(data);
+        if (n == null) return null;
+        return SmPacket._(SmPacketType.fileNack, n);
+      case SmPacketKind.fileAck:
+        final a = SmFileAck.decode(data);
+        if (a == null) return null;
+        return SmPacket._(SmPacketType.fileAck, a);
+      default:
+        return null;
+    }
+  }
 }
 
 /// Tracks rate limits for outgoing SM packets per type.
@@ -131,6 +193,8 @@ class SmRateLimiter {
         return SmRateLimit.signalInterval;
       case SmPortnum.identity:
         return SmRateLimit.identityBroadcastInterval;
+      case SmPortnum.fileTransfer:
+        return SmRateLimit.fileChunkInterval;
       default:
         return const Duration(seconds: 30);
     }

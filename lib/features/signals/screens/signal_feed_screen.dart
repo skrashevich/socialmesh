@@ -24,6 +24,7 @@ import '../../../models/social.dart';
 import '../../../providers/auth_providers.dart';
 import '../../../providers/connection_providers.dart';
 import '../../../providers/connectivity_providers.dart';
+import '../../../providers/file_transfer_providers.dart';
 import '../../../providers/signal_bookmark_provider.dart';
 import '../../../providers/signal_providers.dart';
 import '../../../providers/social_providers.dart';
@@ -42,6 +43,7 @@ import '../widgets/signals_empty_state.dart';
 import '../widgets/swipeable_signal_item.dart';
 import '../widgets/snappable_signal_wrapper.dart';
 import '../widgets/active_signals_banner.dart';
+import '../../file_transfer/widgets/file_transfer_card.dart';
 import 'create_signal_screen.dart';
 import 'signal_detail_screen.dart';
 
@@ -826,6 +828,9 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
               ),
             ),
           ),
+
+          // Active file transfers
+          _ActiveTransfersSliver(),
 
           // Signal list
           SliverList(
@@ -2196,6 +2201,66 @@ class _AuthorAvatar extends StatelessWidget {
         Icons.person_rounded,
         size: size * 0.6,
         color: context.accentColor.withValues(alpha: 0.7),
+      ),
+    );
+  }
+}
+
+/// Sliver that shows active file transfers above the signal feed.
+class _ActiveTransfersSliver extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final transferState = ref.watch(fileTransferStateProvider);
+    final active = transferState.activeTransfers;
+
+    if (active.isEmpty) {
+      return const SliverToBoxAdapter(child: SizedBox.shrink());
+    }
+
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(
+          AppTheme.spacing16,
+          0,
+          AppTheme.spacing16,
+          AppTheme.spacing12,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: AppTheme.spacing8),
+              child: Row(
+                children: [
+                  Icon(Icons.swap_vert, size: 14, color: context.accentColor),
+                  const SizedBox(width: AppTheme.spacing4),
+                  Text(
+                    'File Transfers',
+                    style: TextStyle(
+                      color: context.accentColor,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            ...active.map(
+              (t) => Padding(
+                padding: const EdgeInsets.only(bottom: AppTheme.spacing8),
+                child: FileTransferCard(
+                  transfer: t,
+                  compact: true,
+                  onCancel: t.isActive
+                      ? () => ref
+                            .read(fileTransferStateProvider.notifier)
+                            .cancelTransfer(t.fileIdHex)
+                      : null,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

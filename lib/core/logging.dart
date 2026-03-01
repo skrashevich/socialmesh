@@ -64,6 +64,7 @@ class AppLogging {
   static bool? _adminDiagLoggingEnabled;
   static bool? _tasksLoggingEnabled;
   static bool? _taskSyncLoggingEnabled;
+  static bool? _fileTransferLoggingEnabled;
   static bool? _forceEmptyStates;
   static Logger? _bleLogger;
   static Logger? _mapLogger;
@@ -535,6 +536,18 @@ class AppLogging {
     if (adminDiagLoggingEnabled) debugPrint('AdminDiag: $message');
   }
 
+  /// File transfer engine logging.
+  /// Enable with FILE_TRANSFER_LOGGING_ENABLED=true in .env file.
+  static bool get fileTransferLoggingEnabled {
+    _fileTransferLoggingEnabled ??=
+        _safeGetEnv('FILE_TRANSFER_LOGGING_ENABLED')?.toLowerCase() == 'true';
+    return _fileTransferLoggingEnabled!;
+  }
+
+  static void fileTransfer(String message) {
+    if (fileTransferLoggingEnabled) debugPrint('FileTransfer: $message');
+  }
+
   static void reset() {
     _bleLoggingEnabled = null;
     _protocolLoggingEnabled = null;
@@ -576,6 +589,7 @@ class AppLogging {
     _adminDiagLoggingEnabled = null;
     _tasksLoggingEnabled = null;
     _taskSyncLoggingEnabled = null;
+    _fileTransferLoggingEnabled = null;
     _bleLogger = null;
     _noOpLogger = null;
   }

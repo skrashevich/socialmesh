@@ -31,10 +31,15 @@ import '../../../core/logging.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/app_bottom_sheet.dart';
+import '../../../core/widgets/app_bar_overflow_menu.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../../../core/widgets/ico_help_system.dart';
 import '../../../models/mesh_models.dart';
 import '../../../providers/app_providers.dart';
+import '../../../providers/file_transfer_providers.dart';
+import '../../../services/haptic_service.dart';
+import '../../../utils/snackbar.dart';
+import '../../file_transfer/widgets/file_transfer_card.dart';
 import '../../nodes/node_display_name_resolver.dart';
 
 import '../models/nodedex_entry.dart';
@@ -177,6 +182,23 @@ class _NodeDexDetailScreenState extends ConsumerState<NodeDexDetailScreen>
                 node: node,
               );
             },
+          ),
+          AppBarOverflowMenu<String>(
+            onSelected: (value) {
+              if (value == 'send_file') {
+                _sendFileToNode(context, entry.nodeNum);
+              }
+            },
+            itemBuilder: (context) => [
+              const PopupMenuItem(
+                value: 'send_file',
+                child: ListTile(
+                  leading: Icon(Icons.attach_file),
+                  title: Text('Send file'),
+                  contentPadding: EdgeInsets.zero,
+                ),
+              ),
+            ],
           ),
           IcoHelpAppBarButton(topicId: 'nodedex_detail'),
         ],
@@ -388,6 +410,15 @@ class _NodeDexDetailScreenState extends ConsumerState<NodeDexDetailScreen>
               ),
             ),
 
+          // File transfer history with this node
+          SliverToBoxAdapter(
+            child: _DetailEntrance(
+              index: 14,
+              reduceMotion: reduceMotion,
+              child: _NodeFileTransfersCard(nodeNum: widget.nodeNum),
+            ),
+          ),
+
           // Node activity timeline — unified chronological feed
           SliverPersistentHeader(
             pinned: true,
@@ -466,6 +497,21 @@ class _NodeDexDetailScreenState extends ConsumerState<NodeDexDetailScreen>
         },
       ),
     );
+  }
+
+  Future<void> _sendFileToNode(BuildContext ctx, int nodeNum) async {
+    final haptics = ref.read(hapticServiceProvider);
+    final notifier = ref.read(fileTransferStateProvider.notifier);
+
+    await haptics.trigger(HapticType.medium);
+    if (!ctx.mounted) return;
+
+    final transfer = await notifier.pickAndSendFile(targetNodeNum: nodeNum);
+
+    if (!ctx.mounted) return;
+    if (transfer != null) {
+      showSuccessSnackBar(ctx, 'File transfer started: ${transfer.filename}');
+    }
   }
 
   void _saveNote(NodeDexEntry entry) {
@@ -3317,6 +3363,80 @@ class _InfoRow extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// Shows file transfer history for a specific node.
+class _NodeFileTransfersCard extends ConsumerWidget {
+  const _NodeFileTransfersCard({required this.nodeNum});
+
+  final int nodeNum;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final transfers = ref.watch(nodeTransfersProvider(nodeNum));
+
+    if (transfers.isEmpty) return const SizedBox.shrink();
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppTheme.spacing16,
+        vertical: AppTheme.spacing8,
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          color: context.card,
+          borderRadius: BorderRadius.circular(AppTheme.radius16),
+          border: Border.all(color: context.border.withValues(alpha: 0.5)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(
+                AppTheme.spacing16,
+                AppTheme.spacing12,
+                AppTheme.spacing16,
+                AppTheme.spacing8,
+              ),
+              child: Row(
+                children: [
+                  Icon(Icons.swap_vert, size: 16, color: context.textSecondary),
+                  const SizedBox(width: AppTheme.spacing6),
+                  Text(
+                    'File Transfers',
+                    style: TextStyle(
+                      color: context.textSecondary,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const Spacer(),
+                  Text(
+                    '${transfers.length}',
+                    style: TextStyle(color: context.textTertiary, fontSize: 12),
+                  ),
+                ],
+              ),
+            ),
+            ...transfers
+                .take(5)
+                .map(
+                  (t) => Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      AppTheme.spacing12,
+                      0,
+                      AppTheme.spacing12,
+                      AppTheme.spacing8,
+                    ),
+                    child: FileTransferCard(transfer: t, compact: true),
+                  ),
+                ),
+            const SizedBox(height: AppTheme.spacing4),
+          ],
+        ),
       ),
     );
   }

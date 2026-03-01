@@ -2250,10 +2250,21 @@ final deviceLogStreamProvider = StreamProvider<mesh_pb.LogRecord>((ref) {
 
 // Location service - provides phone GPS to mesh devices
 // Like iOS Meshtastic app, sends phone GPS coordinates to mesh
-// when device doesn't have its own GPS hardware
+// when device doesn't have its own GPS hardware.
+// Gated by SettingsService.providePhoneLocation (default: false),
+// matching meshtastic-ios UserDefaults.provideLocation behaviour.
 final locationServiceProvider = Provider<LocationService>((ref) {
   final protocol = ref.watch(protocolServiceProvider);
-  final service = LocationService(protocol);
+  final service = LocationService(
+    protocol,
+    isLocationSharingEnabled: () {
+      // Read from cached settings synchronously. The callback is
+      // evaluated on every 30-second tick inside LocationService,
+      // mirroring the meshtastic-ios pattern where
+      // `UserDefaults.provideLocation` is checked inside the loop.
+      return _cachedSettingsService?.providePhoneLocation ?? false;
+    },
+  );
 
   ref.onDispose(() {
     service.dispose();
