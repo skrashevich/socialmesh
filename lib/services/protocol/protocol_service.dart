@@ -5686,7 +5686,14 @@ class ProtocolService {
     int gpsEnGpio = 0,
     AdminTarget? target,
   }) async {
-    AppLogging.protocol('Setting position config: gpsMode=$gpsMode');
+    AppLogging.protocol(
+      'Setting position config: gpsMode=$gpsMode, '
+      'broadcastSecs=$positionBroadcastSecs, '
+      'smartEnabled=$positionBroadcastSmartEnabled, '
+      'gpsUpdateInterval=$gpsUpdateInterval, '
+      'smartMinDistance=$broadcastSmartMinimumDistance, '
+      'smartMinInterval=$broadcastSmartMinimumIntervalSecs',
+    );
 
     final posConfig = config_pb.Config_PositionConfig()
       ..positionBroadcastSecs = positionBroadcastSecs

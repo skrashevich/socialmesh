@@ -28,6 +28,54 @@ class PositionConfigScreen extends ConsumerStatefulWidget {
       _PositionConfigScreenState();
 }
 
+/// Discrete position broadcast intervals matching the official Meshtastic iOS
+/// app (IntervalConfiguration.broadcastMedium). Minimum 1 hour to protect
+/// communities with MQTT bots that block nodes broadcasting below 10 minutes.
+const _kBroadcastIntervals = <int>[
+  3600, // 1h
+  7200, // 2h
+  10800, // 3h
+  14400, // 4h
+  18000, // 5h
+  21600, // 6h
+  43200, // 12h
+  64800, // 18h
+  86400, // 24h
+  129600, // 36h
+  172800, // 48h
+  259200, // 72h
+];
+
+/// Discrete GPS update intervals matching the official iOS app.
+const _kGpsUpdateIntervals = <int>[
+  0, // firmware default (30s)
+  30, // 30s
+  60, // 1m
+  120, // 2m
+  300, // 5m
+  600, // 10m
+  900, // 15m
+  1800, // 30m
+  3600, // 1h
+  21600, // 6h
+  43200, // 12h
+  86400, // 24h
+  2147483647, // on boot only
+];
+
+/// Smart broadcast minimum interval options matching the iOS app.
+const _kSmartMinIntervals = <int>[
+  15, // 15s
+  30, // 30s
+  45, // 45s
+  60, // 1m
+  300, // 5m
+  600, // 10m
+  900, // 15m
+  1800, // 30m
+  3600, // 1h
+];
+
 class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
     with LifecycleSafeMixin {
   bool _isLoading = false;
@@ -35,9 +83,9 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
   config_pbenum.Config_PositionConfig_GpsMode? _gpsMode;
   bool _smartBroadcastEnabled = true;
   bool _fixedPosition = false;
-  int _positionBroadcastSecs = 900;
-  int _gpsUpdateInterval = 30;
-  int _gpsAttemptTime = 30;
+  int _positionBroadcastSecs = 3600;
+  int _gpsUpdateInterval = 0;
+  int _gpsAttemptTime = 0;
   int _smartMinimumDistance = 100;
   int _smartMinimumIntervalSecs = 30;
 
@@ -190,19 +238,27 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
       _gpsMode = config.gpsMode;
       _smartBroadcastEnabled = config.positionBroadcastSmartEnabled;
       _fixedPosition = config.fixedPosition;
-      _positionBroadcastSecs = config.positionBroadcastSecs > 0
-          ? config.positionBroadcastSecs
-          : 900;
-      _gpsUpdateInterval = config.gpsUpdateInterval > 0
-          ? config.gpsUpdateInterval
-          : 30;
-      _gpsAttemptTime = config.gpsAttemptTime > 0 ? config.gpsAttemptTime : 30;
+
+      // Preserve 0 from the device — it means "firmware default".
+      // Snap to the nearest allowed discrete value for broadcast interval.
+      _positionBroadcastSecs = _snapToNearest(
+        config.positionBroadcastSecs > 0 ? config.positionBroadcastSecs : 3600,
+        _kBroadcastIntervals,
+      );
+      _gpsUpdateInterval = _snapToNearest(
+        config.gpsUpdateInterval,
+        _kGpsUpdateIntervals,
+      );
+      _gpsAttemptTime = config.gpsAttemptTime;
       _smartMinimumDistance = config.broadcastSmartMinimumDistance > 0
           ? config.broadcastSmartMinimumDistance
           : 100;
-      _smartMinimumIntervalSecs = config.broadcastSmartMinimumIntervalSecs > 0
-          ? config.broadcastSmartMinimumIntervalSecs
-          : 30;
+      _smartMinimumIntervalSecs = _snapToNearest(
+        config.broadcastSmartMinimumIntervalSecs > 0
+            ? config.broadcastSmartMinimumIntervalSecs
+            : 30,
+        _kSmartMinIntervals,
+      );
 
       // Parse position flags bitmask
       final flags = config.positionFlags;
@@ -238,6 +294,26 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
     if (_includeSpeed) flags |= 512;
     return flags;
   }
+
+  /// Snap [value] to the closest entry in [allowed]. If [allowed] is empty or
+  /// [value] is already in the list, returns [value] unchanged.
+  static int _snapToNearest(int value, List<int> allowed) {
+    if (allowed.isEmpty) return value;
+    if (allowed.contains(value)) return value;
+    int best = allowed.first;
+    int bestDist = (value - best).abs();
+    for (final v in allowed) {
+      final d = (value - v).abs();
+      if (d < bestDist) {
+        best = v;
+        bestDist = d;
+      }
+    }
+    return best;
+  }
+
+  bool get _isGpsEnabled =>
+      _gpsMode == config_pbenum.Config_PositionConfig_GpsMode.ENABLED;
 
   Future<void> _saveConfig() async {
     safeSetState(() => _isSaving = true);
@@ -369,132 +445,72 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              'Position Broadcast Interval',
-                              style: TextStyle(
-                                color: context.textPrimary,
-                                fontWeight: FontWeight.w500,
+                            Expanded(
+                              child: Text(
+                                'Position Broadcast Interval',
+                                style: TextStyle(
+                                  color: context.textPrimary,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 4,
-                              ),
-                              decoration: BoxDecoration(
-                                color: context.accentColor.withValues(
-                                  alpha: 0.15,
-                                ),
-                                borderRadius: BorderRadius.circular(
-                                  AppTheme.radius6,
-                                ),
-                              ),
-                              child: Text(
-                                _formatDuration(_positionBroadcastSecs),
-                                style: TextStyle(
-                                  color: context.accentColor,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 13,
-                                ),
-                              ),
+                            _IntervalChip(
+                              label: _formatDuration(_positionBroadcastSecs),
                             ),
                           ],
                         ),
                         SizedBox(height: AppTheme.spacing4),
                         Text(
-                          'How often to share position',
+                          'The maximum time between position broadcasts',
                           style: TextStyle(
                             color: context.textSecondary,
                             fontSize: 13,
                           ),
                         ),
                         SizedBox(height: AppTheme.spacing8),
-                        SliderTheme(
-                          data: SliderThemeData(
-                            inactiveTrackColor: context.border,
-                            thumbColor: context.accentColor,
-                            overlayColor: context.accentColor.withValues(
-                              alpha: 0.2,
-                            ),
-                            trackHeight: 4,
-                          ),
-                          child: Slider(
-                            value: _positionBroadcastSecs.toDouble(),
-                            min: 60,
-                            max: 86400,
-                            divisions: 20,
-                            onChanged: (value) {
-                              setState(
-                                () => _positionBroadcastSecs = value.toInt(),
-                              );
-                            },
-                          ),
+                        _DiscreteIntervalSelector(
+                          value: _positionBroadcastSecs,
+                          intervals: _kBroadcastIntervals,
+                          formatLabel: _formatDuration,
+                          onChanged: (v) =>
+                              setState(() => _positionBroadcastSecs = v),
                         ),
-                        Divider(height: 24, color: context.border),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'GPS Update Interval',
-                              style: TextStyle(
-                                color: context.textPrimary,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 4,
-                              ),
-                              decoration: BoxDecoration(
-                                color: context.accentColor.withValues(
-                                  alpha: 0.15,
-                                ),
-                                borderRadius: BorderRadius.circular(
-                                  AppTheme.radius6,
+                        if (_isGpsEnabled) ...[
+                          Divider(height: 24, color: context.border),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  'GPS Update Interval',
+                                  style: TextStyle(
+                                    color: context.textPrimary,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
-                              child: Text(
-                                '${_gpsUpdateInterval}s',
-                                style: TextStyle(
-                                  color: context.accentColor,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 13,
-                                ),
+                              _IntervalChip(
+                                label: _formatGpsInterval(_gpsUpdateInterval),
                               ),
+                            ],
+                          ),
+                          SizedBox(height: AppTheme.spacing4),
+                          Text(
+                            'How often the device GPS checks for position',
+                            style: TextStyle(
+                              color: context.textSecondary,
+                              fontSize: 13,
                             ),
-                          ],
-                        ),
-                        SizedBox(height: AppTheme.spacing4),
-                        Text(
-                          'How often GPS checks for position',
-                          style: TextStyle(
-                            color: context.textSecondary,
-                            fontSize: 13,
                           ),
-                        ),
-                        SizedBox(height: AppTheme.spacing8),
-                        SliderTheme(
-                          data: SliderThemeData(
-                            inactiveTrackColor: context.border,
-                            thumbColor: context.accentColor,
-                            overlayColor: context.accentColor.withValues(
-                              alpha: 0.2,
-                            ),
-                            trackHeight: 4,
+                          SizedBox(height: AppTheme.spacing8),
+                          _DiscreteIntervalSelector(
+                            value: _gpsUpdateInterval,
+                            intervals: _kGpsUpdateIntervals,
+                            formatLabel: _formatGpsInterval,
+                            onChanged: (v) =>
+                                setState(() => _gpsUpdateInterval = v),
                           ),
-                          child: Slider(
-                            value: _gpsUpdateInterval.toDouble(),
-                            min: 5,
-                            max: 120,
-                            divisions: 23,
-                            onChanged: (value) {
-                              setState(
-                                () => _gpsUpdateInterval = value.toInt(),
-                              );
-                            },
-                          ),
-                        ),
+                        ],
                       ],
                     ),
                   ),
@@ -841,156 +857,51 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                'Minimum Interval',
-                                style: TextStyle(
-                                  color: context.textPrimary,
-                                  fontWeight: FontWeight.w500,
+                              Expanded(
+                                child: Text(
+                                  'Minimum Interval',
+                                  style: TextStyle(
+                                    color: context.textPrimary,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 10,
-                                  vertical: 4,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: context.accentColor.withValues(
-                                    alpha: 0.15,
-                                  ),
-                                  borderRadius: BorderRadius.circular(
-                                    AppTheme.radius6,
-                                  ),
-                                ),
-                                child: Text(
-                                  '${_smartMinimumIntervalSecs}s',
-                                  style: TextStyle(
-                                    color: context.accentColor,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 13,
-                                  ),
+                              _IntervalChip(
+                                label: _formatDuration(
+                                  _smartMinimumIntervalSecs,
                                 ),
                               ),
                             ],
                           ),
                           SizedBox(height: AppTheme.spacing4),
                           Text(
-                            'Minimum time between broadcasts',
+                            'The fastest position updates will be sent if '
+                            'the minimum distance has been satisfied',
                             style: TextStyle(
                               color: context.textSecondary,
                               fontSize: 13,
                             ),
                           ),
                           SizedBox(height: AppTheme.spacing8),
-                          SliderTheme(
-                            data: SliderThemeData(
-                              inactiveTrackColor: context.border,
-                              thumbColor: context.accentColor,
-                              overlayColor: context.accentColor.withValues(
-                                alpha: 0.2,
-                              ),
-                              trackHeight: 4,
-                            ),
-                            child: Slider(
-                              value: _smartMinimumIntervalSecs.toDouble(),
-                              min: 10,
-                              max: 300,
-                              divisions: 29,
-                              onChanged: (value) {
-                                setState(
-                                  () =>
-                                      _smartMinimumIntervalSecs = value.toInt(),
-                                );
-                              },
-                            ),
+                          _DiscreteIntervalSelector(
+                            value: _smartMinimumIntervalSecs,
+                            intervals: _kSmartMinIntervals,
+                            formatLabel: _formatDuration,
+                            onChanged: (v) =>
+                                setState(() => _smartMinimumIntervalSecs = v),
                           ),
                         ],
                       ),
                     ),
                     SizedBox(height: AppTheme.spacing16),
                   ],
-                  const _SectionHeader(title: 'GPS SETTINGS'),
-                  Container(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 2,
-                    ),
-                    padding: const EdgeInsets.all(AppTheme.spacing16),
-                    decoration: BoxDecoration(
-                      color: context.card,
-                      borderRadius: BorderRadius.circular(AppTheme.radius12),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'GPS Attempt Time',
-                              style: TextStyle(
-                                color: context.textPrimary,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 4,
-                              ),
-                              decoration: BoxDecoration(
-                                color: context.accentColor.withValues(
-                                  alpha: 0.15,
-                                ),
-                                borderRadius: BorderRadius.circular(
-                                  AppTheme.radius6,
-                                ),
-                              ),
-                              child: Text(
-                                '${_gpsAttemptTime}s',
-                                style: TextStyle(
-                                  color: context.accentColor,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 13,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: AppTheme.spacing4),
-                        Text(
-                          'How long to wait for GPS lock before giving up',
-                          style: TextStyle(
-                            color: context.textSecondary,
-                            fontSize: 13,
-                          ),
-                        ),
-                        SizedBox(height: AppTheme.spacing8),
-                        SliderTheme(
-                          data: SliderThemeData(
-                            inactiveTrackColor: context.border,
-                            thumbColor: context.accentColor,
-                            overlayColor: context.accentColor.withValues(
-                              alpha: 0.2,
-                            ),
-                            trackHeight: 4,
-                          ),
-                          child: Slider(
-                            value: _gpsAttemptTime.toDouble(),
-                            min: 10,
-                            max: 300,
-                            divisions: 29,
-                            onChanged: (value) {
-                              setState(() => _gpsAttemptTime = value.toInt());
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: AppTheme.spacing16),
-                  const _SectionHeader(title: 'GPS GPIO'),
-                  _buildGpioSettings(),
-                  SizedBox(height: AppTheme.spacing16),
+                  // GPS Settings and GPIO only shown when GPS is enabled
+                  // (matches official Meshtastic iOS behaviour)
+                  if (_isGpsEnabled) ...[
+                    const _SectionHeader(title: 'GPS GPIO'),
+                    _buildGpioSettings(),
+                    SizedBox(height: AppTheme.spacing16),
+                  ],
                   const _SectionHeader(title: 'POSITION FLAGS'),
                   Container(
                     margin: const EdgeInsets.symmetric(
@@ -1364,10 +1275,17 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
   }
 
   String _formatDuration(int seconds) {
+    if (seconds >= 2147483647) return 'Never';
     if (seconds < 60) return '${seconds}s';
     if (seconds < 3600) return '${seconds ~/ 60}m';
     if (seconds < 86400) return '${seconds ~/ 3600}h';
     return '${seconds ~/ 86400}d';
+  }
+
+  String _formatGpsInterval(int seconds) {
+    if (seconds == 0) return 'Default';
+    if (seconds >= 2147483647) return 'On Boot Only';
+    return _formatDuration(seconds);
   }
 }
 
@@ -1446,6 +1364,88 @@ class _SettingsTile extends StatelessWidget {
             ),
             if (trailing != null) trailing!,
           ],
+        ),
+      ),
+    );
+  }
+}
+
+/// A horizontally-scrolling row of tappable interval chips that replaces the
+/// continuous sliders. Each chip shows a formatted label. The selected chip is
+/// highlighted with the accent colour.
+class _DiscreteIntervalSelector extends StatelessWidget {
+  final int value;
+  final List<int> intervals;
+  final String Function(int) formatLabel;
+  final ValueChanged<int> onChanged;
+
+  const _DiscreteIntervalSelector({
+    required this.value,
+    required this.intervals,
+    required this.formatLabel,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: intervals.map((v) {
+          final selected = v == value;
+          return Padding(
+            padding: const EdgeInsets.only(right: 6),
+            child: ChoiceChip(
+              label: Text(
+                formatLabel(v),
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
+                  color: selected ? Colors.white : context.textPrimary,
+                ),
+              ),
+              selected: selected,
+              showCheckmark: false,
+              selectedColor: context.accentColor,
+              backgroundColor: context.background,
+              side: BorderSide(
+                color: selected ? context.accentColor : context.border,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(AppTheme.radius8),
+              ),
+              onSelected: (_) {
+                HapticFeedback.selectionClick();
+                onChanged(v);
+              },
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+}
+
+/// Small accent-coloured badge showing the currently selected interval value.
+class _IntervalChip extends StatelessWidget {
+  final String label;
+
+  const _IntervalChip({required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      decoration: BoxDecoration(
+        color: context.accentColor.withValues(alpha: 0.15),
+        borderRadius: BorderRadius.circular(AppTheme.radius6),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          color: context.accentColor,
+          fontWeight: FontWeight.w600,
+          fontSize: 13,
         ),
       ),
     );
