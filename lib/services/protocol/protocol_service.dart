@@ -5677,8 +5677,8 @@ class ProtocolService {
     required bool fixedPosition,
     required config_pb.Config_PositionConfig_GpsMode gpsMode,
     required int gpsUpdateInterval,
-    int gpsAttemptTime = 30,
-    int broadcastSmartMinimumDistance = 100,
+    int gpsAttemptTime = 0,
+    int broadcastSmartMinimumDistance = 50,
     int broadcastSmartMinimumIntervalSecs = 30,
     int positionFlags = 811,
     int rxGpio = 0,
@@ -5702,7 +5702,6 @@ class ProtocolService {
       ..gpsMode = gpsMode
       ..gpsEnabled = gpsMode == config_pb.Config_PositionConfig_GpsMode.ENABLED
       ..gpsUpdateInterval = gpsUpdateInterval
-      ..gpsAttemptTime = gpsAttemptTime
       ..broadcastSmartMinimumDistance = broadcastSmartMinimumDistance
       ..broadcastSmartMinimumIntervalSecs = broadcastSmartMinimumIntervalSecs
       ..positionFlags = positionFlags

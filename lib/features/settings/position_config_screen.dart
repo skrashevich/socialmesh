@@ -44,6 +44,7 @@ const _kBroadcastIntervals = <int>[
   129600, // 36h
   172800, // 48h
   259200, // 72h
+  2147483647, // never
 ];
 
 /// Discrete GPS update intervals matching the official iOS app.
@@ -85,8 +86,7 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
   bool _fixedPosition = false;
   int _positionBroadcastSecs = 3600;
   int _gpsUpdateInterval = 0;
-  int _gpsAttemptTime = 0;
-  int _smartMinimumDistance = 100;
+  int _smartMinimumDistance = 50;
   int _smartMinimumIntervalSecs = 30;
 
   // Position flags (bitmask)
@@ -249,10 +249,9 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
         config.gpsUpdateInterval,
         _kGpsUpdateIntervals,
       );
-      _gpsAttemptTime = config.gpsAttemptTime;
       _smartMinimumDistance = config.broadcastSmartMinimumDistance > 0
           ? config.broadcastSmartMinimumDistance
-          : 100;
+          : 50;
       _smartMinimumIntervalSecs = _snapToNearest(
         config.broadcastSmartMinimumIntervalSecs > 0
             ? config.broadcastSmartMinimumIntervalSecs
@@ -349,7 +348,6 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
         gpsMode:
             _gpsMode ?? config_pbenum.Config_PositionConfig_GpsMode.ENABLED,
         gpsUpdateInterval: _gpsUpdateInterval,
-        gpsAttemptTime: _gpsAttemptTime,
         broadcastSmartMinimumDistance: _smartMinimumDistance,
         broadcastSmartMinimumIntervalSecs: _smartMinimumIntervalSecs,
         positionFlags: _buildPositionFlags(),
@@ -515,8 +513,10 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                     ),
                   ),
                   SizedBox(height: AppTheme.spacing16),
-                  // Fixed position is local-only (uses localAdmin routing)
-                  if (!isRemote) ...[
+                  // Fixed position: shown when GPS is NOT enabled or
+                  // already toggled on (matches official iOS behaviour).
+                  // Local-only (uses localAdmin routing).
+                  if (!isRemote && (!_isGpsEnabled || _fixedPosition)) ...[
                     const _SectionHeader(title: 'FIXED POSITION'),
                     _SettingsTile(
                       icon: Icons.pin_drop,
@@ -842,13 +842,22 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                               trackHeight: 4,
                             ),
                             child: Slider(
-                              value: _smartMinimumDistance.toDouble(),
+                              value: _smartMinimumDistance.toDouble().clamp(
+                                10,
+                                150,
+                              ),
                               min: 10,
-                              max: 500,
-                              divisions: 49,
+                              max: 150,
+                              divisions: 28,
                               onChanged: (value) {
+                                // Round to nearest multiple of 5
+                                // (iOS uses multiples of 5)
+                                final rounded = (value / 5).round() * 5;
                                 setState(
-                                  () => _smartMinimumDistance = value.toInt(),
+                                  () => _smartMinimumDistance = rounded.clamp(
+                                    10,
+                                    150,
+                                  ),
                                 );
                               },
                             ),
@@ -903,6 +912,21 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                     SizedBox(height: AppTheme.spacing16),
                   ],
                   const _SectionHeader(title: 'POSITION FLAGS'),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 4,
+                    ),
+                    child: Text(
+                      'Optional fields to include in position messages. '
+                      'More fields means larger packets, longer airtime, '
+                      'and higher risk of packet loss.',
+                      style: TextStyle(
+                        color: context.textSecondary,
+                        fontSize: 13,
+                      ),
+                    ),
+                  ),
                   Container(
                     margin: const EdgeInsets.symmetric(
                       horizontal: 16,
@@ -915,35 +939,13 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                     ),
                     child: Column(
                       children: [
+                        // Position Flags section: conditional visibility
+                        // matches the official iOS app structure.
                         _buildFlagToggle(
                           'Include Altitude',
                           'Include altitude in position reports',
                           _includeAltitude,
                           (v) => setState(() => _includeAltitude = v),
-                        ),
-                        _buildFlagToggle(
-                          'Include Altitude MSL',
-                          'Include altitude above mean sea level',
-                          _includeAltitudeMsl,
-                          (v) => setState(() => _includeAltitudeMsl = v),
-                        ),
-                        _buildFlagToggle(
-                          'Include Geoidal Separation',
-                          'Include geoidal separation value',
-                          _includeGeoidalSeparation,
-                          (v) => setState(() => _includeGeoidalSeparation = v),
-                        ),
-                        _buildFlagToggle(
-                          'Include DOP',
-                          'Include dilution of precision',
-                          _includeDop,
-                          (v) => setState(() => _includeDop = v),
-                        ),
-                        _buildFlagToggle(
-                          'Include HVDOP',
-                          'Include horizontal/vertical DOP',
-                          _includeHvdop,
-                          (v) => setState(() => _includeHvdop = v),
                         ),
                         _buildFlagToggle(
                           'Include Sats in View',
@@ -974,8 +976,42 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                           'Include ground speed',
                           _includeSpeed,
                           (v) => setState(() => _includeSpeed = v),
-                          isLast: true,
+                          isLast: !_includeAltitude && !_includeDop,
                         ),
+                        // Advanced flags: conditional on parent flags
+                        // (iOS: MSL/Geoidal only when Altitude on)
+                        if (_includeAltitude) ...[
+                          _buildFlagToggle(
+                            'Altitude is Mean Sea Level',
+                            'Report altitude as MSL instead of HAE',
+                            _includeAltitudeMsl,
+                            (v) => setState(() => _includeAltitudeMsl = v),
+                          ),
+                          _buildFlagToggle(
+                            'Include Geoidal Separation',
+                            'Include geoidal separation value',
+                            _includeGeoidalSeparation,
+                            (v) =>
+                                setState(() => _includeGeoidalSeparation = v),
+                            isLast: !_includeDop,
+                          ),
+                        ],
+                        // iOS: HVDOP only when DOP is on
+                        _buildFlagToggle(
+                          'Include DOP',
+                          'Include dilution of precision (PDOP)',
+                          _includeDop,
+                          (v) => setState(() => _includeDop = v),
+                          isLast: !_includeDop,
+                        ),
+                        if (_includeDop)
+                          _buildFlagToggle(
+                            'Use HDOP / VDOP',
+                            'Send separate HDOP/VDOP instead of PDOP',
+                            _includeHvdop,
+                            (v) => setState(() => _includeHvdop = v),
+                            isLast: true,
+                          ),
                       ],
                     ),
                   ),

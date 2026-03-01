@@ -94,12 +94,12 @@ class PositionConfig {
   final int smartMinimumIntervalSecs;
 
   PositionConfig({
-    this.positionBroadcastSecs = 900,
+    this.positionBroadcastSecs = 3600,
     this.smartBroadcastEnabled = true,
     this.fixedPosition = false,
     this.gpsMode = GpsMode.enabled,
-    this.gpsUpdateInterval = 30,
-    this.smartMinimumDistance = 100,
+    this.gpsUpdateInterval = 0,
+    this.smartMinimumDistance = 50,
     this.smartMinimumIntervalSecs = 30,
   });
 
