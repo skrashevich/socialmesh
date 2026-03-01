@@ -89,6 +89,12 @@ abstract final class SmRateLimit {
   /// Maximum retries per chunk.
   static const int maxChunkRetries = 3;
 
+  /// Maximum retries for the initial offer send.
+  static const int maxOfferRetries = 3;
+
+  /// Delay between offer send retries.
+  static const Duration offerRetryDelay = Duration(seconds: 3);
+
   /// Maximum NACK retransmission rounds.
   static const int maxNackRounds = 3;
 }

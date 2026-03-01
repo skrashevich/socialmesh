@@ -372,16 +372,37 @@ class FileTransferEngine {
       '${transfer.chunkCount} chunks)',
     );
 
-    final sent = await _sendPacket(
-      encoded,
-      SmPortnum.fileTransfer,
-      destinationNode: transfer.targetNodeNum,
-      hopLimit: SmTransport.fileTransferHopLimit,
-    );
+    // Retry offer send up to maxOfferRetries times.
+    // The protocol layer returns false for both rate-limited and
+    // not-connected states, so transient failures are expected
+    // during connection setup.
+    var sent = false;
+    for (var attempt = 1; attempt <= SmRateLimit.maxOfferRetries; attempt++) {
+      sent = await _sendPacket(
+        encoded,
+        SmPortnum.fileTransfer,
+        destinationNode: transfer.targetNodeNum,
+        hopLimit: SmTransport.fileTransferHopLimit,
+      );
+      if (sent) break;
+
+      AppLogging.fileTransfer(
+        'startTransfer: $fileIdHex offer attempt $attempt/'
+        '${SmRateLimit.maxOfferRetries} failed, '
+        '${attempt < SmRateLimit.maxOfferRetries ? "retrying..." : "giving up"}',
+      );
+
+      if (attempt < SmRateLimit.maxOfferRetries) {
+        await Future<void>.delayed(SmRateLimit.offerRetryDelay);
+        // Check transfer still active after delay
+        if (_transfers[fileIdHex]?.isActive != true) return;
+      }
+    }
 
     if (!sent) {
       AppLogging.fileTransfer(
-        'startTransfer: $fileIdHex offer send failed (rate-limited)',
+        'startTransfer: $fileIdHex offer send failed after '
+        '${SmRateLimit.maxOfferRetries} attempts',
       );
       _failTransfer(fileIdHex, TransferFailReason.rateLimited);
       return;

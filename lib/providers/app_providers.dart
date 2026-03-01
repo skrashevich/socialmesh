@@ -10,6 +10,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../config/admin_config.dart';
 
+import '../core/constants.dart';
 import '../core/logging.dart';
 import '../core/safety/error_handler.dart';
 import '../core/transport.dart';
@@ -47,6 +48,7 @@ import 'social_providers.dart';
 import 'telemetry_providers.dart';
 import 'connection_providers.dart';
 import 'age_eligibility_provider.dart';
+import 'file_transfer_providers.dart';
 
 // App initialization state - purely about app lifecycle, NOT device connection
 // Device connection is handled separately by DeviceConnectionNotifier in connection_providers.dart
@@ -197,6 +199,20 @@ class AppInitNotifier extends Notifier<AppInitState> {
       // Eagerly activate the org claims provider so cached claims are
       // available immediately for enterprise query layers.
       ref.read(claimsProvider);
+
+      // Eagerly activate the file transfer engine so the
+      // onSmFileTransferPacket callback is wired before any
+      // incoming offers arrive (lazy init would drop them).
+      if (AppFeatureFlags.isFileTransferEnabled) {
+        try {
+          ref.read(fileTransferEngineProvider);
+          AppLogging.fileTransfer(
+            'Engine eagerly initialised during background init',
+          );
+        } catch (e) {
+          AppLogging.fileTransfer('Eager engine init failed: $e');
+        }
+      }
 
       // Eagerly activate Cloud Sync services so they start on login,
       // not only when the user navigates to specific screens.
