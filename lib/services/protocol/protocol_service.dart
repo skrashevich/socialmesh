@@ -5677,7 +5677,6 @@ class ProtocolService {
     required bool fixedPosition,
     required config_pb.Config_PositionConfig_GpsMode gpsMode,
     required int gpsUpdateInterval,
-    int gpsAttemptTime = 0,
     int broadcastSmartMinimumDistance = 50,
     int broadcastSmartMinimumIntervalSecs = 30,
     int positionFlags = 811,
