@@ -383,6 +383,15 @@ class ProtocolService {
   bool _configurationComplete = false;
   final MeshPacketDedupeStore _dedupeStore;
 
+  // --- Position rate limiter ---
+  // Prevents any caller from spamming POSITION_APP packets regardless of
+  // how they reach sendPosition() / sendPositionToNode(). This is the
+  // authoritative last-mile enforcement point for position airtime.
+  DateTime? _lastPositionBroadcastAt;
+  DateTime? _lastPositionDirectAt;
+  static const Duration _positionBroadcastMinInterval = Duration(seconds: 20);
+  static const Duration _positionDirectMinInterval = Duration(seconds: 10);
+
   void Function({
     required int nodeNum,
     String? longName,
@@ -4178,13 +4187,29 @@ class ProtocolService {
     return _transport.requiresFraming ? PacketFramer.frame(bytes) : bytes;
   }
 
-  /// Send position
+  /// Send position (broadcast to all nodes).
+  ///
+  /// Rate-limited to one broadcast every [_positionBroadcastMinInterval]
+  /// (20 s). Returns silently if the cooldown has not elapsed. This is the
+  /// authoritative last-mile gate — no caller can bypass it.
   Future<void> sendPosition({
     required double latitude,
     required double longitude,
     int? altitude,
   }) async {
     try {
+      // Rate-limit: enforce minimum interval between broadcast positions.
+      if (_lastPositionBroadcastAt != null) {
+        final elapsed = DateTime.now().difference(_lastPositionBroadcastAt!);
+        if (elapsed < _positionBroadcastMinInterval) {
+          AppLogging.protocol(
+            'POSITION_APP broadcast rate-limited '
+            '(${elapsed.inSeconds}s < ${_positionBroadcastMinInterval.inSeconds}s)',
+          );
+          return;
+        }
+      }
+
       AppLogging.protocol('Sending position: $latitude, $longitude');
 
       final position = pb.Position()
@@ -4211,6 +4236,7 @@ class ProtocolService {
       final bytes = toRadio.writeToBuffer();
 
       await _transport.send(_prepareForSend(bytes));
+      _lastPositionBroadcastAt = DateTime.now();
 
       // Also update our own node's position locally immediately
       // This ensures the map shows our position right away without waiting for echo
@@ -4236,7 +4262,10 @@ class ProtocolService {
     }
   }
 
-  /// Send position to a specific node (direct message, not broadcast)
+  /// Send position to a specific node (direct message, not broadcast).
+  ///
+  /// Rate-limited to one directed send every [_positionDirectMinInterval]
+  /// (10 s). Returns silently if the cooldown has not elapsed.
   Future<void> sendPositionToNode({
     required int nodeNum,
     required double latitude,
@@ -4244,6 +4273,18 @@ class ProtocolService {
     int? altitude,
   }) async {
     try {
+      // Rate-limit: enforce minimum interval between directed position sends.
+      if (_lastPositionDirectAt != null) {
+        final elapsed = DateTime.now().difference(_lastPositionDirectAt!);
+        if (elapsed < _positionDirectMinInterval) {
+          AppLogging.protocol(
+            'POSITION_APP direct rate-limited '
+            '(${elapsed.inSeconds}s < ${_positionDirectMinInterval.inSeconds}s)',
+          );
+          return;
+        }
+      }
+
       AppLogging.protocol(
         'Sending position to node $nodeNum: $latitude, $longitude',
       );
@@ -4273,6 +4314,7 @@ class ProtocolService {
       final bytes = toRadio.writeToBuffer();
 
       await _transport.send(_prepareForSend(bytes));
+      _lastPositionDirectAt = DateTime.now();
     } catch (e) {
       AppLogging.protocol('Error sending position to node: $e');
       rethrow;

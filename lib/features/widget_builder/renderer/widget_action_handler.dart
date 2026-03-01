@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../models/widget_schema.dart';
+import '../../../core/logging.dart';
 import '../../../core/widgets/app_bottom_sheet.dart';
 import '../../../core/widgets/action_sheets.dart';
 import '../../../core/widgets/node_selector_sheet.dart';
@@ -72,6 +73,23 @@ class WidgetActionHandler {
 
   Future<void> _handleShareLocation() async {
     if (!context.mounted) return;
+
+    // Gate: respect the providePhoneLocation opt-in setting.
+    // Without this check, widget actions would bypass the LocationService
+    // gate and emit POSITION_APP packets even when the user has not opted in.
+    final settings = ref.read(settingsServiceProvider).value;
+    if (settings != null && !settings.providePhoneLocation) {
+      AppLogging.protocol(
+        'Widget shareLocation blocked — providePhoneLocation is disabled',
+      );
+      if (context.mounted) {
+        showErrorSnackBar(
+          context,
+          'Enable "Provide phone location" in Settings to share your position',
+        );
+      }
+      return;
+    }
 
     // Show node selector to choose who to share location with
     final selection = await NodeSelectorSheet.show(

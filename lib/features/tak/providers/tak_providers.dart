@@ -301,7 +301,7 @@ final takPositionPublisherProvider = Provider<TakPositionPublisher?>((ref) {
     getLat: getLat,
     getLon: getLon,
     getNodeName: getNodeName,
-    config: const TakPublishConfig(enabled: true, intervalSeconds: 60),
+    config: const TakPublishConfig(intervalSeconds: 60),
   );
 
   AppLogging.tak('takPositionPublisherProvider: created');

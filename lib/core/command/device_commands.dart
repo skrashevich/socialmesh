@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/logging.dart';
 import '../../providers/app_providers.dart';
 import '../../providers/connection_providers.dart';
 import '../../models/mesh_models.dart';
@@ -150,6 +151,17 @@ class SharePositionCommand extends DeviceCommand<void> {
 
   @override
   Future<void> execute(Ref ref) async {
+    // Gate: respect the same providePhoneLocation opt-in as LocationService.
+    // Without this, SharePositionCommand would bypass the LocationService
+    // gate and emit POSITION_APP packets even when the user has not opted in.
+    final settings = ref.read(settingsServiceProvider).value;
+    if (settings != null && !settings.providePhoneLocation) {
+      AppLogging.protocol(
+        'SharePositionCommand blocked — providePhoneLocation is disabled',
+      );
+      return;
+    }
+
     final protocol = ref.read(protocolServiceProvider);
     await protocol.sendPosition(
       latitude: latitude,

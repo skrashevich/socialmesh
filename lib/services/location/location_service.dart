@@ -130,6 +130,18 @@ class LocationService {
   Future<void> startLocationUpdates() async {
     if (_isRunning) return;
 
+    // Early exit: don't request GPS permissions or start the timer when
+    // the user has not opted in. This avoids waking the GPS radio and
+    // draining battery for ticks that would be no-ops anyway.
+    // Resume/reconnect paths call this unconditionally, so the guard
+    // must live here as well as inside _sendCurrentPosition().
+    if (!(isLocationSharingEnabled?.call() ?? false)) {
+      AppLogging.nodes(
+        'Skipping location updates — providePhoneLocation is disabled',
+      );
+      return;
+    }
+
     final hasPermission = await checkPermissions();
     if (!hasPermission) {
       AppLogging.nodes('Cannot start location updates - no permission');

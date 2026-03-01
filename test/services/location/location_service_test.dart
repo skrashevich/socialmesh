@@ -72,8 +72,9 @@ class _SpyProtocolService extends ProtocolService {
   }
 }
 
-/// LocationService subclass that overrides `getCurrentPosition` to avoid
-/// hitting the real Geolocator (needs platform channels / real GPS).
+/// LocationService subclass that overrides `getCurrentPosition` and
+/// `checkPermissions` to avoid hitting the real Geolocator (needs
+/// platform channels / real GPS).
 class _TestableLocationService extends LocationService {
   Position? fakePosition;
 
@@ -85,6 +86,60 @@ class _TestableLocationService extends LocationService {
 
   @override
   Future<Position?> getCurrentPosition() async => fakePosition;
+
+  @override
+  Future<bool> checkPermissions() async => true;
+}
+
+/// Transport that records raw send calls so we can count how many
+/// POSITION_APP packets actually reached the transport layer.
+class _RecordingTransport extends DeviceTransport {
+  final List<List<int>> sentBytes = [];
+
+  @override
+  TransportType get type => TransportType.ble;
+
+  @override
+  bool get requiresFraming => false;
+
+  @override
+  bool get isConnected => true;
+
+  @override
+  DeviceConnectionState get state => DeviceConnectionState.connected;
+
+  @override
+  Stream<DeviceConnectionState> get stateStream => const Stream.empty();
+
+  @override
+  Stream<List<int>> get dataStream => const Stream.empty();
+
+  @override
+  Stream<DeviceInfo> scan({Duration? timeout, bool scanAll = false}) =>
+      const Stream.empty();
+
+  @override
+  Future<void> connect(DeviceInfo device) async {}
+
+  @override
+  Future<void> disconnect() async {}
+
+  @override
+  Future<void> enableNotifications() async {}
+
+  @override
+  Future<void> pollOnce() async {}
+
+  @override
+  Future<void> send(List<int> data) async {
+    sentBytes.add(data);
+  }
+
+  @override
+  Future<int?> readRssi() async => null;
+
+  @override
+  Future<void> dispose() async {}
 }
 
 // ---------------------------------------------------------------------------
@@ -306,6 +361,150 @@ void main() {
       // platform channels we can't use in unit tests)
       service.stopLocationUpdates();
       expect(service.isRunning, isFalse);
+    });
+  });
+
+  // -----------------------------------------------------------------------
+  // startLocationUpdates early-exit guard
+  // -----------------------------------------------------------------------
+
+  group('LocationService startLocationUpdates guard', () {
+    late _SpyProtocolService protocol;
+
+    setUp(() {
+      protocol = _SpyProtocolService();
+    });
+
+    test(
+      'startLocationUpdates does not start when isLocationSharingEnabled is null',
+      () async {
+        final service = _TestableLocationService(
+          protocol,
+          fakePosition: _fakePosition(),
+          // isLocationSharingEnabled deliberately omitted (null → false)
+        );
+
+        await service.startLocationUpdates();
+
+        expect(
+          service.isRunning,
+          isFalse,
+          reason: 'Timer must not start when sharing callback is null',
+        );
+        expect(protocol.sentPositions, isEmpty);
+      },
+    );
+
+    test(
+      'startLocationUpdates does not start when isLocationSharingEnabled returns false',
+      () async {
+        final service = _TestableLocationService(
+          protocol,
+          isLocationSharingEnabled: () => false,
+          fakePosition: _fakePosition(),
+        );
+
+        await service.startLocationUpdates();
+
+        expect(
+          service.isRunning,
+          isFalse,
+          reason: 'Timer must not start when sharing is disabled',
+        );
+        expect(protocol.sentPositions, isEmpty);
+      },
+    );
+
+    test(
+      'startLocationUpdates starts and sends when isLocationSharingEnabled returns true',
+      () async {
+        final service = _TestableLocationService(
+          protocol,
+          isLocationSharingEnabled: () => true,
+          fakePosition: _fakePosition(latitude: 38.7223, longitude: -9.1393),
+        );
+
+        await service.startLocationUpdates();
+
+        expect(
+          service.isRunning,
+          isTrue,
+          reason: 'Timer must start when sharing is enabled',
+        );
+        // The initial position should have been sent immediately.
+        expect(protocol.sentPositions, hasLength(1));
+        expect(protocol.sentPositions.first.lat, 38.7223);
+
+        service.dispose();
+      },
+    );
+  });
+
+  // -----------------------------------------------------------------------
+  // ProtocolService POSITION_APP rate limiter
+  // -----------------------------------------------------------------------
+
+  group('ProtocolService position rate limiter', () {
+    test('first sendPosition broadcast always succeeds', () async {
+      final transport = _RecordingTransport();
+      final ps = ProtocolService(transport);
+
+      await ps.sendPosition(latitude: 39.5, longitude: -8.9);
+      expect(transport.sentBytes, hasLength(1));
+    });
+
+    test('rapid successive broadcast is rate-limited', () async {
+      final transport = _RecordingTransport();
+      final ps = ProtocolService(transport);
+
+      await ps.sendPosition(latitude: 39.5, longitude: -8.9);
+      // Immediately send again — should be blocked.
+      await ps.sendPosition(latitude: 39.6, longitude: -8.8);
+
+      expect(
+        transport.sentBytes,
+        hasLength(1),
+        reason: 'Second broadcast within 20 s must be rate-limited',
+      );
+    });
+
+    test('first sendPositionToNode always succeeds', () async {
+      final transport = _RecordingTransport();
+      final ps = ProtocolService(transport);
+
+      await ps.sendPositionToNode(nodeNum: 42, latitude: 39.5, longitude: -8.9);
+      expect(transport.sentBytes, hasLength(1));
+    });
+
+    test('rapid successive direct send is rate-limited', () async {
+      final transport = _RecordingTransport();
+      final ps = ProtocolService(transport);
+
+      await ps.sendPositionToNode(nodeNum: 42, latitude: 39.5, longitude: -8.9);
+      // Immediately send again — should be blocked.
+      await ps.sendPositionToNode(nodeNum: 42, latitude: 39.6, longitude: -8.8);
+
+      expect(
+        transport.sentBytes,
+        hasLength(1),
+        reason: 'Second direct send within 10 s must be rate-limited',
+      );
+    });
+
+    test('broadcast and direct use independent rate limits', () async {
+      final transport = _RecordingTransport();
+      final ps = ProtocolService(transport);
+
+      // Broadcast then direct — both should succeed because they track
+      // separate timestamps.
+      await ps.sendPosition(latitude: 39.5, longitude: -8.9);
+      await ps.sendPositionToNode(nodeNum: 42, latitude: 39.5, longitude: -8.9);
+
+      expect(
+        transport.sentBytes,
+        hasLength(2),
+        reason: 'Broadcast and direct have independent cooldowns',
+      );
     });
   });
 }
