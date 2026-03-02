@@ -26,419 +26,441 @@ class _QrStylePreviewScreenState extends ConsumerState<QrStylePreviewScreen> {
   Widget build(BuildContext context) {
     const sampleData = 'socialmesh://widget/id:SAMPLE_PREVIEW_DATA';
 
-    return GlassScaffold.body(
+    return GlassScaffold(
       title: 'QR Code Styles',
-      body: ListView(
-        padding: const EdgeInsets.all(AppTheme.spacing16),
-        children: [
-          // Description
-          Container(
+      // Use hasScrollBody: true because the child is a ListView.
+      // hasScrollBody: false would force intrinsic dimension computation
+      // which ListView cannot provide, causing a null check crash in
+      // RenderViewportBase.layoutChildSequence.
+      slivers: [
+        SliverFillRemaining(
+          hasScrollBody: true,
+          child: ListView(
             padding: const EdgeInsets.all(AppTheme.spacing16),
-            decoration: BoxDecoration(
-              color: context.card,
-              borderRadius: BorderRadius.circular(AppTheme.radius12),
-              border: Border.all(color: context.border),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+            children: [
+              // Description
+              Container(
+                padding: const EdgeInsets.all(AppTheme.spacing16),
+                decoration: BoxDecoration(
+                  color: context.card,
+                  borderRadius: BorderRadius.circular(AppTheme.radius12),
+                  border: Border.all(color: context.border),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(Icons.qr_code_2, color: context.accentColor, size: 20),
-                    const SizedBox(width: AppTheme.spacing8),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.qr_code_2,
+                          color: context.accentColor,
+                          size: 20,
+                        ),
+                        const SizedBox(width: AppTheme.spacing8),
+                        Text(
+                          'Branded QR Code Styles',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: context.textPrimary,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: AppTheme.spacing8),
                     Text(
-                      'Branded QR Code Styles',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: context.textPrimary,
+                      'Preview different QR code styles with the Socialmesh '
+                      'logo. All styles use Level H error correction for '
+                      'reliable scanning.',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: context.textSecondary,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: AppTheme.spacing8),
-                Text(
-                  'Preview different QR code styles with the Socialmesh '
-                  'logo. All styles use Level H error correction for '
-                  'reliable scanning.',
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodySmall?.copyWith(color: context.textSecondary),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: AppTheme.spacing24),
+              ),
+              const SizedBox(height: AppTheme.spacing24),
 
-          // Style cards
-          _StyleCard(
-            style: QrStyle.smooth,
-            title: 'Smooth',
-            description: 'Modern, rounded liquid-like modules. Premium feel.',
-            sampleData: sampleData,
-            isSelected: _selectedStyle == QrStyle.smooth,
-            onTap: () => _selectStyle(QrStyle.smooth),
-          ),
-          const SizedBox(height: AppTheme.spacing16),
+              // Style cards
+              _StyleCard(
+                style: QrStyle.smooth,
+                title: 'Smooth',
+                description:
+                    'Modern, rounded liquid-like modules. Premium feel.',
+                sampleData: sampleData,
+                isSelected: _selectedStyle == QrStyle.smooth,
+                onTap: () => _selectStyle(QrStyle.smooth),
+              ),
+              const SizedBox(height: AppTheme.spacing16),
 
-          _StyleCard(
-            style: QrStyle.dots,
-            title: 'Dots',
-            description: 'Circular dot modules. Clean and minimal look.',
-            sampleData: sampleData,
-            isSelected: _selectedStyle == QrStyle.dots,
-            onTap: () => _selectStyle(QrStyle.dots),
-          ),
-          const SizedBox(height: AppTheme.spacing16),
+              _StyleCard(
+                style: QrStyle.dots,
+                title: 'Dots',
+                description: 'Circular dot modules. Clean and minimal look.',
+                sampleData: sampleData,
+                isSelected: _selectedStyle == QrStyle.dots,
+                onTap: () => _selectStyle(QrStyle.dots),
+              ),
+              const SizedBox(height: AppTheme.spacing16),
 
-          _StyleCard(
-            style: QrStyle.squares,
-            title: 'Squares',
-            description: 'Classic blocky QR style. Maximum compatibility.',
-            sampleData: sampleData,
-            isSelected: _selectedStyle == QrStyle.squares,
-            onTap: () => _selectStyle(QrStyle.squares),
-          ),
-          const SizedBox(height: AppTheme.spacing32),
+              _StyleCard(
+                style: QrStyle.squares,
+                title: 'Squares',
+                description: 'Classic blocky QR style. Maximum compatibility.',
+                sampleData: sampleData,
+                isSelected: _selectedStyle == QrStyle.squares,
+                onTap: () => _selectStyle(QrStyle.squares),
+              ),
+              const SizedBox(height: AppTheme.spacing32),
 
-          // Elevated Styles Header
-          Row(
-            children: [
-              Icon(Icons.auto_awesome, color: context.accentColor, size: 18),
-              const SizedBox(width: AppTheme.spacing8),
+              // Elevated Styles Header
+              Row(
+                children: [
+                  Icon(
+                    Icons.auto_awesome,
+                    color: context.accentColor,
+                    size: 18,
+                  ),
+                  const SizedBox(width: AppTheme.spacing8),
+                  Text(
+                    'ELEVATED STYLES',
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w700,
+                      color: context.accentColor,
+                      letterSpacing: 2,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: AppTheme.spacing6),
               Text(
-                'ELEVATED STYLES',
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w700,
-                  color: context.accentColor,
-                  letterSpacing: 2,
+                'Premium color treatments using ${_selectedStyle.name} pattern',
+                style: Theme.of(
+                  context,
+                ).textTheme.labelSmall?.copyWith(color: context.textSecondary),
+              ),
+              const SizedBox(height: AppTheme.spacing16),
+
+              // Elevated styles horizontal scroll
+              SizedBox(
+                height: 280,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  clipBehavior: Clip.none,
+                  children: [
+                    // 1. Neon Glow
+                    _ElevatedStyleCard(
+                      title: 'Neon Glow',
+                      icon: Icons.lightbulb,
+                      sampleData: sampleData,
+                      style: _selectedStyle,
+                      qrForeground: context.accentColor,
+                      qrBackground: const Color(0xFF0D0D0D),
+                      containerDecoration: BoxDecoration(
+                        color: const Color(0xFF0D0D0D),
+                        borderRadius: BorderRadius.circular(AppTheme.radius16),
+                        border: Border.all(
+                          color: context.accentColor.withValues(alpha: 0.6),
+                          width: 2,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: context.accentColor.withValues(alpha: 0.5),
+                            blurRadius: 25,
+                            spreadRadius: -2,
+                          ),
+                          BoxShadow(
+                            color: context.accentColor.withValues(alpha: 0.3),
+                            blurRadius: 50,
+                            spreadRadius: 0,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: AppTheme.spacing16),
+
+                    // 2. Frosted Glass
+                    _ElevatedStyleCard(
+                      title: 'Frosted Glass',
+                      icon: Icons.blur_on,
+                      sampleData: sampleData,
+                      style: _selectedStyle,
+                      qrForeground: context.textPrimary.withValues(alpha: 0.85),
+                      qrBackground: Colors.white.withValues(alpha: 0.15),
+                      containerDecoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Colors.white.withValues(alpha: 0.25),
+                            Colors.white.withValues(alpha: 0.08),
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(AppTheme.radius16),
+                        border: Border.all(
+                          color: Colors.white.withValues(alpha: 0.3),
+                          width: 1.5,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: AppTheme.spacing16),
+
+                    // 3. Inverted Dark
+                    _ElevatedStyleCard(
+                      title: 'Inverted',
+                      icon: Icons.invert_colors,
+                      sampleData: sampleData,
+                      style: _selectedStyle,
+                      qrForeground: Colors.white,
+                      qrBackground: const Color(0xFF1A1A1A),
+                      containerDecoration: BoxDecoration(
+                        color: const Color(0xFF1A1A1A),
+                        borderRadius: BorderRadius.circular(AppTheme.radius16),
+                        border: Border.all(
+                          color: Colors.white.withValues(alpha: 0.2),
+                          width: 1,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: AppTheme.spacing16),
+
+                    // 4. Holographic
+                    _ElevatedStyleCard(
+                      title: 'Holographic',
+                      icon: Icons.gradient,
+                      sampleData: sampleData,
+                      style: _selectedStyle,
+                      qrForeground: const Color(0xFF6366F1),
+                      qrBackground: Colors.white,
+                      useGradientQr: true,
+                      containerDecoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Color(0xFFEC4899),
+                            Color(0xFF8B5CF6),
+                            Color(0xFF3B82F6),
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(AppTheme.radius16),
+                      ),
+                    ),
+                    const SizedBox(width: AppTheme.spacing16),
+
+                    // 5. Accent Branded
+                    _ElevatedStyleCard(
+                      title: 'Accent Branded',
+                      icon: Icons.palette,
+                      sampleData: sampleData,
+                      style: _selectedStyle,
+                      qrForeground: context.accentColor,
+                      qrBackground: context.accentColor.withValues(alpha: 0.08),
+                      containerDecoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            context.accentColor.withValues(alpha: 0.2),
+                            context.accentColor.withValues(alpha: 0.05),
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(AppTheme.radius16),
+                        border: Border.all(
+                          color: context.accentColor.withValues(alpha: 0.4),
+                          width: 1.5,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: context.accentColor.withValues(alpha: 0.2),
+                            blurRadius: 20,
+                            spreadRadius: -4,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: AppTheme.spacing16),
+
+                    // 6. Minimal Outline
+                    _ElevatedStyleCard(
+                      title: 'Minimal',
+                      icon: Icons.crop_square,
+                      sampleData: sampleData,
+                      style: _selectedStyle,
+                      qrForeground: context.textPrimary,
+                      qrBackground: Colors.transparent,
+                      containerDecoration: BoxDecoration(
+                        color: context.surface,
+                        borderRadius: BorderRadius.circular(AppTheme.radius16),
+                        border: Border.all(color: context.border, width: 1),
+                      ),
+                    ),
+                    const SizedBox(width: AppTheme.spacing16),
+
+                    // 7. Cyberpunk
+                    _ElevatedStyleCard(
+                      title: 'Cyberpunk',
+                      icon: Icons.electric_bolt,
+                      sampleData: sampleData,
+                      style: _selectedStyle,
+                      qrForeground: const Color(0xFF00FF88),
+                      qrBackground: const Color(0xFF0A0A0A),
+                      containerDecoration: BoxDecoration(
+                        color: const Color(0xFF0A0A0A),
+                        borderRadius: BorderRadius.circular(AppTheme.radius16),
+                        border: Border.all(
+                          color: const Color(0xFF00FF88).withValues(alpha: 0.7),
+                          width: 2,
+                        ),
+                        boxShadow: [
+                          const BoxShadow(
+                            color: Color(0x6600FF88),
+                            blurRadius: 20,
+                            spreadRadius: -4,
+                          ),
+                          BoxShadow(
+                            color: const Color(
+                              0xFFFF0080,
+                            ).withValues(alpha: 0.3),
+                            blurRadius: 30,
+                            offset: const Offset(10, 10),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: AppTheme.spacing16),
+
+                    // 8. Accent Gradient (Sunset-style using accent colors)
+                    _AccentGradientStyleCard(
+                      title: 'Accent Glow',
+                      icon: Icons.wb_twilight,
+                      sampleData: sampleData,
+                      style: _selectedStyle,
+                    ),
+                    const SizedBox(width: AppTheme.spacing16),
+
+                    // 9. Ocean Deep
+                    _ElevatedStyleCard(
+                      title: 'Ocean',
+                      icon: Icons.water,
+                      sampleData: sampleData,
+                      style: _selectedStyle,
+                      qrForeground: const Color(0xFF0891B2),
+                      qrBackground: Colors.white,
+                      containerDecoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Color(0xFF06B6D4),
+                            Color(0xFF0284C7),
+                            Color(0xFF1E40AF),
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(AppTheme.radius16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(
+                              0xFF0284C7,
+                            ).withValues(alpha: 0.4),
+                            blurRadius: 20,
+                            spreadRadius: -4,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: AppTheme.spacing16),
+
+                    // 10. Monochrome Luxury
+                    _ElevatedStyleCard(
+                      title: 'Luxury',
+                      icon: Icons.diamond,
+                      sampleData: sampleData,
+                      style: _selectedStyle,
+                      qrForeground: const Color(0xFF1F1F1F),
+                      qrBackground: const Color(0xFFF5F5F5),
+                      containerDecoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Color(0xFFE5E5E5),
+                            Color(0xFFB8B8B8),
+                            Color(0xFF9CA3AF),
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(AppTheme.radius16),
+                        border: Border.all(
+                          color: Colors.white.withValues(alpha: 0.5),
+                          width: 1.5,
+                        ),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0x40000000),
+                            blurRadius: 15,
+                            spreadRadius: -4,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
+              const SizedBox(height: AppTheme.spacing24),
+
+              // Large preview of selected style
+              Container(
+                padding: const EdgeInsets.all(AppTheme.spacing24),
+                decoration: BoxDecoration(
+                  color: context.card,
+                  borderRadius: BorderRadius.circular(AppTheme.radius16),
+                  border: Border.all(
+                    color: context.accentColor.withValues(alpha: 0.3),
+                    width: 2,
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      'Selected: ${_selectedStyle.name.toUpperCase()}',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: context.accentColor,
+                        letterSpacing: 1,
+                      ),
+                    ),
+                    const SizedBox(height: AppTheme.spacing16),
+                    Container(
+                      padding: const EdgeInsets.all(AppTheme.spacing16),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(AppTheme.radius12),
+                      ),
+                      child: BrandedQrCode(
+                        data: sampleData,
+                        size: 220,
+                        style: _selectedStyle,
+                      ),
+                    ),
+                    const SizedBox(height: AppTheme.spacing16),
+                    Text(
+                      'Scan to verify',
+                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                        color: context.textTertiary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // Bottom padding
+              SizedBox(height: MediaQuery.of(context).padding.bottom + 16),
             ],
           ),
-          const SizedBox(height: AppTheme.spacing6),
-          Text(
-            'Premium color treatments using ${_selectedStyle.name} pattern',
-            style: Theme.of(
-              context,
-            ).textTheme.labelSmall?.copyWith(color: context.textSecondary),
-          ),
-          const SizedBox(height: AppTheme.spacing16),
-
-          // Elevated styles horizontal scroll
-          SizedBox(
-            height: 280,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              clipBehavior: Clip.none,
-              children: [
-                // 1. Neon Glow
-                _ElevatedStyleCard(
-                  title: 'Neon Glow',
-                  icon: Icons.lightbulb,
-                  sampleData: sampleData,
-                  style: _selectedStyle,
-                  qrForeground: context.accentColor,
-                  qrBackground: const Color(0xFF0D0D0D),
-                  containerDecoration: BoxDecoration(
-                    color: const Color(0xFF0D0D0D),
-                    borderRadius: BorderRadius.circular(AppTheme.radius16),
-                    border: Border.all(
-                      color: context.accentColor.withValues(alpha: 0.6),
-                      width: 2,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: context.accentColor.withValues(alpha: 0.5),
-                        blurRadius: 25,
-                        spreadRadius: -2,
-                      ),
-                      BoxShadow(
-                        color: context.accentColor.withValues(alpha: 0.3),
-                        blurRadius: 50,
-                        spreadRadius: 0,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: AppTheme.spacing16),
-
-                // 2. Frosted Glass
-                _ElevatedStyleCard(
-                  title: 'Frosted Glass',
-                  icon: Icons.blur_on,
-                  sampleData: sampleData,
-                  style: _selectedStyle,
-                  qrForeground: context.textPrimary.withValues(alpha: 0.85),
-                  qrBackground: Colors.white.withValues(alpha: 0.15),
-                  containerDecoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Colors.white.withValues(alpha: 0.25),
-                        Colors.white.withValues(alpha: 0.08),
-                      ],
-                    ),
-                    borderRadius: BorderRadius.circular(AppTheme.radius16),
-                    border: Border.all(
-                      color: Colors.white.withValues(alpha: 0.3),
-                      width: 1.5,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: AppTheme.spacing16),
-
-                // 3. Inverted Dark
-                _ElevatedStyleCard(
-                  title: 'Inverted',
-                  icon: Icons.invert_colors,
-                  sampleData: sampleData,
-                  style: _selectedStyle,
-                  qrForeground: Colors.white,
-                  qrBackground: const Color(0xFF1A1A1A),
-                  containerDecoration: BoxDecoration(
-                    color: const Color(0xFF1A1A1A),
-                    borderRadius: BorderRadius.circular(AppTheme.radius16),
-                    border: Border.all(
-                      color: Colors.white.withValues(alpha: 0.2),
-                      width: 1,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: AppTheme.spacing16),
-
-                // 4. Holographic
-                _ElevatedStyleCard(
-                  title: 'Holographic',
-                  icon: Icons.gradient,
-                  sampleData: sampleData,
-                  style: _selectedStyle,
-                  qrForeground: const Color(0xFF6366F1),
-                  qrBackground: Colors.white,
-                  useGradientQr: true,
-                  containerDecoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Color(0xFFEC4899),
-                        Color(0xFF8B5CF6),
-                        Color(0xFF3B82F6),
-                      ],
-                    ),
-                    borderRadius: BorderRadius.circular(AppTheme.radius16),
-                  ),
-                ),
-                const SizedBox(width: AppTheme.spacing16),
-
-                // 5. Accent Branded
-                _ElevatedStyleCard(
-                  title: 'Accent Branded',
-                  icon: Icons.palette,
-                  sampleData: sampleData,
-                  style: _selectedStyle,
-                  qrForeground: context.accentColor,
-                  qrBackground: context.accentColor.withValues(alpha: 0.08),
-                  containerDecoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        context.accentColor.withValues(alpha: 0.2),
-                        context.accentColor.withValues(alpha: 0.05),
-                      ],
-                    ),
-                    borderRadius: BorderRadius.circular(AppTheme.radius16),
-                    border: Border.all(
-                      color: context.accentColor.withValues(alpha: 0.4),
-                      width: 1.5,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: context.accentColor.withValues(alpha: 0.2),
-                        blurRadius: 20,
-                        spreadRadius: -4,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: AppTheme.spacing16),
-
-                // 6. Minimal Outline
-                _ElevatedStyleCard(
-                  title: 'Minimal',
-                  icon: Icons.crop_square,
-                  sampleData: sampleData,
-                  style: _selectedStyle,
-                  qrForeground: context.textPrimary,
-                  qrBackground: Colors.transparent,
-                  containerDecoration: BoxDecoration(
-                    color: context.surface,
-                    borderRadius: BorderRadius.circular(AppTheme.radius16),
-                    border: Border.all(color: context.border, width: 1),
-                  ),
-                ),
-                const SizedBox(width: AppTheme.spacing16),
-
-                // 7. Cyberpunk
-                _ElevatedStyleCard(
-                  title: 'Cyberpunk',
-                  icon: Icons.electric_bolt,
-                  sampleData: sampleData,
-                  style: _selectedStyle,
-                  qrForeground: const Color(0xFF00FF88),
-                  qrBackground: const Color(0xFF0A0A0A),
-                  containerDecoration: BoxDecoration(
-                    color: const Color(0xFF0A0A0A),
-                    borderRadius: BorderRadius.circular(AppTheme.radius16),
-                    border: Border.all(
-                      color: const Color(0xFF00FF88).withValues(alpha: 0.7),
-                      width: 2,
-                    ),
-                    boxShadow: [
-                      const BoxShadow(
-                        color: Color(0x6600FF88),
-                        blurRadius: 20,
-                        spreadRadius: -4,
-                      ),
-                      BoxShadow(
-                        color: const Color(0xFFFF0080).withValues(alpha: 0.3),
-                        blurRadius: 30,
-                        offset: const Offset(10, 10),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: AppTheme.spacing16),
-
-                // 8. Accent Gradient (Sunset-style using accent colors)
-                _AccentGradientStyleCard(
-                  title: 'Accent Glow',
-                  icon: Icons.wb_twilight,
-                  sampleData: sampleData,
-                  style: _selectedStyle,
-                ),
-                const SizedBox(width: AppTheme.spacing16),
-
-                // 9. Ocean Deep
-                _ElevatedStyleCard(
-                  title: 'Ocean',
-                  icon: Icons.water,
-                  sampleData: sampleData,
-                  style: _selectedStyle,
-                  qrForeground: const Color(0xFF0891B2),
-                  qrBackground: Colors.white,
-                  containerDecoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Color(0xFF06B6D4),
-                        Color(0xFF0284C7),
-                        Color(0xFF1E40AF),
-                      ],
-                    ),
-                    borderRadius: BorderRadius.circular(AppTheme.radius16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xFF0284C7).withValues(alpha: 0.4),
-                        blurRadius: 20,
-                        spreadRadius: -4,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: AppTheme.spacing16),
-
-                // 10. Monochrome Luxury
-                _ElevatedStyleCard(
-                  title: 'Luxury',
-                  icon: Icons.diamond,
-                  sampleData: sampleData,
-                  style: _selectedStyle,
-                  qrForeground: const Color(0xFF1F1F1F),
-                  qrBackground: const Color(0xFFF5F5F5),
-                  containerDecoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Color(0xFFE5E5E5),
-                        Color(0xFFB8B8B8),
-                        Color(0xFF9CA3AF),
-                      ],
-                    ),
-                    borderRadius: BorderRadius.circular(AppTheme.radius16),
-                    border: Border.all(
-                      color: Colors.white.withValues(alpha: 0.5),
-                      width: 1.5,
-                    ),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Color(0x40000000),
-                        blurRadius: 15,
-                        spreadRadius: -4,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: AppTheme.spacing24),
-
-          // Large preview of selected style
-          Container(
-            padding: const EdgeInsets.all(AppTheme.spacing24),
-            decoration: BoxDecoration(
-              color: context.card,
-              borderRadius: BorderRadius.circular(AppTheme.radius16),
-              border: Border.all(
-                color: context.accentColor.withValues(alpha: 0.3),
-                width: 2,
-              ),
-            ),
-            child: Column(
-              children: [
-                Text(
-                  'Selected: ${_selectedStyle.name.toUpperCase()}',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: context.accentColor,
-                    letterSpacing: 1,
-                  ),
-                ),
-                const SizedBox(height: AppTheme.spacing16),
-                Container(
-                  padding: const EdgeInsets.all(AppTheme.spacing16),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(AppTheme.radius12),
-                  ),
-                  child: BrandedQrCode(
-                    data: sampleData,
-                    size: 220,
-                    style: _selectedStyle,
-                  ),
-                ),
-                const SizedBox(height: AppTheme.spacing16),
-                Text(
-                  'Scan to verify',
-                  style: Theme.of(
-                    context,
-                  ).textTheme.labelSmall?.copyWith(color: context.textTertiary),
-                ),
-              ],
-            ),
-          ),
-
-          // Bottom padding
-          SizedBox(height: MediaQuery.of(context).padding.bottom + 16),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

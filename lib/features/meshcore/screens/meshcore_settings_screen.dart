@@ -68,31 +68,40 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
 
     return GestureDetector(
       onTap: _dismissKeyboard,
-      child: GlassScaffold.body(
+      child: GlassScaffold(
         leading: const MeshCoreHamburgerMenuButton(),
         title: 'Settings',
         actions: [const MeshCoreDeviceStatusButton()],
-        body: ListView(
-          padding: const EdgeInsets.all(AppTheme.spacing16),
-          children: [
-            _buildDeviceInfoCard(
-              context,
-              isConnected: isConnected,
-              selfInfo: selfInfo,
-              batteryState: batteryState,
-              contactCount: contactsState.contacts.length,
-              channelCount: channelsState.channels.length,
+        // Use hasScrollBody: true because the child is a ListView.
+        // hasScrollBody: false would force intrinsic dimension computation
+        // which ListView cannot provide, causing a null check crash in
+        // RenderViewportBase.layoutChildSequence.
+        slivers: [
+          SliverFillRemaining(
+            hasScrollBody: true,
+            child: ListView(
+              padding: const EdgeInsets.all(AppTheme.spacing16),
+              children: [
+                _buildDeviceInfoCard(
+                  context,
+                  isConnected: isConnected,
+                  selfInfo: selfInfo,
+                  batteryState: batteryState,
+                  contactCount: contactsState.contacts.length,
+                  channelCount: channelsState.channels.length,
+                ),
+                const SizedBox(height: AppTheme.spacing16),
+                _buildNodeSettingsCard(context, selfInfo),
+                const SizedBox(height: AppTheme.spacing16),
+                _buildActionsCard(context, isConnected),
+                const SizedBox(height: AppTheme.spacing16),
+                _buildDebugCard(context),
+                const SizedBox(height: AppTheme.spacing16),
+                _buildAboutCard(context),
+              ],
             ),
-            const SizedBox(height: AppTheme.spacing16),
-            _buildNodeSettingsCard(context, selfInfo),
-            const SizedBox(height: AppTheme.spacing16),
-            _buildActionsCard(context, isConnected),
-            const SizedBox(height: AppTheme.spacing16),
-            _buildDebugCard(context),
-            const SizedBox(height: AppTheme.spacing16),
-            _buildAboutCard(context),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
