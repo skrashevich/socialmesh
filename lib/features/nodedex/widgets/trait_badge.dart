@@ -14,6 +14,7 @@
 
 import 'package:flutter/material.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../models/nodedex_entry.dart';
 import '../services/trait_engine.dart';
@@ -122,7 +123,7 @@ class TraitBadge extends StatelessWidget {
       badge = GestureDetector(onTap: onTap, child: badge);
     }
 
-    return Tooltip(message: trait.displayLabel, child: badge);
+    return Tooltip(message: trait.displayLabel(context.l10n), child: badge);
   }
 
   Widget _buildCompact(BuildContext context) {
@@ -141,7 +142,7 @@ class TraitBadge extends StatelessWidget {
           Icon(_traitIcon, size: 12, color: color),
           const SizedBox(width: AppTheme.spacing4),
           Text(
-            trait.displayLabel,
+            trait.displayLabel(context.l10n),
             style: TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w600,
@@ -177,7 +178,7 @@ class TraitBadge extends StatelessWidget {
           Icon(_traitIcon, size: 14, color: color),
           const SizedBox(width: AppTheme.spacing6),
           Text(
-            trait.displayLabel,
+            trait.displayLabel(context.l10n),
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w600,
@@ -236,7 +237,7 @@ class TraitBadge extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      trait.displayLabel,
+                      trait.displayLabel(context.l10n),
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w700,
@@ -245,7 +246,7 @@ class TraitBadge extends StatelessWidget {
                     ),
                     const SizedBox(height: AppTheme.spacing2),
                     Text(
-                      trait.description,
+                      trait.description(context.l10n),
                       style: TextStyle(
                         fontSize: 12,
                         color: context.textSecondary,
@@ -305,7 +306,7 @@ class TraitIcon extends StatelessWidget {
     };
 
     return Tooltip(
-      message: trait.displayLabel,
+      message: trait.displayLabel(context.l10n),
       child: Icon(icon, size: size, color: trait.color),
     );
   }
@@ -566,7 +567,7 @@ class SocialTagBadge extends StatelessWidget {
           Icon(_tagIcon, size: compact ? 11 : 13, color: color),
           SizedBox(width: compact ? 3 : 5),
           Text(
-            tag.displayLabel,
+            tag.displayLabel(context.l10n),
             style: TextStyle(
               fontSize: compact ? 10 : 12,
               fontWeight: FontWeight.w600,
@@ -709,7 +710,7 @@ class _SocialTagOption extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        tag.displayLabel,
+                        tag.displayLabel(context.l10n),
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,

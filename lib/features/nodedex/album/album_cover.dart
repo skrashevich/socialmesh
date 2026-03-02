@@ -35,6 +35,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../models/nodedex_entry.dart';
 import '../widgets/sigil_card.dart';
@@ -345,7 +346,7 @@ class _ExplorerTitleSection extends StatelessWidget {
 
         // Title
         Text(
-          title.displayLabel.toUpperCase(),
+          title.displayLabel(context.l10n).toUpperCase(),
           style: TextStyle(
             fontSize: AlbumConstants.coverTitleSize,
             fontWeight: FontWeight.w800,
@@ -358,7 +359,7 @@ class _ExplorerTitleSection extends StatelessWidget {
 
         // Subtitle
         Text(
-          title.description,
+          title.description(context.l10n),
           style: TextStyle(
             fontSize: AlbumConstants.coverSubtitleSize,
             color: context.textSecondary,
@@ -815,7 +816,7 @@ class _TraitCompletionRow extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 4),
               child: Tooltip(
                 message:
-                    '${trait.displayLabel}${discovered ? ' ($count)' : ''}',
+                    '${trait.displayLabel(context.l10n)}${discovered ? ' ($count)' : ''}',
                 child: Column(
                   children: [
                     Container(
@@ -844,18 +845,23 @@ class _TraitCompletionRow extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: AppTheme.spacing3),
-                    Text(
-                      trait.displayLabel
-                          .substring(0, math.min(3, trait.displayLabel.length))
-                          .toUpperCase(),
-                      style: TextStyle(
-                        fontSize: 6,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 0.3,
-                        color: discovered
-                            ? trait.color.withValues(alpha: 0.7)
-                            : context.textTertiary.withValues(alpha: 0.3),
-                      ),
+                    Builder(
+                      builder: (context) {
+                        final label = trait.displayLabel(context.l10n);
+                        return Text(
+                          label
+                              .substring(0, math.min(3, label.length))
+                              .toUpperCase(),
+                          style: TextStyle(
+                            fontSize: 6,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 0.3,
+                            color: discovered
+                                ? trait.color.withValues(alpha: 0.7)
+                                : context.textTertiary.withValues(alpha: 0.3),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),

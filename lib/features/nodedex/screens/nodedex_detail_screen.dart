@@ -28,6 +28,7 @@ import '../../../providers/accessibility_providers.dart';
 import '../../../core/constants.dart';
 import '../../../core/help/help_content.dart';
 import '../../../core/logging.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/app_bottom_sheet.dart';
@@ -591,7 +592,7 @@ class _ScoredTraitsList extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      scored.trait.displayLabel,
+                      scored.trait.displayLabel(context.l10n),
                       style: TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.w600,
@@ -640,7 +641,7 @@ class _ScoredTraitsList extends StatelessWidget {
                               const SizedBox(width: AppTheme.spacing6),
                               Expanded(
                                 child: Text(
-                                  '${s.trait.displayLabel}: ${e.observation}',
+                                  '${s.trait.displayLabel(context.l10n)}: ${e.observation}',
                                   style: TextStyle(
                                     fontSize: 10,
                                     color: context.textTertiary,

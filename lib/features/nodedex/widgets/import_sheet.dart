@@ -28,6 +28,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/app_bottom_sheet.dart';
@@ -808,9 +809,14 @@ class _ConflictEntryRow extends StatelessWidget {
             _FieldConflictRow(
               label: 'Classification',
               localValue:
-                  entry.socialTagConflict!.localValue?.displayLabel ?? 'None',
+                  entry.socialTagConflict!.localValue?.displayLabel(
+                    context.l10n,
+                  ) ??
+                  'None',
               importedValue:
-                  entry.socialTagConflict!.importedValue?.displayLabel ??
+                  entry.socialTagConflict!.importedValue?.displayLabel(
+                    context.l10n,
+                  ) ??
                   'None',
               useImport: _resolvedTagChoice,
               canResolve: strategy == MergeStrategy.reviewConflicts,

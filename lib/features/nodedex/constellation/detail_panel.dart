@@ -14,6 +14,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../providers/app_providers.dart';
 import '../../nodes/node_display_name_resolver.dart';
@@ -313,7 +314,7 @@ class _SelectedContent extends ConsumerWidget {
                   ),
                   const SizedBox(width: AppTheme.spacing4),
                   Text(
-                    trait.primary.displayLabel,
+                    trait.primary.displayLabel(context.l10n),
                     style: TextStyle(fontSize: 11, color: tertiaryText),
                   ),
                   const SizedBox(width: AppTheme.spacing8),

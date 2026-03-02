@@ -281,6 +281,8 @@ final collectionProgressProvider = Provider<CollectionProgress>((ref) {
 /// sticky-header sections in the album grid view.
 class AlbumPage {
   /// Display title for the page header (e.g. "Relay Nodes").
+  /// For trait-grouped pages, prefer resolving the title via [nodeTrait]
+  /// at the widget layer so it participates in l10n.
   final String title;
 
   /// Icon for the page header.
@@ -292,11 +294,16 @@ class AlbumPage {
   /// The grouping key (trait name, rarity name, or region label).
   final String groupKey;
 
+  /// When this page groups by trait, holds the corresponding [NodeTrait]
+  /// so the widget layer can resolve a localized display label.
+  final NodeTrait? nodeTrait;
+
   const AlbumPage({
     required this.title,
     required this.iconKey,
     required this.entries,
     required this.groupKey,
+    this.nodeTrait,
   });
 
   /// Number of filled slots in this page.
@@ -354,10 +361,11 @@ List<AlbumPage> _groupByTrait(Ref ref, List<NodeDexEntry> all) {
     if (list != null && list.isNotEmpty) {
       pages.add(
         AlbumPage(
-          title: '${trait.displayLabel} Nodes',
+          title: trait.name,
           iconKey: trait.name,
           entries: list,
           groupKey: trait.name,
+          nodeTrait: trait,
         ),
       );
     }

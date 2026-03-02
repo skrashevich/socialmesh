@@ -19,6 +19,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../models/nodedex_entry.dart';
 import '../services/sigil_generator.dart';
@@ -548,7 +549,7 @@ class _TraitBanner extends StatelessWidget {
 
           // Trait name
           Text(
-            trait.displayLabel.toUpperCase(),
+            trait.displayLabel(context.l10n).toUpperCase(),
             style: TextStyle(
               fontSize: 12 * scale,
               fontWeight: FontWeight.w800,

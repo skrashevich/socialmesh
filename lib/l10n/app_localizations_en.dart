@@ -178,4 +178,132 @@ class AppLocalizationsEn extends AppLocalizations {
   String navigationFlightCompleted(String flightNumber, String route) {
     return '$flightNumber ($route) flight completed';
   }
+
+  @override
+  String get nodedexTagContact => 'Contact';
+
+  @override
+  String get nodedexTagTrustedNode => 'Trusted Node';
+
+  @override
+  String get nodedexTagKnownRelay => 'Known Relay';
+
+  @override
+  String get nodedexTagFrequentPeer => 'Frequent Peer';
+
+  @override
+  String get nodedexTraitWanderer => 'Wanderer';
+
+  @override
+  String get nodedexTraitBeacon => 'Beacon';
+
+  @override
+  String get nodedexTraitGhost => 'Ghost';
+
+  @override
+  String get nodedexTraitSentinel => 'Sentinel';
+
+  @override
+  String get nodedexTraitRelay => 'Relay';
+
+  @override
+  String get nodedexTraitCourier => 'Courier';
+
+  @override
+  String get nodedexTraitAnchor => 'Anchor';
+
+  @override
+  String get nodedexTraitDrifter => 'Drifter';
+
+  @override
+  String get nodedexTraitUnknown => 'Newcomer';
+
+  @override
+  String get nodedexTraitWandererDescription =>
+      'Seen across multiple locations';
+
+  @override
+  String get nodedexTraitBeaconDescription =>
+      'Always active, high availability';
+
+  @override
+  String get nodedexTraitGhostDescription => 'Rarely seen, elusive presence';
+
+  @override
+  String get nodedexTraitSentinelDescription =>
+      'Fixed position, long-lived guardian';
+
+  @override
+  String get nodedexTraitRelayDescription =>
+      'High throughput, forwards traffic';
+
+  @override
+  String get nodedexTraitCourierDescription =>
+      'Carries messages across the mesh';
+
+  @override
+  String get nodedexTraitAnchorDescription =>
+      'Persistent hub with many connections';
+
+  @override
+  String get nodedexTraitDrifterDescription =>
+      'Irregular timing, fades in and out';
+
+  @override
+  String get nodedexTraitUnknownDescription => 'Recently discovered';
+
+  @override
+  String get explorerTitleNewcomer => 'Newcomer';
+
+  @override
+  String get explorerTitleObserver => 'Observer';
+
+  @override
+  String get explorerTitleExplorer => 'Explorer';
+
+  @override
+  String get explorerTitleCartographer => 'Cartographer';
+
+  @override
+  String get explorerTitleSignalHunter => 'Signal Hunter';
+
+  @override
+  String get explorerTitleMeshVeteran => 'Mesh Veteran';
+
+  @override
+  String get explorerTitleMeshCartographer => 'Mesh Cartographer';
+
+  @override
+  String get explorerTitleLongRangeRecordHolder => 'Long-Range Record Holder';
+
+  @override
+  String get explorerTitleNewcomerDescription => 'Beginning the mesh journey';
+
+  @override
+  String get explorerTitleObserverDescription =>
+      'Building awareness of the mesh';
+
+  @override
+  String get explorerTitleExplorerDescription =>
+      'Actively discovering the network';
+
+  @override
+  String get explorerTitleCartographerDescription =>
+      'Mapping the invisible infrastructure';
+
+  @override
+  String get explorerTitleSignalHunterDescription =>
+      'Seeking signals across the spectrum';
+
+  @override
+  String get explorerTitleMeshVeteranDescription =>
+      'Deep knowledge of the mesh';
+
+  @override
+  String get explorerTitleMeshCartographerDescription =>
+      'Charting regions and routes';
+
+  @override
+  String get explorerTitleLongRangeRecordHolderDescription =>
+      'Pushing the limits of range';
 }

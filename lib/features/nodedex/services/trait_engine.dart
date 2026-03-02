@@ -68,7 +68,7 @@ class ScoredTrait {
 
   @override
   String toString() =>
-      'ScoredTrait(${trait.displayLabel} @ '
+      'ScoredTrait(${trait.name} @ '
       '${(confidence * 100).toStringAsFixed(0)}%, '
       '${evidence.length} evidence)';
 }

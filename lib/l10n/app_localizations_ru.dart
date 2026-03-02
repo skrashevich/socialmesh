@@ -36,7 +36,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get commonClose => 'Закрыть';
 
   @override
-  String get commonOk => 'ОК';
+  String get commonOk => 'OК';
 
   @override
   String get commonContinue => 'Продолжить';
@@ -179,4 +179,128 @@ class AppLocalizationsRu extends AppLocalizations {
   String navigationFlightCompleted(String flightNumber, String route) {
     return '$flightNumber ($route) рейс завершён';
   }
+
+  @override
+  String get nodedexTagContact => 'Контакт';
+
+  @override
+  String get nodedexTagTrustedNode => 'Доверенный узел';
+
+  @override
+  String get nodedexTagKnownRelay => 'Известный ретранслятор';
+
+  @override
+  String get nodedexTagFrequentPeer => 'Частый партнёр';
+
+  @override
+  String get nodedexTraitWanderer => 'Странник';
+
+  @override
+  String get nodedexTraitBeacon => 'Маяк';
+
+  @override
+  String get nodedexTraitGhost => 'Призрак';
+
+  @override
+  String get nodedexTraitSentinel => 'Часовой';
+
+  @override
+  String get nodedexTraitRelay => 'Ретранслятор';
+
+  @override
+  String get nodedexTraitCourier => 'Курьер';
+
+  @override
+  String get nodedexTraitAnchor => 'Якорь';
+
+  @override
+  String get nodedexTraitDrifter => 'Дрейфер';
+
+  @override
+  String get nodedexTraitUnknown => 'Новичок';
+
+  @override
+  String get nodedexTraitWandererDescription => 'Замечен в разных местах';
+
+  @override
+  String get nodedexTraitBeaconDescription =>
+      'Всегда активен, высокая доступность';
+
+  @override
+  String get nodedexTraitGhostDescription =>
+      'Редко встречается, неуловимое присутствие';
+
+  @override
+  String get nodedexTraitSentinelDescription =>
+      'Фиксированное положение, долговечный страж';
+
+  @override
+  String get nodedexTraitRelayDescription =>
+      'Высокая пропускная способность, пересылает трафик';
+
+  @override
+  String get nodedexTraitCourierDescription => 'Доставляет сообщения по сети';
+
+  @override
+  String get nodedexTraitAnchorDescription =>
+      'Постоянный узел со множеством соединений';
+
+  @override
+  String get nodedexTraitDrifterDescription =>
+      'Нерегулярные появления, исчезает и появляется';
+
+  @override
+  String get nodedexTraitUnknownDescription => 'Недавно обнаружен';
+
+  @override
+  String get explorerTitleNewcomer => 'Новичок';
+
+  @override
+  String get explorerTitleObserver => 'Наблюдатель';
+
+  @override
+  String get explorerTitleExplorer => 'Исследователь';
+
+  @override
+  String get explorerTitleCartographer => 'Картограф';
+
+  @override
+  String get explorerTitleSignalHunter => 'Охотник за сигналами';
+
+  @override
+  String get explorerTitleMeshVeteran => 'Ветеран сети';
+
+  @override
+  String get explorerTitleMeshCartographer => 'Картограф сети';
+
+  @override
+  String get explorerTitleLongRangeRecordHolder => 'Рекордсмен дальней связи';
+
+  @override
+  String get explorerTitleNewcomerDescription => 'Только начинает путь по сети';
+
+  @override
+  String get explorerTitleObserverDescription => 'Изучает сеть Mesh';
+
+  @override
+  String get explorerTitleExplorerDescription => 'Активно исследует сеть';
+
+  @override
+  String get explorerTitleCartographerDescription =>
+      'Картографирует невидимую инфраструктуру';
+
+  @override
+  String get explorerTitleSignalHunterDescription =>
+      'Ищет сигналы по всему диапазону';
+
+  @override
+  String get explorerTitleMeshVeteranDescription => 'Глубокое знание сети';
+
+  @override
+  String get explorerTitleMeshCartographerDescription =>
+      'Прокладывает регионы и маршруты';
+
+  @override
+  String get explorerTitleLongRangeRecordHolderDescription =>
+      'Раздвигает границы дальности';
 }

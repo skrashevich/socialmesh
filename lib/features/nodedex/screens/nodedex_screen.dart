@@ -22,6 +22,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../core/logging.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/widgets/animated_empty_state.dart';
 import '../../../core/widgets/app_bottom_sheet.dart';
 import '../../../providers/accessibility_providers.dart';
@@ -563,7 +564,7 @@ class _NodeDexStatsCard extends StatelessWidget {
                 const SizedBox(width: AppTheme.spacing6),
                 Flexible(
                   child: Text(
-                    title.displayLabel,
+                    title.displayLabel(context.l10n),
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
@@ -732,7 +733,7 @@ class _SocialTagFilterChip extends StatelessWidget {
             ),
             const SizedBox(width: AppTheme.spacing4),
             Text(
-              tag.displayLabel,
+              tag.displayLabel(context.l10n),
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
@@ -806,7 +807,7 @@ class _TraitFilterChip extends StatelessWidget {
             TraitIcon(trait: trait, size: 13),
             const SizedBox(width: AppTheme.spacing4),
             Text(
-              trait.displayLabel,
+              trait.displayLabel(context.l10n),
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,

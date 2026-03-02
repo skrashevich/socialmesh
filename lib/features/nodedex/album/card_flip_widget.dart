@@ -31,6 +31,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../models/nodedex_entry.dart';
 import '../services/patina_score.dart';
@@ -563,7 +564,7 @@ class _TraitSection extends StatelessWidget {
             SizedBox(width: AppTheme.spacing6 * scale),
             Expanded(
               child: Text(
-                traitResult.primary.displayLabel,
+                traitResult.primary.displayLabel(context.l10n),
                 style: TextStyle(
                   fontSize: 11.0 * scale,
                   fontWeight: FontWeight.w600,
@@ -597,7 +598,7 @@ class _TraitSection extends StatelessWidget {
               ),
               SizedBox(width: AppTheme.spacing6 * scale),
               Text(
-                traitResult.secondary!.displayLabel,
+                traitResult.secondary!.displayLabel(context.l10n),
                 style: TextStyle(
                   fontSize: 9.0 * scale,
                   color: context.textSecondary,

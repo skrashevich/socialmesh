@@ -429,6 +429,234 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{flightNumber} ({route}) flight completed'**
   String navigationFlightCompleted(String flightNumber, String route);
+
+  /// Display label for the Contact social tag.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact'**
+  String get nodedexTagContact;
+
+  /// Display label for the Trusted Node social tag.
+  ///
+  /// In en, this message translates to:
+  /// **'Trusted Node'**
+  String get nodedexTagTrustedNode;
+
+  /// Display label for the Known Relay social tag.
+  ///
+  /// In en, this message translates to:
+  /// **'Known Relay'**
+  String get nodedexTagKnownRelay;
+
+  /// Display label for the Frequent Peer social tag.
+  ///
+  /// In en, this message translates to:
+  /// **'Frequent Peer'**
+  String get nodedexTagFrequentPeer;
+
+  /// Display label for the Wanderer node trait.
+  ///
+  /// In en, this message translates to:
+  /// **'Wanderer'**
+  String get nodedexTraitWanderer;
+
+  /// Display label for the Beacon node trait.
+  ///
+  /// In en, this message translates to:
+  /// **'Beacon'**
+  String get nodedexTraitBeacon;
+
+  /// Display label for the Ghost node trait.
+  ///
+  /// In en, this message translates to:
+  /// **'Ghost'**
+  String get nodedexTraitGhost;
+
+  /// Display label for the Sentinel node trait.
+  ///
+  /// In en, this message translates to:
+  /// **'Sentinel'**
+  String get nodedexTraitSentinel;
+
+  /// Display label for the Relay node trait.
+  ///
+  /// In en, this message translates to:
+  /// **'Relay'**
+  String get nodedexTraitRelay;
+
+  /// Display label for the Courier node trait.
+  ///
+  /// In en, this message translates to:
+  /// **'Courier'**
+  String get nodedexTraitCourier;
+
+  /// Display label for the Anchor node trait.
+  ///
+  /// In en, this message translates to:
+  /// **'Anchor'**
+  String get nodedexTraitAnchor;
+
+  /// Display label for the Drifter node trait.
+  ///
+  /// In en, this message translates to:
+  /// **'Drifter'**
+  String get nodedexTraitDrifter;
+
+  /// Display label for the Unknown (unclassified) node trait.
+  ///
+  /// In en, this message translates to:
+  /// **'Newcomer'**
+  String get nodedexTraitUnknown;
+
+  /// Description for the Wanderer node trait.
+  ///
+  /// In en, this message translates to:
+  /// **'Seen across multiple locations'**
+  String get nodedexTraitWandererDescription;
+
+  /// Description for the Beacon node trait.
+  ///
+  /// In en, this message translates to:
+  /// **'Always active, high availability'**
+  String get nodedexTraitBeaconDescription;
+
+  /// Description for the Ghost node trait.
+  ///
+  /// In en, this message translates to:
+  /// **'Rarely seen, elusive presence'**
+  String get nodedexTraitGhostDescription;
+
+  /// Description for the Sentinel node trait.
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed position, long-lived guardian'**
+  String get nodedexTraitSentinelDescription;
+
+  /// Description for the Relay node trait.
+  ///
+  /// In en, this message translates to:
+  /// **'High throughput, forwards traffic'**
+  String get nodedexTraitRelayDescription;
+
+  /// Description for the Courier node trait.
+  ///
+  /// In en, this message translates to:
+  /// **'Carries messages across the mesh'**
+  String get nodedexTraitCourierDescription;
+
+  /// Description for the Anchor node trait.
+  ///
+  /// In en, this message translates to:
+  /// **'Persistent hub with many connections'**
+  String get nodedexTraitAnchorDescription;
+
+  /// Description for the Drifter node trait.
+  ///
+  /// In en, this message translates to:
+  /// **'Irregular timing, fades in and out'**
+  String get nodedexTraitDrifterDescription;
+
+  /// Description for the Unknown (unclassified) node trait.
+  ///
+  /// In en, this message translates to:
+  /// **'Recently discovered'**
+  String get nodedexTraitUnknownDescription;
+
+  /// Explorer title for fewer than 5 discovered nodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Newcomer'**
+  String get explorerTitleNewcomer;
+
+  /// Explorer title for 5-19 discovered nodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Observer'**
+  String get explorerTitleObserver;
+
+  /// Explorer title for 20-49 discovered nodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Explorer'**
+  String get explorerTitleExplorer;
+
+  /// Explorer title for 50-99 discovered nodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Cartographer'**
+  String get explorerTitleCartographer;
+
+  /// Explorer title for 100-199 discovered nodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Signal Hunter'**
+  String get explorerTitleSignalHunter;
+
+  /// Explorer title for 200+ discovered nodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh Veteran'**
+  String get explorerTitleMeshVeteran;
+
+  /// Explorer title for 200+ nodes AND 5+ regions.
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh Cartographer'**
+  String get explorerTitleMeshCartographer;
+
+  /// Explorer title for the longest distance record above 10 km.
+  ///
+  /// In en, this message translates to:
+  /// **'Long-Range Record Holder'**
+  String get explorerTitleLongRangeRecordHolder;
+
+  /// Description for the Newcomer explorer title.
+  ///
+  /// In en, this message translates to:
+  /// **'Beginning the mesh journey'**
+  String get explorerTitleNewcomerDescription;
+
+  /// Description for the Observer explorer title.
+  ///
+  /// In en, this message translates to:
+  /// **'Building awareness of the mesh'**
+  String get explorerTitleObserverDescription;
+
+  /// Description for the Explorer explorer title.
+  ///
+  /// In en, this message translates to:
+  /// **'Actively discovering the network'**
+  String get explorerTitleExplorerDescription;
+
+  /// Description for the Cartographer explorer title.
+  ///
+  /// In en, this message translates to:
+  /// **'Mapping the invisible infrastructure'**
+  String get explorerTitleCartographerDescription;
+
+  /// Description for the Signal Hunter explorer title.
+  ///
+  /// In en, this message translates to:
+  /// **'Seeking signals across the spectrum'**
+  String get explorerTitleSignalHunterDescription;
+
+  /// Description for the Mesh Veteran explorer title.
+  ///
+  /// In en, this message translates to:
+  /// **'Deep knowledge of the mesh'**
+  String get explorerTitleMeshVeteranDescription;
+
+  /// Description for the Mesh Cartographer explorer title.
+  ///
+  /// In en, this message translates to:
+  /// **'Charting regions and routes'**
+  String get explorerTitleMeshCartographerDescription;
+
+  /// Description for the Long-Range Record Holder explorer title.
+  ///
+  /// In en, this message translates to:
+  /// **'Pushing the limits of range'**
+  String get explorerTitleLongRangeRecordHolderDescription;
 }
 
 class _AppLocalizationsDelegate

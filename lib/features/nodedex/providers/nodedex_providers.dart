@@ -1469,7 +1469,7 @@ final nodeDexSortedEntriesProvider = Provider<List<(NodeDexEntry, MeshNode?)>>((
       final name = node?.displayName.toLowerCase() ?? '';
       final hexId = entry.nodeNum.toRadixString(16).toLowerCase();
       final note = entry.userNote?.toLowerCase() ?? '';
-      final tag = entry.socialTag?.displayLabel.toLowerCase() ?? '';
+      final tag = entry.socialTag?.name.toLowerCase() ?? '';
       return name.contains(search) ||
           hexId.contains(search) ||
           note.contains(search) ||

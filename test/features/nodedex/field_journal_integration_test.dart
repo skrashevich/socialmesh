@@ -7,6 +7,7 @@ import 'package:socialmesh/features/nodedex/services/patina_score.dart';
 import 'package:socialmesh/features/nodedex/services/progressive_disclosure.dart';
 import 'package:socialmesh/features/nodedex/services/sigil_generator.dart';
 import 'package:socialmesh/features/nodedex/services/trait_engine.dart';
+import 'package:socialmesh/l10n/app_localizations_en.dart';
 
 // =============================================================================
 // Test helpers
@@ -847,9 +848,10 @@ void main() {
 
     group('NodeTrait enum completeness', () {
       test('all traits have non-empty displayLabel', () {
+        final l10n = AppLocalizationsEn();
         for (final trait in NodeTrait.values) {
           expect(
-            trait.displayLabel.isNotEmpty,
+            trait.displayLabel(l10n).isNotEmpty,
             isTrue,
             reason: '${trait.name} has empty displayLabel',
           );
@@ -857,9 +859,10 @@ void main() {
       });
 
       test('all traits have non-empty description', () {
+        final l10n = AppLocalizationsEn();
         for (final trait in NodeTrait.values) {
           expect(
-            trait.description.isNotEmpty,
+            trait.description(l10n).isNotEmpty,
             isTrue,
             reason: '${trait.name} has empty description',
           );

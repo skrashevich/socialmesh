@@ -49,6 +49,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../models/nodedex_entry.dart';
 import 'album_constants.dart';
@@ -133,7 +134,9 @@ List<Widget> buildAlbumSlivers({
         SliverPersistentHeader(
           pinned: true,
           delegate: AlbumPageHeaderDelegate(
-            title: page.title,
+            title: page.nodeTrait != null
+                ? '${page.nodeTrait!.displayLabel(context.l10n)} Nodes'
+                : page.title,
             groupKey: page.groupKey,
             count: page.filledCount,
             accentColor: accentColor,

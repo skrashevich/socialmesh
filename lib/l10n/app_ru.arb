@@ -65,5 +65,48 @@
   "navigationFirmwareWarningTitle": "Предупреждение устройства Meshtastic",
 
   "navigationFlightActivated": "{flightNumber} ({route}) в воздухе!",
-  "navigationFlightCompleted": "{flightNumber} ({route}) рейс завершён"
+  "navigationFlightCompleted": "{flightNumber} ({route}) рейс завершён",
+
+  "nodedexTagContact": "Контакт",
+  "nodedexTagTrustedNode": "Доверенный узел",
+  "nodedexTagKnownRelay": "Известный ретранслятор",
+  "nodedexTagFrequentPeer": "Частый партнёр",
+
+  "nodedexTraitWanderer": "Странник",
+  "nodedexTraitBeacon": "Маяк",
+  "nodedexTraitGhost": "Призрак",
+  "nodedexTraitSentinel": "Часовой",
+  "nodedexTraitRelay": "Ретранслятор",
+  "nodedexTraitCourier": "Курьер",
+  "nodedexTraitAnchor": "Якорь",
+  "nodedexTraitDrifter": "Дрейфер",
+  "nodedexTraitUnknown": "Новичок",
+
+  "nodedexTraitWandererDescription": "Замечен в разных местах",
+  "nodedexTraitBeaconDescription": "Всегда активен, высокая доступность",
+  "nodedexTraitGhostDescription": "Редко встречается, неуловимое присутствие",
+  "nodedexTraitSentinelDescription": "Фиксированное положение, долговечный страж",
+  "nodedexTraitRelayDescription": "Высокая пропускная способность, пересылает трафик",
+  "nodedexTraitCourierDescription": "Доставляет сообщения по сети",
+  "nodedexTraitAnchorDescription": "Постоянный узел со множеством соединений",
+  "nodedexTraitDrifterDescription": "Нерегулярные появления, исчезает и появляется",
+  "nodedexTraitUnknownDescription": "Недавно обнаружен",
+
+  "explorerTitleNewcomer": "Новичок",
+  "explorerTitleObserver": "Наблюдатель",
+  "explorerTitleExplorer": "Исследователь",
+  "explorerTitleCartographer": "Картограф",
+  "explorerTitleSignalHunter": "Охотник за сигналами",
+  "explorerTitleMeshVeteran": "Ветеран сети",
+  "explorerTitleMeshCartographer": "Картограф сети",
+  "explorerTitleLongRangeRecordHolder": "Рекордсмен дальней связи",
+
+  "explorerTitleNewcomerDescription": "Только начинает путь по сети",
+  "explorerTitleObserverDescription": "Изучает сеть Mesh",
+  "explorerTitleExplorerDescription": "Активно исследует сеть",
+  "explorerTitleCartographerDescription": "Картографирует невидимую инфраструктуру",
+  "explorerTitleSignalHunterDescription": "Ищет сигналы по всему диапазону",
+  "explorerTitleMeshVeteranDescription": "Глубокое знание сети",
+  "explorerTitleMeshCartographerDescription": "Прокладывает регионы и маршруты",
+  "explorerTitleLongRangeRecordHolderDescription": "Раздвигает границы дальности"
 }

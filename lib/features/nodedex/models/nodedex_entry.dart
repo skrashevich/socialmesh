@@ -12,6 +12,7 @@
 import 'dart:convert';
 import 'dart:ui';
 import 'package:socialmesh/core/theme.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
 
 /// Social classification a user can assign to a node.
 ///
@@ -30,12 +31,12 @@ enum NodeSocialTag {
   /// A frequent peer — regularly co-seen on the mesh.
   frequentPeer;
 
-  String get displayLabel {
+  String displayLabel(AppLocalizations l10n) {
     return switch (this) {
-      NodeSocialTag.contact => 'Contact',
-      NodeSocialTag.trustedNode => 'Trusted Node',
-      NodeSocialTag.knownRelay => 'Known Relay',
-      NodeSocialTag.frequentPeer => 'Frequent Peer',
+      NodeSocialTag.contact => l10n.nodedexTagContact,
+      NodeSocialTag.trustedNode => l10n.nodedexTagTrustedNode,
+      NodeSocialTag.knownRelay => l10n.nodedexTagKnownRelay,
+      NodeSocialTag.frequentPeer => l10n.nodedexTagFrequentPeer,
     };
   }
 
@@ -82,31 +83,31 @@ enum NodeTrait {
   /// Recently discovered, not enough data to classify.
   unknown;
 
-  String get displayLabel {
+  String displayLabel(AppLocalizations l10n) {
     return switch (this) {
-      NodeTrait.wanderer => 'Wanderer',
-      NodeTrait.beacon => 'Beacon',
-      NodeTrait.ghost => 'Ghost',
-      NodeTrait.sentinel => 'Sentinel',
-      NodeTrait.relay => 'Relay',
-      NodeTrait.courier => 'Courier',
-      NodeTrait.anchor => 'Anchor',
-      NodeTrait.drifter => 'Drifter',
-      NodeTrait.unknown => 'Newcomer',
+      NodeTrait.wanderer => l10n.nodedexTraitWanderer,
+      NodeTrait.beacon => l10n.nodedexTraitBeacon,
+      NodeTrait.ghost => l10n.nodedexTraitGhost,
+      NodeTrait.sentinel => l10n.nodedexTraitSentinel,
+      NodeTrait.relay => l10n.nodedexTraitRelay,
+      NodeTrait.courier => l10n.nodedexTraitCourier,
+      NodeTrait.anchor => l10n.nodedexTraitAnchor,
+      NodeTrait.drifter => l10n.nodedexTraitDrifter,
+      NodeTrait.unknown => l10n.nodedexTraitUnknown,
     };
   }
 
-  String get description {
+  String description(AppLocalizations l10n) {
     return switch (this) {
-      NodeTrait.wanderer => 'Seen across multiple locations',
-      NodeTrait.beacon => 'Always active, high availability',
-      NodeTrait.ghost => 'Rarely seen, elusive presence',
-      NodeTrait.sentinel => 'Fixed position, long-lived guardian',
-      NodeTrait.relay => 'High throughput, forwards traffic',
-      NodeTrait.courier => 'Carries messages across the mesh',
-      NodeTrait.anchor => 'Persistent hub with many connections',
-      NodeTrait.drifter => 'Irregular timing, fades in and out',
-      NodeTrait.unknown => 'Recently discovered',
+      NodeTrait.wanderer => l10n.nodedexTraitWandererDescription,
+      NodeTrait.beacon => l10n.nodedexTraitBeaconDescription,
+      NodeTrait.ghost => l10n.nodedexTraitGhostDescription,
+      NodeTrait.sentinel => l10n.nodedexTraitSentinelDescription,
+      NodeTrait.relay => l10n.nodedexTraitRelayDescription,
+      NodeTrait.courier => l10n.nodedexTraitCourierDescription,
+      NodeTrait.anchor => l10n.nodedexTraitAnchorDescription,
+      NodeTrait.drifter => l10n.nodedexTraitDrifterDescription,
+      NodeTrait.unknown => l10n.nodedexTraitUnknownDescription,
     };
   }
 
@@ -380,29 +381,32 @@ enum ExplorerTitle {
   /// Has the longest distance record above 10km.
   longRangeRecordHolder;
 
-  String get displayLabel {
+  String displayLabel(AppLocalizations l10n) {
     return switch (this) {
-      ExplorerTitle.newcomer => 'Newcomer',
-      ExplorerTitle.observer => 'Observer',
-      ExplorerTitle.explorer => 'Explorer',
-      ExplorerTitle.cartographer => 'Cartographer',
-      ExplorerTitle.signalHunter => 'Signal Hunter',
-      ExplorerTitle.meshVeteran => 'Mesh Veteran',
-      ExplorerTitle.meshCartographer => 'Mesh Cartographer',
-      ExplorerTitle.longRangeRecordHolder => 'Long-Range Record Holder',
+      ExplorerTitle.newcomer => l10n.explorerTitleNewcomer,
+      ExplorerTitle.observer => l10n.explorerTitleObserver,
+      ExplorerTitle.explorer => l10n.explorerTitleExplorer,
+      ExplorerTitle.cartographer => l10n.explorerTitleCartographer,
+      ExplorerTitle.signalHunter => l10n.explorerTitleSignalHunter,
+      ExplorerTitle.meshVeteran => l10n.explorerTitleMeshVeteran,
+      ExplorerTitle.meshCartographer => l10n.explorerTitleMeshCartographer,
+      ExplorerTitle.longRangeRecordHolder =>
+        l10n.explorerTitleLongRangeRecordHolder,
     };
   }
 
-  String get description {
+  String description(AppLocalizations l10n) {
     return switch (this) {
-      ExplorerTitle.newcomer => 'Beginning the mesh journey',
-      ExplorerTitle.observer => 'Building awareness of the mesh',
-      ExplorerTitle.explorer => 'Actively discovering the network',
-      ExplorerTitle.cartographer => 'Mapping the invisible infrastructure',
-      ExplorerTitle.signalHunter => 'Seeking signals across the spectrum',
-      ExplorerTitle.meshVeteran => 'Deep knowledge of the mesh',
-      ExplorerTitle.meshCartographer => 'Charting regions and routes',
-      ExplorerTitle.longRangeRecordHolder => 'Pushing the limits of range',
+      ExplorerTitle.newcomer => l10n.explorerTitleNewcomerDescription,
+      ExplorerTitle.observer => l10n.explorerTitleObserverDescription,
+      ExplorerTitle.explorer => l10n.explorerTitleExplorerDescription,
+      ExplorerTitle.cartographer => l10n.explorerTitleCartographerDescription,
+      ExplorerTitle.signalHunter => l10n.explorerTitleSignalHunterDescription,
+      ExplorerTitle.meshVeteran => l10n.explorerTitleMeshVeteranDescription,
+      ExplorerTitle.meshCartographer =>
+        l10n.explorerTitleMeshCartographerDescription,
+      ExplorerTitle.longRangeRecordHolder =>
+        l10n.explorerTitleLongRangeRecordHolderDescription,
     };
   }
 }

@@ -20,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/logging.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/glass_scaffold.dart';
@@ -791,7 +792,7 @@ class _BottomInfoBar extends ConsumerWidget {
                   ),
                   const SizedBox(width: AppTheme.spacing4),
                   Text(
-                    trait.primary.displayLabel,
+                    trait.primary.displayLabel(context.l10n),
                     style: TextStyle(fontSize: 11, color: context.textTertiary),
                   ),
                   const SizedBox(width: AppTheme.spacing8),

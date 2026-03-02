@@ -300,5 +300,195 @@
         "description": "The departure to arrival route string."
       }
     }
+  },
+
+  "nodedexTagContact": "Contact",
+  "@nodedexTagContact": {
+    "description": "Display label for the Contact social tag."
+  },
+
+  "nodedexTagTrustedNode": "Trusted Node",
+  "@nodedexTagTrustedNode": {
+    "description": "Display label for the Trusted Node social tag."
+  },
+
+  "nodedexTagKnownRelay": "Known Relay",
+  "@nodedexTagKnownRelay": {
+    "description": "Display label for the Known Relay social tag."
+  },
+
+  "nodedexTagFrequentPeer": "Frequent Peer",
+  "@nodedexTagFrequentPeer": {
+    "description": "Display label for the Frequent Peer social tag."
+  },
+
+  "nodedexTraitWanderer": "Wanderer",
+  "@nodedexTraitWanderer": {
+    "description": "Display label for the Wanderer node trait."
+  },
+
+  "nodedexTraitBeacon": "Beacon",
+  "@nodedexTraitBeacon": {
+    "description": "Display label for the Beacon node trait."
+  },
+
+  "nodedexTraitGhost": "Ghost",
+  "@nodedexTraitGhost": {
+    "description": "Display label for the Ghost node trait."
+  },
+
+  "nodedexTraitSentinel": "Sentinel",
+  "@nodedexTraitSentinel": {
+    "description": "Display label for the Sentinel node trait."
+  },
+
+  "nodedexTraitRelay": "Relay",
+  "@nodedexTraitRelay": {
+    "description": "Display label for the Relay node trait."
+  },
+
+  "nodedexTraitCourier": "Courier",
+  "@nodedexTraitCourier": {
+    "description": "Display label for the Courier node trait."
+  },
+
+  "nodedexTraitAnchor": "Anchor",
+  "@nodedexTraitAnchor": {
+    "description": "Display label for the Anchor node trait."
+  },
+
+  "nodedexTraitDrifter": "Drifter",
+  "@nodedexTraitDrifter": {
+    "description": "Display label for the Drifter node trait."
+  },
+
+  "nodedexTraitUnknown": "Newcomer",
+  "@nodedexTraitUnknown": {
+    "description": "Display label for the Unknown (unclassified) node trait."
+  },
+
+  "nodedexTraitWandererDescription": "Seen across multiple locations",
+  "@nodedexTraitWandererDescription": {
+    "description": "Description for the Wanderer node trait."
+  },
+
+  "nodedexTraitBeaconDescription": "Always active, high availability",
+  "@nodedexTraitBeaconDescription": {
+    "description": "Description for the Beacon node trait."
+  },
+
+  "nodedexTraitGhostDescription": "Rarely seen, elusive presence",
+  "@nodedexTraitGhostDescription": {
+    "description": "Description for the Ghost node trait."
+  },
+
+  "nodedexTraitSentinelDescription": "Fixed position, long-lived guardian",
+  "@nodedexTraitSentinelDescription": {
+    "description": "Description for the Sentinel node trait."
+  },
+
+  "nodedexTraitRelayDescription": "High throughput, forwards traffic",
+  "@nodedexTraitRelayDescription": {
+    "description": "Description for the Relay node trait."
+  },
+
+  "nodedexTraitCourierDescription": "Carries messages across the mesh",
+  "@nodedexTraitCourierDescription": {
+    "description": "Description for the Courier node trait."
+  },
+
+  "nodedexTraitAnchorDescription": "Persistent hub with many connections",
+  "@nodedexTraitAnchorDescription": {
+    "description": "Description for the Anchor node trait."
+  },
+
+  "nodedexTraitDrifterDescription": "Irregular timing, fades in and out",
+  "@nodedexTraitDrifterDescription": {
+    "description": "Description for the Drifter node trait."
+  },
+
+  "nodedexTraitUnknownDescription": "Recently discovered",
+  "@nodedexTraitUnknownDescription": {
+    "description": "Description for the Unknown (unclassified) node trait."
+  },
+
+  "explorerTitleNewcomer": "Newcomer",
+  "@explorerTitleNewcomer": {
+    "description": "Explorer title for fewer than 5 discovered nodes."
+  },
+
+  "explorerTitleObserver": "Observer",
+  "@explorerTitleObserver": {
+    "description": "Explorer title for 5-19 discovered nodes."
+  },
+
+  "explorerTitleExplorer": "Explorer",
+  "@explorerTitleExplorer": {
+    "description": "Explorer title for 20-49 discovered nodes."
+  },
+
+  "explorerTitleCartographer": "Cartographer",
+  "@explorerTitleCartographer": {
+    "description": "Explorer title for 50-99 discovered nodes."
+  },
+
+  "explorerTitleSignalHunter": "Signal Hunter",
+  "@explorerTitleSignalHunter": {
+    "description": "Explorer title for 100-199 discovered nodes."
+  },
+
+  "explorerTitleMeshVeteran": "Mesh Veteran",
+  "@explorerTitleMeshVeteran": {
+    "description": "Explorer title for 200+ discovered nodes."
+  },
+
+  "explorerTitleMeshCartographer": "Mesh Cartographer",
+  "@explorerTitleMeshCartographer": {
+    "description": "Explorer title for 200+ nodes AND 5+ regions."
+  },
+
+  "explorerTitleLongRangeRecordHolder": "Long-Range Record Holder",
+  "@explorerTitleLongRangeRecordHolder": {
+    "description": "Explorer title for the longest distance record above 10 km."
+  },
+
+  "explorerTitleNewcomerDescription": "Beginning the mesh journey",
+  "@explorerTitleNewcomerDescription": {
+    "description": "Description for the Newcomer explorer title."
+  },
+
+  "explorerTitleObserverDescription": "Building awareness of the mesh",
+  "@explorerTitleObserverDescription": {
+    "description": "Description for the Observer explorer title."
+  },
+
+  "explorerTitleExplorerDescription": "Actively discovering the network",
+  "@explorerTitleExplorerDescription": {
+    "description": "Description for the Explorer explorer title."
+  },
+
+  "explorerTitleCartographerDescription": "Mapping the invisible infrastructure",
+  "@explorerTitleCartographerDescription": {
+    "description": "Description for the Cartographer explorer title."
+  },
+
+  "explorerTitleSignalHunterDescription": "Seeking signals across the spectrum",
+  "@explorerTitleSignalHunterDescription": {
+    "description": "Description for the Signal Hunter explorer title."
+  },
+
+  "explorerTitleMeshVeteranDescription": "Deep knowledge of the mesh",
+  "@explorerTitleMeshVeteranDescription": {
+    "description": "Description for the Mesh Veteran explorer title."
+  },
+
+  "explorerTitleMeshCartographerDescription": "Charting regions and routes",
+  "@explorerTitleMeshCartographerDescription": {
+    "description": "Description for the Mesh Cartographer explorer title."
+  },
+
+  "explorerTitleLongRangeRecordHolderDescription": "Pushing the limits of range",
+  "@explorerTitleLongRangeRecordHolderDescription": {
+    "description": "Description for the Long-Range Record Holder explorer title."
   }
 }
