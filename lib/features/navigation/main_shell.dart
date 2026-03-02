@@ -2,6 +2,7 @@
 // lint-allow: scaffold — navigation shell root scaffold with drawer and bottom nav
 import '../../core/constants.dart';
 import '../../core/logging.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -208,7 +209,7 @@ class HamburgerMenuButton extends ConsumerWidget {
           }
         }
       },
-      tooltip: AppLocalizations.of(context)!.navigationMenuTooltip,
+      tooltip: context.l10n.navigationMenuTooltip,
     );
   }
 }
@@ -264,7 +265,7 @@ class DeviceStatusButton extends ConsumerWidget {
         ],
       ),
       onPressed: () => showDeviceSheet(context),
-      tooltip: AppLocalizations.of(context)!.navigationDeviceTooltip,
+      tooltip: context.l10n.navigationDeviceTooltip,
     );
   }
 }
@@ -627,7 +628,7 @@ class _MainShellState extends ConsumerState<MainShell> {
     slivers.add(const SliverPadding(padding: EdgeInsets.only(top: 8)));
 
     // Group items by section
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = context.l10n;
     final drawerMenuItems = _buildDrawerMenuItems(l10n);
     final sections = <DrawerMenuSection>[];
     DrawerMenuSection? currentSection;
@@ -802,7 +803,7 @@ class _MainShellState extends ConsumerState<MainShell> {
           Padding(
             padding: const EdgeInsets.only(left: 12, bottom: 8),
             child: Text(
-              AppLocalizations.of(context)!.navigationSectionAccount,
+              context.l10n.navigationSectionAccount,
               style: TextStyle(
                 fontSize: 11,
                 fontWeight: FontWeight.w600,
@@ -839,13 +840,12 @@ class _MainShellState extends ConsumerState<MainShell> {
     final isOnline = ref.watch(isOnlineProvider);
 
     final displayName =
-        profile?.displayName ??
-        AppLocalizations.of(context)!.navigationGuestName;
+        profile?.displayName ?? context.l10n.navigationGuestName;
     final initials = profile?.initials ?? '?';
     final avatarUrl = profile?.avatarUrl;
 
     String getSyncStatusText() {
-      final l10n = AppLocalizations.of(context)!;
+      final l10n = context.l10n;
       if (!isSignedIn) return l10n.navigationNotSignedIn;
       if (!isOnline) return l10n.navigationOffline;
       return switch (syncStatus) {
@@ -1030,9 +1030,7 @@ class _MainShellState extends ConsumerState<MainShell> {
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: DrawerMenuTile(
                         icon: Icons.help_outline,
-                        label: AppLocalizations.of(
-                          context,
-                        )!.navigationHelpSupport,
+                        label: context.l10n.navigationHelpSupport,
                         isSelected: false,
                         iconColor: AccentColors.blue,
                         onTap: () {
@@ -1117,7 +1115,7 @@ class _MainShellState extends ConsumerState<MainShell> {
 
     // Listen for firmware client notifications (errors, warnings)
     // These are important messages that need to be shown to the user
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = context.l10n;
     ref.listen(clientNotificationStreamProvider, (previous, next) {
       next.whenData((notification) {
         final level = notification.level;
