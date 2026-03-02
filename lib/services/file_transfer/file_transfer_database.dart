@@ -17,7 +17,7 @@ import 'file_transfer_engine.dart';
 /// existing Socialmesh database patterns.
 class FileTransferDatabase {
   static const _dbName = 'file_transfers.db';
-  static const _dbVersion = 2;
+  static const _dbVersion = 3;
 
   static const _transfersTable = 'transfers';
   static const _chunksTable = 'chunks';
@@ -47,11 +47,20 @@ class FileTransferDatabase {
         },
         onUpgrade: (db, oldVersion, newVersion) async {
           AppLogging.fileTransfer('DB: upgrading v$oldVersion → v$newVersion');
-          // v2: added offerPending state (shifts enum indexes). Drop and
-          // re-create while the feature is pre-release.
-          await db.execute('DROP TABLE IF EXISTS $_chunksTable');
-          await db.execute('DROP TABLE IF EXISTS $_transfersTable');
-          await _createTables(db);
+          if (oldVersion < 2) {
+            // v2: added offerPending state (shifts enum indexes). Drop and
+            // re-create while the feature is pre-release.
+            await db.execute('DROP TABLE IF EXISTS $_chunksTable');
+            await db.execute('DROP TABLE IF EXISTS $_transfersTable');
+            await _createTables(db);
+          }
+          if (oldVersion < 3) {
+            // v3: added savedFilePath for automatic disk persistence.
+            // Safe nullable column addition — no data loss.
+            await db.execute(
+              'ALTER TABLE $_transfersTable ADD COLUMN savedFilePath TEXT',
+            );
+          }
         },
       );
 
@@ -90,7 +99,8 @@ class FileTransferDatabase {
         expiresAt INTEGER NOT NULL,
         completedAt INTEGER,
         transportMode INTEGER NOT NULL DEFAULT 0,
-        fetchHint TEXT NOT NULL DEFAULT ''
+        fetchHint TEXT NOT NULL DEFAULT '',
+        savedFilePath TEXT
       )
     ''');
 
@@ -148,7 +158,25 @@ class FileTransferDatabase {
       'completedAt': transfer.completedAt?.millisecondsSinceEpoch,
       'transportMode': transfer.transportMode.index,
       'fetchHint': transfer.fetchHint,
+      'savedFilePath': transfer.savedFilePath,
     }, conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  /// Update only the savedFilePath column for a completed transfer.
+  ///
+  /// More efficient than re-writing the full row when only the path changed.
+  Future<void> updateSavedPath(String fileIdHex, String path) async {
+    final db = _db;
+    if (db == null) return;
+
+    await db.update(
+      _transfersTable,
+      {'savedFilePath': path},
+      where: 'fileIdHex = ?',
+      whereArgs: [fileIdHex],
+    );
+
+    AppLogging.fileTransfer('DB: updateSavedPath $fileIdHex → $path');
   }
 
   /// Save a received chunk.
@@ -336,6 +364,7 @@ class FileTransferDatabase {
           : null,
       transportMode: FileTransportMode.values[row['transportMode'] as int],
       fetchHint: row['fetchHint'] as String? ?? '',
+      savedFilePath: row['savedFilePath'] as String?,
     );
   }
 }

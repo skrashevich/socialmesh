@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,21 +22,35 @@ class FileContentPreview {
 
   /// Shows a file content preview for the given transfer.
   ///
-  /// Returns early if the transfer has no file bytes or is not complete.
+  /// Uses in-memory [FileTransferState.fileBytes] when available, or falls
+  /// back to loading from [FileTransferState.savedFilePath] on disk.
+  /// Returns early if neither source is available.
   static void show({
     required BuildContext context,
     required FileTransferState transfer,
   }) {
-    if (transfer.fileBytes == null || transfer.fileBytes!.isEmpty) return;
-
-    final viewer = _resolveViewer(transfer);
+    final hasBytes =
+        transfer.fileBytes != null && transfer.fileBytes!.isNotEmpty;
+    final hasPath = transfer.savedFilePath != null;
+    if (!hasBytes && !hasPath) return;
 
     AppBottomSheet.showScrollable<void>(
       context: context,
       title: transfer.filename,
       initialChildSize: 0.65,
       maxChildSize: 0.95,
-      builder: (scrollController) => viewer(scrollController),
+      builder: (scrollController) {
+        if (hasBytes) {
+          return _resolveViewer(transfer)(scrollController);
+        }
+        // Bytes not in memory — load from disk asynchronously.
+        return _DiskFileLoader(
+          path: transfer.savedFilePath!,
+          mimeType: transfer.mimeType,
+          filename: transfer.filename,
+          scrollController: scrollController,
+        );
+      },
     );
   }
 
@@ -511,6 +526,90 @@ class _NumberedLine extends StatelessWidget {
     return context.textSecondary;
   }
 }
+
+// ---------------------------------------------------------------------------
+// Disk file loader (async bytes from savedFilePath)
+// ---------------------------------------------------------------------------
+
+class _DiskFileLoader extends StatefulWidget {
+  const _DiskFileLoader({
+    required this.path,
+    required this.mimeType,
+    required this.filename,
+    required this.scrollController,
+  });
+
+  final String path;
+  final String mimeType;
+  final String filename;
+  final ScrollController scrollController;
+
+  @override
+  State<_DiskFileLoader> createState() => _DiskFileLoaderState();
+}
+
+class _DiskFileLoaderState extends State<_DiskFileLoader> {
+  Uint8List? _bytes;
+  String? _error;
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    try {
+      final bytes = await File(widget.path).readAsBytes();
+      if (mounted) setState(() => _bytes = bytes);
+    } catch (e) {
+      if (mounted) setState(() => _error = 'Could not read file: $e');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_error != null) {
+      return _ErrorPlaceholder(message: _error!);
+    }
+    if (_bytes == null) {
+      return const Center(
+        child: Padding(
+          padding: EdgeInsets.all(AppTheme.spacing40),
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+    final mime = widget.mimeType.toLowerCase();
+    if (mime.startsWith('image/')) {
+      return _ImageViewer(
+        bytes: _bytes!,
+        scrollController: widget.scrollController,
+      );
+    }
+    if (mime.startsWith('text/') ||
+        mime.contains('json') ||
+        mime.contains('xml') ||
+        mime.contains('gpx') ||
+        mime.contains('kml') ||
+        mime.contains('csv')) {
+      return _TextViewer(
+        bytes: _bytes!,
+        mimeType: mime,
+        scrollController: widget.scrollController,
+      );
+    }
+    return _HexViewer(
+      bytes: _bytes!,
+      filename: widget.filename,
+      scrollController: widget.scrollController,
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Error placeholder
+// ---------------------------------------------------------------------------
 
 class _ErrorPlaceholder extends StatelessWidget {
   const _ErrorPlaceholder({required this.message});

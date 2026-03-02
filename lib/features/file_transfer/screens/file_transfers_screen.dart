@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
@@ -116,14 +118,10 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
                     onReject: transfer.state == TransferState.offerPending
                         ? () => _rejectTransfer(transfer)
                         : null,
-                    onOpen:
-                        transfer.state == TransferState.complete &&
-                            transfer.direction == TransferDirection.inbound
+                    onOpen: transfer.state == TransferState.complete
                         ? () => _saveAndOpenFile(transfer)
                         : null,
-                    onShare:
-                        transfer.state == TransferState.complete &&
-                            transfer.direction == TransferDirection.inbound
+                    onShare: transfer.state == TransferState.complete
                         ? () => _shareFile(transfer)
                         : null,
                     onDelete: !transfer.isActive
@@ -424,13 +422,23 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
       'User opening file: ${transfer.fileIdHex} (${transfer.filename})',
     );
 
+    // If already saved, use existing path directly.
+    if (transfer.savedFilePath != null &&
+        File(transfer.savedFilePath!).existsSync()) {
+      showSuccessSnackBar(context, 'Saved: ${transfer.filename}');
+      return;
+    }
+
     final path = await notifier.saveReceivedFile(transfer.fileIdHex);
     if (!mounted) return;
 
     if (path != null) {
       showSuccessSnackBar(context, 'Saved: ${transfer.filename}');
     } else {
-      showErrorSnackBar(context, 'Could not save file');
+      showErrorSnackBar(
+        context,
+        'Could not save file — transfer bytes not in memory',
+      );
     }
   }
 
@@ -445,9 +453,14 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
       'User sharing file: ${transfer.fileIdHex} (${transfer.filename})',
     );
 
-    // Ensure file is saved first
-    final path = await notifier.saveReceivedFile(transfer.fileIdHex);
-    if (!mounted) return;
+    // If already saved, share directly without re-writing.
+    String? path = transfer.savedFilePath;
+    if (path != null && !File(path).existsSync()) path = null;
+
+    if (path == null) {
+      path = await notifier.saveReceivedFile(transfer.fileIdHex);
+      if (!mounted) return;
+    }
 
     if (path == null) {
       showErrorSnackBar(context, 'Could not save file for sharing');

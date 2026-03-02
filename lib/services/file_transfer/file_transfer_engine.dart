@@ -117,6 +117,13 @@ class FileTransferState {
   /// Raw file bytes (for outbound: full file, for inbound: reassembled).
   final Uint8List? fileBytes;
 
+  /// Path to the file saved on device storage after transfer completion.
+  ///
+  /// Set automatically when a transfer completes and bytes are auto-saved
+  /// to the app documents directory. Persisted to SQLite so the file
+  /// survives app restarts without needing bytes in memory.
+  final String? savedFilePath;
+
   const FileTransferState({
     required this.fileIdHex,
     required this.fileId,
@@ -139,6 +146,7 @@ class FileTransferState {
     this.transportMode = FileTransportMode.auto,
     this.fetchHint = '',
     this.fileBytes,
+    this.savedFilePath,
   });
 
   /// Progress as a fraction [0.0, 1.0].
@@ -170,6 +178,7 @@ class FileTransferState {
     TransferFailReason? failReason,
     DateTime? completedAt,
     Uint8List? fileBytes,
+    String? savedFilePath,
   }) {
     return FileTransferState(
       fileIdHex: fileIdHex,
@@ -193,6 +202,7 @@ class FileTransferState {
       transportMode: transportMode,
       fetchHint: fetchHint,
       fileBytes: fileBytes ?? this.fileBytes,
+      savedFilePath: savedFilePath ?? this.savedFilePath,
     );
   }
 }

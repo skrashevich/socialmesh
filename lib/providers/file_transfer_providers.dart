@@ -186,9 +186,51 @@ class FileTransferStateNotifier extends Notifier<FileTransferListState> {
 
   /// Update a single transfer state (called by engine callback).
   void updateTransfer(FileTransferState transfer) {
+    final prev = state.transfers[transfer.fileIdHex];
     final updated = Map<String, FileTransferState>.from(state.transfers)
       ..[transfer.fileIdHex] = transfer;
     state = state.copyWith(transfers: updated);
+
+    // Auto-save bytes to disk when a transfer completes.
+    // Covers both outbound (sender) and inbound (receiver).
+    final justCompleted =
+        transfer.state == TransferState.complete &&
+        transfer.fileBytes != null &&
+        transfer.savedFilePath == null &&
+        (prev == null || prev.state != TransferState.complete);
+    if (justCompleted) {
+      Future.microtask(() => _autoSaveFile(transfer));
+    }
+  }
+
+  /// Write file bytes to the app documents directory and persist the path.
+  Future<void> _autoSaveFile(FileTransferState transfer) async {
+    if (transfer.fileBytes == null) return;
+    try {
+      final dir = await getApplicationDocumentsDirectory();
+      final transferDir = Directory(
+        p.join(dir.path, 'file_transfers', transfer.fileIdHex),
+      );
+      if (!transferDir.existsSync()) {
+        await transferDir.create(recursive: true);
+      }
+      final filePath = p.join(transferDir.path, transfer.filename);
+      await File(filePath).writeAsBytes(transfer.fileBytes!);
+
+      AppLogging.fileTransfer('Auto-saved: ${transfer.filename} → $filePath');
+
+      // Persist path to DB.
+      final db = ref.read(fileTransferDatabaseProvider);
+      await db.updateSavedPath(transfer.fileIdHex, filePath);
+
+      // Update in-memory state.
+      final withPath = transfer.copyWith(savedFilePath: filePath);
+      final updated = Map<String, FileTransferState>.from(state.transfers)
+        ..[transfer.fileIdHex] = withPath;
+      state = state.copyWith(transfers: updated);
+    } catch (e) {
+      AppLogging.fileTransfer('Auto-save failed for ${transfer.fileIdHex}: $e');
+    }
   }
 
   /// Initiate a new outbound file transfer.
@@ -296,36 +338,58 @@ class FileTransferStateNotifier extends Notifier<FileTransferListState> {
     await engine.requestMissingChunks(fileIdHex);
   }
 
-  /// Save a completed inbound file to the documents directory.
+  /// Save a completed file to the documents directory and return its path.
+  ///
+  /// Works for both outbound (sender) and inbound (receiver) transfers.
+  /// Returns the existing [savedFilePath] if already persisted, otherwise
+  /// writes the in-memory bytes to disk.
   Future<String?> saveReceivedFile(String fileIdHex) async {
     final transfer = state.transfers[fileIdHex];
     if (transfer == null) {
-      AppLogging.fileTransfer('saveReceivedFile: $fileIdHex not found');
+      AppLogging.fileTransfer('saveFile: $fileIdHex not found');
       return null;
     }
     if (transfer.state != TransferState.complete) {
       AppLogging.fileTransfer(
-        'saveReceivedFile: $fileIdHex not complete '
+        'saveFile: $fileIdHex not complete '
         '(${transfer.state.name})',
       );
       return null;
     }
+
+    // Already saved — verify the file still exists on disk.
+    if (transfer.savedFilePath != null) {
+      if (File(transfer.savedFilePath!).existsSync()) {
+        return transfer.savedFilePath;
+      }
+      // File was deleted externally — fall through to re-save if bytes available.
+    }
+
     if (transfer.fileBytes == null) {
-      AppLogging.fileTransfer('saveReceivedFile: $fileIdHex no file bytes');
+      AppLogging.fileTransfer('saveFile: $fileIdHex no file bytes');
       return null;
     }
 
     final dir = await getApplicationDocumentsDirectory();
-    final transferDir = Directory(p.join(dir.path, 'file_transfers'));
+    final transferDir = Directory(
+      p.join(dir.path, 'file_transfers', transfer.fileIdHex),
+    );
     if (!transferDir.existsSync()) {
       await transferDir.create(recursive: true);
     }
 
     final filePath = p.join(transferDir.path, transfer.filename);
-    final file = File(filePath);
-    await file.writeAsBytes(transfer.fileBytes!);
+    await File(filePath).writeAsBytes(transfer.fileBytes!);
 
-    AppLogging.protocol('File saved: ${transfer.filename} → $filePath');
+    AppLogging.fileTransfer('File saved: ${transfer.filename} → $filePath');
+
+    final db = ref.read(fileTransferDatabaseProvider);
+    await db.updateSavedPath(fileIdHex, filePath);
+
+    final withPath = transfer.copyWith(savedFilePath: filePath);
+    final updated = Map<String, FileTransferState>.from(state.transfers)
+      ..[fileIdHex] = withPath;
+    state = state.copyWith(transfers: updated);
 
     return filePath;
   }
