@@ -164,8 +164,10 @@ class FileTransferDatabase {
 
   /// Update only the savedFilePath column for a completed transfer.
   ///
+  /// Pass [path] as `null` to clear a stale path (e.g. after an iOS
+  /// container UUID rotation invalidates a previously stored absolute path).
   /// More efficient than re-writing the full row when only the path changed.
-  Future<void> updateSavedPath(String fileIdHex, String path) async {
+  Future<void> updateSavedPath(String fileIdHex, String? path) async {
     final db = _db;
     if (db == null) return;
 

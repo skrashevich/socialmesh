@@ -177,7 +177,46 @@ class FileTransferStateNotifier extends Notifier<FileTransferListState> {
     final db = ref.read(fileTransferDatabaseProvider);
     await db.init();
     final transfers = await db.loadAllTransfers();
-    final map = {for (final t in transfers) t.fileIdHex: t};
+
+    // Resolve stored file paths to absolute paths for the current install.
+    // Paths are stored as relative strings (e.g. 'file_transfers/<id>/file.txt')
+    // so they survive iOS container UUID rotation across builds/reinstalls.
+    // Any legacy absolute path that no longer exists is cleared.
+    final docsDir = await getApplicationDocumentsDirectory();
+    final resolved = <FileTransferState>[];
+    for (final t in transfers) {
+      if (t.savedFilePath == null) {
+        resolved.add(t);
+      } else if (t.savedFilePath!.startsWith('/')) {
+        // Legacy absolute path — validate, then either keep or clear.
+        if (File(t.savedFilePath!).existsSync()) {
+          resolved.add(t);
+        } else {
+          // Try to recover by rebuilding from relative path.
+          final rel = _relativePathFor(t);
+          final abs = p.join(docsDir.path, rel);
+          if (File(abs).existsSync()) {
+            // Rewrite DB with the now-relative path.
+            await db.updateSavedPath(t.fileIdHex, rel);
+            resolved.add(t.copyWith(savedFilePath: abs));
+          } else {
+            // File truly gone — clear the stale path.
+            await db.updateSavedPath(t.fileIdHex, null);
+            resolved.add(t.copyWith(clearSavedFilePath: true));
+          }
+        }
+      } else {
+        // Relative path — resolve to absolute for in-memory use.
+        final abs = p.join(docsDir.path, t.savedFilePath!);
+        resolved.add(
+          File(abs).existsSync()
+              ? t.copyWith(savedFilePath: abs)
+              : t.copyWith(clearSavedFilePath: true),
+        );
+      }
+    }
+
+    final map = {for (final t in resolved) t.fileIdHex: t};
     AppLogging.fileTransfer(
       'Notifier: loaded ${transfers.length} transfers from database',
     );
@@ -208,23 +247,24 @@ class FileTransferStateNotifier extends Notifier<FileTransferListState> {
     if (transfer.fileBytes == null) return;
     try {
       final dir = await getApplicationDocumentsDirectory();
-      final transferDir = Directory(
+      final rel = _relativePathFor(transfer);
+      final absDir = Directory(
         p.join(dir.path, 'file_transfers', transfer.fileIdHex),
       );
-      if (!transferDir.existsSync()) {
-        await transferDir.create(recursive: true);
+      if (!absDir.existsSync()) {
+        await absDir.create(recursive: true);
       }
-      final filePath = p.join(transferDir.path, transfer.filename);
-      await File(filePath).writeAsBytes(transfer.fileBytes!);
+      final absPath = p.join(dir.path, rel);
+      await File(absPath).writeAsBytes(transfer.fileBytes!);
 
-      AppLogging.fileTransfer('Auto-saved: ${transfer.filename} → $filePath');
+      AppLogging.fileTransfer('Auto-saved: ${transfer.filename} → $rel');
 
-      // Persist path to DB.
+      // Persist relative path to DB — survives iOS container UUID rotation.
       final db = ref.read(fileTransferDatabaseProvider);
-      await db.updateSavedPath(transfer.fileIdHex, filePath);
+      await db.updateSavedPath(transfer.fileIdHex, rel);
 
-      // Update in-memory state.
-      final withPath = transfer.copyWith(savedFilePath: filePath);
+      // Update in-memory state with absolute path.
+      final withPath = transfer.copyWith(savedFilePath: absPath);
       final updated = Map<String, FileTransferState>.from(state.transfers)
         ..[transfer.fileIdHex] = withPath;
       state = state.copyWith(transfers: updated);
@@ -232,6 +272,10 @@ class FileTransferStateNotifier extends Notifier<FileTransferListState> {
       AppLogging.fileTransfer('Auto-save failed for ${transfer.fileIdHex}: $e');
     }
   }
+
+  /// Returns the relative file path for a transfer (relative to docs dir).
+  String _relativePathFor(FileTransferState transfer) =>
+      p.join('file_transfers', transfer.fileIdHex, transfer.filename);
 
   /// Initiate a new outbound file transfer.
   Future<FileTransferState?> sendFile({
@@ -371,6 +415,7 @@ class FileTransferStateNotifier extends Notifier<FileTransferListState> {
     }
 
     final dir = await getApplicationDocumentsDirectory();
+    final rel = _relativePathFor(transfer);
     final transferDir = Directory(
       p.join(dir.path, 'file_transfers', transfer.fileIdHex),
     );
@@ -378,20 +423,20 @@ class FileTransferStateNotifier extends Notifier<FileTransferListState> {
       await transferDir.create(recursive: true);
     }
 
-    final filePath = p.join(transferDir.path, transfer.filename);
-    await File(filePath).writeAsBytes(transfer.fileBytes!);
+    final absPath = p.join(dir.path, rel);
+    await File(absPath).writeAsBytes(transfer.fileBytes!);
 
-    AppLogging.fileTransfer('File saved: ${transfer.filename} → $filePath');
+    AppLogging.fileTransfer('File saved: ${transfer.filename} → $rel');
 
     final db = ref.read(fileTransferDatabaseProvider);
-    await db.updateSavedPath(fileIdHex, filePath);
+    await db.updateSavedPath(fileIdHex, rel);
 
-    final withPath = transfer.copyWith(savedFilePath: filePath);
+    final withPath = transfer.copyWith(savedFilePath: absPath);
     final updated = Map<String, FileTransferState>.from(state.transfers)
       ..[fileIdHex] = withPath;
     state = state.copyWith(transfers: updated);
 
-    return filePath;
+    return absPath;
   }
 
   /// Purge expired transfers.

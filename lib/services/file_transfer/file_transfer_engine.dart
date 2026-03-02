@@ -179,6 +179,7 @@ class FileTransferState {
     DateTime? completedAt,
     Uint8List? fileBytes,
     String? savedFilePath,
+    bool clearSavedFilePath = false,
   }) {
     return FileTransferState(
       fileIdHex: fileIdHex,
@@ -202,7 +203,9 @@ class FileTransferState {
       transportMode: transportMode,
       fetchHint: fetchHint,
       fileBytes: fileBytes ?? this.fileBytes,
-      savedFilePath: savedFilePath ?? this.savedFilePath,
+      savedFilePath: clearSavedFilePath
+          ? null
+          : (savedFilePath ?? this.savedFilePath),
     );
   }
 }
