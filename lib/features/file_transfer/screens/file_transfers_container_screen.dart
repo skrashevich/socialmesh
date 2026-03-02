@@ -58,9 +58,12 @@ class _FileTransfersContainerScreenState
         .where((n) => n.nodeNum != myNodeNum)
         .length;
 
+    final route = ModalRoute.of(context);
+    final canPop = route != null ? !route.isFirst : Navigator.canPop(context);
+
     return GlassScaffold(
       resizeToAvoidBottomInset: false,
-      leading: const HamburgerMenuButton(),
+      leading: canPop ? const BackButton() : const HamburgerMenuButton(),
       centerTitle: true,
       title: 'File Transfers',
       actions: [

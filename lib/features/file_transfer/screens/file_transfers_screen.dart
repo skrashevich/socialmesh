@@ -115,6 +115,7 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
                   child: FileTransferCard(
                     transfer: transfer,
                     onTap: () => _showTransferDetail(transfer),
+                    onInfo: () => _showInfoSheet(transfer),
                     onCancel:
                         transfer.isActive &&
                             transfer.state != TransferState.offerPending
@@ -548,47 +549,22 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
   }
 
   void _showTransferDetail(FileTransferState transfer) {
-    // Show file content preview for completed transfers with bytes
-    if (transfer.state == TransferState.complete &&
-        transfer.fileBytes != null &&
-        transfer.fileBytes!.isNotEmpty) {
-      FileContentPreview.show(context: context, transfer: transfer);
-      return;
+    // For completed transfers with content, go straight to the viewer.
+    // FileContentPreview handles both in-memory bytes and a saved path on disk.
+    if (transfer.state == TransferState.complete) {
+      final canPreview =
+          (transfer.fileBytes != null && transfer.fileBytes!.isNotEmpty) ||
+          transfer.savedFilePath != null;
+      if (canPreview) {
+        FileContentPreview.show(context: context, transfer: transfer);
+        return;
+      }
     }
-
-    AppBottomSheet.show<void>(
-      context: context,
-      child: _TransferDetailSheet(transfer: transfer),
-    );
+    // No previewable content — fall back to the detail sheet.
+    _showInfoSheet(transfer);
   }
-}
 
-// ---------------------------------------------------------------------------
-// Filter bar
-// ---------------------------------------------------------------------------
-
-enum _TransferFilter {
-  all('All'),
-  active('Active'),
-  completed('Done'),
-  inbound('Received'),
-  outbound('Sent');
-
-  const _TransferFilter(this.label);
-  final String label;
-}
-
-// ---------------------------------------------------------------------------
-// Transfer detail sheet
-// ---------------------------------------------------------------------------
-
-class _TransferDetailSheet extends StatelessWidget {
-  const _TransferDetailSheet({required this.transfer});
-
-  final FileTransferState transfer;
-
-  @override
-  Widget build(BuildContext context) {
+  void _showInfoSheet(FileTransferState transfer) {
     final isOutbound = transfer.direction == TransferDirection.outbound;
     final rows = <InfoTableRow>[
       InfoTableRow(
@@ -599,64 +575,56 @@ class _TransferDetailSheet extends StatelessWidget {
       ),
       InfoTableRow(
         label: 'Status',
-        value: _stateLabel(transfer.state),
-        icon: _stateIconData(transfer.state, isOutbound),
-        iconColor: _stateColor(context, transfer.state),
+        value: _transferStateLabel(transfer.state),
+        icon: _transferStateIcon(transfer.state, isOutbound),
+        iconColor: _transferStateColor(context, transfer.state),
       ),
       InfoTableRow(
         label: 'Size',
-        value: _formatSize(transfer.totalBytes),
+        value: _formatTransferSize(transfer.totalBytes),
         icon: Icons.storage,
-        iconColor: context.accentColor,
       ),
       InfoTableRow(
         label: 'MIME Type',
         value: transfer.mimeType,
         icon: Icons.description_outlined,
-        iconColor: context.accentColor,
       ),
       InfoTableRow(
         label: 'Chunks',
         value: '${transfer.completedChunks.length}/${transfer.chunkCount}',
         icon: Icons.grid_view,
-        iconColor: context.accentColor,
       ),
       InfoTableRow(
         label: 'Chunk Size',
         value: '${transfer.chunkSize} B',
         icon: Icons.straighten,
-        iconColor: context.accentColor,
       ),
       if (transfer.targetNodeNum != null)
         InfoTableRow(
           label: 'Target Node',
           value: '!${transfer.targetNodeNum!.toRadixString(16)}',
           icon: Icons.tag,
-          iconColor: context.accentColor,
         ),
       if (transfer.sourceNodeNum != null)
         InfoTableRow(
           label: 'Source Node',
           value: '!${transfer.sourceNodeNum!.toRadixString(16)}',
           icon: Icons.tag,
-          iconColor: context.accentColor,
         ),
       InfoTableRow(
         label: 'Created',
-        value: _formatDateTime(transfer.createdAt),
+        value: _formatTransferDateTime(transfer.createdAt),
         icon: Icons.schedule,
-        iconColor: context.accentColor,
       ),
       InfoTableRow(
         label: 'Expires',
-        value: _formatDateTime(transfer.expiresAt),
+        value: _formatTransferDateTime(transfer.expiresAt),
         icon: Icons.timer_off_outlined,
-        iconColor: context.accentColor,
       ),
       if (transfer.completedAt != null)
         InfoTableRow(
           label: 'Completed',
-          value: _formatDateTime(transfer.completedAt!),
+          value: _formatTransferDateTime(transfer.completedAt!),
           icon: Icons.check_circle_outline,
           iconColor: SemanticColors.success,
         ),
@@ -681,116 +649,116 @@ class _TransferDetailSheet extends StatelessWidget {
           transfer.fileIdHex.length.clamp(0, 16),
         ),
         icon: Icons.fingerprint,
-        iconColor: context.accentColor,
       ),
     ];
-
-    return Padding(
-      padding: const EdgeInsets.all(AppTheme.spacing20),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Filename
-          Text(
-            transfer.filename,
-            style: TextStyle(
-              color: context.textPrimary,
-              fontSize: 18,
-              fontWeight: FontWeight.w700,
-            ),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
-          const SizedBox(height: AppTheme.spacing16),
-
-          // Section header
-          Text(
-            'TRANSFER DETAILS',
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: context.textTertiary,
-              letterSpacing: 1,
-            ),
-          ),
-          const SizedBox(height: AppTheme.spacing12),
-
-          // Zebra info table
-          InfoTable(rows: rows),
-
-          // Progress bar for active transfers
-          if (transfer.isActive) ...[
-            const SizedBox(height: AppTheme.spacing16),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(AppTheme.radius4),
-              child: LinearProgressIndicator(
-                value: transfer.progress,
-                minHeight: 6,
-                backgroundColor: context.border.withValues(alpha: 0.3),
-                valueColor: AlwaysStoppedAnimation(context.accentColor),
-              ),
-            ),
-            const SizedBox(height: AppTheme.spacing4),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                '${(transfer.progress * 100).toStringAsFixed(0)}%',
-                style: TextStyle(color: context.textTertiary, fontSize: 12),
-              ),
-            ),
-          ],
-
-          const SizedBox(height: AppTheme.spacing16),
-        ],
-      ),
+    InfoTableSheet.show(
+      context: context,
+      title: transfer.filename,
+      sectionLabel: 'Transfer Details',
+      rows: rows,
+      footer: transfer.isActive
+          ? _TransferProgressFooter(transfer: transfer)
+          : null,
     );
   }
+}
 
-  String _stateLabel(TransferState state) {
-    return switch (state) {
-      TransferState.created => 'Preparing',
-      TransferState.offerSent => 'Offer Sent',
-      TransferState.offerPending => 'Pending Acceptance',
-      TransferState.chunking => 'Transferring',
-      TransferState.waitingMissing => 'Recovering',
-      TransferState.complete => 'Complete',
-      TransferState.failed => 'Failed',
-      TransferState.cancelled => 'Cancelled',
+// ---------------------------------------------------------------------------
+// Filter bar
+// ---------------------------------------------------------------------------
+
+enum _TransferFilter {
+  all('All'),
+  active('Active'),
+  completed('Done'),
+  inbound('Received'),
+  outbound('Sent');
+
+  const _TransferFilter(this.label);
+  final String label;
+}
+
+// ---------------------------------------------------------------------------
+// File-scope helpers for the transfer detail sheet
+// ---------------------------------------------------------------------------
+
+String _transferStateLabel(TransferState state) => switch (state) {
+  TransferState.created => 'Preparing',
+  TransferState.offerSent => 'Offer Sent',
+  TransferState.offerPending => 'Pending Acceptance',
+  TransferState.chunking => 'Transferring',
+  TransferState.waitingMissing => 'Recovering',
+  TransferState.complete => 'Complete',
+  TransferState.failed => 'Failed',
+  TransferState.cancelled => 'Cancelled',
+};
+
+IconData _transferStateIcon(TransferState state, bool isOutbound) =>
+    switch (state) {
+      TransferState.created || TransferState.offerSent => Icons.schedule,
+      TransferState.offerPending => Icons.inbox,
+      TransferState.chunking => isOutbound ? Icons.upload : Icons.download,
+      TransferState.waitingMissing => Icons.sync_problem,
+      TransferState.complete => Icons.check_circle_outline,
+      TransferState.failed => Icons.error_outline,
+      TransferState.cancelled => Icons.cancel_outlined,
     };
+
+Color _transferStateColor(BuildContext context, TransferState state) =>
+    switch (state) {
+      TransferState.created ||
+      TransferState.offerSent ||
+      TransferState.cancelled => context.textTertiary,
+      TransferState.offerPending ||
+      TransferState.waitingMissing => SemanticColors.warning,
+      TransferState.chunking => context.accentColor,
+      TransferState.complete => SemanticColors.success,
+      TransferState.failed => SemanticColors.error,
+    };
+
+String _formatTransferSize(int bytes) {
+  if (bytes < 1024) return '$bytes B';
+  return '${(bytes / 1024.0).toStringAsFixed(1)} KB';
+}
+
+String _formatTransferDateTime(DateTime dt) {
+  return '${dt.month}/${dt.day} '
+      '${dt.hour.toString().padLeft(2, '0')}:'
+      '${dt.minute.toString().padLeft(2, '0')}';
+}
+
+// ---------------------------------------------------------------------------
+// Progress footer for active transfers
+// ---------------------------------------------------------------------------
+
+class _TransferProgressFooter extends StatelessWidget {
+  const _TransferProgressFooter({required this.transfer});
+
+  final FileTransferState transfer;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(AppTheme.radius4),
+          child: LinearProgressIndicator(
+            value: transfer.progress,
+            minHeight: 6,
+            backgroundColor: context.border.withValues(alpha: 0.3),
+            valueColor: AlwaysStoppedAnimation(context.accentColor),
+          ),
+        ),
+        const SizedBox(height: AppTheme.spacing4),
+        Align(
+          alignment: Alignment.centerRight,
+          child: Text(
+            '${(transfer.progress * 100).toStringAsFixed(0)}%',
+            style: TextStyle(color: context.textTertiary, fontSize: 12),
+          ),
+        ),
+      ],
+    );
   }
-
-  String _formatSize(int bytes) {
-    if (bytes < 1024) return '$bytes B';
-    final kb = bytes / 1024.0;
-    return '${kb.toStringAsFixed(1)} KB';
-  }
-
-  String _formatDateTime(DateTime dt) {
-    return '${dt.month}/${dt.day} ${dt.hour.toString().padLeft(2, '0')}:'
-        '${dt.minute.toString().padLeft(2, '0')}';
-  }
-
-  IconData _stateIconData(TransferState state, bool isOutbound) =>
-      switch (state) {
-        TransferState.created || TransferState.offerSent => Icons.schedule,
-        TransferState.offerPending => Icons.inbox,
-        TransferState.chunking => isOutbound ? Icons.upload : Icons.download,
-        TransferState.waitingMissing => Icons.sync_problem,
-        TransferState.complete => Icons.check_circle_outline,
-        TransferState.failed => Icons.error_outline,
-        TransferState.cancelled => Icons.cancel_outlined,
-      };
-
-  Color _stateColor(BuildContext context, TransferState state) =>
-      switch (state) {
-        TransferState.created ||
-        TransferState.offerSent ||
-        TransferState.cancelled => context.textTertiary,
-        TransferState.offerPending ||
-        TransferState.waitingMissing => SemanticColors.warning,
-        TransferState.chunking => context.accentColor,
-        TransferState.complete => SemanticColors.success,
-        TransferState.failed => SemanticColors.error,
-      };
 }

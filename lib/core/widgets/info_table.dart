@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
 import '../theme.dart';
+import 'app_bottom_sheet.dart';
 
 /// A single row item for the InfoTable
 class InfoTableRow {
@@ -116,6 +117,91 @@ class InfoTable extends StatelessWidget {
           }).toList(),
         ),
       ),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// InfoTableSheet — reusable scrollable sheet wrapping an InfoTable
+// ---------------------------------------------------------------------------
+
+/// A standardised bottom sheet that renders an [InfoTable] inside a scrollable
+/// sheet with a title, optional section label, and optional footer widget.
+///
+/// Use [InfoTableSheet.show] anywhere you need a consistent info-table sheet.
+/// Both the padding and typography exactly follow the device-status sheet.
+class InfoTableSheet extends StatelessWidget {
+  const InfoTableSheet({
+    super.key,
+    required this.rows,
+    this.sectionLabel,
+    this.footer,
+    required this.scrollController,
+  });
+
+  final List<InfoTableRow> rows;
+  final String? sectionLabel;
+  final Widget? footer;
+  final ScrollController scrollController;
+
+  /// Shows a standard info-table bottom sheet.
+  ///
+  /// [title] is displayed as the pinned sheet header.
+  /// [sectionLabel] is rendered above the table in ALL-CAPS.
+  /// [footer] is rendered below the table (scrolls with it).
+  static Future<void> show({
+    required BuildContext context,
+    required String title,
+    required List<InfoTableRow> rows,
+    String? sectionLabel,
+    Widget? footer,
+    double initialChildSize = 0.6,
+    double maxChildSize = 0.95,
+  }) {
+    return AppBottomSheet.showScrollable<void>(
+      context: context,
+      title: title,
+      initialChildSize: initialChildSize,
+      maxChildSize: maxChildSize,
+      builder: (sc) => InfoTableSheet(
+        rows: rows,
+        sectionLabel: sectionLabel,
+        footer: footer,
+        scrollController: sc,
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      controller: scrollController,
+      padding: const EdgeInsets.fromLTRB(
+        AppTheme.spacing20,
+        0,
+        AppTheme.spacing20,
+        AppTheme.spacing20,
+      ),
+      children: [
+        if (sectionLabel != null) ...[
+          Text(
+            sectionLabel!.toUpperCase(),
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              color: context.textTertiary,
+              letterSpacing: 1,
+            ),
+          ),
+          const SizedBox(height: AppTheme.spacing12),
+        ],
+        InfoTable(rows: rows),
+        if (footer != null) ...[
+          const SizedBox(height: AppTheme.spacing16),
+          footer!,
+        ],
+        const SizedBox(height: AppTheme.spacing8),
+      ],
     );
   }
 }

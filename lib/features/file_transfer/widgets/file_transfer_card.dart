@@ -24,6 +24,7 @@ class FileTransferCard extends ConsumerWidget {
     this.onAccept,
     this.onReject,
     this.onDelete,
+    this.onInfo,
     this.compact = false,
   });
 
@@ -35,6 +36,7 @@ class FileTransferCard extends ConsumerWidget {
   final VoidCallback? onAccept;
   final VoidCallback? onReject;
   final VoidCallback? onDelete;
+  final VoidCallback? onInfo;
   final bool compact;
 
   @override
@@ -241,6 +243,7 @@ class FileTransferCard extends ConsumerWidget {
             onAccept: onAccept,
             onReject: onReject,
             onDelete: onDelete,
+            onInfo: onInfo,
           ),
         ],
       ],
@@ -253,7 +256,8 @@ class FileTransferCard extends ConsumerWidget {
       onShare != null ||
       onAccept != null ||
       onReject != null ||
-      onDelete != null;
+      onDelete != null ||
+      onInfo != null;
 
   String get _statusText {
     switch (transfer.state) {
@@ -640,6 +644,7 @@ class _ActionRow extends StatelessWidget {
     this.onAccept,
     this.onReject,
     this.onDelete,
+    this.onInfo,
   });
 
   final FileTransferState transfer;
@@ -649,6 +654,7 @@ class _ActionRow extends StatelessWidget {
   final VoidCallback? onAccept;
   final VoidCallback? onReject;
   final VoidCallback? onDelete;
+  final VoidCallback? onInfo;
 
   @override
   Widget build(BuildContext context) {
@@ -703,6 +709,16 @@ class _ActionRow extends StatelessWidget {
               onTap: onShare!,
             ),
           ],
+        ],
+        // Info button — always available when provided
+        if (onInfo != null) ...[
+          const SizedBox(width: AppTheme.spacing8),
+          _ActionButton(
+            label: 'Info',
+            icon: Icons.info_outline,
+            color: context.textSecondary,
+            onTap: onInfo!,
+          ),
         ],
         // Delete button for terminal transfers
         if (!transfer.isActive && onDelete != null) ...[
