@@ -2305,6 +2305,106 @@ class HelpContent {
   );
 
   // ============================================================================
+  // FILE TRANSFER HELP
+  // ============================================================================
+
+  static final HelpTopic fileTransferOverview = HelpTopic(
+    id: 'file_transfer_overview',
+    title: 'File Transfers',
+    description: 'Send files over the mesh radio without internet',
+    icon: Icons.attach_file,
+    category: catNetwork,
+    priority: 28,
+    steps: [
+      HelpStep(
+        id: 'ft_intro',
+        bubbleText:
+            "**File Transfers** let you send small files — text, configs, coordinates — directly over LoRa radio. No internet, no servers.",
+        icoMood: MeshBrainMood.excited,
+        canGoBack: false,
+      ),
+      HelpStep(
+        id: 'ft_how',
+        bubbleText:
+            "Files are split into **~200-byte chunks** and sent one at a time over the mesh. The receiver reassembles them automatically.",
+        icoMood: MeshBrainMood.speaking,
+      ),
+      HelpStep(
+        id: 'ft_nack',
+        bubbleText:
+            "Missed a chunk? No problem. The receiver sends a **NACK** (negative acknowledgement) to request retransmission of exactly the missing pieces.",
+        icoMood: MeshBrainMood.approving,
+      ),
+      HelpStep(
+        id: 'ft_limit',
+        bubbleText:
+            "Files are capped at **8 KB**. LoRa is a slow, shared, low-power radio — a single transfer can occupy the channel for up to a minute at long-range settings.",
+        icoMood: MeshBrainMood.alert,
+      ),
+      HelpStep(
+        id: 'ft_beta',
+        bubbleText:
+            "This feature is **BETA**. Both nodes must be running Socialmesh on the same mesh channel. Standard Meshtastic nodes cannot receive these transfers.",
+        icoMood: MeshBrainMood.curious,
+      ),
+      HelpStep(
+        id: 'ft_contacts',
+        bubbleText:
+            "Use the **Contacts** tab to choose a node, then tap **Send File**. The Contacts tab shows every node your device has seen on the mesh.",
+        icoMood: MeshBrainMood.speaking,
+      ),
+    ],
+  );
+
+  static final HelpTopic fileTransferLimits = HelpTopic(
+    id: 'file_transfer_limits',
+    title: 'Why Only 8 KB?',
+    description: 'Airtime budget and LoRa duty cycle explained',
+    icon: Icons.timer_outlined,
+    category: catNetwork,
+    priority: 29,
+    steps: [
+      HelpStep(
+        id: 'ftl_shared',
+        bubbleText:
+            "LoRa channels are **shared and slow**. Every byte you send is airtime stolen from every other node in range. Treat it like a walkie-talkie frequency, not Wi-Fi.",
+        icoMood: MeshBrainMood.alert,
+        canGoBack: false,
+      ),
+      HelpStep(
+        id: 'ftl_toa',
+        bubbleText:
+            "**Time on Air** per chunk depends on Spreading Factor (SF). SF7 (fast, short range): ~30 ms/chunk. SF12 (slow, long range): ~1,500 ms/chunk.",
+        icoMood: MeshBrainMood.speaking,
+      ),
+      HelpStep(
+        id: 'ftl_math',
+        bubbleText:
+            "8 KB ÷ 200 bytes/chunk = **41 chunks**. At SF7: ~1.2 seconds total. At SF12: **~62 seconds** of continuous radio transmission.",
+        icoMood: MeshBrainMood.curious,
+      ),
+      HelpStep(
+        id: 'ftl_duty',
+        bubbleText:
+            "EU868 and similar bands impose a **1% duty cycle** — your radio can only transmit for 36 seconds per hour. At SF12, one 8 KB transfer nearly exhausts that entire budget.",
+        icoMood: MeshBrainMood.alert,
+      ),
+      HelpStep(
+        id: 'ftl_cap',
+        bubbleText:
+            "8 KB is the **safest ceiling** that keeps transfers survivable at worst-case spreading factors without violating duty cycle regulations or blocking the mesh for minutes.",
+        icoMood: MeshBrainMood.approving,
+      ),
+      HelpStep(
+        id: 'ftl_usb',
+        bubbleText:
+            "BLE and USB-connected transfers carry no radio duty-cycle risk. In a future release, higher limits will be unlocked for direct wired connections.",
+        icoMood: MeshBrainMood.speaking,
+      ),
+    ],
+  );
+
+  // ============================================================================
   // ALL TOPICS
   // ============================================================================
 
@@ -2352,6 +2452,8 @@ class HelpContent {
     tracerouteOverview,
     aetherOverview,
     takGatewayOverview,
+    fileTransferOverview,
+    fileTransferLimits,
   ];
 
   /// Get a topic by ID

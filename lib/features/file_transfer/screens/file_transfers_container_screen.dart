@@ -12,6 +12,7 @@ import '../../../core/theme.dart';
 import '../../../core/widgets/app_bar_overflow_menu.dart';
 import '../../../core/widgets/app_bottom_sheet.dart';
 import '../../../core/widgets/glass_scaffold.dart';
+import '../../../core/widgets/ico_help_system.dart';
 import '../../../core/widgets/node_selector_sheet.dart';
 import '../../../providers/app_providers.dart';
 import '../../../providers/file_transfer_providers.dart';
@@ -67,124 +68,131 @@ class _FileTransfersContainerScreenState
     final route = ModalRoute.of(context);
     final canPop = route != null ? !route.isFirst : Navigator.canPop(context);
 
-    return GlassScaffold(
-      resizeToAvoidBottomInset: false,
-      leading: canPop ? const BackButton() : const HamburgerMenuButton(),
-      centerTitle: true,
-      title: 'File Transfers',
-      actions: [
-        const DeviceStatusButton(),
-        AppBarOverflowMenu<String>(
-          onSelected: _handleOverflowAction,
-          itemBuilder: (context) => [
-            PopupMenuItem<String>(
-              value: 'pick_file',
-              child: ListTile(
-                leading: Icon(
-                  Icons.attach_file,
-                  color: context.accentColor,
-                  size: 20,
-                ),
-                title: const Text('Send File'),
-                contentPadding: EdgeInsets.zero,
-              ),
-            ),
-            PopupMenuItem<String>(
-              value: 'clear_done',
-              child: ListTile(
-                leading: Icon(
-                  Icons.cleaning_services_outlined,
-                  color: context.textSecondary,
-                  size: 20,
-                ),
-                title: const Text('Clear Completed'),
-                contentPadding: EdgeInsets.zero,
-              ),
-            ),
-            PopupMenuItem<String>(
-              value: 'purge',
-              child: ListTile(
-                leading: Icon(
-                  Icons.delete_sweep_outlined,
-                  color: context.textSecondary,
-                  size: 20,
-                ),
-                title: const Text('Purge Expired'),
-                contentPadding: EdgeInsets.zero,
-              ),
-            ),
-          ],
-        ),
-      ],
-      bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(48),
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(color: context.border.withValues(alpha: 0.3)),
-            ),
-          ),
-          child: TabBar(
-            controller: _tabController,
-            indicatorColor: context.accentColor,
-            indicatorWeight: 3,
-            labelColor: context.accentColor,
-            unselectedLabelColor: context.textSecondary,
-            labelStyle: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-            ),
-            unselectedLabelStyle: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-            ),
-            tabs: [
-              Tab(
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Text('Contacts'),
-                    const SizedBox(width: AppTheme.spacing6),
-                    _TabBadge(count: contactCount),
-                  ],
+    return HelpTourController(
+      topicId: 'file_transfer_overview',
+      stepKeys: const {},
+      child: GlassScaffold(
+        resizeToAvoidBottomInset: false,
+        leading: canPop ? const BackButton() : const HamburgerMenuButton(),
+        centerTitle: true,
+        title: 'File Transfers',
+        actions: [
+          IcoHelpAppBarButton(topicId: 'file_transfer_overview'),
+          const DeviceStatusButton(),
+          AppBarOverflowMenu<String>(
+            onSelected: _handleOverflowAction,
+            itemBuilder: (context) => [
+              PopupMenuItem<String>(
+                value: 'pick_file',
+                child: ListTile(
+                  leading: Icon(
+                    Icons.attach_file,
+                    color: context.accentColor,
+                    size: 20,
+                  ),
+                  title: const Text('Send File'),
+                  contentPadding: EdgeInsets.zero,
                 ),
               ),
-              Tab(
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Text('Files'),
-                    const SizedBox(width: AppTheme.spacing6),
-                    _TabBadge(
-                      count: fileCount,
-                      showDot: activeCount > 0 || pendingCount > 0,
-                    ),
-                  ],
+              PopupMenuItem<String>(
+                value: 'clear_done',
+                child: ListTile(
+                  leading: Icon(
+                    Icons.cleaning_services_outlined,
+                    color: context.textSecondary,
+                    size: 20,
+                  ),
+                  title: const Text('Clear Completed'),
+                  contentPadding: EdgeInsets.zero,
+                ),
+              ),
+              PopupMenuItem<String>(
+                value: 'purge',
+                child: ListTile(
+                  leading: Icon(
+                    Icons.delete_sweep_outlined,
+                    color: context.textSecondary,
+                    size: 20,
+                  ),
+                  title: const Text('Purge Expired'),
+                  contentPadding: EdgeInsets.zero,
                 ),
               ),
             ],
           ),
+        ],
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(48),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: context.border.withValues(alpha: 0.3),
+                ),
+              ),
+            ),
+            child: TabBar(
+              controller: _tabController,
+              indicatorColor: context.accentColor,
+              indicatorWeight: 3,
+              labelColor: context.accentColor,
+              unselectedLabelColor: context.textSecondary,
+              labelStyle: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+              unselectedLabelStyle: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
+              tabs: [
+                Tab(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text('Contacts'),
+                      const SizedBox(width: AppTheme.spacing6),
+                      _TabBadge(count: contactCount),
+                    ],
+                  ),
+                ),
+                Tab(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text('Files'),
+                      const SizedBox(width: AppTheme.spacing6),
+                      _TabBadge(
+                        count: fileCount,
+                        showDot: activeCount > 0 || pendingCount > 0,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
+        // Use hasScrollBody: true because each TabBarView child contains
+        // its own CustomScrollView. hasScrollBody: false would force
+        // intrinsic dimension computation which CustomScrollView cannot
+        // provide, causing a null check crash in RenderViewportBase.
+        slivers: [
+          SliverFillRemaining(
+            hasScrollBody: true,
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                const FileTransferContactsScreen(),
+                FileTransfersScreen(
+                  embedded: true,
+                  onSwitchToContacts: () => _tabController.animateTo(0),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
-      // Use hasScrollBody: true because each TabBarView child contains
-      // its own CustomScrollView. hasScrollBody: false would force
-      // intrinsic dimension computation which CustomScrollView cannot
-      // provide, causing a null check crash in RenderViewportBase.
-      slivers: [
-        SliverFillRemaining(
-          hasScrollBody: true,
-          child: TabBarView(
-            controller: _tabController,
-            children: [
-              const FileTransferContactsScreen(),
-              FileTransfersScreen(
-                embedded: true,
-                onSwitchToContacts: () => _tabController.animateTo(0),
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 
