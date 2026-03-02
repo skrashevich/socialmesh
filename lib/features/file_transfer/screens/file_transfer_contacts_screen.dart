@@ -658,51 +658,18 @@ class _ContactDetailSheet extends StatelessWidget {
     return CustomScrollView(
       controller: scrollController,
       slivers: [
-        // Handle bar + close button
+        // Handle bar
         SliverToBoxAdapter(
-          child: Row(
-            children: [
-              const Spacer(),
-              GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () => Navigator.of(context).pop(),
-                child: Container(
-                  margin: const EdgeInsets.only(top: AppTheme.spacing12),
-                  width: 36,
-                  height: 4,
-                  decoration: BoxDecoration(
-                    color: context.border.withValues(alpha: 0.5),
-                    borderRadius: BorderRadius.circular(AppTheme.radius2),
-                  ),
-                ),
+          child: Center(
+            child: Container(
+              margin: const EdgeInsets.only(top: AppTheme.spacing12),
+              width: 36,
+              height: 4,
+              decoration: BoxDecoration(
+                color: context.border.withValues(alpha: 0.5),
+                borderRadius: BorderRadius.circular(AppTheme.radius2),
               ),
-              const Spacer(),
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: AppTheme.spacing8,
-                  right: AppTheme.spacing12,
-                ),
-                child: GestureDetector(
-                  onTap: () {
-                    HapticFeedback.lightImpact();
-                    Navigator.of(context).pop();
-                  },
-                  child: Container(
-                    width: 28,
-                    height: 28,
-                    decoration: BoxDecoration(
-                      color: context.border.withValues(alpha: 0.15),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.close,
-                      size: 14,
-                      color: context.textTertiary,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
         ),
 

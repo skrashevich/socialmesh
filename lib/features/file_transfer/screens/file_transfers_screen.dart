@@ -10,6 +10,7 @@ import '../../../core/theme.dart';
 import '../../../core/widgets/app_bar_overflow_menu.dart';
 import '../../../core/widgets/app_bottom_sheet.dart';
 import '../../../core/widgets/glass_scaffold.dart';
+import '../../../core/widgets/info_table.dart';
 import '../../../core/widgets/node_selector_sheet.dart';
 import '../../../core/widgets/search_filter_header.dart';
 import '../../../core/widgets/status_filter_chip.dart';
@@ -596,13 +597,109 @@ class _TransferDetailSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isOutbound = transfer.direction == TransferDirection.outbound;
+    final rows = <InfoTableRow>[
+      InfoTableRow(
+        label: 'Direction',
+        value: isOutbound ? 'Sent' : 'Received',
+        icon: isOutbound ? Icons.arrow_upward : Icons.arrow_downward,
+        iconColor: isOutbound ? AppTheme.primaryBlue : AppTheme.primaryPurple,
+      ),
+      InfoTableRow(
+        label: 'Status',
+        value: _stateLabel(transfer.state),
+        icon: _stateIconData(transfer.state, isOutbound),
+        iconColor: _stateColor(context, transfer.state),
+      ),
+      InfoTableRow(
+        label: 'Size',
+        value: _formatSize(transfer.totalBytes),
+        icon: Icons.storage,
+        iconColor: context.accentColor,
+      ),
+      InfoTableRow(
+        label: 'MIME Type',
+        value: transfer.mimeType,
+        icon: Icons.description_outlined,
+        iconColor: context.accentColor,
+      ),
+      InfoTableRow(
+        label: 'Chunks',
+        value: '${transfer.completedChunks.length}/${transfer.chunkCount}',
+        icon: Icons.grid_view,
+        iconColor: context.accentColor,
+      ),
+      InfoTableRow(
+        label: 'Chunk Size',
+        value: '${transfer.chunkSize} B',
+        icon: Icons.straighten,
+        iconColor: context.accentColor,
+      ),
+      if (transfer.targetNodeNum != null)
+        InfoTableRow(
+          label: 'Target Node',
+          value: '!${transfer.targetNodeNum!.toRadixString(16)}',
+          icon: Icons.tag,
+          iconColor: context.accentColor,
+        ),
+      if (transfer.sourceNodeNum != null)
+        InfoTableRow(
+          label: 'Source Node',
+          value: '!${transfer.sourceNodeNum!.toRadixString(16)}',
+          icon: Icons.tag,
+          iconColor: context.accentColor,
+        ),
+      InfoTableRow(
+        label: 'Created',
+        value: _formatDateTime(transfer.createdAt),
+        icon: Icons.schedule,
+        iconColor: context.accentColor,
+      ),
+      InfoTableRow(
+        label: 'Expires',
+        value: _formatDateTime(transfer.expiresAt),
+        icon: Icons.timer_off_outlined,
+        iconColor: context.accentColor,
+      ),
+      if (transfer.completedAt != null)
+        InfoTableRow(
+          label: 'Completed',
+          value: _formatDateTime(transfer.completedAt!),
+          icon: Icons.check_circle_outline,
+          iconColor: SemanticColors.success,
+        ),
+      if (transfer.failReason != null)
+        InfoTableRow(
+          label: 'Failure',
+          value: transfer.failReason!.name,
+          icon: Icons.error_outline,
+          iconColor: SemanticColors.error,
+        ),
+      if (transfer.nackRounds > 0)
+        InfoTableRow(
+          label: 'NACK Rounds',
+          value: '${transfer.nackRounds}',
+          icon: Icons.sync_problem,
+          iconColor: SemanticColors.warning,
+        ),
+      InfoTableRow(
+        label: 'Transfer ID',
+        value: transfer.fileIdHex.substring(
+          0,
+          transfer.fileIdHex.length.clamp(0, 16),
+        ),
+        icon: Icons.fingerprint,
+        iconColor: context.accentColor,
+      ),
+    ];
+
     return Padding(
       padding: const EdgeInsets.all(AppTheme.spacing20),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Title
+          // Filename
           Text(
             transfer.filename,
             style: TextStyle(
@@ -615,62 +712,20 @@ class _TransferDetailSheet extends StatelessWidget {
           ),
           const SizedBox(height: AppTheme.spacing16),
 
-          // Metadata rows
-          _DetailRow(
-            label: 'Direction',
-            value: transfer.direction == TransferDirection.outbound
-                ? 'Sent'
-                : 'Received',
+          // Section header
+          Text(
+            'TRANSFER DETAILS',
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              color: context.textTertiary,
+              letterSpacing: 1,
+            ),
           ),
-          _DetailRow(label: 'Status', value: _stateLabel(transfer.state)),
-          _DetailRow(label: 'Size', value: _formatSize(transfer.totalBytes)),
-          _DetailRow(label: 'MIME Type', value: transfer.mimeType),
-          _DetailRow(
-            label: 'Chunks',
-            value: '${transfer.completedChunks.length}/${transfer.chunkCount}',
-          ),
-          _DetailRow(label: 'Chunk Size', value: '${transfer.chunkSize} B'),
+          const SizedBox(height: AppTheme.spacing12),
 
-          if (transfer.targetNodeNum != null)
-            _DetailRow(
-              label: 'Target Node',
-              value: '!${transfer.targetNodeNum!.toRadixString(16)}',
-            ),
-          if (transfer.sourceNodeNum != null)
-            _DetailRow(
-              label: 'Source Node',
-              value: '!${transfer.sourceNodeNum!.toRadixString(16)}',
-            ),
-
-          _DetailRow(
-            label: 'Created',
-            value: _formatDateTime(transfer.createdAt),
-          ),
-          _DetailRow(
-            label: 'Expires',
-            value: _formatDateTime(transfer.expiresAt),
-          ),
-          if (transfer.completedAt != null)
-            _DetailRow(
-              label: 'Completed',
-              value: _formatDateTime(transfer.completedAt!),
-            ),
-          if (transfer.failReason != null)
-            _DetailRow(
-              label: 'Failure',
-              value: transfer.failReason!.name,
-              valueColor: SemanticColors.error,
-            ),
-          if (transfer.nackRounds > 0)
-            _DetailRow(label: 'NACK Rounds', value: '${transfer.nackRounds}'),
-
-          _DetailRow(
-            label: 'Transfer ID',
-            value: transfer.fileIdHex.substring(
-              0,
-              transfer.fileIdHex.length.clamp(0, 16),
-            ),
-          ),
+          // Zebra info table
+          InfoTable(rows: rows),
 
           // Progress bar for active transfers
           if (transfer.isActive) ...[
@@ -723,45 +778,27 @@ class _TransferDetailSheet extends StatelessWidget {
     return '${dt.month}/${dt.day} ${dt.hour.toString().padLeft(2, '0')}:'
         '${dt.minute.toString().padLeft(2, '0')}';
   }
-}
 
-class _DetailRow extends StatelessWidget {
-  const _DetailRow({required this.label, required this.value, this.valueColor});
+  IconData _stateIconData(TransferState state, bool isOutbound) =>
+      switch (state) {
+        TransferState.created || TransferState.offerSent => Icons.schedule,
+        TransferState.offerPending => Icons.inbox,
+        TransferState.chunking => isOutbound ? Icons.upload : Icons.download,
+        TransferState.waitingMissing => Icons.sync_problem,
+        TransferState.complete => Icons.check_circle_outline,
+        TransferState.failed => Icons.error_outline,
+        TransferState.cancelled => Icons.cancel_outlined,
+      };
 
-  final String label;
-  final String value;
-  final Color? valueColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: AppTheme.spacing6),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 110,
-            child: Text(
-              label,
-              style: TextStyle(
-                color: context.textTertiary,
-                fontSize: 13,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
-          Expanded(
-            child: Text(
-              value,
-              style: TextStyle(
-                color: valueColor ?? context.textPrimary,
-                fontSize: 13,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  Color _stateColor(BuildContext context, TransferState state) =>
+      switch (state) {
+        TransferState.created ||
+        TransferState.offerSent ||
+        TransferState.cancelled => context.textTertiary,
+        TransferState.offerPending ||
+        TransferState.waitingMissing => SemanticColors.warning,
+        TransferState.chunking => context.accentColor,
+        TransferState.complete => SemanticColors.success,
+        TransferState.failed => SemanticColors.error,
+      };
 }
