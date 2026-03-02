@@ -87,7 +87,7 @@ class MeshCoreContact {
   String get shortPubKeyHex {
     final hex = publicKeyHex;
     if (hex.length < 16) return hex;
-    return '<${hex.substring(0, 8)}...${hex.substring(hex.length - 8)}>';
+    return '<${hex.substring(0, 8)}…${hex.substring(hex.length - 8)}>';
   }
 
   /// Human-readable type label.

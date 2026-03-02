@@ -1186,7 +1186,7 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
           Flexible(
             child: Text(
               keyBase64.isNotEmpty
-                  ? '${keyBase64.substring(0, keyBase64.length.clamp(0, 8))}...'
+                  ? '${keyBase64.substring(0, keyBase64.length.clamp(0, 8))}…'
                   : '-',
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: context.textPrimary,

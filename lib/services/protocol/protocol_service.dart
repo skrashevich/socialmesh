@@ -3784,7 +3784,7 @@ class ProtocolService {
         final excess = payload.length - _maxSignalPayloadBytes;
         final trimLen = effectiveContent.length - excess - 3;
         if (trimLen > 10) {
-          effectiveContent = '${effectiveContent.substring(0, trimLen)}...';
+          effectiveContent = '${effectiveContent.substring(0, trimLen)}…';
           signalPacket = MeshSignalPacket(
             senderNodeId: _myNodeNum!,
             packetId: 0,

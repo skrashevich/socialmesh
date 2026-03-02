@@ -117,7 +117,7 @@ class LilygoApiService {
           '$_tag FAILED to fetch product $handle: HTTP ${response.statusCode}',
         );
         AppLogging.shop(
-          '$_tag Response body: ${response.body.substring(0, 200.clamp(0, response.body.length))}…',
+          '$_tag Response body: ${response.body.substring(0, 200.clamp(0, response.body.length))}...',
         );
         return null;
       }

@@ -147,7 +147,7 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
             () {
               final hex = _bytesToHex(selfInfo.pubKey);
               final display = hex.length >= 16
-                  ? '${hex.substring(0, 16)}...'
+                  ? '${hex.substring(0, 16)}…'
                   : hex;
               return _buildInfoRow(
                 'Public Key',
