@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -99,7 +100,7 @@ class _FloatingNode {
 }
 
 class _AnimatedEmptyStateState extends State<AnimatedEmptyState>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   late AnimationController _pulseController;
   late AnimationController _convergeController;
   late Ticker _floatTicker;
@@ -122,6 +123,7 @@ class _AnimatedEmptyStateState extends State<AnimatedEmptyState>
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
 
     // Radar pulse animation
     _pulseController = AnimationController(
@@ -145,18 +147,23 @@ class _AnimatedEmptyStateState extends State<AnimatedEmptyState>
       }
     })..start();
 
-    _accelerometerSub =
-        accelerometerEventStream(
-          samplingPeriod: const Duration(milliseconds: 16),
-        ).listen((event) {
-          _updateTilt(event.x, event.y);
-        });
-    _gyroscopeSub =
-        gyroscopeEventStream(
-          samplingPeriod: const Duration(milliseconds: 16),
-        ).listen((event) {
-          _updateGyro(event.x, event.y);
-        });
+    // Guard: CMMotionManager is unavailable on macOS / Mac Catalyst and causes
+    // NSInternalInconsistencyException when the native thunk fires into the
+    // Flutter engine from a CoreMotion background thread.
+    if (defaultTargetPlatform != TargetPlatform.macOS) {
+      _accelerometerSub =
+          accelerometerEventStream(
+            samplingPeriod: const Duration(milliseconds: 16),
+          ).listen((event) {
+            _updateTilt(event.x, event.y);
+          });
+      _gyroscopeSub =
+          gyroscopeEventStream(
+            samplingPeriod: const Duration(milliseconds: 16),
+          ).listen((event) {
+            _updateGyro(event.x, event.y);
+          });
+    }
 
     // Generate random floating nodes
     final random = Random();
@@ -190,12 +197,48 @@ class _AnimatedEmptyStateState extends State<AnimatedEmptyState>
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.paused:
+      case AppLifecycleState.inactive:
+      case AppLifecycleState.detached:
+        // Stop sensor delivery when the app is not in the foreground.
+        // sensors_plus fires CoreMotion callbacks on a background thread;
+        // if the Flutter engine tears down before the subscription is
+        // cancelled the native thunk crashes with NSInternalInconsistencyException.
+        _accelerometerSub?.cancel();
+        _accelerometerSub = null;
+        _gyroscopeSub?.cancel();
+        _gyroscopeSub = null;
+      case AppLifecycleState.resumed:
+      case AppLifecycleState.hidden:
+        if (defaultTargetPlatform != TargetPlatform.macOS) {
+          _accelerometerSub ??=
+              accelerometerEventStream(
+                samplingPeriod: const Duration(milliseconds: 16),
+              ).listen((event) {
+                _updateTilt(event.x, event.y);
+              });
+          _gyroscopeSub ??=
+              gyroscopeEventStream(
+                samplingPeriod: const Duration(milliseconds: 16),
+              ).listen((event) {
+                _updateGyro(event.x, event.y);
+              });
+        }
+    }
+  }
+
+  @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _pulseController.dispose();
     _convergeController.dispose();
     _floatTicker.dispose();
     _accelerometerSub?.cancel();
+    _accelerometerSub = null;
     _gyroscopeSub?.cancel();
+    _gyroscopeSub = null;
     super.dispose();
   }
 

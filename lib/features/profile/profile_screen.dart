@@ -1945,15 +1945,34 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet>
     // Capture notifier before any async operation
     final notifier = ref.read(userProfileProvider.notifier);
 
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.image,
-      allowMultiple: false,
-    );
+    FilePickerResult? result;
+    try {
+      result = await FilePicker.platform.pickFiles(
+        type: FileType.image,
+        allowMultiple: false,
+      );
+    } catch (e) {
+      // PlatformException thrown when the picker cannot load the selected file
+      // (e.g. iCloud image not yet downloaded, corrupt asset, unsupported UTType).
+      safeShowSnackBar(
+        'Could not load the selected image. Make sure the file is downloaded locally and try again.',
+        backgroundColor: AppTheme.errorRed,
+      );
+      return;
+    }
 
     if (result != null && result.files.isNotEmpty) {
+      final path = result.files.first.path;
+      if (path == null) {
+        safeShowSnackBar(
+          'Could not access the selected image. Try saving it to your device first.',
+          backgroundColor: AppTheme.errorRed,
+        );
+        return;
+      }
       safeSetState(() => _isUploadingAvatar = true);
       try {
-        final file = File(result.files.first.path!);
+        final file = File(path);
         await notifier.saveAvatarFromFile(file);
         // Force refresh - safe because invalidate works even after dispose
         if (mounted) {
@@ -2030,15 +2049,34 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet>
     // Capture notifier before async operation
     final notifier = ref.read(userProfileProvider.notifier);
 
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.image,
-      allowMultiple: false,
-    );
+    FilePickerResult? result;
+    try {
+      result = await FilePicker.platform.pickFiles(
+        type: FileType.image,
+        allowMultiple: false,
+      );
+    } catch (e) {
+      // PlatformException thrown when the picker cannot load the selected file
+      // (e.g. iCloud image not yet downloaded, corrupt asset, unsupported UTType).
+      safeShowSnackBar(
+        'Could not load the selected image. Make sure the file is downloaded locally and try again.',
+        backgroundColor: AppTheme.errorRed,
+      );
+      return;
+    }
 
     if (result != null && result.files.isNotEmpty) {
+      final path = result.files.first.path;
+      if (path == null) {
+        safeShowSnackBar(
+          'Could not access the selected image. Try saving it to your device first.',
+          backgroundColor: AppTheme.errorRed,
+        );
+        return;
+      }
       safeSetState(() => _isUploadingBanner = true);
       try {
-        final file = File(result.files.first.path!);
+        final file = File(path);
         await notifier.saveBannerFromFile(file);
         if (mounted) {
           ref.invalidate(userProfileProvider);

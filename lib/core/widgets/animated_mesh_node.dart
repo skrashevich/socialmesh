@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:math' as math;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
@@ -1514,7 +1515,7 @@ class AccelerometerMeshNode extends StatefulWidget {
 }
 
 class _AccelerometerMeshNodeState extends State<AccelerometerMeshNode>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   StreamSubscription<AccelerometerEvent>? _accelerometerSubscription;
   late AnimationController _physicsController;
 
@@ -1551,6 +1552,7 @@ class _AccelerometerMeshNodeState extends State<AccelerometerMeshNode>
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     // Physics loop - ALWAYS runs regardless of settings
     _physicsController = AnimationController(
       vsync: this,
@@ -1558,8 +1560,32 @@ class _AccelerometerMeshNodeState extends State<AccelerometerMeshNode>
     )..addListener(_physicsLoop);
     _physicsController.repeat();
 
-    // Start accelerometer listener
-    _startAccelerometer();
+    // Start accelerometer listener — guarded: CMMotionManager is unavailable
+    // on macOS / Mac Catalyst and causes NSInternalInconsistencyException.
+    if (defaultTargetPlatform != TargetPlatform.macOS) {
+      _startAccelerometer();
+    }
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.paused:
+      case AppLifecycleState.inactive:
+      case AppLifecycleState.detached:
+        // Stop sensor delivery when the app is not in the foreground.
+        // sensors_plus fires CoreMotion callbacks on a background thread;
+        // if the Flutter engine tears down before the subscription is
+        // cancelled the native thunk crashes with NSInternalInconsistencyException.
+        _accelerometerSubscription?.cancel();
+        _accelerometerSubscription = null;
+      case AppLifecycleState.resumed:
+      case AppLifecycleState.hidden:
+        if (_accelerometerSubscription == null &&
+            defaultTargetPlatform != TargetPlatform.macOS) {
+          _startAccelerometer();
+        }
+    }
   }
 
   void _startAccelerometer() {
@@ -1845,7 +1871,9 @@ class _AccelerometerMeshNodeState extends State<AccelerometerMeshNode>
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _accelerometerSubscription?.cancel();
+    _accelerometerSubscription = null;
     _physicsController.dispose();
     super.dispose();
   }
