@@ -10,7 +10,6 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../config/admin_config.dart';
 
-import '../core/constants.dart';
 import '../core/logging.dart';
 import '../core/safety/error_handler.dart';
 import '../core/transport.dart';
@@ -190,6 +189,21 @@ class AppInitNotifier extends Notifier<AppInitState> {
   /// Initialize non-critical services in background
   Future<void> _initializeBackgroundServices() async {
     try {
+      // Eagerly activate the file transfer engine FIRST, before any
+      // async work. The engine wires a stream listener on the protocol
+      // service's broadcast StreamController — if this runs late (after
+      // slow DB opens below), incoming file-transfer packets are silently
+      // dropped because broadcast streams discard events with no listener.
+      // This MUST be synchronous (ref.read, not await) and at the top.
+      try {
+        ref.read(fileTransferEngineProvider);
+        AppLogging.fileTransfer(
+          'Engine eagerly initialised during background init',
+        );
+      } catch (e) {
+        AppLogging.fileTransfer('Eager engine init failed: $e');
+      }
+
       // These can complete after UI is shown
       await ref.read(messageStorageProvider.future);
       await ref.read(nodeStorageProvider.future);
@@ -199,20 +213,6 @@ class AppInitNotifier extends Notifier<AppInitState> {
       // Eagerly activate the org claims provider so cached claims are
       // available immediately for enterprise query layers.
       ref.read(claimsProvider);
-
-      // Eagerly activate the file transfer engine so the
-      // onSmFileTransferPacket callback is wired before any
-      // incoming offers arrive (lazy init would drop them).
-      if (AppFeatureFlags.isFileTransferEnabled) {
-        try {
-          ref.read(fileTransferEngineProvider);
-          AppLogging.fileTransfer(
-            'Engine eagerly initialised during background init',
-          );
-        } catch (e) {
-          AppLogging.fileTransfer('Eager engine init failed: $e');
-        }
-      }
 
       // Eagerly activate Cloud Sync services so they start on login,
       // not only when the user navigates to specific screens.

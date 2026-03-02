@@ -22,6 +22,7 @@ class FileTransferCard extends ConsumerWidget {
     this.onShare,
     this.onAccept,
     this.onReject,
+    this.onDelete,
     this.compact = false,
   });
 
@@ -33,6 +34,7 @@ class FileTransferCard extends ConsumerWidget {
   final VoidCallback? onShare;
   final VoidCallback? onAccept;
   final VoidCallback? onReject;
+  final VoidCallback? onDelete;
   final bool compact;
 
   @override
@@ -115,7 +117,7 @@ class FileTransferCard extends ConsumerWidget {
                   ),
                   const SizedBox(height: AppTheme.spacing2),
                   Text(
-                    _fileSizeText,
+                    _metadataText,
                     style: TextStyle(color: context.textTertiary, fontSize: 12),
                   ),
                 ],
@@ -151,10 +153,15 @@ class FileTransferCard extends ConsumerWidget {
                 ),
               ),
             ),
-            // Chunk progress text
+            // Chunk progress text for active, timestamp for terminal
             if (transfer.isActive)
               Text(
                 '${transfer.completedChunks.length}/${transfer.chunkCount} chunks',
+                style: TextStyle(color: context.textTertiary, fontSize: 11),
+              )
+            else
+              Text(
+                _relativeTime(transfer.completedAt ?? transfer.createdAt),
                 style: TextStyle(color: context.textTertiary, fontSize: 11),
               ),
           ],
@@ -171,6 +178,7 @@ class FileTransferCard extends ConsumerWidget {
             onShare: onShare,
             onAccept: onAccept,
             onReject: onReject,
+            onDelete: onDelete,
           ),
         ],
       ],
@@ -183,7 +191,8 @@ class FileTransferCard extends ConsumerWidget {
       onOpen != null ||
       onShare != null ||
       onAccept != null ||
-      onReject != null;
+      onReject != null ||
+      onDelete != null;
 
   String get _statusText {
     switch (transfer.state) {
@@ -280,6 +289,27 @@ class FileTransferCard extends ConsumerWidget {
     }
     final kb = transfer.totalBytes / 1024.0;
     return '${kb.toStringAsFixed(1)} KB';
+  }
+
+  String _relativeTime(DateTime dt) {
+    final diff = DateTime.now().difference(dt);
+    if (diff.inSeconds < 60) return 'just now';
+    if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
+    if (diff.inHours < 24) return '${diff.inHours}h ago';
+    if (diff.inDays < 7) return '${diff.inDays}d ago';
+    return '${dt.month}/${dt.day}';
+  }
+
+  String get _metadataText {
+    final parts = <String>[_fileSizeText];
+    if (transfer.direction == TransferDirection.outbound &&
+        transfer.targetNodeNum != null) {
+      parts.add('to !${transfer.targetNodeNum!.toRadixString(16)}');
+    } else if (transfer.direction == TransferDirection.inbound &&
+        transfer.sourceNodeNum != null) {
+      parts.add('from !${transfer.sourceNodeNum!.toRadixString(16)}');
+    }
+    return parts.join(' · ');
   }
 }
 
@@ -427,6 +457,7 @@ class _ActionRow extends StatelessWidget {
     this.onShare,
     this.onAccept,
     this.onReject,
+    this.onDelete,
   });
 
   final FileTransferState transfer;
@@ -436,6 +467,7 @@ class _ActionRow extends StatelessWidget {
   final VoidCallback? onShare;
   final VoidCallback? onAccept;
   final VoidCallback? onReject;
+  final VoidCallback? onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -499,6 +531,16 @@ class _ActionRow extends StatelessWidget {
               onTap: onShare!,
             ),
           ],
+        ],
+        // Delete button for terminal transfers
+        if (!transfer.isActive && onDelete != null) ...[
+          const SizedBox(width: AppTheme.spacing8),
+          _ActionButton(
+            label: 'Delete',
+            icon: Icons.delete_outline,
+            color: SemanticColors.error,
+            onTap: onDelete!,
+          ),
         ],
       ],
     );

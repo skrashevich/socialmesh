@@ -75,6 +75,18 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
                 ),
               ),
               PopupMenuItem<String>(
+                value: 'clear_done',
+                child: ListTile(
+                  leading: Icon(
+                    Icons.cleaning_services_outlined,
+                    color: context.textSecondary,
+                    size: 20,
+                  ),
+                  title: const Text('Clear Completed'),
+                  contentPadding: EdgeInsets.zero,
+                ),
+              ),
+              PopupMenuItem<String>(
                 value: 'purge',
                 child: ListTile(
                   leading: Icon(
@@ -154,6 +166,9 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
                           transfer.state == TransferState.complete &&
                               transfer.direction == TransferDirection.inbound
                           ? () => _shareFile(transfer)
+                          : null,
+                      onDelete: !transfer.isActive
+                          ? () => _deleteTransfer(transfer)
                           : null,
                     ),
                   );
@@ -294,8 +309,8 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
           const SizedBox(height: AppTheme.spacing8),
           Text(
             _filter == _TransferFilter.all
-                ? 'Send files to other nodes from the overflow menu\n'
-                      'or via NodeDex'
+                ? 'Send files to other nodes from the\n'
+                      'overflow menu or via NodeDex'
                 : 'No transfers match this filter',
             textAlign: TextAlign.center,
             style: context.bodySecondaryStyle?.copyWith(
@@ -319,6 +334,8 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
     switch (value) {
       case 'pick_file':
         _pickAndSendFile();
+      case 'clear_done':
+        _clearTerminal();
       case 'purge':
         _purgeExpired();
     }
@@ -432,6 +449,58 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
     if (!mounted) return;
 
     showSuccessSnackBar(context, 'Expired transfers purged');
+  }
+
+  Future<void> _clearTerminal() async {
+    final haptics = ref.read(hapticServiceProvider);
+    final notifier = ref.read(fileTransferStateProvider.notifier);
+
+    await haptics.trigger(HapticType.light);
+    if (!mounted) return;
+
+    final confirmed = await AppBottomSheet.showConfirm(
+      context: context,
+      title: 'Clear Completed Transfers?',
+      message:
+          'Remove all completed, failed, and cancelled transfers? '
+          'Active transfers will not be affected.',
+      confirmLabel: 'Clear',
+      isDestructive: true,
+    );
+
+    if (confirmed != true) return;
+    if (!mounted) return;
+
+    final count = await notifier.clearTerminalTransfers();
+    if (!mounted) return;
+
+    showSuccessSnackBar(context, 'Cleared $count transfers');
+  }
+
+  Future<void> _deleteTransfer(FileTransferState transfer) async {
+    final haptics = ref.read(hapticServiceProvider);
+    final notifier = ref.read(fileTransferStateProvider.notifier);
+
+    await haptics.trigger(HapticType.light);
+    if (!mounted) return;
+
+    final confirmed = await AppBottomSheet.showConfirm(
+      context: context,
+      title: 'Delete Transfer?',
+      message:
+          'Delete "${transfer.filename}"? '
+          'This cannot be undone.',
+      confirmLabel: 'Delete',
+      isDestructive: true,
+    );
+
+    if (confirmed != true) return;
+    if (!mounted) return;
+
+    await notifier.deleteTransfer(transfer.fileIdHex);
+    if (!mounted) return;
+
+    showSuccessSnackBar(context, 'Deleted: ${transfer.filename}');
   }
 
   void _acceptTransfer(FileTransferState transfer) {

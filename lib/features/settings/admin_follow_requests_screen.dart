@@ -34,7 +34,7 @@ class _AdminFollowRequestsScreenState
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
-      child: GlassScaffold.body(
+      child: GlassScaffold(
         title: 'Social Admin',
         bottom: TabBar(
           indicatorColor: context.accentColor,
@@ -45,12 +45,21 @@ class _AdminFollowRequestsScreenState
             Tab(text: 'Seed Data'),
           ],
         ),
-        body: TabBarView(
-          children: [
-            _buildFollowRequestsTab(),
-            _SeedDataTab(firestore: _firestore),
-          ],
-        ),
+        // Use hasScrollBody: true because each TabBarView child contains
+        // scrollable content (ListView, etc.). hasScrollBody: false would
+        // force intrinsic dimension computation which scrollable children
+        // cannot provide, causing a null check crash in RenderViewportBase.
+        slivers: [
+          SliverFillRemaining(
+            hasScrollBody: true,
+            child: TabBarView(
+              children: [
+                _buildFollowRequestsTab(),
+                _SeedDataTab(firestore: _firestore),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

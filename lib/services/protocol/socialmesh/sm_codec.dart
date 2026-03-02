@@ -88,7 +88,7 @@ class SmCodec {
         return SmPacket._(SmPacketType.identity, i);
 
       case SmPortnum.fileTransfer:
-        return _decodeFileTransfer(data);
+        return decodeFileTransfer(data);
 
       default:
         return null;
@@ -116,8 +116,22 @@ class SmCodec {
   /// Encode a file ACK to bytes, ready for `Data.payload`.
   static Uint8List? encodeFileAck(SmFileAck ack) => ack.encode();
 
+  /// Returns true if [data] looks like a binary file-transfer payload
+  /// (header kind nibble in 4..7).
+  ///
+  /// Useful for distinguishing binary SM packets from legacy JSON signals
+  /// when both arrive on PRIVATE_APP (256).
+  static bool isFileTransferPayload(Uint8List data) {
+    if (data.isEmpty) return false;
+    final kind = data[0] & 0x0F;
+    return kind >= SmPacketKind.fileOffer && kind <= SmPacketKind.fileAck;
+  }
+
   /// Decode file transfer sub-types by inspecting the header kind nibble.
-  static SmPacket? _decodeFileTransfer(Uint8List data) {
+  ///
+  /// Public so that callers can decode file-transfer payloads arriving on
+  /// PRIVATE_APP (256) without going through [decode].
+  static SmPacket? decodeFileTransfer(Uint8List data) {
     if (data.isEmpty) return null;
     final kind = data[0] & 0x0F;
     switch (kind) {

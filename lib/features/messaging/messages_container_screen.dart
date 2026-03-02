@@ -95,7 +95,7 @@ class _MessagesContainerScreenState
     return HelpTourController(
       topicId: 'message_routing',
       stepKeys: const {},
-      child: GlassScaffold.body(
+      child: GlassScaffold(
         resizeToAvoidBottomInset: false,
         leading: const HamburgerMenuButton(),
         centerTitle: true,
@@ -160,13 +160,22 @@ class _MessagesContainerScreenState
             ),
           ),
         ),
-        body: TabBarView(
-          controller: _tabController,
-          children: const [
-            MessagingScreen(embedded: true),
-            ChannelsScreen(embedded: true),
-          ],
-        ),
+        // Use hasScrollBody: true because each TabBarView child contains
+        // its own CustomScrollView. hasScrollBody: false would force
+        // intrinsic dimension computation which CustomScrollView cannot
+        // provide, causing a null check crash in RenderViewportBase.
+        slivers: [
+          SliverFillRemaining(
+            hasScrollBody: true,
+            child: TabBarView(
+              controller: _tabController,
+              children: const [
+                MessagingScreen(embedded: true),
+                ChannelsScreen(embedded: true),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

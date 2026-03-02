@@ -58,7 +58,7 @@ class _ReviewModerationScreenState extends ConsumerState<ReviewModerationScreen>
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: _dismissKeyboard,
-      child: GlassScaffold.body(
+      child: GlassScaffold(
         title: 'Review Management',
         bottom: TabBar(
           controller: _tabController,
@@ -70,16 +70,28 @@ class _ReviewModerationScreenState extends ConsumerState<ReviewModerationScreen>
             Tab(text: 'All Reviews'),
           ],
         ),
-        body: TabBarView(
-          controller: _tabController,
-          children: [
-            _ReviewList(
-              reviewsProvider: pendingReviewsProvider,
-              isPending: true,
+        // Use hasScrollBody: true because each TabBarView child contains
+        // scrollable content (ListView, etc.). hasScrollBody: false would
+        // force intrinsic dimension computation which scrollable children
+        // cannot provide, causing a null check crash in RenderViewportBase.
+        slivers: [
+          SliverFillRemaining(
+            hasScrollBody: true,
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                _ReviewList(
+                  reviewsProvider: pendingReviewsProvider,
+                  isPending: true,
+                ),
+                _ReviewList(
+                  reviewsProvider: allReviewsProvider,
+                  isPending: false,
+                ),
+              ],
             ),
-            _ReviewList(reviewsProvider: allReviewsProvider, isPending: false),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

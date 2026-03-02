@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -11,6 +12,7 @@ import 'package:path/path.dart' as p;
 import '../core/logging.dart';
 import '../services/file_transfer/file_transfer_database.dart';
 import '../services/file_transfer/file_transfer_engine.dart';
+import '../services/protocol/protocol_service.dart';
 import '../services/protocol/socialmesh/sm_codec.dart';
 import '../services/protocol/socialmesh/sm_constants.dart';
 import '../services/protocol/socialmesh/sm_file_transfer.dart';
@@ -35,13 +37,50 @@ final fileTransferDatabaseProvider = Provider<FileTransferDatabase>((ref) {
 // ---------------------------------------------------------------------------
 
 final fileTransferEngineProvider = Provider<FileTransferEngine>((ref) {
-  final protocol = ref.watch(protocolServiceProvider);
   late final FileTransferEngine engine;
+  StreamSubscription<SmFileTransferEvent>? subscription;
 
   AppLogging.fileTransfer('Provider: creating FileTransferEngine');
 
+  void subscribeToProtocol(ProtocolService protocol) {
+    subscription?.cancel();
+    subscription = protocol.fileTransferStream.listen((event) {
+      AppLogging.fileTransfer(
+        'Provider: routing ${event.type.name} from '
+        '${event.senderNodeNum.toRadixString(16)} to engine',
+      );
+      switch (event.type) {
+        case SmPacketType.fileOffer:
+          final settingsAsync = ref.read(settingsServiceProvider);
+          final autoAccept = settingsAsync.maybeWhen(
+            data: (s) => s.fileTransferAutoAccept,
+            orElse: () => true,
+          );
+          engine.handleIncomingOffer(
+            event.packet as SmFileOffer,
+            sourceNodeNum: event.senderNodeNum,
+            autoAccept: autoAccept,
+          );
+        case SmPacketType.fileChunk:
+          engine.handleIncomingChunk(
+            event.packet as SmFileChunk,
+            sourceNodeNum: event.senderNodeNum,
+          );
+        case SmPacketType.fileNack:
+          engine.handleIncomingNack(event.packet as SmFileNack);
+        case SmPacketType.fileAck:
+          engine.handleIncomingAck(event.packet as SmFileAck);
+        default:
+          break;
+      }
+    });
+  }
+
   engine = FileTransferEngine(
     sendPacket: (payload, portnum, {destinationNode, hopLimit = 3}) async {
+      // Always read the CURRENT protocol service for sending so that
+      // reconnect-created instances are used transparently.
+      final protocol = ref.read(protocolServiceProvider);
       return protocol.sendSmFileTransferPacket(
         payload,
         destinationNode: destinationNode,
@@ -58,42 +97,22 @@ final fileTransferEngineProvider = Provider<FileTransferEngine>((ref) {
     },
   );
 
-  // Wire incoming file transfer packets from ProtocolService to the engine.
-  protocol.onSmFileTransferPacket =
-      ({required type, required packet, required senderNodeNum}) {
-        AppLogging.fileTransfer(
-          'Provider: routing ${type.name} from '
-          '${senderNodeNum.toRadixString(16)} to engine',
-        );
-        switch (type) {
-          case SmPacketType.fileOffer:
-            final settingsAsync = ref.read(settingsServiceProvider);
-            final autoAccept = settingsAsync.maybeWhen(
-              data: (s) => s.fileTransferAutoAccept,
-              orElse: () => true,
-            );
-            engine.handleIncomingOffer(
-              packet as SmFileOffer,
-              sourceNodeNum: senderNodeNum,
-              autoAccept: autoAccept,
-            );
-          case SmPacketType.fileChunk:
-            engine.handleIncomingChunk(
-              packet as SmFileChunk,
-              sourceNodeNum: senderNodeNum,
-            );
-          case SmPacketType.fileNack:
-            engine.handleIncomingNack(packet as SmFileNack);
-          case SmPacketType.fileAck:
-            engine.handleIncomingAck(packet as SmFileAck);
-          default:
-            break;
-        }
-      };
+  // Subscribe to the initial protocol service's file-transfer stream.
+  subscribeToProtocol(ref.read(protocolServiceProvider));
+
+  // When the protocol service is recreated (transport reconnect), tear down
+  // the old stream subscription and subscribe to the new instance. This keeps
+  // the engine alive with its in-memory transfer state intact.
+  ref.listen<ProtocolService>(protocolServiceProvider, (previous, next) {
+    AppLogging.fileTransfer(
+      'Provider: protocol service changed — re-subscribing stream',
+    );
+    subscribeToProtocol(next);
+  });
 
   ref.onDispose(() {
     AppLogging.fileTransfer('Provider: disposing FileTransferEngine');
-    protocol.onSmFileTransferPacket = null;
+    subscription?.cancel();
     engine.dispose();
   });
 
@@ -140,6 +159,15 @@ class FileTransferListState {
 class FileTransferStateNotifier extends Notifier<FileTransferListState> {
   @override
   FileTransferListState build() {
+    // Ensure the engine is alive so the broadcast stream has a listener.
+    // This is the primary creation path — _initializeBackgroundServices
+    // may not have run yet (Android timing), and broadcast streams
+    // silently drop events with no listener.
+    try {
+      ref.read(fileTransferEngineProvider);
+    } catch (e) {
+      AppLogging.fileTransfer('Notifier: engine ensure failed: $e');
+    }
     _loadFromDatabase();
     return const FileTransferListState(isLoading: true);
   }
@@ -311,6 +339,55 @@ class FileTransferStateNotifier extends Notifier<FileTransferListState> {
     final db = ref.read(fileTransferDatabaseProvider);
     final count = await db.purgeExpired();
     AppLogging.fileTransfer('purgeExpired: removed $count from database');
+  }
+
+  /// Delete a single transfer (from engine memory and database).
+  Future<void> deleteTransfer(String fileIdHex) async {
+    AppLogging.fileTransfer('deleteTransfer: $fileIdHex');
+    final engine = ref.read(fileTransferEngineProvider);
+    engine.removeTransfer(fileIdHex);
+
+    final db = ref.read(fileTransferDatabaseProvider);
+    await db.deleteTransfer(fileIdHex);
+
+    final updated = Map<String, FileTransferState>.from(state.transfers)
+      ..remove(fileIdHex);
+    state = state.copyWith(transfers: updated);
+  }
+
+  /// Delete all terminal transfers (complete, failed, cancelled).
+  Future<int> clearTerminalTransfers() async {
+    AppLogging.fileTransfer('clearTerminalTransfers: starting');
+    final db = ref.read(fileTransferDatabaseProvider);
+    final engine = ref.read(fileTransferEngineProvider);
+
+    final toRemove = state.transfers.values
+        .where(
+          (t) =>
+              t.state == TransferState.complete ||
+              t.state == TransferState.failed ||
+              t.state == TransferState.cancelled,
+        )
+        .toList();
+
+    for (final t in toRemove) {
+      engine.removeTransfer(t.fileIdHex);
+      await db.deleteTransfer(t.fileIdHex);
+    }
+
+    final updated = Map<String, FileTransferState>.from(state.transfers)
+      ..removeWhere(
+        (_, t) =>
+            t.state == TransferState.complete ||
+            t.state == TransferState.failed ||
+            t.state == TransferState.cancelled,
+      );
+    state = state.copyWith(transfers: updated);
+
+    AppLogging.fileTransfer(
+      'clearTerminalTransfers: removed ${toRemove.length}',
+    );
+    return toRemove.length;
   }
 
   String _guessMimeType(String filename) {

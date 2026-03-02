@@ -205,6 +205,21 @@ class DetectionSensorEvent {
   }
 }
 
+/// Event emitted by the file-transfer StreamController inside ProtocolService.
+/// Carries the decoded packet (SmFileOffer / SmFileChunk / SmFileNack /
+/// SmFileAck) together with its type discriminator and originating node.
+class SmFileTransferEvent {
+  final SmPacketType type;
+  final Object packet;
+  final int senderNodeNum;
+
+  const SmFileTransferEvent({
+    required this.type,
+    required this.packet,
+    required this.senderNodeNum,
+  });
+}
+
 /// Debug flags to control verbose logging
 class ProtocolDebugFlags {
   /// Log RSSI polling updates
@@ -294,6 +309,7 @@ class ProtocolService {
   final StreamController<ChannelConfig> _channelController;
   final StreamController<DeviceError> _errorController;
   final StreamController<MeshSignalPacket> _signalController;
+  final StreamController<SmFileTransferEvent> _fileTransferController;
   final StreamController<int> _myNodeNumController;
   final StreamController<int> _rssiController;
   final StreamController<double> _snrController;
@@ -443,6 +459,8 @@ class ProtocolService {
        _channelController = StreamController<ChannelConfig>.broadcast(),
        _errorController = StreamController<DeviceError>.broadcast(),
        _signalController = StreamController<MeshSignalPacket>.broadcast(),
+       _fileTransferController =
+           StreamController<SmFileTransferEvent>.broadcast(),
        _myNodeNumController = StreamController<int>.broadcast(),
        _rssiController = StreamController<int>.broadcast(),
        _snrController = StreamController<double>.broadcast(),
@@ -569,6 +587,11 @@ class ProtocolService {
 
   /// Stream of received mesh signal packets (PRIVATE_APP portnum)
   Stream<MeshSignalPacket> get signalStream => _signalController.stream;
+
+  /// Stream of incoming SM file transfer packets (FILE_OFFER, FILE_CHUNK,
+  /// FILE_NACK, FILE_ACK). Consumers subscribe instead of setting a callback.
+  Stream<SmFileTransferEvent> get fileTransferStream =>
+      _fileTransferController.stream;
 
   /// Stream of detection sensor events (DETECTION_SENSOR_APP portnum)
   Stream<DetectionSensorEvent> get detectionSensorEventStream =>
@@ -1199,6 +1222,21 @@ class ProtocolService {
       'Handling mesh packet from ${packet.from} to ${packet.to}',
     );
 
+    // Diagnostic: trace unicast packets through the receive pipeline.
+    // This fires for any packet where `to` is not broadcast, which
+    // includes file-transfer unicast packets. Tagged fileTransfer so
+    // it appears when filtering by FILE_TRANSFER_ENABLED.
+    final isBroadcast = packet.to == 0xFFFFFFFF || packet.to == 0;
+    if (!isBroadcast) {
+      AppLogging.fileTransfer(
+        'RX_PIPELINE: unicast from=${packet.from.toRadixString(16)} '
+        'to=${packet.to.toRadixString(16)} id=${packet.id} '
+        'hasDecoded=${packet.hasDecoded()} '
+        'portnum=${packet.hasDecoded() ? packet.decoded.portnum.name : 'N/A'} '
+        'payloadLen=${packet.hasDecoded() ? packet.decoded.payload.length : 0}',
+      );
+    }
+
     // Emit per-packet telemetry for mesh health analysis
     _emitPacketTelemetry(packet);
 
@@ -1256,6 +1294,16 @@ class ProtocolService {
 
       // Fast path: SM binary portnums bypass the enum-based switch.
       if (SmCodec.isSocialmeshPortnum(rawPortnum)) {
+        // Diagnostic: log every SM packet with fileTransfer tag so it
+        // appears when filtering by FILE_TRANSFER_ENABLED logging.
+        if (rawPortnum == SmPortnum.fileTransfer) {
+          AppLogging.fileTransfer(
+            'RX SM portnum=$rawPortnum from='
+            '${packet.from.toRadixString(16)} '
+            'to=${packet.to.toRadixString(16)} '
+            'payload=${data.payload.length} bytes',
+          );
+        }
         _handleSmPacket(packet, data);
       } else {
         switch (data.portnum) {
@@ -1278,7 +1326,24 @@ class ProtocolService {
             _handleAdminMessage(packet, data);
             break;
           case pn.PortNum.PRIVATE_APP:
-            _handleSignalMessage(packet, data);
+            // Diagnostic: log all incoming PRIVATE_APP packets so we
+            // can verify file-transfer packets are reaching this device.
+            AppLogging.fileTransfer(
+              'RX PRIVATE_APP from=${packet.from.toRadixString(16)} '
+              'to=${packet.to.toRadixString(16)} '
+              '${data.payload.length} bytes, '
+              'firstByte=${data.payload.isNotEmpty ? '0x${data.payload[0].toRadixString(16).padLeft(2, '0')}' : 'empty'}',
+            );
+            // Binary file-transfer packets are sent on PRIVATE_APP (256)
+            // because custom portnums 260-263 are not reliably delivered
+            // by all firmware when SM_BINARY_ENABLED is off.
+            // Detect by inspecting the payload's kind nibble.
+            final privatePayload = Uint8List.fromList(data.payload);
+            if (SmCodec.isFileTransferPayload(privatePayload)) {
+              _handleFileTransferOnPrivateApp(packet, privatePayload);
+            } else {
+              _handleSignalMessage(packet, data);
+            }
             break;
           case pn.PortNum.DETECTION_SENSOR_APP:
             _handleDetectionSensorMessage(packet, data);
@@ -1410,6 +1475,55 @@ class ProtocolService {
       _signalController.add(signalPacket);
     } catch (e) {
       AppLogging.social('Failed to parse signal packet: $e');
+    }
+  }
+
+  // ─────────────────────────────────────────────────────────────────
+  // File transfers received on PRIVATE_APP (256)
+  // ─────────────────────────────────────────────────────────────────
+
+  /// Handle a binary file-transfer payload that arrived on PRIVATE_APP (256).
+  ///
+  /// File transfers are sent on PRIVATE_APP because custom SM portnums
+  /// (260-263) are not reliably relayed by all firmware versions when
+  /// [SmFeatureFlag.shouldSendBinary] is off. The payload is decoded the
+  /// same way as portnum 263 — only the transport portnum differs.
+  void _handleFileTransferOnPrivateApp(
+    pb.MeshPacket packet,
+    Uint8List payload,
+  ) {
+    // Ignore our own packets echoed back
+    if (packet.from == _myNodeNum) return;
+
+    AppLogging.fileTransfer(
+      'RX file-transfer on PRIVATE_APP from='
+      '${packet.from.toRadixString(16)} '
+      'to=${packet.to.toRadixString(16)} '
+      '${payload.length} bytes',
+    );
+
+    final decoded = SmCodec.decodeFileTransfer(payload);
+    if (decoded == null) {
+      AppLogging.fileTransfer(
+        'Failed to decode file-transfer payload from '
+        '${packet.from.toRadixString(16)}',
+      );
+      return;
+    }
+
+    switch (decoded.type) {
+      case SmPacketType.fileOffer:
+        _handleSmFileOffer(decoded.fileOffer, packet.from);
+      case SmPacketType.fileChunk:
+        _handleSmFileChunk(decoded.fileChunk, packet.from);
+      case SmPacketType.fileNack:
+        _handleSmFileNack(decoded.fileNack, packet.from);
+      case SmPacketType.fileAck:
+        _handleSmFileAck(decoded.fileAck, packet.from);
+      case SmPacketType.presence:
+      case SmPacketType.signal:
+      case SmPacketType.identity:
+        break;
     }
   }
 
@@ -1570,15 +1684,6 @@ class ProtocolService {
   })?
   onSmIdentityUpdate;
 
-  /// Callback for incoming file transfer packets. Set by providers to
-  /// route to the FileTransferEngine without importing it here.
-  void Function({
-    required SmPacketType type,
-    required Object packet,
-    required int senderNodeNum,
-  })?
-  onSmFileTransferPacket;
-
   /// Handle incoming FILE_OFFER.
   void _handleSmFileOffer(SmFileOffer offer, int senderNodeNum) {
     AppLogging.protocol(
@@ -1586,10 +1691,12 @@ class ProtocolService {
       'file=${offer.filename}, ${offer.totalBytes} bytes, '
       '${offer.chunkCount} chunks',
     );
-    onSmFileTransferPacket?.call(
-      type: SmPacketType.fileOffer,
-      packet: offer,
-      senderNodeNum: senderNodeNum,
+    _fileTransferController.add(
+      SmFileTransferEvent(
+        type: SmPacketType.fileOffer,
+        packet: offer,
+        senderNodeNum: senderNodeNum,
+      ),
     );
   }
 
@@ -1600,10 +1707,12 @@ class ProtocolService {
       'idx=${chunk.chunkIndex}/${chunk.chunkCount}, '
       '${chunk.payload.length} bytes',
     );
-    onSmFileTransferPacket?.call(
-      type: SmPacketType.fileChunk,
-      packet: chunk,
-      senderNodeNum: senderNodeNum,
+    _fileTransferController.add(
+      SmFileTransferEvent(
+        type: SmPacketType.fileChunk,
+        packet: chunk,
+        senderNodeNum: senderNodeNum,
+      ),
     );
   }
 
@@ -1613,10 +1722,12 @@ class ProtocolService {
       'SM_FILE_NACK from ${senderNodeNum.toRadixString(16)}: '
       '${nack.missingIndexes.length} missing chunks',
     );
-    onSmFileTransferPacket?.call(
-      type: SmPacketType.fileNack,
-      packet: nack,
-      senderNodeNum: senderNodeNum,
+    _fileTransferController.add(
+      SmFileTransferEvent(
+        type: SmPacketType.fileNack,
+        packet: nack,
+        senderNodeNum: senderNodeNum,
+      ),
     );
   }
 
@@ -1626,10 +1737,12 @@ class ProtocolService {
       'SM_FILE_ACK from ${senderNodeNum.toRadixString(16)}: '
       'status=${ack.status.name}',
     );
-    onSmFileTransferPacket?.call(
-      type: SmPacketType.fileAck,
-      packet: ack,
-      senderNodeNum: senderNodeNum,
+    _fileTransferController.add(
+      SmFileTransferEvent(
+        type: SmPacketType.fileAck,
+        packet: ack,
+        senderNodeNum: senderNodeNum,
+      ),
     );
   }
 
@@ -3826,11 +3939,19 @@ class ProtocolService {
     return packetId;
   }
 
-  /// Send a file transfer packet (portnum 263).
+  /// Send a file transfer packet as broadcast on PRIVATE_APP (portnum 256).
+  ///
+  /// File transfers are broadcast rather than unicast because Meshtastic
+  /// firmware 2.5+ may apply PKC (Public Key Cryptography) to unicast
+  /// packets, which fails when PKC keys are not properly exchanged between
+  /// devices. Broadcast packets always use channel PSK encryption — the
+  /// same proven path that legacy JSON signals use.
+  ///
+  /// The [destinationNode] parameter is retained for logging and future
+  /// unicast support once PKC compatibility is resolved.
   ///
   /// The [payload] is the already-encoded binary packet (offer, chunk,
-  /// nack, or ack). [destinationNode] is the target node (0xFFFFFFFF for
-  /// broadcast). Returns true if the packet was queued for send.
+  /// nack, or ack). Returns true if the packet was queued for send.
   Future<bool> sendSmFileTransferPacket(
     Uint8List payload, {
     int? destinationNode,
@@ -3844,11 +3965,22 @@ class ProtocolService {
     }
 
     final packetId = _generatePacketId();
-    final data = _createDataWithPortnum(SmPortnum.fileTransfer, payload);
 
+    // Use the normal protobuf portnum setter — NOT _createDataWithPortnum.
+    // PRIVATE_APP (256) is a known proto enum value, so the standard setter
+    // produces the exact wire encoding that firmware expects.
+    final data = pb.Data()
+      ..portnum = pn.PortNum.PRIVATE_APP
+      ..payload = payload;
+
+    // Always broadcast. Unicast PRIVATE_APP triggers PKC encryption in
+    // firmware 2.5+ which fails between devices without properly
+    // exchanged PKC keys (hasDecoded=false on receiver). Broadcast
+    // uses channel PSK which always works. The engine's fileId matching
+    // ensures only the intended recipient processes the payload.
     final packet = MeshPacketBuilder.userPayload(
       myNodeNum: _myNodeNum!,
-      to: destinationNode ?? 0xFFFFFFFF,
+      to: 0xFFFFFFFF,
       data: data,
       packetId: packetId,
     );
@@ -3859,10 +3991,11 @@ class ProtocolService {
 
     _smRateLimiter.recordSend(SmPortnum.fileTransfer);
 
-    AppLogging.protocol(
-      'SM_FILE_TRANSFER sent: ${payload.length} bytes, '
-      'to=${(destinationNode ?? 0xFFFFFFFF).toRadixString(16)}, '
-      'packetId=$packetId',
+    final intendedTo = destinationNode?.toRadixString(16) ?? 'broadcast';
+    AppLogging.fileTransfer(
+      'TX sent: ${payload.length} bytes, '
+      'intended=$intendedTo, '
+      'packetId=$packetId (broadcast)',
     );
     return true;
   }
@@ -7058,6 +7191,7 @@ class ProtocolService {
     await _channelController.close();
     await _errorController.close();
     await _signalController.close();
+    await _fileTransferController.close();
     await _deliveryController.close();
     await _regionController.close();
     await _clientNotificationController.close();

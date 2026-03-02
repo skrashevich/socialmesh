@@ -830,6 +830,23 @@ class FileTransferEngine {
     }
   }
 
+  /// Remove a terminal transfer from engine memory.
+  ///
+  /// Only removes if the transfer is not active (complete/failed/cancelled).
+  void removeTransfer(String fileIdHex) {
+    final transfer = _transfers[fileIdHex];
+    if (transfer == null) return;
+    if (transfer.isActive) {
+      AppLogging.fileTransfer(
+        'removeTransfer: $fileIdHex still active, skipping',
+      );
+      return;
+    }
+    _transfers.remove(fileIdHex);
+    _chunkBuffers.remove(fileIdHex);
+    AppLogging.fileTransfer('removeTransfer: $fileIdHex removed from engine');
+  }
+
   /// Clean up resources.
   void dispose() {
     AppLogging.fileTransfer(

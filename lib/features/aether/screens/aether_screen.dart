@@ -368,7 +368,7 @@ class _AetherScreenState extends ConsumerState<AetherScreen>
       stepKeys: const {},
       child: GestureDetector(
         onTap: _dismissKeyboard,
-        child: GlassScaffold.body(
+        child: GlassScaffold(
           resizeToAvoidBottomInset: false,
           leading: const BackButton(),
           centerTitle: true,
@@ -451,26 +451,35 @@ class _AetherScreenState extends ConsumerState<AetherScreen>
             ),
             const SizedBox(width: AppTheme.spacing8),
           ],
-          body: _FlightsTabContent(
-            flightsAsync: flightsAsync,
-            activeFlightsAsync: activeFlightsAsync,
-            stats: stats,
-            user: user,
-            reduceMotion: reduceMotion,
-            isLoading: isLoading,
-            searchController: _searchController,
-            searchQuery: _searchQuery,
-            currentFilter: _currentFilter,
-            onSearchChanged: (value) {
-              safeSetState(() => _searchQuery = value);
-            },
-            onFilterChanged: (filter) {
-              HapticFeedback.selectionClick();
-              safeSetState(() => _currentFilter = filter);
-            },
-            onScheduleFlight: _scheduleFlight,
-            onOpenDetail: _openFlightDetail,
-          ),
+          // Use hasScrollBody: true because _FlightsTabContent returns a
+          // CustomScrollView. hasScrollBody: false would force intrinsic
+          // dimension computation which CustomScrollView cannot provide,
+          // causing a null check crash in RenderViewportBase.
+          slivers: [
+            SliverFillRemaining(
+              hasScrollBody: true,
+              child: _FlightsTabContent(
+                flightsAsync: flightsAsync,
+                activeFlightsAsync: activeFlightsAsync,
+                stats: stats,
+                user: user,
+                reduceMotion: reduceMotion,
+                isLoading: isLoading,
+                searchController: _searchController,
+                searchQuery: _searchQuery,
+                currentFilter: _currentFilter,
+                onSearchChanged: (value) {
+                  safeSetState(() => _searchQuery = value);
+                },
+                onFilterChanged: (filter) {
+                  HapticFeedback.selectionClick();
+                  safeSetState(() => _currentFilter = filter);
+                },
+                onScheduleFlight: _scheduleFlight,
+                onOpenDetail: _openFlightDetail,
+              ),
+            ),
+          ],
         ),
       ),
     );

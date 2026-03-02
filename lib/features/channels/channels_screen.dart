@@ -250,7 +250,7 @@ class _ChannelsScreenState extends ConsumerState<ChannelsScreen>
       child: HelpTourController(
         topicId: 'channels_overview',
         stepKeys: const {},
-        child: GlassScaffold.body(
+        child: GlassScaffold(
           resizeToAvoidBottomInset: false,
           leading: const HamburgerMenuButton(),
           centerTitle: true,
@@ -328,7 +328,13 @@ class _ChannelsScreenState extends ConsumerState<ChannelsScreen>
               ],
             ),
           ],
-          body: bodyContent,
+          // Use hasScrollBody: true because bodyContent is a CustomScrollView.
+          // hasScrollBody: false would force intrinsic dimension computation
+          // which CustomScrollView cannot provide, causing a null check crash
+          // in RenderViewportBase.layoutChildSequence.
+          slivers: [
+            SliverFillRemaining(hasScrollBody: true, child: bodyContent),
+          ],
         ),
       ),
     );
