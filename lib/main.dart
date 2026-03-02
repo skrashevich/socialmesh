@@ -28,6 +28,7 @@ import 'core/transport.dart';
 
 import 'services/transport/background_message_processor.dart';
 import 'core/accessibility_theme_adapter.dart';
+import 'l10n/app_localizations.dart';
 import 'core/logging.dart';
 import 'core/safety/error_handler.dart';
 import 'core/safety/lifecycle_mixin.dart';
@@ -1583,7 +1584,8 @@ class _SocialmeshAppState extends ConsumerState<SocialmeshApp>
         theme: lightTheme,
         darkTheme: darkTheme,
         themeMode: themeMode,
-
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
         navigatorObservers: [
           _KeyboardDismissObserver(),
           _DelegatingAnalyticsObserver(ref),

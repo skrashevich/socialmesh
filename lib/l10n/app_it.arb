@@ -1,0 +1,69 @@
+{
+  "@@locale": "it",
+
+  "appTitle": "Socialmesh",
+
+  "commonCancel": "Annulla",
+  "commonSave": "Salva",
+  "commonRetry": "Riprova",
+  "commonDone": "Fatto",
+  "commonGoBack": "Indietro",
+  "commonConfirm": "Conferma",
+  "commonDelete": "Elimina",
+  "commonClose": "Chiudi",
+  "commonOk": "OK",
+  "commonContinue": "Continua",
+
+  "navigationMenuTooltip": "Menu",
+  "navigationDeviceTooltip": "Dispositivo",
+
+  "navigationSectionSocial": "SOCIAL",
+  "navigationSectionMesh": "MESH",
+  "navigationSectionPremium": "PREMIUM",
+  "navigationSectionAccount": "ACCOUNT",
+
+  "navigationSignals": "Segnali",
+  "navigationSocial": "Social",
+  "navigationNodeDex": "NodeDex",
+  "navigationFileTransfers": "Trasferimento File",
+  "navigationAether": "Aether",
+  "navigationTakGateway": "TAK Gateway",
+  "navigationTakMap": "Mappa TAK",
+  "navigationActivity": "Attività",
+  "navigationPresence": "Presenza",
+  "navigationTimeline": "Cronologia",
+  "navigationWorldMap": "Mappa Mondiale",
+  "navigationMesh3dView": "Vista Mesh 3D",
+  "navigationRoutes": "Percorsi",
+  "navigationReachability": "Raggiungibilità",
+  "navigationMeshHealth": "Stato Mesh",
+  "navigationDeviceLogs": "Log Dispositivo",
+
+  "navigationThemePack": "Pacchetto Temi",
+  "navigationRingtonePack": "Pacchetto Suonerie",
+  "navigationWidgets": "Widget",
+  "navigationAutomations": "Automazioni",
+  "navigationIftttIntegration": "Integrazione IFTTT",
+
+  "navigationHelpSupport": "Aiuto e Supporto",
+
+  "navigationMessages": "Messaggi",
+  "navigationMap": "Mappa",
+  "navigationNodes": "Nodi",
+  "navigationDashboard": "Pannello",
+
+  "navigationGuestName": "Ospite",
+  "navigationNotSignedIn": "Non autenticato",
+  "navigationOffline": "Offline",
+  "navigationSyncing": "Sincronizzazione...",
+  "navigationSyncError": "Errore di sincronizzazione",
+  "navigationSynced": "Sincronizzato",
+  "navigationViewProfile": "Visualizza Profilo",
+
+  "navigationFirmwareMessage": "Firmware: {message}",
+  "navigationFirmwareErrorTitle": "Errore Dispositivo Meshtastic",
+  "navigationFirmwareWarningTitle": "Avviso Dispositivo Meshtastic",
+
+  "navigationFlightActivated": "{flightNumber} ({route}) è ora in volo!",
+  "navigationFlightCompleted": "{flightNumber} ({route}) volo completato"
+}

@@ -1,0 +1,304 @@
+{
+  "@@locale": "en",
+
+  "appTitle": "Socialmesh",
+  "@appTitle": {
+    "description": "The name of the application."
+  },
+
+  "commonCancel": "Cancel",
+  "@commonCancel": {
+    "description": "Label for a Cancel button."
+  },
+
+  "commonSave": "Save",
+  "@commonSave": {
+    "description": "Label for a Save button."
+  },
+
+  "commonRetry": "Retry",
+  "@commonRetry": {
+    "description": "Label for a Retry button."
+  },
+
+  "commonDone": "Done",
+  "@commonDone": {
+    "description": "Label for a Done button."
+  },
+
+  "commonGoBack": "Go Back",
+  "@commonGoBack": {
+    "description": "Label for a Go Back button."
+  },
+
+  "commonConfirm": "Confirm",
+  "@commonConfirm": {
+    "description": "Label for a Confirm button."
+  },
+
+  "commonDelete": "Delete",
+  "@commonDelete": {
+    "description": "Label for a Delete button."
+  },
+
+  "commonClose": "Close",
+  "@commonClose": {
+    "description": "Label for a Close button."
+  },
+
+  "commonOk": "OK",
+  "@commonOk": {
+    "description": "Label for an OK button."
+  },
+
+  "commonContinue": "Continue",
+  "@commonContinue": {
+    "description": "Label for a Continue button."
+  },
+
+  "navigationMenuTooltip": "Menu",
+  "@navigationMenuTooltip": {
+    "description": "Tooltip for the hamburger menu button."
+  },
+
+  "navigationDeviceTooltip": "Device",
+  "@navigationDeviceTooltip": {
+    "description": "Tooltip for the device status button."
+  },
+
+  "navigationSectionSocial": "SOCIAL",
+  "@navigationSectionSocial": {
+    "description": "Drawer section header for social features."
+  },
+
+  "navigationSectionMesh": "MESH",
+  "@navigationSectionMesh": {
+    "description": "Drawer section header for mesh features."
+  },
+
+  "navigationSectionPremium": "PREMIUM",
+  "@navigationSectionPremium": {
+    "description": "Drawer section header for premium features."
+  },
+
+  "navigationSectionAccount": "ACCOUNT",
+  "@navigationSectionAccount": {
+    "description": "Drawer section header for account section."
+  },
+
+  "navigationSignals": "Signals",
+  "@navigationSignals": {
+    "description": "Label for the Signals feature in drawer and bottom nav."
+  },
+
+  "navigationSocial": "Social",
+  "@navigationSocial": {
+    "description": "Label for the Social Hub drawer item."
+  },
+
+  "navigationNodeDex": "NodeDex",
+  "@navigationNodeDex": {
+    "description": "Label for the NodeDex drawer item."
+  },
+
+  "navigationFileTransfers": "File Transfers",
+  "@navigationFileTransfers": {
+    "description": "Label for the File Transfers drawer item."
+  },
+
+  "navigationAether": "Aether",
+  "@navigationAether": {
+    "description": "Label for the Aether drawer item."
+  },
+
+  "navigationTakGateway": "TAK Gateway",
+  "@navigationTakGateway": {
+    "description": "Label for the TAK Gateway drawer item."
+  },
+
+  "navigationTakMap": "TAK Map",
+  "@navigationTakMap": {
+    "description": "Label for the TAK Map drawer item."
+  },
+
+  "navigationActivity": "Activity",
+  "@navigationActivity": {
+    "description": "Label for the Activity drawer item."
+  },
+
+  "navigationPresence": "Presence",
+  "@navigationPresence": {
+    "description": "Label for the Presence drawer item."
+  },
+
+  "navigationTimeline": "Timeline",
+  "@navigationTimeline": {
+    "description": "Label for the Timeline drawer item."
+  },
+
+  "navigationWorldMap": "World Map",
+  "@navigationWorldMap": {
+    "description": "Label for the World Map drawer item."
+  },
+
+  "navigationMesh3dView": "3D Mesh View",
+  "@navigationMesh3dView": {
+    "description": "Label for the 3D Mesh View drawer item."
+  },
+
+  "navigationRoutes": "Routes",
+  "@navigationRoutes": {
+    "description": "Label for the Routes drawer item."
+  },
+
+  "navigationReachability": "Reachability",
+  "@navigationReachability": {
+    "description": "Label for the Reachability drawer item."
+  },
+
+  "navigationMeshHealth": "Mesh Health",
+  "@navigationMeshHealth": {
+    "description": "Label for the Mesh Health drawer item."
+  },
+
+  "navigationDeviceLogs": "Device Logs",
+  "@navigationDeviceLogs": {
+    "description": "Label for the Device Logs drawer item."
+  },
+
+  "navigationThemePack": "Theme Pack",
+  "@navigationThemePack": {
+    "description": "Label for the Theme Pack premium drawer item."
+  },
+
+  "navigationRingtonePack": "Ringtone Pack",
+  "@navigationRingtonePack": {
+    "description": "Label for the Ringtone Pack premium drawer item."
+  },
+
+  "navigationWidgets": "Widgets",
+  "@navigationWidgets": {
+    "description": "Label for the Widgets premium drawer item."
+  },
+
+  "navigationAutomations": "Automations",
+  "@navigationAutomations": {
+    "description": "Label for the Automations premium drawer item."
+  },
+
+  "navigationIftttIntegration": "IFTTT Integration",
+  "@navigationIftttIntegration": {
+    "description": "Label for the IFTTT Integration premium drawer item."
+  },
+
+  "navigationHelpSupport": "Help & Support",
+  "@navigationHelpSupport": {
+    "description": "Label for the Help and Support drawer item."
+  },
+
+  "navigationMessages": "Messages",
+  "@navigationMessages": {
+    "description": "Label for the Messages bottom nav tab."
+  },
+
+  "navigationMap": "Map",
+  "@navigationMap": {
+    "description": "Label for the Map bottom nav tab."
+  },
+
+  "navigationNodes": "Nodes",
+  "@navigationNodes": {
+    "description": "Label for the Nodes bottom nav tab."
+  },
+
+  "navigationDashboard": "Dashboard",
+  "@navigationDashboard": {
+    "description": "Label for the Dashboard bottom nav tab."
+  },
+
+  "navigationGuestName": "Guest",
+  "@navigationGuestName": {
+    "description": "Default display name when user is not signed in."
+  },
+
+  "navigationNotSignedIn": "Not signed in",
+  "@navigationNotSignedIn": {
+    "description": "Sync status text when user is not authenticated."
+  },
+
+  "navigationOffline": "Offline",
+  "@navigationOffline": {
+    "description": "Sync status text when device has no internet."
+  },
+
+  "navigationSyncing": "Syncing...",
+  "@navigationSyncing": {
+    "description": "Sync status text during active sync."
+  },
+
+  "navigationSyncError": "Sync error",
+  "@navigationSyncError": {
+    "description": "Sync status text when sync failed."
+  },
+
+  "navigationSynced": "Synced",
+  "@navigationSynced": {
+    "description": "Sync status text when sync is complete."
+  },
+
+  "navigationViewProfile": "View Profile",
+  "@navigationViewProfile": {
+    "description": "Sync status text linking to profile screen."
+  },
+
+  "navigationFirmwareMessage": "Firmware: {message}",
+  "@navigationFirmwareMessage": {
+    "description": "Snackbar text for firmware client notifications.",
+    "placeholders": {
+      "message": {
+        "type": "String",
+        "description": "The firmware notification message."
+      }
+    }
+  },
+
+  "navigationFirmwareErrorTitle": "Meshtastic Device Error",
+  "@navigationFirmwareErrorTitle": {
+    "description": "Push notification title for firmware errors."
+  },
+
+  "navigationFirmwareWarningTitle": "Meshtastic Device Warning",
+  "@navigationFirmwareWarningTitle": {
+    "description": "Push notification title for firmware warnings."
+  },
+
+  "navigationFlightActivated": "{flightNumber} ({route}) is now in flight!",
+  "@navigationFlightActivated": {
+    "description": "Snackbar text when an Aether flight becomes active.",
+    "placeholders": {
+      "flightNumber": {
+        "type": "String",
+        "description": "The flight number identifier."
+      },
+      "route": {
+        "type": "String",
+        "description": "The departure to arrival route string."
+      }
+    }
+  },
+
+  "navigationFlightCompleted": "{flightNumber} ({route}) flight completed",
+  "@navigationFlightCompleted": {
+    "description": "Snackbar text when an Aether flight completes.",
+    "placeholders": {
+      "flightNumber": {
+        "type": "String",
+        "description": "The flight number identifier."
+      },
+      "route": {
+        "type": "String",
+        "description": "The departure to arrival route string."
+      }
+    }
+  }
+}

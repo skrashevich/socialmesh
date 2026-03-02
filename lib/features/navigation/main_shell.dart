@@ -2,6 +2,7 @@
 // lint-allow: scaffold — navigation shell root scaffold with drawer and bottom nav
 import '../../core/constants.dart';
 import '../../core/logging.dart';
+import '../../l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -207,7 +208,7 @@ class HamburgerMenuButton extends ConsumerWidget {
           }
         }
       },
-      tooltip: 'Menu',
+      tooltip: AppLocalizations.of(context)!.navigationMenuTooltip,
     );
   }
 }
@@ -263,7 +264,7 @@ class DeviceStatusButton extends ConsumerWidget {
         ],
       ),
       onPressed: () => showDeviceSheet(context),
-      tooltip: 'Device',
+      tooltip: AppLocalizations.of(context)!.navigationDeviceTooltip,
     );
   }
 }
@@ -368,26 +369,26 @@ class _MainShellState extends ConsumerState<MainShell> {
 
   /// Drawer menu items for quick access screens not in bottom nav
   /// Organized into logical sections with headers
-  final List<DrawerMenuItem> _drawerMenuItems = [
+  List<DrawerMenuItem> _buildDrawerMenuItems(AppLocalizations l10n) => [
     // Social section — Signals switches to bottom-nav tab 2
     DrawerMenuItem(
       icon: Icons.sensors,
-      label: 'Signals',
+      label: l10n.navigationSignals,
       tabIndex: 2,
-      sectionHeader: 'SOCIAL',
+      sectionHeader: l10n.navigationSectionSocial,
       iconColor: AccentColors.lavender,
     ),
     if (AppFeatureFlags.isSocialEnabled)
       DrawerMenuItem(
         icon: Icons.forum_outlined,
-        label: 'Social',
+        label: l10n.navigationSocial,
         screen: const SocialHubScreen(),
         iconColor: AccentColors.pink,
         requiresConnection: false,
       ),
     DrawerMenuItem(
       icon: Icons.auto_stories_outlined,
-      label: 'NodeDex',
+      label: l10n.navigationNodeDex,
       screen: const NodeDexScreen(),
       iconColor: AccentColors.yellow,
       requiresConnection: false,
@@ -396,7 +397,7 @@ class _MainShellState extends ConsumerState<MainShell> {
     if (AppFeatureFlags.isFileTransferEnabled)
       DrawerMenuItem(
         icon: Icons.swap_vert,
-        label: 'File Transfers',
+        label: l10n.navigationFileTransfers,
         screen: const FileTransfersContainerScreen(),
         iconColor: AccentColors.cyan,
         requiresConnection: true,
@@ -405,7 +406,7 @@ class _MainShellState extends ConsumerState<MainShell> {
     if (AppFeatureFlags.isAetherEnabled)
       DrawerMenuItem(
         icon: Icons.flight_takeoff_outlined,
-        label: 'Aether',
+        label: l10n.navigationAether,
         screen: const AetherScreen(),
         iconColor: AccentColors.sky,
         requiresConnection: false,
@@ -414,7 +415,7 @@ class _MainShellState extends ConsumerState<MainShell> {
     if (AppFeatureFlags.isTakGatewayEnabled)
       DrawerMenuItem(
         icon: Icons.gps_fixed,
-        label: 'TAK Gateway',
+        label: l10n.navigationTakGateway,
         screen: const TakScreen(),
         iconColor: AccentColors.orange,
         requiresConnection: false,
@@ -423,7 +424,7 @@ class _MainShellState extends ConsumerState<MainShell> {
     if (AppFeatureFlags.isTakGatewayEnabled)
       DrawerMenuItem(
         icon: Icons.military_tech,
-        label: 'TAK Map',
+        label: l10n.navigationTakMap,
         tabIndex: 1,
         requestsTakMode: true,
         iconColor: AccentColors.orange,
@@ -431,7 +432,7 @@ class _MainShellState extends ConsumerState<MainShell> {
       ),
     DrawerMenuItem(
       icon: Icons.favorite_border,
-      label: 'Activity',
+      label: l10n.navigationActivity,
       screen: const ActivityTimelineScreen(),
       iconColor: AccentColors.red,
       requiresConnection: false,
@@ -439,54 +440,54 @@ class _MainShellState extends ConsumerState<MainShell> {
     ),
     DrawerMenuItem(
       icon: Icons.people_alt_outlined,
-      label: 'Presence',
+      label: l10n.navigationPresence,
       screen: const PresenceScreen(),
       iconColor: AccentColors.green,
       requiresConnection: true,
     ),
     DrawerMenuItem(
       icon: Icons.timeline,
-      label: 'Timeline',
+      label: l10n.navigationTimeline,
       screen: const TimelineScreen(),
-      sectionHeader: 'MESH',
+      sectionHeader: l10n.navigationSectionMesh,
       iconColor: AccentColors.indigo,
     ),
     DrawerMenuItem(
       icon: Icons.public,
-      label: 'World Map',
+      label: l10n.navigationWorldMap,
       screen: const WorldMeshScreen(),
       iconColor: AccentColors.blue,
       requiresConnection: false, // Shows global mesh data from server
     ),
     DrawerMenuItem(
       icon: Icons.view_in_ar,
-      label: '3D Mesh View',
+      label: l10n.navigationMesh3dView,
       screen: const Mesh3DScreen(),
       iconColor: AccentColors.cyan,
     ),
     DrawerMenuItem(
       icon: Icons.route,
-      label: 'Routes',
+      label: l10n.navigationRoutes,
       screen: const RoutesScreen(),
       iconColor: AccentColors.purple,
     ),
     DrawerMenuItem(
       icon: Icons.wifi_find,
-      label: 'Reachability',
+      label: l10n.navigationReachability,
       screen: const MeshReachabilityScreen(),
       iconColor: AccentColors.teal,
       requiresConnection: true,
     ),
     DrawerMenuItem(
       icon: Icons.monitor_heart_outlined,
-      label: 'Mesh Health',
+      label: l10n.navigationMeshHealth,
       screen: const MeshHealthDashboard(),
       iconColor: AccentColors.pink,
       requiresConnection: true,
     ),
     DrawerMenuItem(
       icon: Icons.terminal,
-      label: 'Device Logs',
+      label: l10n.navigationDeviceLogs,
       screen: const DeviceLogsScreen(),
       iconColor: AccentColors.slate,
       requiresConnection: true,
@@ -516,63 +517,67 @@ class _MainShellState extends ConsumerState<MainShell> {
     // Premium Features - mixed requirements
     DrawerMenuItem(
       icon: Icons.palette_outlined,
-      label: 'Theme Pack',
+      label: l10n.navigationThemePack,
       screen: const ThemeSettingsScreen(),
       premiumFeature: PremiumFeature.premiumThemes,
-      sectionHeader: 'PREMIUM',
+      sectionHeader: l10n.navigationSectionPremium,
       iconColor: AccentColors.purple,
     ),
     DrawerMenuItem(
       icon: Icons.music_note_outlined,
-      label: 'Ringtone Pack',
+      label: l10n.navigationRingtonePack,
       screen: const RingtoneScreen(),
       premiumFeature: PremiumFeature.customRingtones,
       iconColor: AccentColors.pink,
     ),
     DrawerMenuItem(
       icon: Icons.widgets_outlined,
-      label: 'Widgets',
+      label: l10n.navigationWidgets,
       screen: const WidgetBuilderScreen(),
       premiumFeature: PremiumFeature.homeWidgets,
       iconColor: AccentColors.coral,
     ),
     DrawerMenuItem(
       icon: Icons.auto_awesome,
-      label: 'Automations',
+      label: l10n.navigationAutomations,
       screen: const AutomationsScreen(),
       premiumFeature: PremiumFeature.automations,
       iconColor: AccentColors.yellow,
     ),
     DrawerMenuItem(
       icon: Icons.webhook_outlined,
-      label: 'IFTTT Integration',
+      label: l10n.navigationIftttIntegration,
       screen: const IftttConfigScreen(),
       premiumFeature: PremiumFeature.iftttIntegration,
       iconColor: AccentColors.sky,
     ),
   ];
 
-  final List<NavItem> _navItems = [
+  List<NavItem> _buildNavItems(AppLocalizations l10n) => [
     NavItem(
       icon: Icons.chat_bubble_outline,
       activeIcon: Icons.chat_bubble,
-      label: 'Messages',
+      label: l10n.navigationMessages,
     ),
-    NavItem(icon: Icons.map_outlined, activeIcon: Icons.map, label: 'Map'),
+    NavItem(
+      icon: Icons.map_outlined,
+      activeIcon: Icons.map,
+      label: l10n.navigationMap,
+    ),
     NavItem(
       icon: Icons.sensors_outlined,
       activeIcon: Icons.sensors,
-      label: 'Signals',
+      label: l10n.navigationSignals,
     ),
     NavItem(
       icon: Icons.people_outline,
       activeIcon: Icons.people,
-      label: 'Nodes',
+      label: l10n.navigationNodes,
     ),
     NavItem(
       icon: Icons.dashboard_outlined,
       activeIcon: Icons.dashboard,
-      label: 'Dashboard',
+      label: l10n.navigationDashboard,
     ),
   ];
 
@@ -622,11 +627,13 @@ class _MainShellState extends ConsumerState<MainShell> {
     slivers.add(const SliverPadding(padding: EdgeInsets.only(top: 8)));
 
     // Group items by section
+    final l10n = AppLocalizations.of(context)!;
+    final drawerMenuItems = _buildDrawerMenuItems(l10n);
     final sections = <DrawerMenuSection>[];
     DrawerMenuSection? currentSection;
 
-    for (var i = 0; i < _drawerMenuItems.length; i++) {
-      final item = _drawerMenuItems[i];
+    for (var i = 0; i < drawerMenuItems.length; i++) {
+      final item = drawerMenuItems[i];
 
       if (item.sectionHeader != null) {
         // Start new section
@@ -795,7 +802,7 @@ class _MainShellState extends ConsumerState<MainShell> {
           Padding(
             padding: const EdgeInsets.only(left: 12, bottom: 8),
             child: Text(
-              'ACCOUNT',
+              AppLocalizations.of(context)!.navigationSectionAccount,
               style: TextStyle(
                 fontSize: 11,
                 fontWeight: FontWeight.w600,
@@ -831,18 +838,21 @@ class _MainShellState extends ConsumerState<MainShell> {
     final syncStatus = ref.watch(syncStatusProvider);
     final isOnline = ref.watch(isOnlineProvider);
 
-    final displayName = profile?.displayName ?? 'Guest';
+    final displayName =
+        profile?.displayName ??
+        AppLocalizations.of(context)!.navigationGuestName;
     final initials = profile?.initials ?? '?';
     final avatarUrl = profile?.avatarUrl;
 
     String getSyncStatusText() {
-      if (!isSignedIn) return 'Not signed in';
-      if (!isOnline) return 'Offline';
+      final l10n = AppLocalizations.of(context)!;
+      if (!isSignedIn) return l10n.navigationNotSignedIn;
+      if (!isOnline) return l10n.navigationOffline;
       return switch (syncStatus) {
-        SyncStatus.syncing => 'Syncing...',
-        SyncStatus.error => 'Sync error',
-        SyncStatus.synced => 'Synced',
-        SyncStatus.idle => 'View Profile',
+        SyncStatus.syncing => l10n.navigationSyncing,
+        SyncStatus.error => l10n.navigationSyncError,
+        SyncStatus.synced => l10n.navigationSynced,
+        SyncStatus.idle => l10n.navigationViewProfile,
       };
     }
 
@@ -1020,7 +1030,9 @@ class _MainShellState extends ConsumerState<MainShell> {
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: DrawerMenuTile(
                         icon: Icons.help_outline,
-                        label: 'Help & Support',
+                        label: AppLocalizations.of(
+                          context,
+                        )!.navigationHelpSupport,
                         isSelected: false,
                         iconColor: AccentColors.blue,
                         onTap: () {
@@ -1105,6 +1117,7 @@ class _MainShellState extends ConsumerState<MainShell> {
 
     // Listen for firmware client notifications (errors, warnings)
     // These are important messages that need to be shown to the user
+    final l10n = AppLocalizations.of(context)!;
     ref.listen(clientNotificationStreamProvider, (previous, next) {
       next.whenData((notification) {
         final level = notification.level;
@@ -1114,24 +1127,24 @@ class _MainShellState extends ConsumerState<MainShell> {
         // Show appropriate snackbar based on severity level
         if (level == LogRecord_Level.ERROR ||
             level == LogRecord_Level.CRITICAL) {
-          showErrorSnackBar(context, 'Firmware: $message');
+          showErrorSnackBar(context, l10n.navigationFirmwareMessage(message));
           // Also show a local push notification for critical errors
           // This ensures user sees the error even if app is backgrounded
           NotificationService().showFirmwareNotification(
-            title: 'Meshtastic Device Error',
+            title: l10n.navigationFirmwareErrorTitle,
             message: message,
             level: levelName,
           );
         } else if (level == LogRecord_Level.WARNING) {
-          showWarningSnackBar(context, 'Firmware: $message');
+          showWarningSnackBar(context, l10n.navigationFirmwareMessage(message));
           // Push notification for warnings too - they're important
           NotificationService().showFirmwareNotification(
-            title: 'Meshtastic Device Warning',
+            title: l10n.navigationFirmwareWarningTitle,
             message: message,
             level: levelName,
           );
         } else if (level == LogRecord_Level.INFO) {
-          showInfoSnackBar(context, 'Firmware: $message');
+          showInfoSnackBar(context, l10n.navigationFirmwareMessage(message));
         }
         // DEBUG and TRACE levels are not shown to user
       });
@@ -1178,13 +1191,13 @@ class _MainShellState extends ConsumerState<MainShell> {
           if (event.activated) {
             showInfoSnackBar(
               context,
-              '${flight.flightNumber} ($route) is now in flight!',
+              l10n.navigationFlightActivated(flight.flightNumber, route),
             );
             AppLogging.aether('Lifecycle: activated ${flight.flightNumber}');
           } else {
             showInfoSnackBar(
               context,
-              '${flight.flightNumber} ($route) flight completed',
+              l10n.navigationFlightCompleted(flight.flightNumber, route),
             );
             AppLogging.aether('Lifecycle: deactivated ${flight.flightNumber}');
           }
@@ -1355,55 +1368,57 @@ class _MainShellState extends ConsumerState<MainShell> {
             child: SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                child: Row(
-                  children: List.generate(_navItems.length, (index) {
-                    final item = _navItems[index];
-                    final isSelected =
-                        ref.watch(mainShellIndexProvider) == index;
-
-                    // Calculate badge count for each tab
-                    int badgeCount = 0;
-                    if (index == 0) {
-                      // Messages tab - show unread count
-                      badgeCount = ref.watch(unreadMessagesCountProvider);
-                    } else if (index == 2) {
-                      // Signals tab - show active signal count
-                      badgeCount = ref.watch(activeSignalCountProvider);
-                    } else if (index == 3) {
-                      // Nodes tab - show new nodes count
-                      badgeCount = ref.watch(newNodesCountProvider);
-                    } else if (index == 4) {
-                      // Dashboard tab - no badge needed
-                      badgeCount = 0;
-                    }
-
-                    return Expanded(
-                      child: NavBarItem(
-                        icon: isSelected ? item.activeIcon : item.icon,
-                        label: item.label,
-                        isSelected: isSelected,
-                        badgeCount: badgeCount,
-                        showWarningBadge: false,
-                        showReconnectingBadge: false,
-                        onTap: () {
-                          ref.haptics.tabChange();
-                          // Clear new nodes badge when navigating to Nodes tab
-                          if (index == 3) {
-                            ref.read(newNodesCountProvider.notifier).reset();
-                          }
-                          ref
-                              .read(mainShellIndexProvider.notifier)
-                              .setIndex(index);
-                        },
-                      ),
-                    );
-                  }),
-                ),
+                child: _buildBottomNavRow(l10n),
               ),
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildBottomNavRow(AppLocalizations l10n) {
+    final navItems = _buildNavItems(l10n);
+    return Row(
+      children: List.generate(navItems.length, (index) {
+        final item = navItems[index];
+        final isSelected = ref.watch(mainShellIndexProvider) == index;
+
+        // Calculate badge count for each tab
+        int badgeCount = 0;
+        if (index == 0) {
+          // Messages tab - show unread count
+          badgeCount = ref.watch(unreadMessagesCountProvider);
+        } else if (index == 2) {
+          // Signals tab - show active signal count
+          badgeCount = ref.watch(activeSignalCountProvider);
+        } else if (index == 3) {
+          // Nodes tab - show new nodes count
+          badgeCount = ref.watch(newNodesCountProvider);
+        } else if (index == 4) {
+          // Dashboard tab - no badge needed
+          badgeCount = 0;
+        }
+
+        return Expanded(
+          child: NavBarItem(
+            icon: isSelected ? item.activeIcon : item.icon,
+            label: item.label,
+            isSelected: isSelected,
+            badgeCount: badgeCount,
+            showWarningBadge: false,
+            showReconnectingBadge: false,
+            onTap: () {
+              ref.haptics.tabChange();
+              // Clear new nodes badge when navigating to Nodes tab
+              if (index == 3) {
+                ref.read(newNodesCountProvider.notifier).reset();
+              }
+              ref.read(mainShellIndexProvider.notifier).setIndex(index);
+            },
+          ),
+        );
+      }),
     );
   }
 }

@@ -265,6 +265,7 @@ check_file() {
   # (TODO comments, etc.) that we don't control
   case "$file" in
     lib/generated/*) return 0 ;;
+    lib/l10n/app_localizations*.dart) return 0 ;;
     *.pb.dart|*.pbenum.dart|*.pbjson.dart|*.pbserver.dart) return 0 ;;
     *.g.dart|*.freezed.dart) return 0 ;;
     lib/core/widgets/glass_scaffold.dart) return 0 ;;
@@ -996,6 +997,7 @@ check_spdx_required() {
 
   case "$file" in
     lib/generated/*) return 0 ;;
+    lib/l10n/app_localizations*.dart) return 0 ;;
     *.g.dart|*.freezed.dart|*.pb.dart|*.pbenum.dart|*.pbjson.dart|*.pbserver.dart) return 0 ;;
   esac
 
