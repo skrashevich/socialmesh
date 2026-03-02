@@ -117,7 +117,7 @@ class LilygoApiService {
           '$_tag FAILED to fetch product $handle: HTTP ${response.statusCode}',
         );
         AppLogging.shop(
-          '$_tag Response body: ${response.body.substring(0, 200.clamp(0, response.body.length))}...',
+          '$_tag Response body: ${response.body.substring(0, 200.clamp(0, response.body.length))}…',
         );
         return null;
       }
@@ -560,9 +560,9 @@ class LilygoApiService {
     final truncated = cleaned.substring(0, 150);
     final lastSpace = truncated.lastIndexOf(' ');
     if (lastSpace > 100) {
-      return '${truncated.substring(0, lastSpace)}...';
+      return '${truncated.substring(0, lastSpace)}…';
     }
-    return '$truncated...';
+    return '$truncated…';
   }
 
   /// Dispose of resources

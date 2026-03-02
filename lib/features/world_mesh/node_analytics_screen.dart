@@ -1010,7 +1010,7 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
           Icon(Icons.radio, size: 12, color: color),
           const SizedBox(width: AppTheme.spacing6),
           Text(
-            nodeId.length > 8 ? '${nodeId.substring(0, 8)}...' : nodeId,
+            nodeId.length > 8 ? '${nodeId.substring(0, 8)}…' : nodeId,
             style: TextStyle(
               fontSize: 11,
               color: color,
@@ -1047,7 +1047,7 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
           Icon(Icons.router, size: 12, color: context.accentColor),
           SizedBox(width: AppTheme.spacing6),
           Text(
-            gateway.length > 12 ? '${gateway.substring(0, 12)}...' : gateway,
+            gateway.length > 12 ? '${gateway.substring(0, 12)}…' : gateway,
             style: TextStyle(
               fontSize: 11,
               color: context.accentColor,

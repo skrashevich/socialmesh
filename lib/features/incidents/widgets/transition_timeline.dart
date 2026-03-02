@@ -156,7 +156,7 @@ class _TimelineEntry extends StatelessWidget {
                     // Actor + timestamp
                     Text(
                       '${transition.actorRole ?? 'unknown'} '
-                      '(${transition.actorId.length > 8 ? '${transition.actorId.substring(0, 8)}...' : transition.actorId})'
+                      '(${transition.actorId.length > 8 ? '${transition.actorId.substring(0, 8)}…' : transition.actorId})'
                       '  •  '
                       '${_formatTimestamp(transition.timestamp)}',
                       style: context.captionMutedStyle,

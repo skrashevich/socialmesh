@@ -407,7 +407,7 @@ class _ReportCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final statusColor = _statusColor();
     final desc = report.description;
-    final preview = desc.length > 120 ? '${desc.substring(0, 117)}...' : desc;
+    final preview = desc.length > 120 ? '${desc.substring(0, 117)}…' : desc;
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),

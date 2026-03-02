@@ -490,5 +490,2614 @@
   "explorerTitleLongRangeRecordHolderDescription": "Pushing the limits of range",
   "@explorerTitleLongRangeRecordHolderDescription": {
     "description": "Description for the Long-Range Record Holder explorer title."
+  },
+
+  "scannerConnectingStatus": "Connecting...",
+  "@scannerConnectingStatus": {
+    "description": "Default status text shown on the connecting animation."
+  },
+
+  "scannerConnectDeviceTitle": "Connect Device",
+  "@scannerConnectDeviceTitle": {
+    "description": "Title of the scanner screen in onboarding mode."
+  },
+
+  "scannerDevicesTitle": "Devices",
+  "@scannerDevicesTitle": {
+    "description": "Title of the scanner screen in normal mode."
+  },
+
+  "scannerSavedDeviceFallbackName": "Your saved device",
+  "@scannerSavedDeviceFallbackName": {
+    "description": "Fallback name used when the last connected device has no stored name."
+  },
+
+  "scannerDeviceNotFoundTitle": "{name} not found",
+  "@scannerDeviceNotFoundTitle": {
+    "description": "Banner title when the saved device was not found during scan.",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "description": "The name of the device that was not found."
+      }
+    }
+  },
+
+  "scannerDeviceNotFoundSubtitle": "If another app is connected to this device, disconnect from it first. Only one app can use Bluetooth at a time.",
+  "@scannerDeviceNotFoundSubtitle": {
+    "description": "Banner subtitle explaining why the saved device was not found."
+  },
+
+  "scannerAutoReconnectDisabledTitle": "Auto-reconnect is disabled",
+  "@scannerAutoReconnectDisabledTitle": {
+    "description": "Title of the info banner shown when auto-reconnect is off."
+  },
+
+  "scannerAutoReconnectDisabledSubtitleWithDevice": "Select \"{name}\" below, or enable auto-reconnect.",
+  "@scannerAutoReconnectDisabledSubtitleWithDevice": {
+    "description": "Subtitle of the auto-reconnect hint when a saved device name is known.",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "description": "The name of the previously connected device."
+      }
+    }
+  },
+
+  "scannerAutoReconnectDisabledSubtitle": "Select a device below to connect manually.",
+  "@scannerAutoReconnectDisabledSubtitle": {
+    "description": "Subtitle of the auto-reconnect hint when no saved device name is available."
+  },
+
+  "scannerEnableAutoReconnectTitle": "Enable Auto-Reconnect?",
+  "@scannerEnableAutoReconnectTitle": {
+    "description": "Title of the confirmation sheet for enabling auto-reconnect."
+  },
+
+  "scannerEnableAutoReconnectMessageWithDevice": "This will automatically connect to \"{name}\" now and whenever you open the app.",
+  "@scannerEnableAutoReconnectMessageWithDevice": {
+    "description": "Auto-reconnect confirmation body when a saved device name is known.",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "description": "The name of the previously connected device."
+      }
+    }
+  },
+
+  "scannerEnableAutoReconnectMessage": "This will automatically connect to your last used device whenever you open the app.",
+  "@scannerEnableAutoReconnectMessage": {
+    "description": "Auto-reconnect confirmation body when no saved device name is available."
+  },
+
+  "scannerEnableLabel": "Enable",
+  "@scannerEnableLabel": {
+    "description": "Confirm label for the enable auto-reconnect sheet."
+  },
+
+  "scannerPairingRemovedHint": "Bluetooth pairing was removed. Forget \"Meshtastic\" in Settings > Bluetooth and reconnect to continue.",
+  "@scannerPairingRemovedHint": {
+    "description": "Hint shown when BLE pairing was invalidated (e.g. factory reset)."
+  },
+
+  "scannerBluetoothSettings": "Bluetooth Settings",
+  "@scannerBluetoothSettings": {
+    "description": "Label for the button that opens the OS Bluetooth settings."
+  },
+
+  "scannerRetryScan": "Retry Scan",
+  "@scannerRetryScan": {
+    "description": "Label for the retry scan button."
+  },
+
+  "scannerScanningTitle": "Scanning for nearby devices",
+  "@scannerScanningTitle": {
+    "description": "Banner title shown while actively scanning for BLE devices."
+  },
+
+  "scannerScanningSubtitle": "Looking for Meshtastic devices...",
+  "@scannerScanningSubtitle": {
+    "description": "Banner subtitle shown when the device list is empty during scan."
+  },
+
+  "scannerDevicesFoundCount": "{count, plural, =1{{count} device found so far} other{{count} devices found so far}}",
+  "@scannerDevicesFoundCount": {
+    "description": "Banner subtitle showing how many devices were found during an active scan.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "description": "Number of devices found so far."
+      }
+    }
+  },
+
+  "scannerAvailableDevices": "Available Devices",
+  "@scannerAvailableDevices": {
+    "description": "Header label above the list of discovered BLE/USB devices."
+  },
+
+  "scannerLookingForDevices": "Looking for devices\u2026",
+  "@scannerLookingForDevices": {
+    "description": "Large text shown when scan is not active and no devices are listed."
+  },
+
+  "scannerEnableBluetoothHint": "Make sure Bluetooth is enabled and your Meshtastic device is powered on",
+  "@scannerEnableBluetoothHint": {
+    "description": "Helper text shown below the looking-for-devices message."
+  },
+
+  "scannerUnknownProtocol": "Unknown Protocol",
+  "@scannerUnknownProtocol": {
+    "description": "Title of the bottom sheet warning for an unrecognised BLE device."
+  },
+
+  "scannerUnknownDeviceDescription": "This device was not detected as Meshtastic or MeshCore.",
+  "@scannerUnknownDeviceDescription": {
+    "description": "Body text in the unknown-protocol warning sheet."
+  },
+
+  "scannerUnsupportedDeviceMessage": "This device cannot be connected automatically. Only Meshtastic and MeshCore devices are supported.",
+  "@scannerUnsupportedDeviceMessage": {
+    "description": "Second paragraph in the unknown-protocol warning sheet."
+  },
+
+  "scannerProtocolMeshtastic": "Meshtastic",
+  "@scannerProtocolMeshtastic": {
+    "description": "Protocol badge label for Meshtastic devices."
+  },
+
+  "scannerProtocolMeshCore": "MeshCore",
+  "@scannerProtocolMeshCore": {
+    "description": "Protocol badge label for MeshCore devices."
+  },
+
+  "scannerProtocolUnknown": "Unknown",
+  "@scannerProtocolUnknown": {
+    "description": "Protocol badge label for devices with an unrecognised protocol."
+  },
+
+  "scannerTransportBluetooth": "Bluetooth",
+  "@scannerTransportBluetooth": {
+    "description": "Transport type label for BLE devices in the device card."
+  },
+
+  "scannerTransportUsb": "USB",
+  "@scannerTransportUsb": {
+    "description": "Transport type label for USB devices in the device card."
+  },
+
+  "scannerDetailDeviceName": "Device Name",
+  "@scannerDetailDeviceName": {
+    "description": "Column header in the device details table."
+  },
+
+  "scannerDetailAddress": "Address",
+  "@scannerDetailAddress": {
+    "description": "Column header in the device details table."
+  },
+
+  "scannerDetailConnectionType": "Connection Type",
+  "@scannerDetailConnectionType": {
+    "description": "Column header in the device details table."
+  },
+
+  "scannerDetailSignalStrength": "Signal Strength",
+  "@scannerDetailSignalStrength": {
+    "description": "Column header in the device details table."
+  },
+
+  "scannerDetailServiceUuids": "Service UUIDs",
+  "@scannerDetailServiceUuids": {
+    "description": "Column header in the device details table (dev mode only)."
+  },
+
+  "scannerDetailManufacturerData": "Manufacturer Data",
+  "@scannerDetailManufacturerData": {
+    "description": "Column header in the device details table (dev mode only)."
+  },
+
+  "scannerDetailBluetoothLowEnergy": "Bluetooth Low Energy",
+  "@scannerDetailBluetoothLowEnergy": {
+    "description": "Connection type value for BLE devices in the device details table."
+  },
+
+  "scannerDetailUsbSerial": "USB Serial",
+  "@scannerDetailUsbSerial": {
+    "description": "Connection type value for USB devices in the device details table."
+  },
+
+  "scannerVersionText": "Socialmesh v{version}",
+  "@scannerVersionText": {
+    "description": "Version text shown at the bottom of the scanner screen.",
+    "placeholders": {
+      "version": {
+        "type": "String",
+        "description": "The current app version string."
+      }
+    }
+  },
+
+  "scannerVersionTextShort": "Version v{version}",
+  "@scannerVersionTextShort": {
+    "description": "Short version text shown at the bottom of the inline scanner.",
+    "placeholders": {
+      "version": {
+        "type": "String",
+        "description": "The current app version string."
+      }
+    }
+  },
+
+  "scannerCopyright": "\u00a9 2026 Socialmesh. All rights reserved.",
+  "@scannerCopyright": {
+    "description": "Copyright notice at the bottom of the scanner screen."
+  },
+
+  "scannerAuthFailedError": "Authentication failed. The device may need to be re-paired. Go to Settings > Bluetooth, forget the Meshtastic device, then tap it below to reconnect.",
+  "@scannerAuthFailedError": {
+    "description": "Error message shown when BLE authentication fails during auto-reconnect."
+  },
+
+  "scannerMeshCoreConnectionFailed": "MeshCore connection failed",
+  "@scannerMeshCoreConnectionFailed": {
+    "description": "Fallback error message when MeshCore connection fails with no specific message."
+  },
+
+  "scannerMeshCoreConnectionFailedWithError": "MeshCore connection failed: {error}",
+  "@scannerMeshCoreConnectionFailedWithError": {
+    "description": "Error snackbar message when MeshCore connection throws an exception.",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "description": "The exception message."
+      }
+    }
+  },
+
+  "scannerConnectionFailedWithError": "Connection failed: {error}",
+  "@scannerConnectionFailedWithError": {
+    "description": "Error message set when a BLE/MeshCore connection fails with an exception.",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "description": "The exception message."
+      }
+    }
+  },
+
+  "scannerPinRequiredError": "Connection failed - please try again and enter the PIN when prompted",
+  "@scannerPinRequiredError": {
+    "description": "Error thrown when Meshtastic config is not received, indicating a PIN/auth issue."
+  },
+
+  "scannerBluetoothSettingsOpenFailed": "Could not open Bluetooth Settings. Please open Settings > Bluetooth manually.",
+  "@scannerBluetoothSettingsOpenFailed": {
+    "description": "Error snackbar when the OS deep link to Bluetooth settings fails."
+  },
+
+  "messagesContainerTitle": "Messages",
+  "@messagesContainerTitle": {
+    "description": "Title of the messages container screen app bar."
+  },
+
+  "messagesContactsTab": "Contacts",
+  "@messagesContactsTab": {
+    "description": "Tab label for the contacts tab in the messages container."
+  },
+
+  "messagesChannelsTab": "Channels",
+  "@messagesChannelsTab": {
+    "description": "Tab label for the channels tab in the messages container."
+  },
+
+  "messagesAddChannelNotConnected": "Connect to a device to add channels",
+  "@messagesAddChannelNotConnected": {
+    "description": "Error shown when user tries to add a channel while disconnected."
+  },
+
+  "messagesScanChannelNotConnected": "Connect to a device to scan channels",
+  "@messagesScanChannelNotConnected": {
+    "description": "Error shown when user tries to scan a QR channel while disconnected."
+  },
+
+  "messagingSearchContactsHint": "Search contacts",
+  "@messagingSearchContactsHint": {
+    "description": "Hint text in the contact search field."
+  },
+
+  "messagingFilterAll": "All",
+  "@messagingFilterAll": {
+    "description": "Label for the All filter chip in the contacts list."
+  },
+
+  "messagingFilterActive": "Active",
+  "@messagingFilterActive": {
+    "description": "Label for the Active filter chip in the contacts list."
+  },
+
+  "messagingFilterUnread": "Unread",
+  "@messagingFilterUnread": {
+    "description": "Label for the Unread filter chip in the contacts list."
+  },
+
+  "messagingFilterMessaged": "Messaged",
+  "@messagingFilterMessaged": {
+    "description": "Label for the Messaged filter chip in the contacts list."
+  },
+
+  "messagingFilterFavorites": "Favorites",
+  "@messagingFilterFavorites": {
+    "description": "Label for the Favorites filter chip in the contacts list."
+  },
+
+  "messagingNoContactsMatchSearch": "No contacts match \"{query}\"",
+  "@messagingNoContactsMatchSearch": {
+    "description": "Empty state text when the contact search returns no results.",
+    "placeholders": {
+      "query": {
+        "type": "String",
+        "description": "The search term entered by the user."
+      }
+    }
+  },
+
+  "messagingNoFilteredContacts": "No {filter} contacts",
+  "@messagingNoFilteredContacts": {
+    "description": "Empty state text when the active filter returns no contacts.",
+    "placeholders": {
+      "filter": {
+        "type": "String",
+        "description": "The programmatic name of the active filter (e.g. active, unread)."
+      }
+    }
+  },
+
+  "messagingNoContactsYet": "No contacts yet",
+  "@messagingNoContactsYet": {
+    "description": "Empty state text when no contacts exist at all."
+  },
+
+  "messagingContactsDiscoveredHint": "Discovered nodes will appear here",
+  "@messagingContactsDiscoveredHint": {
+    "description": "Helper text shown below the no-contacts empty state."
+  },
+
+  "messagingClearSearch": "Clear search",
+  "@messagingClearSearch": {
+    "description": "Button label to clear the contact search query."
+  },
+
+  "messagingContactsTitle": "Contacts",
+  "@messagingContactsTitle": {
+    "description": "Title for the contacts list header when no contacts are present."
+  },
+
+  "messagingContactsTitleWithCount": "Contacts ({count})",
+  "@messagingContactsTitleWithCount": {
+    "description": "Title for the contacts list header showing the contact count.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "description": "The number of contacts."
+      }
+    }
+  },
+
+  "messagingSectionFavorites": "Favorites",
+  "@messagingSectionFavorites": {
+    "description": "Section header for favorite contacts in the contact list."
+  },
+
+  "messagingSectionUnread": "Unread",
+  "@messagingSectionUnread": {
+    "description": "Section header for contacts with unread messages."
+  },
+
+  "messagingSectionActive": "Active",
+  "@messagingSectionActive": {
+    "description": "Section header for recently active contacts."
+  },
+
+  "messagingSectionInactive": "Inactive",
+  "@messagingSectionInactive": {
+    "description": "Section header for inactive contacts."
+  },
+
+  "messagingMessageQueuedOffline": "Message queued - will send when connected",
+  "@messagingMessageQueuedOffline": {
+    "description": "Info snackbar shown when a message is queued because the device is offline."
+  },
+
+  "messagingEncryptionKeyIssueTitle": "Encryption Key Issue",
+  "@messagingEncryptionKeyIssueTitle": {
+    "description": "Title of the encryption key issue bottom sheet."
+  },
+
+  "messagingEncryptionKeyIssueSubtitle": "Direct message to {name} failed",
+  "@messagingEncryptionKeyIssueSubtitle": {
+    "description": "Subtitle of the encryption key issue sheet showing the target node name.",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "description": "The display name of the target node."
+      }
+    }
+  },
+
+  "messagingEncryptionKeyWarning": "The encryption keys may be out of sync. This can happen when a node has been reset or rolled out of the mesh database.",
+  "@messagingEncryptionKeyWarning": {
+    "description": "Warning banner body in the encryption key issue sheet."
+  },
+
+  "messagingRequestUserInfoSuccess": "Requested fresh info from {name}",
+  "@messagingRequestUserInfoSuccess": {
+    "description": "Success snackbar after requesting node info.",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "description": "The display name of the target node."
+      }
+    }
+  },
+
+  "messagingRequestUserInfoFailed": "Failed to request info: {error}",
+  "@messagingRequestUserInfoFailed": {
+    "description": "Error snackbar when requesting node info fails.",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "description": "The error message."
+      }
+    }
+  },
+
+  "messagingRequestUserInfo": "Request User Info",
+  "@messagingRequestUserInfo": {
+    "description": "Button label to request fresh node info."
+  },
+
+  "messagingRetryMessage": "Retry Message",
+  "@messagingRetryMessage": {
+    "description": "Button label to retry sending a failed message."
+  },
+
+  "messagingAdvancedResetNodeDatabase": "Advanced: Reset Node Database",
+  "@messagingAdvancedResetNodeDatabase": {
+    "description": "Advanced option link in the encryption key issue sheet."
+  },
+
+  "messagingDeleteMessageTitle": "Delete Message",
+  "@messagingDeleteMessageTitle": {
+    "description": "Title of the delete message confirmation sheet."
+  },
+
+  "messagingDeleteMessageConfirmation": "Are you sure you want to delete this message? This only removes it locally.",
+  "@messagingDeleteMessageConfirmation": {
+    "description": "Body of the delete message confirmation sheet."
+  },
+
+  "messagingMessageDeleted": "Message deleted",
+  "@messagingMessageDeleted": {
+    "description": "Success snackbar after deleting a message."
+  },
+
+  "messagingChannelSubtitle": "Channel",
+  "@messagingChannelSubtitle": {
+    "description": "Subtitle shown below the channel name in the messaging screen header."
+  },
+
+  "messagingDirectMessageSubtitle": "Direct Message",
+  "@messagingDirectMessageSubtitle": {
+    "description": "Subtitle shown below the contact name in a DM conversation."
+  },
+
+  "messagingCloseSearch": "Close Search",
+  "@messagingCloseSearch": {
+    "description": "Tooltip for the icon button that closes the message search bar."
+  },
+
+  "messagingSearchMessages": "Search Messages",
+  "@messagingSearchMessages": {
+    "description": "Tooltip for the icon button that opens the message search bar."
+  },
+
+  "messagingChannelSettings": "Channel Settings",
+  "@messagingChannelSettings": {
+    "description": "Tooltip for the channel settings icon button in a channel conversation."
+  },
+
+  "messagingFindMessageHint": "Find a message",
+  "@messagingFindMessageHint": {
+    "description": "Hint text in the message search field."
+  },
+
+  "messagingNoMessagesMatchSearch": "No messages match your search",
+  "@messagingNoMessagesMatchSearch": {
+    "description": "Empty state text in the message list when search returns no results."
+  },
+
+  "messagingNoMessagesInChannel": "No messages in this channel",
+  "@messagingNoMessagesInChannel": {
+    "description": "Empty state text when a channel has no messages."
+  },
+
+  "messagingStartConversation": "Start the conversation",
+  "@messagingStartConversation": {
+    "description": "Empty state text in a new DM conversation."
+  },
+
+  "messagingReplyingTo": "Replying to {name}",
+  "@messagingReplyingTo": {
+    "description": "Label shown in the reply banner above the text input.",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "description": "The display name of the message being replied to."
+      }
+    }
+  },
+
+  "messagingMessageHint": "Message\u2026",
+  "@messagingMessageHint": {
+    "description": "Hint text in the message compose field."
+  },
+
+  "messagingSourceAutomation": "Automation",
+  "@messagingSourceAutomation": {
+    "description": "Source label for messages sent by an automation rule."
+  },
+
+  "messagingSourceShortcut": "Shortcut",
+  "@messagingSourceShortcut": {
+    "description": "Source label for messages sent via a shortcut."
+  },
+
+  "messagingSourceNotification": "Notification",
+  "@messagingSourceNotification": {
+    "description": "Source label for messages triggered by a notification action."
+  },
+
+  "messagingSourceTapback": "Tapback",
+  "@messagingSourceTapback": {
+    "description": "Source label for tapback reaction messages."
+  },
+
+  "messagingOriginalMessage": "Original message",
+  "@messagingOriginalMessage": {
+    "description": "Fallback text shown when the quoted reply message has no text."
+  },
+
+  "messagingFailedToSend": "Failed to send",
+  "@messagingFailedToSend": {
+    "description": "Fallback error text shown on a message that failed to send."
+  },
+
+  "messagingQuickResponses": "Quick Responses",
+  "@messagingQuickResponses": {
+    "description": "Title of the quick responses panel in the messaging bottom sheet."
+  },
+
+  "messagingNoQuickResponsesConfigured": "No quick responses configured.\nAdd some in Settings \u2192 Quick responses.",
+  "@messagingNoQuickResponsesConfigured": {
+    "description": "Empty state text in the quick responses panel."
+  },
+
+  "messagingConfigureQuickResponses": "Configure quick responses in Settings",
+  "@messagingConfigureQuickResponses": {
+    "description": "Helper text below an empty quick responses panel."
+  },
+
+  "messagingAddChannel": "Add channel",
+  "@messagingAddChannel": {
+    "description": "Popup menu item to open the channel creation wizard."
+  },
+
+  "messagingScanQrCode": "Scan QR code",
+  "@messagingScanQrCode": {
+    "description": "Popup menu item to scan a QR code for a channel."
+  },
+
+  "messagingHelp": "Help",
+  "@messagingHelp": {
+    "description": "Popup menu item to start the messaging help tour."
+  },
+
+  "messagingSettings": "Settings",
+  "@messagingSettings": {
+    "description": "Popup menu item to navigate to the settings screen."
+  },
+
+  "messagingUnknownNode": "Unknown Node",
+  "@messagingUnknownNode": {
+    "description": "Fallback display name for a node with no stored name."
+  },
+
+  "messageContextMenuReply": "Reply",
+  "@messageContextMenuReply": {
+    "description": "Label for the Reply action in the message context menu."
+  },
+
+  "messageContextMenuCopy": "Copy",
+  "@messageContextMenuCopy": {
+    "description": "Label for the Copy action in the message context menu."
+  },
+
+  "messageContextMenuMessageCopied": "Message copied",
+  "@messageContextMenuMessageCopied": {
+    "description": "Success snackbar after copying message text."
+  },
+
+  "messageContextMenuTapbackSent": "Tapback sent",
+  "@messageContextMenuTapbackSent": {
+    "description": "Success snackbar after sending a tapback reaction."
+  },
+
+  "messageContextMenuTapbackFailed": "Failed to send tapback",
+  "@messageContextMenuTapbackFailed": {
+    "description": "Error snackbar when sending a tapback fails."
+  },
+
+  "messageContextMenuMessageDetails": "Message Details",
+  "@messageContextMenuMessageDetails": {
+    "description": "Header label in the message details section of the context menu."
+  },
+
+  "messageContextMenuStatusSending": "Sending\u2026",
+  "@messageContextMenuStatusSending": {
+    "description": "Delivery status text for a message that is currently being sent."
+  },
+
+  "messageContextMenuStatusSent": "Sent",
+  "@messageContextMenuStatusSent": {
+    "description": "Delivery status text for a message that has been sent."
+  },
+
+  "messageContextMenuStatusDelivered": "Delivered \u2714\ufe0f",
+  "@messageContextMenuStatusDelivered": {
+    "description": "Delivery status text for a message that has been acknowledged."
+  },
+
+  "messageContextMenuStatusFailed": "Failed: {error}",
+  "@messageContextMenuStatusFailed": {
+    "description": "Delivery status text for a message that failed to send.",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "description": "The error message or description."
+      }
+    }
+  },
+
+  "messageContextMenuNoRecents": "No Recents",
+  "@messageContextMenuNoRecents": {
+    "description": "Placeholder text in the emoji picker when there are no recent emoji."
+  },
+
+  "messageContextMenuSearchEmoji": "Search emoji\u2026",
+  "@messageContextMenuSearchEmoji": {
+    "description": "Hint text in the emoji picker search field."
+  },
+
+  "tapbackReact": "React",
+  "@tapbackReact": {
+    "description": "Header label in the tapback reaction picker."
+  },
+
+  "helpArticleMinRead": "{minutes} min read",
+  "@helpArticleMinRead": {
+    "description": "Reading time estimate shown on a help article.",
+    "placeholders": {
+      "minutes": {
+        "type": "int",
+        "description": "Estimated reading time in minutes."
+      }
+    }
+  },
+
+  "helpArticleLoadFailed": "Failed to load article",
+  "@helpArticleLoadFailed": {
+    "description": "Error text shown when a help article fails to load."
+  },
+
+  "helpCenterTitle": "Help Center",
+  "@helpCenterTitle": {
+    "description": "Title of the help center screen."
+  },
+
+  "helpCenterLoadFailed": "Failed to load help content",
+  "@helpCenterLoadFailed": {
+    "description": "Error text shown when the help center content fails to load."
+  },
+
+  "helpCenterArticlesRead": "articles read",
+  "@helpCenterArticlesRead": {
+    "description": "Suffix label on the progress counter in the help center."
+  },
+
+  "helpCenterSearchHint": "Search articles",
+  "@helpCenterSearchHint": {
+    "description": "Hint text in the help center article search field."
+  },
+
+  "helpCenterFilterAll": "All",
+  "@helpCenterFilterAll": {
+    "description": "Label for the All filter chip in the help center."
+  },
+
+  "helpCenterNoArticlesMatchSearch": "No articles match your search.\nTry different keywords.",
+  "@helpCenterNoArticlesMatchSearch": {
+    "description": "Empty state text when the article search returns no results."
+  },
+
+  "helpCenterSearchByTitle": "Search by article title\nor description.",
+  "@helpCenterSearchByTitle": {
+    "description": "Helper description shown in the search empty state."
+  },
+
+  "helpCenterNoArticlesInCategory": "No articles in this category",
+  "@helpCenterNoArticlesInCategory": {
+    "description": "Empty state text when the selected category has no articles."
+  },
+
+  "helpCenterNoArticlesAvailable": "No articles available",
+  "@helpCenterNoArticlesAvailable": {
+    "description": "Empty state text shown when there are no articles at all."
+  },
+
+  "helpCenterTryDifferentCategory": "Try selecting a different category from the filter chips above.",
+  "@helpCenterTryDifferentCategory": {
+    "description": "Helper text in the no-articles-in-category empty state."
+  },
+
+  "helpCenterContentBeingPrepared": "Help content is being prepared. Check back soon.",
+  "@helpCenterContentBeingPrepared": {
+    "description": "Helper text when no articles are available yet."
+  },
+
+  "helpCenterCompleted": "Completed",
+  "@helpCenterCompleted": {
+    "description": "Badge label on a completed help article."
+  },
+
+  "helpCenterMarkAsComplete": "Mark as Complete",
+  "@helpCenterMarkAsComplete": {
+    "description": "Button label to mark a help article as read."
+  },
+
+  "helpCenterArticleRead": "Read",
+  "@helpCenterArticleRead": {
+    "description": "Chip label on a read help article."
+  },
+
+  "helpCenterArticleUnread": "Unread",
+  "@helpCenterArticleUnread": {
+    "description": "Chip label on an unread help article."
+  },
+
+  "helpCenterInteractiveTours": "Interactive Tours",
+  "@helpCenterInteractiveTours": {
+    "description": "Section title for the interactive tours section of the help center."
+  },
+
+  "helpCenterToursCompletedCount": "{completed} / {total} completed",
+  "@helpCenterToursCompletedCount": {
+    "description": "Shows how many interactive tours have been completed out of total.",
+    "placeholders": {
+      "completed": {
+        "type": "int",
+        "description": "Number of completed tours."
+      },
+      "total": {
+        "type": "int",
+        "description": "Total number of tours."
+      }
+    }
+  },
+
+  "helpCenterToursDescription": "Step-by-step walkthroughs for app features. These tours guide you through each screen with Ico.",
+  "@helpCenterToursDescription": {
+    "description": "Description text for the interactive tours section."
+  },
+
+  "helpCenterShowHelpHintsTitle": "Show Help Hints",
+  "@helpCenterShowHelpHintsTitle": {
+    "description": "Title for the show help hints preference toggle."
+  },
+
+  "helpCenterShowHelpHintsSubtitle": "Display pulsing help buttons on screens",
+  "@helpCenterShowHelpHintsSubtitle": {
+    "description": "Subtitle for the show help hints preference toggle."
+  },
+
+  "helpCenterHapticFeedbackTitle": "Haptic Feedback",
+  "@helpCenterHapticFeedbackTitle": {
+    "description": "Title for the haptic feedback toggle in help preferences."
+  },
+
+  "helpCenterHapticFeedbackSubtitle": "Vibrate during typewriter text effect",
+  "@helpCenterHapticFeedbackSubtitle": {
+    "description": "Subtitle for the haptic feedback toggle in help preferences."
+  },
+
+  "helpCenterResetAllProgress": "Reset All Progress",
+  "@helpCenterResetAllProgress": {
+    "description": "Button label to reset all help progress."
+  },
+
+  "helpCenterResetProgressTitle": "Reset Help Progress?",
+  "@helpCenterResetProgressTitle": {
+    "description": "Title of the reset help progress confirmation sheet."
+  },
+
+  "helpCenterResetProgressMessage": "This will mark all articles as unread and reset interactive tour progress. You can start fresh.",
+  "@helpCenterResetProgressMessage": {
+    "description": "Body of the reset help progress confirmation sheet."
+  },
+
+  "helpCenterResetProgressLabel": "Reset",
+  "@helpCenterResetProgressLabel": {
+    "description": "Confirm label on the reset help progress sheet."
+  },
+
+  "helpCenterHelpPreferences": "HELP PREFERENCES",
+  "@helpCenterHelpPreferences": {
+    "description": "Section header for the help preferences section."
+  },
+
+  "helpCenterFindThisIn": "Find this in: {screenName}",
+  "@helpCenterFindThisIn": {
+    "description": "Label shown on a help article chip indicating where the feature lives.",
+    "placeholders": {
+      "screenName": {
+        "type": "String",
+        "description": "The localized name of the screen where the feature lives."
+      }
+    }
+  },
+
+  "helpCenterReadEverything": "You\u2019ve read everything!",
+  "@helpCenterReadEverything": {
+    "description": "Empty state title when all articles have been read."
+  },
+
+  "helpCenterLearnHowItWorks": "Learn how Meshtastic works",
+  "@helpCenterLearnHowItWorks": {
+    "description": "Empty state title when no articles have been read yet."
+  },
+
+  "helpCenterComeBackToRefresh": "Come back anytime to refresh your knowledge.",
+  "@helpCenterComeBackToRefresh": {
+    "description": "Empty state subtitle when all articles have been read."
+  },
+
+  "helpCenterTapToLearn": "Tap an article to learn about mesh networking, radio settings, and more.",
+  "@helpCenterTapToLearn": {
+    "description": "Empty state subtitle when no articles have been read yet."
+  },
+
+  "helpCenterScreenChannels": "Channels",
+  "@helpCenterScreenChannels": {
+    "description": "Screen name shown in help article topic chips for the Channels screen."
+  },
+
+  "helpCenterScreenMessages": "Messages",
+  "@helpCenterScreenMessages": {
+    "description": "Screen name shown in help article topic chips for the Messages screen."
+  },
+
+  "helpCenterScreenNodes": "Nodes",
+  "@helpCenterScreenNodes": {
+    "description": "Screen name shown in help article topic chips for the Nodes screen."
+  },
+
+  "helpCenterScreenSignalFeed": "Signal Feed",
+  "@helpCenterScreenSignalFeed": {
+    "description": "Screen name shown in help article topic chips for the Signal Feed screen."
+  },
+
+  "helpCenterScreenCreateSignal": "Create Signal",
+  "@helpCenterScreenCreateSignal": {
+    "description": "Screen name shown in help article topic chips for the Create Signal screen."
+  },
+
+  "helpCenterScreenScanner": "Scanner",
+  "@helpCenterScreenScanner": {
+    "description": "Screen name shown in help article topic chips for the Scanner screen."
+  },
+
+  "helpCenterScreenRegionSelection": "Region Selection",
+  "@helpCenterScreenRegionSelection": {
+    "description": "Screen name shown in help article topic chips for the Region Selection screen."
+  },
+
+  "helpCenterScreenRadioConfig": "Radio Config",
+  "@helpCenterScreenRadioConfig": {
+    "description": "Screen name shown in help article topic chips for the Radio Config screen."
+  },
+
+  "helpCenterScreenMeshHealth": "Mesh Health",
+  "@helpCenterScreenMeshHealth": {
+    "description": "Screen name shown in help article topic chips for the Mesh Health screen."
+  },
+
+  "helpCenterScreenReachability": "Reachability",
+  "@helpCenterScreenReachability": {
+    "description": "Screen name shown in help article topic chips for the Reachability screen."
+  },
+
+  "helpCenterScreenTraceRouteLog": "Trace Route Log",
+  "@helpCenterScreenTraceRouteLog": {
+    "description": "Screen name shown in help article topic chips for the Trace Route Log screen."
+  },
+
+  "helpCenterScreenMap": "Map",
+  "@helpCenterScreenMap": {
+    "description": "Screen name shown in help article topic chips for the Map screen."
+  },
+
+  "helpCenterScreenWorldMesh": "World Mesh",
+  "@helpCenterScreenWorldMesh": {
+    "description": "Screen name shown in help article topic chips for the World Mesh screen."
+  },
+
+  "helpCenterScreenGlobe": "Globe",
+  "@helpCenterScreenGlobe": {
+    "description": "Screen name shown in help article topic chips for the Globe screen."
+  },
+
+  "helpCenterScreenMesh3d": "Mesh 3D",
+  "@helpCenterScreenMesh3d": {
+    "description": "Screen name shown in help article topic chips for the Mesh 3D screen."
+  },
+
+  "helpCenterScreenRoutes": "Routes",
+  "@helpCenterScreenRoutes": {
+    "description": "Screen name shown in help article topic chips for the Routes screen."
+  },
+
+  "helpCenterScreenTimeline": "Timeline",
+  "@helpCenterScreenTimeline": {
+    "description": "Screen name shown in help article topic chips for the Timeline screen."
+  },
+
+  "helpCenterScreenPresence": "Presence",
+  "@helpCenterScreenPresence": {
+    "description": "Screen name shown in help article topic chips for the Presence screen."
+  },
+
+  "helpCenterScreenAether": "Aether",
+  "@helpCenterScreenAether": {
+    "description": "Screen name shown in help article topic chips for the Aether screen."
+  },
+
+  "helpCenterScreenTakGateway": "TAK Gateway",
+  "@helpCenterScreenTakGateway": {
+    "description": "Screen name shown in help article topic chips for the TAK Gateway screen."
+  },
+
+  "helpCenterScreenWidgetDashboard": "Widget Dashboard",
+  "@helpCenterScreenWidgetDashboard": {
+    "description": "Screen name shown in help article topic chips for the Widget Dashboard screen."
+  },
+
+  "helpCenterScreenWidgetBuilder": "Widget Builder",
+  "@helpCenterScreenWidgetBuilder": {
+    "description": "Screen name shown in help article topic chips for the Widget Builder screen."
+  },
+
+  "helpCenterScreenWidgetMarketplace": "Widget Marketplace",
+  "@helpCenterScreenWidgetMarketplace": {
+    "description": "Screen name shown in help article topic chips for the Widget Marketplace screen."
+  },
+
+  "helpCenterScreenDeviceShop": "Device Shop",
+  "@helpCenterScreenDeviceShop": {
+    "description": "Screen name shown in help article topic chips for the Device Shop screen."
+  },
+
+  "helpCenterScreenNodeDex": "NodeDex",
+  "@helpCenterScreenNodeDex": {
+    "description": "Screen name shown in help article topic chips for the NodeDex screen."
+  },
+
+  "helpCenterScreenSettings": "Settings",
+  "@helpCenterScreenSettings": {
+    "description": "Screen name shown in help article topic chips for the Settings screen."
+  },
+
+  "helpCenterScreenProfile": "Profile",
+  "@helpCenterScreenProfile": {
+    "description": "Screen name shown in help article topic chips for the Profile screen."
+  },
+
+  "helpCenterScreenAutomations": "Automations",
+  "@helpCenterScreenAutomations": {
+    "description": "Screen name shown in help article topic chips for the Automations screen."
+  },
+
+  "settingsTitle": "Settings",
+  "@settingsTitle": {
+    "description": "Title of the settings screen."
+  },
+
+  "settingsSearchHint": "Find a setting",
+  "@settingsSearchHint": {
+    "description": "Hint text in the settings search field."
+  },
+
+  "settingsHelpTooltip": "Help",
+  "@settingsHelpTooltip": {
+    "description": "Tooltip for the help icon button in the settings app bar."
+  },
+
+  "settingsNoSettingsFound": "No settings found",
+  "@settingsNoSettingsFound": {
+    "description": "Empty state title in the settings search results."
+  },
+
+  "settingsTryDifferentSearch": "Try a different search term",
+  "@settingsTryDifferentSearch": {
+    "description": "Empty state subtitle in the settings search results."
+  },
+
+  "settingsErrorLoading": "Error loading settings: {error}",
+  "@settingsErrorLoading": {
+    "description": "Error text shown when the settings screen fails to load.",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "description": "The error message."
+      }
+    }
+  },
+
+  "settingsNotConfigured": "Not configured",
+  "@settingsNotConfigured": {
+    "description": "Subtitle shown for the region tile when no region has been configured."
+  },
+
+  "settingsLoadingStatus": "Loading\u2026",
+  "@settingsLoadingStatus": {
+    "description": "Generic loading subtitle used across several settings tiles."
+  },
+
+  "settingsSectionPremium": "PREMIUM",
+  "@settingsSectionPremium": {
+    "description": "Section header label for the Premium section in settings."
+  },
+
+  "settingsSectionFeedback": "FEEDBACK",
+  "@settingsSectionFeedback": {
+    "description": "Section header label for the Feedback section in settings."
+  },
+
+  "settingsSectionAccount": "ACCOUNT",
+  "@settingsSectionAccount": {
+    "description": "Section header label for the Account section in settings."
+  },
+
+  "settingsSectionConnection": "CONNECTION",
+  "@settingsSectionConnection": {
+    "description": "Section header label for the Connection section in settings."
+  },
+
+  "settingsSectionHapticFeedback": "HAPTIC FEEDBACK",
+  "@settingsSectionHapticFeedback": {
+    "description": "Section header label for the Haptic Feedback section in settings."
+  },
+
+  "settingsSectionAppearance": "APPEARANCE",
+  "@settingsSectionAppearance": {
+    "description": "Section header label for the Appearance section in settings."
+  },
+
+  "settingsSectionWhatsNew": "WHAT\u2019S NEW",
+  "@settingsSectionWhatsNew": {
+    "description": "Section header label for the What's New section in settings."
+  },
+
+  "settingsSectionAnimations": "ANIMATIONS",
+  "@settingsSectionAnimations": {
+    "description": "Section header label for the Animations section in settings."
+  },
+
+  "settingsSectionNotifications": "NOTIFICATIONS",
+  "@settingsSectionNotifications": {
+    "description": "Section header label for the Notifications section in settings."
+  },
+
+  "settingsSectionMessaging": "MESSAGING",
+  "@settingsSectionMessaging": {
+    "description": "Section header label for the Messaging section in settings."
+  },
+
+  "settingsSectionDataStorage": "DATA \u0026 STORAGE",
+  "@settingsSectionDataStorage": {
+    "description": "Section header label for the Data and Storage section in settings."
+  },
+
+  "settingsSectionDevice": "DEVICE",
+  "@settingsSectionDevice": {
+    "description": "Section header label for the Device section in settings."
+  },
+
+  "settingsSectionModules": "MODULES",
+  "@settingsSectionModules": {
+    "description": "Section header label for the Modules section in settings."
+  },
+
+  "settingsSectionTelemetryLogs": "TELEMETRY LOGS",
+  "@settingsSectionTelemetryLogs": {
+    "description": "Section header label for the Telemetry Logs section in settings."
+  },
+
+  "settingsSectionTools": "TOOLS",
+  "@settingsSectionTools": {
+    "description": "Section header label for the Tools section in settings."
+  },
+
+  "settingsSectionAbout": "ABOUT",
+  "@settingsSectionAbout": {
+    "description": "Section header label for the About section in settings."
+  },
+
+  "settingsSectionSocialNotifications": "SOCIAL NOTIFICATIONS",
+  "@settingsSectionSocialNotifications": {
+    "description": "Section header label for the Social Notifications section in settings."
+  },
+
+  "settingsSectionRemoteAdmin": "REMOTE ADMINISTRATION",
+  "@settingsSectionRemoteAdmin": {
+    "description": "Section header label for the Remote Administration section in settings."
+  },
+
+  "settingsPremiumUnlockFeaturesTitle": "Unlock Features",
+  "@settingsPremiumUnlockFeaturesTitle": {
+    "description": "Heading in the premium card when some features are locked."
+  },
+
+  "settingsPremiumAllUnlocked": "All features unlocked!",
+  "@settingsPremiumAllUnlocked": {
+    "description": "Subtitle in the premium card when all features are owned."
+  },
+
+  "settingsPremiumPartiallyUnlocked": "{owned} of {total} unlocked",
+  "@settingsPremiumPartiallyUnlocked": {
+    "description": "Subtitle in the premium card showing how many features are unlocked.",
+    "placeholders": {
+      "owned": {
+        "type": "int",
+        "description": "Number of owned features."
+      },
+      "total": {
+        "type": "int",
+        "description": "Total number of premium features."
+      }
+    }
+  },
+
+  "settingsPremiumBadgeTry": "TRY IT",
+  "@settingsPremiumBadgeTry": {
+    "description": "Badge label on a premium feature tile in trial state."
+  },
+
+  "settingsPremiumBadgeOwned": "OWNED",
+  "@settingsPremiumBadgeOwned": {
+    "description": "Badge label on a premium feature tile that has been purchased."
+  },
+
+  "settingsPremiumBadgeLocked": "LOCKED",
+  "@settingsPremiumBadgeLocked": {
+    "description": "Fallback badge label on a premium feature tile that is locked."
+  },
+
+  "settingsRemoteAdminConfiguringTitle": "Configuring Remote Node",
+  "@settingsRemoteAdminConfiguringTitle": {
+    "description": "Title of the remote admin tile when a remote node is selected."
+  },
+
+  "settingsRemoteAdminConfigureTitle": "Configure Device",
+  "@settingsRemoteAdminConfigureTitle": {
+    "description": "Title of the remote admin tile when viewing the local device."
+  },
+
+  "settingsRemoteAdminConnectedDevice": "Connected Device",
+  "@settingsRemoteAdminConnectedDevice": {
+    "description": "Fallback subtitle value in the remote admin tile when no device name is available."
+  },
+
+  "settingsRemoteAdminNodeCount": "{count} nodes",
+  "@settingsRemoteAdminNodeCount": {
+    "description": "Trailing text on the remote admin tile showing how many adminable nodes exist.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "description": "Number of adminable nodes."
+      }
+    }
+  },
+
+  "settingsRemoteAdminWarning": "Remote admin requires the target node to have your public key in its Admin Keys list.",
+  "@settingsRemoteAdminWarning": {
+    "description": "Warning text in the remote admin section explaining the PKI requirement."
+  },
+
+  "settingsTileShakeToReportTitle": "Shake to report a bug",
+  "@settingsTileShakeToReportTitle": {
+    "description": "Title of the shake-to-report settings tile."
+  },
+
+  "settingsTileShakeToReportSubtitle": "Shake your device to open the bug report flow",
+  "@settingsTileShakeToReportSubtitle": {
+    "description": "Subtitle of the shake-to-report settings tile."
+  },
+
+  "settingsTileMyBugReportsTitle": "My bug reports",
+  "@settingsTileMyBugReportsTitle": {
+    "description": "Title of the my bug reports settings tile."
+  },
+
+  "settingsTileMyBugReportsSubtitle": "View your reports and responses",
+  "@settingsTileMyBugReportsSubtitle": {
+    "description": "Subtitle of the my bug reports tile (when signed in)."
+  },
+
+  "settingsTileMyBugReportsNotSignedIn": "Sign in to track your reports and receive replies",
+  "@settingsTileMyBugReportsNotSignedIn": {
+    "description": "Subtitle of the my bug reports tile when the user is not signed in."
+  },
+
+  "settingsTileAutoReconnectTitle": "Auto-reconnect",
+  "@settingsTileAutoReconnectTitle": {
+    "description": "Title of the auto-reconnect settings tile."
+  },
+
+  "settingsTileAutoReconnectSubtitle": "Automatically reconnect to last device",
+  "@settingsTileAutoReconnectSubtitle": {
+    "description": "Subtitle of the auto-reconnect settings tile."
+  },
+
+  "settingsTileBackgroundConnectionTitle": "Background connection",
+  "@settingsTileBackgroundConnectionTitle": {
+    "description": "Title of the background connection settings tile."
+  },
+
+  "settingsTileBackgroundConnectionSubtitle": "Background BLE, notifications, and power settings",
+  "@settingsTileBackgroundConnectionSubtitle": {
+    "description": "Subtitle of the background connection settings tile."
+  },
+
+  "settingsTileProvideLocationTitle": "Provide phone location",
+  "@settingsTileProvideLocationTitle": {
+    "description": "Title of the provide phone location settings tile."
+  },
+
+  "settingsTileProvideLocationSubtitle": "Send phone GPS to mesh for devices without GPS hardware",
+  "@settingsTileProvideLocationSubtitle": {
+    "description": "Subtitle of the provide phone location settings tile."
+  },
+
+  "settingsTileHapticFeedbackTitle": "Haptic feedback",
+  "@settingsTileHapticFeedbackTitle": {
+    "description": "Title of the haptic feedback toggle tile."
+  },
+
+  "settingsTileHapticFeedbackSubtitle": "Vibration feedback for interactions",
+  "@settingsTileHapticFeedbackSubtitle": {
+    "description": "Subtitle of the haptic feedback toggle tile."
+  },
+
+  "settingsTileIntensityTitle": "Intensity",
+  "@settingsTileIntensityTitle": {
+    "description": "Title of the haptic intensity tile (shown when haptic feedback is enabled)."
+  },
+
+  "settingsTileAppearanceTitle": "Appearance \u0026 Accessibility",
+  "@settingsTileAppearanceTitle": {
+    "description": "Title of the appearance and accessibility settings tile."
+  },
+
+  "settingsTileAppearanceSubtitle": "Font, text size, density, contrast, motion",
+  "@settingsTileAppearanceSubtitle": {
+    "description": "Subtitle of the appearance and accessibility settings tile."
+  },
+
+  "settingsTileWhatsNewTitle": "What\u2019s New",
+  "@settingsTileWhatsNewTitle": {
+    "description": "Title of the what's new settings tile."
+  },
+
+  "settingsTileWhatsNewSubtitle": "Browse recent features and updates",
+  "@settingsTileWhatsNewSubtitle": {
+    "description": "Subtitle of the what's new settings tile."
+  },
+
+  "settingsTileListAnimationsTitle": "List animations",
+  "@settingsTileListAnimationsTitle": {
+    "description": "Title of the list animations toggle tile."
+  },
+
+  "settingsTileListAnimationsSubtitle": "Slide and bounce effects on lists",
+  "@settingsTileListAnimationsSubtitle": {
+    "description": "Subtitle of the list animations toggle tile."
+  },
+
+  "settingsTile3dEffectsTitle": "3D effects",
+  "@settingsTile3dEffectsTitle": {
+    "description": "Title of the 3D effects toggle tile."
+  },
+
+  "settingsTile3dEffectsSubtitle": "Perspective transforms and depth effects",
+  "@settingsTile3dEffectsSubtitle": {
+    "description": "Subtitle of the 3D effects toggle tile."
+  },
+
+  "settingsTilePushNotificationsTitle": "Push notifications",
+  "@settingsTilePushNotificationsTitle": {
+    "description": "Title of the push notifications master toggle tile."
+  },
+
+  "settingsTilePushNotificationsSubtitle": "Master toggle for all notifications",
+  "@settingsTilePushNotificationsSubtitle": {
+    "description": "Subtitle of the push notifications master toggle tile."
+  },
+
+  "settingsTileNewNodesTitle": "New nodes",
+  "@settingsTileNewNodesTitle": {
+    "description": "Title of the new-nodes notification toggle tile."
+  },
+
+  "settingsTileNewNodesSubtitle": "Notify when new nodes join the mesh",
+  "@settingsTileNewNodesSubtitle": {
+    "description": "Subtitle of the new-nodes notification toggle tile."
+  },
+
+  "settingsTileDirectMessagesTitle": "Direct messages",
+  "@settingsTileDirectMessagesTitle": {
+    "description": "Title of the direct messages notification toggle tile."
+  },
+
+  "settingsTileDirectMessagesSubtitle": "Notify for private messages",
+  "@settingsTileDirectMessagesSubtitle": {
+    "description": "Subtitle of the direct messages notification toggle tile."
+  },
+
+  "settingsTileChannelMessagesTitle": "Channel messages",
+  "@settingsTileChannelMessagesTitle": {
+    "description": "Title of the channel messages notification toggle tile."
+  },
+
+  "settingsTileChannelMessagesSubtitle": "Notify for channel broadcasts",
+  "@settingsTileChannelMessagesSubtitle": {
+    "description": "Subtitle of the channel messages notification toggle tile."
+  },
+
+  "settingsTileSoundTitle": "Sound",
+  "@settingsTileSoundTitle": {
+    "description": "Title of the notification sound toggle tile."
+  },
+
+  "settingsTileSoundSubtitle": "Play sound with notifications",
+  "@settingsTileSoundSubtitle": {
+    "description": "Subtitle of the notification sound toggle tile."
+  },
+
+  "settingsTileVibrationTitle": "Vibration",
+  "@settingsTileVibrationTitle": {
+    "description": "Title of the notification vibration toggle tile."
+  },
+
+  "settingsTileVibrationSubtitle": "Vibrate with notifications",
+  "@settingsTileVibrationSubtitle": {
+    "description": "Subtitle of the notification vibration toggle tile."
+  },
+
+  "settingsTileQuickResponsesTitle": "Quick responses",
+  "@settingsTileQuickResponsesTitle": {
+    "description": "Title of the quick responses settings tile."
+  },
+
+  "settingsTileQuickResponsesSubtitle": "Manage canned responses for fast messaging",
+  "@settingsTileQuickResponsesSubtitle": {
+    "description": "Subtitle of the quick responses settings tile."
+  },
+
+  "settingsTileCannedMessagesTitle": "Canned Messages Module",
+  "@settingsTileCannedMessagesTitle": {
+    "description": "Title of the canned messages module settings tile."
+  },
+
+  "settingsTileCannedMessagesSubtitle": "Device-side canned message settings",
+  "@settingsTileCannedMessagesSubtitle": {
+    "description": "Subtitle of the canned messages module settings tile."
+  },
+
+  "settingsTileMessageHistoryTitle": "Message history",
+  "@settingsTileMessageHistoryTitle": {
+    "description": "Title of the message history limit settings tile."
+  },
+
+  "settingsTileMessageHistorySubtitle": "{count} messages stored",
+  "@settingsTileMessageHistorySubtitle": {
+    "description": "Subtitle of the message history limit tile showing the current limit.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "description": "The current message history limit."
+      }
+    }
+  },
+
+  "settingsTileExportMessagesTitle": "Export Messages",
+  "@settingsTileExportMessagesTitle": {
+    "description": "Title of the export messages settings tile."
+  },
+
+  "settingsTileExportMessagesSubtitle": "Export messages to PDF or CSV",
+  "@settingsTileExportMessagesSubtitle": {
+    "description": "Subtitle of the export messages settings tile."
+  },
+
+  "settingsTileClearMessageHistoryTitle": "Clear message history",
+  "@settingsTileClearMessageHistoryTitle": {
+    "description": "Title of the clear message history settings tile."
+  },
+
+  "settingsTileClearMessageHistorySubtitle": "Delete all stored messages",
+  "@settingsTileClearMessageHistorySubtitle": {
+    "description": "Subtitle of the clear message history settings tile."
+  },
+
+  "settingsTileResetLocalDataTitle": "Reset local data",
+  "@settingsTileResetLocalDataTitle": {
+    "description": "Title of the reset local data settings tile."
+  },
+
+  "settingsTileResetLocalDataSubtitle": "Clear messages and nodes, keep settings",
+  "@settingsTileResetLocalDataSubtitle": {
+    "description": "Subtitle of the reset local data settings tile."
+  },
+
+  "settingsTileClearAllDataTitle": "Clear all data",
+  "@settingsTileClearAllDataTitle": {
+    "description": "Title of the clear all data settings tile."
+  },
+
+  "settingsTileClearAllDataSubtitle": "Delete messages, settings, and keys",
+  "@settingsTileClearAllDataSubtitle": {
+    "description": "Subtitle of the clear all data settings tile."
+  },
+
+  "settingsTileForceSyncTitle": "Force Sync",
+  "@settingsTileForceSyncTitle": {
+    "description": "Title of the force sync settings tile."
+  },
+
+  "settingsTileForceSyncSubtitle": "Re-sync all data from connected device",
+  "@settingsTileForceSyncSubtitle": {
+    "description": "Subtitle of the force sync settings tile."
+  },
+
+  "settingsTileRegionTitle": "Region / Frequency",
+  "@settingsTileRegionTitle": {
+    "description": "Title of the region/frequency settings tile."
+  },
+
+  "settingsTileDeviceRoleTitle": "Device Role \u0026 Settings",
+  "@settingsTileDeviceRoleTitle": {
+    "description": "Title of the device role settings tile."
+  },
+
+  "settingsTileDeviceRoleSubtitle": "Configure device behavior and role",
+  "@settingsTileDeviceRoleSubtitle": {
+    "description": "Subtitle of the device role settings tile."
+  },
+
+  "settingsTileRadioConfigTitle": "Radio Configuration",
+  "@settingsTileRadioConfigTitle": {
+    "description": "Title of the radio configuration settings tile."
+  },
+
+  "settingsTileRadioConfigSubtitle": "LoRa settings, modem preset, power",
+  "@settingsTileRadioConfigSubtitle": {
+    "description": "Subtitle of the radio configuration settings tile."
+  },
+
+  "settingsTilePositionTitle": "Position \u0026 GPS",
+  "@settingsTilePositionTitle": {
+    "description": "Title of the position & GPS settings tile."
+  },
+
+  "settingsTilePositionSubtitle": "GPS mode, broadcast intervals, fixed position",
+  "@settingsTilePositionSubtitle": {
+    "description": "Subtitle of the position & GPS settings tile."
+  },
+
+  "settingsTileDisplaySettingsTitle": "Display Settings",
+  "@settingsTileDisplaySettingsTitle": {
+    "description": "Title of the display settings tile."
+  },
+
+  "settingsTileDisplaySettingsSubtitle": "Screen timeout, units, display mode",
+  "@settingsTileDisplaySettingsSubtitle": {
+    "description": "Subtitle of the display settings tile."
+  },
+
+  "settingsTileBluetoothTitle": "Bluetooth",
+  "@settingsTileBluetoothTitle": {
+    "description": "Title of the Bluetooth device settings tile."
+  },
+
+  "settingsTileBluetoothSubtitle": "Pairing mode, PIN settings",
+  "@settingsTileBluetoothSubtitle": {
+    "description": "Subtitle of the Bluetooth device settings tile."
+  },
+
+  "settingsTileNetworkTitle": "Network",
+  "@settingsTileNetworkTitle": {
+    "description": "Title of the network settings tile."
+  },
+
+  "settingsTileNetworkSubtitle": "WiFi, Ethernet, NTP settings",
+  "@settingsTileNetworkSubtitle": {
+    "description": "Subtitle of the network settings tile."
+  },
+
+  "settingsTilePowerManagementTitle": "Power Management",
+  "@settingsTilePowerManagementTitle": {
+    "description": "Title of the power management settings tile."
+  },
+
+  "settingsTilePowerManagementSubtitle": "Power saving, sleep settings",
+  "@settingsTilePowerManagementSubtitle": {
+    "description": "Subtitle of the power management settings tile."
+  },
+
+  "settingsTileSecurityTitle": "Security",
+  "@settingsTileSecurityTitle": {
+    "description": "Title of the security settings tile."
+  },
+
+  "settingsTileSecuritySubtitle": "Access controls, managed mode",
+  "@settingsTileSecuritySubtitle": {
+    "description": "Subtitle of the security settings tile."
+  },
+
+  "settingsTileDeviceManagementTitle": "Device Management",
+  "@settingsTileDeviceManagementTitle": {
+    "description": "Title of the device management settings tile."
+  },
+
+  "settingsTileDeviceManagementSubtitle": "Reboot, shutdown, factory reset",
+  "@settingsTileDeviceManagementSubtitle": {
+    "description": "Subtitle of the device management settings tile."
+  },
+
+  "settingsTileDeviceInfoTitle": "Device info",
+  "@settingsTileDeviceInfoTitle": {
+    "description": "Title of the device info settings tile."
+  },
+
+  "settingsTileDeviceInfoSubtitle": "View connected device details",
+  "@settingsTileDeviceInfoSubtitle": {
+    "description": "Subtitle of the device info settings tile."
+  },
+
+  "settingsTileScanQrCodeTitle": "Scan QR Code",
+  "@settingsTileScanQrCodeTitle": {
+    "description": "Title of the scan QR code settings tile."
+  },
+
+  "settingsTileScanQrCodeSubtitle": "Import nodes, channels, or automations",
+  "@settingsTileScanQrCodeSubtitle": {
+    "description": "Subtitle of the scan QR code settings tile."
+  },
+
+  "settingsTileMqttTitle": "MQTT",
+  "@settingsTileMqttTitle": {
+    "description": "Title of the MQTT module settings tile."
+  },
+
+  "settingsTileMqttSubtitle": "Configure mesh-to-internet bridge",
+  "@settingsTileMqttSubtitle": {
+    "description": "Subtitle of the MQTT module settings tile."
+  },
+
+  "settingsTileRangeTestTitle": "Range Test",
+  "@settingsTileRangeTestTitle": {
+    "description": "Title of the range test module settings tile."
+  },
+
+  "settingsTileRangeTestSubtitle": "Test signal range with other nodes",
+  "@settingsTileRangeTestSubtitle": {
+    "description": "Subtitle of the range test module settings tile."
+  },
+
+  "settingsTileStoreForwardTitle": "Store \u0026 Forward",
+  "@settingsTileStoreForwardTitle": {
+    "description": "Title of the store & forward module settings tile."
+  },
+
+  "settingsTileStoreForwardSubtitle": "Store and relay messages for offline nodes",
+  "@settingsTileStoreForwardSubtitle": {
+    "description": "Subtitle of the store & forward module settings tile."
+  },
+
+  "settingsTileDetectionSensorTitle": "Detection Sensor",
+  "@settingsTileDetectionSensorTitle": {
+    "description": "Title of the detection sensor module settings tile."
+  },
+
+  "settingsTileDetectionSensorSubtitle": "Configure GPIO-based motion/door sensors",
+  "@settingsTileDetectionSensorSubtitle": {
+    "description": "Subtitle of the detection sensor module settings tile."
+  },
+
+  "settingsTileExternalNotificationTitle": "External Notification",
+  "@settingsTileExternalNotificationTitle": {
+    "description": "Title of the external notification module settings tile."
+  },
+
+  "settingsTileExternalNotificationSubtitle": "Configure buzzers, LEDs, and vibration alerts",
+  "@settingsTileExternalNotificationSubtitle": {
+    "description": "Subtitle of the external notification module settings tile."
+  },
+
+  "settingsTileAmbientLightingTitle": "Ambient Lighting",
+  "@settingsTileAmbientLightingTitle": {
+    "description": "Title of the ambient lighting module settings tile."
+  },
+
+  "settingsTileAmbientLightingSubtitle": "Configure LED and RGB settings",
+  "@settingsTileAmbientLightingSubtitle": {
+    "description": "Subtitle of the ambient lighting module settings tile."
+  },
+
+  "settingsTilePaxCounterTitle": "PAX Counter",
+  "@settingsTilePaxCounterTitle": {
+    "description": "Title of the PAX counter module settings tile."
+  },
+
+  "settingsTilePaxCounterSubtitle": "WiFi/BLE device detection settings",
+  "@settingsTilePaxCounterSubtitle": {
+    "description": "Subtitle of the PAX counter module settings tile."
+  },
+
+  "settingsTileTelemetryIntervalsTitle": "Telemetry Intervals",
+  "@settingsTileTelemetryIntervalsTitle": {
+    "description": "Title of the telemetry intervals settings tile."
+  },
+
+  "settingsTileTelemetryIntervalsSubtitle": "Configure telemetry update frequency",
+  "@settingsTileTelemetryIntervalsSubtitle": {
+    "description": "Subtitle of the telemetry intervals settings tile."
+  },
+
+  "settingsTileSerialTitle": "Serial",
+  "@settingsTileSerialTitle": {
+    "description": "Title of the serial module settings tile."
+  },
+
+  "settingsTileSerialSubtitle": "Serial port configuration",
+  "@settingsTileSerialSubtitle": {
+    "description": "Subtitle of the serial module settings tile."
+  },
+
+  "settingsTileTrafficManagementTitle": "Traffic Management",
+  "@settingsTileTrafficManagementTitle": {
+    "description": "Title of the traffic management settings tile."
+  },
+
+  "settingsTileTrafficManagementSubtitle": "Mesh traffic optimization and filtering",
+  "@settingsTileTrafficManagementSubtitle": {
+    "description": "Subtitle of the traffic management settings tile."
+  },
+
+  "settingsTileDeviceMetricsTitle": "Device Metrics",
+  "@settingsTileDeviceMetricsTitle": {
+    "description": "Title of the device metrics telemetry log tile."
+  },
+
+  "settingsTileDeviceMetricsSubtitle": "Battery, voltage, utilization history",
+  "@settingsTileDeviceMetricsSubtitle": {
+    "description": "Subtitle of the device metrics telemetry log tile."
+  },
+
+  "settingsTileEnvironmentMetricsTitle": "Environment Metrics",
+  "@settingsTileEnvironmentMetricsTitle": {
+    "description": "Title of the environment metrics telemetry log tile."
+  },
+
+  "settingsTileEnvironmentMetricsSubtitle": "Temperature, humidity, pressure logs",
+  "@settingsTileEnvironmentMetricsSubtitle": {
+    "description": "Subtitle of the environment metrics telemetry log tile."
+  },
+
+  "settingsTileAirQualityTitle": "Air Quality",
+  "@settingsTileAirQualityTitle": {
+    "description": "Title of the air quality telemetry log tile."
+  },
+
+  "settingsTileAirQualitySubtitle": "PM2.5, PM10, CO2 readings",
+  "@settingsTileAirQualitySubtitle": {
+    "description": "Subtitle of the air quality telemetry log tile."
+  },
+
+  "settingsTilePositionHistoryTitle": "Position History",
+  "@settingsTilePositionHistoryTitle": {
+    "description": "Title of the position history telemetry log tile."
+  },
+
+  "settingsTilePositionHistorySubtitle": "GPS position logs",
+  "@settingsTilePositionHistorySubtitle": {
+    "description": "Subtitle of the position history telemetry log tile."
+  },
+
+  "settingsTileTracerouteHistoryTitle": "Traceroute History",
+  "@settingsTileTracerouteHistoryTitle": {
+    "description": "Title of the traceroute history telemetry log tile."
+  },
+
+  "settingsTileTracerouteHistorySubtitle": "Network path analysis logs",
+  "@settingsTileTracerouteHistorySubtitle": {
+    "description": "Subtitle of the traceroute history telemetry log tile."
+  },
+
+  "settingsTilePaxCounterLogsTitle": "PAX Counter Logs",
+  "@settingsTilePaxCounterLogsTitle": {
+    "description": "Title of the PAX counter logs telemetry tile."
+  },
+
+  "settingsTilePaxCounterLogsSubtitle": "Device detection history",
+  "@settingsTilePaxCounterLogsSubtitle": {
+    "description": "Subtitle of the PAX counter logs telemetry tile."
+  },
+
+  "settingsTileDetectionSensorLogsTitle": "Detection Sensor Logs",
+  "@settingsTileDetectionSensorLogsTitle": {
+    "description": "Title of the detection sensor logs telemetry tile."
+  },
+
+  "settingsTileDetectionSensorLogsSubtitle": "Sensor event history",
+  "@settingsTileDetectionSensorLogsSubtitle": {
+    "description": "Subtitle of the detection sensor logs telemetry tile."
+  },
+
+  "settingsTileRoutesTitle": "Routes",
+  "@settingsTileRoutesTitle": {
+    "description": "Title of the routes tools tile."
+  },
+
+  "settingsTileRoutesSubtitle": "Record and manage GPS routes",
+  "@settingsTileRoutesSubtitle": {
+    "description": "Subtitle of the routes tools tile."
+  },
+
+  "settingsTileGpsStatusTitle": "GPS Status",
+  "@settingsTileGpsStatusTitle": {
+    "description": "Title of the GPS status tools tile."
+  },
+
+  "settingsTileGpsStatusSubtitle": "View detailed GPS information",
+  "@settingsTileGpsStatusSubtitle": {
+    "description": "Subtitle of the GPS status tools tile."
+  },
+
+  "settingsTileFirmwareUpdateTitle": "Firmware Update",
+  "@settingsTileFirmwareUpdateTitle": {
+    "description": "Title of the firmware update tools tile."
+  },
+
+  "settingsTileFirmwareUpdateSubtitle": "Check for device firmware updates",
+  "@settingsTileFirmwareUpdateSubtitle": {
+    "description": "Subtitle of the firmware update tools tile."
+  },
+
+  "settingsTileExportDataTitle": "Export Data",
+  "@settingsTileExportDataTitle": {
+    "description": "Title of the export data tools tile."
+  },
+
+  "settingsTileExportDataSubtitle": "Export messages, telemetry, routes",
+  "@settingsTileExportDataSubtitle": {
+    "description": "Subtitle of the export data tools tile."
+  },
+
+  "settingsTileAppLogTitle": "App Log",
+  "@settingsTileAppLogTitle": {
+    "description": "Title of the app log tools tile."
+  },
+
+  "settingsTileAppLogSubtitle": "View application debug logs",
+  "@settingsTileAppLogSubtitle": {
+    "description": "Subtitle of the app log tools tile."
+  },
+
+  "settingsTileGlyphMatrixTitle": "Glyph Matrix Test",
+  "@settingsTileGlyphMatrixTitle": {
+    "description": "Title of the glyph matrix test tile (Nothing Phone 3 only)."
+  },
+
+  "settingsTileGlyphMatrixSubtitle": "Nothing Phone 3 LED patterns",
+  "@settingsTileGlyphMatrixSubtitle": {
+    "description": "Subtitle of the glyph matrix test tile."
+  },
+
+  "settingsTileSocialmeshTitle": "Socialmesh",
+  "@settingsTileSocialmeshTitle": {
+    "description": "Title of the Socialmesh about tile in the About section."
+  },
+
+  "settingsTileSocialmeshSubtitle": "Meshtastic companion app",
+  "@settingsTileSocialmeshSubtitle": {
+    "description": "Subtitle of the Socialmesh about tile in the About section."
+  },
+
+  "settingsTileHelpCenterTitle": "Help Center",
+  "@settingsTileHelpCenterTitle": {
+    "description": "Title of the Help Center tile in the About section."
+  },
+
+  "settingsTileHelpCenterSubtitle": "Interactive guides with Ico, your mesh guide",
+  "@settingsTileHelpCenterSubtitle": {
+    "description": "Subtitle of the Help Center tile in the About section."
+  },
+
+  "settingsTileHelpSupportTitle": "Help \u0026 Support",
+  "@settingsTileHelpSupportTitle": {
+    "description": "Title of the Help & Support tile in the About section."
+  },
+
+  "settingsTileHelpSupportSubtitle": "FAQ, troubleshooting, and contact info",
+  "@settingsTileHelpSupportSubtitle": {
+    "description": "Subtitle of the Help & Support tile in the About section."
+  },
+
+  "settingsTileTermsOfServiceTitle": "Terms of Service",
+  "@settingsTileTermsOfServiceTitle": {
+    "description": "Title of the Terms of Service tile in the About section."
+  },
+
+  "settingsTileTermsOfServiceSubtitle": "Legal terms and conditions",
+  "@settingsTileTermsOfServiceSubtitle": {
+    "description": "Subtitle of the Terms of Service tile in the About section."
+  },
+
+  "settingsTilePrivacyPolicyTitle": "Privacy Policy",
+  "@settingsTilePrivacyPolicyTitle": {
+    "description": "Title of the Privacy Policy tile in the About section."
+  },
+
+  "settingsTilePrivacyPolicySubtitle": "How we handle your data",
+  "@settingsTilePrivacyPolicySubtitle": {
+    "description": "Subtitle of the Privacy Policy tile in the About section."
+  },
+
+  "settingsTileOpenSourceTitle": "Open Source Licenses",
+  "@settingsTileOpenSourceTitle": {
+    "description": "Title of the Open Source Licenses tile in the About section."
+  },
+
+  "settingsTileOpenSourceSubtitle": "Third-party libraries and attributions",
+  "@settingsTileOpenSourceSubtitle": {
+    "description": "Subtitle of the Open Source Licenses tile in the About section."
+  },
+
+  "settingsHapticIntensityTitle": "Haptic Intensity",
+  "@settingsHapticIntensityTitle": {
+    "description": "Title of the haptic intensity picker bottom sheet."
+  },
+
+  "settingsHapticSubtleDescription": "Subtle feedback for a gentle touch",
+  "@settingsHapticSubtleDescription": {
+    "description": "Description for the light/subtle haptic intensity option."
+  },
+
+  "settingsHapticMediumDescription": "Balanced feedback for most interactions",
+  "@settingsHapticMediumDescription": {
+    "description": "Description for the medium haptic intensity option."
+  },
+
+  "settingsHapticStrongDescription": "Strong feedback for clear confirmation",
+  "@settingsHapticStrongDescription": {
+    "description": "Description for the heavy/strong haptic intensity option."
+  },
+
+  "settingsHistoryLimitTitle": "Message History Limit",
+  "@settingsHistoryLimitTitle": {
+    "description": "Title of the message history limit picker bottom sheet."
+  },
+
+  "settingsHistoryLimitOption": "{limit} messages",
+  "@settingsHistoryLimitOption": {
+    "description": "List tile label for a message history limit option.",
+    "placeholders": {
+      "limit": {
+        "type": "int",
+        "description": "The message count limit for this option."
+      }
+    }
+  },
+
+  "settingsClearMessagesTitle": "Clear Messages",
+  "@settingsClearMessagesTitle": {
+    "description": "Title of the clear messages confirmation sheet."
+  },
+
+  "settingsClearMessagesMessage": "This will delete all stored messages. This action cannot be undone.",
+  "@settingsClearMessagesMessage": {
+    "description": "Body of the clear messages confirmation sheet."
+  },
+
+  "settingsClearMessagesLabel": "Clear",
+  "@settingsClearMessagesLabel": {
+    "description": "Confirm label for the clear messages sheet."
+  },
+
+  "settingsClearMessagesSuccess": "Messages cleared",
+  "@settingsClearMessagesSuccess": {
+    "description": "Success snackbar after clearing all messages."
+  },
+
+  "settingsResetLocalDataTitle": "Reset Local Data",
+  "@settingsResetLocalDataTitle": {
+    "description": "Title of the reset local data confirmation sheet."
+  },
+
+  "settingsResetLocalDataMessage": "This will clear all messages and node data, forcing a fresh sync from your device on next connection.\n\nYour settings, theme, and preferences will be kept.\n\nUse this if nodes show incorrect status or messages appear wrong.",
+  "@settingsResetLocalDataMessage": {
+    "description": "Body of the reset local data confirmation sheet."
+  },
+
+  "settingsResetLocalDataLabel": "Reset",
+  "@settingsResetLocalDataLabel": {
+    "description": "Confirm label for the reset local data sheet."
+  },
+
+  "settingsResetLocalDataSuccess": "Local data reset. Reconnect to sync fresh data.",
+  "@settingsResetLocalDataSuccess": {
+    "description": "Success snackbar after resetting local data."
+  },
+
+  "settingsForceSyncNotConnected": "Not connected to a device",
+  "@settingsForceSyncNotConnected": {
+    "description": "Error snackbar when force sync is triggered without a connected device."
+  },
+
+  "settingsForceSyncTitle": "Force Sync",
+  "@settingsForceSyncTitle": {
+    "description": "Title of the force sync confirmation sheet."
+  },
+
+  "settingsForceSyncMessage": "This will clear all local messages, nodes, and channels, then re-sync everything from the connected device.\n\nAre you sure you want to continue?",
+  "@settingsForceSyncMessage": {
+    "description": "Body of the force sync confirmation sheet."
+  },
+
+  "settingsForceSyncLabel": "Sync",
+  "@settingsForceSyncLabel": {
+    "description": "Confirm label for the force sync sheet."
+  },
+
+  "settingsForceSyncingStatus": "Syncing from device\u2026",
+  "@settingsForceSyncingStatus": {
+    "description": "Loading text shown inside the sync-in-progress bottom sheet."
+  },
+
+  "settingsForceSyncSuccess": "Sync complete",
+  "@settingsForceSyncSuccess": {
+    "description": "Success snackbar after a successful force sync."
+  },
+
+  "settingsForceSyncFailed": "Sync failed: {error}",
+  "@settingsForceSyncFailed": {
+    "description": "Error snackbar when force sync fails.",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "description": "The error message."
+      }
+    }
+  },
+
+  "settingsClearAllDataTitle": "Clear All Data",
+  "@settingsClearAllDataTitle": {
+    "description": "Title of the clear all data confirmation sheet."
+  },
+
+  "settingsClearAllDataMessage": "This will delete ALL app data: messages, nodes, channels, settings, keys, signals, bookmarks, automations, widgets, and saved preferences. This action cannot be undone.",
+  "@settingsClearAllDataMessage": {
+    "description": "Body of the clear all data confirmation sheet."
+  },
+
+  "settingsClearAllDataLabel": "Clear All",
+  "@settingsClearAllDataLabel": {
+    "description": "Confirm label for the clear all data sheet."
+  },
+
+  "settingsClearAllDataSuccess": "All data cleared successfully",
+  "@settingsClearAllDataSuccess": {
+    "description": "Success snackbar after clearing all app data."
+  },
+
+  "settingsClearAllDataFailed": "Failed to clear some data: {error}",
+  "@settingsClearAllDataFailed": {
+    "description": "Error snackbar when clearing all data only partially succeeds.",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "description": "The error message."
+      }
+    }
+  },
+
+  "settingsDeviceInfoTitle": "Device Information",
+  "@settingsDeviceInfoTitle": {
+    "description": "Header title in the device information bottom sheet."
+  },
+
+  "settingsDeviceInfoDeviceName": "Device Name",
+  "@settingsDeviceInfoDeviceName": {
+    "description": "Row label in the device information sheet."
+  },
+
+  "settingsDeviceInfoNotConnected": "Not connected",
+  "@settingsDeviceInfoNotConnected": {
+    "description": "Fallback value in the device information sheet when not connected."
+  },
+
+  "settingsDeviceInfoConnection": "Connection",
+  "@settingsDeviceInfoConnection": {
+    "description": "Row label in the device information sheet."
+  },
+
+  "settingsDeviceInfoNone": "None",
+  "@settingsDeviceInfoNone": {
+    "description": "Fallback value for the connection row in the device information sheet."
+  },
+
+  "settingsDeviceInfoNodeNumber": "Node Number",
+  "@settingsDeviceInfoNodeNumber": {
+    "description": "Row label in the device information sheet."
+  },
+
+  "settingsDeviceInfoLongName": "Long Name",
+  "@settingsDeviceInfoLongName": {
+    "description": "Row label in the device information sheet."
+  },
+
+  "settingsDeviceInfoShortName": "Short Name",
+  "@settingsDeviceInfoShortName": {
+    "description": "Row label in the device information sheet."
+  },
+
+  "settingsDeviceInfoHardware": "Hardware",
+  "@settingsDeviceInfoHardware": {
+    "description": "Row label in the device information sheet."
+  },
+
+  "settingsDeviceInfoUserId": "User ID",
+  "@settingsDeviceInfoUserId": {
+    "description": "Row label in the device information sheet."
+  },
+
+  "settingsDeviceInfoUnknown": "Unknown",
+  "@settingsDeviceInfoUnknown": {
+    "description": "Fallback value for unknown fields in the device information sheet."
+  },
+
+  "settingsProfileTitle": "Profile",
+  "@settingsProfileTitle": {
+    "description": "Title of the profile tile when no profile is loaded."
+  },
+
+  "settingsProfileSubtitle": "Set up your profile",
+  "@settingsProfileSubtitle": {
+    "description": "Subtitle of the profile tile when no profile exists."
+  },
+
+  "settingsProfileSynced": "Synced",
+  "@settingsProfileSynced": {
+    "description": "Tag text on the profile tile when the profile is synced to the cloud."
+  },
+
+  "settingsProfileLocalOnly": "Local only",
+  "@settingsProfileLocalOnly": {
+    "description": "Tag text on the profile tile when the profile exists only locally."
+  },
+
+  "settingsTilePrivacyTitle": "Privacy",
+  "@settingsTilePrivacyTitle": {
+    "description": "Title of the Privacy settings tile in the Account section."
+  },
+
+  "settingsTilePrivacySubtitle": "Analytics, crash reporting, and data controls",
+  "@settingsTilePrivacySubtitle": {
+    "description": "Subtitle of the Privacy settings tile in the Account section."
+  },
+
+  "settingsVersionString": "Version {version}",
+  "@settingsVersionString": {
+    "description": "App version label in the About section.",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+
+  "settingsSocialmeshVersionSnackbar": "Socialmesh v{version}",
+  "@settingsSocialmeshVersionSnackbar": {
+    "description": "Snackbar text shown when tapping the Socialmesh about tile.",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+
+  "settingsRegionConfigureSubtitle": "Configure device radio frequency",
+  "@settingsRegionConfigureSubtitle": {
+    "description": "Fallback subtitle for the Region tile when the region configuration fails to load."
+  },
+
+  "settingsSocialNotificationsLoading": "Loading\u2026",
+  "@settingsSocialNotificationsLoading": {
+    "description": "Title of the social notifications tile while preferences are loading."
+  },
+
+  "settingsSocialNotificationsLoadingSubtitle": "Fetching notification preferences",
+  "@settingsSocialNotificationsLoadingSubtitle": {
+    "description": "Subtitle of the social notifications tile while preferences are loading."
+  },
+
+  "settingsSocialNewFollowersTitle": "New followers",
+  "@settingsSocialNewFollowersTitle": {
+    "description": "Title of the new followers social notification toggle."
+  },
+
+  "settingsSocialNewFollowersSubtitle": "When someone follows you or sends a request",
+  "@settingsSocialNewFollowersSubtitle": {
+    "description": "Subtitle of the new followers social notification toggle."
+  },
+
+  "settingsSocialLikesTitle": "Likes",
+  "@settingsSocialLikesTitle": {
+    "description": "Title of the likes social notification toggle."
+  },
+
+  "settingsSocialLikesSubtitle": "When someone likes your posts",
+  "@settingsSocialLikesSubtitle": {
+    "description": "Subtitle of the likes social notification toggle."
+  },
+
+  "settingsSocialCommentsTitle": "Comments \u0026 mentions",
+  "@settingsSocialCommentsTitle": {
+    "description": "Title of the comments & mentions social notification toggle."
+  },
+
+  "settingsSocialCommentsSubtitle": "When someone comments or @mentions you",
+  "@settingsSocialCommentsSubtitle": {
+    "description": "Subtitle of the comments & mentions social notification toggle."
+  },
+
+  "settingsMeshtasticWebViewTitle": "Meshtastic",
+  "@settingsMeshtasticWebViewTitle": {
+    "description": "Initial title of the Meshtastic web view screen."
+  },
+
+  "settingsMeshtasticGoBack": "Go back",
+  "@settingsMeshtasticGoBack": {
+    "description": "Tooltip for the back navigation button in the Meshtastic web view."
+  },
+
+  "settingsMeshtasticRefresh": "Refresh",
+  "@settingsMeshtasticRefresh": {
+    "description": "Tooltip for the refresh button in the Meshtastic web view."
+  },
+
+  "settingsMeshtasticUnableToLoad": "Unable to load page",
+  "@settingsMeshtasticUnableToLoad": {
+    "description": "Error title in the offline placeholder of the Meshtastic web view."
+  },
+
+  "settingsMeshtasticOfflineMessage": "This content requires an internet connection. Please check your connection and try again.",
+  "@settingsMeshtasticOfflineMessage": {
+    "description": "Error body in the offline placeholder of the Meshtastic web view."
+  },
+
+  "settingsOpenSourceAppName": "Socialmesh",
+  "@settingsOpenSourceAppName": {
+    "description": "Application name passed to the Flutter LicensePage."
+  },
+
+  "settingsOpenSourceLegalese": "\u00a9 2024 Socialmesh\n\nThis app uses open source software. See below for the complete list of third-party licenses.",
+  "@settingsOpenSourceLegalese": {
+    "description": "Legalese text passed to the Flutter LicensePage."
+  },
+
+  "settingsSearchPremiumSubtitle": "Ringtones, themes, automations, IFTTT, widgets",
+  "@settingsSearchPremiumSubtitle": {
+    "description": "Subtitle for the Unlock Features search item in the premium section."
+  },
+
+  "settingsSearchRingtonePackTitle": "Ringtone Pack",
+  "@settingsSearchRingtonePackTitle": {
+    "description": "Fallback title for the ringtone pack search item."
+  },
+
+  "settingsSearchRingtonePackSubtitle": "Custom notification sounds",
+  "@settingsSearchRingtonePackSubtitle": {
+    "description": "Subtitle for the ringtone pack search item."
+  },
+
+  "settingsSearchThemePackTitle": "Theme Pack",
+  "@settingsSearchThemePackTitle": {
+    "description": "Fallback title for the theme pack search item."
+  },
+
+  "settingsSearchThemePackSubtitle": "Accent colors and visual customization",
+  "@settingsSearchThemePackSubtitle": {
+    "description": "Subtitle for the theme pack search item."
+  },
+
+  "settingsSearchAutomationsPackTitle": "Automations Pack",
+  "@settingsSearchAutomationsPackTitle": {
+    "description": "Fallback title for the automations pack search item."
+  },
+
+  "settingsSearchAutomationsPackSubtitle": "Automated actions and triggers",
+  "@settingsSearchAutomationsPackSubtitle": {
+    "description": "Subtitle for the automations pack search item."
+  },
+
+  "settingsSearchIftttPackTitle": "IFTTT Pack",
+  "@settingsSearchIftttPackTitle": {
+    "description": "Fallback title for the IFTTT pack search item."
+  },
+
+  "settingsSearchIftttPackSubtitle": "Integration with external services",
+  "@settingsSearchIftttPackSubtitle": {
+    "description": "Subtitle for the IFTTT pack search item."
+  },
+
+  "settingsSearchWidgetPackTitle": "Widget Pack",
+  "@settingsSearchWidgetPackTitle": {
+    "description": "Fallback title for the widget pack search item."
+  },
+
+  "settingsSearchWidgetPackSubtitle": "Home screen widgets",
+  "@settingsSearchWidgetPackSubtitle": {
+    "description": "Subtitle for the widget pack search item."
+  },
+
+  "settingsSearchProfileSubtitle": "Your display name, avatar, and bio",
+  "@settingsSearchProfileSubtitle": {
+    "description": "Subtitle for the Profile search item."
+  },
+
+  "settingsSearchNewFollowersSubtitle": "Push notifications when someone follows you",
+  "@settingsSearchNewFollowersSubtitle": {
+    "description": "Subtitle for the New followers search item."
+  },
+
+  "settingsSearchLikesSubtitle": "Push notifications for post likes",
+  "@settingsSearchLikesSubtitle": {
+    "description": "Subtitle for the Likes search item."
+  },
+
+  "settingsSearchCommentsSubtitle": "Push notifications for comments and @mentions",
+  "@settingsSearchCommentsSubtitle": {
+    "description": "Subtitle for the Comments & mentions search item."
+  },
+
+  "settingsSearchLinkedDevicesTitle": "Linked Devices",
+  "@settingsSearchLinkedDevicesTitle": {
+    "description": "Title for the Linked Devices search item."
+  },
+
+  "settingsSearchLinkedDevicesSubtitle": "Meshtastic devices connected to your profile",
+  "@settingsSearchLinkedDevicesSubtitle": {
+    "description": "Subtitle for the Linked Devices search item."
+  },
+
+  "settingsSearchTakGatewayTitle": "TAK Gateway",
+  "@settingsSearchTakGatewayTitle": {
+    "description": "Title for the TAK Gateway search item in the Connection section."
+  },
+
+  "settingsSearchTakGatewaySubtitle": "Gateway URL, position publishing, callsign",
+  "@settingsSearchTakGatewaySubtitle": {
+    "description": "Subtitle for the TAK Gateway search item."
+  },
+
+  "settingsSearchHapticIntensitySubtitle": "Light, medium, or heavy feedback",
+  "@settingsSearchHapticIntensitySubtitle": {
+    "description": "Subtitle for the Haptic Intensity search item."
+  },
+
+  "settingsSearchNewNodesNotificationsTitle": "New nodes notifications",
+  "@settingsSearchNewNodesNotificationsTitle": {
+    "description": "Title for the new nodes notifications search item."
+  },
+
+  "settingsSearchNewNodesNotificationsSubtitle": "Notify when new nodes join the mesh",
+  "@settingsSearchNewNodesNotificationsSubtitle": {
+    "description": "Subtitle for the new nodes notifications search item."
+  },
+
+  "settingsSearchDmNotificationsTitle": "Direct message notifications",
+  "@settingsSearchDmNotificationsTitle": {
+    "description": "Title for the direct message notifications search item."
+  },
+
+  "settingsSearchDmNotificationsSubtitle": "Notify for private messages",
+  "@settingsSearchDmNotificationsSubtitle": {
+    "description": "Subtitle for the direct message notifications search item."
+  },
+
+  "settingsSearchChannelNotificationsTitle": "Channel message notifications",
+  "@settingsSearchChannelNotificationsTitle": {
+    "description": "Title for the channel message notifications search item."
+  },
+
+  "settingsSearchChannelNotificationsSubtitle": "Notify for channel broadcasts",
+  "@settingsSearchChannelNotificationsSubtitle": {
+    "description": "Subtitle for the channel message notifications search item."
+  },
+
+  "settingsSearchNotificationSoundTitle": "Notification sound",
+  "@settingsSearchNotificationSoundTitle": {
+    "description": "Title for the notification sound search item."
+  },
+
+  "settingsSearchNotificationSoundSubtitle": "Play sound for notifications",
+  "@settingsSearchNotificationSoundSubtitle": {
+    "description": "Subtitle for the notification sound search item."
+  },
+
+  "settingsSearchNotificationVibrationTitle": "Notification vibration",
+  "@settingsSearchNotificationVibrationTitle": {
+    "description": "Title for the notification vibration search item."
+  },
+
+  "settingsSearchNotificationVibrationSubtitle": "Vibrate for notifications",
+  "@settingsSearchNotificationVibrationSubtitle": {
+    "description": "Subtitle for the notification vibration search item."
+  },
+
+  "settingsSearchCannedMessagesTitle": "Canned Messages",
+  "@settingsSearchCannedMessagesTitle": {
+    "description": "Title for the canned messages search item."
+  },
+
+  "settingsSearchCannedMessagesSubtitle": "Pre-configured device messages",
+  "@settingsSearchCannedMessagesSubtitle": {
+    "description": "Subtitle for the canned messages search item."
+  },
+
+  "settingsSearchFileTransferTitle": "File transfer",
+  "@settingsSearchFileTransferTitle": {
+    "description": "Title for the file transfer search item."
+  },
+
+  "settingsSearchFileTransferSubtitle": "Send and receive small files over mesh",
+  "@settingsSearchFileTransferSubtitle": {
+    "description": "Subtitle for the file transfer search item."
+  },
+
+  "settingsSearchAutoAcceptTransfersTitle": "Auto-accept transfers",
+  "@settingsSearchAutoAcceptTransfersTitle": {
+    "description": "Title for the auto-accept transfers search item."
+  },
+
+  "settingsSearchAutoAcceptTransfersSubtitle": "Automatically accept incoming file offers",
+  "@settingsSearchAutoAcceptTransfersSubtitle": {
+    "description": "Subtitle for the auto-accept transfers search item."
+  },
+
+  "settingsSearchHistoryLimitTitle": "Message history limit",
+  "@settingsSearchHistoryLimitTitle": {
+    "description": "Title for the message history limit search item."
+  },
+
+  "settingsSearchHistoryLimitSubtitle": "Maximum messages to keep",
+  "@settingsSearchHistoryLimitSubtitle": {
+    "description": "Subtitle for the message history limit search item."
+  },
+
+  "settingsSearchExportDataTitle": "Export data",
+  "@settingsSearchExportDataTitle": {
+    "description": "Title for the export data search item (lowercase variant)."
+  },
+
+  "settingsSearchExportDataSubtitle": "Export messages and settings",
+  "@settingsSearchExportDataSubtitle": {
+    "description": "Subtitle for the export data search item."
+  },
+
+  "settingsSearchClearAllMessagesTitle": "Clear all messages",
+  "@settingsSearchClearAllMessagesTitle": {
+    "description": "Title for the clear all messages search item."
+  },
+
+  "settingsSearchClearAllMessagesSubtitle": "Delete all stored messages",
+  "@settingsSearchClearAllMessagesSubtitle": {
+    "description": "Subtitle for the clear all messages search item."
+  },
+
+  "settingsSearchResetLocalDataTitle": "Reset local data",
+  "@settingsSearchResetLocalDataTitle": {
+    "description": "Title for the reset local data search item."
+  },
+
+  "settingsSearchResetLocalDataSubtitle": "Clear all local app data",
+  "@settingsSearchResetLocalDataSubtitle": {
+    "description": "Subtitle for the reset local data search item."
+  },
+
+  "settingsSearchClearAllDataSubtitle": "Delete messages, settings, and keys",
+  "@settingsSearchClearAllDataSubtitle": {
+    "description": "Subtitle for the clear all data search item."
+  },
+
+  "settingsSearchRemoteAdminTitle": "Remote Administration",
+  "@settingsSearchRemoteAdminTitle": {
+    "description": "Title for the remote administration search item."
+  },
+
+  "settingsSearchRemoteAdminSubtitle": "Configure remote nodes via PKI admin",
+  "@settingsSearchRemoteAdminSubtitle": {
+    "description": "Subtitle for the remote administration search item."
+  },
+
+  "settingsSearchForceSyncTitle": "Force sync",
+  "@settingsSearchForceSyncTitle": {
+    "description": "Title for the force sync search item (lowercase variant)."
+  },
+
+  "settingsSearchForceSyncSubtitle": "Force configuration sync",
+  "@settingsSearchForceSyncSubtitle": {
+    "description": "Subtitle for the force sync search item."
+  },
+
+  "settingsSearchScanForDeviceTitle": "Scan for device",
+  "@settingsSearchScanForDeviceTitle": {
+    "description": "Title for the scan for device search item."
+  },
+
+  "settingsSearchScanForDeviceSubtitle": "Scan QR code for easy setup",
+  "@settingsSearchScanForDeviceSubtitle": {
+    "description": "Subtitle for the scan for device search item."
+  },
+
+  "settingsSearchRegionTitle": "Region",
+  "@settingsSearchRegionTitle": {
+    "description": "Title for the region search item."
+  },
+
+  "settingsSearchRegionSubtitle": "Device radio frequency region",
+  "@settingsSearchRegionSubtitle": {
+    "description": "Subtitle for the region search item."
+  },
+
+  "settingsSearchDeviceConfigTitle": "Device config",
+  "@settingsSearchDeviceConfigTitle": {
+    "description": "Title for the device config search item."
+  },
+
+  "settingsSearchDeviceConfigSubtitle": "Device name, role, and behavior",
+  "@settingsSearchDeviceConfigSubtitle": {
+    "description": "Subtitle for the device config search item."
+  },
+
+  "settingsSearchRadioConfigTitle": "Radio config",
+  "@settingsSearchRadioConfigTitle": {
+    "description": "Title for the radio config search item (lowercase variant)."
+  },
+
+  "settingsSearchRadioConfigSubtitle": "LoRa, modem, channel settings",
+  "@settingsSearchRadioConfigSubtitle": {
+    "description": "Subtitle for the radio config search item."
+  },
+
+  "settingsSearchPositionConfigTitle": "Position config",
+  "@settingsSearchPositionConfigTitle": {
+    "description": "Title for the position config search item."
+  },
+
+  "settingsSearchPositionConfigSubtitle": "GPS and position sharing",
+  "@settingsSearchPositionConfigSubtitle": {
+    "description": "Subtitle for the position config search item."
+  },
+
+  "settingsSearchDisplayConfigTitle": "Display config",
+  "@settingsSearchDisplayConfigTitle": {
+    "description": "Title for the display config search item."
+  },
+
+  "settingsSearchDisplayConfigSubtitle": "Screen brightness and timeout",
+  "@settingsSearchDisplayConfigSubtitle": {
+    "description": "Subtitle for the display config search item."
+  },
+
+  "settingsSearchBluetoothConfigTitle": "Bluetooth config",
+  "@settingsSearchBluetoothConfigTitle": {
+    "description": "Title for the Bluetooth config search item."
+  },
+
+  "settingsSearchBluetoothConfigSubtitle": "Bluetooth settings and PIN",
+  "@settingsSearchBluetoothConfigSubtitle": {
+    "description": "Subtitle for the Bluetooth config search item."
+  },
+
+  "settingsSearchNetworkConfigTitle": "Network config",
+  "@settingsSearchNetworkConfigTitle": {
+    "description": "Title for the network config search item."
+  },
+
+  "settingsSearchNetworkConfigSubtitle": "WiFi and network settings",
+  "@settingsSearchNetworkConfigSubtitle": {
+    "description": "Subtitle for the network config search item."
+  },
+
+  "settingsSearchPowerConfigTitle": "Power config",
+  "@settingsSearchPowerConfigTitle": {
+    "description": "Title for the power config search item."
+  },
+
+  "settingsSearchPowerConfigSubtitle": "Power saving and sleep settings",
+  "@settingsSearchPowerConfigSubtitle": {
+    "description": "Subtitle for the power config search item."
+  },
+
+  "settingsSearchImportChannelTitle": "Import channel via QR",
+  "@settingsSearchImportChannelTitle": {
+    "description": "Title for the import channel via QR search item."
+  },
+
+  "settingsSearchImportChannelSubtitle": "Scan a Meshtastic channel QR code",
+  "@settingsSearchImportChannelSubtitle": {
+    "description": "Subtitle for the import channel via QR search item."
+  },
+
+  "settingsSearchSocialmeshSubtitle": "Meshtastic companion app",
+  "@settingsSearchSocialmeshSubtitle": {
+    "description": "Subtitle for the Socialmesh search item in the About section."
+  },
+
+  "settingsSearchHelpSupportSubtitle": "FAQ, troubleshooting, and contact info",
+  "@settingsSearchHelpSupportSubtitle": {
+    "description": "Subtitle for the Help & Support search item."
+  },
+
+  "settingsSearchTermsSubtitle": "Legal terms and conditions",
+  "@settingsSearchTermsSubtitle": {
+    "description": "Subtitle for the Terms of Service search item."
+  },
+
+  "settingsSearchPrivacySubtitle": "How we handle your data",
+  "@settingsSearchPrivacySubtitle": {
+    "description": "Subtitle for the Privacy Policy search item."
+  },
+
+  "scannerPairingInvalidatedError": "Your phone removed the stored pairing info for this device. Return to Settings > Bluetooth, forget \"Meshtastic_XXXX\", and try again.",
+  "@scannerPairingInvalidatedError": {
+    "description": "Error message when the OS removes stored BLE pairing data for the device."
+  },
+
+  "scannerGattConnectionFailed": "Connection failed. This can happen if the device was previously paired with another app. Go to Settings > Bluetooth, find the Meshtastic device, tap \"Forget\", then try again.",
+  "@scannerGattConnectionFailed": {
+    "description": "User-friendly error message for GATT_ERROR 133 or discovery failed BLE errors."
+  },
+
+  "scannerConnectionTimedOut": "Connection timed out. The device may be out of range, powered off, or connected to another phone.",
+  "@scannerConnectionTimedOut": {
+    "description": "User-friendly error message for BLE connection timeout errors."
+  },
+
+  "scannerDeviceDisconnectedUnexpectedly": "The device disconnected unexpectedly. It may have gone out of range or lost power.",
+  "@scannerDeviceDisconnectedUnexpectedly": {
+    "description": "User-friendly error message when the device disconnects unexpectedly during connection."
   }
 }

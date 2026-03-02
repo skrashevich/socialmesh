@@ -885,7 +885,7 @@ class _ConflictEntryRow extends StatelessWidget {
 
   String _truncate(String text, int maxLen) {
     if (text.length <= maxLen) return text;
-    return '${text.substring(0, maxLen)}...';
+    return '${text.substring(0, maxLen)}…';
   }
 }
 

@@ -811,7 +811,7 @@ class _UserModerationCard extends StatelessWidget {
                       ),
                       if (userId != null)
                         Text(
-                          'ID: ${userId.length > 8 ? '${userId.substring(0, 8)}...' : userId}',
+                          'ID: ${userId.length > 8 ? '${userId.substring(0, 8)}…' : userId}',
                           style: theme.textTheme.bodySmall?.copyWith(
                             color: theme.hintColor,
                             fontFamily: 'monospace',

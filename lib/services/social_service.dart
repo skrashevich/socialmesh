@@ -1133,7 +1133,7 @@ class SocialService {
       auth: _auth,
     );
     final preview = content.length > 100
-        ? '${content.substring(0, 100)}...'
+        ? '${content.substring(0, 100)}…'
         : content;
 
     if (parentId == null) {
@@ -1219,7 +1219,7 @@ class SocialService {
           // Don't notify yourself
           if (mentionedUserId != currentUserId) {
             final preview = content.length > 100
-                ? '${content.substring(0, 100)}...'
+                ? '${content.substring(0, 100)}…'
                 : content;
 
             await activityService.createMentionActivity(

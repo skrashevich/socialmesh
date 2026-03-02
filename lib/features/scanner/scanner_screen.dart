@@ -27,6 +27,7 @@ import '../../services/meshcore/meshcore_detector.dart';
 import '../../providers/meshcore_providers.dart';
 import '../../utils/permissions.dart';
 import '../../utils/snackbar.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../providers/app_providers.dart';
 import '../../services/storage/storage_service.dart';
 import '../../generated/meshtastic/config.pbenum.dart' as config_pbenum;
@@ -105,10 +106,7 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
       );
       AppErrorHandler.addBreadcrumb('Scanner: auth failure detected');
       _showPairingInvalidationHint = true;
-      _errorMessage =
-          'Authentication failed. The device may need to be re-paired. '
-          'Go to Settings > Bluetooth, forget the Meshtastic device, '
-          'then tap it below to reconnect.';
+      _errorMessage = context.l10n.scannerAuthFailedError;
     } else if (autoReconnectState == AutoReconnectState.failed &&
         deviceState.reason == conn.DisconnectReason.deviceNotFound) {
       AppLogging.connection(
@@ -801,7 +799,7 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
     if (!opened) {
       showErrorSnackBar(
         context,
-        'Could not open Bluetooth Settings. Please open Settings > Bluetooth manually.',
+        context.l10n.scannerBluetoothSettingsOpenFailed,
       );
     }
   }
@@ -973,11 +971,13 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
         // Connection failed
         safeSetState(() {
           _connecting = false;
-          _errorMessage = result.errorMessage ?? 'MeshCore connection failed';
+          _errorMessage =
+              result.errorMessage ??
+              context.l10n.scannerMeshCoreConnectionFailed;
         });
         showErrorSnackBar(
           context,
-          result.errorMessage ?? 'MeshCore connection failed',
+          result.errorMessage ?? context.l10n.scannerMeshCoreConnectionFailed,
         );
         return;
       }
@@ -1052,9 +1052,14 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
 
       safeSetState(() {
         _connecting = false;
-        _errorMessage = 'Connection failed: $e';
+        _errorMessage = context.l10n.scannerConnectionFailedWithError(
+          e.toString(),
+        );
       });
-      showErrorSnackBar(context, 'MeshCore connection failed: $e');
+      showErrorSnackBar(
+        context,
+        context.l10n.scannerMeshCoreConnectionFailedWithError(e.toString()),
+      );
     }
   }
 
@@ -1073,7 +1078,8 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
       '📡 SCANNER: _connectToDevice ${device.id} (${device.name}), isAutoReconnect=$isAutoReconnect',
     );
 
-    // Capture providers BEFORE any await
+    // Capture providers and context-dependent strings BEFORE any await
+    final pinRequiredError = context.l10n.scannerPinRequiredError;
     final transport = ref.read(transportProvider);
     final connectedDeviceNotifier = ref.read(connectedDeviceProvider.notifier);
     final settingsAsync = ref.read(settingsServiceProvider);
@@ -1139,9 +1145,7 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
           '🔴 Scanner: No config received - authentication may have failed',
         );
         await transport.disconnect();
-        throw Exception(
-          'Connection failed - please try again and enter the PIN when prompted',
-        );
+        throw Exception(pinRequiredError);
       }
 
       // Mark connection as fully established in the device connection provider
@@ -1362,8 +1366,7 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
 
       final sanitizedMessage = e.toString().replaceFirst('Exception: ', '');
       final pairingInvalidation = conn.isPairingInvalidationError(e);
-      final pairingMessage =
-          'Your phone removed the stored pairing info for this device. Return to Settings > Bluetooth, forget "Meshtastic_XXXX", and try again.';
+      final pairingMessage = context.l10n.scannerPairingInvalidatedError;
 
       // Provide user-friendly error messages for common BLE errors
       final errorLower = e.toString().toLowerCase();
@@ -1385,18 +1388,11 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
         // - Device was previously paired with another app (stale bond)
         // - Device is connected to another phone
         // - BLE cache is corrupted
-        userMessage =
-            'Connection failed. This can happen if the device was previously '
-            'paired with another app. Go to Settings > Bluetooth, find the '
-            'Meshtastic device, tap "Forget", then try again.';
+        userMessage = context.l10n.scannerGattConnectionFailed;
       } else if (isTimeout) {
-        userMessage =
-            'Connection timed out. The device may be out of range, powered off, '
-            'or connected to another phone.';
+        userMessage = context.l10n.scannerConnectionTimedOut;
       } else if (isDeviceDisconnected) {
-        userMessage =
-            'The device disconnected unexpectedly. It may have gone out of range '
-            'or lost power.';
+        userMessage = context.l10n.scannerDeviceDisconnectedUnexpectedly;
       } else {
         userMessage = sanitizedMessage;
       }
@@ -1484,9 +1480,9 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
           builder: (context, ref, child) {
             final appVersionAsync = ref.watch(appVersionProvider);
             final versionText = appVersionAsync.when(
-              data: (version) => 'Version v$version',
-              loading: () => 'Socialmesh',
-              error: (_, _) => 'Socialmesh',
+              data: (version) => context.l10n.scannerVersionTextShort(version),
+              loading: () => context.l10n.appTitle,
+              error: (_, _) => context.l10n.appTitle,
             );
 
             return Container(
@@ -1507,7 +1503,7 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
                     ),
                     const SizedBox(height: AppTheme.spacing2),
                     Text(
-                      '© 2026 Socialmesh. All rights reserved.',
+                      context.l10n.scannerCopyright,
                       style: TextStyle(
                         fontSize: 11,
                         color: context.textTertiary.withValues(alpha: 0.7),
@@ -1533,7 +1529,9 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
               )
             : null,
         titleWidget: Text(
-          widget.isOnboarding ? 'Connect Device' : 'Devices',
+          widget.isOnboarding
+              ? context.l10n.scannerConnectDeviceTitle
+              : context.l10n.scannerDevicesTitle,
           style: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.w600,
@@ -1550,9 +1548,9 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
           builder: (context, ref, child) {
             final appVersionAsync = ref.watch(appVersionProvider);
             final versionText = appVersionAsync.when(
-              data: (version) => 'Socialmesh v$version',
-              loading: () => 'Socialmesh',
-              error: (_, _) => 'Socialmesh',
+              data: (version) => context.l10n.scannerVersionText(version),
+              loading: () => context.l10n.appTitle,
+              error: (_, _) => context.l10n.appTitle,
             );
 
             return Container(
@@ -1573,7 +1571,7 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
                     ),
                     const SizedBox(height: AppTheme.spacing2),
                     Text(
-                      '© 2026 Socialmesh. All rights reserved.',
+                      context.l10n.scannerCopyright,
                       style: TextStyle(
                         fontSize: 11,
                         color: context.textTertiary.withValues(alpha: 0.7),
@@ -1594,9 +1592,10 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
                 if (_savedDeviceNotFoundName != null)
                   StatusBanner.custom(
                     color: AccentColors.orange,
-                    title: '$_savedDeviceNotFoundName not found',
-                    subtitle:
-                        'If another app is connected to this device, disconnect from it first. Only one app can use Bluetooth at a time.',
+                    title: context.l10n.scannerDeviceNotFoundTitle(
+                      _savedDeviceNotFoundName!,
+                    ),
+                    subtitle: context.l10n.scannerDeviceNotFoundSubtitle,
                     margin: const EdgeInsets.only(bottom: 16),
                     onDismiss: () =>
                         setState(() => _savedDeviceNotFoundName = null),
@@ -1628,7 +1627,7 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Auto-reconnect is disabled',
+                                context.l10n.scannerAutoReconnectDisabledTitle,
                                 style: TextStyle(
                                   color: context.textPrimary,
                                   fontWeight: FontWeight.w600,
@@ -1638,8 +1637,13 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
                               const SizedBox(height: AppTheme.spacing4),
                               Text(
                                 _savedDeviceName != null
-                                    ? 'Select "$_savedDeviceName" below, or enable auto-reconnect.'
-                                    : 'Select a device below to connect manually.',
+                                    ? context.l10n
+                                          .scannerAutoReconnectDisabledSubtitleWithDevice(
+                                            _savedDeviceName!,
+                                          )
+                                    : context
+                                          .l10n
+                                          .scannerAutoReconnectDisabledSubtitle,
                                 style: TextStyle(
                                   color: context.textSecondary,
                                   fontSize: 13,
@@ -1656,11 +1660,18 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
                               // Ask for confirmation before enabling
                               final confirmed = await AppBottomSheet.showConfirm(
                                 context: context,
-                                title: 'Enable Auto-Reconnect?',
+                                title: context
+                                    .l10n
+                                    .scannerEnableAutoReconnectTitle,
                                 message: _savedDeviceName != null
-                                    ? 'This will automatically connect to "$_savedDeviceName" now and whenever you open the app.'
-                                    : 'This will automatically connect to your last used device whenever you open the app.',
-                                confirmLabel: 'Enable',
+                                    ? context.l10n
+                                          .scannerEnableAutoReconnectMessageWithDevice(
+                                            _savedDeviceName!,
+                                          )
+                                    : context
+                                          .l10n
+                                          .scannerEnableAutoReconnectMessage,
+                                confirmLabel: context.l10n.scannerEnableLabel,
                               );
 
                               if (confirmed == true && mounted) {
@@ -1725,7 +1736,7 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
                                 color: context.textPrimary,
                               ),
                               label: Text(
-                                'Bluetooth Settings',
+                                context.l10n.scannerBluetoothSettings,
                                 style: TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w600,
@@ -1759,7 +1770,7 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
                                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               ),
                               child: Text(
-                                'Retry Scan',
+                                context.l10n.scannerRetryScan,
                                 style: TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w600,
@@ -1775,10 +1786,12 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
 
                 if (_scanning)
                   StatusBanner.accent(
-                    title: 'Scanning for nearby devices',
+                    title: context.l10n.scannerScanningTitle,
                     subtitle: _devices.isEmpty
-                        ? 'Looking for Meshtastic devices...'
-                        : '${_devices.length} ${_devices.length == 1 ? 'device' : 'devices'} found so far',
+                        ? context.l10n.scannerScanningSubtitle
+                        : context.l10n.scannerDevicesFoundCount(
+                            _devices.length,
+                          ),
                     isLoading: true,
                     margin: const EdgeInsets.only(bottom: 16),
                   ),
@@ -1832,7 +1845,7 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
                       child: Row(
                         children: [
                           Text(
-                            'Available Devices',
+                            context.l10n.scannerAvailableDevices,
                             style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w600,
@@ -1867,7 +1880,7 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
                             onPressed: _scanning ? null : _startScan,
                             icon: Icon(Icons.refresh, size: 16),
                             label: Text(
-                              'Retry Scan',
+                              context.l10n.scannerRetryScan,
                               style: TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w600,
@@ -1903,7 +1916,7 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
                         ),
                         SizedBox(height: AppTheme.spacing24),
                         Text(
-                          'Looking for devices\u2026',
+                          context.l10n.scannerLookingForDevices,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
@@ -1912,7 +1925,7 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
                         ),
                         SizedBox(height: AppTheme.spacing8),
                         Text(
-                          'Make sure Bluetooth is enabled and\nyour Meshtastic device is powered on',
+                          context.l10n.scannerEnableBluetoothHint,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 14,
@@ -1996,7 +2009,7 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
               Icon(Icons.warning_amber, color: AccentColors.orange),
               const SizedBox(width: AppTheme.spacing12),
               Text(
-                'Unknown Protocol',
+                context.l10n.scannerUnknownProtocol,
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
@@ -2007,7 +2020,7 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
           ),
           const SizedBox(height: AppTheme.spacing16),
           Text(
-            'This device was not detected as Meshtastic or MeshCore.',
+            context.l10n.scannerUnknownDeviceDescription,
             textAlign: TextAlign.center,
             style: TextStyle(color: context.textSecondary),
           ),
@@ -2038,8 +2051,7 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
           ),
           const SizedBox(height: AppTheme.spacing12),
           Text(
-            'This device cannot be connected automatically. '
-            'Only Meshtastic and MeshCore devices are supported.',
+            context.l10n.scannerUnsupportedDeviceMessage,
             textAlign: TextAlign.center,
             style: TextStyle(color: context.textSecondary),
           ),
@@ -2055,7 +2067,7 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
                   borderRadius: BorderRadius.circular(AppTheme.radius12),
                 ),
               ),
-              child: const Text('OK'),
+              child: Text(context.l10n.commonOk),
             ),
           ),
         ],
@@ -2139,8 +2151,8 @@ class _DeviceCard extends StatelessWidget {
                         children: [
                           Text(
                             device.type == TransportType.ble
-                                ? 'Bluetooth'
-                                : 'USB',
+                                ? context.l10n.scannerTransportBluetooth
+                                : context.l10n.scannerTransportUsb,
                             style: TextStyle(
                               fontSize: 14,
                               color: context.textTertiary,
@@ -2207,9 +2219,18 @@ class _ProtocolBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final (label, color) = switch (protocolType) {
-      MeshProtocolType.meshtastic => ('Meshtastic', AppTheme.successGreen),
-      MeshProtocolType.meshcore => ('MeshCore', AccentColors.blue),
-      MeshProtocolType.unknown => ('Unknown', AccentColors.orange),
+      MeshProtocolType.meshtastic => (
+        context.l10n.scannerProtocolMeshtastic,
+        AppTheme.successGreen,
+      ),
+      MeshProtocolType.meshcore => (
+        context.l10n.scannerProtocolMeshCore,
+        AccentColors.blue,
+      ),
+      MeshProtocolType.unknown => (
+        context.l10n.scannerProtocolUnknown,
+        AccentColors.orange,
+      ),
     };
 
     return Container(
@@ -2243,24 +2264,26 @@ class _DeviceDetailsTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final details = <(String, String)>[
-      ('Device Name', device.name),
-      if (device.address != null) ('Address', device.address!),
+      (context.l10n.scannerDetailDeviceName, device.name),
+      if (device.address != null)
+        (context.l10n.scannerDetailAddress, device.address!),
       (
-        'Connection Type',
+        context.l10n.scannerDetailConnectionType,
         device.type == TransportType.ble
-            ? 'Bluetooth Low Energy'
-            : 'USB Serial',
+            ? context.l10n.scannerDetailBluetoothLowEnergy
+            : context.l10n.scannerDetailUsbSerial,
       ),
-      if (device.rssi != null) ('Signal Strength', '${device.rssi} dBm'),
+      if (device.rssi != null)
+        (context.l10n.scannerDetailSignalStrength, '${device.rssi} dBm'),
       // Advertisement data (dev mode only)
       if (showAdvertisementData && device.serviceUuids.isNotEmpty)
         (
-          'Service UUIDs',
+          context.l10n.scannerDetailServiceUuids,
           device.serviceUuids.isEmpty ? 'None' : device.serviceUuids.join('\n'),
         ),
       if (showAdvertisementData && device.manufacturerData.isNotEmpty)
         (
-          'Manufacturer Data',
+          context.l10n.scannerDetailManufacturerData,
           device.manufacturerData.entries
               .map(
                 (e) =>

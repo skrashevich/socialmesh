@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import '../../../core/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme.dart';
@@ -119,7 +120,7 @@ class TapbackPicker extends ConsumerWidget {
           ),
           const SizedBox(height: AppTheme.spacing20),
           Text(
-            'React',
+            context.l10n.tapbackReact,
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,

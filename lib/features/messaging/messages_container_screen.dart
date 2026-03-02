@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import '../../core/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:socialmesh/core/transport.dart';
@@ -29,7 +30,7 @@ class _MessagesContainerScreenState
 
   void _showAddChannelScreen(bool isConnected) {
     if (!isConnected) {
-      showErrorSnackBar(context, 'Connect to a device to add channels');
+      showErrorSnackBar(context, context.l10n.messagesAddChannelNotConnected);
       return;
     }
 
@@ -52,7 +53,7 @@ class _MessagesContainerScreenState
 
   void _openChannelScanner(bool isConnected) {
     if (!isConnected) {
-      showErrorSnackBar(context, 'Connect to a device to scan channels');
+      showErrorSnackBar(context, context.l10n.messagesScanChannelNotConnected);
       return;
     }
 
@@ -99,7 +100,7 @@ class _MessagesContainerScreenState
         resizeToAvoidBottomInset: false,
         leading: const HamburgerMenuButton(),
         centerTitle: true,
-        title: 'Messages',
+        title: context.l10n.messagesContainerTitle,
         actions: [
           const DeviceStatusButton(),
           MessagingPopupMenu(
@@ -137,7 +138,7 @@ class _MessagesContainerScreenState
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Text('Contacts'),
+                      Text(context.l10n.messagesContactsTab),
                       const SizedBox(width: AppTheme.spacing6),
                       _TabBadge(count: contactsCount, showDot: hasUnreadDm),
                     ],
@@ -147,7 +148,7 @@ class _MessagesContainerScreenState
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Text('Channels'),
+                      Text(context.l10n.messagesChannelsTab),
                       const SizedBox(width: AppTheme.spacing6),
                       _TabBadge(
                         count: channels.length,

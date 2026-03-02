@@ -668,7 +668,7 @@ class NotificationService {
 
     // Truncate message if too long
     final truncatedMessage = message.length > 100
-        ? '${message.substring(0, 100)}...'
+        ? '${message.substring(0, 100)}…'
         : message;
 
     AppLogging.notifications(
@@ -755,7 +755,7 @@ class NotificationService {
 
     // Truncate message if too long
     final truncatedMessage = message.length > 100
-        ? '${message.substring(0, 100)}...'
+        ? '${message.substring(0, 100)}…'
         : message;
 
     // Use short name (4-char code) if available, otherwise last 4 hex digits
@@ -839,13 +839,13 @@ class NotificationService {
       final sender = dms.first;
       title = '$messageCount messages from ${sender.senderName}';
       body = dms.map((m) => m.message).take(3).join(', ');
-      if (messageCount > 3) body += ' ...';
+      if (messageCount > 3) body += ' …';
     } else {
       // Multiple senders
       title = '$messageCount new messages';
       body =
           'From $senderCount people: ${bySender.values.map((msgs) => msgs.first.senderName).take(3).join(', ')}';
-      if (senderCount > 3) body += '...';
+      if (senderCount > 3) body += '…';
     }
 
     final androidDetails = AndroidNotificationDetails(
@@ -921,7 +921,7 @@ class NotificationService {
           .take(3)
           .join(', ');
       body = 'In $channelCount channels: $channelNames';
-      if (channelCount > 3) body += '...';
+      if (channelCount > 3) body += '…';
     }
 
     final androidDetails = AndroidNotificationDetails(
@@ -985,7 +985,7 @@ class NotificationService {
     // Multiple nodes - show summary
     title = '$nodeCount new nodes discovered';
     final nodeNames = nodes.take(3).map((n) => n.node.displayName).join(', ');
-    body = nodeNames + (nodeCount > 3 ? '...' : '');
+    body = nodeNames + (nodeCount > 3 ? '…' : '');
 
     final androidDetails = AndroidNotificationDetails(
       'new_nodes',
@@ -1067,7 +1067,7 @@ class NotificationService {
 
     // Truncate description for notification body
     final truncated = description.length > 120
-        ? '${description.substring(0, 120)}...'
+        ? '${description.substring(0, 120)}…'
         : description;
 
     final subtitle = email != null && email.isNotEmpty

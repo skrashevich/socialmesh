@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/floating_icons_background.dart';
 
@@ -10,19 +11,20 @@ export '../../../core/widgets/floating_icons_background.dart';
 /// Connecting animation with status text and optional cancel button.
 /// Uses the floating icons background centered on screen.
 class ConnectingAnimation extends StatelessWidget {
-  final String statusText;
+  final String? statusText;
   final VoidCallback? onCancel;
   final bool showCancel;
 
   const ConnectingAnimation({
     super.key,
-    this.statusText = 'Connecting...',
+    this.statusText,
     this.onCancel,
     this.showCancel = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    final resolvedStatus = statusText ?? context.l10n.scannerConnectingStatus;
     return Stack(
       children: [
         // Floating icons background
@@ -35,7 +37,7 @@ class ConnectingAnimation extends StatelessWidget {
             children: [
               // Status text
               Text(
-                statusText,
+                resolvedStatus,
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w600,
@@ -50,7 +52,7 @@ class ConnectingAnimation extends StatelessWidget {
                 TextButton(
                   onPressed: onCancel,
                   child: Text(
-                    'Cancel',
+                    context.l10n.commonCancel,
                     style: TextStyle(color: context.textTertiary, fontSize: 16),
                   ),
                 ),

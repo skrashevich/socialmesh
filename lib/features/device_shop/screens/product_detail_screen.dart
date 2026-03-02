@@ -620,7 +620,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
 
   String _truncateDescription(String desc) {
     if (desc.length <= 200) return desc;
-    return '${desc.substring(0, 200)}...';
+    return '${desc.substring(0, 200)}…';
   }
 
   /// Build the variant selector UI

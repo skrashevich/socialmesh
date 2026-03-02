@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import '../../../core/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -53,7 +54,9 @@ class _HelpArticleScreenState extends ConsumerState<HelpArticleScreen> {
                 Icon(Icons.schedule, size: 14, color: context.textTertiary),
                 const SizedBox(width: AppTheme.spacing4),
                 Text(
-                  '${widget.article.readingTimeMinutes} min read',
+                  context.l10n.helpArticleMinRead(
+                    widget.article.readingTimeMinutes,
+                  ),
                   style: TextStyle(
                     fontSize: 12,
                     color: context.textTertiary,
@@ -97,7 +100,7 @@ class _HelpArticleScreenState extends ConsumerState<HelpArticleScreen> {
                   ),
                   const SizedBox(height: AppTheme.spacing12),
                   Text(
-                    'Failed to load article',
+                    context.l10n.helpArticleLoadFailed,
                     style: TextStyle(
                       color: context.textSecondary,
                       fontSize: 15,

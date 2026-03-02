@@ -474,7 +474,7 @@ class _BugReportCardState extends ConsumerState<_BugReportCard>
                       Expanded(
                         child: Text(
                           report.description.length > 80
-                              ? '${report.description.substring(0, 77)}...'
+                              ? '${report.description.substring(0, 77)}…'
                               : report.description,
                           style: TextStyle(
                             fontSize: 15,

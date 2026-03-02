@@ -7,6 +7,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/logging.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../config/revenuecat_config.dart';
@@ -133,8 +134,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         // Premium
         _SearchableSettingItem(
           icon: Icons.rocket_launch_rounded,
-          title: 'Unlock Features',
-          subtitle: 'Ringtones, themes, automations, IFTTT, widgets',
+          title: context.l10n.settingsPremiumUnlockFeaturesTitle,
+          subtitle: context.l10n.settingsSearchPremiumSubtitle,
           keywords: ['premium', 'upgrade', 'purchase', 'buy', 'subscription'],
           section: 'PREMIUM',
           onTap: () => Navigator.push(
@@ -146,8 +147,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           icon: Icons.music_note,
           title:
               storeProducts[RevenueCatConfig.ringtonePackProductId]?.title ??
-              'Ringtone Pack',
-          subtitle: 'Custom notification sounds',
+              context.l10n.settingsSearchRingtonePackTitle,
+          subtitle: context.l10n.settingsSearchRingtonePackSubtitle,
           keywords: ['sound', 'audio', 'tone', 'music', 'alert'],
           section: 'PREMIUM',
           onTap: () {
@@ -166,8 +167,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.bug_report_outlined,
-          title: 'Shake to report a bug',
-          subtitle: 'Shake your device to open the bug report flow',
+          title: context.l10n.settingsTileShakeToReportTitle,
+          subtitle: context.l10n.settingsTileShakeToReportSubtitle,
           keywords: ['bug', 'report', 'shake', 'feedback', 'support'],
           section: 'FEEDBACK',
           hasSwitch: true,
@@ -182,8 +183,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.forum_outlined,
-          title: 'My bug reports',
-          subtitle: 'View your reports and responses',
+          title: context.l10n.settingsTileMyBugReportsTitle,
+          subtitle: context.l10n.settingsTileMyBugReportsSubtitle,
           keywords: ['bug', 'report', 'feedback', 'support', 'response'],
           section: 'FEEDBACK',
           onTap: () {
@@ -195,8 +196,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           icon: Icons.palette,
           title:
               storeProducts[RevenueCatConfig.themePackProductId]?.title ??
-              'Theme Pack',
-          subtitle: 'Accent colors and visual customization',
+              context.l10n.settingsSearchThemePackTitle,
+          subtitle: context.l10n.settingsSearchThemePackSubtitle,
           keywords: ['color', 'accent', 'visual', 'appearance', 'dark'],
           section: 'PREMIUM',
           onTap: () {
@@ -217,8 +218,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           icon: Icons.bolt,
           title:
               storeProducts[RevenueCatConfig.automationsPackProductId]?.title ??
-              'Automations Pack',
-          subtitle: 'Automated actions and triggers',
+              context.l10n.settingsSearchAutomationsPackTitle,
+          subtitle: context.l10n.settingsSearchAutomationsPackSubtitle,
           keywords: ['auto', 'trigger', 'action', 'rule', 'automatic'],
           section: 'PREMIUM',
           onTap: () {
@@ -239,8 +240,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           icon: Icons.webhook,
           title:
               storeProducts[RevenueCatConfig.iftttPackProductId]?.title ??
-              'IFTTT Pack',
-          subtitle: 'Integration with external services',
+              context.l10n.settingsSearchIftttPackTitle,
+          subtitle: context.l10n.settingsSearchIftttPackSubtitle,
           keywords: ['integration', 'webhook', 'external', 'connect'],
           section: 'PREMIUM',
           onTap: () {
@@ -261,8 +262,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           icon: Icons.widgets,
           title:
               storeProducts[RevenueCatConfig.widgetPackProductId]?.title ??
-              'Widget Pack',
-          subtitle: 'Home screen widgets',
+              context.l10n.settingsSearchWidgetPackTitle,
+          subtitle: context.l10n.settingsSearchWidgetPackSubtitle,
           keywords: ['home', 'widget', 'screen', 'launcher'],
           section: 'PREMIUM',
           onTap: () {
@@ -283,8 +284,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         // Profile
         _SearchableSettingItem(
           icon: Icons.person_outline,
-          title: 'Profile',
-          subtitle: 'Your display name, avatar, and bio',
+          title: context.l10n.settingsProfileTitle,
+          subtitle: context.l10n.settingsSearchProfileSubtitle,
           keywords: ['user', 'name', 'avatar', 'account', 'bio'],
           section: 'ACCOUNT',
           onTap: () => Navigator.push(
@@ -298,32 +299,32 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         // Social Notifications
         _SearchableSettingItem(
           icon: Icons.person_add_outlined,
-          title: 'New followers',
-          subtitle: 'Push notifications when someone follows you',
+          title: context.l10n.settingsSocialNewFollowersTitle,
+          subtitle: context.l10n.settingsSearchNewFollowersSubtitle,
           keywords: ['social', 'notification', 'follow', 'follower'],
           section: 'SOCIAL NOTIFICATIONS',
           hasSwitch: true,
         ),
         _SearchableSettingItem(
           icon: Icons.favorite_outline,
-          title: 'Likes',
-          subtitle: 'Push notifications for post likes',
+          title: context.l10n.settingsSocialLikesTitle,
+          subtitle: context.l10n.settingsSearchLikesSubtitle,
           keywords: ['social', 'notification', 'like', 'heart'],
           section: 'SOCIAL NOTIFICATIONS',
           hasSwitch: true,
         ),
         _SearchableSettingItem(
           icon: Icons.chat_bubble_outline,
-          title: 'Comments & mentions',
-          subtitle: 'Push notifications for comments and @mentions',
+          title: context.l10n.settingsSocialCommentsTitle,
+          subtitle: context.l10n.settingsSearchCommentsSubtitle,
           keywords: ['social', 'notification', 'comment', 'mention', 'reply'],
           section: 'SOCIAL NOTIFICATIONS',
           hasSwitch: true,
         ),
         _SearchableSettingItem(
           icon: Icons.devices,
-          title: 'Linked Devices',
-          subtitle: 'Meshtastic devices connected to your profile',
+          title: context.l10n.settingsSearchLinkedDevicesTitle,
+          subtitle: context.l10n.settingsSearchLinkedDevicesSubtitle,
           keywords: ['device', 'node', 'link', 'mesh', 'meshtastic', 'connect'],
           section: 'PROFILE',
           onTap: () => Navigator.push(
@@ -335,16 +336,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         // Connection
         _SearchableSettingItem(
           icon: Icons.bluetooth,
-          title: 'Auto-reconnect',
-          subtitle: 'Automatically reconnect to last device',
+          title: context.l10n.settingsTileAutoReconnectTitle,
+          subtitle: context.l10n.settingsTileAutoReconnectSubtitle,
           keywords: ['bluetooth', 'connect', 'device', 'auto'],
           section: 'CONNECTION',
           hasSwitch: true,
         ),
         _SearchableSettingItem(
           icon: Icons.bluetooth_connected,
-          title: 'Background connection',
-          subtitle: 'Background BLE, notifications, and power settings',
+          title: context.l10n.settingsTileBackgroundConnectionTitle,
+          subtitle: context.l10n.settingsTileBackgroundConnectionSubtitle,
           keywords: [
             'background',
             'ble',
@@ -363,8 +364,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.my_location,
-          title: 'Provide phone location',
-          subtitle: 'Send phone GPS to mesh for devices without GPS hardware',
+          title: context.l10n.settingsTileProvideLocationTitle,
+          subtitle: context.l10n.settingsTileProvideLocationSubtitle,
           keywords: [
             'gps',
             'location',
@@ -389,8 +390,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         if (AppFeatureFlags.isTakGatewayEnabled)
           _SearchableSettingItem(
             icon: Icons.military_tech,
-            title: 'TAK Gateway',
-            subtitle: 'Gateway URL, position publishing, callsign',
+            title: context.l10n.settingsSearchTakGatewayTitle,
+            subtitle: context.l10n.settingsSearchTakGatewaySubtitle,
             keywords: [
               'tak',
               'gateway',
@@ -410,16 +411,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         // Haptic Feedback
         _SearchableSettingItem(
           icon: Icons.vibration,
-          title: 'Haptic feedback',
-          subtitle: 'Vibration feedback for interactions',
+          title: context.l10n.settingsTileHapticFeedbackTitle,
+          subtitle: context.l10n.settingsTileHapticFeedbackSubtitle,
           keywords: ['vibration', 'haptic', 'touch', 'feedback'],
           section: 'HAPTIC FEEDBACK',
           hasSwitch: true,
         ),
         _SearchableSettingItem(
           icon: Icons.tune,
-          title: 'Haptic Intensity',
-          subtitle: 'Light, medium, or heavy feedback',
+          title: context.l10n.settingsTileIntensityTitle,
+          subtitle: context.l10n.settingsSearchHapticIntensitySubtitle,
           keywords: ['vibration', 'strength', 'intensity'],
           section: 'HAPTIC FEEDBACK',
           onTap: () =>
@@ -429,8 +430,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         // Appearance & Accessibility
         _SearchableSettingItem(
           icon: Icons.accessibility_new_rounded,
-          title: 'Appearance & Accessibility',
-          subtitle: 'Font, text size, density, contrast, motion',
+          title: context.l10n.settingsTileAppearanceTitle,
+          subtitle: context.l10n.settingsTileAppearanceSubtitle,
           keywords: [
             'accessibility',
             'font',
@@ -456,8 +457,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         // What's New
         _SearchableSettingItem(
           icon: Icons.auto_awesome_outlined,
-          title: "What's New",
-          subtitle: 'Browse recent features and updates',
+          title: context.l10n.settingsTileWhatsNewTitle,
+          subtitle: context.l10n.settingsTileWhatsNewSubtitle,
           keywords: [
             'new',
             'update',
@@ -473,16 +474,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         // Animations
         _SearchableSettingItem(
           icon: Icons.animation,
-          title: 'List animations',
-          subtitle: 'Slide and bounce effects on lists',
+          title: context.l10n.settingsTileListAnimationsTitle,
+          subtitle: context.l10n.settingsTileListAnimationsSubtitle,
           keywords: ['animation', 'motion', 'effect', 'slide', 'bounce'],
           section: 'ANIMATIONS',
           hasSwitch: true,
         ),
         _SearchableSettingItem(
           icon: Icons.view_in_ar,
-          title: '3D effects',
-          subtitle: 'Perspective transforms and depth effects',
+          title: context.l10n.settingsTile3dEffectsTitle,
+          subtitle: context.l10n.settingsTile3dEffectsSubtitle,
           keywords: ['3d', 'depth', 'perspective', 'transform'],
           section: 'ANIMATIONS',
           hasSwitch: true,
@@ -491,48 +492,48 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         // Notifications
         _SearchableSettingItem(
           icon: Icons.notifications_outlined,
-          title: 'Push notifications',
-          subtitle: 'Master toggle for all notifications',
+          title: context.l10n.settingsTilePushNotificationsTitle,
+          subtitle: context.l10n.settingsTilePushNotificationsSubtitle,
           keywords: ['notification', 'alert', 'push', 'notify'],
           section: 'NOTIFICATIONS',
           hasSwitch: true,
         ),
         _SearchableSettingItem(
           icon: Icons.person_add_outlined,
-          title: 'New nodes notifications',
-          subtitle: 'Notify when new nodes join the mesh',
+          title: context.l10n.settingsSearchNewNodesNotificationsTitle,
+          subtitle: context.l10n.settingsSearchNewNodesNotificationsSubtitle,
           keywords: ['notification', 'node', 'join', 'new'],
           section: 'NOTIFICATIONS',
           hasSwitch: true,
         ),
         _SearchableSettingItem(
           icon: Icons.chat_bubble_outline,
-          title: 'Direct message notifications',
-          subtitle: 'Notify for private messages',
+          title: context.l10n.settingsSearchDmNotificationsTitle,
+          subtitle: context.l10n.settingsSearchDmNotificationsSubtitle,
           keywords: ['notification', 'dm', 'direct', 'message', 'private'],
           section: 'NOTIFICATIONS',
           hasSwitch: true,
         ),
         _SearchableSettingItem(
           icon: Icons.forum_outlined,
-          title: 'Channel message notifications',
-          subtitle: 'Notify for channel broadcasts',
+          title: context.l10n.settingsSearchChannelNotificationsTitle,
+          subtitle: context.l10n.settingsSearchChannelNotificationsSubtitle,
           keywords: ['notification', 'channel', 'broadcast', 'group'],
           section: 'NOTIFICATIONS',
           hasSwitch: true,
         ),
         _SearchableSettingItem(
           icon: Icons.volume_up_outlined,
-          title: 'Notification sound',
-          subtitle: 'Play sound for notifications',
+          title: context.l10n.settingsSearchNotificationSoundTitle,
+          subtitle: context.l10n.settingsSearchNotificationSoundSubtitle,
           keywords: ['sound', 'audio', 'alert', 'ring'],
           section: 'NOTIFICATIONS',
           hasSwitch: true,
         ),
         _SearchableSettingItem(
           icon: Icons.vibration,
-          title: 'Notification vibration',
-          subtitle: 'Vibrate for notifications',
+          title: context.l10n.settingsSearchNotificationVibrationTitle,
+          subtitle: context.l10n.settingsSearchNotificationVibrationSubtitle,
           keywords: ['vibrate', 'haptic', 'buzz'],
           section: 'NOTIFICATIONS',
           hasSwitch: true,
@@ -541,8 +542,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         // Messaging
         _SearchableSettingItem(
           icon: Icons.bolt,
-          title: 'Quick responses',
-          subtitle: 'Manage canned responses for fast messaging',
+          title: context.l10n.settingsTileQuickResponsesTitle,
+          subtitle: context.l10n.settingsTileQuickResponsesSubtitle,
           keywords: ['quick', 'response', 'reply', 'fast', 'canned'],
           section: 'MESSAGING',
           onTap: () => Navigator.push(
@@ -552,8 +553,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.message_outlined,
-          title: 'Canned Messages',
-          subtitle: 'Pre-configured device messages',
+          title: context.l10n.settingsSearchCannedMessagesTitle,
+          subtitle: context.l10n.settingsSearchCannedMessagesSubtitle,
           keywords: ['canned', 'preset', 'template', 'message'],
           section: 'MESSAGING',
           onTap: () => Navigator.push(
@@ -567,8 +568,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         // File Transfer
         _SearchableSettingItem(
           icon: Icons.swap_vert,
-          title: 'File transfer',
-          subtitle: 'Send and receive small files over mesh',
+          title: context.l10n.settingsSearchFileTransferTitle,
+          subtitle: context.l10n.settingsSearchFileTransferSubtitle,
           keywords: ['file', 'transfer', 'send', 'receive', 'share'],
           section: 'FILE TRANSFER',
           hasSwitch: true,
@@ -583,8 +584,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.auto_awesome,
-          title: 'Auto-accept transfers',
-          subtitle: 'Automatically accept incoming file offers',
+          title: context.l10n.settingsSearchAutoAcceptTransfersTitle,
+          subtitle: context.l10n.settingsSearchAutoAcceptTransfersSubtitle,
           keywords: [
             'auto',
             'accept',
@@ -608,16 +609,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         // Data & Storage
         _SearchableSettingItem(
           icon: Icons.history,
-          title: 'Message history limit',
-          subtitle: 'Maximum messages to keep',
+          title: context.l10n.settingsSearchHistoryLimitTitle,
+          subtitle: context.l10n.settingsSearchHistoryLimitSubtitle,
           keywords: ['history', 'limit', 'storage', 'message', 'keep'],
           section: 'DATA & STORAGE',
           onTap: () => _showHistoryLimitDialog(context, settingsService),
         ),
         _SearchableSettingItem(
           icon: Icons.download,
-          title: 'Export Messages',
-          subtitle: 'Export messages to PDF or CSV',
+          title: context.l10n.settingsTileExportMessagesTitle,
+          subtitle: context.l10n.settingsTileExportMessagesSubtitle,
           keywords: ['export', 'message', 'pdf', 'csv', 'download'],
           section: 'DATA & STORAGE',
           onTap: () => Navigator.push(
@@ -627,8 +628,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.ios_share,
-          title: 'Export data',
-          subtitle: 'Export messages and settings',
+          title: context.l10n.settingsSearchExportDataTitle,
+          subtitle: context.l10n.settingsSearchExportDataSubtitle,
           keywords: ['export', 'backup', 'download', 'save'],
           section: 'DATA & STORAGE',
           onTap: () => Navigator.push(
@@ -638,24 +639,24 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.delete_outline,
-          title: 'Clear all messages',
-          subtitle: 'Delete all stored messages',
+          title: context.l10n.settingsSearchClearAllMessagesTitle,
+          subtitle: context.l10n.settingsSearchClearAllMessagesSubtitle,
           keywords: ['clear', 'delete', 'remove', 'message', 'clean'],
           section: 'DATA & STORAGE',
           onTap: () => _confirmClearMessages(context, ref),
         ),
         _SearchableSettingItem(
           icon: Icons.refresh,
-          title: 'Reset local data',
-          subtitle: 'Clear all local app data',
+          title: context.l10n.settingsSearchResetLocalDataTitle,
+          subtitle: context.l10n.settingsSearchResetLocalDataSubtitle,
           keywords: ['reset', 'clear', 'local', 'data', 'factory'],
           section: 'DATA & STORAGE',
           onTap: () => _confirmResetLocalData(context, ref),
         ),
         _SearchableSettingItem(
           icon: Icons.delete_forever,
-          title: 'Clear all data',
-          subtitle: 'Delete messages, settings, and keys',
+          title: context.l10n.settingsTileClearAllDataTitle,
+          subtitle: context.l10n.settingsSearchClearAllDataSubtitle,
           keywords: [
             'clear',
             'delete',
@@ -672,8 +673,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         // Remote Administration
         _SearchableSettingItem(
           icon: Icons.settings_remote,
-          title: 'Remote Administration',
-          subtitle: 'Configure remote nodes via PKI admin',
+          title: context.l10n.settingsSearchRemoteAdminTitle,
+          subtitle: context.l10n.settingsSearchRemoteAdminSubtitle,
           keywords: [
             'remote',
             'admin',
@@ -704,24 +705,24 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         // Device
         _SearchableSettingItem(
           icon: Icons.sync,
-          title: 'Force sync',
-          subtitle: 'Force configuration sync',
+          title: context.l10n.settingsSearchForceSyncTitle,
+          subtitle: context.l10n.settingsSearchForceSyncSubtitle,
           keywords: ['sync', 'force', 'refresh', 'update'],
           section: 'DEVICE',
           onTap: () => _forceSync(context, ref),
         ),
         _SearchableSettingItem(
           icon: Icons.qr_code_scanner,
-          title: 'Scan for device',
-          subtitle: 'Scan QR code for easy setup',
+          title: context.l10n.settingsSearchScanForDeviceTitle,
+          subtitle: context.l10n.settingsSearchScanForDeviceSubtitle,
           keywords: ['scan', 'qr', 'device', 'setup', 'connect'],
           section: 'DEVICE',
           onTap: () => Navigator.pushNamed(context, '/qr-scanner'),
         ),
         _SearchableSettingItem(
           icon: Icons.public,
-          title: 'Region',
-          subtitle: 'Device radio frequency region',
+          title: context.l10n.settingsSearchRegionTitle,
+          subtitle: context.l10n.settingsSearchRegionSubtitle,
           keywords: ['region', 'frequency', 'country', 'radio'],
           section: 'DEVICE',
           onTap: () => Navigator.push(
@@ -731,8 +732,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.settings,
-          title: 'Device config',
-          subtitle: 'Device name, role, and behavior',
+          title: context.l10n.settingsTileDeviceRoleTitle,
+          subtitle: context.l10n.settingsTileDeviceRoleSubtitle,
           keywords: ['device', 'config', 'name', 'role', 'settings'],
           section: 'DEVICE',
           onTap: () => Navigator.push(
@@ -742,8 +743,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.radio,
-          title: 'Radio config',
-          subtitle: 'LoRa, modem, channel settings',
+          title: context.l10n.settingsTileRadioConfigTitle,
+          subtitle: context.l10n.settingsTileRadioConfigSubtitle,
           keywords: ['radio', 'lora', 'modem', 'channel', 'frequency'],
           section: 'DEVICE',
           onTap: () => Navigator.push(
@@ -753,8 +754,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.my_location,
-          title: 'Position config',
-          subtitle: 'GPS and position sharing',
+          title: context.l10n.settingsTilePositionTitle,
+          subtitle: context.l10n.settingsTilePositionSubtitle,
           keywords: ['gps', 'position', 'location', 'share'],
           section: 'DEVICE',
           onTap: () => Navigator.push(
@@ -764,8 +765,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.display_settings_outlined,
-          title: 'Display config',
-          subtitle: 'Screen brightness and timeout',
+          title: context.l10n.settingsTileDisplaySettingsTitle,
+          subtitle: context.l10n.settingsTileDisplaySettingsSubtitle,
           keywords: ['display', 'screen', 'brightness', 'oled', 'timeout'],
           section: 'DEVICE',
           onTap: () => Navigator.push(
@@ -775,8 +776,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.bluetooth_searching,
-          title: 'Bluetooth config',
-          subtitle: 'Bluetooth settings and PIN',
+          title: context.l10n.settingsTileBluetoothTitle,
+          subtitle: context.l10n.settingsTileBluetoothSubtitle,
           keywords: ['bluetooth', 'ble', 'pin', 'pairing'],
           section: 'DEVICE',
           onTap: () => Navigator.push(
@@ -786,8 +787,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.wifi,
-          title: 'Network config',
-          subtitle: 'WiFi and network settings',
+          title: context.l10n.settingsTileNetworkTitle,
+          subtitle: context.l10n.settingsTileNetworkSubtitle,
           keywords: ['wifi', 'network', 'internet', 'ip', 'dhcp'],
           section: 'DEVICE',
           onTap: () => Navigator.push(
@@ -797,8 +798,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.battery_saver,
-          title: 'Power config',
-          subtitle: 'Power saving and sleep settings',
+          title: context.l10n.settingsTilePowerManagementTitle,
+          subtitle: context.l10n.settingsTilePowerManagementSubtitle,
           keywords: ['power', 'battery', 'sleep', 'save', 'energy'],
           section: 'DEVICE',
           onTap: () => Navigator.push(
@@ -808,8 +809,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.security,
-          title: 'Security',
-          subtitle: 'Access controls, managed mode',
+          title: context.l10n.settingsTileSecurityTitle,
+          subtitle: context.l10n.settingsTileSecuritySubtitle,
           keywords: ['security', 'access', 'lock', 'admin', 'managed'],
           section: 'DEVICE',
           onTap: () => Navigator.push(
@@ -819,8 +820,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.power_settings_new,
-          title: 'Device Management',
-          subtitle: 'Reboot, shutdown, factory reset',
+          title: context.l10n.settingsTileDeviceManagementTitle,
+          subtitle: context.l10n.settingsTileDeviceManagementSubtitle,
           keywords: ['reboot', 'shutdown', 'reset', 'restart', 'factory'],
           section: 'DEVICE',
           onTap: () => Navigator.push(
@@ -830,16 +831,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.info_outline,
-          title: 'Device info',
-          subtitle: 'View connected device details',
+          title: context.l10n.settingsTileDeviceInfoTitle,
+          subtitle: context.l10n.settingsTileDeviceInfoSubtitle,
           keywords: ['info', 'details', 'hardware', 'version'],
           section: 'DEVICE',
           onTap: () => _showDeviceInfo(context, ref),
         ),
         _SearchableSettingItem(
           icon: Icons.qr_code_scanner,
-          title: 'Import channel via QR',
-          subtitle: 'Scan a Meshtastic channel QR code',
+          title: context.l10n.settingsTileScanQrCodeTitle,
+          subtitle: context.l10n.settingsTileScanQrCodeSubtitle,
           keywords: ['qr', 'channel', 'import', 'scan'],
           section: 'DEVICE',
           onTap: () => Navigator.pushNamed(context, '/qr-scanner'),
@@ -848,8 +849,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         // Modules
         _SearchableSettingItem(
           icon: Icons.cloud,
-          title: 'MQTT',
-          subtitle: 'Configure mesh-to-internet bridge',
+          title: context.l10n.settingsTileMqttTitle,
+          subtitle: context.l10n.settingsTileMqttSubtitle,
           keywords: ['mqtt', 'internet', 'bridge', 'server', 'broker'],
           section: 'MODULES',
           onTap: () => Navigator.push(
@@ -859,8 +860,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.radar,
-          title: 'Range Test',
-          subtitle: 'Test signal range with other nodes',
+          title: context.l10n.settingsTileRangeTestTitle,
+          subtitle: context.l10n.settingsTileRangeTestSubtitle,
           keywords: ['range', 'test', 'signal', 'distance'],
           section: 'MODULES',
           onTap: () => Navigator.push(
@@ -870,8 +871,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.storage,
-          title: 'Store & Forward',
-          subtitle: 'Store and relay messages for offline nodes',
+          title: context.l10n.settingsTileStoreForwardTitle,
+          subtitle: context.l10n.settingsTileStoreForwardSubtitle,
           keywords: ['store', 'forward', 'relay', 'offline', 'cache'],
           section: 'MODULES',
           onTap: () => Navigator.push(
@@ -881,8 +882,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.sensors,
-          title: 'Detection Sensor',
-          subtitle: 'Configure GPIO-based motion/door sensors',
+          title: context.l10n.settingsTileDetectionSensorTitle,
+          subtitle: context.l10n.settingsTileDetectionSensorSubtitle,
           keywords: ['sensor', 'motion', 'door', 'gpio', 'detection'],
           section: 'MODULES',
           onTap: () => Navigator.push(
@@ -894,8 +895,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.notifications_active,
-          title: 'External Notification',
-          subtitle: 'Configure buzzers, LEDs, and vibration alerts',
+          title: context.l10n.settingsTileExternalNotificationTitle,
+          subtitle: context.l10n.settingsTileExternalNotificationSubtitle,
           keywords: ['buzzer', 'led', 'vibration', 'external', 'alert'],
           section: 'MODULES',
           onTap: () => Navigator.push(
@@ -907,8 +908,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.lightbulb_outline,
-          title: 'Ambient Lighting',
-          subtitle: 'Configure LED and RGB settings',
+          title: context.l10n.settingsTileAmbientLightingTitle,
+          subtitle: context.l10n.settingsTileAmbientLightingSubtitle,
           keywords: ['led', 'rgb', 'light', 'ambient', 'neopixel'],
           section: 'MODULES',
           onTap: () => Navigator.push(
@@ -920,8 +921,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.people_outline,
-          title: 'PAX Counter',
-          subtitle: 'WiFi/BLE device detection settings',
+          title: context.l10n.settingsTilePaxCounterTitle,
+          subtitle: context.l10n.settingsTilePaxCounterSubtitle,
           keywords: ['pax', 'counter', 'wifi', 'ble', 'detection', 'people'],
           section: 'MODULES',
           onTap: () => Navigator.push(
@@ -931,8 +932,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.analytics_outlined,
-          title: 'Telemetry Intervals',
-          subtitle: 'Configure telemetry update frequency',
+          title: context.l10n.settingsTileTelemetryIntervalsTitle,
+          subtitle: context.l10n.settingsTileTelemetryIntervalsSubtitle,
           keywords: ['telemetry', 'interval', 'frequency', 'update'],
           section: 'MODULES',
           onTap: () => Navigator.push(
@@ -942,8 +943,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.usb_rounded,
-          title: 'Serial',
-          subtitle: 'Serial port configuration',
+          title: context.l10n.settingsTileSerialTitle,
+          subtitle: context.l10n.settingsTileSerialSubtitle,
           keywords: ['serial', 'usb', 'port', 'uart'],
           section: 'MODULES',
           onTap: () => Navigator.push(
@@ -953,8 +954,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.traffic,
-          title: 'Traffic Management',
-          subtitle: 'Mesh traffic optimization and filtering',
+          title: context.l10n.settingsTileTrafficManagementTitle,
+          subtitle: context.l10n.settingsTileTrafficManagementSubtitle,
           keywords: ['traffic', 'management', 'rate', 'limit', 'dedup', 'hop'],
           section: 'MODULES',
           onTap: () => Navigator.push(
@@ -968,8 +969,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         // Telemetry Logs
         _SearchableSettingItem(
           icon: Icons.battery_charging_full,
-          title: 'Device Metrics',
-          subtitle: 'Battery, voltage, utilization history',
+          title: context.l10n.settingsTileDeviceMetricsTitle,
+          subtitle: context.l10n.settingsTileDeviceMetricsSubtitle,
           keywords: ['battery', 'voltage', 'metrics', 'device', 'history'],
           section: 'TELEMETRY LOGS',
           onTap: () => Navigator.push(
@@ -979,8 +980,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.thermostat,
-          title: 'Environment Metrics',
-          subtitle: 'Temperature, humidity, pressure logs',
+          title: context.l10n.settingsTileEnvironmentMetricsTitle,
+          subtitle: context.l10n.settingsTileEnvironmentMetricsSubtitle,
           keywords: [
             'temperature',
             'humidity',
@@ -998,8 +999,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.air,
-          title: 'Air Quality',
-          subtitle: 'PM2.5, PM10, CO2 readings',
+          title: context.l10n.settingsTileAirQualityTitle,
+          subtitle: context.l10n.settingsTileAirQualitySubtitle,
           keywords: ['air', 'quality', 'pm25', 'pm10', 'co2', 'pollution'],
           section: 'TELEMETRY LOGS',
           onTap: () => Navigator.push(
@@ -1009,8 +1010,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.location_on_outlined,
-          title: 'Position History',
-          subtitle: 'GPS position logs',
+          title: context.l10n.settingsTilePositionHistoryTitle,
+          subtitle: context.l10n.settingsTilePositionHistorySubtitle,
           keywords: ['position', 'gps', 'location', 'history', 'track'],
           section: 'TELEMETRY LOGS',
           onTap: () => Navigator.push(
@@ -1020,8 +1021,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.timeline,
-          title: 'Traceroute History',
-          subtitle: 'Network path analysis logs',
+          title: context.l10n.settingsTileTracerouteHistoryTitle,
+          subtitle: context.l10n.settingsTileTracerouteHistorySubtitle,
           keywords: ['traceroute', 'path', 'network', 'hop', 'route'],
           section: 'TELEMETRY LOGS',
           onTap: () => Navigator.push(
@@ -1031,8 +1032,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.people_alt_outlined,
-          title: 'PAX Counter Logs',
-          subtitle: 'Device detection history',
+          title: context.l10n.settingsTilePaxCounterLogsTitle,
+          subtitle: context.l10n.settingsTilePaxCounterLogsSubtitle,
           keywords: ['pax', 'counter', 'log', 'detection', 'history'],
           section: 'TELEMETRY LOGS',
           onTap: () => Navigator.push(
@@ -1042,8 +1043,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.sensors,
-          title: 'Detection Sensor Logs',
-          subtitle: 'Sensor event history',
+          title: context.l10n.settingsTileDetectionSensorLogsTitle,
+          subtitle: context.l10n.settingsTileDetectionSensorLogsSubtitle,
           keywords: ['sensor', 'detection', 'log', 'event', 'history'],
           section: 'TELEMETRY LOGS',
           onTap: () => Navigator.push(
@@ -1053,8 +1054,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.route,
-          title: 'Routes',
-          subtitle: 'Record and manage GPS routes',
+          title: context.l10n.settingsTileRoutesTitle,
+          subtitle: context.l10n.settingsTileRoutesSubtitle,
           keywords: ['route', 'gps', 'track', 'record', 'path'],
           section: 'TELEMETRY LOGS',
           onTap: () => Navigator.push(
@@ -1066,8 +1067,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         // Tools
         _SearchableSettingItem(
           icon: Icons.gps_fixed,
-          title: 'GPS Status',
-          subtitle: 'View detailed GPS information',
+          title: context.l10n.settingsTileGpsStatusTitle,
+          subtitle: context.l10n.settingsTileGpsStatusSubtitle,
           keywords: ['gps', 'status', 'satellite', 'location', 'fix'],
           section: 'TOOLS',
           onTap: () => Navigator.push(
@@ -1077,8 +1078,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.system_update,
-          title: 'Firmware Update',
-          subtitle: 'Check for device firmware updates',
+          title: context.l10n.settingsTileFirmwareUpdateTitle,
+          subtitle: context.l10n.settingsTileFirmwareUpdateSubtitle,
           keywords: ['firmware', 'update', 'ota', 'upgrade', 'version'],
           section: 'TOOLS',
           onTap: () => Navigator.push(
@@ -1088,8 +1089,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.ios_share,
-          title: 'Export Data',
-          subtitle: 'Export messages, telemetry, routes',
+          title: context.l10n.settingsTileExportDataTitle,
+          subtitle: context.l10n.settingsTileExportDataSubtitle,
           keywords: ['export', 'data', 'backup', 'messages', 'telemetry'],
           section: 'TOOLS',
           onTap: () => Navigator.push(
@@ -1099,8 +1100,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.article_outlined,
-          title: 'App Log',
-          subtitle: 'View application debug logs',
+          title: context.l10n.settingsTileAppLogTitle,
+          subtitle: context.l10n.settingsTileAppLogSubtitle,
           keywords: ['log', 'debug', 'app', 'error', 'console'],
           section: 'TOOLS',
           onTap: () => Navigator.push(
@@ -1112,8 +1113,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         if (ref.watch(glyphServiceProvider).deviceModel.contains('Phone (3)'))
           _SearchableSettingItem(
             icon: Icons.lightbulb,
-            title: 'Glyph Matrix Test',
-            subtitle: 'Nothing Phone 3 LED patterns',
+            title: context.l10n.settingsTileGlyphMatrixTitle,
+            subtitle: context.l10n.settingsTileGlyphMatrixSubtitle,
             keywords: ['glyph', 'nothing', 'led', 'test', 'light', 'matrix'],
             section: 'TOOLS',
             onTap: () => Navigator.push(
@@ -1125,8 +1126,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         // About
         _SearchableSettingItem(
           icon: Icons.info,
-          title: 'Socialmesh',
-          subtitle: 'Meshtastic companion app',
+          title: context.l10n.settingsTileSocialmeshTitle,
+          subtitle: context.l10n.settingsTileSocialmeshSubtitle,
           keywords: ['about', 'version', 'app', 'info'],
           section: 'ABOUT',
           onTap: () {
@@ -1135,12 +1136,15 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
               data: (v) => v,
               orElse: () => 'unknown',
             );
-            showSuccessSnackBar(context, 'Socialmesh v$version');
+            showSuccessSnackBar(
+              context,
+              context.l10n.settingsSocialmeshVersionSnackbar(version),
+            );
           },
         ),
         _SearchableSettingItem(
           icon: Icons.phone_android,
-          title: 'Device Info',
+          title: context.l10n.settingsTileDeviceInfoTitle,
           subtitle: ref.watch(glyphServiceProvider).deviceModel,
           keywords: ['device', 'phone', 'model', 'hardware', 'nothing'],
           section: 'ABOUT',
@@ -1148,8 +1152,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.help,
-          title: 'Help Center',
-          subtitle: 'Interactive guides with Ico, your mesh guide',
+          title: context.l10n.settingsTileHelpCenterTitle,
+          subtitle: context.l10n.settingsTileHelpCenterSubtitle,
           keywords: ['help', 'guide', 'tutorial', 'ico', 'learn', 'tour'],
           section: 'ABOUT',
           onTap: () => Navigator.push(
@@ -1159,32 +1163,32 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         ),
         _SearchableSettingItem(
           icon: Icons.help_outline,
-          title: 'Help & Support',
-          subtitle: 'FAQ, troubleshooting, and contact info',
+          title: context.l10n.settingsTileHelpSupportTitle,
+          subtitle: context.l10n.settingsTileHelpSupportSubtitle,
           keywords: ['help', 'support', 'faq', 'contact', 'troubleshoot'],
           section: 'ABOUT',
           onTap: () => LegalDocumentSheet.showSupport(context),
         ),
         _SearchableSettingItem(
           icon: Icons.description_outlined,
-          title: 'Terms of Service',
-          subtitle: 'Legal terms and conditions',
+          title: context.l10n.settingsTileTermsOfServiceTitle,
+          subtitle: context.l10n.settingsTileTermsOfServiceSubtitle,
           keywords: ['terms', 'service', 'legal', 'tos'],
           section: 'ABOUT',
           onTap: () => LegalDocumentSheet.showTerms(context),
         ),
         _SearchableSettingItem(
           icon: Icons.privacy_tip_outlined,
-          title: 'Privacy Policy',
-          subtitle: 'How we handle your data',
+          title: context.l10n.settingsTilePrivacyPolicyTitle,
+          subtitle: context.l10n.settingsTilePrivacyPolicySubtitle,
           keywords: ['privacy', 'policy', 'data', 'gdpr'],
           section: 'ABOUT',
           onTap: () => LegalDocumentSheet.showPrivacy(context),
         ),
         _SearchableSettingItem(
           icon: Icons.source_outlined,
-          title: 'Open Source Licenses',
-          subtitle: 'Third-party libraries and attributions',
+          title: context.l10n.settingsTileOpenSourceTitle,
+          subtitle: context.l10n.settingsTileOpenSourceSubtitle,
           keywords: ['license', 'open', 'source', 'library', 'attribution'],
           section: 'ABOUT',
           onTap: () => Navigator.push(
@@ -1244,7 +1248,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                 ),
                 SizedBox(height: AppTheme.spacing16),
                 Text(
-                  'No settings found',
+                  context.l10n.settingsNoSettingsFound,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -1253,7 +1257,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                 ),
                 SizedBox(height: AppTheme.spacing8),
                 Text(
-                  'Try a different search term',
+                  context.l10n.settingsTryDifferentSearch,
                   style: Theme.of(
                     context,
                   ).textTheme.bodyMedium?.copyWith(color: context.textTertiary),
@@ -1352,7 +1356,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const _SectionHeader(title: 'PREMIUM'),
+        _SectionHeader(title: context.l10n.settingsSectionPremium),
         // Main Premium card with accent highlight
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
@@ -1404,7 +1408,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Unlock Features',
+                            context.l10n.settingsPremiumUnlockFeaturesTitle,
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
@@ -1414,8 +1418,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           const SizedBox(height: AppTheme.spacing2),
                           Text(
                             ownedCount == totalCount
-                                ? 'All features unlocked!'
-                                : '$ownedCount of $totalCount unlocked',
+                                ? context.l10n.settingsPremiumAllUnlocked
+                                : context.l10n.settingsPremiumPartiallyUnlocked(
+                                    ownedCount,
+                                    totalCount,
+                                  ),
                             style: TextStyle(
                               fontSize: 13,
                               color: context.textSecondary,
@@ -1438,7 +1445,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           iconColor: AccentColors.purple,
           title:
               storeProducts[RevenueCatConfig.themePackProductId]?.title ??
-              'Theme Pack',
+              context.l10n.settingsSearchThemePackTitle,
           feature: PremiumFeature.premiumThemes,
           onTap: () {
             final hasFeature = purchaseState.hasFeature(
@@ -1465,7 +1472,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           iconColor: AccentColors.pink,
           title:
               storeProducts[RevenueCatConfig.ringtonePackProductId]?.title ??
-              'Ringtone Pack',
+              context.l10n.settingsSearchRingtonePackTitle,
           feature: PremiumFeature.customRingtones,
           onTap: () {
             final hasFeature = purchaseState.hasFeature(
@@ -1492,7 +1499,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           iconColor: AccentColors.coral,
           title:
               storeProducts[RevenueCatConfig.widgetPackProductId]?.title ??
-              'Widget Pack',
+              context.l10n.settingsSearchWidgetPackTitle,
           feature: PremiumFeature.homeWidgets,
           onTap: () {
             final hasFeature = purchaseState.hasFeature(
@@ -1519,7 +1526,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           iconColor: AppTheme.warningYellow,
           title:
               storeProducts[RevenueCatConfig.automationsPackProductId]?.title ??
-              'Automations Pack',
+              context.l10n.settingsSearchAutomationsPackTitle,
           feature: PremiumFeature.automations,
           onTap: () {
             final hasFeature = purchaseState.hasFeature(
@@ -1546,7 +1553,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           iconColor: AccentColors.blue,
           title:
               storeProducts[RevenueCatConfig.iftttPackProductId]?.title ??
-              'IFTTT Pack',
+              context.l10n.settingsSearchIftttPackTitle,
           feature: PremiumFeature.iftttIntegration,
           onTap: () {
             final hasFeature = purchaseState.hasFeature(
@@ -1598,7 +1605,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const _SectionHeader(title: 'REMOTE ADMINISTRATION'),
+        _SectionHeader(title: context.l10n.settingsSectionRemoteAdmin),
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
           decoration: BoxDecoration(
@@ -1639,8 +1646,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                 ),
                 title: Text(
                   remoteState.isRemote
-                      ? 'Configuring Remote Node'
-                      : 'Configure Device',
+                      ? context.l10n.settingsRemoteAdminConfiguringTitle
+                      : context.l10n.settingsRemoteAdminConfigureTitle,
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     color: remoteState.isRemote
                         ? accentColor
@@ -1657,7 +1664,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                         remoteState.isRemote
                             ? remoteState.targetNodeName ??
                                   '0x${remoteState.targetNodeNum!.toRadixString(16)}'
-                            : connectedDevice?.name ?? 'Connected Device',
+                            : connectedDevice?.name ??
+                                  context
+                                      .l10n
+                                      .settingsRemoteAdminConnectedDevice,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: remoteState.isRemote
                               ? accentColor.withValues(alpha: 0.8)
@@ -1680,7 +1690,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      '${adminableNodes.length} nodes',
+                      context.l10n.settingsRemoteAdminNodeCount(
+                        adminableNodes.length,
+                      ),
                       style: Theme.of(context).textTheme.labelSmall?.copyWith(
                         color: context.textTertiary,
                       ),
@@ -1722,7 +1734,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                         const SizedBox(width: AppTheme.spacing8),
                         Expanded(
                           child: Text(
-                            'Remote admin requires the target node to have your public key in its Admin Keys list.',
+                            context.l10n.settingsRemoteAdminWarning,
                             style: Theme.of(context).textTheme.labelSmall
                                 ?.copyWith(color: AccentColors.orange),
                           ),
@@ -1754,11 +1766,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         stepKeys: const {},
         child: GlassScaffold(
           resizeToAvoidBottomInset: false,
-          title: 'Settings',
+          title: context.l10n.settingsTitle,
           actions: [
             IconButton(
               icon: const Icon(Icons.help_outline),
-              tooltip: 'Help',
+              tooltip: context.l10n.settingsHelpTooltip,
               onPressed: () => ref
                   .read(helpProvider.notifier)
                   .startTour('settings_overview'),
@@ -1773,7 +1785,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                 searchQuery: _searchQuery,
                 onSearchChanged: (value) =>
                     safeSetState(() => _searchQuery = value),
-                hintText: 'Find a setting',
+                hintText: context.l10n.settingsSearchHint,
                 focusNode: _searchFocusNode,
                 textScaler: MediaQuery.textScalerOf(context),
               ),
@@ -1809,7 +1821,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           const SizedBox(height: AppTheme.spacing16),
                           Text(
-                            'Error loading settings: $error',
+                            context.l10n.settingsErrorLoading(error.toString()),
                             style: TextStyle(color: context.textSecondary),
                           ),
                           const SizedBox(height: AppTheme.spacing16),
@@ -1847,7 +1859,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                                   minHeight: 48,
                                 ),
                                 alignment: Alignment.center,
-                                child: const Text('Retry'),
+                                child: Text(context.l10n.commonRetry),
                               ),
                             ),
                           ),
@@ -1868,7 +1880,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                     data: (region) {
                       if (region ==
                           config_pbenum.Config_LoRaConfig_RegionCode.UNSET) {
-                        return 'Not configured';
+                        return context.l10n.settingsNotConfigured;
                       }
                       // Find the region info for display
                       final regionInfo = availableRegions
@@ -1879,8 +1891,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                       }
                       return region.name;
                     },
-                    loading: () => 'Loading...',
-                    error: (e, _) => 'Configure device radio frequency',
+                    loading: () => context.l10n.settingsLoadingStatus,
+                    error: (e, _) =>
+                        context.l10n.settingsRegionConfigureSubtitle,
                   );
 
                   return [
@@ -1894,7 +1907,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           const SizedBox(height: AppTheme.spacing16),
 
                           // Profile Section - right after Premium, before Connection
-                          _SectionHeader(title: 'ACCOUNT'),
+                          _SectionHeader(
+                            title: context.l10n.settingsSectionAccount,
+                          ),
                           _ProfileTile(
                             onTap: () => Navigator.push(
                               context,
@@ -1907,9 +1922,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
 
                           _SettingsTile(
                             icon: Icons.shield_outlined,
-                            title: 'Privacy',
-                            subtitle:
-                                'Analytics, crash reporting, and data controls',
+                            title: context.l10n.settingsTilePrivacyTitle,
+                            subtitle: context.l10n.settingsTilePrivacySubtitle,
                             trailing: Icon(
                               Icons.chevron_right,
                               color: context.textTertiary,
@@ -1929,12 +1943,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           const SizedBox(height: AppTheme.spacing16),
 
                           // Feedback Section
-                          const _SectionHeader(title: 'FEEDBACK'),
+                          _SectionHeader(
+                            title: context.l10n.settingsSectionFeedback,
+                          ),
                           _SettingsTile(
                             icon: Icons.bug_report_outlined,
-                            title: 'Shake to report a bug',
+                            title: context.l10n.settingsTileShakeToReportTitle,
                             subtitle:
-                                'Shake your device to open the bug report flow',
+                                context.l10n.settingsTileShakeToReportSubtitle,
                             trailing: ThemedSwitch(
                               value: settingsService.shakeToReportEnabled,
                               onChanged: (value) async {
@@ -1949,8 +1965,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           if (ref.watch(currentUserProvider) != null)
                             _SettingsTile(
                               icon: Icons.forum_outlined,
-                              title: 'My bug reports',
-                              subtitle: 'View your reports and responses',
+                              title: context.l10n.settingsTileMyBugReportsTitle,
+                              subtitle:
+                                  context.l10n.settingsTileMyBugReportsSubtitle,
                               trailing: Consumer(
                                 builder: (context, ref, _) {
                                   final countAsync = ref.watch(
@@ -2006,9 +2023,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                               opacity: 0.5,
                               child: _SettingsTile(
                                 icon: Icons.forum_outlined,
-                                title: 'My bug reports',
-                                subtitle:
-                                    'Sign in to track your reports and receive replies',
+                                title:
+                                    context.l10n.settingsTileMyBugReportsTitle,
+                                subtitle: context
+                                    .l10n
+                                    .settingsTileMyBugReportsNotSignedIn,
                                 trailing: Icon(
                                   Icons.chevron_right,
                                   color: context.textTertiary,
@@ -2029,11 +2048,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           const SizedBox(height: AppTheme.spacing16),
 
                           // Connection Section
-                          _SectionHeader(title: 'CONNECTION'),
+                          _SectionHeader(
+                            title: context.l10n.settingsSectionConnection,
+                          ),
                           _SettingsTile(
                             icon: Icons.bluetooth,
-                            title: 'Auto-reconnect',
-                            subtitle: 'Automatically reconnect to last device',
+                            title: context.l10n.settingsTileAutoReconnectTitle,
+                            subtitle:
+                                context.l10n.settingsTileAutoReconnectSubtitle,
                             trailing: ThemedSwitch(
                               value: settingsService.autoReconnect,
                               onChanged: (value) async {
@@ -2045,9 +2067,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.bluetooth_connected,
-                            title: 'Background connection',
-                            subtitle:
-                                'Background BLE, notifications, and power settings',
+                            title: context
+                                .l10n
+                                .settingsTileBackgroundConnectionTitle,
+                            subtitle: context
+                                .l10n
+                                .settingsTileBackgroundConnectionSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2058,9 +2083,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.my_location,
-                            title: 'Provide phone location',
-                            subtitle:
-                                'Send phone GPS to mesh for devices without GPS hardware',
+                            title:
+                                context.l10n.settingsTileProvideLocationTitle,
+                            subtitle: context
+                                .l10n
+                                .settingsTileProvideLocationSubtitle,
                             trailing: ThemedSwitch(
                               value: settingsService.providePhoneLocation,
                               onChanged: (value) async {
@@ -2076,11 +2103,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           const SizedBox(height: AppTheme.spacing16),
 
                           // Haptic Feedback Section
-                          const _SectionHeader(title: 'HAPTIC FEEDBACK'),
+                          _SectionHeader(
+                            title: context.l10n.settingsSectionHapticFeedback,
+                          ),
                           _SettingsTile(
                             icon: Icons.vibration,
-                            title: 'Haptic feedback',
-                            subtitle: 'Vibration feedback for interactions',
+                            title: context.l10n.settingsTileHapticFeedbackTitle,
+                            subtitle:
+                                context.l10n.settingsTileHapticFeedbackSubtitle,
                             trailing: ThemedSwitch(
                               value: settingsService.hapticFeedbackEnabled,
                               onChanged: (value) async {
@@ -2104,7 +2134,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           if (settingsService.hapticFeedbackEnabled)
                             _SettingsTile(
                               icon: Icons.tune,
-                              title: 'Intensity',
+                              title: context.l10n.settingsTileIntensityTitle,
                               subtitle: HapticIntensity.fromValue(
                                 settingsService.hapticIntensity,
                               ).label,
@@ -2118,12 +2148,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           const SizedBox(height: AppTheme.spacing16),
 
                           // Appearance & Accessibility Section
-                          const _SectionHeader(title: 'APPEARANCE'),
+                          _SectionHeader(
+                            title: context.l10n.settingsSectionAppearance,
+                          ),
                           _SettingsTile(
                             icon: Icons.accessibility_new_rounded,
-                            title: 'Appearance & Accessibility',
+                            title: context.l10n.settingsTileAppearanceTitle,
                             subtitle:
-                                'Font, text size, density, contrast, motion',
+                                context.l10n.settingsTileAppearanceSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2136,11 +2168,13 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           const SizedBox(height: AppTheme.spacing16),
 
                           // What's New Section
-                          const _SectionHeader(title: "WHAT'S NEW"),
+                          _SectionHeader(
+                            title: context.l10n.settingsSectionWhatsNew,
+                          ),
                           _SettingsTile(
                             icon: Icons.auto_awesome_outlined,
-                            title: "What's New",
-                            subtitle: 'Browse recent features and updates',
+                            title: context.l10n.settingsTileWhatsNewTitle,
+                            subtitle: context.l10n.settingsTileWhatsNewSubtitle,
                             iconColor: AppTheme.warningYellow,
                             onTap: () => WhatsNewSheet.showHistory(context),
                           ),
@@ -2148,11 +2182,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           const SizedBox(height: AppTheme.spacing16),
 
                           // Animations Section
-                          const _SectionHeader(title: 'ANIMATIONS'),
+                          _SectionHeader(
+                            title: context.l10n.settingsSectionAnimations,
+                          ),
                           _SettingsTile(
                             icon: Icons.animation,
-                            title: 'List animations',
-                            subtitle: 'Slide and bounce effects on lists',
+                            title: context.l10n.settingsTileListAnimationsTitle,
+                            subtitle:
+                                context.l10n.settingsTileListAnimationsSubtitle,
                             trailing: ThemedSwitch(
                               value: settingsService.animationsEnabled,
                               onChanged: (value) async {
@@ -2174,9 +2211,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.view_in_ar,
-                            title: '3D effects',
+                            title: context.l10n.settingsTile3dEffectsTitle,
                             subtitle:
-                                'Perspective transforms and depth effects',
+                                context.l10n.settingsTile3dEffectsSubtitle,
                             trailing: ThemedSwitch(
                               value: settingsService.animations3DEnabled,
                               onChanged: (value) async {
@@ -2202,11 +2239,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           const SizedBox(height: AppTheme.spacing16),
 
                           // Notifications Section
-                          _SectionHeader(title: 'NOTIFICATIONS'),
+                          _SectionHeader(
+                            title: context.l10n.settingsSectionNotifications,
+                          ),
                           _SettingsTile(
                             icon: Icons.notifications_outlined,
-                            title: 'Push notifications',
-                            subtitle: 'Master toggle for all notifications',
+                            title:
+                                context.l10n.settingsTilePushNotificationsTitle,
+                            subtitle: context
+                                .l10n
+                                .settingsTilePushNotificationsSubtitle,
                             trailing: ThemedSwitch(
                               value: settingsService.notificationsEnabled,
                               onChanged: (value) async {
@@ -2228,8 +2270,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           if (settingsService.notificationsEnabled) ...[
                             _SettingsTile(
                               icon: Icons.person_add_outlined,
-                              title: 'New nodes',
-                              subtitle: 'Notify when new nodes join the mesh',
+                              title: context.l10n.settingsTileNewNodesTitle,
+                              subtitle:
+                                  context.l10n.settingsTileNewNodesSubtitle,
                               trailing: ThemedSwitch(
                                 value:
                                     settingsService.newNodeNotificationsEnabled,
@@ -2250,8 +2293,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                             ),
                             _SettingsTile(
                               icon: Icons.chat_bubble_outline,
-                              title: 'Direct messages',
-                              subtitle: 'Notify for private messages',
+                              title:
+                                  context.l10n.settingsTileDirectMessagesTitle,
+                              subtitle: context
+                                  .l10n
+                                  .settingsTileDirectMessagesSubtitle,
                               trailing: ThemedSwitch(
                                 value: settingsService
                                     .directMessageNotificationsEnabled,
@@ -2275,8 +2321,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                             ),
                             _SettingsTile(
                               icon: Icons.forum_outlined,
-                              title: 'Channel messages',
-                              subtitle: 'Notify for channel broadcasts',
+                              title:
+                                  context.l10n.settingsTileChannelMessagesTitle,
+                              subtitle: context
+                                  .l10n
+                                  .settingsTileChannelMessagesSubtitle,
                               trailing: ThemedSwitch(
                                 value: settingsService
                                     .channelMessageNotificationsEnabled,
@@ -2300,8 +2349,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                             ),
                             _SettingsTile(
                               icon: Icons.volume_up_outlined,
-                              title: 'Sound',
-                              subtitle: 'Play sound with notifications',
+                              title: context.l10n.settingsTileSoundTitle,
+                              subtitle: context.l10n.settingsTileSoundSubtitle,
                               trailing: ThemedSwitch(
                                 value: settingsService.notificationSoundEnabled,
                                 onChanged: (value) async {
@@ -2321,8 +2370,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                             ),
                             _SettingsTile(
                               icon: Icons.vibration,
-                              title: 'Vibration',
-                              subtitle: 'Vibrate with notifications',
+                              title: context.l10n.settingsTileVibrationTitle,
+                              subtitle:
+                                  context.l10n.settingsTileVibrationSubtitle,
                               trailing: ThemedSwitch(
                                 value: settingsService
                                     .notificationVibrationEnabled,
@@ -2346,12 +2396,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           const SizedBox(height: AppTheme.spacing16),
 
                           // Messaging Section
-                          _SectionHeader(title: 'MESSAGING'),
+                          _SectionHeader(
+                            title: context.l10n.settingsSectionMessaging,
+                          ),
                           _SettingsTile(
                             icon: Icons.bolt,
-                            title: 'Quick responses',
+                            title: context.l10n.settingsTileQuickResponsesTitle,
                             subtitle:
-                                'Manage canned responses for fast messaging',
+                                context.l10n.settingsTileQuickResponsesSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2361,8 +2413,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.message,
-                            title: 'Canned Messages Module',
-                            subtitle: 'Device-side canned message settings',
+                            title: context.l10n.settingsTileCannedMessagesTitle,
+                            subtitle:
+                                context.l10n.settingsTileCannedMessagesSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2375,12 +2428,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           const SizedBox(height: AppTheme.spacing16),
 
                           // Data Section
-                          const _SectionHeader(title: 'DATA & STORAGE'),
+                          _SectionHeader(
+                            title: context.l10n.settingsSectionDataStorage,
+                          ),
                           _SettingsTile(
                             icon: Icons.history,
-                            title: 'Message history',
-                            subtitle:
-                                '${settingsService.messageHistoryLimit} messages stored',
+                            title: context.l10n.settingsTileMessageHistoryTitle,
+                            subtitle: context.l10n
+                                .settingsTileMessageHistorySubtitle(
+                                  settingsService.messageHistoryLimit,
+                                ),
                             onTap: () => _showHistoryLimitDialog(
                               context,
                               settingsService,
@@ -2389,8 +2446,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           // Message Export
                           _SettingsTile(
                             icon: Icons.download,
-                            title: 'Export Messages',
-                            subtitle: 'Export messages to PDF or CSV',
+                            title: context.l10n.settingsTileExportMessagesTitle,
+                            subtitle:
+                                context.l10n.settingsTileExportMessagesSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2400,24 +2458,30 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.delete_sweep_outlined,
-                            title: 'Clear message history',
-                            subtitle: 'Delete all stored messages',
+                            title: context
+                                .l10n
+                                .settingsTileClearMessageHistoryTitle,
+                            subtitle: context
+                                .l10n
+                                .settingsTileClearMessageHistorySubtitle,
                             onTap: () => _confirmClearMessages(context, ref),
                           ),
                           _SettingsTile(
                             icon: Icons.refresh,
                             iconColor: AccentColors.orange,
-                            title: 'Reset local data',
+                            title: context.l10n.settingsTileResetLocalDataTitle,
                             titleColor: AccentColors.orange,
-                            subtitle: 'Clear messages and nodes, keep settings',
+                            subtitle:
+                                context.l10n.settingsTileResetLocalDataSubtitle,
                             onTap: () => _confirmResetLocalData(context, ref),
                           ),
                           _SettingsTile(
                             icon: Icons.delete_forever,
                             iconColor: AppTheme.errorRed,
-                            title: 'Clear all data',
+                            title: context.l10n.settingsTileClearAllDataTitle,
                             titleColor: AppTheme.errorRed,
-                            subtitle: 'Delete messages, settings, and keys',
+                            subtitle:
+                                context.l10n.settingsTileClearAllDataSubtitle,
                             onTap: () => _confirmClearData(context, ref),
                           ),
 
@@ -2427,11 +2491,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           _buildRemoteAdminSelector(context, ref),
 
                           // Device Section
-                          _SectionHeader(title: 'DEVICE'),
+                          _SectionHeader(
+                            title: context.l10n.settingsSectionDevice,
+                          ),
                           _SettingsTile(
                             icon: Icons.sync,
-                            title: 'Force Sync',
-                            subtitle: 'Re-sync all data from connected device',
+                            title: context.l10n.settingsTileForceSyncTitle,
+                            subtitle:
+                                context.l10n.settingsTileForceSyncSubtitle,
                             onTap: () => _forceSync(context, ref),
                           ),
                           _SettingsTile(
@@ -2457,7 +2524,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                                     true
                                 ? AccentColors.orange
                                 : null,
-                            title: 'Region / Frequency',
+                            title: context.l10n.settingsTileRegionTitle,
                             subtitle: regionSubtitle,
                             subtitleColor:
                                 regionAsync.whenOrNull(
@@ -2481,8 +2548,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.settings,
-                            title: 'Device Role & Settings',
-                            subtitle: 'Configure device behavior and role',
+                            title: context.l10n.settingsTileDeviceRoleTitle,
+                            subtitle:
+                                context.l10n.settingsTileDeviceRoleSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2492,8 +2560,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.radio,
-                            title: 'Radio Configuration',
-                            subtitle: 'LoRa settings, modem preset, power',
+                            title: context.l10n.settingsTileRadioConfigTitle,
+                            subtitle:
+                                context.l10n.settingsTileRadioConfigSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2503,9 +2572,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.gps_fixed,
-                            title: 'Position & GPS',
-                            subtitle:
-                                'GPS mode, broadcast intervals, fixed position',
+                            title: context.l10n.settingsTilePositionTitle,
+                            subtitle: context.l10n.settingsTilePositionSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2515,8 +2583,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.display_settings,
-                            title: 'Display Settings',
-                            subtitle: 'Screen timeout, units, display mode',
+                            title:
+                                context.l10n.settingsTileDisplaySettingsTitle,
+                            subtitle: context
+                                .l10n
+                                .settingsTileDisplaySettingsSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2526,8 +2597,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.bluetooth,
-                            title: 'Bluetooth',
-                            subtitle: 'Pairing mode, PIN settings',
+                            title: context.l10n.settingsTileBluetoothTitle,
+                            subtitle:
+                                context.l10n.settingsTileBluetoothSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2537,8 +2609,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.wifi,
-                            title: 'Network',
-                            subtitle: 'WiFi, Ethernet, NTP settings',
+                            title: context.l10n.settingsTileNetworkTitle,
+                            subtitle: context.l10n.settingsTileNetworkSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2548,8 +2620,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.battery_full,
-                            title: 'Power Management',
-                            subtitle: 'Power saving, sleep settings',
+                            title:
+                                context.l10n.settingsTilePowerManagementTitle,
+                            subtitle: context
+                                .l10n
+                                .settingsTilePowerManagementSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2559,8 +2634,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.security,
-                            title: 'Security',
-                            subtitle: 'Access controls, managed mode',
+                            title: context.l10n.settingsTileSecurityTitle,
+                            subtitle: context.l10n.settingsTileSecuritySubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2570,8 +2645,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.power_settings_new,
-                            title: 'Device Management',
-                            subtitle: 'Reboot, shutdown, factory reset',
+                            title:
+                                context.l10n.settingsTileDeviceManagementTitle,
+                            subtitle: context
+                                .l10n
+                                .settingsTileDeviceManagementSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2581,14 +2659,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.info_outline,
-                            title: 'Device info',
-                            subtitle: 'View connected device details',
+                            title: context.l10n.settingsTileDeviceInfoTitle,
+                            subtitle:
+                                context.l10n.settingsTileDeviceInfoSubtitle,
                             onTap: () => _showDeviceInfo(context, ref),
                           ),
                           _SettingsTile(
                             icon: Icons.qr_code_scanner,
-                            title: 'Scan QR Code',
-                            subtitle: 'Import nodes, channels, or automations',
+                            title: context.l10n.settingsTileScanQrCodeTitle,
+                            subtitle:
+                                context.l10n.settingsTileScanQrCodeSubtitle,
                             onTap: () =>
                                 Navigator.pushNamed(context, '/qr-scanner'),
                           ),
@@ -2596,11 +2676,13 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           const SizedBox(height: AppTheme.spacing16),
 
                           // Modules Section
-                          _SectionHeader(title: 'MODULES'),
+                          _SectionHeader(
+                            title: context.l10n.settingsSectionModules,
+                          ),
                           _SettingsTile(
                             icon: Icons.cloud,
-                            title: 'MQTT',
-                            subtitle: 'Configure mesh-to-internet bridge',
+                            title: context.l10n.settingsTileMqttTitle,
+                            subtitle: context.l10n.settingsTileMqttSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2610,8 +2692,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.radar,
-                            title: 'Range Test',
-                            subtitle: 'Test signal range with other nodes',
+                            title: context.l10n.settingsTileRangeTestTitle,
+                            subtitle:
+                                context.l10n.settingsTileRangeTestSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2621,9 +2704,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.storage,
-                            title: 'Store & Forward',
+                            title: context.l10n.settingsTileStoreForwardTitle,
                             subtitle:
-                                'Store and relay messages for offline nodes',
+                                context.l10n.settingsTileStoreForwardSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2634,9 +2717,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.sensors,
-                            title: 'Detection Sensor',
-                            subtitle:
-                                'Configure GPIO-based motion/door sensors',
+                            title:
+                                context.l10n.settingsTileDetectionSensorTitle,
+                            subtitle: context
+                                .l10n
+                                .settingsTileDetectionSensorSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2647,9 +2732,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.notifications_active,
-                            title: 'External Notification',
-                            subtitle:
-                                'Configure buzzers, LEDs, and vibration alerts',
+                            title: context
+                                .l10n
+                                .settingsTileExternalNotificationTitle,
+                            subtitle: context
+                                .l10n
+                                .settingsTileExternalNotificationSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2660,8 +2748,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.lightbulb_outline,
-                            title: 'Ambient Lighting',
-                            subtitle: 'Configure LED and RGB settings',
+                            title:
+                                context.l10n.settingsTileAmbientLightingTitle,
+                            subtitle: context
+                                .l10n
+                                .settingsTileAmbientLightingSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2672,8 +2763,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.people_outline,
-                            title: 'PAX Counter',
-                            subtitle: 'WiFi/BLE device detection settings',
+                            title: context.l10n.settingsTilePaxCounterTitle,
+                            subtitle:
+                                context.l10n.settingsTilePaxCounterSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2683,8 +2775,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.analytics_outlined,
-                            title: 'Telemetry Intervals',
-                            subtitle: 'Configure telemetry update frequency',
+                            title: context
+                                .l10n
+                                .settingsTileTelemetryIntervalsTitle,
+                            subtitle: context
+                                .l10n
+                                .settingsTileTelemetryIntervalsSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2694,8 +2790,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.usb_rounded,
-                            title: 'Serial',
-                            subtitle: 'Serial port configuration',
+                            title: context.l10n.settingsTileSerialTitle,
+                            subtitle: context.l10n.settingsTileSerialSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2705,8 +2801,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.traffic,
-                            title: 'Traffic Management',
-                            subtitle: 'Mesh traffic optimization and filtering',
+                            title:
+                                context.l10n.settingsTileTrafficManagementTitle,
+                            subtitle: context
+                                .l10n
+                                .settingsTileTrafficManagementSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2719,11 +2818,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           const SizedBox(height: AppTheme.spacing16),
 
                           // Telemetry Section
-                          _SectionHeader(title: 'TELEMETRY LOGS'),
+                          _SectionHeader(
+                            title: context.l10n.settingsSectionTelemetryLogs,
+                          ),
                           _SettingsTile(
                             icon: Icons.battery_charging_full,
-                            title: 'Device Metrics',
-                            subtitle: 'Battery, voltage, utilization history',
+                            title: context.l10n.settingsTileDeviceMetricsTitle,
+                            subtitle:
+                                context.l10n.settingsTileDeviceMetricsSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2733,8 +2835,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.thermostat,
-                            title: 'Environment Metrics',
-                            subtitle: 'Temperature, humidity, pressure logs',
+                            title: context
+                                .l10n
+                                .settingsTileEnvironmentMetricsTitle,
+                            subtitle: context
+                                .l10n
+                                .settingsTileEnvironmentMetricsSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2745,8 +2851,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.air,
-                            title: 'Air Quality',
-                            subtitle: 'PM2.5, PM10, CO2 readings',
+                            title: context.l10n.settingsTileAirQualityTitle,
+                            subtitle:
+                                context.l10n.settingsTileAirQualitySubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2756,8 +2863,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.location_on_outlined,
-                            title: 'Position History',
-                            subtitle: 'GPS position logs',
+                            title:
+                                context.l10n.settingsTilePositionHistoryTitle,
+                            subtitle: context
+                                .l10n
+                                .settingsTilePositionHistorySubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2767,8 +2877,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.timeline,
-                            title: 'Traceroute History',
-                            subtitle: 'Network path analysis logs',
+                            title:
+                                context.l10n.settingsTileTracerouteHistoryTitle,
+                            subtitle: context
+                                .l10n
+                                .settingsTileTracerouteHistorySubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2778,8 +2891,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.people_alt_outlined,
-                            title: 'PAX Counter Logs',
-                            subtitle: 'Device detection history',
+                            title: context.l10n.settingsTilePaxCounterLogsTitle,
+                            subtitle:
+                                context.l10n.settingsTilePaxCounterLogsSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2789,8 +2903,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.sensors,
-                            title: 'Detection Sensor Logs',
-                            subtitle: 'Sensor event history',
+                            title: context
+                                .l10n
+                                .settingsTileDetectionSensorLogsTitle,
+                            subtitle: context
+                                .l10n
+                                .settingsTileDetectionSensorLogsSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2801,8 +2919,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.route,
-                            title: 'Routes',
-                            subtitle: 'Record and manage GPS routes',
+                            title: context.l10n.settingsTileRoutesTitle,
+                            subtitle: context.l10n.settingsTileRoutesSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2814,11 +2932,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           const SizedBox(height: AppTheme.spacing16),
 
                           // Tools Section
-                          _SectionHeader(title: 'TOOLS'),
+                          _SectionHeader(
+                            title: context.l10n.settingsSectionTools,
+                          ),
                           _SettingsTile(
                             icon: Icons.gps_fixed,
-                            title: 'GPS Status',
-                            subtitle: 'View detailed GPS information',
+                            title: context.l10n.settingsTileGpsStatusTitle,
+                            subtitle:
+                                context.l10n.settingsTileGpsStatusSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2828,8 +2949,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.system_update,
-                            title: 'Firmware Update',
-                            subtitle: 'Check for device firmware updates',
+                            title: context.l10n.settingsTileFirmwareUpdateTitle,
+                            subtitle:
+                                context.l10n.settingsTileFirmwareUpdateSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2839,8 +2961,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.ios_share,
-                            title: 'Export Data',
-                            subtitle: 'Export messages, telemetry, routes',
+                            title: context.l10n.settingsTileExportDataTitle,
+                            subtitle:
+                                context.l10n.settingsTileExportDataSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2850,8 +2973,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.article_outlined,
-                            title: 'App Log',
-                            subtitle: 'View application debug logs',
+                            title: context.l10n.settingsTileAppLogTitle,
+                            subtitle: context.l10n.settingsTileAppLogSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2888,26 +3011,29 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           const SizedBox(height: AppTheme.spacing16),
 
                           // About Section
-                          _SectionHeader(title: 'ABOUT'),
+                          _SectionHeader(
+                            title: context.l10n.settingsSectionAbout,
+                          ),
                           Consumer(
                             builder: (context, ref, child) {
                               final appVersion = ref.watch(appVersionProvider);
                               final versionString = appVersion.maybeWhen(
-                                data: (v) => 'Version $v',
+                                data: (v) =>
+                                    context.l10n.settingsVersionString(v),
                                 orElse: () => null,
                               );
                               return _SettingsTile(
                                 icon: Icons.info,
-                                title: 'Socialmesh',
+                                title: context.l10n.settingsTileSocialmeshTitle,
                                 subtitle: versionString,
                               );
                             },
                           ),
                           _SettingsTile(
                             icon: Icons.help,
-                            title: 'Help Center',
+                            title: context.l10n.settingsTileHelpCenterTitle,
                             subtitle:
-                                'Interactive guides with Ico, your mesh guide',
+                                context.l10n.settingsTileHelpCenterSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2917,26 +3043,28 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                           ),
                           _SettingsTile(
                             icon: Icons.help_outline,
-                            title: 'Help & Support',
-                            subtitle: 'FAQ, troubleshooting, and contact info',
+                            title: context.l10n.settingsTileHelpSupportTitle,
+                            subtitle:
+                                context.l10n.settingsTileHelpSupportSubtitle,
                             onTap: () =>
                                 LegalDocumentSheet.showSupport(context),
                           ),
                           _SettingsTile(
                             icon: Icons.description_outlined,
-                            title: 'Terms of Service',
+                            title: context.l10n.settingsTileTermsOfServiceTitle,
                             onTap: () => LegalDocumentSheet.showTerms(context),
                           ),
                           _SettingsTile(
                             icon: Icons.privacy_tip_outlined,
-                            title: 'Privacy Policy',
+                            title: context.l10n.settingsTilePrivacyPolicyTitle,
                             onTap: () =>
                                 LegalDocumentSheet.showPrivacy(context),
                           ),
                           _SettingsTile(
                             icon: Icons.source_outlined,
-                            title: 'Open Source Licenses',
-                            subtitle: 'Third-party libraries and attributions',
+                            title: context.l10n.settingsTileOpenSourceTitle,
+                            subtitle:
+                                context.l10n.settingsTileOpenSourceSubtitle,
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -2986,7 +3114,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
             Padding(
               padding: EdgeInsets.all(AppTheme.spacing16),
               child: Text(
-                'Haptic Intensity',
+                context.l10n.settingsHapticIntensityTitle,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -3043,11 +3171,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
   String _hapticIntensityDescription(HapticIntensity intensity) {
     switch (intensity) {
       case HapticIntensity.light:
-        return 'Subtle feedback for a gentle touch';
+        return context.l10n.settingsHapticSubtleDescription;
       case HapticIntensity.medium:
-        return 'Balanced feedback for most interactions';
+        return context.l10n.settingsHapticMediumDescription;
       case HapticIntensity.heavy:
-        return 'Strong feedback for clear confirmation';
+        return context.l10n.settingsHapticStrongDescription;
     }
   }
 
@@ -3059,7 +3187,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
 
     AppBottomSheet.showPicker<int>(
       context: context,
-      title: 'Message History Limit',
+      title: context.l10n.settingsHistoryLimitTitle,
       items: limits,
       selectedItem: settingsService.messageHistoryLimit,
       itemBuilder: (limit, isSelected) => ListTile(
@@ -3070,7 +3198,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           color: isSelected ? context.accentColor : context.textTertiary,
         ),
         title: Text(
-          '$limit messages',
+          context.l10n.settingsHistoryLimitOption(limit),
           style: TextStyle(
             color: context.textPrimary,
             fontFamily: AppTheme.fontFamily,
@@ -3092,16 +3220,15 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
     final messagesNotifier = ref.read(messagesProvider.notifier);
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Clear Messages',
-      message:
-          'This will delete all stored messages. This action cannot be undone.',
-      confirmLabel: 'Clear',
+      title: context.l10n.settingsClearMessagesTitle,
+      message: context.l10n.settingsClearMessagesMessage,
+      confirmLabel: context.l10n.settingsClearMessagesLabel,
       isDestructive: true,
     );
 
     if (confirmed == true && context.mounted) {
       messagesNotifier.clearMessages();
-      showSuccessSnackBar(context, 'Messages cleared');
+      showSuccessSnackBar(context, context.l10n.settingsClearMessagesSuccess);
     }
   }
 
@@ -3115,12 +3242,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
     final channelsNotifier = ref.read(channelsProvider.notifier);
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Reset Local Data',
-      message:
-          'This will clear all messages and node data, forcing a fresh sync from your device on next connection.\n\n'
-          'Your settings, theme, and preferences will be kept.\n\n'
-          'Use this if nodes show incorrect status or messages appear wrong.',
-      confirmLabel: 'Reset',
+      title: context.l10n.settingsResetLocalDataTitle,
+      message: context.l10n.settingsResetLocalDataMessage,
+      confirmLabel: context.l10n.settingsResetLocalDataLabel,
       isDestructive: true,
     );
 
@@ -3145,7 +3269,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
       if (context.mounted) {
         showSuccessSnackBar(
           context,
-          'Local data reset. Reconnect to sync fresh data.',
+          context.l10n.settingsResetLocalDataSuccess,
         );
       }
     }
@@ -3161,17 +3285,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
     final connectedDevice = ref.read(connectedDeviceProvider);
 
     if (transport.state != DeviceConnectionState.connected) {
-      showErrorSnackBar(context, 'Not connected to a device');
+      showErrorSnackBar(context, context.l10n.settingsForceSyncNotConnected);
       return;
     }
 
     // Show confirmation dialog
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Force Sync',
-      message:
-          'This will clear all local messages, nodes, and channels, then re-sync everything from the connected device.\n\nAre you sure you want to continue?',
-      confirmLabel: 'Sync',
+      title: context.l10n.settingsForceSyncTitle,
+      message: context.l10n.settingsForceSyncMessage,
+      confirmLabel: context.l10n.settingsForceSyncLabel,
     );
 
     if (confirmed != true) return;
@@ -3186,7 +3309,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           LoadingIndicator(size: 40),
           const SizedBox(width: AppTheme.spacing20),
           Text(
-            'Syncing from device...',
+            context.l10n.settingsForceSyncingStatus,
             style: TextStyle(color: context.textPrimary),
           ),
         ],
@@ -3211,12 +3334,15 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
 
       if (context.mounted) {
         Navigator.of(context).pop(); // Dismiss loading
-        showSuccessSnackBar(context, 'Sync complete');
+        showSuccessSnackBar(context, context.l10n.settingsForceSyncSuccess);
       }
     } catch (e) {
       if (context.mounted) {
         Navigator.of(context).pop(); // Dismiss loading
-        showErrorSnackBar(context, 'Sync failed: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.settingsForceSyncFailed(e.toString()),
+        );
       }
     }
   }
@@ -3234,10 +3360,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
     final signalService = ref.read(signalServiceProvider);
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Clear All Data',
-      message:
-          'This will delete ALL app data: messages, nodes, channels, settings, keys, signals, bookmarks, automations, widgets, and saved preferences. This action cannot be undone.',
-      confirmLabel: 'Clear All',
+      title: context.l10n.settingsClearAllDataTitle,
+      message: context.l10n.settingsClearAllDataMessage,
+      confirmLabel: context.l10n.settingsClearAllDataLabel,
       isDestructive: true,
     );
 
@@ -3281,12 +3406,18 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         }
 
         if (context.mounted) {
-          showSuccessSnackBar(context, 'All data cleared successfully');
+          showSuccessSnackBar(
+            context,
+            context.l10n.settingsClearAllDataSuccess,
+          );
         }
       } catch (e) {
         AppLogging.app('Error clearing data: $e');
         if (context.mounted) {
-          showErrorSnackBar(context, 'Failed to clear some data: $e');
+          showErrorSnackBar(
+            context,
+            context.l10n.settingsClearAllDataFailed(e.toString()),
+          );
         }
       }
     }
@@ -3305,7 +3436,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Device Information',
+            context.l10n.settingsDeviceInfoTitle,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w700,
@@ -3316,38 +3447,48 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           InfoTable(
             rows: [
               InfoTableRow(
-                label: 'Device Name',
-                value: connectedDevice?.name ?? 'Not connected',
+                label: context.l10n.settingsDeviceInfoDeviceName,
+                value:
+                    connectedDevice?.name ??
+                    context.l10n.settingsDeviceInfoNotConnected,
                 icon: Icons.bluetooth,
               ),
               InfoTableRow(
-                label: 'Connection',
-                value: connectedDevice?.type.name.toUpperCase() ?? 'None',
+                label: context.l10n.settingsDeviceInfoConnection,
+                value:
+                    connectedDevice?.type.name.toUpperCase() ??
+                    context.l10n.settingsDeviceInfoNone,
                 icon: Icons.wifi,
               ),
               InfoTableRow(
-                label: 'Node Number',
-                value: myNodeNum?.toString() ?? 'Unknown',
+                label: context.l10n.settingsDeviceInfoNodeNumber,
+                value:
+                    myNodeNum?.toString() ??
+                    context.l10n.settingsDeviceInfoUnknown,
                 icon: Icons.tag,
               ),
               InfoTableRow(
-                label: 'Long Name',
-                value: myNode?.longName ?? 'Unknown',
+                label: context.l10n.settingsDeviceInfoLongName,
+                value:
+                    myNode?.longName ?? context.l10n.settingsDeviceInfoUnknown,
                 icon: Icons.badge_outlined,
               ),
               InfoTableRow(
-                label: 'Short Name',
-                value: myNode?.shortName ?? 'Unknown',
+                label: context.l10n.settingsDeviceInfoShortName,
+                value:
+                    myNode?.shortName ?? context.l10n.settingsDeviceInfoUnknown,
                 icon: Icons.short_text,
               ),
               InfoTableRow(
-                label: 'Hardware',
-                value: myNode?.hardwareModel ?? 'Unknown',
+                label: context.l10n.settingsDeviceInfoHardware,
+                value:
+                    myNode?.hardwareModel ??
+                    context.l10n.settingsDeviceInfoUnknown,
                 icon: Icons.memory_outlined,
               ),
               InfoTableRow(
-                label: 'User ID',
-                value: myNode?.userId ?? 'Unknown',
+                label: context.l10n.settingsDeviceInfoUserId,
+                value: myNode?.userId ?? context.l10n.settingsDeviceInfoUnknown,
                 icon: Icons.fingerprint,
               ),
             ],
@@ -3560,7 +3701,7 @@ class _PremiumFeatureTile extends ConsumerWidget {
                         Icon(Icons.lock, size: 12, color: context.textTertiary),
                         SizedBox(width: AppTheme.spacing4),
                         Text(
-                          priceLabel ?? 'LOCKED',
+                          priceLabel ?? context.l10n.settingsPremiumBadgeLocked,
                           style: context.captionStyle!.copyWith(
                             fontWeight: FontWeight.bold,
                             color: context.textTertiary,
@@ -3575,7 +3716,7 @@ class _PremiumFeatureTile extends ConsumerWidget {
                         ),
                         SizedBox(width: AppTheme.spacing4),
                         Text(
-                          'TRY IT',
+                          context.l10n.settingsPremiumBadgeTry,
                           style: context.captionStyle!.copyWith(
                             fontWeight: FontWeight.bold,
                             color: AppTheme.warningYellow,
@@ -3584,7 +3725,7 @@ class _PremiumFeatureTile extends ConsumerWidget {
                       ] else ...[
                         // Show OWNED badge when user has the feature
                         Text(
-                          'OWNED',
+                          context.l10n.settingsPremiumBadgeOwned,
                           style: context.captionStyle!.copyWith(
                             fontWeight: FontWeight.bold,
                             color: accentColor,
@@ -3626,8 +3767,8 @@ class _ProfileTile extends ConsumerWidget {
         if (profile == null) {
           return _SettingsTile(
             icon: Icons.person_outline,
-            title: 'Profile',
-            subtitle: 'Set up your profile',
+            title: context.l10n.settingsProfileTitle,
+            subtitle: context.l10n.settingsProfileSubtitle,
             onTap: onTap,
           );
         }
@@ -3716,7 +3857,9 @@ class _ProfileTile extends ConsumerWidget {
                               ),
                               SizedBox(width: AppTheme.spacing4),
                               Text(
-                                isSignedIn ? 'Synced' : 'Local only',
+                                isSignedIn
+                                    ? context.l10n.settingsProfileSynced
+                                    : context.l10n.settingsProfileLocalOnly,
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: context.textSecondary,
@@ -3758,14 +3901,14 @@ class _ProfileTile extends ConsumerWidget {
       },
       loading: () => _SettingsTile(
         icon: Icons.person_outline,
-        title: 'Profile',
-        subtitle: 'Loading...',
+        title: context.l10n.settingsProfileTitle,
+        subtitle: context.l10n.settingsLoadingStatus,
         onTap: onTap,
       ),
       error: (error, stackTrace) => _SettingsTile(
         icon: Icons.person_outline,
-        title: 'Profile',
-        subtitle: 'Set up your profile',
+        title: context.l10n.settingsProfileTitle,
+        subtitle: context.l10n.settingsProfileSubtitle,
         onTap: onTap,
       ),
     );
@@ -3944,7 +4087,7 @@ class MeshtasticWebViewScreen extends StatefulWidget {
 class _MeshtasticWebViewScreenState extends State<MeshtasticWebViewScreen>
     with StatefulLifecycleSafeMixin<MeshtasticWebViewScreen> {
   double _progress = 0;
-  String _title = 'Meshtastic';
+  String _title = '';
   InAppWebViewController? _webViewController;
   bool _canGoBack = false;
   bool _hasLoadError = false;
@@ -3979,7 +4122,7 @@ class _MeshtasticWebViewScreenState extends State<MeshtasticWebViewScreen>
             ),
             const SizedBox(height: AppTheme.spacing16),
             Text(
-              'Unable to load page',
+              context.l10n.settingsMeshtasticUnableToLoad,
               style: TextStyle(
                 color: context.textSecondary,
                 fontSize: 16,
@@ -3988,8 +4131,7 @@ class _MeshtasticWebViewScreenState extends State<MeshtasticWebViewScreen>
             ),
             const SizedBox(height: AppTheme.spacing8),
             Text(
-              'This content requires an internet connection. '
-              'Please check your connection and try again.',
+              context.l10n.settingsMeshtasticOfflineMessage,
               style: TextStyle(color: context.textTertiary, fontSize: 14),
               textAlign: TextAlign.center,
             ),
@@ -4007,7 +4149,7 @@ class _MeshtasticWebViewScreenState extends State<MeshtasticWebViewScreen>
             FilledButton.icon(
               onPressed: _retry,
               icon: const Icon(Icons.refresh, size: 18),
-              label: const Text('Retry'),
+              label: Text(context.l10n.commonRetry),
               style: FilledButton.styleFrom(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 24,
@@ -4033,7 +4175,7 @@ class _MeshtasticWebViewScreenState extends State<MeshtasticWebViewScreen>
       appBar: AppBar(
         backgroundColor: context.background,
         title: Text(
-          _title,
+          _title.isEmpty ? context.l10n.settingsMeshtasticWebViewTitle : _title,
           style: Theme.of(context).textTheme.titleMedium,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
@@ -4047,14 +4189,14 @@ class _MeshtasticWebViewScreenState extends State<MeshtasticWebViewScreen>
             IconButton(
               icon: const Icon(Icons.arrow_back),
               onPressed: () => _webViewController?.goBack(),
-              tooltip: 'Go back',
+              tooltip: context.l10n.settingsMeshtasticGoBack,
             ),
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: _hasLoadError
                 ? _retry
                 : () => _webViewController?.reload(),
-            tooltip: 'Refresh',
+            tooltip: context.l10n.settingsMeshtasticRefresh,
           ),
         ],
       ),
@@ -4173,12 +4315,10 @@ class _OpenSourceLicensesScreen extends ConsumerWidget {
         ),
       ),
       child: LicensePage(
-        applicationName: 'Socialmesh',
+        applicationName: context.l10n.settingsOpenSourceAppName,
         applicationVersion: versionString,
         applicationIcon: const _TappableMeshtasticLogo(width: 140),
-        applicationLegalese:
-            '© 2024 Socialmesh\n\nThis app uses open source software. '
-            'See below for the complete list of third-party licenses.',
+        applicationLegalese: context.l10n.settingsOpenSourceLegalese,
       ),
     );
   }
@@ -4261,11 +4401,13 @@ class _SocialNotificationsSectionState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: AppTheme.spacing16),
-          const _SectionHeader(title: 'SOCIAL NOTIFICATIONS'),
+          _SectionHeader(
+            title: context.l10n.settingsSectionSocialNotifications,
+          ),
           _SettingsTile(
             icon: Icons.notifications_active_outlined,
-            title: 'Loading...',
-            subtitle: 'Fetching notification preferences',
+            title: context.l10n.settingsSocialNotificationsLoading,
+            subtitle: context.l10n.settingsSocialNotificationsLoadingSubtitle,
           ),
         ],
       );
@@ -4275,11 +4417,11 @@ class _SocialNotificationsSectionState
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: AppTheme.spacing16),
-        const _SectionHeader(title: 'SOCIAL NOTIFICATIONS'),
+        _SectionHeader(title: context.l10n.settingsSectionSocialNotifications),
         _SettingsTile(
           icon: Icons.person_add_outlined,
-          title: 'New followers',
-          subtitle: 'When someone follows you or sends a request',
+          title: context.l10n.settingsSocialNewFollowersTitle,
+          subtitle: context.l10n.settingsSocialNewFollowersSubtitle,
           trailing: ThemedSwitch(
             value: _followsEnabled,
             onChanged: (value) => _updateSetting('follows', value),
@@ -4287,8 +4429,8 @@ class _SocialNotificationsSectionState
         ),
         _SettingsTile(
           icon: Icons.favorite_outline,
-          title: 'Likes',
-          subtitle: 'When someone likes your posts',
+          title: context.l10n.settingsSocialLikesTitle,
+          subtitle: context.l10n.settingsSocialLikesSubtitle,
           trailing: ThemedSwitch(
             value: _likesEnabled,
             onChanged: (value) => _updateSetting('likes', value),
@@ -4296,8 +4438,8 @@ class _SocialNotificationsSectionState
         ),
         _SettingsTile(
           icon: Icons.chat_bubble_outline,
-          title: 'Comments & mentions',
-          subtitle: 'When someone comments or @mentions you',
+          title: context.l10n.settingsSocialCommentsTitle,
+          subtitle: context.l10n.settingsSocialCommentsSubtitle,
           trailing: ThemedSwitch(
             value: _commentsEnabled,
             onChanged: (value) => _updateSetting('comments', value),

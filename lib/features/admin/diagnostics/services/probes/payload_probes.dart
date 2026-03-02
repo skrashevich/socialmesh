@@ -133,5 +133,5 @@ class GetRingtoneProbe extends DiagnosticProbe {
 
 String _truncate(String s, int maxLen) {
   if (s.length <= maxLen) return s;
-  return '${s.substring(0, maxLen)}...';
+  return '${s.substring(0, maxLen)}…';
 }

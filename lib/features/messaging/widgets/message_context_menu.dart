@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import '../../../core/l10n/l10n_extension.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, TargetPlatform;
@@ -88,7 +89,7 @@ class _MessageContextMenuState extends ConsumerState<MessageContextMenu>
           // Reply
           _buildMenuItem(
             icon: Icons.reply,
-            label: 'Reply',
+            label: context.l10n.messageContextMenuReply,
             onTap: () {
               Navigator.pop(context);
               widget.onReply?.call();
@@ -98,12 +99,15 @@ class _MessageContextMenuState extends ConsumerState<MessageContextMenu>
           // Copy
           _buildMenuItem(
             icon: Icons.copy,
-            label: 'Copy',
+            label: context.l10n.messageContextMenuCopy,
             onTap: () async {
               await Clipboard.setData(ClipboardData(text: widget.message.text));
               if (context.mounted) {
                 Navigator.pop(context);
-                showSuccessSnackBar(context, 'Message copied');
+                showSuccessSnackBar(
+                  context,
+                  context.l10n.messageContextMenuMessageCopied,
+                );
               }
             },
           ),
@@ -116,7 +120,7 @@ class _MessageContextMenuState extends ConsumerState<MessageContextMenu>
           // Delete
           _buildMenuItem(
             icon: Icons.delete_outline,
-            label: 'Delete',
+            label: context.l10n.commonDelete,
             isDestructive: true,
             onTap: () {
               Navigator.pop(context);
@@ -261,13 +265,13 @@ class _MessageContextMenuState extends ConsumerState<MessageContextMenu>
 
       haptics.trigger(HapticType.selection);
       navigator.pop();
-      showSuccessSnackBar(context, 'Tapback sent');
+      showSuccessSnackBar(context, context.l10n.messageContextMenuTapbackSent);
     } catch (e) {
       AppLogging.messages('🏷️ _sendTapback: mesh send FAILED: $e');
       if (!mounted) return;
 
       navigator.pop();
-      showErrorSnackBar(context, 'Failed to send tapback');
+      showErrorSnackBar(context, context.l10n.messageContextMenuTapbackFailed);
     }
   }
 
@@ -285,7 +289,7 @@ class _MessageContextMenuState extends ConsumerState<MessageContextMenu>
             child: Row(
               children: [
                 Text(
-                  'Message Details',
+                  context.l10n.messageContextMenuMessageDetails,
                   style: context.titleSmallStyle?.copyWith(
                     color: context.textPrimary,
                   ),
@@ -384,7 +388,7 @@ class _MessageContextMenuState extends ConsumerState<MessageContextMenu>
               child: Row(
                 children: [
                   Text(
-                    _getDeliveryStatusText(),
+                    _getDeliveryStatusText(context),
                     style: TextStyle(
                       fontSize: 14,
                       color: context.textSecondary,
@@ -399,16 +403,18 @@ class _MessageContextMenuState extends ConsumerState<MessageContextMenu>
     );
   }
 
-  String _getDeliveryStatusText() {
+  String _getDeliveryStatusText(BuildContext context) {
     switch (widget.message.status) {
       case MessageStatus.pending:
-        return 'Sending...';
+        return context.l10n.messageContextMenuStatusSending;
       case MessageStatus.sent:
-        return 'Sent';
+        return context.l10n.messageContextMenuStatusSent;
       case MessageStatus.delivered:
-        return 'Delivered ✔️';
+        return context.l10n.messageContextMenuStatusDelivered;
       case MessageStatus.failed:
-        return 'Failed: ${widget.message.errorMessage ?? "Unknown error"}';
+        return context.l10n.messageContextMenuStatusFailed(
+          widget.message.errorMessage ?? 'Unknown error',
+        );
     }
   }
 }
@@ -561,7 +567,7 @@ class _EmojiPickerSheet extends StatelessWidget {
                   backgroundColor: Colors.transparent,
                   columns: 8,
                   noRecents: Text(
-                    'No Recents',
+                    context.l10n.messageContextMenuNoRecents,
                     style: TextStyle(fontSize: 16, color: context.textTertiary),
                     textAlign: TextAlign.center,
                   ),
@@ -588,7 +594,7 @@ class _EmojiPickerSheet extends StatelessWidget {
                 searchViewConfig: SearchViewConfig(
                   backgroundColor: Colors.transparent,
                   buttonIconColor: context.textTertiary,
-                  hintText: 'Search emoji...',
+                  hintText: context.l10n.messageContextMenuSearchEmoji,
                   hintTextStyle: TextStyle(
                     color: context.textTertiary,
                     fontSize: 14,

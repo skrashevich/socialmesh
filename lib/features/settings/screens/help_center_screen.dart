@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import '../../../core/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -91,7 +92,7 @@ class _HelpCenterScreenState extends ConsumerState<HelpCenterScreen>
         data: (articles) =>
             _buildContent(context, articles, readState, helpState),
         loading: () => GlassScaffold(
-          title: 'Help Center',
+          title: context.l10n.helpCenterTitle,
           slivers: [
             const SliverFillRemaining(
               hasScrollBody: false,
@@ -100,13 +101,13 @@ class _HelpCenterScreenState extends ConsumerState<HelpCenterScreen>
           ],
         ),
         error: (_, _) => GlassScaffold(
-          title: 'Help Center',
+          title: context.l10n.helpCenterTitle,
           slivers: [
             SliverFillRemaining(
               hasScrollBody: false,
               child: Center(
                 child: Text(
-                  'Failed to load help content',
+                  context.l10n.helpCenterLoadFailed,
                   style: TextStyle(color: context.textSecondary),
                 ),
               ),
@@ -131,7 +132,7 @@ class _HelpCenterScreenState extends ConsumerState<HelpCenterScreen>
 
     return GlassScaffold(
       resizeToAvoidBottomInset: false,
-      title: 'Help Center',
+      title: context.l10n.helpCenterTitle,
       slivers: [
         // Ico mascot + progress header (pinned, collapses on scroll)
         SliverPersistentHeader(
@@ -139,7 +140,7 @@ class _HelpCenterScreenState extends ConsumerState<HelpCenterScreen>
           delegate: _ProgressHeaderDelegate(
             completedCount: readCount,
             totalCount: totalCount,
-            label: 'articles read',
+            label: context.l10n.helpCenterArticlesRead,
           ),
         ),
 
@@ -150,7 +151,7 @@ class _HelpCenterScreenState extends ConsumerState<HelpCenterScreen>
             textScaler: MediaQuery.textScalerOf(context),
             searchController: _searchController,
             searchQuery: _searchQuery,
-            hintText: 'Search articles',
+            hintText: context.l10n.helpCenterSearchHint,
             onSearchChanged: (value) {
               safeSetState(() => _searchQuery = value);
             },
@@ -161,7 +162,7 @@ class _HelpCenterScreenState extends ConsumerState<HelpCenterScreen>
             ]),
             filterChips: [
               StatusFilterChip(
-                label: 'All',
+                label: context.l10n.helpCenterFilterAll,
                 count: totalCount,
                 isSelected: _selectedCategory == null,
                 onTap: () {
@@ -247,9 +248,9 @@ class _HelpCenterScreenState extends ConsumerState<HelpCenterScreen>
               Icons.lightbulb_outline,
               Icons.school_outlined,
             ],
-            taglines: const [
-              'No articles match your search.\nTry different keywords.',
-              'Search by article title\nor description.',
+            taglines: [
+              context.l10n.helpCenterNoArticlesMatchSearch,
+              context.l10n.helpCenterSearchByTitle,
             ],
             titlePrefix: 'No ',
             titleKeyword: 'results',
@@ -275,8 +276,8 @@ class _HelpCenterScreenState extends ConsumerState<HelpCenterScreen>
               const SizedBox(height: AppTheme.spacing16),
               Text(
                 isFiltered
-                    ? 'No articles in this category'
-                    : 'No articles available',
+                    ? context.l10n.helpCenterNoArticlesInCategory
+                    : context.l10n.helpCenterNoArticlesAvailable,
                 style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w600,
@@ -287,9 +288,8 @@ class _HelpCenterScreenState extends ConsumerState<HelpCenterScreen>
               const SizedBox(height: AppTheme.spacing8),
               Text(
                 isFiltered
-                    ? 'Try selecting a different category from the '
-                          'filter chips above.'
-                    : 'Help content is being prepared. Check back soon.',
+                    ? context.l10n.helpCenterTryDifferentCategory
+                    : context.l10n.helpCenterContentBeingPrepared,
                 style: TextStyle(
                   fontSize: 13,
                   color: context.textTertiary,
@@ -398,7 +398,7 @@ class _HelpCenterScreenState extends ConsumerState<HelpCenterScreen>
                 ),
                 const SizedBox(width: AppTheme.spacing8),
                 Text(
-                  'Completed',
+                  context.l10n.helpCenterCompleted,
                   style: TextStyle(
                     color: AppTheme.successGreen,
                     fontSize: 15,
@@ -426,9 +426,12 @@ class _HelpCenterScreenState extends ConsumerState<HelpCenterScreen>
                     borderRadius: BorderRadius.circular(AppTheme.radius12),
                   ),
                 ),
-                child: const Text(
-                  'Mark as Complete',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                child: Text(
+                  context.l10n.helpCenterMarkAsComplete,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
             ),
@@ -448,38 +451,39 @@ class _HelpCenterScreenState extends ConsumerState<HelpCenterScreen>
     return switch (topicId) {
       'channels_overview' ||
       'channel_creation' ||
-      'encryption_levels' => 'Channels',
-      'message_routing' => 'Messages',
-      'nodes_overview' || 'node_roles' => 'Nodes',
-      'signals_overview' || 'signal_detail' => 'Signal Feed',
-      'signal_creation' => 'Create Signal',
-      'device_connection' => 'Scanner',
-      'region_selection' => 'Region Selection',
-      'radio_config_overview' => 'Radio Config',
-      'signal_metrics' => 'Nodes',
-      'mesh_health_overview' => 'Mesh Health',
-      'reachability_overview' => 'Reachability',
-      'traceroute_overview' => 'Trace Route Log',
-      'map_overview' => 'Map',
-      'world_mesh_overview' => 'World Mesh',
-      'globe_overview' => 'Globe',
-      'mesh_3d_overview' => 'Mesh 3D',
-      'routes_overview' => 'Routes',
-      'timeline_overview' => 'Timeline',
-      'presence_overview' => 'Presence',
-      'aether_overview' => 'Aether',
-      'tak_gateway_overview' => 'TAK Gateway',
-      'dashboard_overview' => 'Widget Dashboard',
-      'widget_builder_overview' => 'Widget Builder',
-      'marketplace_overview' => 'Widget Marketplace',
-      'device_shop_overview' => 'Device Shop',
+      'encryption_levels' => context.l10n.helpCenterScreenChannels,
+      'message_routing' => context.l10n.helpCenterScreenMessages,
+      'nodes_overview' || 'node_roles' => context.l10n.helpCenterScreenNodes,
+      'signals_overview' ||
+      'signal_detail' => context.l10n.helpCenterScreenSignalFeed,
+      'signal_creation' => context.l10n.helpCenterScreenCreateSignal,
+      'device_connection' => context.l10n.helpCenterScreenScanner,
+      'region_selection' => context.l10n.helpCenterScreenRegionSelection,
+      'radio_config_overview' => context.l10n.helpCenterScreenRadioConfig,
+      'signal_metrics' => context.l10n.helpCenterScreenNodes,
+      'mesh_health_overview' => context.l10n.helpCenterScreenMeshHealth,
+      'reachability_overview' => context.l10n.helpCenterScreenReachability,
+      'traceroute_overview' => context.l10n.helpCenterScreenTraceRouteLog,
+      'map_overview' => context.l10n.helpCenterScreenMap,
+      'world_mesh_overview' => context.l10n.helpCenterScreenWorldMesh,
+      'globe_overview' => context.l10n.helpCenterScreenGlobe,
+      'mesh_3d_overview' => context.l10n.helpCenterScreenMesh3d,
+      'routes_overview' => context.l10n.helpCenterScreenRoutes,
+      'timeline_overview' => context.l10n.helpCenterScreenTimeline,
+      'presence_overview' => context.l10n.helpCenterScreenPresence,
+      'aether_overview' => context.l10n.helpCenterScreenAether,
+      'tak_gateway_overview' => context.l10n.helpCenterScreenTakGateway,
+      'dashboard_overview' => context.l10n.helpCenterScreenWidgetDashboard,
+      'widget_builder_overview' => context.l10n.helpCenterScreenWidgetBuilder,
+      'marketplace_overview' => context.l10n.helpCenterScreenWidgetMarketplace,
+      'device_shop_overview' => context.l10n.helpCenterScreenDeviceShop,
       'nodedex_overview' ||
       'nodedex_album' ||
       'nodedex_detail' ||
-      'nodedex_constellation' => 'NodeDex',
-      'settings_overview' => 'Settings',
-      'profile_overview' => 'Profile',
-      'automations_overview' => 'Automations',
+      'nodedex_constellation' => context.l10n.helpCenterScreenNodeDex,
+      'settings_overview' => context.l10n.helpCenterScreenSettings,
+      'profile_overview' => context.l10n.helpCenterScreenProfile,
+      'automations_overview' => context.l10n.helpCenterScreenAutomations,
       _ => null,
     };
   }
@@ -493,11 +497,9 @@ class _HelpCenterScreenState extends ConsumerState<HelpCenterScreen>
 
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Reset Help Progress?',
-      message:
-          'This will mark all articles as unread and reset interactive tour '
-          'progress. You can start fresh.',
-      confirmLabel: 'Reset',
+      title: context.l10n.helpCenterResetProgressTitle,
+      message: context.l10n.helpCenterResetProgressMessage,
+      confirmLabel: context.l10n.helpCenterResetProgressLabel,
       isDestructive: true,
     );
 
@@ -594,8 +596,8 @@ class _ProgressHeaderDelegate extends SliverPersistentHeaderDelegate {
                         children: [
                           Text(
                             allDone
-                                ? 'You\'ve read everything!'
-                                : 'Learn how Meshtastic works',
+                                ? context.l10n.helpCenterReadEverything
+                                : context.l10n.helpCenterLearnHowItWorks,
                             style: TextStyle(
                               color: context.textPrimary,
                               fontSize: 15,
@@ -605,10 +607,8 @@ class _ProgressHeaderDelegate extends SliverPersistentHeaderDelegate {
                           const SizedBox(height: AppTheme.spacing4),
                           Text(
                             allDone
-                                ? 'Come back anytime to refresh your '
-                                      'knowledge.'
-                                : 'Tap an article to learn about mesh '
-                                      'networking, radio settings, and more.',
+                                ? context.l10n.helpCenterComeBackToRefresh
+                                : context.l10n.helpCenterTapToLearn,
                             style: TextStyle(
                               color: context.textSecondary,
                               fontSize: 13,
@@ -811,7 +811,9 @@ class _HelpArticleTile extends StatelessWidget {
                         icon: isRead
                             ? Icons.visibility
                             : Icons.article_outlined,
-                        label: isRead ? 'Read' : 'Unread',
+                        label: isRead
+                            ? context.l10n.helpCenterArticleRead
+                            : context.l10n.helpCenterArticleUnread,
                         color: isRead
                             ? AppTheme.successGreen
                             : article.category.color,
@@ -924,7 +926,7 @@ class _InteractiveToursSection extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Interactive Tours',
+                          context.l10n.helpCenterInteractiveTours,
                           style: TextStyle(
                             color: context.textPrimary,
                             fontSize: 15,
@@ -933,7 +935,10 @@ class _InteractiveToursSection extends StatelessWidget {
                         ),
                         const SizedBox(height: AppTheme.spacing2),
                         Text(
-                          '$completedCount / $totalCount completed',
+                          context.l10n.helpCenterToursCompletedCount(
+                            completedCount,
+                            totalCount,
+                          ),
                           style: TextStyle(
                             color: context.textTertiary,
                             fontSize: 12,
@@ -986,8 +991,7 @@ class _InteractiveToursSection extends StatelessWidget {
                   left: AppTheme.spacing2,
                 ),
                 child: Text(
-                  'Step-by-step walkthroughs for app features. These tours '
-                  'guide you through each screen with Ico.',
+                  context.l10n.helpCenterToursDescription,
                   style: TextStyle(
                     color: context.textTertiary,
                     fontSize: 12,
@@ -1116,7 +1120,7 @@ class _TopicDetailContent extends StatelessWidget {
               Icon(Icons.place_outlined, size: 14, color: context.textTertiary),
               const SizedBox(width: AppTheme.spacing4),
               Text(
-                'Find this in: $screenName',
+                context.l10n.helpCenterFindThisIn(screenName!),
                 style: TextStyle(
                   color: context.textTertiary,
                   fontSize: 12,
@@ -1290,7 +1294,7 @@ class _HelpSettingsSection extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'HELP PREFERENCES',
+            context.l10n.helpCenterHelpPreferences,
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w600,
@@ -1303,8 +1307,8 @@ class _HelpSettingsSection extends ConsumerWidget {
           // Show Help Hints toggle
           _HelpSettingRow(
             icon: Icons.lightbulb_outline,
-            title: 'Show Help Hints',
-            subtitle: 'Display pulsing help buttons on screens',
+            title: context.l10n.helpCenterShowHelpHintsTitle,
+            subtitle: context.l10n.helpCenterShowHelpHintsSubtitle,
             trailing: ThemedSwitch(
               value: !helpState.skipFutureHelp,
               onChanged: (value) {
@@ -1319,8 +1323,8 @@ class _HelpSettingsSection extends ConsumerWidget {
           // Haptic Feedback toggle
           _HelpSettingRow(
             icon: Icons.vibration,
-            title: 'Haptic Feedback',
-            subtitle: 'Vibrate during typewriter text effect',
+            title: context.l10n.helpCenterHapticFeedbackTitle,
+            subtitle: context.l10n.helpCenterHapticFeedbackSubtitle,
             trailing: ThemedSwitch(
               value: helpState.hapticFeedback,
               onChanged: (value) {
@@ -1338,7 +1342,7 @@ class _HelpSettingsSection extends ConsumerWidget {
             child: OutlinedButton.icon(
               onPressed: onResetProgress,
               icon: const Icon(Icons.refresh, size: 18),
-              label: const Text('Reset All Progress'),
+              label: Text(context.l10n.helpCenterResetAllProgress),
               style: OutlinedButton.styleFrom(
                 foregroundColor: AccentColors.cyan,
                 side: BorderSide(color: AccentColors.cyan),

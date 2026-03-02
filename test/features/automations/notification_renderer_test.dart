@@ -854,7 +854,7 @@ void main() {
         // far exceeds 250 graphemes. The renderer must TRUNCATE the
         // resolved text — preserving partial content — not drop the
         // variable entirely, which would leave only the literal suffix.
-        final body = "\${List.filled(28, '{{node.name}}').join(' ')} 123456";
+        final body = "${List.filled(28, '{{node.name}}').join(' ')} 123456";
         final spec = NotificationSpec.fromUserTemplate(
           titleTemplate: 'Alert',
           bodyTemplate: body,

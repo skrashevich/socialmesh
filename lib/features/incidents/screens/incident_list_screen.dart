@@ -213,7 +213,7 @@ class _IncidentTile extends ConsumerWidget {
                           const SizedBox(width: AppTheme.spacing2),
                           Text(
                             incident.assigneeId!.length > 8
-                                ? '${incident.assigneeId!.substring(0, 8)}...'
+                                ? '${incident.assigneeId!.substring(0, 8)}…'
                                 : incident.assigneeId!,
                             style: context.captionMutedStyle,
                           ),

@@ -113,7 +113,7 @@ final timelineEventsProvider = Provider<List<TimelineEvent>>((ref) {
     String? subtitle;
     if (message.text.isNotEmpty) {
       subtitle = message.text.length > 50
-          ? '${message.text.substring(0, 50)}...'
+          ? '${message.text.substring(0, 50)}…'
           : message.text;
     }
 

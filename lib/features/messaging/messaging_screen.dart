@@ -2,6 +2,7 @@
 
 import 'package:socialmesh/features/nodes/node_display_name_resolver.dart';
 import '../../core/logging.dart';
+import '../../core/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import 'package:flutter/services.dart';
@@ -243,7 +244,7 @@ class _MessagingScreenState extends ConsumerState<MessagingScreen>
             searchController: _searchController,
             searchQuery: _searchQuery,
             onSearchChanged: (value) => setState(() => _searchQuery = value),
-            hintText: 'Search contacts',
+            hintText: context.l10n.messagingSearchContactsHint,
             textScaler: textScaler,
             rebuildKey: Object.hashAll([
               _currentFilter,
@@ -263,13 +264,13 @@ class _MessagingScreenState extends ConsumerState<MessagingScreen>
             ],
             filterChips: [
               StatusFilterChip(
-                label: 'All',
+                label: context.l10n.messagingFilterAll,
                 count: contacts.length,
                 isSelected: _currentFilter == ContactFilter.all,
                 onTap: () => setState(() => _currentFilter = ContactFilter.all),
               ),
               StatusFilterChip(
-                label: 'Active',
+                label: context.l10n.messagingFilterActive,
                 count: activeCount,
                 isSelected: _currentFilter == ContactFilter.active,
                 color: AccentColors.green,
@@ -277,7 +278,7 @@ class _MessagingScreenState extends ConsumerState<MessagingScreen>
                     setState(() => _currentFilter = ContactFilter.active),
               ),
               StatusFilterChip(
-                label: 'Unread',
+                label: context.l10n.messagingFilterUnread,
                 count: unreadCount,
                 isSelected: _currentFilter == ContactFilter.unread,
                 icon: Icons.mark_email_unread_outlined,
@@ -286,7 +287,7 @@ class _MessagingScreenState extends ConsumerState<MessagingScreen>
                     setState(() => _currentFilter = ContactFilter.unread),
               ),
               StatusFilterChip(
-                label: 'Messaged',
+                label: context.l10n.messagingFilterMessaged,
                 count: messagedCount,
                 isSelected: _currentFilter == ContactFilter.messaged,
                 icon: Icons.chat_bubble_outline,
@@ -295,7 +296,7 @@ class _MessagingScreenState extends ConsumerState<MessagingScreen>
                     setState(() => _currentFilter = ContactFilter.messaged),
               ),
               StatusFilterChip(
-                label: 'Favorites',
+                label: context.l10n.messagingFilterFavorites,
                 count: favoritesCount,
                 isSelected: _currentFilter == ContactFilter.favorites,
                 icon: Icons.star,
@@ -330,10 +331,14 @@ class _MessagingScreenState extends ConsumerState<MessagingScreen>
                   SizedBox(height: AppTheme.spacing24),
                   Text(
                     _searchQuery.isNotEmpty
-                        ? 'No contacts match "$_searchQuery"'
+                        ? context.l10n.messagingNoContactsMatchSearch(
+                            _searchQuery,
+                          )
                         : _currentFilter != ContactFilter.all
-                        ? 'No ${_currentFilter.name} contacts'
-                        : 'No contacts yet',
+                        ? context.l10n.messagingNoFilteredContacts(
+                            _currentFilter.name,
+                          )
+                        : context.l10n.messagingNoContactsYet,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -343,7 +348,7 @@ class _MessagingScreenState extends ConsumerState<MessagingScreen>
                   if (_searchQuery.isEmpty) ...[
                     SizedBox(height: AppTheme.spacing8),
                     Text(
-                      'Discovered nodes will appear here',
+                      context.l10n.messagingContactsDiscoveredHint,
                       style: TextStyle(
                         fontSize: 14,
                         color: context.textTertiary,
@@ -354,7 +359,7 @@ class _MessagingScreenState extends ConsumerState<MessagingScreen>
                     const SizedBox(height: AppTheme.spacing12),
                     TextButton(
                       onPressed: () => setState(() => _searchQuery = ''),
-                      child: const Text('Clear search'),
+                      child: Text(context.l10n.messagingClearSearch),
                     ),
                   ],
                 ],
@@ -385,7 +390,9 @@ class _MessagingScreenState extends ConsumerState<MessagingScreen>
           leading: const HamburgerMenuButton(),
           centerTitle: true,
           titleWidget: Text(
-            'Contacts${contacts.isNotEmpty ? ' (${contacts.length})' : ''}',
+            contacts.isNotEmpty
+                ? context.l10n.messagingContactsTitleWithCount(contacts.length)
+                : context.l10n.messagingContactsTitle,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -513,10 +520,14 @@ class _MessagingScreenState extends ConsumerState<MessagingScreen>
         .toList();
 
     return [
-      if (favorites.isNotEmpty) _ContactSection('Favorites', favorites),
-      if (unread.isNotEmpty) _ContactSection('Unread', unread),
-      if (active.isNotEmpty) _ContactSection('Active', active),
-      if (inactive.isNotEmpty) _ContactSection('Inactive', inactive),
+      if (favorites.isNotEmpty)
+        _ContactSection(context.l10n.messagingSectionFavorites, favorites),
+      if (unread.isNotEmpty)
+        _ContactSection(context.l10n.messagingSectionUnread, unread),
+      if (active.isNotEmpty)
+        _ContactSection(context.l10n.messagingSectionActive, active),
+      if (inactive.isNotEmpty)
+        _ContactSection(context.l10n.messagingSectionInactive, inactive),
     ];
   }
 }
@@ -937,7 +948,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
 
       // Show snackbar that message is queued
       if (mounted) {
-        showInfoSnackBar(context, 'Message queued - will send when connected');
+        showInfoSnackBar(context, context.l10n.messagingMessageQueuedOffline);
       }
       return;
     }
@@ -1064,7 +1075,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
 
       // Show snackbar that message is queued
       if (mounted) {
-        showInfoSnackBar(context, 'Message queued - will send when connected');
+        showInfoSnackBar(context, context.l10n.messagingMessageQueuedOffline);
       }
       return;
     }
@@ -1127,7 +1138,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
   void _showPkiFixSheet(Message message) {
     final nodes = ref.read(nodesProvider);
     final targetNode = nodes[message.to];
-    final targetName = targetNode?.displayName ?? 'Unknown Node';
+    final targetName =
+        targetNode?.displayName ?? context.l10n.messagingUnknownNode;
 
     // Capture protocol before showing sheet to avoid ref access in async callback
     final protocol = ref.read(protocolServiceProvider);
@@ -1141,14 +1153,16 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
         children: [
           BottomSheetHeader(
             icon: Icons.key_off,
-            title: 'Encryption Key Issue',
-            subtitle: 'Direct message to $targetName failed',
+            title: context.l10n.messagingEncryptionKeyIssueTitle,
+            subtitle: context.l10n.messagingEncryptionKeyIssueSubtitle(
+              targetName,
+            ),
           ),
           SizedBox(height: AppTheme.spacing16),
           StatusBanner.warning(
             title:
                 message.routingError?.fixSuggestion ??
-                'The encryption keys may be out of sync. This can happen when a node has been reset or rolled out of the mesh database.',
+                context.l10n.messagingEncryptionKeyWarning,
           ),
           const SizedBox(height: AppTheme.spacing20),
           // Request User Info button
@@ -1161,12 +1175,14 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
                   await protocol.requestNodeInfo(message.to);
                   if (mounted) {
                     showGlobalInfoSnackBar(
-                      'Requested fresh info from $targetName',
+                      context.l10n.messagingRequestUserInfoSuccess(targetName),
                     );
                   }
                 } catch (e) {
                   if (mounted) {
-                    showGlobalErrorSnackBar('Failed to request info: $e');
+                    showGlobalErrorSnackBar(
+                      context.l10n.messagingRequestUserInfoFailed(e.toString()),
+                    );
                   }
                 }
               },
@@ -1180,7 +1196,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
               ),
               icon: const Icon(Icons.refresh, size: 20),
               label: Text(
-                'Request User Info',
+                context.l10n.messagingRequestUserInfo,
                 style: Theme.of(
                   context,
                 ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
@@ -1208,7 +1224,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
               ),
               icon: const Icon(Icons.send, size: 20),
               label: Text(
-                'Retry Message',
+                context.l10n.messagingRetryMessage,
                 style: Theme.of(
                   context,
                 ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
@@ -1230,7 +1246,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
               }
             },
             child: Text(
-              'Advanced: Reset Node Database',
+              context.l10n.messagingAdvancedResetNodeDatabase,
               style: TextStyle(color: context.textTertiary, fontSize: 13),
             ),
           ),
@@ -1245,10 +1261,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
 
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Delete Message',
-      message:
-          'Are you sure you want to delete this message? This only removes it locally.',
-      confirmLabel: 'Delete',
+      title: context.l10n.messagingDeleteMessageTitle,
+      message: context.l10n.messagingDeleteMessageConfirmation,
+      confirmLabel: context.l10n.commonDelete,
       isDestructive: true,
     );
 
@@ -1256,7 +1271,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
     if (!mounted) return;
 
     messagesNotifier.deleteMessage(message.id);
-    showSuccessSnackBar(context, 'Message deleted');
+    showSuccessSnackBar(context, context.l10n.messagingMessageDeleted);
   }
 
   void _showChannelSettings(BuildContext context, WidgetRef ref) {
@@ -1418,8 +1433,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
                     ),
                     Text(
                       widget.type == ConversationType.channel
-                          ? 'Channel'
-                          : 'Direct Message',
+                          ? context.l10n.messagingChannelSubtitle
+                          : context.l10n.messagingDirectMessageSubtitle,
                       style: TextStyle(
                         fontSize: 12,
                         color: context.textTertiary,
@@ -1437,13 +1452,15 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
               _isSearching ? Icons.close : Icons.search,
               color: _isSearching ? context.accentColor : context.textPrimary,
             ),
-            tooltip: _isSearching ? 'Close Search' : 'Search Messages',
+            tooltip: _isSearching
+                ? context.l10n.messagingCloseSearch
+                : context.l10n.messagingSearchMessages,
             onPressed: _toggleSearch,
           ),
           if (widget.type == ConversationType.channel)
             IconButton(
               icon: Icon(Icons.settings, color: context.textPrimary),
-              tooltip: 'Channel Settings',
+              tooltip: context.l10n.messagingChannelSettings,
               onPressed: () => _showChannelSettings(context, ref),
             ),
         ],
@@ -1469,7 +1486,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
                     focusNode: _searchFocusNode,
                     style: TextStyle(color: context.textPrimary),
                     decoration: InputDecoration(
-                      hintText: 'Find a message',
+                      hintText: context.l10n.messagingFindMessageHint,
                       hintStyle: TextStyle(color: context.textTertiary),
                       prefixIcon: Icon(
                         Icons.search,
@@ -1534,10 +1551,10 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
                           SizedBox(height: AppTheme.spacing16),
                           Text(
                             _isSearching
-                                ? 'No messages match your search'
+                                ? context.l10n.messagingNoMessagesMatchSearch
                                 : widget.type == ConversationType.channel
-                                ? 'No messages in this channel'
-                                : 'Start the conversation',
+                                ? context.l10n.messagingNoMessagesInChannel
+                                : context.l10n.messagingStartConversation,
                             style: TextStyle(
                               fontSize: 14,
                               color: context.textTertiary,
@@ -1643,7 +1660,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            'Replying to ${_replyingTo!.senderDisplayName}',
+                            context.l10n.messagingReplyingTo(
+                              _replyingTo!.senderDisplayName,
+                            ),
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w600,
@@ -1653,7 +1672,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
                           const SizedBox(height: AppTheme.spacing2),
                           Text(
                             _replyingTo!.text.length > 80
-                                ? '${_replyingTo!.text.substring(0, 80)}...'
+                                ? '${_replyingTo!.text.substring(0, 80)}…'
                                 : _replyingTo!.text,
                             style: TextStyle(
                               fontSize: 13,
@@ -1733,7 +1752,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
                           style: TextStyle(color: context.textPrimary),
                           textCapitalization: TextCapitalization.sentences,
                           decoration: InputDecoration(
-                            hintText: 'Message...',
+                            hintText: context.l10n.messagingMessageHint,
                             hintStyle: TextStyle(color: context.textTertiary),
                             border: InputBorder.none,
                             contentPadding: const EdgeInsets.symmetric(
@@ -1862,16 +1881,16 @@ class _MessageBubble extends StatelessWidget {
   }
 
   /// Get label text for message source
-  String? _getSourceLabel() {
+  String? _getSourceLabel(BuildContext context) {
     switch (message.source) {
       case MessageSource.automation:
-        return 'Automation';
+        return context.l10n.messagingSourceAutomation;
       case MessageSource.siri:
-        return 'Shortcut';
+        return context.l10n.messagingSourceShortcut;
       case MessageSource.reaction:
-        return 'Notification';
+        return context.l10n.messagingSourceNotification;
       case MessageSource.tapback:
-        return 'Tapback';
+        return context.l10n.messagingSourceTapback;
       case MessageSource.manual:
       case MessageSource.unknown:
         return null;
@@ -1896,9 +1915,9 @@ class _MessageBubble extends StatelessWidget {
   }
 
   /// Build the source badge widget
-  Widget? _buildSourceBadge() {
+  Widget? _buildSourceBadge(BuildContext context) {
     final icon = _getSourceIcon();
-    final label = _getSourceLabel();
+    final label = _getSourceLabel(context);
     if (icon == null || label == null) return null;
 
     return Container(
@@ -1941,9 +1960,10 @@ class _MessageBubble extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    final replyText = replyMessage?.text ?? 'Original message';
+    final replyText =
+        replyMessage?.text ?? context.l10n.messagingOriginalMessage;
     final truncated = replyText.length > 60
-        ? '${replyText.substring(0, 60)}...'
+        ? '${replyText.substring(0, 60)}…'
         : replyText;
 
     return Container(
@@ -1999,7 +2019,7 @@ class _MessageBubble extends StatelessWidget {
     final isFailed = message.isFailed;
     final isPending = message.isPending;
     final isDelivered = message.status == MessageStatus.delivered;
-    final sourceBadge = _buildSourceBadge();
+    final sourceBadge = _buildSourceBadge(context);
 
     if (isFromMe) {
       return Padding(
@@ -2122,7 +2142,8 @@ class _MessageBubble extends StatelessWidget {
                         const SizedBox(width: AppTheme.spacing4),
                         Flexible(
                           child: Text(
-                            message.errorMessage ?? 'Failed to send',
+                            message.errorMessage ??
+                                context.l10n.messagingFailedToSend,
                             style: const TextStyle(
                               fontSize: 11,
                               color: AppTheme.errorRed,
@@ -2156,7 +2177,7 @@ class _MessageBubble extends StatelessWidget {
                                   ),
                                   SizedBox(width: AppTheme.spacing4),
                                   Text(
-                                    'Retry',
+                                    context.l10n.commonRetry,
                                     style: TextStyle(
                                       fontSize: 11,
                                       color: context.accentColor,
@@ -2322,7 +2343,7 @@ class _QuickResponsesSheet extends StatelessWidget {
                 ),
                 SizedBox(width: AppTheme.spacing12),
                 Text(
-                  'Quick Responses',
+                  context.l10n.messagingQuickResponses,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
@@ -2339,7 +2360,7 @@ class _QuickResponsesSheet extends StatelessWidget {
                 ? Padding(
                     padding: const EdgeInsets.all(AppTheme.spacing32),
                     child: Text(
-                      'No quick responses configured.\nAdd some in Settings → Quick responses.',
+                      context.l10n.messagingNoQuickResponsesConfigured,
                       textAlign: TextAlign.center,
                       style: TextStyle(color: context.textSecondary),
                     ),
@@ -2389,7 +2410,7 @@ class _QuickResponsesSheet extends StatelessWidget {
                   ),
                   SizedBox(width: AppTheme.spacing8),
                   Text(
-                    'Configure quick responses in Settings',
+                    context.l10n.messagingConfigureQuickResponses,
                     style: TextStyle(
                       color: context.textSecondary.withValues(alpha: 0.8),
                       fontSize: 13,
@@ -2493,7 +2514,7 @@ class MessagingPopupMenu extends ConsumerWidget {
                   Icon(Icons.add, color: context.textSecondary, size: 20),
                   const SizedBox(width: AppTheme.spacing12),
                   Text(
-                    'Add channel',
+                    context.l10n.messagingAddChannel,
                     style: TextStyle(color: context.textPrimary),
                   ),
                 ],
@@ -2514,7 +2535,7 @@ class MessagingPopupMenu extends ConsumerWidget {
                   ),
                   const SizedBox(width: AppTheme.spacing12),
                   Text(
-                    'Scan QR code',
+                    context.l10n.messagingScanQrCode,
                     style: TextStyle(color: context.textPrimary),
                   ),
                 ],
@@ -2533,7 +2554,10 @@ class MessagingPopupMenu extends ConsumerWidget {
                   size: 20,
                 ),
                 const SizedBox(width: AppTheme.spacing12),
-                Text('Help', style: TextStyle(color: context.textPrimary)),
+                Text(
+                  context.l10n.messagingHelp,
+                  style: TextStyle(color: context.textPrimary),
+                ),
               ],
             ),
           ),
@@ -2547,7 +2571,10 @@ class MessagingPopupMenu extends ConsumerWidget {
                   size: 20,
                 ),
                 const SizedBox(width: AppTheme.spacing12),
-                Text('Settings', style: TextStyle(color: context.textPrimary)),
+                Text(
+                  context.l10n.messagingSettings,
+                  style: TextStyle(color: context.textPrimary),
+                ),
               ],
             ),
           ),

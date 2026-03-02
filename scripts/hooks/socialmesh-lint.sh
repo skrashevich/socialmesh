@@ -507,6 +507,89 @@ check_file() {
   fi
 
   # ------------------------------------------------------------------
+  # BLOCK: Three-dot truncation suffix — use '…' (U+2026) instead
+  #
+  # '...' appended to a truncated string is visually correct but
+  # typographically wrong. The canonical truncation suffix throughout
+  # the app is the single Unicode ellipsis character '…' (U+2026),
+  # which is what text_measurement.dart's safeTruncate* functions emit
+  # by default and what every content-truncation site must produce.
+  #
+  # Patterns flagged (all are truncation contexts, not spinners):
+  #   substring(...) + '...'         -- explicit cut + suffix
+  #   substring(...) + "..."
+  #   ? '...${anything}'             -- ternary truncation guard
+  #   ? "${anything}...'             -- interpolated suffix
+  #   body += '...'                  -- accumulating a suffix
+  #   body += "..."
+  #
+  # NOT flagged (loading/progress spinners are idiomatic with ASCII):
+  #   'Connecting...'   'Loading...'  'Sending...'   etc.
+  #   hintText: 'Type something...'
+  #   These are identified by the absence of a preceding substring()
+  #   call or truncation guard on the same line.
+  #
+  # Exempt: test files that intentionally pass suffix: '...' to exercise
+  # the custom-suffix code path in safeTruncateGraphemes.
+  # ------------------------------------------------------------------
+  if [ "$is_dart" = true ] && [[ "$file" != test/* ]]; then
+    while IFS=: read -r lineno matched_line; do
+      line_in_scope "$file" "$lineno" || continue
+      local trimmed="${matched_line#"${matched_line%%[![:space:]]*}"}"
+      # Skip comment lines
+      [[ "$trimmed" == //* ]] && continue
+      # Skip lines where '...' appears as a named argument value for
+      # a suffix: parameter (intentional custom-suffix override)
+      [[ "$matched_line" =~ suffix:[[:space:]]*\'\.\.\.\'  ]] && continue
+      [[ "$matched_line" =~ suffix:[[:space:]]*\"\.\.\.\"  ]] && continue
+      record_hit "$file" "$lineno" "no-three-dot-truncation" \
+        "Use '…' (U+2026) as truncation suffix, not '...' — matches safeTruncate* default and app-wide convention" "error"
+    done < <({
+      grep -nE "substring\(.*\.\.\." "$file" 2>/dev/null || true
+      grep -nE "[+]=[[:space:]]*['\"]\\.\\.\\.['\"]" "$file" 2>/dev/null || true
+    } | sort -t: -k1,1n | uniq)
+  fi
+
+  # ------------------------------------------------------------------
+  # BLOCK: Ellipsis character (…) in loading/progress spinner strings
+  #
+  # Loading and progress strings use three ASCII dots by convention:
+  #   'Connecting...'   'Loading...'   'Sending...'
+  # Using the Unicode ellipsis '…' in those contexts is wrong — it
+  # looks subtly different and breaks the in-progress idiom.
+  #
+  # A spinner string is heuristically identified as a string that:
+  #   - is entirely a short label (no substring call on same line)
+  #   - ends with the ellipsis as the last character before the quote
+  #   - appears in a UI context (label:, hintText:, return, Text(, etc.)
+  #
+  # Patterns flagged:
+  #   'Word…'     "Word…"   (trailing ellipsis, no preceding substring)
+  #   label: Text('…')      hint: '…'
+  #
+  # NOT flagged (truncation is correct with U+2026):
+  #   '${text.substring(0, 50)}…'
+  #   text.length > N ? '${text.substring(0,N)}…' : text
+  #   body += '…'   (after a length check)
+  # ------------------------------------------------------------------
+  if [ "$is_dart" = true ]; then
+    while IFS=: read -r lineno matched_line; do
+      line_in_scope "$file" "$lineno" || continue
+      local trimmed="${matched_line#"${matched_line%%[![:space:]]*}"}"
+      # Skip comment lines
+      [[ "$trimmed" == //* ]] && continue
+      # Skip lines that also contain substring( — those are truncation sites
+      [[ "$matched_line" == *"substring("* ]] && continue
+      # Skip lines that also contain += — those are accumulation sites
+      # that follow a length check (e.g. notification body builders)
+      [[ "$matched_line" =~ \+=[[:space:]]*\'…\' ]] && continue
+      [[ "$matched_line" =~ \+=[[:space:]]*\"…\" ]] && continue
+      record_hit "$file" "$lineno" "no-ellipsis-in-spinner" \
+        "Use '...' (three ASCII dots) for loading/progress spinners, not '…' (U+2026) — reserve '…' for content truncation" "error"
+    done < <(grep -nE "('[A-Z][a-zA-Z ]+…'|\"[A-Z][a-zA-Z ]+…\"|hintText:[[:space:]]*'[^']*…'|hintText:[[:space:]]*\"[^\"]*…\"|hint:[[:space:]]*'[^']*…'|hint:[[:space:]]*\"[^\"]*…\"|Text\('[^']*…'\)|Text\(\"[^\"]*…\"\)|label:[[:space:]]*Text\('[^']*…'\)|label:[[:space:]]*Text\(\"[^\"]*…\"\))" "$file" 2>/dev/null || true)
+  fi
+
+  # ------------------------------------------------------------------
   # BLOCK: // ignore: directives outside lib/generated/
   # Only check Dart files -- markdown and yaml mention ignore: as documentation
   # ------------------------------------------------------------------
@@ -686,6 +769,17 @@ check_file() {
       # to prevent post_await state from leaking across scope boundaries.
       /async[[:space:]]*\{/ { state = "idle" }
 
+      # Reset when a closure/block closes or branches.  Matches:
+      #   }          — end of block / closure
+      #   },         — end of closure in argument list
+      #   } else {   — else branch (await in the if-block did not execute here)
+      #   } catch (  — catch branch after try with await
+      #   } finally {— finally branch
+      #   } on Foo { — typed catch
+      # This prevents post_await state leaking into sibling branches or
+      # surrounding widget-tree code.
+      state == "post_await" && /^[[:space:]]*\}/ { state = "idle" }
+
       # Detect await — only enter post_await when the statement completes.
       # Multi-line await expressions (e.g. await AppBottomSheet.show(
       #   context: context, child: ...)) stay in in_await_expr until
@@ -710,25 +804,47 @@ check_file() {
 
       # In post_await state
       state == "post_await" {
-        # mounted check clears the danger zone.
-        # safeSetState() checks mounted internally, so treat it the same.
+        # mounted check or LifecycleSafeMixin safe* methods clear the danger zone.
+        # All safe* methods check mounted internally before touching context.
         # canUpdateUI is the LifecycleSafeMixin equivalent of mounted.
-        if (/mounted/ || /safeSetState/ || /canUpdateUI/) { state = "idle"; next }
+        if (/mounted/ || /canUpdateUI/ || /safe[A-Z]/) { state = "idle"; next }
 
-        # Dangerous usage after the await line itself
+        # Dangerous usage after the await line itself.
+        # Strip inline comments and string literals before pattern matching
+        # to avoid false positives on context/ref inside log strings or comments.
         if (NR > await_ln) {
-          # In notifier/provider files, ref.read/ref.watch and .setState() are safe
-          # (.setState() on notifiers sets provider state, not Flutter setState)
-          if (is_notifier == "true") {
-            if (/context\./) {
-              print NR
-              state = "idle"
-            }
-          } else {
-            if (/context\./ || /ref\.read\(/ || /ref\.watch\(/ || /setState\(/) {
-              print NR
-              state = "idle"
-            }
+          line = $0
+          sub(/\/\/.*$/, "", line)
+          gsub(/"[^"]*"/, "", line)
+          # Strip single-quoted string literals. \x27 is apostrophe — avoids breaking
+          # the surrounding bash single-quote string that wraps this awk program.
+          gsub(/\x27[^\x27]*\x27/, "", line)
+
+          # context unsafe: four precise patterns that indicate real BuildContext usage.
+          # Avoids false positives on local variables named "context" (e.g. Map context).
+          #
+          # Pattern 1: .of(context) — Flutter static accessor (Navigator.of, Theme.of, etc.)
+          ctx_of = (line ~ /\.of\(context[),]/)
+          # Pattern 2: context as first positional arg of known navigation/snackbar helpers
+          ctx_first = (line ~ /Navigator\.(push|pop|pushNamed|pushReplacement|pushAndRemoveUntil|replace|canPop|maybePop)[[:space:]]*\(context[),]/ || \
+                       line ~ /show(Error|Info|Success|Warning|Action)?SnackBar[[:space:]]*\(context[),]/)
+          # Pattern 3: context: context — named argument passing BuildContext
+          ctx_named = (line ~ /context:[[:space:]]*context[),;]/)
+          # Pattern 4: context. — method or property access on BuildContext (context.l10n, context.read, etc.)
+          ctx_dot = (line ~ /^[[:space:]]*context\./ || line ~ /[^A-Za-z_]context\./)
+          ctx_unsafe = (ctx_of || ctx_first || ctx_named || ctx_dot)
+
+          # ref unsafe: ref.read( / ref.watch( used as a captured WidgetRef after await.
+          # Not flagged in notifier/provider files where ref is a stable class member.
+          ref_unsafe = (is_notifier != "true" && (line ~ /ref\.read\(/ || line ~ /ref\.watch\(/))
+
+          # setState unsafe: raw setState( after await without a mounted guard.
+          set_unsafe = (is_notifier != "true" && line ~ /setState\(/)
+
+          if (ctx_unsafe || ref_unsafe || set_unsafe) {
+            print NR
+            # Do NOT reset state — keep reporting every unsafe use in this async gap,
+            # matching the behaviour of flutter analyze use_build_context_synchronously.
           }
         }
       }
