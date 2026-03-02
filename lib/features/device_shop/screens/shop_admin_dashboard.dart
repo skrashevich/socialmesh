@@ -83,7 +83,7 @@ class _AdminDashboardContent extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final statsAsync = ref.watch(adminShopStatisticsProvider);
 
-    return GlassScaffold.body(
+    return GlassScaffold(
       titleWidget: Row(
         children: [
           Container(
@@ -105,49 +105,58 @@ class _AdminDashboardContent extends ConsumerWidget {
           tooltip: 'Refresh',
         ),
       ],
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(AppTheme.spacing16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Statistics Cards
-            statsAsync.when(
-              data: (stats) => _buildStatisticsGrid(context, stats),
-              loading: () => const Center(
-                child: Padding(
-                  padding: EdgeInsets.all(AppTheme.spacing32),
-                  child: CircularProgressIndicator(),
+      // Use hasScrollBody: true because the child is a SingleChildScrollView.
+      // hasScrollBody: false would force intrinsic dimension computation
+      // which scrollable widgets cannot provide, causing a null check crash
+      // in RenderViewportBase.layoutChildSequence.
+      slivers: [
+        SliverFillRemaining(
+          hasScrollBody: true,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(AppTheme.spacing16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Statistics Cards
+                statsAsync.when(
+                  data: (stats) => _buildStatisticsGrid(context, stats),
+                  loading: () => const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(AppTheme.spacing32),
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
+                  error: (e, _) => Center(child: Text('Error: $e')),
                 ),
-              ),
-              error: (e, _) => Center(child: Text('Error: $e')),
+
+                const SizedBox(height: AppTheme.spacing32),
+
+                // Quick Actions
+                Text(
+                  'Quick Actions',
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: AppTheme.spacing16),
+                _buildQuickActions(context),
+
+                const SizedBox(height: AppTheme.spacing32),
+
+                // Management Sections
+                Text(
+                  'Management',
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: AppTheme.spacing16),
+                _buildManagementCards(context),
+              ],
             ),
-
-            const SizedBox(height: AppTheme.spacing32),
-
-            // Quick Actions
-            Text(
-              'Quick Actions',
-              style: Theme.of(
-                context,
-              ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: AppTheme.spacing16),
-            _buildQuickActions(context),
-
-            const SizedBox(height: AppTheme.spacing32),
-
-            // Management Sections
-            Text(
-              'Management',
-              style: Theme.of(
-                context,
-              ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: AppTheme.spacing16),
-            _buildManagementCards(context),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 

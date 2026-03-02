@@ -227,35 +227,34 @@ class SkeletonNodeDexStatsCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(AppTheme.radius14),
           border: Border.all(color: context.border, width: 0.5),
         ),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Expanded(
-              child: Row(
-                children: [
-                  const Bone.icon(size: 14),
-                  const SizedBox(width: AppTheme.spacing6),
-                  Flexible(child: Bone.text(words: 2, fontSize: 12)),
-                ],
-              ),
+            // Title row
+            Row(
+              children: [
+                const Bone.icon(size: 14),
+                const SizedBox(width: AppTheme.spacing6),
+                Flexible(child: Bone.text(words: 2, fontSize: 12)),
+              ],
             ),
-            Flexible(
-              flex: 0,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Bone.icon(size: 12),
-                  const SizedBox(width: AppTheme.spacing3),
-                  Bone.text(words: 1, fontSize: 12),
-                  const SizedBox(width: AppTheme.spacing8),
-                  const Bone.icon(size: 12),
-                  const SizedBox(width: AppTheme.spacing3),
-                  Bone.text(words: 1, fontSize: 12),
-                  const SizedBox(width: AppTheme.spacing8),
-                  const Bone.icon(size: 12),
-                  const SizedBox(width: AppTheme.spacing3),
-                  Bone.text(words: 1, fontSize: 12),
-                ],
-              ),
+            const SizedBox(height: AppTheme.spacing6),
+            // Stats row
+            Row(
+              children: [
+                const Bone.icon(size: 12),
+                const SizedBox(width: AppTheme.spacing3),
+                Bone.text(words: 1, fontSize: 12),
+                const SizedBox(width: AppTheme.spacing10),
+                const Bone.icon(size: 12),
+                const SizedBox(width: AppTheme.spacing3),
+                Bone.text(words: 1, fontSize: 12),
+                const SizedBox(width: AppTheme.spacing10),
+                const Bone.icon(size: 12),
+                const SizedBox(width: AppTheme.spacing3),
+                Bone.text(words: 1, fontSize: 12),
+              ],
             ),
           ],
         ),

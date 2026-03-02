@@ -58,7 +58,7 @@ import '../nodedex/screens/nodedex_screen.dart';
 import '../social/screens/activity_timeline_screen.dart';
 import '../social/screens/social_hub_screen.dart';
 import '../aether/screens/aether_screen.dart';
-import '../file_transfer/screens/file_transfers_screen.dart';
+import '../file_transfer/screens/file_transfers_container_screen.dart';
 import '../aether/providers/aether_flight_matcher_provider.dart';
 import '../aether/providers/aether_flight_lifecycle_provider.dart';
 import '../aether/widgets/aether_flight_detected_overlay.dart';
@@ -397,7 +397,7 @@ class _MainShellState extends ConsumerState<MainShell> {
       DrawerMenuItem(
         icon: Icons.swap_vert,
         label: 'File Transfers',
-        screen: const FileTransfersScreen(),
+        screen: const FileTransfersContainerScreen(),
         iconColor: AccentColors.cyan,
         requiresConnection: true,
         whatsNewBadgeKey: 'file_transfers',

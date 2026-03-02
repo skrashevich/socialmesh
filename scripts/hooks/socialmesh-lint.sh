@@ -920,6 +920,52 @@ check_file() {
       fi
     fi
 
+    # ------------------------------------------------------------------
+    # ERROR: GlassScaffold.body() wrapping a scrollable widget
+    #
+    # GlassScaffold.body() wraps its child in SliverFillRemaining with
+    # hasScrollBody: false, which forces intrinsic dimension computation.
+    # Scrollable widgets (ListView, CustomScrollView, TabBarView, etc.)
+    # cannot compute intrinsic dimensions — their nested viewport's
+    # sliver geometry is null, causing a crash:
+    #   "Null check operator used on a null value" in
+    #   RenderViewportBase.layoutChildSequence during performLayout().
+    #
+    # Fix: use GlassScaffold(slivers: [SliverFillRemaining(
+    #   hasScrollBody: true, child: scrollableWidget)]) instead.
+    #
+    # Uses awk to detect GlassScaffold.body( followed by a body:
+    # argument whose value is a scrollable widget constructor.
+    # ------------------------------------------------------------------
+    while IFS= read -r hit_lineno; do
+      [ -n "$hit_lineno" ] || continue
+      if line_in_scope "$file" "$hit_lineno"; then
+        record_hit "$file" "$hit_lineno" "no-scrollable-in-glass-body" \
+          "Scrollable widget in GlassScaffold.body() — use GlassScaffold(slivers: [SliverFillRemaining(hasScrollBody: true, child: ...)]) instead" "error"
+      fi
+    done < <(awk '
+      BEGIN { in_glass_body = 0; glass_line = 0 }
+
+      /GlassScaffold\.body\(/ {
+        in_glass_body = 1
+        glass_line = NR
+        next
+      }
+
+      in_glass_body && /body:[[:space:]]*(ListView|CustomScrollView|TabBarView|GridView|SingleChildScrollView|ReorderableListView|PageView|NestedScrollView)/ {
+        print NR
+        in_glass_body = 0
+        next
+      }
+
+      # Reset if we hit a new top-level construct that clearly ends the
+      # GlassScaffold.body( call (new return statement, class, or closing
+      # of the enclosing build method).
+      in_glass_body && /^[[:space:]]*(return |class |^\}$)/ {
+        in_glass_body = 0
+      }
+    ' "$file" 2>/dev/null)
+
   fi # end whole-file checks
 
   # Flush grouped output for this file

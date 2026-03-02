@@ -552,65 +552,58 @@ class _NodeDexStatsCard extends StatelessWidget {
             width: 0.5,
           ),
         ),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            // Explorer title
-            Expanded(
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.auto_awesome,
-                    size: 14,
-                    color: context.accentColor,
-                  ),
-                  const SizedBox(width: AppTheme.spacing6),
-                  Flexible(
-                    child: Text(
-                      title.displayLabel,
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        color: context.accentColor,
-                        letterSpacing: 0.3,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+            // Explorer title — full width, never truncated
+            Row(
+              children: [
+                Icon(Icons.auto_awesome, size: 14, color: context.accentColor),
+                const SizedBox(width: AppTheme.spacing6),
+                Flexible(
+                  child: Text(
+                    title.displayLabel,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: context.accentColor,
+                      letterSpacing: 0.3,
                     ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
 
-            // Compact stats — wrapped in Flexible to prevent overflow
-            // on narrow screens / large text scale
-            Flexible(
-              flex: 0,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
+            const SizedBox(height: AppTheme.spacing6),
+
+            // Compact stats row — full width below the title
+            Row(
+              children: [
+                _CompactStat(
+                  icon: Icons.hexagon_outlined,
+                  value: stats.totalNodes.toString(),
+                ),
+                const SizedBox(width: AppTheme.spacing10),
+                _CompactStat(
+                  icon: Icons.public_outlined,
+                  value: stats.totalRegions.toString(),
+                ),
+                const SizedBox(width: AppTheme.spacing10),
+                _CompactStat(
+                  icon: Icons.repeat,
+                  value: _compactNumber(stats.totalEncounters),
+                ),
+                if (stats.longestDistance != null) ...[
+                  const SizedBox(width: AppTheme.spacing10),
                   _CompactStat(
-                    icon: Icons.hexagon_outlined,
-                    value: stats.totalNodes.toString(),
+                    icon: Icons.straighten,
+                    value: _formatDistance(stats.longestDistance),
                   ),
-                  const SizedBox(width: AppTheme.spacing8),
-                  _CompactStat(
-                    icon: Icons.public_outlined,
-                    value: stats.totalRegions.toString(),
-                  ),
-                  const SizedBox(width: AppTheme.spacing8),
-                  _CompactStat(
-                    icon: Icons.repeat,
-                    value: _compactNumber(stats.totalEncounters),
-                  ),
-                  if (stats.longestDistance != null) ...[
-                    const SizedBox(width: AppTheme.spacing8),
-                    _CompactStat(
-                      icon: Icons.straighten,
-                      value: _formatDistance(stats.longestDistance),
-                    ),
-                  ],
                 ],
-              ),
+              ],
             ),
           ],
         ),

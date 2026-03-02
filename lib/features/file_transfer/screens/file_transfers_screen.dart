@@ -17,6 +17,7 @@ import '../../../providers/file_transfer_providers.dart';
 import '../../../services/file_transfer/file_transfer_engine.dart';
 import '../../../services/haptic_service.dart';
 import '../../../utils/snackbar.dart';
+import '../widgets/file_content_preview.dart';
 import '../widgets/file_transfer_card.dart';
 
 /// Dedicated screen for viewing and managing all file transfers.
@@ -24,8 +25,14 @@ import '../widgets/file_transfer_card.dart';
 /// Shows active, completed, and failed transfers. Allows users to
 /// cancel active transfers, save/share completed files, and purge
 /// expired entries.
+///
+/// When [embedded] is true, renders without its own GlassScaffold
+/// so it can be used as a tab child in [FileTransfersContainerScreen].
 class FileTransfersScreen extends ConsumerStatefulWidget {
-  const FileTransfersScreen({super.key});
+  const FileTransfersScreen({super.key, this.embedded = false});
+
+  /// Used when embedded in tabs.
+  final bool embedded;
 
   @override
   ConsumerState<FileTransfersScreen> createState() =>
@@ -53,6 +60,94 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
     final transferState = ref.watch(fileTransferStateProvider);
     final transfers = _filteredTransfers(transferState);
 
+    final bodyContent = CustomScrollView(
+      slivers: [
+        // Top padding
+        const SliverToBoxAdapter(child: SizedBox(height: AppTheme.spacing8)),
+
+        // Pinned search + filter controls
+        SliverPersistentHeader(
+          pinned: true,
+          delegate: SearchFilterHeaderDelegate(
+            searchController: _searchController,
+            searchQuery: _searchQuery,
+            onSearchChanged: (value) {
+              safeSetState(() => _searchQuery = value);
+            },
+            hintText: 'Search transfers',
+            textScaler: MediaQuery.textScalerOf(context),
+            rebuildKey: Object.hashAll([
+              _filter,
+              transferState.sortedTransfers.length,
+              transferState.activeTransfers.length,
+            ]),
+            filterChips: _buildFilterChips(transferState),
+          ),
+        ),
+
+        // Transfer list or empty state
+        if (transferState.isLoading)
+          const SliverFillRemaining(
+            hasScrollBody: false,
+            child: Center(child: CircularProgressIndicator()),
+          )
+        else if (transfers.isEmpty)
+          SliverFillRemaining(hasScrollBody: false, child: _buildEmptyState())
+        else
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: AppTheme.spacing16),
+            sliver: SliverList(
+              delegate: SliverChildBuilderDelegate((context, index) {
+                final transfer = transfers[index];
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: AppTheme.spacing12),
+                  child: FileTransferCard(
+                    transfer: transfer,
+                    onTap: () => _showTransferDetail(transfer),
+                    onCancel:
+                        transfer.isActive &&
+                            transfer.state != TransferState.offerPending
+                        ? () => _cancelTransfer(transfer)
+                        : null,
+                    onAccept: transfer.state == TransferState.offerPending
+                        ? () => _acceptTransfer(transfer)
+                        : null,
+                    onReject: transfer.state == TransferState.offerPending
+                        ? () => _rejectTransfer(transfer)
+                        : null,
+                    onOpen:
+                        transfer.state == TransferState.complete &&
+                            transfer.direction == TransferDirection.inbound
+                        ? () => _saveAndOpenFile(transfer)
+                        : null,
+                    onShare:
+                        transfer.state == TransferState.complete &&
+                            transfer.direction == TransferDirection.inbound
+                        ? () => _shareFile(transfer)
+                        : null,
+                    onDelete: !transfer.isActive
+                        ? () => _deleteTransfer(transfer)
+                        : null,
+                  ),
+                );
+              }, childCount: transfers.length),
+            ),
+          ),
+
+        // Bottom spacing
+        const SliverToBoxAdapter(child: SizedBox(height: AppTheme.spacing24)),
+      ],
+    );
+
+    // If embedded (in tabs), return just the body with gesture detector
+    if (widget.embedded) {
+      return GestureDetector(
+        onTap: _dismissKeyboard,
+        child: Container(color: context.background, child: bodyContent),
+      );
+    }
+
+    // Full standalone screen with AppBar
     return GestureDetector(
       onTap: _dismissKeyboard,
       child: GlassScaffold(
@@ -101,84 +196,7 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
             ],
           ),
         ],
-        slivers: [
-          // Top padding below glass app bar
-          const SliverToBoxAdapter(child: SizedBox(height: AppTheme.spacing8)),
-
-          // Pinned search + filter controls
-          SliverPersistentHeader(
-            pinned: true,
-            delegate: SearchFilterHeaderDelegate(
-              searchController: _searchController,
-              searchQuery: _searchQuery,
-              onSearchChanged: (value) {
-                safeSetState(() => _searchQuery = value);
-              },
-              hintText: 'Search transfers',
-              textScaler: MediaQuery.textScalerOf(context),
-              rebuildKey: Object.hashAll([
-                _filter,
-                transferState.sortedTransfers.length,
-                transferState.activeTransfers.length,
-              ]),
-              filterChips: _buildFilterChips(transferState),
-            ),
-          ),
-
-          // Transfer list or empty state
-          if (transferState.isLoading)
-            const SliverFillRemaining(
-              hasScrollBody: false,
-              child: Center(child: CircularProgressIndicator()),
-            )
-          else if (transfers.isEmpty)
-            SliverFillRemaining(hasScrollBody: false, child: _buildEmptyState())
-          else
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppTheme.spacing16,
-              ),
-              sliver: SliverList(
-                delegate: SliverChildBuilderDelegate((context, index) {
-                  final transfer = transfers[index];
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: AppTheme.spacing12),
-                    child: FileTransferCard(
-                      transfer: transfer,
-                      onTap: () => _showTransferDetail(transfer),
-                      onCancel:
-                          transfer.isActive &&
-                              transfer.state != TransferState.offerPending
-                          ? () => _cancelTransfer(transfer)
-                          : null,
-                      onAccept: transfer.state == TransferState.offerPending
-                          ? () => _acceptTransfer(transfer)
-                          : null,
-                      onReject: transfer.state == TransferState.offerPending
-                          ? () => _rejectTransfer(transfer)
-                          : null,
-                      onOpen:
-                          transfer.state == TransferState.complete &&
-                              transfer.direction == TransferDirection.inbound
-                          ? () => _saveAndOpenFile(transfer)
-                          : null,
-                      onShare:
-                          transfer.state == TransferState.complete &&
-                              transfer.direction == TransferDirection.inbound
-                          ? () => _shareFile(transfer)
-                          : null,
-                      onDelete: !transfer.isActive
-                          ? () => _deleteTransfer(transfer)
-                          : null,
-                    ),
-                  );
-                }, childCount: transfers.length),
-              ),
-            ),
-
-          // Bottom spacing
-          const SliverToBoxAdapter(child: SizedBox(height: AppTheme.spacing24)),
-        ],
+        slivers: [SliverFillRemaining(hasScrollBody: true, child: bodyContent)],
       ),
     );
   }
@@ -537,6 +555,14 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
   }
 
   void _showTransferDetail(FileTransferState transfer) {
+    // Show file content preview for completed transfers with bytes
+    if (transfer.state == TransferState.complete &&
+        transfer.fileBytes != null &&
+        transfer.fileBytes!.isNotEmpty) {
+      FileContentPreview.show(context: context, transfer: transfer);
+      return;
+    }
+
     AppBottomSheet.show<void>(
       context: context,
       child: _TransferDetailSheet(transfer: transfer),

@@ -50,7 +50,7 @@ class TakEventDetailScreen extends ConsumerWidget {
     return HelpTourController(
       topicId: 'tak_gateway_overview',
       stepKeys: const {},
-      child: GlassScaffold.body(
+      child: GlassScaffold(
         title: event.displayName,
         actions: [
           IconButton(
@@ -121,109 +121,128 @@ class TakEventDetailScreen extends ConsumerWidget {
             ],
           ),
         ],
-        body: ListView(
-          padding: const EdgeInsets.all(AppTheme.spacing16),
-          children: [
-            _HeaderCard(
-              event: event,
-              theme: theme,
-              affiliationColor: affiliationColor,
-              affiliationLabel: affiliation.label,
-            ),
-            const SizedBox(height: AppTheme.spacing16),
-            _buildSection(theme, affiliationColor, 'Identity', [
-              _row('UID', event.uid, dimStyle, valueStyle),
-              _row('Type', event.type, dimStyle, valueStyle),
-              _row('Description', event.typeDescription, dimStyle, valueStyle),
-              if (event.callsign != null)
-                _row('Callsign', event.callsign!, dimStyle, valueStyle),
-            ], helpKey: 'identity'),
-            const SizedBox(height: AppTheme.spacing8),
-            _buildSection(theme, affiliationColor, 'Position', [
-              _row(
-                'Latitude',
-                event.lat.toStringAsFixed(6),
-                dimStyle,
-                valueStyle,
-              ),
-              _row(
-                'Longitude',
-                event.lon.toStringAsFixed(6),
-                dimStyle,
-                valueStyle,
-              ),
-            ], helpKey: 'position'),
-            if (event.hasMotionData) ...[
-              const SizedBox(height: AppTheme.spacing8),
-              _buildSection(theme, affiliationColor, 'Motion', [
-                _row('Speed', event.formattedSpeed, dimStyle, valueStyle),
-                if (event.formattedCourse != null)
-                  _row('Course', event.formattedCourse!, dimStyle, valueStyle),
-                if (event.formattedAltitude != null)
+        // Use hasScrollBody: true because the child is a ListView.
+        // hasScrollBody: false would force intrinsic dimension computation
+        // which ListView cannot provide, causing a null check crash
+        // in RenderViewportBase.layoutChildSequence.
+        slivers: [
+          SliverFillRemaining(
+            hasScrollBody: true,
+            child: ListView(
+              padding: const EdgeInsets.all(AppTheme.spacing16),
+              children: [
+                _HeaderCard(
+                  event: event,
+                  theme: theme,
+                  affiliationColor: affiliationColor,
+                  affiliationLabel: affiliation.label,
+                ),
+                const SizedBox(height: AppTheme.spacing16),
+                _buildSection(theme, affiliationColor, 'Identity', [
+                  _row('UID', event.uid, dimStyle, valueStyle),
+                  _row('Type', event.type, dimStyle, valueStyle),
                   _row(
-                    'Altitude',
-                    event.formattedAltitude!,
+                    'Description',
+                    event.typeDescription,
                     dimStyle,
                     valueStyle,
                   ),
-              ], helpKey: 'motion'),
-            ],
-            const SizedBox(height: AppTheme.spacing8),
-            _buildSection(theme, affiliationColor, 'Timestamps', [
-              _row(
-                'Event Time',
-                _formatTimestamp(event.timeUtcMs),
-                dimStyle,
-                valueStyle,
-              ),
-              _row(
-                'Stale Time',
-                _formatTimestamp(event.staleUtcMs),
-                dimStyle,
-                valueStyle,
-              ),
-              _row(
-                'Received',
-                _formatTimestamp(event.receivedUtcMs),
-                dimStyle,
-                valueStyle,
-              ),
-              _row(
-                'Status',
-                event.isStale ? 'STALE' : 'ACTIVE',
-                dimStyle,
-                valueStyle?.copyWith(
-                  color: event.isStale
-                      ? AppTheme.errorRed
-                      : AppTheme.successGreen,
-                ),
-              ),
-            ], helpKey: 'timestamps'),
-            const SizedBox(height: AppTheme.spacing8),
-            _PositionHistorySection(
-              event: event,
-              theme: theme,
-              affiliationColor: affiliationColor,
-              dimStyle: dimStyle,
-              valueStyle: valueStyle,
-            ),
-            if (event.rawPayloadJson != null) ...[
-              const SizedBox(height: AppTheme.spacing8),
-              _buildSection(theme, affiliationColor, 'Raw Payload', [
-                Padding(
-                  padding: const EdgeInsets.all(AppTheme.spacing8),
-                  child: SelectableText(
-                    event.rawPayloadJson!,
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      fontFamily: 'monospace',
-                      fontSize: 11,
+                  if (event.callsign != null)
+                    _row('Callsign', event.callsign!, dimStyle, valueStyle),
+                ], helpKey: 'identity'),
+                const SizedBox(height: AppTheme.spacing8),
+                _buildSection(theme, affiliationColor, 'Position', [
+                  _row(
+                    'Latitude',
+                    event.lat.toStringAsFixed(6),
+                    dimStyle,
+                    valueStyle,
+                  ),
+                  _row(
+                    'Longitude',
+                    event.lon.toStringAsFixed(6),
+                    dimStyle,
+                    valueStyle,
+                  ),
+                ], helpKey: 'position'),
+                if (event.hasMotionData) ...[
+                  const SizedBox(height: AppTheme.spacing8),
+                  _buildSection(theme, affiliationColor, 'Motion', [
+                    _row('Speed', event.formattedSpeed, dimStyle, valueStyle),
+                    if (event.formattedCourse != null)
+                      _row(
+                        'Course',
+                        event.formattedCourse!,
+                        dimStyle,
+                        valueStyle,
+                      ),
+                    if (event.formattedAltitude != null)
+                      _row(
+                        'Altitude',
+                        event.formattedAltitude!,
+                        dimStyle,
+                        valueStyle,
+                      ),
+                  ], helpKey: 'motion'),
+                ],
+                const SizedBox(height: AppTheme.spacing8),
+                _buildSection(theme, affiliationColor, 'Timestamps', [
+                  _row(
+                    'Event Time',
+                    _formatTimestamp(event.timeUtcMs),
+                    dimStyle,
+                    valueStyle,
+                  ),
+                  _row(
+                    'Stale Time',
+                    _formatTimestamp(event.staleUtcMs),
+                    dimStyle,
+                    valueStyle,
+                  ),
+                  _row(
+                    'Received',
+                    _formatTimestamp(event.receivedUtcMs),
+                    dimStyle,
+                    valueStyle,
+                  ),
+                  _row(
+                    'Status',
+                    event.isStale ? 'STALE' : 'ACTIVE',
+                    dimStyle,
+                    valueStyle?.copyWith(
+                      color: event.isStale
+                          ? AppTheme.errorRed
+                          : AppTheme.successGreen,
                     ),
                   ),
+                ], helpKey: 'timestamps'),
+                const SizedBox(height: AppTheme.spacing8),
+                _PositionHistorySection(
+                  event: event,
+                  theme: theme,
+                  affiliationColor: affiliationColor,
+                  dimStyle: dimStyle,
+                  valueStyle: valueStyle,
                 ),
-              ], helpKey: 'raw_payload'),
-            ],
-          ],
-        ),
+                if (event.rawPayloadJson != null) ...[
+                  const SizedBox(height: AppTheme.spacing8),
+                  _buildSection(theme, affiliationColor, 'Raw Payload', [
+                    Padding(
+                      padding: const EdgeInsets.all(AppTheme.spacing8),
+                      child: SelectableText(
+                        event.rawPayloadJson!,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          fontFamily: 'monospace',
+                          fontSize: 11,
+                        ),
+                      ),
+                    ),
+                  ], helpKey: 'raw_payload'),
+                ],
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

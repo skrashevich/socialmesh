@@ -5,7 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme.dart';
 import '../../../core/widgets/animations.dart';
+import '../../../providers/app_providers.dart';
 import '../../../services/file_transfer/file_transfer_engine.dart';
+import '../../nodes/node_display_name_resolver.dart';
 
 /// A card widget for displaying a file transfer (sending or receiving).
 ///
@@ -42,15 +44,46 @@ class FileTransferCard extends ConsumerWidget {
     return BouncyTap(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.all(
-          compact ? AppTheme.spacing10 : AppTheme.spacing12,
-        ),
+        clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
           color: context.card,
           borderRadius: BorderRadius.circular(AppTheme.radius12),
           border: Border.all(color: context.border.withValues(alpha: 0.5)),
         ),
-        child: compact ? _buildCompact(context) : _buildFull(context),
+        child: compact
+            ? Padding(
+                padding: const EdgeInsets.all(AppTheme.spacing10),
+                child: _buildCompact(context),
+              )
+            : _buildFullCard(context, ref),
+      ),
+    );
+  }
+
+  Widget _buildFullCard(BuildContext context, WidgetRef ref) {
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // Colored accent stripe
+          Container(
+            width: 3,
+            decoration: BoxDecoration(
+              color: _statusColor(context),
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(AppTheme.radius12),
+                bottomLeft: Radius.circular(AppTheme.radius12),
+              ),
+            ),
+          ),
+          // Card content
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(AppTheme.spacing12),
+              child: _buildFull(context, ref),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -92,11 +125,34 @@ class FileTransferCard extends ConsumerWidget {
     );
   }
 
-  Widget _buildFull(BuildContext context) {
+  Widget _buildFull(BuildContext context, WidgetRef ref) {
+    // Resolve node display name
+    final nodes = ref.watch(nodesProvider);
+    String? nodeName;
+    if (transfer.direction == TransferDirection.outbound &&
+        transfer.targetNodeNum != null) {
+      final node = nodes[transfer.targetNodeNum!];
+      nodeName = NodeDisplayNameResolver.resolve(
+        nodeNum: transfer.targetNodeNum!,
+        longName: node?.longName,
+        shortName: node?.shortName,
+      );
+    } else if (transfer.direction == TransferDirection.inbound &&
+        transfer.sourceNodeNum != null) {
+      final node = nodes[transfer.sourceNodeNum!];
+      nodeName = NodeDisplayNameResolver.resolve(
+        nodeNum: transfer.sourceNodeNum!,
+        longName: node?.longName,
+        shortName: node?.shortName,
+      );
+    }
+
+    final metaText = _buildMetadataText(nodeName);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Header row: icon + filename + size
+        // Header row: icon + filename + direction badge
         Row(
           children: [
             _FileTypeIcon(mimeType: transfer.mimeType, size: 36),
@@ -117,7 +173,7 @@ class FileTransferCard extends ConsumerWidget {
                   ),
                   const SizedBox(height: AppTheme.spacing2),
                   Text(
-                    _metadataText,
+                    metaText,
                     style: TextStyle(color: context.textTertiary, fontSize: 12),
                   ),
                 ],
@@ -300,14 +356,21 @@ class FileTransferCard extends ConsumerWidget {
     return '${dt.month}/${dt.day}';
   }
 
-  String get _metadataText {
+  /// Builds metadata text with resolved node names when available.
+  String _buildMetadataText(String? nodeName) {
     final parts = <String>[_fileSizeText];
-    if (transfer.direction == TransferDirection.outbound &&
-        transfer.targetNodeNum != null) {
-      parts.add('to !${transfer.targetNodeNum!.toRadixString(16)}');
-    } else if (transfer.direction == TransferDirection.inbound &&
-        transfer.sourceNodeNum != null) {
-      parts.add('from !${transfer.sourceNodeNum!.toRadixString(16)}');
+    if (transfer.direction == TransferDirection.outbound) {
+      if (nodeName != null) {
+        parts.add('to $nodeName');
+      } else if (transfer.targetNodeNum != null) {
+        parts.add('to !${transfer.targetNodeNum!.toRadixString(16)}');
+      }
+    } else {
+      if (nodeName != null) {
+        parts.add('from $nodeName');
+      } else if (transfer.sourceNodeNum != null) {
+        parts.add('from !${transfer.sourceNodeNum!.toRadixString(16)}');
+      }
     }
     return parts.join(' · ');
   }
@@ -325,38 +388,104 @@ class _FileTypeIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return FileTypeIcon(mimeType: mimeType, size: size);
+  }
+}
+
+/// Icon widget that displays a visual indicator for a file's MIME type.
+///
+/// Shows an appropriate icon and color based on the file type category.
+/// Used in file transfer cards, attachment previews, and file lists.
+class FileTypeIcon extends StatelessWidget {
+  const FileTypeIcon({super.key, required this.mimeType, this.size = 36});
+
+  final String mimeType;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       width: size,
       height: size,
       decoration: BoxDecoration(
-        color: _iconColor(context).withValues(alpha: 0.15),
+        color: iconColor(context).withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(AppTheme.radius8),
       ),
-      child: Icon(_icon, size: size * 0.55, color: _iconColor(context)),
+      child: Icon(icon, size: size * 0.55, color: iconColor(context)),
     );
   }
 
-  IconData get _icon {
-    if (mimeType.startsWith('image/')) return Icons.image;
-    if (mimeType.startsWith('text/')) return Icons.description;
-    if (mimeType.contains('json')) return Icons.data_object;
-    if (mimeType.contains('gpx') || mimeType.contains('kml')) {
-      return Icons.map;
-    }
-    if (mimeType.contains('pdf')) return Icons.picture_as_pdf;
-    if (mimeType.contains('zip') || mimeType.contains('gzip')) {
+  /// The icon to display for this MIME type.
+  IconData get icon {
+    final mime = mimeType.toLowerCase();
+
+    // Images
+    if (mime.startsWith('image/')) return Icons.image;
+
+    // Text types
+    if (mime == 'text/csv') return Icons.table_chart;
+    if (mime == 'text/html') return Icons.code;
+    if (mime == 'text/markdown') return Icons.article;
+    if (mime.startsWith('text/')) return Icons.description;
+
+    // Geospatial
+    if (mime.contains('gpx')) return Icons.route;
+    if (mime.contains('kml') || mime.contains('kmz')) return Icons.map;
+
+    // Data formats
+    if (mime.contains('json')) return Icons.data_object;
+    if (mime.contains('xml')) return Icons.code;
+    if (mime.contains('yaml') || mime.contains('yml')) return Icons.settings;
+    if (mime.contains('protobuf')) return Icons.memory;
+
+    // Documents
+    if (mime.contains('pdf')) return Icons.picture_as_pdf;
+
+    // Archives
+    if (mime.contains('zip') ||
+        mime.contains('gzip') ||
+        mime.contains('tar') ||
+        mime.contains('7z') ||
+        mime.contains('rar')) {
       return Icons.folder_zip;
     }
+
+    // Audio
+    if (mime.startsWith('audio/')) return Icons.audiotrack;
+
+    // Video
+    if (mime.startsWith('video/')) return Icons.videocam;
+
+    // Firmware / binary
+    if (mime.contains('firmware') || mime.contains('octet-stream')) {
+      return Icons.memory;
+    }
+
     return Icons.insert_drive_file;
   }
 
-  Color _iconColor(BuildContext context) {
-    if (mimeType.startsWith('image/')) return AppTheme.primaryMagenta;
-    if (mimeType.startsWith('text/')) return AppTheme.primaryBlue;
-    if (mimeType.contains('json')) return AppTheme.primaryPurple;
-    if (mimeType.contains('gpx') || mimeType.contains('kml')) {
+  /// The accent color for this MIME type.
+  Color iconColor(BuildContext context) {
+    final mime = mimeType.toLowerCase();
+
+    if (mime.startsWith('image/')) return AppTheme.primaryMagenta;
+    if (mime == 'text/csv') return AccentColors.orange;
+    if (mime == 'text/html') return AccentColors.red;
+    if (mime.startsWith('text/')) return AppTheme.primaryBlue;
+    if (mime.contains('json')) return AppTheme.primaryPurple;
+    if (mime.contains('xml') || mime.contains('yaml')) {
+      return AppTheme.primaryPurple;
+    }
+    if (mime.contains('gpx') || mime.contains('kml') || mime.contains('kmz')) {
       return SemanticColors.success;
     }
+    if (mime.contains('pdf')) return AccentColors.red;
+    if (mime.contains('zip') || mime.contains('gzip') || mime.contains('tar')) {
+      return AccentColors.orange;
+    }
+    if (mime.startsWith('audio/')) return AccentColors.cyan;
+    if (mime.startsWith('video/')) return AppTheme.primaryMagenta;
+
     return context.accentColor;
   }
 }
