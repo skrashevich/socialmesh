@@ -1,0 +1,69 @@
+{
+  "@@locale": "ru",
+
+  "appTitle": "Socialmesh",
+
+  "commonCancel": "Отмена",
+  "commonSave": "Сохранить",
+  "commonRetry": "Повторить",
+  "commonDone": "Готово",
+  "commonGoBack": "Назад",
+  "commonConfirm": "Подтвердить",
+  "commonDelete": "Удалить",
+  "commonClose": "Закрыть",
+  "commonOk": "OК",
+  "commonContinue": "Продолжить",
+
+  "navigationMenuTooltip": "Меню",
+  "navigationDeviceTooltip": "Устройство",
+
+  "navigationSectionSocial": "СОЦИАЛЬНОЕ",
+  "navigationSectionMesh": "MESH",
+  "navigationSectionPremium": "ПРЕМИУМ",
+  "navigationSectionAccount": "АККАУНТ",
+
+  "navigationSignals": "Сигналы",
+  "navigationSocial": "Социальное",
+  "navigationNodeDex": "NodeDex",
+  "navigationFileTransfers": "Передача файлов",
+  "navigationAether": "Aether",
+  "navigationTakGateway": "TAK Шлюз",
+  "navigationTakMap": "TAK Карта",
+  "navigationActivity": "Активность",
+  "navigationPresence": "Присутствие",
+  "navigationTimeline": "Хронология",
+  "navigationWorldMap": "Карта мира",
+  "navigationMesh3dView": "3D-вид сети",
+  "navigationRoutes": "Маршруты",
+  "navigationReachability": "Доступность",
+  "navigationMeshHealth": "Состояние сети",
+  "navigationDeviceLogs": "Журнал устройства",
+
+  "navigationThemePack": "Пакет тем",
+  "navigationRingtonePack": "Пакет рингтонов",
+  "navigationWidgets": "Виджеты",
+  "navigationAutomations": "Автоматизации",
+  "navigationIftttIntegration": "Интеграция IFTTT",
+
+  "navigationHelpSupport": "Помощь и поддержка",
+
+  "navigationMessages": "Сообщения",
+  "navigationMap": "Карта",
+  "navigationNodes": "Узлы",
+  "navigationDashboard": "Панель",
+
+  "navigationGuestName": "Гость",
+  "navigationNotSignedIn": "Не выполнен вход",
+  "navigationOffline": "Офлайн",
+  "navigationSyncing": "Синхронизация...",
+  "navigationSyncError": "Ошибка синхронизации",
+  "navigationSynced": "Синхронизировано",
+  "navigationViewProfile": "Просмотр профиля",
+
+  "navigationFirmwareMessage": "Прошивка: {message}",
+  "navigationFirmwareErrorTitle": "Ошибка устройства Meshtastic",
+  "navigationFirmwareWarningTitle": "Предупреждение устройства Meshtastic",
+
+  "navigationFlightActivated": "{flightNumber} ({route}) в воздухе!",
+  "navigationFlightCompleted": "{flightNumber} ({route}) рейс завершён"
+}

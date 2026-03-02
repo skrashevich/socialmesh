@@ -2440,10 +2440,19 @@ class ProtocolService {
         _nodeController.add(placeholderNode);
       }
 
+      // rxTime is set by the firmware on the receiving radio before delivery
+      // to the phone over BLE. It is never sent over-the-air. Use it as the
+      // message timestamp so the chat shows when the radio actually received
+      // the packet, not when the app processed it.
+      final timestamp = packet.hasRxTime() && packet.rxTime > 0
+          ? DateTime.fromMillisecondsSinceEpoch(packet.rxTime * 1000)
+          : DateTime.now();
+
       final message = Message(
         from: packet.from,
         to: packet.to,
         text: text,
+        timestamp: timestamp,
         channel: packet.channel,
         received: true,
         packetId: packet.id,
