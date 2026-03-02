@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,6 +16,8 @@ import '../../../core/widgets/node_selector_sheet.dart';
 import '../../../providers/app_providers.dart';
 import '../../../providers/file_transfer_providers.dart';
 import '../../../services/haptic_service.dart';
+import '../../../services/protocol/socialmesh/sm_constants.dart';
+import '../../../services/protocol/socialmesh/sm_file_transfer.dart';
 import '../../../utils/snackbar.dart';
 import '../../navigation/main_shell.dart';
 import 'file_transfer_contacts_screen.dart';
@@ -200,6 +206,42 @@ class _FileTransfersContainerScreenState
     await haptics.trigger(HapticType.medium);
     if (!mounted) return;
 
+    // Step 1: pick the file first so we can validate before asking for a node.
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.any,
+      withData: true,
+    );
+    if (result == null || result.files.isEmpty) return;
+    if (!mounted) return;
+
+    final file = result.files.first;
+    final Uint8List bytes;
+    if (file.bytes != null) {
+      bytes = Uint8List.fromList(file.bytes!);
+    } else if (file.path != null) {
+      bytes = await File(file.path!).readAsBytes();
+    } else {
+      showErrorSnackBar(context, 'Could not read file.');
+      return;
+    }
+    if (!mounted) return;
+
+    // Step 2: validate size against the mesh limit.
+    if (bytes.isEmpty) {
+      showWarningSnackBar(context, 'The selected file is empty.');
+      return;
+    }
+    if (bytes.length > SmFileTransferLimits.maxFileSize) {
+      final fileSizeKb = (bytes.length / 1024.0).toStringAsFixed(1);
+      final limitKb = (SmFileTransferLimits.maxFileSize / 1024).truncate();
+      showErrorSnackBar(
+        context,
+        '${file.name} is $fileSizeKb KB — mesh transfer limit is $limitKb KB.',
+      );
+      return;
+    }
+
+    // Step 3: pick destination node.
     final selection = await NodeSelectorSheet.show(
       context,
       title: 'Send to Node',
@@ -209,12 +251,40 @@ class _FileTransfersContainerScreenState
     if (nodeNum == null) return;
     if (!mounted) return;
 
-    final transfer = await notifier.pickAndSendFile(targetNodeNum: nodeNum);
+    // Step 4: initiate transfer.
+    final mimeType = _guessMimeType(file.name);
+    final transfer = await notifier.sendFile(
+      filename: file.name,
+      mimeType: mimeType,
+      fileBytes: bytes,
+      targetNodeNum: nodeNum,
+      transportMode: FileTransportMode.auto,
+    );
 
     if (!mounted) return;
     if (transfer != null) {
       showSuccessSnackBar(context, 'Transfer started: ${transfer.filename}');
+    } else {
+      showErrorSnackBar(
+        context,
+        'Could not start transfer. Check that a node is connected and try again.',
+      );
     }
+  }
+
+  String _guessMimeType(String filename) {
+    final ext = filename.split('.').last.toLowerCase();
+    return switch (ext) {
+      'txt' || 'md' || 'csv' || 'log' => 'text/plain',
+      'json' => 'application/json',
+      'xml' => 'application/xml',
+      'jpg' || 'jpeg' => 'image/jpeg',
+      'png' => 'image/png',
+      'gif' => 'image/gif',
+      'pdf' => 'application/pdf',
+      'zip' => 'application/zip',
+      _ => 'application/octet-stream',
+    };
   }
 
   Future<void> _clearTerminal() async {
