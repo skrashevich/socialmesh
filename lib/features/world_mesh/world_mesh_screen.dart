@@ -10,6 +10,7 @@ import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/los_analysis.dart';
 import '../../core/map_config.dart';
 import '../../core/safety/lifecycle_mixin.dart';
@@ -214,7 +215,7 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
           appBar: AppBar(
             backgroundColor: context.background,
             title: Text(
-              'World Map',
+              context.l10n.worldMeshTitle,
               style: TextStyle(color: context.textPrimary),
             ),
             actions: [
@@ -243,7 +244,7 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
                         child: const Icon(Icons.star),
                       )
                     : const Icon(Icons.star_border),
-                tooltip: 'Favorites',
+                tooltip: context.l10n.worldMeshFavoritesTooltip,
                 onPressed: () => _openFavorites(context),
               ),
               // Overflow menu for map style and refresh
@@ -282,7 +283,7 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
                     value: 'dark',
                     child: ListTile(
                       leading: const Icon(Icons.layers),
-                      title: const Text('Dark Map'),
+                      title: Text(context.l10n.worldMeshMapStyleDark),
                       trailing: _mapStyle == MapTileStyle.dark
                           ? Icon(Icons.check, size: 18, color: accentColor)
                           : null,
@@ -294,7 +295,7 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
                     value: 'satellite',
                     child: ListTile(
                       leading: const Icon(Icons.layers),
-                      title: const Text('Satellite'),
+                      title: Text(context.l10n.worldMeshMapStyleSatellite),
                       trailing: _mapStyle == MapTileStyle.satellite
                           ? Icon(Icons.check, size: 18, color: accentColor)
                           : null,
@@ -306,7 +307,7 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
                     value: 'light',
                     child: ListTile(
                       leading: const Icon(Icons.layers),
-                      title: const Text('Light Map'),
+                      title: Text(context.l10n.worldMeshMapStyleLight),
                       trailing: _mapStyle == MapTileStyle.light
                           ? Icon(Icons.check, size: 18, color: accentColor)
                           : null,
@@ -318,7 +319,7 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
                     value: 'terrain',
                     child: ListTile(
                       leading: const Icon(Icons.layers),
-                      title: const Text('Terrain'),
+                      title: Text(context.l10n.worldMeshMapStyleTerrain),
                       trailing: _mapStyle == MapTileStyle.terrain
                           ? Icon(Icons.check, size: 18, color: accentColor)
                           : null,
@@ -327,21 +328,21 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
                     ),
                   ),
                   const PopupMenuDivider(),
-                  const PopupMenuItem(
+                  PopupMenuItem(
                     value: 'refresh',
                     child: ListTile(
-                      leading: Icon(Icons.refresh),
-                      title: Text('Refresh'),
+                      leading: const Icon(Icons.refresh),
+                      title: Text(context.l10n.worldMeshRefresh),
                       contentPadding: EdgeInsets.zero,
                       visualDensity: VisualDensity.compact,
                     ),
                   ),
                   const PopupMenuDivider(),
-                  const PopupMenuItem(
+                  PopupMenuItem(
                     value: 'help',
                     child: ListTile(
-                      leading: Icon(Icons.help_outline),
-                      title: Text('Help'),
+                      leading: const Icon(Icons.help_outline),
+                      title: Text(context.l10n.worldMeshHelp),
                       contentPadding: EdgeInsets.zero,
                       visualDensity: VisualDensity.compact,
                     ),
@@ -410,7 +411,7 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
           focusNode: _searchFocusNode,
           style: TextStyle(color: context.textPrimary),
           decoration: InputDecoration(
-            hintText: 'Find a node',
+            hintText: context.l10n.worldMeshSearchHint,
             hintStyle: TextStyle(color: context.textTertiary),
             prefixIcon: Icon(Icons.search, color: context.textTertiary),
             // Close button as suffix
@@ -455,7 +456,7 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
             Icons.filter_list,
             color: activeCount > 0 ? accentColor : null,
           ),
-          tooltip: 'Filter nodes',
+          tooltip: context.l10n.worldMeshFilterTooltip,
           onPressed: () async {
             HapticFeedback.selectionClick();
             await showModalBottomSheet<void>(
@@ -531,7 +532,7 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
                   Icon(Icons.search, size: 14, color: context.textTertiary),
                   SizedBox(width: AppTheme.spacing8),
                   Text(
-                    '${NumberFormatUtils.formatWithThousandsSeparators(results.length)} node${results.length == 1 ? '' : 's'} found',
+                    context.l10n.worldMeshSearchResultCount(results.length),
                     style: context.bodySmallStyle?.copyWith(
                       color: context.textTertiary,
                     ),
@@ -574,17 +575,17 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
                 children: [
                   _StatusLegendItem(
                     color: AppTheme.successGreen,
-                    label: 'Active (<1h)',
+                    label: context.l10n.worldMeshLegendActive,
                   ),
                   SizedBox(width: AppTheme.spacing16),
                   _StatusLegendItem(
                     color: AppTheme.warningYellow,
-                    label: 'Idle (1-24h)',
+                    label: context.l10n.worldMeshLegendIdle,
                   ),
                   const SizedBox(width: AppTheme.spacing16),
                   _StatusLegendItem(
                     color: context.textTertiary,
-                    label: 'Offline (>24h)',
+                    label: context.l10n.worldMeshLegendOffline,
                   ),
                 ],
               ),
@@ -610,7 +611,7 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
             ),
             SizedBox(height: AppTheme.spacing16),
             Text(
-              'Unable to load mesh map',
+              context.l10n.worldMeshErrorTitle,
               style: TextStyle(color: context.textSecondary, fontSize: 16),
             ),
             SizedBox(height: AppTheme.spacing8),
@@ -623,7 +624,10 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
             TextButton(
               onPressed: () =>
                   ref.read(worldMeshMapProvider.notifier).forceRefresh(),
-              child: Text('Retry', style: TextStyle(color: accentColor)),
+              child: Text(
+                context.l10n.worldMeshRetry,
+                style: TextStyle(color: accentColor),
+              ),
             ),
           ],
         ),
@@ -852,10 +856,10 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
                           shape: BoxShape.circle,
                           border: Border.all(color: Colors.black, width: 2),
                         ),
-                        child: const Center(
+                        child: Center(
                           child: Text(
-                            'A',
-                            style: TextStyle(
+                            context.l10n.worldMeshMeasurePointA,
+                            style: const TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
@@ -875,10 +879,10 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
                             shape: BoxShape.circle,
                             border: Border.all(color: Colors.black, width: 2),
                           ),
-                          child: const Center(
+                          child: Center(
                             child: Text(
-                              'B',
-                              style: TextStyle(
+                              context.l10n.worldMeshMeasurePointB,
+                              style: const TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
@@ -973,8 +977,8 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
                     Flexible(
                       child: Text(
                         _measureStart == null
-                            ? 'Tap node or map for point A'
-                            : 'Tap node or map for point B',
+                            ? context.l10n.worldMeshMeasureTapA
+                            : context.l10n.worldMeshMeasureTapB,
                         style: const TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w600,
@@ -1089,7 +1093,7 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
             LoadingIndicator(size: 20),
             SizedBox(width: AppTheme.spacing12),
             Text(
-              'Loading node info...',
+              context.l10n.worldMeshLoadingNodeInfo,
               style: TextStyle(color: context.textSecondary, fontSize: 14),
             ),
           ],
@@ -1149,7 +1153,9 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
                   theme,
                   hasFilters ? Icons.filter_alt : Icons.public,
                   visibleCount,
-                  hasFilters ? 'filtered' : 'visible',
+                  hasFilters
+                      ? context.l10n.worldMeshStatsFiltered
+                      : context.l10n.worldMeshStatsVisible,
                   highlight: hasFilters,
                 ),
                 const SizedBox(width: AppTheme.spacing16),
@@ -1157,7 +1163,7 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
                   theme,
                   Icons.cloud_done,
                   state.nodeCount,
-                  'total',
+                  context.l10n.worldMeshStatsTotal,
                 ),
                 const Spacer(),
                 if (state.lastUpdated != null)
@@ -1166,7 +1172,7 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
                       ref.read(worldMeshMapProvider.notifier).forceRefresh();
                       showInfoSnackBar(
                         context,
-                        'Refreshing world mesh data...',
+                        context.l10n.worldMeshRefreshing,
                       );
                     },
                     child: Row(
@@ -1250,9 +1256,13 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
 
   String _formatLastUpdated(DateTime time) {
     final diff = DateTime.now().difference(time);
-    if (diff.inSeconds < 60) return 'just now';
-    if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
-    return '${diff.inHours}h ago';
+    if (diff.inSeconds < 60) {
+      return context.l10n.worldMeshTimeJustNow;
+    }
+    if (diff.inMinutes < 60) {
+      return context.l10n.worldMeshTimeMinutesAgo(diff.inMinutes);
+    }
+    return context.l10n.worldMeshTimeHoursAgo(diff.inHours);
   }
 }
 
@@ -1402,7 +1412,7 @@ class _LazySearchResultsListState extends State<_LazySearchResultsList> {
             padding: const EdgeInsets.all(AppTheme.spacing16),
             child: Center(
               child: Text(
-                'Scroll for more...',
+                context.l10n.worldMeshScrollForMore,
                 style: context.bodySmallStyle?.copyWith(
                   color: context.textTertiary,
                 ),
@@ -1627,9 +1637,9 @@ class _WorldNodeInfoCardState extends ConsumerState<WorldNodeInfoCard> {
     ref.read(nodeFavoritesProvider.notifier).toggleFavorite(node);
 
     if (isFavorite) {
-      showInfoSnackBar(context, 'Removed from favorites');
+      showInfoSnackBar(context, context.l10n.worldMeshRemovedFromFavorites);
     } else {
-      showSuccessSnackBar(context, 'Added to favorites');
+      showSuccessSnackBar(context, context.l10n.worldMeshAddedToFavorites);
     }
   }
 
@@ -1721,7 +1731,7 @@ class _WorldNodeInfoCardState extends ConsumerState<WorldNodeInfoCard> {
                                 ),
                               ),
                               child: Text(
-                                'ACTIVE',
+                                context.l10n.worldMeshBadgeActive,
                                 style: TextStyle(
                                   color: AppTheme.successGreen,
                                   fontSize: 9,
@@ -1745,8 +1755,8 @@ class _WorldNodeInfoCardState extends ConsumerState<WorldNodeInfoCard> {
                   ),
                   onPressed: _toggleFavorite,
                   tooltip: isFavorite
-                      ? 'Remove from favorites'
-                      : 'Add to favorites',
+                      ? context.l10n.worldMeshRemoveFromFavorites
+                      : context.l10n.worldMeshAddToFavorites,
                 ),
                 IconButton(
                   icon: Icon(Icons.close, size: 20),
@@ -1771,36 +1781,63 @@ class _WorldNodeInfoCardState extends ConsumerState<WorldNodeInfoCard> {
                   const SizedBox(height: AppTheme.spacing16),
 
                   // Device Info Section
-                  _buildSectionHeader(theme, Icons.memory, 'Device'),
+                  _buildSectionHeader(
+                    theme,
+                    Icons.memory,
+                    context.l10n.worldMeshSectionDevice,
+                  ),
                   const SizedBox(height: AppTheme.spacing8),
                   _buildInfoGrid([
-                    _InfoItem('Hardware', _formatHardware(node.hwModel)),
-                    _InfoItem('Role', _formatRole(node.role)),
+                    _InfoItem(
+                      context.l10n.worldMeshInfoHardware,
+                      _formatHardware(node.hwModel),
+                    ),
+                    _InfoItem(
+                      context.l10n.worldMeshInfoRole,
+                      _formatRole(node.role),
+                    ),
                     if (node.fwVersion != null)
-                      _InfoItem('Firmware', node.fwVersion!),
-                    if (node.region != null) _InfoItem('Region', node.region!),
+                      _InfoItem(
+                        context.l10n.worldMeshInfoFirmware,
+                        node.fwVersion!,
+                      ),
+                    if (node.region != null)
+                      _InfoItem(context.l10n.worldMeshInfoRegion, node.region!),
                     if (node.modemPreset != null)
-                      _InfoItem('Modem', node.modemPreset!),
+                      _InfoItem(
+                        context.l10n.worldMeshInfoModem,
+                        node.modemPreset!,
+                      ),
                     if (node.onlineLocalNodes != null)
-                      _InfoItem('Local Nodes', '${node.onlineLocalNodes}'),
+                      _InfoItem(
+                        context.l10n.worldMeshInfoLocalNodes,
+                        '${node.onlineLocalNodes}',
+                      ),
                   ]),
 
                   // Position Section
                   if (node.altitude != null ||
                       node.precisionMarginMeters != null) ...[
                     const SizedBox(height: AppTheme.spacing16),
-                    _buildSectionHeader(theme, Icons.location_on, 'Position'),
+                    _buildSectionHeader(
+                      theme,
+                      Icons.location_on,
+                      context.l10n.worldMeshSectionPosition,
+                    ),
                     const SizedBox(height: AppTheme.spacing8),
                     _buildInfoGrid([
                       _InfoItem(
-                        'Coordinates',
+                        context.l10n.worldMeshInfoCoordinates,
                         '${node.latitudeDecimal.toStringAsFixed(5)}, ${node.longitudeDecimal.toStringAsFixed(5)}',
                       ),
                       if (node.altitude != null)
-                        _InfoItem('Altitude', '${node.altitude}m'),
+                        _InfoItem(
+                          context.l10n.worldMeshInfoAltitude,
+                          '${node.altitude}m',
+                        ),
                       if (node.precisionMarginMeters != null)
                         _InfoItem(
-                          'Precision',
+                          context.l10n.worldMeshInfoPrecision,
                           '±${_formatDistance(node.precisionMarginMeters!)}',
                         ),
                     ]),
@@ -1816,7 +1853,7 @@ class _WorldNodeInfoCardState extends ConsumerState<WorldNodeInfoCard> {
                     _buildSectionHeader(
                       theme,
                       Icons.analytics,
-                      'Device Metrics',
+                      context.l10n.worldMeshSectionDeviceMetrics,
                     ),
                     const SizedBox(height: AppTheme.spacing8),
                     _buildMetricsRow(theme, [
@@ -1849,7 +1886,7 @@ class _WorldNodeInfoCardState extends ConsumerState<WorldNodeInfoCard> {
                       Padding(
                         padding: const EdgeInsets.only(top: 8),
                         child: Text(
-                          'Uptime: ${node.uptimeString}',
+                          context.l10n.worldMeshUptimeLabel(node.uptimeString!),
                           style: TextStyle(
                             color: context.textSecondary,
                             fontSize: 12,
@@ -1865,7 +1902,11 @@ class _WorldNodeInfoCardState extends ConsumerState<WorldNodeInfoCard> {
                       node.windSpeed != null ||
                       node.lux != null) ...[
                     const SizedBox(height: AppTheme.spacing16),
-                    _buildSectionHeader(theme, Icons.thermostat, 'Environment'),
+                    _buildSectionHeader(
+                      theme,
+                      Icons.thermostat,
+                      context.l10n.worldMeshSectionEnvironment,
+                    ),
                     const SizedBox(height: AppTheme.spacing8),
                     _buildMetricsRow(theme, [
                       if (node.temperature != null)
@@ -1923,7 +1964,9 @@ class _WorldNodeInfoCardState extends ConsumerState<WorldNodeInfoCard> {
                     _buildSectionHeader(
                       theme,
                       Icons.people,
-                      'Neighbors (${NumberFormatUtils.formatWithThousandsSeparators(node.neighbors!.length)})',
+                      context.l10n.worldMeshSectionNeighbors(
+                        node.neighbors!.length,
+                      ),
                     ),
                     const SizedBox(height: AppTheme.spacing8),
                     Wrap(
@@ -1960,13 +2003,15 @@ class _WorldNodeInfoCardState extends ConsumerState<WorldNodeInfoCard> {
                     _buildSectionHeader(
                       theme,
                       Icons.wifi_tethering,
-                      'Seen By (${NumberFormatUtils.formatWithThousandsSeparators(node.seenBy.length)} gateways)',
+                      context.l10n.worldMeshSectionSeenBy(node.seenBy.length),
                     ),
                     const SizedBox(height: AppTheme.spacing8),
                     Text(
                       node.seenBy.keys.take(3).join(', ') +
                           (node.seenBy.length > 3
-                              ? ' +${NumberFormatUtils.formatWithThousandsSeparators(node.seenBy.length - 3)} more'
+                              ? context.l10n.worldMeshMoreGateways(
+                                  node.seenBy.length - 3,
+                                )
                               : ''),
                       style: TextStyle(
                         color: context.textSecondary,
@@ -1986,7 +2031,7 @@ class _WorldNodeInfoCardState extends ConsumerState<WorldNodeInfoCard> {
                       ),
                       SizedBox(width: AppTheme.spacing6),
                       Text(
-                        'Last seen: ${node.lastSeenString}',
+                        context.l10n.worldMeshLastSeen(node.lastSeenString),
                         style: TextStyle(
                           color: context.textSecondary,
                           fontSize: 12,
@@ -2010,10 +2055,13 @@ class _WorldNodeInfoCardState extends ConsumerState<WorldNodeInfoCard> {
                   child: OutlinedButton.icon(
                     onPressed: () {
                       Clipboard.setData(ClipboardData(text: node.nodeId));
-                      showSuccessSnackBar(context, 'Node ID copied');
+                      showSuccessSnackBar(
+                        context,
+                        context.l10n.worldMeshNodeIdCopied,
+                      );
                     },
                     icon: const Icon(Icons.copy, size: 16),
-                    label: const Text('Copy ID'),
+                    label: Text(context.l10n.worldMeshCopyId),
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 12),
                     ),
@@ -2024,7 +2072,7 @@ class _WorldNodeInfoCardState extends ConsumerState<WorldNodeInfoCard> {
                   child: FilledButton.icon(
                     onPressed: onFocus,
                     icon: const Icon(Icons.center_focus_strong, size: 16),
-                    label: const Text('Focus'),
+                    label: Text(context.l10n.worldMeshFocus),
                     style: FilledButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 12),
                     ),
@@ -2279,7 +2327,7 @@ class _WorldMeasurementCardState extends State<_WorldMeasurementCard> {
       header: Padding(
         padding: const EdgeInsets.only(bottom: AppTheme.spacing4),
         child: Text(
-          'Measurement Actions',
+          context.l10n.worldMeshMeasurementActions,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -2291,13 +2339,13 @@ class _WorldMeasurementCardState extends State<_WorldMeasurementCard> {
         if (hasElevation)
           BottomSheetAction(
             icon: Icons.visibility,
-            label: 'LOS Analysis',
-            subtitle: 'Earth curvature + Fresnel zone check',
+            label: context.l10n.worldMeshLosAnalysis,
+            subtitle: context.l10n.worldMeshLosSubtitle,
             onTap: () => setState(() => _showLos = !_showLos),
           ),
         BottomSheetAction(
           icon: Icons.copy,
-          label: 'Copy Summary',
+          label: context.l10n.worldMeshCopySummary,
           subtitle: _formatDist(distanceKm),
           onTap: () {
             Clipboard.setData(
@@ -2311,14 +2359,17 @@ class _WorldMeasurementCardState extends State<_WorldMeasurementCard> {
               ),
             );
             if (context.mounted) {
-              showSuccessSnackBar(context, 'Measurement copied to clipboard');
+              showSuccessSnackBar(
+                context,
+                context.l10n.worldMeshMeasurementCopied,
+              );
             }
           },
         ),
         BottomSheetAction(
           icon: Icons.pin_drop,
-          label: 'Copy Coordinates',
-          subtitle: 'Both A and B coordinates',
+          label: context.l10n.worldMeshCopyCoordinates,
+          subtitle: context.l10n.worldMeshCopyCoordinatesSubtitle,
           onTap: () {
             final a = widget.start;
             final b = widget.end;
@@ -2332,14 +2383,17 @@ class _WorldMeasurementCardState extends State<_WorldMeasurementCard> {
               ),
             );
             if (context.mounted) {
-              showSuccessSnackBar(context, 'Coordinates copied to clipboard');
+              showSuccessSnackBar(
+                context,
+                context.l10n.worldMeshCoordinatesCopied,
+              );
             }
           },
         ),
         BottomSheetAction(
           icon: Icons.open_in_new,
-          label: 'Open Midpoint in Maps',
-          subtitle: 'Open in external map app',
+          label: context.l10n.worldMeshOpenMidpointInMaps,
+          subtitle: context.l10n.worldMeshOpenMidpointSubtitle,
           onTap: () {
             final midLat = (widget.start.latitude + widget.end.latitude) / 2.0;
             final midLon =
@@ -2353,31 +2407,34 @@ class _WorldMeasurementCardState extends State<_WorldMeasurementCard> {
         if (widget.onSwap != null)
           BottomSheetAction(
             icon: Icons.swap_horiz,
-            label: 'Swap A \u2194 B',
-            subtitle: 'Reverse measurement direction',
+            label: context.l10n.worldMeshSwapAB,
+            subtitle: context.l10n.worldMeshSwapSubtitle,
             onTap: widget.onSwap,
           ),
         if (hasElevation)
           BottomSheetAction(
             icon: Icons.terrain,
-            label: 'RF Link Budget',
-            subtitle:
-                'FSPL: ${_pathLoss(distanceM, 906.0).toStringAsFixed(0)} dB',
+            label: context.l10n.worldMeshRfLinkBudget,
+            subtitle: context.l10n.worldMeshFsplSubtitle(
+              _pathLoss(distanceM, 906.0).toStringAsFixed(0),
+            ),
             onTap: () {
               final fspl = _pathLoss(distanceM, 906.0);
               Clipboard.setData(
                 ClipboardData(
-                  text:
-                      'RF Link Budget (free-space path loss)\n'
-                      'Distance: ${_formatDist(distanceKm)}\n'
-                      'Frequency: 906 MHz\n'
-                      'FSPL: ${fspl.toStringAsFixed(1)} dB\n'
-                      'Alt A: ${altA}m · Alt B: ${altB}m\n'
-                      'Bearing: ${bearing.toStringAsFixed(0)}° $cardinal',
+                  text: context.l10n.worldMeshRfLinkBudgetClipboard(
+                    _formatDist(distanceKm),
+                    '906 MHz',
+                    '${fspl.toStringAsFixed(1)} dB',
+                    'Alt A: ${altA}m · Alt B: ${altB}m\nBearing: ${bearing.toStringAsFixed(0)}° $cardinal',
+                  ),
                 ),
               );
               if (context.mounted) {
-                showSuccessSnackBar(context, 'Link budget copied to clipboard');
+                showSuccessSnackBar(
+                  context,
+                  context.l10n.worldMeshLinkBudgetCopied,
+                );
               }
             },
           ),
@@ -2507,19 +2564,19 @@ class _WorldMeasurementCardState extends State<_WorldMeasurementCard> {
                   icon: Icon(Icons.refresh, size: 20),
                   color: context.textTertiary,
                   onPressed: widget.onClear,
-                  tooltip: 'New measurement',
+                  tooltip: context.l10n.worldMeshNewMeasurement,
                 ),
                 IconButton(
                   icon: const Icon(Icons.close, size: 20),
                   color: AppTheme.errorRed,
                   onPressed: widget.onExitMeasureMode,
-                  tooltip: 'Exit measure mode',
+                  tooltip: context.l10n.worldMeshExitMeasureMode,
                 ),
               ],
             ),
             const SizedBox(height: AppTheme.spacing4),
             Text(
-              'Long-press for actions',
+              context.l10n.worldMeshLongPressHint,
               style: TextStyle(fontSize: 10, color: context.textTertiary),
             ),
             if (_showLos && hasElevation) ...[
@@ -2589,7 +2646,7 @@ class _WorldLosResultPanel extends StatelessWidget {
               Icon(verdictIcon, size: 16, color: verdictColor),
               const SizedBox(width: AppTheme.spacing4),
               Text(
-                'LOS: ${result.verdict.label}',
+                context.l10n.worldMeshLosVerdict(result.verdict.label),
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
@@ -2598,8 +2655,10 @@ class _WorldLosResultPanel extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                'Bulge: ${result.earthBulgeMeters.toStringAsFixed(1)}m '
-                '· F1: ${result.fresnelRadiusMeters.toStringAsFixed(1)}m',
+                context.l10n.worldMeshLosBulgeAndFresnel(
+                  result.earthBulgeMeters.toStringAsFixed(1),
+                  result.fresnelRadiusMeters.toStringAsFixed(1),
+                ),
                 style: TextStyle(fontSize: 11, color: context.textTertiary),
               ),
             ],

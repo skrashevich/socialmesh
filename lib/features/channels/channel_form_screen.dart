@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:socialmesh/core/logging.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
 import '../../core/transport.dart';
@@ -14,6 +15,7 @@ import '../../core/widgets/channel_key_field.dart';
 import '../../core/widgets/status_banner.dart';
 import '../../models/mesh_models.dart';
 import '../../providers/app_providers.dart';
+import '../../l10n/app_localizations.dart';
 import '../../utils/encoding.dart';
 import '../../utils/snackbar.dart';
 import '../../utils/validation.dart';
@@ -22,14 +24,26 @@ import '../../core/widgets/loading_indicator.dart';
 
 /// Key size options
 enum KeySize {
-  none(0, 'No Encryption'),
-  default1(1, 'Default (Simple)'),
-  bit128(16, 'AES-128'),
-  bit256(32, 'AES-256');
+  none(0),
+  default1(1),
+  bit128(16),
+  bit256(32);
 
   final int bytes;
-  final String displayName;
-  const KeySize(this.bytes, this.displayName);
+  const KeySize(this.bytes);
+
+  String displayName(AppLocalizations l10n) {
+    switch (this) {
+      case KeySize.none:
+        return l10n.channelFormKeySizeNone;
+      case KeySize.default1:
+        return l10n.channelFormKeySizeDefault;
+      case KeySize.bit128:
+        return l10n.channelFormKeySizeAes128;
+      case KeySize.bit256:
+        return l10n.channelFormKeySizeAes256;
+    }
+  }
 
   static KeySize fromBytes(int bytes) {
     switch (bytes) {
@@ -159,6 +173,18 @@ class _ChannelFormScreenState extends ConsumerState<ChannelFormScreen>
     FocusScope.of(context).unfocus();
   }
 
+  String _localizeKeyError(BuildContext context, String errorCode) {
+    if (errorCode == 'invalid_base64') {
+      return context.l10n.channelFormInvalidBase64;
+    } else if (errorCode.startsWith('invalid_key_size:')) {
+      final bytes = int.tryParse(errorCode.split(':').last) ?? 0;
+      return context.l10n.channelFormInvalidKeySize(bytes);
+    } else if (errorCode == 'key_empty') {
+      return context.l10n.channelFormKeyEmpty;
+    }
+    return errorCode;
+  }
+
   void _generateRandomKey() {
     if (_selectedKeySize == KeySize.none) {
       _keyController.text = '';
@@ -200,14 +226,13 @@ class _ChannelFormScreenState extends ConsumerState<ChannelFormScreen>
       // Check if it's a decoding error vs size error
       final decoded = ChannelKeyUtils.base64ToKey(keyText);
       if (decoded == null) {
-        _keyValidationError = 'Invalid base64 encoding';
+        _keyValidationError = 'invalid_base64';
       } else {
-        _keyValidationError =
-            'Invalid key size (${decoded.length} bytes). Use 1, 16, or 32 bytes.';
+        _keyValidationError = 'invalid_key_size:${decoded.length}';
       }
       _detectedKeySize = null;
     } else if (validatedSize == 0) {
-      _keyValidationError = 'Key cannot be empty';
+      _keyValidationError = 'key_empty';
       _detectedKeySize = null;
     } else {
       _keyValidationError = null;
@@ -226,7 +251,7 @@ class _ChannelFormScreenState extends ConsumerState<ChannelFormScreen>
     );
 
     if (!isConnected) {
-      showErrorSnackBar(context, 'Cannot save channel: Device not connected');
+      showErrorSnackBar(context, context.l10n.channelFormDeviceNotConnected);
       return;
     }
 
@@ -234,7 +259,8 @@ class _ChannelFormScreenState extends ConsumerState<ChannelFormScreen>
     if (_selectedKeySize != KeySize.none) {
       _validateAndDetectKey(_keyController.text);
       if (_keyValidationError != null) {
-        showErrorSnackBar(context, 'Invalid key: $_keyValidationError');
+        final errorMsg = _localizeKeyError(context, _keyValidationError!);
+        showErrorSnackBar(context, errorMsg);
         return;
       }
     }
@@ -269,7 +295,7 @@ class _ChannelFormScreenState extends ConsumerState<ChannelFormScreen>
           index++;
         }
         if (index >= 8) {
-          throw Exception('Maximum 8 channels allowed');
+          throw Exception('max_channels');
         }
       }
 
@@ -306,7 +332,7 @@ class _ChannelFormScreenState extends ConsumerState<ChannelFormScreen>
 
       // Verify we have node info (indicates device is ready)
       if (protocol.myNodeNum == null) {
-        throw Exception('Device not ready - please wait for connection');
+        throw Exception('device_not_ready');
       }
 
       await protocol.setChannel(newChannel);
@@ -325,17 +351,36 @@ class _ChannelFormScreenState extends ConsumerState<ChannelFormScreen>
 
       if (psk.isNotEmpty) {
         await secureStorage.storeChannelKey(
-          newChannel.name.isEmpty ? 'Channel $index' : newChannel.name,
+          newChannel.name.isEmpty
+              ? context.l10n.channelFormDefaultName(index)
+              : newChannel.name,
           psk,
         );
         if (!mounted) return;
       }
 
       safeNavigatorPop();
-      safeShowSnackBar(isEditing ? 'Channel updated' : 'Channel created');
+      safeShowSnackBar(
+        isEditing
+            ? context.l10n.channelFormUpdatedSnackbar
+            : context.l10n.channelFormCreatedSnackbar,
+      );
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Error: $e');
+        final errorStr = e.toString();
+        if (errorStr.contains('max_channels')) {
+          showErrorSnackBar(
+            context,
+            context.l10n.channelFormMaxChannelsReached,
+          );
+        } else if (errorStr.contains('device_not_ready')) {
+          showErrorSnackBar(context, context.l10n.channelFormDeviceNotReady);
+        } else {
+          showErrorSnackBar(
+            context,
+            context.l10n.channelFormError(e.toString()),
+          );
+        }
       }
     } finally {
       safeSetState(() => _isSaving = false);
@@ -351,7 +396,9 @@ class _ChannelFormScreenState extends ConsumerState<ChannelFormScreen>
           icon: Icon(Icons.close, color: context.textPrimary),
           onPressed: () => Navigator.pop(context),
         ),
-        title: isEditing ? 'Edit Channel' : 'New Channel',
+        title: isEditing
+            ? context.l10n.channelFormEditTitle
+            : context.l10n.channelFormNewTitle,
         centerTitle: true,
         actions: [
           Padding(
@@ -361,7 +408,7 @@ class _ChannelFormScreenState extends ConsumerState<ChannelFormScreen>
               child: _isSaving
                   ? LoadingIndicator(size: 20)
                   : Text(
-                      'Save',
+                      context.l10n.channelFormSaveButton,
                       style: TextStyle(
                         color: context.accentColor,
                         fontWeight: FontWeight.w600,
@@ -382,7 +429,7 @@ class _ChannelFormScreenState extends ConsumerState<ChannelFormScreen>
               const SizedBox(height: AppTheme.spacing28),
 
               // Encryption Section
-              _buildFieldLabel('Encryption'),
+              _buildFieldLabel(context.l10n.channelFormEncryptionLabel),
               const SizedBox(height: AppTheme.spacing8),
               _buildEncryptionSelector(),
 
@@ -406,14 +453,14 @@ class _ChannelFormScreenState extends ConsumerState<ChannelFormScreen>
               const SizedBox(height: AppTheme.spacing28),
 
               // Position Settings
-              _buildFieldLabel('Position'),
+              _buildFieldLabel(context.l10n.channelFormPositionLabel),
               const SizedBox(height: AppTheme.spacing8),
               _buildPositionOptions(),
 
               const SizedBox(height: AppTheme.spacing28),
 
               // MQTT Settings
-              _buildFieldLabel('MQTT'),
+              _buildFieldLabel(context.l10n.channelFormMqttLabel),
               const SizedBox(height: AppTheme.spacing8),
               _buildMqttOptions(),
 
@@ -471,7 +518,7 @@ class _ChannelFormScreenState extends ConsumerState<ChannelFormScreen>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Channel Name',
+                        context.l10n.channelFormNameTitle,
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w600,
@@ -480,7 +527,7 @@ class _ChannelFormScreenState extends ConsumerState<ChannelFormScreen>
                       ),
                       SizedBox(height: AppTheme.spacing2),
                       Text(
-                        'Max 11 characters',
+                        context.l10n.channelFormNameMaxHint,
                         style: TextStyle(
                           fontSize: 12,
                           color: context.textTertiary,
@@ -536,7 +583,7 @@ class _ChannelFormScreenState extends ConsumerState<ChannelFormScreen>
                 border: InputBorder.none,
                 isDense: true,
                 contentPadding: EdgeInsets.all(AppTheme.spacing16),
-                hintText: 'Enter channel name (no spaces)',
+                hintText: context.l10n.channelFormNameHint,
                 hintStyle: TextStyle(
                   color: context.textTertiary,
                   fontWeight: FontWeight.w400,
@@ -635,7 +682,7 @@ class _ChannelFormScreenState extends ConsumerState<ChannelFormScreen>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                keySize.displayName,
+                                keySize.displayName(context.l10n),
                                 style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: isSelected
@@ -649,10 +696,12 @@ class _ChannelFormScreenState extends ConsumerState<ChannelFormScreen>
                               SizedBox(height: AppTheme.spacing2),
                               Text(
                                 keySize == KeySize.none
-                                    ? 'Messages sent in plaintext'
+                                    ? context.l10n.channelFormKeySizeNoneDesc
                                     : keySize == KeySize.default1
-                                    ? '1-byte simple key (AQ==)'
-                                    : '${keySize.bytes * 8}-bit encryption key',
+                                    ? context.l10n.channelFormKeySizeDefaultDesc
+                                    : context.l10n.channelFormKeySizeBitDesc(
+                                        keySize.bytes * 8,
+                                      ),
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: context.textTertiary,
@@ -710,8 +759,8 @@ class _ChannelFormScreenState extends ConsumerState<ChannelFormScreen>
           _buildToggleRow(
             icon: Icons.location_on_outlined,
             iconColor: context.accentColor,
-            title: 'Positions Enabled',
-            subtitle: 'Share position on this channel',
+            title: context.l10n.channelFormPositionEnabledTitle,
+            subtitle: context.l10n.channelFormPositionEnabledSubtitle,
             value: _positionEnabled,
             onChanged: (v) {
               setState(() {
@@ -749,8 +798,8 @@ class _ChannelFormScreenState extends ConsumerState<ChannelFormScreen>
           _buildToggleRow(
             icon: Icons.cloud_upload_outlined,
             iconColor: context.accentColor,
-            title: 'Uplink Enabled',
-            subtitle: 'Forward messages to MQTT server',
+            title: context.l10n.channelFormUplinkTitle,
+            subtitle: context.l10n.channelFormUplinkSubtitle,
             value: _uplinkEnabled,
             onChanged: (v) => setState(() => _uplinkEnabled = v),
           ),
@@ -762,8 +811,8 @@ class _ChannelFormScreenState extends ConsumerState<ChannelFormScreen>
           _buildToggleRow(
             icon: Icons.cloud_download_outlined,
             iconColor: context.accentColor,
-            title: 'Downlink Enabled',
-            subtitle: 'Receive messages from MQTT server',
+            title: context.l10n.channelFormDownlinkTitle,
+            subtitle: context.l10n.channelFormDownlinkSubtitle,
             value: _downlinkEnabled,
             onChanged: (v) => setState(() => _downlinkEnabled = v),
           ),
@@ -772,13 +821,7 @@ class _ChannelFormScreenState extends ConsumerState<ChannelFormScreen>
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: StatusBanner.info(
-                title:
-                    'Most devices have very limited processing power '
-                    'and RAM. Bridging a busy channel like LongFast '
-                    'via the default MQTT server can flood the device '
-                    'with 15-25 packets per second, causing it to '
-                    'stop responding. Consider using a private broker '
-                    'or a quieter channel.',
+                title: context.l10n.channelFormMqttWarning,
                 margin: EdgeInsets.zero,
               ),
             ),
@@ -845,17 +888,17 @@ class _ChannelFormScreenState extends ConsumerState<ChannelFormScreen>
     // iOS values: 12 ≈ 5.8km, 13 ≈ 2.9km, 14 ≈ 1.5km, 15 ≈ 700m
     switch (precision) {
       case 12:
-        return 'Within 5.8 km';
+        return context.l10n.channelFormPrecision12;
       case 13:
-        return 'Within 2.9 km';
+        return context.l10n.channelFormPrecision13;
       case 14:
-        return 'Within 1.5 km';
+        return context.l10n.channelFormPrecision14;
       case 15:
-        return 'Within 700 m';
+        return context.l10n.channelFormPrecision15;
       case 32:
-        return 'Precise location';
+        return context.l10n.channelFormPrecision32;
       default:
-        return 'Unknown';
+        return context.l10n.channelFormPrecisionUnknown;
     }
   }
 
@@ -897,7 +940,7 @@ class _ChannelFormScreenState extends ConsumerState<ChannelFormScreen>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Precise Location',
+                        context.l10n.channelFormPreciseLocationTitle,
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w500,
@@ -906,7 +949,7 @@ class _ChannelFormScreenState extends ConsumerState<ChannelFormScreen>
                       ),
                       const SizedBox(height: AppTheme.spacing2),
                       Text(
-                        'Share exact GPS coordinates',
+                        context.l10n.channelFormPreciseLocationSubtitle,
                         style: TextStyle(
                           fontSize: 12,
                           color: context.textTertiary,
@@ -947,7 +990,7 @@ class _ChannelFormScreenState extends ConsumerState<ChannelFormScreen>
                 const SizedBox(width: AppTheme.spacing14),
                 Expanded(
                   child: Text(
-                    'Approximate Location',
+                    context.l10n.channelFormApproxLocationTitle,
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w500,
@@ -996,9 +1039,8 @@ class _ChannelFormScreenState extends ConsumerState<ChannelFormScreen>
 
   Widget _buildPrimaryChannelNote() {
     return StatusBanner.warning(
-      title: 'Primary Channel',
-      subtitle:
-          'This is the main channel for device communication. Changes may affect connectivity.',
+      title: context.l10n.channelFormPrimaryChannelTitle,
+      subtitle: context.l10n.channelFormPrimaryChannelNote,
     );
   }
 

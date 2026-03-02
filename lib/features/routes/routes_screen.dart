@@ -12,6 +12,7 @@ import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../core/theme.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/widgets/app_bar_overflow_menu.dart';
 import '../../core/widgets/animations.dart';
 import '../../core/safety/lifecycle_mixin.dart';
@@ -45,7 +46,7 @@ class _RoutesScreenState extends ConsumerState<RoutesScreen>
       topicId: 'routes_overview',
       stepKeys: const {},
       child: GlassScaffold(
-        title: 'Routes',
+        title: context.l10n.routesScreenTitle,
         actions: [
           IcoHelpAppBarButton(topicId: 'routes_overview'),
           AppBarOverflowMenu<String>(
@@ -71,7 +72,7 @@ class _RoutesScreenState extends ConsumerState<RoutesScreen>
                         size: 20,
                       ),
                       const SizedBox(width: AppTheme.spacing12),
-                      const Text('Start Route'),
+                      Text(context.l10n.routesStartRoute),
                     ],
                   ),
                 ),
@@ -85,7 +86,7 @@ class _RoutesScreenState extends ConsumerState<RoutesScreen>
                       size: 20,
                     ),
                     const SizedBox(width: AppTheme.spacing12),
-                    const Text('Import GPX'),
+                    Text(context.l10n.routesImportGpx),
                   ],
                 ),
               ),
@@ -133,7 +134,7 @@ class _RoutesScreenState extends ConsumerState<RoutesScreen>
           Icon(Icons.route_outlined, size: 80, color: context.textTertiary),
           const SizedBox(height: AppTheme.spacing24),
           Text(
-            'No Routes Yet',
+            context.l10n.routesEmptyTitle,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -142,7 +143,7 @@ class _RoutesScreenState extends ConsumerState<RoutesScreen>
           ),
           const SizedBox(height: AppTheme.spacing8),
           Text(
-            'Record your first route or import a GPX file',
+            context.l10n.routesEmptyDescription,
             style: context.bodySecondaryStyle?.copyWith(
               color: context.textTertiary,
             ),
@@ -170,12 +171,12 @@ class _RoutesScreenState extends ConsumerState<RoutesScreen>
   }
 
   void _deleteRoute(route_model.Route route) async {
+    final l10n = context.l10n;
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Delete Route?',
-      message:
-          'Are you sure you want to delete "${route.name}"? This cannot be undone.',
-      confirmLabel: 'Delete',
+      title: l10n.routesDeleteConfirmTitle,
+      message: l10n.routesDeleteConfirmMessage(route.name),
+      confirmLabel: l10n.routesDeleteConfirmAction,
       isDestructive: true,
     );
     if (!mounted) return;
@@ -186,6 +187,7 @@ class _RoutesScreenState extends ConsumerState<RoutesScreen>
   }
 
   void _exportRoute(route_model.Route route) async {
+    final l10n = context.l10n;
     final storageAsync = ref.read(routeStorageProvider);
     final storage = storageAsync.value;
     if (storage == null) return;
@@ -212,18 +214,19 @@ class _RoutesScreenState extends ConsumerState<RoutesScreen>
       await Share.shareXFiles(
         [XFile(file.path)],
         subject: fileName,
-        text: 'Route: ${route.name}',
+        text: l10n.routesShareText(route.name),
         sharePositionOrigin: safePosition,
       );
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Export failed: $e');
+        showErrorSnackBar(context, l10n.routesExportFailed(e.toString()));
       }
     }
   }
 
   Future<void> _importRoute() async {
     // Capture providers before async gap
+    final l10n = context.l10n;
     final storageAsync = ref.read(routeStorageProvider);
     final routesNotifier = ref.read(routesProvider.notifier);
 
@@ -239,7 +242,7 @@ class _RoutesScreenState extends ConsumerState<RoutesScreen>
       final file = result.files.first;
       if (file.bytes == null) {
         if (mounted) {
-          showErrorSnackBar(context, 'Failed to read file');
+          showErrorSnackBar(context, l10n.routesFileReadFailed);
         }
         return;
       }
@@ -252,16 +255,19 @@ class _RoutesScreenState extends ConsumerState<RoutesScreen>
       if (importedRoute != null) {
         await routesNotifier.saveRoute(importedRoute);
         if (mounted) {
-          showSuccessSnackBar(context, 'Imported: ${importedRoute.name}');
+          showSuccessSnackBar(
+            context,
+            l10n.routesImportSuccess(importedRoute.name),
+          );
         }
       } else {
         if (mounted) {
-          showErrorSnackBar(context, 'Invalid GPX file');
+          showErrorSnackBar(context, l10n.routesInvalidGpxFile);
         }
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Import failed: $e');
+        showErrorSnackBar(context, l10n.routesImportFailed(e.toString()));
       }
     }
   }
@@ -337,8 +343,8 @@ class _ActiveRouteBannerState extends ConsumerState<_ActiveRouteBanner>
                     ),
                   ),
                   const SizedBox(width: AppTheme.spacing8),
-                  const Text(
-                    'Recording',
+                  Text(
+                    context.l10n.routesRecordingLabel,
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
@@ -347,7 +353,7 @@ class _ActiveRouteBannerState extends ConsumerState<_ActiveRouteBanner>
                   ),
                   const Spacer(),
                   Text(
-                    '${route.locations.length} points',
+                    context.l10n.routesPointCount(route.locations.length),
                     style: TextStyle(
                       fontSize: 12,
                       color: context.textSecondary,
@@ -366,7 +372,10 @@ class _ActiveRouteBannerState extends ConsumerState<_ActiveRouteBanner>
               ),
               const SizedBox(height: AppTheme.spacing4),
               Text(
-                '${_formatDistance(route.totalDistance)} • ${_formatDuration(DateTime.now().difference(route.createdAt))}',
+                context.l10n.routesDistanceDuration(
+                  _formatDistance(route.totalDistance),
+                  _formatDuration(DateTime.now().difference(route.createdAt)),
+                ),
                 style: context.bodySecondaryStyle?.copyWith(
                   color: context.textSecondary,
                 ),
@@ -386,8 +395,8 @@ class _ActiveRouteBannerState extends ConsumerState<_ActiveRouteBanner>
                         size: 18,
                         color: Colors.white,
                       ),
-                      label: const Text(
-                        'Cancel',
+                      label: Text(
+                        context.l10n.routesCancelRecording,
                         style: TextStyle(color: Colors.white),
                       ),
                       style: FilledButton.styleFrom(
@@ -409,7 +418,7 @@ class _ActiveRouteBannerState extends ConsumerState<_ActiveRouteBanner>
                         }
                       },
                       icon: const Icon(Icons.stop, size: 18),
-                      label: const Text('Stop'),
+                      label: Text(context.l10n.routesStopRecording),
                       style: FilledButton.styleFrom(
                         backgroundColor: AccentColors.green,
                         padding: const EdgeInsets.symmetric(vertical: 12),
@@ -427,19 +436,27 @@ class _ActiveRouteBannerState extends ConsumerState<_ActiveRouteBanner>
 
   String _formatDistance(double meters) {
     if (meters < 1000) {
-      return '${meters.toStringAsFixed(0)}m';
+      return context.l10n.routesDistanceMeters(meters.toStringAsFixed(0));
     }
-    return '${(meters / 1000).toStringAsFixed(2)}km';
+    return context.l10n.routesDistanceKilometers(
+      (meters / 1000).toStringAsFixed(2),
+    );
   }
 
   String _formatDuration(Duration duration) {
     if (duration.inSeconds < 60) {
-      return '${duration.inSeconds}s';
+      return context.l10n.routesDurationSeconds(duration.inSeconds);
     }
     if (duration.inMinutes < 60) {
-      return '${duration.inMinutes}m ${duration.inSeconds % 60}s';
+      return context.l10n.routesDurationMinutesSeconds(
+        duration.inMinutes,
+        duration.inSeconds % 60,
+      );
     }
-    return '${duration.inHours}h ${duration.inMinutes % 60}m';
+    return context.l10n.routesDurationHoursMinutes(
+      duration.inHours,
+      duration.inMinutes % 60,
+    );
   }
 }
 
@@ -522,7 +539,7 @@ class _RouteCard extends StatelessWidget {
                             children: [
                               Icon(Icons.file_download, size: 18),
                               SizedBox(width: AppTheme.spacing8),
-                              Text('Export GPX'),
+                              Text(context.l10n.routesExportGpx),
                             ],
                           ),
                         ),
@@ -537,7 +554,7 @@ class _RouteCard extends StatelessWidget {
                               ),
                               SizedBox(width: AppTheme.spacing8),
                               Text(
-                                'Delete',
+                                context.l10n.routesDeleteAction,
                                 style: TextStyle(color: AppTheme.errorRed),
                               ),
                             ],
@@ -552,23 +569,27 @@ class _RouteCard extends StatelessWidget {
                   children: [
                     _StatChip(
                       icon: Icons.straighten,
-                      value: _formatDistance(route.totalDistance),
+                      value: _formatDistance(context, route.totalDistance),
                     ),
                     const SizedBox(width: AppTheme.spacing16),
                     if (route.duration != null)
                       _StatChip(
                         icon: Icons.timer_outlined,
-                        value: _formatDuration(route.duration!),
+                        value: _formatDuration(context, route.duration!),
                       ),
                     const SizedBox(width: AppTheme.spacing16),
                     _StatChip(
                       icon: Icons.terrain,
-                      value: '${route.elevationGain.toStringAsFixed(0)}m ↑',
+                      value: context.l10n.routesElevationGain(
+                        route.elevationGain.toStringAsFixed(0),
+                      ),
                     ),
                     const SizedBox(width: AppTheme.spacing16),
                     _StatChip(
                       icon: Icons.location_on,
-                      value: '${route.locations.length} pts',
+                      value: context.l10n.routesPointsShort(
+                        route.locations.length,
+                      ),
                     ),
                   ],
                 ),
@@ -592,18 +613,23 @@ class _RouteCard extends StatelessWidget {
     );
   }
 
-  String _formatDistance(double meters) {
+  String _formatDistance(BuildContext context, double meters) {
     if (meters < 1000) {
-      return '${meters.toStringAsFixed(0)}m';
+      return context.l10n.routesDistanceMeters(meters.toStringAsFixed(0));
     }
-    return '${(meters / 1000).toStringAsFixed(2)}km';
+    return context.l10n.routesDistanceKilometers(
+      (meters / 1000).toStringAsFixed(2),
+    );
   }
 
-  String _formatDuration(Duration duration) {
+  String _formatDuration(BuildContext context, Duration duration) {
     if (duration.inMinutes < 60) {
-      return '${duration.inMinutes}min';
+      return context.l10n.routesCardDurationMinutes(duration.inMinutes);
     }
-    return '${duration.inHours}h ${duration.inMinutes % 60}m';
+    return context.l10n.routesCardDurationHoursMinutes(
+      duration.inHours,
+      duration.inMinutes % 60,
+    );
   }
 }
 
@@ -667,18 +693,18 @@ class _NewRouteSheetState extends State<_NewRouteSheet> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const BottomSheetHeader(
+        BottomSheetHeader(
           icon: Icons.route,
           iconColor: AccentColors.green,
-          title: 'New Route',
-          subtitle: 'Start recording your GPS track',
+          title: context.l10n.routesNewRouteTitle,
+          subtitle: context.l10n.routesNewRouteSubtitle,
         ),
         const SizedBox(height: AppTheme.spacing24),
         BottomSheetTextField(
           maxLength: 100,
           controller: _nameController,
-          label: 'Route Name',
-          hint: 'Morning hike',
+          label: context.l10n.routesRouteNameLabel,
+          hint: context.l10n.routesRouteNameHint,
           autofocus: true,
           onChanged: (_) => setState(() {}),
         ),
@@ -686,13 +712,13 @@ class _NewRouteSheetState extends State<_NewRouteSheet> {
         BottomSheetTextField(
           maxLength: 500,
           controller: _notesController,
-          label: 'Notes (optional)',
-          hint: 'Trail conditions, weather, etc.',
+          label: context.l10n.routesNotesLabel,
+          hint: context.l10n.routesNotesHint,
           maxLines: 2,
         ),
         const SizedBox(height: AppTheme.spacing20),
         Text(
-          'Color',
+          context.l10n.routesColorLabel,
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w500,
@@ -738,8 +764,8 @@ class _NewRouteSheetState extends State<_NewRouteSheet> {
         ),
         const SizedBox(height: AppTheme.spacing24),
         BottomSheetButtons(
-          cancelLabel: 'Cancel',
-          confirmLabel: 'Start',
+          cancelLabel: context.l10n.routesCancel,
+          confirmLabel: context.l10n.routesStart,
           isConfirmEnabled: _nameController.text.trim().isNotEmpty,
           onConfirm: () {
             widget.onStart(

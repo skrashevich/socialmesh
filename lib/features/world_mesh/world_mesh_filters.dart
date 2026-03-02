@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../l10n/app_localizations.dart';
 import '../../models/world_mesh_node.dart';
 import '../../models/presence_confidence.dart';
 
@@ -17,24 +18,24 @@ enum WorldMeshFilterCategory {
 }
 
 extension WorldMeshFilterCategoryExtension on WorldMeshFilterCategory {
-  String get displayName {
+  String displayName(AppLocalizations l10n) {
     switch (this) {
       case WorldMeshFilterCategory.status:
-        return 'Status';
+        return l10n.worldMeshFilterCatStatus;
       case WorldMeshFilterCategory.hardware:
-        return 'Hardware';
+        return l10n.worldMeshFilterCatHardware;
       case WorldMeshFilterCategory.modemPreset:
-        return 'Modem Preset';
+        return l10n.worldMeshFilterCatModemPreset;
       case WorldMeshFilterCategory.region:
-        return 'Region';
+        return l10n.worldMeshFilterCatRegion;
       case WorldMeshFilterCategory.role:
-        return 'Role';
+        return l10n.worldMeshFilterCatRole;
       case WorldMeshFilterCategory.firmware:
-        return 'Firmware';
+        return l10n.worldMeshFilterCatFirmware;
       case WorldMeshFilterCategory.hasEnvironmentSensors:
-        return 'Environment Sensors';
+        return l10n.worldMeshFilterCatEnvSensors;
       case WorldMeshFilterCategory.hasBattery:
-        return 'Battery Info';
+        return l10n.worldMeshFilterCatBatteryInfo;
     }
   }
 

@@ -5640,4 +5640,2142 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get shopFavoritesOutOfStock => 'Out of Stock';
+
+  @override
+  String get channelsSearchHint => 'Search channels';
+
+  @override
+  String get channelsFilterAll => 'All';
+
+  @override
+  String get channelsFilterPrimary => 'Primary';
+
+  @override
+  String get channelsFilterEncrypted => 'Encrypted';
+
+  @override
+  String get channelsFilterPosition => 'Position';
+
+  @override
+  String get channelsFilterMqtt => 'MQTT';
+
+  @override
+  String channelsNoMatch(String query) {
+    return 'No channels match \"$query\"';
+  }
+
+  @override
+  String get channelsEmpty => 'No channels configured';
+
+  @override
+  String get channelsEmptySubtitle =>
+      'Channels are still being loaded from device\nor use the icons above to add channels';
+
+  @override
+  String get channelsClearSearch => 'Clear search';
+
+  @override
+  String channelsScreenTitle(int count) {
+    return 'Channels ($count)';
+  }
+
+  @override
+  String get channelsMenuAddChannel => 'Add Channel';
+
+  @override
+  String get channelsMenuScanQrCode => 'Scan QR Code';
+
+  @override
+  String get channelsMenuSettings => 'Settings';
+
+  @override
+  String get channelsMenuHelp => 'Help';
+
+  @override
+  String get channelsPrimaryChannelName => 'Primary Channel';
+
+  @override
+  String channelsDefaultChannelName(int index) {
+    return 'Channel $index';
+  }
+
+  @override
+  String get channelsTileEncrypted => 'Encrypted';
+
+  @override
+  String get channelsTileNoEncryption => 'No encryption';
+
+  @override
+  String get channelsTilePrimaryBadge => 'PRIMARY';
+
+  @override
+  String get channelsUnreadOverflow => '99+';
+
+  @override
+  String get channelFormKeySizeNone => 'No Encryption';
+
+  @override
+  String get channelFormKeySizeDefault => 'Default (Simple)';
+
+  @override
+  String get channelFormKeySizeAes128 => 'AES-128';
+
+  @override
+  String get channelFormKeySizeAes256 => 'AES-256';
+
+  @override
+  String get channelFormInvalidBase64 => 'Invalid base64 encoding';
+
+  @override
+  String channelFormInvalidKeySize(int byteCount) {
+    return 'Invalid key size ($byteCount bytes). Use 1, 16, or 32 bytes.';
+  }
+
+  @override
+  String get channelFormKeyEmpty => 'Key cannot be empty';
+
+  @override
+  String get channelFormDeviceNotConnected =>
+      'Cannot save channel: Device not connected';
+
+  @override
+  String get channelFormMaxChannelsReached => 'Maximum 8 channels allowed';
+
+  @override
+  String get channelFormDeviceNotReady =>
+      'Device not ready - please wait for connection';
+
+  @override
+  String channelFormDefaultName(int index) {
+    return 'Channel $index';
+  }
+
+  @override
+  String get channelFormUpdatedSnackbar => 'Channel updated';
+
+  @override
+  String get channelFormCreatedSnackbar => 'Channel created';
+
+  @override
+  String channelFormError(String error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String get channelFormEditTitle => 'Edit Channel';
+
+  @override
+  String get channelFormNewTitle => 'New Channel';
+
+  @override
+  String get channelFormSaveButton => 'Save';
+
+  @override
+  String get channelFormEncryptionLabel => 'Encryption';
+
+  @override
+  String get channelFormPositionLabel => 'Position';
+
+  @override
+  String get channelFormMqttLabel => 'MQTT';
+
+  @override
+  String get channelFormNameTitle => 'Channel Name';
+
+  @override
+  String get channelFormNameMaxHint => 'Max 11 characters';
+
+  @override
+  String get channelFormNameHint => 'Enter channel name (no spaces)';
+
+  @override
+  String get channelFormKeySizeNoneDesc => 'Messages sent in plaintext';
+
+  @override
+  String get channelFormKeySizeDefaultDesc => '1-byte simple key (AQ==)';
+
+  @override
+  String channelFormKeySizeBitDesc(int bits) {
+    return '$bits-bit encryption key';
+  }
+
+  @override
+  String get channelFormPositionEnabledTitle => 'Positions Enabled';
+
+  @override
+  String get channelFormPositionEnabledSubtitle =>
+      'Share position on this channel';
+
+  @override
+  String get channelFormUplinkTitle => 'Uplink Enabled';
+
+  @override
+  String get channelFormUplinkSubtitle => 'Forward messages to MQTT server';
+
+  @override
+  String get channelFormDownlinkTitle => 'Downlink Enabled';
+
+  @override
+  String get channelFormDownlinkSubtitle => 'Receive messages from MQTT server';
+
+  @override
+  String get channelFormMqttWarning =>
+      'Most devices have very limited processing power and RAM. Bridging a busy channel like LongFast via the default MQTT server can flood the device with 15-25 packets per second, causing it to stop responding. Consider using a private broker or a quieter channel.';
+
+  @override
+  String get channelFormPrecision12 => 'Within 5.8 km';
+
+  @override
+  String get channelFormPrecision13 => 'Within 2.9 km';
+
+  @override
+  String get channelFormPrecision14 => 'Within 1.5 km';
+
+  @override
+  String get channelFormPrecision15 => 'Within 700 m';
+
+  @override
+  String get channelFormPrecision32 => 'Precise location';
+
+  @override
+  String get channelFormPrecisionUnknown => 'Unknown';
+
+  @override
+  String get channelFormPreciseLocationTitle => 'Precise Location';
+
+  @override
+  String get channelFormPreciseLocationSubtitle =>
+      'Share exact GPS coordinates';
+
+  @override
+  String get channelFormApproxLocationTitle => 'Approximate Location';
+
+  @override
+  String get channelFormPrimaryChannelTitle => 'Primary Channel';
+
+  @override
+  String get channelFormPrimaryChannelNote =>
+      'This is the main channel for device communication. Changes may affect connectivity.';
+
+  @override
+  String get channelWizardStepNameTitle => 'Channel Name';
+
+  @override
+  String get channelWizardStepNameContent =>
+      'Choose a memorable name for your channel.\n\n• Names are limited to 12 characters\n• Only letters and numbers allowed\n• The name is visible to anyone who joins\n• Pick something descriptive like \"Family\" or \"Hiking\"';
+
+  @override
+  String get channelWizardStepPrivacyTitle => 'Privacy Level';
+
+  @override
+  String get channelWizardStepPrivacyContent =>
+      'Select how secure your channel should be.\n\n• OPEN: No encryption - anyone can read messages\n• SHARED: Uses the default Meshtastic key - not private\n• PRIVATE (Recommended): Unique AES-128 key - secure\n• MAXIMUM: AES-256 encryption - highest security\n\nHigher security requires sharing your channel key with others.';
+
+  @override
+  String get channelWizardStepOptionsTitle => 'Advanced Options';
+
+  @override
+  String get channelWizardStepOptionsContent =>
+      'Configure optional channel settings.\n\n• Position Sharing: Allow location sharing on this channel\n• MQTT Uplink: Send messages to the internet (requires MQTT setup)\n• MQTT Downlink: Receive messages from the internet\n• Encryption Key: Auto-generated, but you can paste a custom key\n\nMost users can skip these advanced options.';
+
+  @override
+  String get channelWizardStepReviewTitle => 'Review & Create';
+
+  @override
+  String get channelWizardStepReviewContent =>
+      'Review your channel settings before creating.\n\n• Verify the name and privacy level are correct\n• After creation, share the QR code with others\n• Others scan the QR code to join your channel\n• You can also copy the URL to share via text';
+
+  @override
+  String get channelWizardKeySizeNone => 'None';
+
+  @override
+  String get channelWizardKeySizeNoneDesc =>
+      'No encryption - messages are sent in plain text';
+
+  @override
+  String get channelWizardKeySizeDefault => 'Default';
+
+  @override
+  String get channelWizardKeySizeDefaultDesc =>
+      'Simple shared key - compatible but not secure';
+
+  @override
+  String get channelWizardKeySizeAes128 => 'AES-128';
+
+  @override
+  String get channelWizardKeySizeAes128Desc =>
+      'Strong encryption - recommended for most uses';
+
+  @override
+  String get channelWizardKeySizeAes256 => 'AES-256';
+
+  @override
+  String get channelWizardKeySizeAes256Desc =>
+      'Maximum encryption - highest security';
+
+  @override
+  String get channelWizardPrivacyOpenTitle => 'Open Channel';
+
+  @override
+  String get channelWizardPrivacySharedTitle => 'Shared Channel';
+
+  @override
+  String get channelWizardPrivacyPrivateTitle => 'Private Channel';
+
+  @override
+  String get channelWizardPrivacyMaxTitle => 'Maximum Security';
+
+  @override
+  String get channelWizardPrivacyOpenDesc =>
+      'No encryption. Anyone with a compatible radio can read your messages. Use only for public broadcasts.';
+
+  @override
+  String get channelWizardPrivacySharedDesc =>
+      'Uses the well-known default key. Other Meshtastic users may be able to read messages. Good for community channels.';
+
+  @override
+  String get channelWizardPrivacyPrivateDesc =>
+      'AES-128 encryption with a random key. Only people you share the QR code with can join. Recommended for most uses.';
+
+  @override
+  String get channelWizardPrivacyMaxDesc =>
+      'AES-256 encryption for maximum security. Ideal for sensitive communications. Slightly higher battery usage.';
+
+  @override
+  String get channelWizardRadioComplianceLink => 'View Radio Compliance Rules';
+
+  @override
+  String get channelWizardDeviceNotConnected =>
+      'Cannot save channel: Device not connected';
+
+  @override
+  String channelWizardCreateFailed(String error) {
+    return 'Failed to create channel: $error';
+  }
+
+  @override
+  String get channelWizardScreenTitle => 'Create Channel';
+
+  @override
+  String get channelWizardHelpTooltip => 'Help';
+
+  @override
+  String get channelWizardNameHeading => 'Name Your Channel';
+
+  @override
+  String get channelWizardNameSubtitle =>
+      'Choose a name that helps you identify this channel. It will be visible to anyone who joins.';
+
+  @override
+  String get channelWizardNameLabel => 'Channel Name';
+
+  @override
+  String get channelWizardNameHint => 'e.g., Family, Friends, Hiking';
+
+  @override
+  String get channelWizardNameBannerInfo =>
+      'Channel names are limited to 12 alphanumeric characters.';
+
+  @override
+  String get channelWizardPrivacyHeading => 'Choose Privacy Level';
+
+  @override
+  String get channelWizardPrivacySubtitle =>
+      'Select how secure you want this channel to be. Higher security uses stronger encryption.';
+
+  @override
+  String get channelWizardCompatOpen =>
+      'Compatible with all devices. No key exchange needed.';
+
+  @override
+  String get channelWizardCompatShared =>
+      'Uses the default Meshtastic key. Other users with default settings may intercept messages.';
+
+  @override
+  String get channelWizardCompatPrivate =>
+      'Recommended. Share the QR code securely with people you want to communicate with.';
+
+  @override
+  String get channelWizardCompatMax =>
+      'Highest security. Ensure all participants support AES-256 encryption.';
+
+  @override
+  String get channelWizardOptionsHeading => 'Advanced Options';
+
+  @override
+  String get channelWizardOptionsSubtitle =>
+      'Configure optional channel settings.';
+
+  @override
+  String get channelWizardPositionTitle => 'Position Enabled';
+
+  @override
+  String get channelWizardPositionSubtitle =>
+      'Share your position on this channel.';
+
+  @override
+  String get channelWizardMqttHeader => 'MQTT Settings';
+
+  @override
+  String get channelWizardUplinkTitle => 'Uplink Enabled';
+
+  @override
+  String get channelWizardUplinkSubtitle =>
+      'Send messages from this channel to MQTT when connected to the internet.';
+
+  @override
+  String get channelWizardDownlinkTitle => 'Downlink Enabled';
+
+  @override
+  String get channelWizardDownlinkSubtitle =>
+      'Receive messages from MQTT and broadcast them on this channel.';
+
+  @override
+  String get channelWizardMqttWarning =>
+      'MQTT must be configured on your device for uplink/downlink to work.';
+
+  @override
+  String get channelWizardMqttFloodWarning =>
+      'Most devices have very limited processing power and RAM. Bridging a busy channel like LongFast via the default MQTT server can flood the device with 15-25 packets per second, causing it to stop responding. Consider using a private broker or a quieter channel.';
+
+  @override
+  String get channelWizardCreating => 'Creating channel...';
+
+  @override
+  String get channelWizardCreatedHeading => 'Channel Created!';
+
+  @override
+  String get channelWizardCreatedSubtitle =>
+      'Share this QR code with others to let them join.';
+
+  @override
+  String get channelWizardSummaryName => 'Name';
+
+  @override
+  String get channelWizardSummaryPrivacy => 'Privacy';
+
+  @override
+  String get channelWizardSummaryEncryption => 'Encryption';
+
+  @override
+  String get channelWizardUrlCopied => 'Channel URL copied to clipboard';
+
+  @override
+  String get channelWizardCopyUrlButton => 'Copy URL';
+
+  @override
+  String get channelWizardDoneButton => 'Done';
+
+  @override
+  String get channelWizardReviewHeading => 'Review & Create';
+
+  @override
+  String get channelWizardReviewSubtitle =>
+      'Review your channel settings before creating.';
+
+  @override
+  String get channelWizardReviewName => 'Name';
+
+  @override
+  String get channelWizardReviewPrivacyLevel => 'Privacy Level';
+
+  @override
+  String get channelWizardReviewEncryption => 'Encryption';
+
+  @override
+  String get channelWizardReviewKeySize => 'Key Size';
+
+  @override
+  String get channelWizardNoKey => 'No key';
+
+  @override
+  String get channelWizardDefaultKey => 'Default key';
+
+  @override
+  String channelWizardKeyBits(int bits) {
+    return '$bits bits';
+  }
+
+  @override
+  String get channelWizardEncryptionKeyLabel => 'Encryption Key';
+
+  @override
+  String get channelWizardReviewMqttUplink => 'MQTT Uplink';
+
+  @override
+  String get channelWizardEnabled => 'Enabled';
+
+  @override
+  String get channelWizardDisabled => 'Disabled';
+
+  @override
+  String get channelWizardReviewMqttDownlink => 'MQTT Downlink';
+
+  @override
+  String get channelWizardReviewPositionSharing => 'Position Sharing';
+
+  @override
+  String get channelWizardBackButton => 'Back';
+
+  @override
+  String get channelWizardCreateButton => 'Create Channel';
+
+  @override
+  String get channelWizardContinueButton => 'Continue';
+
+  @override
+  String channelOptionsDefaultName(int index) {
+    return 'Channel $index';
+  }
+
+  @override
+  String get channelOptionsEdit => 'Edit Channel';
+
+  @override
+  String get channelOptionsViewKey => 'View Encryption Key';
+
+  @override
+  String get channelOptionsShare => 'Share Channel';
+
+  @override
+  String get channelOptionsInviteLink => 'Share Invite Link';
+
+  @override
+  String get channelOptionsDelete => 'Delete Channel';
+
+  @override
+  String get channelOptionsEncrypted => 'Encrypted';
+
+  @override
+  String get channelOptionsNoEncryption => 'No encryption';
+
+  @override
+  String get channelOptionsDeleteNotConnected =>
+      'Cannot delete channel: Device not connected';
+
+  @override
+  String get channelOptionsDeleteTitle => 'Delete Channel';
+
+  @override
+  String channelOptionsDeleteConfirm(String name) {
+    return 'Delete channel \"$name\"?';
+  }
+
+  @override
+  String get channelOptionsDeleteButton => 'Delete';
+
+  @override
+  String channelOptionsDeleteFailed(String error) {
+    return 'Failed to delete channel: $error';
+  }
+
+  @override
+  String get channelOptionsKeyTitle => 'Encryption Key';
+
+  @override
+  String channelOptionsKeySubtitle(int keyBits, int keyBytes) {
+    return '$keyBits-bit · $keyBytes bytes · Base64';
+  }
+
+  @override
+  String get channelOptionsHideButton => 'Hide';
+
+  @override
+  String get channelOptionsShowButton => 'Show';
+
+  @override
+  String get channelOptionsKeyCopied => 'Key copied to clipboard';
+
+  @override
+  String get channelOptionsCopyButton => 'Copy';
+
+  @override
+  String get channelShareSignInRequired => 'Sign in to share channels';
+
+  @override
+  String get channelShareSignInAction => 'Sign In';
+
+  @override
+  String channelShareDefaultName(int index) {
+    return 'Channel $index';
+  }
+
+  @override
+  String get channelShareTitle => 'Share Channel';
+
+  @override
+  String get channelShareQrInfo =>
+      'Scan this QR code in Socialmesh to import this channel';
+
+  @override
+  String channelShareSubject(String channelName) {
+    return 'Socialmesh Channel: $channelName';
+  }
+
+  @override
+  String get channelShareMessage => 'Join my channel on Socialmesh!';
+
+  @override
+  String get channelShareCreatingInvite => 'Creating invite link...';
+
+  @override
+  String get channelShareInviteCopied => 'Invite link copied to clipboard';
+
+  @override
+  String get channelShareInviteFailed => 'Failed to create invite link';
+
+  @override
+  String get routesScreenTitle => 'Routes';
+
+  @override
+  String get routesStartRoute => 'Start Route';
+
+  @override
+  String get routesImportGpx => 'Import GPX';
+
+  @override
+  String get routesEmptyTitle => 'No Routes Yet';
+
+  @override
+  String get routesEmptyDescription =>
+      'Record your first route or import a GPX file';
+
+  @override
+  String get routesDeleteConfirmTitle => 'Delete Route?';
+
+  @override
+  String routesDeleteConfirmMessage(String name) {
+    return 'Are you sure you want to delete \"$name\"? This cannot be undone.';
+  }
+
+  @override
+  String get routesDeleteConfirmAction => 'Delete';
+
+  @override
+  String routesShareText(String name) {
+    return 'Route: $name';
+  }
+
+  @override
+  String routesExportFailed(String error) {
+    return 'Export failed: $error';
+  }
+
+  @override
+  String get routesFileReadFailed => 'Failed to read file';
+
+  @override
+  String routesImportSuccess(String name) {
+    return 'Imported: $name';
+  }
+
+  @override
+  String get routesInvalidGpxFile => 'Invalid GPX file';
+
+  @override
+  String routesImportFailed(String error) {
+    return 'Import failed: $error';
+  }
+
+  @override
+  String get routesRecordingLabel => 'Recording';
+
+  @override
+  String routesPointCount(int count) {
+    return '$count points';
+  }
+
+  @override
+  String routesDistanceDuration(String distance, String duration) {
+    return '$distance • $duration';
+  }
+
+  @override
+  String get routesCancelRecording => 'Cancel';
+
+  @override
+  String get routesStopRecording => 'Stop';
+
+  @override
+  String routesDistanceMeters(String meters) {
+    return '${meters}m';
+  }
+
+  @override
+  String routesDistanceKilometers(String km) {
+    return '${km}km';
+  }
+
+  @override
+  String routesDurationSeconds(int seconds) {
+    return '${seconds}s';
+  }
+
+  @override
+  String routesDurationMinutesSeconds(int minutes, int seconds) {
+    return '${minutes}m ${seconds}s';
+  }
+
+  @override
+  String routesDurationHoursMinutes(int hours, int minutes) {
+    return '${hours}h ${minutes}m';
+  }
+
+  @override
+  String get routesExportGpx => 'Export GPX';
+
+  @override
+  String get routesDeleteAction => 'Delete';
+
+  @override
+  String routesElevationGain(String meters) {
+    return '${meters}m ↑';
+  }
+
+  @override
+  String routesPointsShort(int count) {
+    return '$count pts';
+  }
+
+  @override
+  String routesCardDurationMinutes(int minutes) {
+    return '${minutes}min';
+  }
+
+  @override
+  String routesCardDurationHoursMinutes(int hours, int minutes) {
+    return '${hours}h ${minutes}m';
+  }
+
+  @override
+  String get routesNewRouteTitle => 'New Route';
+
+  @override
+  String get routesNewRouteSubtitle => 'Start recording your GPS track';
+
+  @override
+  String get routesRouteNameLabel => 'Route Name';
+
+  @override
+  String get routesRouteNameHint => 'Morning hike';
+
+  @override
+  String get routesNotesLabel => 'Notes (optional)';
+
+  @override
+  String get routesNotesHint => 'Trail conditions, weather, etc.';
+
+  @override
+  String get routesColorLabel => 'Color';
+
+  @override
+  String get routesCancel => 'Cancel';
+
+  @override
+  String get routesStart => 'Start';
+
+  @override
+  String get routeDetailNoGpsPoints => 'No GPS Points';
+
+  @override
+  String get routeDetailDistanceLabel => 'Distance';
+
+  @override
+  String get routeDetailDurationLabel => 'Duration';
+
+  @override
+  String get routeDetailNoData => '--';
+
+  @override
+  String get routeDetailElevationLabel => 'Elevation';
+
+  @override
+  String routeDetailElevationValue(String meters) {
+    return '${meters}m';
+  }
+
+  @override
+  String get routeDetailPointsLabel => 'Points';
+
+  @override
+  String get routeDetailStorageUnavailable => 'Storage not available';
+
+  @override
+  String routeDetailShareText(String name) {
+    return 'Route: $name';
+  }
+
+  @override
+  String routeDetailExportFailed(String error) {
+    return 'Export failed: $error';
+  }
+
+  @override
+  String routeDetailDistanceMeters(String meters) {
+    return '${meters}m';
+  }
+
+  @override
+  String routeDetailDistanceKilometers(String km) {
+    return '${km}km';
+  }
+
+  @override
+  String routeDetailDurationMinutes(int minutes) {
+    return '${minutes}min';
+  }
+
+  @override
+  String routeDetailDurationHoursMinutes(int hours, int minutes) {
+    return '${hours}h ${minutes}m';
+  }
+
+  @override
+  String get routeDetailYouBadge => 'You';
+
+  @override
+  String get routeDetailCenterOnNodeTooltip => 'Center on node';
+
+  @override
+  String get globeScreenTitle => 'Mesh Globe';
+
+  @override
+  String get globeHideConnections => 'Hide connections';
+
+  @override
+  String get globeShowConnections => 'Show connections';
+
+  @override
+  String get globeResetView => 'Reset view';
+
+  @override
+  String get globeHelp => 'Help';
+
+  @override
+  String get globeSelectNode => 'Select Node';
+
+  @override
+  String globeNodeCount(int count) {
+    return '$count nodes';
+  }
+
+  @override
+  String get globeEmptyTitle => 'No nodes with GPS';
+
+  @override
+  String get globeEmptyDescription =>
+      'Nodes with position data will appear here';
+
+  @override
+  String get reachabilityScreenTitle => 'Reachability';
+
+  @override
+  String get reachabilityBetaBadge => 'BETA';
+
+  @override
+  String get reachabilityAboutTooltip => 'About Reachability';
+
+  @override
+  String get reachabilityAboutTitle => 'About Reachability';
+
+  @override
+  String get reachabilityGotIt => 'Got it';
+
+  @override
+  String get reachabilityWhatIsThisTitle => 'What is this?';
+
+  @override
+  String get reachabilityWhatIsThisContent =>
+      'This screen shows a probabilistic estimate of how likely your messages will reach each node. It is NOT a guarantee of delivery.';
+
+  @override
+  String get reachabilityScoringModelTitle => 'Scoring Model';
+
+  @override
+  String get reachabilityScoringModelContent =>
+      'Opportunistic Mesh Reach Likelihood Model (v1) — BETA\n\nA heuristic scoring model that estimates likelihood of reaching a node based on observed RF metrics and packet history. This score represents likelihood, not reachability. Meshtastic forwards packets opportunistically without routing. A high score does not guarantee delivery.';
+
+  @override
+  String get reachabilityHowCalculatedTitle => 'How is it calculated?';
+
+  @override
+  String get reachabilityHowCalculatedContent =>
+      'The likelihood score combines several factors:\n• Freshness: How recently we heard from the node\n• Path Depth: Number of hops observed\n• Signal Quality: RSSI and SNR when available\n• Observation Pattern: Direct vs relayed packets\n• ACK History: DM acknowledgement success rate';
+
+  @override
+  String get reachabilityLevelsMeanTitle => 'What the levels mean';
+
+  @override
+  String get reachabilityLevelsMeanContent =>
+      '• High: Strong recent indicators, but not guaranteed\n• Medium: Moderate confidence based on available data\n• Low: Weak or stale indicators, delivery unlikely';
+
+  @override
+  String get reachabilityLimitationsTitle => 'Important limitations';
+
+  @override
+  String get reachabilityLimitationsContent =>
+      '• Meshtastic has no true routing tables\n• No end-to-end acknowledgements exist\n• Forwarding is opportunistic\n• Mesh topology changes constantly\n• All estimates based on passive observation only';
+
+  @override
+  String get reachabilitySearchHint => 'Search nodes';
+
+  @override
+  String get reachabilityDisclaimerBanner =>
+      'Likelihood estimates only. Delivery is never guaranteed in a mesh network.';
+
+  @override
+  String get reachabilityLevelHigh => 'High';
+
+  @override
+  String get reachabilityLevelMedium => 'Medium';
+
+  @override
+  String get reachabilityLevelLow => 'Low';
+
+  @override
+  String get reachabilityEmptyTitle => 'No nodes discovered yet';
+
+  @override
+  String get reachabilityEmptyDescription =>
+      'Nodes will appear as they\'re observed\non the mesh network.';
+
+  @override
+  String reachabilityScorePercent(String percentage) {
+    return '$percentage%';
+  }
+
+  @override
+  String get mapFilterAll => 'All';
+
+  @override
+  String get mapFilterActive => 'Active';
+
+  @override
+  String get mapFilterInactive => 'Inactive';
+
+  @override
+  String get mapFilterWithGps => 'With GPS';
+
+  @override
+  String get mapFilterInRange => 'In Range';
+
+  @override
+  String mapDistanceMeters(String meters) {
+    return '${meters}m';
+  }
+
+  @override
+  String mapDistanceKilometers(String km) {
+    return '${km}km';
+  }
+
+  @override
+  String mapDistanceKilometersRound(String km) {
+    return '${km}km';
+  }
+
+  @override
+  String mapDistanceMetersFormal(String meters) {
+    return '$meters m';
+  }
+
+  @override
+  String mapDistanceKilometersPrecise(String km) {
+    return '$km km';
+  }
+
+  @override
+  String mapDistanceKilometersFormal(String km) {
+    return '$km km';
+  }
+
+  @override
+  String mapWaypointDefaultLabel(int number) {
+    return 'WP $number';
+  }
+
+  @override
+  String get mapCoordinatesCopied => 'Coordinates copied to clipboard';
+
+  @override
+  String get mapLocationTitle => 'Location';
+
+  @override
+  String get mapScreenTitle => 'Mesh Map';
+
+  @override
+  String get mapFilterNodesTooltip => 'Filter nodes';
+
+  @override
+  String get mapStyleTooltip => 'Map style';
+
+  @override
+  String get mapRefreshing => 'Refreshing...';
+
+  @override
+  String get mapRefreshPositions => 'Refresh positions';
+
+  @override
+  String get mapHideHeatmap => 'Hide heatmap';
+
+  @override
+  String get mapShowHeatmap => 'Show heatmap';
+
+  @override
+  String get mapHideConnectionLines => 'Hide connection lines';
+
+  @override
+  String get mapShowConnectionLines => 'Show connection lines';
+
+  @override
+  String get mapMaxDistance => 'Max Distance';
+
+  @override
+  String get mapDistance1Km => '1 km';
+
+  @override
+  String get mapDistance5Km => '5 km';
+
+  @override
+  String get mapDistance10Km => '10 km';
+
+  @override
+  String get mapDistance25Km => '25 km';
+
+  @override
+  String get mapDistanceAll => 'All';
+
+  @override
+  String get mapHideRangeCircles => 'Hide range circles';
+
+  @override
+  String get mapShowRangeCircles => 'Show range circles';
+
+  @override
+  String get mapHidePositionHistory => 'Hide position history';
+
+  @override
+  String get mapShowPositionHistory => 'Show position history';
+
+  @override
+  String get mapExitMeasureMode => 'Exit measure mode';
+
+  @override
+  String get mapMeasureDistance => 'Measure distance';
+
+  @override
+  String get mapGlobeView => '3D Globe View';
+
+  @override
+  String get mapHideTakEntities => 'Hide TAK entities';
+
+  @override
+  String get mapShowTakEntities => 'Show TAK entities';
+
+  @override
+  String get mapSaDashboard => 'SA Dashboard';
+
+  @override
+  String get mapHelp => 'Help';
+
+  @override
+  String get mapSettings => 'Settings';
+
+  @override
+  String get mapMeasureTapPointA => 'Tap node or map for point A';
+
+  @override
+  String get mapMeasureTapPointB => 'Tap node or map for point B';
+
+  @override
+  String get mapMeasureMarkerA => 'A';
+
+  @override
+  String get mapMeasureMarkerB => 'B';
+
+  @override
+  String mapShareDistanceLabel(String distance) {
+    return 'Distance: $distance';
+  }
+
+  @override
+  String mapNodeCount(String count) {
+    return '$count nodes';
+  }
+
+  @override
+  String mapTakEntityCount(int count) {
+    return '• $count entities';
+  }
+
+  @override
+  String get mapDropWaypoint => 'Drop Waypoint';
+
+  @override
+  String get mapShareLocation => 'Share Location';
+
+  @override
+  String get mapCopyCoordinates => 'Copy Coordinates';
+
+  @override
+  String get mapShare => 'Share';
+
+  @override
+  String get mapDelete => 'Delete';
+
+  @override
+  String get mapEmptyTitle => 'No Nodes with GPS';
+
+  @override
+  String mapEmptyBodyWithNodes(int totalNodes) {
+    return '$totalNodes nodes discovered but none have\nreported GPS position yet.';
+  }
+
+  @override
+  String get mapEmptyBodyNoNodes =>
+      'Nodes will appear on the map once they\nreport their GPS position.';
+
+  @override
+  String get mapRequesting => 'Requesting...';
+
+  @override
+  String get mapRequestPositions => 'Request Positions';
+
+  @override
+  String get mapPositionBroadcastHint =>
+      'Position broadcasts can take up to 15 minutes.\nTap to request immediately.';
+
+  @override
+  String get mapEntitiesTitle => 'Entities';
+
+  @override
+  String get mapNodesTitle => 'Nodes';
+
+  @override
+  String get mapSearchEntitiesHint => 'Search entities...';
+
+  @override
+  String get mapSearchNodesHint => 'Search nodes...';
+
+  @override
+  String get mapNoEntities => 'No entities';
+
+  @override
+  String get mapNoMatchingEntities => 'No matching entities';
+
+  @override
+  String get mapSearchHint => 'Try a different search term';
+
+  @override
+  String get mapYouBadge => 'YOU';
+
+  @override
+  String get mapLastKnown => '• Last known';
+
+  @override
+  String get mapFilterNodesTitle => 'Filter Nodes';
+
+  @override
+  String get mapMeasurementActions => 'Measurement Actions';
+
+  @override
+  String get mapLosAnalysis => 'LOS Analysis';
+
+  @override
+  String get mapLosAnalysisSubtitle => 'Earth curvature + Fresnel zone check';
+
+  @override
+  String get mapShareMeasurement => 'Share Measurement';
+
+  @override
+  String get mapShareMeasurementSubtitle => 'Share via system share sheet';
+
+  @override
+  String get mapCopySummary => 'Copy Summary';
+
+  @override
+  String get mapMeasurementCopied => 'Measurement copied to clipboard';
+
+  @override
+  String get mapCopyBothCoordinates => 'Both A and B coordinates';
+
+  @override
+  String get mapOpenMidpointInMaps => 'Open Midpoint in Maps';
+
+  @override
+  String get mapOpenInExternalApp => 'Open in external map app';
+
+  @override
+  String get mapSwapAB => 'Swap A ↔ B';
+
+  @override
+  String get mapReverseDirection => 'Reverse measurement direction';
+
+  @override
+  String get mapRfLinkBudget => 'RF Link Budget';
+
+  @override
+  String mapEstimatedPathLoss(String pathLoss) {
+    return 'Estimated path loss: $pathLoss dB (free-space)';
+  }
+
+  @override
+  String mapRfLinkBudgetClipboard(
+    String distance,
+    String frequency,
+    String pathLoss,
+    String linkMargin,
+  ) {
+    return 'RF Link Budget (free-space path loss)\nDistance: $distance\nFrequency: $frequency\nPath Loss: $pathLoss\nLink Margin: $linkMargin';
+  }
+
+  @override
+  String get mapLinkBudgetCopied => 'Link budget copied to clipboard';
+
+  @override
+  String get mapNewMeasurement => 'New measurement';
+
+  @override
+  String get mapExitMeasureModeTooltip => 'Exit measure mode';
+
+  @override
+  String get mapLongPressForActions => 'Long-press for actions';
+
+  @override
+  String mapLosVerdict(String verdict) {
+    return 'LOS: $verdict';
+  }
+
+  @override
+  String mapLosBulgeAndFresnel(String bulge, String fresnel) {
+    return 'Bulge: ${bulge}m · F1: ${fresnel}m';
+  }
+
+  @override
+  String get mapTakStale => 'Stale';
+
+  @override
+  String get mapTakActive => 'Active';
+
+  @override
+  String get mapTakTracked => 'Tracked';
+
+  @override
+  String get mapTakTrack => 'Track';
+
+  @override
+  String get mapNavigateToTooltip => 'Navigate to';
+
+  @override
+  String get mapCopyCoordinatesTooltip => 'Copy coordinates';
+
+  @override
+  String get mapDismissTooltip => 'Dismiss';
+
+  @override
+  String get mapTakStaleBadge => 'STALE';
+
+  @override
+  String get mapTakActiveBadge => 'ACTIVE';
+
+  @override
+  String mapAgeSeconds(String seconds) {
+    return '${seconds}s ago';
+  }
+
+  @override
+  String mapAgeMinutes(String minutes) {
+    return '${minutes}m ago';
+  }
+
+  @override
+  String mapAgeHours(String hours) {
+    return '${hours}h ago';
+  }
+
+  @override
+  String get worldMeshTitle => 'World Map';
+
+  @override
+  String get worldMeshFavoritesTooltip => 'Favorites';
+
+  @override
+  String get worldMeshMapStyleDark => 'Dark Map';
+
+  @override
+  String get worldMeshMapStyleSatellite => 'Satellite';
+
+  @override
+  String get worldMeshMapStyleLight => 'Light Map';
+
+  @override
+  String get worldMeshMapStyleTerrain => 'Terrain';
+
+  @override
+  String get worldMeshRefresh => 'Refresh';
+
+  @override
+  String get worldMeshHelp => 'Help';
+
+  @override
+  String get worldMeshSearchHint => 'Find a node';
+
+  @override
+  String get worldMeshFilterTooltip => 'Filter nodes';
+
+  @override
+  String worldMeshSearchResultCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count nodes found',
+      one: '1 node found',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get worldMeshLegendActive => 'Active (<1h)';
+
+  @override
+  String get worldMeshLegendIdle => 'Idle (1-24h)';
+
+  @override
+  String get worldMeshLegendOffline => 'Offline (>24h)';
+
+  @override
+  String get worldMeshErrorTitle => 'Unable to load mesh map';
+
+  @override
+  String get worldMeshRetry => 'Retry';
+
+  @override
+  String get worldMeshMeasurePointA => 'A';
+
+  @override
+  String get worldMeshMeasurePointB => 'B';
+
+  @override
+  String get worldMeshMeasureTapA => 'Tap node or map for point A';
+
+  @override
+  String get worldMeshMeasureTapB => 'Tap node or map for point B';
+
+  @override
+  String get worldMeshLoadingNodeInfo => 'Loading node info...';
+
+  @override
+  String get worldMeshStatsFiltered => 'filtered';
+
+  @override
+  String get worldMeshStatsVisible => 'visible';
+
+  @override
+  String get worldMeshStatsTotal => 'total';
+
+  @override
+  String get worldMeshRefreshing => 'Refreshing world mesh data...';
+
+  @override
+  String get worldMeshTimeJustNow => 'just now';
+
+  @override
+  String worldMeshTimeMinutesAgo(int minutes) {
+    return '${minutes}m ago';
+  }
+
+  @override
+  String worldMeshTimeHoursAgo(int hours) {
+    return '${hours}h ago';
+  }
+
+  @override
+  String get worldMeshScrollForMore => 'Scroll for more...';
+
+  @override
+  String get worldMeshBadgeActive => 'ACTIVE';
+
+  @override
+  String get worldMeshRemoveFromFavorites => 'Remove from favorites';
+
+  @override
+  String get worldMeshAddToFavorites => 'Add to favorites';
+
+  @override
+  String get worldMeshRemovedFromFavorites => 'Removed from favorites';
+
+  @override
+  String get worldMeshAddedToFavorites => 'Added to favorites';
+
+  @override
+  String get worldMeshCopyId => 'Copy ID';
+
+  @override
+  String get worldMeshFocus => 'Focus';
+
+  @override
+  String get worldMeshNodeIdCopied => 'Node ID copied';
+
+  @override
+  String get worldMeshSectionDevice => 'Device';
+
+  @override
+  String get worldMeshInfoHardware => 'Hardware';
+
+  @override
+  String get worldMeshInfoRole => 'Role';
+
+  @override
+  String get worldMeshInfoFirmware => 'Firmware';
+
+  @override
+  String get worldMeshInfoRegion => 'Region';
+
+  @override
+  String get worldMeshInfoModem => 'Modem';
+
+  @override
+  String get worldMeshInfoLocalNodes => 'Local Nodes';
+
+  @override
+  String get worldMeshSectionPosition => 'Position';
+
+  @override
+  String get worldMeshInfoCoordinates => 'Coordinates';
+
+  @override
+  String get worldMeshInfoAltitude => 'Altitude';
+
+  @override
+  String get worldMeshInfoPrecision => 'Precision';
+
+  @override
+  String get worldMeshSectionDeviceMetrics => 'Device Metrics';
+
+  @override
+  String worldMeshUptimeLabel(String uptime) {
+    return 'Uptime: $uptime';
+  }
+
+  @override
+  String get worldMeshSectionEnvironment => 'Environment';
+
+  @override
+  String worldMeshSectionNeighbors(int count) {
+    return 'Neighbors ($count)';
+  }
+
+  @override
+  String worldMeshSectionSeenBy(int count) {
+    return 'Seen By ($count gateways)';
+  }
+
+  @override
+  String worldMeshMoreGateways(int count) {
+    return ' +$count more';
+  }
+
+  @override
+  String worldMeshLastSeen(String time) {
+    return 'Last seen: $time';
+  }
+
+  @override
+  String get worldMeshMeasurementActions => 'Measurement Actions';
+
+  @override
+  String get worldMeshLosAnalysis => 'LOS Analysis';
+
+  @override
+  String get worldMeshLosSubtitle => 'Earth curvature + Fresnel zone check';
+
+  @override
+  String get worldMeshCopySummary => 'Copy Summary';
+
+  @override
+  String get worldMeshMeasurementCopied => 'Measurement copied to clipboard';
+
+  @override
+  String get worldMeshCopyCoordinates => 'Copy Coordinates';
+
+  @override
+  String get worldMeshCopyCoordinatesSubtitle => 'Both A and B coordinates';
+
+  @override
+  String get worldMeshCoordinatesCopied => 'Coordinates copied to clipboard';
+
+  @override
+  String get worldMeshOpenMidpointInMaps => 'Open Midpoint in Maps';
+
+  @override
+  String get worldMeshOpenMidpointSubtitle => 'Open in external map app';
+
+  @override
+  String get worldMeshSwapAB => 'Swap A ↔ B';
+
+  @override
+  String get worldMeshSwapSubtitle => 'Reverse measurement direction';
+
+  @override
+  String get worldMeshRfLinkBudget => 'RF Link Budget';
+
+  @override
+  String worldMeshFsplSubtitle(String db) {
+    return 'FSPL: $db dB';
+  }
+
+  @override
+  String worldMeshRfLinkBudgetClipboard(
+    String distance,
+    String frequency,
+    String pathLoss,
+    String linkMargin,
+  ) {
+    return 'RF Link Budget (free-space path loss)\nDistance: $distance\nFrequency: $frequency\nPath Loss: $pathLoss\nLink Margin: $linkMargin';
+  }
+
+  @override
+  String get worldMeshLinkBudgetCopied => 'Link budget copied to clipboard';
+
+  @override
+  String get worldMeshLongPressHint => 'Long-press for actions';
+
+  @override
+  String get worldMeshNewMeasurement => 'New measurement';
+
+  @override
+  String get worldMeshExitMeasureMode => 'Exit measure mode';
+
+  @override
+  String worldMeshLosVerdict(String verdict) {
+    return 'LOS: $verdict';
+  }
+
+  @override
+  String worldMeshLosBulgeAndFresnel(String bulge, String fresnel) {
+    return 'Bulge: ${bulge}m · F1: ${fresnel}m';
+  }
+
+  @override
+  String get nodeAnalyticsDataUpdated => 'Node data updated';
+
+  @override
+  String get nodeAnalyticsNodeNotFound => 'Node not found in mesh';
+
+  @override
+  String nodeAnalyticsRefreshFailed(String error) {
+    return 'Failed to refresh: $error';
+  }
+
+  @override
+  String get nodeAnalyticsRemovedFromFavorites => 'Removed from favorites';
+
+  @override
+  String get nodeAnalyticsAddedToFavorites => 'Added to favorites';
+
+  @override
+  String get nodeAnalyticsLiveWatchEnabled =>
+      'Live watching enabled (updates every 30s)';
+
+  @override
+  String get nodeAnalyticsLiveWatchDisabled => 'Live watching disabled';
+
+  @override
+  String get nodeAnalyticsClearHistoryTitle => 'Clear History';
+
+  @override
+  String get nodeAnalyticsClearHistoryMessage =>
+      'This will delete all historical data for this node. This action cannot be undone.';
+
+  @override
+  String get nodeAnalyticsClearConfirm => 'Clear';
+
+  @override
+  String get nodeAnalyticsHistoryCleared => 'History cleared';
+
+  @override
+  String get nodeAnalyticsShareNodeTitle => 'Share Node';
+
+  @override
+  String get nodeAnalyticsShareLink => 'Share Link';
+
+  @override
+  String get nodeAnalyticsShareLinkSubtitle =>
+      'Rich preview in iMessage, Slack, etc.';
+
+  @override
+  String get nodeAnalyticsShareDetails => 'Share Details';
+
+  @override
+  String get nodeAnalyticsShareDetailsSubtitle => 'Full technical info as text';
+
+  @override
+  String get nodeAnalyticsSignInToShare => 'Sign in to share nodes';
+
+  @override
+  String get nodeAnalyticsSignIn => 'Sign In';
+
+  @override
+  String nodeAnalyticsShareText(String name, String url) {
+    return 'Check out $name on Socialmesh!\n$url';
+  }
+
+  @override
+  String nodeAnalyticsShareSubject(String name) {
+    return 'Mesh Node: $name';
+  }
+
+  @override
+  String nodeAnalyticsShareFailed(String error) {
+    return 'Failed to share node: $error';
+  }
+
+  @override
+  String nodeAnalyticsShareDetailHeader(String name) {
+    return '🛰️ Mesh Node: $name';
+  }
+
+  @override
+  String nodeAnalyticsShareDetailId(String nodeId) {
+    return 'ID: !$nodeId';
+  }
+
+  @override
+  String nodeAnalyticsShareDetailRole(String role) {
+    return 'Role: $role';
+  }
+
+  @override
+  String nodeAnalyticsShareDetailHardware(String hardware) {
+    return 'Hardware: $hardware';
+  }
+
+  @override
+  String get nodeAnalyticsShareDetailBatteryCharging => 'Battery: Charging';
+
+  @override
+  String nodeAnalyticsShareDetailBatteryLevel(String level) {
+    return 'Battery: $level%';
+  }
+
+  @override
+  String nodeAnalyticsShareDetailLocation(String location) {
+    return 'Location: $location';
+  }
+
+  @override
+  String nodeAnalyticsShareDetailStatus(String status) {
+    return 'Status: $status';
+  }
+
+  @override
+  String nodeAnalyticsShareDetailNeighbors(String count) {
+    return 'Neighbors: $count';
+  }
+
+  @override
+  String nodeAnalyticsShareDetailGateways(String count) {
+    return 'Gateways: $count';
+  }
+
+  @override
+  String get nodeAnalyticsNoHistoryToExport => 'No history data to export';
+
+  @override
+  String get nodeAnalyticsExportHistoryTitle => 'Export History';
+
+  @override
+  String nodeAnalyticsExportRecordCount(int count) {
+    return '$count records';
+  }
+
+  @override
+  String get nodeAnalyticsExportJson => 'JSON';
+
+  @override
+  String get nodeAnalyticsExportCsv => 'CSV';
+
+  @override
+  String nodeAnalyticsExportJsonSubject(String name) {
+    return 'Node $name History (JSON)';
+  }
+
+  @override
+  String get nodeAnalyticsJsonShared => 'JSON data shared';
+
+  @override
+  String nodeAnalyticsExportCsvSubject(String name) {
+    return 'Node $name History (CSV)';
+  }
+
+  @override
+  String get nodeAnalyticsCsvShared => 'CSV data shared';
+
+  @override
+  String get nodeAnalyticsShareTooltip => 'Share node info';
+
+  @override
+  String get nodeAnalyticsStopWatching => 'Stop watching';
+
+  @override
+  String get nodeAnalyticsWatchLive => 'Watch live';
+
+  @override
+  String get nodeAnalyticsRemoveFavoriteTooltip => 'Remove from favorites';
+
+  @override
+  String get nodeAnalyticsAddFavoriteTooltip => 'Add to favorites';
+
+  @override
+  String get nodeAnalyticsSectionDeviceInfo => 'Device Info';
+
+  @override
+  String get nodeAnalyticsSectionDeviceMetrics => 'Device Metrics';
+
+  @override
+  String get nodeAnalyticsSectionNetwork => 'Network';
+
+  @override
+  String get nodeAnalyticsSectionTrends => 'Trends';
+
+  @override
+  String get nodeAnalyticsBadgeLive => 'LIVE';
+
+  @override
+  String get nodeAnalyticsNodeIdCopied => 'Node ID copied';
+
+  @override
+  String get nodeAnalyticsShowOnMap => 'Show on Map';
+
+  @override
+  String get nodeAnalyticsRefreshing => 'Refreshing...';
+
+  @override
+  String get nodeAnalyticsRefreshNow => 'Refresh Now';
+
+  @override
+  String get nodeAnalyticsExport => 'Export';
+
+  @override
+  String get nodeAnalyticsClear => 'Clear';
+
+  @override
+  String get nodeAnalyticsLongName => 'Long Name';
+
+  @override
+  String get nodeAnalyticsShortName => 'Short Name';
+
+  @override
+  String get nodeAnalyticsRole => 'Role';
+
+  @override
+  String get nodeAnalyticsHardware => 'Hardware';
+
+  @override
+  String get nodeAnalyticsLatitude => 'Latitude';
+
+  @override
+  String get nodeAnalyticsLongitude => 'Longitude';
+
+  @override
+  String nodeAnalyticsAltitude(String meters) {
+    return '${meters}m';
+  }
+
+  @override
+  String get nodeAnalyticsBattery => 'Battery';
+
+  @override
+  String get nodeAnalyticsCharging => 'Charging';
+
+  @override
+  String get nodeAnalyticsUnknown => 'Unknown';
+
+  @override
+  String get nodeAnalyticsVoltage => 'Voltage';
+
+  @override
+  String get nodeAnalyticsChannelUtilization => 'Channel Utilization';
+
+  @override
+  String get nodeAnalyticsAirTimeTx => 'Air Time TX';
+
+  @override
+  String get nodeAnalyticsUptime => 'Uptime';
+
+  @override
+  String nodeAnalyticsDirectNeighbors(int count) {
+    return 'Direct Neighbors ($count)';
+  }
+
+  @override
+  String get nodeAnalyticsNoNeighborData => 'No neighbor data available';
+
+  @override
+  String nodeAnalyticsSeenByGateways(int count) {
+    return 'Seen by Gateways ($count)';
+  }
+
+  @override
+  String get nodeAnalyticsNoGatewayData => 'No gateway data available';
+
+  @override
+  String get nodeAnalyticsNoHistoryYet => 'No historical data yet';
+
+  @override
+  String get nodeAnalyticsVisitAgain =>
+      'Visit this node again to build history';
+
+  @override
+  String get nodeAnalyticsRecords => 'Records';
+
+  @override
+  String get nodeAnalyticsUptimeStat => 'Uptime';
+
+  @override
+  String get nodeAnalyticsAvgBattery => 'Avg Battery';
+
+  @override
+  String get nodeAnalyticsFirstSeen => 'First seen';
+
+  @override
+  String get nodeAnalyticsLastUpdate => 'Last update';
+
+  @override
+  String nodeAnalyticsTimeDaysAgo(int days) {
+    return '${days}d ago';
+  }
+
+  @override
+  String nodeAnalyticsTimeHoursAgo(int hours) {
+    return '${hours}h ago';
+  }
+
+  @override
+  String nodeAnalyticsTimeMinutesAgo(int minutes) {
+    return '${minutes}m ago';
+  }
+
+  @override
+  String get nodeAnalyticsTimeJustNow => 'Just now';
+
+  @override
+  String get nodeAnalyticsSectionHistory => 'History';
+
+  @override
+  String get worldMeshFilterTitle => 'Filter Nodes';
+
+  @override
+  String get worldMeshFilterClearAll => 'Clear All';
+
+  @override
+  String worldMeshFilterNodeCount(int filteredCount, int totalCount) {
+    return '$filteredCount of $totalCount nodes';
+  }
+
+  @override
+  String worldMeshFilterActiveCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count filters',
+      one: '1 filter',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get worldMeshFilterStatus => 'Status';
+
+  @override
+  String get worldMeshFilterHardwareModel => 'Hardware Model';
+
+  @override
+  String get worldMeshFilterModemPreset => 'Modem Preset';
+
+  @override
+  String get worldMeshFilterRegion => 'Region';
+
+  @override
+  String get worldMeshFilterNodeRole => 'Node Role';
+
+  @override
+  String get worldMeshFilterFirmwareVersion => 'Firmware Version';
+
+  @override
+  String get worldMeshFilterEnvironmentSensors => 'Environment Sensors';
+
+  @override
+  String worldMeshFilterNodesWithSensors(int count) {
+    return '$count nodes with sensors';
+  }
+
+  @override
+  String get worldMeshFilterBatteryInfo => 'Battery Info';
+
+  @override
+  String worldMeshFilterNodesWithBattery(int count) {
+    return '$count nodes with battery data';
+  }
+
+  @override
+  String get worldMeshFilterStatusActive => 'Active (≤2m)';
+
+  @override
+  String get worldMeshFilterStatusFading => 'Fading (2-10m)';
+
+  @override
+  String get worldMeshFilterStatusInactive => 'Inactive (10-60m)';
+
+  @override
+  String get worldMeshFilterStatusUnknown => 'Unknown (>60m)';
+
+  @override
+  String get worldMeshFilterNoOptions => 'No options available';
+
+  @override
+  String get worldMeshFilterAny => 'Any';
+
+  @override
+  String get worldMeshFilterYes => 'Yes';
+
+  @override
+  String get worldMeshFilterNo => 'No';
+
+  @override
+  String get favoritesTitle => 'Favorite Nodes';
+
+  @override
+  String get favoritesErrorLoading => 'Error loading favorites';
+
+  @override
+  String get favoritesRetry => 'Retry';
+
+  @override
+  String get favoritesSelectFirst => 'Select first node';
+
+  @override
+  String get favoritesSelectSecond => 'Select second node';
+
+  @override
+  String get favoritesCancelCompare => 'Cancel compare';
+
+  @override
+  String get favoritesCompareNodes => 'Compare nodes';
+
+  @override
+  String get favoritesEmptyTitle => 'No Favorites Yet';
+
+  @override
+  String get favoritesEmptyDescription =>
+      'Tap the star icon on any node to add it to your favorites for quick access.';
+
+  @override
+  String get favoritesDelete => 'Delete';
+
+  @override
+  String get favoritesRemoveTitle => 'Remove Favorite?';
+
+  @override
+  String favoritesRemoveMessage(String name) {
+    return 'Remove $name from your favorites?';
+  }
+
+  @override
+  String get favoritesRemoveConfirm => 'Remove';
+
+  @override
+  String get favoritesNotInMesh => 'Not in mesh';
+
+  @override
+  String get favoritesNodeNotInMesh =>
+      'Node not currently in mesh. Check back later.';
+
+  @override
+  String get favoritesCannotCompare => 'Cannot compare nodes not in mesh';
+
+  @override
+  String get favoritesCharging => 'Charging';
+
+  @override
+  String get favoritesRemoveTooltip => 'Remove from favorites';
+
+  @override
+  String get nodeComparisonTitle => 'Compare Nodes';
+
+  @override
+  String get nodeComparisonVs => 'VS';
+
+  @override
+  String get nodeComparisonNodeIdCopied => 'Node ID copied';
+
+  @override
+  String get nodeComparisonSectionStatus => 'Status';
+
+  @override
+  String get nodeComparisonSectionDeviceInfo => 'Device Info';
+
+  @override
+  String get nodeComparisonSectionMetrics => 'Metrics';
+
+  @override
+  String get nodeComparisonSectionNetwork => 'Network';
+
+  @override
+  String get nodeComparisonRowStatus => 'Status';
+
+  @override
+  String get nodeComparisonRowRole => 'Role';
+
+  @override
+  String get nodeComparisonRowHardware => 'Hardware';
+
+  @override
+  String get nodeComparisonUnknown => 'Unknown';
+
+  @override
+  String get nodeComparisonRowFirmware => 'Firmware';
+
+  @override
+  String get nodeComparisonNoData => '--';
+
+  @override
+  String get nodeComparisonRowRegion => 'Region';
+
+  @override
+  String get nodeComparisonRowBattery => 'Battery';
+
+  @override
+  String get nodeComparisonCharging => 'Charging';
+
+  @override
+  String get nodeComparisonRowVoltage => 'Voltage';
+
+  @override
+  String get nodeComparisonRowChannelUtil => 'Channel Util';
+
+  @override
+  String get nodeComparisonRowAirTimeTx => 'Air Time TX';
+
+  @override
+  String get nodeComparisonRowUptime => 'Uptime';
+
+  @override
+  String get nodeComparisonRowNeighbors => 'Neighbors';
+
+  @override
+  String get nodeComparisonRowGateways => 'Gateways';
+
+  @override
+  String get nodeComparisonRowHasLocation => 'Has Location';
+
+  @override
+  String get nodeComparisonYes => 'Yes';
+
+  @override
+  String get nodeComparisonNo => 'No';
+
+  @override
+  String get worldMeshFilterCatStatus => 'Status';
+
+  @override
+  String get worldMeshFilterCatHardware => 'Hardware';
+
+  @override
+  String get worldMeshFilterCatModemPreset => 'Modem Preset';
+
+  @override
+  String get worldMeshFilterCatRegion => 'Region';
+
+  @override
+  String get worldMeshFilterCatRole => 'Role';
+
+  @override
+  String get worldMeshFilterCatFirmware => 'Firmware';
+
+  @override
+  String get worldMeshFilterCatEnvSensors => 'Environment Sensors';
+
+  @override
+  String get worldMeshFilterCatBatteryInfo => 'Battery Info';
+
+  @override
+  String get nodeIntelligenceTitle => 'Mesh Intelligence';
+
+  @override
+  String get nodeIntelligenceDerivedBadge => 'DERIVED';
+
+  @override
+  String get nodeIntelligenceTapHint => 'Tap for deep analytics';
+
+  @override
+  String get nodeIntelligenceHealth => 'Health';
+
+  @override
+  String get nodeIntelligenceConnectivity => 'Connectivity';
+
+  @override
+  String nodeIntelligenceNeighborCount(int count) {
+    return '$count neighbors';
+  }
+
+  @override
+  String nodeIntelligenceGatewayCount(int count) {
+    return '$count gateways';
+  }
+
+  @override
+  String get nodeIntelligenceChannelUtil => 'Channel Utilization';
+
+  @override
+  String get nodeIntelligenceMobilityInfra => 'Infrastructure';
+
+  @override
+  String get nodeIntelligenceMobilityMobile => 'Mobile';
+
+  @override
+  String get nodeIntelligenceMobilityTracker => 'Tracker';
+
+  @override
+  String get nodeIntelligenceMobilityElevated => 'Elevated';
+
+  @override
+  String get nodeIntelligenceMobilityStationary => 'Stationary';
+
+  @override
+  String get nodeIntelligenceUnknown => 'Unknown';
+
+  @override
+  String get nodeIntelligenceActivityHot => 'Hot';
+
+  @override
+  String get nodeIntelligenceActivityActive => 'Active';
+
+  @override
+  String get nodeIntelligenceActivityQuiet => 'Quiet';
+
+  @override
+  String get nodeIntelligenceActivityCold => 'Cold';
+
+  @override
+  String get nodeHistoryNeedMoreData => 'Need more data for charts';
+
+  @override
+  String nodeHistoryDataPointCount(int current, int required) {
+    return '$current/$required data points';
+  }
+
+  @override
+  String nodeHistoryNoMetricData(String metric) {
+    return 'No $metric data';
+  }
+
+  @override
+  String get nodeHistoryMetricBattery => 'Battery';
+
+  @override
+  String get nodeHistoryMetricConnectivity => 'Connectivity';
+
+  @override
+  String get nodeHistoryMetricChannelUtil => 'Channel Util';
 }

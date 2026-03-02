@@ -5,20 +5,32 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
+import '../../../l10n/app_localizations.dart';
 import '../services/node_history_service.dart';
 
 /// Chart type for node history visualization
-enum NodeChartMetric {
-  battery('Battery', '%', Icons.battery_std),
-  connectivity('Connectivity', '', Icons.hub),
-  channelUtil('Channel Util', '%', Icons.wifi_channel);
+enum NodeChartMetric { battery, connectivity, channelUtil }
 
-  final String label;
-  final String unit;
-  final IconData icon;
+extension NodeChartMetricExt on NodeChartMetric {
+  IconData get icon => switch (this) {
+    NodeChartMetric.battery => Icons.battery_full,
+    NodeChartMetric.connectivity => Icons.hub_outlined,
+    NodeChartMetric.channelUtil => Icons.signal_cellular_alt,
+  };
 
-  const NodeChartMetric(this.label, this.unit, this.icon);
+  String label(AppLocalizations l10n) => switch (this) {
+    NodeChartMetric.battery => l10n.nodeHistoryMetricBattery,
+    NodeChartMetric.connectivity => l10n.nodeHistoryMetricConnectivity,
+    NodeChartMetric.channelUtil => l10n.nodeHistoryMetricChannelUtil,
+  };
+
+  String get unit => switch (this) {
+    NodeChartMetric.battery => '%',
+    NodeChartMetric.connectivity => '',
+    NodeChartMetric.channelUtil => '%',
+  };
 }
 
 /// Widget displaying historical charts for a mesh node
@@ -54,14 +66,14 @@ class _NodeHistoryChartsState extends State<NodeHistoryCharts> {
             Icon(Icons.show_chart, size: 40, color: context.textTertiary),
             SizedBox(height: AppTheme.spacing12),
             Text(
-              'Need more data for charts',
+              context.l10n.nodeHistoryNeedMoreData,
               style: context.bodySecondaryStyle?.copyWith(
                 color: context.textSecondary,
               ),
             ),
             SizedBox(height: AppTheme.spacing4),
             Text(
-              '${widget.history.length}/2 data points',
+              context.l10n.nodeHistoryDataPointCount(widget.history.length, 2),
               style: context.bodySmallStyle?.copyWith(
                 color: context.textTertiary,
               ),
@@ -103,7 +115,7 @@ class _NodeHistoryChartsState extends State<NodeHistoryCharts> {
                                 : context.textSecondary,
                           ),
                           SizedBox(width: AppTheme.spacing6),
-                          Text(metric.label),
+                          Text(metric.label(context.l10n)),
                         ],
                       ),
                       onSelected: (_) =>
@@ -178,7 +190,9 @@ class _NodeHistoryChartsState extends State<NodeHistoryCharts> {
             Icon(_selectedMetric.icon, size: 32, color: context.textTertiary),
             SizedBox(height: AppTheme.spacing8),
             Text(
-              'No ${_selectedMetric.label.toLowerCase()} data',
+              context.l10n.nodeHistoryNoMetricData(
+                _selectedMetric.label(context.l10n).toLowerCase(),
+              ),
               style: context.bodySmallStyle?.copyWith(
                 color: context.textTertiary,
               ),

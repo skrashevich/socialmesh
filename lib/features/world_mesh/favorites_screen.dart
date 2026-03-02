@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/glass_scaffold.dart';
@@ -76,9 +77,9 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
   Future<void> _confirmRemoveFavorite(_FavoriteItem item) async {
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Remove Favorite?',
-      message: 'Remove ${item.displayName} from your favorites?',
-      confirmLabel: 'Remove',
+      title: context.l10n.favoritesRemoveTitle,
+      message: context.l10n.favoritesRemoveMessage(item.displayName),
+      confirmLabel: context.l10n.favoritesRemoveConfirm,
       isDestructive: true,
     );
 
@@ -90,10 +91,7 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
   void _openNodeAnalytics(_FavoriteItem item) {
     final node = item.liveNode;
     if (node == null) {
-      showWarningSnackBar(
-        context,
-        'Node not currently in mesh. Check back later.',
-      );
+      showWarningSnackBar(context, context.l10n.favoritesNodeNotInMesh);
       return;
     }
 
@@ -129,7 +127,7 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
     }
 
     if (item.liveNode == null) {
-      showWarningSnackBar(context, 'Cannot compare nodes not in mesh');
+      showWarningSnackBar(context, context.l10n.favoritesCannotCompare);
       return;
     }
 
@@ -167,11 +165,11 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
 
     return favoritesAsync.when(
       loading: () => GlassScaffold.body(
-        title: 'Favorite Nodes',
+        title: context.l10n.favoritesTitle,
         body: const ScreenLoadingIndicator(),
       ),
       error: (error, stack) => GlassScaffold.body(
-        title: 'Favorite Nodes',
+        title: context.l10n.favoritesTitle,
         body: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -183,14 +181,14 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
               ),
               const SizedBox(height: AppTheme.spacing16),
               Text(
-                'Error loading favorites',
+                context.l10n.favoritesErrorLoading,
                 style: TextStyle(color: context.textPrimary),
               ),
               const SizedBox(height: AppTheme.spacing8),
               TextButton(
                 onPressed: () =>
                     ref.read(nodeFavoritesProvider.notifier).refresh(),
-                child: const Text('Retry'),
+                child: Text(context.l10n.favoritesRetry),
               ),
             ],
           ),
@@ -204,9 +202,9 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
         return GlassScaffold(
           title: _isCompareMode
               ? (_selectedForCompare == null
-                    ? 'Select first node'
-                    : 'Select second node')
-              : 'Favorite Nodes',
+                    ? context.l10n.favoritesSelectFirst
+                    : context.l10n.favoritesSelectSecond)
+              : context.l10n.favoritesTitle,
           actions: [
             // Compare toggle
             if (favorites.length >= 2 && hasEnoughForCompare)
@@ -215,7 +213,9 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
                   _isCompareMode ? Icons.close : Icons.compare_arrows,
                   color: _isCompareMode ? AccentColors.green : null,
                 ),
-                tooltip: _isCompareMode ? 'Cancel compare' : 'Compare nodes',
+                tooltip: _isCompareMode
+                    ? context.l10n.favoritesCancelCompare
+                    : context.l10n.favoritesCompareNodes,
                 onPressed: _toggleCompareMode,
               ),
             if (favorites.isNotEmpty && !_isCompareMode)
@@ -274,7 +274,7 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
             ),
             SizedBox(height: AppTheme.spacing24),
             Text(
-              'No Favorites Yet',
+              context.l10n.favoritesEmptyTitle,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
@@ -283,7 +283,7 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
             ),
             const SizedBox(height: AppTheme.spacing8),
             Text(
-              'Tap the star icon on any node to add it to your favorites for quick access.',
+              context.l10n.favoritesEmptyDescription,
               textAlign: TextAlign.center,
               style: context.bodySecondaryStyle?.copyWith(
                 color: context.textSecondary,
@@ -328,7 +328,7 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
                 Icon(Icons.delete, color: Colors.white, size: 24),
                 SizedBox(width: AppTheme.spacing8),
                 Text(
-                  'Delete',
+                  context.l10n.favoritesDelete,
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -341,9 +341,11 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
           confirmDismiss: (direction) async {
             return await AppBottomSheet.showConfirm(
                   context: context,
-                  title: 'Remove Favorite?',
-                  message: 'Remove ${item.displayName} from your favorites?',
-                  confirmLabel: 'Remove',
+                  title: context.l10n.favoritesRemoveTitle,
+                  message: context.l10n.favoritesRemoveMessage(
+                    item.displayName,
+                  ),
+                  confirmLabel: context.l10n.favoritesRemoveConfirm,
                   isDestructive: true,
                 ) ??
                 false;
@@ -362,7 +364,7 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
     final statusColor = _presenceColor(context, item.presence);
     final statusText = item.hasLiveData
         ? presenceStatusText(item.presence, lastSeenAge)
-        : 'Not in mesh';
+        : context.l10n.favoritesNotInMesh;
 
     final isSelected =
         _isCompareMode &&
@@ -512,7 +514,7 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
                           const SizedBox(width: AppTheme.spacing4),
                           Text(
                             item.liveNode!.batteryLevel! > 100
-                                ? 'Charging'
+                                ? context.l10n.favoritesCharging
                                 : '${item.liveNode!.batteryLevel}%',
                             style: TextStyle(
                               fontSize: 12,
@@ -539,7 +541,7 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
                       size: 22,
                     ),
                     onPressed: () => _confirmRemoveFavorite(item),
-                    tooltip: 'Remove from favorites',
+                    tooltip: context.l10n.favoritesRemoveTooltip,
                     constraints: const BoxConstraints(
                       minWidth: 36,
                       minHeight: 36,

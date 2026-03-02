@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/legal/legal_constants.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 
@@ -16,6 +17,7 @@ import '../../core/widgets/branded_qr_code.dart';
 import '../../core/widgets/glass_scaffold.dart';
 import '../../core/widgets/channel_key_field.dart';
 import '../../core/widgets/loading_indicator.dart';
+import '../../l10n/app_localizations.dart';
 import '../../models/mesh_models.dart';
 import '../../providers/app_providers.dart';
 import '../../utils/encoding.dart';
@@ -27,8 +29,8 @@ import '../../generated/meshtastic/channel.pbenum.dart' as channel_pbenum;
 
 /// Step-specific help content for the channel wizard
 class _WizardStepHelp {
-  final String title;
-  final String content;
+  final String Function(AppLocalizations l10n) title;
+  final String Function(AppLocalizations l10n) content;
   final IconData icon;
   final Color color;
 
@@ -39,97 +41,99 @@ class _WizardStepHelp {
     required this.color,
   });
 
-  static const List<_WizardStepHelp> steps = [
+  static List<_WizardStepHelp> steps = [
     _WizardStepHelp(
-      title: 'Channel Name',
+      title: (l10n) => l10n.channelWizardStepNameTitle,
       icon: Icons.edit,
       color: AppTheme.primaryBlue,
-      content:
-          'Choose a memorable name for your channel.\n\n'
-          '• Names are limited to 12 characters\n'
-          '• Only letters and numbers allowed\n'
-          '• The name is visible to anyone who joins\n'
-          '• Pick something descriptive like "Family" or "Hiking"',
+      content: (l10n) => l10n.channelWizardStepNameContent,
     ),
     _WizardStepHelp(
-      title: 'Privacy Level',
+      title: (l10n) => l10n.channelWizardStepPrivacyTitle,
       icon: Icons.security,
       color: AppTheme.primaryPurple,
-      content:
-          'Select how secure your channel should be.\n\n'
-          '• OPEN: No encryption - anyone can read messages\n'
-          '• SHARED: Uses the default Meshtastic key - not private\n'
-          '• PRIVATE (Recommended): Unique AES-128 key - secure\n'
-          '• MAXIMUM: AES-256 encryption - highest security\n\n'
-          'Higher security requires sharing your channel key with others.',
+      content: (l10n) => l10n.channelWizardStepPrivacyContent,
     ),
     _WizardStepHelp(
-      title: 'Advanced Options',
+      title: (l10n) => l10n.channelWizardStepOptionsTitle,
       icon: Icons.tune,
       color: AppTheme.primaryBlue,
-      content:
-          'Configure optional channel settings.\n\n'
-          '• Position Sharing: Allow location sharing on this channel\n'
-          '• MQTT Uplink: Send messages to the internet (requires MQTT setup)\n'
-          '• MQTT Downlink: Receive messages from the internet\n'
-          '• Encryption Key: Auto-generated, but you can paste a custom key\n\n'
-          'Most users can skip these advanced options.',
+      content: (l10n) => l10n.channelWizardStepOptionsContent,
     ),
     _WizardStepHelp(
-      title: 'Review & Create',
+      title: (l10n) => l10n.channelWizardStepReviewTitle,
       icon: Icons.check_circle,
       color: AppTheme.successGreen,
-      content:
-          'Review your channel settings before creating.\n\n'
-          '• Verify the name and privacy level are correct\n'
-          '• After creation, share the QR code with others\n'
-          '• Others scan the QR code to join your channel\n'
-          '• You can also copy the URL to share via text',
+      content: (l10n) => l10n.channelWizardStepReviewContent,
     ),
   ];
 }
 
 /// Key size options with security explanations
 enum WizardKeySize {
-  none(0, 'None', 'No encryption - messages are sent in plain text'),
-  default1(1, 'Default', 'Simple shared key - compatible but not secure'),
-  bit128(16, 'AES-128', 'Strong encryption - recommended for most uses'),
-  bit256(32, 'AES-256', 'Maximum encryption - highest security');
+  none(0),
+  default1(1),
+  bit128(16),
+  bit256(32);
 
   final int bytes;
-  final String displayName;
-  final String description;
 
-  const WizardKeySize(this.bytes, this.displayName, this.description);
+  const WizardKeySize(this.bytes);
+
+  String displayName(AppLocalizations l10n) {
+    switch (this) {
+      case WizardKeySize.none:
+        return l10n.channelWizardKeySizeNone;
+      case WizardKeySize.default1:
+        return l10n.channelWizardKeySizeDefault;
+      case WizardKeySize.bit128:
+        return l10n.channelWizardKeySizeAes128;
+      case WizardKeySize.bit256:
+        return l10n.channelWizardKeySizeAes256;
+    }
+  }
+
+  String description(AppLocalizations l10n) {
+    switch (this) {
+      case WizardKeySize.none:
+        return l10n.channelWizardKeySizeNoneDesc;
+      case WizardKeySize.default1:
+        return l10n.channelWizardKeySizeDefaultDesc;
+      case WizardKeySize.bit128:
+        return l10n.channelWizardKeySizeAes128Desc;
+      case WizardKeySize.bit256:
+        return l10n.channelWizardKeySizeAes256Desc;
+    }
+  }
 }
 
 /// Privacy level with detailed explanations
 enum PrivacyLevel { open, shared, private, maximum }
 
 extension PrivacyLevelExt on PrivacyLevel {
-  String get title {
+  String title(AppLocalizations l10n) {
     switch (this) {
       case PrivacyLevel.open:
-        return 'Open Channel';
+        return l10n.channelWizardPrivacyOpenTitle;
       case PrivacyLevel.shared:
-        return 'Shared Channel';
+        return l10n.channelWizardPrivacySharedTitle;
       case PrivacyLevel.private:
-        return 'Private Channel';
+        return l10n.channelWizardPrivacyPrivateTitle;
       case PrivacyLevel.maximum:
-        return 'Maximum Security';
+        return l10n.channelWizardPrivacyMaxTitle;
     }
   }
 
-  String get description {
+  String description(AppLocalizations l10n) {
     switch (this) {
       case PrivacyLevel.open:
-        return 'No encryption. Anyone with a compatible radio can read your messages. Use only for public broadcasts.';
+        return l10n.channelWizardPrivacyOpenDesc;
       case PrivacyLevel.shared:
-        return 'Uses the well-known default key. Other Meshtastic users may be able to read messages. Good for community channels.';
+        return l10n.channelWizardPrivacySharedDesc;
       case PrivacyLevel.private:
-        return 'AES-128 encryption with a random key. Only people you share the QR code with can join. Recommended for most uses.';
+        return l10n.channelWizardPrivacyPrivateDesc;
       case PrivacyLevel.maximum:
-        return 'AES-256 encryption for maximum security. Ideal for sensitive communications. Slightly higher battery usage.';
+        return l10n.channelWizardPrivacyMaxDesc;
     }
   }
 
@@ -262,6 +266,7 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
 
   void _showStepHelp() {
     final stepHelp = _WizardStepHelp.steps[_currentStep];
+    final l10n = context.l10n;
     showModalBottomSheet(
       context: context,
       backgroundColor: context.surface,
@@ -289,7 +294,7 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
                   const SizedBox(width: AppTheme.spacing16),
                   Expanded(
                     child: Text(
-                      stepHelp.title,
+                      stepHelp.title(l10n),
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         color: context.textPrimary,
                         fontWeight: FontWeight.w600,
@@ -304,7 +309,7 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
               ),
               const SizedBox(height: AppTheme.spacing20),
               Text(
-                stepHelp.content,
+                stepHelp.content(l10n),
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: context.textSecondary,
                   height: 1.5,
@@ -333,7 +338,7 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
                       const SizedBox(width: AppTheme.spacing8),
                       Expanded(
                         child: Text(
-                          'View Radio Compliance Rules',
+                          context.l10n.channelWizardRadioComplianceLink,
                           style: TextStyle(
                             color: context.accentColor,
                             fontSize: 14,
@@ -368,7 +373,7 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
     );
 
     if (!isConnected) {
-      showErrorSnackBar(context, 'Cannot save channel: Device not connected');
+      showErrorSnackBar(context, context.l10n.channelWizardDeviceNotConnected);
       return;
     }
 
@@ -402,7 +407,10 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
       });
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to create channel: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.channelWizardCreateFailed(e.toString()),
+        );
         safeSetState(() {
           _isSaving = false;
         });
@@ -438,7 +446,7 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
     final stepHelp = _WizardStepHelp.steps[_currentStep];
 
     return GlassScaffold.body(
-      title: 'Create Channel',
+      title: context.l10n.channelWizardScreenTitle,
       leading: IconButton(
         icon: const Icon(Icons.close),
         onPressed: () => Navigator.pop(context),
@@ -447,7 +455,7 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
         IconButton(
           icon: Icon(stepHelp.icon, color: stepHelp.color),
           onPressed: _showStepHelp,
-          tooltip: 'Help',
+          tooltip: context.l10n.channelWizardHelpTooltip,
         ),
       ],
       body: GestureDetector(
@@ -543,10 +551,13 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
         children: [
           Icon(Icons.edit, size: 48, color: context.accentColor),
           SizedBox(height: AppTheme.spacing24),
-          Text('Name Your Channel', style: theme.textTheme.headlineMedium),
+          Text(
+            context.l10n.channelWizardNameHeading,
+            style: theme.textTheme.headlineMedium,
+          ),
           const SizedBox(height: AppTheme.spacing8),
           Text(
-            'Choose a name that helps you identify this channel. It will be visible to anyone who joins.',
+            context.l10n.channelWizardNameSubtitle,
             style: theme.textTheme.bodyMedium?.copyWith(
               color: context.textSecondary,
             ),
@@ -560,9 +571,9 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
               FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9]')),
             ],
             decoration: InputDecoration(
-              labelText: 'Channel Name',
+              labelText: context.l10n.channelWizardNameLabel,
               labelStyle: TextStyle(color: context.textSecondary),
-              hintText: 'e.g., Family, Friends, Hiking',
+              hintText: context.l10n.channelWizardNameHint,
               hintStyle: TextStyle(color: context.textSecondary.withAlpha(128)),
               filled: true,
               fillColor: context.surface,
@@ -585,7 +596,7 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
           ),
           const SizedBox(height: AppTheme.spacing16),
           StatusBanner.info(
-            title: 'Channel names are limited to 12 alphanumeric characters.',
+            title: context.l10n.channelWizardNameBannerInfo,
             margin: EdgeInsets.zero,
           ),
         ],
@@ -601,10 +612,13 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
         children: [
           Icon(Icons.security, size: 48, color: AppTheme.primaryPurple),
           const SizedBox(height: AppTheme.spacing24),
-          Text('Choose Privacy Level', style: theme.textTheme.headlineMedium),
+          Text(
+            context.l10n.channelWizardPrivacyHeading,
+            style: theme.textTheme.headlineMedium,
+          ),
           const SizedBox(height: AppTheme.spacing8),
           Text(
-            'Select how secure you want this channel to be. Higher security uses stronger encryption.',
+            context.l10n.channelWizardPrivacySubtitle,
             style: theme.textTheme.bodyMedium?.copyWith(
               color: context.textSecondary,
             ),
@@ -661,7 +675,7 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
                   Row(
                     children: [
                       Text(
-                        level.title,
+                        level.title(context.l10n),
                         style: theme.textTheme.bodyLarge?.copyWith(
                           color: context.textPrimary,
                           fontWeight: FontWeight.w600,
@@ -678,7 +692,7 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
                           borderRadius: BorderRadius.circular(AppTheme.radius4),
                         ),
                         child: Text(
-                          level.keySize.displayName,
+                          level.keySize.displayName(context.l10n),
                           style: theme.textTheme.labelSmall?.copyWith(
                             color: level.color,
                             fontWeight: FontWeight.w600,
@@ -689,7 +703,7 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
                   ),
                   const SizedBox(height: AppTheme.spacing4),
                   Text(
-                    level.description,
+                    level.description(context.l10n),
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: context.textSecondary,
                     ),
@@ -734,26 +748,22 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
 
     switch (_privacyLevel) {
       case PrivacyLevel.open:
-        compatibilityText =
-            'Compatible with all devices. No key exchange needed.';
+        compatibilityText = context.l10n.channelWizardCompatOpen;
         compatibilityIcon = Icons.check_circle;
         compatibilityColor = AppTheme.successGreen;
         break;
       case PrivacyLevel.shared:
-        compatibilityText =
-            'Uses the default Meshtastic key. Other users with default settings may intercept messages.';
+        compatibilityText = context.l10n.channelWizardCompatShared;
         compatibilityIcon = Icons.warning;
         compatibilityColor = AppTheme.warningYellow;
         break;
       case PrivacyLevel.private:
-        compatibilityText =
-            'Recommended. Share the QR code securely with people you want to communicate with.';
+        compatibilityText = context.l10n.channelWizardCompatPrivate;
         compatibilityIcon = Icons.recommend;
         compatibilityColor = AppTheme.successGreen;
         break;
       case PrivacyLevel.maximum:
-        compatibilityText =
-            'Highest security. Ensure all participants support AES-256 encryption.';
+        compatibilityText = context.l10n.channelWizardCompatMax;
         compatibilityIcon = Icons.verified_user;
         compatibilityColor = AppTheme.primaryPurple;
         break;
@@ -791,10 +801,13 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
         children: [
           Icon(Icons.tune, size: 48, color: AppTheme.primaryBlue),
           const SizedBox(height: AppTheme.spacing24),
-          Text('Advanced Options', style: theme.textTheme.headlineMedium),
+          Text(
+            context.l10n.channelWizardOptionsHeading,
+            style: theme.textTheme.headlineMedium,
+          ),
           const SizedBox(height: AppTheme.spacing8),
           Text(
-            'Configure optional channel settings.',
+            context.l10n.channelWizardOptionsSubtitle,
             style: theme.textTheme.bodyMedium?.copyWith(
               color: context.textSecondary,
             ),
@@ -822,8 +835,8 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
           // Position setting (doesn't require MQTT)
           _buildToggleOption(
             theme: theme,
-            title: 'Position Enabled',
-            subtitle: 'Share your position on this channel.',
+            title: context.l10n.channelWizardPositionTitle,
+            subtitle: context.l10n.channelWizardPositionSubtitle,
             value: _positionEnabled,
             onChanged: (value) {
               setState(() {
@@ -838,7 +851,7 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
               Icon(Icons.cloud_outlined, size: 16, color: context.textTertiary),
               SizedBox(width: AppTheme.spacing8),
               Text(
-                'MQTT Settings',
+                context.l10n.channelWizardMqttHeader,
                 style: theme.textTheme.labelMedium?.copyWith(
                   color: context.textTertiary,
                   fontWeight: FontWeight.w600,
@@ -850,9 +863,8 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
           const SizedBox(height: AppTheme.spacing12),
           _buildToggleOption(
             theme: theme,
-            title: 'Uplink Enabled',
-            subtitle:
-                'Send messages from this channel to MQTT when connected to the internet.',
+            title: context.l10n.channelWizardUplinkTitle,
+            subtitle: context.l10n.channelWizardUplinkSubtitle,
             value: _uplinkEnabled,
             onChanged: (value) {
               setState(() {
@@ -863,9 +875,8 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
           const SizedBox(height: AppTheme.spacing16),
           _buildToggleOption(
             theme: theme,
-            title: 'Downlink Enabled',
-            subtitle:
-                'Receive messages from MQTT and broadcast them on this channel.',
+            title: context.l10n.channelWizardDownlinkTitle,
+            subtitle: context.l10n.channelWizardDownlinkSubtitle,
             value: _downlinkEnabled,
             onChanged: (value) {
               setState(() {
@@ -876,19 +887,12 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
           if (_uplinkEnabled || _downlinkEnabled) ...[
             const SizedBox(height: AppTheme.spacing16),
             StatusBanner.warning(
-              title:
-                  'MQTT must be configured on your device for uplink/downlink to work.',
+              title: context.l10n.channelWizardMqttWarning,
               margin: EdgeInsets.zero,
             ),
             const SizedBox(height: AppTheme.spacing12),
             StatusBanner.info(
-              title:
-                  'Most devices have very limited processing power '
-                  'and RAM. Bridging a busy channel like LongFast '
-                  'via the default MQTT server can flood the device '
-                  'with 15-25 packets per second, causing it to '
-                  'stop responding. Consider using a private broker '
-                  'or a quieter channel.',
+              title: context.l10n.channelWizardMqttFloodWarning,
               margin: EdgeInsets.zero,
             ),
           ],
@@ -949,7 +953,7 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
             LoadingIndicator(size: 64),
             SizedBox(height: AppTheme.spacing24),
             Text(
-              'Creating channel...',
+              context.l10n.channelWizardCreating,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: context.textSecondary,
               ),
@@ -969,10 +973,13 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
           children: [
             Icon(Icons.check_circle, size: 64, color: AppTheme.successGreen),
             const SizedBox(height: AppTheme.spacing24),
-            Text('Channel Created!', style: theme.textTheme.headlineMedium),
+            Text(
+              context.l10n.channelWizardCreatedHeading,
+              style: theme.textTheme.headlineMedium,
+            ),
             const SizedBox(height: AppTheme.spacing8),
             Text(
-              'Share this QR code with others to let them join.',
+              context.l10n.channelWizardCreatedSubtitle,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: context.textSecondary,
               ),
@@ -996,14 +1003,22 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
               ),
               child: Column(
                 children: [
-                  _buildSummaryRow(theme, 'Name', _nameController.text),
-                  Divider(color: context.border.withAlpha(128)),
-                  _buildSummaryRow(theme, 'Privacy', _privacyLevel.title),
+                  _buildSummaryRow(
+                    theme,
+                    context.l10n.channelWizardSummaryName,
+                    _nameController.text,
+                  ),
                   Divider(color: context.border.withAlpha(128)),
                   _buildSummaryRow(
                     theme,
-                    'Encryption',
-                    _privacyLevel.keySize.displayName,
+                    context.l10n.channelWizardSummaryPrivacy,
+                    _privacyLevel.title(context.l10n),
+                  ),
+                  Divider(color: context.border.withAlpha(128)),
+                  _buildSummaryRow(
+                    theme,
+                    context.l10n.channelWizardSummaryEncryption,
+                    _privacyLevel.keySize.displayName(context.l10n),
                   ),
                 ],
               ),
@@ -1017,11 +1032,11 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
                       Clipboard.setData(ClipboardData(text: channelUrl));
                       showSuccessSnackBar(
                         context,
-                        'Channel URL copied to clipboard',
+                        context.l10n.channelWizardUrlCopied,
                       );
                     },
                     icon: Icon(Icons.copy),
-                    label: Text('Copy URL'),
+                    label: Text(context.l10n.channelWizardCopyUrlButton),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: context.accentColor,
                       side: BorderSide(color: context.accentColor),
@@ -1034,7 +1049,7 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
                   child: FilledButton.icon(
                     onPressed: () => Navigator.pop(context, true),
                     icon: const Icon(Icons.check),
-                    label: Text('Done'),
+                    label: Text(context.l10n.channelWizardDoneButton),
                     style: FilledButton.styleFrom(
                       backgroundColor: context.accentColor,
                       padding: const EdgeInsets.symmetric(vertical: 16),
@@ -1056,10 +1071,13 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
         children: [
           Icon(Icons.preview, size: 48, color: AppTheme.successGreen),
           const SizedBox(height: AppTheme.spacing24),
-          Text('Review & Create', style: theme.textTheme.headlineMedium),
+          Text(
+            context.l10n.channelWizardReviewHeading,
+            style: theme.textTheme.headlineMedium,
+          ),
           const SizedBox(height: AppTheme.spacing8),
           Text(
-            'Review your channel settings before creating.',
+            context.l10n.channelWizardReviewSubtitle,
             style: theme.textTheme.bodyMedium?.copyWith(
               color: context.textSecondary,
             ),
@@ -1073,24 +1091,34 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
             ),
             child: Column(
               children: [
-                _buildSummaryRow(theme, 'Name', _nameController.text),
-                Divider(color: context.border.withAlpha(128)),
-                _buildSummaryRow(theme, 'Privacy Level', _privacyLevel.title),
-                Divider(color: context.border.withAlpha(128)),
                 _buildSummaryRow(
                   theme,
-                  'Encryption',
-                  _privacyLevel.keySize.displayName,
+                  context.l10n.channelWizardReviewName,
+                  _nameController.text,
                 ),
                 Divider(color: context.border.withAlpha(128)),
                 _buildSummaryRow(
                   theme,
-                  'Key Size',
+                  context.l10n.channelWizardReviewPrivacyLevel,
+                  _privacyLevel.title(context.l10n),
+                ),
+                Divider(color: context.border.withAlpha(128)),
+                _buildSummaryRow(
+                  theme,
+                  context.l10n.channelWizardReviewEncryption,
+                  _privacyLevel.keySize.displayName(context.l10n),
+                ),
+                Divider(color: context.border.withAlpha(128)),
+                _buildSummaryRow(
+                  theme,
+                  context.l10n.channelWizardReviewKeySize,
                   _privacyLevel.keySize.bytes == 0
-                      ? 'No key'
+                      ? context.l10n.channelWizardNoKey
                       : _privacyLevel.keySize.bytes == 1
-                      ? 'Default key'
-                      : '${_privacyLevel.keySize.bytes * 8} bits',
+                      ? context.l10n.channelWizardDefaultKey
+                      : context.l10n.channelWizardKeyBits(
+                          _privacyLevel.keySize.bytes * 8,
+                        ),
                 ),
                 if (_privacyLevel.keySize.bytes > 1) ...[
                   Divider(color: context.border.withAlpha(128)),
@@ -1099,20 +1127,26 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
                 Divider(color: context.border.withAlpha(128)),
                 _buildSummaryRow(
                   theme,
-                  'MQTT Uplink',
-                  _uplinkEnabled ? 'Enabled' : 'Disabled',
+                  context.l10n.channelWizardReviewMqttUplink,
+                  _uplinkEnabled
+                      ? context.l10n.channelWizardEnabled
+                      : context.l10n.channelWizardDisabled,
                 ),
                 Divider(color: context.border.withAlpha(128)),
                 _buildSummaryRow(
                   theme,
-                  'MQTT Downlink',
-                  _downlinkEnabled ? 'Enabled' : 'Disabled',
+                  context.l10n.channelWizardReviewMqttDownlink,
+                  _downlinkEnabled
+                      ? context.l10n.channelWizardEnabled
+                      : context.l10n.channelWizardDisabled,
                 ),
                 Divider(color: context.border.withAlpha(128)),
                 _buildSummaryRow(
                   theme,
-                  'Position Sharing',
-                  _positionEnabled ? 'Enabled' : 'Disabled',
+                  context.l10n.channelWizardReviewPositionSharing,
+                  _positionEnabled
+                      ? context.l10n.channelWizardEnabled
+                      : context.l10n.channelWizardDisabled,
                 ),
               ],
             ),
@@ -1131,7 +1165,7 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
                 const SizedBox(width: AppTheme.spacing12),
                 Expanded(
                   child: Text(
-                    _privacyLevel.description,
+                    _privacyLevel.description(context.l10n),
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: _privacyLevel.color,
                     ),
@@ -1177,7 +1211,7 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
       child: Row(
         children: [
           Text(
-            'Encryption Key',
+            context.l10n.channelWizardEncryptionKeyLabel,
             style: theme.textTheme.bodyMedium?.copyWith(
               color: context.textSecondary,
             ),
@@ -1219,7 +1253,7 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
                   side: BorderSide(color: context.border),
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
-                child: const Text('Back'),
+                child: Text(context.l10n.channelWizardBackButton),
               ),
             ),
           if (_currentStep > 0) SizedBox(width: AppTheme.spacing16),
@@ -1241,7 +1275,9 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
                 padding: const EdgeInsets.symmetric(vertical: 16),
               ),
               child: Text(
-                _currentStep == _totalSteps - 1 ? 'Create Channel' : 'Continue',
+                _currentStep == _totalSteps - 1
+                    ? context.l10n.channelWizardCreateButton
+                    : context.l10n.channelWizardContinueButton,
               ),
             ),
           ),

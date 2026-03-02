@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../core/constants.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/glass_scaffold.dart';
 import '../../core/widgets/auto_scroll_text.dart';
@@ -92,6 +93,7 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
     if (_isRefreshing) return;
 
     if (!mounted) return;
+    final l10n = context.l10n;
     setState(() => _isRefreshing = true);
     try {
       final freshNode = await _meshService.fetchNode(widget.node.nodeNum);
@@ -100,12 +102,12 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
         setState(() => _currentNode = freshNode);
         await _recordVisit();
         if (!mounted) return;
-        showSuccessSnackBar(context, 'Node data updated');
+        showSuccessSnackBar(context, l10n.nodeAnalyticsDataUpdated);
       } else {
-        showErrorSnackBar(context, 'Node not found in mesh');
+        showErrorSnackBar(context, l10n.nodeAnalyticsNodeNotFound);
       }
     } catch (e) {
-      showErrorSnackBar(context, 'Failed to refresh: $e');
+      showErrorSnackBar(context, l10n.nodeAnalyticsRefreshFailed(e.toString()));
     } finally {
       if (mounted) {
         setState(() => _isRefreshing = false);
@@ -114,16 +116,17 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
   }
 
   Future<void> _toggleFavorite() async {
+    final l10n = context.l10n;
     HapticFeedback.mediumImpact();
     if (_isFavorite) {
       await _favoritesService.removeFavorite(_nodeId);
       if (mounted) {
-        showSuccessSnackBar(context, 'Removed from favorites');
+        showSuccessSnackBar(context, l10n.nodeAnalyticsRemovedFromFavorites);
       }
     } else {
       await _favoritesService.addFavorite(_node);
       if (mounted) {
-        showSuccessSnackBar(context, 'Added to favorites');
+        showSuccessSnackBar(context, l10n.nodeAnalyticsAddedToFavorites);
       }
     }
     await _loadFavoriteStatus();
@@ -141,21 +144,21 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
       _refreshTimer = Timer.periodic(const Duration(seconds: 30), (_) {
         _fetchLiveData();
       });
-      showSuccessSnackBar(context, 'Live watching enabled (updates every 30s)');
+      showSuccessSnackBar(context, context.l10n.nodeAnalyticsLiveWatchEnabled);
     } else {
       _refreshTimer?.cancel();
       _refreshTimer = null;
-      showSuccessSnackBar(context, 'Live watching disabled');
+      showSuccessSnackBar(context, context.l10n.nodeAnalyticsLiveWatchDisabled);
     }
   }
 
   Future<void> _clearHistory() async {
+    final l10n = context.l10n;
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Clear History',
-      message:
-          'This will delete all historical data for this node. This action cannot be undone.',
-      confirmLabel: 'Clear',
+      title: l10n.nodeAnalyticsClearHistoryTitle,
+      message: l10n.nodeAnalyticsClearHistoryMessage,
+      confirmLabel: l10n.nodeAnalyticsClearConfirm,
       isDestructive: true,
     );
 
@@ -163,7 +166,7 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
       await _historyService.clearHistory(_nodeId);
       await _loadHistory();
       if (mounted) {
-        showSuccessSnackBar(context, 'History cleared');
+        showSuccessSnackBar(context, l10n.nodeAnalyticsHistoryCleared);
       }
     }
   }
@@ -182,7 +185,7 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'Share Node',
+              context.l10n.nodeAnalyticsShareNodeTitle,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -200,11 +203,11 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
                 child: Icon(Icons.link, color: AccentColors.blue),
               ),
               title: Text(
-                'Share Link',
+                context.l10n.nodeAnalyticsShareLink,
                 style: TextStyle(color: context.textPrimary),
               ),
               subtitle: Text(
-                'Rich preview in iMessage, Slack, etc.',
+                context.l10n.nodeAnalyticsShareLinkSubtitle,
                 style: TextStyle(color: context.textSecondary, fontSize: 12),
               ),
               onTap: () {
@@ -222,11 +225,11 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
                 child: Icon(Icons.text_snippet, color: AccentColors.green),
               ),
               title: Text(
-                'Share Details',
+                context.l10n.nodeAnalyticsShareDetails,
                 style: TextStyle(color: context.textPrimary),
               ),
               subtitle: Text(
-                'Full technical info as text',
+                context.l10n.nodeAnalyticsShareDetailsSubtitle,
                 style: TextStyle(color: context.textSecondary, fontSize: 12),
               ),
               onTap: () {
@@ -241,14 +244,15 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
   }
 
   Future<void> _shareNodeAsLink() async {
+    final l10n = context.l10n;
     // Check if user is authenticated
     final currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) {
       if (mounted) {
         showActionSnackBar(
           context,
-          'Sign in to share nodes',
-          actionLabel: 'Sign In',
+          l10n.nodeAnalyticsSignInToShare,
+          actionLabel: l10n.nodeAnalyticsSignIn,
           onAction: () => Navigator.pushNamed(context, '/account'),
           type: SnackBarType.info,
         );
@@ -281,13 +285,13 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
       final shareUrl = AppUrls.shareNodeUrl(docRef.id);
 
       await Share.share(
-        'Check out ${node.displayName} on Socialmesh!\n$shareUrl',
-        subject: 'Mesh Node: ${node.displayName}',
+        l10n.nodeAnalyticsShareText(node.displayName, shareUrl),
+        subject: l10n.nodeAnalyticsShareSubject(node.displayName),
         sharePositionOrigin: sharePosition,
       );
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to share node: $e');
+        showErrorSnackBar(context, l10n.nodeAnalyticsShareFailed(e.toString()));
       }
     }
   }
@@ -295,20 +299,28 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
   void _shareNodeAsText() {
     final node = _node;
     final buffer = StringBuffer();
-    buffer.writeln('🛰️ Mesh Node: ${node.displayName}');
-    buffer.writeln('ID: !$_nodeId');
-    buffer.writeln('Role: ${node.role}');
-    buffer.writeln('Hardware: ${node.hwModel}');
+    buffer.writeln(
+      context.l10n.nodeAnalyticsShareDetailHeader(node.displayName),
+    );
+    buffer.writeln(context.l10n.nodeAnalyticsShareDetailId(_nodeId));
+    buffer.writeln(context.l10n.nodeAnalyticsShareDetailRole(node.role));
+    buffer.writeln(context.l10n.nodeAnalyticsShareDetailHardware(node.hwModel));
 
     if (node.batteryLevel != null) {
       buffer.writeln(
-        'Battery: ${node.batteryLevel! > 100 ? "Charging" : "${node.batteryLevel}%"}',
+        node.batteryLevel! > 100
+            ? context.l10n.nodeAnalyticsShareDetailBatteryCharging
+            : context.l10n.nodeAnalyticsShareDetailBatteryLevel(
+                '${node.batteryLevel}',
+              ),
       );
     }
 
     if (node.latitude != 0 && node.longitude != 0) {
       buffer.writeln(
-        'Location: ${node.latitudeDecimal.toStringAsFixed(5)}, ${node.longitudeDecimal.toStringAsFixed(5)}',
+        context.l10n.nodeAnalyticsShareDetailLocation(
+          '${node.latitudeDecimal.toStringAsFixed(5)}, ${node.longitudeDecimal.toStringAsFixed(5)}',
+        ),
       );
       buffer.writeln(
         'Map: https://www.google.com/maps?q=${node.latitudeDecimal},${node.longitudeDecimal}',
@@ -320,14 +332,22 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
         ? DateTime.now().difference(node.lastSeen!)
         : null;
     buffer.writeln(
-      'Status: ${presenceStatusText(node.presenceConfidence, lastSeenAge)}',
+      context.l10n.nodeAnalyticsShareDetailStatus(
+        presenceStatusText(node.presenceConfidence, lastSeenAge),
+      ),
     );
-    buffer.writeln('Neighbors: ${node.neighbors?.length ?? 0}');
-    buffer.writeln('Gateways: ${node.seenBy.length}');
+    buffer.writeln(
+      context.l10n.nodeAnalyticsShareDetailNeighbors(
+        '${node.neighbors?.length ?? 0}',
+      ),
+    );
+    buffer.writeln(
+      context.l10n.nodeAnalyticsShareDetailGateways('${node.seenBy.length}'),
+    );
 
     shareText(
       buffer.toString(),
-      subject: 'Mesh Node: ${node.displayName}',
+      subject: context.l10n.nodeAnalyticsShareSubject(node.displayName),
       context: context,
     );
   }
@@ -339,7 +359,7 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
 
   void _exportHistory() {
     if (_history.isEmpty) {
-      showErrorSnackBar(context, 'No history data to export');
+      showErrorSnackBar(context, context.l10n.nodeAnalyticsNoHistoryToExport);
       return;
     }
 
@@ -356,7 +376,7 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'Export History',
+              context.l10n.nodeAnalyticsExportHistoryTitle,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
@@ -365,7 +385,7 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
             ),
             SizedBox(height: AppTheme.spacing8),
             Text(
-              '${_history.length} records',
+              context.l10n.nodeAnalyticsExportRecordCount(_history.length),
               style: context.bodySmallStyle?.copyWith(
                 color: context.textTertiary,
               ),
@@ -380,7 +400,7 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
                       _exportAsJson();
                     },
                     icon: Icon(Icons.code, size: 18),
-                    label: const Text('JSON'),
+                    label: Text(context.l10n.nodeAnalyticsExportJson),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: context.accentColor,
                       side: BorderSide(
@@ -398,7 +418,7 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
                       _exportAsCsv();
                     },
                     icon: Icon(Icons.table_chart, size: 18),
-                    label: const Text('CSV'),
+                    label: Text(context.l10n.nodeAnalyticsExportCsv),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: context.accentColor,
                       side: BorderSide(
@@ -446,10 +466,10 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
     final jsonString = const JsonEncoder.withIndent('  ').convert(data);
     shareText(
       jsonString,
-      subject: 'Node ${node.displayName} History (JSON)',
+      subject: context.l10n.nodeAnalyticsExportJsonSubject(node.displayName),
       context: context,
     );
-    showSuccessSnackBar(context, 'JSON data shared');
+    showSuccessSnackBar(context, context.l10n.nodeAnalyticsJsonShared);
   }
 
   void _exportAsCsv() {
@@ -480,10 +500,10 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
 
     shareText(
       buffer.toString(),
-      subject: 'Node ${node.displayName} History (CSV)',
+      subject: context.l10n.nodeAnalyticsExportCsvSubject(node.displayName),
       context: context,
     );
-    showSuccessSnackBar(context, 'CSV data shared');
+    showSuccessSnackBar(context, context.l10n.nodeAnalyticsCsvShared);
   }
 
   @override
@@ -510,7 +530,7 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
         // Share button
         IconButton(
           icon: const Icon(Icons.share),
-          tooltip: 'Share node info',
+          tooltip: context.l10n.nodeAnalyticsShareTooltip,
           onPressed: _shareNode,
         ),
         // Live watch toggle
@@ -525,7 +545,9 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
                   _isLiveWatching ? Icons.sensors : Icons.sensors_off,
                   color: _isLiveWatching ? AccentColors.green : null,
                 ),
-          tooltip: _isLiveWatching ? 'Stop watching' : 'Watch live',
+          tooltip: _isLiveWatching
+              ? context.l10n.nodeAnalyticsStopWatching
+              : context.l10n.nodeAnalyticsWatchLive,
           onPressed: _isRefreshing ? null : _toggleLiveWatching,
         ),
         // Favorite toggle
@@ -534,7 +556,9 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
             _isFavorite ? Icons.star : Icons.star_border,
             color: _isFavorite ? const Color(0xFFFFD700) : null,
           ),
-          tooltip: _isFavorite ? 'Remove from favorites' : 'Add to favorites',
+          tooltip: _isFavorite
+              ? context.l10n.nodeAnalyticsRemoveFavoriteTooltip
+              : context.l10n.nodeAnalyticsAddFavoriteTooltip,
           onPressed: _toggleFavorite,
         ),
       ],
@@ -552,25 +576,27 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
               const SizedBox(height: AppTheme.spacing24),
 
               // Device info section
-              _buildSectionHeader('Device Info'),
+              _buildSectionHeader(context.l10n.nodeAnalyticsSectionDeviceInfo),
               const SizedBox(height: AppTheme.spacing8),
               _buildDeviceInfoTable(node),
               const SizedBox(height: AppTheme.spacing24),
 
               // Metrics section
-              _buildSectionHeader('Device Metrics'),
+              _buildSectionHeader(
+                context.l10n.nodeAnalyticsSectionDeviceMetrics,
+              ),
               const SizedBox(height: AppTheme.spacing8),
               _buildMetricsTable(node),
               const SizedBox(height: AppTheme.spacing24),
 
               // Network section
-              _buildSectionHeader('Network'),
+              _buildSectionHeader(context.l10n.nodeAnalyticsSectionNetwork),
               const SizedBox(height: AppTheme.spacing8),
               _buildNetworkSection(node),
               const SizedBox(height: AppTheme.spacing24),
 
               // Charts section
-              _buildSectionHeader('Trends'),
+              _buildSectionHeader(context.l10n.nodeAnalyticsSectionTrends),
               const SizedBox(height: AppTheme.spacing8),
               NodeHistoryCharts(
                 history: _history,
@@ -659,7 +685,7 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
                           borderRadius: BorderRadius.circular(AppTheme.radius4),
                         ),
                         child: Text(
-                          'LIVE',
+                          context.l10n.nodeAnalyticsBadgeLive,
                           style: TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.bold,
@@ -698,7 +724,10 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
             color: context.textTertiary,
             onPressed: () {
               Clipboard.setData(ClipboardData(text: '!$_nodeId'));
-              showSuccessSnackBar(context, 'Node ID copied');
+              showSuccessSnackBar(
+                context,
+                context.l10n.nodeAnalyticsNodeIdCopied,
+              );
             },
           ),
         ],
@@ -717,7 +746,7 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
             child: OutlinedButton.icon(
               onPressed: _showOnMap,
               icon: Icon(Icons.map, size: 18),
-              label: const Text('Show on Map'),
+              label: Text(context.l10n.nodeAnalyticsShowOnMap),
               style: OutlinedButton.styleFrom(
                 foregroundColor: context.accentColor,
                 side: BorderSide(
@@ -740,7 +769,11 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
                     child: CircularProgressIndicator(strokeWidth: 2),
                   )
                 : const Icon(Icons.refresh, size: 18),
-            label: Text(_isRefreshing ? 'Refreshing...' : 'Refresh Now'),
+            label: Text(
+              _isRefreshing
+                  ? context.l10n.nodeAnalyticsRefreshing
+                  : context.l10n.nodeAnalyticsRefreshNow,
+            ),
             style: OutlinedButton.styleFrom(
               foregroundColor: context.accentColor,
               side: BorderSide(
@@ -771,7 +804,7 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          'History',
+          context.l10n.nodeAnalyticsSectionHistory,
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
@@ -785,7 +818,7 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
               TextButton.icon(
                 onPressed: _exportHistory,
                 icon: Icon(Icons.download, size: 16),
-                label: const Text('Export'),
+                label: Text(context.l10n.nodeAnalyticsExport),
                 style: TextButton.styleFrom(
                   foregroundColor: context.accentColor,
                   padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -795,7 +828,7 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
               TextButton.icon(
                 onPressed: _clearHistory,
                 icon: Icon(Icons.delete_outline, size: 16),
-                label: const Text('Clear'),
+                label: Text(context.l10n.nodeAnalyticsClear),
                 style: TextButton.styleFrom(
                   foregroundColor: context.textTertiary,
                   padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -812,36 +845,39 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
     return InfoTable(
       rows: [
         InfoTableRow(
-          label: 'Long Name',
+          label: context.l10n.nodeAnalyticsLongName,
           value: node.longName.isNotEmpty ? node.longName : '—',
         ),
         InfoTableRow(
-          label: 'Short Name',
+          label: context.l10n.nodeAnalyticsShortName,
           value: node.shortName.isNotEmpty && node.shortName != '????'
               ? node.shortName
               : nodeIdHex.substring(0, 4).toUpperCase(),
         ),
         InfoTableRow(
-          label: 'Role',
+          label: context.l10n.nodeAnalyticsRole,
           value: node.role != 'UNKNOWN' ? _formatRole(node.role) : '—',
         ),
         InfoTableRow(
-          label: 'Hardware',
+          label: context.l10n.nodeAnalyticsHardware,
           value: node.hwModel.isNotEmpty && node.hwModel != 'UNKNOWN'
               ? node.hwModel
               : '—',
         ),
         if (node.latitude != 0 && node.longitude != 0) ...[
           InfoTableRow(
-            label: 'Latitude',
+            label: context.l10n.nodeAnalyticsLatitude,
             value: node.latitudeDecimal.toStringAsFixed(6),
           ),
           InfoTableRow(
-            label: 'Longitude',
+            label: context.l10n.nodeAnalyticsLongitude,
             value: node.longitudeDecimal.toStringAsFixed(6),
           ),
           if (node.altitude != null)
-            InfoTableRow(label: 'Altitude', value: '${node.altitude}m'),
+            InfoTableRow(
+              label: 'Altitude',
+              value: context.l10n.nodeAnalyticsAltitude('${node.altitude}'),
+            ),
         ],
       ],
     );
@@ -863,31 +899,34 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
     return InfoTable(
       rows: [
         InfoTableRow(
-          label: 'Battery',
+          label: context.l10n.nodeAnalyticsBattery,
           value: node.batteryLevel != null
               ? (node.batteryLevel! > 100
-                    ? 'Charging'
+                    ? context.l10n.nodeAnalyticsCharging
                     : '${node.batteryLevel}%')
-              : 'Unknown',
+              : context.l10n.nodeAnalyticsUnknown,
         ),
         if (node.voltage != null)
           InfoTableRow(
-            label: 'Voltage',
+            label: context.l10n.nodeAnalyticsVoltage,
             value: '${node.voltage!.toStringAsFixed(2)}V',
           ),
         InfoTableRow(
-          label: 'Channel Utilization',
+          label: context.l10n.nodeAnalyticsChannelUtilization,
           value: node.chUtil != null
               ? '${node.chUtil!.toStringAsFixed(1)}%'
-              : 'Unknown',
+              : context.l10n.nodeAnalyticsUnknown,
         ),
         InfoTableRow(
-          label: 'Air Time TX',
+          label: context.l10n.nodeAnalyticsAirTimeTx,
           value: node.airUtilTx != null
               ? '${node.airUtilTx!.toStringAsFixed(1)}%'
-              : 'Unknown',
+              : context.l10n.nodeAnalyticsUnknown,
         ),
-        InfoTableRow(label: 'Uptime', value: _formatUptime(node.uptime)),
+        InfoTableRow(
+          label: context.l10n.nodeAnalyticsUptime,
+          value: _formatUptime(node.uptime),
+        ),
       ],
     );
   }
@@ -913,7 +952,9 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
                     Icon(Icons.people, size: 16, color: context.textTertiary),
                     SizedBox(width: AppTheme.spacing8),
                     Text(
-                      'Direct Neighbors (${node.neighbors?.length ?? 0})',
+                      context.l10n.nodeAnalyticsDirectNeighbors(
+                        node.neighbors?.length ?? 0,
+                      ),
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.w500,
@@ -925,7 +966,7 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
                 SizedBox(height: AppTheme.spacing12),
                 if (node.neighbors == null || node.neighbors!.isEmpty)
                   Text(
-                    'No neighbor data available',
+                    context.l10n.nodeAnalyticsNoNeighborData,
                     style: TextStyle(
                       fontSize: 13,
                       color: context.textTertiary,
@@ -955,7 +996,9 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
                     Icon(Icons.router, size: 16, color: context.textTertiary),
                     SizedBox(width: AppTheme.spacing8),
                     Text(
-                      'Seen by Gateways (${node.seenBy.length})',
+                      context.l10n.nodeAnalyticsSeenByGateways(
+                        node.seenBy.length,
+                      ),
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.w500,
@@ -967,7 +1010,7 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
                 SizedBox(height: AppTheme.spacing12),
                 if (node.seenBy.isEmpty)
                   Text(
-                    'No gateway data available',
+                    context.l10n.nodeAnalyticsNoGatewayData,
                     style: TextStyle(
                       fontSize: 13,
                       color: context.textTertiary,
@@ -1073,14 +1116,14 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
                 Icon(Icons.history, size: 40, color: context.textTertiary),
                 SizedBox(height: AppTheme.spacing12),
                 Text(
-                  'No historical data yet',
+                  context.l10n.nodeAnalyticsNoHistoryYet,
                   style: context.bodySecondaryStyle?.copyWith(
                     color: context.textSecondary,
                   ),
                 ),
                 SizedBox(height: AppTheme.spacing4),
                 Text(
-                  'Visit this node again to build history',
+                  context.l10n.nodeAnalyticsVisitAgain,
                   style: context.bodySmallStyle?.copyWith(
                     color: context.textTertiary,
                   ),
@@ -1094,14 +1137,14 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
                   children: [
                     Expanded(
                       child: _buildStatItem(
-                        'Records',
+                        context.l10n.nodeAnalyticsRecords,
                         '${_history.length}',
                         Icons.data_array,
                       ),
                     ),
                     Expanded(
                       child: _buildStatItem(
-                        'Uptime',
+                        context.l10n.nodeAnalyticsUptimeStat,
                         _stats != null
                             ? '${_stats!.uptimePercent.toStringAsFixed(0)}%'
                             : '--',
@@ -1111,7 +1154,7 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
                     if (_stats?.avgBattery != null)
                       Expanded(
                         child: _buildStatItem(
-                          'Avg Battery',
+                          context.l10n.nodeAnalyticsAvgBattery,
                           '${_stats!.avgBattery!.toStringAsFixed(0)}%',
                           Icons.battery_std,
                         ),
@@ -1129,7 +1172,7 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'First seen',
+                          context.l10n.nodeAnalyticsFirstSeen,
                           style: TextStyle(
                             fontSize: 11,
                             color: context.textTertiary,
@@ -1148,7 +1191,7 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          'Last update',
+                          context.l10n.nodeAnalyticsLastUpdate,
                           style: TextStyle(
                             fontSize: 11,
                             color: context.textTertiary,
@@ -1192,7 +1235,7 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
   }
 
   String _formatUptime(int? seconds) {
-    if (seconds == null) return 'Unknown';
+    if (seconds == null) return context.l10n.nodeAnalyticsUnknown;
     final duration = Duration(seconds: seconds);
     if (duration.inDays > 0) {
       return '${duration.inDays}d ${duration.inHours % 24}h';
@@ -1205,10 +1248,16 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
 
   String _formatTimeAgo(DateTime time) {
     final diff = DateTime.now().difference(time);
-    if (diff.inDays > 0) return '${diff.inDays}d ago';
-    if (diff.inHours > 0) return '${diff.inHours}h ago';
-    if (diff.inMinutes > 0) return '${diff.inMinutes}m ago';
-    return 'Just now';
+    if (diff.inDays > 0) {
+      return context.l10n.nodeAnalyticsTimeDaysAgo(diff.inDays);
+    }
+    if (diff.inHours > 0) {
+      return context.l10n.nodeAnalyticsTimeHoursAgo(diff.inHours);
+    }
+    if (diff.inMinutes > 0) {
+      return context.l10n.nodeAnalyticsTimeMinutesAgo(diff.inMinutes);
+    }
+    return context.l10n.nodeAnalyticsTimeJustNow;
   }
 
   Color _presenceColor(BuildContext context, PresenceConfidence confidence) {

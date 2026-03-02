@@ -10203,6 +10203,3736 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Out of Stock'**
   String get shopFavoritesOutOfStock;
+
+  /// No description provided for @channelsSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search channels'**
+  String get channelsSearchHint;
+
+  /// No description provided for @channelsFilterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get channelsFilterAll;
+
+  /// No description provided for @channelsFilterPrimary.
+  ///
+  /// In en, this message translates to:
+  /// **'Primary'**
+  String get channelsFilterPrimary;
+
+  /// No description provided for @channelsFilterEncrypted.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypted'**
+  String get channelsFilterEncrypted;
+
+  /// No description provided for @channelsFilterPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Position'**
+  String get channelsFilterPosition;
+
+  /// No description provided for @channelsFilterMqtt.
+  ///
+  /// In en, this message translates to:
+  /// **'MQTT'**
+  String get channelsFilterMqtt;
+
+  /// No description provided for @channelsNoMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'No channels match \"{query}\"'**
+  String channelsNoMatch(String query);
+
+  /// No description provided for @channelsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No channels configured'**
+  String get channelsEmpty;
+
+  /// No description provided for @channelsEmptySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Channels are still being loaded from device\nor use the icons above to add channels'**
+  String get channelsEmptySubtitle;
+
+  /// No description provided for @channelsClearSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear search'**
+  String get channelsClearSearch;
+
+  /// No description provided for @channelsScreenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Channels ({count})'**
+  String channelsScreenTitle(int count);
+
+  /// No description provided for @channelsMenuAddChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Channel'**
+  String get channelsMenuAddChannel;
+
+  /// No description provided for @channelsMenuScanQrCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan QR Code'**
+  String get channelsMenuScanQrCode;
+
+  /// No description provided for @channelsMenuSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get channelsMenuSettings;
+
+  /// No description provided for @channelsMenuHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get channelsMenuHelp;
+
+  /// No description provided for @channelsPrimaryChannelName.
+  ///
+  /// In en, this message translates to:
+  /// **'Primary Channel'**
+  String get channelsPrimaryChannelName;
+
+  /// No description provided for @channelsDefaultChannelName.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel {index}'**
+  String channelsDefaultChannelName(int index);
+
+  /// No description provided for @channelsTileEncrypted.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypted'**
+  String get channelsTileEncrypted;
+
+  /// No description provided for @channelsTileNoEncryption.
+  ///
+  /// In en, this message translates to:
+  /// **'No encryption'**
+  String get channelsTileNoEncryption;
+
+  /// No description provided for @channelsTilePrimaryBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'PRIMARY'**
+  String get channelsTilePrimaryBadge;
+
+  /// No description provided for @channelsUnreadOverflow.
+  ///
+  /// In en, this message translates to:
+  /// **'99+'**
+  String get channelsUnreadOverflow;
+
+  /// No description provided for @channelFormKeySizeNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No Encryption'**
+  String get channelFormKeySizeNone;
+
+  /// No description provided for @channelFormKeySizeDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Default (Simple)'**
+  String get channelFormKeySizeDefault;
+
+  /// No description provided for @channelFormKeySizeAes128.
+  ///
+  /// In en, this message translates to:
+  /// **'AES-128'**
+  String get channelFormKeySizeAes128;
+
+  /// No description provided for @channelFormKeySizeAes256.
+  ///
+  /// In en, this message translates to:
+  /// **'AES-256'**
+  String get channelFormKeySizeAes256;
+
+  /// No description provided for @channelFormInvalidBase64.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid base64 encoding'**
+  String get channelFormInvalidBase64;
+
+  /// No description provided for @channelFormInvalidKeySize.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid key size ({byteCount} bytes). Use 1, 16, or 32 bytes.'**
+  String channelFormInvalidKeySize(int byteCount);
+
+  /// No description provided for @channelFormKeyEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Key cannot be empty'**
+  String get channelFormKeyEmpty;
+
+  /// No description provided for @channelFormDeviceNotConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot save channel: Device not connected'**
+  String get channelFormDeviceNotConnected;
+
+  /// No description provided for @channelFormMaxChannelsReached.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum 8 channels allowed'**
+  String get channelFormMaxChannelsReached;
+
+  /// No description provided for @channelFormDeviceNotReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Device not ready - please wait for connection'**
+  String get channelFormDeviceNotReady;
+
+  /// No description provided for @channelFormDefaultName.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel {index}'**
+  String channelFormDefaultName(int index);
+
+  /// No description provided for @channelFormUpdatedSnackbar.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel updated'**
+  String get channelFormUpdatedSnackbar;
+
+  /// No description provided for @channelFormCreatedSnackbar.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel created'**
+  String get channelFormCreatedSnackbar;
+
+  /// No description provided for @channelFormError.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {error}'**
+  String channelFormError(String error);
+
+  /// No description provided for @channelFormEditTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Channel'**
+  String get channelFormEditTitle;
+
+  /// No description provided for @channelFormNewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New Channel'**
+  String get channelFormNewTitle;
+
+  /// No description provided for @channelFormSaveButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get channelFormSaveButton;
+
+  /// No description provided for @channelFormEncryptionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Encryption'**
+  String get channelFormEncryptionLabel;
+
+  /// No description provided for @channelFormPositionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Position'**
+  String get channelFormPositionLabel;
+
+  /// No description provided for @channelFormMqttLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'MQTT'**
+  String get channelFormMqttLabel;
+
+  /// No description provided for @channelFormNameTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel Name'**
+  String get channelFormNameTitle;
+
+  /// No description provided for @channelFormNameMaxHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Max 11 characters'**
+  String get channelFormNameMaxHint;
+
+  /// No description provided for @channelFormNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter channel name (no spaces)'**
+  String get channelFormNameHint;
+
+  /// No description provided for @channelFormKeySizeNoneDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages sent in plaintext'**
+  String get channelFormKeySizeNoneDesc;
+
+  /// No description provided for @channelFormKeySizeDefaultDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'1-byte simple key (AQ==)'**
+  String get channelFormKeySizeDefaultDesc;
+
+  /// No description provided for @channelFormKeySizeBitDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'{bits}-bit encryption key'**
+  String channelFormKeySizeBitDesc(int bits);
+
+  /// No description provided for @channelFormPositionEnabledTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Positions Enabled'**
+  String get channelFormPositionEnabledTitle;
+
+  /// No description provided for @channelFormPositionEnabledSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Share position on this channel'**
+  String get channelFormPositionEnabledSubtitle;
+
+  /// No description provided for @channelFormUplinkTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Uplink Enabled'**
+  String get channelFormUplinkTitle;
+
+  /// No description provided for @channelFormUplinkSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Forward messages to MQTT server'**
+  String get channelFormUplinkSubtitle;
+
+  /// No description provided for @channelFormDownlinkTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Downlink Enabled'**
+  String get channelFormDownlinkTitle;
+
+  /// No description provided for @channelFormDownlinkSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive messages from MQTT server'**
+  String get channelFormDownlinkSubtitle;
+
+  /// No description provided for @channelFormMqttWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Most devices have very limited processing power and RAM. Bridging a busy channel like LongFast via the default MQTT server can flood the device with 15-25 packets per second, causing it to stop responding. Consider using a private broker or a quieter channel.'**
+  String get channelFormMqttWarning;
+
+  /// No description provided for @channelFormPrecision12.
+  ///
+  /// In en, this message translates to:
+  /// **'Within 5.8 km'**
+  String get channelFormPrecision12;
+
+  /// No description provided for @channelFormPrecision13.
+  ///
+  /// In en, this message translates to:
+  /// **'Within 2.9 km'**
+  String get channelFormPrecision13;
+
+  /// No description provided for @channelFormPrecision14.
+  ///
+  /// In en, this message translates to:
+  /// **'Within 1.5 km'**
+  String get channelFormPrecision14;
+
+  /// No description provided for @channelFormPrecision15.
+  ///
+  /// In en, this message translates to:
+  /// **'Within 700 m'**
+  String get channelFormPrecision15;
+
+  /// No description provided for @channelFormPrecision32.
+  ///
+  /// In en, this message translates to:
+  /// **'Precise location'**
+  String get channelFormPrecision32;
+
+  /// No description provided for @channelFormPrecisionUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get channelFormPrecisionUnknown;
+
+  /// No description provided for @channelFormPreciseLocationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Precise Location'**
+  String get channelFormPreciseLocationTitle;
+
+  /// No description provided for @channelFormPreciseLocationSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Share exact GPS coordinates'**
+  String get channelFormPreciseLocationSubtitle;
+
+  /// No description provided for @channelFormApproxLocationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Approximate Location'**
+  String get channelFormApproxLocationTitle;
+
+  /// No description provided for @channelFormPrimaryChannelTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Primary Channel'**
+  String get channelFormPrimaryChannelTitle;
+
+  /// No description provided for @channelFormPrimaryChannelNote.
+  ///
+  /// In en, this message translates to:
+  /// **'This is the main channel for device communication. Changes may affect connectivity.'**
+  String get channelFormPrimaryChannelNote;
+
+  /// No description provided for @channelWizardStepNameTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel Name'**
+  String get channelWizardStepNameTitle;
+
+  /// No description provided for @channelWizardStepNameContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a memorable name for your channel.\n\n• Names are limited to 12 characters\n• Only letters and numbers allowed\n• The name is visible to anyone who joins\n• Pick something descriptive like \"Family\" or \"Hiking\"'**
+  String get channelWizardStepNameContent;
+
+  /// No description provided for @channelWizardStepPrivacyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Level'**
+  String get channelWizardStepPrivacyTitle;
+
+  /// No description provided for @channelWizardStepPrivacyContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Select how secure your channel should be.\n\n• OPEN: No encryption - anyone can read messages\n• SHARED: Uses the default Meshtastic key - not private\n• PRIVATE (Recommended): Unique AES-128 key - secure\n• MAXIMUM: AES-256 encryption - highest security\n\nHigher security requires sharing your channel key with others.'**
+  String get channelWizardStepPrivacyContent;
+
+  /// No description provided for @channelWizardStepOptionsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced Options'**
+  String get channelWizardStepOptionsTitle;
+
+  /// No description provided for @channelWizardStepOptionsContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Configure optional channel settings.\n\n• Position Sharing: Allow location sharing on this channel\n• MQTT Uplink: Send messages to the internet (requires MQTT setup)\n• MQTT Downlink: Receive messages from the internet\n• Encryption Key: Auto-generated, but you can paste a custom key\n\nMost users can skip these advanced options.'**
+  String get channelWizardStepOptionsContent;
+
+  /// No description provided for @channelWizardStepReviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Review & Create'**
+  String get channelWizardStepReviewTitle;
+
+  /// No description provided for @channelWizardStepReviewContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Review your channel settings before creating.\n\n• Verify the name and privacy level are correct\n• After creation, share the QR code with others\n• Others scan the QR code to join your channel\n• You can also copy the URL to share via text'**
+  String get channelWizardStepReviewContent;
+
+  /// No description provided for @channelWizardKeySizeNone.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get channelWizardKeySizeNone;
+
+  /// No description provided for @channelWizardKeySizeNoneDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'No encryption - messages are sent in plain text'**
+  String get channelWizardKeySizeNoneDesc;
+
+  /// No description provided for @channelWizardKeySizeDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Default'**
+  String get channelWizardKeySizeDefault;
+
+  /// No description provided for @channelWizardKeySizeDefaultDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Simple shared key - compatible but not secure'**
+  String get channelWizardKeySizeDefaultDesc;
+
+  /// No description provided for @channelWizardKeySizeAes128.
+  ///
+  /// In en, this message translates to:
+  /// **'AES-128'**
+  String get channelWizardKeySizeAes128;
+
+  /// No description provided for @channelWizardKeySizeAes128Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Strong encryption - recommended for most uses'**
+  String get channelWizardKeySizeAes128Desc;
+
+  /// No description provided for @channelWizardKeySizeAes256.
+  ///
+  /// In en, this message translates to:
+  /// **'AES-256'**
+  String get channelWizardKeySizeAes256;
+
+  /// No description provided for @channelWizardKeySizeAes256Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum encryption - highest security'**
+  String get channelWizardKeySizeAes256Desc;
+
+  /// No description provided for @channelWizardPrivacyOpenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Channel'**
+  String get channelWizardPrivacyOpenTitle;
+
+  /// No description provided for @channelWizardPrivacySharedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Shared Channel'**
+  String get channelWizardPrivacySharedTitle;
+
+  /// No description provided for @channelWizardPrivacyPrivateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Private Channel'**
+  String get channelWizardPrivacyPrivateTitle;
+
+  /// No description provided for @channelWizardPrivacyMaxTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum Security'**
+  String get channelWizardPrivacyMaxTitle;
+
+  /// No description provided for @channelWizardPrivacyOpenDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'No encryption. Anyone with a compatible radio can read your messages. Use only for public broadcasts.'**
+  String get channelWizardPrivacyOpenDesc;
+
+  /// No description provided for @channelWizardPrivacySharedDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Uses the well-known default key. Other Meshtastic users may be able to read messages. Good for community channels.'**
+  String get channelWizardPrivacySharedDesc;
+
+  /// No description provided for @channelWizardPrivacyPrivateDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'AES-128 encryption with a random key. Only people you share the QR code with can join. Recommended for most uses.'**
+  String get channelWizardPrivacyPrivateDesc;
+
+  /// No description provided for @channelWizardPrivacyMaxDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'AES-256 encryption for maximum security. Ideal for sensitive communications. Slightly higher battery usage.'**
+  String get channelWizardPrivacyMaxDesc;
+
+  /// No description provided for @channelWizardRadioComplianceLink.
+  ///
+  /// In en, this message translates to:
+  /// **'View Radio Compliance Rules'**
+  String get channelWizardRadioComplianceLink;
+
+  /// No description provided for @channelWizardDeviceNotConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot save channel: Device not connected'**
+  String get channelWizardDeviceNotConnected;
+
+  /// No description provided for @channelWizardCreateFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to create channel: {error}'**
+  String channelWizardCreateFailed(String error);
+
+  /// No description provided for @channelWizardScreenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Channel'**
+  String get channelWizardScreenTitle;
+
+  /// No description provided for @channelWizardHelpTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get channelWizardHelpTooltip;
+
+  /// No description provided for @channelWizardNameHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Name Your Channel'**
+  String get channelWizardNameHeading;
+
+  /// No description provided for @channelWizardNameSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a name that helps you identify this channel. It will be visible to anyone who joins.'**
+  String get channelWizardNameSubtitle;
+
+  /// No description provided for @channelWizardNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel Name'**
+  String get channelWizardNameLabel;
+
+  /// No description provided for @channelWizardNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., Family, Friends, Hiking'**
+  String get channelWizardNameHint;
+
+  /// No description provided for @channelWizardNameBannerInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel names are limited to 12 alphanumeric characters.'**
+  String get channelWizardNameBannerInfo;
+
+  /// No description provided for @channelWizardPrivacyHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Privacy Level'**
+  String get channelWizardPrivacyHeading;
+
+  /// No description provided for @channelWizardPrivacySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select how secure you want this channel to be. Higher security uses stronger encryption.'**
+  String get channelWizardPrivacySubtitle;
+
+  /// No description provided for @channelWizardCompatOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Compatible with all devices. No key exchange needed.'**
+  String get channelWizardCompatOpen;
+
+  /// No description provided for @channelWizardCompatShared.
+  ///
+  /// In en, this message translates to:
+  /// **'Uses the default Meshtastic key. Other users with default settings may intercept messages.'**
+  String get channelWizardCompatShared;
+
+  /// No description provided for @channelWizardCompatPrivate.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended. Share the QR code securely with people you want to communicate with.'**
+  String get channelWizardCompatPrivate;
+
+  /// No description provided for @channelWizardCompatMax.
+  ///
+  /// In en, this message translates to:
+  /// **'Highest security. Ensure all participants support AES-256 encryption.'**
+  String get channelWizardCompatMax;
+
+  /// No description provided for @channelWizardOptionsHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced Options'**
+  String get channelWizardOptionsHeading;
+
+  /// No description provided for @channelWizardOptionsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Configure optional channel settings.'**
+  String get channelWizardOptionsSubtitle;
+
+  /// No description provided for @channelWizardPositionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Position Enabled'**
+  String get channelWizardPositionTitle;
+
+  /// No description provided for @channelWizardPositionSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your position on this channel.'**
+  String get channelWizardPositionSubtitle;
+
+  /// No description provided for @channelWizardMqttHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'MQTT Settings'**
+  String get channelWizardMqttHeader;
+
+  /// No description provided for @channelWizardUplinkTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Uplink Enabled'**
+  String get channelWizardUplinkTitle;
+
+  /// No description provided for @channelWizardUplinkSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Send messages from this channel to MQTT when connected to the internet.'**
+  String get channelWizardUplinkSubtitle;
+
+  /// No description provided for @channelWizardDownlinkTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Downlink Enabled'**
+  String get channelWizardDownlinkTitle;
+
+  /// No description provided for @channelWizardDownlinkSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive messages from MQTT and broadcast them on this channel.'**
+  String get channelWizardDownlinkSubtitle;
+
+  /// No description provided for @channelWizardMqttWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'MQTT must be configured on your device for uplink/downlink to work.'**
+  String get channelWizardMqttWarning;
+
+  /// No description provided for @channelWizardMqttFloodWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Most devices have very limited processing power and RAM. Bridging a busy channel like LongFast via the default MQTT server can flood the device with 15-25 packets per second, causing it to stop responding. Consider using a private broker or a quieter channel.'**
+  String get channelWizardMqttFloodWarning;
+
+  /// No description provided for @channelWizardCreating.
+  ///
+  /// In en, this message translates to:
+  /// **'Creating channel...'**
+  String get channelWizardCreating;
+
+  /// No description provided for @channelWizardCreatedHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel Created!'**
+  String get channelWizardCreatedHeading;
+
+  /// No description provided for @channelWizardCreatedSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Share this QR code with others to let them join.'**
+  String get channelWizardCreatedSubtitle;
+
+  /// No description provided for @channelWizardSummaryName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get channelWizardSummaryName;
+
+  /// No description provided for @channelWizardSummaryPrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy'**
+  String get channelWizardSummaryPrivacy;
+
+  /// No description provided for @channelWizardSummaryEncryption.
+  ///
+  /// In en, this message translates to:
+  /// **'Encryption'**
+  String get channelWizardSummaryEncryption;
+
+  /// No description provided for @channelWizardUrlCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel URL copied to clipboard'**
+  String get channelWizardUrlCopied;
+
+  /// No description provided for @channelWizardCopyUrlButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy URL'**
+  String get channelWizardCopyUrlButton;
+
+  /// No description provided for @channelWizardDoneButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get channelWizardDoneButton;
+
+  /// No description provided for @channelWizardReviewHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Review & Create'**
+  String get channelWizardReviewHeading;
+
+  /// No description provided for @channelWizardReviewSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Review your channel settings before creating.'**
+  String get channelWizardReviewSubtitle;
+
+  /// No description provided for @channelWizardReviewName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get channelWizardReviewName;
+
+  /// No description provided for @channelWizardReviewPrivacyLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Level'**
+  String get channelWizardReviewPrivacyLevel;
+
+  /// No description provided for @channelWizardReviewEncryption.
+  ///
+  /// In en, this message translates to:
+  /// **'Encryption'**
+  String get channelWizardReviewEncryption;
+
+  /// No description provided for @channelWizardReviewKeySize.
+  ///
+  /// In en, this message translates to:
+  /// **'Key Size'**
+  String get channelWizardReviewKeySize;
+
+  /// No description provided for @channelWizardNoKey.
+  ///
+  /// In en, this message translates to:
+  /// **'No key'**
+  String get channelWizardNoKey;
+
+  /// No description provided for @channelWizardDefaultKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Default key'**
+  String get channelWizardDefaultKey;
+
+  /// No description provided for @channelWizardKeyBits.
+  ///
+  /// In en, this message translates to:
+  /// **'{bits} bits'**
+  String channelWizardKeyBits(int bits);
+
+  /// No description provided for @channelWizardEncryptionKeyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Encryption Key'**
+  String get channelWizardEncryptionKeyLabel;
+
+  /// No description provided for @channelWizardReviewMqttUplink.
+  ///
+  /// In en, this message translates to:
+  /// **'MQTT Uplink'**
+  String get channelWizardReviewMqttUplink;
+
+  /// No description provided for @channelWizardEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Enabled'**
+  String get channelWizardEnabled;
+
+  /// No description provided for @channelWizardDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Disabled'**
+  String get channelWizardDisabled;
+
+  /// No description provided for @channelWizardReviewMqttDownlink.
+  ///
+  /// In en, this message translates to:
+  /// **'MQTT Downlink'**
+  String get channelWizardReviewMqttDownlink;
+
+  /// No description provided for @channelWizardReviewPositionSharing.
+  ///
+  /// In en, this message translates to:
+  /// **'Position Sharing'**
+  String get channelWizardReviewPositionSharing;
+
+  /// No description provided for @channelWizardBackButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get channelWizardBackButton;
+
+  /// No description provided for @channelWizardCreateButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Channel'**
+  String get channelWizardCreateButton;
+
+  /// No description provided for @channelWizardContinueButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get channelWizardContinueButton;
+
+  /// No description provided for @channelOptionsDefaultName.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel {index}'**
+  String channelOptionsDefaultName(int index);
+
+  /// No description provided for @channelOptionsEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Channel'**
+  String get channelOptionsEdit;
+
+  /// No description provided for @channelOptionsViewKey.
+  ///
+  /// In en, this message translates to:
+  /// **'View Encryption Key'**
+  String get channelOptionsViewKey;
+
+  /// No description provided for @channelOptionsShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share Channel'**
+  String get channelOptionsShare;
+
+  /// No description provided for @channelOptionsInviteLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Share Invite Link'**
+  String get channelOptionsInviteLink;
+
+  /// No description provided for @channelOptionsDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Channel'**
+  String get channelOptionsDelete;
+
+  /// No description provided for @channelOptionsEncrypted.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypted'**
+  String get channelOptionsEncrypted;
+
+  /// No description provided for @channelOptionsNoEncryption.
+  ///
+  /// In en, this message translates to:
+  /// **'No encryption'**
+  String get channelOptionsNoEncryption;
+
+  /// No description provided for @channelOptionsDeleteNotConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot delete channel: Device not connected'**
+  String get channelOptionsDeleteNotConnected;
+
+  /// No description provided for @channelOptionsDeleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Channel'**
+  String get channelOptionsDeleteTitle;
+
+  /// No description provided for @channelOptionsDeleteConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete channel \"{name}\"?'**
+  String channelOptionsDeleteConfirm(String name);
+
+  /// No description provided for @channelOptionsDeleteButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get channelOptionsDeleteButton;
+
+  /// No description provided for @channelOptionsDeleteFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to delete channel: {error}'**
+  String channelOptionsDeleteFailed(String error);
+
+  /// No description provided for @channelOptionsKeyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Encryption Key'**
+  String get channelOptionsKeyTitle;
+
+  /// No description provided for @channelOptionsKeySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{keyBits}-bit · {keyBytes} bytes · Base64'**
+  String channelOptionsKeySubtitle(int keyBits, int keyBytes);
+
+  /// No description provided for @channelOptionsHideButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide'**
+  String get channelOptionsHideButton;
+
+  /// No description provided for @channelOptionsShowButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Show'**
+  String get channelOptionsShowButton;
+
+  /// No description provided for @channelOptionsKeyCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Key copied to clipboard'**
+  String get channelOptionsKeyCopied;
+
+  /// No description provided for @channelOptionsCopyButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get channelOptionsCopyButton;
+
+  /// No description provided for @channelShareSignInRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to share channels'**
+  String get channelShareSignInRequired;
+
+  /// No description provided for @channelShareSignInAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign In'**
+  String get channelShareSignInAction;
+
+  /// No description provided for @channelShareDefaultName.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel {index}'**
+  String channelShareDefaultName(int index);
+
+  /// No description provided for @channelShareTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Share Channel'**
+  String get channelShareTitle;
+
+  /// No description provided for @channelShareQrInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan this QR code in Socialmesh to import this channel'**
+  String get channelShareQrInfo;
+
+  /// No description provided for @channelShareSubject.
+  ///
+  /// In en, this message translates to:
+  /// **'Socialmesh Channel: {channelName}'**
+  String channelShareSubject(String channelName);
+
+  /// No description provided for @channelShareMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Join my channel on Socialmesh!'**
+  String get channelShareMessage;
+
+  /// No description provided for @channelShareCreatingInvite.
+  ///
+  /// In en, this message translates to:
+  /// **'Creating invite link...'**
+  String get channelShareCreatingInvite;
+
+  /// No description provided for @channelShareInviteCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite link copied to clipboard'**
+  String get channelShareInviteCopied;
+
+  /// No description provided for @channelShareInviteFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to create invite link'**
+  String get channelShareInviteFailed;
+
+  /// No description provided for @routesScreenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Routes'**
+  String get routesScreenTitle;
+
+  /// No description provided for @routesStartRoute.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Route'**
+  String get routesStartRoute;
+
+  /// No description provided for @routesImportGpx.
+  ///
+  /// In en, this message translates to:
+  /// **'Import GPX'**
+  String get routesImportGpx;
+
+  /// No description provided for @routesEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No Routes Yet'**
+  String get routesEmptyTitle;
+
+  /// No description provided for @routesEmptyDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Record your first route or import a GPX file'**
+  String get routesEmptyDescription;
+
+  /// No description provided for @routesDeleteConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Route?'**
+  String get routesDeleteConfirmTitle;
+
+  /// No description provided for @routesDeleteConfirmMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete \"{name}\"? This cannot be undone.'**
+  String routesDeleteConfirmMessage(String name);
+
+  /// No description provided for @routesDeleteConfirmAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get routesDeleteConfirmAction;
+
+  /// No description provided for @routesShareText.
+  ///
+  /// In en, this message translates to:
+  /// **'Route: {name}'**
+  String routesShareText(String name);
+
+  /// No description provided for @routesExportFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Export failed: {error}'**
+  String routesExportFailed(String error);
+
+  /// No description provided for @routesFileReadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to read file'**
+  String get routesFileReadFailed;
+
+  /// No description provided for @routesImportSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Imported: {name}'**
+  String routesImportSuccess(String name);
+
+  /// No description provided for @routesInvalidGpxFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid GPX file'**
+  String get routesInvalidGpxFile;
+
+  /// No description provided for @routesImportFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Import failed: {error}'**
+  String routesImportFailed(String error);
+
+  /// No description provided for @routesRecordingLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Recording'**
+  String get routesRecordingLabel;
+
+  /// No description provided for @routesPointCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} points'**
+  String routesPointCount(int count);
+
+  /// No description provided for @routesDistanceDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'{distance} • {duration}'**
+  String routesDistanceDuration(String distance, String duration);
+
+  /// No description provided for @routesCancelRecording.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get routesCancelRecording;
+
+  /// No description provided for @routesStopRecording.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get routesStopRecording;
+
+  /// No description provided for @routesDistanceMeters.
+  ///
+  /// In en, this message translates to:
+  /// **'{meters}m'**
+  String routesDistanceMeters(String meters);
+
+  /// No description provided for @routesDistanceKilometers.
+  ///
+  /// In en, this message translates to:
+  /// **'{km}km'**
+  String routesDistanceKilometers(String km);
+
+  /// No description provided for @routesDurationSeconds.
+  ///
+  /// In en, this message translates to:
+  /// **'{seconds}s'**
+  String routesDurationSeconds(int seconds);
+
+  /// No description provided for @routesDurationMinutesSeconds.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes}m {seconds}s'**
+  String routesDurationMinutesSeconds(int minutes, int seconds);
+
+  /// No description provided for @routesDurationHoursMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h {minutes}m'**
+  String routesDurationHoursMinutes(int hours, int minutes);
+
+  /// No description provided for @routesExportGpx.
+  ///
+  /// In en, this message translates to:
+  /// **'Export GPX'**
+  String get routesExportGpx;
+
+  /// No description provided for @routesDeleteAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get routesDeleteAction;
+
+  /// No description provided for @routesElevationGain.
+  ///
+  /// In en, this message translates to:
+  /// **'{meters}m ↑'**
+  String routesElevationGain(String meters);
+
+  /// No description provided for @routesPointsShort.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} pts'**
+  String routesPointsShort(int count);
+
+  /// No description provided for @routesCardDurationMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes}min'**
+  String routesCardDurationMinutes(int minutes);
+
+  /// No description provided for @routesCardDurationHoursMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h {minutes}m'**
+  String routesCardDurationHoursMinutes(int hours, int minutes);
+
+  /// No description provided for @routesNewRouteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New Route'**
+  String get routesNewRouteTitle;
+
+  /// No description provided for @routesNewRouteSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Start recording your GPS track'**
+  String get routesNewRouteSubtitle;
+
+  /// No description provided for @routesRouteNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Route Name'**
+  String get routesRouteNameLabel;
+
+  /// No description provided for @routesRouteNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Morning hike'**
+  String get routesRouteNameHint;
+
+  /// No description provided for @routesNotesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes (optional)'**
+  String get routesNotesLabel;
+
+  /// No description provided for @routesNotesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Trail conditions, weather, etc.'**
+  String get routesNotesHint;
+
+  /// No description provided for @routesColorLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Color'**
+  String get routesColorLabel;
+
+  /// No description provided for @routesCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get routesCancel;
+
+  /// No description provided for @routesStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get routesStart;
+
+  /// No description provided for @routeDetailNoGpsPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'No GPS Points'**
+  String get routeDetailNoGpsPoints;
+
+  /// No description provided for @routeDetailDistanceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Distance'**
+  String get routeDetailDistanceLabel;
+
+  /// No description provided for @routeDetailDurationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get routeDetailDurationLabel;
+
+  /// No description provided for @routeDetailNoData.
+  ///
+  /// In en, this message translates to:
+  /// **'--'**
+  String get routeDetailNoData;
+
+  /// No description provided for @routeDetailElevationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Elevation'**
+  String get routeDetailElevationLabel;
+
+  /// No description provided for @routeDetailElevationValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{meters}m'**
+  String routeDetailElevationValue(String meters);
+
+  /// No description provided for @routeDetailPointsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Points'**
+  String get routeDetailPointsLabel;
+
+  /// No description provided for @routeDetailStorageUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Storage not available'**
+  String get routeDetailStorageUnavailable;
+
+  /// No description provided for @routeDetailShareText.
+  ///
+  /// In en, this message translates to:
+  /// **'Route: {name}'**
+  String routeDetailShareText(String name);
+
+  /// No description provided for @routeDetailExportFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Export failed: {error}'**
+  String routeDetailExportFailed(String error);
+
+  /// No description provided for @routeDetailDistanceMeters.
+  ///
+  /// In en, this message translates to:
+  /// **'{meters}m'**
+  String routeDetailDistanceMeters(String meters);
+
+  /// No description provided for @routeDetailDistanceKilometers.
+  ///
+  /// In en, this message translates to:
+  /// **'{km}km'**
+  String routeDetailDistanceKilometers(String km);
+
+  /// No description provided for @routeDetailDurationMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes}min'**
+  String routeDetailDurationMinutes(int minutes);
+
+  /// No description provided for @routeDetailDurationHoursMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h {minutes}m'**
+  String routeDetailDurationHoursMinutes(int hours, int minutes);
+
+  /// No description provided for @routeDetailYouBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get routeDetailYouBadge;
+
+  /// No description provided for @routeDetailCenterOnNodeTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Center on node'**
+  String get routeDetailCenterOnNodeTooltip;
+
+  /// No description provided for @globeScreenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh Globe'**
+  String get globeScreenTitle;
+
+  /// No description provided for @globeHideConnections.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide connections'**
+  String get globeHideConnections;
+
+  /// No description provided for @globeShowConnections.
+  ///
+  /// In en, this message translates to:
+  /// **'Show connections'**
+  String get globeShowConnections;
+
+  /// No description provided for @globeResetView.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset view'**
+  String get globeResetView;
+
+  /// No description provided for @globeHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get globeHelp;
+
+  /// No description provided for @globeSelectNode.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Node'**
+  String get globeSelectNode;
+
+  /// No description provided for @globeNodeCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} nodes'**
+  String globeNodeCount(int count);
+
+  /// No description provided for @globeEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No nodes with GPS'**
+  String get globeEmptyTitle;
+
+  /// No description provided for @globeEmptyDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes with position data will appear here'**
+  String get globeEmptyDescription;
+
+  /// No description provided for @reachabilityScreenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reachability'**
+  String get reachabilityScreenTitle;
+
+  /// No description provided for @reachabilityBetaBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'BETA'**
+  String get reachabilityBetaBadge;
+
+  /// No description provided for @reachabilityAboutTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'About Reachability'**
+  String get reachabilityAboutTooltip;
+
+  /// No description provided for @reachabilityAboutTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'About Reachability'**
+  String get reachabilityAboutTitle;
+
+  /// No description provided for @reachabilityGotIt.
+  ///
+  /// In en, this message translates to:
+  /// **'Got it'**
+  String get reachabilityGotIt;
+
+  /// No description provided for @reachabilityWhatIsThisTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What is this?'**
+  String get reachabilityWhatIsThisTitle;
+
+  /// No description provided for @reachabilityWhatIsThisContent.
+  ///
+  /// In en, this message translates to:
+  /// **'This screen shows a probabilistic estimate of how likely your messages will reach each node. It is NOT a guarantee of delivery.'**
+  String get reachabilityWhatIsThisContent;
+
+  /// No description provided for @reachabilityScoringModelTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Scoring Model'**
+  String get reachabilityScoringModelTitle;
+
+  /// No description provided for @reachabilityScoringModelContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Opportunistic Mesh Reach Likelihood Model (v1) — BETA\n\nA heuristic scoring model that estimates likelihood of reaching a node based on observed RF metrics and packet history. This score represents likelihood, not reachability. Meshtastic forwards packets opportunistically without routing. A high score does not guarantee delivery.'**
+  String get reachabilityScoringModelContent;
+
+  /// No description provided for @reachabilityHowCalculatedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How is it calculated?'**
+  String get reachabilityHowCalculatedTitle;
+
+  /// No description provided for @reachabilityHowCalculatedContent.
+  ///
+  /// In en, this message translates to:
+  /// **'The likelihood score combines several factors:\n• Freshness: How recently we heard from the node\n• Path Depth: Number of hops observed\n• Signal Quality: RSSI and SNR when available\n• Observation Pattern: Direct vs relayed packets\n• ACK History: DM acknowledgement success rate'**
+  String get reachabilityHowCalculatedContent;
+
+  /// No description provided for @reachabilityLevelsMeanTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What the levels mean'**
+  String get reachabilityLevelsMeanTitle;
+
+  /// No description provided for @reachabilityLevelsMeanContent.
+  ///
+  /// In en, this message translates to:
+  /// **'• High: Strong recent indicators, but not guaranteed\n• Medium: Moderate confidence based on available data\n• Low: Weak or stale indicators, delivery unlikely'**
+  String get reachabilityLevelsMeanContent;
+
+  /// No description provided for @reachabilityLimitationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Important limitations'**
+  String get reachabilityLimitationsTitle;
+
+  /// No description provided for @reachabilityLimitationsContent.
+  ///
+  /// In en, this message translates to:
+  /// **'• Meshtastic has no true routing tables\n• No end-to-end acknowledgements exist\n• Forwarding is opportunistic\n• Mesh topology changes constantly\n• All estimates based on passive observation only'**
+  String get reachabilityLimitationsContent;
+
+  /// No description provided for @reachabilitySearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search nodes'**
+  String get reachabilitySearchHint;
+
+  /// No description provided for @reachabilityDisclaimerBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'Likelihood estimates only. Delivery is never guaranteed in a mesh network.'**
+  String get reachabilityDisclaimerBanner;
+
+  /// No description provided for @reachabilityLevelHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'High'**
+  String get reachabilityLevelHigh;
+
+  /// No description provided for @reachabilityLevelMedium.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get reachabilityLevelMedium;
+
+  /// No description provided for @reachabilityLevelLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Low'**
+  String get reachabilityLevelLow;
+
+  /// No description provided for @reachabilityEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No nodes discovered yet'**
+  String get reachabilityEmptyTitle;
+
+  /// No description provided for @reachabilityEmptyDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes will appear as they\'re observed\non the mesh network.'**
+  String get reachabilityEmptyDescription;
+
+  /// No description provided for @reachabilityScorePercent.
+  ///
+  /// In en, this message translates to:
+  /// **'{percentage}%'**
+  String reachabilityScorePercent(String percentage);
+
+  /// No description provided for @mapFilterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get mapFilterAll;
+
+  /// No description provided for @mapFilterActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get mapFilterActive;
+
+  /// No description provided for @mapFilterInactive.
+  ///
+  /// In en, this message translates to:
+  /// **'Inactive'**
+  String get mapFilterInactive;
+
+  /// No description provided for @mapFilterWithGps.
+  ///
+  /// In en, this message translates to:
+  /// **'With GPS'**
+  String get mapFilterWithGps;
+
+  /// No description provided for @mapFilterInRange.
+  ///
+  /// In en, this message translates to:
+  /// **'In Range'**
+  String get mapFilterInRange;
+
+  /// No description provided for @mapDistanceMeters.
+  ///
+  /// In en, this message translates to:
+  /// **'{meters}m'**
+  String mapDistanceMeters(String meters);
+
+  /// No description provided for @mapDistanceKilometers.
+  ///
+  /// In en, this message translates to:
+  /// **'{km}km'**
+  String mapDistanceKilometers(String km);
+
+  /// No description provided for @mapDistanceKilometersRound.
+  ///
+  /// In en, this message translates to:
+  /// **'{km}km'**
+  String mapDistanceKilometersRound(String km);
+
+  /// No description provided for @mapDistanceMetersFormal.
+  ///
+  /// In en, this message translates to:
+  /// **'{meters} m'**
+  String mapDistanceMetersFormal(String meters);
+
+  /// No description provided for @mapDistanceKilometersPrecise.
+  ///
+  /// In en, this message translates to:
+  /// **'{km} km'**
+  String mapDistanceKilometersPrecise(String km);
+
+  /// No description provided for @mapDistanceKilometersFormal.
+  ///
+  /// In en, this message translates to:
+  /// **'{km} km'**
+  String mapDistanceKilometersFormal(String km);
+
+  /// No description provided for @mapWaypointDefaultLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'WP {number}'**
+  String mapWaypointDefaultLabel(int number);
+
+  /// No description provided for @mapCoordinatesCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Coordinates copied to clipboard'**
+  String get mapCoordinatesCopied;
+
+  /// No description provided for @mapLocationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get mapLocationTitle;
+
+  /// No description provided for @mapScreenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh Map'**
+  String get mapScreenTitle;
+
+  /// No description provided for @mapFilterNodesTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter nodes'**
+  String get mapFilterNodesTooltip;
+
+  /// No description provided for @mapStyleTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Map style'**
+  String get mapStyleTooltip;
+
+  /// No description provided for @mapRefreshing.
+  ///
+  /// In en, this message translates to:
+  /// **'Refreshing...'**
+  String get mapRefreshing;
+
+  /// No description provided for @mapRefreshPositions.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh positions'**
+  String get mapRefreshPositions;
+
+  /// No description provided for @mapHideHeatmap.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide heatmap'**
+  String get mapHideHeatmap;
+
+  /// No description provided for @mapShowHeatmap.
+  ///
+  /// In en, this message translates to:
+  /// **'Show heatmap'**
+  String get mapShowHeatmap;
+
+  /// No description provided for @mapHideConnectionLines.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide connection lines'**
+  String get mapHideConnectionLines;
+
+  /// No description provided for @mapShowConnectionLines.
+  ///
+  /// In en, this message translates to:
+  /// **'Show connection lines'**
+  String get mapShowConnectionLines;
+
+  /// No description provided for @mapMaxDistance.
+  ///
+  /// In en, this message translates to:
+  /// **'Max Distance'**
+  String get mapMaxDistance;
+
+  /// No description provided for @mapDistance1Km.
+  ///
+  /// In en, this message translates to:
+  /// **'1 km'**
+  String get mapDistance1Km;
+
+  /// No description provided for @mapDistance5Km.
+  ///
+  /// In en, this message translates to:
+  /// **'5 km'**
+  String get mapDistance5Km;
+
+  /// No description provided for @mapDistance10Km.
+  ///
+  /// In en, this message translates to:
+  /// **'10 km'**
+  String get mapDistance10Km;
+
+  /// No description provided for @mapDistance25Km.
+  ///
+  /// In en, this message translates to:
+  /// **'25 km'**
+  String get mapDistance25Km;
+
+  /// No description provided for @mapDistanceAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get mapDistanceAll;
+
+  /// No description provided for @mapHideRangeCircles.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide range circles'**
+  String get mapHideRangeCircles;
+
+  /// No description provided for @mapShowRangeCircles.
+  ///
+  /// In en, this message translates to:
+  /// **'Show range circles'**
+  String get mapShowRangeCircles;
+
+  /// No description provided for @mapHidePositionHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide position history'**
+  String get mapHidePositionHistory;
+
+  /// No description provided for @mapShowPositionHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Show position history'**
+  String get mapShowPositionHistory;
+
+  /// No description provided for @mapExitMeasureMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Exit measure mode'**
+  String get mapExitMeasureMode;
+
+  /// No description provided for @mapMeasureDistance.
+  ///
+  /// In en, this message translates to:
+  /// **'Measure distance'**
+  String get mapMeasureDistance;
+
+  /// No description provided for @mapGlobeView.
+  ///
+  /// In en, this message translates to:
+  /// **'3D Globe View'**
+  String get mapGlobeView;
+
+  /// No description provided for @mapHideTakEntities.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide TAK entities'**
+  String get mapHideTakEntities;
+
+  /// No description provided for @mapShowTakEntities.
+  ///
+  /// In en, this message translates to:
+  /// **'Show TAK entities'**
+  String get mapShowTakEntities;
+
+  /// No description provided for @mapSaDashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'SA Dashboard'**
+  String get mapSaDashboard;
+
+  /// No description provided for @mapHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get mapHelp;
+
+  /// No description provided for @mapSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get mapSettings;
+
+  /// No description provided for @mapMeasureTapPointA.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap node or map for point A'**
+  String get mapMeasureTapPointA;
+
+  /// No description provided for @mapMeasureTapPointB.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap node or map for point B'**
+  String get mapMeasureTapPointB;
+
+  /// No description provided for @mapMeasureMarkerA.
+  ///
+  /// In en, this message translates to:
+  /// **'A'**
+  String get mapMeasureMarkerA;
+
+  /// No description provided for @mapMeasureMarkerB.
+  ///
+  /// In en, this message translates to:
+  /// **'B'**
+  String get mapMeasureMarkerB;
+
+  /// No description provided for @mapShareDistanceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Distance: {distance}'**
+  String mapShareDistanceLabel(String distance);
+
+  /// No description provided for @mapNodeCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} nodes'**
+  String mapNodeCount(String count);
+
+  /// No description provided for @mapTakEntityCount.
+  ///
+  /// In en, this message translates to:
+  /// **'• {count} entities'**
+  String mapTakEntityCount(int count);
+
+  /// No description provided for @mapDropWaypoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Drop Waypoint'**
+  String get mapDropWaypoint;
+
+  /// No description provided for @mapShareLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Share Location'**
+  String get mapShareLocation;
+
+  /// No description provided for @mapCopyCoordinates.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy Coordinates'**
+  String get mapCopyCoordinates;
+
+  /// No description provided for @mapShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get mapShare;
+
+  /// No description provided for @mapDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get mapDelete;
+
+  /// No description provided for @mapEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No Nodes with GPS'**
+  String get mapEmptyTitle;
+
+  /// No description provided for @mapEmptyBodyWithNodes.
+  ///
+  /// In en, this message translates to:
+  /// **'{totalNodes} nodes discovered but none have\nreported GPS position yet.'**
+  String mapEmptyBodyWithNodes(int totalNodes);
+
+  /// No description provided for @mapEmptyBodyNoNodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes will appear on the map once they\nreport their GPS position.'**
+  String get mapEmptyBodyNoNodes;
+
+  /// No description provided for @mapRequesting.
+  ///
+  /// In en, this message translates to:
+  /// **'Requesting...'**
+  String get mapRequesting;
+
+  /// No description provided for @mapRequestPositions.
+  ///
+  /// In en, this message translates to:
+  /// **'Request Positions'**
+  String get mapRequestPositions;
+
+  /// No description provided for @mapPositionBroadcastHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Position broadcasts can take up to 15 minutes.\nTap to request immediately.'**
+  String get mapPositionBroadcastHint;
+
+  /// No description provided for @mapEntitiesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Entities'**
+  String get mapEntitiesTitle;
+
+  /// No description provided for @mapNodesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes'**
+  String get mapNodesTitle;
+
+  /// No description provided for @mapSearchEntitiesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search entities...'**
+  String get mapSearchEntitiesHint;
+
+  /// No description provided for @mapSearchNodesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search nodes...'**
+  String get mapSearchNodesHint;
+
+  /// No description provided for @mapNoEntities.
+  ///
+  /// In en, this message translates to:
+  /// **'No entities'**
+  String get mapNoEntities;
+
+  /// No description provided for @mapNoMatchingEntities.
+  ///
+  /// In en, this message translates to:
+  /// **'No matching entities'**
+  String get mapNoMatchingEntities;
+
+  /// No description provided for @mapSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Try a different search term'**
+  String get mapSearchHint;
+
+  /// No description provided for @mapYouBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'YOU'**
+  String get mapYouBadge;
+
+  /// No description provided for @mapLastKnown.
+  ///
+  /// In en, this message translates to:
+  /// **'• Last known'**
+  String get mapLastKnown;
+
+  /// No description provided for @mapFilterNodesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter Nodes'**
+  String get mapFilterNodesTitle;
+
+  /// No description provided for @mapMeasurementActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Measurement Actions'**
+  String get mapMeasurementActions;
+
+  /// No description provided for @mapLosAnalysis.
+  ///
+  /// In en, this message translates to:
+  /// **'LOS Analysis'**
+  String get mapLosAnalysis;
+
+  /// No description provided for @mapLosAnalysisSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Earth curvature + Fresnel zone check'**
+  String get mapLosAnalysisSubtitle;
+
+  /// No description provided for @mapShareMeasurement.
+  ///
+  /// In en, this message translates to:
+  /// **'Share Measurement'**
+  String get mapShareMeasurement;
+
+  /// No description provided for @mapShareMeasurementSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Share via system share sheet'**
+  String get mapShareMeasurementSubtitle;
+
+  /// No description provided for @mapCopySummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy Summary'**
+  String get mapCopySummary;
+
+  /// No description provided for @mapMeasurementCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Measurement copied to clipboard'**
+  String get mapMeasurementCopied;
+
+  /// No description provided for @mapCopyBothCoordinates.
+  ///
+  /// In en, this message translates to:
+  /// **'Both A and B coordinates'**
+  String get mapCopyBothCoordinates;
+
+  /// No description provided for @mapOpenMidpointInMaps.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Midpoint in Maps'**
+  String get mapOpenMidpointInMaps;
+
+  /// No description provided for @mapOpenInExternalApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Open in external map app'**
+  String get mapOpenInExternalApp;
+
+  /// No description provided for @mapSwapAB.
+  ///
+  /// In en, this message translates to:
+  /// **'Swap A ↔ B'**
+  String get mapSwapAB;
+
+  /// No description provided for @mapReverseDirection.
+  ///
+  /// In en, this message translates to:
+  /// **'Reverse measurement direction'**
+  String get mapReverseDirection;
+
+  /// No description provided for @mapRfLinkBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'RF Link Budget'**
+  String get mapRfLinkBudget;
+
+  /// No description provided for @mapEstimatedPathLoss.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated path loss: {pathLoss} dB (free-space)'**
+  String mapEstimatedPathLoss(String pathLoss);
+
+  /// No description provided for @mapRfLinkBudgetClipboard.
+  ///
+  /// In en, this message translates to:
+  /// **'RF Link Budget (free-space path loss)\nDistance: {distance}\nFrequency: {frequency}\nPath Loss: {pathLoss}\nLink Margin: {linkMargin}'**
+  String mapRfLinkBudgetClipboard(
+    String distance,
+    String frequency,
+    String pathLoss,
+    String linkMargin,
+  );
+
+  /// No description provided for @mapLinkBudgetCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Link budget copied to clipboard'**
+  String get mapLinkBudgetCopied;
+
+  /// No description provided for @mapNewMeasurement.
+  ///
+  /// In en, this message translates to:
+  /// **'New measurement'**
+  String get mapNewMeasurement;
+
+  /// No description provided for @mapExitMeasureModeTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Exit measure mode'**
+  String get mapExitMeasureModeTooltip;
+
+  /// No description provided for @mapLongPressForActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Long-press for actions'**
+  String get mapLongPressForActions;
+
+  /// No description provided for @mapLosVerdict.
+  ///
+  /// In en, this message translates to:
+  /// **'LOS: {verdict}'**
+  String mapLosVerdict(String verdict);
+
+  /// No description provided for @mapLosBulgeAndFresnel.
+  ///
+  /// In en, this message translates to:
+  /// **'Bulge: {bulge}m · F1: {fresnel}m'**
+  String mapLosBulgeAndFresnel(String bulge, String fresnel);
+
+  /// No description provided for @mapTakStale.
+  ///
+  /// In en, this message translates to:
+  /// **'Stale'**
+  String get mapTakStale;
+
+  /// No description provided for @mapTakActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get mapTakActive;
+
+  /// No description provided for @mapTakTracked.
+  ///
+  /// In en, this message translates to:
+  /// **'Tracked'**
+  String get mapTakTracked;
+
+  /// No description provided for @mapTakTrack.
+  ///
+  /// In en, this message translates to:
+  /// **'Track'**
+  String get mapTakTrack;
+
+  /// No description provided for @mapNavigateToTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Navigate to'**
+  String get mapNavigateToTooltip;
+
+  /// No description provided for @mapCopyCoordinatesTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy coordinates'**
+  String get mapCopyCoordinatesTooltip;
+
+  /// No description provided for @mapDismissTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Dismiss'**
+  String get mapDismissTooltip;
+
+  /// No description provided for @mapTakStaleBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'STALE'**
+  String get mapTakStaleBadge;
+
+  /// No description provided for @mapTakActiveBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'ACTIVE'**
+  String get mapTakActiveBadge;
+
+  /// No description provided for @mapAgeSeconds.
+  ///
+  /// In en, this message translates to:
+  /// **'{seconds}s ago'**
+  String mapAgeSeconds(String seconds);
+
+  /// No description provided for @mapAgeMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes}m ago'**
+  String mapAgeMinutes(String minutes);
+
+  /// No description provided for @mapAgeHours.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h ago'**
+  String mapAgeHours(String hours);
+
+  /// No description provided for @worldMeshTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'World Map'**
+  String get worldMeshTitle;
+
+  /// No description provided for @worldMeshFavoritesTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get worldMeshFavoritesTooltip;
+
+  /// No description provided for @worldMeshMapStyleDark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark Map'**
+  String get worldMeshMapStyleDark;
+
+  /// No description provided for @worldMeshMapStyleSatellite.
+  ///
+  /// In en, this message translates to:
+  /// **'Satellite'**
+  String get worldMeshMapStyleSatellite;
+
+  /// No description provided for @worldMeshMapStyleLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light Map'**
+  String get worldMeshMapStyleLight;
+
+  /// No description provided for @worldMeshMapStyleTerrain.
+  ///
+  /// In en, this message translates to:
+  /// **'Terrain'**
+  String get worldMeshMapStyleTerrain;
+
+  /// No description provided for @worldMeshRefresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get worldMeshRefresh;
+
+  /// No description provided for @worldMeshHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get worldMeshHelp;
+
+  /// No description provided for @worldMeshSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Find a node'**
+  String get worldMeshSearchHint;
+
+  /// No description provided for @worldMeshFilterTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter nodes'**
+  String get worldMeshFilterTooltip;
+
+  /// No description provided for @worldMeshSearchResultCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 node found} other{{count} nodes found}}'**
+  String worldMeshSearchResultCount(int count);
+
+  /// No description provided for @worldMeshLegendActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active (<1h)'**
+  String get worldMeshLegendActive;
+
+  /// No description provided for @worldMeshLegendIdle.
+  ///
+  /// In en, this message translates to:
+  /// **'Idle (1-24h)'**
+  String get worldMeshLegendIdle;
+
+  /// No description provided for @worldMeshLegendOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline (>24h)'**
+  String get worldMeshLegendOffline;
+
+  /// No description provided for @worldMeshErrorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to load mesh map'**
+  String get worldMeshErrorTitle;
+
+  /// No description provided for @worldMeshRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get worldMeshRetry;
+
+  /// No description provided for @worldMeshMeasurePointA.
+  ///
+  /// In en, this message translates to:
+  /// **'A'**
+  String get worldMeshMeasurePointA;
+
+  /// No description provided for @worldMeshMeasurePointB.
+  ///
+  /// In en, this message translates to:
+  /// **'B'**
+  String get worldMeshMeasurePointB;
+
+  /// No description provided for @worldMeshMeasureTapA.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap node or map for point A'**
+  String get worldMeshMeasureTapA;
+
+  /// No description provided for @worldMeshMeasureTapB.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap node or map for point B'**
+  String get worldMeshMeasureTapB;
+
+  /// No description provided for @worldMeshLoadingNodeInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading node info...'**
+  String get worldMeshLoadingNodeInfo;
+
+  /// No description provided for @worldMeshStatsFiltered.
+  ///
+  /// In en, this message translates to:
+  /// **'filtered'**
+  String get worldMeshStatsFiltered;
+
+  /// No description provided for @worldMeshStatsVisible.
+  ///
+  /// In en, this message translates to:
+  /// **'visible'**
+  String get worldMeshStatsVisible;
+
+  /// No description provided for @worldMeshStatsTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'total'**
+  String get worldMeshStatsTotal;
+
+  /// No description provided for @worldMeshRefreshing.
+  ///
+  /// In en, this message translates to:
+  /// **'Refreshing world mesh data...'**
+  String get worldMeshRefreshing;
+
+  /// No description provided for @worldMeshTimeJustNow.
+  ///
+  /// In en, this message translates to:
+  /// **'just now'**
+  String get worldMeshTimeJustNow;
+
+  /// No description provided for @worldMeshTimeMinutesAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes}m ago'**
+  String worldMeshTimeMinutesAgo(int minutes);
+
+  /// No description provided for @worldMeshTimeHoursAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h ago'**
+  String worldMeshTimeHoursAgo(int hours);
+
+  /// No description provided for @worldMeshScrollForMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Scroll for more...'**
+  String get worldMeshScrollForMore;
+
+  /// No description provided for @worldMeshBadgeActive.
+  ///
+  /// In en, this message translates to:
+  /// **'ACTIVE'**
+  String get worldMeshBadgeActive;
+
+  /// No description provided for @worldMeshRemoveFromFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from favorites'**
+  String get worldMeshRemoveFromFavorites;
+
+  /// No description provided for @worldMeshAddToFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to favorites'**
+  String get worldMeshAddToFavorites;
+
+  /// No description provided for @worldMeshRemovedFromFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Removed from favorites'**
+  String get worldMeshRemovedFromFavorites;
+
+  /// No description provided for @worldMeshAddedToFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to favorites'**
+  String get worldMeshAddedToFavorites;
+
+  /// No description provided for @worldMeshCopyId.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy ID'**
+  String get worldMeshCopyId;
+
+  /// No description provided for @worldMeshFocus.
+  ///
+  /// In en, this message translates to:
+  /// **'Focus'**
+  String get worldMeshFocus;
+
+  /// No description provided for @worldMeshNodeIdCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Node ID copied'**
+  String get worldMeshNodeIdCopied;
+
+  /// No description provided for @worldMeshSectionDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'Device'**
+  String get worldMeshSectionDevice;
+
+  /// No description provided for @worldMeshInfoHardware.
+  ///
+  /// In en, this message translates to:
+  /// **'Hardware'**
+  String get worldMeshInfoHardware;
+
+  /// No description provided for @worldMeshInfoRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get worldMeshInfoRole;
+
+  /// No description provided for @worldMeshInfoFirmware.
+  ///
+  /// In en, this message translates to:
+  /// **'Firmware'**
+  String get worldMeshInfoFirmware;
+
+  /// No description provided for @worldMeshInfoRegion.
+  ///
+  /// In en, this message translates to:
+  /// **'Region'**
+  String get worldMeshInfoRegion;
+
+  /// No description provided for @worldMeshInfoModem.
+  ///
+  /// In en, this message translates to:
+  /// **'Modem'**
+  String get worldMeshInfoModem;
+
+  /// No description provided for @worldMeshInfoLocalNodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Local Nodes'**
+  String get worldMeshInfoLocalNodes;
+
+  /// No description provided for @worldMeshSectionPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Position'**
+  String get worldMeshSectionPosition;
+
+  /// No description provided for @worldMeshInfoCoordinates.
+  ///
+  /// In en, this message translates to:
+  /// **'Coordinates'**
+  String get worldMeshInfoCoordinates;
+
+  /// No description provided for @worldMeshInfoAltitude.
+  ///
+  /// In en, this message translates to:
+  /// **'Altitude'**
+  String get worldMeshInfoAltitude;
+
+  /// No description provided for @worldMeshInfoPrecision.
+  ///
+  /// In en, this message translates to:
+  /// **'Precision'**
+  String get worldMeshInfoPrecision;
+
+  /// No description provided for @worldMeshSectionDeviceMetrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Metrics'**
+  String get worldMeshSectionDeviceMetrics;
+
+  /// No description provided for @worldMeshUptimeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Uptime: {uptime}'**
+  String worldMeshUptimeLabel(String uptime);
+
+  /// No description provided for @worldMeshSectionEnvironment.
+  ///
+  /// In en, this message translates to:
+  /// **'Environment'**
+  String get worldMeshSectionEnvironment;
+
+  /// No description provided for @worldMeshSectionNeighbors.
+  ///
+  /// In en, this message translates to:
+  /// **'Neighbors ({count})'**
+  String worldMeshSectionNeighbors(int count);
+
+  /// No description provided for @worldMeshSectionSeenBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Seen By ({count} gateways)'**
+  String worldMeshSectionSeenBy(int count);
+
+  /// No description provided for @worldMeshMoreGateways.
+  ///
+  /// In en, this message translates to:
+  /// **' +{count} more'**
+  String worldMeshMoreGateways(int count);
+
+  /// No description provided for @worldMeshLastSeen.
+  ///
+  /// In en, this message translates to:
+  /// **'Last seen: {time}'**
+  String worldMeshLastSeen(String time);
+
+  /// No description provided for @worldMeshMeasurementActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Measurement Actions'**
+  String get worldMeshMeasurementActions;
+
+  /// No description provided for @worldMeshLosAnalysis.
+  ///
+  /// In en, this message translates to:
+  /// **'LOS Analysis'**
+  String get worldMeshLosAnalysis;
+
+  /// No description provided for @worldMeshLosSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Earth curvature + Fresnel zone check'**
+  String get worldMeshLosSubtitle;
+
+  /// No description provided for @worldMeshCopySummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy Summary'**
+  String get worldMeshCopySummary;
+
+  /// No description provided for @worldMeshMeasurementCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Measurement copied to clipboard'**
+  String get worldMeshMeasurementCopied;
+
+  /// No description provided for @worldMeshCopyCoordinates.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy Coordinates'**
+  String get worldMeshCopyCoordinates;
+
+  /// No description provided for @worldMeshCopyCoordinatesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Both A and B coordinates'**
+  String get worldMeshCopyCoordinatesSubtitle;
+
+  /// No description provided for @worldMeshCoordinatesCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Coordinates copied to clipboard'**
+  String get worldMeshCoordinatesCopied;
+
+  /// No description provided for @worldMeshOpenMidpointInMaps.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Midpoint in Maps'**
+  String get worldMeshOpenMidpointInMaps;
+
+  /// No description provided for @worldMeshOpenMidpointSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Open in external map app'**
+  String get worldMeshOpenMidpointSubtitle;
+
+  /// No description provided for @worldMeshSwapAB.
+  ///
+  /// In en, this message translates to:
+  /// **'Swap A ↔ B'**
+  String get worldMeshSwapAB;
+
+  /// No description provided for @worldMeshSwapSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reverse measurement direction'**
+  String get worldMeshSwapSubtitle;
+
+  /// No description provided for @worldMeshRfLinkBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'RF Link Budget'**
+  String get worldMeshRfLinkBudget;
+
+  /// No description provided for @worldMeshFsplSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'FSPL: {db} dB'**
+  String worldMeshFsplSubtitle(String db);
+
+  /// No description provided for @worldMeshRfLinkBudgetClipboard.
+  ///
+  /// In en, this message translates to:
+  /// **'RF Link Budget (free-space path loss)\nDistance: {distance}\nFrequency: {frequency}\nPath Loss: {pathLoss}\nLink Margin: {linkMargin}'**
+  String worldMeshRfLinkBudgetClipboard(
+    String distance,
+    String frequency,
+    String pathLoss,
+    String linkMargin,
+  );
+
+  /// No description provided for @worldMeshLinkBudgetCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Link budget copied to clipboard'**
+  String get worldMeshLinkBudgetCopied;
+
+  /// No description provided for @worldMeshLongPressHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Long-press for actions'**
+  String get worldMeshLongPressHint;
+
+  /// No description provided for @worldMeshNewMeasurement.
+  ///
+  /// In en, this message translates to:
+  /// **'New measurement'**
+  String get worldMeshNewMeasurement;
+
+  /// No description provided for @worldMeshExitMeasureMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Exit measure mode'**
+  String get worldMeshExitMeasureMode;
+
+  /// No description provided for @worldMeshLosVerdict.
+  ///
+  /// In en, this message translates to:
+  /// **'LOS: {verdict}'**
+  String worldMeshLosVerdict(String verdict);
+
+  /// No description provided for @worldMeshLosBulgeAndFresnel.
+  ///
+  /// In en, this message translates to:
+  /// **'Bulge: {bulge}m · F1: {fresnel}m'**
+  String worldMeshLosBulgeAndFresnel(String bulge, String fresnel);
+
+  /// No description provided for @nodeAnalyticsDataUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Node data updated'**
+  String get nodeAnalyticsDataUpdated;
+
+  /// No description provided for @nodeAnalyticsNodeNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Node not found in mesh'**
+  String get nodeAnalyticsNodeNotFound;
+
+  /// No description provided for @nodeAnalyticsRefreshFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to refresh: {error}'**
+  String nodeAnalyticsRefreshFailed(String error);
+
+  /// No description provided for @nodeAnalyticsRemovedFromFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Removed from favorites'**
+  String get nodeAnalyticsRemovedFromFavorites;
+
+  /// No description provided for @nodeAnalyticsAddedToFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to favorites'**
+  String get nodeAnalyticsAddedToFavorites;
+
+  /// No description provided for @nodeAnalyticsLiveWatchEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Live watching enabled (updates every 30s)'**
+  String get nodeAnalyticsLiveWatchEnabled;
+
+  /// No description provided for @nodeAnalyticsLiveWatchDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Live watching disabled'**
+  String get nodeAnalyticsLiveWatchDisabled;
+
+  /// No description provided for @nodeAnalyticsClearHistoryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear History'**
+  String get nodeAnalyticsClearHistoryTitle;
+
+  /// No description provided for @nodeAnalyticsClearHistoryMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'This will delete all historical data for this node. This action cannot be undone.'**
+  String get nodeAnalyticsClearHistoryMessage;
+
+  /// No description provided for @nodeAnalyticsClearConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get nodeAnalyticsClearConfirm;
+
+  /// No description provided for @nodeAnalyticsHistoryCleared.
+  ///
+  /// In en, this message translates to:
+  /// **'History cleared'**
+  String get nodeAnalyticsHistoryCleared;
+
+  /// No description provided for @nodeAnalyticsShareNodeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Share Node'**
+  String get nodeAnalyticsShareNodeTitle;
+
+  /// No description provided for @nodeAnalyticsShareLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Share Link'**
+  String get nodeAnalyticsShareLink;
+
+  /// No description provided for @nodeAnalyticsShareLinkSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rich preview in iMessage, Slack, etc.'**
+  String get nodeAnalyticsShareLinkSubtitle;
+
+  /// No description provided for @nodeAnalyticsShareDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Share Details'**
+  String get nodeAnalyticsShareDetails;
+
+  /// No description provided for @nodeAnalyticsShareDetailsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Full technical info as text'**
+  String get nodeAnalyticsShareDetailsSubtitle;
+
+  /// No description provided for @nodeAnalyticsSignInToShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to share nodes'**
+  String get nodeAnalyticsSignInToShare;
+
+  /// No description provided for @nodeAnalyticsSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign In'**
+  String get nodeAnalyticsSignIn;
+
+  /// No description provided for @nodeAnalyticsShareText.
+  ///
+  /// In en, this message translates to:
+  /// **'Check out {name} on Socialmesh!\n{url}'**
+  String nodeAnalyticsShareText(String name, String url);
+
+  /// No description provided for @nodeAnalyticsShareSubject.
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh Node: {name}'**
+  String nodeAnalyticsShareSubject(String name);
+
+  /// No description provided for @nodeAnalyticsShareFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to share node: {error}'**
+  String nodeAnalyticsShareFailed(String error);
+
+  /// No description provided for @nodeAnalyticsShareDetailHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'🛰️ Mesh Node: {name}'**
+  String nodeAnalyticsShareDetailHeader(String name);
+
+  /// No description provided for @nodeAnalyticsShareDetailId.
+  ///
+  /// In en, this message translates to:
+  /// **'ID: !{nodeId}'**
+  String nodeAnalyticsShareDetailId(String nodeId);
+
+  /// No description provided for @nodeAnalyticsShareDetailRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Role: {role}'**
+  String nodeAnalyticsShareDetailRole(String role);
+
+  /// No description provided for @nodeAnalyticsShareDetailHardware.
+  ///
+  /// In en, this message translates to:
+  /// **'Hardware: {hardware}'**
+  String nodeAnalyticsShareDetailHardware(String hardware);
+
+  /// No description provided for @nodeAnalyticsShareDetailBatteryCharging.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery: Charging'**
+  String get nodeAnalyticsShareDetailBatteryCharging;
+
+  /// No description provided for @nodeAnalyticsShareDetailBatteryLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery: {level}%'**
+  String nodeAnalyticsShareDetailBatteryLevel(String level);
+
+  /// No description provided for @nodeAnalyticsShareDetailLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Location: {location}'**
+  String nodeAnalyticsShareDetailLocation(String location);
+
+  /// No description provided for @nodeAnalyticsShareDetailStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status: {status}'**
+  String nodeAnalyticsShareDetailStatus(String status);
+
+  /// No description provided for @nodeAnalyticsShareDetailNeighbors.
+  ///
+  /// In en, this message translates to:
+  /// **'Neighbors: {count}'**
+  String nodeAnalyticsShareDetailNeighbors(String count);
+
+  /// No description provided for @nodeAnalyticsShareDetailGateways.
+  ///
+  /// In en, this message translates to:
+  /// **'Gateways: {count}'**
+  String nodeAnalyticsShareDetailGateways(String count);
+
+  /// No description provided for @nodeAnalyticsNoHistoryToExport.
+  ///
+  /// In en, this message translates to:
+  /// **'No history data to export'**
+  String get nodeAnalyticsNoHistoryToExport;
+
+  /// No description provided for @nodeAnalyticsExportHistoryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Export History'**
+  String get nodeAnalyticsExportHistoryTitle;
+
+  /// No description provided for @nodeAnalyticsExportRecordCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} records'**
+  String nodeAnalyticsExportRecordCount(int count);
+
+  /// No description provided for @nodeAnalyticsExportJson.
+  ///
+  /// In en, this message translates to:
+  /// **'JSON'**
+  String get nodeAnalyticsExportJson;
+
+  /// No description provided for @nodeAnalyticsExportCsv.
+  ///
+  /// In en, this message translates to:
+  /// **'CSV'**
+  String get nodeAnalyticsExportCsv;
+
+  /// No description provided for @nodeAnalyticsExportJsonSubject.
+  ///
+  /// In en, this message translates to:
+  /// **'Node {name} History (JSON)'**
+  String nodeAnalyticsExportJsonSubject(String name);
+
+  /// No description provided for @nodeAnalyticsJsonShared.
+  ///
+  /// In en, this message translates to:
+  /// **'JSON data shared'**
+  String get nodeAnalyticsJsonShared;
+
+  /// No description provided for @nodeAnalyticsExportCsvSubject.
+  ///
+  /// In en, this message translates to:
+  /// **'Node {name} History (CSV)'**
+  String nodeAnalyticsExportCsvSubject(String name);
+
+  /// No description provided for @nodeAnalyticsCsvShared.
+  ///
+  /// In en, this message translates to:
+  /// **'CSV data shared'**
+  String get nodeAnalyticsCsvShared;
+
+  /// No description provided for @nodeAnalyticsShareTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Share node info'**
+  String get nodeAnalyticsShareTooltip;
+
+  /// No description provided for @nodeAnalyticsStopWatching.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop watching'**
+  String get nodeAnalyticsStopWatching;
+
+  /// No description provided for @nodeAnalyticsWatchLive.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch live'**
+  String get nodeAnalyticsWatchLive;
+
+  /// No description provided for @nodeAnalyticsRemoveFavoriteTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from favorites'**
+  String get nodeAnalyticsRemoveFavoriteTooltip;
+
+  /// No description provided for @nodeAnalyticsAddFavoriteTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to favorites'**
+  String get nodeAnalyticsAddFavoriteTooltip;
+
+  /// No description provided for @nodeAnalyticsSectionDeviceInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Info'**
+  String get nodeAnalyticsSectionDeviceInfo;
+
+  /// No description provided for @nodeAnalyticsSectionDeviceMetrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Metrics'**
+  String get nodeAnalyticsSectionDeviceMetrics;
+
+  /// No description provided for @nodeAnalyticsSectionNetwork.
+  ///
+  /// In en, this message translates to:
+  /// **'Network'**
+  String get nodeAnalyticsSectionNetwork;
+
+  /// No description provided for @nodeAnalyticsSectionTrends.
+  ///
+  /// In en, this message translates to:
+  /// **'Trends'**
+  String get nodeAnalyticsSectionTrends;
+
+  /// No description provided for @nodeAnalyticsBadgeLive.
+  ///
+  /// In en, this message translates to:
+  /// **'LIVE'**
+  String get nodeAnalyticsBadgeLive;
+
+  /// No description provided for @nodeAnalyticsNodeIdCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Node ID copied'**
+  String get nodeAnalyticsNodeIdCopied;
+
+  /// No description provided for @nodeAnalyticsShowOnMap.
+  ///
+  /// In en, this message translates to:
+  /// **'Show on Map'**
+  String get nodeAnalyticsShowOnMap;
+
+  /// No description provided for @nodeAnalyticsRefreshing.
+  ///
+  /// In en, this message translates to:
+  /// **'Refreshing...'**
+  String get nodeAnalyticsRefreshing;
+
+  /// No description provided for @nodeAnalyticsRefreshNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh Now'**
+  String get nodeAnalyticsRefreshNow;
+
+  /// No description provided for @nodeAnalyticsExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get nodeAnalyticsExport;
+
+  /// No description provided for @nodeAnalyticsClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get nodeAnalyticsClear;
+
+  /// No description provided for @nodeAnalyticsLongName.
+  ///
+  /// In en, this message translates to:
+  /// **'Long Name'**
+  String get nodeAnalyticsLongName;
+
+  /// No description provided for @nodeAnalyticsShortName.
+  ///
+  /// In en, this message translates to:
+  /// **'Short Name'**
+  String get nodeAnalyticsShortName;
+
+  /// No description provided for @nodeAnalyticsRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get nodeAnalyticsRole;
+
+  /// No description provided for @nodeAnalyticsHardware.
+  ///
+  /// In en, this message translates to:
+  /// **'Hardware'**
+  String get nodeAnalyticsHardware;
+
+  /// No description provided for @nodeAnalyticsLatitude.
+  ///
+  /// In en, this message translates to:
+  /// **'Latitude'**
+  String get nodeAnalyticsLatitude;
+
+  /// No description provided for @nodeAnalyticsLongitude.
+  ///
+  /// In en, this message translates to:
+  /// **'Longitude'**
+  String get nodeAnalyticsLongitude;
+
+  /// No description provided for @nodeAnalyticsAltitude.
+  ///
+  /// In en, this message translates to:
+  /// **'{meters}m'**
+  String nodeAnalyticsAltitude(String meters);
+
+  /// No description provided for @nodeAnalyticsBattery.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery'**
+  String get nodeAnalyticsBattery;
+
+  /// No description provided for @nodeAnalyticsCharging.
+  ///
+  /// In en, this message translates to:
+  /// **'Charging'**
+  String get nodeAnalyticsCharging;
+
+  /// No description provided for @nodeAnalyticsUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get nodeAnalyticsUnknown;
+
+  /// No description provided for @nodeAnalyticsVoltage.
+  ///
+  /// In en, this message translates to:
+  /// **'Voltage'**
+  String get nodeAnalyticsVoltage;
+
+  /// No description provided for @nodeAnalyticsChannelUtilization.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel Utilization'**
+  String get nodeAnalyticsChannelUtilization;
+
+  /// No description provided for @nodeAnalyticsAirTimeTx.
+  ///
+  /// In en, this message translates to:
+  /// **'Air Time TX'**
+  String get nodeAnalyticsAirTimeTx;
+
+  /// No description provided for @nodeAnalyticsUptime.
+  ///
+  /// In en, this message translates to:
+  /// **'Uptime'**
+  String get nodeAnalyticsUptime;
+
+  /// No description provided for @nodeAnalyticsDirectNeighbors.
+  ///
+  /// In en, this message translates to:
+  /// **'Direct Neighbors ({count})'**
+  String nodeAnalyticsDirectNeighbors(int count);
+
+  /// No description provided for @nodeAnalyticsNoNeighborData.
+  ///
+  /// In en, this message translates to:
+  /// **'No neighbor data available'**
+  String get nodeAnalyticsNoNeighborData;
+
+  /// No description provided for @nodeAnalyticsSeenByGateways.
+  ///
+  /// In en, this message translates to:
+  /// **'Seen by Gateways ({count})'**
+  String nodeAnalyticsSeenByGateways(int count);
+
+  /// No description provided for @nodeAnalyticsNoGatewayData.
+  ///
+  /// In en, this message translates to:
+  /// **'No gateway data available'**
+  String get nodeAnalyticsNoGatewayData;
+
+  /// No description provided for @nodeAnalyticsNoHistoryYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No historical data yet'**
+  String get nodeAnalyticsNoHistoryYet;
+
+  /// No description provided for @nodeAnalyticsVisitAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit this node again to build history'**
+  String get nodeAnalyticsVisitAgain;
+
+  /// No description provided for @nodeAnalyticsRecords.
+  ///
+  /// In en, this message translates to:
+  /// **'Records'**
+  String get nodeAnalyticsRecords;
+
+  /// No description provided for @nodeAnalyticsUptimeStat.
+  ///
+  /// In en, this message translates to:
+  /// **'Uptime'**
+  String get nodeAnalyticsUptimeStat;
+
+  /// No description provided for @nodeAnalyticsAvgBattery.
+  ///
+  /// In en, this message translates to:
+  /// **'Avg Battery'**
+  String get nodeAnalyticsAvgBattery;
+
+  /// No description provided for @nodeAnalyticsFirstSeen.
+  ///
+  /// In en, this message translates to:
+  /// **'First seen'**
+  String get nodeAnalyticsFirstSeen;
+
+  /// No description provided for @nodeAnalyticsLastUpdate.
+  ///
+  /// In en, this message translates to:
+  /// **'Last update'**
+  String get nodeAnalyticsLastUpdate;
+
+  /// No description provided for @nodeAnalyticsTimeDaysAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{days}d ago'**
+  String nodeAnalyticsTimeDaysAgo(int days);
+
+  /// No description provided for @nodeAnalyticsTimeHoursAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h ago'**
+  String nodeAnalyticsTimeHoursAgo(int hours);
+
+  /// No description provided for @nodeAnalyticsTimeMinutesAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes}m ago'**
+  String nodeAnalyticsTimeMinutesAgo(int minutes);
+
+  /// No description provided for @nodeAnalyticsTimeJustNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Just now'**
+  String get nodeAnalyticsTimeJustNow;
+
+  /// No description provided for @nodeAnalyticsSectionHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get nodeAnalyticsSectionHistory;
+
+  /// No description provided for @worldMeshFilterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter Nodes'**
+  String get worldMeshFilterTitle;
+
+  /// No description provided for @worldMeshFilterClearAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear All'**
+  String get worldMeshFilterClearAll;
+
+  /// No description provided for @worldMeshFilterNodeCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{filteredCount} of {totalCount} nodes'**
+  String worldMeshFilterNodeCount(int filteredCount, int totalCount);
+
+  /// No description provided for @worldMeshFilterActiveCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 filter} other{{count} filters}}'**
+  String worldMeshFilterActiveCount(int count);
+
+  /// No description provided for @worldMeshFilterStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get worldMeshFilterStatus;
+
+  /// No description provided for @worldMeshFilterHardwareModel.
+  ///
+  /// In en, this message translates to:
+  /// **'Hardware Model'**
+  String get worldMeshFilterHardwareModel;
+
+  /// No description provided for @worldMeshFilterModemPreset.
+  ///
+  /// In en, this message translates to:
+  /// **'Modem Preset'**
+  String get worldMeshFilterModemPreset;
+
+  /// No description provided for @worldMeshFilterRegion.
+  ///
+  /// In en, this message translates to:
+  /// **'Region'**
+  String get worldMeshFilterRegion;
+
+  /// No description provided for @worldMeshFilterNodeRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Node Role'**
+  String get worldMeshFilterNodeRole;
+
+  /// No description provided for @worldMeshFilterFirmwareVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Firmware Version'**
+  String get worldMeshFilterFirmwareVersion;
+
+  /// No description provided for @worldMeshFilterEnvironmentSensors.
+  ///
+  /// In en, this message translates to:
+  /// **'Environment Sensors'**
+  String get worldMeshFilterEnvironmentSensors;
+
+  /// No description provided for @worldMeshFilterNodesWithSensors.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} nodes with sensors'**
+  String worldMeshFilterNodesWithSensors(int count);
+
+  /// No description provided for @worldMeshFilterBatteryInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery Info'**
+  String get worldMeshFilterBatteryInfo;
+
+  /// No description provided for @worldMeshFilterNodesWithBattery.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} nodes with battery data'**
+  String worldMeshFilterNodesWithBattery(int count);
+
+  /// No description provided for @worldMeshFilterStatusActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active (≤2m)'**
+  String get worldMeshFilterStatusActive;
+
+  /// No description provided for @worldMeshFilterStatusFading.
+  ///
+  /// In en, this message translates to:
+  /// **'Fading (2-10m)'**
+  String get worldMeshFilterStatusFading;
+
+  /// No description provided for @worldMeshFilterStatusInactive.
+  ///
+  /// In en, this message translates to:
+  /// **'Inactive (10-60m)'**
+  String get worldMeshFilterStatusInactive;
+
+  /// No description provided for @worldMeshFilterStatusUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown (>60m)'**
+  String get worldMeshFilterStatusUnknown;
+
+  /// No description provided for @worldMeshFilterNoOptions.
+  ///
+  /// In en, this message translates to:
+  /// **'No options available'**
+  String get worldMeshFilterNoOptions;
+
+  /// No description provided for @worldMeshFilterAny.
+  ///
+  /// In en, this message translates to:
+  /// **'Any'**
+  String get worldMeshFilterAny;
+
+  /// No description provided for @worldMeshFilterYes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get worldMeshFilterYes;
+
+  /// No description provided for @worldMeshFilterNo.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get worldMeshFilterNo;
+
+  /// No description provided for @favoritesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorite Nodes'**
+  String get favoritesTitle;
+
+  /// No description provided for @favoritesErrorLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading favorites'**
+  String get favoritesErrorLoading;
+
+  /// No description provided for @favoritesRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get favoritesRetry;
+
+  /// No description provided for @favoritesSelectFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Select first node'**
+  String get favoritesSelectFirst;
+
+  /// No description provided for @favoritesSelectSecond.
+  ///
+  /// In en, this message translates to:
+  /// **'Select second node'**
+  String get favoritesSelectSecond;
+
+  /// No description provided for @favoritesCancelCompare.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel compare'**
+  String get favoritesCancelCompare;
+
+  /// No description provided for @favoritesCompareNodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Compare nodes'**
+  String get favoritesCompareNodes;
+
+  /// No description provided for @favoritesEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No Favorites Yet'**
+  String get favoritesEmptyTitle;
+
+  /// No description provided for @favoritesEmptyDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the star icon on any node to add it to your favorites for quick access.'**
+  String get favoritesEmptyDescription;
+
+  /// No description provided for @favoritesDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get favoritesDelete;
+
+  /// No description provided for @favoritesRemoveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Favorite?'**
+  String get favoritesRemoveTitle;
+
+  /// No description provided for @favoritesRemoveMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {name} from your favorites?'**
+  String favoritesRemoveMessage(String name);
+
+  /// No description provided for @favoritesRemoveConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get favoritesRemoveConfirm;
+
+  /// No description provided for @favoritesNotInMesh.
+  ///
+  /// In en, this message translates to:
+  /// **'Not in mesh'**
+  String get favoritesNotInMesh;
+
+  /// No description provided for @favoritesNodeNotInMesh.
+  ///
+  /// In en, this message translates to:
+  /// **'Node not currently in mesh. Check back later.'**
+  String get favoritesNodeNotInMesh;
+
+  /// No description provided for @favoritesCannotCompare.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot compare nodes not in mesh'**
+  String get favoritesCannotCompare;
+
+  /// No description provided for @favoritesCharging.
+  ///
+  /// In en, this message translates to:
+  /// **'Charging'**
+  String get favoritesCharging;
+
+  /// No description provided for @favoritesRemoveTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from favorites'**
+  String get favoritesRemoveTooltip;
+
+  /// No description provided for @nodeComparisonTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Compare Nodes'**
+  String get nodeComparisonTitle;
+
+  /// No description provided for @nodeComparisonVs.
+  ///
+  /// In en, this message translates to:
+  /// **'VS'**
+  String get nodeComparisonVs;
+
+  /// No description provided for @nodeComparisonNodeIdCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Node ID copied'**
+  String get nodeComparisonNodeIdCopied;
+
+  /// No description provided for @nodeComparisonSectionStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get nodeComparisonSectionStatus;
+
+  /// No description provided for @nodeComparisonSectionDeviceInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Info'**
+  String get nodeComparisonSectionDeviceInfo;
+
+  /// No description provided for @nodeComparisonSectionMetrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Metrics'**
+  String get nodeComparisonSectionMetrics;
+
+  /// No description provided for @nodeComparisonSectionNetwork.
+  ///
+  /// In en, this message translates to:
+  /// **'Network'**
+  String get nodeComparisonSectionNetwork;
+
+  /// No description provided for @nodeComparisonRowStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get nodeComparisonRowStatus;
+
+  /// No description provided for @nodeComparisonRowRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get nodeComparisonRowRole;
+
+  /// No description provided for @nodeComparisonRowHardware.
+  ///
+  /// In en, this message translates to:
+  /// **'Hardware'**
+  String get nodeComparisonRowHardware;
+
+  /// No description provided for @nodeComparisonUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get nodeComparisonUnknown;
+
+  /// No description provided for @nodeComparisonRowFirmware.
+  ///
+  /// In en, this message translates to:
+  /// **'Firmware'**
+  String get nodeComparisonRowFirmware;
+
+  /// No description provided for @nodeComparisonNoData.
+  ///
+  /// In en, this message translates to:
+  /// **'--'**
+  String get nodeComparisonNoData;
+
+  /// No description provided for @nodeComparisonRowRegion.
+  ///
+  /// In en, this message translates to:
+  /// **'Region'**
+  String get nodeComparisonRowRegion;
+
+  /// No description provided for @nodeComparisonRowBattery.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery'**
+  String get nodeComparisonRowBattery;
+
+  /// No description provided for @nodeComparisonCharging.
+  ///
+  /// In en, this message translates to:
+  /// **'Charging'**
+  String get nodeComparisonCharging;
+
+  /// No description provided for @nodeComparisonRowVoltage.
+  ///
+  /// In en, this message translates to:
+  /// **'Voltage'**
+  String get nodeComparisonRowVoltage;
+
+  /// No description provided for @nodeComparisonRowChannelUtil.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel Util'**
+  String get nodeComparisonRowChannelUtil;
+
+  /// No description provided for @nodeComparisonRowAirTimeTx.
+  ///
+  /// In en, this message translates to:
+  /// **'Air Time TX'**
+  String get nodeComparisonRowAirTimeTx;
+
+  /// No description provided for @nodeComparisonRowUptime.
+  ///
+  /// In en, this message translates to:
+  /// **'Uptime'**
+  String get nodeComparisonRowUptime;
+
+  /// No description provided for @nodeComparisonRowNeighbors.
+  ///
+  /// In en, this message translates to:
+  /// **'Neighbors'**
+  String get nodeComparisonRowNeighbors;
+
+  /// No description provided for @nodeComparisonRowGateways.
+  ///
+  /// In en, this message translates to:
+  /// **'Gateways'**
+  String get nodeComparisonRowGateways;
+
+  /// No description provided for @nodeComparisonRowHasLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Has Location'**
+  String get nodeComparisonRowHasLocation;
+
+  /// No description provided for @nodeComparisonYes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get nodeComparisonYes;
+
+  /// No description provided for @nodeComparisonNo.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get nodeComparisonNo;
+
+  /// No description provided for @worldMeshFilterCatStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get worldMeshFilterCatStatus;
+
+  /// No description provided for @worldMeshFilterCatHardware.
+  ///
+  /// In en, this message translates to:
+  /// **'Hardware'**
+  String get worldMeshFilterCatHardware;
+
+  /// No description provided for @worldMeshFilterCatModemPreset.
+  ///
+  /// In en, this message translates to:
+  /// **'Modem Preset'**
+  String get worldMeshFilterCatModemPreset;
+
+  /// No description provided for @worldMeshFilterCatRegion.
+  ///
+  /// In en, this message translates to:
+  /// **'Region'**
+  String get worldMeshFilterCatRegion;
+
+  /// No description provided for @worldMeshFilterCatRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get worldMeshFilterCatRole;
+
+  /// No description provided for @worldMeshFilterCatFirmware.
+  ///
+  /// In en, this message translates to:
+  /// **'Firmware'**
+  String get worldMeshFilterCatFirmware;
+
+  /// No description provided for @worldMeshFilterCatEnvSensors.
+  ///
+  /// In en, this message translates to:
+  /// **'Environment Sensors'**
+  String get worldMeshFilterCatEnvSensors;
+
+  /// No description provided for @worldMeshFilterCatBatteryInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery Info'**
+  String get worldMeshFilterCatBatteryInfo;
+
+  /// No description provided for @nodeIntelligenceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh Intelligence'**
+  String get nodeIntelligenceTitle;
+
+  /// No description provided for @nodeIntelligenceDerivedBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'DERIVED'**
+  String get nodeIntelligenceDerivedBadge;
+
+  /// No description provided for @nodeIntelligenceTapHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap for deep analytics'**
+  String get nodeIntelligenceTapHint;
+
+  /// No description provided for @nodeIntelligenceHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Health'**
+  String get nodeIntelligenceHealth;
+
+  /// No description provided for @nodeIntelligenceConnectivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Connectivity'**
+  String get nodeIntelligenceConnectivity;
+
+  /// No description provided for @nodeIntelligenceNeighborCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} neighbors'**
+  String nodeIntelligenceNeighborCount(int count);
+
+  /// No description provided for @nodeIntelligenceGatewayCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} gateways'**
+  String nodeIntelligenceGatewayCount(int count);
+
+  /// No description provided for @nodeIntelligenceChannelUtil.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel Utilization'**
+  String get nodeIntelligenceChannelUtil;
+
+  /// No description provided for @nodeIntelligenceMobilityInfra.
+  ///
+  /// In en, this message translates to:
+  /// **'Infrastructure'**
+  String get nodeIntelligenceMobilityInfra;
+
+  /// No description provided for @nodeIntelligenceMobilityMobile.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile'**
+  String get nodeIntelligenceMobilityMobile;
+
+  /// No description provided for @nodeIntelligenceMobilityTracker.
+  ///
+  /// In en, this message translates to:
+  /// **'Tracker'**
+  String get nodeIntelligenceMobilityTracker;
+
+  /// No description provided for @nodeIntelligenceMobilityElevated.
+  ///
+  /// In en, this message translates to:
+  /// **'Elevated'**
+  String get nodeIntelligenceMobilityElevated;
+
+  /// No description provided for @nodeIntelligenceMobilityStationary.
+  ///
+  /// In en, this message translates to:
+  /// **'Stationary'**
+  String get nodeIntelligenceMobilityStationary;
+
+  /// No description provided for @nodeIntelligenceUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get nodeIntelligenceUnknown;
+
+  /// No description provided for @nodeIntelligenceActivityHot.
+  ///
+  /// In en, this message translates to:
+  /// **'Hot'**
+  String get nodeIntelligenceActivityHot;
+
+  /// No description provided for @nodeIntelligenceActivityActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get nodeIntelligenceActivityActive;
+
+  /// No description provided for @nodeIntelligenceActivityQuiet.
+  ///
+  /// In en, this message translates to:
+  /// **'Quiet'**
+  String get nodeIntelligenceActivityQuiet;
+
+  /// No description provided for @nodeIntelligenceActivityCold.
+  ///
+  /// In en, this message translates to:
+  /// **'Cold'**
+  String get nodeIntelligenceActivityCold;
+
+  /// No description provided for @nodeHistoryNeedMoreData.
+  ///
+  /// In en, this message translates to:
+  /// **'Need more data for charts'**
+  String get nodeHistoryNeedMoreData;
+
+  /// No description provided for @nodeHistoryDataPointCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{current}/{required} data points'**
+  String nodeHistoryDataPointCount(int current, int required);
+
+  /// No description provided for @nodeHistoryNoMetricData.
+  ///
+  /// In en, this message translates to:
+  /// **'No {metric} data'**
+  String nodeHistoryNoMetricData(String metric);
+
+  /// No description provided for @nodeHistoryMetricBattery.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery'**
+  String get nodeHistoryMetricBattery;
+
+  /// No description provided for @nodeHistoryMetricConnectivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Connectivity'**
+  String get nodeHistoryMetricConnectivity;
+
+  /// No description provided for @nodeHistoryMetricChannelUtil.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel Util'**
+  String get nodeHistoryMetricChannelUtil;
 }
 
 class _AppLocalizationsDelegate

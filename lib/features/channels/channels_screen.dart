@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../providers/app_providers.dart';
 import '../../providers/help_providers.dart';
@@ -97,7 +98,7 @@ class _ChannelsScreenState extends ConsumerState<ChannelsScreen>
             searchController: _searchController,
             searchQuery: _searchQuery,
             onSearchChanged: (value) => setState(() => _searchQuery = value),
-            hintText: 'Search channels',
+            hintText: context.l10n.channelsSearchHint,
             textScaler: textScaler,
             rebuildKey: Object.hashAll([
               _activeFilter,
@@ -109,7 +110,7 @@ class _ChannelsScreenState extends ConsumerState<ChannelsScreen>
             ]),
             filterChips: [
               StatusFilterChip(
-                label: 'All',
+                label: context.l10n.channelsFilterAll,
                 count: channels.length,
                 isSelected: _activeFilter == ChannelFilter.all,
                 onTap: () {
@@ -118,7 +119,7 @@ class _ChannelsScreenState extends ConsumerState<ChannelsScreen>
                 },
               ),
               StatusFilterChip(
-                label: 'Primary',
+                label: context.l10n.channelsFilterPrimary,
                 count: primaryCount,
                 isSelected: _activeFilter == ChannelFilter.primary,
                 color: AccentColors.blue,
@@ -127,7 +128,7 @@ class _ChannelsScreenState extends ConsumerState<ChannelsScreen>
                     setState(() => _activeFilter = ChannelFilter.primary),
               ),
               StatusFilterChip(
-                label: 'Encrypted',
+                label: context.l10n.channelsFilterEncrypted,
                 count: encryptedCount,
                 isSelected: _activeFilter == ChannelFilter.encrypted,
                 color: AccentColors.green,
@@ -136,7 +137,7 @@ class _ChannelsScreenState extends ConsumerState<ChannelsScreen>
                     setState(() => _activeFilter = ChannelFilter.encrypted),
               ),
               StatusFilterChip(
-                label: 'Position',
+                label: context.l10n.channelsFilterPosition,
                 count: positionCount,
                 isSelected: _activeFilter == ChannelFilter.position,
                 color: AccentColors.orange,
@@ -145,7 +146,7 @@ class _ChannelsScreenState extends ConsumerState<ChannelsScreen>
                     setState(() => _activeFilter = ChannelFilter.position),
               ),
               StatusFilterChip(
-                label: 'MQTT',
+                label: context.l10n.channelsFilterMqtt,
                 count: mqttCount,
                 isSelected: _activeFilter == ChannelFilter.mqtt,
                 color: AccentColors.purple,
@@ -179,8 +180,8 @@ class _ChannelsScreenState extends ConsumerState<ChannelsScreen>
                   SizedBox(height: AppTheme.spacing24),
                   Text(
                     _searchQuery.isNotEmpty
-                        ? 'No channels match "$_searchQuery"'
-                        : 'No channels configured',
+                        ? context.l10n.channelsNoMatch(_searchQuery)
+                        : context.l10n.channelsEmpty,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -190,7 +191,7 @@ class _ChannelsScreenState extends ConsumerState<ChannelsScreen>
                   if (_searchQuery.isEmpty) ...[
                     SizedBox(height: AppTheme.spacing8),
                     Text(
-                      'Channels are still being loaded from device\nor use the icons above to add channels',
+                      context.l10n.channelsEmptySubtitle,
                       style: TextStyle(
                         fontSize: 14,
                         color: context.textTertiary,
@@ -202,7 +203,7 @@ class _ChannelsScreenState extends ConsumerState<ChannelsScreen>
                     const SizedBox(height: AppTheme.spacing12),
                     TextButton(
                       onPressed: () => setState(() => _searchQuery = ''),
-                      child: const Text('Clear search'),
+                      child: Text(context.l10n.channelsClearSearch),
                     ),
                   ],
                 ],
@@ -254,7 +255,7 @@ class _ChannelsScreenState extends ConsumerState<ChannelsScreen>
           resizeToAvoidBottomInset: false,
           leading: const HamburgerMenuButton(),
           centerTitle: true,
-          title: 'Channels (${channels.length})',
+          title: context.l10n.channelsScreenTitle(channels.length),
           actions: [
             const DeviceStatusButton(),
             AppBarOverflowMenu<String>(
@@ -288,39 +289,39 @@ class _ChannelsScreenState extends ConsumerState<ChannelsScreen>
                 }
               },
               itemBuilder: (context) => [
-                const PopupMenuItem(
+                PopupMenuItem(
                   value: 'add',
                   child: ListTile(
                     leading: Icon(Icons.add),
-                    title: Text('Add Channel'),
+                    title: Text(context.l10n.channelsMenuAddChannel),
                     contentPadding: EdgeInsets.zero,
                     visualDensity: VisualDensity.compact,
                   ),
                 ),
-                const PopupMenuItem(
+                PopupMenuItem(
                   value: 'scan',
                   child: ListTile(
                     leading: Icon(Icons.qr_code_scanner),
-                    title: Text('Scan QR Code'),
+                    title: Text(context.l10n.channelsMenuScanQrCode),
                     contentPadding: EdgeInsets.zero,
                     visualDensity: VisualDensity.compact,
                   ),
                 ),
                 const PopupMenuDivider(),
-                const PopupMenuItem(
+                PopupMenuItem(
                   value: 'settings',
                   child: ListTile(
                     leading: Icon(Icons.settings_outlined),
-                    title: Text('Settings'),
+                    title: Text(context.l10n.channelsMenuSettings),
                     contentPadding: EdgeInsets.zero,
                     visualDensity: VisualDensity.compact,
                   ),
                 ),
-                const PopupMenuItem(
+                PopupMenuItem(
                   value: 'help',
                   child: ListTile(
                     leading: Icon(Icons.help_outline),
-                    title: Text('Help'),
+                    title: Text(context.l10n.channelsMenuHelp),
                     contentPadding: EdgeInsets.zero,
                     visualDensity: VisualDensity.compact,
                   ),
@@ -395,8 +396,10 @@ class _ChannelTile extends ConsumerWidget {
                     Text(
                       channel.name.isEmpty
                           ? (isPrimary
-                                ? 'Primary Channel'
-                                : 'Channel ${channel.index}')
+                                ? context.l10n.channelsPrimaryChannelName
+                                : context.l10n.channelsDefaultChannelName(
+                                    channel.index,
+                                  ))
                           : channel.name,
                       style: TextStyle(
                         fontSize: 16,
@@ -416,7 +419,9 @@ class _ChannelTile extends ConsumerWidget {
                         ),
                         SizedBox(width: AppTheme.spacing6),
                         Text(
-                          hasKey ? 'Encrypted' : 'No encryption',
+                          hasKey
+                              ? context.l10n.channelsTileEncrypted
+                              : context.l10n.channelsTileNoEncryption,
                           style: TextStyle(
                             fontSize: 13,
                             color: context.textSecondary,
@@ -436,7 +441,7 @@ class _ChannelTile extends ConsumerWidget {
                               ),
                             ),
                             child: Text(
-                              'PRIMARY',
+                              context.l10n.channelsTilePrimaryBadge,
                               style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.w700,
@@ -468,7 +473,9 @@ class _ChannelTile extends ConsumerWidget {
                   ),
                   child: Center(
                     child: Text(
-                      unreadCount > 99 ? '99+' : '$unreadCount',
+                      unreadCount > 99
+                          ? context.l10n.channelsUnreadOverflow
+                          : '$unreadCount',
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 11,
@@ -496,8 +503,8 @@ class _ChannelTile extends ConsumerWidget {
           channelIndex: channel.index,
           title: channel.name.isEmpty
               ? (channel.index == 0
-                    ? 'Primary Channel'
-                    : 'Channel ${channel.index}')
+                    ? context.l10n.channelsPrimaryChannelName
+                    : context.l10n.channelsDefaultChannelName(channel.index))
               : channel.name,
         ),
       ),

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/animations.dart';
 import '../../core/widgets/app_bottom_sheet.dart';
@@ -75,7 +76,7 @@ class _MeshReachabilityScreenState
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Reachability',
+                context.l10n.reachabilityScreenTitle,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -93,7 +94,7 @@ class _MeshReachabilityScreenState
                   ),
                 ),
                 child: Text(
-                  'BETA',
+                  context.l10n.reachabilityBetaBadge,
                   style: TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.w700,
@@ -107,7 +108,7 @@ class _MeshReachabilityScreenState
           actions: [
             IconButton(
               icon: const Icon(Icons.info_outline),
-              tooltip: 'About Reachability',
+              tooltip: context.l10n.reachabilityAboutTooltip,
               onPressed: () => _showInfoDialog(context),
             ),
             IcoHelpAppBarButton(topicId: 'reachability_overview'),
@@ -133,7 +134,7 @@ class _MeshReachabilityScreenState
                 searchQuery: _searchQuery,
                 onSearchChanged: (value) =>
                     setState(() => _searchQuery = value),
-                hintText: 'Search nodes',
+                hintText: context.l10n.reachabilitySearchHint,
                 textScaler: MediaQuery.textScalerOf(context),
               ),
             ),
@@ -173,12 +174,12 @@ class _MeshReachabilityScreenState
       initialChildSize: 0.7,
       minChildSize: 0.4,
       maxChildSize: 0.85,
-      title: 'About Reachability',
+      title: context.l10n.reachabilityAboutTitle,
       footer: SizedBox(
         width: double.infinity,
         child: FilledButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Got it'),
+          child: Text(context.l10n.reachabilityGotIt),
         ),
       ),
       builder: (scrollController) => SingleChildScrollView(
@@ -188,52 +189,29 @@ class _MeshReachabilityScreenState
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            const _InfoSection(
-              title: 'What is this?',
-              content:
-                  'This screen shows a probabilistic estimate of how likely '
-                  'your messages will reach each node. It is NOT a guarantee '
-                  'of delivery.',
+            _InfoSection(
+              title: context.l10n.reachabilityWhatIsThisTitle,
+              content: context.l10n.reachabilityWhatIsThisContent,
             ),
             const SizedBox(height: AppTheme.spacing16),
-            const _InfoSection(
-              title: 'Scoring Model',
-              content:
-                  'Opportunistic Mesh Reach Likelihood Model (v1) — BETA\n\n'
-                  'A heuristic scoring model that estimates likelihood of '
-                  'reaching a node based on observed RF metrics and packet '
-                  'history. This score represents likelihood, not reachability. '
-                  'Meshtastic forwards packets opportunistically without routing. '
-                  'A high score does not guarantee delivery.',
+            _InfoSection(
+              title: context.l10n.reachabilityScoringModelTitle,
+              content: context.l10n.reachabilityScoringModelContent,
             ),
             const SizedBox(height: AppTheme.spacing16),
-            const _InfoSection(
-              title: 'How is it calculated?',
-              content:
-                  'The likelihood score combines several factors:\n'
-                  '• Freshness: How recently we heard from the node\n'
-                  '• Path Depth: Number of hops observed\n'
-                  '• Signal Quality: RSSI and SNR when available\n'
-                  '• Observation Pattern: Direct vs relayed packets\n'
-                  '• ACK History: DM acknowledgement success rate',
+            _InfoSection(
+              title: context.l10n.reachabilityHowCalculatedTitle,
+              content: context.l10n.reachabilityHowCalculatedContent,
             ),
             const SizedBox(height: AppTheme.spacing16),
-            const _InfoSection(
-              title: 'What the levels mean',
-              content:
-                  '• High: Strong recent indicators, but not guaranteed\n'
-                  '• Medium: Moderate confidence based on available data\n'
-                  '• Low: Weak or stale indicators, delivery unlikely',
+            _InfoSection(
+              title: context.l10n.reachabilityLevelsMeanTitle,
+              content: context.l10n.reachabilityLevelsMeanContent,
             ),
             const SizedBox(height: AppTheme.spacing16),
-            const _InfoSection(
-              title: 'Important limitations',
-              content:
-                  '• Meshtastic has no true routing tables\n'
-                  '• No end-to-end acknowledgements exist\n'
-                  '• Forwarding is opportunistic\n'
-                  '• Mesh topology changes constantly\n'
-                  '• All estimates based on passive observation only',
+            _InfoSection(
+              title: context.l10n.reachabilityLimitationsTitle,
+              content: context.l10n.reachabilityLimitationsContent,
             ),
             const SizedBox(height: AppTheme.spacing16),
           ],
@@ -282,8 +260,7 @@ class _DisclaimerBanner extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(AppTheme.spacing16, 8, 16, 0),
       child: StatusBanner.warning(
-        title:
-            'Likelihood estimates only. Delivery is never guaranteed in a mesh network.',
+        title: context.l10n.reachabilityDisclaimerBanner,
         margin: EdgeInsets.zero,
       ),
     );
@@ -308,19 +285,19 @@ class _ReachabilitySummary extends StatelessWidget {
       child: Row(
         children: [
           _SummaryChip(
-            label: 'High',
+            label: context.l10n.reachabilityLevelHigh,
             count: highCount,
             color: _ReachabilityColors.high,
           ),
           const SizedBox(width: AppTheme.spacing8),
           _SummaryChip(
-            label: 'Medium',
+            label: context.l10n.reachabilityLevelMedium,
             count: mediumCount,
             color: _ReachabilityColors.medium,
           ),
           const SizedBox(width: AppTheme.spacing8),
           _SummaryChip(
-            label: 'Low',
+            label: context.l10n.reachabilityLevelLow,
             count: lowCount,
             color: _ReachabilityColors.low,
           ),
@@ -395,7 +372,7 @@ class _EmptyState extends StatelessWidget {
           ),
           SizedBox(height: AppTheme.spacing24),
           Text(
-            'No nodes discovered yet',
+            context.l10n.reachabilityEmptyTitle,
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w500,
@@ -404,7 +381,7 @@ class _EmptyState extends StatelessWidget {
           ),
           SizedBox(height: AppTheme.spacing8),
           Text(
-            'Nodes will appear as they\'re observed\non the mesh network.',
+            context.l10n.reachabilityEmptyDescription,
             textAlign: TextAlign.center,
             style: context.bodySmallStyle?.copyWith(
               color: context.textTertiary,
@@ -446,7 +423,7 @@ class _ReachabilityNodeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final likelihood = nodeData.reachability.likelihood;
     final likelihoodColor = _ReachabilityColors.forLikelihood(likelihood);
-    final likelihoodLabel = _ReachabilityColors.labelFor(likelihood);
+    final likelihoodLabel = _ReachabilityColors.labelFor(context, likelihood);
 
     return BouncyTap(
       onTap: onTap,
@@ -633,7 +610,7 @@ class _ScoreIndicator extends StatelessWidget {
         ),
         const SizedBox(width: AppTheme.spacing6),
         Text(
-          '$percentage%',
+          context.l10n.reachabilityScorePercent('$percentage'),
           style: TextStyle(
             fontSize: 11,
             fontWeight: FontWeight.w600,
@@ -669,14 +646,14 @@ class _ReachabilityColors {
     }
   }
 
-  static String labelFor(ReachLikelihood likelihood) {
+  static String labelFor(BuildContext context, ReachLikelihood likelihood) {
     switch (likelihood) {
       case ReachLikelihood.high:
-        return 'High';
+        return context.l10n.reachabilityLevelHigh;
       case ReachLikelihood.medium:
-        return 'Medium';
+        return context.l10n.reachabilityLevelMedium;
       case ReachLikelihood.low:
-        return 'Low';
+        return context.l10n.reachabilityLevelLow;
     }
   }
 }

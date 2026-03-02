@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/ico_help_system.dart';
@@ -13,7 +14,6 @@ import '../../providers/help_providers.dart';
 import '../../models/mesh_models.dart';
 import '../../providers/app_providers.dart';
 import '../../providers/presence_providers.dart';
-import '../../utils/number_format.dart';
 import '../messaging/messaging_screen.dart';
 
 /// Screen showing the 3D mesh globe with node positions
@@ -77,7 +77,7 @@ class _GlobeScreenState extends ConsumerState<GlobeScreen>
       topicId: 'globe_overview',
       stepKeys: const {},
       child: GlassScaffold.body(
-        title: 'Mesh Globe',
+        title: context.l10n.globeScreenTitle,
         physics: const NeverScrollableScrollPhysics(),
         actions: [
           // Toggle connections
@@ -93,7 +93,9 @@ class _GlobeScreenState extends ConsumerState<GlobeScreen>
                 _showConnections = !_showConnections;
               });
             },
-            tooltip: _showConnections ? 'Hide connections' : 'Show connections',
+            tooltip: _showConnections
+                ? context.l10n.globeHideConnections
+                : context.l10n.globeShowConnections,
           ),
           // Reset view
           IconButton(
@@ -104,14 +106,14 @@ class _GlobeScreenState extends ConsumerState<GlobeScreen>
                 _selectedNode = null;
               });
             },
-            tooltip: 'Reset view',
+            tooltip: context.l10n.globeResetView,
           ),
           // Help button
           IconButton(
             icon: const Icon(Icons.help_outline),
             onPressed: () =>
                 ref.read(helpProvider.notifier).startTour('globe_overview'),
-            tooltip: 'Help',
+            tooltip: context.l10n.globeHelp,
           ),
         ],
         body: Stack(
@@ -141,7 +143,7 @@ class _GlobeScreenState extends ConsumerState<GlobeScreen>
                   HapticFeedback.lightImpact();
                   final selection = await NodeSelectorSheet.show(
                     context,
-                    title: 'Select Node',
+                    title: context.l10n.globeSelectNode,
                     allowBroadcast: false,
                   );
                   if (!mounted) return;
@@ -168,7 +170,7 @@ class _GlobeScreenState extends ConsumerState<GlobeScreen>
                       Icon(Icons.public, size: 14, color: context.accentColor),
                       SizedBox(width: AppTheme.spacing6),
                       Text(
-                        '${NumberFormatUtils.formatWithThousandsSeparators(nodesList.length)} nodes',
+                        context.l10n.globeNodeCount(nodesList.length),
                         style: TextStyle(
                           color: context.textPrimary,
                           fontSize: 12,
@@ -221,7 +223,7 @@ class _GlobeScreenState extends ConsumerState<GlobeScreen>
                     ),
                     SizedBox(height: AppTheme.spacing16),
                     Text(
-                      'No nodes with GPS',
+                      context.l10n.globeEmptyTitle,
                       style: TextStyle(
                         color: context.textTertiary,
                         fontSize: 16,
@@ -229,7 +231,7 @@ class _GlobeScreenState extends ConsumerState<GlobeScreen>
                     ),
                     SizedBox(height: AppTheme.spacing8),
                     Text(
-                      'Nodes with position data will appear here',
+                      context.l10n.globeEmptyDescription,
                       style: TextStyle(
                         color: context.textTertiary,
                         fontSize: 12,

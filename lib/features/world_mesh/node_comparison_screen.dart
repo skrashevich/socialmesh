@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/glass_scaffold.dart';
 import '../../core/widgets/auto_scroll_text.dart';
@@ -24,7 +25,7 @@ class NodeComparisonScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GlassScaffold.body(
-      title: 'Compare Nodes',
+      title: context.l10n.nodeComparisonTitle,
       body: Padding(
         padding: const EdgeInsets.all(AppTheme.spacing16),
         child: Column(
@@ -35,27 +36,39 @@ class NodeComparisonScreen extends StatelessWidget {
             const SizedBox(height: AppTheme.spacing24),
 
             // Status comparison
-            _buildSectionHeader(context, 'Status'),
+            _buildSectionHeader(
+              context,
+              context.l10n.nodeComparisonSectionStatus,
+            ),
             const SizedBox(height: AppTheme.spacing8),
             _buildStatusComparison(context),
             const SizedBox(height: AppTheme.spacing24),
 
             // Device info comparison
-            _buildSectionHeader(context, 'Device Info'),
+            _buildSectionHeader(
+              context,
+              context.l10n.nodeComparisonSectionDeviceInfo,
+            ),
             const SizedBox(height: AppTheme.spacing8),
-            _buildDeviceComparison(),
+            _buildDeviceComparison(context),
             const SizedBox(height: AppTheme.spacing24),
 
             // Metrics comparison
-            _buildSectionHeader(context, 'Metrics'),
+            _buildSectionHeader(
+              context,
+              context.l10n.nodeComparisonSectionMetrics,
+            ),
             const SizedBox(height: AppTheme.spacing8),
-            _buildMetricsComparison(),
+            _buildMetricsComparison(context),
             const SizedBox(height: AppTheme.spacing24),
 
             // Network comparison
-            _buildSectionHeader(context, 'Network'),
+            _buildSectionHeader(
+              context,
+              context.l10n.nodeComparisonSectionNetwork,
+            ),
             const SizedBox(height: AppTheme.spacing8),
-            _buildNetworkComparison(),
+            _buildNetworkComparison(context),
             const SizedBox(height: AppTheme.spacing32),
           ],
         ),
@@ -78,7 +91,7 @@ class NodeComparisonScreen extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              'VS',
+              context.l10n.nodeComparisonVs,
               style: TextStyle(
                 fontSize: 10,
                 fontWeight: FontWeight.bold,
@@ -131,7 +144,10 @@ class NodeComparisonScreen extends StatelessWidget {
             onTap: () {
               HapticFeedback.lightImpact();
               Clipboard.setData(ClipboardData(text: '!$nodeId'));
-              showSuccessSnackBar(context, 'Node ID copied');
+              showSuccessSnackBar(
+                context,
+                context.l10n.nodeComparisonNodeIdCopied,
+              );
             },
             child: Text(
               '!$nodeId',
@@ -163,7 +179,7 @@ class NodeComparisonScreen extends StatelessWidget {
     return _ComparisonTable(
       rows: [
         _ComparisonRow(
-          label: 'Status',
+          label: context.l10n.nodeComparisonRowStatus,
           valueA: presenceStatusText(
             nodeA.presenceConfidence,
             _lastSeenAge(nodeA),
@@ -175,79 +191,87 @@ class NodeComparisonScreen extends StatelessWidget {
           colorA: _getStatusColor(context, nodeA),
           colorB: _getStatusColor(context, nodeB),
         ),
-        _ComparisonRow(label: 'Role', valueA: nodeA.role, valueB: nodeB.role),
+        _ComparisonRow(
+          label: context.l10n.nodeComparisonRowRole,
+          valueA: nodeA.role,
+          valueB: nodeB.role,
+        ),
       ],
     );
   }
 
-  Widget _buildDeviceComparison() {
+  Widget _buildDeviceComparison(BuildContext context) {
     return _ComparisonTable(
       rows: [
         _ComparisonRow(
-          label: 'Hardware',
-          valueA: nodeA.hwModel.isNotEmpty ? nodeA.hwModel : 'Unknown',
-          valueB: nodeB.hwModel.isNotEmpty ? nodeB.hwModel : 'Unknown',
+          label: context.l10n.nodeComparisonRowHardware,
+          valueA: nodeA.hwModel.isNotEmpty
+              ? nodeA.hwModel
+              : context.l10n.nodeComparisonUnknown,
+          valueB: nodeB.hwModel.isNotEmpty
+              ? nodeB.hwModel
+              : context.l10n.nodeComparisonUnknown,
         ),
         if (nodeA.fwVersion != null || nodeB.fwVersion != null)
           _ComparisonRow(
-            label: 'Firmware',
-            valueA: nodeA.fwVersion ?? '--',
-            valueB: nodeB.fwVersion ?? '--',
+            label: context.l10n.nodeComparisonRowFirmware,
+            valueA: nodeA.fwVersion ?? context.l10n.nodeComparisonNoData,
+            valueB: nodeB.fwVersion ?? context.l10n.nodeComparisonNoData,
           ),
         if (nodeA.region != null || nodeB.region != null)
           _ComparisonRow(
-            label: 'Region',
-            valueA: nodeA.region ?? '--',
-            valueB: nodeB.region ?? '--',
+            label: context.l10n.nodeComparisonRowRegion,
+            valueA: nodeA.region ?? context.l10n.nodeComparisonNoData,
+            valueB: nodeB.region ?? context.l10n.nodeComparisonNoData,
           ),
       ],
     );
   }
 
-  Widget _buildMetricsComparison() {
+  Widget _buildMetricsComparison(BuildContext context) {
     return _ComparisonTable(
       rows: [
         _ComparisonRow(
-          label: 'Battery',
-          valueA: _formatBattery(nodeA.batteryLevel),
-          valueB: _formatBattery(nodeB.batteryLevel),
+          label: context.l10n.nodeComparisonRowBattery,
+          valueA: _formatBattery(context, nodeA.batteryLevel),
+          valueB: _formatBattery(context, nodeB.batteryLevel),
           colorA: _getBatteryColor(nodeA.batteryLevel),
           colorB: _getBatteryColor(nodeB.batteryLevel),
           winner: _compareBattery(nodeA.batteryLevel, nodeB.batteryLevel),
         ),
         if (nodeA.voltage != null || nodeB.voltage != null)
           _ComparisonRow(
-            label: 'Voltage',
+            label: context.l10n.nodeComparisonRowVoltage,
             valueA: nodeA.voltage != null
                 ? '${nodeA.voltage!.toStringAsFixed(2)}V'
-                : '--',
+                : context.l10n.nodeComparisonNoData,
             valueB: nodeB.voltage != null
                 ? '${nodeB.voltage!.toStringAsFixed(2)}V'
-                : '--',
+                : context.l10n.nodeComparisonNoData,
             winner: _compareValues(nodeA.voltage, nodeB.voltage),
           ),
         _ComparisonRow(
-          label: 'Channel Util',
+          label: context.l10n.nodeComparisonRowChannelUtil,
           valueA: nodeA.chUtil != null
               ? '${nodeA.chUtil!.toStringAsFixed(1)}%'
-              : '--',
+              : context.l10n.nodeComparisonNoData,
           valueB: nodeB.chUtil != null
               ? '${nodeB.chUtil!.toStringAsFixed(1)}%'
-              : '--',
+              : context.l10n.nodeComparisonNoData,
           // Lower is better for channel util
           winner: _compareValues(nodeB.chUtil, nodeA.chUtil),
         ),
         _ComparisonRow(
-          label: 'Air Time TX',
+          label: context.l10n.nodeComparisonRowAirTimeTx,
           valueA: nodeA.airUtilTx != null
               ? '${nodeA.airUtilTx!.toStringAsFixed(1)}%'
-              : '--',
+              : context.l10n.nodeComparisonNoData,
           valueB: nodeB.airUtilTx != null
               ? '${nodeB.airUtilTx!.toStringAsFixed(1)}%'
-              : '--',
+              : context.l10n.nodeComparisonNoData,
         ),
         _ComparisonRow(
-          label: 'Uptime',
+          label: context.l10n.nodeComparisonRowUptime,
           valueA: _formatUptime(nodeA.uptime),
           valueB: _formatUptime(nodeB.uptime),
           winner: _compareValues(
@@ -259,7 +283,7 @@ class NodeComparisonScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildNetworkComparison() {
+  Widget _buildNetworkComparison(BuildContext context) {
     final neighborsA = nodeA.neighbors?.length ?? 0;
     final neighborsB = nodeB.neighbors?.length ?? 0;
     final gatewaysA = nodeA.seenBy.length;
@@ -268,13 +292,13 @@ class NodeComparisonScreen extends StatelessWidget {
     return _ComparisonTable(
       rows: [
         _ComparisonRow(
-          label: 'Neighbors',
+          label: context.l10n.nodeComparisonRowNeighbors,
           valueA: '$neighborsA',
           valueB: '$neighborsB',
           winner: _compareInts(neighborsA, neighborsB),
         ),
         _ComparisonRow(
-          label: 'Gateways',
+          label: context.l10n.nodeComparisonRowGateways,
           valueA: '$gatewaysA',
           valueB: '$gatewaysB',
           winner: _compareInts(gatewaysA, gatewaysB),
@@ -282,9 +306,13 @@ class NodeComparisonScreen extends StatelessWidget {
         if ((nodeA.latitude != 0 && nodeA.longitude != 0) ||
             (nodeB.latitude != 0 && nodeB.longitude != 0))
           _ComparisonRow(
-            label: 'Has Location',
-            valueA: nodeA.latitude != 0 ? 'Yes' : 'No',
-            valueB: nodeB.latitude != 0 ? 'Yes' : 'No',
+            label: context.l10n.nodeComparisonRowHasLocation,
+            valueA: nodeA.latitude != 0
+                ? context.l10n.nodeComparisonYes
+                : context.l10n.nodeComparisonNo,
+            valueB: nodeB.latitude != 0
+                ? context.l10n.nodeComparisonYes
+                : context.l10n.nodeComparisonNo,
           ),
       ],
     );
@@ -326,9 +354,9 @@ class NodeComparisonScreen extends StatelessWidget {
     return DateTime.now().difference(lastSeen);
   }
 
-  String _formatBattery(int? level) {
-    if (level == null) return '--';
-    if (level > 100) return 'Charging';
+  String _formatBattery(BuildContext context, int? level) {
+    if (level == null) return context.l10n.nodeComparisonNoData;
+    if (level > 100) return context.l10n.nodeComparisonCharging;
     return '$level%';
   }
 

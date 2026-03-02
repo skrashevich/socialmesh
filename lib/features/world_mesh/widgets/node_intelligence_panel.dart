@@ -4,6 +4,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../models/world_mesh_node.dart';
 import '../../../models/presence_confidence.dart';
@@ -181,7 +182,7 @@ class NodeIntelligencePanel extends StatelessWidget {
             _buildSectionHeader(
               theme,
               Icons.psychology,
-              'Mesh Intelligence',
+              context.l10n.nodeIntelligenceTitle,
               context,
             ),
             const SizedBox(height: AppTheme.spacing12),
@@ -191,7 +192,7 @@ class NodeIntelligencePanel extends StatelessWidget {
               children: [
                 Expanded(
                   child: _IntelligenceGauge(
-                    label: 'Health',
+                    label: context.l10n.nodeIntelligenceHealth,
                     value: intelligence.healthScore,
                     icon: Icons.favorite,
                     color: _getHealthColor(intelligence.healthScore),
@@ -200,7 +201,7 @@ class NodeIntelligencePanel extends StatelessWidget {
                 const SizedBox(width: AppTheme.spacing12),
                 Expanded(
                   child: _IntelligenceGauge(
-                    label: 'Connectivity',
+                    label: context.l10n.nodeIntelligenceConnectivity,
                     value: intelligence.connectivityScore,
                     icon: Icons.hub,
                     color: _getConnectivityColor(
@@ -220,12 +221,17 @@ class NodeIntelligencePanel extends StatelessWidget {
               children: [
                 _IntelligenceChip(
                   icon: _getMobilityIcon(intelligence.mobilityClass),
-                  label: intelligence.mobilityClass,
+                  label: _localizedMobility(
+                    context,
+                    intelligence.mobilityClass,
+                  ),
                   color: _getMobilityColor(intelligence.mobilityClass),
                 ),
                 _IntelligenceChip(
                   icon: Icons.people,
-                  label: '${intelligence.neighborCount} neighbors',
+                  label: context.l10n.nodeIntelligenceNeighborCount(
+                    intelligence.neighborCount,
+                  ),
                   color: intelligence.neighborCount > 5
                       ? AppTheme.successGreen
                       : intelligence.neighborCount > 0
@@ -234,7 +240,9 @@ class NodeIntelligencePanel extends StatelessWidget {
                 ),
                 _IntelligenceChip(
                   icon: Icons.wifi_tethering,
-                  label: '${intelligence.gatewayCount} gateways',
+                  label: context.l10n.nodeIntelligenceGatewayCount(
+                    intelligence.gatewayCount,
+                  ),
                   color: intelligence.gatewayCount > 2
                       ? AppTheme.successGreen
                       : intelligence.gatewayCount > 0
@@ -273,7 +281,7 @@ class NodeIntelligencePanel extends StatelessWidget {
                     Icon(Icons.analytics, size: 14, color: accentColor),
                     const SizedBox(width: AppTheme.spacing6),
                     Text(
-                      'Tap for deep analytics',
+                      context.l10n.nodeIntelligenceTapHint,
                       style: TextStyle(
                         color: accentColor,
                         fontSize: 11,
@@ -318,7 +326,7 @@ class NodeIntelligencePanel extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppTheme.radius4),
           ),
           child: Text(
-            'DERIVED',
+            context.l10n.nodeIntelligenceDerivedBadge,
             style: TextStyle(
               color: AccentColors.cyan,
               fontSize: 9,
@@ -374,6 +382,23 @@ class NodeIntelligencePanel extends StatelessWidget {
         return AccentColors.slate;
       default:
         return SemanticColors.disabled;
+    }
+  }
+
+  String _localizedMobility(BuildContext context, String mobility) {
+    switch (mobility) {
+      case 'Infrastructure':
+        return context.l10n.nodeIntelligenceMobilityInfra;
+      case 'Mobile':
+        return context.l10n.nodeIntelligenceMobilityMobile;
+      case 'Tracker':
+        return context.l10n.nodeIntelligenceMobilityTracker;
+      case 'Elevated':
+        return context.l10n.nodeIntelligenceMobilityElevated;
+      case 'Stationary':
+        return context.l10n.nodeIntelligenceMobilityStationary;
+      default:
+        return context.l10n.nodeIntelligenceUnknown;
     }
   }
 }
@@ -566,7 +591,7 @@ class _ActivityChip extends StatelessWidget {
           Icon(icon, size: 14, color: color),
           const SizedBox(width: AppTheme.spacing6),
           Text(
-            activity,
+            _localizedActivity(context),
             style: TextStyle(
               color: color,
               fontSize: 11,
@@ -590,6 +615,21 @@ class _ActivityChip extends StatelessWidget {
         return (Icons.ac_unit, AccentColors.slate);
       default:
         return (Icons.help_outline, SemanticColors.disabled);
+    }
+  }
+
+  String _localizedActivity(BuildContext context) {
+    switch (activity) {
+      case 'Hot':
+        return context.l10n.nodeIntelligenceActivityHot;
+      case 'Active':
+        return context.l10n.nodeIntelligenceActivityActive;
+      case 'Quiet':
+        return context.l10n.nodeIntelligenceActivityQuiet;
+      case 'Cold':
+        return context.l10n.nodeIntelligenceActivityCold;
+      default:
+        return context.l10n.nodeIntelligenceUnknown;
     }
   }
 }
@@ -626,7 +666,7 @@ class _ChannelUtilizationBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Channel Utilization',
+                context.l10n.nodeIntelligenceChannelUtil,
                 style: TextStyle(color: context.textSecondary, fontSize: 11),
               ),
               Text(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/animations.dart';
 import '../../models/presence_confidence.dart';
@@ -62,7 +63,7 @@ class _WorldMeshFilterSheetState extends ConsumerState<WorldMeshFilterSheet> {
                   Icon(Icons.filter_list, color: accentColor),
                   const SizedBox(width: AppTheme.spacing12),
                   Text(
-                    'Filter Nodes',
+                    context.l10n.worldMeshFilterTitle,
                     style: theme.textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -77,7 +78,7 @@ class _WorldMeshFilterSheetState extends ConsumerState<WorldMeshFilterSheet> {
                             .clearAllFilters();
                       },
                       child: Text(
-                        'Clear All',
+                        context.l10n.worldMeshFilterClearAll,
                         style: TextStyle(color: accentColor),
                       ),
                     ),
@@ -102,7 +103,10 @@ class _WorldMeshFilterSheetState extends ConsumerState<WorldMeshFilterSheet> {
                     Icon(Icons.location_on, size: 16, color: accentColor),
                     const SizedBox(width: AppTheme.spacing8),
                     Text(
-                      '$filteredCount of $totalCount nodes',
+                      context.l10n.worldMeshFilterNodeCount(
+                        filteredCount,
+                        totalCount,
+                      ),
                       style: TextStyle(
                         color: accentColor,
                         fontWeight: FontWeight.w600,
@@ -122,7 +126,9 @@ class _WorldMeshFilterSheetState extends ConsumerState<WorldMeshFilterSheet> {
                           ),
                         ),
                         child: Text(
-                          '${filters.activeFilterCount} filter${filters.activeFilterCount == 1 ? '' : 's'}',
+                          context.l10n.worldMeshFilterActiveCount(
+                            filters.activeFilterCount,
+                          ),
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 11,
@@ -145,7 +151,7 @@ class _WorldMeshFilterSheetState extends ConsumerState<WorldMeshFilterSheet> {
                   // Status filter
                   _buildFilterSection(
                     category: WorldMeshFilterCategory.status,
-                    title: 'Status',
+                    title: context.l10n.worldMeshFilterStatus,
                     icon: Icons.circle,
                     isExpanded:
                         _expandedCategory == WorldMeshFilterCategory.status,
@@ -159,7 +165,7 @@ class _WorldMeshFilterSheetState extends ConsumerState<WorldMeshFilterSheet> {
                   // Hardware filter
                   _buildFilterSection(
                     category: WorldMeshFilterCategory.hardware,
-                    title: 'Hardware Model',
+                    title: context.l10n.worldMeshFilterHardwareModel,
                     icon: Icons.memory,
                     isExpanded:
                         _expandedCategory == WorldMeshFilterCategory.hardware,
@@ -180,7 +186,7 @@ class _WorldMeshFilterSheetState extends ConsumerState<WorldMeshFilterSheet> {
                   // Modem Preset filter
                   _buildFilterSection(
                     category: WorldMeshFilterCategory.modemPreset,
-                    title: 'Modem Preset',
+                    title: context.l10n.worldMeshFilterModemPreset,
                     icon: Icons.settings_input_antenna,
                     isExpanded:
                         _expandedCategory ==
@@ -202,7 +208,7 @@ class _WorldMeshFilterSheetState extends ConsumerState<WorldMeshFilterSheet> {
                   // Region filter
                   _buildFilterSection(
                     category: WorldMeshFilterCategory.region,
-                    title: 'Region',
+                    title: context.l10n.worldMeshFilterRegion,
                     icon: Icons.public,
                     isExpanded:
                         _expandedCategory == WorldMeshFilterCategory.region,
@@ -223,7 +229,7 @@ class _WorldMeshFilterSheetState extends ConsumerState<WorldMeshFilterSheet> {
                   // Role filter
                   _buildFilterSection(
                     category: WorldMeshFilterCategory.role,
-                    title: 'Node Role',
+                    title: context.l10n.worldMeshFilterNodeRole,
                     icon: Icons.person,
                     isExpanded:
                         _expandedCategory == WorldMeshFilterCategory.role,
@@ -244,7 +250,7 @@ class _WorldMeshFilterSheetState extends ConsumerState<WorldMeshFilterSheet> {
                   // Firmware filter
                   _buildFilterSection(
                     category: WorldMeshFilterCategory.firmware,
-                    title: 'Firmware Version',
+                    title: context.l10n.worldMeshFilterFirmwareVersion,
                     icon: Icons.system_update,
                     isExpanded:
                         _expandedCategory == WorldMeshFilterCategory.firmware,
@@ -264,10 +270,11 @@ class _WorldMeshFilterSheetState extends ConsumerState<WorldMeshFilterSheet> {
 
                   // Boolean filters
                   _buildBooleanFilterSection(
-                    title: 'Environment Sensors',
+                    title: context.l10n.worldMeshFilterEnvironmentSensors,
                     icon: Icons.thermostat,
-                    subtitle:
-                        '${options.withEnvironmentSensors} nodes with sensors',
+                    subtitle: context.l10n.worldMeshFilterNodesWithSensors(
+                      options.withEnvironmentSensors,
+                    ),
                     value: filters.hasEnvironmentSensors,
                     onChanged: (value) => ref
                         .read(worldMeshFiltersProvider.notifier)
@@ -277,9 +284,11 @@ class _WorldMeshFilterSheetState extends ConsumerState<WorldMeshFilterSheet> {
                   const SizedBox(height: AppTheme.spacing12),
 
                   _buildBooleanFilterSection(
-                    title: 'Battery Info',
+                    title: context.l10n.worldMeshFilterBatteryInfo,
                     icon: Icons.battery_full,
-                    subtitle: '${options.withBattery} nodes with battery data',
+                    subtitle: context.l10n.worldMeshFilterNodesWithBattery(
+                      options.withBattery,
+                    ),
                     value: filters.hasBattery,
                     onChanged: (value) => ref
                         .read(worldMeshFiltersProvider.notifier)
@@ -423,7 +432,7 @@ class _WorldMeshFilterSheetState extends ConsumerState<WorldMeshFilterSheet> {
     return Column(
       children: [
         _buildStatusChip(
-          label: 'Active (≤2m)',
+          label: context.l10n.worldMeshFilterStatusActive,
           count: options.activeCount,
           color: AppTheme.successGreen,
           isSelected: filters.statusFilter.contains(PresenceConfidence.active),
@@ -433,7 +442,7 @@ class _WorldMeshFilterSheetState extends ConsumerState<WorldMeshFilterSheet> {
         ),
         SizedBox(height: AppTheme.spacing8),
         _buildStatusChip(
-          label: 'Fading (2-10m)',
+          label: context.l10n.worldMeshFilterStatusFading,
           count: options.fadingCount,
           color: AppTheme.warningYellow,
           isSelected: filters.statusFilter.contains(PresenceConfidence.fading),
@@ -443,7 +452,7 @@ class _WorldMeshFilterSheetState extends ConsumerState<WorldMeshFilterSheet> {
         ),
         const SizedBox(height: AppTheme.spacing8),
         _buildStatusChip(
-          label: 'Inactive (10-60m)',
+          label: context.l10n.worldMeshFilterStatusInactive,
           count: options.staleCount,
           color: context.textTertiary,
           isSelected: filters.statusFilter.contains(PresenceConfidence.stale),
@@ -453,7 +462,7 @@ class _WorldMeshFilterSheetState extends ConsumerState<WorldMeshFilterSheet> {
         ),
         const SizedBox(height: AppTheme.spacing8),
         _buildStatusChip(
-          label: 'Unknown (>60m)',
+          label: context.l10n.worldMeshFilterStatusUnknown,
           count: options.unknownCount,
           color: context.textTertiary,
           isSelected: filters.statusFilter.contains(PresenceConfidence.unknown),
@@ -524,7 +533,7 @@ class _WorldMeshFilterSheetState extends ConsumerState<WorldMeshFilterSheet> {
       return Padding(
         padding: const EdgeInsets.all(AppTheme.spacing8),
         child: Text(
-          'No options available',
+          context.l10n.worldMeshFilterNoOptions,
           style: TextStyle(color: context.textTertiary, fontSize: 13),
         ),
       );

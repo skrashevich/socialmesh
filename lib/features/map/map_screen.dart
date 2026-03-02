@@ -8,6 +8,8 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import '../../core/safety/lifecycle_mixin.dart';
+import '../../core/l10n/l10n_extension.dart';
+import '../../l10n/app_localizations.dart';
 import '../../providers/countdown_providers.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -51,14 +53,26 @@ import '../tak/widgets/tak_trail_layer.dart';
 
 /// Node filter options
 enum NodeFilter {
-  all('All'),
-  active('Active'),
-  inactive('Inactive'),
-  withGps('With GPS'),
-  inRange('In Range');
+  all,
+  active,
+  inactive,
+  withGps,
+  inRange;
 
-  final String label;
-  const NodeFilter(this.label);
+  String label(AppLocalizations l10n) {
+    switch (this) {
+      case NodeFilter.all:
+        return l10n.mapFilterAll;
+      case NodeFilter.active:
+        return l10n.mapFilterActive;
+      case NodeFilter.inactive:
+        return l10n.mapFilterInactive;
+      case NodeFilter.withGps:
+        return l10n.mapFilterWithGps;
+      case NodeFilter.inRange:
+        return l10n.mapFilterInRange;
+    }
+  }
 }
 
 /// Map screen showing all mesh nodes with GPS positions
@@ -453,7 +467,9 @@ class _MapScreenState extends ConsumerState<MapScreen>
         _Waypoint(
           id: DateTime.now().millisecondsSinceEpoch,
           position: point,
-          label: label ?? 'WP ${_waypoints.length + 1}',
+          label:
+              label ??
+              context.l10n.mapWaypointDefaultLabel(_waypoints.length + 1),
         ),
       );
     });
@@ -487,7 +503,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
     final lat = point.latitude.toStringAsFixed(6);
     final lng = point.longitude.toStringAsFixed(6);
     Clipboard.setData(ClipboardData(text: '$lat, $lng'));
-    showSuccessSnackBar(context, 'Coordinates copied to clipboard');
+    showSuccessSnackBar(context, context.l10n.mapCoordinatesCopied);
   }
 
   @override
@@ -655,8 +671,8 @@ class _MapScreenState extends ConsumerState<MapScreen>
         centerTitle: true,
         titleWidget: Text(
           widget.locationOnlyMode
-              ? (widget.initialLocationLabel ?? 'Location')
-              : 'Mesh Map',
+              ? (widget.initialLocationLabel ?? context.l10n.mapLocationTitle)
+              : context.l10n.mapScreenTitle,
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
@@ -676,12 +692,12 @@ class _MapScreenState extends ConsumerState<MapScreen>
                     : context.textSecondary,
               ),
               onPressed: () => setState(() => _showFilters = !_showFilters),
-              tooltip: 'Filter nodes',
+              tooltip: context.l10n.mapFilterNodesTooltip,
             ),
           // Map style
           PopupMenuButton<MapTileStyle>(
             icon: Icon(Icons.map, color: context.textSecondary),
-            tooltip: 'Map style',
+            tooltip: context.l10n.mapStyleTooltip,
             onSelected: (style) {
               setState(() => _mapStyle = style);
               unawaited(_saveMapStyle(style));
@@ -790,7 +806,9 @@ class _MapScreenState extends ConsumerState<MapScreen>
                       ),
                       SizedBox(width: AppTheme.spacing8),
                       Text(
-                        _isRefreshing ? 'Refreshing...' : 'Refresh positions',
+                        _isRefreshing
+                            ? context.l10n.mapRefreshing
+                            : context.l10n.mapRefreshPositions,
                       ),
                     ],
                   ),
@@ -807,7 +825,11 @@ class _MapScreenState extends ConsumerState<MapScreen>
                             : context.textSecondary,
                       ),
                       SizedBox(width: AppTheme.spacing8),
-                      Text(_showHeatmap ? 'Hide heatmap' : 'Show heatmap'),
+                      Text(
+                        _showHeatmap
+                            ? context.l10n.mapHideHeatmap
+                            : context.l10n.mapShowHeatmap,
+                      ),
                     ],
                   ),
                 ),
@@ -827,8 +849,8 @@ class _MapScreenState extends ConsumerState<MapScreen>
                       SizedBox(width: AppTheme.spacing8),
                       Text(
                         _showConnectionLines
-                            ? 'Hide connection lines'
-                            : 'Show connection lines',
+                            ? context.l10n.mapHideConnectionLines
+                            : context.l10n.mapShowConnectionLines,
                       ),
                     ],
                   ),
@@ -839,7 +861,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
                     enabled: false,
                     height: 32,
                     child: Text(
-                      'Max Distance',
+                      context.l10n.mapMaxDistance,
                       style: TextStyle(
                         fontSize: 12,
                         color: context.textTertiary,
@@ -861,7 +883,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
                               : context.textTertiary,
                         ),
                         SizedBox(width: AppTheme.spacing8),
-                        const Text('1 km'),
+                        Text(context.l10n.mapDistance1Km),
                       ],
                     ),
                   ),
@@ -879,7 +901,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
                               : context.textTertiary,
                         ),
                         SizedBox(width: AppTheme.spacing8),
-                        const Text('5 km'),
+                        Text(context.l10n.mapDistance5Km),
                       ],
                     ),
                   ),
@@ -897,7 +919,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
                               : context.textTertiary,
                         ),
                         SizedBox(width: AppTheme.spacing8),
-                        const Text('10 km'),
+                        Text(context.l10n.mapDistance10Km),
                       ],
                     ),
                   ),
@@ -915,7 +937,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
                               : context.textTertiary,
                         ),
                         SizedBox(width: AppTheme.spacing8),
-                        const Text('25 km'),
+                        Text(context.l10n.mapDistance25Km),
                       ],
                     ),
                   ),
@@ -933,7 +955,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
                               : context.textTertiary,
                         ),
                         SizedBox(width: AppTheme.spacing8),
-                        const Text('All'),
+                        Text(context.l10n.mapDistanceAll),
                       ],
                     ),
                   ),
@@ -953,8 +975,8 @@ class _MapScreenState extends ConsumerState<MapScreen>
                       SizedBox(width: AppTheme.spacing8),
                       Text(
                         _showRangeCircles
-                            ? 'Hide range circles'
-                            : 'Show range circles',
+                            ? context.l10n.mapHideRangeCircles
+                            : context.l10n.mapShowRangeCircles,
                       ),
                     ],
                   ),
@@ -973,8 +995,8 @@ class _MapScreenState extends ConsumerState<MapScreen>
                       SizedBox(width: AppTheme.spacing8),
                       Text(
                         _showPositionHistory
-                            ? 'Hide position history'
-                            : 'Show position history',
+                            ? context.l10n.mapHidePositionHistory
+                            : context.l10n.mapShowPositionHistory,
                       ),
                     ],
                   ),
@@ -993,7 +1015,9 @@ class _MapScreenState extends ConsumerState<MapScreen>
                     ),
                     SizedBox(width: AppTheme.spacing8),
                     Text(
-                      _measureMode ? 'Exit measure mode' : 'Measure distance',
+                      _measureMode
+                          ? context.l10n.mapExitMeasureMode
+                          : context.l10n.mapMeasureDistance,
                     ),
                   ],
                 ),
@@ -1005,7 +1029,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
                   children: [
                     Icon(Icons.public, size: 18, color: context.textSecondary),
                     SizedBox(width: AppTheme.spacing8),
-                    const Text('3D Globe View'),
+                    Text(context.l10n.mapGlobeView),
                   ],
                 ),
               ),
@@ -1027,8 +1051,8 @@ class _MapScreenState extends ConsumerState<MapScreen>
                       SizedBox(width: AppTheme.spacing8),
                       Text(
                         _showTakLayer
-                            ? 'Hide TAK entities'
-                            : 'Show TAK entities',
+                            ? context.l10n.mapHideTakEntities
+                            : context.l10n.mapShowTakEntities,
                       ),
                     ],
                   ),
@@ -1043,7 +1067,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
                         color: context.textSecondary,
                       ),
                       SizedBox(width: AppTheme.spacing8),
-                      const Text('SA Dashboard'),
+                      Text(context.l10n.mapSaDashboard),
                     ],
                   ),
                 ),
@@ -1059,7 +1083,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
                       color: context.textSecondary,
                     ),
                     SizedBox(width: AppTheme.spacing8),
-                    const Text('Help'),
+                    Text(context.l10n.mapHelp),
                   ],
                 ),
               ),
@@ -1073,7 +1097,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
                       color: context.textSecondary,
                     ),
                     SizedBox(width: AppTheme.spacing8),
-                    const Text('Settings'),
+                    Text(context.l10n.mapSettings),
                   ],
                 ),
               ),
@@ -1369,10 +1393,10 @@ class _MapScreenState extends ConsumerState<MapScreen>
                                     width: 2,
                                   ),
                                 ),
-                                child: const Center(
+                                child: Center(
                                   child: Text(
-                                    'A',
-                                    style: TextStyle(
+                                    context.l10n.mapMeasureMarkerA,
+                                    style: const TextStyle(
                                       fontSize: 10,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -1394,10 +1418,10 @@ class _MapScreenState extends ConsumerState<MapScreen>
                                       width: 2,
                                     ),
                                   ),
-                                  child: const Center(
+                                  child: Center(
                                     child: Text(
-                                      'B',
-                                      style: TextStyle(
+                                      context.l10n.mapMeasureMarkerB,
+                                      style: const TextStyle(
                                         fontSize: 10,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -1492,8 +1516,16 @@ class _MapScreenState extends ConsumerState<MapScreen>
                         }),
                         onShare: () => _shareLocation(
                           _measureStart!,
-                          label:
-                              'Distance: ${_formatDistance(_calculateDistance(_measureStart!.latitude, _measureStart!.longitude, _measureEnd!.latitude, _measureEnd!.longitude))}',
+                          label: context.l10n.mapShareDistanceLabel(
+                            _formatDistance(
+                              _calculateDistance(
+                                _measureStart!.latitude,
+                                _measureStart!.longitude,
+                                _measureEnd!.latitude,
+                                _measureEnd!.longitude,
+                              ),
+                            ),
+                          ),
                         ),
                         onExitMeasureMode: () => setState(() {
                           _measureMode = false;
@@ -1526,7 +1558,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
                           );
                           showSuccessSnackBar(
                             context,
-                            'Coordinates copied to clipboard',
+                            context.l10n.mapCoordinatesCopied,
                           );
                         },
                       ),
@@ -1564,8 +1596,8 @@ class _MapScreenState extends ConsumerState<MapScreen>
                               Flexible(
                                 child: Text(
                                   _measureStart == null
-                                      ? 'Tap node or map for point A'
-                                      : 'Tap node or map for point B',
+                                      ? context.l10n.mapMeasureTapPointA
+                                      : context.l10n.mapMeasureTapPointB,
                                   style: const TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.w600,
@@ -1797,7 +1829,9 @@ class _MapScreenState extends ConsumerState<MapScreen>
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Text(
-                                    '${nodesWithPosition.length}${nodesWithPosition.length != allNodesWithPosition.length ? '/${allNodesWithPosition.length}' : ''} nodes',
+                                    context.l10n.mapNodeCount(
+                                      '${nodesWithPosition.length}${nodesWithPosition.length != allNodesWithPosition.length ? '/${allNodesWithPosition.length}' : ''}',
+                                    ),
                                     style: TextStyle(
                                       fontSize: 13,
                                       fontWeight: FontWeight.w500,
@@ -1807,7 +1841,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
                                   if (takCount > 0) ...[
                                     const SizedBox(width: AppTheme.spacing6),
                                     Text(
-                                      '\u2022 $takCount entities',
+                                      context.l10n.mapTakEntityCount(takCount),
                                       style: TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w500,
@@ -1913,19 +1947,19 @@ class _MapScreenState extends ConsumerState<MapScreen>
         BottomSheetAction(
           icon: Icons.add_location,
           iconColor: AppTheme.warningYellow,
-          label: 'Drop Waypoint',
+          label: context.l10n.mapDropWaypoint,
           onTap: () => _addWaypoint(point),
         ),
         BottomSheetAction(
           icon: Icons.share,
           iconColor: context.accentColor,
-          label: 'Share Location',
+          label: context.l10n.mapShareLocation,
           onTap: () => _shareLocation(point),
         ),
         BottomSheetAction(
           icon: Icons.copy,
           iconColor: context.textSecondary,
-          label: 'Copy Coordinates',
+          label: context.l10n.mapCopyCoordinates,
           onTap: () => _copyCoordinates(point),
         ),
       ],
@@ -1945,18 +1979,18 @@ class _MapScreenState extends ConsumerState<MapScreen>
         BottomSheetAction(
           icon: Icons.share,
           iconColor: context.accentColor,
-          label: 'Share',
+          label: context.l10n.mapShare,
           onTap: () => _shareLocation(waypoint.position, label: waypoint.label),
         ),
         BottomSheetAction(
           icon: Icons.copy,
           iconColor: context.textSecondary,
-          label: 'Copy Coordinates',
+          label: context.l10n.mapCopyCoordinates,
           onTap: () => _copyCoordinates(waypoint.position),
         ),
         BottomSheetAction(
           icon: Icons.delete,
-          label: 'Delete',
+          label: context.l10n.mapDelete,
           isDestructive: true,
           onTap: () => _removeWaypoint(waypoint.id),
         ),
@@ -2091,7 +2125,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
             ),
             SizedBox(height: AppTheme.spacing24),
             Text(
-              'No Nodes with GPS',
+              context.l10n.mapEmptyTitle,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
@@ -2101,8 +2135,8 @@ class _MapScreenState extends ConsumerState<MapScreen>
             const SizedBox(height: AppTheme.spacing8),
             Text(
               totalNodes > 0
-                  ? '$totalNodes nodes discovered but none have\nreported GPS position yet.'
-                  : 'Nodes will appear on the map once they\nreport their GPS position.',
+                  ? context.l10n.mapEmptyBodyWithNodes(totalNodes)
+                  : context.l10n.mapEmptyBodyNoNodes,
               style: context.bodySecondaryStyle?.copyWith(
                 color: context.textSecondary,
               ),
@@ -2115,7 +2149,9 @@ class _MapScreenState extends ConsumerState<MapScreen>
                   ? const LoadingIndicator(size: 16)
                   : Icon(Icons.refresh, size: 18),
               label: Text(
-                _isRefreshing ? 'Requesting...' : 'Request Positions',
+                _isRefreshing
+                    ? context.l10n.mapRequesting
+                    : context.l10n.mapRequestPositions,
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: context.accentColor,
@@ -2131,7 +2167,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
             ),
             SizedBox(height: AppTheme.spacing12),
             Text(
-              'Position broadcasts can take up to 15 minutes.\nTap to request immediately.',
+              context.l10n.mapPositionBroadcastHint,
               style: context.bodySmallStyle?.copyWith(
                 color: context.textTertiary,
               ),
@@ -2583,13 +2619,17 @@ class _NodeListPanel extends StatelessWidget {
     final isEntityTab = activeTab == 1;
 
     return MapNodeDrawer(
-      title: isEntityTab ? 'Entities' : 'Nodes',
+      title: isEntityTab
+          ? context.l10n.mapEntitiesTitle
+          : context.l10n.mapNodesTitle,
       headerIcon: Icons.hub,
       itemCount: isEntityTab ? takEvents.length : sortedNodes.length,
       onClose: onClose,
       searchController: isEntityTab ? takSearchController : searchController,
       onSearchChanged: isEntityTab ? onTakSearchChanged : onSearchChanged,
-      searchHintText: isEntityTab ? 'Search entities...' : 'Search nodes...',
+      searchHintText: isEntityTab
+          ? context.l10n.mapSearchEntitiesHint
+          : context.l10n.mapSearchNodesHint,
       headerExtra: showTakTab
           ? Container(
               decoration: BoxDecoration(
@@ -2602,13 +2642,13 @@ class _NodeListPanel extends StatelessWidget {
               child: Row(
                 children: [
                   _PanelTab(
-                    label: 'Nodes',
+                    label: context.l10n.mapNodesTitle,
                     count: sortedNodes.length,
                     isActive: activeTab == 0,
                     onTap: () => onTabChanged(0),
                   ),
                   _PanelTab(
-                    label: 'Entities',
+                    label: context.l10n.mapEntitiesTitle,
                     count: takEvents.length,
                     isActive: activeTab == 1,
                     onTap: () => onTabChanged(1),
@@ -2675,8 +2715,10 @@ class _NodeListPanel extends StatelessWidget {
     if (filtered.isEmpty) {
       return DrawerEmptyState(
         icon: Icons.military_tech_outlined,
-        message: query.isEmpty ? 'No entities' : 'No matching entities',
-        hint: query.isEmpty ? null : 'Try a different search term',
+        message: query.isEmpty
+            ? context.l10n.mapNoEntities
+            : context.l10n.mapNoMatchingEntities,
+        hint: query.isEmpty ? null : context.l10n.mapSearchHint,
       );
     }
     return ListView.builder(
@@ -2716,13 +2758,13 @@ class _NodeListItem extends StatelessWidget {
     required this.onTap,
   });
 
-  String _formatDistance(double km) {
+  String _formatDistance(double km, AppLocalizations l10n) {
     if (km < 1) {
-      return '${(km * 1000).round()}m';
+      return l10n.mapDistanceMeters('${(km * 1000).round()}');
     } else if (km < 10) {
-      return '${km.toStringAsFixed(1)}km';
+      return l10n.mapDistanceKilometers(km.toStringAsFixed(1));
     } else {
-      return '${km.round()}km';
+      return l10n.mapDistanceKilometersRound('${km.round()}');
     }
   }
 
@@ -2841,7 +2883,7 @@ class _NodeListItem extends StatelessWidget {
                               ),
                             ),
                             child: Text(
-                              'YOU',
+                              context.l10n.mapYouBadge,
                               style: TextStyle(
                                 fontSize: 8,
                                 fontWeight: FontWeight.bold,
@@ -2879,7 +2921,7 @@ class _NodeListItem extends StatelessWidget {
                         if (nodeWithPos.isStale) ...[
                           SizedBox(width: AppTheme.spacing6),
                           Text(
-                            '• Last known',
+                            context.l10n.mapLastKnown,
                             style: TextStyle(
                               fontSize: 11,
                               color: AppTheme.warningYellow.withValues(
@@ -2905,7 +2947,7 @@ class _NodeListItem extends StatelessWidget {
                     borderRadius: BorderRadius.circular(AppTheme.radius12),
                   ),
                   child: Text(
-                    _formatDistance(distance!),
+                    _formatDistance(distance!, context.l10n),
                     style: TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
@@ -2969,7 +3011,7 @@ class _FilterBar extends StatelessWidget {
               Icon(Icons.filter_alt, size: 16, color: context.accentColor),
               SizedBox(width: AppTheme.spacing8),
               Text(
-                'Filter Nodes',
+                context.l10n.mapFilterNodesTitle,
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
@@ -3010,7 +3052,7 @@ class _FilterBar extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    filter.label,
+                    filter.label(context.l10n),
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: isSelected
@@ -3066,12 +3108,13 @@ class _MeasurementCardState extends State<_MeasurementCard> {
   bool _showLos = false;
 
   String _formatDistance(double km) {
+    final l10n = context.l10n;
     if (km < 1) {
-      return '${(km * 1000).round()} m';
+      return l10n.mapDistanceMetersFormal('${(km * 1000).round()}');
     } else if (km < 10) {
-      return '${km.toStringAsFixed(2)} km';
+      return l10n.mapDistanceKilometersPrecise(km.toStringAsFixed(2));
     } else {
-      return '${km.toStringAsFixed(1)} km';
+      return l10n.mapDistanceKilometersFormal(km.toStringAsFixed(1));
     }
   }
 
@@ -3130,7 +3173,7 @@ class _MeasurementCardState extends State<_MeasurementCard> {
       header: Padding(
         padding: const EdgeInsets.only(bottom: AppTheme.spacing4),
         child: Text(
-          'Measurement Actions',
+          context.l10n.mapMeasurementActions,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -3142,19 +3185,19 @@ class _MeasurementCardState extends State<_MeasurementCard> {
         if (hasElevation)
           BottomSheetAction(
             icon: Icons.visibility,
-            label: 'LOS Analysis',
-            subtitle: 'Earth curvature + Fresnel zone check',
+            label: context.l10n.mapLosAnalysis,
+            subtitle: context.l10n.mapLosAnalysisSubtitle,
             onTap: () => setState(() => _showLos = !_showLos),
           ),
         BottomSheetAction(
           icon: Icons.share,
-          label: 'Share Measurement',
-          subtitle: 'Share via system share sheet',
+          label: context.l10n.mapShareMeasurement,
+          subtitle: context.l10n.mapShareMeasurementSubtitle,
           onTap: widget.onShare,
         ),
         BottomSheetAction(
           icon: Icons.copy,
-          label: 'Copy Summary',
+          label: context.l10n.mapCopySummary,
           subtitle: _formatDistance(distanceKm),
           onTap: () {
             Clipboard.setData(
@@ -3168,21 +3211,21 @@ class _MeasurementCardState extends State<_MeasurementCard> {
               ),
             );
             if (context.mounted) {
-              showSuccessSnackBar(context, 'Measurement copied to clipboard');
+              showSuccessSnackBar(context, context.l10n.mapMeasurementCopied);
             }
           },
         ),
         if (widget.onCopyCoordinates != null)
           BottomSheetAction(
             icon: Icons.pin_drop,
-            label: 'Copy Coordinates',
-            subtitle: 'Both A and B coordinates',
+            label: context.l10n.mapCopyCoordinates,
+            subtitle: context.l10n.mapCopyBothCoordinates,
             onTap: widget.onCopyCoordinates,
           ),
         BottomSheetAction(
           icon: Icons.open_in_new,
-          label: 'Open Midpoint in Maps',
-          subtitle: 'Open in external map app',
+          label: context.l10n.mapOpenMidpointInMaps,
+          subtitle: context.l10n.mapOpenInExternalApp,
           onTap: () {
             final midLat = (widget.start.latitude + widget.end.latitude) / 2.0;
             final midLon =
@@ -3196,33 +3239,32 @@ class _MeasurementCardState extends State<_MeasurementCard> {
         if (widget.onSwap != null)
           BottomSheetAction(
             icon: Icons.swap_horiz,
-            label: 'Swap A \u2194 B',
-            subtitle: 'Reverse measurement direction',
+            label: context.l10n.mapSwapAB,
+            subtitle: context.l10n.mapReverseDirection,
             onTap: widget.onSwap,
           ),
         if (hasElevation)
           BottomSheetAction(
             icon: Icons.terrain,
-            label: 'RF Link Budget',
-            subtitle:
-                'Estimated path loss: '
-                '${_estimatePathLoss(distanceM, 906.0).toStringAsFixed(0)} dB '
-                '(free-space)',
+            label: context.l10n.mapRfLinkBudget,
+            subtitle: context.l10n.mapEstimatedPathLoss(
+              _estimatePathLoss(distanceM, 906.0).toStringAsFixed(0),
+            ),
             onTap: () {
               final fspl = _estimatePathLoss(distanceM, 906.0);
               Clipboard.setData(
                 ClipboardData(
-                  text:
-                      'RF Link Budget (free-space path loss)\n'
-                      'Distance: ${_formatDistance(distanceKm)}\n'
-                      'Frequency: 906 MHz\n'
-                      'FSPL: ${fspl.toStringAsFixed(1)} dB\n'
-                      'Alt A: ${altA}m · Alt B: ${altB}m\n'
-                      'Bearing: ${bearing.toStringAsFixed(0)}° $cardinal',
+                  text: context.l10n.mapRfLinkBudgetClipboard(
+                    _formatDistance(distanceKm),
+                    '906 MHz',
+                    '${fspl.toStringAsFixed(1)} dB',
+                    'Alt A: ${altA}m · Alt B: ${altB}m\n'
+                        'Bearing: ${bearing.toStringAsFixed(0)}° $cardinal',
+                  ),
                 ),
               );
               if (context.mounted) {
-                showSuccessSnackBar(context, 'Link budget copied to clipboard');
+                showSuccessSnackBar(context, context.l10n.mapLinkBudgetCopied);
               }
             },
           ),
@@ -3356,20 +3398,20 @@ class _MeasurementCardState extends State<_MeasurementCard> {
                   icon: Icon(Icons.refresh, size: 20),
                   color: context.textTertiary,
                   onPressed: widget.onClear,
-                  tooltip: 'New measurement',
+                  tooltip: context.l10n.mapNewMeasurement,
                 ),
                 IconButton(
                   icon: const Icon(Icons.close, size: 20),
                   color: AppTheme.errorRed,
                   onPressed: widget.onExitMeasureMode,
-                  tooltip: 'Exit measure mode',
+                  tooltip: context.l10n.mapExitMeasureModeTooltip,
                 ),
               ],
             ),
             // Long-press hint
             const SizedBox(height: AppTheme.spacing4),
             Text(
-              'Long-press for actions',
+              context.l10n.mapLongPressForActions,
               style: TextStyle(fontSize: 10, color: context.textTertiary),
             ),
             // LOS result panel (toggled from actions sheet)
@@ -3440,7 +3482,7 @@ class _LosResultPanel extends StatelessWidget {
               Icon(verdictIcon, size: 16, color: verdictColor),
               const SizedBox(width: AppTheme.spacing4),
               Text(
-                'LOS: ${result.verdict.label}',
+                context.l10n.mapLosVerdict(result.verdict.label),
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
@@ -3449,8 +3491,10 @@ class _LosResultPanel extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                'Bulge: ${result.earthBulgeMeters.toStringAsFixed(1)}m '
-                '· F1: ${result.fresnelRadiusMeters.toStringAsFixed(1)}m',
+                context.l10n.mapLosBulgeAndFresnel(
+                  result.earthBulgeMeters.toStringAsFixed(1),
+                  result.fresnelRadiusMeters.toStringAsFixed(1),
+                ),
                 style: TextStyle(fontSize: 11, color: context.textTertiary),
               ),
             ],
@@ -3607,7 +3651,9 @@ class _TakEntityListItem extends StatelessWidget {
                         ),
                         const SizedBox(width: AppTheme.spacing4),
                         Text(
-                          isStale ? 'Stale' : 'Active',
+                          isStale
+                              ? context.l10n.mapTakStale
+                              : context.l10n.mapTakActive,
                           style: TextStyle(
                             fontSize: 11,
                             color: isStale
@@ -3680,7 +3726,7 @@ class _TakEntityInfoCard extends StatelessWidget {
     final affiliation = parseAffiliation(event.type);
     final affiliationColor = affiliation.color;
     final isStale = event.isStale;
-    final age = _formatAge(event.receivedUtcMs);
+    final age = _formatAge(event.receivedUtcMs, context.l10n);
 
     return GestureDetector(
       onTap: onTapDetail,
@@ -3782,7 +3828,9 @@ class _TakEntityInfoCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(AppTheme.radius6),
                         ),
                         child: Text(
-                          isStale ? 'STALE' : 'ACTIVE',
+                          isStale
+                              ? context.l10n.mapTakStaleBadge
+                              : context.l10n.mapTakActiveBadge,
                           style: TextStyle(
                             fontSize: 10,
                             color: isStale
@@ -3834,7 +3882,9 @@ class _TakEntityInfoCard extends StatelessWidget {
                         ),
                         const SizedBox(width: AppTheme.spacing4),
                         Text(
-                          isTracked ? 'Tracked' : 'Track',
+                          isTracked
+                              ? context.l10n.mapTakTracked
+                              : context.l10n.mapTakTrack,
                           style: TextStyle(
                             fontSize: 11,
                             color: affiliationColor,
@@ -3854,7 +3904,7 @@ class _TakEntityInfoCard extends StatelessWidget {
                       color: context.textSecondary,
                       onPressed: onNavigateTo,
                       visualDensity: VisualDensity.compact,
-                      tooltip: 'Navigate to',
+                      tooltip: context.l10n.mapNavigateToTooltip,
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(
                         minWidth: 32,
@@ -3866,7 +3916,7 @@ class _TakEntityInfoCard extends StatelessWidget {
                       color: context.textSecondary,
                       onPressed: onCopyCoordinates,
                       visualDensity: VisualDensity.compact,
-                      tooltip: 'Copy coordinates',
+                      tooltip: context.l10n.mapCopyCoordinatesTooltip,
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(
                         minWidth: 32,
@@ -3878,7 +3928,7 @@ class _TakEntityInfoCard extends StatelessWidget {
                       color: context.textTertiary,
                       onPressed: onClose,
                       visualDensity: VisualDensity.compact,
-                      tooltip: 'Dismiss',
+                      tooltip: context.l10n.mapDismissTooltip,
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(
                         minWidth: 32,
@@ -3897,11 +3947,11 @@ class _TakEntityInfoCard extends StatelessWidget {
     );
   }
 
-  static String _formatAge(int receivedUtcMs) {
+  static String _formatAge(int receivedUtcMs, AppLocalizations l10n) {
     final age = DateTime.now().millisecondsSinceEpoch - receivedUtcMs;
-    if (age < 60000) return '${(age / 1000).round()}s ago';
-    if (age < 3600000) return '${(age / 60000).round()}m ago';
-    return '${(age / 3600000).round()}h ago';
+    if (age < 60000) return l10n.mapAgeSeconds('${(age / 1000).round()}');
+    if (age < 3600000) return l10n.mapAgeMinutes('${(age / 60000).round()}');
+    return l10n.mapAgeHours('${(age / 3600000).round()}');
   }
 }
 

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/theme.dart';
 import '../../core/transport.dart';
 import '../../core/widgets/app_bottom_sheet.dart';
@@ -27,32 +28,38 @@ Future<void> showChannelOptionsSheet(
 }) async {
   final channelName =
       displayTitle ??
-      (channel.name.isEmpty ? 'Channel ${channel.index}' : channel.name);
+      (channel.name.isEmpty
+          ? context.l10n.channelOptionsDefaultName(channel.index)
+          : channel.name);
 
   final actions = [
-    BottomSheetAction(icon: Icons.edit, label: 'Edit Channel', value: 'edit'),
+    BottomSheetAction(
+      icon: Icons.edit,
+      label: context.l10n.channelOptionsEdit,
+      value: 'edit',
+    ),
     BottomSheetAction(
       icon: Icons.key,
-      label: 'View Encryption Key',
+      label: context.l10n.channelOptionsViewKey,
       value: 'key',
       enabled: channel.psk.isNotEmpty,
     ),
     BottomSheetAction(
       icon: Icons.share,
-      label: 'Share Channel',
+      label: context.l10n.channelOptionsShare,
       value: 'qr',
       enabled: channel.psk.isNotEmpty,
     ),
     BottomSheetAction(
       icon: Icons.link,
-      label: 'Share Invite Link',
+      label: context.l10n.channelOptionsInviteLink,
       value: 'invite',
       enabled: channel.psk.isNotEmpty,
     ),
     if (channel.index != 0)
       BottomSheetAction(
         icon: Icons.delete,
-        label: 'Delete Channel',
+        label: context.l10n.channelOptionsDelete,
         value: 'delete',
         isDestructive: true,
       ),
@@ -64,7 +71,9 @@ Future<void> showChannelOptionsSheet(
     header: BottomSheetHeader(
       icon: Icons.wifi_tethering,
       title: channelName,
-      subtitle: channel.psk.isNotEmpty ? 'Encrypted' : 'No encryption',
+      subtitle: channel.psk.isNotEmpty
+          ? context.l10n.channelOptionsEncrypted
+          : context.l10n.channelOptionsNoEncryption,
     ),
   );
 
@@ -123,15 +132,15 @@ Future<void> _deleteChannel(
   );
 
   if (!isConnected) {
-    showErrorSnackBar(context, 'Cannot delete channel: Device not connected');
+    showErrorSnackBar(context, context.l10n.channelOptionsDeleteNotConnected);
     return;
   }
 
   final confirmed = await AppBottomSheet.showConfirm(
     context: context,
-    title: 'Delete Channel',
-    message: 'Delete channel "${channel.name}"?',
-    confirmLabel: 'Delete',
+    title: context.l10n.channelOptionsDeleteTitle,
+    message: context.l10n.channelOptionsDeleteConfirm(channel.name),
+    confirmLabel: context.l10n.channelOptionsDeleteButton,
     isDestructive: true,
   );
   if (confirmed != true || !context.mounted) return;
@@ -152,7 +161,10 @@ Future<void> _deleteChannel(
     channelsNotifier.removeChannel(channel.index);
   } catch (e) {
     if (context.mounted) {
-      showErrorSnackBar(context, 'Failed to delete channel: $e');
+      showErrorSnackBar(
+        context,
+        context.l10n.channelOptionsDeleteFailed(e.toString()),
+      );
     }
   }
 }
@@ -184,8 +196,8 @@ class _EncryptionKeyContentState extends State<EncryptionKeyContent> {
       children: [
         BottomSheetHeader(
           icon: Icons.key,
-          title: 'Encryption Key',
-          subtitle: '$keyBits-bit · $keyBytes bytes · Base64',
+          title: context.l10n.channelOptionsKeyTitle,
+          subtitle: context.l10n.channelOptionsKeySubtitle(keyBits, keyBytes),
         ),
         const SizedBox(height: AppTheme.spacing20),
         Container(
@@ -237,7 +249,9 @@ class _EncryptionKeyContentState extends State<EncryptionKeyContent> {
                   size: 20,
                 ),
                 label: Text(
-                  _showKey ? 'Hide' : 'Show',
+                  _showKey
+                      ? context.l10n.channelOptionsHideButton
+                      : context.l10n.channelOptionsShowButton,
                   style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
@@ -252,7 +266,10 @@ class _EncryptionKeyContentState extends State<EncryptionKeyContent> {
                     ? () {
                         Clipboard.setData(ClipboardData(text: base64Key));
                         Navigator.pop(context);
-                        showSuccessSnackBar(context, 'Key copied to clipboard');
+                        showSuccessSnackBar(
+                          context,
+                          context.l10n.channelOptionsKeyCopied,
+                        );
                       }
                     : null,
                 style: ElevatedButton.styleFrom(
@@ -269,7 +286,7 @@ class _EncryptionKeyContentState extends State<EncryptionKeyContent> {
                 ),
                 icon: const Icon(Icons.copy, size: 20),
                 label: Text(
-                  'Copy',
+                  context.l10n.channelOptionsCopyButton,
                   style: Theme.of(
                     context,
                   ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),

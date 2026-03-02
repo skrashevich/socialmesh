@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/constants.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/logging.dart';
 import '../../core/widgets/qr_share_sheet.dart';
 import '../../models/mesh_models.dart';
@@ -27,8 +28,8 @@ Future<void> showChannelShareSheet(
   if (user == null) {
     showActionSnackBar(
       context,
-      'Sign in to share channels',
-      actionLabel: 'Sign In',
+      context.l10n.channelShareSignInRequired,
+      actionLabel: context.l10n.channelShareSignInAction,
       onAction: () => Navigator.pushNamed(context, '/account'),
       type: SnackBarType.info,
     );
@@ -39,15 +40,17 @@ Future<void> showChannelShareSheet(
   final cryptoService = ref.read(channelCryptoServiceProvider);
   final channelName =
       displayTitle ??
-      (channel.name.isEmpty ? 'Channel ${channel.index}' : channel.name);
+      (channel.name.isEmpty
+          ? context.l10n.channelShareDefaultName(channel.index)
+          : channel.name);
 
   await QrShareSheet.showWithLoader(
     context: context,
-    title: 'Share Channel',
+    title: context.l10n.channelShareTitle,
     subtitle: channelName,
-    infoText: 'Scan this QR code in Socialmesh to import this channel',
-    shareSubject: 'Socialmesh Channel: $channelName',
-    shareMessage: 'Join my channel on Socialmesh!',
+    infoText: context.l10n.channelShareQrInfo,
+    shareSubject: context.l10n.channelShareSubject(channelName),
+    shareMessage: context.l10n.channelShareMessage,
     loader: () => _uploadAndGetShareData(channel, userId, cryptoService),
   );
 }
@@ -67,23 +70,26 @@ Future<void> shareChannelInviteLink(
   if (user == null) {
     showActionSnackBar(
       context,
-      'Sign in to share channels',
-      actionLabel: 'Sign In',
+      context.l10n.channelShareSignInRequired,
+      actionLabel: context.l10n.channelShareSignInAction,
       onAction: () => Navigator.pushNamed(context, '/account'),
       type: SnackBarType.info,
     );
     return;
   }
 
+  final l10n = context.l10n;
   final messenger = ScaffoldMessenger.of(context);
   final channelName =
       displayTitle ??
-      (channel.name.isEmpty ? 'Channel ${channel.index}' : channel.name);
+      (channel.name.isEmpty
+          ? l10n.channelShareDefaultName(channel.index)
+          : channel.name);
 
   // Show loading indicator while generating
   showLoadingSnackBar(
     context,
-    'Creating invite link...',
+    l10n.channelShareCreatingInvite,
     duration: const Duration(seconds: 30),
   );
 
@@ -113,12 +119,12 @@ Future<void> shareChannelInviteLink(
 
     messenger.clearSnackBars();
     if (!context.mounted) return;
-    showSuccessSnackBar(context, 'Invite link copied to clipboard');
+    showSuccessSnackBar(context, l10n.channelShareInviteCopied);
   } catch (e) {
     AppLogging.channels('[ChannelShare] Invite link error: $e');
     messenger.clearSnackBars();
     if (!context.mounted) return;
-    showErrorSnackBar(context, 'Failed to create invite link');
+    showErrorSnackBar(context, l10n.channelShareInviteFailed);
   }
 }
 

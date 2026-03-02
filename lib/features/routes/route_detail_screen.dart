@@ -10,6 +10,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../core/map_config.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/map_controls.dart';
@@ -243,7 +244,7 @@ class _RouteDetailScreenState extends ConsumerState<RouteDetailScreen>
                   ),
                   const SizedBox(height: AppTheme.spacing16),
                   Text(
-                    'No GPS Points',
+                    context.l10n.routeDetailNoGpsPoints,
                     style: TextStyle(
                       fontSize: 18,
                       color: Colors.white.withValues(alpha: 0.5),
@@ -410,24 +411,26 @@ class _RouteDetailScreenState extends ConsumerState<RouteDetailScreen>
                     children: [
                       _StatItem(
                         icon: Icons.straighten,
-                        label: 'Distance',
+                        label: context.l10n.routeDetailDistanceLabel,
                         value: _formatDistance(route.totalDistance),
                       ),
                       _StatItem(
                         icon: Icons.timer_outlined,
-                        label: 'Duration',
+                        label: context.l10n.routeDetailDurationLabel,
                         value: route.duration != null
                             ? _formatDuration(route.duration!)
-                            : '--',
+                            : context.l10n.routeDetailNoData,
                       ),
                       _StatItem(
                         icon: Icons.terrain,
-                        label: 'Elevation',
-                        value: '${route.elevationGain.toStringAsFixed(0)}m',
+                        label: context.l10n.routeDetailElevationLabel,
+                        value: context.l10n.routeDetailElevationValue(
+                          route.elevationGain.toStringAsFixed(0),
+                        ),
                       ),
                       _StatItem(
                         icon: Icons.location_on,
-                        label: 'Points',
+                        label: context.l10n.routeDetailPointsLabel,
                         value: '${route.locations.length}',
                       ),
                     ],
@@ -506,6 +509,7 @@ class _RouteDetailScreenState extends ConsumerState<RouteDetailScreen>
 
   Future<void> _exportRoute() async {
     safeSetState(() => _isExporting = true);
+    final l10n = context.l10n;
 
     // Get the render box for sharePositionOrigin (required on iPad) before async
     final box = context.findRenderObject() as RenderBox?;
@@ -520,7 +524,7 @@ class _RouteDetailScreenState extends ConsumerState<RouteDetailScreen>
       final storage = storageAsync.value;
       if (storage == null) {
         if (mounted) {
-          showErrorSnackBar(context, 'Storage not available');
+          showErrorSnackBar(context, l10n.routeDetailStorageUnavailable);
         }
         return;
       }
@@ -540,12 +544,12 @@ class _RouteDetailScreenState extends ConsumerState<RouteDetailScreen>
       await Share.shareXFiles(
         [XFile(file.path)],
         subject: fileName,
-        text: 'Route: ${widget.route.name}',
+        text: l10n.routeDetailShareText(widget.route.name),
         sharePositionOrigin: getSafeSharePosition(null, sharePositionOrigin),
       );
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Export failed: $e');
+        showErrorSnackBar(context, l10n.routeDetailExportFailed(e.toString()));
       }
     } finally {
       safeSetState(() => _isExporting = false);
@@ -554,16 +558,21 @@ class _RouteDetailScreenState extends ConsumerState<RouteDetailScreen>
 
   String _formatDistance(double meters) {
     if (meters < 1000) {
-      return '${meters.toStringAsFixed(0)}m';
+      return context.l10n.routeDetailDistanceMeters(meters.toStringAsFixed(0));
     }
-    return '${(meters / 1000).toStringAsFixed(2)}km';
+    return context.l10n.routeDetailDistanceKilometers(
+      (meters / 1000).toStringAsFixed(2),
+    );
   }
 
   String _formatDuration(Duration duration) {
     if (duration.inMinutes < 60) {
-      return '${duration.inMinutes}min';
+      return context.l10n.routeDetailDurationMinutes(duration.inMinutes);
     }
-    return '${duration.inHours}h ${duration.inMinutes % 60}m';
+    return context.l10n.routeDetailDurationHoursMinutes(
+      duration.inHours,
+      duration.inMinutes % 60,
+    );
   }
 }
 
@@ -634,8 +643,8 @@ class _NodeInfoCard extends StatelessWidget {
                               AppTheme.radius4,
                             ),
                           ),
-                          child: const Text(
-                            'You',
+                          child: Text(
+                            context.l10n.routeDetailYouBadge,
                             style: TextStyle(
                               fontSize: 10,
                               color: AppTheme.primaryBlue,
@@ -664,7 +673,7 @@ class _NodeInfoCard extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.my_location, size: 20),
               onPressed: onCenter,
-              tooltip: 'Center on node',
+              tooltip: context.l10n.routeDetailCenterOnNodeTooltip,
             ),
             IconButton(
               icon: const Icon(Icons.close, size: 20),
