@@ -20,7 +20,6 @@ class FileTransferCard extends ConsumerWidget {
     this.onTap,
     this.onCancel,
     this.onRetry,
-    this.onOpen,
     this.onShare,
     this.onAccept,
     this.onReject,
@@ -32,7 +31,6 @@ class FileTransferCard extends ConsumerWidget {
   final VoidCallback? onTap;
   final VoidCallback? onCancel;
   final VoidCallback? onRetry;
-  final VoidCallback? onOpen;
   final VoidCallback? onShare;
   final VoidCallback? onAccept;
   final VoidCallback? onReject;
@@ -176,6 +174,15 @@ class FileTransferCard extends ConsumerWidget {
                     metaText,
                     style: TextStyle(color: context.textTertiary, fontSize: 12),
                   ),
+                  const SizedBox(height: AppTheme.spacing4),
+                  Wrap(
+                    spacing: AppTheme.spacing4,
+                    runSpacing: AppTheme.spacing4,
+                    children: [
+                      _InfoChip(label: transfer.mimeType),
+                      _InfoChip(label: _technicalInfoText),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -230,7 +237,6 @@ class FileTransferCard extends ConsumerWidget {
             transfer: transfer,
             onCancel: onCancel,
             onRetry: onRetry,
-            onOpen: onOpen,
             onShare: onShare,
             onAccept: onAccept,
             onReject: onReject,
@@ -244,7 +250,6 @@ class FileTransferCard extends ConsumerWidget {
   bool get _showActions =>
       onCancel != null ||
       onRetry != null ||
-      onOpen != null ||
       onShare != null ||
       onAccept != null ||
       onReject != null ||
@@ -356,7 +361,6 @@ class FileTransferCard extends ConsumerWidget {
     return '${dt.month}/${dt.day}';
   }
 
-  /// Builds metadata text with resolved node names when available.
   String _buildMetadataText(String? nodeName) {
     final parts = <String>[_fileSizeText];
     if (transfer.direction == TransferDirection.outbound) {
@@ -373,6 +377,56 @@ class FileTransferCard extends ConsumerWidget {
       }
     }
     return parts.join(' · ');
+  }
+
+  String get _technicalInfoText {
+    final ext = transfer.filename.contains('.')
+        ? transfer.filename.split('.').last.toUpperCase()
+        : null;
+    final typeLabel = _fileTypeLabel;
+    final chunkInfo = '${transfer.chunkCount} chunks';
+    final chunkSize = _formatBytes(transfer.chunkSize);
+    final parts = <String>[
+      if (ext != null) ext,
+      typeLabel,
+      '$chunkInfo · $chunkSize ea.',
+    ];
+    return parts.join(' · ');
+  }
+
+  String get _fileTypeLabel {
+    final mime = transfer.mimeType.toLowerCase();
+    if (mime.startsWith('image/')) return 'Image';
+    if (mime == 'text/csv') return 'Spreadsheet';
+    if (mime == 'text/html') return 'HTML';
+    if (mime == 'text/markdown') return 'Markdown';
+    if (mime.startsWith('text/')) return 'Text';
+    if (mime.contains('gpx')) return 'GPS Track';
+    if (mime.contains('kml') || mime.contains('kmz')) return 'Map';
+    if (mime.contains('json')) return 'JSON';
+    if (mime.contains('xml')) return 'XML';
+    if (mime.contains('yaml') || mime.contains('yml')) return 'YAML';
+    if (mime.contains('protobuf')) return 'Protobuf';
+    if (mime.contains('pdf')) return 'PDF';
+    if (mime.contains('zip') ||
+        mime.contains('gzip') ||
+        mime.contains('tar') ||
+        mime.contains('7z') ||
+        mime.contains('rar')) {
+      return 'Archive';
+    }
+    if (mime.startsWith('audio/')) return 'Audio';
+    if (mime.startsWith('video/')) return 'Video';
+    if (mime.contains('firmware') || mime.contains('octet-stream')) {
+      return 'Binary';
+    }
+    return 'File';
+  }
+
+  static String _formatBytes(int bytes) {
+    if (bytes < 1024) return '$bytes B';
+    final kb = bytes / 1024.0;
+    return '${kb.toStringAsFixed(1)} KB';
   }
 }
 
@@ -582,7 +636,6 @@ class _ActionRow extends StatelessWidget {
     required this.transfer,
     this.onCancel,
     this.onRetry,
-    this.onOpen,
     this.onShare,
     this.onAccept,
     this.onReject,
@@ -592,7 +645,6 @@ class _ActionRow extends StatelessWidget {
   final FileTransferState transfer;
   final VoidCallback? onCancel;
   final VoidCallback? onRetry;
-  final VoidCallback? onOpen;
   final VoidCallback? onShare;
   final VoidCallback? onAccept;
   final VoidCallback? onReject;
@@ -642,15 +694,6 @@ class _ActionRow extends StatelessWidget {
           ),
         ],
         if (transfer.state == TransferState.complete) ...[
-          if (onOpen != null) ...[
-            const SizedBox(width: AppTheme.spacing8),
-            _ActionButton(
-              label: 'Open',
-              icon: Icons.open_in_new,
-              color: context.accentColor,
-              onTap: onOpen!,
-            ),
-          ],
           if (onShare != null) ...[
             const SizedBox(width: AppTheme.spacing8),
             _ActionButton(
@@ -672,6 +715,32 @@ class _ActionRow extends StatelessWidget {
           ),
         ],
       ],
+    );
+  }
+}
+
+class _InfoChip extends StatelessWidget {
+  const _InfoChip({required this.label});
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+      decoration: BoxDecoration(
+        color: context.border.withValues(alpha: 0.25),
+        borderRadius: BorderRadius.circular(AppTheme.radius6),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          color: context.textTertiary,
+          fontSize: 10,
+          fontWeight: FontWeight.w500,
+          fontFamily: 'monospace',
+        ),
+      ),
     );
   }
 }

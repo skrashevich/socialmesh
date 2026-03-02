@@ -32,10 +32,18 @@ import '../widgets/file_transfer_card.dart';
 /// When [embedded] is true, renders without its own GlassScaffold
 /// so it can be used as a tab child in [FileTransfersContainerScreen].
 class FileTransfersScreen extends ConsumerStatefulWidget {
-  const FileTransfersScreen({super.key, this.embedded = false});
+  const FileTransfersScreen({
+    super.key,
+    this.embedded = false,
+    this.onSwitchToContacts,
+  });
 
   /// Used when embedded in tabs.
   final bool embedded;
+
+  /// When non-null and [embedded] is true, the empty-state button
+  /// navigates to the Contacts tab instead of launching a file picker.
+  final VoidCallback? onSwitchToContacts;
 
   @override
   ConsumerState<FileTransfersScreen> createState() =>
@@ -117,9 +125,6 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
                         : null,
                     onReject: transfer.state == TransferState.offerPending
                         ? () => _rejectTransfer(transfer)
-                        : null,
-                    onOpen: transfer.state == TransferState.complete
-                        ? () => _saveAndOpenFile(transfer)
                         : null,
                     onShare: transfer.state == TransferState.complete
                         ? () => _shareFile(transfer)
@@ -326,8 +331,9 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
           const SizedBox(height: AppTheme.spacing8),
           Text(
             _filter == _TransferFilter.all
-                ? 'Send files to other nodes from the\n'
-                      'overflow menu or via NodeDex'
+                ? widget.embedded
+                      ? 'Go to Contacts, tap a node, and\nchoose Send File to get started'
+                      : 'Send files to other nodes from the\noverflow menu or via NodeDex'
                 : 'No transfers match this filter',
             textAlign: TextAlign.center,
             style: context.bodySecondaryStyle?.copyWith(
@@ -336,11 +342,18 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
           ),
           if (_filter == _TransferFilter.all) ...[
             const SizedBox(height: AppTheme.spacing24),
-            FilledButton.icon(
-              onPressed: _pickAndSendFile,
-              icon: const Icon(Icons.attach_file),
-              label: const Text('Send a File'),
-            ),
+            if (widget.embedded && widget.onSwitchToContacts != null)
+              FilledButton.icon(
+                onPressed: widget.onSwitchToContacts,
+                icon: const Icon(Icons.people_outline),
+                label: const Text('Go to Contacts'),
+              )
+            else
+              FilledButton.icon(
+                onPressed: _pickAndSendFile,
+                icon: const Icon(Icons.attach_file),
+                label: const Text('Send a File'),
+              ),
           ],
         ],
       ),
@@ -368,18 +381,15 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
     // Step 1: Pick destination node
     final selection = await NodeSelectorSheet.show(
       context,
-      title: 'Send File To',
-      allowBroadcast: true,
-      broadcastLabel: 'Broadcast to All',
-      broadcastSubtitle: 'Send to every node on the mesh',
+      title: 'Send to Node',
+      allowBroadcast: false,
     );
-    if (selection == null) return;
+    final nodeNum = selection?.nodeNum;
+    if (nodeNum == null) return;
     if (!mounted) return;
 
     // Step 2: Pick file and send
-    final transfer = await notifier.pickAndSendFile(
-      targetNodeNum: selection.nodeNum,
-    );
+    final transfer = await notifier.pickAndSendFile(targetNodeNum: nodeNum);
 
     if (!mounted) return;
     if (transfer != null) {
@@ -409,37 +419,6 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
 
     notifier.cancelTransfer(transfer.fileIdHex);
     showSuccessSnackBar(context, 'Transfer cancelled');
-  }
-
-  Future<void> _saveAndOpenFile(FileTransferState transfer) async {
-    final haptics = ref.read(hapticServiceProvider);
-    final notifier = ref.read(fileTransferStateProvider.notifier);
-
-    await haptics.trigger(HapticType.light);
-    if (!mounted) return;
-
-    AppLogging.fileTransfer(
-      'User opening file: ${transfer.fileIdHex} (${transfer.filename})',
-    );
-
-    // If already saved, use existing path directly.
-    if (transfer.savedFilePath != null &&
-        File(transfer.savedFilePath!).existsSync()) {
-      showSuccessSnackBar(context, 'Saved: ${transfer.filename}');
-      return;
-    }
-
-    final path = await notifier.saveReceivedFile(transfer.fileIdHex);
-    if (!mounted) return;
-
-    if (path != null) {
-      showSuccessSnackBar(context, 'Saved: ${transfer.filename}');
-    } else {
-      showErrorSnackBar(
-        context,
-        'Could not save file — transfer bytes not in memory',
-      );
-    }
   }
 
   Future<void> _shareFile(FileTransferState transfer) async {

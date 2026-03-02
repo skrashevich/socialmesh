@@ -12,6 +12,7 @@ import '../../../core/widgets/app_bottom_sheet.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../../../core/widgets/ico_help_system.dart';
 import '../../../services/haptic_service.dart';
+import '../../../utils/snackbar.dart';
 import '../../navigation/main_shell.dart';
 import '../models/tak_event.dart';
 import '../providers/tak_providers.dart';
@@ -86,9 +87,7 @@ class TakEventDetailScreen extends ConsumerWidget {
                 'Copied event JSON to clipboard: uid=${event.uid}',
               );
               Clipboard.setData(ClipboardData(text: event.toJsonString()));
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Event JSON copied')),
-              );
+              showInfoSnackBar(context, 'Event JSON copied');
             },
             tooltip: 'Copy JSON',
           ),

@@ -2,49 +2,85 @@
 // lint-allow: scaffold (embedded tab panel, GlassScaffold provided by container)
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/animations.dart';
-import '../../../core/widgets/node_selector_sheet.dart';
+import '../../../core/widgets/gradient_border_container.dart';
+import '../../../core/widgets/node_avatar.dart';
+import '../../../core/widgets/search_filter_header.dart';
+import '../../../core/widgets/section_header.dart';
+import '../../../core/widgets/status_filter_chip.dart';
+import '../../../models/presence_confidence.dart';
 import '../../../providers/app_providers.dart';
 import '../../../providers/file_transfer_providers.dart';
+import '../../../providers/presence_providers.dart';
 import '../../../services/file_transfer/file_transfer_engine.dart';
 import '../../../services/haptic_service.dart';
+import '../../../utils/presence_utils.dart';
 import '../../../utils/snackbar.dart';
 import '../../nodes/node_display_name_resolver.dart';
 import '../../nodedex/widgets/sigil_painter.dart';
 import '../widgets/file_content_preview.dart';
 import '../widgets/file_transfer_card.dart';
 
-/// Contact model representing a node the user has exchanged files with.
-class _TransferContact {
+// ---------------------------------------------------------------------------
+// Filter enum
+// ---------------------------------------------------------------------------
+
+enum _FileContactFilter { all, active, hasFiles, favorites }
+
+// ---------------------------------------------------------------------------
+// Contact model
+// ---------------------------------------------------------------------------
+
+/// Unified contact model — includes presence + transfer stats.
+class _Contact {
   final int nodeNum;
+  final String displayName;
+  final String? shortName;
+  final int? avatarColor;
+  final PresenceConfidence presence;
+  final Duration? lastHeardAge;
+  final bool isFavorite;
+
+  // Transfer stats (0 when no transfers yet)
   final int transferCount;
-  final int activeCount;
-  final DateTime lastTransferAt;
   final int sentCount;
   final int receivedCount;
   final int totalBytes;
+  final int activeTransferCount;
+  final DateTime? lastTransferAt;
+  final String? lastTransferFilename;
 
-  const _TransferContact({
+  const _Contact({
     required this.nodeNum,
-    required this.transferCount,
-    required this.activeCount,
-    required this.lastTransferAt,
-    required this.sentCount,
-    required this.receivedCount,
-    required this.totalBytes,
+    required this.displayName,
+    this.shortName,
+    this.avatarColor,
+    this.presence = PresenceConfidence.unknown,
+    this.lastHeardAge,
+    this.isFavorite = false,
+    this.transferCount = 0,
+    this.sentCount = 0,
+    this.receivedCount = 0,
+    this.totalBytes = 0,
+    this.activeTransferCount = 0,
+    this.lastTransferAt,
+    this.lastTransferFilename,
   });
+
+  bool get hasTransfers => transferCount > 0;
+  bool get hasActiveTransfers => activeTransferCount > 0;
 }
 
-/// Contacts tab showing nodes the user has exchanged files with.
-///
-/// Displays recent transfer contacts sorted by last activity, with
-/// node name, sigil avatar, transfer statistics, and the ability to
-/// initiate new transfers.
+// ---------------------------------------------------------------------------
+// Contacts tab
+// ---------------------------------------------------------------------------
+
+/// Contacts tab showing ALL known mesh nodes, with transfer stats for nodes
+/// the user has exchanged files with. Mirrors the Messages Contacts tab.
 class FileTransferContactsScreen extends ConsumerStatefulWidget {
   const FileTransferContactsScreen({super.key});
 
@@ -58,6 +94,8 @@ class _FileTransferContactsScreenState
     with LifecycleSafeMixin {
   String _searchQuery = '';
   final TextEditingController _searchController = TextEditingController();
+  _FileContactFilter _currentFilter = _FileContactFilter.all;
+  bool _showSectionHeaders = true;
 
   @override
   void dispose() {
@@ -69,224 +107,330 @@ class _FileTransferContactsScreenState
     FocusScope.of(context).unfocus();
   }
 
-  List<_TransferContact> _buildContacts(FileTransferListState state) {
-    final contactMap = <int, _ContactAccumulator>{};
+  @override
+  Widget build(BuildContext context) {
+    final nodes = ref.watch(nodesProvider);
+    final presenceMap = ref.watch(presenceMapProvider);
+    final transferState = ref.watch(fileTransferStateProvider);
+    final myNodeNum = ref.watch(myNodeNumProvider);
 
-    for (final transfer in state.sortedTransfers) {
-      final nodeNum = transfer.direction == TransferDirection.outbound
-          ? transfer.targetNodeNum
-          : transfer.sourceNodeNum;
+    // Accumulate transfer stats per node from the transfer list
+    final accMap = <int, _ContactAccumulator>{};
+    for (final t in transferState.sortedTransfers) {
+      final nodeNum = t.direction == TransferDirection.outbound
+          ? t.targetNodeNum
+          : t.sourceNodeNum;
       if (nodeNum == null) continue;
-
-      final acc = contactMap[nodeNum] ??= _ContactAccumulator(nodeNum: nodeNum);
+      final acc = accMap[nodeNum] ??= _ContactAccumulator(nodeNum: nodeNum);
       acc.transferCount++;
-      if (transfer.isActive) acc.activeCount++;
-      if (transfer.direction == TransferDirection.outbound) {
+      if (t.isActive) acc.activeTransferCount++;
+      if (t.direction == TransferDirection.outbound) {
         acc.sentCount++;
       } else {
         acc.receivedCount++;
       }
-      acc.totalBytes += transfer.totalBytes;
-
-      final dt = transfer.completedAt ?? transfer.createdAt;
-      if (dt.isAfter(acc.lastTransferAt)) {
+      acc.totalBytes += t.totalBytes;
+      final dt = t.completedAt ?? t.createdAt;
+      if (acc.lastTransferAt == null || dt.isAfter(acc.lastTransferAt!)) {
         acc.lastTransferAt = dt;
+        acc.lastTransferFilename = t.filename;
       }
     }
 
-    final contacts =
-        contactMap.values
-            .map(
-              (acc) => _TransferContact(
-                nodeNum: acc.nodeNum,
-                transferCount: acc.transferCount,
-                activeCount: acc.activeCount,
-                lastTransferAt: acc.lastTransferAt,
-                sentCount: acc.sentCount,
-                receivedCount: acc.receivedCount,
-                totalBytes: acc.totalBytes,
-              ),
-            )
-            .toList()
-          ..sort((a, b) => b.lastTransferAt.compareTo(a.lastTransferAt));
+    // Build contacts from ALL nodes except self (like Messages contacts tab)
+    final contacts = <_Contact>[];
+    for (final node in nodes.values) {
+      if (node.nodeNum == myNodeNum) continue;
+      final acc = accMap[node.nodeNum];
+      contacts.add(
+        _Contact(
+          nodeNum: node.nodeNum,
+          displayName: node.displayName,
+          shortName: node.shortName,
+          avatarColor: node.avatarColor,
+          presence: presenceConfidenceFor(presenceMap, node),
+          lastHeardAge: lastHeardAgeFor(presenceMap, node),
+          isFavorite: node.isFavorite,
+          transferCount: acc?.transferCount ?? 0,
+          sentCount: acc?.sentCount ?? 0,
+          receivedCount: acc?.receivedCount ?? 0,
+          totalBytes: acc?.totalBytes ?? 0,
+          activeTransferCount: acc?.activeTransferCount ?? 0,
+          lastTransferAt: acc?.lastTransferAt,
+          lastTransferFilename: acc?.lastTransferFilename,
+        ),
+      );
+    }
 
-    // Apply search filter
+    // Also include nodes that have transfers but left the mesh
+    for (final acc in accMap.values) {
+      if (nodes.containsKey(acc.nodeNum)) continue;
+      contacts.add(
+        _Contact(
+          nodeNum: acc.nodeNum,
+          displayName: NodeDisplayNameResolver.defaultName(acc.nodeNum),
+          shortName: NodeDisplayNameResolver.defaultShortName(acc.nodeNum),
+          isFavorite: false,
+          transferCount: acc.transferCount,
+          sentCount: acc.sentCount,
+          receivedCount: acc.receivedCount,
+          totalBytes: acc.totalBytes,
+          activeTransferCount: acc.activeTransferCount,
+          lastTransferAt: acc.lastTransferAt,
+          lastTransferFilename: acc.lastTransferFilename,
+        ),
+      );
+    }
+
+    // Sort: favorites → active → has transfers → alphabetical
+    contacts.sort((a, b) {
+      if (a.isFavorite != b.isFavorite) return a.isFavorite ? -1 : 1;
+      if (a.presence.isActive != b.presence.isActive) {
+        return a.presence.isActive ? -1 : 1;
+      }
+      if (a.hasTransfers != b.hasTransfers) return a.hasTransfers ? -1 : 1;
+      return a.displayName.toLowerCase().compareTo(b.displayName.toLowerCase());
+    });
+
+    // Compute counts for filter chips
+    final favoritesCount = contacts.where((c) => c.isFavorite).length;
+    final activeCount = contacts.where((c) => c.presence.isActive).length;
+    final hasFilesCount = contacts.where((c) => c.hasTransfers).length;
+
+    // Apply filter chip
+    var filtered = contacts;
+    switch (_currentFilter) {
+      case _FileContactFilter.all:
+        break;
+      case _FileContactFilter.active:
+        filtered = contacts.where((c) => c.presence.isActive).toList();
+      case _FileContactFilter.hasFiles:
+        filtered = contacts.where((c) => c.hasTransfers).toList();
+      case _FileContactFilter.favorites:
+        filtered = contacts.where((c) => c.isFavorite).toList();
+    }
+
+    // Apply search
     if (_searchQuery.isNotEmpty) {
-      final query = _searchQuery.toLowerCase();
-      final nodes = ref.read(nodesProvider);
-      return contacts.where((c) {
-        final node = nodes[c.nodeNum];
-        final displayName = NodeDisplayNameResolver.resolve(
-          nodeNum: c.nodeNum,
-          longName: node?.longName,
-          shortName: node?.shortName,
-        ).toLowerCase();
-        final hexId = '!${c.nodeNum.toRadixString(16)}'.toLowerCase();
-        return displayName.contains(query) || hexId.contains(query);
+      final q = _searchQuery.toLowerCase();
+      filtered = filtered.where((c) {
+        return c.displayName.toLowerCase().contains(q) ||
+            (c.shortName?.toLowerCase().contains(q) ?? false) ||
+            '!${c.nodeNum.toRadixString(16)}'.contains(q);
       }).toList();
     }
 
-    return contacts;
-  }
+    final textScaler = MediaQuery.textScalerOf(context);
 
-  @override
-  Widget build(BuildContext context) {
-    final transferState = ref.watch(fileTransferStateProvider);
-    final contacts = _buildContacts(transferState);
+    final bodyContent = CustomScrollView(
+      slivers: [
+        SliverPersistentHeader(
+          pinned: true,
+          delegate: SearchFilterHeaderDelegate(
+            searchController: _searchController,
+            searchQuery: _searchQuery,
+            onSearchChanged: (v) => setState(() => _searchQuery = v),
+            hintText: 'Search contacts',
+            textScaler: textScaler,
+            rebuildKey: Object.hashAll([
+              _currentFilter,
+              contacts.length,
+              activeCount,
+              hasFilesCount,
+              favoritesCount,
+              _showSectionHeaders,
+            ]),
+            trailingControls: [
+              SectionHeadersToggle(
+                enabled: _showSectionHeaders,
+                onToggle: () =>
+                    setState(() => _showSectionHeaders = !_showSectionHeaders),
+              ),
+            ],
+            filterChips: [
+              StatusFilterChip(
+                label: 'All',
+                count: contacts.length,
+                isSelected: _currentFilter == _FileContactFilter.all,
+                onTap: () =>
+                    setState(() => _currentFilter = _FileContactFilter.all),
+              ),
+              StatusFilterChip(
+                label: 'Active',
+                count: activeCount,
+                isSelected: _currentFilter == _FileContactFilter.active,
+                color: AccentColors.green,
+                onTap: () =>
+                    setState(() => _currentFilter = _FileContactFilter.active),
+              ),
+              StatusFilterChip(
+                label: 'Has Files',
+                count: hasFilesCount,
+                isSelected: _currentFilter == _FileContactFilter.hasFiles,
+                icon: Icons.attach_file,
+                color: AppTheme.primaryBlue,
+                onTap: () => setState(
+                  () => _currentFilter = _FileContactFilter.hasFiles,
+                ),
+              ),
+              StatusFilterChip(
+                label: 'Favorites',
+                count: favoritesCount,
+                isSelected: _currentFilter == _FileContactFilter.favorites,
+                icon: Icons.star,
+                color: AppTheme.warningYellow,
+                onTap: () => setState(
+                  () => _currentFilter = _FileContactFilter.favorites,
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        // Empty state
+        if (filtered.isEmpty)
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: AppTheme.spacing64 + AppTheme.spacing8,
+                    height: AppTheme.spacing64 + AppTheme.spacing8,
+                    decoration: BoxDecoration(
+                      color: context.card,
+                      borderRadius: BorderRadius.circular(AppTheme.radius16),
+                    ),
+                    child: Icon(
+                      Icons.people_outline,
+                      size: AppTheme.spacing40,
+                      color: context.textTertiary,
+                    ),
+                  ),
+                  const SizedBox(height: AppTheme.spacing24),
+                  Text(
+                    _searchQuery.isNotEmpty
+                        ? 'No contacts match "$_searchQuery"'
+                        : _currentFilter != _FileContactFilter.all
+                        ? 'No ${_currentFilter.name} contacts'
+                        : 'No nodes on the mesh yet',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: context.textSecondary,
+                    ),
+                  ),
+                  if (_searchQuery.isEmpty) ...[
+                    const SizedBox(height: AppTheme.spacing8),
+                    Text(
+                      'Discovered nodes will appear here',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: context.textTertiary,
+                      ),
+                    ),
+                  ],
+                  if (_searchQuery.isNotEmpty) ...[
+                    const SizedBox(height: AppTheme.spacing12),
+                    TextButton(
+                      onPressed: () => setState(() => _searchQuery = ''),
+                      child: const Text('Clear search'),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          )
+        else
+          ..._buildContactSlivers(filtered),
+      ],
+    );
 
     return GestureDetector(
       onTap: _dismissKeyboard,
-      child: Container(
-        color: context.background,
-        child: CustomScrollView(
-          slivers: [
-            // Search bar
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  AppTheme.spacing16,
-                  AppTheme.spacing12,
-                  AppTheme.spacing16,
-                  AppTheme.spacing8,
-                ),
-                child: _ContactSearchBar(
-                  controller: _searchController,
-                  onChanged: (value) {
-                    safeSetState(() => _searchQuery = value);
-                  },
-                ),
-              ),
-            ),
-
-            // Recent Contacts header
-            if (contacts.isNotEmpty)
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(
-                    AppTheme.spacing16,
-                    AppTheme.spacing8,
-                    AppTheme.spacing16,
-                    AppTheme.spacing8,
-                  ),
-                  child: Text(
-                    'Recent Contacts',
-                    style: TextStyle(
-                      color: context.textTertiary,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 0.5,
-                    ),
-                  ),
-                ),
-              ),
-
-            // Contact list or empty state
-            if (transferState.isLoading)
-              const SliverFillRemaining(
-                hasScrollBody: false,
-                child: Center(child: CircularProgressIndicator()),
-              )
-            else if (contacts.isEmpty && _searchQuery.isEmpty)
-              SliverFillRemaining(
-                hasScrollBody: false,
-                child: _buildEmptyState(),
-              )
-            else if (contacts.isEmpty)
-              SliverFillRemaining(
-                hasScrollBody: false,
-                child: Center(
-                  child: Text(
-                    'No contacts match "$_searchQuery"',
-                    style: TextStyle(color: context.textTertiary, fontSize: 14),
-                  ),
-                ),
-              )
-            else
-              SliverPadding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppTheme.spacing16,
-                ),
-                sliver: SliverList(
-                  delegate: SliverChildBuilderDelegate((context, index) {
-                    return _ContactCard(
-                      contact: contacts[index],
-                      onTap: () => _openContactDetail(contacts[index]),
-                      onSendFile: () =>
-                          _sendFileToContact(contacts[index].nodeNum),
-                    );
-                  }, childCount: contacts.length),
-                ),
-              ),
-
-            // Bottom spacing
-            const SliverToBoxAdapter(
-              child: SizedBox(height: AppTheme.spacing24),
-            ),
-          ],
-        ),
-      ),
+      child: Container(color: context.background, child: bodyContent),
     );
   }
 
-  Widget _buildEmptyState() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.people_outline, size: 80, color: context.textTertiary),
-          const SizedBox(height: AppTheme.spacing24),
-          Text(
-            'No Transfer Contacts',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
-              color: context.textSecondary,
+  List<Widget> _buildContactSlivers(List<_Contact> contacts) {
+    final animationsEnabled = ref.watch(animationsEnabledProvider);
+
+    if (!_showSectionHeaders) {
+      return [
+        SliverPadding(
+          padding: const EdgeInsets.only(top: AppTheme.spacing8),
+          sliver: SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (ctx, index) => Perspective3DSlide(
+                index: index,
+                direction: SlideDirection.left,
+                enabled: animationsEnabled,
+                child: _ContactTile(
+                  contact: contacts[index],
+                  onTap: () => _openContactDetail(contacts[index]),
+                ),
+              ),
+              childCount: contacts.length,
             ),
           ),
-          const SizedBox(height: AppTheme.spacing8),
-          Text(
-            'Nodes you exchange files with\nwill appear here',
-            textAlign: TextAlign.center,
-            style: context.bodySecondaryStyle?.copyWith(
-              color: context.textTertiary,
-            ),
+        ),
+      ];
+    }
+
+    // Grouped sections matching Messages screen pattern
+    final favorites = contacts.where((c) => c.isFavorite).toList();
+    final active = contacts
+        .where((c) => !c.isFavorite && c.presence.isActive)
+        .toList();
+    final withFiles = contacts
+        .where((c) => !c.isFavorite && !c.presence.isActive && c.hasTransfers)
+        .toList();
+    final inactive = contacts
+        .where((c) => !c.isFavorite && !c.presence.isActive && !c.hasTransfers)
+        .toList();
+
+    Widget buildSection(String title, List<_Contact> group) {
+      return SliverMainAxisGroup(
+        slivers: [
+          SliverToBoxAdapter(
+            child: SectionHeader(title: title, count: group.length),
           ),
-          const SizedBox(height: AppTheme.spacing24),
-          FilledButton.icon(
-            onPressed: () => _sendToNewNode(),
-            icon: const Icon(Icons.send),
-            label: const Text('Send a File'),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (ctx, index) => Perspective3DSlide(
+                index: index,
+                direction: SlideDirection.left,
+                enabled: animationsEnabled,
+                child: _ContactTile(
+                  contact: group[index],
+                  onTap: () => _openContactDetail(group[index]),
+                ),
+              ),
+              childCount: group.length,
+            ),
           ),
         ],
-      ),
-    );
+      );
+    }
+
+    return [
+      if (favorites.isNotEmpty) buildSection('Favorites', favorites),
+      if (active.isNotEmpty) buildSection('Active', active),
+      if (withFiles.isNotEmpty) buildSection('With Files', withFiles),
+      if (inactive.isNotEmpty) buildSection('Inactive', inactive),
+    ];
   }
 
-  Future<void> _sendToNewNode() async {
-    final haptics = ref.read(hapticServiceProvider);
-    final notifier = ref.read(fileTransferStateProvider.notifier);
-
-    await haptics.trigger(HapticType.medium);
-    if (!mounted) return;
-
-    final selection = await NodeSelectorSheet.show(
-      context,
-      title: 'Send File To',
-      allowBroadcast: true,
-      broadcastLabel: 'Broadcast to All',
-      broadcastSubtitle: 'Send to every node on the mesh',
+  void _openContactDetail(_Contact contact) {
+    final transfers = ref.read(nodeTransfersProvider(contact.nodeNum));
+    _ContactDetailSheet.show(
+      context: context,
+      contact: contact,
+      transfers: transfers,
+      onSendFile: () => _sendFileToContact(contact.nodeNum),
     );
-    if (selection == null) return;
-    if (!mounted) return;
-
-    final transfer = await notifier.pickAndSendFile(
-      targetNodeNum: selection.nodeNum,
-    );
-
-    if (!mounted) return;
-    if (transfer != null) {
-      showSuccessSnackBar(context, 'Transfer started: ${transfer.filename}');
-    }
+    ref.read(hapticServiceProvider).trigger(HapticType.light);
   }
 
   Future<void> _sendFileToContact(int nodeNum) async {
@@ -297,280 +441,182 @@ class _FileTransferContactsScreenState
     if (!mounted) return;
 
     final transfer = await notifier.pickAndSendFile(targetNodeNum: nodeNum);
-
     if (!mounted) return;
     if (transfer != null) {
       showSuccessSnackBar(context, 'Transfer started: ${transfer.filename}');
     }
   }
-
-  void _openContactDetail(_TransferContact contact) {
-    final transfers = ref.read(nodeTransfersProvider(contact.nodeNum));
-    final nodes = ref.read(nodesProvider);
-    final node = nodes[contact.nodeNum];
-    final displayName = NodeDisplayNameResolver.resolve(
-      nodeNum: contact.nodeNum,
-      longName: node?.longName,
-      shortName: node?.shortName,
-    );
-
-    _ContactDetailSheet.show(
-      context: context,
-      nodeNum: contact.nodeNum,
-      displayName: displayName,
-      contact: contact,
-      transfers: transfers,
-      onSendFile: () => _sendFileToContact(contact.nodeNum),
-    );
-    HapticFeedback.lightImpact();
-  }
 }
 
 // ---------------------------------------------------------------------------
-// Private helper
+// Transfer stats accumulator (internal build helper)
 // ---------------------------------------------------------------------------
 
 class _ContactAccumulator {
   final int nodeNum;
   int transferCount = 0;
-  int activeCount = 0;
+  int activeTransferCount = 0;
   int sentCount = 0;
   int receivedCount = 0;
   int totalBytes = 0;
-  DateTime lastTransferAt = DateTime.fromMillisecondsSinceEpoch(0);
+  DateTime? lastTransferAt;
+  String? lastTransferFilename;
 
   _ContactAccumulator({required this.nodeNum});
 }
 
 // ---------------------------------------------------------------------------
-// Search bar
+// Contact tile — mirrors Messages _ContactTile exactly
 // ---------------------------------------------------------------------------
 
-class _ContactSearchBar extends StatelessWidget {
-  const _ContactSearchBar({required this.controller, required this.onChanged});
+class _ContactTile extends StatelessWidget {
+  const _ContactTile({required this.contact, required this.onTap});
 
-  final TextEditingController controller;
-  final ValueChanged<String> onChanged;
+  final _Contact contact;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 40,
-      decoration: BoxDecoration(
-        color: context.card,
-        borderRadius: BorderRadius.circular(AppTheme.radius10),
-        border: Border.all(color: context.border.withValues(alpha: 0.3)),
-      ),
-      child: TextField(
-        controller: controller,
-        onChanged: onChanged,
-        maxLength: 100,
-        style: TextStyle(color: context.textPrimary, fontSize: 14),
-        decoration: InputDecoration(
-          hintText: 'Search contacts',
-          hintStyle: TextStyle(color: context.textTertiary, fontSize: 14),
-          prefixIcon: Icon(Icons.search, size: 18, color: context.textTertiary),
-          suffixIcon: controller.text.isNotEmpty
-              ? IconButton(
-                  onPressed: () {
-                    controller.clear();
-                    onChanged('');
-                  },
-                  icon: Icon(
-                    Icons.close,
-                    size: 16,
-                    color: context.textTertiary,
-                  ),
-                )
-              : null,
-          border: InputBorder.none,
-          counterText: '',
-          contentPadding: const EdgeInsets.symmetric(vertical: 10),
-        ),
-      ),
-    );
-  }
-}
+    final shortText =
+        contact.shortName ??
+        (contact.displayName.length >= 2
+            ? contact.displayName.substring(0, 2)
+            : contact.displayName);
 
-// ---------------------------------------------------------------------------
-// Contact card
-// ---------------------------------------------------------------------------
+    final subtitle = contact.hasTransfers
+        ? '${contact.transferCount} '
+              'file${contact.transferCount == 1 ? '' : 's'} transferred'
+        : presenceStatusText(contact.presence, contact.lastHeardAge);
 
-class _ContactCard extends ConsumerWidget {
-  const _ContactCard({
-    required this.contact,
-    required this.onTap,
-    required this.onSendFile,
-  });
+    final subtitleColor = !contact.hasTransfers && contact.presence.isActive
+        ? AppTheme.successGreen
+        : context.textTertiary;
 
-  final _TransferContact contact;
-  final VoidCallback onTap;
-  final VoidCallback onSendFile;
-
-  String _relativeTime(DateTime dt) {
-    final diff = DateTime.now().difference(dt);
-    if (diff.inSeconds < 60) return 'just now';
-    if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
-    if (diff.inHours < 24) return '${diff.inHours}h ago';
-    if (diff.inDays < 7) return '${diff.inDays}d ago';
-    return '${dt.month}/${dt.day}';
-  }
-
-  String _formatBytes(int bytes) {
-    if (bytes < 1024) return '$bytes B';
-    final kb = bytes / 1024.0;
-    if (kb < 1024) return '${kb.toStringAsFixed(1)} KB';
-    final mb = kb / 1024.0;
-    return '${mb.toStringAsFixed(1)} MB';
-  }
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final nodes = ref.watch(nodesProvider);
-    final node = nodes[contact.nodeNum];
-    final displayName = NodeDisplayNameResolver.resolve(
-      nodeNum: contact.nodeNum,
-      longName: node?.longName,
-      shortName: node?.shortName,
-    );
-
-    return Padding(
-      padding: const EdgeInsets.only(bottom: AppTheme.spacing8),
-      child: BouncyTap(
-        onTap: onTap,
-        child: Container(
-          padding: const EdgeInsets.all(AppTheme.spacing12),
-          decoration: BoxDecoration(
-            color: context.card,
-            borderRadius: BorderRadius.circular(AppTheme.radius12),
-            border: Border.all(color: context.border.withValues(alpha: 0.5)),
-          ),
-          child: Row(
+    final cardContent = Padding(
+      padding: const EdgeInsets.all(AppTheme.spacing12),
+      child: Row(
+        children: [
+          // Avatar with presence dot
+          Stack(
             children: [
-              // Sigil avatar
-              SigilAvatar(nodeNum: contact.nodeNum, size: 44),
-              const SizedBox(width: AppTheme.spacing12),
-
-              // Name and metadata
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Name row
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            displayName,
-                            style: TextStyle(
-                              color: context.textPrimary,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        Text(
-                          _relativeTime(contact.lastTransferAt),
-                          style: TextStyle(
-                            color: context.textTertiary,
-                            fontSize: 11,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: AppTheme.spacing4),
-
-                    // Stats row
-                    Wrap(
-                      spacing: AppTheme.spacing8,
-                      children: [
-                        _StatChip(
-                          icon: Icons.swap_vert,
-                          label: '${contact.transferCount}',
-                          color: context.textTertiary,
-                        ),
-                        if (contact.sentCount > 0)
-                          _StatChip(
-                            icon: Icons.arrow_upward,
-                            label: '${contact.sentCount}',
-                            color: AppTheme.primaryBlue,
-                          ),
-                        if (contact.receivedCount > 0)
-                          _StatChip(
-                            icon: Icons.arrow_downward,
-                            label: '${contact.receivedCount}',
-                            color: AppTheme.primaryPurple,
-                          ),
-                        _StatChip(
-                          icon: Icons.data_usage,
-                          label: _formatBytes(contact.totalBytes),
-                          color: context.textTertiary,
-                        ),
-                        if (contact.activeCount > 0)
-                          _StatChip(
-                            icon: Icons.sync,
-                            label: '${contact.activeCount} active',
-                            color: AccentColors.cyan,
-                          ),
-                      ],
-                    ),
-                  ],
-                ),
+              NodeAvatar(
+                text: shortText,
+                color: contact.avatarColor != null
+                    ? Color(contact.avatarColor!)
+                    : AppTheme.graphPurple,
+                size: 48,
               ),
-
-              // Send file button
-              const SizedBox(width: AppTheme.spacing8),
-              IconButton(
-                onPressed: onSendFile,
-                icon: Icon(
-                  Icons.attach_file,
-                  size: 20,
-                  color: context.accentColor,
+              if (contact.presence.isActive)
+                Positioned(
+                  right: 0,
+                  bottom: 0,
+                  child: Container(
+                    width: 14,
+                    height: 14,
+                    decoration: BoxDecoration(
+                      color: AppTheme.successGreen,
+                      shape: BoxShape.circle,
+                      border: Border.all(color: context.card, width: 2),
+                    ),
+                  ),
                 ),
-                padding: EdgeInsets.zero,
-                constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
-              ),
             ],
           ),
-        ),
+          const SizedBox(width: AppTheme.spacing12),
+
+          // Name + subtitle
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        contact.displayName,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: context.textPrimary,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    // Active transfers badge (mirrors unread badge in Messages)
+                    if (contact.hasActiveTransfers) ...[
+                      const SizedBox(width: AppTheme.spacing8),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppTheme.spacing8,
+                          vertical: AppTheme.spacing2,
+                        ),
+                        decoration: BoxDecoration(
+                          color: context.accentColor,
+                          borderRadius: BorderRadius.circular(
+                            AppTheme.radius10,
+                          ),
+                        ),
+                        child: Text(
+                          '${contact.activeTransferCount}',
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+                const SizedBox(height: AppTheme.spacing4),
+                Text(
+                  subtitle,
+                  style: TextStyle(fontSize: 14, color: subtitleColor),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ),
+
+          const SizedBox(width: AppTheme.spacing8),
+          if (contact.isFavorite)
+            Padding(
+              padding: const EdgeInsets.only(right: AppTheme.spacing8),
+              child: Icon(Icons.star, color: AccentColors.yellow, size: 20),
+            ),
+          Icon(Icons.chevron_right, color: context.textTertiary),
+        ],
       ),
     );
-  }
-}
 
-// ---------------------------------------------------------------------------
-// Stat chip
-// ---------------------------------------------------------------------------
-
-class _StatChip extends StatelessWidget {
-  const _StatChip({
-    required this.icon,
-    required this.label,
-    required this.color,
-  });
-
-  final IconData icon;
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(icon, size: 11, color: color),
-        const SizedBox(width: AppTheme.spacing2),
-        Text(
-          label,
-          style: TextStyle(
-            color: color,
-            fontSize: 11,
-            fontWeight: FontWeight.w500,
-          ),
+    return BouncyTap(
+      onTap: onTap,
+      scaleFactor: 0.98,
+      child: Container(
+        margin: const EdgeInsets.symmetric(
+          horizontal: AppTheme.spacing16,
+          vertical: AppTheme.spacing4,
         ),
-      ],
+        decoration: !contact.isFavorite
+            ? BoxDecoration(
+                color: context.card,
+                borderRadius: BorderRadius.circular(AppTheme.radius12),
+                border: Border.all(color: context.border),
+              )
+            : null,
+        child: contact.isFavorite
+            ? GradientBorderContainer(
+                borderRadius: 12,
+                borderWidth: 2,
+                accentOpacity: 1.0,
+                accentColor: AccentColors.yellow,
+                backgroundColor: context.card,
+                child: cardContent,
+              )
+            : cardContent,
+      ),
     );
   }
 }
@@ -581,26 +627,20 @@ class _StatChip extends StatelessWidget {
 
 class _ContactDetailSheet extends StatelessWidget {
   const _ContactDetailSheet({
-    required this.nodeNum,
-    required this.displayName,
     required this.contact,
     required this.transfers,
     required this.onSendFile,
     required this.scrollController,
   });
 
-  final int nodeNum;
-  final String displayName;
-  final _TransferContact contact;
+  final _Contact contact;
   final List<FileTransferState> transfers;
   final VoidCallback onSendFile;
   final ScrollController scrollController;
 
   static void show({
     required BuildContext context,
-    required int nodeNum,
-    required String displayName,
-    required _TransferContact contact,
+    required _Contact contact,
     required List<FileTransferState> transfers,
     required VoidCallback onSendFile,
   }) {
@@ -612,10 +652,10 @@ class _ContactDetailSheet extends StatelessWidget {
         initialChildSize: 0.5,
         minChildSize: 0.3,
         maxChildSize: 0.85,
-        builder: (context, scrollController) {
+        builder: (ctx, scrollController) {
           return Container(
             decoration: BoxDecoration(
-              color: Theme.of(context).brightness == Brightness.dark
+              color: Theme.of(ctx).brightness == Brightness.dark
                   ? const Color(0xFF1A1A2E)
                   : const Color(0xFFF8F9FA),
               borderRadius: const BorderRadius.vertical(
@@ -623,8 +663,6 @@ class _ContactDetailSheet extends StatelessWidget {
               ),
             ),
             child: _ContactDetailSheet(
-              nodeNum: nodeNum,
-              displayName: displayName,
               contact: contact,
               transfers: transfers,
               onSendFile: onSendFile,
@@ -655,6 +693,12 @@ class _ContactDetailSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final shortText =
+        contact.shortName ??
+        (contact.displayName.length >= 2
+            ? contact.displayName.substring(0, 2)
+            : contact.displayName);
+
     return CustomScrollView(
       controller: scrollController,
       slivers: [
@@ -673,16 +717,16 @@ class _ContactDetailSheet extends StatelessWidget {
           ),
         ),
 
-        // Header with sigil and name
+        // Header: sigil + name + stats + send button
         SliverToBoxAdapter(
           child: Padding(
             padding: const EdgeInsets.all(AppTheme.spacing20),
             child: Column(
               children: [
-                SigilAvatar(nodeNum: nodeNum, size: 64),
+                SigilAvatar(nodeNum: contact.nodeNum, size: AppTheme.spacing64),
                 const SizedBox(height: AppTheme.spacing12),
                 Text(
-                  displayName,
+                  contact.displayName,
                   style: TextStyle(
                     color: context.textPrimary,
                     fontSize: 20,
@@ -692,7 +736,7 @@ class _ContactDetailSheet extends StatelessWidget {
                 ),
                 const SizedBox(height: AppTheme.spacing4),
                 Text(
-                  '!${nodeNum.toRadixString(16)}',
+                  '!${contact.nodeNum.toRadixString(16)}',
                   style: TextStyle(
                     color: context.textTertiary,
                     fontSize: 13,
@@ -728,7 +772,35 @@ class _ContactDetailSheet extends StatelessWidget {
 
                 const SizedBox(height: AppTheme.spacing16),
 
-                // Send file button
+                // Presence
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    NodeAvatar(
+                      text: shortText,
+                      color: contact.avatarColor != null
+                          ? Color(contact.avatarColor!)
+                          : AppTheme.graphPurple,
+                      size: 24,
+                    ),
+                    const SizedBox(width: AppTheme.spacing8),
+                    Text(
+                      presenceStatusText(
+                        contact.presence,
+                        contact.lastHeardAge,
+                      ),
+                      style: TextStyle(
+                        color: contact.presence.isActive
+                            ? AppTheme.successGreen
+                            : context.textTertiary,
+                        fontSize: 13,
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: AppTheme.spacing16),
+
                 SizedBox(
                   width: double.infinity,
                   child: FilledButton.icon(
@@ -749,16 +821,19 @@ class _ContactDetailSheet extends StatelessWidget {
         if (transfers.isNotEmpty)
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppTheme.spacing20,
+              padding: const EdgeInsets.fromLTRB(
+                AppTheme.spacing20,
+                AppTheme.spacing4,
+                AppTheme.spacing20,
+                AppTheme.spacing8,
               ),
               child: Text(
-                'Recent Transfers',
+                'RECENT TRANSFERS',
                 style: TextStyle(
                   color: context.textTertiary,
-                  fontSize: 12,
+                  fontSize: 11,
                   fontWeight: FontWeight.w600,
-                  letterSpacing: 0.5,
+                  letterSpacing: 1,
                 ),
               ),
             ),
@@ -771,27 +846,22 @@ class _ContactDetailSheet extends StatelessWidget {
             vertical: AppTheme.spacing8,
           ),
           sliver: SliverList(
-            delegate: SliverChildBuilderDelegate((context, index) {
-              final transfer = transfers[index];
+            delegate: SliverChildBuilderDelegate((ctx, index) {
+              final t = transfers[index];
               final canPreview =
-                  transfer.fileBytes != null && transfer.fileBytes!.isNotEmpty;
+                  (t.fileBytes != null && t.fileBytes!.isNotEmpty) ||
+                  t.savedFilePath != null;
               return _CompactTransferRow(
-                transfer: transfer,
-                relativeTime: _relativeTime(
-                  transfer.completedAt ?? transfer.createdAt,
-                ),
+                transfer: t,
+                relativeTime: _relativeTime(t.completedAt ?? t.createdAt),
                 onTap: canPreview
-                    ? () => FileContentPreview.show(
-                        context: context,
-                        transfer: transfer,
-                      )
+                    ? () => FileContentPreview.show(context: ctx, transfer: t)
                     : null,
               );
             }, childCount: transfers.length),
           ),
         ),
 
-        // Bottom spacing
         const SliverToBoxAdapter(child: SizedBox(height: AppTheme.spacing24)),
       ],
     );
@@ -820,8 +890,8 @@ class _DetailStat extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: 40,
-          height: 40,
+          width: AppTheme.spacing40,
+          height: AppTheme.spacing40,
           decoration: BoxDecoration(
             color: color.withValues(alpha: 0.12),
             shape: BoxShape.circle,
@@ -847,7 +917,7 @@ class _DetailStat extends StatelessWidget {
 }
 
 // ---------------------------------------------------------------------------
-// Compact transfer row for detail sheet
+// Compact transfer row (in detail sheet)
 // ---------------------------------------------------------------------------
 
 class _CompactTransferRow extends StatelessWidget {
@@ -893,12 +963,10 @@ class _CompactTransferRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isOutbound = transfer.direction == TransferDirection.outbound;
-    final canPreview = onTap != null;
     final row = Padding(
       padding: const EdgeInsets.only(bottom: AppTheme.spacing8),
       child: Row(
         children: [
-          // Mime-type icon
           SizedBox(
             width: 32,
             height: 32,
@@ -954,7 +1022,7 @@ class _CompactTransferRow extends StatelessWidget {
               ],
             ),
           ),
-          if (canPreview)
+          if (onTap != null)
             Padding(
               padding: const EdgeInsets.only(right: AppTheme.spacing6),
               child: Icon(

@@ -9,6 +9,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../../core/logging.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
+import '../../../utils/snackbar.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/animations.dart';
 import '../../../core/widgets/glass_scaffold.dart';
@@ -667,7 +668,6 @@ class _AdminDiagnosticsScreenState extends ConsumerState<AdminDiagnosticsScreen>
 
   Future<void> _exportBundle(BuildContext context) async {
     final haptics = ref.haptics;
-    final messenger = ScaffoldMessenger.of(context);
     final box = context.findRenderObject() as RenderBox?;
     final position = box != null
         ? box.localToGlobal(Offset.zero) & box.size
@@ -693,13 +693,12 @@ class _AdminDiagnosticsScreenState extends ConsumerState<AdminDiagnosticsScreen>
       );
     } catch (e) {
       if (!mounted) return;
-      messenger.showSnackBar(SnackBar(content: Text('Export failed: $e')));
+      safeShowSnackBar('Export failed: $e', type: SnackBarType.error);
     }
   }
 
   Future<void> _copySummaryToClipboard(BuildContext context) async {
     final haptics = ref.haptics;
-    final messenger = ScaffoldMessenger.of(context);
     await haptics.buttonTap();
 
     if (_summary == null) return;
@@ -707,8 +706,6 @@ class _AdminDiagnosticsScreenState extends ConsumerState<AdminDiagnosticsScreen>
     await Clipboard.setData(ClipboardData(text: _summary!.toJsonString()));
 
     if (!mounted) return;
-    messenger.showSnackBar(
-      const SnackBar(content: Text('Summary copied to clipboard')),
-    );
+    safeShowSnackBar('Summary copied to clipboard');
   }
 }

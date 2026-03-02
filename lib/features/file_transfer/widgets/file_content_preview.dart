@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../core/theme.dart';
+import '../../../utils/snackbar.dart';
 import '../../../core/widgets/app_bottom_sheet.dart';
 import '../../../services/file_transfer/file_transfer_engine.dart';
 
@@ -430,11 +431,10 @@ class _CopyButton extends StatelessWidget {
       onTap: () {
         HapticFeedback.lightImpact();
         Clipboard.setData(ClipboardData(text: text));
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Copied to clipboard'),
-            duration: Duration(seconds: 1),
-          ),
+        showInfoSnackBar(
+          context,
+          'Copied to clipboard',
+          duration: const Duration(seconds: 1),
         );
       },
       child: Container(

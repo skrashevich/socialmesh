@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
+import '../../../utils/snackbar.dart';
 import '../../../core/widgets/app_bottom_sheet.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 
@@ -140,11 +141,9 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
         AppLogging.app('[Broadcast] ABORT: No Firebase user');
         if (!mounted) return;
         ref.read(hapticServiceProvider).trigger(HapticType.error);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text('You must be signed in to send notifications'),
-            backgroundColor: Colors.red.shade400,
-          ),
+        safeShowSnackBar(
+          'You must be signed in to send notifications',
+          type: SnackBarType.error,
         );
         return;
       }
@@ -233,11 +232,9 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
       if (!mounted) return;
 
       ref.read(hapticServiceProvider).trigger(HapticType.error);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Failed to send: ${e.code} - ${e.message}'),
-          backgroundColor: Colors.red.shade400,
-        ),
+      safeShowSnackBar(
+        'Failed to send: ${e.code} - ${e.message}',
+        type: SnackBarType.error,
       );
     } catch (e, stack) {
       AppLogging.app('[Broadcast] Unexpected error: $e');
@@ -245,12 +242,7 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
       if (!mounted) return;
 
       ref.read(hapticServiceProvider).trigger(HapticType.error);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Failed to send: $e'),
-          backgroundColor: Colors.red.shade400,
-        ),
-      );
+      safeShowSnackBar('Failed to send: $e', type: SnackBarType.error);
     } finally {
       if (mounted) {
         safeSetState(() {

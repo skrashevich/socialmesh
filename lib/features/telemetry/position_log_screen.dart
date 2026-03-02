@@ -380,8 +380,6 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
   // -----------------------------------------------------------------------
 
   Future<void> _confirmClearData() async {
-    final messenger = ScaffoldMessenger.of(context);
-
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
       title: 'Clear Position Data',
@@ -400,9 +398,7 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
       ref.invalidate(positionLogsProvider);
 
       if (!mounted) return;
-      messenger.showSnackBar(
-        const SnackBar(content: Text('Position data cleared')),
-      );
+      safeShowSnackBar('Position data cleared', type: SnackBarType.success);
     } catch (e) {
       showErrorSnackBar(context, 'Failed to clear data: $e');
     }

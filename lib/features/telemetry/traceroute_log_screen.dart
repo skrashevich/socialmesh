@@ -482,7 +482,6 @@ class _TraceRouteLogScreenState extends ConsumerState<TraceRouteLogScreen>
 
   Future<void> _confirmClearData() async {
     final scope = widget.nodeNum != null ? 'this node' : 'all nodes';
-    final messenger = ScaffoldMessenger.of(context);
 
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
@@ -506,9 +505,7 @@ class _TraceRouteLogScreenState extends ConsumerState<TraceRouteLogScreen>
       }
 
       if (!mounted) return;
-      messenger.showSnackBar(
-        const SnackBar(content: Text('Traceroute data cleared')),
-      );
+      safeShowSnackBar('Traceroute data cleared', type: SnackBarType.success);
     } catch (e) {
       showErrorSnackBar(context, 'Failed to clear data: $e');
     }

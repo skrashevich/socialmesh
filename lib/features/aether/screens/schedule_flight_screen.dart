@@ -668,10 +668,9 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
       // Share to Aether API in background (non-blocking)
       _shareFlightInBackground(activeFlight);
 
-      final messenger = ScaffoldMessenger.of(context);
       final status = activeFlight.isActive ? 'in flight!' : 'scheduled!';
       Navigator.of(context).pop(true);
-      messenger.showSnackBar(SnackBar(content: Text('Flight $status')));
+      showSuccessSnackBar(context, 'Flight $status');
     } catch (e) {
       if (mounted) {
         showErrorSnackBar(context, 'Error: $e');

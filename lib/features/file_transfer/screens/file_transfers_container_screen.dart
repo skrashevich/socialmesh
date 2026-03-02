@@ -9,6 +9,7 @@ import '../../../core/widgets/app_bar_overflow_menu.dart';
 import '../../../core/widgets/app_bottom_sheet.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../../../core/widgets/node_selector_sheet.dart';
+import '../../../providers/app_providers.dart';
 import '../../../providers/file_transfer_providers.dart';
 import '../../../services/haptic_service.dart';
 import '../../../utils/snackbar.dart';
@@ -48,17 +49,14 @@ class _FileTransfersContainerScreenState
   @override
   Widget build(BuildContext context) {
     final transferState = ref.watch(fileTransferStateProvider);
-    final transferCount = transferState.sortedTransfers.length;
+    final fileCount = transferState.sortedTransfers.length;
     final activeCount = transferState.activeTransfers.length;
     final pendingCount = ref.watch(pendingTransferCountProvider);
-
-    // Derive unique contact count from transfers
-    final contactNodeNums = <int>{};
-    for (final t in transferState.sortedTransfers) {
-      if (t.targetNodeNum != null) contactNodeNums.add(t.targetNodeNum!);
-      if (t.sourceNodeNum != null) contactNodeNums.add(t.sourceNodeNum!);
-    }
-    final contactCount = contactNodeNums.length;
+    final nodes = ref.watch(nodesProvider);
+    final myNodeNum = ref.watch(myNodeNumProvider);
+    final contactCount = nodes.values
+        .where((n) => n.nodeNum != myNodeNum)
+        .length;
 
     return GlassScaffold(
       resizeToAvoidBottomInset: false,
@@ -136,12 +134,9 @@ class _FileTransfersContainerScreenState
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text('Transfers'),
+                    const Text('Contacts'),
                     const SizedBox(width: AppTheme.spacing6),
-                    _TabBadge(
-                      count: transferCount,
-                      showDot: activeCount > 0 || pendingCount > 0,
-                    ),
+                    _TabBadge(count: contactCount),
                   ],
                 ),
               ),
@@ -149,9 +144,12 @@ class _FileTransfersContainerScreenState
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text('Contacts'),
+                    const Text('Files'),
                     const SizedBox(width: AppTheme.spacing6),
-                    _TabBadge(count: contactCount),
+                    _TabBadge(
+                      count: fileCount,
+                      showDot: activeCount > 0 || pendingCount > 0,
+                    ),
                   ],
                 ),
               ),
@@ -168,9 +166,12 @@ class _FileTransfersContainerScreenState
           hasScrollBody: true,
           child: TabBarView(
             controller: _tabController,
-            children: const [
-              FileTransfersScreen(embedded: true),
-              FileTransferContactsScreen(),
+            children: [
+              const FileTransferContactsScreen(),
+              FileTransfersScreen(
+                embedded: true,
+                onSwitchToContacts: () => _tabController.animateTo(0),
+              ),
             ],
           ),
         ),
@@ -198,17 +199,14 @@ class _FileTransfersContainerScreenState
 
     final selection = await NodeSelectorSheet.show(
       context,
-      title: 'Send File To',
-      allowBroadcast: true,
-      broadcastLabel: 'Broadcast to All',
-      broadcastSubtitle: 'Send to every node on the mesh',
+      title: 'Send to Node',
+      allowBroadcast: false,
     );
-    if (selection == null) return;
+    final nodeNum = selection?.nodeNum;
+    if (nodeNum == null) return;
     if (!mounted) return;
 
-    final transfer = await notifier.pickAndSendFile(
-      targetNodeNum: selection.nodeNum,
-    );
+    final transfer = await notifier.pickAndSendFile(targetNodeNum: nodeNum);
 
     if (!mounted) return;
     if (transfer != null) {

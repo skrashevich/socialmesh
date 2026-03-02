@@ -391,6 +391,21 @@ check_file() {
       "Material dialog — use AppBottomSheet, DatePickerSheet, or TimePickerSheet" \
       "error" true true
 
+    # BLOCK: Raw SnackBar construction (use snackbar utilities instead)
+    # The app has styled snackbar helpers (showInfoSnackBar, showErrorSnackBar,
+    # showSuccessSnackBar, showWarningSnackBar, showActionSnackBar) and
+    # safeShowSnackBar from LifecycleSafeMixin. Raw SnackBar( bypasses the
+    # glass-styled appearance and is never correct in feature code.
+    # Exempt: lib/utils/snackbar.dart (defines the utilities),
+    #         lib/core/safety/lifecycle_mixin.dart (defines safeShowSnackBar).
+    if [[ "$file" != *"utils/snackbar.dart" ]] && [[ "$file" != *"lifecycle_mixin.dart" ]]; then
+      grep_check "$file" \
+        '\bSnackBar\(' \
+        "no-raw-snackbar" \
+        "Raw SnackBar — use showInfoSnackBar/showErrorSnackBar/showSuccessSnackBar/safeShowSnackBar instead" \
+        "error" true true
+    fi
+
     # BLOCK: FloatingActionButton (except glass_scaffold.dart which IS the FAB wrapper)
     if [[ "$file" != *"glass_scaffold.dart" ]]; then
       grep_check "$file" \

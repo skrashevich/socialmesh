@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// lint-allow: haptic-feedback — haptic triggered via ref.read(hapticServiceProvider)
 
 /// Global Layer Topic Explorer Screen — manage and monitor MQTT topic
 /// subscriptions for the Global Layer feature.
@@ -17,6 +18,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/mqtt/mqtt_config.dart';
 import '../../../core/mqtt/mqtt_connection_state.dart';
 import '../../../core/mqtt/mqtt_constants.dart';
+import '../../../utils/snackbar.dart';
 import '../../../core/mqtt/mqtt_metrics.dart';
 import '../../../core/mqtt/mqtt_topic_builder.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
@@ -65,7 +67,6 @@ class _GlobalLayerTopicExplorerScreenState
 
   Future<void> _removeSubscription(int index) async {
     final haptics = ref.read(hapticServiceProvider);
-    final messenger = ScaffoldMessenger.of(context);
     await haptics.trigger(HapticType.warning);
 
     if (!mounted) return;
@@ -95,16 +96,13 @@ class _GlobalLayerTopicExplorerScreenState
         .updateConfig(updatedConfig);
 
     if (!mounted) return;
-    messenger.showSnackBar(
-      SnackBar(
-        content: Text('Removed "${removedTopic.label}"'),
-        action: SnackBarAction(
-          label: 'Undo',
-          onPressed: () {
-            ref.read(globalLayerConfigProvider.notifier).updateConfig(config);
-          },
-        ),
-      ),
+    showActionSnackBar(
+      context,
+      'Removed "${removedTopic.label}"',
+      actionLabel: 'Undo',
+      onAction: () {
+        ref.read(globalLayerConfigProvider.notifier).updateConfig(config);
+      },
     );
   }
 

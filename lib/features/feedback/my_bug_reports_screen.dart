@@ -397,7 +397,6 @@ class _BugReportCardState extends ConsumerState<_BugReportCard>
 
     if (!mounted) return;
     final repository = ref.read(bugReportRepositoryProvider);
-    final messenger = ScaffoldMessenger.of(context);
 
     safeSetState(() => _isSending = true);
 
@@ -409,14 +408,7 @@ class _BugReportCardState extends ConsumerState<_BugReportCard>
       _replyFocusNode.unfocus();
       ref.invalidate(myBugReportsProvider);
 
-      messenger.showSnackBar(
-        SnackBar(
-          content: const Text('Reply sent'),
-          backgroundColor: AppTheme.successGreen,
-          behavior: SnackBarBehavior.floating,
-          duration: const Duration(seconds: 2),
-        ),
-      );
+      safeShowSnackBar('Reply sent', type: SnackBarType.success);
     } catch (e) {
       showErrorSnackBar(context, 'Failed to send reply: $e');
     } finally {

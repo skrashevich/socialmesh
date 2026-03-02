@@ -256,16 +256,13 @@ class _GlobalLayerDiagnosticsScreenState
 
     if (!mounted) return;
     final haptics = ref.read(hapticServiceProvider);
-    final messenger = ScaffoldMessenger.of(context);
     await haptics.trigger(HapticType.light);
 
     final summary = _report!.toClipboardSummary();
     await Clipboard.setData(ClipboardData(text: summary));
 
     if (!mounted) return;
-    messenger.showSnackBar(
-      const SnackBar(content: Text('Diagnostics report copied to clipboard')),
-    );
+    safeShowSnackBar('Diagnostics report copied to clipboard');
   }
 
   // ---------------------------------------------------------------------------

@@ -246,9 +246,6 @@ class _VisualFlowEditorScreenState extends ConsumerState<VisualFlowEditorScreen>
     final navigator = Navigator.of(context);
     final haptics = ref.read(hapticServiceProvider);
 
-    // Capture messenger before await.
-    final messenger = ScaffoldMessenger.of(context);
-
     try {
       if (_isEditing && widget.automation != null) {
         // Update the existing automation with the first compiled result.
@@ -278,20 +275,14 @@ class _VisualFlowEditorScreenState extends ConsumerState<VisualFlowEditorScreen>
       if (!mounted) return;
 
       flowNotifier.markClean();
-      navigator.pop();
 
       final count = result.automations.length;
       final suffix = count > 1 ? ' ($count automations)' : '';
       final message = _isEditing
           ? 'Automation updated$suffix'
           : 'Automation created$suffix';
-      messenger.showSnackBar(
-        SnackBar(
-          content: Text(message),
-          backgroundColor: AppTheme.successGreen,
-          behavior: SnackBarBehavior.floating,
-        ),
-      );
+      showSuccessSnackBar(context, message);
+      navigator.pop();
     } catch (e) {
       safeSetState(() => _isSaving = false);
       if (mounted) {

@@ -97,10 +97,10 @@ class _GlobalLayerStatusScreenState
 
   Future<void> _handlePause() async {
     final haptics = ref.read(hapticServiceProvider);
-    final messenger = ScaffoldMessenger.of(context);
     await haptics.trigger(HapticType.medium);
 
     if (!mounted) return;
+
     final connectionNotifier = ref.read(
       globalLayerConnectionStateProvider.notifier,
     );
@@ -113,14 +113,11 @@ class _GlobalLayerStatusScreenState
     await configNotifier.disable();
 
     if (!mounted) return;
-    messenger.showSnackBar(
-      const SnackBar(content: Text('Global Layer paused')),
-    );
+    safeShowSnackBar('Global Layer paused');
   }
 
   Future<void> _handleResume() async {
     final haptics = ref.read(hapticServiceProvider);
-    final messenger = ScaffoldMessenger.of(context);
     await haptics.trigger(HapticType.medium);
 
     if (!mounted) return;
@@ -128,9 +125,7 @@ class _GlobalLayerStatusScreenState
     await configNotifier.enable();
 
     if (!mounted) return;
-    messenger.showSnackBar(
-      const SnackBar(content: Text('Global Layer resumed')),
-    );
+    safeShowSnackBar('Global Layer resumed');
   }
 
   void _openDiagnostics() {
@@ -181,7 +176,6 @@ class _GlobalLayerStatusScreenState
 
   Future<void> _copyDiagnosticsSummary() async {
     final haptics = ref.read(hapticServiceProvider);
-    final messenger = ScaffoldMessenger.of(context);
     await haptics.trigger(HapticType.light);
 
     if (!mounted) return;
@@ -192,9 +186,7 @@ class _GlobalLayerStatusScreenState
     await Clipboard.setData(ClipboardData(text: summary));
 
     if (!mounted) return;
-    messenger.showSnackBar(
-      const SnackBar(content: Text('Diagnostics copied to clipboard')),
-    );
+    safeShowSnackBar('Diagnostics copied to clipboard');
   }
 
   // ---------------------------------------------------------------------------

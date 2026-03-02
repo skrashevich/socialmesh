@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
+import '../../../utils/snackbar.dart';
 import '../../../core/widgets/animations.dart';
 import '../../../core/widgets/app_bottom_sheet.dart';
 import '../../../core/widgets/action_sheets.dart';
@@ -115,7 +116,6 @@ class _QuickActionsContentState extends ConsumerState<QuickActionsContent>
   }
 
   void _shareLocation(BuildContext context) async {
-    final messenger = ScaffoldMessenger.of(context);
     try {
       final locationService = ref.read(locationServiceProvider);
       await locationService.sendPositionOnce();
@@ -125,8 +125,9 @@ class _QuickActionsContentState extends ConsumerState<QuickActionsContent>
       // navigation and confirms propagation to the mesh.
       ref.read(countdownProvider.notifier).startPositionBroadcastCountdown();
     } catch (e) {
-      messenger.showSnackBar(
-        SnackBar(content: Text('Failed to share location: $e')),
+      safeShowSnackBar(
+        'Failed to share location: $e',
+        type: SnackBarType.error,
       );
     }
   }
@@ -151,7 +152,6 @@ class _QuickActionsContentState extends ConsumerState<QuickActionsContent>
     final notifier = ref.read(countdownProvider.notifier);
     if (notifier.isPositionRequestActive) return;
 
-    final messenger = ScaffoldMessenger.of(context);
     try {
       final protocol = ref.read(protocolServiceProvider);
       await protocol.requestAllPositions();
@@ -161,8 +161,9 @@ class _QuickActionsContentState extends ConsumerState<QuickActionsContent>
       // across navigation and sets expectations for trickle-in time.
       notifier.startPositionRequestCountdown();
     } catch (e) {
-      messenger.showSnackBar(
-        SnackBar(content: Text('Failed to request positions: $e')),
+      safeShowSnackBar(
+        'Failed to request positions: $e',
+        type: SnackBarType.error,
       );
     }
   }
