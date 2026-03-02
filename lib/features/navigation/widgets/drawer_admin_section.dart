@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/admin_pin_dialog.dart';
@@ -72,7 +73,7 @@ class _DrawerAdminSectionState extends ConsumerState<DrawerAdminSection>
                         ),
                         const SizedBox(width: AppTheme.spacing6),
                         Text(
-                          'ADMIN',
+                          context.l10n.drawerAdminSectionHeader,
                           style: TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.w600,
@@ -87,7 +88,7 @@ class _DrawerAdminSectionState extends ConsumerState<DrawerAdminSection>
                   // Single Admin entry with PIN protection
                   DrawerMenuTile(
                     icon: Icons.shield_outlined,
-                    label: 'Admin Dashboard',
+                    label: context.l10n.drawerAdminDashboard,
                     isSelected: false,
                     iconColor: AccentColors.orange,
                     badgeCount: badgeCount > 0 ? badgeCount : null,

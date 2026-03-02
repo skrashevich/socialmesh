@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/logging.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
@@ -33,61 +34,61 @@ class DeviceRoleOption {
   const DeviceRoleOption(this.role, this.displayName, this.description);
 }
 
-final deviceRoles = [
+List<DeviceRoleOption> _deviceRoleOptions(BuildContext context) => [
   DeviceRoleOption(
     config_pbenum.Config_DeviceConfig_Role.CLIENT,
-    'Client',
-    'Default role. Mesh packets are routed through this node. Can send and receive messages.',
+    context.l10n.deviceConfigRoleClient,
+    context.l10n.deviceConfigRoleClientDesc,
   ),
   DeviceRoleOption(
     config_pbenum.Config_DeviceConfig_Role.CLIENT_MUTE,
-    'Client Mute',
-    'Same as client but will not transmit any messages from itself. Useful for monitoring.',
+    context.l10n.deviceConfigRoleClientMute,
+    context.l10n.deviceConfigRoleClientMuteDesc,
   ),
   DeviceRoleOption(
     config_pbenum.Config_DeviceConfig_Role.CLIENT_HIDDEN,
-    'Client Hidden',
-    'Acts as client but hides from the node list. Still routes traffic.',
+    context.l10n.deviceConfigRoleClientHidden,
+    context.l10n.deviceConfigRoleClientHiddenDesc,
   ),
   DeviceRoleOption(
     config_pbenum.Config_DeviceConfig_Role.CLIENT_BASE,
-    'Client Base',
-    'Base station for favorited nodes. Routes their packets like a router, others as client.',
+    context.l10n.deviceConfigRoleClientBase,
+    context.l10n.deviceConfigRoleClientBaseDesc,
   ),
   DeviceRoleOption(
     config_pbenum.Config_DeviceConfig_Role.ROUTER,
-    'Router',
-    'Routes mesh packets between nodes. Screen and Bluetooth disabled to conserve power.',
+    context.l10n.deviceConfigRoleRouter,
+    context.l10n.deviceConfigRoleRouterDesc,
   ),
   DeviceRoleOption(
     config_pbenum.Config_DeviceConfig_Role.ROUTER_LATE,
-    'Router Late',
-    'Rebroadcasts all packets after other routers. Extends coverage without consuming priority hops.',
+    context.l10n.deviceConfigRoleRouterLate,
+    context.l10n.deviceConfigRoleRouterLateDesc,
   ),
   DeviceRoleOption(
     config_pbenum.Config_DeviceConfig_Role.TRACKER,
-    'Tracker',
-    'Optimized for GPS tracking. Sends position updates at defined intervals.',
+    context.l10n.deviceConfigRoleTracker,
+    context.l10n.deviceConfigRoleTrackerDesc,
   ),
   DeviceRoleOption(
     config_pbenum.Config_DeviceConfig_Role.SENSOR,
-    'Sensor',
-    'Designed for remote sensing. Reports telemetry data at defined intervals.',
+    context.l10n.deviceConfigRoleSensor,
+    context.l10n.deviceConfigRoleSensorDesc,
   ),
   DeviceRoleOption(
     config_pbenum.Config_DeviceConfig_Role.TAK,
-    'TAK',
-    'Team Awareness Kit integration. Bridges Meshtastic and TAK systems.',
+    context.l10n.deviceConfigRoleTak,
+    context.l10n.deviceConfigRoleTakDesc,
   ),
   DeviceRoleOption(
     config_pbenum.Config_DeviceConfig_Role.TAK_TRACKER,
-    'TAK Tracker',
-    'Combination of TAK and Tracker modes.',
+    context.l10n.deviceConfigRoleTakTracker,
+    context.l10n.deviceConfigRoleTakTrackerDesc,
   ),
   DeviceRoleOption(
     config_pbenum.Config_DeviceConfig_Role.LOST_AND_FOUND,
-    'Lost and Found',
-    'Optimized for finding lost devices. Sends periodic beacons.',
+    context.l10n.deviceConfigRoleLostAndFound,
+    context.l10n.deviceConfigRoleLostAndFoundDesc,
   ),
 ];
 
@@ -100,36 +101,36 @@ class RebroadcastModeOption {
   const RebroadcastModeOption(this.mode, this.displayName, this.description);
 }
 
-final rebroadcastModes = [
+List<RebroadcastModeOption> _rebroadcastModeOptions(BuildContext context) => [
   RebroadcastModeOption(
     config_pbenum.Config_DeviceConfig_RebroadcastMode.ALL,
-    'All',
-    'Rebroadcast any observed message. Default behavior.',
+    context.l10n.deviceConfigRebroadcastAll,
+    context.l10n.deviceConfigRebroadcastAllDesc,
   ),
   RebroadcastModeOption(
     config_pbenum.Config_DeviceConfig_RebroadcastMode.ALL_SKIP_DECODING,
-    'All (Skip Decoding)',
-    'Rebroadcast all messages without decoding. Faster, less CPU.',
+    context.l10n.deviceConfigRebroadcastAllSkipDecoding,
+    context.l10n.deviceConfigRebroadcastAllSkipDecodingDesc,
   ),
   RebroadcastModeOption(
     config_pbenum.Config_DeviceConfig_RebroadcastMode.LOCAL_ONLY,
-    'Local Only',
-    'Only rebroadcast messages from local senders. Good for isolated networks.',
+    context.l10n.deviceConfigRebroadcastLocalOnly,
+    context.l10n.deviceConfigRebroadcastLocalOnlyDesc,
   ),
   RebroadcastModeOption(
     config_pbenum.Config_DeviceConfig_RebroadcastMode.KNOWN_ONLY,
-    'Known Only',
-    'Only rebroadcast messages from nodes in the node database.',
+    context.l10n.deviceConfigRebroadcastKnownOnly,
+    context.l10n.deviceConfigRebroadcastKnownOnlyDesc,
   ),
   RebroadcastModeOption(
     config_pbenum.Config_DeviceConfig_RebroadcastMode.CORE_PORTNUMS_ONLY,
-    'Core Port Numbers Only',
-    'Rebroadcast only core Meshtastic packets (position, telemetry, etc).',
+    context.l10n.deviceConfigRebroadcastCorePortnumsOnly,
+    context.l10n.deviceConfigRebroadcastCorePortnumsOnlyDesc,
   ),
   RebroadcastModeOption(
     config_pbenum.Config_DeviceConfig_RebroadcastMode.NONE,
-    'None',
-    'Do not rebroadcast any messages. Node only receives.',
+    context.l10n.deviceConfigRebroadcastNone,
+    context.l10n.deviceConfigRebroadcastNoneDesc,
   ),
 ];
 
@@ -142,31 +143,31 @@ class BuzzerModeOption {
   const BuzzerModeOption(this.mode, this.displayName, this.description);
 }
 
-final buzzerModes = [
+List<BuzzerModeOption> _buzzerModeOptions(BuildContext context) => [
   BuzzerModeOption(
     config_pbenum.Config_DeviceConfig_BuzzerMode.ALL_ENABLED,
-    'All Enabled',
-    'Buzzer sounds for all feedback including buttons and alerts.',
+    context.l10n.deviceConfigBuzzerAllEnabled,
+    context.l10n.deviceConfigBuzzerAllEnabledDesc,
   ),
   BuzzerModeOption(
     config_pbenum.Config_DeviceConfig_BuzzerMode.NOTIFICATIONS_ONLY,
-    'Notifications Only',
-    'Buzzer only for notifications and alerts, not button presses.',
+    context.l10n.deviceConfigBuzzerNotificationsOnly,
+    context.l10n.deviceConfigBuzzerNotificationsOnlyDesc,
   ),
   BuzzerModeOption(
     config_pbenum.Config_DeviceConfig_BuzzerMode.DIRECT_MSG_ONLY,
-    'Direct Messages Only',
-    'Buzzer only for direct messages and alerts.',
+    context.l10n.deviceConfigBuzzerDirectMsgOnly,
+    context.l10n.deviceConfigBuzzerDirectMsgOnlyDesc,
   ),
   BuzzerModeOption(
     config_pbenum.Config_DeviceConfig_BuzzerMode.SYSTEM_ONLY,
-    'System Only',
-    'Button presses, startup, shutdown sounds only. No alerts.',
+    context.l10n.deviceConfigBuzzerSystemOnly,
+    context.l10n.deviceConfigBuzzerSystemOnlyDesc,
   ),
   BuzzerModeOption(
     config_pbenum.Config_DeviceConfig_BuzzerMode.DISABLED,
-    'Disabled',
-    'All buzzer audio feedback is disabled.',
+    context.l10n.deviceConfigBuzzerDisabled,
+    context.l10n.deviceConfigBuzzerDisabledDesc,
   ),
 ];
 
@@ -491,11 +492,9 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
 
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Save Changes?',
-      message:
-          'Saving device configuration will cause the device to reboot. '
-          'You will be briefly disconnected while the device restarts.',
-      confirmLabel: 'Save & Reboot',
+      title: context.l10n.deviceConfigSaveChangesTitle,
+      message: context.l10n.deviceConfigSaveChangesMessage,
+      confirmLabel: context.l10n.deviceConfigSaveAndReboot,
     );
 
     if (confirmed == true) {
@@ -644,8 +643,8 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
         showSuccessSnackBar(
           context,
           isRemote
-              ? 'Configuration sent to remote node'
-              : 'Configuration saved - device rebooting',
+              ? context.l10n.deviceConfigSavedRemote
+              : context.l10n.deviceConfigSavedLocal,
         );
       }
 
@@ -665,7 +664,10 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
     } catch (e) {
       AppLogging.protocol('DeviceConfigScreen: Error saving config: $e');
       if (mounted) {
-        showErrorSnackBar(context, 'Error saving config: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.deviceConfigSaveError(e.toString()),
+        );
       }
     } finally {
       safeSetState(() => _isSaving = false);
@@ -680,8 +682,11 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
     final connectedDevice = ref.watch(connectedDeviceProvider);
     final remoteState = ref.watch(remoteAdminProvider);
     final isRemote = remoteState.isRemote;
+    final deviceRolesList = _deviceRoleOptions(context);
 
-    final title = isRemote ? 'Device Config (Remote)' : 'Device Config';
+    final title = isRemote
+        ? context.l10n.deviceConfigTitleRemote
+        : context.l10n.deviceConfigTitle;
 
     if (_isLoading) {
       return GlassScaffold(
@@ -706,7 +711,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
                     ),
                   )
                 : Text(
-                    'Save',
+                    context.l10n.deviceConfigSave,
                     style: TextStyle(
                       color: context.accentColor,
                       fontWeight: FontWeight.w600,
@@ -725,11 +730,11 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
               // Long Name Field
               _buildNameField(
                 icon: Icons.badge_outlined,
-                label: 'Long Name',
-                subtitle: 'Display name visible on the mesh',
+                label: context.l10n.deviceConfigLongName,
+                subtitle: context.l10n.deviceConfigLongNameSubtitle,
                 controller: _longNameController,
                 maxLength: maxLongNameLength,
-                hint: 'Enter display name',
+                hint: context.l10n.deviceConfigLongNameHint,
               ),
 
               SizedBox(height: AppTheme.spacing16),
@@ -737,11 +742,13 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
               // Short Name Field
               _buildNameField(
                 icon: Icons.short_text,
-                label: 'Short Name',
-                subtitle: 'Max $maxShortNameLength characters (A-Z, 0-9)',
+                label: context.l10n.deviceConfigShortName,
+                subtitle: context.l10n.deviceConfigShortNameSubtitle(
+                  maxShortNameLength,
+                ),
                 controller: _shortNameController,
                 maxLength: maxShortNameLength,
-                hint: 'e.g. FUZZ',
+                hint: context.l10n.deviceConfigShortNameHint,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9]')),
                   UpperCaseTextFormatter(),
@@ -754,7 +761,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4),
                 child: Text(
-                  'Your device name is broadcast to the mesh and visible to other nodes.',
+                  context.l10n.deviceConfigNameHelpText,
                   style: Theme.of(
                     context,
                   ).textTheme.labelSmall?.copyWith(color: context.textTertiary),
@@ -764,32 +771,36 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
               SizedBox(height: AppTheme.spacing24),
 
               // User Flags Section
-              _buildSectionHeader('User Flags'),
+              _buildSectionHeader(context.l10n.deviceConfigSectionUserFlags),
               _buildUserFlagsSettings(),
 
               SizedBox(height: AppTheme.spacing24),
 
               // Device Info Section
-              _buildSectionHeader('Device Info'),
+              _buildSectionHeader(context.l10n.deviceConfigSectionDeviceInfo),
               InfoTable(
                 rows: [
                   InfoTableRow(
-                    label: 'BLE Name',
-                    value: connectedDevice?.name ?? 'Unknown',
+                    label: context.l10n.deviceConfigBleName,
+                    value:
+                        connectedDevice?.name ??
+                        context.l10n.deviceConfigUnknown,
                     icon: Icons.bluetooth,
                   ),
                   InfoTableRow(
-                    label: 'Hardware',
-                    value: myNode?.hardwareModel ?? 'Unknown',
+                    label: context.l10n.deviceConfigHardware,
+                    value:
+                        myNode?.hardwareModel ??
+                        context.l10n.deviceConfigUnknown,
                     icon: Icons.memory_outlined,
                   ),
                   InfoTableRow(
-                    label: 'User ID',
-                    value: myNode?.userId ?? 'Unknown',
+                    label: context.l10n.deviceConfigUserId,
+                    value: myNode?.userId ?? context.l10n.deviceConfigUnknown,
                     icon: Icons.fingerprint,
                   ),
                   InfoTableRow(
-                    label: 'Node Number',
+                    label: context.l10n.deviceConfigNodeNumber,
                     value: '${myNode?.nodeNum ?? 0}',
                     icon: Icons.tag,
                   ),
@@ -799,7 +810,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
               const SizedBox(height: AppTheme.spacing24),
 
               // Device Role Section
-              _buildSectionHeader('Device Role'),
+              _buildSectionHeader(context.l10n.deviceConfigSectionDeviceRole),
               Container(
                 decoration: BoxDecoration(
                   color: context.card,
@@ -810,7 +821,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
                   color: Colors.transparent,
                   borderRadius: BorderRadius.circular(AppTheme.radius12),
                   child: Column(
-                    children: deviceRoles.asMap().entries.map((entry) {
+                    children: deviceRolesList.asMap().entries.map((entry) {
                       final index = entry.key;
                       final option = entry.value;
                       final isSelected = _selectedRole == option.role;
@@ -822,7 +833,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
                                 ? const BorderRadius.vertical(
                                     top: Radius.circular(12),
                                   )
-                                : index == deviceRoles.length - 1
+                                : index == deviceRolesList.length - 1
                                 ? const BorderRadius.vertical(
                                     bottom: Radius.circular(12),
                                   )
@@ -896,7 +907,8 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
                               ),
                             ),
                           ),
-                          if (index < deviceRoles.length - 1) _buildDivider(),
+                          if (index < deviceRolesList.length - 1)
+                            _buildDivider(),
                         ],
                       );
                     }).toList(),
@@ -907,56 +919,60 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
               const SizedBox(height: AppTheme.spacing32),
 
               // Rebroadcast Mode Section
-              _buildSectionHeader('Rebroadcast Mode'),
+              _buildSectionHeader(
+                context.l10n.deviceConfigSectionRebroadcastMode,
+              ),
               _buildRebroadcastModeSelector(),
 
               const SizedBox(height: AppTheme.spacing24),
 
               // Node Info Broadcast Section
-              _buildSectionHeader('Node Info Broadcast'),
+              _buildSectionHeader(
+                context.l10n.deviceConfigSectionNodeInfoBroadcast,
+              ),
               _buildNodeInfoBroadcastSetting(),
 
               const SizedBox(height: AppTheme.spacing24),
 
               // Button & Input Section
-              _buildSectionHeader('Button & Input'),
+              _buildSectionHeader(context.l10n.deviceConfigSectionButtonInput),
               _buildButtonInputSettings(),
 
               const SizedBox(height: AppTheme.spacing24),
 
               // Buzzer Section
-              _buildSectionHeader('Buzzer'),
+              _buildSectionHeader(context.l10n.deviceConfigSectionBuzzer),
               _buildBuzzerSettings(),
 
               const SizedBox(height: AppTheme.spacing24),
 
               // LED & Display Section
-              _buildSectionHeader('LED'),
+              _buildSectionHeader(context.l10n.deviceConfigSectionLed),
               _buildLedSettings(),
 
               const SizedBox(height: AppTheme.spacing24),
 
               // Serial Console Section
-              _buildSectionHeader('Serial'),
+              _buildSectionHeader(context.l10n.deviceConfigSectionSerial),
               _buildSerialConsoleSetting(),
 
               const SizedBox(height: AppTheme.spacing24),
 
               // Timezone Section
-              _buildSectionHeader('Timezone'),
+              _buildSectionHeader(context.l10n.deviceConfigSectionTimezone),
               _buildTimezoneSettings(),
 
               const SizedBox(height: AppTheme.spacing24),
 
               // GPIO Section (Advanced)
-              _buildSectionHeader('GPIO (Advanced)'),
+              _buildSectionHeader(context.l10n.deviceConfigSectionGpio),
               _buildGpioSettings(),
 
               const SizedBox(height: AppTheme.spacing24),
 
               // Danger Zone — only for local devices
               if (!isRemote) ...[
-                _buildSectionHeader('Danger Zone'),
+                _buildSectionHeader(context.l10n.deviceConfigSectionDangerZone),
                 _buildDangerZone(),
                 const SizedBox(height: AppTheme.spacing24),
               ],
@@ -964,8 +980,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
               // Warning
               if (!isRemote)
                 StatusBanner.warning(
-                  title:
-                      'Changes to device configuration will cause the device to reboot.',
+                  title: context.l10n.deviceConfigRebootWarning,
                   margin: EdgeInsets.zero,
                 ),
 
@@ -978,6 +993,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
   }
 
   Widget _buildRebroadcastModeSelector() {
+    final modes = _rebroadcastModeOptions(context);
     return Container(
       decoration: BoxDecoration(
         color: context.card,
@@ -988,7 +1004,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(AppTheme.radius12),
         child: Column(
-          children: rebroadcastModes.asMap().entries.map((entry) {
+          children: modes.asMap().entries.map((entry) {
             final index = entry.key;
             final option = entry.value;
             final isSelected = _rebroadcastMode == option.mode;
@@ -998,7 +1014,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
                 InkWell(
                   borderRadius: index == 0
                       ? const BorderRadius.vertical(top: Radius.circular(12))
-                      : index == rebroadcastModes.length - 1
+                      : index == modes.length - 1
                       ? const BorderRadius.vertical(bottom: Radius.circular(12))
                       : BorderRadius.zero,
                   onTap: () {
@@ -1067,7 +1083,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
                     ),
                   ),
                 ),
-                if (index < rebroadcastModes.length - 1) _buildDivider(),
+                if (index < modes.length - 1) _buildDivider(),
               ],
             );
           }).toList(),
@@ -1076,23 +1092,39 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
     );
   }
 
+  /// Broadcast interval seconds for snapping legacy values.
+  static const List<int> _broadcastIntervalSeconds = [
+    10800,
+    14400,
+    18000,
+    21600,
+    43200,
+    64800,
+    86400,
+    129600,
+    172800,
+    259200,
+    0,
+  ];
+
   /// Broadcast interval options matching the official Meshtastic iOS app.
   /// The minimum is 3 hours (10 800 s); "Never" disables broadcasts.
-  static const List<({int seconds, String label})> _broadcastIntervals = [
-    (seconds: 10800, label: 'Three Hours'),
-    (seconds: 14400, label: 'Four Hours'),
-    (seconds: 18000, label: 'Five Hours'),
-    (seconds: 21600, label: 'Six Hours'),
-    (seconds: 43200, label: 'Twelve Hours'),
-    (seconds: 64800, label: 'Eighteen Hours'),
-    (seconds: 86400, label: 'Twenty Four Hours'),
-    (seconds: 129600, label: 'Thirty Six Hours'),
-    (seconds: 172800, label: 'Forty Eight Hours'),
-    (seconds: 259200, label: 'Seventy Two Hours'),
-    (seconds: 0, label: 'Never'),
+  List<({int seconds, String label})> _getBroadcastIntervals() => [
+    (seconds: 10800, label: context.l10n.deviceConfigBroadcastThreeHours),
+    (seconds: 14400, label: context.l10n.deviceConfigBroadcastFourHours),
+    (seconds: 18000, label: context.l10n.deviceConfigBroadcastFiveHours),
+    (seconds: 21600, label: context.l10n.deviceConfigBroadcastSixHours),
+    (seconds: 43200, label: context.l10n.deviceConfigBroadcastTwelveHours),
+    (seconds: 64800, label: context.l10n.deviceConfigBroadcastEighteenHours),
+    (seconds: 86400, label: context.l10n.deviceConfigBroadcastTwentyFourHours),
+    (seconds: 129600, label: context.l10n.deviceConfigBroadcastThirtySixHours),
+    (seconds: 172800, label: context.l10n.deviceConfigBroadcastFortyEightHours),
+    (seconds: 259200, label: context.l10n.deviceConfigBroadcastSeventyTwoHours),
+    (seconds: 0, label: context.l10n.deviceConfigBroadcastNever),
   ];
 
   Widget _buildNodeInfoBroadcastSetting() {
+    final intervals = _getBroadcastIntervals();
     // Snap any legacy/out-of-range value to the nearest valid option so the
     // picker always has a selection.  This covers devices that were configured
     // before the picker was introduced (e.g. 900 s → snaps to 10 800 s).
@@ -1130,7 +1162,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Broadcast Interval',
+                          context.l10n.deviceConfigBroadcastInterval,
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w600,
@@ -1139,7 +1171,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
                         ),
                         const SizedBox(height: AppTheme.spacing2),
                         Text(
-                          'How often to broadcast node info to the mesh',
+                          context.l10n.deviceConfigBroadcastIntervalSubtitle,
                           style: TextStyle(
                             fontSize: 12,
                             color: context.textTertiary,
@@ -1151,11 +1183,11 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
                 ],
               ),
             ),
-            ..._broadcastIntervals.asMap().entries.map((entry) {
+            ...intervals.asMap().entries.map((entry) {
               final index = entry.key;
               final option = entry.value;
               final isSelected = effectiveValue == option.seconds;
-              final isLast = index == _broadcastIntervals.length - 1;
+              final isLast = index == intervals.length - 1;
 
               return Column(
                 children: [
@@ -1216,13 +1248,13 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
   /// value (covers legacy configs that used the old slider).
   int _snapToNearestInterval(int seconds) {
     if (seconds == 0) return 0;
-    int closest = _broadcastIntervals.first.seconds;
+    int closest = _broadcastIntervalSeconds.first;
     int closestDiff = (seconds - closest).abs();
-    for (final option in _broadcastIntervals) {
-      if (option.seconds == 0) continue; // skip "Never"
-      final diff = (seconds - option.seconds).abs();
+    for (final s in _broadcastIntervalSeconds) {
+      if (s == 0) continue; // skip "Never"
+      final diff = (seconds - s).abs();
       if (diff < closestDiff) {
-        closest = option.seconds;
+        closest = s;
         closestDiff = diff;
       }
     }
@@ -1240,8 +1272,8 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
         children: [
           _buildToggleRow(
             icon: Icons.touch_app,
-            label: 'Double Tap as Button',
-            subtitle: 'Treat accelerometer double-tap as button press',
+            label: context.l10n.deviceConfigDoubleTapAsButton,
+            subtitle: context.l10n.deviceConfigDoubleTapAsButtonSubtitle,
             value: _doubleTapAsButtonPress,
             onChanged: (value) {
               setState(() => _doubleTapAsButtonPress = value);
@@ -1251,8 +1283,8 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
           _buildDivider(),
           _buildToggleRow(
             icon: Icons.touch_app_outlined,
-            label: 'Disable Triple Click',
-            subtitle: 'Disable triple-click to toggle GPS',
+            label: context.l10n.deviceConfigDisableTripleClick,
+            subtitle: context.l10n.deviceConfigDisableTripleClickSubtitle,
             value: _disableTripleClick,
             onChanged: (value) {
               setState(() => _disableTripleClick = value);
@@ -1265,6 +1297,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
   }
 
   Widget _buildBuzzerSettings() {
+    final buzzerOptions = _buzzerModeOptions(context);
     return Container(
       decoration: BoxDecoration(
         color: context.card,
@@ -1275,7 +1308,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(AppTheme.radius12),
         child: Column(
-          children: buzzerModes.asMap().entries.map((entry) {
+          children: buzzerOptions.asMap().entries.map((entry) {
             final index = entry.key;
             final option = entry.value;
             final isSelected = _buzzerMode == option.mode;
@@ -1285,7 +1318,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
                 InkWell(
                   borderRadius: index == 0
                       ? const BorderRadius.vertical(top: Radius.circular(12))
-                      : index == buzzerModes.length - 1
+                      : index == buzzerOptions.length - 1
                       ? const BorderRadius.vertical(bottom: Radius.circular(12))
                       : BorderRadius.zero,
                   onTap: () {
@@ -1354,7 +1387,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
                     ),
                   ),
                 ),
-                if (index < buzzerModes.length - 1) _buildDivider(),
+                if (index < buzzerOptions.length - 1) _buildDivider(),
               ],
             );
           }).toList(),
@@ -1372,8 +1405,8 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
       ),
       child: _buildToggleRow(
         icon: Icons.lightbulb_outline,
-        label: 'Disable LED Heartbeat',
-        subtitle: 'Turn off the blinking status LED',
+        label: context.l10n.deviceConfigDisableLedHeartbeat,
+        subtitle: context.l10n.deviceConfigDisableLedHeartbeatSubtitle,
         value: _ledHeartbeatDisabled,
         onChanged: (value) {
           setState(() => _ledHeartbeatDisabled = value);
@@ -1403,7 +1436,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'POSIX Timezone',
+                      context.l10n.deviceConfigPosixTimezone,
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
@@ -1412,7 +1445,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
                     ),
                     const SizedBox(height: AppTheme.spacing2),
                     Text(
-                      'e.g. EST5EDT,M3.2.0,M11.1.0',
+                      context.l10n.deviceConfigPosixTimezoneExample,
                       style: TextStyle(
                         fontSize: 12,
                         color: context.textTertiary,
@@ -1436,7 +1469,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
                 horizontal: 12,
                 vertical: 10,
               ),
-              hintText: 'Leave empty for UTC',
+              hintText: context.l10n.deviceConfigPosixTimezoneHint,
               hintStyle: TextStyle(color: context.textTertiary),
               filled: true,
               fillColor: context.background,
@@ -1475,7 +1508,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Only change these if you know your hardware requires custom GPIO pins.',
+            context.l10n.deviceConfigGpioWarning,
             style: Theme.of(
               context,
             ).textTheme.labelSmall?.copyWith(color: context.textTertiary),
@@ -1485,7 +1518,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
             children: [
               Expanded(
                 child: _buildGpioField(
-                  label: 'Button GPIO',
+                  label: context.l10n.deviceConfigButtonGpio,
                   value: _buttonGpio,
                   onChanged: (value) {
                     _buttonGpio = value;
@@ -1496,7 +1529,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
               const SizedBox(width: AppTheme.spacing16),
               Expanded(
                 child: _buildGpioField(
-                  label: 'Buzzer GPIO',
+                  label: context.l10n.deviceConfigBuzzerGpio,
                   value: _buzzerGpio,
                   onChanged: (value) {
                     _buzzerGpio = value;
@@ -1781,7 +1814,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Unmessagable',
+                        context.l10n.deviceConfigUnmessagable,
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w500,
@@ -1790,7 +1823,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
                       ),
                       const SizedBox(height: AppTheme.spacing2),
                       Text(
-                        'Mark as infrastructure node that won\'t respond to messages',
+                        context.l10n.deviceConfigUnmessagableSubtitle,
                         style: TextStyle(
                           fontSize: 12,
                           color: context.textTertiary,
@@ -1829,7 +1862,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Licensed Operator (Ham)',
+                        context.l10n.deviceConfigLicensedOperator,
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w500,
@@ -1838,8 +1871,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
                       ),
                       const SizedBox(height: AppTheme.spacing2),
                       Text(
-                        'Sets call sign, overrides frequency/power, '
-                        'disables encryption',
+                        context.l10n.deviceConfigLicensedOperatorSubtitle,
                         style: TextStyle(
                           fontSize: 12,
                           color: context.textTertiary,
@@ -1868,26 +1900,18 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   StatusBanner.accent(
-                    title:
-                        'Ham mode uses your long name as call sign (max 8 chars), '
-                        'broadcasts node info every 10 minutes, overrides '
-                        'frequency, duty cycle, and TX power, and disables '
-                        'encryption.',
+                    title: context.l10n.deviceConfigHamModeInfo,
                     margin: EdgeInsets.zero,
                   ),
                   const SizedBox(height: AppTheme.spacing12),
                   StatusBanner.warning(
-                    title:
-                        'HAM nodes cannot relay encrypted traffic. Other '
-                        'non-HAM nodes in your mesh will not be able to '
-                        'route encrypted messages through this node, '
-                        'creating a relay gap in the network.',
+                    title: context.l10n.deviceConfigHamModeWarning,
                     margin: EdgeInsets.zero,
                   ),
                   const SizedBox(height: AppTheme.spacing16),
                   // Frequency override
                   Text(
-                    'Frequency Override (MHz)',
+                    context.l10n.deviceConfigFrequencyOverride,
                     style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w500,
@@ -1902,7 +1926,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
                     ),
                     style: TextStyle(color: context.textPrimary, fontSize: 14),
                     decoration: InputDecoration(
-                      hintText: '0.0 (use default)',
+                      hintText: context.l10n.deviceConfigFrequencyOverrideHint,
                       hintStyle: TextStyle(color: context.textTertiary),
                       filled: true,
                       fillColor: context.background,
@@ -1932,7 +1956,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'TX Power',
+                        context.l10n.deviceConfigTxPower,
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w500,
@@ -1940,7 +1964,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
                         ),
                       ),
                       Text(
-                        '$_txPower dBm',
+                        context.l10n.deviceConfigTxPowerValue(_txPower),
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
@@ -2006,7 +2030,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Remote Administration',
+                  context.l10n.deviceConfigRemoteAdminTitle,
                   style: TextStyle(
                     color: accentColor,
                     fontWeight: FontWeight.w600,
@@ -2015,7 +2039,10 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
                 ),
                 const SizedBox(height: AppTheme.spacing2),
                 Text(
-                  'Configuring: ${remoteState.targetNodeName ?? '0x${remoteState.targetNodeNum!.toRadixString(16)}'}',
+                  context.l10n.deviceConfigRemoteAdminConfiguring(
+                    remoteState.targetNodeName ??
+                        '0x${remoteState.targetNodeNum!.toRadixString(16)}',
+                  ),
                   style: TextStyle(
                     color: accentColor.withValues(alpha: 0.8),
                     fontSize: 12,
@@ -2038,8 +2065,8 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
       ),
       child: _buildToggleRow(
         icon: Icons.terminal,
-        label: 'Serial Console',
-        subtitle: 'Enable serial port for debugging',
+        label: context.l10n.deviceConfigSerialConsole,
+        subtitle: context.l10n.deviceConfigSerialConsoleSubtitle,
         value: _serialEnabled,
         onChanged: (value) {
           setState(() => _serialEnabled = value);
@@ -2085,7 +2112,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Reset Node Database',
+                          context.l10n.deviceConfigResetNodeDb,
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
@@ -2094,7 +2121,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
                         ),
                         const SizedBox(height: AppTheme.spacing2),
                         Text(
-                          'Clear all stored node information',
+                          context.l10n.deviceConfigResetNodeDbSubtitle,
                           style: TextStyle(
                             fontSize: 12,
                             color: context.textTertiary,
@@ -2138,7 +2165,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Factory Reset',
+                          context.l10n.deviceConfigFactoryReset,
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
@@ -2147,7 +2174,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
                         ),
                         const SizedBox(height: AppTheme.spacing2),
                         Text(
-                          'Reset device to factory defaults',
+                          context.l10n.deviceConfigFactoryResetSubtitle,
                           style: TextStyle(
                             fontSize: 12,
                             color: context.textTertiary,
@@ -2175,12 +2202,9 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
 
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Reset Node Database',
-      message:
-          'This will clear all stored node information from the device. '
-          'The mesh network will need to rediscover all nodes.\n\n'
-          'Are you sure you want to continue?',
-      confirmLabel: 'Reset',
+      title: context.l10n.deviceConfigResetNodeDbDialogTitle,
+      message: context.l10n.deviceConfigResetNodeDbDialogMessage,
+      confirmLabel: context.l10n.deviceConfigResetNodeDbDialogConfirm,
     );
 
     if (!mounted) return;
@@ -2188,11 +2212,17 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
       try {
         await protocol.nodeDbReset(target: target);
         if (mounted) {
-          showSuccessSnackBar(context, 'Node database reset initiated');
+          showSuccessSnackBar(
+            context,
+            context.l10n.deviceConfigResetNodeDbSuccess,
+          );
         }
       } catch (e) {
         if (mounted) {
-          showErrorSnackBar(context, 'Failed to reset: $e');
+          showErrorSnackBar(
+            context,
+            context.l10n.deviceConfigResetNodeDbError(e.toString()),
+          );
         }
       }
     }
@@ -2207,12 +2237,9 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
 
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Factory Reset',
-      message:
-          'This will reset ALL device settings to factory defaults, '
-          'including channels, configuration, and stored data.\n\n'
-          'This action cannot be undone!',
-      confirmLabel: 'Factory Reset',
+      title: context.l10n.deviceConfigFactoryResetDialogTitle,
+      message: context.l10n.deviceConfigFactoryResetDialogMessage,
+      confirmLabel: context.l10n.deviceConfigFactoryResetDialogConfirm,
     );
 
     if (!mounted) return;
@@ -2229,13 +2256,16 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
           }
           showSuccessSnackBar(
             context,
-            'Factory reset initiated - device will restart',
+            context.l10n.deviceConfigFactoryResetSuccess,
           );
         }
       } catch (e) {
         AppLogging.protocol('DeviceConfig: factoryResetDevice FAILED: $e');
         if (mounted) {
-          showErrorSnackBar(context, 'Failed to reset: $e');
+          showErrorSnackBar(
+            context,
+            context.l10n.deviceConfigFactoryResetError(e.toString()),
+          );
         }
       }
     }

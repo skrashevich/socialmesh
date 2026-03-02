@@ -1955,4 +1955,2323 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get scannerDeviceDisconnectedUnexpectedly =>
       'The device disconnected unexpectedly. It may have gone out of range or lost power.';
+
+  @override
+  String get drawerAdminSectionHeader => 'ADMIN';
+
+  @override
+  String get drawerAdminDashboard => 'Admin Dashboard';
+
+  @override
+  String get drawerNodeNotConnected => 'Not Connected';
+
+  @override
+  String get drawerNodeOnline => 'Online';
+
+  @override
+  String get drawerNodeOffline => 'Offline';
+
+  @override
+  String get drawerBadgeNew => 'NEW';
+
+  @override
+  String get drawerBadgePro => 'PRO';
+
+  @override
+  String get drawerBadgeTryIt => 'TRY IT';
+
+  @override
+  String get drawerEnterpriseSectionHeader => 'ENTERPRISE';
+
+  @override
+  String get drawerEnterpriseIncidents => 'Incidents';
+
+  @override
+  String get drawerEnterpriseTasks => 'Tasks';
+
+  @override
+  String get drawerEnterpriseFieldReports => 'Field Reports';
+
+  @override
+  String get drawerEnterpriseReports => 'Reports';
+
+  @override
+  String get drawerEnterpriseExportDenied =>
+      'Requires Supervisor or Admin role';
+
+  @override
+  String get drawerEnterpriseUserManagement => 'User Management';
+
+  @override
+  String get drawerEnterpriseDeviceManagement => 'Device Management';
+
+  @override
+  String get drawerEnterpriseOrgSettings => 'Org Settings';
+
+  @override
+  String get discoveryScanningNetwork => 'Scanning Network';
+
+  @override
+  String get discoverySearchingForNodes => 'Searching for nodes...';
+
+  @override
+  String discoveryNodesFound(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count nodes found',
+      one: '1 node found',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get discoveryUnknownNode => 'Unknown Node';
+
+  @override
+  String get discoverySignalExcellent => 'Excellent';
+
+  @override
+  String get discoverySignalGood => 'Good';
+
+  @override
+  String get discoverySignalWeak => 'Weak';
+
+  @override
+  String get discoveryDiscoveredBadge => 'DISCOVERED';
+
+  @override
+  String get meshcoreShellMenuTooltip => 'Menu';
+
+  @override
+  String get meshcoreShellDeviceTooltip => 'Device';
+
+  @override
+  String get meshcoreShellNavContacts => 'Contacts';
+
+  @override
+  String get meshcoreShellNavChannels => 'Channels';
+
+  @override
+  String get meshcoreShellNavMap => 'Map';
+
+  @override
+  String get meshcoreShellNavTools => 'Tools';
+
+  @override
+  String get meshcoreShellDefaultDeviceName => 'MeshCore';
+
+  @override
+  String meshcoreShellDisconnectedFrom(String deviceName) {
+    return 'Disconnected from $deviceName';
+  }
+
+  @override
+  String get meshcoreShellReconnectButton => 'Reconnect';
+
+  @override
+  String get meshcoreShellDrawerSectionHeader => 'MESHCORE';
+
+  @override
+  String get meshcoreShellDrawerAddContact => 'Add Contact';
+
+  @override
+  String get meshcoreShellDrawerAddChannel => 'Add Channel';
+
+  @override
+  String get meshcoreShellDrawerDiscoverContacts => 'Discover Contacts';
+
+  @override
+  String get meshcoreShellDrawerMyContactCode => 'My Contact Code';
+
+  @override
+  String get meshcoreShellDrawerSettings => 'Settings';
+
+  @override
+  String get meshcoreShellDrawerDisconnect => 'Disconnect';
+
+  @override
+  String get meshcoreShellDefaultDeviceNameFull => 'MeshCore Device';
+
+  @override
+  String get meshcoreShellNoSavedDevice => 'No saved device to reconnect to';
+
+  @override
+  String meshcoreShellReconnecting(String deviceName) {
+    return 'Reconnecting to $deviceName...';
+  }
+
+  @override
+  String meshcoreShellConnectedTo(String deviceName) {
+    return 'Connected to $deviceName';
+  }
+
+  @override
+  String meshcoreShellReconnectFailed(String error) {
+    return 'Reconnect failed: $error';
+  }
+
+  @override
+  String get meshcoreShellAddContactHint => 'Use the + button to add a contact';
+
+  @override
+  String get meshcoreShellAddChannelHint =>
+      'Use the menu to create or join a channel';
+
+  @override
+  String get meshcoreShellNotConnected => 'Not connected';
+
+  @override
+  String get meshcoreShellAdvertisementSent =>
+      'Advertisement sent - listen for responses';
+
+  @override
+  String get meshcoreShellDeviceInfoNotAvailable => 'Device info not available';
+
+  @override
+  String get meshcoreShellUnnamedNode => 'Unnamed Node';
+
+  @override
+  String get meshcoreShellScanToAddContact => 'Scan to add as contact';
+
+  @override
+  String get meshcoreShellShareContactInfo =>
+      'Share your contact code so others can message you';
+
+  @override
+  String get meshcoreShellDefaultInitials => 'MC';
+
+  @override
+  String get meshcoreShellStatusOnline => 'Online';
+
+  @override
+  String get meshcoreShellStatusOffline => 'Offline';
+
+  @override
+  String get meshcoreShellStatusConnected => 'Connected';
+
+  @override
+  String get meshcoreShellStatusConnecting => 'Connecting...';
+
+  @override
+  String get meshcoreShellStatusDisconnected => 'Disconnected';
+
+  @override
+  String get meshcoreShellSectionDeviceInfo => 'Device Information';
+
+  @override
+  String get meshcoreShellSectionQuickActions => 'Quick Actions';
+
+  @override
+  String get meshcoreShellSectionConnection => 'Connection';
+
+  @override
+  String get meshcoreShellAddContactSubtitle => 'Scan QR or enter contact code';
+
+  @override
+  String get meshcoreShellJoinChannel => 'Join Channel';
+
+  @override
+  String get meshcoreShellJoinChannelSubtitle =>
+      'Scan QR or enter channel code';
+
+  @override
+  String get meshcoreShellJoinChannelHint => 'Use the menu to join a channel';
+
+  @override
+  String get meshcoreShellShareContactSubtitle => 'Share your contact info';
+
+  @override
+  String get meshcoreShellDiscoverSubtitle =>
+      'Send advertisement to find nearby nodes';
+
+  @override
+  String get meshcoreShellAppSettings => 'App Settings';
+
+  @override
+  String get meshcoreShellAppSettingsSubtitle =>
+      'Notifications, theme, preferences';
+
+  @override
+  String get meshcoreShellInfoProtocol => 'Protocol';
+
+  @override
+  String get meshcoreShellInfoProtocolValue => 'MeshCore';
+
+  @override
+  String get meshcoreShellInfoNodeName => 'Node Name';
+
+  @override
+  String get meshcoreShellUnknown => 'Unknown';
+
+  @override
+  String get meshcoreShellInfoNodeId => 'Node ID';
+
+  @override
+  String get meshcoreShellInfoPublicKey => 'Public Key';
+
+  @override
+  String get meshcoreShellInfoStatus => 'Status';
+
+  @override
+  String get meshcoreShellDisconnecting => 'Disconnecting...';
+
+  @override
+  String get meshcoreShellDisconnect => 'Disconnect';
+
+  @override
+  String get meshcoreShellDisconnectConfirmMessage =>
+      'Are you sure you want to disconnect from this MeshCore device?';
+
+  @override
+  String get meshcoreShellAdvertisementSentListening =>
+      'Advertisement sent - listening for responses';
+
+  @override
+  String get linkDeviceBannerLinkedSuccess => 'Device linked to your profile!';
+
+  @override
+  String linkDeviceBannerLinkError(String error) {
+    return 'Failed to link: $error';
+  }
+
+  @override
+  String get linkDeviceBannerTitle => 'Link this device to your profile';
+
+  @override
+  String get linkDeviceBannerSubtitle => 'Others can find and follow you';
+
+  @override
+  String get linkDeviceBannerLinkButton => 'Link';
+
+  @override
+  String nodesScreenTitle(int count) {
+    return 'Nodes ($count)';
+  }
+
+  @override
+  String get nodesScreenScanQrCodeTooltip => 'Scan QR Code';
+
+  @override
+  String get nodesScreenHelpMenu => 'Help';
+
+  @override
+  String get nodesScreenSettingsMenu => 'Settings';
+
+  @override
+  String get nodesScreenSearchHint => 'Find a node';
+
+  @override
+  String get nodesScreenFilterAll => 'All';
+
+  @override
+  String get nodesScreenFilterActive => 'Active';
+
+  @override
+  String get nodesScreenFilterFavorites => 'Favorites';
+
+  @override
+  String get nodesScreenFilterWithPosition => 'With Position';
+
+  @override
+  String get nodesScreenFilterInactive => 'Inactive';
+
+  @override
+  String get nodesScreenFilterNew => 'New';
+
+  @override
+  String get nodesScreenFilterRf => 'RF';
+
+  @override
+  String get nodesScreenFilterMqtt => 'MQTT';
+
+  @override
+  String get nodesScreenEmptyAll => 'No nodes discovered yet';
+
+  @override
+  String get nodesScreenEmptyFiltered => 'No nodes match this filter';
+
+  @override
+  String get nodesScreenShowAllButton => 'Show all nodes';
+
+  @override
+  String get nodesScreenSectionAetherFlights => 'Aether Flights Nearby';
+
+  @override
+  String get nodesScreenSectionDiscovering => 'Discovering';
+
+  @override
+  String get nodesScreenSectionYourDevice => 'Your Device';
+
+  @override
+  String get nodesScreenSectionFavorites => 'Favorites';
+
+  @override
+  String get nodesScreenSectionActive => 'Active';
+
+  @override
+  String get nodesScreenSectionSeenRecently => 'Seen Recently';
+
+  @override
+  String get nodesScreenSectionInactive => 'Inactive';
+
+  @override
+  String get nodesScreenSectionUnknown => 'Unknown';
+
+  @override
+  String get nodesScreenSectionSignalStrong => 'Strong (>0 dB)';
+
+  @override
+  String get nodesScreenSectionSignalMedium => 'Medium (-10 to 0 dB)';
+
+  @override
+  String get nodesScreenSectionSignalWeak => 'Weak (<-10 dB)';
+
+  @override
+  String get nodesScreenSectionCharging => 'Charging';
+
+  @override
+  String get nodesScreenSectionBatteryFull => 'Full (80-100%)';
+
+  @override
+  String get nodesScreenSectionBatteryGood => 'Good (50-80%)';
+
+  @override
+  String get nodesScreenSectionBatteryLow => 'Low (20-50%)';
+
+  @override
+  String get nodesScreenSectionBatteryCritical => 'Critical (<20%)';
+
+  @override
+  String get nodesScreenConnectedDevice => 'Connected Device';
+
+  @override
+  String get nodesScreenDisconnect => 'Disconnect';
+
+  @override
+  String get nodesScreenSortRecent => 'Recent';
+
+  @override
+  String get nodesScreenSortName => 'Name';
+
+  @override
+  String get nodesScreenSortSignal => 'Signal';
+
+  @override
+  String get nodesScreenSortBattery => 'Battery';
+
+  @override
+  String get nodesScreenSortMenuMostRecent => 'Most Recent';
+
+  @override
+  String get nodesScreenSortMenuNameAZ => 'Name (A-Z)';
+
+  @override
+  String get nodesScreenSortMenuSignalStrength => 'Signal Strength';
+
+  @override
+  String get nodesScreenSortMenuBatteryLevel => 'Battery Level';
+
+  @override
+  String nodesScreenDistanceMeters(String meters) {
+    return '$meters m away';
+  }
+
+  @override
+  String nodesScreenDistanceKilometers(String km) {
+    return '$km km away';
+  }
+
+  @override
+  String get nodesScreenYouBadge => 'YOU';
+
+  @override
+  String get nodesScreenThisDevice => 'This Device';
+
+  @override
+  String get nodesScreenGps => 'GPS';
+
+  @override
+  String get nodesScreenNoGps => 'No GPS';
+
+  @override
+  String get nodesScreenLogsLabel => 'Logs:';
+
+  @override
+  String get nodesScreenHopDirect => 'Direct';
+
+  @override
+  String nodesScreenHopCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count hops',
+      one: '1 hop',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get nodesScreenTransportMqtt => 'MQTT';
+
+  @override
+  String get nodesScreenTransportRf => 'RF';
+
+  @override
+  String get nodeDetailQrSubtitle => 'Scan to add this node';
+
+  @override
+  String nodeDetailQrInfoText(String nodeId) {
+    return 'Node ID: $nodeId';
+  }
+
+  @override
+  String nodeDetailRemovedFromFavorites(String name) {
+    return '$name removed from favorites';
+  }
+
+  @override
+  String nodeDetailAddedToFavorites(String name) {
+    return '$name added to favorites';
+  }
+
+  @override
+  String nodeDetailFavoriteError(String error) {
+    return 'Failed to update favorite: $error';
+  }
+
+  @override
+  String get nodeDetailMuteNotConnected =>
+      'Cannot change mute status: Device not connected';
+
+  @override
+  String nodeDetailUnmuted(String name) {
+    return '$name unmuted';
+  }
+
+  @override
+  String nodeDetailMuted(String name) {
+    return '$name muted';
+  }
+
+  @override
+  String nodeDetailMuteError(String error) {
+    return 'Failed to update mute status: $error';
+  }
+
+  @override
+  String get nodeDetailTracerouteNotConnected =>
+      'Cannot send traceroute: Device not connected';
+
+  @override
+  String nodeDetailTracerouteSent(String name) {
+    return 'Traceroute sent to $name — check Traceroute History for results';
+  }
+
+  @override
+  String nodeDetailTracerouteError(String error) {
+    return 'Failed to send traceroute: $error';
+  }
+
+  @override
+  String get nodeDetailRebootNotConnected =>
+      'Cannot reboot: Device not connected';
+
+  @override
+  String get nodeDetailRebootTitle => 'Reboot Device';
+
+  @override
+  String get nodeDetailRebootMessage =>
+      'This will reboot your Meshtastic device. The app will automatically reconnect once the device restarts.';
+
+  @override
+  String get nodeDetailRebootConfirm => 'Reboot';
+
+  @override
+  String get nodeDetailRebootingSnackbar => 'Device is rebooting...';
+
+  @override
+  String nodeDetailRebootError(String error) {
+    return 'Failed to reboot: $error';
+  }
+
+  @override
+  String get nodeDetailShutdownNotConnected =>
+      'Cannot shutdown: Device not connected';
+
+  @override
+  String get nodeDetailShutdownTitle => 'Shutdown Device';
+
+  @override
+  String get nodeDetailShutdownMessage =>
+      'This will turn off your Meshtastic device. You will need to physically power it back on to reconnect.';
+
+  @override
+  String get nodeDetailShutdownConfirm => 'Shutdown';
+
+  @override
+  String get nodeDetailShuttingDownSnackbar => 'Device is shutting down...';
+
+  @override
+  String nodeDetailShutdownError(String error) {
+    return 'Failed to shutdown: $error';
+  }
+
+  @override
+  String get nodeDetailRemoveTitle => 'Remove Node';
+
+  @override
+  String nodeDetailRemoveMessage(String name) {
+    return 'Remove $name from the node database? This will remove the node from your local device.';
+  }
+
+  @override
+  String get nodeDetailRemoveConfirm => 'Remove';
+
+  @override
+  String nodeDetailRemovedSnackbar(String name) {
+    return '$name removed';
+  }
+
+  @override
+  String nodeDetailRemoveError(String error) {
+    return 'Failed to remove node: $error';
+  }
+
+  @override
+  String get nodeDetailNoPositionData => 'Node has no position data';
+
+  @override
+  String nodeDetailFixedPositionSet(String name) {
+    return 'Fixed position set to $name\'s location';
+  }
+
+  @override
+  String nodeDetailFixedPositionError(String error) {
+    return 'Failed to set fixed position: $error';
+  }
+
+  @override
+  String nodeDetailUserInfoRequested(String name) {
+    return 'User info requested from $name';
+  }
+
+  @override
+  String nodeDetailUserInfoError(String error) {
+    return 'Failed to request user info: $error';
+  }
+
+  @override
+  String nodeDetailPositionRequested(String name) {
+    return 'Position requested from $name';
+  }
+
+  @override
+  String nodeDetailPositionError(String error) {
+    return 'Failed to request position: $error';
+  }
+
+  @override
+  String get nodeDetailLastHeardNever => 'Never';
+
+  @override
+  String get nodeDetailLastHeardJustNow => 'Just now';
+
+  @override
+  String nodeDetailLastHeardMinutesAgo(int minutes) {
+    return '${minutes}m ago';
+  }
+
+  @override
+  String nodeDetailLastHeardHoursAgo(int hours) {
+    return '${hours}h ago';
+  }
+
+  @override
+  String nodeDetailLastHeardDaysAgo(int days) {
+    return '${days}d ago';
+  }
+
+  @override
+  String get nodeDetailSignalUnknown => 'Unknown';
+
+  @override
+  String get nodeDetailSignalExcellent => 'Excellent';
+
+  @override
+  String get nodeDetailSignalGood => 'Good';
+
+  @override
+  String get nodeDetailSignalFair => 'Fair';
+
+  @override
+  String get nodeDetailSignalWeak => 'Weak';
+
+  @override
+  String get nodeDetailSignalVeryWeak => 'Very Weak';
+
+  @override
+  String get nodeDetailYouBadge => 'YOU';
+
+  @override
+  String get nodeDetailPkiBadge => 'PKI';
+
+  @override
+  String get nodeDetailNoPkiBadge => 'No PKI';
+
+  @override
+  String get nodeDetailMutedBadge => 'Muted';
+
+  @override
+  String get nodeDetailFavoriteBadge => 'Favorite';
+
+  @override
+  String get nodeDetailBatteryCharging => 'Charging';
+
+  @override
+  String nodeDetailBatteryPercent(int level) {
+    return '$level%';
+  }
+
+  @override
+  String nodeDetailDistanceMeters(String meters) {
+    return '$meters m';
+  }
+
+  @override
+  String nodeDetailDistanceKilometers(String km) {
+    return '$km km';
+  }
+
+  @override
+  String get nodeDetailSectionIdentity => 'Identity';
+
+  @override
+  String get nodeDetailLabelUserId => 'User ID';
+
+  @override
+  String get nodeDetailLabelHardware => 'Hardware';
+
+  @override
+  String get nodeDetailLabelFirmware => 'Firmware';
+
+  @override
+  String get nodeDetailLabelEncryption => 'Encryption';
+
+  @override
+  String get nodeDetailValuePkiEnabled => 'PKI Enabled';
+
+  @override
+  String get nodeDetailValueNoPublicKey => 'No Public Key';
+
+  @override
+  String get nodeDetailLabelStatus => 'Status';
+
+  @override
+  String get nodeDetailSectionRadio => 'Radio';
+
+  @override
+  String get nodeDetailLabelRssi => 'RSSI';
+
+  @override
+  String nodeDetailValueRssi(int rssi) {
+    return '$rssi dBm';
+  }
+
+  @override
+  String get nodeDetailLabelSnr => 'SNR';
+
+  @override
+  String nodeDetailValueSnr(String snr) {
+    return '$snr dB';
+  }
+
+  @override
+  String get nodeDetailLabelNoiseFloor => 'Noise Floor';
+
+  @override
+  String nodeDetailValueNoiseFloor(int noiseFloor) {
+    return '$noiseFloor dBm';
+  }
+
+  @override
+  String get nodeDetailLabelDistance => 'Distance';
+
+  @override
+  String get nodeDetailLabelPosition => 'Position';
+
+  @override
+  String get nodeDetailLabelAltitude => 'Altitude';
+
+  @override
+  String nodeDetailValueAltitude(int altitude) {
+    return '$altitude m';
+  }
+
+  @override
+  String get nodeDetailSectionDeviceMetrics => 'Device Metrics';
+
+  @override
+  String get nodeDetailLabelBattery => 'Battery';
+
+  @override
+  String get nodeDetailLabelVoltage => 'Voltage';
+
+  @override
+  String nodeDetailValueVoltage(String voltage) {
+    return '$voltage V';
+  }
+
+  @override
+  String get nodeDetailLabelChannelUtil => 'Channel Util';
+
+  @override
+  String nodeDetailValuePercent(String value) {
+    return '$value%';
+  }
+
+  @override
+  String get nodeDetailLabelAirUtilTx => 'Air Util TX';
+
+  @override
+  String get nodeDetailLabelUptime => 'Uptime';
+
+  @override
+  String get nodeDetailSectionNetwork => 'Network';
+
+  @override
+  String get nodeDetailLabelPacketsTx => 'Packets TX';
+
+  @override
+  String get nodeDetailLabelPacketsRx => 'Packets RX';
+
+  @override
+  String get nodeDetailLabelBadPackets => 'Bad Packets';
+
+  @override
+  String get nodeDetailLabelOnlineNodes => 'Online Nodes';
+
+  @override
+  String get nodeDetailLabelTotalNodes => 'Total Nodes';
+
+  @override
+  String get nodeDetailLabelTxDropped => 'TX Dropped';
+
+  @override
+  String get nodeDetailSectionTraffic => 'Traffic Management';
+
+  @override
+  String get nodeDetailLabelInspected => 'Inspected';
+
+  @override
+  String get nodeDetailLabelPositionDedup => 'Position Dedup';
+
+  @override
+  String get nodeDetailLabelCacheHits => 'Cache Hits';
+
+  @override
+  String get nodeDetailLabelRateLimitDrops => 'Rate Limit Drops';
+
+  @override
+  String get nodeDetailLabelUnknownDrops => 'Unknown Drops';
+
+  @override
+  String get nodeDetailLabelHopExhausted => 'Hop Exhausted';
+
+  @override
+  String get nodeDetailLabelHopsPreserved => 'Hops Preserved';
+
+  @override
+  String get nodeDetailRebootButton => 'Reboot';
+
+  @override
+  String get nodeDetailShutdownButton => 'Shutdown';
+
+  @override
+  String get nodeDetailRemoveFromFavoritesTooltip => 'Remove from favorites';
+
+  @override
+  String get nodeDetailAddToFavoritesTooltip => 'Add to favorites';
+
+  @override
+  String get nodeDetailUnmuteTooltip => 'Unmute node';
+
+  @override
+  String get nodeDetailMuteTooltip => 'Mute node';
+
+  @override
+  String get nodeDetailMessageButton => 'Message';
+
+  @override
+  String get nodeDetailAppBarTitle => 'Node Details';
+
+  @override
+  String get nodeDetailSigilCardTooltip => 'Sigil Card';
+
+  @override
+  String get nodeDetailMenuQrCode => 'QR Code';
+
+  @override
+  String get nodeDetailMenuShowOnMap => 'Show on Map';
+
+  @override
+  String get nodeDetailMenuTracerouteHistory => 'Traceroute History';
+
+  @override
+  String get nodeDetailMenuRequestUserInfo => 'Request User Info';
+
+  @override
+  String get nodeDetailMenuExchangePositions => 'Exchange Positions';
+
+  @override
+  String get nodeDetailMenuSetFixedPosition => 'Set as Fixed Position';
+
+  @override
+  String get nodeDetailMenuAdminSettings => 'Admin Settings';
+
+  @override
+  String get nodeDetailMenuAdminSubtitle => 'Configure this node remotely';
+
+  @override
+  String get nodeDetailMenuRemoveNode => 'Remove Node';
+
+  @override
+  String nodeDetailLastHeardTimestamp(String timestamp) {
+    return 'Last heard $timestamp';
+  }
+
+  @override
+  String nodeDetailTracerouteCooldownTooltip(int seconds) {
+    return 'Traceroute cooldown: ${seconds}s';
+  }
+
+  @override
+  String get nodeDetailTracerouteTooltip => 'Traceroute';
+
+  @override
+  String get deviceConfigRoleClient => 'Client';
+
+  @override
+  String get deviceConfigRoleClientDesc =>
+      'Default role. Mesh packets are routed through this node. Can send and receive messages.';
+
+  @override
+  String get deviceConfigRoleClientMute => 'Client Mute';
+
+  @override
+  String get deviceConfigRoleClientMuteDesc =>
+      'Same as client but will not transmit any messages from itself. Useful for monitoring.';
+
+  @override
+  String get deviceConfigRoleClientHidden => 'Client Hidden';
+
+  @override
+  String get deviceConfigRoleClientHiddenDesc =>
+      'Acts as client but hides from the node list. Still routes traffic.';
+
+  @override
+  String get deviceConfigRoleClientBase => 'Client Base';
+
+  @override
+  String get deviceConfigRoleClientBaseDesc =>
+      'Base station for favorited nodes. Routes their packets like a router, others as client.';
+
+  @override
+  String get deviceConfigRoleRouter => 'Router';
+
+  @override
+  String get deviceConfigRoleRouterDesc =>
+      'Routes mesh packets between nodes. Screen and Bluetooth disabled to conserve power.';
+
+  @override
+  String get deviceConfigRoleRouterLate => 'Router Late';
+
+  @override
+  String get deviceConfigRoleRouterLateDesc =>
+      'Rebroadcasts all packets after other routers. Extends coverage without consuming priority hops.';
+
+  @override
+  String get deviceConfigRoleTracker => 'Tracker';
+
+  @override
+  String get deviceConfigRoleTrackerDesc =>
+      'Optimized for GPS tracking. Sends position updates at defined intervals.';
+
+  @override
+  String get deviceConfigRoleSensor => 'Sensor';
+
+  @override
+  String get deviceConfigRoleSensorDesc =>
+      'Designed for remote sensing. Reports telemetry data at defined intervals.';
+
+  @override
+  String get deviceConfigRoleTak => 'TAK';
+
+  @override
+  String get deviceConfigRoleTakDesc =>
+      'Team Awareness Kit integration. Bridges Meshtastic and TAK systems.';
+
+  @override
+  String get deviceConfigRoleTakTracker => 'TAK Tracker';
+
+  @override
+  String get deviceConfigRoleTakTrackerDesc =>
+      'Combination of TAK and Tracker modes.';
+
+  @override
+  String get deviceConfigRoleLostAndFound => 'Lost and Found';
+
+  @override
+  String get deviceConfigRoleLostAndFoundDesc =>
+      'Optimized for finding lost devices. Sends periodic beacons.';
+
+  @override
+  String get deviceConfigRebroadcastAll => 'All';
+
+  @override
+  String get deviceConfigRebroadcastAllDesc =>
+      'Rebroadcast any observed message. Default behavior.';
+
+  @override
+  String get deviceConfigRebroadcastAllSkipDecoding => 'All (Skip Decoding)';
+
+  @override
+  String get deviceConfigRebroadcastAllSkipDecodingDesc =>
+      'Rebroadcast all messages without decoding. Faster, less CPU.';
+
+  @override
+  String get deviceConfigRebroadcastLocalOnly => 'Local Only';
+
+  @override
+  String get deviceConfigRebroadcastLocalOnlyDesc =>
+      'Only rebroadcast messages from local senders. Good for isolated networks.';
+
+  @override
+  String get deviceConfigRebroadcastKnownOnly => 'Known Only';
+
+  @override
+  String get deviceConfigRebroadcastKnownOnlyDesc =>
+      'Only rebroadcast messages from nodes in the node database.';
+
+  @override
+  String get deviceConfigRebroadcastCorePortnumsOnly =>
+      'Core Port Numbers Only';
+
+  @override
+  String get deviceConfigRebroadcastCorePortnumsOnlyDesc =>
+      'Rebroadcast only core Meshtastic packets (position, telemetry, etc).';
+
+  @override
+  String get deviceConfigRebroadcastNone => 'None';
+
+  @override
+  String get deviceConfigRebroadcastNoneDesc =>
+      'Do not rebroadcast any messages. Node only receives.';
+
+  @override
+  String get deviceConfigBuzzerAllEnabled => 'All Enabled';
+
+  @override
+  String get deviceConfigBuzzerAllEnabledDesc =>
+      'Buzzer sounds for all feedback including buttons and alerts.';
+
+  @override
+  String get deviceConfigBuzzerNotificationsOnly => 'Notifications Only';
+
+  @override
+  String get deviceConfigBuzzerNotificationsOnlyDesc =>
+      'Buzzer only for notifications and alerts, not button presses.';
+
+  @override
+  String get deviceConfigBuzzerDirectMsgOnly => 'Direct Messages Only';
+
+  @override
+  String get deviceConfigBuzzerDirectMsgOnlyDesc =>
+      'Buzzer only for direct messages and alerts.';
+
+  @override
+  String get deviceConfigBuzzerSystemOnly => 'System Only';
+
+  @override
+  String get deviceConfigBuzzerSystemOnlyDesc =>
+      'Button presses, startup, shutdown sounds only. No alerts.';
+
+  @override
+  String get deviceConfigBuzzerDisabled => 'Disabled';
+
+  @override
+  String get deviceConfigBuzzerDisabledDesc =>
+      'All buzzer audio feedback is disabled.';
+
+  @override
+  String get deviceConfigBroadcastThreeHours => 'Three Hours';
+
+  @override
+  String get deviceConfigBroadcastFourHours => 'Four Hours';
+
+  @override
+  String get deviceConfigBroadcastFiveHours => 'Five Hours';
+
+  @override
+  String get deviceConfigBroadcastSixHours => 'Six Hours';
+
+  @override
+  String get deviceConfigBroadcastTwelveHours => 'Twelve Hours';
+
+  @override
+  String get deviceConfigBroadcastEighteenHours => 'Eighteen Hours';
+
+  @override
+  String get deviceConfigBroadcastTwentyFourHours => 'Twenty Four Hours';
+
+  @override
+  String get deviceConfigBroadcastThirtySixHours => 'Thirty Six Hours';
+
+  @override
+  String get deviceConfigBroadcastFortyEightHours => 'Forty Eight Hours';
+
+  @override
+  String get deviceConfigBroadcastSeventyTwoHours => 'Seventy Two Hours';
+
+  @override
+  String get deviceConfigBroadcastNever => 'Never';
+
+  @override
+  String get deviceConfigTitleRemote => 'Device Config (Remote)';
+
+  @override
+  String get deviceConfigTitle => 'Device Config';
+
+  @override
+  String get deviceConfigSave => 'Save';
+
+  @override
+  String get deviceConfigSaveChangesTitle => 'Save Changes?';
+
+  @override
+  String get deviceConfigSaveChangesMessage =>
+      'Saving device configuration will cause the device to reboot. You will be briefly disconnected while the device restarts.';
+
+  @override
+  String get deviceConfigSaveAndReboot => 'Save & Reboot';
+
+  @override
+  String get deviceConfigSavedRemote => 'Configuration sent to remote node';
+
+  @override
+  String get deviceConfigSavedLocal => 'Configuration saved - device rebooting';
+
+  @override
+  String deviceConfigSaveError(String error) {
+    return 'Error saving config: $error';
+  }
+
+  @override
+  String get deviceConfigLongName => 'Long Name';
+
+  @override
+  String get deviceConfigLongNameSubtitle => 'Display name visible on the mesh';
+
+  @override
+  String get deviceConfigLongNameHint => 'Enter display name';
+
+  @override
+  String get deviceConfigShortName => 'Short Name';
+
+  @override
+  String deviceConfigShortNameSubtitle(int maxLength) {
+    return 'Max $maxLength characters (A-Z, 0-9)';
+  }
+
+  @override
+  String get deviceConfigShortNameHint => 'e.g. FUZZ';
+
+  @override
+  String get deviceConfigNameHelpText =>
+      'Your device name is broadcast to the mesh and visible to other nodes.';
+
+  @override
+  String get deviceConfigSectionUserFlags => 'User Flags';
+
+  @override
+  String get deviceConfigSectionDeviceInfo => 'Device Info';
+
+  @override
+  String get deviceConfigSectionDeviceRole => 'Device Role';
+
+  @override
+  String get deviceConfigSectionRebroadcastMode => 'Rebroadcast Mode';
+
+  @override
+  String get deviceConfigSectionNodeInfoBroadcast => 'Node Info Broadcast';
+
+  @override
+  String get deviceConfigSectionButtonInput => 'Button & Input';
+
+  @override
+  String get deviceConfigSectionBuzzer => 'Buzzer';
+
+  @override
+  String get deviceConfigSectionLed => 'LED';
+
+  @override
+  String get deviceConfigSectionSerial => 'Serial';
+
+  @override
+  String get deviceConfigSectionTimezone => 'Timezone';
+
+  @override
+  String get deviceConfigSectionGpio => 'GPIO (Advanced)';
+
+  @override
+  String get deviceConfigSectionDangerZone => 'Danger Zone';
+
+  @override
+  String get deviceConfigBleName => 'BLE Name';
+
+  @override
+  String get deviceConfigHardware => 'Hardware';
+
+  @override
+  String get deviceConfigUserId => 'User ID';
+
+  @override
+  String get deviceConfigNodeNumber => 'Node Number';
+
+  @override
+  String get deviceConfigUnknown => 'Unknown';
+
+  @override
+  String get deviceConfigBroadcastInterval => 'Broadcast Interval';
+
+  @override
+  String get deviceConfigBroadcastIntervalSubtitle =>
+      'How often to broadcast node info to the mesh';
+
+  @override
+  String get deviceConfigDoubleTapAsButton => 'Double Tap as Button';
+
+  @override
+  String get deviceConfigDoubleTapAsButtonSubtitle =>
+      'Treat accelerometer double-tap as button press';
+
+  @override
+  String get deviceConfigDisableTripleClick => 'Disable Triple Click';
+
+  @override
+  String get deviceConfigDisableTripleClickSubtitle =>
+      'Disable triple-click to toggle GPS';
+
+  @override
+  String get deviceConfigDisableLedHeartbeat => 'Disable LED Heartbeat';
+
+  @override
+  String get deviceConfigDisableLedHeartbeatSubtitle =>
+      'Turn off the blinking status LED';
+
+  @override
+  String get deviceConfigSerialConsole => 'Serial Console';
+
+  @override
+  String get deviceConfigSerialConsoleSubtitle =>
+      'Enable serial port for debugging';
+
+  @override
+  String get deviceConfigPosixTimezone => 'POSIX Timezone';
+
+  @override
+  String get deviceConfigPosixTimezoneExample => 'e.g. EST5EDT,M3.2.0,M11.1.0';
+
+  @override
+  String get deviceConfigPosixTimezoneHint => 'Leave empty for UTC';
+
+  @override
+  String get deviceConfigGpioWarning =>
+      'Only change these if you know your hardware requires custom GPIO pins.';
+
+  @override
+  String get deviceConfigButtonGpio => 'Button GPIO';
+
+  @override
+  String get deviceConfigBuzzerGpio => 'Buzzer GPIO';
+
+  @override
+  String get deviceConfigUnmessagable => 'Unmessagable';
+
+  @override
+  String get deviceConfigUnmessagableSubtitle =>
+      'Mark as infrastructure node that won\'t respond to messages';
+
+  @override
+  String get deviceConfigLicensedOperator => 'Licensed Operator (Ham)';
+
+  @override
+  String get deviceConfigLicensedOperatorSubtitle =>
+      'Sets call sign, overrides frequency/power, disables encryption';
+
+  @override
+  String get deviceConfigHamModeInfo =>
+      'Ham mode uses your long name as call sign (max 8 chars), broadcasts node info every 10 minutes, overrides frequency, duty cycle, and TX power, and disables encryption.';
+
+  @override
+  String get deviceConfigHamModeWarning =>
+      'HAM nodes cannot relay encrypted traffic. Other non-HAM nodes in your mesh will not be able to route encrypted messages through this node, creating a relay gap in the network.';
+
+  @override
+  String get deviceConfigFrequencyOverride => 'Frequency Override (MHz)';
+
+  @override
+  String get deviceConfigFrequencyOverrideHint => '0.0 (use default)';
+
+  @override
+  String get deviceConfigTxPower => 'TX Power';
+
+  @override
+  String deviceConfigTxPowerValue(int power) {
+    return '$power dBm';
+  }
+
+  @override
+  String get deviceConfigRemoteAdminTitle => 'Remote Administration';
+
+  @override
+  String deviceConfigRemoteAdminConfiguring(String nodeName) {
+    return 'Configuring: $nodeName';
+  }
+
+  @override
+  String get deviceConfigRebootWarning =>
+      'Changes to device configuration will cause the device to reboot.';
+
+  @override
+  String get deviceConfigResetNodeDb => 'Reset Node Database';
+
+  @override
+  String get deviceConfigResetNodeDbSubtitle =>
+      'Clear all stored node information';
+
+  @override
+  String get deviceConfigFactoryReset => 'Factory Reset';
+
+  @override
+  String get deviceConfigFactoryResetSubtitle =>
+      'Reset device to factory defaults';
+
+  @override
+  String get deviceConfigResetNodeDbDialogTitle => 'Reset Node Database';
+
+  @override
+  String get deviceConfigResetNodeDbDialogMessage =>
+      'This will clear all stored node information from the device. The mesh network will need to rediscover all nodes.\n\nAre you sure you want to continue?';
+
+  @override
+  String get deviceConfigResetNodeDbDialogConfirm => 'Reset';
+
+  @override
+  String get deviceConfigResetNodeDbSuccess => 'Node database reset initiated';
+
+  @override
+  String deviceConfigResetNodeDbError(String error) {
+    return 'Failed to reset: $error';
+  }
+
+  @override
+  String get deviceConfigFactoryResetDialogTitle => 'Factory Reset';
+
+  @override
+  String get deviceConfigFactoryResetDialogMessage =>
+      'This will reset ALL device settings to factory defaults, including channels, configuration, and stored data.\n\nThis action cannot be undone!';
+
+  @override
+  String get deviceConfigFactoryResetDialogConfirm => 'Factory Reset';
+
+  @override
+  String get deviceConfigFactoryResetSuccess =>
+      'Factory reset initiated - device will restart';
+
+  @override
+  String deviceConfigFactoryResetError(String error) {
+    return 'Failed to reset: $error';
+  }
+
+  @override
+  String get deviceSheetNoDevice => 'No Device';
+
+  @override
+  String get deviceSheetReconnecting => 'Reconnecting...';
+
+  @override
+  String get deviceSheetConnecting => 'Connecting...';
+
+  @override
+  String get deviceSheetConnected => 'Connected';
+
+  @override
+  String get deviceSheetDisconnecting => 'Disconnecting...';
+
+  @override
+  String get deviceSheetError => 'Error';
+
+  @override
+  String get deviceSheetDisconnected => 'Disconnected';
+
+  @override
+  String get deviceSheetSectionConnectionDetails => 'Connection Details';
+
+  @override
+  String get deviceSheetSectionQuickActions => 'Quick Actions';
+
+  @override
+  String get deviceSheetSectionDeveloperTools => 'Developer Tools';
+
+  @override
+  String get deviceSheetActionDeviceConfig => 'Device Config';
+
+  @override
+  String get deviceSheetActionDeviceConfigSubtitle =>
+      'Configure device role and settings';
+
+  @override
+  String get deviceSheetActionDeviceManagement => 'Device Management';
+
+  @override
+  String get deviceSheetActionDeviceManagementSubtitle =>
+      'Radio, display, power, and position settings';
+
+  @override
+  String get deviceSheetActionScanQr => 'Scan QR Code';
+
+  @override
+  String get deviceSheetActionScanQrSubtitle =>
+      'Import nodes, channels, or automations';
+
+  @override
+  String get deviceSheetActionAppSettings => 'App Settings';
+
+  @override
+  String get deviceSheetActionAppSettingsSubtitle =>
+      'Notifications, theme, preferences';
+
+  @override
+  String get deviceSheetActionResetNodeDb => 'Reset Node Database';
+
+  @override
+  String get deviceSheetActionResetNodeDbSubtitle =>
+      'Clear all learned nodes from device';
+
+  @override
+  String get deviceSheetDisconnectingButton => 'Disconnecting...';
+
+  @override
+  String get deviceSheetDisconnectButton => 'Disconnect';
+
+  @override
+  String get deviceSheetScanForDevices => 'Scan for Devices';
+
+  @override
+  String get deviceSheetDisconnectDialogTitle => 'Disconnect';
+
+  @override
+  String get deviceSheetDisconnectDialogMessage =>
+      'Are you sure you want to disconnect from this device?';
+
+  @override
+  String get deviceSheetDisconnectDialogConfirm => 'Disconnect';
+
+  @override
+  String get deviceSheetResetNodeDbDialogTitle => 'Reset Node Database';
+
+  @override
+  String get deviceSheetResetNodeDbDialogMessage =>
+      'This will clear all learned nodes from the device and app. The device will need to rediscover nodes on the mesh.\n\nAre you sure you want to continue?';
+
+  @override
+  String get deviceSheetResetNodeDbDialogConfirm => 'Reset';
+
+  @override
+  String get deviceSheetResetNodeDbSuccess =>
+      'Node database reset successfully';
+
+  @override
+  String deviceSheetResetNodeDbError(String error) {
+    return 'Failed to reset node database: $error';
+  }
+
+  @override
+  String get deviceSheetProtocol => 'Protocol';
+
+  @override
+  String get deviceSheetNodeName => 'Node Name';
+
+  @override
+  String get deviceSheetDeviceName => 'Device Name';
+
+  @override
+  String get deviceSheetUnknown => 'Unknown';
+
+  @override
+  String get deviceSheetFirmware => 'Firmware';
+
+  @override
+  String get deviceSheetNodeId => 'Node ID';
+
+  @override
+  String get deviceSheetStatus => 'Status';
+
+  @override
+  String get deviceSheetConnectionType => 'Connection Type';
+
+  @override
+  String get deviceSheetBluetoothLe => 'Bluetooth LE';
+
+  @override
+  String get deviceSheetUsb => 'USB';
+
+  @override
+  String get deviceSheetAddress => 'Address';
+
+  @override
+  String get deviceSheetSignalStrength => 'Signal Strength';
+
+  @override
+  String deviceSheetSignalStrengthValue(String rssi) {
+    return '$rssi dBm';
+  }
+
+  @override
+  String get deviceSheetBattery => 'Battery';
+
+  @override
+  String get deviceSheetCharging => 'Charging';
+
+  @override
+  String deviceSheetBatteryPercent(String percent) {
+    return '$percent%';
+  }
+
+  @override
+  String get deviceSheetInfoCardConnecting => 'Connecting...';
+
+  @override
+  String get deviceSheetInfoCardConnected => 'Connected';
+
+  @override
+  String get deviceSheetInfoCardDisconnecting => 'Disconnecting...';
+
+  @override
+  String get deviceSheetInfoCardConnectionError => 'Connection Error';
+
+  @override
+  String get deviceSheetInfoCardDisconnected => 'Disconnected';
+
+  @override
+  String get deviceSheetRefreshingBattery => 'Refreshing battery...';
+
+  @override
+  String deviceSheetBatteryRefreshResult(String percent, String millivolts) {
+    return '$percent%$millivolts';
+  }
+
+  @override
+  String get deviceSheetBatteryRefreshFailed => 'Failed';
+
+  @override
+  String get deviceSheetBatteryRefreshIdle => 'Fetch battery from device';
+
+  @override
+  String get deviceSheetRefreshBattery => 'Refresh Battery';
+
+  @override
+  String get regionSelectionTitleInitial => 'Select Your Region';
+
+  @override
+  String get regionSelectionTitleChange => 'Change Region';
+
+  @override
+  String get regionSelectionBannerTitle => 'Important: Select Your Region';
+
+  @override
+  String get regionSelectionBannerSubtitle =>
+      'Choose the correct frequency for your location to comply with local regulations.';
+
+  @override
+  String get regionSelectionSearchHint => 'Search regions...';
+
+  @override
+  String get regionSelectionApplying => 'Applying...';
+
+  @override
+  String get regionSelectionContinue => 'Continue';
+
+  @override
+  String get regionSelectionSave => 'Save';
+
+  @override
+  String get regionSelectionCurrentBadge => 'CURRENT';
+
+  @override
+  String get regionSelectionApplyDialogTitle => 'Apply Region';
+
+  @override
+  String get regionSelectionApplyDialogMessageInitial =>
+      'Your device will reboot to apply the region settings. This may take up to 30 seconds.\n\nThe app will automatically reconnect when ready.';
+
+  @override
+  String get regionSelectionApplyDialogMessageChange =>
+      'Changing the region will cause your device to reboot. This may take up to 30 seconds.\n\nYou will be briefly disconnected while the device restarts.';
+
+  @override
+  String get regionSelectionApplyDialogConfirm => 'Continue';
+
+  @override
+  String get regionSelectionDeviceDisconnected =>
+      'Device disconnected. Please reconnect and try again.';
+
+  @override
+  String get regionSelectionReconnectTimeout =>
+      'Reconnect timed out. Please try again.';
+
+  @override
+  String get regionSelectionPairingInvalidation =>
+      'Your phone removed the stored pairing info for this device.\nGo to Settings > Bluetooth, forget the Meshtastic device, and try again.';
+
+  @override
+  String regionSelectionSetRegionError(String error) {
+    return 'Failed to set region: $error';
+  }
+
+  @override
+  String get regionSelectionOpenBluetoothSettingsError =>
+      'Could not open Bluetooth Settings. Please open Settings > Bluetooth manually.';
+
+  @override
+  String get regionSelectionPairingHintMessage =>
+      'Bluetooth pairing was removed. Forget \"Meshtastic_XXXX\" in Settings > Bluetooth and reconnect to continue.';
+
+  @override
+  String get regionSelectionBluetoothSettings => 'Bluetooth Settings';
+
+  @override
+  String get regionSelectionViewScanner => 'View Scanner';
+
+  @override
+  String get regionSelectionRegionUs => 'United States';
+
+  @override
+  String get regionSelectionRegionUsFreq => '915 MHz';
+
+  @override
+  String get regionSelectionRegionUsDesc => 'US, Canada, Mexico';
+
+  @override
+  String get regionSelectionRegionEu868 => 'Europe 868';
+
+  @override
+  String get regionSelectionRegionEu868Freq => '868 MHz';
+
+  @override
+  String get regionSelectionRegionEu868Desc => 'EU, UK, and most of Europe';
+
+  @override
+  String get regionSelectionRegionEu433 => 'Europe 433';
+
+  @override
+  String get regionSelectionRegionEu433Freq => '433 MHz';
+
+  @override
+  String get regionSelectionRegionEu433Desc => 'EU alternate frequency';
+
+  @override
+  String get regionSelectionRegionAnz => 'Australia/NZ';
+
+  @override
+  String get regionSelectionRegionAnzFreq => '915 MHz';
+
+  @override
+  String get regionSelectionRegionAnzDesc => 'Australia and New Zealand';
+
+  @override
+  String get regionSelectionRegionCn => 'China';
+
+  @override
+  String get regionSelectionRegionCnFreq => '470 MHz';
+
+  @override
+  String get regionSelectionRegionCnDesc => 'China';
+
+  @override
+  String get regionSelectionRegionJp => 'Japan';
+
+  @override
+  String get regionSelectionRegionJpFreq => '920 MHz';
+
+  @override
+  String get regionSelectionRegionJpDesc => 'Japan';
+
+  @override
+  String get regionSelectionRegionKr => 'Korea';
+
+  @override
+  String get regionSelectionRegionKrFreq => '920 MHz';
+
+  @override
+  String get regionSelectionRegionKrDesc => 'South Korea';
+
+  @override
+  String get regionSelectionRegionTw => 'Taiwan';
+
+  @override
+  String get regionSelectionRegionTwFreq => '923 MHz';
+
+  @override
+  String get regionSelectionRegionTwDesc => 'Taiwan';
+
+  @override
+  String get regionSelectionRegionRu => 'Russia';
+
+  @override
+  String get regionSelectionRegionRuFreq => '868 MHz';
+
+  @override
+  String get regionSelectionRegionRuDesc => 'Russia';
+
+  @override
+  String get regionSelectionRegionIn => 'India';
+
+  @override
+  String get regionSelectionRegionInFreq => '865 MHz';
+
+  @override
+  String get regionSelectionRegionInDesc => 'India';
+
+  @override
+  String get regionSelectionRegionNz865 => 'New Zealand 865';
+
+  @override
+  String get regionSelectionRegionNz865Freq => '865 MHz';
+
+  @override
+  String get regionSelectionRegionNz865Desc => 'New Zealand alternate';
+
+  @override
+  String get regionSelectionRegionTh => 'Thailand';
+
+  @override
+  String get regionSelectionRegionThFreq => '920 MHz';
+
+  @override
+  String get regionSelectionRegionThDesc => 'Thailand';
+
+  @override
+  String get regionSelectionRegionUa433 => 'Ukraine 433';
+
+  @override
+  String get regionSelectionRegionUa433Freq => '433 MHz';
+
+  @override
+  String get regionSelectionRegionUa433Desc => 'Ukraine';
+
+  @override
+  String get regionSelectionRegionUa868 => 'Ukraine 868';
+
+  @override
+  String get regionSelectionRegionUa868Freq => '868 MHz';
+
+  @override
+  String get regionSelectionRegionUa868Desc => 'Ukraine';
+
+  @override
+  String get regionSelectionRegionMy433 => 'Malaysia 433';
+
+  @override
+  String get regionSelectionRegionMy433Freq => '433 MHz';
+
+  @override
+  String get regionSelectionRegionMy433Desc => 'Malaysia';
+
+  @override
+  String get regionSelectionRegionMy919 => 'Malaysia 919';
+
+  @override
+  String get regionSelectionRegionMy919Freq => '919 MHz';
+
+  @override
+  String get regionSelectionRegionMy919Desc => 'Malaysia';
+
+  @override
+  String get regionSelectionRegionSg923 => 'Singapore';
+
+  @override
+  String get regionSelectionRegionSg923Freq => '923 MHz';
+
+  @override
+  String get regionSelectionRegionSg923Desc => 'Singapore';
+
+  @override
+  String get regionSelectionRegionLora24 => '2.4 GHz';
+
+  @override
+  String get regionSelectionRegionLora24Freq => '2.4 GHz';
+
+  @override
+  String get regionSelectionRegionLora24Desc => 'Worldwide 2.4GHz band';
+
+  @override
+  String get gpsStatusTitle => 'GPS Status';
+
+  @override
+  String get gpsStatusSectionPosition => 'Position';
+
+  @override
+  String get gpsStatusSectionMotion => 'Motion';
+
+  @override
+  String get gpsStatusSectionSatellites => 'Satellites';
+
+  @override
+  String get gpsStatusSectionLastUpdate => 'Last Update';
+
+  @override
+  String get gpsStatusLatitude => 'Latitude';
+
+  @override
+  String gpsStatusLatitudeValue(String value) {
+    return '$value°';
+  }
+
+  @override
+  String get gpsStatusLongitude => 'Longitude';
+
+  @override
+  String gpsStatusLongitudeValue(String value) {
+    return '$value°';
+  }
+
+  @override
+  String get gpsStatusAltitude => 'Altitude';
+
+  @override
+  String gpsStatusAltitudeValue(String meters) {
+    return '${meters}m';
+  }
+
+  @override
+  String get gpsStatusAccuracy => 'Accuracy';
+
+  @override
+  String gpsStatusAccuracyValue(String meters) {
+    return '±${meters}m';
+  }
+
+  @override
+  String get gpsStatusPrecisionBits => 'Precision Bits';
+
+  @override
+  String get gpsStatusUnknown => 'Unknown';
+
+  @override
+  String get gpsStatusGroundSpeed => 'Ground Speed';
+
+  @override
+  String gpsStatusGroundSpeedValue(String mps, String kmh) {
+    return '$mps m/s ($kmh km/h)';
+  }
+
+  @override
+  String get gpsStatusGroundTrack => 'Ground Track';
+
+  @override
+  String gpsStatusGroundTrackValue(String degrees, String direction) {
+    return '$degrees° $direction';
+  }
+
+  @override
+  String get gpsStatusOpenInMaps => 'Open in Maps';
+
+  @override
+  String get gpsStatusNoGpsFix => 'No GPS Fix';
+
+  @override
+  String get gpsStatusNoGpsFixMessage =>
+      'The device has not acquired a GPS position yet. Make sure the device has a clear view of the sky.';
+
+  @override
+  String get gpsStatusSatellitesInView => 'Satellites in View';
+
+  @override
+  String get gpsStatusSatNoFix => 'No Fix';
+
+  @override
+  String get gpsStatusSatPoor => 'Poor';
+
+  @override
+  String get gpsStatusSatFair => 'Fair';
+
+  @override
+  String get gpsStatusSatGood => 'Good';
+
+  @override
+  String get gpsStatusFixAcquired => 'GPS Fix Acquired';
+
+  @override
+  String get gpsStatusAcquiring => 'Acquiring GPS...';
+
+  @override
+  String gpsStatusSatellitesCount(int count) {
+    return '$count satellites in view';
+  }
+
+  @override
+  String get gpsStatusSearchingSatellites => 'Searching for satellites...';
+
+  @override
+  String get gpsStatusActiveBadge => 'ACTIVE';
+
+  @override
+  String gpsStatusTodayAt(String time) {
+    return 'Today at $time';
+  }
+
+  @override
+  String gpsStatusDateAt(String date, String time) {
+    return '$date $time';
+  }
+
+  @override
+  String gpsStatusSecondsAgo(int count) {
+    return '$count seconds ago';
+  }
+
+  @override
+  String gpsStatusMinutesAgo(int count) {
+    return '$count minutes ago';
+  }
+
+  @override
+  String gpsStatusHoursAgo(int count) {
+    return '$count hours ago';
+  }
+
+  @override
+  String gpsStatusDaysAgo(int count) {
+    return '$count days ago';
+  }
+
+  @override
+  String get gpsStatusCardinalN => 'N';
+
+  @override
+  String get gpsStatusCardinalNE => 'NE';
+
+  @override
+  String get gpsStatusCardinalE => 'E';
+
+  @override
+  String get gpsStatusCardinalSE => 'SE';
+
+  @override
+  String get gpsStatusCardinalS => 'S';
+
+  @override
+  String get gpsStatusCardinalSW => 'SW';
+
+  @override
+  String get gpsStatusCardinalW => 'W';
+
+  @override
+  String get gpsStatusCardinalNW => 'NW';
+
+  @override
+  String get serialConfigTitle => 'Serial Config';
+
+  @override
+  String get serialConfigSave => 'Save';
+
+  @override
+  String get serialConfigSectionGeneral => 'General';
+
+  @override
+  String get serialConfigSectionBaudRate => 'Baud Rate';
+
+  @override
+  String get serialConfigSectionTimeout => 'Timeout';
+
+  @override
+  String get serialConfigSectionSerialMode => 'Serial Mode';
+
+  @override
+  String get serialConfigEnabled => 'Serial Enabled';
+
+  @override
+  String get serialConfigEnabledSubtitle => 'Enable serial port communication';
+
+  @override
+  String get serialConfigEcho => 'Echo';
+
+  @override
+  String get serialConfigEchoSubtitle =>
+      'Echo sent packets back to the serial port';
+
+  @override
+  String get serialConfigRxdGpio => 'RXD GPIO Pin';
+
+  @override
+  String get serialConfigRxdGpioSubtitle => 'Receive data GPIO pin number';
+
+  @override
+  String get serialConfigTxdGpio => 'TXD GPIO Pin';
+
+  @override
+  String get serialConfigTxdGpioSubtitle => 'Transmit data GPIO pin number';
+
+  @override
+  String get serialConfigOverrideConsole => 'Override Console Serial';
+
+  @override
+  String get serialConfigOverrideConsoleSubtitle =>
+      'Use serial module instead of console';
+
+  @override
+  String get serialConfigBaudRate => 'Baud Rate';
+
+  @override
+  String get serialConfigBaudRateSubtitle => 'Serial communication speed';
+
+  @override
+  String get serialConfigTimeout => 'Timeout';
+
+  @override
+  String serialConfigTimeoutValue(int seconds) {
+    return '$seconds seconds';
+  }
+
+  @override
+  String get serialConfigModeSimpleDesc =>
+      'Simple serial output for basic terminal usage';
+
+  @override
+  String get serialConfigModeProtoDesc =>
+      'Protobuf binary protocol for programmatic access';
+
+  @override
+  String get serialConfigModeTextmsgDesc =>
+      'Text message mode for SMS-style communication';
+
+  @override
+  String get serialConfigModeNmeaDesc =>
+      'NMEA GPS sentence output for GPS applications';
+
+  @override
+  String get serialConfigModeCaltopoDesc =>
+      'CalTopo format for mapping applications';
+
+  @override
+  String get serialConfigGpioUnset => 'Unset';
+
+  @override
+  String serialConfigGpioPin(int pin) {
+    return 'Pin $pin';
+  }
+
+  @override
+  String get serialConfigSaved => 'Serial configuration saved';
+
+  @override
+  String serialConfigSaveError(String error) {
+    return 'Error saving config: $error';
+  }
+
+  @override
+  String get firmwareUpdateTitle => 'Firmware Update';
+
+  @override
+  String get firmwareUpdateSectionCurrentVersion => 'Current Version';
+
+  @override
+  String get firmwareUpdateSectionAvailableUpdate => 'Available Update';
+
+  @override
+  String get firmwareUpdateSectionHowToUpdate => 'How to Update';
+
+  @override
+  String get firmwareUpdateInstalledFirmware => 'Installed Firmware';
+
+  @override
+  String get firmwareUpdateUnknown => 'Unknown';
+
+  @override
+  String get firmwareUpdateHardware => 'Hardware';
+
+  @override
+  String get firmwareUpdateNodeId => 'Node ID';
+
+  @override
+  String get firmwareUpdateUptime => 'Uptime';
+
+  @override
+  String get firmwareUpdateWifi => 'WiFi';
+
+  @override
+  String get firmwareUpdateBluetooth => 'Bluetooth';
+
+  @override
+  String get firmwareUpdateSupported => 'Supported';
+
+  @override
+  String get firmwareUpdateAvailable => 'Update Available';
+
+  @override
+  String get firmwareUpdateUpToDate => 'Up to Date';
+
+  @override
+  String firmwareUpdateLatestVersion(String version) {
+    return 'Latest: $version';
+  }
+
+  @override
+  String get firmwareUpdateNewBadge => 'NEW';
+
+  @override
+  String get firmwareUpdateDownload => 'Download Update';
+
+  @override
+  String get firmwareUpdateReleaseNotes => 'Release Notes';
+
+  @override
+  String get firmwareUpdateChecking => 'Checking for updates...';
+
+  @override
+  String get firmwareUpdateCheckFailed => 'Failed to check for updates';
+
+  @override
+  String get firmwareUpdateUnableToCheck => 'Unable to check for updates';
+
+  @override
+  String get firmwareUpdateVisitWebsite =>
+      'Visit the Meshtastic website for the latest firmware.';
+
+  @override
+  String get firmwareUpdateStep1 =>
+      'Download the firmware file for your device';
+
+  @override
+  String get firmwareUpdateStep2 => 'Connect your device via USB';
+
+  @override
+  String get firmwareUpdateStep3 =>
+      'Use the Meshtastic Web Flasher or CLI to flash';
+
+  @override
+  String get firmwareUpdateStep4 => 'Wait for device to reboot and reconnect';
+
+  @override
+  String get firmwareUpdateOpenWebFlasher => 'Open Web Flasher';
+
+  @override
+  String get firmwareUpdateBackupWarningTitle => 'Backup Your Settings';
+
+  @override
+  String get firmwareUpdateBackupWarningSubtitle =>
+      'Firmware updates may reset your device configuration. Consider exporting your settings before updating.';
+
+  @override
+  String get telemetryConfigTitle => 'Telemetry';
+
+  @override
+  String get telemetryConfigSave => 'Save';
+
+  @override
+  String get telemetryConfigSectionDeviceMetrics => 'Device Metrics';
+
+  @override
+  String get telemetryConfigSectionEnvironmentMetrics => 'Environment Metrics';
+
+  @override
+  String get telemetryConfigSectionAirQuality => 'Air Quality';
+
+  @override
+  String get telemetryConfigSectionPowerMetrics => 'Power Metrics';
+
+  @override
+  String get telemetryConfigDeviceMetricsDesc =>
+      'Battery level, voltage, channel utilization, air util TX';
+
+  @override
+  String get telemetryConfigEnvironmentMetricsDesc =>
+      'Temperature, humidity, barometric pressure, gas resistance';
+
+  @override
+  String get telemetryConfigAirQualityDesc =>
+      'PM1.0, PM2.5, PM10, particle counts, CO2';
+
+  @override
+  String get telemetryConfigPowerMetricsDesc =>
+      'Voltage and current for channels 1-3';
+
+  @override
+  String get telemetryConfigDisplayOnScreen => 'Display on Screen';
+
+  @override
+  String get telemetryConfigDisplayOnScreenSubtitle =>
+      'Show environment data on device screen';
+
+  @override
+  String get telemetryConfigDisplayFahrenheit => 'Display Fahrenheit';
+
+  @override
+  String get telemetryConfigDisplayFahrenheitSubtitle =>
+      'Show temperature in Fahrenheit instead of Celsius';
+
+  @override
+  String get telemetryConfigEnabled => 'Enabled';
+
+  @override
+  String get telemetryConfigUpdateInterval => 'Update Interval';
+
+  @override
+  String get telemetryConfigMinutes => ' minutes';
+
+  @override
+  String get telemetryConfigAirtimeWarning =>
+      'Telemetry data is shared with all nodes on the mesh network. Shorter intervals increase airtime usage.';
+
+  @override
+  String get telemetryConfigSaved => 'Telemetry config saved';
+
+  @override
+  String telemetryConfigSaveError(String error) {
+    return 'Failed to save: $error';
+  }
+
+  @override
+  String get ambientLightingTitle => 'Ambient Lighting';
+
+  @override
+  String get ambientLightingSave => 'Save';
+
+  @override
+  String get ambientLightingLedEnabled => 'LED Enabled';
+
+  @override
+  String get ambientLightingLedEnabledSubtitle =>
+      'Turn ambient lighting on or off';
+
+  @override
+  String get ambientLightingPresetColors => 'Preset Colors';
+
+  @override
+  String get ambientLightingCustomColor => 'Custom Color';
+
+  @override
+  String get ambientLightingRed => 'Red';
+
+  @override
+  String get ambientLightingGreen => 'Green';
+
+  @override
+  String get ambientLightingBlue => 'Blue';
+
+  @override
+  String get ambientLightingBrightness => 'LED Brightness';
+
+  @override
+  String get ambientLightingCurrent => 'Current';
+
+  @override
+  String ambientLightingCurrentValue(int milliamps) {
+    return '$milliamps mA';
+  }
+
+  @override
+  String get ambientLightingCurrentSubtitle => 'LED drive current (brightness)';
+
+  @override
+  String get ambientLightingDeviceSupportInfo =>
+      'Ambient lighting is only available on devices with LED support (RAK WisBlock, T-Beam, etc.)';
+
+  @override
+  String get ambientLightingSaved => 'Ambient lighting saved';
+
+  @override
+  String ambientLightingSaveError(String error) {
+    return 'Failed to save: $error';
+  }
+
+  @override
+  String get paxCounterTitle => 'PAX Counter';
+
+  @override
+  String get paxCounterSave => 'Save';
+
+  @override
+  String get paxCounterCardTitle => 'PAX Counter';
+
+  @override
+  String get paxCounterCardSubtitle =>
+      'Counts nearby WiFi and Bluetooth devices';
+
+  @override
+  String get paxCounterEnable => 'Enable PAX Counter';
+
+  @override
+  String get paxCounterEnableSubtitle =>
+      'Count nearby devices and report to mesh';
+
+  @override
+  String get paxCounterUpdateInterval => 'Update Interval';
+
+  @override
+  String paxCounterIntervalMinutes(int minutes) {
+    return '$minutes minutes';
+  }
+
+  @override
+  String get paxCounterMinLabel => '1 min';
+
+  @override
+  String get paxCounterMaxLabel => '60 min';
+
+  @override
+  String get paxCounterAboutTitle => 'About PAX Counter';
+
+  @override
+  String get paxCounterAboutSubtitle =>
+      'PAX Counter passively listens for WiFi and Bluetooth probe requests from nearby devices. It does not store MAC addresses or any personal data.';
+
+  @override
+  String get paxCounterSaved => 'PAX counter config saved';
+
+  @override
+  String paxCounterSaveError(String error) {
+    return 'Failed to save: $error';
+  }
+
+  @override
+  String get meshcoreConsoleTitle => 'MeshCore Console';
+
+  @override
+  String get meshcoreConsoleDevBadge => 'DEV';
+
+  @override
+  String meshcoreConsoleFramesCaptured(int count) {
+    return '$count frames captured';
+  }
+
+  @override
+  String get meshcoreConsoleRefresh => 'Refresh';
+
+  @override
+  String get meshcoreConsoleCopyHex => 'Copy Hex';
+
+  @override
+  String get meshcoreConsoleClear => 'Clear';
+
+  @override
+  String get meshcoreConsoleNoFrames => 'No frames captured yet';
+
+  @override
+  String get meshcoreConsoleHexCopied => 'Hex log copied to clipboard';
+
+  @override
+  String get meshcoreConsoleCaptureCleared => 'Capture cleared';
 }

@@ -1519,6 +1519,11 @@ class _AccelerometerMeshNodeState extends State<AccelerometerMeshNode>
   StreamSubscription<AccelerometerEvent>? _accelerometerSubscription;
   late AnimationController _physicsController;
 
+  /// Whether the physics controller is currently running. Tracked to avoid
+  /// redundant start/stop calls and to allow the loop to self-suspend when
+  /// all velocities drop below [_velocityThreshold].
+  bool _physicsRunning = false;
+
   // ============ ROTATION STATE ============
   double _rotationX = 0.0;
   double _rotationY = 0.0;
@@ -1540,6 +1545,12 @@ class _AccelerometerMeshNodeState extends State<AccelerometerMeshNode>
 
   // ============ CONSTANTS ============
   static const double _maxVelocity = 0.15;
+
+  /// Velocity magnitude below which the physics loop self-suspends to avoid
+  /// burning 60 fps of setState calls while the mesh node is visually static.
+  /// 0.0005 rad/frame ≈ 0.03 deg/frame — imperceptible on screen.
+  static const double _velocityThreshold = 0.0005;
+
   static final double _phi = (1 + math.sqrt(5)) / 2;
 
   // For chaos mode
@@ -1553,18 +1564,34 @@ class _AccelerometerMeshNodeState extends State<AccelerometerMeshNode>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    // Physics loop - ALWAYS runs regardless of settings
+    // Physics loop — starts on demand and self-suspends when velocities are
+    // below threshold, eliminating ~60 setState/sec while the node is static.
     _physicsController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 1),
     )..addListener(_physicsLoop);
-    _physicsController.repeat();
+    _ensurePhysicsRunning();
 
     // Start accelerometer listener — guarded: CMMotionManager is unavailable
     // on macOS / Mac Catalyst and causes NSInternalInconsistencyException.
     if (defaultTargetPlatform != TargetPlatform.macOS) {
       _startAccelerometer();
     }
+  }
+
+  /// Start the physics animation controller if it is not already running.
+  void _ensurePhysicsRunning() {
+    if (_physicsRunning) return;
+    _physicsRunning = true;
+    _physicsController.repeat();
+  }
+
+  /// Stop the physics animation controller to save CPU when the mesh node
+  /// is visually static (velocity ≈ 0, no spring-back, no chaos).
+  void _suspendPhysics() {
+    if (!_physicsRunning) return;
+    _physicsRunning = false;
+    _physicsController.stop();
   }
 
   @override
@@ -1591,7 +1618,7 @@ class _AccelerometerMeshNodeState extends State<AccelerometerMeshNode>
   void _startAccelerometer() {
     _accelerometerSubscription =
         accelerometerEventStream(
-          samplingPeriod: const Duration(milliseconds: 16),
+          samplingPeriod: const Duration(milliseconds: 50),
         ).listen((event) {
           _handleAccelerometer(event.x, event.y);
         });
@@ -1651,51 +1678,71 @@ class _AccelerometerMeshNodeState extends State<AccelerometerMeshNode>
     // Clamp velocities
     _velocityX = _velocityX.clamp(-_maxVelocity, _maxVelocity);
     _velocityY = _velocityY.clamp(-_maxVelocity, _maxVelocity);
+
+    // Wake the physics loop if it was suspended due to low velocity.
+    _ensurePhysicsRunning();
   }
 
-  // ============ PHYSICS LOOP - ALWAYS RUNS ============
+  // ============ PHYSICS LOOP ============
   void _physicsLoop() {
-    setState(() {
-      // ALWAYS apply velocity to rotation (this makes everything spin)
-      _rotationX += _velocityX;
-      _rotationY += _velocityY;
+    // Apply velocity to rotation
+    _rotationX += _velocityX;
+    _rotationY += _velocityY;
 
-      // ALWAYS apply friction (this makes things slow down)
-      _velocityX *= widget.friction;
-      _velocityY *= widget.friction;
+    // Apply friction
+    _velocityX *= widget.friction;
+    _velocityY *= widget.friction;
 
-      // Chaos mode random perturbations
-      if (widget.physicsMode == MeshPhysicsMode.chaos && !_isTouching) {
-        if (_random.nextDouble() < 0.1) {
-          _velocityX += (_random.nextDouble() - 0.5) * 0.02;
-          _velocityY += (_random.nextDouble() - 0.5) * 0.02;
-        }
+    // Chaos mode random perturbations
+    if (widget.physicsMode == MeshPhysicsMode.chaos && !_isTouching) {
+      if (_random.nextDouble() < 0.1) {
+        _velocityX += (_random.nextDouble() - 0.5) * 0.02;
+        _velocityY += (_random.nextDouble() - 0.5) * 0.02;
       }
+    }
 
-      // SPRING-BACK: when not grabbing but have a drag position, animate back
-      if (_grabbedVertexIndex < 0 &&
-          _springBackVertexIndex >= 0 &&
-          _dragPosition != null &&
-          _originalVertexPosition != null) {
-        // Lerp drag position back toward original
-        final dx = _originalVertexPosition!.dx - _dragPosition!.dx;
-        final dy = _originalVertexPosition!.dy - _dragPosition!.dy;
-        final dist = math.sqrt(dx * dx + dy * dy);
+    // SPRING-BACK: when not grabbing but have a drag position, animate back
+    bool springBackActive = false;
+    if (_grabbedVertexIndex < 0 &&
+        _springBackVertexIndex >= 0 &&
+        _dragPosition != null &&
+        _originalVertexPosition != null) {
+      springBackActive = true;
+      // Lerp drag position back toward original
+      final dx = _originalVertexPosition!.dx - _dragPosition!.dx;
+      final dy = _originalVertexPosition!.dy - _dragPosition!.dy;
+      final dist = math.sqrt(dx * dx + dy * dy);
 
-        if (dist < 0.01) {
-          // Close enough - snap to original and clear
-          _dragPosition = null;
-          _originalVertexPosition = null;
-          _springBackVertexIndex = -1;
-        } else {
-          // Fast spring back (30% per frame)
-          _dragPosition = Offset(
-            _dragPosition!.dx + dx * 0.3,
-            _dragPosition!.dy + dy * 0.3,
-          );
-        }
+      if (dist < 0.01) {
+        // Close enough — snap to original and clear
+        _dragPosition = null;
+        _originalVertexPosition = null;
+        _springBackVertexIndex = -1;
+        springBackActive = false;
+      } else {
+        // Fast spring back (30% per frame)
+        _dragPosition = Offset(
+          _dragPosition!.dx + dx * 0.3,
+          _dragPosition!.dy + dy * 0.3,
+        );
       }
-    });
+    }
+
+    // Self-suspend when there is no meaningful visual change: both velocities
+    // are below threshold, no spring-back in progress, and not in chaos mode
+    // (chaos injects random perturbations that need the loop running).
+    final velocityMagnitude = _velocityX.abs() + _velocityY.abs();
+    if (velocityMagnitude < _velocityThreshold &&
+        !springBackActive &&
+        !_isTouching &&
+        widget.physicsMode != MeshPhysicsMode.chaos) {
+      _velocityX = 0;
+      _velocityY = 0;
+      _suspendPhysics();
+      return;
+    }
+
+    setState(() {});
   }
 
   // ============ NODE HIT DETECTION ============
@@ -1802,6 +1849,9 @@ class _AccelerometerMeshNodeState extends State<AccelerometerMeshNode>
     // STOP momentum when touch starts
     _velocityX = 0.0;
     _velocityY = 0.0;
+
+    // Wake the physics loop for touch-driven updates.
+    _ensurePhysicsRunning();
 
     // Try to grab a vertex (only if pull-to-stretch enabled)
     _grabbedVertexIndex = -1;

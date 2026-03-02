@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
 import '../../core/transport.dart';
@@ -144,7 +145,7 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
           leading: const HamburgerMenuButton(),
           centerTitle: true,
           titleWidget: Text(
-            'Nodes (${nodes.length})',
+            context.l10n.nodesScreenTitle(nodes.length),
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -154,7 +155,7 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
           actions: [
             IconButton(
               icon: const Icon(Icons.qr_code_scanner),
-              tooltip: 'Scan QR Code',
+              tooltip: context.l10n.nodesScreenScanQrCodeTooltip,
               onPressed: () => Navigator.pushNamed(context, '/qr-scanner'),
             ),
             const DeviceStatusButton(),
@@ -179,7 +180,7 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
                       ),
                       const SizedBox(width: AppTheme.spacing12),
                       Text(
-                        'Help',
+                        context.l10n.nodesScreenHelpMenu,
                         style: TextStyle(color: context.textPrimary),
                       ),
                     ],
@@ -196,7 +197,7 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
                       ),
                       const SizedBox(width: AppTheme.spacing12),
                       Text(
-                        'Settings',
+                        context.l10n.nodesScreenSettingsMenu,
                         style: TextStyle(color: context.textPrimary),
                       ),
                     ],
@@ -218,7 +219,7 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
                 searchQuery: _searchQuery,
                 onSearchChanged: (value) =>
                     setState(() => _searchQuery = value),
-                hintText: 'Find a node',
+                hintText: context.l10n.nodesScreenSearchHint,
                 textScaler: MediaQuery.textScalerOf(context),
                 rebuildKey: Object.hashAll([
                   _activeFilter,
@@ -235,13 +236,13 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
                 ]),
                 filterChips: [
                   StatusFilterChip(
-                    label: 'All',
+                    label: context.l10n.nodesScreenFilterAll,
                     count: nodes.length,
                     isSelected: _activeFilter == NodeFilter.all,
                     onTap: () => setState(() => _activeFilter = NodeFilter.all),
                   ),
                   StatusFilterChip(
-                    label: 'Active',
+                    label: context.l10n.nodesScreenFilterActive,
                     count: activeCount,
                     isSelected: _activeFilter == NodeFilter.active,
                     color: AccentColors.green,
@@ -249,7 +250,7 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
                         setState(() => _activeFilter = NodeFilter.active),
                   ),
                   StatusFilterChip(
-                    label: 'Favorites',
+                    label: context.l10n.nodesScreenFilterFavorites,
                     count: favoritesCount,
                     isSelected: _activeFilter == NodeFilter.favorites,
                     color: AppTheme.warningYellow,
@@ -258,7 +259,7 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
                         setState(() => _activeFilter = NodeFilter.favorites),
                   ),
                   StatusFilterChip(
-                    label: 'With Position',
+                    label: context.l10n.nodesScreenFilterWithPosition,
                     count: withPositionCount,
                     isSelected: _activeFilter == NodeFilter.withPosition,
                     color: AccentColors.cyan,
@@ -267,7 +268,7 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
                         setState(() => _activeFilter = NodeFilter.withPosition),
                   ),
                   StatusFilterChip(
-                    label: 'Inactive',
+                    label: context.l10n.nodesScreenFilterInactive,
                     count: inactiveCount,
                     isSelected: _activeFilter == NodeFilter.inactive,
                     color: context.textTertiary,
@@ -275,7 +276,7 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
                         setState(() => _activeFilter = NodeFilter.inactive),
                   ),
                   StatusFilterChip(
-                    label: 'New',
+                    label: context.l10n.nodesScreenFilterNew,
                     count: recentlyDiscoveredCount,
                     isSelected: _activeFilter == NodeFilter.recentlyDiscovered,
                     color: AccentColors.purple,
@@ -285,7 +286,7 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
                     ),
                   ),
                   StatusFilterChip(
-                    label: 'RF',
+                    label: context.l10n.nodesScreenFilterRf,
                     count: rfCount,
                     isSelected: _activeFilter == NodeFilter.rf,
                     color: AccentColors.emerald,
@@ -293,7 +294,7 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
                     onTap: () => setState(() => _activeFilter = NodeFilter.rf),
                   ),
                   StatusFilterChip(
-                    label: 'MQTT',
+                    label: context.l10n.nodesScreenFilterMqtt,
                     count: mqttCount,
                     isSelected: _activeFilter == NodeFilter.mqtt,
                     color: AccentColors.sky,
@@ -356,8 +357,8 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
                       SizedBox(height: AppTheme.spacing24),
                       Text(
                         _activeFilter == NodeFilter.all
-                            ? 'No nodes discovered yet'
-                            : 'No nodes match this filter',
+                            ? context.l10n.nodesScreenEmptyAll
+                            : context.l10n.nodesScreenEmptyFiltered,
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
@@ -369,7 +370,7 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
                         TextButton(
                           onPressed: () =>
                               setState(() => _activeFilter = NodeFilter.all),
-                          child: const Text('Show all nodes'),
+                          child: Text(context.l10n.nodesScreenShowAllButton),
                         ),
                       ],
                     ],
@@ -382,6 +383,7 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
               if (AppFeatureFlags.isAetherEnabled)
                 ..._buildAetherFlightSlivers(context),
               ..._buildNodeSlivers(
+                context,
                 nodesList,
                 myNodeNum,
                 linkedNodeIds,
@@ -409,7 +411,7 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
       SliverPersistentHeader(
         pinned: true,
         delegate: SectionHeaderDelegate(
-          title: 'Aether Flights Nearby',
+          title: context.l10n.nodesScreenSectionAetherFlights,
           count: matches.length,
         ),
       ),
@@ -422,6 +424,7 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
   }
 
   List<Widget> _buildNodeSlivers(
+    BuildContext context,
     List<MeshNode> nodesList,
     int? myNodeNum,
     List<int> linkedNodeIds,
@@ -485,6 +488,7 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
 
     // Build grouped list with sticky section headers
     final sections = _groupNodesIntoSections(
+      context,
       nodesList,
       myNodeNum,
       linkedNodeIds,
@@ -501,7 +505,8 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
     // on every app restart (cooldown is fresh but nothing is coming).
     final hasOnlyMyDevice =
         nonEmptySections.length == 1 &&
-        nonEmptySections.first.title == 'Your Device';
+        nonEmptySections.first.title ==
+            context.l10n.nodesScreenSectionYourDevice;
     final cooldownState = ref.read(nodeDiscoveryCooldownProvider);
     final hasDiscoveredNodes =
         cooldownState.discoveredDuringCooldown.isNotEmpty;
@@ -560,7 +565,7 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
         SliverPersistentHeader(
           pinned: true,
           delegate: SectionHeaderDelegate(
-            title: 'Discovering',
+            title: context.l10n.nodesScreenSectionDiscovering,
             count: null, // No count while loading
           ),
         ),
@@ -576,6 +581,7 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
   }
 
   List<_NodeSection> _groupNodesIntoSections(
+    BuildContext context,
     List<MeshNode> nodes,
     int? myNodeNum,
     List<int> linkedNodeIds,
@@ -583,17 +589,24 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
   ) {
     switch (_sortOrder) {
       case NodeSortOrder.lastHeard:
-        return _groupByStatus(nodes, myNodeNum, linkedNodeIds, presenceMap);
+        return _groupByStatus(
+          context,
+          nodes,
+          myNodeNum,
+          linkedNodeIds,
+          presenceMap,
+        );
       case NodeSortOrder.name:
-        return _groupByAlphabet(nodes, myNodeNum, linkedNodeIds);
+        return _groupByAlphabet(context, nodes, myNodeNum, linkedNodeIds);
       case NodeSortOrder.signalStrength:
-        return _groupBySignal(nodes, myNodeNum, linkedNodeIds);
+        return _groupBySignal(context, nodes, myNodeNum, linkedNodeIds);
       case NodeSortOrder.batteryLevel:
-        return _groupByBattery(nodes, myNodeNum, linkedNodeIds);
+        return _groupByBattery(context, nodes, myNodeNum, linkedNodeIds);
     }
   }
 
   List<_NodeSection> _groupByStatus(
+    BuildContext context,
     List<MeshNode> nodes,
     int? myNodeNum,
     List<int> linkedNodeIds,
@@ -649,16 +662,18 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
         .toList();
 
     return [
-      if (myNode.isNotEmpty) _NodeSection('Your Device', myNode),
-      _NodeSection('Favorites', favorites),
-      _NodeSection('Active', active),
-      _NodeSection('Seen Recently', fading),
-      _NodeSection('Inactive', inactive),
-      _NodeSection('Unknown', unknown),
+      if (myNode.isNotEmpty)
+        _NodeSection(context.l10n.nodesScreenSectionYourDevice, myNode),
+      _NodeSection(context.l10n.nodesScreenSectionFavorites, favorites),
+      _NodeSection(context.l10n.nodesScreenSectionActive, active),
+      _NodeSection(context.l10n.nodesScreenSectionSeenRecently, fading),
+      _NodeSection(context.l10n.nodesScreenSectionInactive, inactive),
+      _NodeSection(context.l10n.nodesScreenSectionUnknown, unknown),
     ];
   }
 
   List<_NodeSection> _groupByAlphabet(
+    BuildContext context,
     List<MeshNode> nodes,
     int? myNodeNum,
     List<int> linkedNodeIds,
@@ -686,13 +701,15 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
 
     final sortedKeys = grouped.keys.toList()..sort();
     return [
-      if (myNode.isNotEmpty) _NodeSection('Your Device', myNode),
+      if (myNode.isNotEmpty)
+        _NodeSection(context.l10n.nodesScreenSectionYourDevice, myNode),
       // if (linkedNodes.isNotEmpty) _NodeSection('Linked Devices', linkedNodes),
       ...sortedKeys.map((key) => _NodeSection(key, grouped[key]!)),
     ];
   }
 
   List<_NodeSection> _groupBySignal(
+    BuildContext context,
     List<MeshNode> nodes,
     int? myNodeNum,
     List<int> linkedNodeIds,
@@ -719,16 +736,18 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
     final unknown = others.where((n) => n.snr == null).toList();
 
     return [
-      if (myNode.isNotEmpty) _NodeSection('Your Device', myNode),
+      if (myNode.isNotEmpty)
+        _NodeSection(context.l10n.nodesScreenSectionYourDevice, myNode),
       // if (linkedNodes.isNotEmpty) _NodeSection('Linked Devices', linkedNodes),
-      _NodeSection('Strong (>0 dB)', strong),
-      _NodeSection('Medium (-10 to 0 dB)', medium),
-      _NodeSection('Weak (<-10 dB)', weak),
-      _NodeSection('Unknown', unknown),
+      _NodeSection(context.l10n.nodesScreenSectionSignalStrong, strong),
+      _NodeSection(context.l10n.nodesScreenSectionSignalMedium, medium),
+      _NodeSection(context.l10n.nodesScreenSectionSignalWeak, weak),
+      _NodeSection(context.l10n.nodesScreenSectionUnknown, unknown),
     ];
   }
 
   List<_NodeSection> _groupByBattery(
+    BuildContext context,
     List<MeshNode> nodes,
     int? myNodeNum,
     List<int> linkedNodeIds,
@@ -769,14 +788,15 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
         .toList();
 
     return [
-      if (myNode.isNotEmpty) _NodeSection('Your Device', myNode),
+      if (myNode.isNotEmpty)
+        _NodeSection(context.l10n.nodesScreenSectionYourDevice, myNode),
       // if (linkedNodes.isNotEmpty) _NodeSection('Linked Devices', linkedNodes),
-      _NodeSection('Charging', charging),
-      _NodeSection('Full (80-100%)', full),
-      _NodeSection('Good (50-80%)', good),
-      _NodeSection('Low (20-50%)', low),
-      _NodeSection('Critical (<20%)', critical),
-      _NodeSection('Unknown', unknown),
+      _NodeSection(context.l10n.nodesScreenSectionCharging, charging),
+      _NodeSection(context.l10n.nodesScreenSectionBatteryFull, full),
+      _NodeSection(context.l10n.nodesScreenSectionBatteryGood, good),
+      _NodeSection(context.l10n.nodesScreenSectionBatteryLow, low),
+      _NodeSection(context.l10n.nodesScreenSectionBatteryCritical, critical),
+      _NodeSection(context.l10n.nodesScreenSectionUnknown, unknown),
     ];
   }
 
@@ -900,7 +920,7 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
                             ),
                           ),
                           Text(
-                            'Connected Device',
+                            context.l10n.nodesScreenConnectedDevice,
                             style: TextStyle(
                               color: context.accentColor,
                               fontSize: 12,
@@ -916,8 +936,8 @@ class _NodesScreenState extends ConsumerState<NodesScreen>
               // Disconnect option
               ListTile(
                 leading: Icon(Icons.link_off_rounded, color: AppTheme.errorRed),
-                title: const Text(
-                  'Disconnect',
+                title: Text(
+                  context.l10n.nodesScreenDisconnect,
                   style: TextStyle(
                     color: AppTheme.errorRed,
                     fontWeight: FontWeight.w500,
@@ -966,16 +986,16 @@ class _SortButton extends StatelessWidget {
 
   const _SortButton({required this.sortOrder, required this.onChanged});
 
-  String get _sortLabel {
+  String _sortLabel(BuildContext context) {
     switch (sortOrder) {
       case NodeSortOrder.lastHeard:
-        return 'Recent';
+        return context.l10n.nodesScreenSortRecent;
       case NodeSortOrder.name:
-        return 'Name';
+        return context.l10n.nodesScreenSortName;
       case NodeSortOrder.signalStrength:
-        return 'Signal';
+        return context.l10n.nodesScreenSortSignal;
       case NodeSortOrder.batteryLevel:
-        return 'Battery';
+        return context.l10n.nodesScreenSortBattery;
     }
   }
 
@@ -1000,7 +1020,7 @@ class _SortButton extends StatelessWidget {
                 Icon(Icons.sort, size: 14, color: context.textTertiary),
                 SizedBox(width: AppTheme.spacing4),
                 Text(
-                  _sortLabel,
+                  _sortLabel(context),
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w500,
@@ -1045,25 +1065,25 @@ class _SortButton extends StatelessWidget {
       items: [
         _buildMenuItem(
           NodeSortOrder.lastHeard,
-          'Most Recent',
+          context.l10n.nodesScreenSortMenuMostRecent,
           Icons.schedule,
           context,
         ),
         _buildMenuItem(
           NodeSortOrder.name,
-          'Name (A-Z)',
+          context.l10n.nodesScreenSortMenuNameAZ,
           Icons.sort_by_alpha,
           context,
         ),
         _buildMenuItem(
           NodeSortOrder.signalStrength,
-          'Signal Strength',
+          context.l10n.nodesScreenSortMenuSignalStrength,
           Icons.signal_cellular_alt,
           context,
         ),
         _buildMenuItem(
           NodeSortOrder.batteryLevel,
-          'Battery Level',
+          context.l10n.nodesScreenSortMenuBatteryLevel,
           Icons.battery_full,
           context,
         ),
@@ -1159,12 +1179,16 @@ class _NodeCard extends StatelessWidget {
     return 0;
   }
 
-  String _formatDistance(double? distance) {
+  String _formatDistance(BuildContext context, double? distance) {
     if (distance == null) return '';
     if (distance < 1000) {
-      return '${distance.toInt()} m away';
+      return context.l10n.nodesScreenDistanceMeters(
+        distance.toInt().toString(),
+      );
     }
-    return '${(distance / 1000).toStringAsFixed(1)} km away';
+    return context.l10n.nodesScreenDistanceKilometers(
+      (distance / 1000).toStringAsFixed(1),
+    );
   }
 
   String _formatLastHeard(DateTime time) {
@@ -1350,7 +1374,7 @@ class _NodeCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(AppTheme.radius6),
                       ),
                       child: Text(
-                        'YOU',
+                        context.l10n.nodesScreenYouBadge,
                         style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.w700,
@@ -1374,7 +1398,7 @@ class _NodeCard extends StatelessWidget {
                     ),
                     SizedBox(width: AppTheme.spacing6),
                     Text(
-                      'This Device',
+                      context.l10n.nodesScreenThisDevice,
                       style: TextStyle(
                         fontSize: 13,
                         color: context.accentColor,
@@ -1484,7 +1508,9 @@ class _NodeCard extends StatelessWidget {
                   ),
                   SizedBox(width: AppTheme.spacing4),
                   Text(
-                    node.hasPosition ? 'GPS' : 'No GPS',
+                    node.hasPosition
+                        ? context.l10n.nodesScreenGps
+                        : context.l10n.nodesScreenNoGps,
                     style: TextStyle(
                       fontSize: 12,
                       color: node.hasPosition
@@ -1502,7 +1528,7 @@ class _NodeCard extends StatelessWidget {
                     Icon(Icons.near_me, size: 14, color: context.textTertiary),
                     SizedBox(width: AppTheme.spacing6),
                     Text(
-                      _formatDistance(node.distance),
+                      _formatDistance(context, node.distance),
                       style: TextStyle(
                         fontSize: 12,
                         color: context.textTertiary,
@@ -1518,7 +1544,7 @@ class _NodeCard extends StatelessWidget {
                   Icon(Icons.article, size: 14, color: context.textTertiary),
                   SizedBox(width: AppTheme.spacing4),
                   Text(
-                    'Logs:',
+                    context.l10n.nodesScreenLogsLabel,
                     style: Theme.of(context).textTheme.labelSmall?.copyWith(
                       color: context.textTertiary,
                     ),
@@ -1591,9 +1617,10 @@ class _NodeCard extends StatelessWidget {
                           SizedBox(width: AppTheme.spacing2),
                           Text(
                             node.hopCount == 0
-                                ? 'Direct'
-                                : '${node.hopCount} '
-                                      '${node.hopCount == 1 ? 'hop' : 'hops'}',
+                                ? context.l10n.nodesScreenHopDirect
+                                : context.l10n.nodesScreenHopCount(
+                                    node.hopCount!,
+                                  ),
                             style: TextStyle(
                               fontSize: 11,
                               color: context.textTertiary,
@@ -1627,7 +1654,9 @@ class _NodeCard extends StatelessWidget {
                           ),
                           SizedBox(width: AppTheme.spacing2),
                           Text(
-                            node.viaMqtt ? 'MQTT' : 'RF',
+                            node.viaMqtt
+                                ? context.l10n.nodesScreenTransportMqtt
+                                : context.l10n.nodesScreenTransportRf,
                             style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w600,

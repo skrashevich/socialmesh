@@ -920,11 +920,15 @@ class ProtocolService {
     AppLogging.protocol('Protocol service started');
   }
 
-  /// Start periodic RSSI polling from BLE connection
+  /// Start periodic RSSI polling from BLE connection.
+  ///
+  /// Polls every 5 seconds. BLE signal strength between phone and radio
+  /// changes slowly; 5-second granularity is imperceptible on the lock
+  /// screen Live Activity while cutting BLE wake-ups by 60% vs 2 seconds.
   void _startRssiPolling() {
     _rssiTimer?.cancel();
     _rssiPaused = false;
-    _rssiTimer = Timer.periodic(const Duration(seconds: 2), (_) async {
+    _rssiTimer = Timer.periodic(const Duration(seconds: 5), (_) async {
       final rssi = await _transport.readRssi();
       if (rssi != null && rssi != _lastRssi) {
         _lastRssi = rssi;

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/animations.dart';
 import '../../../models/subscription_models.dart';
@@ -260,7 +261,7 @@ class DrawerMenuTile extends StatelessWidget {
                           ],
                         ),
                         child: Text(
-                          'NEW',
+                          context.l10n.drawerBadgeNew,
                           style: TextStyle(
                             fontSize: 9,
                             fontWeight: FontWeight.bold,
@@ -307,7 +308,7 @@ class DrawerMenuTile extends StatelessWidget {
                       ),
                       const SizedBox(width: AppTheme.spacing4),
                       Text(
-                        'PRO',
+                        context.l10n.drawerBadgePro,
                         style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.bold,
@@ -337,7 +338,7 @@ class DrawerMenuTile extends StatelessWidget {
                       Icon(Icons.star, size: 12, color: AccentColors.yellow),
                       const SizedBox(width: AppTheme.spacing4),
                       Text(
-                        'TRY IT',
+                        context.l10n.drawerBadgeTryIt,
                         style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.bold,

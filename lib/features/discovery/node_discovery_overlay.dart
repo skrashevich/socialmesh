@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import 'package:vector_math/vector_math_64.dart' show Vector3;
 import '../../core/theme.dart';
@@ -332,7 +333,7 @@ class _PremiumScanningIndicator extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Scanning Network',
+                        context.l10n.discoveryScanningNetwork,
                         style: TextStyle(
                           color: context.textPrimary,
                           fontSize: 13,
@@ -343,8 +344,8 @@ class _PremiumScanningIndicator extends StatelessWidget {
                       const SizedBox(height: AppTheme.spacing2),
                       Text(
                         nodeCount == 0
-                            ? 'Searching for nodes...'
-                            : '$nodeCount node${nodeCount == 1 ? '' : 's'} found',
+                            ? context.l10n.discoverySearchingForNodes
+                            : context.l10n.discoveryNodesFound(nodeCount),
                         style: TextStyle(
                           color: nodeCount > 0
                               ? context.accentColor
@@ -729,7 +730,7 @@ class _PremiumCardState extends State<_PremiumCard>
         ? longName
         : shortName.isNotEmpty
         ? shortName
-        : 'Unknown Node';
+        : context.l10n.discoveryUnknownNode;
     final nodeId = node.nodeNum.toRadixString(16).toUpperCase().padLeft(4, '0');
     final rssi = node.rssi ?? 0;
 
@@ -896,21 +897,21 @@ class _PremiumCardState extends State<_PremiumCard>
   _SignalQuality _getSignalQuality(int rssi) {
     if (rssi >= -60) {
       return _SignalQuality(
-        label: 'Excellent',
+        label: context.l10n.discoverySignalExcellent,
         color: AccentColors.green,
         icon: Icons.signal_cellular_4_bar,
         strength: 1.0,
       );
     } else if (rssi >= -75) {
       return _SignalQuality(
-        label: 'Good',
+        label: context.l10n.discoverySignalGood,
         color: AppTheme.warningYellow,
         icon: Icons.signal_cellular_alt_2_bar,
         strength: 0.6,
       );
     } else {
       return _SignalQuality(
-        label: 'Weak',
+        label: context.l10n.discoverySignalWeak,
         color: AppTheme.errorRed,
         icon: Icons.signal_cellular_alt_1_bar,
         strength: 0.3,
@@ -1177,7 +1178,7 @@ class _DiscoveryBadgeState extends State<_DiscoveryBadge>
               ),
               const SizedBox(width: AppTheme.spacing6),
               Text(
-                'DISCOVERED',
+                context.l10n.discoveryDiscoveredBadge,
                 style: TextStyle(
                   color: context.accentColor,
                   fontSize: 9,

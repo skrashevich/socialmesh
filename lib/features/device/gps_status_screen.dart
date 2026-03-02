@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/glass_scaffold.dart';
 import '../../providers/app_providers.dart';
@@ -33,7 +34,7 @@ class GpsStatusScreen extends ConsumerWidget {
         longitude != 0;
 
     return GlassScaffold(
-      title: 'GPS Status',
+      title: context.l10n.gpsStatusTitle,
       slivers: [
         SliverPadding(
           padding: const EdgeInsets.all(AppTheme.spacing16),
@@ -50,7 +51,10 @@ class GpsStatusScreen extends ConsumerWidget {
 
               // Position Card
               if (hasGpsFix) ...[
-                _buildSectionHeader(context, 'Position'),
+                _buildSectionHeader(
+                  context,
+                  context.l10n.gpsStatusSectionPosition,
+                ),
                 Container(
                   decoration: BoxDecoration(
                     color: context.card,
@@ -61,38 +65,50 @@ class GpsStatusScreen extends ConsumerWidget {
                     children: [
                       _buildInfoRow(
                         icon: Icons.my_location,
-                        label: 'Latitude',
-                        value: '${latitude.toStringAsFixed(6)}°',
+                        label: context.l10n.gpsStatusLatitude,
+                        value: context.l10n.gpsStatusLatitudeValue(
+                          latitude.toStringAsFixed(6),
+                        ),
                         context: context,
                       ),
                       _buildDivider(context),
                       _buildInfoRow(
                         icon: Icons.my_location,
-                        label: 'Longitude',
-                        value: '${longitude.toStringAsFixed(6)}°',
+                        label: context.l10n.gpsStatusLongitude,
+                        value: context.l10n.gpsStatusLongitudeValue(
+                          longitude.toStringAsFixed(6),
+                        ),
                         context: context,
                       ),
                       _buildDivider(context),
                       _buildInfoRow(
                         icon: Icons.terrain,
-                        label: 'Altitude',
-                        value: altitude != null ? '${altitude}m' : 'Unknown',
+                        label: context.l10n.gpsStatusAltitude,
+                        value: altitude != null
+                            ? context.l10n.gpsStatusAltitudeValue(
+                                altitude.toString(),
+                              )
+                            : context.l10n.gpsStatusUnknown,
                         context: context,
                       ),
                       _buildDivider(context),
                       _buildInfoRow(
                         icon: Icons.gps_fixed,
-                        label: 'Accuracy',
+                        label: context.l10n.gpsStatusAccuracy,
                         value: gpsAccuracy != null
-                            ? '±${gpsAccuracy}m'
-                            : 'Unknown',
+                            ? context.l10n.gpsStatusAccuracyValue(
+                                gpsAccuracy.toString(),
+                              )
+                            : context.l10n.gpsStatusUnknown,
                         context: context,
                       ),
                       _buildDivider(context),
                       _buildInfoRow(
                         icon: Icons.grid_4x4,
-                        label: 'Precision Bits',
-                        value: precisionBits?.toString() ?? 'Unknown',
+                        label: context.l10n.gpsStatusPrecisionBits,
+                        value:
+                            precisionBits?.toString() ??
+                            context.l10n.gpsStatusUnknown,
                         context: context,
                       ),
                     ],
@@ -102,7 +118,10 @@ class GpsStatusScreen extends ConsumerWidget {
                 SizedBox(height: AppTheme.spacing16),
 
                 // Motion Card
-                _buildSectionHeader(context, 'Motion'),
+                _buildSectionHeader(
+                  context,
+                  context.l10n.gpsStatusSectionMotion,
+                ),
                 Container(
                   decoration: BoxDecoration(
                     color: context.card,
@@ -113,19 +132,25 @@ class GpsStatusScreen extends ConsumerWidget {
                     children: [
                       _buildInfoRow(
                         icon: Icons.speed,
-                        label: 'Ground Speed',
+                        label: context.l10n.gpsStatusGroundSpeed,
                         value: groundSpeed != null
-                            ? '$groundSpeed m/s (${(groundSpeed * 3.6).toStringAsFixed(1)} km/h)'
-                            : 'Unknown',
+                            ? context.l10n.gpsStatusGroundSpeedValue(
+                                groundSpeed.toString(),
+                                (groundSpeed * 3.6).toStringAsFixed(1),
+                              )
+                            : context.l10n.gpsStatusUnknown,
                         context: context,
                       ),
                       _buildDivider(context),
                       _buildInfoRow(
                         icon: Icons.explore,
-                        label: 'Ground Track',
+                        label: context.l10n.gpsStatusGroundTrack,
                         value: groundTrack != null
-                            ? '$groundTrack° ${_getCardinalDirection(groundTrack)}'
-                            : 'Unknown',
+                            ? context.l10n.gpsStatusGroundTrackValue(
+                                groundTrack.toString(),
+                                _getCardinalDirection(context, groundTrack),
+                              )
+                            : context.l10n.gpsStatusUnknown,
                         context: context,
                       ),
                     ],
@@ -147,8 +172,8 @@ class GpsStatusScreen extends ConsumerWidget {
                       ),
                     ),
                     icon: Icon(Icons.map),
-                    label: const Text(
-                      'Open in Maps',
+                    label: Text(
+                      context.l10n.gpsStatusOpenInMaps,
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
                   ),
@@ -171,7 +196,7 @@ class GpsStatusScreen extends ConsumerWidget {
                       ),
                       SizedBox(height: AppTheme.spacing16),
                       Text(
-                        'No GPS Fix',
+                        context.l10n.gpsStatusNoGpsFix,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -180,8 +205,7 @@ class GpsStatusScreen extends ConsumerWidget {
                       ),
                       const SizedBox(height: AppTheme.spacing8),
                       Text(
-                        'The device has not acquired a GPS position yet. '
-                        'Make sure the device has a clear view of the sky.',
+                        context.l10n.gpsStatusNoGpsFixMessage,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 14,
@@ -196,7 +220,10 @@ class GpsStatusScreen extends ConsumerWidget {
               SizedBox(height: AppTheme.spacing16),
 
               // Satellites Card
-              _buildSectionHeader(context, 'Satellites'),
+              _buildSectionHeader(
+                context,
+                context.l10n.gpsStatusSectionSatellites,
+              ),
               Container(
                 decoration: BoxDecoration(
                   color: context.card,
@@ -239,7 +266,7 @@ class GpsStatusScreen extends ConsumerWidget {
                                 ),
                               ),
                               Text(
-                                'Satellites in View',
+                                context.l10n.gpsStatusSatellitesInView,
                                 style: TextStyle(
                                   fontSize: 13,
                                   color: context.textSecondary,
@@ -258,22 +285,22 @@ class GpsStatusScreen extends ConsumerWidget {
                       children: [
                         _buildSatelliteLabel(
                           context,
-                          'No Fix',
+                          context.l10n.gpsStatusSatNoFix,
                           SemanticColors.disabled,
                         ),
                         _buildSatelliteLabel(
                           context,
-                          'Poor',
+                          context.l10n.gpsStatusSatPoor,
                           AppTheme.errorRed,
                         ),
                         _buildSatelliteLabel(
                           context,
-                          'Fair',
+                          context.l10n.gpsStatusSatFair,
                           AppTheme.warningYellow,
                         ),
                         _buildSatelliteLabel(
                           context,
-                          'Good',
+                          context.l10n.gpsStatusSatGood,
                           AppTheme.successGreen,
                         ),
                       ],
@@ -286,7 +313,10 @@ class GpsStatusScreen extends ConsumerWidget {
 
               // Last Update
               if (positionTimestamp != null) ...[
-                _buildSectionHeader(context, 'Last Update'),
+                _buildSectionHeader(
+                  context,
+                  context.l10n.gpsStatusSectionLastUpdate,
+                ),
                 Container(
                   decoration: BoxDecoration(
                     color: context.card,
@@ -317,7 +347,7 @@ class GpsStatusScreen extends ConsumerWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              _formatTimestamp(positionTimestamp),
+                              _formatTimestamp(context, positionTimestamp),
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
@@ -325,7 +355,7 @@ class GpsStatusScreen extends ConsumerWidget {
                               ),
                             ),
                             Text(
-                              _timeAgo(positionTimestamp),
+                              _timeAgo(context, positionTimestamp),
                               style: TextStyle(
                                 fontSize: 12,
                                 color: context.textTertiary,
@@ -384,7 +414,9 @@ class GpsStatusScreen extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  hasGpsFix ? 'GPS Fix Acquired' : 'Acquiring GPS...',
+                  hasGpsFix
+                      ? context.l10n.gpsStatusFixAcquired
+                      : context.l10n.gpsStatusAcquiring,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
@@ -396,8 +428,8 @@ class GpsStatusScreen extends ConsumerWidget {
                 SizedBox(height: AppTheme.spacing4),
                 Text(
                   hasGpsFix
-                      ? '${satsInView ?? 0} satellites in view'
-                      : 'Searching for satellites...',
+                      ? context.l10n.gpsStatusSatellitesCount(satsInView ?? 0)
+                      : context.l10n.gpsStatusSearchingSatellites,
                   style: Theme.of(
                     context,
                   ).textTheme.bodyMedium?.copyWith(color: context.textTertiary),
@@ -412,8 +444,8 @@ class GpsStatusScreen extends ConsumerWidget {
                 color: AppTheme.successGreen.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(AppTheme.radius8),
               ),
-              child: const Text(
-                'ACTIVE',
+              child: Text(
+                context.l10n.gpsStatusActiveBadge,
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
@@ -534,13 +566,22 @@ class GpsStatusScreen extends ConsumerWidget {
     return AppTheme.successGreen;
   }
 
-  String _getCardinalDirection(double degrees) {
-    const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+  String _getCardinalDirection(BuildContext context, double degrees) {
+    final directions = [
+      context.l10n.gpsStatusCardinalN,
+      context.l10n.gpsStatusCardinalNE,
+      context.l10n.gpsStatusCardinalE,
+      context.l10n.gpsStatusCardinalSE,
+      context.l10n.gpsStatusCardinalS,
+      context.l10n.gpsStatusCardinalSW,
+      context.l10n.gpsStatusCardinalW,
+      context.l10n.gpsStatusCardinalNW,
+    ];
     final index = ((degrees + 22.5) / 45).floor() % 8;
     return directions[index];
   }
 
-  String _formatTimestamp(DateTime timestamp) {
+  String _formatTimestamp(BuildContext context, DateTime timestamp) {
     final now = DateTime.now();
     final isToday =
         timestamp.day == now.day &&
@@ -551,22 +592,25 @@ class GpsStatusScreen extends ConsumerWidget {
         '${timestamp.hour.toString().padLeft(2, '0')}:${timestamp.minute.toString().padLeft(2, '0')}:${timestamp.second.toString().padLeft(2, '0')}';
 
     if (isToday) {
-      return 'Today at $time';
+      return context.l10n.gpsStatusTodayAt(time);
     }
 
-    return '${timestamp.day}/${timestamp.month}/${timestamp.year} $time';
+    return context.l10n.gpsStatusDateAt(
+      '${timestamp.day}/${timestamp.month}/${timestamp.year}',
+      time,
+    );
   }
 
-  String _timeAgo(DateTime timestamp) {
+  String _timeAgo(BuildContext context, DateTime timestamp) {
     final diff = DateTime.now().difference(timestamp);
     if (diff.inSeconds < 60) {
-      return '${diff.inSeconds} seconds ago';
+      return context.l10n.gpsStatusSecondsAgo(diff.inSeconds);
     } else if (diff.inMinutes < 60) {
-      return '${diff.inMinutes} minutes ago';
+      return context.l10n.gpsStatusMinutesAgo(diff.inMinutes);
     } else if (diff.inHours < 24) {
-      return '${diff.inHours} hours ago';
+      return context.l10n.gpsStatusHoursAgo(diff.inHours);
     } else {
-      return '${diff.inDays} days ago';
+      return context.l10n.gpsStatusDaysAgo(diff.inDays);
     }
   }
 

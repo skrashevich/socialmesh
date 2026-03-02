@@ -5,7 +5,6 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
@@ -103,7 +102,7 @@ class _AnimatedEmptyStateState extends State<AnimatedEmptyState>
     with TickerProviderStateMixin, WidgetsBindingObserver {
   late AnimationController _pulseController;
   late AnimationController _convergeController;
-  late Ticker _floatTicker;
+  late AnimationController _floatController;
   double _floatTime = 0.0;
   late List<_FloatingNode> _floatingNodes;
   StreamSubscription<AccelerometerEvent>? _accelerometerSub;
@@ -119,6 +118,10 @@ class _AnimatedEmptyStateState extends State<AnimatedEmptyState>
   static const double _gyroFriction = 0.94;
   static const double _gyroMax = 12.0;
   static const double _iconSize = 48.0;
+
+  /// Sensor sampling period. 50ms (20Hz) is sufficient for smooth parallax
+  /// tilt effects while using ~68% less CPU than the previous 16ms (62.5Hz).
+  static const Duration _sensorSamplingPeriod = Duration(milliseconds: 50);
 
   @override
   void initState() {
@@ -136,16 +139,15 @@ class _AnimatedEmptyStateState extends State<AnimatedEmptyState>
       duration: const Duration(milliseconds: 550),
     );
 
-    // Floating nodes animation
-    _floatTicker = createTicker((elapsed) {
-      _floatTime = elapsed.inMilliseconds / 3000.0;
-      _tiltOffset =
-          _tiltOffset * _tiltSmoothing + _tiltTarget * (1 - _tiltSmoothing);
-      _gyroOffset = _gyroOffset * _gyroFriction;
-      if (mounted) {
-        setState(() {});
-      }
-    })..start();
+    // Floating nodes animation driven by AnimationController instead of a raw
+    // Ticker + setState. The controller's value linearly sweeps 0→1 over 3s
+    // and repeats. The listener updates tilt/gyro interpolation state but does
+    // NOT call setState -- rebuilds are handled by AnimatedBuilder in the tree.
+    _floatController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 3000),
+    )..addListener(_onFloatTick);
+    _floatController.repeat();
 
     // Guard: CMMotionManager is unavailable on macOS / Mac Catalyst and causes
     // NSInternalInconsistencyException when the native thunk fires into the
@@ -153,14 +155,14 @@ class _AnimatedEmptyStateState extends State<AnimatedEmptyState>
     if (defaultTargetPlatform != TargetPlatform.macOS) {
       _accelerometerSub =
           accelerometerEventStream(
-            samplingPeriod: const Duration(milliseconds: 16),
+            samplingPeriod: _sensorSamplingPeriod,
           ).listen((event) {
             _updateTilt(event.x, event.y);
           });
       _gyroscopeSub =
-          gyroscopeEventStream(
-            samplingPeriod: const Duration(milliseconds: 16),
-          ).listen((event) {
+          gyroscopeEventStream(samplingPeriod: _sensorSamplingPeriod).listen((
+            event,
+          ) {
             _updateGyro(event.x, event.y);
           });
     }
@@ -196,6 +198,21 @@ class _AnimatedEmptyStateState extends State<AnimatedEmptyState>
     }
   }
 
+  /// Listener for `_floatController`. Updates the cumulative float time from
+  /// the controller's elapsed duration and interpolates tilt/gyro offsets each
+  /// frame. No `setState` -- the `AnimatedBuilder` in the widget tree observes
+  /// `_floatController` directly and triggers a rebuild/repaint only within
+  /// its isolated subtree.
+  void _onFloatTick() {
+    final elapsed = _floatController.lastElapsedDuration;
+    if (elapsed != null) {
+      _floatTime = elapsed.inMilliseconds / 3000.0;
+    }
+    _tiltOffset =
+        _tiltOffset * _tiltSmoothing + _tiltTarget * (1 - _tiltSmoothing);
+    _gyroOffset = _gyroOffset * _gyroFriction;
+  }
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     switch (state) {
@@ -215,13 +232,13 @@ class _AnimatedEmptyStateState extends State<AnimatedEmptyState>
         if (defaultTargetPlatform != TargetPlatform.macOS) {
           _accelerometerSub ??=
               accelerometerEventStream(
-                samplingPeriod: const Duration(milliseconds: 16),
+                samplingPeriod: _sensorSamplingPeriod,
               ).listen((event) {
                 _updateTilt(event.x, event.y);
               });
           _gyroscopeSub ??=
               gyroscopeEventStream(
-                samplingPeriod: const Duration(milliseconds: 16),
+                samplingPeriod: _sensorSamplingPeriod,
               ).listen((event) {
                 _updateGyro(event.x, event.y);
               });
@@ -234,7 +251,7 @@ class _AnimatedEmptyStateState extends State<AnimatedEmptyState>
     WidgetsBinding.instance.removeObserver(this);
     _pulseController.dispose();
     _convergeController.dispose();
-    _floatTicker.dispose();
+    _floatController.dispose();
     _accelerometerSub?.cancel();
     _accelerometerSub = null;
     _gyroscopeSub?.cancel();
@@ -383,73 +400,87 @@ class _AnimatedEmptyStateState extends State<AnimatedEmptyState>
                     ),
                   ),
 
-                  // Floating nodes (above center icon)
-                  AnimatedBuilder(
-                    animation: _convergeController,
-                    builder: (context, child) {
-                      final converge = 1 - (_convergeController.value * 0.25);
-                      return Stack(
-                        alignment: Alignment.center,
-                        children: _floatingNodes.map((node) {
-                          final oscillation = sin(
-                            _floatTime * 2 * pi * node.speed * activityFactor +
-                                node.phaseOffset,
-                          );
-                          final angle = node.angle + (oscillation * node.sweep);
-                          final wobblePhase =
-                              _floatTime * 2 * pi * node.wobbleSpeed +
-                              node.phaseOffset;
-                          final radius =
-                              node.radius *
-                              converge *
-                              (1 + sin(wobblePhase + node.angle) * node.wobble);
-                          final depthScale = 0.4 + (node.radius / 140);
-                          final parallax =
-                              (_tiltOffset + (_gyroOffset * 0.4)) *
-                              activityFactor;
-                          final x =
-                              cos(angle) * radius + parallax.dx * depthScale;
-                          final y =
-                              sin(angle) * radius + parallax.dy * depthScale;
-                          final opacity =
-                              node.opacity *
-                              (widget.config.actionEnabled ? 1.0 : 0.6);
+                  // Floating nodes — wrapped in RepaintBoundary to isolate
+                  // repaints from the rest of the widget subtree. The
+                  // AnimatedBuilder observes both _floatController (for time-
+                  // based motion) and _convergeController (for the converge
+                  // tap effect) so it rebuilds only this layer, not the
+                  // entire empty-state tree.
+                  RepaintBoundary(
+                    child: AnimatedBuilder(
+                      animation: Listenable.merge([
+                        _floatController,
+                        _convergeController,
+                      ]),
+                      builder: (context, child) {
+                        final floatTime = _floatTime;
+                        final converge = 1 - (_convergeController.value * 0.25);
+                        return Stack(
+                          alignment: Alignment.center,
+                          children: _floatingNodes.map((node) {
+                            final oscillation = sin(
+                              floatTime * 2 * pi * node.speed * activityFactor +
+                                  node.phaseOffset,
+                            );
+                            final angle =
+                                node.angle + (oscillation * node.sweep);
+                            final wobblePhase =
+                                floatTime * 2 * pi * node.wobbleSpeed +
+                                node.phaseOffset;
+                            final radius =
+                                node.radius *
+                                converge *
+                                (1 +
+                                    sin(wobblePhase + node.angle) *
+                                        node.wobble);
+                            final depthScale = 0.4 + (node.radius / 140);
+                            final parallax =
+                                (_tiltOffset + (_gyroOffset * 0.4)) *
+                                activityFactor;
+                            final x =
+                                cos(angle) * radius + parallax.dx * depthScale;
+                            final y =
+                                sin(angle) * radius + parallax.dy * depthScale;
+                            final opacity =
+                                node.opacity *
+                                (widget.config.actionEnabled ? 1.0 : 0.6);
 
-                          Widget orb = Container(
-                            width: node.size,
-                            height: node.size,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: node.color.withValues(alpha: opacity),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: node.color.withValues(
-                                    alpha: opacity * 0.5,
+                            Widget orb = Container(
+                              width: node.size,
+                              height: node.size,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: node.color.withValues(alpha: opacity),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: node.color.withValues(
+                                      alpha: opacity * 0.5,
+                                    ),
+                                    blurRadius: node.size,
+                                    spreadRadius: 2,
                                   ),
-                                  blurRadius: node.size,
-                                  spreadRadius: 2,
-                                ),
-                              ],
-                            ),
-                          );
-
-                          if (node.blurSigma > 0) {
-                            orb = ImageFiltered(
-                              imageFilter: ImageFilter.blur(
-                                sigmaX: node.blurSigma,
-                                sigmaY: node.blurSigma,
+                                ],
                               ),
+                            );
+
+                            if (node.blurSigma > 0) {
+                              orb = ImageFiltered(
+                                imageFilter: ImageFilter.blur(
+                                  sigmaX: node.blurSigma,
+                                  sigmaY: node.blurSigma,
+                                ),
+                                child: orb,
+                              );
+                            }
+
+                            return Transform.translate(
+                              offset: Offset(x, y),
                               child: orb,
                             );
-                          }
-
-                          return Transform.translate(
-                            offset: Offset(x, y),
-                            child: orb,
-                          );
-                        }).toList(),
-                      );
-                    },
+                          }).toList(),
+                        );
+                      },
+                    ),
                   ),
                 ],
               ),

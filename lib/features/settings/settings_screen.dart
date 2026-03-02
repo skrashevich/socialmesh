@@ -1883,9 +1883,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                         return context.l10n.settingsNotConfigured;
                       }
                       // Find the region info for display
-                      final regionInfo = availableRegions
-                          .where((r) => r.code == region)
-                          .firstOrNull;
+                      final regionInfo = getAvailableRegions(
+                        context,
+                      ).where((r) => r.code == region).firstOrNull;
                       if (regionInfo != null) {
                         return '${regionInfo.name} (${regionInfo.frequency})';
                       }

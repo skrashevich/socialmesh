@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../core/transport.dart';
 import '../../../providers/app_providers.dart';
@@ -27,7 +28,7 @@ class DrawerNodeHeader extends ConsumerWidget {
     );
 
     // Get node display info
-    final nodeName = myNode?.longName ?? 'Not Connected';
+    final nodeName = myNode?.longName ?? context.l10n.drawerNodeNotConnected;
     final nodeId = myNodeNum != null ? '!${myNodeNum.toRadixString(16)}' : '';
 
     return Container(
@@ -113,7 +114,9 @@ class DrawerNodeHeader extends ConsumerWidget {
                           ),
                           const SizedBox(width: AppTheme.spacing4),
                           Text(
-                            isConnected ? 'Online' : 'Offline',
+                            isConnected
+                                ? context.l10n.drawerNodeOnline
+                                : context.l10n.drawerNodeOffline,
                             style: TextStyle(
                               fontSize: 11,
                               fontWeight: FontWeight.w500,

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:socialmesh/core/logging.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
 import '../../core/transport.dart';
@@ -105,7 +106,7 @@ class MeshCoreHamburgerMenuButton extends ConsumerWidget {
           }
         }
       },
-      tooltip: 'Menu',
+      tooltip: context.l10n.meshcoreShellMenuTooltip,
     );
   }
 }
@@ -154,7 +155,7 @@ class MeshCoreDeviceStatusButton extends ConsumerWidget {
         ],
       ),
       onPressed: () => showMeshCoreDeviceSheet(context),
-      tooltip: 'Device',
+      tooltip: context.l10n.meshcoreShellDeviceTooltip,
     );
   }
 }
@@ -209,26 +210,26 @@ class _MeshCoreShellState extends ConsumerState<MeshCoreShell>
     super.dispose();
   }
 
-  final List<_MeshCoreNavItem> _navItems = [
-    const _MeshCoreNavItem(
+  List<_MeshCoreNavItem> _navItems(BuildContext context) => [
+    _MeshCoreNavItem(
       icon: Icons.people_outline,
       activeIcon: Icons.people,
-      label: 'Contacts',
+      label: context.l10n.meshcoreShellNavContacts,
     ),
-    const _MeshCoreNavItem(
+    _MeshCoreNavItem(
       icon: Icons.forum_outlined,
       activeIcon: Icons.forum,
-      label: 'Channels',
+      label: context.l10n.meshcoreShellNavChannels,
     ),
-    const _MeshCoreNavItem(
+    _MeshCoreNavItem(
       icon: Icons.map_outlined,
       activeIcon: Icons.map,
-      label: 'Map',
+      label: context.l10n.meshcoreShellNavMap,
     ),
-    const _MeshCoreNavItem(
+    _MeshCoreNavItem(
       icon: Icons.build_outlined,
       activeIcon: Icons.build,
-      label: 'Tools',
+      label: context.l10n.meshcoreShellNavTools,
     ),
   ];
 
@@ -254,7 +255,8 @@ class _MeshCoreShellState extends ConsumerState<MeshCoreShell>
     final linkStatus = ref.watch(linkStatusProvider);
     final isConnected = linkStatus.isConnected;
     final isConnecting = linkStatus.isConnecting;
-    final deviceName = linkStatus.deviceName ?? 'MeshCore';
+    final deviceName =
+        linkStatus.deviceName ?? context.l10n.meshcoreShellDefaultDeviceName;
 
     // Determine if we should show reconnection banner
     final showReconnectionBanner = !isConnected && !isConnecting;
@@ -273,7 +275,7 @@ class _MeshCoreShellState extends ConsumerState<MeshCoreShell>
             child: IndexedStack(
               index: selectedIndex,
               children: List.generate(
-                _navItems.length,
+                _navItems(context).length,
                 (index) => _buildScreen(index),
               ),
             ),
@@ -305,7 +307,7 @@ class _MeshCoreShellState extends ConsumerState<MeshCoreShell>
             const SizedBox(width: AppTheme.spacing12),
             Expanded(
               child: Text(
-                'Disconnected from $deviceName',
+                context.l10n.meshcoreShellDisconnectedFrom(deviceName),
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: AppTheme.errorRed,
                 ),
@@ -314,7 +316,7 @@ class _MeshCoreShellState extends ConsumerState<MeshCoreShell>
             TextButton(
               onPressed: _reconnect,
               child: Text(
-                'Reconnect',
+                context.l10n.meshcoreShellReconnectButton,
                 style: TextStyle(color: AppTheme.errorRed),
               ),
             ),
@@ -349,8 +351,8 @@ class _MeshCoreShellState extends ConsumerState<MeshCoreShell>
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: List.generate(_navItems.length, (index) {
-              final item = _navItems[index];
+            children: List.generate(_navItems(context).length, (index) {
+              final item = _navItems(context)[index];
               final isSelected = index == selected;
 
               return _MeshCoreNavBarItem(
@@ -410,11 +412,13 @@ class _MeshCoreShellState extends ConsumerState<MeshCoreShell>
                 ),
                 children: [
                   // MeshCore section header
-                  _buildSectionHeader('MESHCORE'),
+                  _buildSectionHeader(
+                    context.l10n.meshcoreShellDrawerSectionHeader,
+                  ),
 
                   _MeshCoreDrawerMenuTile(
                     icon: Icons.person_add_rounded,
-                    label: 'Add Contact',
+                    label: context.l10n.meshcoreShellDrawerAddContact,
                     iconColor: AccentColors.cyan,
                     onTap: () {
                       ref.haptics.tabChange();
@@ -425,7 +429,7 @@ class _MeshCoreShellState extends ConsumerState<MeshCoreShell>
                   const SizedBox(height: AppTheme.spacing4),
                   _MeshCoreDrawerMenuTile(
                     icon: Icons.add_rounded,
-                    label: 'Add Channel',
+                    label: context.l10n.meshcoreShellDrawerAddChannel,
                     iconColor: AccentColors.purple,
                     onTap: () {
                       ref.haptics.tabChange();
@@ -436,7 +440,7 @@ class _MeshCoreShellState extends ConsumerState<MeshCoreShell>
                   const SizedBox(height: AppTheme.spacing4),
                   _MeshCoreDrawerMenuTile(
                     icon: Icons.radar_rounded,
-                    label: 'Discover Contacts',
+                    label: context.l10n.meshcoreShellDrawerDiscoverContacts,
                     iconColor: AccentColors.green,
                     onTap: () {
                       ref.haptics.tabChange();
@@ -447,7 +451,7 @@ class _MeshCoreShellState extends ConsumerState<MeshCoreShell>
                   const SizedBox(height: AppTheme.spacing4),
                   _MeshCoreDrawerMenuTile(
                     icon: Icons.qr_code_rounded,
-                    label: 'My Contact Code',
+                    label: context.l10n.meshcoreShellDrawerMyContactCode,
                     iconColor: AccentColors.orange,
                     onTap: () {
                       ref.haptics.tabChange();
@@ -467,7 +471,7 @@ class _MeshCoreShellState extends ConsumerState<MeshCoreShell>
 
                   _MeshCoreDrawerMenuTile(
                     icon: Icons.settings_outlined,
-                    label: 'Settings',
+                    label: context.l10n.meshcoreShellDrawerSettings,
                     iconColor: SemanticColors.muted,
                     onTap: () {
                       ref.haptics.tabChange();
@@ -541,7 +545,7 @@ class _MeshCoreShellState extends ConsumerState<MeshCoreShell>
                       _disconnect();
                     },
                     icon: const Icon(Icons.link_off_rounded, size: 18),
-                    label: const Text('Disconnect'),
+                    label: Text(context.l10n.meshcoreShellDrawerDisconnect),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: AppTheme.errorRed,
                       side: BorderSide(
@@ -592,17 +596,19 @@ class _MeshCoreShellState extends ConsumerState<MeshCoreShell>
     final settingsAsync = ref.read(settingsServiceProvider);
     final settings = settingsAsync.asData?.value;
     final deviceId = settings?.lastDeviceId;
-    final deviceName = settings?.lastDeviceName ?? 'MeshCore Device';
+    final deviceName =
+        settings?.lastDeviceName ??
+        context.l10n.meshcoreShellDefaultDeviceNameFull;
 
     if (deviceId == null) {
-      showErrorSnackBar(context, 'No saved device to reconnect to');
+      showErrorSnackBar(context, context.l10n.meshcoreShellNoSavedDevice);
       return;
     }
 
     // Show reconnecting feedback
     showLoadingSnackBar(
       context,
-      'Reconnecting to $deviceName...',
+      context.l10n.meshcoreShellReconnecting(deviceName),
       duration: const Duration(seconds: 30),
     );
 
@@ -632,13 +638,17 @@ class _MeshCoreShellState extends ConsumerState<MeshCoreShell>
       ScaffoldMessenger.of(context).clearSnackBars();
       showSuccessSnackBar(
         context,
-        'Connected to ${result.deviceInfo?.displayName ?? deviceName}',
+        context.l10n.meshcoreShellConnectedTo(
+          result.deviceInfo?.displayName ?? deviceName,
+        ),
       );
     } else {
       ScaffoldMessenger.of(context).clearSnackBars();
       showErrorSnackBar(
         context,
-        'Reconnect failed: ${result.errorMessage ?? "Unknown error"}',
+        context.l10n.meshcoreShellReconnectFailed(
+          result.errorMessage ?? context.l10n.meshcoreShellUnknown,
+        ),
       );
     }
   }
@@ -651,33 +661,36 @@ class _MeshCoreShellState extends ConsumerState<MeshCoreShell>
   void _showAddContact() {
     // Navigate to Contacts tab
     ref.read(meshCoreShellIndexProvider.notifier).setIndex(0);
-    showInfoSnackBar(context, 'Use the + button to add a contact');
+    showInfoSnackBar(context, context.l10n.meshcoreShellAddContactHint);
   }
 
   void _showAddChannel() {
     // Navigate to Channels tab
     ref.read(meshCoreShellIndexProvider.notifier).setIndex(1);
-    showInfoSnackBar(context, 'Use the menu to create or join a channel');
+    showInfoSnackBar(context, context.l10n.meshcoreShellAddChannelHint);
   }
 
   void _showDiscoverContacts() {
     // Send advertisement to discover other nodes
     final session = ref.read(meshCoreSessionProvider);
     if (session == null) {
-      showErrorSnackBar(context, 'Not connected');
+      showErrorSnackBar(context, context.l10n.meshcoreShellNotConnected);
       return;
     }
 
     // Send self advertisement command
     session.sendCommand(0x07);
-    showSuccessSnackBar(context, 'Advertisement sent - listen for responses');
+    showSuccessSnackBar(context, context.l10n.meshcoreShellAdvertisementSent);
   }
 
   void _showMyContactCode() {
     final selfInfo = ref.read(meshCoreSelfInfoProvider);
     final info = selfInfo.selfInfo;
     if (info == null) {
-      showErrorSnackBar(context, 'Device info not available');
+      showErrorSnackBar(
+        context,
+        context.l10n.meshcoreShellDeviceInfoNotAvailable,
+      );
       return;
     }
 
@@ -688,10 +701,12 @@ class _MeshCoreShellState extends ConsumerState<MeshCoreShell>
 
     QrShareSheet.show(
       context: context,
-      title: info.nodeName.isNotEmpty ? info.nodeName : 'Unnamed Node',
-      subtitle: 'Scan to add as contact',
+      title: info.nodeName.isNotEmpty
+          ? info.nodeName
+          : context.l10n.meshcoreShellUnnamedNode,
+      subtitle: context.l10n.meshcoreShellScanToAddContact,
       qrData: shareCode,
-      infoText: 'Share your contact code so others can message you',
+      infoText: context.l10n.meshcoreShellShareContactInfo,
     );
   }
 }
@@ -710,7 +725,8 @@ class _MeshCoreDrawerNodeHeader extends ConsumerWidget {
 
     final nodeName = selfInfo.selfInfo?.nodeName.isNotEmpty == true
         ? selfInfo.selfInfo!.nodeName
-        : linkStatus.deviceName ?? 'MeshCore Device';
+        : linkStatus.deviceName ??
+              context.l10n.meshcoreShellDefaultDeviceNameFull;
 
     final nodeId = selfInfo.selfInfo != null
         ? selfInfo.selfInfo!.pubKey
@@ -723,7 +739,7 @@ class _MeshCoreDrawerNodeHeader extends ConsumerWidget {
     // Get initials for avatar
     final initials = nodeName.length >= 2
         ? nodeName.substring(0, 2).toUpperCase()
-        : 'MC';
+        : context.l10n.meshcoreShellDefaultInitials;
 
     return Container(
       padding: const EdgeInsets.fromLTRB(AppTheme.spacing20, 20, 20, 16),
@@ -796,7 +812,9 @@ class _MeshCoreDrawerNodeHeader extends ConsumerWidget {
                           ),
                           const SizedBox(width: AppTheme.spacing4),
                           Text(
-                            isConnected ? 'Online' : 'Offline',
+                            isConnected
+                                ? context.l10n.meshcoreShellStatusOnline
+                                : context.l10n.meshcoreShellStatusOffline,
                             style: TextStyle(
                               fontSize: 11,
                               fontWeight: FontWeight.w500,
@@ -1035,7 +1053,8 @@ class _MeshCoreDeviceSheetContentState
 
     final nodeName = selfInfo.selfInfo?.nodeName.isNotEmpty == true
         ? selfInfo.selfInfo!.nodeName
-        : linkStatus.deviceName ?? 'MeshCore Device';
+        : linkStatus.deviceName ??
+              context.l10n.meshcoreShellDefaultDeviceNameFull;
 
     final nodeId = selfInfo.selfInfo != null
         ? selfInfo.selfInfo!.pubKey
@@ -1102,10 +1121,10 @@ class _MeshCoreDeviceSheetContentState
                         const SizedBox(width: AppTheme.spacing6),
                         Text(
                           isConnected
-                              ? 'Connected'
+                              ? context.l10n.meshcoreShellStatusConnected
                               : isConnecting
-                              ? 'Connecting...'
-                              : 'Disconnected',
+                              ? context.l10n.meshcoreShellStatusConnecting
+                              : context.l10n.meshcoreShellStatusDisconnected,
                           style: TextStyle(
                             fontSize: 14,
                             color: isConnected
@@ -1135,43 +1154,52 @@ class _MeshCoreDeviceSheetContentState
             padding: const EdgeInsets.all(AppTheme.spacing20),
             children: [
               // Device Info
-              _buildSectionTitle(context, 'Device Information'),
+              _buildSectionTitle(
+                context,
+                context.l10n.meshcoreShellSectionDeviceInfo,
+              ),
               const SizedBox(height: AppTheme.spacing12),
               _buildDeviceInfoCard(context, selfInfo, nodeId, isConnected),
               const SizedBox(height: AppTheme.spacing24),
 
               // Quick Actions
-              _buildSectionTitle(context, 'Quick Actions'),
+              _buildSectionTitle(
+                context,
+                context.l10n.meshcoreShellSectionQuickActions,
+              ),
               const SizedBox(height: AppTheme.spacing12),
               _MeshCoreActionTile(
                 icon: Icons.person_add_rounded,
-                title: 'Add Contact',
-                subtitle: 'Scan QR or enter contact code',
+                title: context.l10n.meshcoreShellDrawerAddContact,
+                subtitle: context.l10n.meshcoreShellAddContactSubtitle,
                 enabled: isConnected && !_disconnecting,
                 onTap: () {
                   Navigator.pop(context);
                   ref.read(meshCoreShellIndexProvider.notifier).setIndex(0);
                   showInfoSnackBar(
                     context,
-                    'Use the + button to add a contact',
+                    context.l10n.meshcoreShellAddContactHint,
                   );
                 },
               ),
               _MeshCoreActionTile(
                 icon: Icons.add_rounded,
-                title: 'Join Channel',
-                subtitle: 'Scan QR or enter channel code',
+                title: context.l10n.meshcoreShellJoinChannel,
+                subtitle: context.l10n.meshcoreShellJoinChannelSubtitle,
                 enabled: isConnected && !_disconnecting,
                 onTap: () {
                   Navigator.pop(context);
                   ref.read(meshCoreShellIndexProvider.notifier).setIndex(1);
-                  showInfoSnackBar(context, 'Use the menu to join a channel');
+                  showInfoSnackBar(
+                    context,
+                    context.l10n.meshcoreShellJoinChannelHint,
+                  );
                 },
               ),
               _MeshCoreActionTile(
                 icon: Icons.qr_code_rounded,
-                title: 'My Contact Code',
-                subtitle: 'Share your contact info',
+                title: context.l10n.meshcoreShellDrawerMyContactCode,
+                subtitle: context.l10n.meshcoreShellShareContactSubtitle,
                 enabled: isConnected && !_disconnecting,
                 onTap: () {
                   Navigator.pop(context);
@@ -1180,8 +1208,8 @@ class _MeshCoreDeviceSheetContentState
               ),
               _MeshCoreActionTile(
                 icon: Icons.radar_rounded,
-                title: 'Discover Contacts',
-                subtitle: 'Send advertisement to find nearby nodes',
+                title: context.l10n.meshcoreShellDrawerDiscoverContacts,
+                subtitle: context.l10n.meshcoreShellDiscoverSubtitle,
                 enabled: isConnected && !_disconnecting,
                 onTap: () {
                   Navigator.pop(context);
@@ -1190,8 +1218,8 @@ class _MeshCoreDeviceSheetContentState
               ),
               _MeshCoreActionTile(
                 icon: Icons.settings_outlined,
-                title: 'App Settings',
-                subtitle: 'Notifications, theme, preferences',
+                title: context.l10n.meshcoreShellAppSettings,
+                subtitle: context.l10n.meshcoreShellAppSettingsSubtitle,
                 onTap: () {
                   Navigator.pop(context);
                   Navigator.push(
@@ -1206,7 +1234,10 @@ class _MeshCoreDeviceSheetContentState
 
               // Connection Actions
               if (isConnected) ...[
-                _buildSectionTitle(context, 'Connection'),
+                _buildSectionTitle(
+                  context,
+                  context.l10n.meshcoreShellSectionConnection,
+                ),
                 const SizedBox(height: AppTheme.spacing12),
                 _buildDisconnectButton(context),
               ],
@@ -1247,25 +1278,27 @@ class _MeshCoreDeviceSheetContentState
       child: InfoTable(
         rows: [
           InfoTableRow(
-            label: 'Protocol',
-            value: 'MeshCore',
+            label: context.l10n.meshcoreShellInfoProtocol,
+            value: context.l10n.meshcoreShellInfoProtocolValue,
             icon: Icons.hub_rounded,
             iconColor: AccentColors.cyan,
           ),
           if (info != null) ...[
             InfoTableRow(
-              label: 'Node Name',
-              value: info.nodeName.isNotEmpty ? info.nodeName : 'Unknown',
+              label: context.l10n.meshcoreShellInfoNodeName,
+              value: info.nodeName.isNotEmpty
+                  ? info.nodeName
+                  : context.l10n.meshcoreShellUnknown,
               icon: Icons.label_rounded,
             ),
             if (nodeId.isNotEmpty)
               InfoTableRow(
-                label: 'Node ID',
+                label: context.l10n.meshcoreShellInfoNodeId,
                 value: nodeId,
                 icon: Icons.tag_rounded,
               ),
             InfoTableRow(
-              label: 'Public Key',
+              label: context.l10n.meshcoreShellInfoPublicKey,
               value: info.pubKey
                   .take(8)
                   .map((b) => b.toRadixString(16).padLeft(2, '0'))
@@ -1275,8 +1308,10 @@ class _MeshCoreDeviceSheetContentState
             ),
           ],
           InfoTableRow(
-            label: 'Status',
-            value: isConnected ? 'Online' : 'Offline',
+            label: context.l10n.meshcoreShellInfoStatus,
+            value: isConnected
+                ? context.l10n.meshcoreShellStatusOnline
+                : context.l10n.meshcoreShellStatusOffline,
             icon: Icons.circle,
             iconColor: isConnected ? AppTheme.successGreen : AppTheme.errorRed,
           ),
@@ -1302,7 +1337,11 @@ class _MeshCoreDeviceSheetContentState
                   ),
                 )
               : const Icon(Icons.link_off, size: 20),
-          label: Text(_disconnecting ? 'Disconnecting...' : 'Disconnect'),
+          label: Text(
+            _disconnecting
+                ? context.l10n.meshcoreShellDisconnecting
+                : context.l10n.meshcoreShellDisconnect,
+          ),
           style: OutlinedButton.styleFrom(
             foregroundColor: AppTheme.errorRed,
             side: BorderSide(
@@ -1324,9 +1363,9 @@ class _MeshCoreDeviceSheetContentState
     final nav = Navigator.of(context);
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Disconnect',
-      message: 'Are you sure you want to disconnect from this MeshCore device?',
-      confirmLabel: 'Disconnect',
+      title: context.l10n.meshcoreShellDisconnect,
+      message: context.l10n.meshcoreShellDisconnectConfirmMessage,
+      confirmLabel: context.l10n.meshcoreShellDisconnect,
       isDestructive: true,
     );
 
@@ -1346,7 +1385,10 @@ class _MeshCoreDeviceSheetContentState
     final selfInfo = ref.read(meshCoreSelfInfoProvider);
     final info = selfInfo.selfInfo;
     if (info == null) {
-      showErrorSnackBar(context, 'Device info not available');
+      showErrorSnackBar(
+        context,
+        context.l10n.meshcoreShellDeviceInfoNotAvailable,
+      );
       return;
     }
 
@@ -1357,23 +1399,25 @@ class _MeshCoreDeviceSheetContentState
 
     QrShareSheet.show(
       context: context,
-      title: info.nodeName.isNotEmpty ? info.nodeName : 'Unnamed Node',
-      subtitle: 'Scan to add as contact',
+      title: info.nodeName.isNotEmpty
+          ? info.nodeName
+          : context.l10n.meshcoreShellUnnamedNode,
+      subtitle: context.l10n.meshcoreShellScanToAddContact,
       qrData: shareCode,
-      infoText: 'Share your contact code so others can message you',
+      infoText: context.l10n.meshcoreShellShareContactInfo,
     );
   }
 
   void _discoverContacts() {
     final session = ref.read(meshCoreSessionProvider);
     if (session == null) {
-      showErrorSnackBar(context, 'Not connected');
+      showErrorSnackBar(context, context.l10n.meshcoreShellNotConnected);
       return;
     }
     session.sendCommand(0x07);
     showSuccessSnackBar(
       context,
-      'Advertisement sent - listening for responses',
+      context.l10n.meshcoreShellAdvertisementSentListening,
     );
   }
 }

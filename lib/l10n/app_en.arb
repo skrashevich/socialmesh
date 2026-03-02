@@ -3099,5 +3099,2002 @@
   "scannerDeviceDisconnectedUnexpectedly": "The device disconnected unexpectedly. It may have gone out of range or lost power.",
   "@scannerDeviceDisconnectedUnexpectedly": {
     "description": "User-friendly error message when the device disconnects unexpectedly during connection."
-  }
+  },
+
+
+
+  "drawerAdminSectionHeader": "ADMIN",
+  "@drawerAdminSectionHeader": {
+    "description": "Section header for the admin area in the navigation drawer."
+  },
+
+  "drawerAdminDashboard": "Admin Dashboard",
+  "@drawerAdminDashboard": {
+    "description": "Label for the Admin Dashboard menu tile in the navigation drawer."
+  },
+
+  "drawerNodeNotConnected": "Not Connected",
+  "@drawerNodeNotConnected": {
+    "description": "Fallback node name shown in drawer header when no device is connected."
+  },
+
+  "drawerNodeOnline": "Online",
+  "@drawerNodeOnline": {
+    "description": "Connection status chip label when the device is connected."
+  },
+
+  "drawerNodeOffline": "Offline",
+  "@drawerNodeOffline": {
+    "description": "Connection status chip label when the device is disconnected."
+  },
+
+  "drawerBadgeNew": "NEW",
+  "@drawerBadgeNew": {
+    "description": "Badge label for newly added drawer menu items."
+  },
+
+  "drawerBadgePro": "PRO",
+  "@drawerBadgePro": {
+    "description": "Badge label for locked premium features in the drawer."
+  },
+
+  "drawerBadgeTryIt": "TRY IT",
+  "@drawerBadgeTryIt": {
+    "description": "Badge label for premium features available to try in the drawer."
+  },
+
+  "drawerEnterpriseSectionHeader": "ENTERPRISE",
+  "@drawerEnterpriseSectionHeader": {
+    "description": "Section header for the enterprise (RBAC) area in the navigation drawer."
+  },
+
+  "drawerEnterpriseIncidents": "Incidents",
+  "@drawerEnterpriseIncidents": {
+    "description": "Label for the Incidents menu tile in the enterprise drawer section."
+  },
+
+  "drawerEnterpriseTasks": "Tasks",
+  "@drawerEnterpriseTasks": {
+    "description": "Label for the Tasks menu tile in the enterprise drawer section."
+  },
+
+  "drawerEnterpriseFieldReports": "Field Reports",
+  "@drawerEnterpriseFieldReports": {
+    "description": "Label for the Field Reports menu tile in the enterprise drawer section."
+  },
+
+  "drawerEnterpriseReports": "Reports",
+  "@drawerEnterpriseReports": {
+    "description": "Label for the Reports menu tile in the enterprise drawer section."
+  },
+
+  "drawerEnterpriseExportDenied": "Requires Supervisor or Admin role",
+  "@drawerEnterpriseExportDenied": {
+    "description": "Tooltip shown when a user without sufficient role tries to access export reports."
+  },
+
+  "drawerEnterpriseUserManagement": "User Management",
+  "@drawerEnterpriseUserManagement": {
+    "description": "Label for the User Management menu tile in the enterprise drawer section."
+  },
+
+  "drawerEnterpriseDeviceManagement": "Device Management",
+  "@drawerEnterpriseDeviceManagement": {
+    "description": "Label for the Device Management menu tile in the enterprise drawer section."
+  },
+
+  "drawerEnterpriseOrgSettings": "Org Settings",
+  "@drawerEnterpriseOrgSettings": {
+    "description": "Label for the Org Settings menu tile in the enterprise drawer section."
+  },
+
+  "discoveryScanningNetwork": "Scanning Network",
+  "@discoveryScanningNetwork": {
+    "description": "Title shown in the discovery overlay while scanning for mesh nodes."
+  },
+
+  "discoverySearchingForNodes": "Searching for nodes...",
+  "@discoverySearchingForNodes": {
+    "description": "Subtitle shown while no nodes have been discovered yet."
+  },
+
+  "discoveryNodesFound": "{count, plural, =1{1 node found} other{{count} nodes found}}",
+  "@discoveryNodesFound": {
+    "description": "Subtitle showing the number of discovered nodes.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "discoveryUnknownNode": "Unknown Node",
+  "@discoveryUnknownNode": {
+    "description": "Fallback display name for a discovered node with no name."
+  },
+
+  "discoverySignalExcellent": "Excellent",
+  "@discoverySignalExcellent": {
+    "description": "Signal quality label for strong RSSI values."
+  },
+
+  "discoverySignalGood": "Good",
+  "@discoverySignalGood": {
+    "description": "Signal quality label for moderate RSSI values."
+  },
+
+  "discoverySignalWeak": "Weak",
+  "@discoverySignalWeak": {
+    "description": "Signal quality label for poor RSSI values."
+  },
+
+  "discoveryDiscoveredBadge": "DISCOVERED",
+  "@discoveryDiscoveredBadge": {
+    "description": "Badge label shown on newly discovered node cards."
+  },
+
+
+
+  "meshcoreShellMenuTooltip": "Menu",
+  "@meshcoreShellMenuTooltip": {
+    "description": "Tooltip for the hamburger menu button in the MeshCore app bar."
+  },
+
+  "meshcoreShellDeviceTooltip": "Device",
+  "@meshcoreShellDeviceTooltip": {
+    "description": "Tooltip for the device status button in the MeshCore app bar."
+  },
+
+  "meshcoreShellNavContacts": "Contacts",
+  "@meshcoreShellNavContacts": {
+    "description": "Bottom navigation label for the Contacts tab in MeshCore."
+  },
+
+  "meshcoreShellNavChannels": "Channels",
+  "@meshcoreShellNavChannels": {
+    "description": "Bottom navigation label for the Channels tab in MeshCore."
+  },
+
+  "meshcoreShellNavMap": "Map",
+  "@meshcoreShellNavMap": {
+    "description": "Bottom navigation label for the Map tab in MeshCore."
+  },
+
+  "meshcoreShellNavTools": "Tools",
+  "@meshcoreShellNavTools": {
+    "description": "Bottom navigation label for the Tools tab in MeshCore."
+  },
+
+  "meshcoreShellDefaultDeviceName": "MeshCore",
+  "@meshcoreShellDefaultDeviceName": {
+    "description": "Fallback short device name for MeshCore when no name is saved."
+  },
+
+  "meshcoreShellDisconnectedFrom": "Disconnected from {deviceName}",
+  "@meshcoreShellDisconnectedFrom": {
+    "description": "Banner text shown when the MeshCore device disconnects.",
+    "placeholders": {
+      "deviceName": {
+        "type": "String"
+      }
+    }
+  },
+
+  "meshcoreShellReconnectButton": "Reconnect",
+  "@meshcoreShellReconnectButton": {
+    "description": "Button label to reconnect to a MeshCore device."
+  },
+
+  "meshcoreShellDrawerSectionHeader": "MESHCORE",
+  "@meshcoreShellDrawerSectionHeader": {
+    "description": "Section header for the MeshCore menu items in the drawer."
+  },
+
+  "meshcoreShellDrawerAddContact": "Add Contact",
+  "@meshcoreShellDrawerAddContact": {
+    "description": "Drawer menu item label for adding a MeshCore contact."
+  },
+
+  "meshcoreShellDrawerAddChannel": "Add Channel",
+  "@meshcoreShellDrawerAddChannel": {
+    "description": "Drawer menu item label for adding a MeshCore channel."
+  },
+
+  "meshcoreShellDrawerDiscoverContacts": "Discover Contacts",
+  "@meshcoreShellDrawerDiscoverContacts": {
+    "description": "Drawer menu item label for discovering nearby MeshCore contacts."
+  },
+
+  "meshcoreShellDrawerMyContactCode": "My Contact Code",
+  "@meshcoreShellDrawerMyContactCode": {
+    "description": "Drawer menu item label for showing the user's own MeshCore contact QR code."
+  },
+
+  "meshcoreShellDrawerSettings": "Settings",
+  "@meshcoreShellDrawerSettings": {
+    "description": "Drawer menu item label for MeshCore settings."
+  },
+
+  "meshcoreShellDrawerDisconnect": "Disconnect",
+  "@meshcoreShellDrawerDisconnect": {
+    "description": "Drawer disconnect button label."
+  },
+
+  "meshcoreShellDefaultDeviceNameFull": "MeshCore Device",
+  "@meshcoreShellDefaultDeviceNameFull": {
+    "description": "Fallback full device name for MeshCore."
+  },
+
+  "meshcoreShellNoSavedDevice": "No saved device to reconnect to",
+  "@meshcoreShellNoSavedDevice": {
+    "description": "Error snackbar when attempting to reconnect without a saved device."
+  },
+
+  "meshcoreShellReconnecting": "Reconnecting to {deviceName}...",
+  "@meshcoreShellReconnecting": {
+    "description": "Loading snackbar shown during MeshCore reconnection.",
+    "placeholders": {
+      "deviceName": {
+        "type": "String"
+      }
+    }
+  },
+
+  "meshcoreShellConnectedTo": "Connected to {deviceName}",
+  "@meshcoreShellConnectedTo": {
+    "description": "Success snackbar after reconnecting to a MeshCore device.",
+    "placeholders": {
+      "deviceName": {
+        "type": "String"
+      }
+    }
+  },
+
+  "meshcoreShellReconnectFailed": "Reconnect failed: {error}",
+  "@meshcoreShellReconnectFailed": {
+    "description": "Error snackbar when MeshCore reconnection fails.",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "meshcoreShellAddContactHint": "Use the + button to add a contact",
+  "@meshcoreShellAddContactHint": {
+    "description": "Info snackbar hint after navigating to contacts tab."
+  },
+
+  "meshcoreShellAddChannelHint": "Use the menu to create or join a channel",
+  "@meshcoreShellAddChannelHint": {
+    "description": "Info snackbar hint after navigating to channels tab."
+  },
+
+  "meshcoreShellNotConnected": "Not connected",
+  "@meshcoreShellNotConnected": {
+    "description": "Error message when attempting an action while MeshCore is disconnected."
+  },
+
+  "meshcoreShellAdvertisementSent": "Advertisement sent - listen for responses",
+  "@meshcoreShellAdvertisementSent": {
+    "description": "Success snackbar after sending a MeshCore contact discovery advertisement."
+  },
+
+  "meshcoreShellDeviceInfoNotAvailable": "Device info not available",
+  "@meshcoreShellDeviceInfoNotAvailable": {
+    "description": "Error message when device self-info is not yet available."
+  },
+
+  "meshcoreShellUnnamedNode": "Unnamed Node",
+  "@meshcoreShellUnnamedNode": {
+    "description": "Fallback title for QR share when device has no node name."
+  },
+
+  "meshcoreShellScanToAddContact": "Scan to add as contact",
+  "@meshcoreShellScanToAddContact": {
+    "description": "Subtitle on the QR share sheet for adding a MeshCore contact."
+  },
+
+  "meshcoreShellShareContactInfo": "Share your contact code so others can message you",
+  "@meshcoreShellShareContactInfo": {
+    "description": "Info text on the QR contact code share sheet."
+  },
+
+  "meshcoreShellDefaultInitials": "MC",
+  "@meshcoreShellDefaultInitials": {
+    "description": "Fallback avatar initials for MeshCore node."
+  },
+
+  "meshcoreShellStatusOnline": "Online",
+  "@meshcoreShellStatusOnline": {
+    "description": "Connection status label when the MeshCore device is connected."
+  },
+
+  "meshcoreShellStatusOffline": "Offline",
+  "@meshcoreShellStatusOffline": {
+    "description": "Connection status label when the MeshCore device is disconnected."
+  },
+
+  "meshcoreShellStatusConnected": "Connected",
+  "@meshcoreShellStatusConnected": {
+    "description": "Device sheet status when connected to a MeshCore device."
+  },
+
+  "meshcoreShellStatusConnecting": "Connecting...",
+  "@meshcoreShellStatusConnecting": {
+    "description": "Device sheet status while connecting to a MeshCore device."
+  },
+
+  "meshcoreShellStatusDisconnected": "Disconnected",
+  "@meshcoreShellStatusDisconnected": {
+    "description": "Device sheet status when disconnected from a MeshCore device."
+  },
+
+  "meshcoreShellSectionDeviceInfo": "Device Information",
+  "@meshcoreShellSectionDeviceInfo": {
+    "description": "Section title for device information in the MeshCore device sheet."
+  },
+
+  "meshcoreShellSectionQuickActions": "Quick Actions",
+  "@meshcoreShellSectionQuickActions": {
+    "description": "Section title for quick actions in the MeshCore device sheet."
+  },
+
+  "meshcoreShellSectionConnection": "Connection",
+  "@meshcoreShellSectionConnection": {
+    "description": "Section title for connection actions in the MeshCore device sheet."
+  },
+
+  "meshcoreShellAddContactSubtitle": "Scan QR or enter contact code",
+  "@meshcoreShellAddContactSubtitle": {
+    "description": "Subtitle for the Add Contact action tile in the MeshCore device sheet."
+  },
+
+  "meshcoreShellJoinChannel": "Join Channel",
+  "@meshcoreShellJoinChannel": {
+    "description": "Title for the Join Channel action tile in the MeshCore device sheet."
+  },
+
+  "meshcoreShellJoinChannelSubtitle": "Scan QR or enter channel code",
+  "@meshcoreShellJoinChannelSubtitle": {
+    "description": "Subtitle for the Join Channel action tile in the MeshCore device sheet."
+  },
+
+  "meshcoreShellJoinChannelHint": "Use the menu to join a channel",
+  "@meshcoreShellJoinChannelHint": {
+    "description": "Info snackbar hint after navigating to channels tab from device sheet."
+  },
+
+  "meshcoreShellShareContactSubtitle": "Share your contact info",
+  "@meshcoreShellShareContactSubtitle": {
+    "description": "Subtitle for the My Contact Code action tile in the device sheet."
+  },
+
+  "meshcoreShellDiscoverSubtitle": "Send advertisement to find nearby nodes",
+  "@meshcoreShellDiscoverSubtitle": {
+    "description": "Subtitle for the Discover Contacts action tile in the device sheet."
+  },
+
+  "meshcoreShellAppSettings": "App Settings",
+  "@meshcoreShellAppSettings": {
+    "description": "Title for the App Settings action tile in the MeshCore device sheet."
+  },
+
+  "meshcoreShellAppSettingsSubtitle": "Notifications, theme, preferences",
+  "@meshcoreShellAppSettingsSubtitle": {
+    "description": "Subtitle for the App Settings action tile in the device sheet."
+  },
+
+  "meshcoreShellInfoProtocol": "Protocol",
+  "@meshcoreShellInfoProtocol": {
+    "description": "Info table label for the protocol row."
+  },
+
+  "meshcoreShellInfoProtocolValue": "MeshCore",
+  "@meshcoreShellInfoProtocolValue": {
+    "description": "Info table protocol value for MeshCore."
+  },
+
+  "meshcoreShellInfoNodeName": "Node Name",
+  "@meshcoreShellInfoNodeName": {
+    "description": "Info table label for the node name row."
+  },
+
+  "meshcoreShellUnknown": "Unknown",
+  "@meshcoreShellUnknown": {
+    "description": "Fallback value when a node name is empty."
+  },
+
+  "meshcoreShellInfoNodeId": "Node ID",
+  "@meshcoreShellInfoNodeId": {
+    "description": "Info table label for the node ID row."
+  },
+
+  "meshcoreShellInfoPublicKey": "Public Key",
+  "@meshcoreShellInfoPublicKey": {
+    "description": "Info table label for the public key row."
+  },
+
+  "meshcoreShellInfoStatus": "Status",
+  "@meshcoreShellInfoStatus": {
+    "description": "Info table label for the connection status row."
+  },
+
+  "meshcoreShellDisconnecting": "Disconnecting...",
+  "@meshcoreShellDisconnecting": {
+    "description": "Button label while disconnection is in progress."
+  },
+
+  "meshcoreShellDisconnect": "Disconnect",
+  "@meshcoreShellDisconnect": {
+    "description": "Button label and confirmation dialog title for disconnecting."
+  },
+
+  "meshcoreShellDisconnectConfirmMessage": "Are you sure you want to disconnect from this MeshCore device?",
+  "@meshcoreShellDisconnectConfirmMessage": {
+    "description": "Confirmation dialog body when disconnecting from a MeshCore device."
+  },
+
+  "meshcoreShellAdvertisementSentListening": "Advertisement sent - listening for responses",
+  "@meshcoreShellAdvertisementSentListening": {
+    "description": "Success snackbar after sending discovery advertisement from device sheet."
+  },
+
+
+
+  "linkDeviceBannerLinkedSuccess": "Device linked to your profile!",
+  "@linkDeviceBannerLinkedSuccess": {
+    "description": "Success snackbar after linking a device to the user profile."
+  },
+
+  "linkDeviceBannerLinkError": "Failed to link: {error}",
+  "@linkDeviceBannerLinkError": {
+    "description": "Error snackbar when device linking fails.",
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+
+  "linkDeviceBannerTitle": "Link this device to your profile",
+  "@linkDeviceBannerTitle": {
+    "description": "Title text on the link device banner."
+  },
+
+  "linkDeviceBannerSubtitle": "Others can find and follow you",
+  "@linkDeviceBannerSubtitle": {
+    "description": "Subtitle text on the link device banner."
+  },
+
+  "linkDeviceBannerLinkButton": "Link",
+  "@linkDeviceBannerLinkButton": {
+    "description": "Button label to link the device."
+  },
+
+  "nodesScreenTitle": "Nodes ({count})",
+  "@nodesScreenTitle": {
+    "description": "App bar title showing node count.",
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+  "nodesScreenScanQrCodeTooltip": "Scan QR Code",
+  "@nodesScreenScanQrCodeTooltip": {
+    "description": "Tooltip for the QR code scan button."
+  },
+
+  "nodesScreenHelpMenu": "Help",
+  "@nodesScreenHelpMenu": {
+    "description": "Overflow menu item for help."
+  },
+
+  "nodesScreenSettingsMenu": "Settings",
+  "@nodesScreenSettingsMenu": {
+    "description": "Overflow menu item for settings."
+  },
+
+  "nodesScreenSearchHint": "Find a node",
+  "@nodesScreenSearchHint": {
+    "description": "Search bar placeholder text."
+  },
+
+  "nodesScreenFilterAll": "All",
+  "@nodesScreenFilterAll": {
+    "description": "Filter chip label showing all nodes."
+  },
+
+  "nodesScreenFilterActive": "Active",
+  "@nodesScreenFilterActive": {
+    "description": "Filter chip label for active nodes."
+  },
+
+  "nodesScreenFilterFavorites": "Favorites",
+  "@nodesScreenFilterFavorites": {
+    "description": "Filter chip label for favorite nodes."
+  },
+
+  "nodesScreenFilterWithPosition": "With Position",
+  "@nodesScreenFilterWithPosition": {
+    "description": "Filter chip label for nodes with GPS position."
+  },
+
+  "nodesScreenFilterInactive": "Inactive",
+  "@nodesScreenFilterInactive": {
+    "description": "Filter chip label for inactive nodes."
+  },
+
+  "nodesScreenFilterNew": "New",
+  "@nodesScreenFilterNew": {
+    "description": "Filter chip label for newly discovered nodes."
+  },
+
+  "nodesScreenFilterRf": "RF",
+  "@nodesScreenFilterRf": {
+    "description": "Filter chip label for RF-connected nodes."
+  },
+
+  "nodesScreenFilterMqtt": "MQTT",
+  "@nodesScreenFilterMqtt": {
+    "description": "Filter chip label for MQTT-connected nodes."
+  },
+
+  "nodesScreenEmptyAll": "No nodes discovered yet",
+  "@nodesScreenEmptyAll": {
+    "description": "Empty state message when no nodes exist."
+  },
+
+  "nodesScreenEmptyFiltered": "No nodes match this filter",
+  "@nodesScreenEmptyFiltered": {
+    "description": "Empty state message when filter returns no results."
+  },
+
+  "nodesScreenShowAllButton": "Show all nodes",
+  "@nodesScreenShowAllButton": {
+    "description": "Button to clear filters and show all nodes."
+  },
+
+  "nodesScreenSectionAetherFlights": "Aether Flights Nearby",
+  "@nodesScreenSectionAetherFlights": {
+    "description": "Section header for Aether flight nodes."
+  },
+
+  "nodesScreenSectionDiscovering": "Discovering",
+  "@nodesScreenSectionDiscovering": {
+    "description": "Section header for nodes currently being discovered."
+  },
+
+  "nodesScreenSectionYourDevice": "Your Device",
+  "@nodesScreenSectionYourDevice": {
+    "description": "Section header for the user's own device."
+  },
+
+  "nodesScreenSectionFavorites": "Favorites",
+  "@nodesScreenSectionFavorites": {
+    "description": "Section header for favorite nodes."
+  },
+
+  "nodesScreenSectionActive": "Active",
+  "@nodesScreenSectionActive": {
+    "description": "Section header for active nodes."
+  },
+
+  "nodesScreenSectionSeenRecently": "Seen Recently",
+  "@nodesScreenSectionSeenRecently": {
+    "description": "Section header for recently seen nodes."
+  },
+
+  "nodesScreenSectionInactive": "Inactive",
+  "@nodesScreenSectionInactive": {
+    "description": "Section header for inactive nodes."
+  },
+
+  "nodesScreenSectionUnknown": "Unknown",
+  "@nodesScreenSectionUnknown": {
+    "description": "Section header for nodes with unknown status."
+  },
+
+  "nodesScreenSectionSignalStrong": "Strong (>0 dB)",
+  "@nodesScreenSectionSignalStrong": {
+    "description": "Section header for nodes with strong signal."
+  },
+
+  "nodesScreenSectionSignalMedium": "Medium (-10 to 0 dB)",
+  "@nodesScreenSectionSignalMedium": {
+    "description": "Section header for nodes with medium signal."
+  },
+
+  "nodesScreenSectionSignalWeak": "Weak (<-10 dB)",
+  "@nodesScreenSectionSignalWeak": {
+    "description": "Section header for nodes with weak signal."
+  },
+
+  "nodesScreenSectionCharging": "Charging",
+  "@nodesScreenSectionCharging": {
+    "description": "Section header for nodes currently charging."
+  },
+
+  "nodesScreenSectionBatteryFull": "Full (80-100%)",
+  "@nodesScreenSectionBatteryFull": {
+    "description": "Section header for nodes with full battery."
+  },
+
+  "nodesScreenSectionBatteryGood": "Good (50-80%)",
+  "@nodesScreenSectionBatteryGood": {
+    "description": "Section header for nodes with good battery."
+  },
+
+  "nodesScreenSectionBatteryLow": "Low (20-50%)",
+  "@nodesScreenSectionBatteryLow": {
+    "description": "Section header for nodes with low battery."
+  },
+
+  "nodesScreenSectionBatteryCritical": "Critical (<20%)",
+  "@nodesScreenSectionBatteryCritical": {
+    "description": "Section header for nodes with critical battery."
+  },
+
+  "nodesScreenConnectedDevice": "Connected Device",
+  "@nodesScreenConnectedDevice": {
+    "description": "Label in long-press menu for the connected device."
+  },
+
+  "nodesScreenDisconnect": "Disconnect",
+  "@nodesScreenDisconnect": {
+    "description": "Long-press menu action to disconnect."
+  },
+
+  "nodesScreenSortRecent": "Recent",
+  "@nodesScreenSortRecent": {
+    "description": "Sort chip label for most recent sort."
+  },
+
+  "nodesScreenSortName": "Name",
+  "@nodesScreenSortName": {
+    "description": "Sort chip label for name sort."
+  },
+
+  "nodesScreenSortSignal": "Signal",
+  "@nodesScreenSortSignal": {
+    "description": "Sort chip label for signal sort."
+  },
+
+  "nodesScreenSortBattery": "Battery",
+  "@nodesScreenSortBattery": {
+    "description": "Sort chip label for battery sort."
+  },
+
+  "nodesScreenSortMenuMostRecent": "Most Recent",
+  "@nodesScreenSortMenuMostRecent": {
+    "description": "Sort menu option for most recent."
+  },
+
+  "nodesScreenSortMenuNameAZ": "Name (A-Z)",
+  "@nodesScreenSortMenuNameAZ": {
+    "description": "Sort menu option for alphabetical name sort."
+  },
+
+  "nodesScreenSortMenuSignalStrength": "Signal Strength",
+  "@nodesScreenSortMenuSignalStrength": {
+    "description": "Sort menu option for signal strength sort."
+  },
+
+  "nodesScreenSortMenuBatteryLevel": "Battery Level",
+  "@nodesScreenSortMenuBatteryLevel": {
+    "description": "Sort menu option for battery level sort."
+  },
+
+  "nodesScreenDistanceMeters": "{meters} m away",
+  "@nodesScreenDistanceMeters": {
+    "description": "Distance label in meters on node card.",
+    "placeholders": {
+      "meters": { "type": "String" }
+    }
+  },
+
+  "nodesScreenDistanceKilometers": "{km} km away",
+  "@nodesScreenDistanceKilometers": {
+    "description": "Distance label in kilometers on node card.",
+    "placeholders": {
+      "km": { "type": "String" }
+    }
+  },
+
+  "nodesScreenYouBadge": "YOU",
+  "@nodesScreenYouBadge": {
+    "description": "Badge label on the user's own node card."
+  },
+
+  "nodesScreenThisDevice": "This Device",
+  "@nodesScreenThisDevice": {
+    "description": "Subtitle on the user's own node card."
+  },
+
+  "nodesScreenGps": "GPS",
+  "@nodesScreenGps": {
+    "description": "Badge label for nodes with GPS position."
+  },
+
+  "nodesScreenNoGps": "No GPS",
+  "@nodesScreenNoGps": {
+    "description": "Badge label for nodes without GPS position."
+  },
+
+  "nodesScreenLogsLabel": "Logs:",
+  "@nodesScreenLogsLabel": {
+    "description": "Label prefix for node log count."
+  },
+
+  "nodesScreenHopDirect": "Direct",
+  "@nodesScreenHopDirect": {
+    "description": "Hop count label for directly connected nodes."
+  },
+
+  "nodesScreenHopCount": "{count, plural, =1{1 hop} other{{count} hops}}",
+  "@nodesScreenHopCount": {
+    "description": "Hop count label for multi-hop nodes.",
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+  "nodesScreenTransportMqtt": "MQTT",
+  "@nodesScreenTransportMqtt": {
+    "description": "Transport badge for MQTT nodes."
+  },
+
+  "nodesScreenTransportRf": "RF",
+  "@nodesScreenTransportRf": {
+    "description": "Transport badge for RF nodes."
+  },
+
+  "nodeDetailQrSubtitle": "Scan to add this node",
+  "@nodeDetailQrSubtitle": {
+    "description": "QR code sheet subtitle."
+  },
+
+  "nodeDetailQrInfoText": "Node ID: {nodeId}",
+  "@nodeDetailQrInfoText": {
+    "description": "QR code sheet info text with hex node ID.",
+    "placeholders": {
+      "nodeId": { "type": "String" }
+    }
+  },
+
+  "nodeDetailRemovedFromFavorites": "{name} removed from favorites",
+  "@nodeDetailRemovedFromFavorites": {
+    "description": "Snackbar after removing a node from favorites.",
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+
+  "nodeDetailAddedToFavorites": "{name} added to favorites",
+  "@nodeDetailAddedToFavorites": {
+    "description": "Snackbar after adding a node to favorites.",
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+
+  "nodeDetailFavoriteError": "Failed to update favorite: {error}",
+  "@nodeDetailFavoriteError": {
+    "description": "Error snackbar when favorite toggle fails.",
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+
+  "nodeDetailMuteNotConnected": "Cannot change mute status: Device not connected",
+  "@nodeDetailMuteNotConnected": {
+    "description": "Error when trying to mute while disconnected."
+  },
+
+  "nodeDetailUnmuted": "{name} unmuted",
+  "@nodeDetailUnmuted": {
+    "description": "Snackbar after unmuting a node.",
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+
+  "nodeDetailMuted": "{name} muted",
+  "@nodeDetailMuted": {
+    "description": "Snackbar after muting a node.",
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+
+  "nodeDetailMuteError": "Failed to update mute status: {error}",
+  "@nodeDetailMuteError": {
+    "description": "Error snackbar when mute toggle fails.",
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+
+  "nodeDetailTracerouteNotConnected": "Cannot send traceroute: Device not connected",
+  "@nodeDetailTracerouteNotConnected": {
+    "description": "Error when sending traceroute while disconnected."
+  },
+
+  "nodeDetailTracerouteSent": "Traceroute sent to {name} — check Traceroute History for results",
+  "@nodeDetailTracerouteSent": {
+    "description": "Success snackbar after sending a traceroute.",
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+
+  "nodeDetailTracerouteError": "Failed to send traceroute: {error}",
+  "@nodeDetailTracerouteError": {
+    "description": "Error snackbar when traceroute fails.",
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+
+  "nodeDetailRebootNotConnected": "Cannot reboot: Device not connected",
+  "@nodeDetailRebootNotConnected": {
+    "description": "Error when rebooting while disconnected."
+  },
+
+  "nodeDetailRebootTitle": "Reboot Device",
+  "@nodeDetailRebootTitle": {
+    "description": "Confirmation dialog title for rebooting."
+  },
+
+  "nodeDetailRebootMessage": "This will reboot your Meshtastic device. The app will automatically reconnect once the device restarts.",
+  "@nodeDetailRebootMessage": {
+    "description": "Confirmation dialog body for rebooting."
+  },
+
+  "nodeDetailRebootConfirm": "Reboot",
+  "@nodeDetailRebootConfirm": {
+    "description": "Confirmation button label for rebooting."
+  },
+
+  "nodeDetailRebootingSnackbar": "Device is rebooting...",
+  "@nodeDetailRebootingSnackbar": {
+    "description": "Snackbar shown after initiating a reboot."
+  },
+
+  "nodeDetailRebootError": "Failed to reboot: {error}",
+  "@nodeDetailRebootError": {
+    "description": "Error snackbar when reboot fails.",
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+
+  "nodeDetailShutdownNotConnected": "Cannot shutdown: Device not connected",
+  "@nodeDetailShutdownNotConnected": {
+    "description": "Error when shutting down while disconnected."
+  },
+
+  "nodeDetailShutdownTitle": "Shutdown Device",
+  "@nodeDetailShutdownTitle": {
+    "description": "Confirmation dialog title for shutdown."
+  },
+
+  "nodeDetailShutdownMessage": "This will turn off your Meshtastic device. You will need to physically power it back on to reconnect.",
+  "@nodeDetailShutdownMessage": {
+    "description": "Confirmation dialog body for shutdown."
+  },
+
+  "nodeDetailShutdownConfirm": "Shutdown",
+  "@nodeDetailShutdownConfirm": {
+    "description": "Confirmation button label for shutdown."
+  },
+
+  "nodeDetailShuttingDownSnackbar": "Device is shutting down...",
+  "@nodeDetailShuttingDownSnackbar": {
+    "description": "Snackbar shown after initiating a shutdown."
+  },
+
+  "nodeDetailShutdownError": "Failed to shutdown: {error}",
+  "@nodeDetailShutdownError": {
+    "description": "Error snackbar when shutdown fails.",
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+
+  "nodeDetailRemoveTitle": "Remove Node",
+  "@nodeDetailRemoveTitle": {
+    "description": "Confirmation dialog title for removing a node."
+  },
+
+  "nodeDetailRemoveMessage": "Remove {name} from the node database? This will remove the node from your local device.",
+  "@nodeDetailRemoveMessage": {
+    "description": "Confirmation dialog body for removing a node.",
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+
+  "nodeDetailRemoveConfirm": "Remove",
+  "@nodeDetailRemoveConfirm": {
+    "description": "Confirmation button label for removing a node."
+  },
+
+  "nodeDetailRemovedSnackbar": "{name} removed",
+  "@nodeDetailRemovedSnackbar": {
+    "description": "Snackbar after successfully removing a node.",
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+
+  "nodeDetailRemoveError": "Failed to remove node: {error}",
+  "@nodeDetailRemoveError": {
+    "description": "Error snackbar when node removal fails.",
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+
+  "nodeDetailNoPositionData": "Node has no position data",
+  "@nodeDetailNoPositionData": {
+    "description": "Error when node has no GPS position for fixed position."
+  },
+
+  "nodeDetailFixedPositionSet": "Fixed position set to {name}'s location",
+  "@nodeDetailFixedPositionSet": {
+    "description": "Success snackbar after setting fixed position.",
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+
+  "nodeDetailFixedPositionError": "Failed to set fixed position: {error}",
+  "@nodeDetailFixedPositionError": {
+    "description": "Error snackbar when fixed position fails.",
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+
+  "nodeDetailUserInfoRequested": "User info requested from {name}",
+  "@nodeDetailUserInfoRequested": {
+    "description": "Success snackbar after requesting user info.",
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+
+  "nodeDetailUserInfoError": "Failed to request user info: {error}",
+  "@nodeDetailUserInfoError": {
+    "description": "Error snackbar when user info request fails.",
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+
+  "nodeDetailPositionRequested": "Position requested from {name}",
+  "@nodeDetailPositionRequested": {
+    "description": "Success snackbar after requesting position.",
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+
+  "nodeDetailPositionError": "Failed to request position: {error}",
+  "@nodeDetailPositionError": {
+    "description": "Error snackbar when position request fails.",
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+
+  "nodeDetailLastHeardNever": "Never",
+  "@nodeDetailLastHeardNever": {
+    "description": "Relative time label when a node has never been heard."
+  },
+
+  "nodeDetailLastHeardJustNow": "Just now",
+  "@nodeDetailLastHeardJustNow": {
+    "description": "Relative time label for very recent contact."
+  },
+
+  "nodeDetailLastHeardMinutesAgo": "{minutes}m ago",
+  "@nodeDetailLastHeardMinutesAgo": {
+    "description": "Relative time label in minutes.",
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
+
+  "nodeDetailLastHeardHoursAgo": "{hours}h ago",
+  "@nodeDetailLastHeardHoursAgo": {
+    "description": "Relative time label in hours.",
+    "placeholders": {
+      "hours": { "type": "int" }
+    }
+  },
+
+  "nodeDetailLastHeardDaysAgo": "{days}d ago",
+  "@nodeDetailLastHeardDaysAgo": {
+    "description": "Relative time label in days.",
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+
+  "nodeDetailSignalUnknown": "Unknown",
+  "@nodeDetailSignalUnknown": {
+    "description": "Signal quality label when RSSI is unknown."
+  },
+
+  "nodeDetailSignalExcellent": "Excellent",
+  "@nodeDetailSignalExcellent": {
+    "description": "Signal quality label for excellent RSSI."
+  },
+
+  "nodeDetailSignalGood": "Good",
+  "@nodeDetailSignalGood": {
+    "description": "Signal quality label for good RSSI."
+  },
+
+  "nodeDetailSignalFair": "Fair",
+  "@nodeDetailSignalFair": {
+    "description": "Signal quality label for fair RSSI."
+  },
+
+  "nodeDetailSignalWeak": "Weak",
+  "@nodeDetailSignalWeak": {
+    "description": "Signal quality label for weak RSSI."
+  },
+
+  "nodeDetailSignalVeryWeak": "Very Weak",
+  "@nodeDetailSignalVeryWeak": {
+    "description": "Signal quality label for very weak RSSI."
+  },
+
+  "nodeDetailYouBadge": "YOU",
+  "@nodeDetailYouBadge": {
+    "description": "Badge on the user's own node in the detail screen."
+  },
+
+  "nodeDetailPkiBadge": "PKI",
+  "@nodeDetailPkiBadge": {
+    "description": "Badge for nodes with PKI encryption."
+  },
+
+  "nodeDetailNoPkiBadge": "No PKI",
+  "@nodeDetailNoPkiBadge": {
+    "description": "Badge for nodes without PKI encryption."
+  },
+
+  "nodeDetailMutedBadge": "Muted",
+  "@nodeDetailMutedBadge": {
+    "description": "Badge for muted nodes."
+  },
+
+  "nodeDetailFavoriteBadge": "Favorite",
+  "@nodeDetailFavoriteBadge": {
+    "description": "Badge for favorite nodes."
+  },
+
+  "nodeDetailBatteryCharging": "Charging",
+  "@nodeDetailBatteryCharging": {
+    "description": "Battery status label when charging."
+  },
+
+  "nodeDetailBatteryPercent": "{level}%",
+  "@nodeDetailBatteryPercent": {
+    "description": "Battery percentage display.",
+    "placeholders": {
+      "level": { "type": "int" }
+    }
+  },
+
+  "nodeDetailDistanceMeters": "{meters} m",
+  "@nodeDetailDistanceMeters": {
+    "description": "Distance display in meters.",
+    "placeholders": {
+      "meters": { "type": "String" }
+    }
+  },
+
+  "nodeDetailDistanceKilometers": "{km} km",
+  "@nodeDetailDistanceKilometers": {
+    "description": "Distance display in kilometers.",
+    "placeholders": {
+      "km": { "type": "String" }
+    }
+  },
+
+  "nodeDetailSectionIdentity": "Identity",
+  "@nodeDetailSectionIdentity": {
+    "description": "Section title for identity info."
+  },
+
+  "nodeDetailLabelUserId": "User ID",
+  "@nodeDetailLabelUserId": {
+    "description": "Info table label for user ID."
+  },
+
+  "nodeDetailLabelHardware": "Hardware",
+  "@nodeDetailLabelHardware": {
+    "description": "Info table label for hardware model."
+  },
+
+  "nodeDetailLabelFirmware": "Firmware",
+  "@nodeDetailLabelFirmware": {
+    "description": "Info table label for firmware version."
+  },
+
+  "nodeDetailLabelEncryption": "Encryption",
+  "@nodeDetailLabelEncryption": {
+    "description": "Info table label for encryption status."
+  },
+
+  "nodeDetailValuePkiEnabled": "PKI Enabled",
+  "@nodeDetailValuePkiEnabled": {
+    "description": "Encryption value when PKI is enabled."
+  },
+
+  "nodeDetailValueNoPublicKey": "No Public Key",
+  "@nodeDetailValueNoPublicKey": {
+    "description": "Encryption value when no public key exists."
+  },
+
+  "nodeDetailLabelStatus": "Status",
+  "@nodeDetailLabelStatus": {
+    "description": "Info table label for node status."
+  },
+
+  "nodeDetailSectionRadio": "Radio",
+  "@nodeDetailSectionRadio": {
+    "description": "Section title for radio info."
+  },
+
+  "nodeDetailLabelRssi": "RSSI",
+  "@nodeDetailLabelRssi": {
+    "description": "Info table label for RSSI."
+  },
+
+  "nodeDetailValueRssi": "{rssi} dBm",
+  "@nodeDetailValueRssi": {
+    "description": "RSSI value with unit.",
+    "placeholders": {
+      "rssi": { "type": "int" }
+    }
+  },
+
+  "nodeDetailLabelSnr": "SNR",
+  "@nodeDetailLabelSnr": {
+    "description": "Info table label for SNR."
+  },
+
+  "nodeDetailValueSnr": "{snr} dB",
+  "@nodeDetailValueSnr": {
+    "description": "SNR value with unit.",
+    "placeholders": {
+      "snr": { "type": "String" }
+    }
+  },
+
+  "nodeDetailLabelNoiseFloor": "Noise Floor",
+  "@nodeDetailLabelNoiseFloor": {
+    "description": "Info table label for noise floor."
+  },
+
+  "nodeDetailValueNoiseFloor": "{noiseFloor} dBm",
+  "@nodeDetailValueNoiseFloor": {
+    "description": "Noise floor value with unit.",
+    "placeholders": {
+      "noiseFloor": { "type": "int" }
+    }
+  },
+
+  "nodeDetailLabelDistance": "Distance",
+  "@nodeDetailLabelDistance": {
+    "description": "Info table label for distance."
+  },
+
+  "nodeDetailLabelPosition": "Position",
+  "@nodeDetailLabelPosition": {
+    "description": "Info table label for GPS position."
+  },
+
+  "nodeDetailLabelAltitude": "Altitude",
+  "@nodeDetailLabelAltitude": {
+    "description": "Info table label for altitude."
+  },
+
+  "nodeDetailValueAltitude": "{altitude} m",
+  "@nodeDetailValueAltitude": {
+    "description": "Altitude value with unit.",
+    "placeholders": {
+      "altitude": { "type": "int" }
+    }
+  },
+
+  "nodeDetailSectionDeviceMetrics": "Device Metrics",
+  "@nodeDetailSectionDeviceMetrics": {
+    "description": "Section title for device metrics."
+  },
+
+  "nodeDetailLabelBattery": "Battery",
+  "@nodeDetailLabelBattery": {
+    "description": "Info table label for battery level."
+  },
+
+  "nodeDetailLabelVoltage": "Voltage",
+  "@nodeDetailLabelVoltage": {
+    "description": "Info table label for voltage."
+  },
+
+  "nodeDetailValueVoltage": "{voltage} V",
+  "@nodeDetailValueVoltage": {
+    "description": "Voltage value with unit.",
+    "placeholders": {
+      "voltage": { "type": "String" }
+    }
+  },
+
+  "nodeDetailLabelChannelUtil": "Channel Util",
+  "@nodeDetailLabelChannelUtil": {
+    "description": "Info table label for channel utilization."
+  },
+
+  "nodeDetailValuePercent": "{value}%",
+  "@nodeDetailValuePercent": {
+    "description": "Generic percentage value display.",
+    "placeholders": {
+      "value": { "type": "String" }
+    }
+  },
+
+  "nodeDetailLabelAirUtilTx": "Air Util TX",
+  "@nodeDetailLabelAirUtilTx": {
+    "description": "Info table label for air utilization TX."
+  },
+
+  "nodeDetailLabelUptime": "Uptime",
+  "@nodeDetailLabelUptime": {
+    "description": "Info table label for uptime."
+  },
+
+  "nodeDetailSectionNetwork": "Network",
+  "@nodeDetailSectionNetwork": {
+    "description": "Section title for network info."
+  },
+
+  "nodeDetailLabelPacketsTx": "Packets TX",
+  "@nodeDetailLabelPacketsTx": {
+    "description": "Info table label for transmitted packets."
+  },
+
+  "nodeDetailLabelPacketsRx": "Packets RX",
+  "@nodeDetailLabelPacketsRx": {
+    "description": "Info table label for received packets."
+  },
+
+  "nodeDetailLabelBadPackets": "Bad Packets",
+  "@nodeDetailLabelBadPackets": {
+    "description": "Info table label for bad packets."
+  },
+
+  "nodeDetailLabelOnlineNodes": "Online Nodes",
+  "@nodeDetailLabelOnlineNodes": {
+    "description": "Info table label for online node count."
+  },
+
+  "nodeDetailLabelTotalNodes": "Total Nodes",
+  "@nodeDetailLabelTotalNodes": {
+    "description": "Info table label for total node count."
+  },
+
+  "nodeDetailLabelTxDropped": "TX Dropped",
+  "@nodeDetailLabelTxDropped": {
+    "description": "Info table label for dropped transmissions."
+  },
+
+  "nodeDetailSectionTraffic": "Traffic Management",
+  "@nodeDetailSectionTraffic": {
+    "description": "Section title for traffic management info."
+  },
+
+  "nodeDetailLabelInspected": "Inspected",
+  "@nodeDetailLabelInspected": {
+    "description": "Info table label for inspected packets."
+  },
+
+  "nodeDetailLabelPositionDedup": "Position Dedup",
+  "@nodeDetailLabelPositionDedup": {
+    "description": "Info table label for position deduplication."
+  },
+
+  "nodeDetailLabelCacheHits": "Cache Hits",
+  "@nodeDetailLabelCacheHits": {
+    "description": "Info table label for cache hits."
+  },
+
+  "nodeDetailLabelRateLimitDrops": "Rate Limit Drops",
+  "@nodeDetailLabelRateLimitDrops": {
+    "description": "Info table label for rate-limited drops."
+  },
+
+  "nodeDetailLabelUnknownDrops": "Unknown Drops",
+  "@nodeDetailLabelUnknownDrops": {
+    "description": "Info table label for unknown drops."
+  },
+
+  "nodeDetailLabelHopExhausted": "Hop Exhausted",
+  "@nodeDetailLabelHopExhausted": {
+    "description": "Info table label for hop-exhausted packets."
+  },
+
+  "nodeDetailLabelHopsPreserved": "Hops Preserved",
+  "@nodeDetailLabelHopsPreserved": {
+    "description": "Info table label for preserved hops."
+  },
+
+  "nodeDetailRebootButton": "Reboot",
+  "@nodeDetailRebootButton": {
+    "description": "Action button label for rebooting the device."
+  },
+
+  "nodeDetailShutdownButton": "Shutdown",
+  "@nodeDetailShutdownButton": {
+    "description": "Action button label for shutting down the device."
+  },
+
+  "nodeDetailRemoveFromFavoritesTooltip": "Remove from favorites",
+  "@nodeDetailRemoveFromFavoritesTooltip": {
+    "description": "Tooltip for removing from favorites."
+  },
+
+  "nodeDetailAddToFavoritesTooltip": "Add to favorites",
+  "@nodeDetailAddToFavoritesTooltip": {
+    "description": "Tooltip for adding to favorites."
+  },
+
+  "nodeDetailUnmuteTooltip": "Unmute node",
+  "@nodeDetailUnmuteTooltip": {
+    "description": "Tooltip for unmuting a node."
+  },
+
+  "nodeDetailMuteTooltip": "Mute node",
+  "@nodeDetailMuteTooltip": {
+    "description": "Tooltip for muting a node."
+  },
+
+  "nodeDetailMessageButton": "Message",
+  "@nodeDetailMessageButton": {
+    "description": "Action button label for messaging the node."
+  },
+
+  "nodeDetailAppBarTitle": "Node Details",
+  "@nodeDetailAppBarTitle": {
+    "description": "App bar title for the node detail screen."
+  },
+
+  "nodeDetailSigilCardTooltip": "Sigil Card",
+  "@nodeDetailSigilCardTooltip": {
+    "description": "Tooltip for the sigil card button."
+  },
+
+  "nodeDetailMenuQrCode": "QR Code",
+  "@nodeDetailMenuQrCode": {
+    "description": "Overflow menu item for QR code."
+  },
+
+  "nodeDetailMenuShowOnMap": "Show on Map",
+  "@nodeDetailMenuShowOnMap": {
+    "description": "Overflow menu item for showing node on map."
+  },
+
+  "nodeDetailMenuTracerouteHistory": "Traceroute History",
+  "@nodeDetailMenuTracerouteHistory": {
+    "description": "Overflow menu item for traceroute history."
+  },
+
+  "nodeDetailMenuRequestUserInfo": "Request User Info",
+  "@nodeDetailMenuRequestUserInfo": {
+    "description": "Overflow menu item for requesting user info."
+  },
+
+  "nodeDetailMenuExchangePositions": "Exchange Positions",
+  "@nodeDetailMenuExchangePositions": {
+    "description": "Overflow menu item for exchanging positions."
+  },
+
+  "nodeDetailMenuSetFixedPosition": "Set as Fixed Position",
+  "@nodeDetailMenuSetFixedPosition": {
+    "description": "Overflow menu item for setting fixed position."
+  },
+
+  "nodeDetailMenuAdminSettings": "Admin Settings",
+  "@nodeDetailMenuAdminSettings": {
+    "description": "Overflow menu item for remote admin settings."
+  },
+
+  "nodeDetailMenuAdminSubtitle": "Configure this node remotely",
+  "@nodeDetailMenuAdminSubtitle": {
+    "description": "Subtitle for the admin settings menu item."
+  },
+
+  "nodeDetailMenuRemoveNode": "Remove Node",
+  "@nodeDetailMenuRemoveNode": {
+    "description": "Overflow menu item for removing a node."
+  },
+
+  "nodeDetailLastHeardTimestamp": "Last heard {timestamp}",
+  "@nodeDetailLastHeardTimestamp": {
+    "description": "Footer showing when the node was last heard.",
+    "placeholders": {
+      "timestamp": { "type": "String" }
+    }
+  },
+
+  "nodeDetailTracerouteCooldownTooltip": "Traceroute cooldown: {seconds}s",
+  "@nodeDetailTracerouteCooldownTooltip": {
+    "description": "Tooltip showing remaining traceroute cooldown.",
+    "placeholders": {
+      "seconds": { "type": "int" }
+    }
+  },
+
+  "nodeDetailTracerouteTooltip": "Traceroute",
+  "@nodeDetailTracerouteTooltip": {
+    "description": "Tooltip for the traceroute button."
+  },
+
+  "deviceConfigRoleClient": "Client",
+  "deviceConfigRoleClientDesc": "Default role. Mesh packets are routed through this node. Can send and receive messages.",
+  "deviceConfigRoleClientMute": "Client Mute",
+  "deviceConfigRoleClientMuteDesc": "Same as client but will not transmit any messages from itself. Useful for monitoring.",
+  "deviceConfigRoleClientHidden": "Client Hidden",
+  "deviceConfigRoleClientHiddenDesc": "Acts as client but hides from the node list. Still routes traffic.",
+  "deviceConfigRoleClientBase": "Client Base",
+  "deviceConfigRoleClientBaseDesc": "Base station for favorited nodes. Routes their packets like a router, others as client.",
+  "deviceConfigRoleRouter": "Router",
+  "deviceConfigRoleRouterDesc": "Routes mesh packets between nodes. Screen and Bluetooth disabled to conserve power.",
+  "deviceConfigRoleRouterLate": "Router Late",
+  "deviceConfigRoleRouterLateDesc": "Rebroadcasts all packets after other routers. Extends coverage without consuming priority hops.",
+  "deviceConfigRoleTracker": "Tracker",
+  "deviceConfigRoleTrackerDesc": "Optimized for GPS tracking. Sends position updates at defined intervals.",
+  "deviceConfigRoleSensor": "Sensor",
+  "deviceConfigRoleSensorDesc": "Designed for remote sensing. Reports telemetry data at defined intervals.",
+  "deviceConfigRoleTak": "TAK",
+  "deviceConfigRoleTakDesc": "Team Awareness Kit integration. Bridges Meshtastic and TAK systems.",
+  "deviceConfigRoleTakTracker": "TAK Tracker",
+  "deviceConfigRoleTakTrackerDesc": "Combination of TAK and Tracker modes.",
+  "deviceConfigRoleLostAndFound": "Lost and Found",
+  "deviceConfigRoleLostAndFoundDesc": "Optimized for finding lost devices. Sends periodic beacons.",
+
+  "deviceConfigRebroadcastAll": "All",
+  "deviceConfigRebroadcastAllDesc": "Rebroadcast any observed message. Default behavior.",
+  "deviceConfigRebroadcastAllSkipDecoding": "All (Skip Decoding)",
+  "deviceConfigRebroadcastAllSkipDecodingDesc": "Rebroadcast all messages without decoding. Faster, less CPU.",
+  "deviceConfigRebroadcastLocalOnly": "Local Only",
+  "deviceConfigRebroadcastLocalOnlyDesc": "Only rebroadcast messages from local senders. Good for isolated networks.",
+  "deviceConfigRebroadcastKnownOnly": "Known Only",
+  "deviceConfigRebroadcastKnownOnlyDesc": "Only rebroadcast messages from nodes in the node database.",
+  "deviceConfigRebroadcastCorePortnumsOnly": "Core Port Numbers Only",
+  "deviceConfigRebroadcastCorePortnumsOnlyDesc": "Rebroadcast only core Meshtastic packets (position, telemetry, etc).",
+  "deviceConfigRebroadcastNone": "None",
+  "deviceConfigRebroadcastNoneDesc": "Do not rebroadcast any messages. Node only receives.",
+
+  "deviceConfigBuzzerAllEnabled": "All Enabled",
+  "deviceConfigBuzzerAllEnabledDesc": "Buzzer sounds for all feedback including buttons and alerts.",
+  "deviceConfigBuzzerNotificationsOnly": "Notifications Only",
+  "deviceConfigBuzzerNotificationsOnlyDesc": "Buzzer only for notifications and alerts, not button presses.",
+  "deviceConfigBuzzerDirectMsgOnly": "Direct Messages Only",
+  "deviceConfigBuzzerDirectMsgOnlyDesc": "Buzzer only for direct messages and alerts.",
+  "deviceConfigBuzzerSystemOnly": "System Only",
+  "deviceConfigBuzzerSystemOnlyDesc": "Button presses, startup, shutdown sounds only. No alerts.",
+  "deviceConfigBuzzerDisabled": "Disabled",
+  "deviceConfigBuzzerDisabledDesc": "All buzzer audio feedback is disabled.",
+
+  "deviceConfigBroadcastThreeHours": "Three Hours",
+  "deviceConfigBroadcastFourHours": "Four Hours",
+  "deviceConfigBroadcastFiveHours": "Five Hours",
+  "deviceConfigBroadcastSixHours": "Six Hours",
+  "deviceConfigBroadcastTwelveHours": "Twelve Hours",
+  "deviceConfigBroadcastEighteenHours": "Eighteen Hours",
+  "deviceConfigBroadcastTwentyFourHours": "Twenty Four Hours",
+  "deviceConfigBroadcastThirtySixHours": "Thirty Six Hours",
+  "deviceConfigBroadcastFortyEightHours": "Forty Eight Hours",
+  "deviceConfigBroadcastSeventyTwoHours": "Seventy Two Hours",
+  "deviceConfigBroadcastNever": "Never",
+
+  "deviceConfigTitleRemote": "Device Config (Remote)",
+  "deviceConfigTitle": "Device Config",
+  "deviceConfigSave": "Save",
+  "deviceConfigSaveChangesTitle": "Save Changes?",
+  "deviceConfigSaveChangesMessage": "Saving device configuration will cause the device to reboot. You will be briefly disconnected while the device restarts.",
+  "deviceConfigSaveAndReboot": "Save & Reboot",
+  "deviceConfigSavedRemote": "Configuration sent to remote node",
+  "deviceConfigSavedLocal": "Configuration saved - device rebooting",
+  "deviceConfigSaveError": "Error saving config: {error}",
+  "@deviceConfigSaveError": {
+    "placeholders": { "error": { "type": "String" } }
+  },
+  "deviceConfigLongName": "Long Name",
+  "deviceConfigLongNameSubtitle": "Display name visible on the mesh",
+  "deviceConfigLongNameHint": "Enter display name",
+  "deviceConfigShortName": "Short Name",
+  "deviceConfigShortNameSubtitle": "Max {maxLength} characters (A-Z, 0-9)",
+  "@deviceConfigShortNameSubtitle": {
+    "placeholders": { "maxLength": { "type": "int" } }
+  },
+  "deviceConfigShortNameHint": "e.g. FUZZ",
+  "deviceConfigNameHelpText": "Your device name is broadcast to the mesh and visible to other nodes.",
+  "deviceConfigSectionUserFlags": "User Flags",
+  "deviceConfigSectionDeviceInfo": "Device Info",
+  "deviceConfigSectionDeviceRole": "Device Role",
+  "deviceConfigSectionRebroadcastMode": "Rebroadcast Mode",
+  "deviceConfigSectionNodeInfoBroadcast": "Node Info Broadcast",
+  "deviceConfigSectionButtonInput": "Button & Input",
+  "deviceConfigSectionBuzzer": "Buzzer",
+  "deviceConfigSectionLed": "LED",
+  "deviceConfigSectionSerial": "Serial",
+  "deviceConfigSectionTimezone": "Timezone",
+  "deviceConfigSectionGpio": "GPIO (Advanced)",
+  "deviceConfigSectionDangerZone": "Danger Zone",
+  "deviceConfigBleName": "BLE Name",
+  "deviceConfigHardware": "Hardware",
+  "deviceConfigUserId": "User ID",
+  "deviceConfigNodeNumber": "Node Number",
+  "deviceConfigUnknown": "Unknown",
+  "deviceConfigBroadcastInterval": "Broadcast Interval",
+  "deviceConfigBroadcastIntervalSubtitle": "How often to broadcast node info to the mesh",
+  "deviceConfigDoubleTapAsButton": "Double Tap as Button",
+  "deviceConfigDoubleTapAsButtonSubtitle": "Treat accelerometer double-tap as button press",
+  "deviceConfigDisableTripleClick": "Disable Triple Click",
+  "deviceConfigDisableTripleClickSubtitle": "Disable triple-click to toggle GPS",
+  "deviceConfigDisableLedHeartbeat": "Disable LED Heartbeat",
+  "deviceConfigDisableLedHeartbeatSubtitle": "Turn off the blinking status LED",
+  "deviceConfigSerialConsole": "Serial Console",
+  "deviceConfigSerialConsoleSubtitle": "Enable serial port for debugging",
+  "deviceConfigPosixTimezone": "POSIX Timezone",
+  "deviceConfigPosixTimezoneExample": "e.g. EST5EDT,M3.2.0,M11.1.0",
+  "deviceConfigPosixTimezoneHint": "Leave empty for UTC",
+  "deviceConfigGpioWarning": "Only change these if you know your hardware requires custom GPIO pins.",
+  "deviceConfigButtonGpio": "Button GPIO",
+  "deviceConfigBuzzerGpio": "Buzzer GPIO",
+  "deviceConfigUnmessagable": "Unmessagable",
+  "deviceConfigUnmessagableSubtitle": "Mark as infrastructure node that won't respond to messages",
+  "deviceConfigLicensedOperator": "Licensed Operator (Ham)",
+  "deviceConfigLicensedOperatorSubtitle": "Sets call sign, overrides frequency/power, disables encryption",
+  "deviceConfigHamModeInfo": "Ham mode uses your long name as call sign (max 8 chars), broadcasts node info every 10 minutes, overrides frequency, duty cycle, and TX power, and disables encryption.",
+  "deviceConfigHamModeWarning": "HAM nodes cannot relay encrypted traffic. Other non-HAM nodes in your mesh will not be able to route encrypted messages through this node, creating a relay gap in the network.",
+  "deviceConfigFrequencyOverride": "Frequency Override (MHz)",
+  "deviceConfigFrequencyOverrideHint": "0.0 (use default)",
+  "deviceConfigTxPower": "TX Power",
+  "deviceConfigTxPowerValue": "{power} dBm",
+  "@deviceConfigTxPowerValue": {
+    "placeholders": { "power": { "type": "int" } }
+  },
+  "deviceConfigRemoteAdminTitle": "Remote Administration",
+  "deviceConfigRemoteAdminConfiguring": "Configuring: {nodeName}",
+  "@deviceConfigRemoteAdminConfiguring": {
+    "placeholders": { "nodeName": { "type": "String" } }
+  },
+  "deviceConfigRebootWarning": "Changes to device configuration will cause the device to reboot.",
+  "deviceConfigResetNodeDb": "Reset Node Database",
+  "deviceConfigResetNodeDbSubtitle": "Clear all stored node information",
+  "deviceConfigFactoryReset": "Factory Reset",
+  "deviceConfigFactoryResetSubtitle": "Reset device to factory defaults",
+  "deviceConfigResetNodeDbDialogTitle": "Reset Node Database",
+  "deviceConfigResetNodeDbDialogMessage": "This will clear all stored node information from the device. The mesh network will need to rediscover all nodes.\n\nAre you sure you want to continue?",
+  "deviceConfigResetNodeDbDialogConfirm": "Reset",
+  "deviceConfigResetNodeDbSuccess": "Node database reset initiated",
+  "deviceConfigResetNodeDbError": "Failed to reset: {error}",
+  "@deviceConfigResetNodeDbError": {
+    "placeholders": { "error": { "type": "String" } }
+  },
+  "deviceConfigFactoryResetDialogTitle": "Factory Reset",
+  "deviceConfigFactoryResetDialogMessage": "This will reset ALL device settings to factory defaults, including channels, configuration, and stored data.\n\nThis action cannot be undone!",
+  "deviceConfigFactoryResetDialogConfirm": "Factory Reset",
+  "deviceConfigFactoryResetSuccess": "Factory reset initiated - device will restart",
+  "deviceConfigFactoryResetError": "Failed to reset: {error}",
+  "@deviceConfigFactoryResetError": {
+    "placeholders": { "error": { "type": "String" } }
+  },
+
+  "deviceSheetNoDevice": "No Device",
+  "deviceSheetReconnecting": "Reconnecting...",
+  "deviceSheetConnecting": "Connecting...",
+  "deviceSheetConnected": "Connected",
+  "deviceSheetDisconnecting": "Disconnecting...",
+  "deviceSheetError": "Error",
+  "deviceSheetDisconnected": "Disconnected",
+  "deviceSheetSectionConnectionDetails": "Connection Details",
+  "deviceSheetSectionQuickActions": "Quick Actions",
+  "deviceSheetSectionDeveloperTools": "Developer Tools",
+  "deviceSheetActionDeviceConfig": "Device Config",
+  "deviceSheetActionDeviceConfigSubtitle": "Configure device role and settings",
+  "deviceSheetActionDeviceManagement": "Device Management",
+  "deviceSheetActionDeviceManagementSubtitle": "Radio, display, power, and position settings",
+  "deviceSheetActionScanQr": "Scan QR Code",
+  "deviceSheetActionScanQrSubtitle": "Import nodes, channels, or automations",
+  "deviceSheetActionAppSettings": "App Settings",
+  "deviceSheetActionAppSettingsSubtitle": "Notifications, theme, preferences",
+  "deviceSheetActionResetNodeDb": "Reset Node Database",
+  "deviceSheetActionResetNodeDbSubtitle": "Clear all learned nodes from device",
+  "deviceSheetDisconnectingButton": "Disconnecting...",
+  "deviceSheetDisconnectButton": "Disconnect",
+  "deviceSheetScanForDevices": "Scan for Devices",
+  "deviceSheetDisconnectDialogTitle": "Disconnect",
+  "deviceSheetDisconnectDialogMessage": "Are you sure you want to disconnect from this device?",
+  "deviceSheetDisconnectDialogConfirm": "Disconnect",
+  "deviceSheetResetNodeDbDialogTitle": "Reset Node Database",
+  "deviceSheetResetNodeDbDialogMessage": "This will clear all learned nodes from the device and app. The device will need to rediscover nodes on the mesh.\n\nAre you sure you want to continue?",
+  "deviceSheetResetNodeDbDialogConfirm": "Reset",
+  "deviceSheetResetNodeDbSuccess": "Node database reset successfully",
+  "deviceSheetResetNodeDbError": "Failed to reset node database: {error}",
+  "@deviceSheetResetNodeDbError": {
+    "placeholders": { "error": { "type": "String" } }
+  },
+  "deviceSheetProtocol": "Protocol",
+  "deviceSheetNodeName": "Node Name",
+  "deviceSheetDeviceName": "Device Name",
+  "deviceSheetUnknown": "Unknown",
+  "deviceSheetFirmware": "Firmware",
+  "deviceSheetNodeId": "Node ID",
+  "deviceSheetStatus": "Status",
+  "deviceSheetConnectionType": "Connection Type",
+  "deviceSheetBluetoothLe": "Bluetooth LE",
+  "deviceSheetUsb": "USB",
+  "deviceSheetAddress": "Address",
+  "deviceSheetSignalStrength": "Signal Strength",
+  "deviceSheetSignalStrengthValue": "{rssi} dBm",
+  "@deviceSheetSignalStrengthValue": {
+    "placeholders": { "rssi": { "type": "String" } }
+  },
+  "deviceSheetBattery": "Battery",
+  "deviceSheetCharging": "Charging",
+  "deviceSheetBatteryPercent": "{percent}%",
+  "@deviceSheetBatteryPercent": {
+    "placeholders": { "percent": { "type": "String" } }
+  },
+  "deviceSheetInfoCardConnecting": "Connecting...",
+  "deviceSheetInfoCardConnected": "Connected",
+  "deviceSheetInfoCardDisconnecting": "Disconnecting...",
+  "deviceSheetInfoCardConnectionError": "Connection Error",
+  "deviceSheetInfoCardDisconnected": "Disconnected",
+  "deviceSheetRefreshingBattery": "Refreshing battery...",
+  "deviceSheetBatteryRefreshResult": "{percent}%{millivolts}",
+  "@deviceSheetBatteryRefreshResult": {
+    "placeholders": {
+      "percent": { "type": "String" },
+      "millivolts": { "type": "String" }
+    }
+  },
+  "deviceSheetBatteryRefreshFailed": "Failed",
+  "deviceSheetBatteryRefreshIdle": "Fetch battery from device",
+  "deviceSheetRefreshBattery": "Refresh Battery",
+
+  "regionSelectionTitleInitial": "Select Your Region",
+  "regionSelectionTitleChange": "Change Region",
+  "regionSelectionBannerTitle": "Important: Select Your Region",
+  "regionSelectionBannerSubtitle": "Choose the correct frequency for your location to comply with local regulations.",
+  "regionSelectionSearchHint": "Search regions...",
+  "regionSelectionApplying": "Applying...",
+  "regionSelectionContinue": "Continue",
+  "regionSelectionSave": "Save",
+  "regionSelectionCurrentBadge": "CURRENT",
+  "regionSelectionApplyDialogTitle": "Apply Region",
+  "regionSelectionApplyDialogMessageInitial": "Your device will reboot to apply the region settings. This may take up to 30 seconds.\n\nThe app will automatically reconnect when ready.",
+  "regionSelectionApplyDialogMessageChange": "Changing the region will cause your device to reboot. This may take up to 30 seconds.\n\nYou will be briefly disconnected while the device restarts.",
+  "regionSelectionApplyDialogConfirm": "Continue",
+  "regionSelectionDeviceDisconnected": "Device disconnected. Please reconnect and try again.",
+  "regionSelectionReconnectTimeout": "Reconnect timed out. Please try again.",
+  "regionSelectionPairingInvalidation": "Your phone removed the stored pairing info for this device.\nGo to Settings > Bluetooth, forget the Meshtastic device, and try again.",
+  "regionSelectionSetRegionError": "Failed to set region: {error}",
+  "@regionSelectionSetRegionError": {
+    "placeholders": { "error": { "type": "String" } }
+  },
+  "regionSelectionOpenBluetoothSettingsError": "Could not open Bluetooth Settings. Please open Settings > Bluetooth manually.",
+  "regionSelectionPairingHintMessage": "Bluetooth pairing was removed. Forget \"Meshtastic_XXXX\" in Settings > Bluetooth and reconnect to continue.",
+  "regionSelectionBluetoothSettings": "Bluetooth Settings",
+  "regionSelectionViewScanner": "View Scanner",
+  "regionSelectionRegionUs": "United States",
+  "regionSelectionRegionUsFreq": "915 MHz",
+  "regionSelectionRegionUsDesc": "US, Canada, Mexico",
+  "regionSelectionRegionEu868": "Europe 868",
+  "regionSelectionRegionEu868Freq": "868 MHz",
+  "regionSelectionRegionEu868Desc": "EU, UK, and most of Europe",
+  "regionSelectionRegionEu433": "Europe 433",
+  "regionSelectionRegionEu433Freq": "433 MHz",
+  "regionSelectionRegionEu433Desc": "EU alternate frequency",
+  "regionSelectionRegionAnz": "Australia/NZ",
+  "regionSelectionRegionAnzFreq": "915 MHz",
+  "regionSelectionRegionAnzDesc": "Australia and New Zealand",
+  "regionSelectionRegionCn": "China",
+  "regionSelectionRegionCnFreq": "470 MHz",
+  "regionSelectionRegionCnDesc": "China",
+  "regionSelectionRegionJp": "Japan",
+  "regionSelectionRegionJpFreq": "920 MHz",
+  "regionSelectionRegionJpDesc": "Japan",
+  "regionSelectionRegionKr": "Korea",
+  "regionSelectionRegionKrFreq": "920 MHz",
+  "regionSelectionRegionKrDesc": "South Korea",
+  "regionSelectionRegionTw": "Taiwan",
+  "regionSelectionRegionTwFreq": "923 MHz",
+  "regionSelectionRegionTwDesc": "Taiwan",
+  "regionSelectionRegionRu": "Russia",
+  "regionSelectionRegionRuFreq": "868 MHz",
+  "regionSelectionRegionRuDesc": "Russia",
+  "regionSelectionRegionIn": "India",
+  "regionSelectionRegionInFreq": "865 MHz",
+  "regionSelectionRegionInDesc": "India",
+  "regionSelectionRegionNz865": "New Zealand 865",
+  "regionSelectionRegionNz865Freq": "865 MHz",
+  "regionSelectionRegionNz865Desc": "New Zealand alternate",
+  "regionSelectionRegionTh": "Thailand",
+  "regionSelectionRegionThFreq": "920 MHz",
+  "regionSelectionRegionThDesc": "Thailand",
+  "regionSelectionRegionUa433": "Ukraine 433",
+  "regionSelectionRegionUa433Freq": "433 MHz",
+  "regionSelectionRegionUa433Desc": "Ukraine",
+  "regionSelectionRegionUa868": "Ukraine 868",
+  "regionSelectionRegionUa868Freq": "868 MHz",
+  "regionSelectionRegionUa868Desc": "Ukraine",
+  "regionSelectionRegionMy433": "Malaysia 433",
+  "regionSelectionRegionMy433Freq": "433 MHz",
+  "regionSelectionRegionMy433Desc": "Malaysia",
+  "regionSelectionRegionMy919": "Malaysia 919",
+  "regionSelectionRegionMy919Freq": "919 MHz",
+  "regionSelectionRegionMy919Desc": "Malaysia",
+  "regionSelectionRegionSg923": "Singapore",
+  "regionSelectionRegionSg923Freq": "923 MHz",
+  "regionSelectionRegionSg923Desc": "Singapore",
+  "regionSelectionRegionLora24": "2.4 GHz",
+  "regionSelectionRegionLora24Freq": "2.4 GHz",
+  "regionSelectionRegionLora24Desc": "Worldwide 2.4GHz band",
+
+  "gpsStatusTitle": "GPS Status",
+  "gpsStatusSectionPosition": "Position",
+  "gpsStatusSectionMotion": "Motion",
+  "gpsStatusSectionSatellites": "Satellites",
+  "gpsStatusSectionLastUpdate": "Last Update",
+  "gpsStatusLatitude": "Latitude",
+  "gpsStatusLatitudeValue": "{value}°",
+  "@gpsStatusLatitudeValue": {
+    "placeholders": { "value": { "type": "String" } }
+  },
+  "gpsStatusLongitude": "Longitude",
+  "gpsStatusLongitudeValue": "{value}°",
+  "@gpsStatusLongitudeValue": {
+    "placeholders": { "value": { "type": "String" } }
+  },
+  "gpsStatusAltitude": "Altitude",
+  "gpsStatusAltitudeValue": "{meters}m",
+  "@gpsStatusAltitudeValue": {
+    "placeholders": { "meters": { "type": "String" } }
+  },
+  "gpsStatusAccuracy": "Accuracy",
+  "gpsStatusAccuracyValue": "±{meters}m",
+  "@gpsStatusAccuracyValue": {
+    "placeholders": { "meters": { "type": "String" } }
+  },
+  "gpsStatusPrecisionBits": "Precision Bits",
+  "gpsStatusUnknown": "Unknown",
+  "gpsStatusGroundSpeed": "Ground Speed",
+  "gpsStatusGroundSpeedValue": "{mps} m/s ({kmh} km/h)",
+  "@gpsStatusGroundSpeedValue": {
+    "placeholders": {
+      "mps": { "type": "String" },
+      "kmh": { "type": "String" }
+    }
+  },
+  "gpsStatusGroundTrack": "Ground Track",
+  "gpsStatusGroundTrackValue": "{degrees}° {direction}",
+  "@gpsStatusGroundTrackValue": {
+    "placeholders": {
+      "degrees": { "type": "String" },
+      "direction": { "type": "String" }
+    }
+  },
+  "gpsStatusOpenInMaps": "Open in Maps",
+  "gpsStatusNoGpsFix": "No GPS Fix",
+  "gpsStatusNoGpsFixMessage": "The device has not acquired a GPS position yet. Make sure the device has a clear view of the sky.",
+  "gpsStatusSatellitesInView": "Satellites in View",
+  "gpsStatusSatNoFix": "No Fix",
+  "gpsStatusSatPoor": "Poor",
+  "gpsStatusSatFair": "Fair",
+  "gpsStatusSatGood": "Good",
+  "gpsStatusFixAcquired": "GPS Fix Acquired",
+  "gpsStatusAcquiring": "Acquiring GPS...",
+  "gpsStatusSatellitesCount": "{count} satellites in view",
+  "@gpsStatusSatellitesCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "gpsStatusSearchingSatellites": "Searching for satellites...",
+  "gpsStatusActiveBadge": "ACTIVE",
+  "gpsStatusTodayAt": "Today at {time}",
+  "@gpsStatusTodayAt": {
+    "placeholders": { "time": { "type": "String" } }
+  },
+  "gpsStatusDateAt": "{date} {time}",
+  "@gpsStatusDateAt": {
+    "placeholders": {
+      "date": { "type": "String" },
+      "time": { "type": "String" }
+    }
+  },
+  "gpsStatusSecondsAgo": "{count} seconds ago",
+  "@gpsStatusSecondsAgo": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "gpsStatusMinutesAgo": "{count} minutes ago",
+  "@gpsStatusMinutesAgo": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "gpsStatusHoursAgo": "{count} hours ago",
+  "@gpsStatusHoursAgo": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "gpsStatusDaysAgo": "{count} days ago",
+  "@gpsStatusDaysAgo": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "gpsStatusCardinalN": "N",
+  "gpsStatusCardinalNE": "NE",
+  "gpsStatusCardinalE": "E",
+  "gpsStatusCardinalSE": "SE",
+  "gpsStatusCardinalS": "S",
+  "gpsStatusCardinalSW": "SW",
+  "gpsStatusCardinalW": "W",
+  "gpsStatusCardinalNW": "NW",
+
+  "serialConfigTitle": "Serial Config",
+  "serialConfigSave": "Save",
+  "serialConfigSectionGeneral": "General",
+  "serialConfigSectionBaudRate": "Baud Rate",
+  "serialConfigSectionTimeout": "Timeout",
+  "serialConfigSectionSerialMode": "Serial Mode",
+  "serialConfigEnabled": "Serial Enabled",
+  "serialConfigEnabledSubtitle": "Enable serial port communication",
+  "serialConfigEcho": "Echo",
+  "serialConfigEchoSubtitle": "Echo sent packets back to the serial port",
+  "serialConfigRxdGpio": "RXD GPIO Pin",
+  "serialConfigRxdGpioSubtitle": "Receive data GPIO pin number",
+  "serialConfigTxdGpio": "TXD GPIO Pin",
+  "serialConfigTxdGpioSubtitle": "Transmit data GPIO pin number",
+  "serialConfigOverrideConsole": "Override Console Serial",
+  "serialConfigOverrideConsoleSubtitle": "Use serial module instead of console",
+  "serialConfigBaudRate": "Baud Rate",
+  "serialConfigBaudRateSubtitle": "Serial communication speed",
+  "serialConfigTimeout": "Timeout",
+  "serialConfigTimeoutValue": "{seconds} seconds",
+  "@serialConfigTimeoutValue": {
+    "placeholders": { "seconds": { "type": "int" } }
+  },
+  "serialConfigModeSimpleDesc": "Simple serial output for basic terminal usage",
+  "serialConfigModeProtoDesc": "Protobuf binary protocol for programmatic access",
+  "serialConfigModeTextmsgDesc": "Text message mode for SMS-style communication",
+  "serialConfigModeNmeaDesc": "NMEA GPS sentence output for GPS applications",
+  "serialConfigModeCaltopoDesc": "CalTopo format for mapping applications",
+  "serialConfigGpioUnset": "Unset",
+  "serialConfigGpioPin": "Pin {pin}",
+  "@serialConfigGpioPin": {
+    "placeholders": { "pin": { "type": "int" } }
+  },
+  "serialConfigSaved": "Serial configuration saved",
+  "serialConfigSaveError": "Error saving config: {error}",
+  "@serialConfigSaveError": {
+    "placeholders": { "error": { "type": "String" } }
+  },
+
+  "firmwareUpdateTitle": "Firmware Update",
+  "firmwareUpdateSectionCurrentVersion": "Current Version",
+  "firmwareUpdateSectionAvailableUpdate": "Available Update",
+  "firmwareUpdateSectionHowToUpdate": "How to Update",
+  "firmwareUpdateInstalledFirmware": "Installed Firmware",
+  "firmwareUpdateUnknown": "Unknown",
+  "firmwareUpdateHardware": "Hardware",
+  "firmwareUpdateNodeId": "Node ID",
+  "firmwareUpdateUptime": "Uptime",
+  "firmwareUpdateWifi": "WiFi",
+  "firmwareUpdateBluetooth": "Bluetooth",
+  "firmwareUpdateSupported": "Supported",
+  "firmwareUpdateAvailable": "Update Available",
+  "firmwareUpdateUpToDate": "Up to Date",
+  "firmwareUpdateLatestVersion": "Latest: {version}",
+  "@firmwareUpdateLatestVersion": {
+    "placeholders": { "version": { "type": "String" } }
+  },
+  "firmwareUpdateNewBadge": "NEW",
+  "firmwareUpdateDownload": "Download Update",
+  "firmwareUpdateReleaseNotes": "Release Notes",
+  "firmwareUpdateChecking": "Checking for updates...",
+  "firmwareUpdateCheckFailed": "Failed to check for updates",
+  "firmwareUpdateUnableToCheck": "Unable to check for updates",
+  "firmwareUpdateVisitWebsite": "Visit the Meshtastic website for the latest firmware.",
+  "firmwareUpdateStep1": "Download the firmware file for your device",
+  "firmwareUpdateStep2": "Connect your device via USB",
+  "firmwareUpdateStep3": "Use the Meshtastic Web Flasher or CLI to flash",
+  "firmwareUpdateStep4": "Wait for device to reboot and reconnect",
+  "firmwareUpdateOpenWebFlasher": "Open Web Flasher",
+  "firmwareUpdateBackupWarningTitle": "Backup Your Settings",
+  "firmwareUpdateBackupWarningSubtitle": "Firmware updates may reset your device configuration. Consider exporting your settings before updating.",
+
+  "telemetryConfigTitle": "Telemetry",
+  "telemetryConfigSave": "Save",
+  "telemetryConfigSectionDeviceMetrics": "Device Metrics",
+  "telemetryConfigSectionEnvironmentMetrics": "Environment Metrics",
+  "telemetryConfigSectionAirQuality": "Air Quality",
+  "telemetryConfigSectionPowerMetrics": "Power Metrics",
+  "telemetryConfigDeviceMetricsDesc": "Battery level, voltage, channel utilization, air util TX",
+  "telemetryConfigEnvironmentMetricsDesc": "Temperature, humidity, barometric pressure, gas resistance",
+  "telemetryConfigAirQualityDesc": "PM1.0, PM2.5, PM10, particle counts, CO2",
+  "telemetryConfigPowerMetricsDesc": "Voltage and current for channels 1-3",
+  "telemetryConfigDisplayOnScreen": "Display on Screen",
+  "telemetryConfigDisplayOnScreenSubtitle": "Show environment data on device screen",
+  "telemetryConfigDisplayFahrenheit": "Display Fahrenheit",
+  "telemetryConfigDisplayFahrenheitSubtitle": "Show temperature in Fahrenheit instead of Celsius",
+  "telemetryConfigEnabled": "Enabled",
+  "telemetryConfigUpdateInterval": "Update Interval",
+  "telemetryConfigMinutes": " minutes",
+  "telemetryConfigAirtimeWarning": "Telemetry data is shared with all nodes on the mesh network. Shorter intervals increase airtime usage.",
+  "telemetryConfigSaved": "Telemetry config saved",
+  "telemetryConfigSaveError": "Failed to save: {error}",
+  "@telemetryConfigSaveError": {
+    "placeholders": { "error": { "type": "String" } }
+  },
+
+  "ambientLightingTitle": "Ambient Lighting",
+  "ambientLightingSave": "Save",
+  "ambientLightingLedEnabled": "LED Enabled",
+  "ambientLightingLedEnabledSubtitle": "Turn ambient lighting on or off",
+  "ambientLightingPresetColors": "Preset Colors",
+  "ambientLightingCustomColor": "Custom Color",
+  "ambientLightingRed": "Red",
+  "ambientLightingGreen": "Green",
+  "ambientLightingBlue": "Blue",
+  "ambientLightingBrightness": "LED Brightness",
+  "ambientLightingCurrent": "Current",
+  "ambientLightingCurrentValue": "{milliamps} mA",
+  "@ambientLightingCurrentValue": {
+    "placeholders": { "milliamps": { "type": "int" } }
+  },
+  "ambientLightingCurrentSubtitle": "LED drive current (brightness)",
+  "ambientLightingDeviceSupportInfo": "Ambient lighting is only available on devices with LED support (RAK WisBlock, T-Beam, etc.)",
+  "ambientLightingSaved": "Ambient lighting saved",
+  "ambientLightingSaveError": "Failed to save: {error}",
+  "@ambientLightingSaveError": {
+    "placeholders": { "error": { "type": "String" } }
+  },
+
+  "paxCounterTitle": "PAX Counter",
+  "paxCounterSave": "Save",
+  "paxCounterCardTitle": "PAX Counter",
+  "paxCounterCardSubtitle": "Counts nearby WiFi and Bluetooth devices",
+  "paxCounterEnable": "Enable PAX Counter",
+  "paxCounterEnableSubtitle": "Count nearby devices and report to mesh",
+  "paxCounterUpdateInterval": "Update Interval",
+  "paxCounterIntervalMinutes": "{minutes} minutes",
+  "@paxCounterIntervalMinutes": {
+    "placeholders": { "minutes": { "type": "int" } }
+  },
+  "paxCounterMinLabel": "1 min",
+  "paxCounterMaxLabel": "60 min",
+  "paxCounterAboutTitle": "About PAX Counter",
+  "paxCounterAboutSubtitle": "PAX Counter passively listens for WiFi and Bluetooth probe requests from nearby devices. It does not store MAC addresses or any personal data.",
+  "paxCounterSaved": "PAX counter config saved",
+  "paxCounterSaveError": "Failed to save: {error}",
+  "@paxCounterSaveError": {
+    "placeholders": { "error": { "type": "String" } }
+  },
+
+  "meshcoreConsoleTitle": "MeshCore Console",
+  "meshcoreConsoleDevBadge": "DEV",
+  "meshcoreConsoleFramesCaptured": "{count} frames captured",
+  "@meshcoreConsoleFramesCaptured": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "meshcoreConsoleRefresh": "Refresh",
+  "meshcoreConsoleCopyHex": "Copy Hex",
+  "meshcoreConsoleClear": "Clear",
+  "meshcoreConsoleNoFrames": "No frames captured yet",
+  "meshcoreConsoleHexCopied": "Hex log copied to clipboard",
+  "meshcoreConsoleCaptureCleared": "Capture cleared"
 }

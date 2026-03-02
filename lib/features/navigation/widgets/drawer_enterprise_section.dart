@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../core/auth/permission.dart';
 import '../../../core/auth/permission_provider.dart';
@@ -49,7 +50,7 @@ class DrawerEnterpriseSection extends ConsumerWidget {
               ),
               const SizedBox(width: AppTheme.spacing6),
               Text(
-                'ENTERPRISE',
+                context.l10n.drawerEnterpriseSectionHeader,
                 style: TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.w600,
@@ -70,7 +71,7 @@ class DrawerEnterpriseSection extends ConsumerWidget {
                 minRole: Role.observer,
                 child: DrawerMenuTile(
                   icon: Icons.warning_amber_outlined,
-                  label: 'Incidents',
+                  label: context.l10n.drawerEnterpriseIncidents,
                   isSelected: false,
                   iconColor: AccentColors.red,
                   onTap: () {
@@ -87,7 +88,7 @@ class DrawerEnterpriseSection extends ConsumerWidget {
                 minRole: Role.observer,
                 child: DrawerMenuTile(
                   icon: Icons.task_alt_outlined,
-                  label: 'Tasks',
+                  label: context.l10n.drawerEnterpriseTasks,
                   isSelected: false,
                   iconColor: AccentColors.blue,
                   onTap: () {
@@ -104,7 +105,7 @@ class DrawerEnterpriseSection extends ConsumerWidget {
                 permission: Permission.createFieldReport,
                 child: DrawerMenuTile(
                   icon: Icons.description_outlined,
-                  label: 'Field Reports',
+                  label: context.l10n.drawerEnterpriseFieldReports,
                   isSelected: false,
                   iconColor: AccentColors.green,
                   onTap: () {
@@ -120,10 +121,10 @@ class DrawerEnterpriseSection extends ConsumerWidget {
               PermissionGate(
                 permission: Permission.exportReports,
                 mode: PermissionGateMode.disabled,
-                deniedTooltip: 'Requires Supervisor or Admin role',
+                deniedTooltip: context.l10n.drawerEnterpriseExportDenied,
                 child: DrawerMenuTile(
                   icon: Icons.summarize_outlined,
-                  label: 'Reports',
+                  label: context.l10n.drawerEnterpriseReports,
                   isSelected: false,
                   iconColor: AccentColors.indigo,
                   onTap: () {
@@ -140,7 +141,7 @@ class DrawerEnterpriseSection extends ConsumerWidget {
                 minRole: Role.admin,
                 child: DrawerMenuTile(
                   icon: Icons.people_outline,
-                  label: 'User Management',
+                  label: context.l10n.drawerEnterpriseUserManagement,
                   isSelected: false,
                   iconColor: AccentColors.orange,
                   onTap: () {
@@ -157,7 +158,7 @@ class DrawerEnterpriseSection extends ConsumerWidget {
                 minRole: Role.admin,
                 child: DrawerMenuTile(
                   icon: Icons.devices_outlined,
-                  label: 'Device Management',
+                  label: context.l10n.drawerEnterpriseDeviceManagement,
                   isSelected: false,
                   iconColor: AccentColors.slate,
                   onTap: () {
@@ -174,7 +175,7 @@ class DrawerEnterpriseSection extends ConsumerWidget {
                 minRole: Role.admin,
                 child: DrawerMenuTile(
                   icon: Icons.settings_outlined,
-                  label: 'Org Settings',
+                  label: context.l10n.drawerEnterpriseOrgSettings,
                   isSelected: false,
                   iconColor: AccentColors.purple,
                   onTap: () {

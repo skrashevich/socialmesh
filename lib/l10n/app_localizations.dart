@@ -3579,6 +3579,4116 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The device disconnected unexpectedly. It may have gone out of range or lost power.'**
   String get scannerDeviceDisconnectedUnexpectedly;
+
+  /// Section header for the admin area in the navigation drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'ADMIN'**
+  String get drawerAdminSectionHeader;
+
+  /// Label for the Admin Dashboard menu tile in the navigation drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin Dashboard'**
+  String get drawerAdminDashboard;
+
+  /// Fallback node name shown in drawer header when no device is connected.
+  ///
+  /// In en, this message translates to:
+  /// **'Not Connected'**
+  String get drawerNodeNotConnected;
+
+  /// Connection status chip label when the device is connected.
+  ///
+  /// In en, this message translates to:
+  /// **'Online'**
+  String get drawerNodeOnline;
+
+  /// Connection status chip label when the device is disconnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline'**
+  String get drawerNodeOffline;
+
+  /// Badge label for newly added drawer menu items.
+  ///
+  /// In en, this message translates to:
+  /// **'NEW'**
+  String get drawerBadgeNew;
+
+  /// Badge label for locked premium features in the drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'PRO'**
+  String get drawerBadgePro;
+
+  /// Badge label for premium features available to try in the drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'TRY IT'**
+  String get drawerBadgeTryIt;
+
+  /// Section header for the enterprise (RBAC) area in the navigation drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'ENTERPRISE'**
+  String get drawerEnterpriseSectionHeader;
+
+  /// Label for the Incidents menu tile in the enterprise drawer section.
+  ///
+  /// In en, this message translates to:
+  /// **'Incidents'**
+  String get drawerEnterpriseIncidents;
+
+  /// Label for the Tasks menu tile in the enterprise drawer section.
+  ///
+  /// In en, this message translates to:
+  /// **'Tasks'**
+  String get drawerEnterpriseTasks;
+
+  /// Label for the Field Reports menu tile in the enterprise drawer section.
+  ///
+  /// In en, this message translates to:
+  /// **'Field Reports'**
+  String get drawerEnterpriseFieldReports;
+
+  /// Label for the Reports menu tile in the enterprise drawer section.
+  ///
+  /// In en, this message translates to:
+  /// **'Reports'**
+  String get drawerEnterpriseReports;
+
+  /// Tooltip shown when a user without sufficient role tries to access export reports.
+  ///
+  /// In en, this message translates to:
+  /// **'Requires Supervisor or Admin role'**
+  String get drawerEnterpriseExportDenied;
+
+  /// Label for the User Management menu tile in the enterprise drawer section.
+  ///
+  /// In en, this message translates to:
+  /// **'User Management'**
+  String get drawerEnterpriseUserManagement;
+
+  /// Label for the Device Management menu tile in the enterprise drawer section.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Management'**
+  String get drawerEnterpriseDeviceManagement;
+
+  /// Label for the Org Settings menu tile in the enterprise drawer section.
+  ///
+  /// In en, this message translates to:
+  /// **'Org Settings'**
+  String get drawerEnterpriseOrgSettings;
+
+  /// Title shown in the discovery overlay while scanning for mesh nodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Scanning Network'**
+  String get discoveryScanningNetwork;
+
+  /// Subtitle shown while no nodes have been discovered yet.
+  ///
+  /// In en, this message translates to:
+  /// **'Searching for nodes...'**
+  String get discoverySearchingForNodes;
+
+  /// Subtitle showing the number of discovered nodes.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 node found} other{{count} nodes found}}'**
+  String discoveryNodesFound(int count);
+
+  /// Fallback display name for a discovered node with no name.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown Node'**
+  String get discoveryUnknownNode;
+
+  /// Signal quality label for strong RSSI values.
+  ///
+  /// In en, this message translates to:
+  /// **'Excellent'**
+  String get discoverySignalExcellent;
+
+  /// Signal quality label for moderate RSSI values.
+  ///
+  /// In en, this message translates to:
+  /// **'Good'**
+  String get discoverySignalGood;
+
+  /// Signal quality label for poor RSSI values.
+  ///
+  /// In en, this message translates to:
+  /// **'Weak'**
+  String get discoverySignalWeak;
+
+  /// Badge label shown on newly discovered node cards.
+  ///
+  /// In en, this message translates to:
+  /// **'DISCOVERED'**
+  String get discoveryDiscoveredBadge;
+
+  /// Tooltip for the hamburger menu button in the MeshCore app bar.
+  ///
+  /// In en, this message translates to:
+  /// **'Menu'**
+  String get meshcoreShellMenuTooltip;
+
+  /// Tooltip for the device status button in the MeshCore app bar.
+  ///
+  /// In en, this message translates to:
+  /// **'Device'**
+  String get meshcoreShellDeviceTooltip;
+
+  /// Bottom navigation label for the Contacts tab in MeshCore.
+  ///
+  /// In en, this message translates to:
+  /// **'Contacts'**
+  String get meshcoreShellNavContacts;
+
+  /// Bottom navigation label for the Channels tab in MeshCore.
+  ///
+  /// In en, this message translates to:
+  /// **'Channels'**
+  String get meshcoreShellNavChannels;
+
+  /// Bottom navigation label for the Map tab in MeshCore.
+  ///
+  /// In en, this message translates to:
+  /// **'Map'**
+  String get meshcoreShellNavMap;
+
+  /// Bottom navigation label for the Tools tab in MeshCore.
+  ///
+  /// In en, this message translates to:
+  /// **'Tools'**
+  String get meshcoreShellNavTools;
+
+  /// Fallback short device name for MeshCore when no name is saved.
+  ///
+  /// In en, this message translates to:
+  /// **'MeshCore'**
+  String get meshcoreShellDefaultDeviceName;
+
+  /// Banner text shown when the MeshCore device disconnects.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnected from {deviceName}'**
+  String meshcoreShellDisconnectedFrom(String deviceName);
+
+  /// Button label to reconnect to a MeshCore device.
+  ///
+  /// In en, this message translates to:
+  /// **'Reconnect'**
+  String get meshcoreShellReconnectButton;
+
+  /// Section header for the MeshCore menu items in the drawer.
+  ///
+  /// In en, this message translates to:
+  /// **'MESHCORE'**
+  String get meshcoreShellDrawerSectionHeader;
+
+  /// Drawer menu item label for adding a MeshCore contact.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Contact'**
+  String get meshcoreShellDrawerAddContact;
+
+  /// Drawer menu item label for adding a MeshCore channel.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Channel'**
+  String get meshcoreShellDrawerAddChannel;
+
+  /// Drawer menu item label for discovering nearby MeshCore contacts.
+  ///
+  /// In en, this message translates to:
+  /// **'Discover Contacts'**
+  String get meshcoreShellDrawerDiscoverContacts;
+
+  /// Drawer menu item label for showing the user's own MeshCore contact QR code.
+  ///
+  /// In en, this message translates to:
+  /// **'My Contact Code'**
+  String get meshcoreShellDrawerMyContactCode;
+
+  /// Drawer menu item label for MeshCore settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get meshcoreShellDrawerSettings;
+
+  /// Drawer disconnect button label.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect'**
+  String get meshcoreShellDrawerDisconnect;
+
+  /// Fallback full device name for MeshCore.
+  ///
+  /// In en, this message translates to:
+  /// **'MeshCore Device'**
+  String get meshcoreShellDefaultDeviceNameFull;
+
+  /// Error snackbar when attempting to reconnect without a saved device.
+  ///
+  /// In en, this message translates to:
+  /// **'No saved device to reconnect to'**
+  String get meshcoreShellNoSavedDevice;
+
+  /// Loading snackbar shown during MeshCore reconnection.
+  ///
+  /// In en, this message translates to:
+  /// **'Reconnecting to {deviceName}...'**
+  String meshcoreShellReconnecting(String deviceName);
+
+  /// Success snackbar after reconnecting to a MeshCore device.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected to {deviceName}'**
+  String meshcoreShellConnectedTo(String deviceName);
+
+  /// Error snackbar when MeshCore reconnection fails.
+  ///
+  /// In en, this message translates to:
+  /// **'Reconnect failed: {error}'**
+  String meshcoreShellReconnectFailed(String error);
+
+  /// Info snackbar hint after navigating to contacts tab.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the + button to add a contact'**
+  String get meshcoreShellAddContactHint;
+
+  /// Info snackbar hint after navigating to channels tab.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the menu to create or join a channel'**
+  String get meshcoreShellAddChannelHint;
+
+  /// Error message when attempting an action while MeshCore is disconnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Not connected'**
+  String get meshcoreShellNotConnected;
+
+  /// Success snackbar after sending a MeshCore contact discovery advertisement.
+  ///
+  /// In en, this message translates to:
+  /// **'Advertisement sent - listen for responses'**
+  String get meshcoreShellAdvertisementSent;
+
+  /// Error message when device self-info is not yet available.
+  ///
+  /// In en, this message translates to:
+  /// **'Device info not available'**
+  String get meshcoreShellDeviceInfoNotAvailable;
+
+  /// Fallback title for QR share when device has no node name.
+  ///
+  /// In en, this message translates to:
+  /// **'Unnamed Node'**
+  String get meshcoreShellUnnamedNode;
+
+  /// Subtitle on the QR share sheet for adding a MeshCore contact.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan to add as contact'**
+  String get meshcoreShellScanToAddContact;
+
+  /// Info text on the QR contact code share sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your contact code so others can message you'**
+  String get meshcoreShellShareContactInfo;
+
+  /// Fallback avatar initials for MeshCore node.
+  ///
+  /// In en, this message translates to:
+  /// **'MC'**
+  String get meshcoreShellDefaultInitials;
+
+  /// Connection status label when the MeshCore device is connected.
+  ///
+  /// In en, this message translates to:
+  /// **'Online'**
+  String get meshcoreShellStatusOnline;
+
+  /// Connection status label when the MeshCore device is disconnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline'**
+  String get meshcoreShellStatusOffline;
+
+  /// Device sheet status when connected to a MeshCore device.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected'**
+  String get meshcoreShellStatusConnected;
+
+  /// Device sheet status while connecting to a MeshCore device.
+  ///
+  /// In en, this message translates to:
+  /// **'Connecting...'**
+  String get meshcoreShellStatusConnecting;
+
+  /// Device sheet status when disconnected from a MeshCore device.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnected'**
+  String get meshcoreShellStatusDisconnected;
+
+  /// Section title for device information in the MeshCore device sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Information'**
+  String get meshcoreShellSectionDeviceInfo;
+
+  /// Section title for quick actions in the MeshCore device sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Actions'**
+  String get meshcoreShellSectionQuickActions;
+
+  /// Section title for connection actions in the MeshCore device sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection'**
+  String get meshcoreShellSectionConnection;
+
+  /// Subtitle for the Add Contact action tile in the MeshCore device sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan QR or enter contact code'**
+  String get meshcoreShellAddContactSubtitle;
+
+  /// Title for the Join Channel action tile in the MeshCore device sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Join Channel'**
+  String get meshcoreShellJoinChannel;
+
+  /// Subtitle for the Join Channel action tile in the MeshCore device sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan QR or enter channel code'**
+  String get meshcoreShellJoinChannelSubtitle;
+
+  /// Info snackbar hint after navigating to channels tab from device sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the menu to join a channel'**
+  String get meshcoreShellJoinChannelHint;
+
+  /// Subtitle for the My Contact Code action tile in the device sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your contact info'**
+  String get meshcoreShellShareContactSubtitle;
+
+  /// Subtitle for the Discover Contacts action tile in the device sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Send advertisement to find nearby nodes'**
+  String get meshcoreShellDiscoverSubtitle;
+
+  /// Title for the App Settings action tile in the MeshCore device sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'App Settings'**
+  String get meshcoreShellAppSettings;
+
+  /// Subtitle for the App Settings action tile in the device sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications, theme, preferences'**
+  String get meshcoreShellAppSettingsSubtitle;
+
+  /// Info table label for the protocol row.
+  ///
+  /// In en, this message translates to:
+  /// **'Protocol'**
+  String get meshcoreShellInfoProtocol;
+
+  /// Info table protocol value for MeshCore.
+  ///
+  /// In en, this message translates to:
+  /// **'MeshCore'**
+  String get meshcoreShellInfoProtocolValue;
+
+  /// Info table label for the node name row.
+  ///
+  /// In en, this message translates to:
+  /// **'Node Name'**
+  String get meshcoreShellInfoNodeName;
+
+  /// Fallback value when a node name is empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get meshcoreShellUnknown;
+
+  /// Info table label for the node ID row.
+  ///
+  /// In en, this message translates to:
+  /// **'Node ID'**
+  String get meshcoreShellInfoNodeId;
+
+  /// Info table label for the public key row.
+  ///
+  /// In en, this message translates to:
+  /// **'Public Key'**
+  String get meshcoreShellInfoPublicKey;
+
+  /// Info table label for the connection status row.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get meshcoreShellInfoStatus;
+
+  /// Button label while disconnection is in progress.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnecting...'**
+  String get meshcoreShellDisconnecting;
+
+  /// Button label and confirmation dialog title for disconnecting.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect'**
+  String get meshcoreShellDisconnect;
+
+  /// Confirmation dialog body when disconnecting from a MeshCore device.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to disconnect from this MeshCore device?'**
+  String get meshcoreShellDisconnectConfirmMessage;
+
+  /// Success snackbar after sending discovery advertisement from device sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Advertisement sent - listening for responses'**
+  String get meshcoreShellAdvertisementSentListening;
+
+  /// Success snackbar after linking a device to the user profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Device linked to your profile!'**
+  String get linkDeviceBannerLinkedSuccess;
+
+  /// Error snackbar when device linking fails.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to link: {error}'**
+  String linkDeviceBannerLinkError(String error);
+
+  /// Title text on the link device banner.
+  ///
+  /// In en, this message translates to:
+  /// **'Link this device to your profile'**
+  String get linkDeviceBannerTitle;
+
+  /// Subtitle text on the link device banner.
+  ///
+  /// In en, this message translates to:
+  /// **'Others can find and follow you'**
+  String get linkDeviceBannerSubtitle;
+
+  /// Button label to link the device.
+  ///
+  /// In en, this message translates to:
+  /// **'Link'**
+  String get linkDeviceBannerLinkButton;
+
+  /// App bar title showing node count.
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes ({count})'**
+  String nodesScreenTitle(int count);
+
+  /// Tooltip for the QR code scan button.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan QR Code'**
+  String get nodesScreenScanQrCodeTooltip;
+
+  /// Overflow menu item for help.
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get nodesScreenHelpMenu;
+
+  /// Overflow menu item for settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get nodesScreenSettingsMenu;
+
+  /// Search bar placeholder text.
+  ///
+  /// In en, this message translates to:
+  /// **'Find a node'**
+  String get nodesScreenSearchHint;
+
+  /// Filter chip label showing all nodes.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get nodesScreenFilterAll;
+
+  /// Filter chip label for active nodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get nodesScreenFilterActive;
+
+  /// Filter chip label for favorite nodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get nodesScreenFilterFavorites;
+
+  /// Filter chip label for nodes with GPS position.
+  ///
+  /// In en, this message translates to:
+  /// **'With Position'**
+  String get nodesScreenFilterWithPosition;
+
+  /// Filter chip label for inactive nodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Inactive'**
+  String get nodesScreenFilterInactive;
+
+  /// Filter chip label for newly discovered nodes.
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get nodesScreenFilterNew;
+
+  /// Filter chip label for RF-connected nodes.
+  ///
+  /// In en, this message translates to:
+  /// **'RF'**
+  String get nodesScreenFilterRf;
+
+  /// Filter chip label for MQTT-connected nodes.
+  ///
+  /// In en, this message translates to:
+  /// **'MQTT'**
+  String get nodesScreenFilterMqtt;
+
+  /// Empty state message when no nodes exist.
+  ///
+  /// In en, this message translates to:
+  /// **'No nodes discovered yet'**
+  String get nodesScreenEmptyAll;
+
+  /// Empty state message when filter returns no results.
+  ///
+  /// In en, this message translates to:
+  /// **'No nodes match this filter'**
+  String get nodesScreenEmptyFiltered;
+
+  /// Button to clear filters and show all nodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Show all nodes'**
+  String get nodesScreenShowAllButton;
+
+  /// Section header for Aether flight nodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Aether Flights Nearby'**
+  String get nodesScreenSectionAetherFlights;
+
+  /// Section header for nodes currently being discovered.
+  ///
+  /// In en, this message translates to:
+  /// **'Discovering'**
+  String get nodesScreenSectionDiscovering;
+
+  /// Section header for the user's own device.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Device'**
+  String get nodesScreenSectionYourDevice;
+
+  /// Section header for favorite nodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get nodesScreenSectionFavorites;
+
+  /// Section header for active nodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get nodesScreenSectionActive;
+
+  /// Section header for recently seen nodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Seen Recently'**
+  String get nodesScreenSectionSeenRecently;
+
+  /// Section header for inactive nodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Inactive'**
+  String get nodesScreenSectionInactive;
+
+  /// Section header for nodes with unknown status.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get nodesScreenSectionUnknown;
+
+  /// Section header for nodes with strong signal.
+  ///
+  /// In en, this message translates to:
+  /// **'Strong (>0 dB)'**
+  String get nodesScreenSectionSignalStrong;
+
+  /// Section header for nodes with medium signal.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium (-10 to 0 dB)'**
+  String get nodesScreenSectionSignalMedium;
+
+  /// Section header for nodes with weak signal.
+  ///
+  /// In en, this message translates to:
+  /// **'Weak (<-10 dB)'**
+  String get nodesScreenSectionSignalWeak;
+
+  /// Section header for nodes currently charging.
+  ///
+  /// In en, this message translates to:
+  /// **'Charging'**
+  String get nodesScreenSectionCharging;
+
+  /// Section header for nodes with full battery.
+  ///
+  /// In en, this message translates to:
+  /// **'Full (80-100%)'**
+  String get nodesScreenSectionBatteryFull;
+
+  /// Section header for nodes with good battery.
+  ///
+  /// In en, this message translates to:
+  /// **'Good (50-80%)'**
+  String get nodesScreenSectionBatteryGood;
+
+  /// Section header for nodes with low battery.
+  ///
+  /// In en, this message translates to:
+  /// **'Low (20-50%)'**
+  String get nodesScreenSectionBatteryLow;
+
+  /// Section header for nodes with critical battery.
+  ///
+  /// In en, this message translates to:
+  /// **'Critical (<20%)'**
+  String get nodesScreenSectionBatteryCritical;
+
+  /// Label in long-press menu for the connected device.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected Device'**
+  String get nodesScreenConnectedDevice;
+
+  /// Long-press menu action to disconnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect'**
+  String get nodesScreenDisconnect;
+
+  /// Sort chip label for most recent sort.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent'**
+  String get nodesScreenSortRecent;
+
+  /// Sort chip label for name sort.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get nodesScreenSortName;
+
+  /// Sort chip label for signal sort.
+  ///
+  /// In en, this message translates to:
+  /// **'Signal'**
+  String get nodesScreenSortSignal;
+
+  /// Sort chip label for battery sort.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery'**
+  String get nodesScreenSortBattery;
+
+  /// Sort menu option for most recent.
+  ///
+  /// In en, this message translates to:
+  /// **'Most Recent'**
+  String get nodesScreenSortMenuMostRecent;
+
+  /// Sort menu option for alphabetical name sort.
+  ///
+  /// In en, this message translates to:
+  /// **'Name (A-Z)'**
+  String get nodesScreenSortMenuNameAZ;
+
+  /// Sort menu option for signal strength sort.
+  ///
+  /// In en, this message translates to:
+  /// **'Signal Strength'**
+  String get nodesScreenSortMenuSignalStrength;
+
+  /// Sort menu option for battery level sort.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery Level'**
+  String get nodesScreenSortMenuBatteryLevel;
+
+  /// Distance label in meters on node card.
+  ///
+  /// In en, this message translates to:
+  /// **'{meters} m away'**
+  String nodesScreenDistanceMeters(String meters);
+
+  /// Distance label in kilometers on node card.
+  ///
+  /// In en, this message translates to:
+  /// **'{km} km away'**
+  String nodesScreenDistanceKilometers(String km);
+
+  /// Badge label on the user's own node card.
+  ///
+  /// In en, this message translates to:
+  /// **'YOU'**
+  String get nodesScreenYouBadge;
+
+  /// Subtitle on the user's own node card.
+  ///
+  /// In en, this message translates to:
+  /// **'This Device'**
+  String get nodesScreenThisDevice;
+
+  /// Badge label for nodes with GPS position.
+  ///
+  /// In en, this message translates to:
+  /// **'GPS'**
+  String get nodesScreenGps;
+
+  /// Badge label for nodes without GPS position.
+  ///
+  /// In en, this message translates to:
+  /// **'No GPS'**
+  String get nodesScreenNoGps;
+
+  /// Label prefix for node log count.
+  ///
+  /// In en, this message translates to:
+  /// **'Logs:'**
+  String get nodesScreenLogsLabel;
+
+  /// Hop count label for directly connected nodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Direct'**
+  String get nodesScreenHopDirect;
+
+  /// Hop count label for multi-hop nodes.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 hop} other{{count} hops}}'**
+  String nodesScreenHopCount(int count);
+
+  /// Transport badge for MQTT nodes.
+  ///
+  /// In en, this message translates to:
+  /// **'MQTT'**
+  String get nodesScreenTransportMqtt;
+
+  /// Transport badge for RF nodes.
+  ///
+  /// In en, this message translates to:
+  /// **'RF'**
+  String get nodesScreenTransportRf;
+
+  /// QR code sheet subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan to add this node'**
+  String get nodeDetailQrSubtitle;
+
+  /// QR code sheet info text with hex node ID.
+  ///
+  /// In en, this message translates to:
+  /// **'Node ID: {nodeId}'**
+  String nodeDetailQrInfoText(String nodeId);
+
+  /// Snackbar after removing a node from favorites.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} removed from favorites'**
+  String nodeDetailRemovedFromFavorites(String name);
+
+  /// Snackbar after adding a node to favorites.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} added to favorites'**
+  String nodeDetailAddedToFavorites(String name);
+
+  /// Error snackbar when favorite toggle fails.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to update favorite: {error}'**
+  String nodeDetailFavoriteError(String error);
+
+  /// Error when trying to mute while disconnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot change mute status: Device not connected'**
+  String get nodeDetailMuteNotConnected;
+
+  /// Snackbar after unmuting a node.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} unmuted'**
+  String nodeDetailUnmuted(String name);
+
+  /// Snackbar after muting a node.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} muted'**
+  String nodeDetailMuted(String name);
+
+  /// Error snackbar when mute toggle fails.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to update mute status: {error}'**
+  String nodeDetailMuteError(String error);
+
+  /// Error when sending traceroute while disconnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot send traceroute: Device not connected'**
+  String get nodeDetailTracerouteNotConnected;
+
+  /// Success snackbar after sending a traceroute.
+  ///
+  /// In en, this message translates to:
+  /// **'Traceroute sent to {name} — check Traceroute History for results'**
+  String nodeDetailTracerouteSent(String name);
+
+  /// Error snackbar when traceroute fails.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to send traceroute: {error}'**
+  String nodeDetailTracerouteError(String error);
+
+  /// Error when rebooting while disconnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot reboot: Device not connected'**
+  String get nodeDetailRebootNotConnected;
+
+  /// Confirmation dialog title for rebooting.
+  ///
+  /// In en, this message translates to:
+  /// **'Reboot Device'**
+  String get nodeDetailRebootTitle;
+
+  /// Confirmation dialog body for rebooting.
+  ///
+  /// In en, this message translates to:
+  /// **'This will reboot your Meshtastic device. The app will automatically reconnect once the device restarts.'**
+  String get nodeDetailRebootMessage;
+
+  /// Confirmation button label for rebooting.
+  ///
+  /// In en, this message translates to:
+  /// **'Reboot'**
+  String get nodeDetailRebootConfirm;
+
+  /// Snackbar shown after initiating a reboot.
+  ///
+  /// In en, this message translates to:
+  /// **'Device is rebooting...'**
+  String get nodeDetailRebootingSnackbar;
+
+  /// Error snackbar when reboot fails.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to reboot: {error}'**
+  String nodeDetailRebootError(String error);
+
+  /// Error when shutting down while disconnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot shutdown: Device not connected'**
+  String get nodeDetailShutdownNotConnected;
+
+  /// Confirmation dialog title for shutdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Shutdown Device'**
+  String get nodeDetailShutdownTitle;
+
+  /// Confirmation dialog body for shutdown.
+  ///
+  /// In en, this message translates to:
+  /// **'This will turn off your Meshtastic device. You will need to physically power it back on to reconnect.'**
+  String get nodeDetailShutdownMessage;
+
+  /// Confirmation button label for shutdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Shutdown'**
+  String get nodeDetailShutdownConfirm;
+
+  /// Snackbar shown after initiating a shutdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Device is shutting down...'**
+  String get nodeDetailShuttingDownSnackbar;
+
+  /// Error snackbar when shutdown fails.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to shutdown: {error}'**
+  String nodeDetailShutdownError(String error);
+
+  /// Confirmation dialog title for removing a node.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Node'**
+  String get nodeDetailRemoveTitle;
+
+  /// Confirmation dialog body for removing a node.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {name} from the node database? This will remove the node from your local device.'**
+  String nodeDetailRemoveMessage(String name);
+
+  /// Confirmation button label for removing a node.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get nodeDetailRemoveConfirm;
+
+  /// Snackbar after successfully removing a node.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} removed'**
+  String nodeDetailRemovedSnackbar(String name);
+
+  /// Error snackbar when node removal fails.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to remove node: {error}'**
+  String nodeDetailRemoveError(String error);
+
+  /// Error when node has no GPS position for fixed position.
+  ///
+  /// In en, this message translates to:
+  /// **'Node has no position data'**
+  String get nodeDetailNoPositionData;
+
+  /// Success snackbar after setting fixed position.
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed position set to {name}\'s location'**
+  String nodeDetailFixedPositionSet(String name);
+
+  /// Error snackbar when fixed position fails.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to set fixed position: {error}'**
+  String nodeDetailFixedPositionError(String error);
+
+  /// Success snackbar after requesting user info.
+  ///
+  /// In en, this message translates to:
+  /// **'User info requested from {name}'**
+  String nodeDetailUserInfoRequested(String name);
+
+  /// Error snackbar when user info request fails.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to request user info: {error}'**
+  String nodeDetailUserInfoError(String error);
+
+  /// Success snackbar after requesting position.
+  ///
+  /// In en, this message translates to:
+  /// **'Position requested from {name}'**
+  String nodeDetailPositionRequested(String name);
+
+  /// Error snackbar when position request fails.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to request position: {error}'**
+  String nodeDetailPositionError(String error);
+
+  /// Relative time label when a node has never been heard.
+  ///
+  /// In en, this message translates to:
+  /// **'Never'**
+  String get nodeDetailLastHeardNever;
+
+  /// Relative time label for very recent contact.
+  ///
+  /// In en, this message translates to:
+  /// **'Just now'**
+  String get nodeDetailLastHeardJustNow;
+
+  /// Relative time label in minutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes}m ago'**
+  String nodeDetailLastHeardMinutesAgo(int minutes);
+
+  /// Relative time label in hours.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h ago'**
+  String nodeDetailLastHeardHoursAgo(int hours);
+
+  /// Relative time label in days.
+  ///
+  /// In en, this message translates to:
+  /// **'{days}d ago'**
+  String nodeDetailLastHeardDaysAgo(int days);
+
+  /// Signal quality label when RSSI is unknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get nodeDetailSignalUnknown;
+
+  /// Signal quality label for excellent RSSI.
+  ///
+  /// In en, this message translates to:
+  /// **'Excellent'**
+  String get nodeDetailSignalExcellent;
+
+  /// Signal quality label for good RSSI.
+  ///
+  /// In en, this message translates to:
+  /// **'Good'**
+  String get nodeDetailSignalGood;
+
+  /// Signal quality label for fair RSSI.
+  ///
+  /// In en, this message translates to:
+  /// **'Fair'**
+  String get nodeDetailSignalFair;
+
+  /// Signal quality label for weak RSSI.
+  ///
+  /// In en, this message translates to:
+  /// **'Weak'**
+  String get nodeDetailSignalWeak;
+
+  /// Signal quality label for very weak RSSI.
+  ///
+  /// In en, this message translates to:
+  /// **'Very Weak'**
+  String get nodeDetailSignalVeryWeak;
+
+  /// Badge on the user's own node in the detail screen.
+  ///
+  /// In en, this message translates to:
+  /// **'YOU'**
+  String get nodeDetailYouBadge;
+
+  /// Badge for nodes with PKI encryption.
+  ///
+  /// In en, this message translates to:
+  /// **'PKI'**
+  String get nodeDetailPkiBadge;
+
+  /// Badge for nodes without PKI encryption.
+  ///
+  /// In en, this message translates to:
+  /// **'No PKI'**
+  String get nodeDetailNoPkiBadge;
+
+  /// Badge for muted nodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Muted'**
+  String get nodeDetailMutedBadge;
+
+  /// Badge for favorite nodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorite'**
+  String get nodeDetailFavoriteBadge;
+
+  /// Battery status label when charging.
+  ///
+  /// In en, this message translates to:
+  /// **'Charging'**
+  String get nodeDetailBatteryCharging;
+
+  /// Battery percentage display.
+  ///
+  /// In en, this message translates to:
+  /// **'{level}%'**
+  String nodeDetailBatteryPercent(int level);
+
+  /// Distance display in meters.
+  ///
+  /// In en, this message translates to:
+  /// **'{meters} m'**
+  String nodeDetailDistanceMeters(String meters);
+
+  /// Distance display in kilometers.
+  ///
+  /// In en, this message translates to:
+  /// **'{km} km'**
+  String nodeDetailDistanceKilometers(String km);
+
+  /// Section title for identity info.
+  ///
+  /// In en, this message translates to:
+  /// **'Identity'**
+  String get nodeDetailSectionIdentity;
+
+  /// Info table label for user ID.
+  ///
+  /// In en, this message translates to:
+  /// **'User ID'**
+  String get nodeDetailLabelUserId;
+
+  /// Info table label for hardware model.
+  ///
+  /// In en, this message translates to:
+  /// **'Hardware'**
+  String get nodeDetailLabelHardware;
+
+  /// Info table label for firmware version.
+  ///
+  /// In en, this message translates to:
+  /// **'Firmware'**
+  String get nodeDetailLabelFirmware;
+
+  /// Info table label for encryption status.
+  ///
+  /// In en, this message translates to:
+  /// **'Encryption'**
+  String get nodeDetailLabelEncryption;
+
+  /// Encryption value when PKI is enabled.
+  ///
+  /// In en, this message translates to:
+  /// **'PKI Enabled'**
+  String get nodeDetailValuePkiEnabled;
+
+  /// Encryption value when no public key exists.
+  ///
+  /// In en, this message translates to:
+  /// **'No Public Key'**
+  String get nodeDetailValueNoPublicKey;
+
+  /// Info table label for node status.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get nodeDetailLabelStatus;
+
+  /// Section title for radio info.
+  ///
+  /// In en, this message translates to:
+  /// **'Radio'**
+  String get nodeDetailSectionRadio;
+
+  /// Info table label for RSSI.
+  ///
+  /// In en, this message translates to:
+  /// **'RSSI'**
+  String get nodeDetailLabelRssi;
+
+  /// RSSI value with unit.
+  ///
+  /// In en, this message translates to:
+  /// **'{rssi} dBm'**
+  String nodeDetailValueRssi(int rssi);
+
+  /// Info table label for SNR.
+  ///
+  /// In en, this message translates to:
+  /// **'SNR'**
+  String get nodeDetailLabelSnr;
+
+  /// SNR value with unit.
+  ///
+  /// In en, this message translates to:
+  /// **'{snr} dB'**
+  String nodeDetailValueSnr(String snr);
+
+  /// Info table label for noise floor.
+  ///
+  /// In en, this message translates to:
+  /// **'Noise Floor'**
+  String get nodeDetailLabelNoiseFloor;
+
+  /// Noise floor value with unit.
+  ///
+  /// In en, this message translates to:
+  /// **'{noiseFloor} dBm'**
+  String nodeDetailValueNoiseFloor(int noiseFloor);
+
+  /// Info table label for distance.
+  ///
+  /// In en, this message translates to:
+  /// **'Distance'**
+  String get nodeDetailLabelDistance;
+
+  /// Info table label for GPS position.
+  ///
+  /// In en, this message translates to:
+  /// **'Position'**
+  String get nodeDetailLabelPosition;
+
+  /// Info table label for altitude.
+  ///
+  /// In en, this message translates to:
+  /// **'Altitude'**
+  String get nodeDetailLabelAltitude;
+
+  /// Altitude value with unit.
+  ///
+  /// In en, this message translates to:
+  /// **'{altitude} m'**
+  String nodeDetailValueAltitude(int altitude);
+
+  /// Section title for device metrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Metrics'**
+  String get nodeDetailSectionDeviceMetrics;
+
+  /// Info table label for battery level.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery'**
+  String get nodeDetailLabelBattery;
+
+  /// Info table label for voltage.
+  ///
+  /// In en, this message translates to:
+  /// **'Voltage'**
+  String get nodeDetailLabelVoltage;
+
+  /// Voltage value with unit.
+  ///
+  /// In en, this message translates to:
+  /// **'{voltage} V'**
+  String nodeDetailValueVoltage(String voltage);
+
+  /// Info table label for channel utilization.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel Util'**
+  String get nodeDetailLabelChannelUtil;
+
+  /// Generic percentage value display.
+  ///
+  /// In en, this message translates to:
+  /// **'{value}%'**
+  String nodeDetailValuePercent(String value);
+
+  /// Info table label for air utilization TX.
+  ///
+  /// In en, this message translates to:
+  /// **'Air Util TX'**
+  String get nodeDetailLabelAirUtilTx;
+
+  /// Info table label for uptime.
+  ///
+  /// In en, this message translates to:
+  /// **'Uptime'**
+  String get nodeDetailLabelUptime;
+
+  /// Section title for network info.
+  ///
+  /// In en, this message translates to:
+  /// **'Network'**
+  String get nodeDetailSectionNetwork;
+
+  /// Info table label for transmitted packets.
+  ///
+  /// In en, this message translates to:
+  /// **'Packets TX'**
+  String get nodeDetailLabelPacketsTx;
+
+  /// Info table label for received packets.
+  ///
+  /// In en, this message translates to:
+  /// **'Packets RX'**
+  String get nodeDetailLabelPacketsRx;
+
+  /// Info table label for bad packets.
+  ///
+  /// In en, this message translates to:
+  /// **'Bad Packets'**
+  String get nodeDetailLabelBadPackets;
+
+  /// Info table label for online node count.
+  ///
+  /// In en, this message translates to:
+  /// **'Online Nodes'**
+  String get nodeDetailLabelOnlineNodes;
+
+  /// Info table label for total node count.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Nodes'**
+  String get nodeDetailLabelTotalNodes;
+
+  /// Info table label for dropped transmissions.
+  ///
+  /// In en, this message translates to:
+  /// **'TX Dropped'**
+  String get nodeDetailLabelTxDropped;
+
+  /// Section title for traffic management info.
+  ///
+  /// In en, this message translates to:
+  /// **'Traffic Management'**
+  String get nodeDetailSectionTraffic;
+
+  /// Info table label for inspected packets.
+  ///
+  /// In en, this message translates to:
+  /// **'Inspected'**
+  String get nodeDetailLabelInspected;
+
+  /// Info table label for position deduplication.
+  ///
+  /// In en, this message translates to:
+  /// **'Position Dedup'**
+  String get nodeDetailLabelPositionDedup;
+
+  /// Info table label for cache hits.
+  ///
+  /// In en, this message translates to:
+  /// **'Cache Hits'**
+  String get nodeDetailLabelCacheHits;
+
+  /// Info table label for rate-limited drops.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate Limit Drops'**
+  String get nodeDetailLabelRateLimitDrops;
+
+  /// Info table label for unknown drops.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown Drops'**
+  String get nodeDetailLabelUnknownDrops;
+
+  /// Info table label for hop-exhausted packets.
+  ///
+  /// In en, this message translates to:
+  /// **'Hop Exhausted'**
+  String get nodeDetailLabelHopExhausted;
+
+  /// Info table label for preserved hops.
+  ///
+  /// In en, this message translates to:
+  /// **'Hops Preserved'**
+  String get nodeDetailLabelHopsPreserved;
+
+  /// Action button label for rebooting the device.
+  ///
+  /// In en, this message translates to:
+  /// **'Reboot'**
+  String get nodeDetailRebootButton;
+
+  /// Action button label for shutting down the device.
+  ///
+  /// In en, this message translates to:
+  /// **'Shutdown'**
+  String get nodeDetailShutdownButton;
+
+  /// Tooltip for removing from favorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from favorites'**
+  String get nodeDetailRemoveFromFavoritesTooltip;
+
+  /// Tooltip for adding to favorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to favorites'**
+  String get nodeDetailAddToFavoritesTooltip;
+
+  /// Tooltip for unmuting a node.
+  ///
+  /// In en, this message translates to:
+  /// **'Unmute node'**
+  String get nodeDetailUnmuteTooltip;
+
+  /// Tooltip for muting a node.
+  ///
+  /// In en, this message translates to:
+  /// **'Mute node'**
+  String get nodeDetailMuteTooltip;
+
+  /// Action button label for messaging the node.
+  ///
+  /// In en, this message translates to:
+  /// **'Message'**
+  String get nodeDetailMessageButton;
+
+  /// App bar title for the node detail screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Node Details'**
+  String get nodeDetailAppBarTitle;
+
+  /// Tooltip for the sigil card button.
+  ///
+  /// In en, this message translates to:
+  /// **'Sigil Card'**
+  String get nodeDetailSigilCardTooltip;
+
+  /// Overflow menu item for QR code.
+  ///
+  /// In en, this message translates to:
+  /// **'QR Code'**
+  String get nodeDetailMenuQrCode;
+
+  /// Overflow menu item for showing node on map.
+  ///
+  /// In en, this message translates to:
+  /// **'Show on Map'**
+  String get nodeDetailMenuShowOnMap;
+
+  /// Overflow menu item for traceroute history.
+  ///
+  /// In en, this message translates to:
+  /// **'Traceroute History'**
+  String get nodeDetailMenuTracerouteHistory;
+
+  /// Overflow menu item for requesting user info.
+  ///
+  /// In en, this message translates to:
+  /// **'Request User Info'**
+  String get nodeDetailMenuRequestUserInfo;
+
+  /// Overflow menu item for exchanging positions.
+  ///
+  /// In en, this message translates to:
+  /// **'Exchange Positions'**
+  String get nodeDetailMenuExchangePositions;
+
+  /// Overflow menu item for setting fixed position.
+  ///
+  /// In en, this message translates to:
+  /// **'Set as Fixed Position'**
+  String get nodeDetailMenuSetFixedPosition;
+
+  /// Overflow menu item for remote admin settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin Settings'**
+  String get nodeDetailMenuAdminSettings;
+
+  /// Subtitle for the admin settings menu item.
+  ///
+  /// In en, this message translates to:
+  /// **'Configure this node remotely'**
+  String get nodeDetailMenuAdminSubtitle;
+
+  /// Overflow menu item for removing a node.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Node'**
+  String get nodeDetailMenuRemoveNode;
+
+  /// Footer showing when the node was last heard.
+  ///
+  /// In en, this message translates to:
+  /// **'Last heard {timestamp}'**
+  String nodeDetailLastHeardTimestamp(String timestamp);
+
+  /// Tooltip showing remaining traceroute cooldown.
+  ///
+  /// In en, this message translates to:
+  /// **'Traceroute cooldown: {seconds}s'**
+  String nodeDetailTracerouteCooldownTooltip(int seconds);
+
+  /// Tooltip for the traceroute button.
+  ///
+  /// In en, this message translates to:
+  /// **'Traceroute'**
+  String get nodeDetailTracerouteTooltip;
+
+  /// No description provided for @deviceConfigRoleClient.
+  ///
+  /// In en, this message translates to:
+  /// **'Client'**
+  String get deviceConfigRoleClient;
+
+  /// No description provided for @deviceConfigRoleClientDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Default role. Mesh packets are routed through this node. Can send and receive messages.'**
+  String get deviceConfigRoleClientDesc;
+
+  /// No description provided for @deviceConfigRoleClientMute.
+  ///
+  /// In en, this message translates to:
+  /// **'Client Mute'**
+  String get deviceConfigRoleClientMute;
+
+  /// No description provided for @deviceConfigRoleClientMuteDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Same as client but will not transmit any messages from itself. Useful for monitoring.'**
+  String get deviceConfigRoleClientMuteDesc;
+
+  /// No description provided for @deviceConfigRoleClientHidden.
+  ///
+  /// In en, this message translates to:
+  /// **'Client Hidden'**
+  String get deviceConfigRoleClientHidden;
+
+  /// No description provided for @deviceConfigRoleClientHiddenDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Acts as client but hides from the node list. Still routes traffic.'**
+  String get deviceConfigRoleClientHiddenDesc;
+
+  /// No description provided for @deviceConfigRoleClientBase.
+  ///
+  /// In en, this message translates to:
+  /// **'Client Base'**
+  String get deviceConfigRoleClientBase;
+
+  /// No description provided for @deviceConfigRoleClientBaseDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Base station for favorited nodes. Routes their packets like a router, others as client.'**
+  String get deviceConfigRoleClientBaseDesc;
+
+  /// No description provided for @deviceConfigRoleRouter.
+  ///
+  /// In en, this message translates to:
+  /// **'Router'**
+  String get deviceConfigRoleRouter;
+
+  /// No description provided for @deviceConfigRoleRouterDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Routes mesh packets between nodes. Screen and Bluetooth disabled to conserve power.'**
+  String get deviceConfigRoleRouterDesc;
+
+  /// No description provided for @deviceConfigRoleRouterLate.
+  ///
+  /// In en, this message translates to:
+  /// **'Router Late'**
+  String get deviceConfigRoleRouterLate;
+
+  /// No description provided for @deviceConfigRoleRouterLateDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Rebroadcasts all packets after other routers. Extends coverage without consuming priority hops.'**
+  String get deviceConfigRoleRouterLateDesc;
+
+  /// No description provided for @deviceConfigRoleTracker.
+  ///
+  /// In en, this message translates to:
+  /// **'Tracker'**
+  String get deviceConfigRoleTracker;
+
+  /// No description provided for @deviceConfigRoleTrackerDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Optimized for GPS tracking. Sends position updates at defined intervals.'**
+  String get deviceConfigRoleTrackerDesc;
+
+  /// No description provided for @deviceConfigRoleSensor.
+  ///
+  /// In en, this message translates to:
+  /// **'Sensor'**
+  String get deviceConfigRoleSensor;
+
+  /// No description provided for @deviceConfigRoleSensorDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Designed for remote sensing. Reports telemetry data at defined intervals.'**
+  String get deviceConfigRoleSensorDesc;
+
+  /// No description provided for @deviceConfigRoleTak.
+  ///
+  /// In en, this message translates to:
+  /// **'TAK'**
+  String get deviceConfigRoleTak;
+
+  /// No description provided for @deviceConfigRoleTakDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Team Awareness Kit integration. Bridges Meshtastic and TAK systems.'**
+  String get deviceConfigRoleTakDesc;
+
+  /// No description provided for @deviceConfigRoleTakTracker.
+  ///
+  /// In en, this message translates to:
+  /// **'TAK Tracker'**
+  String get deviceConfigRoleTakTracker;
+
+  /// No description provided for @deviceConfigRoleTakTrackerDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Combination of TAK and Tracker modes.'**
+  String get deviceConfigRoleTakTrackerDesc;
+
+  /// No description provided for @deviceConfigRoleLostAndFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Lost and Found'**
+  String get deviceConfigRoleLostAndFound;
+
+  /// No description provided for @deviceConfigRoleLostAndFoundDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Optimized for finding lost devices. Sends periodic beacons.'**
+  String get deviceConfigRoleLostAndFoundDesc;
+
+  /// No description provided for @deviceConfigRebroadcastAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get deviceConfigRebroadcastAll;
+
+  /// No description provided for @deviceConfigRebroadcastAllDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Rebroadcast any observed message. Default behavior.'**
+  String get deviceConfigRebroadcastAllDesc;
+
+  /// No description provided for @deviceConfigRebroadcastAllSkipDecoding.
+  ///
+  /// In en, this message translates to:
+  /// **'All (Skip Decoding)'**
+  String get deviceConfigRebroadcastAllSkipDecoding;
+
+  /// No description provided for @deviceConfigRebroadcastAllSkipDecodingDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Rebroadcast all messages without decoding. Faster, less CPU.'**
+  String get deviceConfigRebroadcastAllSkipDecodingDesc;
+
+  /// No description provided for @deviceConfigRebroadcastLocalOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Local Only'**
+  String get deviceConfigRebroadcastLocalOnly;
+
+  /// No description provided for @deviceConfigRebroadcastLocalOnlyDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Only rebroadcast messages from local senders. Good for isolated networks.'**
+  String get deviceConfigRebroadcastLocalOnlyDesc;
+
+  /// No description provided for @deviceConfigRebroadcastKnownOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Known Only'**
+  String get deviceConfigRebroadcastKnownOnly;
+
+  /// No description provided for @deviceConfigRebroadcastKnownOnlyDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Only rebroadcast messages from nodes in the node database.'**
+  String get deviceConfigRebroadcastKnownOnlyDesc;
+
+  /// No description provided for @deviceConfigRebroadcastCorePortnumsOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Core Port Numbers Only'**
+  String get deviceConfigRebroadcastCorePortnumsOnly;
+
+  /// No description provided for @deviceConfigRebroadcastCorePortnumsOnlyDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Rebroadcast only core Meshtastic packets (position, telemetry, etc).'**
+  String get deviceConfigRebroadcastCorePortnumsOnlyDesc;
+
+  /// No description provided for @deviceConfigRebroadcastNone.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get deviceConfigRebroadcastNone;
+
+  /// No description provided for @deviceConfigRebroadcastNoneDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Do not rebroadcast any messages. Node only receives.'**
+  String get deviceConfigRebroadcastNoneDesc;
+
+  /// No description provided for @deviceConfigBuzzerAllEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'All Enabled'**
+  String get deviceConfigBuzzerAllEnabled;
+
+  /// No description provided for @deviceConfigBuzzerAllEnabledDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Buzzer sounds for all feedback including buttons and alerts.'**
+  String get deviceConfigBuzzerAllEnabledDesc;
+
+  /// No description provided for @deviceConfigBuzzerNotificationsOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications Only'**
+  String get deviceConfigBuzzerNotificationsOnly;
+
+  /// No description provided for @deviceConfigBuzzerNotificationsOnlyDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Buzzer only for notifications and alerts, not button presses.'**
+  String get deviceConfigBuzzerNotificationsOnlyDesc;
+
+  /// No description provided for @deviceConfigBuzzerDirectMsgOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Direct Messages Only'**
+  String get deviceConfigBuzzerDirectMsgOnly;
+
+  /// No description provided for @deviceConfigBuzzerDirectMsgOnlyDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Buzzer only for direct messages and alerts.'**
+  String get deviceConfigBuzzerDirectMsgOnlyDesc;
+
+  /// No description provided for @deviceConfigBuzzerSystemOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'System Only'**
+  String get deviceConfigBuzzerSystemOnly;
+
+  /// No description provided for @deviceConfigBuzzerSystemOnlyDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Button presses, startup, shutdown sounds only. No alerts.'**
+  String get deviceConfigBuzzerSystemOnlyDesc;
+
+  /// No description provided for @deviceConfigBuzzerDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Disabled'**
+  String get deviceConfigBuzzerDisabled;
+
+  /// No description provided for @deviceConfigBuzzerDisabledDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'All buzzer audio feedback is disabled.'**
+  String get deviceConfigBuzzerDisabledDesc;
+
+  /// No description provided for @deviceConfigBroadcastThreeHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Three Hours'**
+  String get deviceConfigBroadcastThreeHours;
+
+  /// No description provided for @deviceConfigBroadcastFourHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Four Hours'**
+  String get deviceConfigBroadcastFourHours;
+
+  /// No description provided for @deviceConfigBroadcastFiveHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Five Hours'**
+  String get deviceConfigBroadcastFiveHours;
+
+  /// No description provided for @deviceConfigBroadcastSixHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Six Hours'**
+  String get deviceConfigBroadcastSixHours;
+
+  /// No description provided for @deviceConfigBroadcastTwelveHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Twelve Hours'**
+  String get deviceConfigBroadcastTwelveHours;
+
+  /// No description provided for @deviceConfigBroadcastEighteenHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Eighteen Hours'**
+  String get deviceConfigBroadcastEighteenHours;
+
+  /// No description provided for @deviceConfigBroadcastTwentyFourHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Twenty Four Hours'**
+  String get deviceConfigBroadcastTwentyFourHours;
+
+  /// No description provided for @deviceConfigBroadcastThirtySixHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Thirty Six Hours'**
+  String get deviceConfigBroadcastThirtySixHours;
+
+  /// No description provided for @deviceConfigBroadcastFortyEightHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Forty Eight Hours'**
+  String get deviceConfigBroadcastFortyEightHours;
+
+  /// No description provided for @deviceConfigBroadcastSeventyTwoHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Seventy Two Hours'**
+  String get deviceConfigBroadcastSeventyTwoHours;
+
+  /// No description provided for @deviceConfigBroadcastNever.
+  ///
+  /// In en, this message translates to:
+  /// **'Never'**
+  String get deviceConfigBroadcastNever;
+
+  /// No description provided for @deviceConfigTitleRemote.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Config (Remote)'**
+  String get deviceConfigTitleRemote;
+
+  /// No description provided for @deviceConfigTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Config'**
+  String get deviceConfigTitle;
+
+  /// No description provided for @deviceConfigSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get deviceConfigSave;
+
+  /// No description provided for @deviceConfigSaveChangesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Changes?'**
+  String get deviceConfigSaveChangesTitle;
+
+  /// No description provided for @deviceConfigSaveChangesMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving device configuration will cause the device to reboot. You will be briefly disconnected while the device restarts.'**
+  String get deviceConfigSaveChangesMessage;
+
+  /// No description provided for @deviceConfigSaveAndReboot.
+  ///
+  /// In en, this message translates to:
+  /// **'Save & Reboot'**
+  String get deviceConfigSaveAndReboot;
+
+  /// No description provided for @deviceConfigSavedRemote.
+  ///
+  /// In en, this message translates to:
+  /// **'Configuration sent to remote node'**
+  String get deviceConfigSavedRemote;
+
+  /// No description provided for @deviceConfigSavedLocal.
+  ///
+  /// In en, this message translates to:
+  /// **'Configuration saved - device rebooting'**
+  String get deviceConfigSavedLocal;
+
+  /// No description provided for @deviceConfigSaveError.
+  ///
+  /// In en, this message translates to:
+  /// **'Error saving config: {error}'**
+  String deviceConfigSaveError(String error);
+
+  /// No description provided for @deviceConfigLongName.
+  ///
+  /// In en, this message translates to:
+  /// **'Long Name'**
+  String get deviceConfigLongName;
+
+  /// No description provided for @deviceConfigLongNameSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Display name visible on the mesh'**
+  String get deviceConfigLongNameSubtitle;
+
+  /// No description provided for @deviceConfigLongNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter display name'**
+  String get deviceConfigLongNameHint;
+
+  /// No description provided for @deviceConfigShortName.
+  ///
+  /// In en, this message translates to:
+  /// **'Short Name'**
+  String get deviceConfigShortName;
+
+  /// No description provided for @deviceConfigShortNameSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Max {maxLength} characters (A-Z, 0-9)'**
+  String deviceConfigShortNameSubtitle(int maxLength);
+
+  /// No description provided for @deviceConfigShortNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. FUZZ'**
+  String get deviceConfigShortNameHint;
+
+  /// No description provided for @deviceConfigNameHelpText.
+  ///
+  /// In en, this message translates to:
+  /// **'Your device name is broadcast to the mesh and visible to other nodes.'**
+  String get deviceConfigNameHelpText;
+
+  /// No description provided for @deviceConfigSectionUserFlags.
+  ///
+  /// In en, this message translates to:
+  /// **'User Flags'**
+  String get deviceConfigSectionUserFlags;
+
+  /// No description provided for @deviceConfigSectionDeviceInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Info'**
+  String get deviceConfigSectionDeviceInfo;
+
+  /// No description provided for @deviceConfigSectionDeviceRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Role'**
+  String get deviceConfigSectionDeviceRole;
+
+  /// No description provided for @deviceConfigSectionRebroadcastMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Rebroadcast Mode'**
+  String get deviceConfigSectionRebroadcastMode;
+
+  /// No description provided for @deviceConfigSectionNodeInfoBroadcast.
+  ///
+  /// In en, this message translates to:
+  /// **'Node Info Broadcast'**
+  String get deviceConfigSectionNodeInfoBroadcast;
+
+  /// No description provided for @deviceConfigSectionButtonInput.
+  ///
+  /// In en, this message translates to:
+  /// **'Button & Input'**
+  String get deviceConfigSectionButtonInput;
+
+  /// No description provided for @deviceConfigSectionBuzzer.
+  ///
+  /// In en, this message translates to:
+  /// **'Buzzer'**
+  String get deviceConfigSectionBuzzer;
+
+  /// No description provided for @deviceConfigSectionLed.
+  ///
+  /// In en, this message translates to:
+  /// **'LED'**
+  String get deviceConfigSectionLed;
+
+  /// No description provided for @deviceConfigSectionSerial.
+  ///
+  /// In en, this message translates to:
+  /// **'Serial'**
+  String get deviceConfigSectionSerial;
+
+  /// No description provided for @deviceConfigSectionTimezone.
+  ///
+  /// In en, this message translates to:
+  /// **'Timezone'**
+  String get deviceConfigSectionTimezone;
+
+  /// No description provided for @deviceConfigSectionGpio.
+  ///
+  /// In en, this message translates to:
+  /// **'GPIO (Advanced)'**
+  String get deviceConfigSectionGpio;
+
+  /// No description provided for @deviceConfigSectionDangerZone.
+  ///
+  /// In en, this message translates to:
+  /// **'Danger Zone'**
+  String get deviceConfigSectionDangerZone;
+
+  /// No description provided for @deviceConfigBleName.
+  ///
+  /// In en, this message translates to:
+  /// **'BLE Name'**
+  String get deviceConfigBleName;
+
+  /// No description provided for @deviceConfigHardware.
+  ///
+  /// In en, this message translates to:
+  /// **'Hardware'**
+  String get deviceConfigHardware;
+
+  /// No description provided for @deviceConfigUserId.
+  ///
+  /// In en, this message translates to:
+  /// **'User ID'**
+  String get deviceConfigUserId;
+
+  /// No description provided for @deviceConfigNodeNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Node Number'**
+  String get deviceConfigNodeNumber;
+
+  /// No description provided for @deviceConfigUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get deviceConfigUnknown;
+
+  /// No description provided for @deviceConfigBroadcastInterval.
+  ///
+  /// In en, this message translates to:
+  /// **'Broadcast Interval'**
+  String get deviceConfigBroadcastInterval;
+
+  /// No description provided for @deviceConfigBroadcastIntervalSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How often to broadcast node info to the mesh'**
+  String get deviceConfigBroadcastIntervalSubtitle;
+
+  /// No description provided for @deviceConfigDoubleTapAsButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Double Tap as Button'**
+  String get deviceConfigDoubleTapAsButton;
+
+  /// No description provided for @deviceConfigDoubleTapAsButtonSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Treat accelerometer double-tap as button press'**
+  String get deviceConfigDoubleTapAsButtonSubtitle;
+
+  /// No description provided for @deviceConfigDisableTripleClick.
+  ///
+  /// In en, this message translates to:
+  /// **'Disable Triple Click'**
+  String get deviceConfigDisableTripleClick;
+
+  /// No description provided for @deviceConfigDisableTripleClickSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Disable triple-click to toggle GPS'**
+  String get deviceConfigDisableTripleClickSubtitle;
+
+  /// No description provided for @deviceConfigDisableLedHeartbeat.
+  ///
+  /// In en, this message translates to:
+  /// **'Disable LED Heartbeat'**
+  String get deviceConfigDisableLedHeartbeat;
+
+  /// No description provided for @deviceConfigDisableLedHeartbeatSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn off the blinking status LED'**
+  String get deviceConfigDisableLedHeartbeatSubtitle;
+
+  /// No description provided for @deviceConfigSerialConsole.
+  ///
+  /// In en, this message translates to:
+  /// **'Serial Console'**
+  String get deviceConfigSerialConsole;
+
+  /// No description provided for @deviceConfigSerialConsoleSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable serial port for debugging'**
+  String get deviceConfigSerialConsoleSubtitle;
+
+  /// No description provided for @deviceConfigPosixTimezone.
+  ///
+  /// In en, this message translates to:
+  /// **'POSIX Timezone'**
+  String get deviceConfigPosixTimezone;
+
+  /// No description provided for @deviceConfigPosixTimezoneExample.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. EST5EDT,M3.2.0,M11.1.0'**
+  String get deviceConfigPosixTimezoneExample;
+
+  /// No description provided for @deviceConfigPosixTimezoneHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave empty for UTC'**
+  String get deviceConfigPosixTimezoneHint;
+
+  /// No description provided for @deviceConfigGpioWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Only change these if you know your hardware requires custom GPIO pins.'**
+  String get deviceConfigGpioWarning;
+
+  /// No description provided for @deviceConfigButtonGpio.
+  ///
+  /// In en, this message translates to:
+  /// **'Button GPIO'**
+  String get deviceConfigButtonGpio;
+
+  /// No description provided for @deviceConfigBuzzerGpio.
+  ///
+  /// In en, this message translates to:
+  /// **'Buzzer GPIO'**
+  String get deviceConfigBuzzerGpio;
+
+  /// No description provided for @deviceConfigUnmessagable.
+  ///
+  /// In en, this message translates to:
+  /// **'Unmessagable'**
+  String get deviceConfigUnmessagable;
+
+  /// No description provided for @deviceConfigUnmessagableSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as infrastructure node that won\'t respond to messages'**
+  String get deviceConfigUnmessagableSubtitle;
+
+  /// No description provided for @deviceConfigLicensedOperator.
+  ///
+  /// In en, this message translates to:
+  /// **'Licensed Operator (Ham)'**
+  String get deviceConfigLicensedOperator;
+
+  /// No description provided for @deviceConfigLicensedOperatorSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sets call sign, overrides frequency/power, disables encryption'**
+  String get deviceConfigLicensedOperatorSubtitle;
+
+  /// No description provided for @deviceConfigHamModeInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Ham mode uses your long name as call sign (max 8 chars), broadcasts node info every 10 minutes, overrides frequency, duty cycle, and TX power, and disables encryption.'**
+  String get deviceConfigHamModeInfo;
+
+  /// No description provided for @deviceConfigHamModeWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'HAM nodes cannot relay encrypted traffic. Other non-HAM nodes in your mesh will not be able to route encrypted messages through this node, creating a relay gap in the network.'**
+  String get deviceConfigHamModeWarning;
+
+  /// No description provided for @deviceConfigFrequencyOverride.
+  ///
+  /// In en, this message translates to:
+  /// **'Frequency Override (MHz)'**
+  String get deviceConfigFrequencyOverride;
+
+  /// No description provided for @deviceConfigFrequencyOverrideHint.
+  ///
+  /// In en, this message translates to:
+  /// **'0.0 (use default)'**
+  String get deviceConfigFrequencyOverrideHint;
+
+  /// No description provided for @deviceConfigTxPower.
+  ///
+  /// In en, this message translates to:
+  /// **'TX Power'**
+  String get deviceConfigTxPower;
+
+  /// No description provided for @deviceConfigTxPowerValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{power} dBm'**
+  String deviceConfigTxPowerValue(int power);
+
+  /// No description provided for @deviceConfigRemoteAdminTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remote Administration'**
+  String get deviceConfigRemoteAdminTitle;
+
+  /// No description provided for @deviceConfigRemoteAdminConfiguring.
+  ///
+  /// In en, this message translates to:
+  /// **'Configuring: {nodeName}'**
+  String deviceConfigRemoteAdminConfiguring(String nodeName);
+
+  /// No description provided for @deviceConfigRebootWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes to device configuration will cause the device to reboot.'**
+  String get deviceConfigRebootWarning;
+
+  /// No description provided for @deviceConfigResetNodeDb.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Node Database'**
+  String get deviceConfigResetNodeDb;
+
+  /// No description provided for @deviceConfigResetNodeDbSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear all stored node information'**
+  String get deviceConfigResetNodeDbSubtitle;
+
+  /// No description provided for @deviceConfigFactoryReset.
+  ///
+  /// In en, this message translates to:
+  /// **'Factory Reset'**
+  String get deviceConfigFactoryReset;
+
+  /// No description provided for @deviceConfigFactoryResetSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset device to factory defaults'**
+  String get deviceConfigFactoryResetSubtitle;
+
+  /// No description provided for @deviceConfigResetNodeDbDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Node Database'**
+  String get deviceConfigResetNodeDbDialogTitle;
+
+  /// No description provided for @deviceConfigResetNodeDbDialogMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'This will clear all stored node information from the device. The mesh network will need to rediscover all nodes.\n\nAre you sure you want to continue?'**
+  String get deviceConfigResetNodeDbDialogMessage;
+
+  /// No description provided for @deviceConfigResetNodeDbDialogConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get deviceConfigResetNodeDbDialogConfirm;
+
+  /// No description provided for @deviceConfigResetNodeDbSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Node database reset initiated'**
+  String get deviceConfigResetNodeDbSuccess;
+
+  /// No description provided for @deviceConfigResetNodeDbError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to reset: {error}'**
+  String deviceConfigResetNodeDbError(String error);
+
+  /// No description provided for @deviceConfigFactoryResetDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Factory Reset'**
+  String get deviceConfigFactoryResetDialogTitle;
+
+  /// No description provided for @deviceConfigFactoryResetDialogMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'This will reset ALL device settings to factory defaults, including channels, configuration, and stored data.\n\nThis action cannot be undone!'**
+  String get deviceConfigFactoryResetDialogMessage;
+
+  /// No description provided for @deviceConfigFactoryResetDialogConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Factory Reset'**
+  String get deviceConfigFactoryResetDialogConfirm;
+
+  /// No description provided for @deviceConfigFactoryResetSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Factory reset initiated - device will restart'**
+  String get deviceConfigFactoryResetSuccess;
+
+  /// No description provided for @deviceConfigFactoryResetError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to reset: {error}'**
+  String deviceConfigFactoryResetError(String error);
+
+  /// No description provided for @deviceSheetNoDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'No Device'**
+  String get deviceSheetNoDevice;
+
+  /// No description provided for @deviceSheetReconnecting.
+  ///
+  /// In en, this message translates to:
+  /// **'Reconnecting...'**
+  String get deviceSheetReconnecting;
+
+  /// No description provided for @deviceSheetConnecting.
+  ///
+  /// In en, this message translates to:
+  /// **'Connecting...'**
+  String get deviceSheetConnecting;
+
+  /// No description provided for @deviceSheetConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected'**
+  String get deviceSheetConnected;
+
+  /// No description provided for @deviceSheetDisconnecting.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnecting...'**
+  String get deviceSheetDisconnecting;
+
+  /// No description provided for @deviceSheetError.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get deviceSheetError;
+
+  /// No description provided for @deviceSheetDisconnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnected'**
+  String get deviceSheetDisconnected;
+
+  /// No description provided for @deviceSheetSectionConnectionDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection Details'**
+  String get deviceSheetSectionConnectionDetails;
+
+  /// No description provided for @deviceSheetSectionQuickActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Actions'**
+  String get deviceSheetSectionQuickActions;
+
+  /// No description provided for @deviceSheetSectionDeveloperTools.
+  ///
+  /// In en, this message translates to:
+  /// **'Developer Tools'**
+  String get deviceSheetSectionDeveloperTools;
+
+  /// No description provided for @deviceSheetActionDeviceConfig.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Config'**
+  String get deviceSheetActionDeviceConfig;
+
+  /// No description provided for @deviceSheetActionDeviceConfigSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Configure device role and settings'**
+  String get deviceSheetActionDeviceConfigSubtitle;
+
+  /// No description provided for @deviceSheetActionDeviceManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Management'**
+  String get deviceSheetActionDeviceManagement;
+
+  /// No description provided for @deviceSheetActionDeviceManagementSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Radio, display, power, and position settings'**
+  String get deviceSheetActionDeviceManagementSubtitle;
+
+  /// No description provided for @deviceSheetActionScanQr.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan QR Code'**
+  String get deviceSheetActionScanQr;
+
+  /// No description provided for @deviceSheetActionScanQrSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Import nodes, channels, or automations'**
+  String get deviceSheetActionScanQrSubtitle;
+
+  /// No description provided for @deviceSheetActionAppSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'App Settings'**
+  String get deviceSheetActionAppSettings;
+
+  /// No description provided for @deviceSheetActionAppSettingsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications, theme, preferences'**
+  String get deviceSheetActionAppSettingsSubtitle;
+
+  /// No description provided for @deviceSheetActionResetNodeDb.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Node Database'**
+  String get deviceSheetActionResetNodeDb;
+
+  /// No description provided for @deviceSheetActionResetNodeDbSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear all learned nodes from device'**
+  String get deviceSheetActionResetNodeDbSubtitle;
+
+  /// No description provided for @deviceSheetDisconnectingButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnecting...'**
+  String get deviceSheetDisconnectingButton;
+
+  /// No description provided for @deviceSheetDisconnectButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect'**
+  String get deviceSheetDisconnectButton;
+
+  /// No description provided for @deviceSheetScanForDevices.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan for Devices'**
+  String get deviceSheetScanForDevices;
+
+  /// No description provided for @deviceSheetDisconnectDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect'**
+  String get deviceSheetDisconnectDialogTitle;
+
+  /// No description provided for @deviceSheetDisconnectDialogMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to disconnect from this device?'**
+  String get deviceSheetDisconnectDialogMessage;
+
+  /// No description provided for @deviceSheetDisconnectDialogConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect'**
+  String get deviceSheetDisconnectDialogConfirm;
+
+  /// No description provided for @deviceSheetResetNodeDbDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Node Database'**
+  String get deviceSheetResetNodeDbDialogTitle;
+
+  /// No description provided for @deviceSheetResetNodeDbDialogMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'This will clear all learned nodes from the device and app. The device will need to rediscover nodes on the mesh.\n\nAre you sure you want to continue?'**
+  String get deviceSheetResetNodeDbDialogMessage;
+
+  /// No description provided for @deviceSheetResetNodeDbDialogConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get deviceSheetResetNodeDbDialogConfirm;
+
+  /// No description provided for @deviceSheetResetNodeDbSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Node database reset successfully'**
+  String get deviceSheetResetNodeDbSuccess;
+
+  /// No description provided for @deviceSheetResetNodeDbError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to reset node database: {error}'**
+  String deviceSheetResetNodeDbError(String error);
+
+  /// No description provided for @deviceSheetProtocol.
+  ///
+  /// In en, this message translates to:
+  /// **'Protocol'**
+  String get deviceSheetProtocol;
+
+  /// No description provided for @deviceSheetNodeName.
+  ///
+  /// In en, this message translates to:
+  /// **'Node Name'**
+  String get deviceSheetNodeName;
+
+  /// No description provided for @deviceSheetDeviceName.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Name'**
+  String get deviceSheetDeviceName;
+
+  /// No description provided for @deviceSheetUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get deviceSheetUnknown;
+
+  /// No description provided for @deviceSheetFirmware.
+  ///
+  /// In en, this message translates to:
+  /// **'Firmware'**
+  String get deviceSheetFirmware;
+
+  /// No description provided for @deviceSheetNodeId.
+  ///
+  /// In en, this message translates to:
+  /// **'Node ID'**
+  String get deviceSheetNodeId;
+
+  /// No description provided for @deviceSheetStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get deviceSheetStatus;
+
+  /// No description provided for @deviceSheetConnectionType.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection Type'**
+  String get deviceSheetConnectionType;
+
+  /// No description provided for @deviceSheetBluetoothLe.
+  ///
+  /// In en, this message translates to:
+  /// **'Bluetooth LE'**
+  String get deviceSheetBluetoothLe;
+
+  /// No description provided for @deviceSheetUsb.
+  ///
+  /// In en, this message translates to:
+  /// **'USB'**
+  String get deviceSheetUsb;
+
+  /// No description provided for @deviceSheetAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get deviceSheetAddress;
+
+  /// No description provided for @deviceSheetSignalStrength.
+  ///
+  /// In en, this message translates to:
+  /// **'Signal Strength'**
+  String get deviceSheetSignalStrength;
+
+  /// No description provided for @deviceSheetSignalStrengthValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{rssi} dBm'**
+  String deviceSheetSignalStrengthValue(String rssi);
+
+  /// No description provided for @deviceSheetBattery.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery'**
+  String get deviceSheetBattery;
+
+  /// No description provided for @deviceSheetCharging.
+  ///
+  /// In en, this message translates to:
+  /// **'Charging'**
+  String get deviceSheetCharging;
+
+  /// No description provided for @deviceSheetBatteryPercent.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}%'**
+  String deviceSheetBatteryPercent(String percent);
+
+  /// No description provided for @deviceSheetInfoCardConnecting.
+  ///
+  /// In en, this message translates to:
+  /// **'Connecting...'**
+  String get deviceSheetInfoCardConnecting;
+
+  /// No description provided for @deviceSheetInfoCardConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected'**
+  String get deviceSheetInfoCardConnected;
+
+  /// No description provided for @deviceSheetInfoCardDisconnecting.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnecting...'**
+  String get deviceSheetInfoCardDisconnecting;
+
+  /// No description provided for @deviceSheetInfoCardConnectionError.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection Error'**
+  String get deviceSheetInfoCardConnectionError;
+
+  /// No description provided for @deviceSheetInfoCardDisconnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnected'**
+  String get deviceSheetInfoCardDisconnected;
+
+  /// No description provided for @deviceSheetRefreshingBattery.
+  ///
+  /// In en, this message translates to:
+  /// **'Refreshing battery...'**
+  String get deviceSheetRefreshingBattery;
+
+  /// No description provided for @deviceSheetBatteryRefreshResult.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}%{millivolts}'**
+  String deviceSheetBatteryRefreshResult(String percent, String millivolts);
+
+  /// No description provided for @deviceSheetBatteryRefreshFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed'**
+  String get deviceSheetBatteryRefreshFailed;
+
+  /// No description provided for @deviceSheetBatteryRefreshIdle.
+  ///
+  /// In en, this message translates to:
+  /// **'Fetch battery from device'**
+  String get deviceSheetBatteryRefreshIdle;
+
+  /// No description provided for @deviceSheetRefreshBattery.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh Battery'**
+  String get deviceSheetRefreshBattery;
+
+  /// No description provided for @regionSelectionTitleInitial.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Your Region'**
+  String get regionSelectionTitleInitial;
+
+  /// No description provided for @regionSelectionTitleChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Region'**
+  String get regionSelectionTitleChange;
+
+  /// No description provided for @regionSelectionBannerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Important: Select Your Region'**
+  String get regionSelectionBannerTitle;
+
+  /// No description provided for @regionSelectionBannerSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the correct frequency for your location to comply with local regulations.'**
+  String get regionSelectionBannerSubtitle;
+
+  /// No description provided for @regionSelectionSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search regions...'**
+  String get regionSelectionSearchHint;
+
+  /// No description provided for @regionSelectionApplying.
+  ///
+  /// In en, this message translates to:
+  /// **'Applying...'**
+  String get regionSelectionApplying;
+
+  /// No description provided for @regionSelectionContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get regionSelectionContinue;
+
+  /// No description provided for @regionSelectionSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get regionSelectionSave;
+
+  /// No description provided for @regionSelectionCurrentBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'CURRENT'**
+  String get regionSelectionCurrentBadge;
+
+  /// No description provided for @regionSelectionApplyDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply Region'**
+  String get regionSelectionApplyDialogTitle;
+
+  /// No description provided for @regionSelectionApplyDialogMessageInitial.
+  ///
+  /// In en, this message translates to:
+  /// **'Your device will reboot to apply the region settings. This may take up to 30 seconds.\n\nThe app will automatically reconnect when ready.'**
+  String get regionSelectionApplyDialogMessageInitial;
+
+  /// No description provided for @regionSelectionApplyDialogMessageChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Changing the region will cause your device to reboot. This may take up to 30 seconds.\n\nYou will be briefly disconnected while the device restarts.'**
+  String get regionSelectionApplyDialogMessageChange;
+
+  /// No description provided for @regionSelectionApplyDialogConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get regionSelectionApplyDialogConfirm;
+
+  /// No description provided for @regionSelectionDeviceDisconnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Device disconnected. Please reconnect and try again.'**
+  String get regionSelectionDeviceDisconnected;
+
+  /// No description provided for @regionSelectionReconnectTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Reconnect timed out. Please try again.'**
+  String get regionSelectionReconnectTimeout;
+
+  /// No description provided for @regionSelectionPairingInvalidation.
+  ///
+  /// In en, this message translates to:
+  /// **'Your phone removed the stored pairing info for this device.\nGo to Settings > Bluetooth, forget the Meshtastic device, and try again.'**
+  String get regionSelectionPairingInvalidation;
+
+  /// No description provided for @regionSelectionSetRegionError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to set region: {error}'**
+  String regionSelectionSetRegionError(String error);
+
+  /// No description provided for @regionSelectionOpenBluetoothSettingsError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open Bluetooth Settings. Please open Settings > Bluetooth manually.'**
+  String get regionSelectionOpenBluetoothSettingsError;
+
+  /// No description provided for @regionSelectionPairingHintMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Bluetooth pairing was removed. Forget \"Meshtastic_XXXX\" in Settings > Bluetooth and reconnect to continue.'**
+  String get regionSelectionPairingHintMessage;
+
+  /// No description provided for @regionSelectionBluetoothSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Bluetooth Settings'**
+  String get regionSelectionBluetoothSettings;
+
+  /// No description provided for @regionSelectionViewScanner.
+  ///
+  /// In en, this message translates to:
+  /// **'View Scanner'**
+  String get regionSelectionViewScanner;
+
+  /// No description provided for @regionSelectionRegionUs.
+  ///
+  /// In en, this message translates to:
+  /// **'United States'**
+  String get regionSelectionRegionUs;
+
+  /// No description provided for @regionSelectionRegionUsFreq.
+  ///
+  /// In en, this message translates to:
+  /// **'915 MHz'**
+  String get regionSelectionRegionUsFreq;
+
+  /// No description provided for @regionSelectionRegionUsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'US, Canada, Mexico'**
+  String get regionSelectionRegionUsDesc;
+
+  /// No description provided for @regionSelectionRegionEu868.
+  ///
+  /// In en, this message translates to:
+  /// **'Europe 868'**
+  String get regionSelectionRegionEu868;
+
+  /// No description provided for @regionSelectionRegionEu868Freq.
+  ///
+  /// In en, this message translates to:
+  /// **'868 MHz'**
+  String get regionSelectionRegionEu868Freq;
+
+  /// No description provided for @regionSelectionRegionEu868Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'EU, UK, and most of Europe'**
+  String get regionSelectionRegionEu868Desc;
+
+  /// No description provided for @regionSelectionRegionEu433.
+  ///
+  /// In en, this message translates to:
+  /// **'Europe 433'**
+  String get regionSelectionRegionEu433;
+
+  /// No description provided for @regionSelectionRegionEu433Freq.
+  ///
+  /// In en, this message translates to:
+  /// **'433 MHz'**
+  String get regionSelectionRegionEu433Freq;
+
+  /// No description provided for @regionSelectionRegionEu433Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'EU alternate frequency'**
+  String get regionSelectionRegionEu433Desc;
+
+  /// No description provided for @regionSelectionRegionAnz.
+  ///
+  /// In en, this message translates to:
+  /// **'Australia/NZ'**
+  String get regionSelectionRegionAnz;
+
+  /// No description provided for @regionSelectionRegionAnzFreq.
+  ///
+  /// In en, this message translates to:
+  /// **'915 MHz'**
+  String get regionSelectionRegionAnzFreq;
+
+  /// No description provided for @regionSelectionRegionAnzDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Australia and New Zealand'**
+  String get regionSelectionRegionAnzDesc;
+
+  /// No description provided for @regionSelectionRegionCn.
+  ///
+  /// In en, this message translates to:
+  /// **'China'**
+  String get regionSelectionRegionCn;
+
+  /// No description provided for @regionSelectionRegionCnFreq.
+  ///
+  /// In en, this message translates to:
+  /// **'470 MHz'**
+  String get regionSelectionRegionCnFreq;
+
+  /// No description provided for @regionSelectionRegionCnDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'China'**
+  String get regionSelectionRegionCnDesc;
+
+  /// No description provided for @regionSelectionRegionJp.
+  ///
+  /// In en, this message translates to:
+  /// **'Japan'**
+  String get regionSelectionRegionJp;
+
+  /// No description provided for @regionSelectionRegionJpFreq.
+  ///
+  /// In en, this message translates to:
+  /// **'920 MHz'**
+  String get regionSelectionRegionJpFreq;
+
+  /// No description provided for @regionSelectionRegionJpDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Japan'**
+  String get regionSelectionRegionJpDesc;
+
+  /// No description provided for @regionSelectionRegionKr.
+  ///
+  /// In en, this message translates to:
+  /// **'Korea'**
+  String get regionSelectionRegionKr;
+
+  /// No description provided for @regionSelectionRegionKrFreq.
+  ///
+  /// In en, this message translates to:
+  /// **'920 MHz'**
+  String get regionSelectionRegionKrFreq;
+
+  /// No description provided for @regionSelectionRegionKrDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'South Korea'**
+  String get regionSelectionRegionKrDesc;
+
+  /// No description provided for @regionSelectionRegionTw.
+  ///
+  /// In en, this message translates to:
+  /// **'Taiwan'**
+  String get regionSelectionRegionTw;
+
+  /// No description provided for @regionSelectionRegionTwFreq.
+  ///
+  /// In en, this message translates to:
+  /// **'923 MHz'**
+  String get regionSelectionRegionTwFreq;
+
+  /// No description provided for @regionSelectionRegionTwDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Taiwan'**
+  String get regionSelectionRegionTwDesc;
+
+  /// No description provided for @regionSelectionRegionRu.
+  ///
+  /// In en, this message translates to:
+  /// **'Russia'**
+  String get regionSelectionRegionRu;
+
+  /// No description provided for @regionSelectionRegionRuFreq.
+  ///
+  /// In en, this message translates to:
+  /// **'868 MHz'**
+  String get regionSelectionRegionRuFreq;
+
+  /// No description provided for @regionSelectionRegionRuDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Russia'**
+  String get regionSelectionRegionRuDesc;
+
+  /// No description provided for @regionSelectionRegionIn.
+  ///
+  /// In en, this message translates to:
+  /// **'India'**
+  String get regionSelectionRegionIn;
+
+  /// No description provided for @regionSelectionRegionInFreq.
+  ///
+  /// In en, this message translates to:
+  /// **'865 MHz'**
+  String get regionSelectionRegionInFreq;
+
+  /// No description provided for @regionSelectionRegionInDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'India'**
+  String get regionSelectionRegionInDesc;
+
+  /// No description provided for @regionSelectionRegionNz865.
+  ///
+  /// In en, this message translates to:
+  /// **'New Zealand 865'**
+  String get regionSelectionRegionNz865;
+
+  /// No description provided for @regionSelectionRegionNz865Freq.
+  ///
+  /// In en, this message translates to:
+  /// **'865 MHz'**
+  String get regionSelectionRegionNz865Freq;
+
+  /// No description provided for @regionSelectionRegionNz865Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'New Zealand alternate'**
+  String get regionSelectionRegionNz865Desc;
+
+  /// No description provided for @regionSelectionRegionTh.
+  ///
+  /// In en, this message translates to:
+  /// **'Thailand'**
+  String get regionSelectionRegionTh;
+
+  /// No description provided for @regionSelectionRegionThFreq.
+  ///
+  /// In en, this message translates to:
+  /// **'920 MHz'**
+  String get regionSelectionRegionThFreq;
+
+  /// No description provided for @regionSelectionRegionThDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Thailand'**
+  String get regionSelectionRegionThDesc;
+
+  /// No description provided for @regionSelectionRegionUa433.
+  ///
+  /// In en, this message translates to:
+  /// **'Ukraine 433'**
+  String get regionSelectionRegionUa433;
+
+  /// No description provided for @regionSelectionRegionUa433Freq.
+  ///
+  /// In en, this message translates to:
+  /// **'433 MHz'**
+  String get regionSelectionRegionUa433Freq;
+
+  /// No description provided for @regionSelectionRegionUa433Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Ukraine'**
+  String get regionSelectionRegionUa433Desc;
+
+  /// No description provided for @regionSelectionRegionUa868.
+  ///
+  /// In en, this message translates to:
+  /// **'Ukraine 868'**
+  String get regionSelectionRegionUa868;
+
+  /// No description provided for @regionSelectionRegionUa868Freq.
+  ///
+  /// In en, this message translates to:
+  /// **'868 MHz'**
+  String get regionSelectionRegionUa868Freq;
+
+  /// No description provided for @regionSelectionRegionUa868Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Ukraine'**
+  String get regionSelectionRegionUa868Desc;
+
+  /// No description provided for @regionSelectionRegionMy433.
+  ///
+  /// In en, this message translates to:
+  /// **'Malaysia 433'**
+  String get regionSelectionRegionMy433;
+
+  /// No description provided for @regionSelectionRegionMy433Freq.
+  ///
+  /// In en, this message translates to:
+  /// **'433 MHz'**
+  String get regionSelectionRegionMy433Freq;
+
+  /// No description provided for @regionSelectionRegionMy433Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Malaysia'**
+  String get regionSelectionRegionMy433Desc;
+
+  /// No description provided for @regionSelectionRegionMy919.
+  ///
+  /// In en, this message translates to:
+  /// **'Malaysia 919'**
+  String get regionSelectionRegionMy919;
+
+  /// No description provided for @regionSelectionRegionMy919Freq.
+  ///
+  /// In en, this message translates to:
+  /// **'919 MHz'**
+  String get regionSelectionRegionMy919Freq;
+
+  /// No description provided for @regionSelectionRegionMy919Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Malaysia'**
+  String get regionSelectionRegionMy919Desc;
+
+  /// No description provided for @regionSelectionRegionSg923.
+  ///
+  /// In en, this message translates to:
+  /// **'Singapore'**
+  String get regionSelectionRegionSg923;
+
+  /// No description provided for @regionSelectionRegionSg923Freq.
+  ///
+  /// In en, this message translates to:
+  /// **'923 MHz'**
+  String get regionSelectionRegionSg923Freq;
+
+  /// No description provided for @regionSelectionRegionSg923Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Singapore'**
+  String get regionSelectionRegionSg923Desc;
+
+  /// No description provided for @regionSelectionRegionLora24.
+  ///
+  /// In en, this message translates to:
+  /// **'2.4 GHz'**
+  String get regionSelectionRegionLora24;
+
+  /// No description provided for @regionSelectionRegionLora24Freq.
+  ///
+  /// In en, this message translates to:
+  /// **'2.4 GHz'**
+  String get regionSelectionRegionLora24Freq;
+
+  /// No description provided for @regionSelectionRegionLora24Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Worldwide 2.4GHz band'**
+  String get regionSelectionRegionLora24Desc;
+
+  /// No description provided for @gpsStatusTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'GPS Status'**
+  String get gpsStatusTitle;
+
+  /// No description provided for @gpsStatusSectionPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Position'**
+  String get gpsStatusSectionPosition;
+
+  /// No description provided for @gpsStatusSectionMotion.
+  ///
+  /// In en, this message translates to:
+  /// **'Motion'**
+  String get gpsStatusSectionMotion;
+
+  /// No description provided for @gpsStatusSectionSatellites.
+  ///
+  /// In en, this message translates to:
+  /// **'Satellites'**
+  String get gpsStatusSectionSatellites;
+
+  /// No description provided for @gpsStatusSectionLastUpdate.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Update'**
+  String get gpsStatusSectionLastUpdate;
+
+  /// No description provided for @gpsStatusLatitude.
+  ///
+  /// In en, this message translates to:
+  /// **'Latitude'**
+  String get gpsStatusLatitude;
+
+  /// No description provided for @gpsStatusLatitudeValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{value}°'**
+  String gpsStatusLatitudeValue(String value);
+
+  /// No description provided for @gpsStatusLongitude.
+  ///
+  /// In en, this message translates to:
+  /// **'Longitude'**
+  String get gpsStatusLongitude;
+
+  /// No description provided for @gpsStatusLongitudeValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{value}°'**
+  String gpsStatusLongitudeValue(String value);
+
+  /// No description provided for @gpsStatusAltitude.
+  ///
+  /// In en, this message translates to:
+  /// **'Altitude'**
+  String get gpsStatusAltitude;
+
+  /// No description provided for @gpsStatusAltitudeValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{meters}m'**
+  String gpsStatusAltitudeValue(String meters);
+
+  /// No description provided for @gpsStatusAccuracy.
+  ///
+  /// In en, this message translates to:
+  /// **'Accuracy'**
+  String get gpsStatusAccuracy;
+
+  /// No description provided for @gpsStatusAccuracyValue.
+  ///
+  /// In en, this message translates to:
+  /// **'±{meters}m'**
+  String gpsStatusAccuracyValue(String meters);
+
+  /// No description provided for @gpsStatusPrecisionBits.
+  ///
+  /// In en, this message translates to:
+  /// **'Precision Bits'**
+  String get gpsStatusPrecisionBits;
+
+  /// No description provided for @gpsStatusUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get gpsStatusUnknown;
+
+  /// No description provided for @gpsStatusGroundSpeed.
+  ///
+  /// In en, this message translates to:
+  /// **'Ground Speed'**
+  String get gpsStatusGroundSpeed;
+
+  /// No description provided for @gpsStatusGroundSpeedValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{mps} m/s ({kmh} km/h)'**
+  String gpsStatusGroundSpeedValue(String mps, String kmh);
+
+  /// No description provided for @gpsStatusGroundTrack.
+  ///
+  /// In en, this message translates to:
+  /// **'Ground Track'**
+  String get gpsStatusGroundTrack;
+
+  /// No description provided for @gpsStatusGroundTrackValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{degrees}° {direction}'**
+  String gpsStatusGroundTrackValue(String degrees, String direction);
+
+  /// No description provided for @gpsStatusOpenInMaps.
+  ///
+  /// In en, this message translates to:
+  /// **'Open in Maps'**
+  String get gpsStatusOpenInMaps;
+
+  /// No description provided for @gpsStatusNoGpsFix.
+  ///
+  /// In en, this message translates to:
+  /// **'No GPS Fix'**
+  String get gpsStatusNoGpsFix;
+
+  /// No description provided for @gpsStatusNoGpsFixMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'The device has not acquired a GPS position yet. Make sure the device has a clear view of the sky.'**
+  String get gpsStatusNoGpsFixMessage;
+
+  /// No description provided for @gpsStatusSatellitesInView.
+  ///
+  /// In en, this message translates to:
+  /// **'Satellites in View'**
+  String get gpsStatusSatellitesInView;
+
+  /// No description provided for @gpsStatusSatNoFix.
+  ///
+  /// In en, this message translates to:
+  /// **'No Fix'**
+  String get gpsStatusSatNoFix;
+
+  /// No description provided for @gpsStatusSatPoor.
+  ///
+  /// In en, this message translates to:
+  /// **'Poor'**
+  String get gpsStatusSatPoor;
+
+  /// No description provided for @gpsStatusSatFair.
+  ///
+  /// In en, this message translates to:
+  /// **'Fair'**
+  String get gpsStatusSatFair;
+
+  /// No description provided for @gpsStatusSatGood.
+  ///
+  /// In en, this message translates to:
+  /// **'Good'**
+  String get gpsStatusSatGood;
+
+  /// No description provided for @gpsStatusFixAcquired.
+  ///
+  /// In en, this message translates to:
+  /// **'GPS Fix Acquired'**
+  String get gpsStatusFixAcquired;
+
+  /// No description provided for @gpsStatusAcquiring.
+  ///
+  /// In en, this message translates to:
+  /// **'Acquiring GPS...'**
+  String get gpsStatusAcquiring;
+
+  /// No description provided for @gpsStatusSatellitesCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} satellites in view'**
+  String gpsStatusSatellitesCount(int count);
+
+  /// No description provided for @gpsStatusSearchingSatellites.
+  ///
+  /// In en, this message translates to:
+  /// **'Searching for satellites...'**
+  String get gpsStatusSearchingSatellites;
+
+  /// No description provided for @gpsStatusActiveBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'ACTIVE'**
+  String get gpsStatusActiveBadge;
+
+  /// No description provided for @gpsStatusTodayAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Today at {time}'**
+  String gpsStatusTodayAt(String time);
+
+  /// No description provided for @gpsStatusDateAt.
+  ///
+  /// In en, this message translates to:
+  /// **'{date} {time}'**
+  String gpsStatusDateAt(String date, String time);
+
+  /// No description provided for @gpsStatusSecondsAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} seconds ago'**
+  String gpsStatusSecondsAgo(int count);
+
+  /// No description provided for @gpsStatusMinutesAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} minutes ago'**
+  String gpsStatusMinutesAgo(int count);
+
+  /// No description provided for @gpsStatusHoursAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} hours ago'**
+  String gpsStatusHoursAgo(int count);
+
+  /// No description provided for @gpsStatusDaysAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} days ago'**
+  String gpsStatusDaysAgo(int count);
+
+  /// No description provided for @gpsStatusCardinalN.
+  ///
+  /// In en, this message translates to:
+  /// **'N'**
+  String get gpsStatusCardinalN;
+
+  /// No description provided for @gpsStatusCardinalNE.
+  ///
+  /// In en, this message translates to:
+  /// **'NE'**
+  String get gpsStatusCardinalNE;
+
+  /// No description provided for @gpsStatusCardinalE.
+  ///
+  /// In en, this message translates to:
+  /// **'E'**
+  String get gpsStatusCardinalE;
+
+  /// No description provided for @gpsStatusCardinalSE.
+  ///
+  /// In en, this message translates to:
+  /// **'SE'**
+  String get gpsStatusCardinalSE;
+
+  /// No description provided for @gpsStatusCardinalS.
+  ///
+  /// In en, this message translates to:
+  /// **'S'**
+  String get gpsStatusCardinalS;
+
+  /// No description provided for @gpsStatusCardinalSW.
+  ///
+  /// In en, this message translates to:
+  /// **'SW'**
+  String get gpsStatusCardinalSW;
+
+  /// No description provided for @gpsStatusCardinalW.
+  ///
+  /// In en, this message translates to:
+  /// **'W'**
+  String get gpsStatusCardinalW;
+
+  /// No description provided for @gpsStatusCardinalNW.
+  ///
+  /// In en, this message translates to:
+  /// **'NW'**
+  String get gpsStatusCardinalNW;
+
+  /// No description provided for @serialConfigTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Serial Config'**
+  String get serialConfigTitle;
+
+  /// No description provided for @serialConfigSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get serialConfigSave;
+
+  /// No description provided for @serialConfigSectionGeneral.
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get serialConfigSectionGeneral;
+
+  /// No description provided for @serialConfigSectionBaudRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Baud Rate'**
+  String get serialConfigSectionBaudRate;
+
+  /// No description provided for @serialConfigSectionTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Timeout'**
+  String get serialConfigSectionTimeout;
+
+  /// No description provided for @serialConfigSectionSerialMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Serial Mode'**
+  String get serialConfigSectionSerialMode;
+
+  /// No description provided for @serialConfigEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Serial Enabled'**
+  String get serialConfigEnabled;
+
+  /// No description provided for @serialConfigEnabledSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable serial port communication'**
+  String get serialConfigEnabledSubtitle;
+
+  /// No description provided for @serialConfigEcho.
+  ///
+  /// In en, this message translates to:
+  /// **'Echo'**
+  String get serialConfigEcho;
+
+  /// No description provided for @serialConfigEchoSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Echo sent packets back to the serial port'**
+  String get serialConfigEchoSubtitle;
+
+  /// No description provided for @serialConfigRxdGpio.
+  ///
+  /// In en, this message translates to:
+  /// **'RXD GPIO Pin'**
+  String get serialConfigRxdGpio;
+
+  /// No description provided for @serialConfigRxdGpioSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive data GPIO pin number'**
+  String get serialConfigRxdGpioSubtitle;
+
+  /// No description provided for @serialConfigTxdGpio.
+  ///
+  /// In en, this message translates to:
+  /// **'TXD GPIO Pin'**
+  String get serialConfigTxdGpio;
+
+  /// No description provided for @serialConfigTxdGpioSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Transmit data GPIO pin number'**
+  String get serialConfigTxdGpioSubtitle;
+
+  /// No description provided for @serialConfigOverrideConsole.
+  ///
+  /// In en, this message translates to:
+  /// **'Override Console Serial'**
+  String get serialConfigOverrideConsole;
+
+  /// No description provided for @serialConfigOverrideConsoleSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Use serial module instead of console'**
+  String get serialConfigOverrideConsoleSubtitle;
+
+  /// No description provided for @serialConfigBaudRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Baud Rate'**
+  String get serialConfigBaudRate;
+
+  /// No description provided for @serialConfigBaudRateSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Serial communication speed'**
+  String get serialConfigBaudRateSubtitle;
+
+  /// No description provided for @serialConfigTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Timeout'**
+  String get serialConfigTimeout;
+
+  /// No description provided for @serialConfigTimeoutValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{seconds} seconds'**
+  String serialConfigTimeoutValue(int seconds);
+
+  /// No description provided for @serialConfigModeSimpleDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Simple serial output for basic terminal usage'**
+  String get serialConfigModeSimpleDesc;
+
+  /// No description provided for @serialConfigModeProtoDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Protobuf binary protocol for programmatic access'**
+  String get serialConfigModeProtoDesc;
+
+  /// No description provided for @serialConfigModeTextmsgDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Text message mode for SMS-style communication'**
+  String get serialConfigModeTextmsgDesc;
+
+  /// No description provided for @serialConfigModeNmeaDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'NMEA GPS sentence output for GPS applications'**
+  String get serialConfigModeNmeaDesc;
+
+  /// No description provided for @serialConfigModeCaltopoDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'CalTopo format for mapping applications'**
+  String get serialConfigModeCaltopoDesc;
+
+  /// No description provided for @serialConfigGpioUnset.
+  ///
+  /// In en, this message translates to:
+  /// **'Unset'**
+  String get serialConfigGpioUnset;
+
+  /// No description provided for @serialConfigGpioPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Pin {pin}'**
+  String serialConfigGpioPin(int pin);
+
+  /// No description provided for @serialConfigSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Serial configuration saved'**
+  String get serialConfigSaved;
+
+  /// No description provided for @serialConfigSaveError.
+  ///
+  /// In en, this message translates to:
+  /// **'Error saving config: {error}'**
+  String serialConfigSaveError(String error);
+
+  /// No description provided for @firmwareUpdateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Firmware Update'**
+  String get firmwareUpdateTitle;
+
+  /// No description provided for @firmwareUpdateSectionCurrentVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Version'**
+  String get firmwareUpdateSectionCurrentVersion;
+
+  /// No description provided for @firmwareUpdateSectionAvailableUpdate.
+  ///
+  /// In en, this message translates to:
+  /// **'Available Update'**
+  String get firmwareUpdateSectionAvailableUpdate;
+
+  /// No description provided for @firmwareUpdateSectionHowToUpdate.
+  ///
+  /// In en, this message translates to:
+  /// **'How to Update'**
+  String get firmwareUpdateSectionHowToUpdate;
+
+  /// No description provided for @firmwareUpdateInstalledFirmware.
+  ///
+  /// In en, this message translates to:
+  /// **'Installed Firmware'**
+  String get firmwareUpdateInstalledFirmware;
+
+  /// No description provided for @firmwareUpdateUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get firmwareUpdateUnknown;
+
+  /// No description provided for @firmwareUpdateHardware.
+  ///
+  /// In en, this message translates to:
+  /// **'Hardware'**
+  String get firmwareUpdateHardware;
+
+  /// No description provided for @firmwareUpdateNodeId.
+  ///
+  /// In en, this message translates to:
+  /// **'Node ID'**
+  String get firmwareUpdateNodeId;
+
+  /// No description provided for @firmwareUpdateUptime.
+  ///
+  /// In en, this message translates to:
+  /// **'Uptime'**
+  String get firmwareUpdateUptime;
+
+  /// No description provided for @firmwareUpdateWifi.
+  ///
+  /// In en, this message translates to:
+  /// **'WiFi'**
+  String get firmwareUpdateWifi;
+
+  /// No description provided for @firmwareUpdateBluetooth.
+  ///
+  /// In en, this message translates to:
+  /// **'Bluetooth'**
+  String get firmwareUpdateBluetooth;
+
+  /// No description provided for @firmwareUpdateSupported.
+  ///
+  /// In en, this message translates to:
+  /// **'Supported'**
+  String get firmwareUpdateSupported;
+
+  /// No description provided for @firmwareUpdateAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Available'**
+  String get firmwareUpdateAvailable;
+
+  /// No description provided for @firmwareUpdateUpToDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Up to Date'**
+  String get firmwareUpdateUpToDate;
+
+  /// No description provided for @firmwareUpdateLatestVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Latest: {version}'**
+  String firmwareUpdateLatestVersion(String version);
+
+  /// No description provided for @firmwareUpdateNewBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'NEW'**
+  String get firmwareUpdateNewBadge;
+
+  /// No description provided for @firmwareUpdateDownload.
+  ///
+  /// In en, this message translates to:
+  /// **'Download Update'**
+  String get firmwareUpdateDownload;
+
+  /// No description provided for @firmwareUpdateReleaseNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Release Notes'**
+  String get firmwareUpdateReleaseNotes;
+
+  /// No description provided for @firmwareUpdateChecking.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking for updates...'**
+  String get firmwareUpdateChecking;
+
+  /// No description provided for @firmwareUpdateCheckFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to check for updates'**
+  String get firmwareUpdateCheckFailed;
+
+  /// No description provided for @firmwareUpdateUnableToCheck.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to check for updates'**
+  String get firmwareUpdateUnableToCheck;
+
+  /// No description provided for @firmwareUpdateVisitWebsite.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit the Meshtastic website for the latest firmware.'**
+  String get firmwareUpdateVisitWebsite;
+
+  /// No description provided for @firmwareUpdateStep1.
+  ///
+  /// In en, this message translates to:
+  /// **'Download the firmware file for your device'**
+  String get firmwareUpdateStep1;
+
+  /// No description provided for @firmwareUpdateStep2.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect your device via USB'**
+  String get firmwareUpdateStep2;
+
+  /// No description provided for @firmwareUpdateStep3.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the Meshtastic Web Flasher or CLI to flash'**
+  String get firmwareUpdateStep3;
+
+  /// No description provided for @firmwareUpdateStep4.
+  ///
+  /// In en, this message translates to:
+  /// **'Wait for device to reboot and reconnect'**
+  String get firmwareUpdateStep4;
+
+  /// No description provided for @firmwareUpdateOpenWebFlasher.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Web Flasher'**
+  String get firmwareUpdateOpenWebFlasher;
+
+  /// No description provided for @firmwareUpdateBackupWarningTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup Your Settings'**
+  String get firmwareUpdateBackupWarningTitle;
+
+  /// No description provided for @firmwareUpdateBackupWarningSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Firmware updates may reset your device configuration. Consider exporting your settings before updating.'**
+  String get firmwareUpdateBackupWarningSubtitle;
+
+  /// No description provided for @telemetryConfigTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Telemetry'**
+  String get telemetryConfigTitle;
+
+  /// No description provided for @telemetryConfigSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get telemetryConfigSave;
+
+  /// No description provided for @telemetryConfigSectionDeviceMetrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Metrics'**
+  String get telemetryConfigSectionDeviceMetrics;
+
+  /// No description provided for @telemetryConfigSectionEnvironmentMetrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Environment Metrics'**
+  String get telemetryConfigSectionEnvironmentMetrics;
+
+  /// No description provided for @telemetryConfigSectionAirQuality.
+  ///
+  /// In en, this message translates to:
+  /// **'Air Quality'**
+  String get telemetryConfigSectionAirQuality;
+
+  /// No description provided for @telemetryConfigSectionPowerMetrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Power Metrics'**
+  String get telemetryConfigSectionPowerMetrics;
+
+  /// No description provided for @telemetryConfigDeviceMetricsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery level, voltage, channel utilization, air util TX'**
+  String get telemetryConfigDeviceMetricsDesc;
+
+  /// No description provided for @telemetryConfigEnvironmentMetricsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Temperature, humidity, barometric pressure, gas resistance'**
+  String get telemetryConfigEnvironmentMetricsDesc;
+
+  /// No description provided for @telemetryConfigAirQualityDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'PM1.0, PM2.5, PM10, particle counts, CO2'**
+  String get telemetryConfigAirQualityDesc;
+
+  /// No description provided for @telemetryConfigPowerMetricsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Voltage and current for channels 1-3'**
+  String get telemetryConfigPowerMetricsDesc;
+
+  /// No description provided for @telemetryConfigDisplayOnScreen.
+  ///
+  /// In en, this message translates to:
+  /// **'Display on Screen'**
+  String get telemetryConfigDisplayOnScreen;
+
+  /// No description provided for @telemetryConfigDisplayOnScreenSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Show environment data on device screen'**
+  String get telemetryConfigDisplayOnScreenSubtitle;
+
+  /// No description provided for @telemetryConfigDisplayFahrenheit.
+  ///
+  /// In en, this message translates to:
+  /// **'Display Fahrenheit'**
+  String get telemetryConfigDisplayFahrenheit;
+
+  /// No description provided for @telemetryConfigDisplayFahrenheitSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Show temperature in Fahrenheit instead of Celsius'**
+  String get telemetryConfigDisplayFahrenheitSubtitle;
+
+  /// No description provided for @telemetryConfigEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Enabled'**
+  String get telemetryConfigEnabled;
+
+  /// No description provided for @telemetryConfigUpdateInterval.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Interval'**
+  String get telemetryConfigUpdateInterval;
+
+  /// No description provided for @telemetryConfigMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **' minutes'**
+  String get telemetryConfigMinutes;
+
+  /// No description provided for @telemetryConfigAirtimeWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Telemetry data is shared with all nodes on the mesh network. Shorter intervals increase airtime usage.'**
+  String get telemetryConfigAirtimeWarning;
+
+  /// No description provided for @telemetryConfigSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Telemetry config saved'**
+  String get telemetryConfigSaved;
+
+  /// No description provided for @telemetryConfigSaveError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save: {error}'**
+  String telemetryConfigSaveError(String error);
+
+  /// No description provided for @ambientLightingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Ambient Lighting'**
+  String get ambientLightingTitle;
+
+  /// No description provided for @ambientLightingSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get ambientLightingSave;
+
+  /// No description provided for @ambientLightingLedEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'LED Enabled'**
+  String get ambientLightingLedEnabled;
+
+  /// No description provided for @ambientLightingLedEnabledSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn ambient lighting on or off'**
+  String get ambientLightingLedEnabledSubtitle;
+
+  /// No description provided for @ambientLightingPresetColors.
+  ///
+  /// In en, this message translates to:
+  /// **'Preset Colors'**
+  String get ambientLightingPresetColors;
+
+  /// No description provided for @ambientLightingCustomColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom Color'**
+  String get ambientLightingCustomColor;
+
+  /// No description provided for @ambientLightingRed.
+  ///
+  /// In en, this message translates to:
+  /// **'Red'**
+  String get ambientLightingRed;
+
+  /// No description provided for @ambientLightingGreen.
+  ///
+  /// In en, this message translates to:
+  /// **'Green'**
+  String get ambientLightingGreen;
+
+  /// No description provided for @ambientLightingBlue.
+  ///
+  /// In en, this message translates to:
+  /// **'Blue'**
+  String get ambientLightingBlue;
+
+  /// No description provided for @ambientLightingBrightness.
+  ///
+  /// In en, this message translates to:
+  /// **'LED Brightness'**
+  String get ambientLightingBrightness;
+
+  /// No description provided for @ambientLightingCurrent.
+  ///
+  /// In en, this message translates to:
+  /// **'Current'**
+  String get ambientLightingCurrent;
+
+  /// No description provided for @ambientLightingCurrentValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{milliamps} mA'**
+  String ambientLightingCurrentValue(int milliamps);
+
+  /// No description provided for @ambientLightingCurrentSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'LED drive current (brightness)'**
+  String get ambientLightingCurrentSubtitle;
+
+  /// No description provided for @ambientLightingDeviceSupportInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Ambient lighting is only available on devices with LED support (RAK WisBlock, T-Beam, etc.)'**
+  String get ambientLightingDeviceSupportInfo;
+
+  /// No description provided for @ambientLightingSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Ambient lighting saved'**
+  String get ambientLightingSaved;
+
+  /// No description provided for @ambientLightingSaveError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save: {error}'**
+  String ambientLightingSaveError(String error);
+
+  /// No description provided for @paxCounterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'PAX Counter'**
+  String get paxCounterTitle;
+
+  /// No description provided for @paxCounterSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get paxCounterSave;
+
+  /// No description provided for @paxCounterCardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'PAX Counter'**
+  String get paxCounterCardTitle;
+
+  /// No description provided for @paxCounterCardSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Counts nearby WiFi and Bluetooth devices'**
+  String get paxCounterCardSubtitle;
+
+  /// No description provided for @paxCounterEnable.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable PAX Counter'**
+  String get paxCounterEnable;
+
+  /// No description provided for @paxCounterEnableSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Count nearby devices and report to mesh'**
+  String get paxCounterEnableSubtitle;
+
+  /// No description provided for @paxCounterUpdateInterval.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Interval'**
+  String get paxCounterUpdateInterval;
+
+  /// No description provided for @paxCounterIntervalMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} minutes'**
+  String paxCounterIntervalMinutes(int minutes);
+
+  /// No description provided for @paxCounterMinLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'1 min'**
+  String get paxCounterMinLabel;
+
+  /// No description provided for @paxCounterMaxLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'60 min'**
+  String get paxCounterMaxLabel;
+
+  /// No description provided for @paxCounterAboutTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'About PAX Counter'**
+  String get paxCounterAboutTitle;
+
+  /// No description provided for @paxCounterAboutSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'PAX Counter passively listens for WiFi and Bluetooth probe requests from nearby devices. It does not store MAC addresses or any personal data.'**
+  String get paxCounterAboutSubtitle;
+
+  /// No description provided for @paxCounterSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'PAX counter config saved'**
+  String get paxCounterSaved;
+
+  /// No description provided for @paxCounterSaveError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save: {error}'**
+  String paxCounterSaveError(String error);
+
+  /// No description provided for @meshcoreConsoleTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'MeshCore Console'**
+  String get meshcoreConsoleTitle;
+
+  /// No description provided for @meshcoreConsoleDevBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'DEV'**
+  String get meshcoreConsoleDevBadge;
+
+  /// No description provided for @meshcoreConsoleFramesCaptured.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} frames captured'**
+  String meshcoreConsoleFramesCaptured(int count);
+
+  /// No description provided for @meshcoreConsoleRefresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get meshcoreConsoleRefresh;
+
+  /// No description provided for @meshcoreConsoleCopyHex.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy Hex'**
+  String get meshcoreConsoleCopyHex;
+
+  /// No description provided for @meshcoreConsoleClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get meshcoreConsoleClear;
+
+  /// No description provided for @meshcoreConsoleNoFrames.
+  ///
+  /// In en, this message translates to:
+  /// **'No frames captured yet'**
+  String get meshcoreConsoleNoFrames;
+
+  /// No description provided for @meshcoreConsoleHexCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Hex log copied to clipboard'**
+  String get meshcoreConsoleHexCopied;
+
+  /// No description provided for @meshcoreConsoleCaptureCleared.
+  ///
+  /// In en, this message translates to:
+  /// **'Capture cleared'**
+  String get meshcoreConsoleCaptureCleared;
 }
 
 class _AppLocalizationsDelegate

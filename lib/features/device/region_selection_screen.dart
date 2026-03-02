@@ -6,6 +6,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/logging.dart';
 import '../../core/theme.dart';
 import '../../services/storage/storage_service.dart';
@@ -39,115 +40,117 @@ class RegionInfo {
   });
 }
 
-/// Available regions with their frequency bands
-const List<RegionInfo> availableRegions = [
+/// Available regions with their frequency bands.
+/// Requires [BuildContext] because names, frequencies, and descriptions
+/// are localised.
+List<RegionInfo> getAvailableRegions(BuildContext context) => [
   RegionInfo(
     code: RegionCode.US,
-    name: 'United States',
-    frequency: '915 MHz',
-    description: 'US, Canada, Mexico',
+    name: context.l10n.regionSelectionRegionUs,
+    frequency: context.l10n.regionSelectionRegionUsFreq,
+    description: context.l10n.regionSelectionRegionUsDesc,
   ),
   RegionInfo(
     code: RegionCode.EU_868,
-    name: 'Europe 868',
-    frequency: '868 MHz',
-    description: 'EU, UK, and most of Europe',
+    name: context.l10n.regionSelectionRegionEu868,
+    frequency: context.l10n.regionSelectionRegionEu868Freq,
+    description: context.l10n.regionSelectionRegionEu868Desc,
   ),
   RegionInfo(
     code: RegionCode.EU_433,
-    name: 'Europe 433',
-    frequency: '433 MHz',
-    description: 'EU alternate frequency',
+    name: context.l10n.regionSelectionRegionEu433,
+    frequency: context.l10n.regionSelectionRegionEu433Freq,
+    description: context.l10n.regionSelectionRegionEu433Desc,
   ),
   RegionInfo(
     code: RegionCode.ANZ,
-    name: 'Australia/NZ',
-    frequency: '915 MHz',
-    description: 'Australia and New Zealand',
+    name: context.l10n.regionSelectionRegionAnz,
+    frequency: context.l10n.regionSelectionRegionAnzFreq,
+    description: context.l10n.regionSelectionRegionAnzDesc,
   ),
   RegionInfo(
     code: RegionCode.CN,
-    name: 'China',
-    frequency: '470 MHz',
-    description: 'China',
+    name: context.l10n.regionSelectionRegionCn,
+    frequency: context.l10n.regionSelectionRegionCnFreq,
+    description: context.l10n.regionSelectionRegionCnDesc,
   ),
   RegionInfo(
     code: RegionCode.JP,
-    name: 'Japan',
-    frequency: '920 MHz',
-    description: 'Japan',
+    name: context.l10n.regionSelectionRegionJp,
+    frequency: context.l10n.regionSelectionRegionJpFreq,
+    description: context.l10n.regionSelectionRegionJpDesc,
   ),
   RegionInfo(
     code: RegionCode.KR,
-    name: 'Korea',
-    frequency: '920 MHz',
-    description: 'South Korea',
+    name: context.l10n.regionSelectionRegionKr,
+    frequency: context.l10n.regionSelectionRegionKrFreq,
+    description: context.l10n.regionSelectionRegionKrDesc,
   ),
   RegionInfo(
     code: RegionCode.TW,
-    name: 'Taiwan',
-    frequency: '923 MHz',
-    description: 'Taiwan',
+    name: context.l10n.regionSelectionRegionTw,
+    frequency: context.l10n.regionSelectionRegionTwFreq,
+    description: context.l10n.regionSelectionRegionTwDesc,
   ),
   RegionInfo(
     code: RegionCode.RU,
-    name: 'Russia',
-    frequency: '868 MHz',
-    description: 'Russia',
+    name: context.l10n.regionSelectionRegionRu,
+    frequency: context.l10n.regionSelectionRegionRuFreq,
+    description: context.l10n.regionSelectionRegionRuDesc,
   ),
   RegionInfo(
     code: RegionCode.IN,
-    name: 'India',
-    frequency: '865 MHz',
-    description: 'India',
+    name: context.l10n.regionSelectionRegionIn,
+    frequency: context.l10n.regionSelectionRegionInFreq,
+    description: context.l10n.regionSelectionRegionInDesc,
   ),
   RegionInfo(
     code: RegionCode.NZ_865,
-    name: 'New Zealand 865',
-    frequency: '865 MHz',
-    description: 'New Zealand alternate',
+    name: context.l10n.regionSelectionRegionNz865,
+    frequency: context.l10n.regionSelectionRegionNz865Freq,
+    description: context.l10n.regionSelectionRegionNz865Desc,
   ),
   RegionInfo(
     code: RegionCode.TH,
-    name: 'Thailand',
-    frequency: '920 MHz',
-    description: 'Thailand',
+    name: context.l10n.regionSelectionRegionTh,
+    frequency: context.l10n.regionSelectionRegionThFreq,
+    description: context.l10n.regionSelectionRegionThDesc,
   ),
   RegionInfo(
     code: RegionCode.UA_433,
-    name: 'Ukraine 433',
-    frequency: '433 MHz',
-    description: 'Ukraine',
+    name: context.l10n.regionSelectionRegionUa433,
+    frequency: context.l10n.regionSelectionRegionUa433Freq,
+    description: context.l10n.regionSelectionRegionUa433Desc,
   ),
   RegionInfo(
     code: RegionCode.UA_868,
-    name: 'Ukraine 868',
-    frequency: '868 MHz',
-    description: 'Ukraine',
+    name: context.l10n.regionSelectionRegionUa868,
+    frequency: context.l10n.regionSelectionRegionUa868Freq,
+    description: context.l10n.regionSelectionRegionUa868Desc,
   ),
   RegionInfo(
     code: RegionCode.MY_433,
-    name: 'Malaysia 433',
-    frequency: '433 MHz',
-    description: 'Malaysia',
+    name: context.l10n.regionSelectionRegionMy433,
+    frequency: context.l10n.regionSelectionRegionMy433Freq,
+    description: context.l10n.regionSelectionRegionMy433Desc,
   ),
   RegionInfo(
     code: RegionCode.MY_919,
-    name: 'Malaysia 919',
-    frequency: '919 MHz',
-    description: 'Malaysia',
+    name: context.l10n.regionSelectionRegionMy919,
+    frequency: context.l10n.regionSelectionRegionMy919Freq,
+    description: context.l10n.regionSelectionRegionMy919Desc,
   ),
   RegionInfo(
     code: RegionCode.SG_923,
-    name: 'Singapore',
-    frequency: '923 MHz',
-    description: 'Singapore',
+    name: context.l10n.regionSelectionRegionSg923,
+    frequency: context.l10n.regionSelectionRegionSg923Freq,
+    description: context.l10n.regionSelectionRegionSg923Desc,
   ),
   RegionInfo(
     code: RegionCode.LORA_24,
-    name: '2.4 GHz',
-    frequency: '2.4 GHz',
-    description: 'Worldwide 2.4GHz band',
+    name: context.l10n.regionSelectionRegionLora24,
+    frequency: context.l10n.regionSelectionRegionLora24Freq,
+    description: context.l10n.regionSelectionRegionLora24Desc,
   ),
 ];
 
@@ -209,9 +212,10 @@ class _RegionSelectionScreenState extends ConsumerState<RegionSelectionScreen>
   }
 
   List<RegionInfo> get _filteredRegions {
-    if (_searchQuery.isEmpty) return availableRegions;
+    final regions = getAvailableRegions(context);
+    if (_searchQuery.isEmpty) return regions;
     final query = _searchQuery.toLowerCase();
-    return availableRegions.where((r) {
+    return regions.where((r) {
       return r.name.toLowerCase().contains(query) ||
           r.description.toLowerCase().contains(query) ||
           r.frequency.toLowerCase().contains(query);
@@ -239,17 +243,14 @@ class _RegionSelectionScreenState extends ConsumerState<RegionSelectionScreen>
     final settingsRefresh = ref.read(settingsRefreshProvider.notifier);
 
     // Show confirmation dialog explaining the device will reboot
+    final l10n = context.l10n;
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Apply Region',
+      title: l10n.regionSelectionApplyDialogTitle,
       message: isInitialSetup
-          ? 'Your device will reboot to apply the region settings. '
-                'This may take up to 30 seconds.\n\n'
-                'The app will automatically reconnect when ready.'
-          : 'Changing the region will cause your device to reboot. '
-                'This may take up to 30 seconds.\n\n'
-                'You will be briefly disconnected while the device restarts.',
-      confirmLabel: 'Continue',
+          ? l10n.regionSelectionApplyDialogMessageInitial
+          : l10n.regionSelectionApplyDialogMessageChange,
+      confirmLabel: l10n.regionSelectionApplyDialogConfirm,
     );
 
     if (confirmed != true) {
@@ -271,7 +272,7 @@ class _RegionSelectionScreenState extends ConsumerState<RegionSelectionScreen>
         '🌍 RegionSelection: BLOCKED — device disconnected before apply',
       );
       safeSetState(() {
-        _errorMessage = 'Device disconnected. Please reconnect and try again.';
+        _errorMessage = context.l10n.regionSelectionDeviceDisconnected;
       });
       return;
     }
@@ -462,12 +463,10 @@ class _RegionSelectionScreenState extends ConsumerState<RegionSelectionScreen>
       }
 
       final message = e is TimeoutException
-          ? 'Reconnect timed out. Please try again.'
+          ? context.l10n.regionSelectionReconnectTimeout
           : pairingInvalidation
-          ? 'Your phone removed the stored pairing info for this device.\n'
-                'Go to Settings > Bluetooth, forget the Meshtastic device, '
-                'and try again.'
-          : 'Failed to set region: $e';
+          ? context.l10n.regionSelectionPairingInvalidation
+          : context.l10n.regionSelectionSetRegionError(e.toString());
 
       safeSetState(() {
         _errorMessage = message;
@@ -546,7 +545,7 @@ class _RegionSelectionScreenState extends ConsumerState<RegionSelectionScreen>
       // Unlock the UI so the user can retry
       safeSetState(() => _applying = false);
       if (!mounted) return;
-      final message = 'Failed to set region: $e';
+      final message = context.l10n.regionSelectionSetRegionError(e.toString());
       safeSetState(() {
         _errorMessage = message;
       });
@@ -560,7 +559,7 @@ class _RegionSelectionScreenState extends ConsumerState<RegionSelectionScreen>
     if (!opened) {
       showErrorSnackBar(
         context,
-        'Could not open Bluetooth Settings. Please open Settings > Bluetooth manually.',
+        context.l10n.regionSelectionOpenBluetoothSettingsError,
       );
     }
   }
@@ -581,7 +580,9 @@ class _RegionSelectionScreenState extends ConsumerState<RegionSelectionScreen>
         stepKeys: const {},
         child: GlassScaffold(
           resizeToAvoidBottomInset: false,
-          title: widget.isInitialSetup ? 'Select Your Region' : 'Change Region',
+          title: widget.isInitialSetup
+              ? context.l10n.regionSelectionTitleInitial
+              : context.l10n.regionSelectionTitleChange,
           leading: widget.isInitialSetup ? const SizedBox.shrink() : null,
           automaticallyImplyLeading: !widget.isInitialSetup,
           actions: [
@@ -602,9 +603,8 @@ class _RegionSelectionScreenState extends ConsumerState<RegionSelectionScreen>
                     16,
                   ),
                   child: StatusBanner.accent(
-                    title: 'Important: Select Your Region',
-                    subtitle:
-                        'Choose the correct frequency for your location to comply with local regulations.',
+                    title: context.l10n.regionSelectionBannerTitle,
+                    subtitle: context.l10n.regionSelectionBannerSubtitle,
                   ),
                 ),
               ),
@@ -626,7 +626,7 @@ class _RegionSelectionScreenState extends ConsumerState<RegionSelectionScreen>
                     enabled: !isApplying,
                     style: TextStyle(color: context.textPrimary),
                     decoration: InputDecoration(
-                      hintText: 'Search regions...',
+                      hintText: context.l10n.regionSelectionSearchHint,
                       hintStyle: TextStyle(color: context.textTertiary),
                       counterText: '',
                       prefixIcon: Icon(
@@ -709,10 +709,10 @@ class _RegionSelectionScreenState extends ConsumerState<RegionSelectionScreen>
                           ),
                         ),
                         child: isApplying
-                            ? const Row(
+                            ? Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 18,
                                     height: 18,
                                     child: CircularProgressIndicator(
@@ -720,10 +720,10 @@ class _RegionSelectionScreenState extends ConsumerState<RegionSelectionScreen>
                                       color: Colors.white,
                                     ),
                                   ),
-                                  SizedBox(width: AppTheme.spacing10),
+                                  const SizedBox(width: AppTheme.spacing10),
                                   Text(
-                                    'Applying...',
-                                    style: TextStyle(
+                                    context.l10n.regionSelectionApplying,
+                                    style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
                                     ),
@@ -731,7 +731,9 @@ class _RegionSelectionScreenState extends ConsumerState<RegionSelectionScreen>
                                 ],
                               )
                             : Text(
-                                widget.isInitialSetup ? 'Continue' : 'Save',
+                                widget.isInitialSetup
+                                    ? context.l10n.regionSelectionContinue
+                                    : context.l10n.regionSelectionSave,
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
@@ -850,7 +852,7 @@ class _RegionSelectionScreenState extends ConsumerState<RegionSelectionScreen>
                       borderRadius: BorderRadius.circular(AppTheme.radius6),
                     ),
                     child: Text(
-                      'CURRENT',
+                      context.l10n.regionSelectionCurrentBadge,
                       style: TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.w700,
@@ -889,7 +891,7 @@ class _RegionSelectionScreenState extends ConsumerState<RegionSelectionScreen>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Bluetooth pairing was removed. Forget "Meshtastic_XXXX" in Settings > Bluetooth and reconnect to continue.',
+              context.l10n.regionSelectionPairingHintMessage,
               style: context.bodySmallStyle?.copyWith(
                 color: context.textSecondary,
               ),
@@ -905,7 +907,7 @@ class _RegionSelectionScreenState extends ConsumerState<RegionSelectionScreen>
                     color: context.textPrimary,
                   ),
                   label: Text(
-                    'Bluetooth Settings',
+                    context.l10n.regionSelectionBluetoothSettings,
                     style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
@@ -933,7 +935,7 @@ class _RegionSelectionScreenState extends ConsumerState<RegionSelectionScreen>
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
                   child: Text(
-                    'View Scanner',
+                    context.l10n.regionSelectionViewScanner,
                     style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,

@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
 import '../../core/transport.dart';
@@ -179,9 +180,11 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
     QrShareSheet.show(
       context: context,
       title: node.displayName,
-      subtitle: 'Scan to add this node',
+      subtitle: context.l10n.nodeDetailQrSubtitle,
       qrData: nodeUrl,
-      infoText: 'Node ID: ${node.nodeNum.toRadixString(16).toUpperCase()}',
+      infoText: context.l10n.nodeDetailQrInfoText(
+        node.nodeNum.toRadixString(16).toUpperCase(),
+      ),
     );
   }
 
@@ -217,7 +220,7 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
         if (context.mounted) {
           showSuccessSnackBar(
             context,
-            '${node.displayName} removed from favorites',
+            context.l10n.nodeDetailRemovedFromFavorites(node.displayName),
           );
         }
       } else {
@@ -228,13 +231,16 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
         if (context.mounted) {
           showSuccessSnackBar(
             context,
-            '${node.displayName} added to favorites',
+            context.l10n.nodeDetailAddedToFavorites(node.displayName),
           );
         }
       }
     } catch (e) {
       if (context.mounted) {
-        showErrorSnackBar(context, 'Failed to update favorite: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.nodeDetailFavoriteError(e.toString()),
+        );
       }
     } finally {
       safeSetState(() => _isTogglingFavorite = false);
@@ -251,10 +257,7 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
     );
 
     if (!isConnected) {
-      showErrorSnackBar(
-        context,
-        'Cannot change mute status: Device not connected',
-      );
+      showErrorSnackBar(context, context.l10n.nodeDetailMuteNotConnected);
       return;
     }
 
@@ -271,7 +274,10 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
         if (!mounted) return;
         nodesNotifier.addOrUpdateNode(node.copyWith(isIgnored: false));
         if (context.mounted) {
-          showSuccessSnackBar(context, '${node.displayName} unmuted');
+          showSuccessSnackBar(
+            context,
+            context.l10n.nodeDetailUnmuted(node.displayName),
+          );
         }
       } else {
         await protocol.setIgnoredNode(node.nodeNum);
@@ -279,12 +285,18 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
         if (!mounted) return;
         nodesNotifier.addOrUpdateNode(node.copyWith(isIgnored: true));
         if (context.mounted) {
-          showSuccessSnackBar(context, '${node.displayName} muted');
+          showSuccessSnackBar(
+            context,
+            context.l10n.nodeDetailMuted(node.displayName),
+          );
         }
       }
     } catch (e) {
       if (context.mounted) {
-        showErrorSnackBar(context, 'Failed to update mute status: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.nodeDetailMuteError(e.toString()),
+        );
       }
     } finally {
       safeSetState(() => _isTogglingMute = false);
@@ -304,10 +316,7 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
     );
 
     if (!isConnected) {
-      showErrorSnackBar(
-        context,
-        'Cannot send traceroute: Device not connected',
-      );
+      showErrorSnackBar(context, context.l10n.nodeDetailTracerouteNotConnected);
       return;
     }
 
@@ -330,13 +339,16 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
       if (context.mounted) {
         showSuccessSnackBar(
           context,
-          'Traceroute sent to $displayName -- check Traceroute History for results',
+          context.l10n.nodeDetailTracerouteSent(displayName),
         );
       }
     } catch (e) {
       safeSetState(() => _isSendingTraceroute = false);
       if (context.mounted) {
-        showErrorSnackBar(context, 'Failed to send traceroute: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.nodeDetailTracerouteError(e.toString()),
+        );
       }
     }
   }
@@ -361,16 +373,15 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
     );
 
     if (!isConnected) {
-      showErrorSnackBar(context, 'Cannot reboot: Device not connected');
+      showErrorSnackBar(context, context.l10n.nodeDetailRebootNotConnected);
       return;
     }
 
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Reboot Device',
-      message:
-          'This will reboot your Meshtastic device. The app will automatically reconnect once the device restarts.',
-      confirmLabel: 'Reboot',
+      title: context.l10n.nodeDetailRebootTitle,
+      message: context.l10n.nodeDetailRebootMessage,
+      confirmLabel: context.l10n.nodeDetailRebootConfirm,
       isDestructive: true,
     );
 
@@ -386,11 +397,14 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
           .startDeviceRebootCountdown(reason: 'reboot');
       if (context.mounted) {
         Navigator.pop(context);
-        showInfoSnackBar(context, 'Device is rebooting...');
+        showInfoSnackBar(context, context.l10n.nodeDetailRebootingSnackbar);
       }
     } catch (e) {
       if (context.mounted) {
-        showErrorSnackBar(context, 'Failed to reboot: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.nodeDetailRebootError(e.toString()),
+        );
       }
     }
   }
@@ -406,16 +420,15 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
     );
 
     if (!isConnected) {
-      showErrorSnackBar(context, 'Cannot shutdown: Device not connected');
+      showErrorSnackBar(context, context.l10n.nodeDetailShutdownNotConnected);
       return;
     }
 
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Shutdown Device',
-      message:
-          'This will turn off your Meshtastic device. You will need to physically power it back on to reconnect.',
-      confirmLabel: 'Shutdown',
+      title: context.l10n.nodeDetailShutdownTitle,
+      message: context.l10n.nodeDetailShutdownMessage,
+      confirmLabel: context.l10n.nodeDetailShutdownConfirm,
       isDestructive: true,
     );
 
@@ -428,11 +441,14 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
       if (!mounted) return;
       if (context.mounted) {
         Navigator.pop(context);
-        showInfoSnackBar(context, 'Device is shutting down...');
+        showInfoSnackBar(context, context.l10n.nodeDetailShuttingDownSnackbar);
       }
     } catch (e) {
       if (context.mounted) {
-        showErrorSnackBar(context, 'Failed to shutdown: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.nodeDetailShutdownError(e.toString()),
+        );
       }
     }
   }
@@ -440,10 +456,9 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
   Future<void> _removeNode(BuildContext context, MeshNode node) async {
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Remove Node',
-      message:
-          'Remove ${node.displayName} from the node database? This will remove the node from your local device.',
-      confirmLabel: 'Remove',
+      title: context.l10n.nodeDetailRemoveTitle,
+      message: context.l10n.nodeDetailRemoveMessage(node.displayName),
+      confirmLabel: context.l10n.nodeDetailRemoveConfirm,
       isDestructive: true,
     );
 
@@ -458,18 +473,24 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
       nodesNotifier.removeNode(node.nodeNum);
       if (context.mounted) {
         Navigator.pop(context);
-        showSuccessSnackBar(context, '${node.displayName} removed');
+        showSuccessSnackBar(
+          context,
+          context.l10n.nodeDetailRemovedSnackbar(node.displayName),
+        );
       }
     } catch (e) {
       if (context.mounted) {
-        showErrorSnackBar(context, 'Failed to remove node: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.nodeDetailRemoveError(e.toString()),
+        );
       }
     }
   }
 
   Future<void> _setFixedPosition(BuildContext context, MeshNode node) async {
     if (!node.hasPosition) {
-      showInfoSnackBar(context, 'Node has no position data');
+      showInfoSnackBar(context, context.l10n.nodeDetailNoPositionData);
       return;
     }
 
@@ -485,12 +506,15 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
       if (context.mounted) {
         showSuccessSnackBar(
           context,
-          'Fixed position set to ${node.displayName}\'s location',
+          context.l10n.nodeDetailFixedPositionSet(node.displayName),
         );
       }
     } catch (e) {
       if (context.mounted) {
-        showErrorSnackBar(context, 'Failed to set fixed position: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.nodeDetailFixedPositionError(e.toString()),
+        );
       }
     }
   }
@@ -504,12 +528,15 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
       if (context.mounted) {
         showInfoSnackBar(
           context,
-          'User info requested from ${node.displayName}',
+          context.l10n.nodeDetailUserInfoRequested(node.displayName),
         );
       }
     } catch (e) {
       if (context.mounted) {
-        showErrorSnackBar(context, 'Failed to request user info: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.nodeDetailUserInfoError(e.toString()),
+        );
       }
     }
   }
@@ -534,12 +561,15 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
       if (context.mounted) {
         showInfoSnackBar(
           context,
-          'Position requested from ${node.displayName}',
+          context.l10n.nodeDetailPositionRequested(node.displayName),
         );
       }
     } catch (e) {
       if (context.mounted) {
-        showErrorSnackBar(context, 'Failed to request position: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.nodeDetailPositionError(e.toString()),
+        );
       }
     }
   }
@@ -554,24 +584,30 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
   }
 
   /// Human-friendly relative time string for last heard.
-  String _relativeLastHeard(DateTime? lastHeard) {
-    if (lastHeard == null) return 'Never';
+  String _relativeLastHeard(BuildContext context, DateTime? lastHeard) {
+    if (lastHeard == null) return context.l10n.nodeDetailLastHeardNever;
     final diff = DateTime.now().difference(lastHeard);
-    if (diff.inSeconds < 60) return 'Just now';
-    if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
-    if (diff.inHours < 24) return '${diff.inHours}h ago';
-    if (diff.inDays < 7) return '${diff.inDays}d ago';
+    if (diff.inSeconds < 60) return context.l10n.nodeDetailLastHeardJustNow;
+    if (diff.inMinutes < 60) {
+      return context.l10n.nodeDetailLastHeardMinutesAgo(diff.inMinutes);
+    }
+    if (diff.inHours < 24) {
+      return context.l10n.nodeDetailLastHeardHoursAgo(diff.inHours);
+    }
+    if (diff.inDays < 7) {
+      return context.l10n.nodeDetailLastHeardDaysAgo(diff.inDays);
+    }
     return DateFormat('MMM d').format(lastHeard);
   }
 
   /// Signal quality label from SNR value.
-  String _signalLabel(int? snr) {
-    if (snr == null) return 'Unknown';
-    if (snr >= 10) return 'Excellent';
-    if (snr >= 5) return 'Good';
-    if (snr >= 0) return 'Fair';
-    if (snr >= -5) return 'Weak';
-    return 'Very Weak';
+  String _signalLabel(BuildContext context, int? snr) {
+    if (snr == null) return context.l10n.nodeDetailSignalUnknown;
+    if (snr >= 10) return context.l10n.nodeDetailSignalExcellent;
+    if (snr >= 5) return context.l10n.nodeDetailSignalGood;
+    if (snr >= 0) return context.l10n.nodeDetailSignalFair;
+    if (snr >= -5) return context.l10n.nodeDetailSignalWeak;
+    return context.l10n.nodeDetailSignalVeryWeak;
   }
 
   Color _signalColor(int? snr) {
@@ -666,7 +702,7 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
             children: [
               if (isMyNode)
                 _BadgePill(
-                  label: 'YOU',
+                  label: context.l10n.nodeDetailYouBadge,
                   color: context.accentColor,
                   filled: true,
                 ),
@@ -674,7 +710,9 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
                 _BadgePill(label: node.role!, color: context.textTertiary),
               _BadgePill(
                 icon: node.hasPublicKey ? Icons.lock : Icons.lock_open,
-                label: node.hasPublicKey ? 'PKI' : 'No PKI',
+                label: node.hasPublicKey
+                    ? context.l10n.nodeDetailPkiBadge
+                    : context.l10n.nodeDetailNoPkiBadge,
                 color: node.hasPublicKey
                     ? AccentColors.green
                     : context.textTertiary,
@@ -682,13 +720,13 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
               if (node.isIgnored)
                 _BadgePill(
                   icon: Icons.volume_off,
-                  label: 'Muted',
+                  label: context.l10n.nodeDetailMutedBadge,
                   color: AppTheme.errorRed,
                 ),
               if (node.isFavorite)
                 _BadgePill(
                   icon: Icons.star,
-                  label: 'Favorite',
+                  label: context.l10n.nodeDetailFavoriteBadge,
                   color: AppTheme.warningYellow,
                 ),
             ],
@@ -710,7 +748,7 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
     chips.add(
       _QuickStatChip(
         icon: Icons.access_time,
-        value: _relativeLastHeard(node.lastHeard),
+        value: _relativeLastHeard(context, node.lastHeard),
         color: _isNodeOnline(node) ? AccentColors.green : context.textTertiary,
       ),
     );
@@ -721,8 +759,8 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
         _QuickStatChip(
           icon: _getBatteryIcon(node.batteryLevel!),
           value: node.batteryLevel! > 100
-              ? 'Charging'
-              : '${node.batteryLevel}%',
+              ? context.l10n.nodeDetailBatteryCharging
+              : context.l10n.nodeDetailBatteryPercent(node.batteryLevel!),
           color: _getBatteryColor(node.batteryLevel!),
         ),
       );
@@ -733,7 +771,7 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
       chips.add(
         _QuickStatChip(
           icon: Icons.signal_cellular_alt,
-          value: _signalLabel(node.snr),
+          value: _signalLabel(context, node.snr),
           color: _signalColor(node.snr),
         ),
       );
@@ -745,8 +783,12 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
         _QuickStatChip(
           icon: Icons.near_me,
           value: node.distance! < 1000
-              ? '${node.distance!.toInt()} m'
-              : '${(node.distance! / 1000).toStringAsFixed(1)} km',
+              ? context.l10n.nodeDetailDistanceMeters(
+                  node.distance!.toInt().toString(),
+                )
+              : context.l10n.nodeDetailDistanceKilometers(
+                  (node.distance! / 1000).toStringAsFixed(1),
+                ),
           color: context.accentColor,
         ),
       );
@@ -800,31 +842,33 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
   Widget _buildIdentityCard(BuildContext context, MeshNode node) {
     return _buildInfoSection(
       context,
-      title: 'Identity',
+      title: context.l10n.nodeDetailSectionIdentity,
       icon: Icons.badge_outlined,
       rows: [
         if (node.userId != null)
           InfoTableRow(
             icon: Icons.person_outline,
-            label: 'User ID',
+            label: context.l10n.nodeDetailLabelUserId,
             value: node.userId!,
           ),
         if (node.hardwareModel != null)
           InfoTableRow(
             icon: Icons.memory,
-            label: 'Hardware',
+            label: context.l10n.nodeDetailLabelHardware,
             value: node.hardwareModel!,
           ),
         if (node.firmwareVersion != null)
           InfoTableRow(
             icon: Icons.system_update,
-            label: 'Firmware',
+            label: context.l10n.nodeDetailLabelFirmware,
             value: node.firmwareVersion!,
           ),
         InfoTableRow(
           icon: node.hasPublicKey ? Icons.lock : Icons.lock_open,
-          label: 'Encryption',
-          value: node.hasPublicKey ? 'PKI Enabled' : 'No Public Key',
+          label: context.l10n.nodeDetailLabelEncryption,
+          value: node.hasPublicKey
+              ? context.l10n.nodeDetailValuePkiEnabled
+              : context.l10n.nodeDetailValueNoPublicKey,
           iconColor: node.hasPublicKey
               ? AccentColors.green
               : context.textTertiary,
@@ -832,7 +876,7 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
         if (node.nodeStatus != null && node.nodeStatus!.isNotEmpty)
           InfoTableRow(
             icon: Icons.info_outline,
-            label: 'Status',
+            label: context.l10n.nodeDetailLabelStatus,
             value: node.nodeStatus!,
           ),
       ],
@@ -843,43 +887,51 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
   Widget _buildRadioCard(BuildContext context, MeshNode node) {
     return _buildInfoSection(
       context,
-      title: 'Radio',
+      title: context.l10n.nodeDetailSectionRadio,
       icon: Icons.cell_tower,
       rows: [
         if (node.rssi != null)
           InfoTableRow(
             icon: Icons.signal_cellular_alt,
-            label: 'RSSI',
-            value: '${node.rssi} dBm',
+            label: context.l10n.nodeDetailLabelRssi,
+            value: context.l10n.nodeDetailValueRssi(node.rssi!),
           ),
         if (node.snr != null)
-          InfoTableRow(icon: Icons.wifi, label: 'SNR', value: '${node.snr} dB'),
+          InfoTableRow(
+            icon: Icons.wifi,
+            label: context.l10n.nodeDetailLabelSnr,
+            value: context.l10n.nodeDetailValueSnr(node.snr.toString()),
+          ),
         if (node.noiseFloor != null)
           InfoTableRow(
             icon: Icons.graphic_eq,
-            label: 'Noise Floor',
-            value: '${node.noiseFloor} dBm',
+            label: context.l10n.nodeDetailLabelNoiseFloor,
+            value: context.l10n.nodeDetailValueNoiseFloor(node.noiseFloor!),
           ),
         if (node.distance != null)
           InfoTableRow(
             icon: Icons.near_me,
-            label: 'Distance',
+            label: context.l10n.nodeDetailLabelDistance,
             value: node.distance! < 1000
-                ? '${node.distance!.toInt()} m'
-                : '${(node.distance! / 1000).toStringAsFixed(1)} km',
+                ? context.l10n.nodeDetailDistanceMeters(
+                    node.distance!.toInt().toString(),
+                  )
+                : context.l10n.nodeDetailDistanceKilometers(
+                    (node.distance! / 1000).toStringAsFixed(1),
+                  ),
           ),
         if (node.hasPosition)
           InfoTableRow(
             icon: Icons.location_on,
-            label: 'Position',
+            label: context.l10n.nodeDetailLabelPosition,
             value:
                 '${node.latitude!.toStringAsFixed(5)}, ${node.longitude!.toStringAsFixed(5)}',
           ),
         if (node.altitude != null)
           InfoTableRow(
             icon: Icons.height,
-            label: 'Altitude',
-            value: '${node.altitude} m',
+            label: context.l10n.nodeDetailLabelAltitude,
+            value: context.l10n.nodeDetailValueAltitude(node.altitude!),
           ),
       ],
     );
@@ -889,40 +941,46 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
   Widget _buildDeviceMetricsCard(BuildContext context, MeshNode node) {
     return _buildInfoSection(
       context,
-      title: 'Device Metrics',
+      title: context.l10n.nodeDetailSectionDeviceMetrics,
       icon: Icons.developer_board,
       rows: [
         if (node.batteryLevel != null)
           InfoTableRow(
             icon: _getBatteryIcon(node.batteryLevel!),
             iconColor: _getBatteryColor(node.batteryLevel!),
-            label: 'Battery',
+            label: context.l10n.nodeDetailLabelBattery,
             value: node.batteryLevel! > 100
-                ? 'Charging'
-                : '${node.batteryLevel}%',
+                ? context.l10n.nodeDetailBatteryCharging
+                : context.l10n.nodeDetailBatteryPercent(node.batteryLevel!),
           ),
         if (node.voltage != null)
           InfoTableRow(
             icon: Icons.battery_charging_full,
-            label: 'Voltage',
-            value: '${node.voltage!.toStringAsFixed(2)} V',
+            label: context.l10n.nodeDetailLabelVoltage,
+            value: context.l10n.nodeDetailValueVoltage(
+              node.voltage!.toStringAsFixed(2),
+            ),
           ),
         if (node.channelUtilization != null)
           InfoTableRow(
             icon: Icons.wifi_tethering,
-            label: 'Channel Util',
-            value: '${node.channelUtilization!.toStringAsFixed(1)}%',
+            label: context.l10n.nodeDetailLabelChannelUtil,
+            value: context.l10n.nodeDetailValuePercent(
+              node.channelUtilization!.toStringAsFixed(1),
+            ),
           ),
         if (node.airUtilTx != null)
           InfoTableRow(
             icon: Icons.cell_tower,
-            label: 'Air Util TX',
-            value: '${node.airUtilTx!.toStringAsFixed(1)}%',
+            label: context.l10n.nodeDetailLabelAirUtilTx,
+            value: context.l10n.nodeDetailValuePercent(
+              node.airUtilTx!.toStringAsFixed(1),
+            ),
           ),
         if (node.uptimeSeconds != null)
           InfoTableRow(
             icon: Icons.timer,
-            label: 'Uptime',
+            label: context.l10n.nodeDetailLabelUptime,
             value: _formatUptime(node.uptimeSeconds!),
           ),
       ],
@@ -933,43 +991,43 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
   Widget _buildNetworkStatsCard(BuildContext context, MeshNode node) {
     return _buildInfoSection(
       context,
-      title: 'Network',
+      title: context.l10n.nodeDetailSectionNetwork,
       icon: Icons.bar_chart,
       rows: [
         if (node.numPacketsTx != null)
           InfoTableRow(
             icon: Icons.upload,
-            label: 'Packets TX',
+            label: context.l10n.nodeDetailLabelPacketsTx,
             value: '${node.numPacketsTx}',
           ),
         if (node.numPacketsRx != null)
           InfoTableRow(
             icon: Icons.download,
-            label: 'Packets RX',
+            label: context.l10n.nodeDetailLabelPacketsRx,
             value: '${node.numPacketsRx}',
           ),
         if (node.numPacketsRxBad != null)
           InfoTableRow(
             icon: Icons.error_outline,
-            label: 'Bad Packets',
+            label: context.l10n.nodeDetailLabelBadPackets,
             value: '${node.numPacketsRxBad}',
           ),
         if (node.numOnlineNodes != null)
           InfoTableRow(
             icon: Icons.people,
-            label: 'Online Nodes',
+            label: context.l10n.nodeDetailLabelOnlineNodes,
             value: '${node.numOnlineNodes}',
           ),
         if (node.numTotalNodes != null)
           InfoTableRow(
             icon: Icons.groups,
-            label: 'Total Nodes',
+            label: context.l10n.nodeDetailLabelTotalNodes,
             value: '${node.numTotalNodes}',
           ),
         if (node.numTxDropped != null)
           InfoTableRow(
             icon: Icons.block,
-            label: 'TX Dropped',
+            label: context.l10n.nodeDetailLabelTxDropped,
             value: '${node.numTxDropped}',
           ),
       ],
@@ -980,49 +1038,49 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
   Widget _buildTrafficCard(BuildContext context, MeshNode node) {
     return _buildInfoSection(
       context,
-      title: 'Traffic Management',
+      title: context.l10n.nodeDetailSectionTraffic,
       icon: Icons.traffic,
       rows: [
         if (node.tmPacketsInspected != null)
           InfoTableRow(
             icon: Icons.search,
-            label: 'Inspected',
+            label: context.l10n.nodeDetailLabelInspected,
             value: '${node.tmPacketsInspected}',
           ),
         if (node.tmPositionDedupDrops != null)
           InfoTableRow(
             icon: Icons.filter_alt,
-            label: 'Position Dedup',
+            label: context.l10n.nodeDetailLabelPositionDedup,
             value: '${node.tmPositionDedupDrops}',
           ),
         if (node.tmNodeinfoCacheHits != null)
           InfoTableRow(
             icon: Icons.cached,
-            label: 'Cache Hits',
+            label: context.l10n.nodeDetailLabelCacheHits,
             value: '${node.tmNodeinfoCacheHits}',
           ),
         if (node.tmRateLimitDrops != null)
           InfoTableRow(
             icon: Icons.speed,
-            label: 'Rate Limit Drops',
+            label: context.l10n.nodeDetailLabelRateLimitDrops,
             value: '${node.tmRateLimitDrops}',
           ),
         if (node.tmUnknownPacketDrops != null)
           InfoTableRow(
             icon: Icons.help_outline,
-            label: 'Unknown Drops',
+            label: context.l10n.nodeDetailLabelUnknownDrops,
             value: '${node.tmUnknownPacketDrops}',
           ),
         if (node.tmHopExhaustedPackets != null)
           InfoTableRow(
             icon: Icons.do_not_disturb,
-            label: 'Hop Exhausted',
+            label: context.l10n.nodeDetailLabelHopExhausted,
             value: '${node.tmHopExhaustedPackets}',
           ),
         if (node.tmRouterHopsPreserved != null)
           InfoTableRow(
             icon: Icons.route,
-            label: 'Hops Preserved',
+            label: context.l10n.nodeDetailLabelHopsPreserved,
             value: '${node.tmRouterHopsPreserved}',
           ),
       ],
@@ -1048,9 +1106,12 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
                 ),
               ),
               icon: const Icon(Icons.restart_alt, size: 20),
-              label: const Text(
-                'Reboot',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+              label: Text(
+                context.l10n.nodeDetailRebootButton,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),
@@ -1069,9 +1130,12 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
                 ),
               ),
               icon: const Icon(Icons.power_settings_new, size: 20),
-              label: const Text(
-                'Shutdown',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+              label: Text(
+                context.l10n.nodeDetailShutdownButton,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),
@@ -1091,8 +1155,8 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
               ? AppTheme.warningYellow
               : context.textSecondary,
           tooltip: node.isFavorite
-              ? 'Remove from favorites'
-              : 'Add to favorites',
+              ? context.l10n.nodeDetailRemoveFromFavoritesTooltip
+              : context.l10n.nodeDetailAddToFavoritesTooltip,
         ),
         const SizedBox(width: AppTheme.spacing8),
         // Mute
@@ -1102,7 +1166,9 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
           onPressed: () => _toggleIgnored(context, node),
           icon: node.isIgnored ? Icons.volume_off : Icons.volume_up,
           iconColor: node.isIgnored ? AppTheme.errorRed : context.textSecondary,
-          tooltip: node.isIgnored ? 'Unmute node' : 'Mute node',
+          tooltip: node.isIgnored
+              ? context.l10n.nodeDetailUnmuteTooltip
+              : context.l10n.nodeDetailMuteTooltip,
         ),
         const SizedBox(width: AppTheme.spacing8),
         // Traceroute
@@ -1117,7 +1183,7 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
           child: FilledButton.icon(
             onPressed: () => _sendDirectMessage(context, node),
             icon: const Icon(Icons.message, size: 20),
-            label: const Text('Message'),
+            label: Text(context.l10n.nodeDetailMessageButton),
             style: FilledButton.styleFrom(
               backgroundColor: context.accentColor,
               padding: const EdgeInsets.symmetric(vertical: 14),
@@ -1171,7 +1237,7 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
               )
             : Text(
                 key: const ValueKey('title'),
-                'Node Details',
+                context.l10n.nodeDetailAppBarTitle,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -1196,7 +1262,7 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
         IconButton(
           onPressed: () => _shareSigilCard(context, node),
           icon: Icon(Icons.auto_awesome_outlined, color: context.textSecondary),
-          tooltip: 'Sigil Card',
+          tooltip: context.l10n.nodeDetailSigilCardTooltip,
         ),
         // Overflow menu
         AppBarOverflowMenu<String>(
@@ -1205,7 +1271,7 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
               value: 'qr',
               child: ListTile(
                 leading: Icon(Icons.qr_code, color: context.accentColor),
-                title: const Text('QR Code'),
+                title: Text(context.l10n.nodeDetailMenuQrCode),
                 dense: true,
                 contentPadding: EdgeInsets.zero,
               ),
@@ -1215,7 +1281,7 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
                 value: 'map',
                 child: ListTile(
                   leading: Icon(Icons.map, color: context.accentColor),
-                  title: const Text('Show on Map'),
+                  title: Text(context.l10n.nodeDetailMenuShowOnMap),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
                 ),
@@ -1225,7 +1291,7 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
                 value: 'traceroute_history',
                 child: ListTile(
                   leading: Icon(Icons.timeline, color: context.accentColor),
-                  title: const Text('Traceroute History'),
+                  title: Text(context.l10n.nodeDetailMenuTracerouteHistory),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
                 ),
@@ -1234,7 +1300,7 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
                 value: 'request_info',
                 child: ListTile(
                   leading: Icon(Icons.refresh, color: context.accentColor),
-                  title: const Text('Request User Info'),
+                  title: Text(context.l10n.nodeDetailMenuRequestUserInfo),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
                 ),
@@ -1243,7 +1309,7 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
                 value: 'exchange_positions',
                 child: ListTile(
                   leading: Icon(Icons.swap_horiz, color: context.accentColor),
-                  title: const Text('Exchange Positions'),
+                  title: Text(context.l10n.nodeDetailMenuExchangePositions),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
                 ),
@@ -1256,7 +1322,7 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
                       Icons.location_on,
                       color: context.accentColor,
                     ),
-                    title: const Text('Set as Fixed Position'),
+                    title: Text(context.l10n.nodeDetailMenuSetFixedPosition),
                     dense: true,
                     contentPadding: EdgeInsets.zero,
                   ),
@@ -1269,9 +1335,9 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
                       Icons.admin_panel_settings,
                       color: context.accentColor,
                     ),
-                    title: const Text('Admin Settings'),
+                    title: Text(context.l10n.nodeDetailMenuAdminSettings),
                     subtitle: Text(
-                      'Configure this node remotely',
+                      context.l10n.nodeDetailMenuAdminSubtitle,
                       style: TextStyle(
                         fontSize: 11,
                         color: context.textTertiary,
@@ -1289,9 +1355,9 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
                     Icons.delete_outline,
                     color: AppTheme.errorRed,
                   ),
-                  title: const Text(
-                    'Remove Node',
-                    style: TextStyle(color: AppTheme.errorRed),
+                  title: Text(
+                    context.l10n.nodeDetailMenuRemoveNode,
+                    style: const TextStyle(color: AppTheme.errorRed),
                   ),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
@@ -1361,7 +1427,9 @@ class _NodeDetailScreenState extends ConsumerState<NodeDetailScreen>
                   ),
                   const SizedBox(width: AppTheme.spacing4),
                   Text(
-                    'Last heard ${DateFormat('MMM d, yyyy HH:mm').format(node.lastHeard!)}',
+                    context.l10n.nodeDetailLastHeardTimestamp(
+                      DateFormat('MMM d, yyyy HH:mm').format(node.lastHeard!),
+                    ),
                     style: TextStyle(fontSize: 11, color: context.textTertiary),
                   ),
                 ],
@@ -1467,7 +1535,9 @@ class _TracerouteButton extends ConsumerWidget {
             )
           : cooldownRemaining > 0
           ? Tooltip(
-              message: 'Traceroute cooldown: ${cooldownRemaining}s',
+              message: context.l10n.nodeDetailTracerouteCooldownTooltip(
+                cooldownRemaining,
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(AppTheme.spacing12),
                 child: SizedBox(
@@ -1506,7 +1576,7 @@ class _TracerouteButton extends ConsumerWidget {
           : IconButton(
               onPressed: onPressed,
               icon: Icon(Icons.route, color: context.textSecondary, size: 22),
-              tooltip: 'Traceroute',
+              tooltip: context.l10n.nodeDetailTracerouteTooltip,
               padding: const EdgeInsets.all(AppTheme.spacing12),
               constraints: const BoxConstraints(),
             ),

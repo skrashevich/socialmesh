@@ -8,6 +8,7 @@ import '../../../core/theme.dart';
 import '../../../providers/app_providers.dart';
 import '../../../providers/auth_providers.dart';
 import '../../../providers/social_providers.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../utils/snackbar.dart';
 import '../../settings/linked_devices_screen.dart';
 
@@ -81,12 +82,18 @@ class _LinkDeviceBannerState extends ConsumerState<LinkDeviceBanner>
     try {
       await linkNode(ref, nodeNum, setPrimary: true);
       if (mounted) {
-        showSuccessSnackBar(context, 'Device linked to your profile!');
+        showSuccessSnackBar(
+          context,
+          context.l10n.linkDeviceBannerLinkedSuccess,
+        );
         _dismiss(nodeNum);
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to link: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.linkDeviceBannerLinkError(e.toString()),
+        );
         safeSetState(() => _isLinking = false);
       }
     }
@@ -169,7 +176,7 @@ class _LinkDeviceBannerState extends ConsumerState<LinkDeviceBanner>
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              'Link this device to your profile',
+                              context.l10n.linkDeviceBannerTitle,
                               style: TextStyle(
                                 color: context.textPrimary,
                                 fontWeight: FontWeight.w600,
@@ -178,7 +185,7 @@ class _LinkDeviceBannerState extends ConsumerState<LinkDeviceBanner>
                             ),
                             const SizedBox(height: AppTheme.spacing2),
                             Text(
-                              'Others can find and follow you',
+                              context.l10n.linkDeviceBannerSubtitle,
                               style: TextStyle(
                                 color: context.textSecondary,
                                 fontSize: 11,
@@ -209,9 +216,9 @@ class _LinkDeviceBannerState extends ConsumerState<LinkDeviceBanner>
                                 minimumSize: Size.zero,
                                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               ),
-                              child: const Text(
-                                'Link',
-                                style: TextStyle(
+                              child: Text(
+                                context.l10n.linkDeviceBannerLinkButton,
+                                style: const TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600,
                                 ),
