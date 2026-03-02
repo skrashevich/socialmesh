@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../models/mesh_device.dart';
 import '../../../providers/meshcore_providers.dart';
@@ -82,7 +83,7 @@ class _MeshCoreConsoleState extends ConsumerState<MeshCoreConsole> {
                         Row(
                           children: [
                             Text(
-                              'MeshCore Console',
+                              context.l10n.meshcoreConsoleTitle,
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
@@ -104,7 +105,7 @@ class _MeshCoreConsoleState extends ConsumerState<MeshCoreConsole> {
                                 ),
                               ),
                               child: Text(
-                                'DEV',
+                                context.l10n.meshcoreConsoleDevBadge,
                                 style: TextStyle(
                                   fontSize: 10,
                                   fontWeight: FontWeight.w600,
@@ -116,7 +117,9 @@ class _MeshCoreConsoleState extends ConsumerState<MeshCoreConsole> {
                         ),
                         const SizedBox(height: AppTheme.spacing2),
                         Text(
-                          '${captureSnapshot.totalCount} frames captured',
+                          context.l10n.meshcoreConsoleFramesCaptured(
+                            captureSnapshot.totalCount,
+                          ),
                           style: TextStyle(
                             fontSize: 13,
                             color: context.textSecondary,
@@ -148,7 +151,7 @@ class _MeshCoreConsoleState extends ConsumerState<MeshCoreConsole> {
                     child: OutlinedButton.icon(
                       onPressed: () => _onRefresh(),
                       icon: const Icon(Icons.refresh, size: 18),
-                      label: const Text('Refresh'),
+                      label: Text(context.l10n.meshcoreConsoleRefresh),
                       style: OutlinedButton.styleFrom(
                         foregroundColor: AccentColors.purple,
                         side: BorderSide(
@@ -164,7 +167,7 @@ class _MeshCoreConsoleState extends ConsumerState<MeshCoreConsole> {
                           ? _onCopyHexLog
                           : null,
                       icon: const Icon(Icons.copy, size: 18),
-                      label: const Text('Copy Hex'),
+                      label: Text(context.l10n.meshcoreConsoleCopyHex),
                       style: OutlinedButton.styleFrom(
                         foregroundColor: AccentColors.purple,
                         side: BorderSide(
@@ -178,7 +181,7 @@ class _MeshCoreConsoleState extends ConsumerState<MeshCoreConsole> {
                     child: OutlinedButton.icon(
                       onPressed: captureSnapshot.hasFrames ? _onClear : null,
                       icon: const Icon(Icons.delete_sweep, size: 18),
-                      label: const Text('Clear'),
+                      label: Text(context.l10n.meshcoreConsoleClear),
                       style: OutlinedButton.styleFrom(
                         foregroundColor: AppTheme.errorRed,
                         side: BorderSide(
@@ -225,7 +228,7 @@ class _MeshCoreConsoleState extends ConsumerState<MeshCoreConsole> {
                   ),
                   child: Center(
                     child: Text(
-                      'No frames captured yet',
+                      context.l10n.meshcoreConsoleNoFrames,
                       style: TextStyle(
                         fontSize: 13,
                         color: context.textTertiary,
@@ -250,14 +253,14 @@ class _MeshCoreConsoleState extends ConsumerState<MeshCoreConsole> {
         .getHexLog();
     Clipboard.setData(ClipboardData(text: hexLog));
     if (mounted) {
-      showSuccessSnackBar(context, 'Hex log copied to clipboard');
+      showSuccessSnackBar(context, context.l10n.meshcoreConsoleHexCopied);
     }
   }
 
   void _onClear() {
     ref.read(meshCoreCaptureSnapshotProvider.notifier).clear();
     if (mounted) {
-      showSuccessSnackBar(context, 'Capture cleared');
+      showSuccessSnackBar(context, context.l10n.meshcoreConsoleCaptureCleared);
     }
   }
 }

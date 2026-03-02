@@ -16,6 +16,7 @@ import '../../../core/widgets/search_filter_header.dart';
 import '../../../providers/auth_providers.dart';
 import '../../../utils/snackbar.dart';
 import '../models/shop_models.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../providers/admin_shop_providers.dart';
 import '../providers/device_shop_providers.dart';
 
@@ -49,7 +50,7 @@ class _AdminProductsScreenState extends ConsumerState<AdminProductsScreen>
       onTap: () => FocusScope.of(context).unfocus(),
       child: GlassScaffold(
         resizeToAvoidBottomInset: false,
-        title: 'Manage Products',
+        title: context.l10n.adminProductsTitle,
         actions: [
           IconButton(
             icon: Icon(
@@ -57,12 +58,14 @@ class _AdminProductsScreenState extends ConsumerState<AdminProductsScreen>
               color: _showInactive ? context.accentColor : null,
             ),
             onPressed: () => setState(() => _showInactive = !_showInactive),
-            tooltip: _showInactive ? 'Hide inactive' : 'Show inactive',
+            tooltip: _showInactive
+                ? context.l10n.adminProductsHideInactive
+                : context.l10n.adminProductsShowInactive,
           ),
           IconButton(
             icon: Icon(Icons.add),
             onPressed: () => _navigateToEdit(null),
-            tooltip: 'Add Product',
+            tooltip: context.l10n.adminProductsAddTooltip,
           ),
         ],
         slivers: [
@@ -73,7 +76,7 @@ class _AdminProductsScreenState extends ConsumerState<AdminProductsScreen>
               searchController: _searchController,
               searchQuery: _searchQuery,
               onSearchChanged: (value) => setState(() => _searchQuery = value),
-              hintText: 'Search products...',
+              hintText: context.l10n.adminProductsSearchHint,
               textScaler: MediaQuery.textScalerOf(context),
               trailingControls: [
                 PopupMenuButton<DeviceCategory?>(
@@ -81,17 +84,19 @@ class _AdminProductsScreenState extends ConsumerState<AdminProductsScreen>
                     Icons.filter_list,
                     color: _filterCategory != null ? context.accentColor : null,
                   ),
-                  tooltip: 'Filter by category',
+                  tooltip: context.l10n.adminProductsFilterTooltip,
                   onSelected: (category) =>
                       setState(() => _filterCategory = category),
                   itemBuilder: (context) => [
-                    const PopupMenuItem(
+                    PopupMenuItem(
                       value: null,
-                      child: Text('All Categories'),
+                      child: Text(context.l10n.adminProductsAllCategories),
                     ),
                     ...DeviceCategory.values.map(
-                      (cat) =>
-                          PopupMenuItem(value: cat, child: Text(cat.label)),
+                      (cat) => PopupMenuItem(
+                        value: cat,
+                        child: Text(cat.displayLabel(context.l10n)),
+                      ),
                     ),
                   ],
                 ),
@@ -128,7 +133,7 @@ class _AdminProductsScreenState extends ConsumerState<AdminProductsScreen>
                           color: context.textTertiary,
                         ),
                         const SizedBox(height: AppTheme.spacing16),
-                        const Text('No products found'),
+                        Text(context.l10n.adminProductsNotFound),
                       ],
                     ),
                   ),
@@ -198,14 +203,13 @@ class _AdminProductsScreenState extends ConsumerState<AdminProductsScreen>
   Future<void> _confirmDelete(ShopProduct product) async {
     // Capture providers before async gap
     final service = ref.read(deviceShopServiceProvider);
+    final l10n = context.l10n;
 
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Delete Product',
-      message:
-          'Are you sure you want to permanently delete "${product.name}"?\n\n'
-          'This action cannot be undone.',
-      confirmLabel: 'Delete',
+      title: l10n.adminProductsDeleteTitle,
+      message: l10n.adminProductsDeleteMessage(product.name),
+      confirmLabel: l10n.adminProductsDelete,
       isDestructive: true,
     );
 
@@ -214,7 +218,7 @@ class _AdminProductsScreenState extends ConsumerState<AdminProductsScreen>
         await service.deleteProductPermanently(product.id);
         if (!mounted) return;
         ref.invalidate(adminAllProductsProvider);
-        showSuccessSnackBar(context, 'Product deleted');
+        showSuccessSnackBar(context, l10n.adminProductsDeleted);
       } catch (e) {
         if (mounted) {
           showErrorSnackBar(context, 'Error: $e');
@@ -295,7 +299,7 @@ class _ProductListItem extends StatelessWidget {
                               ),
                             ),
                             child: Text(
-                              'INACTIVE',
+                              context.l10n.adminProductsInactiveBadge,
                               style: TextStyle(
                                 fontSize: 10,
                                 color: AppTheme.errorRed,
@@ -318,8 +322,8 @@ class _ProductListItem extends StatelessWidget {
                                 AppTheme.radius4,
                               ),
                             ),
-                            child: const Text(
-                              'FEATURED',
+                            child: Text(
+                              context.l10n.adminProductsFeaturedBadge,
                               style: TextStyle(
                                 fontSize: 10,
                                 color: AppTheme.warningYellow,
@@ -331,7 +335,7 @@ class _ProductListItem extends StatelessWidget {
                     ),
                     const SizedBox(height: AppTheme.spacing4),
                     Text(
-                      '${product.category.label} • ${product.sellerName}',
+                      '${product.category.displayLabel(context.l10n)} • ${product.sellerName}',
                       style: TextStyle(
                         fontSize: 12,
                         color: context.textSecondary,
@@ -341,7 +345,7 @@ class _ProductListItem extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          product.formattedPrice,
+                          product.formattedPrice(context.l10n),
                           style: TextStyle(
                             color: context.accentColor,
                             fontWeight: FontWeight.bold,
@@ -397,13 +401,13 @@ class _ProductListItem extends StatelessWidget {
                   }
                 },
                 itemBuilder: (context) => [
-                  const PopupMenuItem(
+                  PopupMenuItem(
                     value: 'edit',
                     child: Row(
                       children: [
                         Icon(Icons.edit, size: 20),
                         SizedBox(width: AppTheme.spacing8),
-                        Text('Edit'),
+                        Text(context.l10n.adminProductsEdit),
                       ],
                     ),
                   ),
@@ -418,18 +422,22 @@ class _ProductListItem extends StatelessWidget {
                           size: 20,
                         ),
                         const SizedBox(width: AppTheme.spacing8),
-                        Text(product.isActive ? 'Deactivate' : 'Activate'),
+                        Text(
+                          product.isActive
+                              ? context.l10n.adminProductsDeactivate
+                              : context.l10n.adminProductsActivate,
+                        ),
                       ],
                     ),
                   ),
-                  const PopupMenuItem(
+                  PopupMenuItem(
                     value: 'delete',
                     child: Row(
                       children: [
                         Icon(Icons.delete, size: 20, color: AppTheme.errorRed),
                         SizedBox(width: AppTheme.spacing8),
                         Text(
-                          'Delete',
+                          context.l10n.adminProductsDeleteMenu,
                           style: TextStyle(color: AppTheme.errorRed),
                         ),
                       ],
@@ -564,13 +572,15 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
     final sellersAsync = ref.watch(shopSellersProvider);
 
     return GlassScaffold(
-      title: _isEditing ? 'Edit Product' : 'Add Product',
+      title: _isEditing
+          ? context.l10n.adminProductsEditTitle
+          : context.l10n.adminProductsAddTitle,
       actions: [
         if (_isEditing)
           IconButton(
             icon: const Icon(Icons.delete, color: AppTheme.errorRed),
             onPressed: _confirmDelete,
-            tooltip: 'Delete',
+            tooltip: context.l10n.adminProductsDeleteTooltip,
           ),
       ],
       slivers: [
@@ -583,27 +593,31 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Images Section
-                  _buildSectionTitle('Product Images'),
+                  _buildSectionTitle(context.l10n.adminProductsImagesSection),
                   _buildImageSection(),
                   const SizedBox(height: AppTheme.spacing24),
 
                   // Basic Info
-                  _buildSectionTitle('Basic Information'),
+                  _buildSectionTitle(
+                    context.l10n.adminProductsBasicInfoSection,
+                  ),
                   TextFormField(
                     controller: _nameController,
-                    decoration: const InputDecoration(
-                      labelText: 'Product Name *',
-                      hintText: 'e.g., T-Beam Supreme',
+                    decoration: InputDecoration(
+                      labelText: context.l10n.adminProductsNameLabel,
+                      hintText: context.l10n.adminProductsNameHint,
                     ),
-                    validator: (v) => v?.isEmpty == true ? 'Required' : null,
+                    validator: (v) => v?.isEmpty == true
+                        ? context.l10n.adminProductsRequired
+                        : null,
                   ),
                   const SizedBox(height: AppTheme.spacing16),
 
                   TextFormField(
                     controller: _shortDescriptionController,
-                    decoration: const InputDecoration(
-                      labelText: 'Short Description',
-                      hintText: 'Brief summary (max 150 chars)',
+                    decoration: InputDecoration(
+                      labelText: context.l10n.adminProductsShortDescLabel,
+                      hintText: context.l10n.adminProductsShortDescHint,
                       counterText: '',
                     ),
                     maxLength: 150,
@@ -612,19 +626,25 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
 
                   TextFormField(
                     controller: _descriptionController,
-                    decoration: const InputDecoration(
-                      labelText: 'Full Description *',
-                      hintText: 'Detailed product description',
+                    decoration: InputDecoration(
+                      labelText: context.l10n.adminProductsFullDescLabel,
+                      hintText: context.l10n.adminProductsFullDescHint,
                     ),
                     maxLines: 5,
-                    validator: (v) => v?.isEmpty == true ? 'Required' : null,
+                    validator: (v) => v?.isEmpty == true
+                        ? context.l10n.adminProductsRequired
+                        : null,
                   ),
                   const SizedBox(height: AppTheme.spacing24),
 
                   // Category & Seller
-                  _buildSectionTitle('Category & Seller'),
+                  _buildSectionTitle(
+                    context.l10n.adminProductsCategorySellerSection,
+                  ),
                   InputDecorator(
-                    decoration: const InputDecoration(labelText: 'Category *'),
+                    decoration: InputDecoration(
+                      labelText: context.l10n.adminProductsCategoryLabel,
+                    ),
                     child: DropdownButton<DeviceCategory>(
                       value: _category,
                       isExpanded: true,
@@ -632,7 +652,7 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
                       items: DeviceCategory.values.map((cat) {
                         return DropdownMenuItem(
                           value: cat,
-                          child: Text(cat.label),
+                          child: Text(cat.displayLabel(context.l10n)),
                         );
                       }).toList(),
                       onChanged: (cat) {
@@ -644,12 +664,14 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
 
                   sellersAsync.when(
                     data: (sellers) => InputDecorator(
-                      decoration: const InputDecoration(labelText: 'Seller *'),
+                      decoration: InputDecoration(
+                        labelText: context.l10n.adminProductsSellerLabel,
+                      ),
                       child: DropdownButton<String>(
                         value: _sellerId,
                         isExpanded: true,
                         underline: const SizedBox.shrink(),
-                        hint: const Text('Select seller'),
+                        hint: Text(context.l10n.adminProductsSelectSeller),
                         items: sellers.map((seller) {
                           return DropdownMenuItem(
                             value: seller.id,
@@ -670,25 +692,33 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
                       ),
                     ),
                     loading: () => const LinearProgressIndicator(),
-                    error: (e, s) => Text('Error loading sellers: $e'),
+                    error: (e, s) => Text(
+                      context.l10n.adminProductsErrorLoadingSellers(
+                        e.toString(),
+                      ),
+                    ),
                   ),
                   const SizedBox(height: AppTheme.spacing24),
 
                   // Pricing
-                  _buildSectionTitle('Pricing'),
+                  _buildSectionTitle(context.l10n.adminProductsPricingSection),
                   Row(
                     children: [
                       Expanded(
                         child: TextFormField(
                           controller: _priceController,
-                          decoration: const InputDecoration(
-                            labelText: 'Price (USD) *',
+                          decoration: InputDecoration(
+                            labelText: context.l10n.adminProductsPriceLabel,
                             prefixText: '\$ ',
                           ),
                           keyboardType: TextInputType.number,
                           validator: (v) {
-                            if (v?.isEmpty == true) return 'Required';
-                            if (double.tryParse(v!) == null) return 'Invalid';
+                            if (v?.isEmpty == true) {
+                              return context.l10n.adminProductsRequired;
+                            }
+                            if (double.tryParse(v!) == null) {
+                              return context.l10n.adminProductsInvalid;
+                            }
                             return null;
                           },
                         ),
@@ -697,10 +727,12 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
                       Expanded(
                         child: TextFormField(
                           controller: _compareAtPriceController,
-                          decoration: const InputDecoration(
-                            labelText: 'Compare at Price',
+                          decoration: InputDecoration(
+                            labelText:
+                                context.l10n.adminProductsComparePriceLabel,
                             prefixText: '\$ ',
-                            hintText: 'Original price for sale',
+                            hintText:
+                                context.l10n.adminProductsComparePriceHint,
                           ),
                           keyboardType: TextInputType.number,
                         ),
@@ -710,11 +742,13 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
                   const SizedBox(height: AppTheme.spacing24),
 
                   // External URL
-                  _buildSectionTitle('Purchase Link'),
+                  _buildSectionTitle(
+                    context.l10n.adminProductsPurchaseLinkSection,
+                  ),
                   TextFormField(
                     controller: _purchaseUrlController,
-                    decoration: const InputDecoration(
-                      labelText: 'Purchase URL',
+                    decoration: InputDecoration(
+                      labelText: context.l10n.adminProductsPurchaseUrlLabel,
                       hintText: 'https://...',
                       prefixIcon: Icon(Icons.link),
                     ),
@@ -723,15 +757,17 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
                   const SizedBox(height: AppTheme.spacing24),
 
                   // Technical Specs
-                  _buildSectionTitle('Technical Specifications'),
+                  _buildSectionTitle(
+                    context.l10n.adminProductsTechSpecsSection,
+                  ),
                   Row(
                     children: [
                       Expanded(
                         child: TextFormField(
                           controller: _chipsetController,
-                          decoration: const InputDecoration(
-                            labelText: 'Chipset',
-                            hintText: 'e.g., ESP32-S3',
+                          decoration: InputDecoration(
+                            labelText: context.l10n.adminProductsChipsetLabel,
+                            hintText: context.l10n.adminProductsChipsetHint,
                           ),
                         ),
                       ),
@@ -739,9 +775,9 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
                       Expanded(
                         child: TextFormField(
                           controller: _loraChipController,
-                          decoration: const InputDecoration(
-                            labelText: 'LoRa Chip',
-                            hintText: 'e.g., SX1262',
+                          decoration: InputDecoration(
+                            labelText: context.l10n.adminProductsLoraChipLabel,
+                            hintText: context.l10n.adminProductsLoraChipHint,
                           ),
                         ),
                       ),
@@ -754,9 +790,9 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
                       Expanded(
                         child: TextFormField(
                           controller: _batteryCapacityController,
-                          decoration: const InputDecoration(
-                            labelText: 'Battery Capacity',
-                            hintText: 'e.g., 4000mAh',
+                          decoration: InputDecoration(
+                            labelText: context.l10n.adminProductsBatteryLabel,
+                            hintText: context.l10n.adminProductsBatteryHint,
                           ),
                         ),
                       ),
@@ -764,9 +800,9 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
                       Expanded(
                         child: TextFormField(
                           controller: _weightController,
-                          decoration: const InputDecoration(
-                            labelText: 'Weight',
-                            hintText: 'e.g., 50g',
+                          decoration: InputDecoration(
+                            labelText: context.l10n.adminProductsWeightLabel,
+                            hintText: context.l10n.adminProductsWeightHint,
                           ),
                         ),
                       ),
@@ -780,7 +816,7 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
                     runSpacing: 8,
                     children: [
                       FilterChip(
-                        label: const Text('GPS'),
+                        label: Text(context.l10n.adminProductsGps),
                         selected: _hasGps,
                         onSelected: (v) => setState(() => _hasGps = v),
                         selectedColor: context.accentColor.withValues(
@@ -789,7 +825,7 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
                         checkmarkColor: context.accentColor,
                       ),
                       FilterChip(
-                        label: Text('WiFi'),
+                        label: Text(context.l10n.adminProductsWifi),
                         selected: _hasWifi,
                         onSelected: (v) => setState(() => _hasWifi = v),
                         selectedColor: context.accentColor.withValues(
@@ -798,7 +834,7 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
                         checkmarkColor: context.accentColor,
                       ),
                       FilterChip(
-                        label: Text('Bluetooth'),
+                        label: Text(context.l10n.adminProductsBluetooth),
                         selected: _hasBluetooth,
                         onSelected: (v) => setState(() => _hasBluetooth = v),
                         selectedColor: context.accentColor.withValues(
@@ -807,7 +843,7 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
                         checkmarkColor: context.accentColor,
                       ),
                       FilterChip(
-                        label: Text('Display'),
+                        label: Text(context.l10n.adminProductsDisplay),
                         selected: _hasDisplay,
                         onSelected: (v) => setState(() => _hasDisplay = v),
                         selectedColor: context.accentColor.withValues(
@@ -820,14 +856,16 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
                   const SizedBox(height: AppTheme.spacing16),
 
                   // Frequency Bands
-                  _buildSectionTitle('Frequency Bands'),
+                  _buildSectionTitle(
+                    context.l10n.adminProductsFrequencyBandsSection,
+                  ),
                   Wrap(
                     spacing: 8,
                     runSpacing: 8,
                     children: FrequencyBand.values.map((band) {
                       final selected = _frequencyBands.contains(band);
                       return FilterChip(
-                        label: Text(band.label),
+                        label: Text(band.displayLabel(context.l10n)),
                         selected: selected,
                         onSelected: (v) {
                           setState(() {
@@ -848,49 +886,51 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
                   SizedBox(height: AppTheme.spacing24),
 
                   // Physical Specs
-                  _buildSectionTitle('Physical Specifications'),
+                  _buildSectionTitle(
+                    context.l10n.adminProductsPhysicalSpecsSection,
+                  ),
                   TextFormField(
                     controller: _dimensionsController,
-                    decoration: const InputDecoration(
-                      labelText: 'Dimensions',
-                      hintText: 'e.g., 100x50x25mm',
+                    decoration: InputDecoration(
+                      labelText: context.l10n.adminProductsDimensionsLabel,
+                      hintText: context.l10n.adminProductsDimensionsHint,
                     ),
                   ),
                   const SizedBox(height: AppTheme.spacing24),
 
                   // Tags
-                  _buildSectionTitle('Tags'),
+                  _buildSectionTitle(context.l10n.adminProductsTagsSection),
                   TextFormField(
                     controller: _tagsController,
-                    decoration: const InputDecoration(
-                      labelText: 'Tags',
-                      hintText: 'meshtastic, lora, gps (comma separated)',
+                    decoration: InputDecoration(
+                      labelText: context.l10n.adminProductsTagsLabel,
+                      hintText: context.l10n.adminProductsTagsHint,
                     ),
                   ),
                   const SizedBox(height: AppTheme.spacing24),
 
                   // Stock & Status
-                  _buildSectionTitle('Stock & Status'),
+                  _buildSectionTitle(context.l10n.adminProductsStockSection),
                   TextFormField(
                     controller: _stockQuantityController,
-                    decoration: const InputDecoration(
-                      labelText: 'Stock Quantity',
-                      hintText: 'Leave empty for unlimited',
+                    decoration: InputDecoration(
+                      labelText: context.l10n.adminProductsStockLabel,
+                      hintText: context.l10n.adminProductsStockHint,
                     ),
                     keyboardType: TextInputType.number,
                   ),
                   const SizedBox(height: AppTheme.spacing16),
 
                   ListTile(
-                    title: const Text('In Stock'),
+                    title: Text(context.l10n.adminProductsInStock),
                     trailing: ThemedSwitch(
                       value: _isInStock,
                       onChanged: (v) => setState(() => _isInStock = v),
                     ),
                   ),
                   ListTile(
-                    title: const Text('Featured'),
-                    subtitle: const Text('Show in featured products section'),
+                    title: Text(context.l10n.adminProductsFeatured),
+                    subtitle: Text(context.l10n.adminProductsFeaturedSubtitle),
                     trailing: ThemedSwitch(
                       value: _isFeatured,
                       onChanged: (v) => setState(() => _isFeatured = v),
@@ -901,19 +941,20 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
                       padding: const EdgeInsets.only(left: 16, right: 16),
                       child: TextFormField(
                         controller: _featuredOrderController,
-                        decoration: const InputDecoration(
-                          labelText: 'Featured Order',
-                          hintText: 'Lower numbers appear first (0 = top)',
+                        decoration: InputDecoration(
+                          labelText:
+                              context.l10n.adminProductsFeaturedOrderLabel,
+                          hintText: context.l10n.adminProductsFeaturedOrderHint,
                           helperText:
-                              'Controls display order in featured section',
+                              context.l10n.adminProductsFeaturedOrderHelper,
                         ),
                         keyboardType: TextInputType.number,
                       ),
                     ),
                   const SizedBox(height: AppTheme.spacing8),
                   ListTile(
-                    title: const Text('Active'),
-                    subtitle: const Text('Product is visible in the shop'),
+                    title: Text(context.l10n.adminProductsActive),
+                    subtitle: Text(context.l10n.adminProductsActiveSubtitle),
                     trailing: ThemedSwitch(
                       value: _isActive,
                       onChanged: (v) => setState(() => _isActive = v),
@@ -922,17 +963,23 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
                   const SizedBox(height: AppTheme.spacing24),
 
                   // Vendor Verification Section
-                  _buildSectionTitle('Vendor Verification'),
+                  _buildSectionTitle(
+                    context.l10n.adminProductsVendorVerificationSection,
+                  ),
                   Card(
                     color: _vendorVerified
                         ? AppTheme.successGreen.withValues(alpha: 0.1)
                         : Colors.white.withValues(alpha: 0.05),
                     child: ListTile(
-                      title: const Text('Vendor Verified Specs'),
+                      title: Text(
+                        context.l10n.adminProductsVendorVerifiedTitle,
+                      ),
                       subtitle: Text(
                         _vendorVerified
-                            ? 'Specifications have been verified by the vendor'
-                            : 'Mark when vendor confirms all specs are accurate',
+                            ? context.l10n.adminProductsVendorVerifiedSubtitle
+                            : context
+                                  .l10n
+                                  .adminProductsVendorUnverifiedSubtitle,
                       ),
                       leading: Icon(
                         _vendorVerified
@@ -971,7 +1018,9 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
                                 ),
                               )
                             : Text(
-                                _isEditing ? 'Save Changes' : 'Create Product',
+                                _isEditing
+                                    ? context.l10n.adminProductsSaveChanges
+                                    : context.l10n.adminProductsCreate,
                               ),
                       ),
                     ),
@@ -1077,8 +1126,8 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
                                 AppTheme.radius4,
                               ),
                             ),
-                            child: const Text(
-                              'Main',
+                            child: Text(
+                              context.l10n.adminProductsMainImage,
                               style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.bold,
@@ -1104,13 +1153,17 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
                   child: CircularProgressIndicator(strokeWidth: 2),
                 )
               : const Icon(Icons.add_photo_alternate),
-          label: Text(_isUploadingImage ? 'Uploading...' : 'Add Image'),
+          label: Text(
+            _isUploadingImage
+                ? context.l10n.adminProductsUploading
+                : context.l10n.adminProductsAddImage,
+          ),
         ),
         if (_imageUrls.isEmpty)
           Padding(
             padding: const EdgeInsets.only(top: 8),
             child: Text(
-              'At least one image is required',
+              context.l10n.adminProductsImageRequired,
               style: TextStyle(
                 color: AppTheme.errorRed.withValues(alpha: 0.7),
                 fontSize: 12,
@@ -1157,17 +1210,21 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
   Future<void> _save() async {
     if (!_formKey.currentState!.validate()) return;
     if (_imageUrls.isEmpty) {
-      showWarningSnackBar(context, 'Please add at least one image');
+      showWarningSnackBar(context, context.l10n.adminProductsImageWarning);
       return;
     }
     if (_sellerId == null) {
-      showWarningSnackBar(context, 'Please select a seller');
+      showWarningSnackBar(
+        context,
+        context.l10n.adminProductsSelectSellerWarning,
+      );
       return;
     }
 
     // Capture providers before async gap
     final service = ref.read(deviceShopServiceProvider);
     final user = ref.read(currentUserProvider);
+    final l10n = context.l10n;
 
     safeSetState(() => _isLoading = true);
 
@@ -1250,7 +1307,9 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
       ref.invalidate(adminAllProductsProvider);
 
       safeNavigatorPop();
-      safeShowSnackBar(_isEditing ? 'Product updated' : 'Product created');
+      safeShowSnackBar(
+        _isEditing ? l10n.adminProductsUpdated : l10n.adminProductsCreated,
+      );
     } catch (e) {
       safeSetState(() => _isLoading = false);
       if (mounted) {
@@ -1264,12 +1323,13 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
 
     // Capture providers before async gap
     final service = ref.read(deviceShopServiceProvider);
+    final l10n = context.l10n;
 
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Delete Product',
-      message: 'Are you sure you want to permanently delete this product?',
-      confirmLabel: 'Delete',
+      title: l10n.adminProductsDeleteConfirmTitle,
+      message: l10n.adminProductsDeleteConfirmMessage,
+      confirmLabel: l10n.adminProductsDelete,
       isDestructive: true,
     );
 
@@ -1279,7 +1339,7 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
         if (!mounted) return;
         ref.invalidate(adminAllProductsProvider);
         safeNavigatorPop();
-        safeShowSnackBar('Product deleted');
+        safeShowSnackBar(l10n.adminProductsDeletedSuccess);
       } catch (e) {
         if (mounted) {
           showErrorSnackBar(context, 'Error: $e');

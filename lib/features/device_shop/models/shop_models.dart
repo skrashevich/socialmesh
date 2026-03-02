@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../../l10n/app_localizations.dart';
 
 /// Device category
 enum DeviceCategory {
@@ -20,6 +21,30 @@ enum DeviceCategory {
       (c) => c.name == value,
       orElse: () => DeviceCategory.node,
     );
+  }
+
+  String displayLabel(AppLocalizations l10n) {
+    return switch (this) {
+      DeviceCategory.node => l10n.shopModelCategoryNodes,
+      DeviceCategory.module => l10n.shopModelCategoryModules,
+      DeviceCategory.antenna => l10n.shopModelCategoryAntennas,
+      DeviceCategory.enclosure => l10n.shopModelCategoryEnclosures,
+      DeviceCategory.accessory => l10n.shopModelCategoryAccessories,
+      DeviceCategory.kit => l10n.shopModelCategoryKits,
+      DeviceCategory.solar => l10n.shopModelCategorySolar,
+    };
+  }
+
+  String displayDescription(AppLocalizations l10n) {
+    return switch (this) {
+      DeviceCategory.node => l10n.shopModelCategoryNodesDescription,
+      DeviceCategory.module => l10n.shopModelCategoryModulesDescription,
+      DeviceCategory.antenna => l10n.shopModelCategoryAntennasDescription,
+      DeviceCategory.enclosure => l10n.shopModelCategoryEnclosuresDescription,
+      DeviceCategory.accessory => l10n.shopModelCategoryAccessoriesDescription,
+      DeviceCategory.kit => l10n.shopModelCategoryKitsDescription,
+      DeviceCategory.solar => l10n.shopModelCategorySolarDescription,
+    };
   }
 }
 
@@ -43,6 +68,32 @@ enum FrequencyBand {
       (f) => f.name == value,
       orElse: () => FrequencyBand.us915,
     );
+  }
+
+  String displayLabel(AppLocalizations l10n) {
+    return switch (this) {
+      FrequencyBand.us915 => l10n.shopModelBandUs915,
+      FrequencyBand.eu868 => l10n.shopModelBandEu868,
+      FrequencyBand.cn470 => l10n.shopModelBandCn470,
+      FrequencyBand.jp920 => l10n.shopModelBandJp920,
+      FrequencyBand.kr920 => l10n.shopModelBandKr920,
+      FrequencyBand.au915 => l10n.shopModelBandAu915,
+      FrequencyBand.in865 => l10n.shopModelBandIn865,
+      FrequencyBand.multiband => l10n.shopModelBandMulti,
+    };
+  }
+
+  String displayRange(AppLocalizations l10n) {
+    return switch (this) {
+      FrequencyBand.us915 => l10n.shopModelBandUs915Range,
+      FrequencyBand.eu868 => l10n.shopModelBandEu868Range,
+      FrequencyBand.cn470 => l10n.shopModelBandCn470Range,
+      FrequencyBand.jp920 => l10n.shopModelBandJp920Range,
+      FrequencyBand.kr920 => l10n.shopModelBandKr920Range,
+      FrequencyBand.au915 => l10n.shopModelBandAu915Range,
+      FrequencyBand.in865 => l10n.shopModelBandIn865Range,
+      FrequencyBand.multiband => l10n.shopModelBandMultiRange,
+    };
   }
 }
 
@@ -456,9 +507,9 @@ class ShopProduct {
   String? get primaryImage => imageUrls.isNotEmpty ? imageUrls.first : null;
 
   /// Get formatted price - shows "From $X" if there's a price range
-  String get formattedPrice {
+  String formattedPrice(AppLocalizations l10n) {
     if (hasPriceRange) {
-      return 'From \$${price.toStringAsFixed(2)}';
+      return l10n.shopModelPriceFrom(price.toStringAsFixed(2));
     }
     return '\$${price.toStringAsFixed(2)}';
   }

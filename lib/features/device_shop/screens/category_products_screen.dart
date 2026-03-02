@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/animations.dart';
 import '../../../core/widgets/app_bar_overflow_menu.dart';
@@ -35,21 +36,27 @@ class _CategoryProductsScreenState
     );
 
     return GlassScaffold(
-      title: widget.category.label,
+      title: widget.category.displayLabel(context.l10n),
       actions: [
         IconButton(
           icon: const Icon(Icons.filter_list),
           onPressed: () => _showFilterSheet(context),
-          tooltip: 'Filter',
+          tooltip: context.l10n.categoryProductsFilter,
         ),
         AppBarOverflowMenu<String>(
           onSelected: (value) => setState(() => _sortBy = value),
           itemBuilder: (context) => [
-            _sortMenuItem('popular', 'Most Popular'),
-            _sortMenuItem('newest', 'Newest First'),
-            _sortMenuItem('price_low', 'Price: Low to High'),
-            _sortMenuItem('price_high', 'Price: High to Low'),
-            _sortMenuItem('rating', 'Highest Rated'),
+            _sortMenuItem('popular', context.l10n.categoryProductsSortPopular),
+            _sortMenuItem('newest', context.l10n.categoryProductsSortNewest),
+            _sortMenuItem(
+              'price_low',
+              context.l10n.categoryProductsSortPriceLow,
+            ),
+            _sortMenuItem(
+              'price_high',
+              context.l10n.categoryProductsSortPriceHigh,
+            ),
+            _sortMenuItem('rating', context.l10n.categoryProductsSortRating),
           ],
         ),
       ],
@@ -66,12 +73,12 @@ class _CategoryProductsScreenState
                   Icon(Icons.error_outline, color: AppTheme.errorRed, size: 48),
                   const SizedBox(height: AppTheme.spacing16),
                   Text(
-                    'Error loading products',
+                    context.l10n.categoryProductsErrorLoading,
                     style: TextStyle(color: context.textPrimary),
                   ),
                   TextButton(
                     onPressed: () => ref.invalidate(lilygoProductsProvider),
-                    child: Text('Retry'),
+                    child: Text(context.l10n.categoryProductsRetry),
                   ),
                 ],
               ),
@@ -94,7 +101,7 @@ class _CategoryProductsScreenState
                       ),
                       SizedBox(height: AppTheme.spacing16),
                       Text(
-                        'No products found',
+                        context.l10n.categoryProductsNotFound,
                         style: TextStyle(
                           color: context.textPrimary,
                           fontSize: 18,
@@ -102,13 +109,15 @@ class _CategoryProductsScreenState
                       ),
                       const SizedBox(height: AppTheme.spacing8),
                       Text(
-                        'Try adjusting your filters',
+                        context.l10n.categoryProductsTryFilters,
                         style: TextStyle(color: context.textSecondary),
                       ),
                       if (_hasActiveFilters)
                         TextButton(
                           onPressed: _clearFilters,
-                          child: Text('Clear Filters'),
+                          child: Text(
+                            context.l10n.categoryProductsClearFilters,
+                          ),
                         ),
                     ],
                   ),
@@ -129,14 +138,18 @@ class _CategoryProductsScreenState
                       child: Row(
                         children: [
                           Text(
-                            '${sorted.length} products',
+                            context.l10n.categoryProductsResultCount(
+                              sorted.length,
+                            ),
                             style: TextStyle(color: context.textSecondary),
                           ),
                           const Spacer(),
                           TextButton.icon(
                             onPressed: _clearFilters,
                             icon: Icon(Icons.clear, size: 18),
-                            label: Text('Clear Filters'),
+                            label: Text(
+                              context.l10n.categoryProductsClearFilters,
+                            ),
                             style: TextButton.styleFrom(
                               foregroundColor: context.textSecondary,
                             ),
@@ -298,7 +311,7 @@ class _CategoryProductsScreenState
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Filters',
+                          context.l10n.categoryProductsFiltersTitle,
                           style: TextStyle(
                             color: context.textPrimary,
                             fontSize: 20,
@@ -313,7 +326,7 @@ class _CategoryProductsScreenState
                               _selectedBands = [];
                             });
                           },
-                          child: Text('Reset'),
+                          child: Text(context.l10n.categoryProductsReset),
                         ),
                       ],
                     ),
@@ -322,7 +335,7 @@ class _CategoryProductsScreenState
                     // In Stock Only
                     ListTile(
                       title: Text(
-                        'In Stock Only',
+                        context.l10n.categoryProductsInStockOnly,
                         style: TextStyle(color: context.textPrimary),
                       ),
                       trailing: ThemedSwitch(
@@ -337,7 +350,7 @@ class _CategoryProductsScreenState
 
                     // Price Range
                     Text(
-                      'Price Range',
+                      context.l10n.categoryProductsPriceRange,
                       style: TextStyle(
                         color: context.textPrimary,
                         fontSize: 16,
@@ -373,7 +386,7 @@ class _CategoryProductsScreenState
 
                     // Frequency Bands
                     Text(
-                      'Frequency Bands',
+                      context.l10n.categoryProductsFrequencyBands,
                       style: TextStyle(
                         color: context.textPrimary,
                         fontSize: 16,
@@ -387,7 +400,7 @@ class _CategoryProductsScreenState
                       children: FrequencyBand.values.map((band) {
                         final isSelected = _selectedBands.contains(band);
                         return FilterChip(
-                          label: Text(band.label),
+                          label: Text(band.displayLabel(context.l10n)),
                           selected: isSelected,
                           onSelected: (selected) {
                             setSheetState(() {
@@ -431,9 +444,9 @@ class _CategoryProductsScreenState
                             ),
                           ),
                         ),
-                        child: const Text(
-                          'Apply Filters',
-                          style: TextStyle(
+                        child: Text(
+                          context.l10n.categoryProductsApplyFilters,
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
@@ -529,10 +542,10 @@ class _ProductGridCard extends ConsumerWidget {
                             top: Radius.circular(12),
                           ),
                         ),
-                        child: const Center(
+                        child: Center(
                           child: Text(
-                            'OUT OF STOCK',
-                            style: TextStyle(
+                            context.l10n.categoryProductsOutOfStock,
+                            style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 11,
@@ -577,7 +590,7 @@ class _ProductGridCard extends ConsumerWidget {
                     Row(
                       children: [
                         Text(
-                          product.formattedPrice,
+                          product.formattedPrice(context.l10n),
                           style: TextStyle(
                             color: context.accentColor,
                             fontSize: 15,

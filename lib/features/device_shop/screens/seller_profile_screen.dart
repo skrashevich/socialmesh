@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/glass_scaffold.dart';
@@ -95,7 +96,7 @@ class _SellerProfileScreenState extends ConsumerState<SellerProfileScreen>
 
     return sellerAsync.when(
       loading: () => GlassScaffold(
-        title: 'Seller',
+        title: context.l10n.sellerProfileTitle,
         slivers: [
           SliverFillRemaining(
             child: Center(child: CircularProgressIndicator()),
@@ -103,7 +104,7 @@ class _SellerProfileScreenState extends ConsumerState<SellerProfileScreen>
         ],
       ),
       error: (e, _) => GlassScaffold(
-        title: 'Seller',
+        title: context.l10n.sellerProfileTitle,
         slivers: [
           SliverFillRemaining(
             child: Center(
@@ -113,12 +114,12 @@ class _SellerProfileScreenState extends ConsumerState<SellerProfileScreen>
                   Icon(Icons.error_outline, color: AppTheme.errorRed, size: 48),
                   const SizedBox(height: AppTheme.spacing16),
                   Text(
-                    'Error loading seller',
+                    context.l10n.sellerProfileErrorLoading,
                     style: TextStyle(color: context.textPrimary),
                   ),
                   TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: Text('Go Back'),
+                    child: Text(context.l10n.sellerProfileGoBack),
                   ),
                 ],
               ),
@@ -129,7 +130,7 @@ class _SellerProfileScreenState extends ConsumerState<SellerProfileScreen>
       data: (seller) {
         if (seller == null) {
           return GlassScaffold(
-            title: 'Seller',
+            title: context.l10n.sellerProfileTitle,
             slivers: [
               SliverFillRemaining(
                 child: Center(
@@ -143,12 +144,12 @@ class _SellerProfileScreenState extends ConsumerState<SellerProfileScreen>
                       ),
                       const SizedBox(height: AppTheme.spacing16),
                       Text(
-                        'Seller not found',
+                        context.l10n.sellerProfileNotFound,
                         style: TextStyle(color: context.textPrimary),
                       ),
                       TextButton(
                         onPressed: () => Navigator.pop(context),
-                        child: Text('Go Back'),
+                        child: Text(context.l10n.sellerProfileGoBack),
                       ),
                     ],
                   ),
@@ -176,7 +177,7 @@ class _SellerProfileScreenState extends ConsumerState<SellerProfileScreen>
                     searchQuery: _searchQuery,
                     onSearchChanged: (value) =>
                         setState(() => _searchQuery = value),
-                    hintText: 'Search products...',
+                    hintText: context.l10n.sellerProfileSearchHint,
                     textScaler: MediaQuery.textScalerOf(context),
                     rebuildKey: _searchQuery,
                   ),
@@ -211,7 +212,9 @@ class _SellerProfileScreenState extends ConsumerState<SellerProfileScreen>
                       12,
                     ),
                     child: Text(
-                      'Products (${seller.productCount})',
+                      context.l10n.sellerProfileProductsCount(
+                        seller.productCount,
+                      ),
                       style: TextStyle(
                         color: context.textPrimary,
                         fontSize: 18,
@@ -236,7 +239,7 @@ class _SellerProfileScreenState extends ConsumerState<SellerProfileScreen>
                       child: Padding(
                         padding: const EdgeInsets.all(AppTheme.spacing32),
                         child: Text(
-                          'Unable to load products',
+                          context.l10n.sellerProfileUnableToLoad,
                           style: TextStyle(color: context.textSecondary),
                         ),
                       ),
@@ -257,7 +260,7 @@ class _SellerProfileScreenState extends ConsumerState<SellerProfileScreen>
                                 ),
                                 SizedBox(height: AppTheme.spacing12),
                                 Text(
-                                  'No products listed yet',
+                                  context.l10n.sellerProfileNoProducts,
                                   style: TextStyle(
                                     color: context.textSecondary,
                                   ),
@@ -297,7 +300,9 @@ class _SellerProfileScreenState extends ConsumerState<SellerProfileScreen>
                                 ),
                                 SizedBox(height: AppTheme.spacing12),
                                 Text(
-                                  'No products match "$_searchQuery"',
+                                  context.l10n.sellerProfileNoSearchResults(
+                                    _searchQuery,
+                                  ),
                                   style: TextStyle(
                                     color: context.textSecondary,
                                   ),
@@ -415,7 +420,7 @@ class _SellerProfileScreenState extends ConsumerState<SellerProfileScreen>
                           borderRadius: BorderRadius.circular(AppTheme.radius4),
                         ),
                         child: Text(
-                          'Official Partner',
+                          context.l10n.sellerProfileOfficialPartner,
                           style: TextStyle(
                             color: AppTheme.warningYellow,
                             fontSize: 10,
@@ -457,28 +462,28 @@ class _SellerStats extends StatelessWidget {
             icon: Icons.star,
             iconColor: AppTheme.warningYellow,
             value: seller.rating.toStringAsFixed(1),
-            label: '${seller.reviewCount} reviews',
+            label: context.l10n.sellerProfileReviewCount(seller.reviewCount),
           ),
           _StatDivider(),
           _StatItem(
             icon: Icons.inventory_2,
             iconColor: context.accentColor,
             value: '${seller.productCount}',
-            label: 'Products',
+            label: context.l10n.sellerProfileProductsStat,
           ),
           _StatDivider(),
           _StatItem(
             icon: Icons.shopping_bag,
             iconColor: AppTheme.successGreen,
             value: '${seller.salesCount}',
-            label: 'Sales',
+            label: context.l10n.sellerProfileSalesStat,
           ),
           _StatDivider(),
           _StatItem(
             icon: Icons.calendar_today,
             iconColor: context.textSecondary,
             value: _formatJoinDate(seller.joinedAt),
-            label: 'Founded',
+            label: context.l10n.sellerProfileFoundedStat,
           ),
         ],
       ),
@@ -560,7 +565,7 @@ class _SellerDescription extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'About',
+            context.l10n.sellerProfileAbout,
             style: TextStyle(
               color: context.textPrimary,
               fontSize: 16,
@@ -605,7 +610,7 @@ class _ContactSection extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Contact & Shipping',
+            context.l10n.sellerProfileContactShipping,
             style: TextStyle(
               color: context.textPrimary,
               fontSize: 16,
@@ -617,7 +622,7 @@ class _ContactSection extends ConsumerWidget {
           if (hasWebsite)
             _ContactRow(
               icon: Icons.language,
-              label: 'Website',
+              label: context.l10n.sellerProfileWebsite,
               value: _formatUrl(seller.websiteUrl!),
               onTap: () async {
                 final logger = ref.read(deviceShopEventLoggerProvider);
@@ -634,7 +639,7 @@ class _ContactSection extends ConsumerWidget {
           if (hasEmail)
             _ContactRow(
               icon: Icons.email_outlined,
-              label: 'Email',
+              label: context.l10n.sellerProfileEmail,
               value: seller.contactEmail!,
               onTap: () async {
                 final logger = ref.read(deviceShopEventLoggerProvider);
@@ -651,7 +656,7 @@ class _ContactSection extends ConsumerWidget {
           if (hasShipping)
             _ContactRow(
               icon: Icons.local_shipping_outlined,
-              label: 'Ships to',
+              label: context.l10n.sellerProfileShipsTo,
               value: seller.countries.length > 3
                   ? '${seller.countries.take(3).join(", ")} +${seller.countries.length - 3} more'
                   : seller.countries.join(', '),
@@ -766,7 +771,7 @@ class _DiscountCodeSectionState extends ConsumerState<_DiscountCodeSection>
                 Icon(Icons.local_offer, color: context.accentColor, size: 20),
                 const SizedBox(width: AppTheme.spacing8),
                 Text(
-                  'Partner Discount',
+                  context.l10n.sellerProfilePartnerDiscount,
                   style: TextStyle(
                     color: context.textPrimary,
                     fontSize: 16,
@@ -778,7 +783,7 @@ class _DiscountCodeSectionState extends ConsumerState<_DiscountCodeSection>
             const SizedBox(height: AppTheme.spacing12),
             if (!_isRevealed) ...[
               Text(
-                'Exclusive discount code for Socialmesh users',
+                context.l10n.sellerProfileDiscountExclusive,
                 style: TextStyle(color: context.textSecondary, fontSize: 13),
               ),
               const SizedBox(height: AppTheme.spacing12),
@@ -803,7 +808,7 @@ class _DiscountCodeSectionState extends ConsumerState<_DiscountCodeSection>
                       borderRadius: BorderRadius.circular(AppTheme.radius8),
                     ),
                   ),
-                  child: const Text('Reveal Code'),
+                  child: Text(context.l10n.sellerProfileRevealCode),
                 ),
               ),
             ] else ...[
@@ -846,7 +851,7 @@ class _DiscountCodeSectionState extends ConsumerState<_DiscountCodeSection>
                         if (!context.mounted) return;
                         showSuccessSnackBar(
                           context,
-                          'Code copied to clipboard',
+                          context.l10n.sellerProfileCodeCopied,
                         );
                       },
                       tooltip: 'Copy code',
@@ -856,7 +861,7 @@ class _DiscountCodeSectionState extends ConsumerState<_DiscountCodeSection>
               ),
               const SizedBox(height: AppTheme.spacing8),
               Text(
-                'Apply this code at checkout on the seller\'s store',
+                context.l10n.sellerProfileApplyCodeHint,
                 style: TextStyle(color: context.textTertiary, fontSize: 11),
               ),
             ],

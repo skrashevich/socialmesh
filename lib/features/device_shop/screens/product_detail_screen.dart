@@ -6,6 +6,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import '../../../core/logging.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
+import '../../../core/l10n/l10n_extension.dart';
 
 import '../../../core/theme.dart';
 import '../../../core/widgets/user_avatar.dart';
@@ -116,7 +117,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
 
     return productAsync.when(
       loading: () => GlassScaffold(
-        title: 'Product',
+        title: context.l10n.productDetailTitle,
         slivers: [
           SliverFillRemaining(
             child: Center(child: CircularProgressIndicator()),
@@ -124,7 +125,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
         ],
       ),
       error: (e, _) => GlassScaffold(
-        title: 'Product',
+        title: context.l10n.productDetailTitle,
         slivers: [
           SliverFillRemaining(
             child: Center(
@@ -134,13 +135,13 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
                   Icon(Icons.error_outline, color: AppTheme.errorRed, size: 48),
                   const SizedBox(height: AppTheme.spacing16),
                   Text(
-                    'Error loading product',
+                    context.l10n.productDetailErrorLoading,
                     style: TextStyle(color: context.textPrimary),
                   ),
                   const SizedBox(height: AppTheme.spacing8),
                   TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: Text('Go Back'),
+                    child: Text(context.l10n.productDetailGoBack),
                   ),
                 ],
               ),
@@ -151,7 +152,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
       data: (product) {
         if (product == null) {
           return GlassScaffold(
-            title: 'Product',
+            title: context.l10n.productDetailTitle,
             slivers: [
               SliverFillRemaining(
                 child: Center(
@@ -165,13 +166,13 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
                       ),
                       const SizedBox(height: AppTheme.spacing16),
                       Text(
-                        'Product not found',
+                        context.l10n.productDetailNotFound,
                         style: TextStyle(color: context.textPrimary),
                       ),
                       const SizedBox(height: AppTheme.spacing8),
                       TextButton(
                         onPressed: () => Navigator.pop(context),
-                        child: Text('Go Back'),
+                        child: Text(context.l10n.productDetailGoBack),
                       ),
                     ],
                   ),
@@ -261,7 +262,10 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
             if (userId != null) {
               toggleFavoriteQueued(ref, userId: userId, productId: product.id);
             } else {
-              showSignInRequiredSnackBar(context, 'Sign in to save favorites');
+              showSignInRequiredSnackBar(
+                context,
+                context.l10n.productDetailSignInFavorites,
+              );
             }
           },
         ),
@@ -375,7 +379,9 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
                     borderRadius: BorderRadius.circular(AppTheme.radius4),
                   ),
                   child: Text(
-                    '-${product.discountPercent}% OFF',
+                    context.l10n.productDetailDiscountBadge(
+                      product.discountPercent,
+                    ),
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -414,7 +420,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
                 borderRadius: BorderRadius.circular(AppTheme.radius4),
               ),
               child: Text(
-                product.category.label,
+                product.category.displayLabel(context.l10n),
                 style: TextStyle(
                   color: context.accentColor,
                   fontSize: 12,
@@ -454,16 +460,8 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
             child: Row(
               children: [
                 Text(
-                  'by ',
+                  context.l10n.productDetailBySeller(product.sellerName),
                   style: TextStyle(color: context.textSecondary, fontSize: 14),
-                ),
-                Text(
-                  product.sellerName,
-                  style: TextStyle(
-                    color: context.accentColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
                 ),
                 SizedBox(width: AppTheme.spacing4),
                 Icon(Icons.chevron_right, color: context.accentColor, size: 18),
@@ -487,7 +485,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
                 ),
                 const SizedBox(width: AppTheme.spacing4),
                 Text(
-                  '(${product.reviewCount} reviews)',
+                  context.l10n.productDetailReviewCount(product.reviewCount),
                   style: TextStyle(color: context.textSecondary, fontSize: 14),
                 ),
                 SizedBox(width: AppTheme.spacing16),
@@ -510,7 +508,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
               ),
               SizedBox(width: AppTheme.spacing4),
               Text(
-                '${product.salesCount} sold',
+                context.l10n.productDetailSoldCount(product.salesCount),
                 style: TextStyle(color: context.textTertiary, fontSize: 14),
               ),
             ],
@@ -522,7 +520,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                product.formattedPrice,
+                product.formattedPrice(context.l10n),
                 style: TextStyle(
                   color: context.accentColor,
                   fontSize: 28,
@@ -560,8 +558,10 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
               const SizedBox(width: AppTheme.spacing8),
               Text(
                 product.isInStock
-                    ? 'In Stock (${product.stockQuantity} available)'
-                    : 'Out of Stock',
+                    ? context.l10n.productDetailInStockCount(
+                        product.stockQuantity,
+                      )
+                    : context.l10n.productDetailOutOfStock,
                 style: TextStyle(
                   color: product.isInStock
                       ? AppTheme.successGreen
@@ -585,7 +585,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
 
           // Description
           Text(
-            'Description',
+            context.l10n.productDetailDescription,
             style: TextStyle(
               color: context.textPrimary,
               fontSize: 18,
@@ -609,7 +609,9 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
                 setState(() => _showFullDescription = !_showFullDescription);
               },
               child: Text(
-                _showFullDescription ? 'Show Less' : 'Read More',
+                _showFullDescription
+                    ? context.l10n.productDetailShowLess
+                    : context.l10n.productDetailReadMore,
                 style: TextStyle(color: context.accentColor),
               ),
             ),
@@ -713,7 +715,9 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
               Icon(Icons.info_outline, size: 16, color: context.accentColor),
               const SizedBox(width: AppTheme.spacing6),
               Text(
-                'Selected: \$${_selectedVariant!.price.toStringAsFixed(2)}',
+                context.l10n.productDetailSelectedPrice(
+                  _selectedVariant!.price.toStringAsFixed(2),
+                ),
                 style: TextStyle(
                   color: context.accentColor,
                   fontSize: 14,
@@ -779,7 +783,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Technical Specifications',
+                context.l10n.productDetailTechSpecs,
                 style: TextStyle(
                   color: context.textPrimary,
                   fontSize: 18,
@@ -809,7 +813,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
                       ),
                       const SizedBox(width: AppTheme.spacing4),
                       Text(
-                        'Vendor Verified',
+                        context.l10n.productDetailVendorVerified,
                         style: TextStyle(
                           color: context.accentColor,
                           fontSize: 11,
@@ -824,7 +828,9 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
           if (product.vendorVerified && product.approvedAt != null) ...[
             const SizedBox(height: AppTheme.spacing6),
             Text(
-              'Verified on ${_formatDate(product.approvedAt!)}',
+              context.l10n.productDetailVerifiedOn(
+                _formatDate(product.approvedAt!),
+              ),
               style: TextStyle(color: context.textTertiary, fontSize: 11),
             ),
           ],
@@ -838,23 +844,39 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
             child: Column(
               children: [
                 if (product.chipset != null)
-                  _specRow('Chipset', product.chipset!),
+                  _specRow(context.l10n.productDetailChipset, product.chipset!),
                 if (product.loraChip != null)
-                  _specRow('LoRa Chip', product.loraChip!),
+                  _specRow(
+                    context.l10n.productDetailLoraChip,
+                    product.loraChip!,
+                  ),
                 if (product.frequencyBands.isNotEmpty)
                   _specRow(
-                    'Frequency Bands',
+                    context.l10n.productDetailFrequencyBands,
                     product.frequencyBands.map((f) => f.label).join(', '),
                   ),
                 if (product.batteryCapacity != null)
-                  _specRow('Battery', product.batteryCapacity!),
+                  _specRow(
+                    context.l10n.productDetailBattery,
+                    product.batteryCapacity!,
+                  ),
                 if (product.dimensions != null)
-                  _specRow('Dimensions', product.dimensions!),
-                if (product.weight != null) _specRow('Weight', product.weight!),
+                  _specRow(
+                    context.l10n.productDetailDimensions,
+                    product.dimensions!,
+                  ),
+                if (product.weight != null)
+                  _specRow(context.l10n.productDetailWeight, product.weight!),
                 if (product.hardwareVersion != null)
-                  _specRow('Hardware Version', product.hardwareVersion!),
+                  _specRow(
+                    context.l10n.productDetailHardwareVersion,
+                    product.hardwareVersion!,
+                  ),
                 if (product.firmwareVersion != null)
-                  _specRow('Firmware', product.firmwareVersion!),
+                  _specRow(
+                    context.l10n.productDetailFirmware,
+                    product.firmwareVersion!,
+                  ),
               ],
             ),
           ),
@@ -896,20 +918,40 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
     final features = <_FeatureItem>[];
 
     if (product.hasGps) {
-      features.add(_FeatureItem(Icons.gps_fixed, 'GPS', true));
+      features.add(
+        _FeatureItem(Icons.gps_fixed, context.l10n.productDetailGps, true),
+      );
     }
     if (product.hasDisplay) {
-      features.add(_FeatureItem(Icons.screenshot_monitor, 'Display', true));
+      features.add(
+        _FeatureItem(
+          Icons.screenshot_monitor,
+          context.l10n.productDetailDisplay,
+          true,
+        ),
+      );
     }
     if (product.hasBluetooth) {
-      features.add(_FeatureItem(Icons.bluetooth, 'Bluetooth', true));
+      features.add(
+        _FeatureItem(
+          Icons.bluetooth,
+          context.l10n.productDetailBluetooth,
+          true,
+        ),
+      );
     }
     if (product.hasWifi) {
-      features.add(_FeatureItem(Icons.wifi, 'WiFi', true));
+      features.add(
+        _FeatureItem(Icons.wifi, context.l10n.productDetailWifi, true),
+      );
     }
     if (product.isMeshtasticCompatible) {
       features.add(
-        _FeatureItem(Icons.check_circle, 'Meshtastic Compatible', true),
+        _FeatureItem(
+          Icons.check_circle,
+          context.l10n.productDetailMeshtasticCompatible,
+          true,
+        ),
       );
     }
 
@@ -921,7 +963,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Features',
+            context.l10n.productDetailFeatures,
             style: TextStyle(
               color: context.textPrimary,
               fontSize: 18,
@@ -939,7 +981,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
           if (product.includedAccessories.isNotEmpty) ...[
             const SizedBox(height: AppTheme.spacing20),
             Text(
-              'Included Accessories',
+              context.l10n.productDetailIncludedAccessories,
               style: TextStyle(
                 color: context.textPrimary,
                 fontSize: 16,
@@ -972,7 +1014,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Shipping',
+            context.l10n.productDetailShipping,
             style: TextStyle(
               color: context.textPrimary,
               fontSize: 18,
@@ -1004,8 +1046,10 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
                           Text(
                             product.shippingCost != null &&
                                     product.shippingCost! > 0
-                                ? 'Shipping: \$${product.shippingCost!.toStringAsFixed(2)}'
-                                : 'Free Shipping',
+                                ? context.l10n.productDetailShippingCost(
+                                    product.shippingCost!.toStringAsFixed(2),
+                                  )
+                                : context.l10n.productDetailFreeShipping,
                             style: TextStyle(
                               color: context.textPrimary,
                               fontWeight: FontWeight.w600,
@@ -1013,7 +1057,9 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
                           ),
                           if (product.estimatedDeliveryDays != null)
                             Text(
-                              'Estimated ${product.estimatedDeliveryDays} days',
+                              context.l10n.productDetailEstimatedDelivery(
+                                product.estimatedDeliveryDays!,
+                              ),
                               style: TextStyle(
                                 color: context.textSecondary,
                                 fontSize: 13,
@@ -1042,7 +1088,9 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
                       SizedBox(width: AppTheme.spacing8),
                       Expanded(
                         child: Text(
-                          'Ships to: ${product.shipsTo.join(", ")}',
+                          context.l10n.productDetailShipsTo(
+                            product.shipsTo.join(', '),
+                          ),
                           style: TextStyle(
                             color: context.textSecondary,
                             fontSize: 13,
@@ -1084,7 +1132,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
                 const SizedBox(width: AppTheme.spacing8),
                 Expanded(
                   child: Text(
-                    'Purchases completed on seller\'s official store',
+                    context.l10n.productDetailPurchaseDisclaimer,
                     style: TextStyle(
                       color: context.textSecondary,
                       fontSize: 11,
@@ -1103,7 +1151,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Total',
+                      context.l10n.productDetailTotal,
                       style: TextStyle(
                         color: context.textSecondary,
                         fontSize: 12,
@@ -1137,7 +1185,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
                     );
                   },
                   icon: Icon(Icons.edit, size: 18),
-                  label: const Text('Edit'),
+                  label: Text(context.l10n.productDetailEdit),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: context.accentColor,
                     side: BorderSide(color: context.accentColor),
@@ -1168,7 +1216,9 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
                     disabledBackgroundColor: context.border,
                   ),
                   child: Text(
-                    product.isInStock ? 'Buy Now' : 'Out of Stock',
+                    product.isInStock
+                        ? context.l10n.productDetailBuyNow
+                        : context.l10n.productDetailOutOfStockButton,
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -1217,7 +1267,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen>
 
 ${product.shortDescription ?? product.description}
 
-Price: ${product.formattedPrice}${product.purchaseUrl != null ? '\n\n${product.purchaseUrl}' : ''}''';
+Price: ${product.formattedPrice(context.l10n)}${product.purchaseUrl != null ? '\n\n${product.purchaseUrl}' : ''}''';
     shareText(text, subject: product.name, context: context);
   }
 
@@ -1264,7 +1314,7 @@ Price: ${product.formattedPrice}${product.purchaseUrl != null ? '\n\n${product.p
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'Purchase',
+            context.l10n.productDetailPurchaseTitle,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -1273,7 +1323,7 @@ Price: ${product.formattedPrice}${product.purchaseUrl != null ? '\n\n${product.p
           ),
           const SizedBox(height: AppTheme.spacing12),
           Text(
-            'Contact the seller to purchase this product.',
+            context.l10n.productDetailContactToPurchase,
             textAlign: TextAlign.center,
             style: TextStyle(color: context.textSecondary),
           ),
@@ -1290,7 +1340,7 @@ Price: ${product.formattedPrice}${product.purchaseUrl != null ? '\n\n${product.p
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
                   ),
-                  child: const Text('Cancel'),
+                  child: Text(context.l10n.productDetailCancel),
                 ),
               ),
               const SizedBox(width: AppTheme.spacing12),
@@ -1312,7 +1362,7 @@ Price: ${product.formattedPrice}${product.purchaseUrl != null ? '\n\n${product.p
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
                   ),
-                  child: const Text('Contact Seller'),
+                  child: Text(context.l10n.productDetailContactSeller),
                 ),
               ),
             ],
@@ -1368,7 +1418,7 @@ class _PurchaseWebViewScreenState extends State<_PurchaseWebViewScreen> {
             ),
             const SizedBox(height: AppTheme.spacing16),
             Text(
-              'Unable to load page',
+              context.l10n.productDetailUnableToLoadPage,
               style: TextStyle(
                 color: context.textSecondary,
                 fontSize: 16,
@@ -1377,8 +1427,7 @@ class _PurchaseWebViewScreenState extends State<_PurchaseWebViewScreen> {
             ),
             const SizedBox(height: AppTheme.spacing8),
             Text(
-              'This content requires an internet connection. '
-              'Please check your connection and try again.',
+              context.l10n.productDetailWebviewOffline,
               style: TextStyle(color: context.textTertiary, fontSize: 14),
               textAlign: TextAlign.center,
             ),
@@ -1396,7 +1445,7 @@ class _PurchaseWebViewScreenState extends State<_PurchaseWebViewScreen> {
             FilledButton.icon(
               onPressed: _retry,
               icon: const Icon(Icons.refresh, size: 18),
-              label: const Text('Retry'),
+              label: Text(context.l10n.productDetailRetry),
               style: FilledButton.styleFrom(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 24,
@@ -1587,7 +1636,7 @@ class _ReviewsSection extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Reviews',
+                context.l10n.productDetailReviews,
                 style: TextStyle(
                   color: context.textPrimary,
                   fontSize: 18,
@@ -1597,7 +1646,7 @@ class _ReviewsSection extends ConsumerWidget {
               TextButton.icon(
                 onPressed: () => _showWriteReviewSheet(context, ref),
                 icon: Icon(Icons.edit, size: 18),
-                label: Text('Write Review'),
+                label: Text(context.l10n.productDetailWriteReview),
               ),
             ],
           ),
@@ -1605,7 +1654,7 @@ class _ReviewsSection extends ConsumerWidget {
           reviewsAsync.when(
             loading: () => const Center(child: CircularProgressIndicator()),
             error: (error, stack) => Text(
-              'Unable to load reviews',
+              context.l10n.productDetailUnableToLoadReviews,
               style: TextStyle(color: context.textSecondary),
             ),
             data: (reviews) {
@@ -1626,12 +1675,12 @@ class _ReviewsSection extends ConsumerWidget {
                         ),
                         SizedBox(height: AppTheme.spacing12),
                         Text(
-                          'No reviews yet',
+                          context.l10n.productDetailNoReviews,
                           style: TextStyle(color: context.textSecondary),
                         ),
                         SizedBox(height: AppTheme.spacing8),
                         Text(
-                          'Be the first to review this product!',
+                          context.l10n.productDetailBeFirstReviewer,
                           style: TextStyle(
                             color: context.textTertiary,
                             fontSize: 13,
@@ -1718,7 +1767,8 @@ class _ReviewCard extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          review.userName ?? 'Anonymous',
+                          review.userName ??
+                              context.l10n.productDetailAnonymous,
                           style: TextStyle(
                             color: context.textPrimary,
                             fontWeight: FontWeight.w600,
@@ -1740,7 +1790,7 @@ class _ReviewCard extends StatelessWidget {
                               ),
                             ),
                             child: Text(
-                              'Verified',
+                              context.l10n.productDetailReviewVerified,
                               style: TextStyle(
                                 color: AppTheme.successGreen,
                                 fontSize: 10,
@@ -1763,7 +1813,7 @@ class _ReviewCard extends StatelessWidget {
                         ),
                         const SizedBox(width: AppTheme.spacing8),
                         Text(
-                          _formatDate(review.createdAt),
+                          _formatDate(context, review.createdAt),
                           style: TextStyle(
                             color: context.textTertiary,
                             fontSize: 12,
@@ -1809,7 +1859,7 @@ class _ReviewCard extends StatelessWidget {
                       Icon(Icons.store, color: context.accentColor, size: 16),
                       SizedBox(width: AppTheme.spacing6),
                       Text(
-                        'Seller Response',
+                        context.l10n.productDetailSellerResponse,
                         style: TextStyle(
                           color: context.accentColor,
                           fontSize: 12,
@@ -1835,15 +1885,19 @@ class _ReviewCard extends StatelessWidget {
     );
   }
 
-  String _formatDate(DateTime date) {
+  String _formatDate(BuildContext context, DateTime date) {
     final now = DateTime.now();
     final diff = now.difference(date);
-    if (diff.inDays == 0) return 'Today';
-    if (diff.inDays == 1) return 'Yesterday';
-    if (diff.inDays < 7) return '${diff.inDays} days ago';
-    if (diff.inDays < 30) return '${diff.inDays ~/ 7} weeks ago';
-    if (diff.inDays < 365) return '${diff.inDays ~/ 30} months ago';
-    return '${diff.inDays ~/ 365} years ago';
+    if (diff.inDays == 0) return context.l10n.productDetailToday;
+    if (diff.inDays == 1) return context.l10n.productDetailYesterday;
+    if (diff.inDays < 7) return context.l10n.productDetailDaysAgo(diff.inDays);
+    if (diff.inDays < 30) {
+      return context.l10n.productDetailWeeksAgo(diff.inDays ~/ 7);
+    }
+    if (diff.inDays < 365) {
+      return context.l10n.productDetailMonthsAgo(diff.inDays ~/ 30);
+    }
+    return context.l10n.productDetailYearsAgo(diff.inDays ~/ 365);
   }
 }
 
@@ -1911,7 +1965,7 @@ class _WriteReviewSheetState extends ConsumerState<_WriteReviewSheet>
               ),
               SizedBox(height: AppTheme.spacing20),
               Text(
-                'Write a Review',
+                context.l10n.productDetailWriteReviewTitle,
                 style: TextStyle(
                   color: context.textPrimary,
                   fontSize: 20,
@@ -1941,7 +1995,10 @@ class _WriteReviewSheetState extends ConsumerState<_WriteReviewSheet>
                     const SizedBox(width: AppTheme.spacing8),
                     Expanded(
                       child: Text(
-                        'Your review will be public and posted as "${widget.userName ?? 'Anonymous'}". Reviews are moderated before appearing on the product page.',
+                        context.l10n.productDetailReviewPrivacyNotice(
+                          widget.userName ??
+                              context.l10n.productDetailAnonymous,
+                        ),
                         style: TextStyle(
                           color: context.textSecondary,
                           fontSize: 12,
@@ -1955,7 +2012,7 @@ class _WriteReviewSheetState extends ConsumerState<_WriteReviewSheet>
 
               // Rating
               Text(
-                'Your Rating',
+                context.l10n.productDetailYourRating,
                 style: TextStyle(color: context.textSecondary),
               ),
               SizedBox(height: AppTheme.spacing8),
@@ -1982,7 +2039,7 @@ class _WriteReviewSheetState extends ConsumerState<_WriteReviewSheet>
                 controller: _titleController,
                 style: TextStyle(color: context.textPrimary),
                 decoration: InputDecoration(
-                  labelText: 'Title (optional)',
+                  labelText: context.l10n.productDetailReviewTitleLabel,
                   labelStyle: TextStyle(color: context.textSecondary),
                   filled: true,
                   fillColor: context.background,
@@ -2006,14 +2063,14 @@ class _WriteReviewSheetState extends ConsumerState<_WriteReviewSheet>
                 maxLines: 4,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return 'Please write a review description';
+                    return context.l10n.productDetailReviewValidation;
                   }
                   return null;
                 },
                 decoration: InputDecoration(
-                  labelText: 'Your Review *',
+                  labelText: context.l10n.productDetailYourReview,
                   labelStyle: TextStyle(color: context.textSecondary),
-                  hintText: 'Share your experience with this product...',
+                  hintText: context.l10n.productDetailReviewHint,
                   hintStyle: TextStyle(color: context.textTertiary),
                   alignLabelWithHint: true,
                   filled: true,
@@ -2078,9 +2135,9 @@ class _WriteReviewSheetState extends ConsumerState<_WriteReviewSheet>
                             color: Colors.white,
                           ),
                         )
-                      : const Text(
-                          'Submit Review',
-                          style: TextStyle(
+                      : Text(
+                          context.l10n.productDetailSubmitReview,
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
@@ -2108,6 +2165,7 @@ class _WriteReviewSheetState extends ConsumerState<_WriteReviewSheet>
     }
 
     final reviewText = _bodyController.text.trim();
+    final reviewSubmittedMsg = context.l10n.productDetailReviewSubmitted;
 
     // Pre-submission content moderation check
     final moderationService = ref.read(contentModerationServiceProvider);
@@ -2171,7 +2229,7 @@ class _WriteReviewSheetState extends ConsumerState<_WriteReviewSheet>
       );
 
       safeNavigatorPop();
-      safeShowSnackBar('Review submitted for moderation. Thank you!');
+      safeShowSnackBar(reviewSubmittedMsg);
     } catch (e) {
       if (mounted) {
         showErrorSnackBar(context, 'Failed to submit review: $e');
@@ -2218,7 +2276,10 @@ class _FullscreenGalleryState extends State<_FullscreenGallery> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text(
-          '${_currentIndex + 1} / ${widget.images.length}',
+          context.l10n.productDetailImageCounter(
+            _currentIndex + 1,
+            widget.images.length,
+          ),
           style: const TextStyle(color: Colors.white),
         ),
       ),

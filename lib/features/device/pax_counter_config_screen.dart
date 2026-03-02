@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/animations.dart';
@@ -108,7 +109,7 @@ class _PaxCounterConfigScreenState extends ConsumerState<PaxCounterConfigScreen>
 
       safeSetState(() => _hasChanges = false);
       if (mounted) {
-        showSuccessSnackBar(context, 'PAX counter config saved');
+        showSuccessSnackBar(context, context.l10n.paxCounterSaved);
         if (target.isLocal) {
           ref
               .read(countdownProvider.notifier)
@@ -117,7 +118,10 @@ class _PaxCounterConfigScreenState extends ConsumerState<PaxCounterConfigScreen>
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to save: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.paxCounterSaveError(e.toString()),
+        );
       }
     } finally {
       safeSetState(() => _isSaving = false);
@@ -128,7 +132,7 @@ class _PaxCounterConfigScreenState extends ConsumerState<PaxCounterConfigScreen>
   Widget build(BuildContext context) {
     if (_isLoading) {
       return GlassScaffold(
-        title: 'PAX Counter',
+        title: context.l10n.paxCounterTitle,
         slivers: [
           SliverFillRemaining(
             child: Center(
@@ -146,7 +150,7 @@ class _PaxCounterConfigScreenState extends ConsumerState<PaxCounterConfigScreen>
     }
 
     return GlassScaffold(
-      title: 'PAX Counter',
+      title: context.l10n.paxCounterTitle,
       actions: [
         if (_hasChanges)
           TextButton(
@@ -154,7 +158,7 @@ class _PaxCounterConfigScreenState extends ConsumerState<PaxCounterConfigScreen>
             child: _isSaving
                 ? LoadingIndicator(size: 16)
                 : Text(
-                    'Save',
+                    context.l10n.paxCounterSave,
                     style: TextStyle(
                       color: context.accentColor,
                       fontWeight: FontWeight.w600,
@@ -183,7 +187,7 @@ class _PaxCounterConfigScreenState extends ConsumerState<PaxCounterConfigScreen>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'PAX Counter',
+                            context.l10n.paxCounterCardTitle,
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
@@ -191,7 +195,7 @@ class _PaxCounterConfigScreenState extends ConsumerState<PaxCounterConfigScreen>
                             ),
                           ),
                           Text(
-                            'Counts nearby WiFi and Bluetooth devices',
+                            context.l10n.paxCounterCardSubtitle,
                             style: TextStyle(
                               fontSize: 13,
                               color: context.textSecondary,
@@ -208,8 +212,8 @@ class _PaxCounterConfigScreenState extends ConsumerState<PaxCounterConfigScreen>
 
               // Enable PAX Counter
               _SettingsTile(
-                title: 'Enable PAX Counter',
-                subtitle: 'Count nearby devices and report to mesh',
+                title: context.l10n.paxCounterEnable,
+                subtitle: context.l10n.paxCounterEnableSubtitle,
                 trailing: ThemedSwitch(
                   value: _paxCounterEnabled,
                   onChanged: (value) {
@@ -239,7 +243,7 @@ class _PaxCounterConfigScreenState extends ConsumerState<PaxCounterConfigScreen>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Update Interval',
+                        context.l10n.paxCounterUpdateInterval,
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
@@ -248,7 +252,9 @@ class _PaxCounterConfigScreenState extends ConsumerState<PaxCounterConfigScreen>
                       ),
                       SizedBox(height: AppTheme.spacing8),
                       Text(
-                        '${_paxCounterUpdateInterval ~/ 60} minutes',
+                        context.l10n.paxCounterIntervalMinutes(
+                          _paxCounterUpdateInterval ~/ 60,
+                        ),
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w600,
@@ -284,14 +290,14 @@ class _PaxCounterConfigScreenState extends ConsumerState<PaxCounterConfigScreen>
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            '1 min',
+                            context.l10n.paxCounterMinLabel,
                             style: TextStyle(
                               fontSize: 12,
                               color: context.textTertiary,
                             ),
                           ),
                           Text(
-                            '60 min',
+                            context.l10n.paxCounterMaxLabel,
                             style: TextStyle(
                               fontSize: 12,
                               color: context.textTertiary,
@@ -308,10 +314,8 @@ class _PaxCounterConfigScreenState extends ConsumerState<PaxCounterConfigScreen>
 
               // Info card
               StatusBanner.accent(
-                title: 'About PAX Counter',
-                subtitle:
-                    'PAX Counter passively listens for WiFi and Bluetooth probe requests from nearby devices. '
-                    'It does not store MAC addresses or any personal data.',
+                title: context.l10n.paxCounterAboutTitle,
+                subtitle: context.l10n.paxCounterAboutSubtitle,
                 margin: EdgeInsets.zero,
               ),
             ]),

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../providers/admin_shop_providers.dart';
@@ -23,7 +24,7 @@ class ShopAdminDashboard extends ConsumerWidget {
       data: (isAdmin) {
         if (!isAdmin) {
           return GlassScaffold(
-            title: 'Access Denied',
+            title: context.l10n.shopAdminDashboardAccessDenied,
             slivers: [
               SliverFillRemaining(
                 child: Center(
@@ -36,16 +37,16 @@ class ShopAdminDashboard extends ConsumerWidget {
                         color: AppTheme.errorRed.withValues(alpha: 0.5),
                       ),
                       const SizedBox(height: AppTheme.spacing16),
-                      const Text(
-                        'Admin Access Required',
-                        style: TextStyle(
+                      Text(
+                        context.l10n.shopAdminDashboardAccessRequired,
+                        style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(height: AppTheme.spacing8),
                       Text(
-                        'You do not have permission to access this area.',
+                        context.l10n.shopAdminDashboardNoPermission,
                         style: TextStyle(color: context.textSecondary),
                       ),
                     ],
@@ -58,16 +59,16 @@ class ShopAdminDashboard extends ConsumerWidget {
 
         return const _AdminDashboardContent();
       },
-      loading: () => const GlassScaffold(
-        title: 'Shop Admin',
+      loading: () => GlassScaffold(
+        title: context.l10n.shopAdminDashboardTitle,
         slivers: [
-          SliverFillRemaining(
+          const SliverFillRemaining(
             child: Center(child: CircularProgressIndicator()),
           ),
         ],
       ),
       error: (error, _) => GlassScaffold(
-        title: 'Error',
+        title: context.l10n.shopAdminDashboardError,
         slivers: [
           SliverFillRemaining(child: Center(child: Text('Error: \$error'))),
         ],
@@ -95,14 +96,14 @@ class _AdminDashboardContent extends ConsumerWidget {
             child: Icon(Icons.admin_panel_settings, color: context.accentColor),
           ),
           const SizedBox(width: AppTheme.spacing12),
-          const Text('Shop Admin'),
+          Text(context.l10n.shopAdminDashboardTitle),
         ],
       ),
       actions: [
         IconButton(
           icon: const Icon(Icons.refresh),
           onPressed: () => ref.invalidate(adminShopStatisticsProvider),
-          tooltip: 'Refresh',
+          tooltip: context.l10n.shopAdminDashboardRefresh,
         ),
       ],
       // Use hasScrollBody: true because the child is a SingleChildScrollView.
@@ -133,7 +134,7 @@ class _AdminDashboardContent extends ConsumerWidget {
 
                 // Quick Actions
                 Text(
-                  'Quick Actions',
+                  context.l10n.shopAdminDashboardQuickActions,
                   style: Theme.of(
                     context,
                   ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
@@ -145,7 +146,7 @@ class _AdminDashboardContent extends ConsumerWidget {
 
                 // Management Sections
                 Text(
-                  'Management',
+                  context.l10n.shopAdminDashboardManagement,
                   style: Theme.of(
                     context,
                   ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
@@ -170,44 +171,46 @@ class _AdminDashboardContent extends ConsumerWidget {
       childAspectRatio: 1.5,
       children: [
         _StatCard(
-          title: 'Total Products',
+          title: context.l10n.shopAdminDashboardTotalProducts,
           value: stats.totalProducts.toString(),
-          subtitle: '${stats.activeProducts} active',
+          subtitle: context.l10n.shopAdminDashboardActiveCount(
+            stats.activeProducts,
+          ),
           icon: Icons.inventory_2,
           color: AccentColors.blue,
         ),
         _StatCard(
-          title: 'Total Sellers',
+          title: context.l10n.shopAdminDashboardTotalSellers,
           value: stats.totalSellers.toString(),
           icon: Icons.store,
           color: AppTheme.successGreen,
         ),
         _StatCard(
-          title: 'Total Sales',
+          title: context.l10n.shopAdminDashboardTotalSales,
           value: stats.totalSales.toString(),
           icon: Icons.shopping_cart,
           color: AccentColors.orange,
         ),
         _StatCard(
-          title: 'Total Views',
+          title: context.l10n.shopAdminDashboardTotalViews,
           value: _formatNumber(stats.totalViews),
           icon: Icons.visibility,
           color: AccentColors.purple,
         ),
         _StatCard(
-          title: 'Reviews',
+          title: context.l10n.shopAdminDashboardReviews,
           value: stats.totalReviews.toString(),
           icon: Icons.star,
           color: AppTheme.warningYellow,
         ),
         _StatCard(
-          title: 'Est. Revenue',
+          title: context.l10n.shopAdminDashboardEstRevenue,
           value: '\$${_formatNumber(stats.estimatedRevenue.round())}',
           icon: Icons.attach_money,
           color: AccentColors.teal,
         ),
         _StatCard(
-          title: 'Out of Stock',
+          title: context.l10n.shopAdminDashboardOutOfStock,
           value: stats.outOfStockProducts.toString(),
           icon: Icons.warning,
           color: stats.outOfStockProducts > 0
@@ -215,7 +218,7 @@ class _AdminDashboardContent extends ConsumerWidget {
               : SemanticColors.disabled,
         ),
         _StatCard(
-          title: 'Inactive',
+          title: context.l10n.shopAdminDashboardInactive,
           value: stats.inactiveProducts.toString(),
           icon: Icons.pause_circle,
           color: SemanticColors.disabled,
@@ -239,7 +242,7 @@ class _AdminDashboardContent extends ConsumerWidget {
         Expanded(
           child: _ActionButton(
             icon: Icons.add_box,
-            label: 'Add Product',
+            label: context.l10n.shopAdminDashboardAddProduct,
             color: context.accentColor,
             onTap: () {
               Navigator.of(context).push(
@@ -254,7 +257,7 @@ class _AdminDashboardContent extends ConsumerWidget {
         Expanded(
           child: _ActionButton(
             icon: Icons.store,
-            label: 'Add Seller',
+            label: context.l10n.shopAdminDashboardAddSeller,
             color: AppTheme.successGreen,
             onTap: () {
               Navigator.of(context).push(
@@ -274,8 +277,8 @@ class _AdminDashboardContent extends ConsumerWidget {
       children: [
         _ManagementCard(
           icon: Icons.inventory_2,
-          title: 'Products',
-          subtitle: 'Manage all product listings',
+          title: context.l10n.shopAdminDashboardProducts,
+          subtitle: context.l10n.shopAdminDashboardProductsSubtitle,
           onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const AdminProductsScreen()),
@@ -285,8 +288,8 @@ class _AdminDashboardContent extends ConsumerWidget {
         const SizedBox(height: AppTheme.spacing12),
         _ManagementCard(
           icon: Icons.store,
-          title: 'Sellers',
-          subtitle: 'Manage seller profiles and partnerships',
+          title: context.l10n.shopAdminDashboardSellers,
+          subtitle: context.l10n.shopAdminDashboardSellersSubtitle,
           onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const AdminSellersScreen()),
@@ -296,8 +299,8 @@ class _AdminDashboardContent extends ConsumerWidget {
         const SizedBox(height: AppTheme.spacing12),
         _ManagementCard(
           icon: Icons.star,
-          title: 'Featured Products',
-          subtitle: 'Manage featured product display order',
+          title: context.l10n.shopAdminDashboardFeatured,
+          subtitle: context.l10n.shopAdminDashboardFeaturedSubtitle,
           onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const FeaturedProductsScreen()),
@@ -307,8 +310,8 @@ class _AdminDashboardContent extends ConsumerWidget {
         const SizedBox(height: AppTheme.spacing12),
         _ManagementCard(
           icon: Icons.rate_review,
-          title: 'Reviews',
-          subtitle: 'Moderate product reviews',
+          title: context.l10n.shopAdminDashboardReviewsMgmt,
+          subtitle: context.l10n.shopAdminDashboardReviewsSubtitle,
           onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const ReviewModerationScreen()),

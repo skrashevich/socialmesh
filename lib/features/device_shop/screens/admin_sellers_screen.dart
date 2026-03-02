@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/animations.dart';
@@ -45,7 +46,7 @@ class _AdminSellersScreenState extends ConsumerState<AdminSellersScreen>
 
     return GlassScaffold(
       resizeToAvoidBottomInset: false,
-      title: 'Manage Sellers',
+      title: context.l10n.adminSellersTitle,
       actions: [
         IconButton(
           icon: Icon(
@@ -53,12 +54,14 @@ class _AdminSellersScreenState extends ConsumerState<AdminSellersScreen>
             color: _showInactive ? context.accentColor : null,
           ),
           onPressed: () => setState(() => _showInactive = !_showInactive),
-          tooltip: _showInactive ? 'Hide inactive' : 'Show inactive',
+          tooltip: _showInactive
+              ? context.l10n.adminSellersHideInactive
+              : context.l10n.adminSellersShowInactive,
         ),
         IconButton(
           icon: const Icon(Icons.add),
           onPressed: () => _navigateToEdit(null),
-          tooltip: 'Add Seller',
+          tooltip: context.l10n.adminSellersAddTooltip,
         ),
       ],
       slivers: [
@@ -69,7 +72,7 @@ class _AdminSellersScreenState extends ConsumerState<AdminSellersScreen>
             searchController: _searchController,
             searchQuery: _searchQuery,
             onSearchChanged: (value) => setState(() => _searchQuery = value),
-            hintText: 'Search sellers...',
+            hintText: context.l10n.adminSellersSearchHint,
             textScaler: MediaQuery.textScalerOf(context),
           ),
         ),
@@ -99,7 +102,7 @@ class _AdminSellersScreenState extends ConsumerState<AdminSellersScreen>
                         color: context.textTertiary,
                       ),
                       const SizedBox(height: AppTheme.spacing16),
-                      const Text('No sellers found'),
+                      Text(context.l10n.adminSellersNotFound),
                     ],
                   ),
                 ),
@@ -222,11 +225,20 @@ class _SellerListItem extends StatelessWidget {
                       runSpacing: 4,
                       children: [
                         if (!seller.isActive)
-                          _buildBadge('INACTIVE', AppTheme.errorRed),
+                          _buildBadge(
+                            context.l10n.adminSellersInactiveBadge,
+                            AppTheme.errorRed,
+                          ),
                         if (seller.isOfficialPartner)
-                          _buildBadge('PARTNER', AppTheme.successGreen),
+                          _buildBadge(
+                            context.l10n.adminSellersPartnerBadge,
+                            AppTheme.successGreen,
+                          ),
                         if (seller.isVerified)
-                          _buildBadge('VERIFIED', AccentColors.blue),
+                          _buildBadge(
+                            context.l10n.adminSellersVerifiedBadge,
+                            AccentColors.blue,
+                          ),
                       ],
                     ),
                     const SizedBox(height: AppTheme.spacing4),
@@ -279,13 +291,13 @@ class _SellerListItem extends StatelessWidget {
                   }
                 },
                 itemBuilder: (context) => [
-                  const PopupMenuItem(
+                  PopupMenuItem(
                     value: 'edit',
                     child: Row(
                       children: [
-                        Icon(Icons.edit, size: 20),
-                        SizedBox(width: AppTheme.spacing8),
-                        Text('Edit'),
+                        const Icon(Icons.edit, size: 20),
+                        const SizedBox(width: AppTheme.spacing8),
+                        Text(context.l10n.adminSellersEdit),
                       ],
                     ),
                   ),
@@ -300,7 +312,11 @@ class _SellerListItem extends StatelessWidget {
                           size: 20,
                         ),
                         const SizedBox(width: AppTheme.spacing8),
-                        Text(seller.isActive ? 'Deactivate' : 'Activate'),
+                        Text(
+                          seller.isActive
+                              ? context.l10n.adminSellersDeactivate
+                              : context.l10n.adminSellersActivate,
+                        ),
                       ],
                     ),
                   ),
@@ -438,13 +454,15 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: GlassScaffold(
-        title: _isEditing ? 'Edit Seller' : 'Add Seller',
+        title: _isEditing
+            ? context.l10n.adminSellersEditTitle
+            : context.l10n.adminSellersAddTitle,
         actions: [
           if (_isEditing)
             IconButton(
               icon: const Icon(Icons.delete, color: AppTheme.errorRed),
               onPressed: _confirmDelete,
-              tooltip: 'Delete Seller',
+              tooltip: context.l10n.adminSellersDeleteTooltip,
             ),
         ],
         slivers: [
@@ -457,18 +475,20 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Logo Section
-                    _buildSectionTitle('Seller Logo'),
+                    _buildSectionTitle(context.l10n.adminSellersLogoSection),
                     _buildLogoSection(),
                     const SizedBox(height: AppTheme.spacing24),
 
                     // Basic Info
-                    _buildSectionTitle('Basic Information'),
+                    _buildSectionTitle(
+                      context.l10n.adminSellersBasicInfoSection,
+                    ),
                     TextFormField(
                       maxLength: 100,
                       controller: _nameController,
-                      decoration: const InputDecoration(
-                        labelText: 'Seller Name *',
-                        hintText: 'e.g., LilyGO, RAK Wireless',
+                      decoration: InputDecoration(
+                        labelText: context.l10n.adminSellersNameLabel,
+                        hintText: context.l10n.adminSellersNameHint,
                         counterText: '',
                       ),
                       validator: (v) => v?.isEmpty == true ? 'Required' : null,
@@ -478,9 +498,9 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
                     TextFormField(
                       maxLength: 500,
                       controller: _descriptionController,
-                      decoration: const InputDecoration(
-                        labelText: 'Description',
-                        hintText: 'Brief description of the seller',
+                      decoration: InputDecoration(
+                        labelText: context.l10n.adminSellersDescriptionLabel,
+                        hintText: context.l10n.adminSellersDescriptionHint,
                         counterText: '',
                       ),
                       maxLines: 3,
@@ -488,14 +508,16 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
                     const SizedBox(height: AppTheme.spacing24),
 
                     // Contact Info
-                    _buildSectionTitle('Contact Information'),
+                    _buildSectionTitle(
+                      context.l10n.adminSellersContactInfoSection,
+                    ),
                     TextFormField(
                       maxLength: 100,
                       controller: _websiteUrlController,
-                      decoration: const InputDecoration(
-                        labelText: 'Website URL *',
+                      decoration: InputDecoration(
+                        labelText: context.l10n.adminSellersWebsiteLabel,
                         hintText: 'https://...',
-                        prefixIcon: Icon(Icons.link),
+                        prefixIcon: const Icon(Icons.link),
                         counterText: '',
                       ),
                       keyboardType: TextInputType.url,
@@ -506,10 +528,10 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
                     TextFormField(
                       maxLength: 100,
                       controller: _contactEmailController,
-                      decoration: const InputDecoration(
-                        labelText: 'Contact Email',
-                        hintText: 'support@example.com',
-                        prefixIcon: Icon(Icons.email),
+                      decoration: InputDecoration(
+                        labelText: context.l10n.adminSellersEmailLabel,
+                        hintText: context.l10n.adminSellersEmailHint,
+                        prefixIcon: const Icon(Icons.email),
                         counterText: '',
                       ),
                       keyboardType: TextInputType.emailAddress,
@@ -517,37 +539,41 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
                     const SizedBox(height: AppTheme.spacing24),
 
                     // Shipping Countries
-                    _buildSectionTitle('Shipping Countries'),
+                    _buildSectionTitle(
+                      context.l10n.adminSellersShippingSection,
+                    ),
                     TextFormField(
                       maxLength: 100,
                       controller: _countriesController,
-                      decoration: const InputDecoration(
-                        labelText: 'Countries',
-                        hintText: 'US, CA, UK, DE (comma separated)',
+                      decoration: InputDecoration(
+                        labelText: context.l10n.adminSellersCountriesLabel,
+                        hintText: context.l10n.adminSellersCountriesHint,
                         counterText: '',
                       ),
                     ),
                     const SizedBox(height: AppTheme.spacing24),
 
                     // Discount Code Section
-                    _buildSectionTitle('Partner Discount Code'),
+                    _buildSectionTitle(
+                      context.l10n.adminSellersDiscountSection,
+                    ),
                     _buildDiscountCodeSection(),
                     const SizedBox(height: AppTheme.spacing24),
 
                     // Status Toggles
-                    _buildSectionTitle('Status & Verification'),
+                    _buildSectionTitle(context.l10n.adminSellersStatusSection),
                     ListTile(
-                      title: const Text('Verified'),
-                      subtitle: const Text('Seller identity has been verified'),
+                      title: Text(context.l10n.adminSellersVerifiedToggle),
+                      subtitle: Text(context.l10n.adminSellersVerifiedSubtitle),
                       trailing: ThemedSwitch(
                         value: _isVerified,
                         onChanged: (v) => setState(() => _isVerified = v),
                       ),
                     ),
                     ListTile(
-                      title: const Text('Official Partner'),
-                      subtitle: const Text(
-                        'Display as official Meshtastic partner',
+                      title: Text(context.l10n.adminSellersOfficialPartner),
+                      subtitle: Text(
+                        context.l10n.adminSellersOfficialPartnerSubtitle,
                       ),
                       trailing: ThemedSwitch(
                         value: _isOfficialPartner,
@@ -556,8 +582,8 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
                       ),
                     ),
                     ListTile(
-                      title: const Text('Active'),
-                      subtitle: const Text('Seller is visible in the shop'),
+                      title: Text(context.l10n.adminSellersActive),
+                      subtitle: Text(context.l10n.adminSellersActiveSubtitle),
                       trailing: ThemedSwitch(
                         value: _isActive,
                         onChanged: (v) => setState(() => _isActive = v),
@@ -587,7 +613,9 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
                                   ),
                                 )
                               : Text(
-                                  _isEditing ? 'Save Changes' : 'Create Seller',
+                                  _isEditing
+                                      ? context.l10n.adminSellersSaveChanges
+                                      : context.l10n.adminSellersCreate,
                                 ),
                         ),
                       ),
@@ -598,7 +626,7 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
                       const SizedBox(height: AppTheme.spacing24),
                       const Divider(),
                       const SizedBox(height: AppTheme.spacing16),
-                      _buildSectionTitle('Danger Zone'),
+                      _buildSectionTitle(context.l10n.adminSellersDangerZone),
                       Card(
                         color: AppTheme.errorRed.withValues(alpha: 0.1),
                         child: Padding(
@@ -606,13 +634,16 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Row(
+                              Row(
                                 children: [
-                                  Icon(Icons.warning, color: AppTheme.errorRed),
-                                  SizedBox(width: AppTheme.spacing8),
+                                  const Icon(
+                                    Icons.warning,
+                                    color: AppTheme.errorRed,
+                                  ),
+                                  const SizedBox(width: AppTheme.spacing8),
                                   Text(
-                                    'Delete Seller',
-                                    style: TextStyle(
+                                    context.l10n.adminSellersDeleteTitle,
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: AppTheme.errorRed,
                                     ),
@@ -621,8 +652,7 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
                               ),
                               const SizedBox(height: AppTheme.spacing8),
                               Text(
-                                'Permanently delete this seller and deactivate all their products. '
-                                'This action cannot be undone.',
+                                context.l10n.adminSellersDeleteDescription,
                                 style: TextStyle(
                                   color: context.textSecondary,
                                   fontSize: 13,
@@ -637,7 +667,9 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
                                     color: AppTheme.errorRed,
                                   ),
                                 ),
-                                child: const Text('Delete Seller Permanently'),
+                                child: Text(
+                                  context.l10n.adminSellersDeletePermanently,
+                                ),
                               ),
                             ],
                           ),
@@ -694,14 +726,18 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
                   color: AccentColors.orange.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(AppTheme.radius4),
                 ),
-                child: const Row(
+                child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.warning, color: AccentColors.orange, size: 16),
-                    SizedBox(width: AppTheme.spacing4),
+                    const Icon(
+                      Icons.warning,
+                      color: AccentColors.orange,
+                      size: 16,
+                    ),
+                    const SizedBox(width: AppTheme.spacing4),
                     Text(
-                      'Discount code has expired',
-                      style: TextStyle(
+                      context.l10n.adminSellersDiscountExpired,
+                      style: const TextStyle(
                         color: AccentColors.orange,
                         fontSize: 12,
                       ),
@@ -712,10 +748,10 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
             TextFormField(
               maxLength: 100,
               controller: _discountCodeController,
-              decoration: const InputDecoration(
-                labelText: 'Discount Code',
-                hintText: 'e.g., MESH10',
-                prefixIcon: Icon(Icons.local_offer),
+              decoration: InputDecoration(
+                labelText: context.l10n.adminSellersDiscountCodeLabel,
+                hintText: context.l10n.adminSellersDiscountCodeHint,
+                prefixIcon: const Icon(Icons.local_offer),
                 counterText: '',
               ),
               textCapitalization: TextCapitalization.characters,
@@ -724,9 +760,9 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
             TextFormField(
               maxLength: 100,
               controller: _discountLabelController,
-              decoration: const InputDecoration(
-                labelText: 'Display Label',
-                hintText: 'e.g., 10% off for Socialmesh users',
+              decoration: InputDecoration(
+                labelText: context.l10n.adminSellersDiscountDisplayLabel,
+                hintText: context.l10n.adminSellersDiscountDisplayHint,
                 counterText: '',
               ),
             ),
@@ -734,9 +770,9 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
             InkWell(
               onTap: _selectExpiryDate,
               child: InputDecorator(
-                decoration: const InputDecoration(
-                  labelText: 'Expiry Date (optional)',
-                  prefixIcon: Icon(Icons.calendar_today),
+                decoration: InputDecoration(
+                  labelText: context.l10n.adminSellersDiscountExpiryLabel,
+                  prefixIcon: const Icon(Icons.calendar_today),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -744,7 +780,7 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
                     Text(
                       _discountCodeExpiry != null
                           ? '${_discountCodeExpiry!.day}/${_discountCodeExpiry!.month}/${_discountCodeExpiry!.year}'
-                          : 'No expiry',
+                          : context.l10n.adminSellersDiscountNoExpiry,
                       style: TextStyle(
                         color: _discountCodeExpiry != null
                             ? context.textPrimary
@@ -767,9 +803,9 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
             TextFormField(
               maxLength: 500,
               controller: _discountTermsController,
-              decoration: const InputDecoration(
-                labelText: 'Terms & Conditions',
-                hintText: 'e.g., Cannot be combined with other offers',
+              decoration: InputDecoration(
+                labelText: context.l10n.adminSellersDiscountTermsLabel,
+                hintText: context.l10n.adminSellersDiscountTermsHint,
                 counterText: '',
               ),
               maxLines: 2,
@@ -779,7 +815,7 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
               TextButton.icon(
                 onPressed: _clearDiscountCode,
                 icon: const Icon(Icons.clear, size: 18),
-                label: const Text('Clear Discount Code'),
+                label: Text(context.l10n.adminSellersClearDiscount),
                 style: TextButton.styleFrom(foregroundColor: AppTheme.errorRed),
               ),
             ],
@@ -844,14 +880,18 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
                       child: CircularProgressIndicator(strokeWidth: 2),
                     )
                   : const Icon(Icons.upload),
-              label: Text(_isUploadingLogo ? 'Uploading...' : 'Upload Logo'),
+              label: Text(
+                _isUploadingLogo
+                    ? context.l10n.adminSellersUploading
+                    : context.l10n.adminSellersUploadLogo,
+              ),
             ),
             if (_logoUrl != null)
               TextButton(
                 onPressed: () => setState(() => _logoUrl = null),
-                child: const Text(
-                  'Remove',
-                  style: TextStyle(color: AppTheme.errorRed),
+                child: Text(
+                  context.l10n.adminSellersRemoveLogo,
+                  style: const TextStyle(color: AppTheme.errorRed),
                 ),
               ),
           ],
@@ -912,6 +952,7 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
     final service = ref.read(deviceShopServiceProvider);
     final user = ref.read(currentUserProvider);
     final navigator = Navigator.of(context);
+    final l10n = context.l10n;
 
     safeSetState(() => _isLoading = true);
 
@@ -968,7 +1009,7 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
       navigator.pop();
       showSuccessSnackBar(
         context,
-        _isEditing ? 'Seller updated' : 'Seller created',
+        _isEditing ? l10n.adminSellersUpdated : l10n.adminSellersCreated,
       );
     } catch (e) {
       safeSetState(() => _isLoading = false);
@@ -984,6 +1025,7 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
     // Capture providers before any await
     final service = ref.read(deviceShopServiceProvider);
     final navigator = Navigator.of(context);
+    final l10n = context.l10n;
 
     final productCount = widget.seller!.productCount;
     final confirmed = await AppBottomSheet.show<bool>(
@@ -993,7 +1035,7 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Delete Seller',
+            l10n.adminSellersDeleteDialogTitle,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -1001,9 +1043,7 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
             ),
           ),
           const SizedBox(height: AppTheme.spacing12),
-          Text(
-            'Are you sure you want to permanently delete "${widget.seller!.name}"?',
-          ),
+          Text(l10n.adminSellersDeleteDialogMessage(widget.seller!.name)),
           if (productCount > 0) ...[
             const SizedBox(height: AppTheme.spacing12),
             Container(
@@ -1018,7 +1058,7 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
                   const SizedBox(width: AppTheme.spacing8),
                   Expanded(
                     child: Text(
-                      '$productCount product(s) will be deactivated.',
+                      l10n.adminSellersDeleteProductWarning(productCount),
                       style: const TextStyle(color: AccentColors.orange),
                     ),
                   ),
@@ -1027,9 +1067,9 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
             ),
           ],
           const SizedBox(height: AppTheme.spacing12),
-          const Text(
-            'This action cannot be undone.',
-            style: TextStyle(fontWeight: FontWeight.bold),
+          Text(
+            l10n.adminSellersDeleteUndoWarning,
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: AppTheme.spacing24),
           Row(
@@ -1044,7 +1084,7 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
                   ),
-                  child: const Text('Cancel'),
+                  child: Text(l10n.adminSellersCancel),
                 ),
               ),
               const SizedBox(width: AppTheme.spacing12),
@@ -1058,7 +1098,7 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
                   ),
-                  child: const Text('Delete'),
+                  child: Text(l10n.adminSellersDeleteConfirm),
                 ),
               ),
             ],
@@ -1075,7 +1115,7 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
         ref.invalidate(adminAllSellersProvider);
         ref.invalidate(shopSellersProvider);
         navigator.pop();
-        showSuccessSnackBar(context, 'Seller deleted');
+        showSuccessSnackBar(context, l10n.adminSellersDeleted);
       } catch (e) {
         if (mounted) {
           showErrorSnackBar(context, 'Error: $e');

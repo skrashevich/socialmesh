@@ -1069,74 +1069,44 @@ class _NodeDexListTile extends ConsumerWidget {
                     ),
                     const SizedBox(height: AppTheme.spacing4),
 
-                    // Metadata row: trait + stats + patina indicator
-                    Row(
+                    // Metadata chips — single Wrap for natural flow
+                    Wrap(
+                      spacing: AppTheme.spacing4,
+                      runSpacing: AppTheme.spacing4,
                       children: [
-                        // Left side badges — flexible to prevent overflow
-                        Flexible(
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              if (disclosure.showPrimaryTrait)
-                                Flexible(
-                                  flex: 0,
-                                  child: TraitBadge(
-                                    trait: traitResult.primary,
-                                    size: TraitBadgeSize.compact,
-                                  ),
-                                ),
-                              if (entry.socialTag != null) ...[
-                                const SizedBox(width: AppTheme.spacing6),
-                                Flexible(
-                                  flex: 0,
-                                  child: SocialTagBadge(
-                                    tag: entry.socialTag!,
-                                    compact: true,
-                                  ),
-                                ),
-                              ],
-                              if (disclosure.showPatinaStamp) ...[
-                                const SizedBox(width: AppTheme.spacing6),
-                                Flexible(
-                                  flex: 0,
-                                  child: PatinaIndicator(
-                                    result: patinaResult,
-                                    accentColor:
-                                        entry.sigil?.primaryColor ??
-                                        context.accentColor,
-                                  ),
-                                ),
-                              ],
-                              if (disclosure.showPrimaryTrait &&
-                                  trustResult.level != TrustLevel.unknown) ...[
-                                const SizedBox(width: AppTheme.spacing6),
-                                Flexible(
-                                  flex: 0,
-                                  child: TrustIndicator(
-                                    level: trustResult.level,
-                                    size: TrustIndicatorSize.compact,
-                                  ),
-                                ),
-                              ],
-                            ],
+                        if (disclosure.showPrimaryTrait)
+                          TraitBadge(
+                            trait: traitResult.primary,
+                            size: TraitBadgeSize.compact,
                           ),
-                        ),
-                        const SizedBox(width: AppTheme.spacing6),
+                        if (entry.socialTag != null)
+                          SocialTagBadge(tag: entry.socialTag!, compact: true),
+                        if (disclosure.showPatinaStamp)
+                          PatinaIndicator(
+                            result: patinaResult,
+                            accentColor:
+                                entry.sigil?.primaryColor ??
+                                context.accentColor,
+                          ),
+                        if (disclosure.showPrimaryTrait &&
+                            trustResult.level != TrustLevel.unknown)
+                          TrustIndicator(
+                            level: trustResult.level,
+                            size: TrustIndicatorSize.compact,
+                          ),
                         // Encounter count
                         _MetricChip(
                           icon: Icons.repeat,
                           value: entry.encounterCount.toString(),
                           tooltip: '${entry.encounterCount} encounters',
                         ),
-                        if (entry.maxDistanceSeen != null) ...[
-                          const SizedBox(width: AppTheme.spacing6),
+                        if (entry.maxDistanceSeen != null)
                           _MetricChip(
                             icon: Icons.straighten,
                             value: _shortDistance(entry.maxDistanceSeen!),
                             tooltip:
                                 'Max range: ${_shortDistance(entry.maxDistanceSeen!)}',
                           ),
-                        ],
                       ],
                     ),
 
@@ -1301,23 +1271,33 @@ class _MetricChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = context.textTertiary;
     return Tooltip(
       message: tooltip,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 11, color: context.textTertiary),
-          const SizedBox(width: AppTheme.spacing3),
-          Text(
-            value,
-            style: TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.w500,
-              color: context.textTertiary,
-              fontFamily: AppTheme.fontFamily,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+        decoration: BoxDecoration(
+          color: color.withValues(alpha: 0.10),
+          borderRadius: BorderRadius.circular(AppTheme.radius10),
+          border: Border.all(color: color.withValues(alpha: 0.25), width: 0.5),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 11, color: color),
+            const SizedBox(width: AppTheme.spacing3),
+            Text(
+              value,
+              style: TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.w600,
+                color: color,
+                fontFamily: AppTheme.fontFamily,
+                letterSpacing: 0.2,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

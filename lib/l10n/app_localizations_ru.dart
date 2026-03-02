@@ -4272,4 +4272,1369 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get meshcoreConsoleCaptureCleared => 'Capture cleared';
+
+  @override
+  String get shopModelCategoryNodes => 'Nodes';
+
+  @override
+  String get shopModelCategoryNodesDescription => 'Complete Meshtastic devices';
+
+  @override
+  String get shopModelCategoryModules => 'Modules';
+
+  @override
+  String get shopModelCategoryModulesDescription => 'Add-on modules and boards';
+
+  @override
+  String get shopModelCategoryAntennas => 'Antennas';
+
+  @override
+  String get shopModelCategoryAntennasDescription =>
+      'Antennas and RF accessories';
+
+  @override
+  String get shopModelCategoryEnclosures => 'Enclosures';
+
+  @override
+  String get shopModelCategoryEnclosuresDescription => 'Cases and enclosures';
+
+  @override
+  String get shopModelCategoryAccessories => 'Accessories';
+
+  @override
+  String get shopModelCategoryAccessoriesDescription =>
+      'Cables, batteries, and more';
+
+  @override
+  String get shopModelCategoryKits => 'Kits';
+
+  @override
+  String get shopModelCategoryKitsDescription => 'DIY kits and bundles';
+
+  @override
+  String get shopModelCategorySolar => 'Solar';
+
+  @override
+  String get shopModelCategorySolarDescription =>
+      'Solar panels and power solutions';
+
+  @override
+  String get shopModelBandUs915 => 'US 915MHz';
+
+  @override
+  String get shopModelBandUs915Range => '902-928 MHz';
+
+  @override
+  String get shopModelBandEu868 => 'EU 868MHz';
+
+  @override
+  String get shopModelBandEu868Range => '863-870 MHz';
+
+  @override
+  String get shopModelBandCn470 => 'CN 470MHz';
+
+  @override
+  String get shopModelBandCn470Range => '470-510 MHz';
+
+  @override
+  String get shopModelBandJp920 => 'JP 920MHz';
+
+  @override
+  String get shopModelBandJp920Range => '920-925 MHz';
+
+  @override
+  String get shopModelBandKr920 => 'KR 920MHz';
+
+  @override
+  String get shopModelBandKr920Range => '920-923 MHz';
+
+  @override
+  String get shopModelBandAu915 => 'AU 915MHz';
+
+  @override
+  String get shopModelBandAu915Range => '915-928 MHz';
+
+  @override
+  String get shopModelBandIn865 => 'IN 865MHz';
+
+  @override
+  String get shopModelBandIn865Range => '865-867 MHz';
+
+  @override
+  String get shopModelBandMulti => 'Multi-band';
+
+  @override
+  String get shopModelBandMultiRange => 'Multiple frequencies';
+
+  @override
+  String shopModelPriceFrom(String price) {
+    return 'From \$$price';
+  }
+
+  @override
+  String get lilygoModelPriceUnavailable => 'Price unavailable';
+
+  @override
+  String get deviceShopTitle => 'Device Shop';
+
+  @override
+  String get deviceShopFavoritesTooltip => 'Favorites';
+
+  @override
+  String get deviceShopHelpTooltip => 'Help';
+
+  @override
+  String get deviceShopSearchHint => 'Search devices, modules, antennas...';
+
+  @override
+  String get deviceShopMarketplaceInfoTitle => 'Marketplace Information';
+
+  @override
+  String get deviceShopMarketplaceDisclaimer =>
+      'Purchases are completed on the seller\'s official store. Socialmesh does not handle payment, shipping, warranty, or returns.';
+
+  @override
+  String get deviceShopRecentSearches => 'Recent Searches';
+
+  @override
+  String get deviceShopClear => 'Clear';
+
+  @override
+  String get deviceShopTrending => 'Trending';
+
+  @override
+  String get deviceShopBrowseByCategory => 'Browse by Category';
+
+  @override
+  String deviceShopNoResults(String query) {
+    return 'No results for \"$query\"';
+  }
+
+  @override
+  String get deviceShopTryDifferentKeywords => 'Try different keywords';
+
+  @override
+  String get deviceShopErrorLoadingProducts => 'Error loading products';
+
+  @override
+  String get deviceShopCategories => 'Categories';
+
+  @override
+  String get deviceShopOfficialPartners => 'Official Partners';
+
+  @override
+  String get deviceShopNewArrivals => 'New Arrivals';
+
+  @override
+  String get deviceShopPopularDevices => 'Popular Devices';
+
+  @override
+  String get deviceShopBecomeSeller => 'Become a Seller';
+
+  @override
+  String get deviceShopSellYourDevices => 'Sell your Meshtastic devices';
+
+  @override
+  String get deviceShopBecomeSellerBody =>
+      'Are you a manufacturer or distributor of Meshtastic-compatible devices? Join our marketplace to reach mesh radio enthusiasts worldwide.';
+
+  @override
+  String get deviceShopContactUs => 'Contact Us';
+
+  @override
+  String get deviceShopSupportEmail => 'support@socialmesh.app';
+
+  @override
+  String get deviceShopOnSale => 'On Sale';
+
+  @override
+  String get deviceShopSeeAll => 'See All';
+
+  @override
+  String get deviceShopOutOfStock => 'OUT OF STOCK';
+
+  @override
+  String get deviceShopUnableToLoad => 'Unable to load products';
+
+  @override
+  String get deviceShopNoInternet => 'No internet connection';
+
+  @override
+  String get deviceShopTryAgain => 'Try again in a moment';
+
+  @override
+  String get deviceShopConnectToBrowse => 'Connect to browse devices';
+
+  @override
+  String get deviceShopRetry => 'Retry';
+
+  @override
+  String get deviceShopFeatured => 'Featured';
+
+  @override
+  String get productDetailTitle => 'Product';
+
+  @override
+  String get productDetailErrorLoading => 'Error loading product';
+
+  @override
+  String get productDetailGoBack => 'Go Back';
+
+  @override
+  String get productDetailNotFound => 'Product not found';
+
+  @override
+  String get productDetailSignInFavorites => 'Sign in to save favorites';
+
+  @override
+  String productDetailBySeller(String seller) {
+    return 'by $seller';
+  }
+
+  @override
+  String productDetailReviewCount(int count) {
+    return '($count reviews)';
+  }
+
+  @override
+  String productDetailSoldCount(int count) {
+    return '$count sold';
+  }
+
+  @override
+  String productDetailInStockCount(int quantity) {
+    return 'In Stock ($quantity available)';
+  }
+
+  @override
+  String get productDetailOutOfStock => 'Out of Stock';
+
+  @override
+  String get productDetailDescription => 'Description';
+
+  @override
+  String get productDetailShowLess => 'Show Less';
+
+  @override
+  String get productDetailReadMore => 'Read More';
+
+  @override
+  String productDetailSelectedPrice(String price) {
+    return 'Selected: \$$price';
+  }
+
+  @override
+  String get productDetailTechSpecs => 'Technical Specifications';
+
+  @override
+  String get productDetailVendorVerified => 'Vendor Verified';
+
+  @override
+  String productDetailVerifiedOn(String date) {
+    return 'Verified on $date';
+  }
+
+  @override
+  String get productDetailChipset => 'Chipset';
+
+  @override
+  String get productDetailLoraChip => 'LoRa Chip';
+
+  @override
+  String get productDetailFrequencyBands => 'Frequency Bands';
+
+  @override
+  String get productDetailBattery => 'Battery';
+
+  @override
+  String get productDetailDimensions => 'Dimensions';
+
+  @override
+  String get productDetailWeight => 'Weight';
+
+  @override
+  String get productDetailHardwareVersion => 'Hardware Version';
+
+  @override
+  String get productDetailFirmware => 'Firmware';
+
+  @override
+  String get productDetailGps => 'GPS';
+
+  @override
+  String get productDetailDisplay => 'Display';
+
+  @override
+  String get productDetailBluetooth => 'Bluetooth';
+
+  @override
+  String get productDetailWifi => 'WiFi';
+
+  @override
+  String get productDetailMeshtasticCompatible => 'Meshtastic Compatible';
+
+  @override
+  String get productDetailFeatures => 'Features';
+
+  @override
+  String get productDetailIncludedAccessories => 'Included Accessories';
+
+  @override
+  String get productDetailShipping => 'Shipping';
+
+  @override
+  String productDetailShippingCost(String cost) {
+    return 'Shipping: \$$cost';
+  }
+
+  @override
+  String get productDetailFreeShipping => 'Free Shipping';
+
+  @override
+  String productDetailEstimatedDelivery(int days) {
+    return 'Estimated $days days';
+  }
+
+  @override
+  String productDetailShipsTo(String countries) {
+    return 'Ships to: $countries';
+  }
+
+  @override
+  String get productDetailPurchaseDisclaimer =>
+      'Purchases completed on seller\'s official store';
+
+  @override
+  String get productDetailTotal => 'Total';
+
+  @override
+  String get productDetailEdit => 'Edit';
+
+  @override
+  String get productDetailBuyNow => 'Buy Now';
+
+  @override
+  String get productDetailOutOfStockButton => 'Out of Stock';
+
+  @override
+  String get productDetailPurchaseTitle => 'Purchase';
+
+  @override
+  String get productDetailContactToPurchase =>
+      'Contact the seller to purchase this product.';
+
+  @override
+  String get productDetailCancel => 'Cancel';
+
+  @override
+  String get productDetailContactSeller => 'Contact Seller';
+
+  @override
+  String get productDetailUnableToLoadPage => 'Unable to load page';
+
+  @override
+  String get productDetailWebviewOffline =>
+      'This content requires an internet connection. Please check your connection and try again.';
+
+  @override
+  String get productDetailRetry => 'Retry';
+
+  @override
+  String get productDetailReviews => 'Reviews';
+
+  @override
+  String get productDetailWriteReview => 'Write Review';
+
+  @override
+  String get productDetailUnableToLoadReviews => 'Unable to load reviews';
+
+  @override
+  String get productDetailNoReviews => 'No reviews yet';
+
+  @override
+  String get productDetailBeFirstReviewer =>
+      'Be the first to review this product!';
+
+  @override
+  String get productDetailReviewVerified => 'Verified';
+
+  @override
+  String get productDetailSellerResponse => 'Seller Response';
+
+  @override
+  String get productDetailToday => 'Today';
+
+  @override
+  String get productDetailYesterday => 'Yesterday';
+
+  @override
+  String productDetailDaysAgo(int count) {
+    return '$count days ago';
+  }
+
+  @override
+  String productDetailWeeksAgo(int count) {
+    return '$count weeks ago';
+  }
+
+  @override
+  String productDetailMonthsAgo(int count) {
+    return '$count months ago';
+  }
+
+  @override
+  String productDetailYearsAgo(int count) {
+    return '$count years ago';
+  }
+
+  @override
+  String get productDetailWriteReviewTitle => 'Write a Review';
+
+  @override
+  String productDetailReviewPrivacyNotice(String userName) {
+    return 'Your review will be public and posted as \"$userName\". Reviews are moderated before appearing on the product page.';
+  }
+
+  @override
+  String get productDetailAnonymous => 'Anonymous';
+
+  @override
+  String get productDetailYourRating => 'Your Rating';
+
+  @override
+  String get productDetailReviewTitleLabel => 'Title (optional)';
+
+  @override
+  String get productDetailYourReview => 'Your Review *';
+
+  @override
+  String get productDetailReviewHint =>
+      'Share your experience with this product...';
+
+  @override
+  String get productDetailReviewValidation =>
+      'Please write a review description';
+
+  @override
+  String get productDetailSubmitReview => 'Submit Review';
+
+  @override
+  String get productDetailReviewSubmitted =>
+      'Review submitted for moderation. Thank you!';
+
+  @override
+  String productDetailImageCounter(int current, int total) {
+    return '$current / $total';
+  }
+
+  @override
+  String productDetailDiscountBadge(int percent) {
+    return '-$percent% OFF';
+  }
+
+  @override
+  String get adminProductsTitle => 'Manage Products';
+
+  @override
+  String get adminProductsHideInactive => 'Hide inactive';
+
+  @override
+  String get adminProductsShowInactive => 'Show inactive';
+
+  @override
+  String get adminProductsAddTooltip => 'Add Product';
+
+  @override
+  String get adminProductsSearchHint => 'Search products...';
+
+  @override
+  String get adminProductsFilterTooltip => 'Filter by category';
+
+  @override
+  String get adminProductsAllCategories => 'All Categories';
+
+  @override
+  String get adminProductsNotFound => 'No products found';
+
+  @override
+  String get adminProductsDeleteTitle => 'Delete Product';
+
+  @override
+  String adminProductsDeleteMessage(String name) {
+    return 'Are you sure you want to permanently delete \"$name\"?\n\nThis action cannot be undone.';
+  }
+
+  @override
+  String get adminProductsDelete => 'Delete';
+
+  @override
+  String get adminProductsDeleted => 'Product deleted';
+
+  @override
+  String get adminProductsInactiveBadge => 'INACTIVE';
+
+  @override
+  String get adminProductsFeaturedBadge => 'FEATURED';
+
+  @override
+  String get adminProductsEdit => 'Edit';
+
+  @override
+  String get adminProductsDeactivate => 'Deactivate';
+
+  @override
+  String get adminProductsActivate => 'Activate';
+
+  @override
+  String get adminProductsDeleteMenu => 'Delete';
+
+  @override
+  String get adminProductsEditTitle => 'Edit Product';
+
+  @override
+  String get adminProductsAddTitle => 'Add Product';
+
+  @override
+  String get adminProductsDeleteTooltip => 'Delete';
+
+  @override
+  String get adminProductsImagesSection => 'Product Images';
+
+  @override
+  String get adminProductsBasicInfoSection => 'Basic Information';
+
+  @override
+  String get adminProductsNameLabel => 'Product Name *';
+
+  @override
+  String get adminProductsNameHint => 'e.g., T-Beam Supreme';
+
+  @override
+  String get adminProductsRequired => 'Required';
+
+  @override
+  String get adminProductsShortDescLabel => 'Short Description';
+
+  @override
+  String get adminProductsShortDescHint => 'Brief summary (max 150 chars)';
+
+  @override
+  String get adminProductsFullDescLabel => 'Full Description *';
+
+  @override
+  String get adminProductsFullDescHint => 'Detailed product description';
+
+  @override
+  String get adminProductsCategorySellerSection => 'Category & Seller';
+
+  @override
+  String get adminProductsCategoryLabel => 'Category *';
+
+  @override
+  String get adminProductsSellerLabel => 'Seller *';
+
+  @override
+  String get adminProductsSelectSeller => 'Select seller';
+
+  @override
+  String adminProductsErrorLoadingSellers(String error) {
+    return 'Error loading sellers: $error';
+  }
+
+  @override
+  String get adminProductsPricingSection => 'Pricing';
+
+  @override
+  String get adminProductsPriceLabel => 'Price (USD) *';
+
+  @override
+  String get adminProductsInvalid => 'Invalid';
+
+  @override
+  String get adminProductsComparePriceLabel => 'Compare at Price';
+
+  @override
+  String get adminProductsComparePriceHint => 'Original price for sale';
+
+  @override
+  String get adminProductsPurchaseLinkSection => 'Purchase Link';
+
+  @override
+  String get adminProductsPurchaseUrlLabel => 'Purchase URL';
+
+  @override
+  String get adminProductsTechSpecsSection => 'Technical Specifications';
+
+  @override
+  String get adminProductsChipsetLabel => 'Chipset';
+
+  @override
+  String get adminProductsChipsetHint => 'e.g., ESP32-S3';
+
+  @override
+  String get adminProductsLoraChipLabel => 'LoRa Chip';
+
+  @override
+  String get adminProductsLoraChipHint => 'e.g., SX1262';
+
+  @override
+  String get adminProductsBatteryLabel => 'Battery Capacity';
+
+  @override
+  String get adminProductsBatteryHint => 'e.g., 4000mAh';
+
+  @override
+  String get adminProductsWeightLabel => 'Weight';
+
+  @override
+  String get adminProductsWeightHint => 'e.g., 50g';
+
+  @override
+  String get adminProductsGps => 'GPS';
+
+  @override
+  String get adminProductsWifi => 'WiFi';
+
+  @override
+  String get adminProductsBluetooth => 'Bluetooth';
+
+  @override
+  String get adminProductsDisplay => 'Display';
+
+  @override
+  String get adminProductsFrequencyBandsSection => 'Frequency Bands';
+
+  @override
+  String get adminProductsPhysicalSpecsSection => 'Physical Specifications';
+
+  @override
+  String get adminProductsDimensionsLabel => 'Dimensions';
+
+  @override
+  String get adminProductsDimensionsHint => 'e.g., 100x50x25mm';
+
+  @override
+  String get adminProductsTagsSection => 'Tags';
+
+  @override
+  String get adminProductsTagsLabel => 'Tags';
+
+  @override
+  String get adminProductsTagsHint => 'meshtastic, lora, gps (comma separated)';
+
+  @override
+  String get adminProductsStockSection => 'Stock & Status';
+
+  @override
+  String get adminProductsStockLabel => 'Stock Quantity';
+
+  @override
+  String get adminProductsStockHint => 'Leave empty for unlimited';
+
+  @override
+  String get adminProductsInStock => 'In Stock';
+
+  @override
+  String get adminProductsFeatured => 'Featured';
+
+  @override
+  String get adminProductsFeaturedSubtitle =>
+      'Show in featured products section';
+
+  @override
+  String get adminProductsFeaturedOrderLabel => 'Featured Order';
+
+  @override
+  String get adminProductsFeaturedOrderHint =>
+      'Lower numbers appear first (0 = top)';
+
+  @override
+  String get adminProductsFeaturedOrderHelper =>
+      'Controls display order in featured section';
+
+  @override
+  String get adminProductsActive => 'Active';
+
+  @override
+  String get adminProductsActiveSubtitle => 'Product is visible in the shop';
+
+  @override
+  String get adminProductsVendorVerificationSection => 'Vendor Verification';
+
+  @override
+  String get adminProductsVendorVerifiedTitle => 'Vendor Verified Specs';
+
+  @override
+  String get adminProductsVendorVerifiedSubtitle =>
+      'Specifications have been verified by the vendor';
+
+  @override
+  String get adminProductsVendorUnverifiedSubtitle =>
+      'Mark when vendor confirms all specs are accurate';
+
+  @override
+  String get adminProductsSaveChanges => 'Save Changes';
+
+  @override
+  String get adminProductsCreate => 'Create Product';
+
+  @override
+  String get adminProductsMainImage => 'Main';
+
+  @override
+  String get adminProductsUploading => 'Uploading...';
+
+  @override
+  String get adminProductsAddImage => 'Add Image';
+
+  @override
+  String get adminProductsImageRequired => 'At least one image is required';
+
+  @override
+  String get adminProductsImageWarning => 'Please add at least one image';
+
+  @override
+  String get adminProductsSelectSellerWarning => 'Please select a seller';
+
+  @override
+  String get adminProductsUpdated => 'Product updated';
+
+  @override
+  String get adminProductsCreated => 'Product created';
+
+  @override
+  String get adminProductsDeleteConfirmTitle => 'Delete Product';
+
+  @override
+  String get adminProductsDeleteConfirmMessage =>
+      'Are you sure you want to permanently delete this product?';
+
+  @override
+  String get adminProductsDeletedSuccess => 'Product deleted';
+
+  @override
+  String get adminSellersTitle => 'Manage Sellers';
+
+  @override
+  String get adminSellersHideInactive => 'Hide inactive';
+
+  @override
+  String get adminSellersShowInactive => 'Show inactive';
+
+  @override
+  String get adminSellersAddTooltip => 'Add Seller';
+
+  @override
+  String get adminSellersSearchHint => 'Search sellers...';
+
+  @override
+  String get adminSellersNotFound => 'No sellers found';
+
+  @override
+  String get adminSellersInactiveBadge => 'INACTIVE';
+
+  @override
+  String get adminSellersPartnerBadge => 'PARTNER';
+
+  @override
+  String get adminSellersVerifiedBadge => 'VERIFIED';
+
+  @override
+  String get adminSellersEdit => 'Edit';
+
+  @override
+  String get adminSellersDeactivate => 'Deactivate';
+
+  @override
+  String get adminSellersActivate => 'Activate';
+
+  @override
+  String get adminSellersEditTitle => 'Edit Seller';
+
+  @override
+  String get adminSellersAddTitle => 'Add Seller';
+
+  @override
+  String get adminSellersDeleteTooltip => 'Delete Seller';
+
+  @override
+  String get adminSellersLogoSection => 'Seller Logo';
+
+  @override
+  String get adminSellersBasicInfoSection => 'Basic Information';
+
+  @override
+  String get adminSellersNameLabel => 'Seller Name *';
+
+  @override
+  String get adminSellersNameHint => 'e.g., LilyGO, RAK Wireless';
+
+  @override
+  String get adminSellersDescriptionLabel => 'Description';
+
+  @override
+  String get adminSellersDescriptionHint => 'Brief description of the seller';
+
+  @override
+  String get adminSellersContactInfoSection => 'Contact Information';
+
+  @override
+  String get adminSellersWebsiteLabel => 'Website URL *';
+
+  @override
+  String get adminSellersEmailLabel => 'Contact Email';
+
+  @override
+  String get adminSellersEmailHint => 'support@example.com';
+
+  @override
+  String get adminSellersShippingSection => 'Shipping Countries';
+
+  @override
+  String get adminSellersCountriesLabel => 'Countries';
+
+  @override
+  String get adminSellersCountriesHint => 'US, CA, UK, DE (comma separated)';
+
+  @override
+  String get adminSellersDiscountSection => 'Partner Discount Code';
+
+  @override
+  String get adminSellersStatusSection => 'Status & Verification';
+
+  @override
+  String get adminSellersVerifiedToggle => 'Verified';
+
+  @override
+  String get adminSellersVerifiedSubtitle =>
+      'Seller identity has been verified';
+
+  @override
+  String get adminSellersOfficialPartner => 'Official Partner';
+
+  @override
+  String get adminSellersOfficialPartnerSubtitle =>
+      'Display as official Meshtastic partner';
+
+  @override
+  String get adminSellersActive => 'Active';
+
+  @override
+  String get adminSellersActiveSubtitle => 'Seller is visible in the shop';
+
+  @override
+  String get adminSellersSaveChanges => 'Save Changes';
+
+  @override
+  String get adminSellersCreate => 'Create Seller';
+
+  @override
+  String get adminSellersDangerZone => 'Danger Zone';
+
+  @override
+  String get adminSellersDeleteTitle => 'Delete Seller';
+
+  @override
+  String get adminSellersDeleteDescription =>
+      'Permanently delete this seller and deactivate all their products. This action cannot be undone.';
+
+  @override
+  String get adminSellersDeletePermanently => 'Delete Seller Permanently';
+
+  @override
+  String get adminSellersDiscountCodeLabel => 'Discount Code';
+
+  @override
+  String get adminSellersDiscountCodeHint => 'e.g., MESH10';
+
+  @override
+  String get adminSellersDiscountDisplayLabel => 'Display Label';
+
+  @override
+  String get adminSellersDiscountDisplayHint =>
+      'e.g., 10% off for Socialmesh users';
+
+  @override
+  String get adminSellersDiscountExpiryLabel => 'Expiry Date (optional)';
+
+  @override
+  String get adminSellersDiscountNoExpiry => 'No expiry';
+
+  @override
+  String get adminSellersDiscountTermsLabel => 'Terms & Conditions';
+
+  @override
+  String get adminSellersDiscountTermsHint =>
+      'e.g., Cannot be combined with other offers';
+
+  @override
+  String get adminSellersClearDiscount => 'Clear Discount Code';
+
+  @override
+  String get adminSellersDiscountExpired => 'Discount code has expired';
+
+  @override
+  String get adminSellersUploading => 'Uploading...';
+
+  @override
+  String get adminSellersUploadLogo => 'Upload Logo';
+
+  @override
+  String get adminSellersRemoveLogo => 'Remove';
+
+  @override
+  String get adminSellersUpdated => 'Seller updated';
+
+  @override
+  String get adminSellersCreated => 'Seller created';
+
+  @override
+  String get adminSellersDeleteDialogTitle => 'Delete Seller';
+
+  @override
+  String adminSellersDeleteDialogMessage(String name) {
+    return 'Are you sure you want to permanently delete \"$name\"?';
+  }
+
+  @override
+  String adminSellersDeleteProductWarning(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count products will be deactivated.',
+      one: '1 product will be deactivated.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get adminSellersDeleteUndoWarning => 'This action cannot be undone.';
+
+  @override
+  String get adminSellersCancel => 'Cancel';
+
+  @override
+  String get adminSellersDeleteConfirm => 'Delete';
+
+  @override
+  String get adminSellersDeleted => 'Seller deleted';
+
+  @override
+  String get sellerProfileTitle => 'Seller';
+
+  @override
+  String get sellerProfileErrorLoading => 'Error loading seller';
+
+  @override
+  String get sellerProfileGoBack => 'Go Back';
+
+  @override
+  String get sellerProfileNotFound => 'Seller not found';
+
+  @override
+  String get sellerProfileSearchHint => 'Search products...';
+
+  @override
+  String sellerProfileProductsCount(int count) {
+    return 'Products ($count)';
+  }
+
+  @override
+  String get sellerProfileUnableToLoad => 'Unable to load products';
+
+  @override
+  String get sellerProfileNoProducts => 'No products listed yet';
+
+  @override
+  String sellerProfileNoSearchResults(String query) {
+    return 'No products match \"$query\"';
+  }
+
+  @override
+  String get sellerProfileOfficialPartner => 'Official Partner';
+
+  @override
+  String sellerProfileReviewCount(int count) {
+    return '$count reviews';
+  }
+
+  @override
+  String get sellerProfileProductsStat => 'Products';
+
+  @override
+  String get sellerProfileSalesStat => 'Sales';
+
+  @override
+  String get sellerProfileFoundedStat => 'Founded';
+
+  @override
+  String get sellerProfileAbout => 'About';
+
+  @override
+  String get sellerProfileContactShipping => 'Contact & Shipping';
+
+  @override
+  String get sellerProfileWebsite => 'Website';
+
+  @override
+  String get sellerProfileEmail => 'Email';
+
+  @override
+  String get sellerProfileShipsTo => 'Ships to';
+
+  @override
+  String get sellerProfilePartnerDiscount => 'Partner Discount';
+
+  @override
+  String get sellerProfileDiscountExclusive =>
+      'Exclusive discount code for Socialmesh users';
+
+  @override
+  String get sellerProfileRevealCode => 'Reveal Code';
+
+  @override
+  String get sellerProfileCodeCopied => 'Code copied to clipboard';
+
+  @override
+  String get sellerProfileApplyCodeHint =>
+      'Apply this code at checkout on the seller\'s store';
+
+  @override
+  String get shopAdminDashboardAccessDenied => 'Access Denied';
+
+  @override
+  String get shopAdminDashboardAccessRequired => 'Admin Access Required';
+
+  @override
+  String get shopAdminDashboardNoPermission =>
+      'You do not have permission to access this area.';
+
+  @override
+  String get shopAdminDashboardTitle => 'Shop Admin';
+
+  @override
+  String get shopAdminDashboardError => 'Error';
+
+  @override
+  String get shopAdminDashboardRefresh => 'Refresh';
+
+  @override
+  String get shopAdminDashboardQuickActions => 'Quick Actions';
+
+  @override
+  String get shopAdminDashboardManagement => 'Management';
+
+  @override
+  String get shopAdminDashboardTotalProducts => 'Total Products';
+
+  @override
+  String shopAdminDashboardActiveCount(int count) {
+    return '$count active';
+  }
+
+  @override
+  String get shopAdminDashboardTotalSellers => 'Total Sellers';
+
+  @override
+  String get shopAdminDashboardTotalSales => 'Total Sales';
+
+  @override
+  String get shopAdminDashboardTotalViews => 'Total Views';
+
+  @override
+  String get shopAdminDashboardReviews => 'Reviews';
+
+  @override
+  String get shopAdminDashboardEstRevenue => 'Est. Revenue';
+
+  @override
+  String get shopAdminDashboardOutOfStock => 'Out of Stock';
+
+  @override
+  String get shopAdminDashboardInactive => 'Inactive';
+
+  @override
+  String get shopAdminDashboardAddProduct => 'Add Product';
+
+  @override
+  String get shopAdminDashboardAddSeller => 'Add Seller';
+
+  @override
+  String get shopAdminDashboardProducts => 'Products';
+
+  @override
+  String get shopAdminDashboardProductsSubtitle =>
+      'Manage all product listings';
+
+  @override
+  String get shopAdminDashboardSellers => 'Sellers';
+
+  @override
+  String get shopAdminDashboardSellersSubtitle =>
+      'Manage seller profiles and partnerships';
+
+  @override
+  String get shopAdminDashboardFeatured => 'Featured Products';
+
+  @override
+  String get shopAdminDashboardFeaturedSubtitle =>
+      'Manage featured product display order';
+
+  @override
+  String get shopAdminDashboardReviewsMgmt => 'Reviews';
+
+  @override
+  String get shopAdminDashboardReviewsSubtitle => 'Moderate product reviews';
+
+  @override
+  String get reviewModerationTitle => 'Review Management';
+
+  @override
+  String get reviewModerationPending => 'Pending';
+
+  @override
+  String get reviewModerationAllReviews => 'All Reviews';
+
+  @override
+  String get reviewModerationErrorLoading => 'Error loading reviews';
+
+  @override
+  String get reviewModerationAllCaughtUp => 'All caught up!';
+
+  @override
+  String get reviewModerationNoReviews => 'No reviews yet';
+
+  @override
+  String get reviewModerationNoPending => 'No pending reviews to moderate';
+
+  @override
+  String get reviewModerationNoDatabase => 'No reviews in database';
+
+  @override
+  String get reviewModerationApproved => 'Review approved';
+
+  @override
+  String get reviewModerationRejectTitle => 'Reject Review';
+
+  @override
+  String get reviewModerationRejectReasonLabel => 'Reason for rejection';
+
+  @override
+  String get reviewModerationRejectReasonHint =>
+      'e.g., Inappropriate content, spam, etc.';
+
+  @override
+  String get reviewModerationCancel => 'Cancel';
+
+  @override
+  String get reviewModerationReject => 'Reject';
+
+  @override
+  String get reviewModerationRejected => 'Review rejected';
+
+  @override
+  String get reviewModerationDeleteTitle => 'Delete Review';
+
+  @override
+  String get reviewModerationDeleteMessage =>
+      'Are you sure you want to permanently delete this review?';
+
+  @override
+  String get reviewModerationDelete => 'Delete';
+
+  @override
+  String get reviewModerationDeleted => 'Review deleted';
+
+  @override
+  String get reviewModerationAnonymous => 'Anonymous';
+
+  @override
+  String get reviewModerationVerified => 'Verified';
+
+  @override
+  String get reviewModerationApprove => 'Approve';
+
+  @override
+  String get reviewModerationLegacy => 'Legacy (no status)';
+
+  @override
+  String get categoryProductsFilter => 'Filter';
+
+  @override
+  String get categoryProductsSortPopular => 'Most Popular';
+
+  @override
+  String get categoryProductsSortNewest => 'Newest First';
+
+  @override
+  String get categoryProductsSortPriceLow => 'Price: Low to High';
+
+  @override
+  String get categoryProductsSortPriceHigh => 'Price: High to Low';
+
+  @override
+  String get categoryProductsSortRating => 'Highest Rated';
+
+  @override
+  String get categoryProductsErrorLoading => 'Error loading products';
+
+  @override
+  String get categoryProductsRetry => 'Retry';
+
+  @override
+  String get categoryProductsNotFound => 'No products found';
+
+  @override
+  String get categoryProductsTryFilters => 'Try adjusting your filters';
+
+  @override
+  String get categoryProductsClearFilters => 'Clear Filters';
+
+  @override
+  String categoryProductsResultCount(int count) {
+    return '$count products';
+  }
+
+  @override
+  String get categoryProductsFiltersTitle => 'Filters';
+
+  @override
+  String get categoryProductsReset => 'Reset';
+
+  @override
+  String get categoryProductsInStockOnly => 'In Stock Only';
+
+  @override
+  String get categoryProductsPriceRange => 'Price Range';
+
+  @override
+  String get categoryProductsFrequencyBands => 'Frequency Bands';
+
+  @override
+  String get categoryProductsApplyFilters => 'Apply Filters';
+
+  @override
+  String get categoryProductsOutOfStock => 'OUT OF STOCK';
+
+  @override
+  String get featuredProductsTitle => 'Featured Products';
+
+  @override
+  String get featuredProductsSave => 'Save';
+
+  @override
+  String get featuredProductsReorderInfo =>
+      'Drag and drop products to reorder. Products at the top will appear first in the featured section.';
+
+  @override
+  String get featuredProductsEmpty => 'No featured products';
+
+  @override
+  String get featuredProductsEmptySubtitle =>
+      'Mark products as featured to manage their order here';
+
+  @override
+  String get featuredProductsUnsavedChanges => 'You have unsaved changes';
+
+  @override
+  String get featuredProductsDiscard => 'Discard';
+
+  @override
+  String get featuredProductsOrderUpdated => 'Featured order updated';
+
+  @override
+  String get featuredProductsRemoveTitle => 'Remove from Featured';
+
+  @override
+  String featuredProductsRemoveMessage(String name) {
+    return 'Remove \"$name\" from featured products?';
+  }
+
+  @override
+  String get featuredProductsRemove => 'Remove';
+
+  @override
+  String get featuredProductsRemoved => 'Removed from featured';
+
+  @override
+  String get featuredProductsRemoveTooltip => 'Remove from featured';
+
+  @override
+  String get searchProductsHint => 'Search devices, modules, antennas...';
+
+  @override
+  String get searchProductsRecentSearches => 'Recent Searches';
+
+  @override
+  String get searchProductsClear => 'Clear';
+
+  @override
+  String get searchProductsTrending => 'Trending';
+
+  @override
+  String get searchProductsBrowseByCategory => 'Browse by Category';
+
+  @override
+  String get searchProductsSearchFailed => 'Search failed';
+
+  @override
+  String get searchProductsRetry => 'Retry';
+
+  @override
+  String searchProductsNoResults(String query) {
+    return 'No results for \"$query\"';
+  }
+
+  @override
+  String get searchProductsTryDifferent =>
+      'Try different keywords or browse categories';
+
+  @override
+  String searchProductsResultCount(int count, String query) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count results for \"$query\"',
+      one: '1 result for \"$query\"',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get searchProductsOutOfStock => 'Out of Stock';
+
+  @override
+  String get shopFavoritesTitle => 'Favorites';
+
+  @override
+  String get shopFavoritesSignIn => 'Sign in to save favorites';
+
+  @override
+  String get shopFavoritesSignInSubtitle =>
+      'Your favorite devices will appear here';
+
+  @override
+  String get shopFavoritesErrorLoading => 'Error loading favorites';
+
+  @override
+  String get shopFavoritesRetry => 'Retry';
+
+  @override
+  String get shopFavoritesEmpty => 'No favorites yet';
+
+  @override
+  String get shopFavoritesEmptySubtitle =>
+      'Tap the heart icon on products to save them';
+
+  @override
+  String get shopFavoritesUnableToLoad => 'Unable to load product';
+
+  @override
+  String get shopFavoritesProductRemoved => 'Product no longer available';
+
+  @override
+  String get shopFavoritesInStock => 'In Stock';
+
+  @override
+  String get shopFavoritesOutOfStock => 'Out of Stock';
 }

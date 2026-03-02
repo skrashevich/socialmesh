@@ -99,7 +99,7 @@ class TrustIndicator extends StatelessWidget {
     Widget badge = Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.12),
+        color: color.withValues(alpha: 0.10),
         borderRadius: BorderRadius.circular(AppTheme.radius10),
         border: Border.all(color: color.withValues(alpha: 0.25), width: 0.5),
       ),

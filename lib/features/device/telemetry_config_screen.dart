@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/logging.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
@@ -167,7 +168,7 @@ class _TelemetryConfigScreenState extends ConsumerState<TelemetryConfigScreen>
 
       safeSetState(() => _hasChanges = false);
       if (mounted) {
-        showSuccessSnackBar(context, 'Telemetry config saved');
+        showSuccessSnackBar(context, context.l10n.telemetryConfigSaved);
         if (target.isLocal) {
           ref
               .read(countdownProvider.notifier)
@@ -176,7 +177,10 @@ class _TelemetryConfigScreenState extends ConsumerState<TelemetryConfigScreen>
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to save: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.telemetryConfigSaveError(e.toString()),
+        );
       }
     } finally {
       safeSetState(() => _isSaving = false);
@@ -187,13 +191,13 @@ class _TelemetryConfigScreenState extends ConsumerState<TelemetryConfigScreen>
   Widget build(BuildContext context) {
     if (_isLoading) {
       return GlassScaffold(
-        title: 'Telemetry',
+        title: context.l10n.telemetryConfigTitle,
         slivers: [SliverFillRemaining(child: const ScreenLoadingIndicator())],
       );
     }
 
     return GlassScaffold(
-      title: 'Telemetry',
+      title: context.l10n.telemetryConfigTitle,
       actions: [
         if (_hasChanges)
           TextButton(
@@ -208,7 +212,7 @@ class _TelemetryConfigScreenState extends ConsumerState<TelemetryConfigScreen>
                     ),
                   )
                 : Text(
-                    'Save',
+                    context.l10n.telemetryConfigSave,
                     style: TextStyle(
                       color: context.accentColor,
                       fontWeight: FontWeight.w600,
@@ -223,7 +227,7 @@ class _TelemetryConfigScreenState extends ConsumerState<TelemetryConfigScreen>
             delegate: SliverChildListDelegate([
               // Device Metrics Section
               _SectionHeader(
-                title: 'Device Metrics',
+                title: context.l10n.telemetryConfigSectionDeviceMetrics,
                 icon: Icons.memory,
                 color: AccentColors.blue,
               ),
@@ -243,15 +247,14 @@ class _TelemetryConfigScreenState extends ConsumerState<TelemetryConfigScreen>
                     _hasChanges = true;
                   });
                 },
-                description:
-                    'Battery level, voltage, channel utilization, air util TX',
+                description: context.l10n.telemetryConfigDeviceMetricsDesc,
               ),
 
               const SizedBox(height: AppTheme.spacing24),
 
               // Environment Metrics Section
               _SectionHeader(
-                title: 'Environment Metrics',
+                title: context.l10n.telemetryConfigSectionEnvironmentMetrics,
                 icon: Icons.thermostat,
                 color: AccentColors.green,
               ),
@@ -271,13 +274,13 @@ class _TelemetryConfigScreenState extends ConsumerState<TelemetryConfigScreen>
                     _hasChanges = true;
                   });
                 },
-                description:
-                    'Temperature, humidity, barometric pressure, gas resistance',
+                description: context.l10n.telemetryConfigEnvironmentMetricsDesc,
                 additionalWidget: Column(
                   children: [
                     _ToggleTile(
-                      title: 'Display on Screen',
-                      subtitle: 'Show environment data on device screen',
+                      title: context.l10n.telemetryConfigDisplayOnScreen,
+                      subtitle:
+                          context.l10n.telemetryConfigDisplayOnScreenSubtitle,
                       value: _environmentDisplayOnScreen,
                       onChanged: (value) {
                         setState(() {
@@ -288,9 +291,9 @@ class _TelemetryConfigScreenState extends ConsumerState<TelemetryConfigScreen>
                     ),
                     const SizedBox(height: AppTheme.spacing12),
                     _ToggleTile(
-                      title: 'Display Fahrenheit',
+                      title: context.l10n.telemetryConfigDisplayFahrenheit,
                       subtitle:
-                          'Show temperature in Fahrenheit instead of Celsius',
+                          context.l10n.telemetryConfigDisplayFahrenheitSubtitle,
                       value: _environmentDisplayFahrenheit,
                       onChanged: (value) {
                         setState(() {
@@ -307,7 +310,7 @@ class _TelemetryConfigScreenState extends ConsumerState<TelemetryConfigScreen>
 
               // Air Quality Section
               _SectionHeader(
-                title: 'Air Quality',
+                title: context.l10n.telemetryConfigSectionAirQuality,
                 icon: Icons.air,
                 color: AccentColors.teal,
               ),
@@ -327,14 +330,14 @@ class _TelemetryConfigScreenState extends ConsumerState<TelemetryConfigScreen>
                     _hasChanges = true;
                   });
                 },
-                description: 'PM1.0, PM2.5, PM10, particle counts, CO2',
+                description: context.l10n.telemetryConfigAirQualityDesc,
               ),
 
               const SizedBox(height: AppTheme.spacing24),
 
               // Power Metrics Section
               _SectionHeader(
-                title: 'Power Metrics',
+                title: context.l10n.telemetryConfigSectionPowerMetrics,
                 icon: Icons.electric_bolt,
                 color: AccentColors.orange,
               ),
@@ -354,16 +357,14 @@ class _TelemetryConfigScreenState extends ConsumerState<TelemetryConfigScreen>
                     _hasChanges = true;
                   });
                 },
-                description: 'Voltage and current for channels 1-3',
+                description: context.l10n.telemetryConfigPowerMetricsDesc,
               ),
 
               SizedBox(height: AppTheme.spacing24),
 
               // Info card
               StatusBanner.accent(
-                title:
-                    'Telemetry data is shared with all nodes on the mesh network. '
-                    'Shorter intervals increase airtime usage.',
+                title: context.l10n.telemetryConfigAirtimeWarning,
                 margin: EdgeInsets.zero,
               ),
             ]),
@@ -448,7 +449,7 @@ class _TelemetrySection extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Enabled',
+                      context.l10n.telemetryConfigEnabled,
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
@@ -473,7 +474,7 @@ class _TelemetrySection extends StatelessWidget {
             Divider(color: context.border, height: 1),
             const SizedBox(height: AppTheme.spacing16),
             Text(
-              'Update Interval',
+              context.l10n.telemetryConfigUpdateInterval,
               style: context.bodySmallStyle?.copyWith(
                 color: context.textSecondary,
               ),
@@ -490,7 +491,7 @@ class _TelemetrySection extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  ' minutes',
+                  context.l10n.telemetryConfigMinutes,
                   style: context.bodySecondaryStyle?.copyWith(
                     color: context.textTertiary,
                   ),

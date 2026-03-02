@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../models/shop_models.dart';
@@ -91,7 +92,7 @@ class _SearchProductsScreenState extends ConsumerState<SearchProductsScreen> {
       focusNode: _focusNode,
       style: TextStyle(color: context.textPrimary),
       decoration: InputDecoration(
-        hintText: 'Search devices, modules, antennas...',
+        hintText: context.l10n.searchProductsHint,
         hintStyle: TextStyle(color: context.textTertiary),
         border: InputBorder.none,
         contentPadding: const EdgeInsets.symmetric(
@@ -118,7 +119,7 @@ class _SearchProductsScreenState extends ConsumerState<SearchProductsScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Recent Searches',
+                  context.l10n.searchProductsRecentSearches,
                   style: TextStyle(
                     color: context.textPrimary,
                     fontSize: 16,
@@ -127,7 +128,7 @@ class _SearchProductsScreenState extends ConsumerState<SearchProductsScreen> {
                 ),
                 TextButton(
                   onPressed: () => setState(() => _recentSearches.clear()),
-                  child: Text('Clear'),
+                  child: Text(context.l10n.searchProductsClear),
                 ),
               ],
             ),
@@ -153,7 +154,7 @@ class _SearchProductsScreenState extends ConsumerState<SearchProductsScreen> {
 
           // Trending products
           Text(
-            'Trending',
+            context.l10n.searchProductsTrending,
             style: TextStyle(
               color: context.textPrimary,
               fontSize: 16,
@@ -251,7 +252,7 @@ class _SearchProductsScreenState extends ConsumerState<SearchProductsScreen> {
 
           // Browse by category
           Text(
-            'Browse by Category',
+            context.l10n.searchProductsBrowseByCategory,
             style: TextStyle(
               color: context.textPrimary,
               fontSize: 16,
@@ -276,7 +277,7 @@ class _SearchProductsScreenState extends ConsumerState<SearchProductsScreen> {
                 ),
               ),
               title: Text(
-                cat.label,
+                cat.displayLabel(context.l10n),
                 style: TextStyle(color: context.textPrimary),
               ),
               subtitle: Text(
@@ -322,10 +323,13 @@ class _SearchProductsScreenState extends ConsumerState<SearchProductsScreen> {
           children: [
             Icon(Icons.error_outline, color: AppTheme.errorRed, size: 48),
             const SizedBox(height: AppTheme.spacing16),
-            Text('Search failed', style: TextStyle(color: context.textPrimary)),
+            Text(
+              context.l10n.searchProductsSearchFailed,
+              style: TextStyle(color: context.textPrimary),
+            ),
             TextButton(
               onPressed: () => ref.invalidate(lilygoProductsProvider),
-              child: Text('Retry'),
+              child: Text(context.l10n.searchProductsRetry),
             ),
           ],
         ),
@@ -339,12 +343,12 @@ class _SearchProductsScreenState extends ConsumerState<SearchProductsScreen> {
                 Icon(Icons.search_off, color: context.textTertiary, size: 64),
                 SizedBox(height: AppTheme.spacing16),
                 Text(
-                  'No results for "$_query"',
+                  context.l10n.searchProductsNoResults(_query),
                   style: TextStyle(color: context.textPrimary, fontSize: 18),
                 ),
                 const SizedBox(height: AppTheme.spacing8),
                 Text(
-                  'Try different keywords or browse categories',
+                  context.l10n.searchProductsTryDifferent,
                   style: TextStyle(color: context.textSecondary),
                 ),
               ],
@@ -359,7 +363,7 @@ class _SearchProductsScreenState extends ConsumerState<SearchProductsScreen> {
             Padding(
               padding: const EdgeInsets.all(AppTheme.spacing16),
               child: Text(
-                '${products.length} result${products.length == 1 ? '' : 's'} for "$_query"',
+                context.l10n.searchProductsResultCount(products.length, _query),
                 style: TextStyle(color: context.textSecondary),
               ),
             ),
@@ -489,7 +493,7 @@ class _SearchResultCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(AppTheme.radius4),
                       ),
                       child: Text(
-                        product.category.label,
+                        product.category.displayLabel(context.l10n),
                         style: TextStyle(
                           color: context.accentColor,
                           fontSize: 10,
@@ -526,7 +530,7 @@ class _SearchResultCard extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          product.formattedPrice,
+                          product.formattedPrice(context.l10n),
                           style: TextStyle(
                             color: context.accentColor,
                             fontSize: 16,
@@ -578,7 +582,7 @@ class _SearchResultCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(AppTheme.radius4),
                   ),
                   child: Text(
-                    'Out of Stock',
+                    context.l10n.searchProductsOutOfStock,
                     style: TextStyle(
                       color: AppTheme.errorRed,
                       fontSize: 10,

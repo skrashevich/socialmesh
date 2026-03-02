@@ -130,21 +130,21 @@ class TraitBadge extends StatelessWidget {
     final color = trait.color;
 
     Widget badge = Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(AppTheme.radius12),
+        color: color.withValues(alpha: 0.10),
+        borderRadius: BorderRadius.circular(AppTheme.radius10),
         border: Border.all(color: color.withValues(alpha: 0.25), width: 0.5),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(_traitIcon, size: 12, color: color),
-          const SizedBox(width: AppTheme.spacing4),
+          Icon(_traitIcon, size: 11, color: color),
+          const SizedBox(width: AppTheme.spacing3),
           Text(
             trait.displayLabel(context.l10n),
             style: TextStyle(
-              fontSize: 11,
+              fontSize: 10,
               fontWeight: FontWeight.w600,
               color: color,
               letterSpacing: 0.2,
@@ -557,15 +557,15 @@ class SocialTagBadge extends StatelessWidget {
         vertical: compact ? 3 : 5,
       ),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(compact ? 10 : 14),
-        border: Border.all(color: color.withValues(alpha: 0.3), width: 0.5),
+        color: color.withValues(alpha: 0.10),
+        borderRadius: BorderRadius.circular(compact ? AppTheme.radius10 : 14),
+        border: Border.all(color: color.withValues(alpha: 0.25), width: 0.5),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(_tagIcon, size: compact ? 11 : 13, color: color),
-          SizedBox(width: compact ? 3 : 5),
+          SizedBox(width: compact ? AppTheme.spacing3 : 5),
           Text(
             tag.displayLabel(context.l10n),
             style: TextStyle(

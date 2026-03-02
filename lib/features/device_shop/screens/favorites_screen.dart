@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../../../core/widgets/auto_scroll_text.dart';
@@ -21,7 +22,7 @@ class FavoritesScreen extends ConsumerWidget {
     if (user == null) {
       return GlassScaffold(
         titleWidget: AutoScrollText(
-          'Favorites',
+          context.l10n.shopFavoritesTitle,
           style: TextStyle(color: context.textPrimary),
           maxLines: 1,
           velocity: 30.0,
@@ -40,12 +41,12 @@ class FavoritesScreen extends ConsumerWidget {
                   ),
                   SizedBox(height: AppTheme.spacing16),
                   Text(
-                    'Sign in to save favorites',
+                    context.l10n.shopFavoritesSignIn,
                     style: TextStyle(color: context.textPrimary, fontSize: 18),
                   ),
                   const SizedBox(height: AppTheme.spacing8),
                   Text(
-                    'Your favorite devices will appear here',
+                    context.l10n.shopFavoritesSignInSubtitle,
                     style: TextStyle(color: context.textSecondary),
                   ),
                 ],
@@ -60,7 +61,7 @@ class FavoritesScreen extends ConsumerWidget {
 
     return GlassScaffold(
       titleWidget: AutoScrollText(
-        'Favorites',
+        context.l10n.shopFavoritesTitle,
         style: TextStyle(color: context.textPrimary),
         maxLines: 1,
         velocity: 30.0,
@@ -79,13 +80,13 @@ class FavoritesScreen extends ConsumerWidget {
                   Icon(Icons.error_outline, color: AppTheme.errorRed, size: 48),
                   const SizedBox(height: AppTheme.spacing16),
                   Text(
-                    'Error loading favorites',
+                    context.l10n.shopFavoritesErrorLoading,
                     style: TextStyle(color: context.textPrimary),
                   ),
                   TextButton(
                     onPressed: () =>
                         ref.invalidate(userFavoritesProvider(user.uid)),
-                    child: Text('Retry'),
+                    child: Text(context.l10n.shopFavoritesRetry),
                   ),
                 ],
               ),
@@ -105,7 +106,7 @@ class FavoritesScreen extends ConsumerWidget {
                       ),
                       SizedBox(height: AppTheme.spacing16),
                       Text(
-                        'No favorites yet',
+                        context.l10n.shopFavoritesEmpty,
                         style: TextStyle(
                           color: context.textPrimary,
                           fontSize: 18,
@@ -113,7 +114,7 @@ class FavoritesScreen extends ConsumerWidget {
                       ),
                       const SizedBox(height: AppTheme.spacing8),
                       Text(
-                        'Tap the heart icon on products to save them',
+                        context.l10n.shopFavoritesEmptySubtitle,
                         style: TextStyle(color: context.textSecondary),
                       ),
                     ],
@@ -189,7 +190,7 @@ class _FavoriteProductCard extends ConsumerWidget {
       child: ListTile(
         leading: Icon(Icons.error_outline, color: AppTheme.errorRed),
         title: Text(
-          'Unable to load product',
+          context.l10n.shopFavoritesUnableToLoad,
           style: TextStyle(color: context.textPrimary),
         ),
         trailing: IconButton(
@@ -210,7 +211,7 @@ class _FavoriteProductCard extends ConsumerWidget {
       child: ListTile(
         leading: Icon(Icons.inventory_2_outlined, color: context.textTertiary),
         title: Text(
-          'Product no longer available',
+          context.l10n.shopFavoritesProductRemoved,
           style: TextStyle(color: context.textSecondary),
         ),
         trailing: IconButton(
@@ -301,7 +302,7 @@ class _FavoriteProductCard extends ConsumerWidget {
                       Row(
                         children: [
                           Text(
-                            product.formattedPrice,
+                            product.formattedPrice(context.l10n),
                             style: TextStyle(
                               color: context.accentColor,
                               fontSize: 16,
@@ -347,7 +348,9 @@ class _FavoriteProductCard extends ConsumerWidget {
                               ),
                             ),
                             child: Text(
-                              product.isInStock ? 'In Stock' : 'Out of Stock',
+                              product.isInStock
+                                  ? context.l10n.shopFavoritesInStock
+                                  : context.l10n.shopFavoritesOutOfStock,
                               style: TextStyle(
                                 color: product.isInStock
                                     ? AppTheme.successGreen

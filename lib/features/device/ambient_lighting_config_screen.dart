@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/logging.dart';
 import '../../core/theme.dart';
@@ -139,7 +140,7 @@ class _AmbientLightingConfigScreenState
 
       safeSetState(() => _hasChanges = false);
       if (mounted) {
-        showSuccessSnackBar(context, 'Ambient lighting saved');
+        showSuccessSnackBar(context, context.l10n.ambientLightingSaved);
         if (target.isLocal) {
           ref
               .read(countdownProvider.notifier)
@@ -150,7 +151,10 @@ class _AmbientLightingConfigScreenState
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to save: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.ambientLightingSaveError(e.toString()),
+        );
       }
     } finally {
       safeSetState(() => _isSaving = false);
@@ -161,13 +165,13 @@ class _AmbientLightingConfigScreenState
   Widget build(BuildContext context) {
     if (_isLoading) {
       return GlassScaffold(
-        title: 'Ambient Lighting',
+        title: context.l10n.ambientLightingTitle,
         slivers: [const SliverFillRemaining(child: ScreenLoadingIndicator())],
       );
     }
 
     return GlassScaffold(
-      title: 'Ambient Lighting',
+      title: context.l10n.ambientLightingTitle,
       actions: [
         if (_hasChanges)
           TextButton(
@@ -182,7 +186,7 @@ class _AmbientLightingConfigScreenState
                     ),
                   )
                 : Text(
-                    'Save',
+                    context.l10n.ambientLightingSave,
                     style: TextStyle(
                       color: context.accentColor,
                       fontWeight: FontWeight.w600,
@@ -209,7 +213,7 @@ class _AmbientLightingConfigScreenState
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'LED Enabled',
+                          context.l10n.ambientLightingLedEnabled,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
@@ -217,7 +221,7 @@ class _AmbientLightingConfigScreenState
                           ),
                         ),
                         Text(
-                          'Turn ambient lighting on or off',
+                          context.l10n.ambientLightingLedEnabledSubtitle,
                           style: TextStyle(
                             fontSize: 12,
                             color: context.textTertiary,
@@ -267,7 +271,7 @@ class _AmbientLightingConfigScreenState
 
               // Preset colors
               Text(
-                'Preset Colors',
+                context.l10n.ambientLightingPresetColors,
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
@@ -310,7 +314,7 @@ class _AmbientLightingConfigScreenState
 
               // RGB sliders
               Text(
-                'Custom Color',
+                context.l10n.ambientLightingCustomColor,
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
@@ -320,7 +324,7 @@ class _AmbientLightingConfigScreenState
               const SizedBox(height: AppTheme.spacing16),
 
               _ColorSlider(
-                label: 'Red',
+                label: context.l10n.ambientLightingRed,
                 value: _red,
                 color: AppTheme.errorRed,
                 onChanged: (value) {
@@ -332,7 +336,7 @@ class _AmbientLightingConfigScreenState
               ),
 
               _ColorSlider(
-                label: 'Green',
+                label: context.l10n.ambientLightingGreen,
                 value: _green,
                 color: AppTheme.successGreen,
                 onChanged: (value) {
@@ -344,7 +348,7 @@ class _AmbientLightingConfigScreenState
               ),
 
               _ColorSlider(
-                label: 'Blue',
+                label: context.l10n.ambientLightingBlue,
                 value: _blue,
                 color: AccentColors.blue,
                 onChanged: (value) {
@@ -359,7 +363,7 @@ class _AmbientLightingConfigScreenState
 
               // LED Brightness/Current
               Text(
-                'LED Brightness',
+                context.l10n.ambientLightingBrightness,
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
@@ -380,7 +384,7 @@ class _AmbientLightingConfigScreenState
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Current',
+                          context.l10n.ambientLightingCurrent,
                           style: TextStyle(
                             color: context.textPrimary,
                             fontWeight: FontWeight.w500,
@@ -398,7 +402,7 @@ class _AmbientLightingConfigScreenState
                             ),
                           ),
                           child: Text(
-                            '$_current mA',
+                            context.l10n.ambientLightingCurrentValue(_current),
                             style: TextStyle(
                               color: context.accentColor,
                               fontWeight: FontWeight.w600,
@@ -410,7 +414,7 @@ class _AmbientLightingConfigScreenState
                     ),
                     const SizedBox(height: AppTheme.spacing4),
                     Text(
-                      'LED drive current (brightness)',
+                      context.l10n.ambientLightingCurrentSubtitle,
                       style: TextStyle(
                         color: context.textSecondary,
                         fontSize: 12,
@@ -448,8 +452,7 @@ class _AmbientLightingConfigScreenState
 
               // Info card
               StatusBanner.accent(
-                title:
-                    'Ambient lighting is only available on devices with LED support (RAK WisBlock, T-Beam, etc.)',
+                title: context.l10n.ambientLightingDeviceSupportInfo,
                 margin: EdgeInsets.zero,
               ),
             ]),

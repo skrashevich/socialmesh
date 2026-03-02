@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/auto_scroll_text.dart';
@@ -129,7 +130,7 @@ class _DeviceShopScreenState extends ConsumerState<DeviceShopScreen> {
                       Icon(Icons.store, color: context.accentColor, size: 24),
                       const SizedBox(width: AppTheme.spacing8),
                       AutoScrollText(
-                        'Device Shop',
+                        context.l10n.deviceShopTitle,
                         style: TextStyle(
                           color: context.textPrimary,
                           fontWeight: FontWeight.bold,
@@ -146,14 +147,14 @@ class _DeviceShopScreenState extends ConsumerState<DeviceShopScreen> {
                   IconButton(
                     icon: const Icon(Icons.favorite_outline),
                     onPressed: () => _openFavorites(context),
-                    tooltip: 'Favorites',
+                    tooltip: context.l10n.deviceShopFavoritesTooltip,
                   ),
                   IconButton(
                     icon: const Icon(Icons.help_outline),
                     onPressed: () => ref
                         .read(helpProvider.notifier)
                         .startTour('device_shop_overview'),
-                    tooltip: 'Help',
+                    tooltip: context.l10n.deviceShopHelpTooltip,
                   ),
                 ],
               ),
@@ -166,7 +167,7 @@ class _DeviceShopScreenState extends ConsumerState<DeviceShopScreen> {
                   searchQuery: _searchQuery,
                   focusNode: _searchFocusNode,
                   onSearchChanged: _onSearchChanged,
-                  hintText: 'Search devices, modules, antennas...',
+                  hintText: context.l10n.deviceShopSearchHint,
                   textScaler: MediaQuery.textScalerOf(context),
                   rebuildKey: _searchQuery,
                 ),
@@ -253,7 +254,7 @@ class _DeviceShopScreenState extends ConsumerState<DeviceShopScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Marketplace Information',
+                    context.l10n.deviceShopMarketplaceInfoTitle,
                     style: TextStyle(
                       color: context.textPrimary,
                       fontWeight: FontWeight.bold,
@@ -262,7 +263,7 @@ class _DeviceShopScreenState extends ConsumerState<DeviceShopScreen> {
                   ),
                   const SizedBox(height: AppTheme.spacing6),
                   Text(
-                    'Purchases are completed on the seller\'s official store. Socialmesh does not handle payment, shipping, warranty, or returns.',
+                    context.l10n.deviceShopMarketplaceDisclaimer,
                     style: TextStyle(
                       color: context.textSecondary,
                       fontSize: 12,
@@ -291,7 +292,7 @@ class _DeviceShopScreenState extends ConsumerState<DeviceShopScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Recent Searches',
+                    context.l10n.deviceShopRecentSearches,
                     style: TextStyle(
                       color: context.textPrimary,
                       fontSize: 16,
@@ -300,7 +301,7 @@ class _DeviceShopScreenState extends ConsumerState<DeviceShopScreen> {
                   ),
                   TextButton(
                     onPressed: () => setState(() => _recentSearches.clear()),
-                    child: Text('Clear'),
+                    child: Text(context.l10n.deviceShopClear),
                   ),
                 ],
               ),
@@ -326,7 +327,7 @@ class _DeviceShopScreenState extends ConsumerState<DeviceShopScreen> {
 
             // Trending products
             Text(
-              'Trending',
+              context.l10n.deviceShopTrending,
               style: TextStyle(
                 color: context.textPrimary,
                 fontSize: 16,
@@ -428,7 +429,7 @@ class _DeviceShopScreenState extends ConsumerState<DeviceShopScreen> {
 
             // Browse by category
             Text(
-              'Browse by Category',
+              context.l10n.deviceShopBrowseByCategory,
               style: TextStyle(
                 color: context.textPrimary,
                 fontSize: 16,
@@ -453,11 +454,11 @@ class _DeviceShopScreenState extends ConsumerState<DeviceShopScreen> {
                   ),
                 ),
                 title: Text(
-                  cat.label,
+                  cat.displayLabel(context.l10n),
                   style: TextStyle(color: context.textPrimary),
                 ),
                 subtitle: Text(
-                  cat.description,
+                  cat.displayDescription(context.l10n),
                   style: TextStyle(color: context.textTertiary, fontSize: 12),
                 ),
                 trailing: Icon(
@@ -521,7 +522,7 @@ class _DeviceShopScreenState extends ConsumerState<DeviceShopScreen> {
                       ),
                       const SizedBox(height: AppTheme.spacing16),
                       Text(
-                        'No results for "$_searchQuery"',
+                        context.l10n.deviceShopNoResults(_searchQuery),
                         style: TextStyle(
                           color: context.textSecondary,
                           fontSize: 16,
@@ -529,7 +530,7 @@ class _DeviceShopScreenState extends ConsumerState<DeviceShopScreen> {
                       ),
                       const SizedBox(height: AppTheme.spacing8),
                       Text(
-                        'Try different keywords',
+                        context.l10n.deviceShopTryDifferentKeywords,
                         style: TextStyle(
                           color: context.textTertiary,
                           fontSize: 14,
@@ -563,7 +564,7 @@ class _DeviceShopScreenState extends ConsumerState<DeviceShopScreen> {
           error: (error, stack) => SliverFillRemaining(
             child: Center(
               child: Text(
-                'Error loading products',
+                context.l10n.deviceShopErrorLoadingProducts,
                 style: TextStyle(color: context.textSecondary),
               ),
             ),
@@ -588,7 +589,7 @@ class _CategoriesSection extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.fromLTRB(AppTheme.spacing16, 20, 16, 12),
           child: Text(
-            'Categories',
+            context.l10n.deviceShopCategories,
             style: TextStyle(
               color: context.textPrimary,
               fontSize: 18,
@@ -668,7 +669,7 @@ class _CategoryCard extends StatelessWidget {
                   width: 80,
                   child: Center(
                     child: AutoScrollText(
-                      category.label,
+                      category.displayLabel(context.l10n),
                       style: TextStyle(
                         color: context.textPrimary,
                         fontSize: 11,
@@ -699,7 +700,7 @@ class _FeaturedSection extends ConsumerWidget {
     final productsAsync = ref.watch(lilygoFeaturedProductsProvider);
 
     return productsAsync.when(
-      loading: () => _SectionLoading(title: 'Featured'),
+      loading: () => _SectionLoading(title: context.l10n.deviceShopFeatured),
       error: (error, stack) => _SectionOffline(
         ref: ref,
         onRetry: () => ref.invalidate(lilygoFeaturedProductsProvider),
@@ -708,7 +709,7 @@ class _FeaturedSection extends ConsumerWidget {
         if (products.isEmpty) return const SizedBox.shrink();
 
         return _ProductSection(
-          title: 'Featured',
+          title: context.l10n.deviceShopFeatured,
           titleIcon: Icons.star,
           products: products,
           onSeeAll: null,
@@ -747,7 +748,7 @@ class _PartnersSection extends ConsumerWidget {
                   Icon(Icons.verified, color: AccentColors.blue, size: 20),
                   const SizedBox(width: AppTheme.spacing8),
                   Text(
-                    'Official Partners',
+                    context.l10n.deviceShopOfficialPartners,
                     style: TextStyle(
                       color: context.textPrimary,
                       fontSize: 18,
@@ -851,7 +852,7 @@ class _NewArrivalsSection extends ConsumerWidget {
     final productsAsync = ref.watch(lilygoProductsProvider);
 
     return productsAsync.when(
-      loading: () => _SectionLoading(title: 'New Arrivals'),
+      loading: () => _SectionLoading(title: context.l10n.deviceShopNewArrivals),
       error: (error, stack) => _SectionOffline(
         ref: ref,
         onRetry: () => ref.invalidate(lilygoProductsProvider),
@@ -864,7 +865,7 @@ class _NewArrivalsSection extends ConsumerWidget {
           ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
 
         return _ProductSection(
-          title: 'New Arrivals',
+          title: context.l10n.deviceShopNewArrivals,
           titleIcon: Icons.fiber_new,
           products: sorted.take(10).toList(),
           onSeeAll: null,
@@ -884,7 +885,8 @@ class _BestSellersSection extends ConsumerWidget {
     final tapCountsAsync = ref.watch(productTapCountsProvider);
 
     return productsAsync.when(
-      loading: () => _SectionLoading(title: 'Popular Devices'),
+      loading: () =>
+          _SectionLoading(title: context.l10n.deviceShopPopularDevices),
       error: (error, stack) => _SectionOffline(
         ref: ref,
         onRetry: () => ref.invalidate(lilygoProductsProvider),
@@ -915,7 +917,7 @@ class _BestSellersSection extends ConsumerWidget {
         if (popular.isEmpty) return const SizedBox.shrink();
 
         return _ProductSection(
-          title: 'Popular Devices',
+          title: context.l10n.deviceShopPopularDevices,
           titleIcon: Icons.local_fire_department,
           products: popular.take(10).toList(),
           onSeeAll: null,
@@ -969,7 +971,7 @@ class _BecomeSellerSection extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Become a Seller',
+                      context.l10n.deviceShopBecomeSeller,
                       style: TextStyle(
                         color: context.textPrimary,
                         fontSize: 18,
@@ -977,7 +979,7 @@ class _BecomeSellerSection extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Sell your Meshtastic devices',
+                      context.l10n.deviceShopSellYourDevices,
                       style: TextStyle(
                         color: context.textSecondary,
                         fontSize: 13,
@@ -990,9 +992,7 @@ class _BecomeSellerSection extends StatelessWidget {
           ),
           const SizedBox(height: AppTheme.spacing16),
           Text(
-            'Are you a manufacturer or distributor of Meshtastic-compatible '
-            'devices? Join our marketplace to reach mesh radio enthusiasts '
-            'worldwide.',
+            context.l10n.deviceShopBecomeSellerBody,
             style: TextStyle(
               color: context.textSecondary,
               fontSize: 14,
@@ -1006,7 +1006,7 @@ class _BecomeSellerSection extends StatelessWidget {
                 child: OutlinedButton.icon(
                   onPressed: () => _contactSocialmesh(context),
                   icon: const Icon(Icons.email_outlined, size: 18),
-                  label: const Text('Contact Us'),
+                  label: Text(context.l10n.deviceShopContactUs),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: context.accentColor,
                     side: BorderSide(color: context.accentColor),
@@ -1019,7 +1019,7 @@ class _BecomeSellerSection extends StatelessWidget {
           const SizedBox(height: AppTheme.spacing8),
           Center(
             child: Text(
-              'support@socialmesh.app',
+              context.l10n.deviceShopSupportEmail,
               style: TextStyle(color: context.textTertiary, fontSize: 12),
             ),
           ),
@@ -1061,7 +1061,7 @@ class _OnSaleSection extends ConsumerWidget {
         if (onSale.isEmpty) return const SizedBox.shrink();
 
         return _ProductSection(
-          title: 'On Sale',
+          title: context.l10n.deviceShopOnSale,
           titleIcon: Icons.local_offer,
           products: onSale.take(10).toList(),
           onSeeAll: null,
@@ -1119,7 +1119,7 @@ class _ProductSection extends StatelessWidget {
                 TextButton(
                   onPressed: onSeeAll,
                   child: Text(
-                    'See All',
+                    context.l10n.deviceShopSeeAll,
                     style: TextStyle(color: context.accentColor),
                   ),
                 ),
@@ -1344,9 +1344,9 @@ class _ProductCardState extends ConsumerState<ProductCard>
                               top: Radius.circular(12),
                             ),
                           ),
-                          child: const Center(
+                          child: Center(
                             child: Text(
-                              'OUT OF STOCK',
+                              context.l10n.deviceShopOutOfStock,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -1390,7 +1390,7 @@ class _ProductCardState extends ConsumerState<ProductCard>
                         Row(
                           children: [
                             Text(
-                              widget.product.formattedPrice,
+                              widget.product.formattedPrice(context.l10n),
                               style: TextStyle(
                                 color: context.accentColor,
                                 fontSize: 15,
@@ -1546,7 +1546,9 @@ class _SectionOffline extends StatelessWidget {
             ),
             const SizedBox(height: AppTheme.spacing12),
             Text(
-              isOnline ? 'Unable to load products' : 'No internet connection',
+              isOnline
+                  ? context.l10n.deviceShopUnableToLoad
+                  : context.l10n.deviceShopNoInternet,
               style: TextStyle(
                 color: context.textPrimary,
                 fontSize: 15,
@@ -1555,14 +1557,16 @@ class _SectionOffline extends StatelessWidget {
             ),
             const SizedBox(height: AppTheme.spacing4),
             Text(
-              isOnline ? 'Try again in a moment' : 'Connect to browse devices',
+              isOnline
+                  ? context.l10n.deviceShopTryAgain
+                  : context.l10n.deviceShopConnectToBrowse,
               style: TextStyle(color: context.textSecondary, fontSize: 13),
             ),
             const SizedBox(height: AppTheme.spacing16),
             TextButton.icon(
               onPressed: onRetry,
               icon: const Icon(Icons.refresh, size: 18),
-              label: const Text('Retry'),
+              label: Text(context.l10n.deviceShopRetry),
             ),
           ],
         ),

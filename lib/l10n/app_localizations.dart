@@ -7689,6 +7689,2520 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Capture cleared'**
   String get meshcoreConsoleCaptureCleared;
+
+  /// No description provided for @shopModelCategoryNodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes'**
+  String get shopModelCategoryNodes;
+
+  /// No description provided for @shopModelCategoryNodesDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete Meshtastic devices'**
+  String get shopModelCategoryNodesDescription;
+
+  /// No description provided for @shopModelCategoryModules.
+  ///
+  /// In en, this message translates to:
+  /// **'Modules'**
+  String get shopModelCategoryModules;
+
+  /// No description provided for @shopModelCategoryModulesDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Add-on modules and boards'**
+  String get shopModelCategoryModulesDescription;
+
+  /// No description provided for @shopModelCategoryAntennas.
+  ///
+  /// In en, this message translates to:
+  /// **'Antennas'**
+  String get shopModelCategoryAntennas;
+
+  /// No description provided for @shopModelCategoryAntennasDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Antennas and RF accessories'**
+  String get shopModelCategoryAntennasDescription;
+
+  /// No description provided for @shopModelCategoryEnclosures.
+  ///
+  /// In en, this message translates to:
+  /// **'Enclosures'**
+  String get shopModelCategoryEnclosures;
+
+  /// No description provided for @shopModelCategoryEnclosuresDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Cases and enclosures'**
+  String get shopModelCategoryEnclosuresDescription;
+
+  /// No description provided for @shopModelCategoryAccessories.
+  ///
+  /// In en, this message translates to:
+  /// **'Accessories'**
+  String get shopModelCategoryAccessories;
+
+  /// No description provided for @shopModelCategoryAccessoriesDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Cables, batteries, and more'**
+  String get shopModelCategoryAccessoriesDescription;
+
+  /// No description provided for @shopModelCategoryKits.
+  ///
+  /// In en, this message translates to:
+  /// **'Kits'**
+  String get shopModelCategoryKits;
+
+  /// No description provided for @shopModelCategoryKitsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'DIY kits and bundles'**
+  String get shopModelCategoryKitsDescription;
+
+  /// No description provided for @shopModelCategorySolar.
+  ///
+  /// In en, this message translates to:
+  /// **'Solar'**
+  String get shopModelCategorySolar;
+
+  /// No description provided for @shopModelCategorySolarDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Solar panels and power solutions'**
+  String get shopModelCategorySolarDescription;
+
+  /// No description provided for @shopModelBandUs915.
+  ///
+  /// In en, this message translates to:
+  /// **'US 915MHz'**
+  String get shopModelBandUs915;
+
+  /// No description provided for @shopModelBandUs915Range.
+  ///
+  /// In en, this message translates to:
+  /// **'902-928 MHz'**
+  String get shopModelBandUs915Range;
+
+  /// No description provided for @shopModelBandEu868.
+  ///
+  /// In en, this message translates to:
+  /// **'EU 868MHz'**
+  String get shopModelBandEu868;
+
+  /// No description provided for @shopModelBandEu868Range.
+  ///
+  /// In en, this message translates to:
+  /// **'863-870 MHz'**
+  String get shopModelBandEu868Range;
+
+  /// No description provided for @shopModelBandCn470.
+  ///
+  /// In en, this message translates to:
+  /// **'CN 470MHz'**
+  String get shopModelBandCn470;
+
+  /// No description provided for @shopModelBandCn470Range.
+  ///
+  /// In en, this message translates to:
+  /// **'470-510 MHz'**
+  String get shopModelBandCn470Range;
+
+  /// No description provided for @shopModelBandJp920.
+  ///
+  /// In en, this message translates to:
+  /// **'JP 920MHz'**
+  String get shopModelBandJp920;
+
+  /// No description provided for @shopModelBandJp920Range.
+  ///
+  /// In en, this message translates to:
+  /// **'920-925 MHz'**
+  String get shopModelBandJp920Range;
+
+  /// No description provided for @shopModelBandKr920.
+  ///
+  /// In en, this message translates to:
+  /// **'KR 920MHz'**
+  String get shopModelBandKr920;
+
+  /// No description provided for @shopModelBandKr920Range.
+  ///
+  /// In en, this message translates to:
+  /// **'920-923 MHz'**
+  String get shopModelBandKr920Range;
+
+  /// No description provided for @shopModelBandAu915.
+  ///
+  /// In en, this message translates to:
+  /// **'AU 915MHz'**
+  String get shopModelBandAu915;
+
+  /// No description provided for @shopModelBandAu915Range.
+  ///
+  /// In en, this message translates to:
+  /// **'915-928 MHz'**
+  String get shopModelBandAu915Range;
+
+  /// No description provided for @shopModelBandIn865.
+  ///
+  /// In en, this message translates to:
+  /// **'IN 865MHz'**
+  String get shopModelBandIn865;
+
+  /// No description provided for @shopModelBandIn865Range.
+  ///
+  /// In en, this message translates to:
+  /// **'865-867 MHz'**
+  String get shopModelBandIn865Range;
+
+  /// No description provided for @shopModelBandMulti.
+  ///
+  /// In en, this message translates to:
+  /// **'Multi-band'**
+  String get shopModelBandMulti;
+
+  /// No description provided for @shopModelBandMultiRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Multiple frequencies'**
+  String get shopModelBandMultiRange;
+
+  /// No description provided for @shopModelPriceFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'From \${price}'**
+  String shopModelPriceFrom(String price);
+
+  /// No description provided for @lilygoModelPriceUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Price unavailable'**
+  String get lilygoModelPriceUnavailable;
+
+  /// No description provided for @deviceShopTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Shop'**
+  String get deviceShopTitle;
+
+  /// No description provided for @deviceShopFavoritesTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get deviceShopFavoritesTooltip;
+
+  /// No description provided for @deviceShopHelpTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get deviceShopHelpTooltip;
+
+  /// No description provided for @deviceShopSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search devices, modules, antennas...'**
+  String get deviceShopSearchHint;
+
+  /// No description provided for @deviceShopMarketplaceInfoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Marketplace Information'**
+  String get deviceShopMarketplaceInfoTitle;
+
+  /// No description provided for @deviceShopMarketplaceDisclaimer.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchases are completed on the seller\'s official store. Socialmesh does not handle payment, shipping, warranty, or returns.'**
+  String get deviceShopMarketplaceDisclaimer;
+
+  /// No description provided for @deviceShopRecentSearches.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Searches'**
+  String get deviceShopRecentSearches;
+
+  /// No description provided for @deviceShopClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get deviceShopClear;
+
+  /// No description provided for @deviceShopTrending.
+  ///
+  /// In en, this message translates to:
+  /// **'Trending'**
+  String get deviceShopTrending;
+
+  /// No description provided for @deviceShopBrowseByCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse by Category'**
+  String get deviceShopBrowseByCategory;
+
+  /// No description provided for @deviceShopNoResults.
+  ///
+  /// In en, this message translates to:
+  /// **'No results for \"{query}\"'**
+  String deviceShopNoResults(String query);
+
+  /// No description provided for @deviceShopTryDifferentKeywords.
+  ///
+  /// In en, this message translates to:
+  /// **'Try different keywords'**
+  String get deviceShopTryDifferentKeywords;
+
+  /// No description provided for @deviceShopErrorLoadingProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading products'**
+  String get deviceShopErrorLoadingProducts;
+
+  /// No description provided for @deviceShopCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get deviceShopCategories;
+
+  /// No description provided for @deviceShopOfficialPartners.
+  ///
+  /// In en, this message translates to:
+  /// **'Official Partners'**
+  String get deviceShopOfficialPartners;
+
+  /// No description provided for @deviceShopNewArrivals.
+  ///
+  /// In en, this message translates to:
+  /// **'New Arrivals'**
+  String get deviceShopNewArrivals;
+
+  /// No description provided for @deviceShopPopularDevices.
+  ///
+  /// In en, this message translates to:
+  /// **'Popular Devices'**
+  String get deviceShopPopularDevices;
+
+  /// No description provided for @deviceShopBecomeSeller.
+  ///
+  /// In en, this message translates to:
+  /// **'Become a Seller'**
+  String get deviceShopBecomeSeller;
+
+  /// No description provided for @deviceShopSellYourDevices.
+  ///
+  /// In en, this message translates to:
+  /// **'Sell your Meshtastic devices'**
+  String get deviceShopSellYourDevices;
+
+  /// No description provided for @deviceShopBecomeSellerBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you a manufacturer or distributor of Meshtastic-compatible devices? Join our marketplace to reach mesh radio enthusiasts worldwide.'**
+  String get deviceShopBecomeSellerBody;
+
+  /// No description provided for @deviceShopContactUs.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Us'**
+  String get deviceShopContactUs;
+
+  /// No description provided for @deviceShopSupportEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'support@socialmesh.app'**
+  String get deviceShopSupportEmail;
+
+  /// No description provided for @deviceShopOnSale.
+  ///
+  /// In en, this message translates to:
+  /// **'On Sale'**
+  String get deviceShopOnSale;
+
+  /// No description provided for @deviceShopSeeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'See All'**
+  String get deviceShopSeeAll;
+
+  /// No description provided for @deviceShopOutOfStock.
+  ///
+  /// In en, this message translates to:
+  /// **'OUT OF STOCK'**
+  String get deviceShopOutOfStock;
+
+  /// No description provided for @deviceShopUnableToLoad.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to load products'**
+  String get deviceShopUnableToLoad;
+
+  /// No description provided for @deviceShopNoInternet.
+  ///
+  /// In en, this message translates to:
+  /// **'No internet connection'**
+  String get deviceShopNoInternet;
+
+  /// No description provided for @deviceShopTryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again in a moment'**
+  String get deviceShopTryAgain;
+
+  /// No description provided for @deviceShopConnectToBrowse.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to browse devices'**
+  String get deviceShopConnectToBrowse;
+
+  /// No description provided for @deviceShopRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get deviceShopRetry;
+
+  /// No description provided for @deviceShopFeatured.
+  ///
+  /// In en, this message translates to:
+  /// **'Featured'**
+  String get deviceShopFeatured;
+
+  /// No description provided for @productDetailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Product'**
+  String get productDetailTitle;
+
+  /// No description provided for @productDetailErrorLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading product'**
+  String get productDetailErrorLoading;
+
+  /// No description provided for @productDetailGoBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Go Back'**
+  String get productDetailGoBack;
+
+  /// No description provided for @productDetailNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Product not found'**
+  String get productDetailNotFound;
+
+  /// No description provided for @productDetailSignInFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to save favorites'**
+  String get productDetailSignInFavorites;
+
+  /// No description provided for @productDetailBySeller.
+  ///
+  /// In en, this message translates to:
+  /// **'by {seller}'**
+  String productDetailBySeller(String seller);
+
+  /// No description provided for @productDetailReviewCount.
+  ///
+  /// In en, this message translates to:
+  /// **'({count} reviews)'**
+  String productDetailReviewCount(int count);
+
+  /// No description provided for @productDetailSoldCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} sold'**
+  String productDetailSoldCount(int count);
+
+  /// No description provided for @productDetailInStockCount.
+  ///
+  /// In en, this message translates to:
+  /// **'In Stock ({quantity} available)'**
+  String productDetailInStockCount(int quantity);
+
+  /// No description provided for @productDetailOutOfStock.
+  ///
+  /// In en, this message translates to:
+  /// **'Out of Stock'**
+  String get productDetailOutOfStock;
+
+  /// No description provided for @productDetailDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get productDetailDescription;
+
+  /// No description provided for @productDetailShowLess.
+  ///
+  /// In en, this message translates to:
+  /// **'Show Less'**
+  String get productDetailShowLess;
+
+  /// No description provided for @productDetailReadMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Read More'**
+  String get productDetailReadMore;
+
+  /// No description provided for @productDetailSelectedPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Selected: \${price}'**
+  String productDetailSelectedPrice(String price);
+
+  /// No description provided for @productDetailTechSpecs.
+  ///
+  /// In en, this message translates to:
+  /// **'Technical Specifications'**
+  String get productDetailTechSpecs;
+
+  /// No description provided for @productDetailVendorVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Vendor Verified'**
+  String get productDetailVendorVerified;
+
+  /// No description provided for @productDetailVerifiedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified on {date}'**
+  String productDetailVerifiedOn(String date);
+
+  /// No description provided for @productDetailChipset.
+  ///
+  /// In en, this message translates to:
+  /// **'Chipset'**
+  String get productDetailChipset;
+
+  /// No description provided for @productDetailLoraChip.
+  ///
+  /// In en, this message translates to:
+  /// **'LoRa Chip'**
+  String get productDetailLoraChip;
+
+  /// No description provided for @productDetailFrequencyBands.
+  ///
+  /// In en, this message translates to:
+  /// **'Frequency Bands'**
+  String get productDetailFrequencyBands;
+
+  /// No description provided for @productDetailBattery.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery'**
+  String get productDetailBattery;
+
+  /// No description provided for @productDetailDimensions.
+  ///
+  /// In en, this message translates to:
+  /// **'Dimensions'**
+  String get productDetailDimensions;
+
+  /// No description provided for @productDetailWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight'**
+  String get productDetailWeight;
+
+  /// No description provided for @productDetailHardwareVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Hardware Version'**
+  String get productDetailHardwareVersion;
+
+  /// No description provided for @productDetailFirmware.
+  ///
+  /// In en, this message translates to:
+  /// **'Firmware'**
+  String get productDetailFirmware;
+
+  /// No description provided for @productDetailGps.
+  ///
+  /// In en, this message translates to:
+  /// **'GPS'**
+  String get productDetailGps;
+
+  /// No description provided for @productDetailDisplay.
+  ///
+  /// In en, this message translates to:
+  /// **'Display'**
+  String get productDetailDisplay;
+
+  /// No description provided for @productDetailBluetooth.
+  ///
+  /// In en, this message translates to:
+  /// **'Bluetooth'**
+  String get productDetailBluetooth;
+
+  /// No description provided for @productDetailWifi.
+  ///
+  /// In en, this message translates to:
+  /// **'WiFi'**
+  String get productDetailWifi;
+
+  /// No description provided for @productDetailMeshtasticCompatible.
+  ///
+  /// In en, this message translates to:
+  /// **'Meshtastic Compatible'**
+  String get productDetailMeshtasticCompatible;
+
+  /// No description provided for @productDetailFeatures.
+  ///
+  /// In en, this message translates to:
+  /// **'Features'**
+  String get productDetailFeatures;
+
+  /// No description provided for @productDetailIncludedAccessories.
+  ///
+  /// In en, this message translates to:
+  /// **'Included Accessories'**
+  String get productDetailIncludedAccessories;
+
+  /// No description provided for @productDetailShipping.
+  ///
+  /// In en, this message translates to:
+  /// **'Shipping'**
+  String get productDetailShipping;
+
+  /// No description provided for @productDetailShippingCost.
+  ///
+  /// In en, this message translates to:
+  /// **'Shipping: \${cost}'**
+  String productDetailShippingCost(String cost);
+
+  /// No description provided for @productDetailFreeShipping.
+  ///
+  /// In en, this message translates to:
+  /// **'Free Shipping'**
+  String get productDetailFreeShipping;
+
+  /// No description provided for @productDetailEstimatedDelivery.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated {days} days'**
+  String productDetailEstimatedDelivery(int days);
+
+  /// No description provided for @productDetailShipsTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Ships to: {countries}'**
+  String productDetailShipsTo(String countries);
+
+  /// No description provided for @productDetailPurchaseDisclaimer.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchases completed on seller\'s official store'**
+  String get productDetailPurchaseDisclaimer;
+
+  /// No description provided for @productDetailTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get productDetailTotal;
+
+  /// No description provided for @productDetailEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get productDetailEdit;
+
+  /// No description provided for @productDetailBuyNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Buy Now'**
+  String get productDetailBuyNow;
+
+  /// No description provided for @productDetailOutOfStockButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Out of Stock'**
+  String get productDetailOutOfStockButton;
+
+  /// No description provided for @productDetailPurchaseTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase'**
+  String get productDetailPurchaseTitle;
+
+  /// No description provided for @productDetailContactToPurchase.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact the seller to purchase this product.'**
+  String get productDetailContactToPurchase;
+
+  /// No description provided for @productDetailCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get productDetailCancel;
+
+  /// No description provided for @productDetailContactSeller.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Seller'**
+  String get productDetailContactSeller;
+
+  /// No description provided for @productDetailUnableToLoadPage.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to load page'**
+  String get productDetailUnableToLoadPage;
+
+  /// No description provided for @productDetailWebviewOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'This content requires an internet connection. Please check your connection and try again.'**
+  String get productDetailWebviewOffline;
+
+  /// No description provided for @productDetailRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get productDetailRetry;
+
+  /// No description provided for @productDetailReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviews'**
+  String get productDetailReviews;
+
+  /// No description provided for @productDetailWriteReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Write Review'**
+  String get productDetailWriteReview;
+
+  /// No description provided for @productDetailUnableToLoadReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to load reviews'**
+  String get productDetailUnableToLoadReviews;
+
+  /// No description provided for @productDetailNoReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'No reviews yet'**
+  String get productDetailNoReviews;
+
+  /// No description provided for @productDetailBeFirstReviewer.
+  ///
+  /// In en, this message translates to:
+  /// **'Be the first to review this product!'**
+  String get productDetailBeFirstReviewer;
+
+  /// No description provided for @productDetailReviewVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified'**
+  String get productDetailReviewVerified;
+
+  /// No description provided for @productDetailSellerResponse.
+  ///
+  /// In en, this message translates to:
+  /// **'Seller Response'**
+  String get productDetailSellerResponse;
+
+  /// No description provided for @productDetailToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get productDetailToday;
+
+  /// No description provided for @productDetailYesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get productDetailYesterday;
+
+  /// No description provided for @productDetailDaysAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} days ago'**
+  String productDetailDaysAgo(int count);
+
+  /// No description provided for @productDetailWeeksAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} weeks ago'**
+  String productDetailWeeksAgo(int count);
+
+  /// No description provided for @productDetailMonthsAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} months ago'**
+  String productDetailMonthsAgo(int count);
+
+  /// No description provided for @productDetailYearsAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} years ago'**
+  String productDetailYearsAgo(int count);
+
+  /// No description provided for @productDetailWriteReviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a Review'**
+  String get productDetailWriteReviewTitle;
+
+  /// No description provided for @productDetailReviewPrivacyNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'Your review will be public and posted as \"{userName}\". Reviews are moderated before appearing on the product page.'**
+  String productDetailReviewPrivacyNotice(String userName);
+
+  /// No description provided for @productDetailAnonymous.
+  ///
+  /// In en, this message translates to:
+  /// **'Anonymous'**
+  String get productDetailAnonymous;
+
+  /// No description provided for @productDetailYourRating.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Rating'**
+  String get productDetailYourRating;
+
+  /// No description provided for @productDetailReviewTitleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Title (optional)'**
+  String get productDetailReviewTitleLabel;
+
+  /// No description provided for @productDetailYourReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Review *'**
+  String get productDetailYourReview;
+
+  /// No description provided for @productDetailReviewHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your experience with this product...'**
+  String get productDetailReviewHint;
+
+  /// No description provided for @productDetailReviewValidation.
+  ///
+  /// In en, this message translates to:
+  /// **'Please write a review description'**
+  String get productDetailReviewValidation;
+
+  /// No description provided for @productDetailSubmitReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit Review'**
+  String get productDetailSubmitReview;
+
+  /// No description provided for @productDetailReviewSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Review submitted for moderation. Thank you!'**
+  String get productDetailReviewSubmitted;
+
+  /// No description provided for @productDetailImageCounter.
+  ///
+  /// In en, this message translates to:
+  /// **'{current} / {total}'**
+  String productDetailImageCounter(int current, int total);
+
+  /// No description provided for @productDetailDiscountBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'-{percent}% OFF'**
+  String productDetailDiscountBadge(int percent);
+
+  /// No description provided for @adminProductsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Products'**
+  String get adminProductsTitle;
+
+  /// No description provided for @adminProductsHideInactive.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide inactive'**
+  String get adminProductsHideInactive;
+
+  /// No description provided for @adminProductsShowInactive.
+  ///
+  /// In en, this message translates to:
+  /// **'Show inactive'**
+  String get adminProductsShowInactive;
+
+  /// No description provided for @adminProductsAddTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Product'**
+  String get adminProductsAddTooltip;
+
+  /// No description provided for @adminProductsSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search products...'**
+  String get adminProductsSearchHint;
+
+  /// No description provided for @adminProductsFilterTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter by category'**
+  String get adminProductsFilterTooltip;
+
+  /// No description provided for @adminProductsAllCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'All Categories'**
+  String get adminProductsAllCategories;
+
+  /// No description provided for @adminProductsNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No products found'**
+  String get adminProductsNotFound;
+
+  /// No description provided for @adminProductsDeleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Product'**
+  String get adminProductsDeleteTitle;
+
+  /// No description provided for @adminProductsDeleteMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to permanently delete \"{name}\"?\n\nThis action cannot be undone.'**
+  String adminProductsDeleteMessage(String name);
+
+  /// No description provided for @adminProductsDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get adminProductsDelete;
+
+  /// No description provided for @adminProductsDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Product deleted'**
+  String get adminProductsDeleted;
+
+  /// No description provided for @adminProductsInactiveBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'INACTIVE'**
+  String get adminProductsInactiveBadge;
+
+  /// No description provided for @adminProductsFeaturedBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'FEATURED'**
+  String get adminProductsFeaturedBadge;
+
+  /// No description provided for @adminProductsEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get adminProductsEdit;
+
+  /// No description provided for @adminProductsDeactivate.
+  ///
+  /// In en, this message translates to:
+  /// **'Deactivate'**
+  String get adminProductsDeactivate;
+
+  /// No description provided for @adminProductsActivate.
+  ///
+  /// In en, this message translates to:
+  /// **'Activate'**
+  String get adminProductsActivate;
+
+  /// No description provided for @adminProductsDeleteMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get adminProductsDeleteMenu;
+
+  /// No description provided for @adminProductsEditTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Product'**
+  String get adminProductsEditTitle;
+
+  /// No description provided for @adminProductsAddTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Product'**
+  String get adminProductsAddTitle;
+
+  /// No description provided for @adminProductsDeleteTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get adminProductsDeleteTooltip;
+
+  /// No description provided for @adminProductsImagesSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Product Images'**
+  String get adminProductsImagesSection;
+
+  /// No description provided for @adminProductsBasicInfoSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Basic Information'**
+  String get adminProductsBasicInfoSection;
+
+  /// No description provided for @adminProductsNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Product Name *'**
+  String get adminProductsNameLabel;
+
+  /// No description provided for @adminProductsNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., T-Beam Supreme'**
+  String get adminProductsNameHint;
+
+  /// No description provided for @adminProductsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get adminProductsRequired;
+
+  /// No description provided for @adminProductsShortDescLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Short Description'**
+  String get adminProductsShortDescLabel;
+
+  /// No description provided for @adminProductsShortDescHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Brief summary (max 150 chars)'**
+  String get adminProductsShortDescHint;
+
+  /// No description provided for @adminProductsFullDescLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Full Description *'**
+  String get adminProductsFullDescLabel;
+
+  /// No description provided for @adminProductsFullDescHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Detailed product description'**
+  String get adminProductsFullDescHint;
+
+  /// No description provided for @adminProductsCategorySellerSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Category & Seller'**
+  String get adminProductsCategorySellerSection;
+
+  /// No description provided for @adminProductsCategoryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Category *'**
+  String get adminProductsCategoryLabel;
+
+  /// No description provided for @adminProductsSellerLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Seller *'**
+  String get adminProductsSellerLabel;
+
+  /// No description provided for @adminProductsSelectSeller.
+  ///
+  /// In en, this message translates to:
+  /// **'Select seller'**
+  String get adminProductsSelectSeller;
+
+  /// No description provided for @adminProductsErrorLoadingSellers.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading sellers: {error}'**
+  String adminProductsErrorLoadingSellers(String error);
+
+  /// No description provided for @adminProductsPricingSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Pricing'**
+  String get adminProductsPricingSection;
+
+  /// No description provided for @adminProductsPriceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Price (USD) *'**
+  String get adminProductsPriceLabel;
+
+  /// No description provided for @adminProductsInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid'**
+  String get adminProductsInvalid;
+
+  /// No description provided for @adminProductsComparePriceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Compare at Price'**
+  String get adminProductsComparePriceLabel;
+
+  /// No description provided for @adminProductsComparePriceHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Original price for sale'**
+  String get adminProductsComparePriceHint;
+
+  /// No description provided for @adminProductsPurchaseLinkSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase Link'**
+  String get adminProductsPurchaseLinkSection;
+
+  /// No description provided for @adminProductsPurchaseUrlLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase URL'**
+  String get adminProductsPurchaseUrlLabel;
+
+  /// No description provided for @adminProductsTechSpecsSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Technical Specifications'**
+  String get adminProductsTechSpecsSection;
+
+  /// No description provided for @adminProductsChipsetLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Chipset'**
+  String get adminProductsChipsetLabel;
+
+  /// No description provided for @adminProductsChipsetHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., ESP32-S3'**
+  String get adminProductsChipsetHint;
+
+  /// No description provided for @adminProductsLoraChipLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'LoRa Chip'**
+  String get adminProductsLoraChipLabel;
+
+  /// No description provided for @adminProductsLoraChipHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., SX1262'**
+  String get adminProductsLoraChipHint;
+
+  /// No description provided for @adminProductsBatteryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery Capacity'**
+  String get adminProductsBatteryLabel;
+
+  /// No description provided for @adminProductsBatteryHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., 4000mAh'**
+  String get adminProductsBatteryHint;
+
+  /// No description provided for @adminProductsWeightLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight'**
+  String get adminProductsWeightLabel;
+
+  /// No description provided for @adminProductsWeightHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., 50g'**
+  String get adminProductsWeightHint;
+
+  /// No description provided for @adminProductsGps.
+  ///
+  /// In en, this message translates to:
+  /// **'GPS'**
+  String get adminProductsGps;
+
+  /// No description provided for @adminProductsWifi.
+  ///
+  /// In en, this message translates to:
+  /// **'WiFi'**
+  String get adminProductsWifi;
+
+  /// No description provided for @adminProductsBluetooth.
+  ///
+  /// In en, this message translates to:
+  /// **'Bluetooth'**
+  String get adminProductsBluetooth;
+
+  /// No description provided for @adminProductsDisplay.
+  ///
+  /// In en, this message translates to:
+  /// **'Display'**
+  String get adminProductsDisplay;
+
+  /// No description provided for @adminProductsFrequencyBandsSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Frequency Bands'**
+  String get adminProductsFrequencyBandsSection;
+
+  /// No description provided for @adminProductsPhysicalSpecsSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Physical Specifications'**
+  String get adminProductsPhysicalSpecsSection;
+
+  /// No description provided for @adminProductsDimensionsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Dimensions'**
+  String get adminProductsDimensionsLabel;
+
+  /// No description provided for @adminProductsDimensionsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., 100x50x25mm'**
+  String get adminProductsDimensionsHint;
+
+  /// No description provided for @adminProductsTagsSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Tags'**
+  String get adminProductsTagsSection;
+
+  /// No description provided for @adminProductsTagsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Tags'**
+  String get adminProductsTagsLabel;
+
+  /// No description provided for @adminProductsTagsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'meshtastic, lora, gps (comma separated)'**
+  String get adminProductsTagsHint;
+
+  /// No description provided for @adminProductsStockSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock & Status'**
+  String get adminProductsStockSection;
+
+  /// No description provided for @adminProductsStockLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock Quantity'**
+  String get adminProductsStockLabel;
+
+  /// No description provided for @adminProductsStockHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave empty for unlimited'**
+  String get adminProductsStockHint;
+
+  /// No description provided for @adminProductsInStock.
+  ///
+  /// In en, this message translates to:
+  /// **'In Stock'**
+  String get adminProductsInStock;
+
+  /// No description provided for @adminProductsFeatured.
+  ///
+  /// In en, this message translates to:
+  /// **'Featured'**
+  String get adminProductsFeatured;
+
+  /// No description provided for @adminProductsFeaturedSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Show in featured products section'**
+  String get adminProductsFeaturedSubtitle;
+
+  /// No description provided for @adminProductsFeaturedOrderLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Featured Order'**
+  String get adminProductsFeaturedOrderLabel;
+
+  /// No description provided for @adminProductsFeaturedOrderHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Lower numbers appear first (0 = top)'**
+  String get adminProductsFeaturedOrderHint;
+
+  /// No description provided for @adminProductsFeaturedOrderHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Controls display order in featured section'**
+  String get adminProductsFeaturedOrderHelper;
+
+  /// No description provided for @adminProductsActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get adminProductsActive;
+
+  /// No description provided for @adminProductsActiveSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Product is visible in the shop'**
+  String get adminProductsActiveSubtitle;
+
+  /// No description provided for @adminProductsVendorVerificationSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Vendor Verification'**
+  String get adminProductsVendorVerificationSection;
+
+  /// No description provided for @adminProductsVendorVerifiedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Vendor Verified Specs'**
+  String get adminProductsVendorVerifiedTitle;
+
+  /// No description provided for @adminProductsVendorVerifiedSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Specifications have been verified by the vendor'**
+  String get adminProductsVendorVerifiedSubtitle;
+
+  /// No description provided for @adminProductsVendorUnverifiedSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark when vendor confirms all specs are accurate'**
+  String get adminProductsVendorUnverifiedSubtitle;
+
+  /// No description provided for @adminProductsSaveChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Changes'**
+  String get adminProductsSaveChanges;
+
+  /// No description provided for @adminProductsCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Product'**
+  String get adminProductsCreate;
+
+  /// No description provided for @adminProductsMainImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Main'**
+  String get adminProductsMainImage;
+
+  /// No description provided for @adminProductsUploading.
+  ///
+  /// In en, this message translates to:
+  /// **'Uploading...'**
+  String get adminProductsUploading;
+
+  /// No description provided for @adminProductsAddImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Image'**
+  String get adminProductsAddImage;
+
+  /// No description provided for @adminProductsImageRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'At least one image is required'**
+  String get adminProductsImageRequired;
+
+  /// No description provided for @adminProductsImageWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Please add at least one image'**
+  String get adminProductsImageWarning;
+
+  /// No description provided for @adminProductsSelectSellerWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a seller'**
+  String get adminProductsSelectSellerWarning;
+
+  /// No description provided for @adminProductsUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Product updated'**
+  String get adminProductsUpdated;
+
+  /// No description provided for @adminProductsCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Product created'**
+  String get adminProductsCreated;
+
+  /// No description provided for @adminProductsDeleteConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Product'**
+  String get adminProductsDeleteConfirmTitle;
+
+  /// No description provided for @adminProductsDeleteConfirmMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to permanently delete this product?'**
+  String get adminProductsDeleteConfirmMessage;
+
+  /// No description provided for @adminProductsDeletedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Product deleted'**
+  String get adminProductsDeletedSuccess;
+
+  /// No description provided for @adminSellersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Sellers'**
+  String get adminSellersTitle;
+
+  /// No description provided for @adminSellersHideInactive.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide inactive'**
+  String get adminSellersHideInactive;
+
+  /// No description provided for @adminSellersShowInactive.
+  ///
+  /// In en, this message translates to:
+  /// **'Show inactive'**
+  String get adminSellersShowInactive;
+
+  /// No description provided for @adminSellersAddTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Seller'**
+  String get adminSellersAddTooltip;
+
+  /// No description provided for @adminSellersSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search sellers...'**
+  String get adminSellersSearchHint;
+
+  /// No description provided for @adminSellersNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No sellers found'**
+  String get adminSellersNotFound;
+
+  /// No description provided for @adminSellersInactiveBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'INACTIVE'**
+  String get adminSellersInactiveBadge;
+
+  /// No description provided for @adminSellersPartnerBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'PARTNER'**
+  String get adminSellersPartnerBadge;
+
+  /// No description provided for @adminSellersVerifiedBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'VERIFIED'**
+  String get adminSellersVerifiedBadge;
+
+  /// No description provided for @adminSellersEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get adminSellersEdit;
+
+  /// No description provided for @adminSellersDeactivate.
+  ///
+  /// In en, this message translates to:
+  /// **'Deactivate'**
+  String get adminSellersDeactivate;
+
+  /// No description provided for @adminSellersActivate.
+  ///
+  /// In en, this message translates to:
+  /// **'Activate'**
+  String get adminSellersActivate;
+
+  /// No description provided for @adminSellersEditTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Seller'**
+  String get adminSellersEditTitle;
+
+  /// No description provided for @adminSellersAddTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Seller'**
+  String get adminSellersAddTitle;
+
+  /// No description provided for @adminSellersDeleteTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Seller'**
+  String get adminSellersDeleteTooltip;
+
+  /// No description provided for @adminSellersLogoSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Seller Logo'**
+  String get adminSellersLogoSection;
+
+  /// No description provided for @adminSellersBasicInfoSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Basic Information'**
+  String get adminSellersBasicInfoSection;
+
+  /// No description provided for @adminSellersNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Seller Name *'**
+  String get adminSellersNameLabel;
+
+  /// No description provided for @adminSellersNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., LilyGO, RAK Wireless'**
+  String get adminSellersNameHint;
+
+  /// No description provided for @adminSellersDescriptionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get adminSellersDescriptionLabel;
+
+  /// No description provided for @adminSellersDescriptionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Brief description of the seller'**
+  String get adminSellersDescriptionHint;
+
+  /// No description provided for @adminSellersContactInfoSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Information'**
+  String get adminSellersContactInfoSection;
+
+  /// No description provided for @adminSellersWebsiteLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Website URL *'**
+  String get adminSellersWebsiteLabel;
+
+  /// No description provided for @adminSellersEmailLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Email'**
+  String get adminSellersEmailLabel;
+
+  /// No description provided for @adminSellersEmailHint.
+  ///
+  /// In en, this message translates to:
+  /// **'support@example.com'**
+  String get adminSellersEmailHint;
+
+  /// No description provided for @adminSellersShippingSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Shipping Countries'**
+  String get adminSellersShippingSection;
+
+  /// No description provided for @adminSellersCountriesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Countries'**
+  String get adminSellersCountriesLabel;
+
+  /// No description provided for @adminSellersCountriesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'US, CA, UK, DE (comma separated)'**
+  String get adminSellersCountriesHint;
+
+  /// No description provided for @adminSellersDiscountSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Partner Discount Code'**
+  String get adminSellersDiscountSection;
+
+  /// No description provided for @adminSellersStatusSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Status & Verification'**
+  String get adminSellersStatusSection;
+
+  /// No description provided for @adminSellersVerifiedToggle.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified'**
+  String get adminSellersVerifiedToggle;
+
+  /// No description provided for @adminSellersVerifiedSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Seller identity has been verified'**
+  String get adminSellersVerifiedSubtitle;
+
+  /// No description provided for @adminSellersOfficialPartner.
+  ///
+  /// In en, this message translates to:
+  /// **'Official Partner'**
+  String get adminSellersOfficialPartner;
+
+  /// No description provided for @adminSellersOfficialPartnerSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Display as official Meshtastic partner'**
+  String get adminSellersOfficialPartnerSubtitle;
+
+  /// No description provided for @adminSellersActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get adminSellersActive;
+
+  /// No description provided for @adminSellersActiveSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Seller is visible in the shop'**
+  String get adminSellersActiveSubtitle;
+
+  /// No description provided for @adminSellersSaveChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Changes'**
+  String get adminSellersSaveChanges;
+
+  /// No description provided for @adminSellersCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Seller'**
+  String get adminSellersCreate;
+
+  /// No description provided for @adminSellersDangerZone.
+  ///
+  /// In en, this message translates to:
+  /// **'Danger Zone'**
+  String get adminSellersDangerZone;
+
+  /// No description provided for @adminSellersDeleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Seller'**
+  String get adminSellersDeleteTitle;
+
+  /// No description provided for @adminSellersDeleteDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Permanently delete this seller and deactivate all their products. This action cannot be undone.'**
+  String get adminSellersDeleteDescription;
+
+  /// No description provided for @adminSellersDeletePermanently.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Seller Permanently'**
+  String get adminSellersDeletePermanently;
+
+  /// No description provided for @adminSellersDiscountCodeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Discount Code'**
+  String get adminSellersDiscountCodeLabel;
+
+  /// No description provided for @adminSellersDiscountCodeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., MESH10'**
+  String get adminSellersDiscountCodeHint;
+
+  /// No description provided for @adminSellersDiscountDisplayLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Display Label'**
+  String get adminSellersDiscountDisplayLabel;
+
+  /// No description provided for @adminSellersDiscountDisplayHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., 10% off for Socialmesh users'**
+  String get adminSellersDiscountDisplayHint;
+
+  /// No description provided for @adminSellersDiscountExpiryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry Date (optional)'**
+  String get adminSellersDiscountExpiryLabel;
+
+  /// No description provided for @adminSellersDiscountNoExpiry.
+  ///
+  /// In en, this message translates to:
+  /// **'No expiry'**
+  String get adminSellersDiscountNoExpiry;
+
+  /// No description provided for @adminSellersDiscountTermsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms & Conditions'**
+  String get adminSellersDiscountTermsLabel;
+
+  /// No description provided for @adminSellersDiscountTermsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., Cannot be combined with other offers'**
+  String get adminSellersDiscountTermsHint;
+
+  /// No description provided for @adminSellersClearDiscount.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Discount Code'**
+  String get adminSellersClearDiscount;
+
+  /// No description provided for @adminSellersDiscountExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Discount code has expired'**
+  String get adminSellersDiscountExpired;
+
+  /// No description provided for @adminSellersUploading.
+  ///
+  /// In en, this message translates to:
+  /// **'Uploading...'**
+  String get adminSellersUploading;
+
+  /// No description provided for @adminSellersUploadLogo.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload Logo'**
+  String get adminSellersUploadLogo;
+
+  /// No description provided for @adminSellersRemoveLogo.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get adminSellersRemoveLogo;
+
+  /// No description provided for @adminSellersUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Seller updated'**
+  String get adminSellersUpdated;
+
+  /// No description provided for @adminSellersCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Seller created'**
+  String get adminSellersCreated;
+
+  /// No description provided for @adminSellersDeleteDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Seller'**
+  String get adminSellersDeleteDialogTitle;
+
+  /// No description provided for @adminSellersDeleteDialogMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to permanently delete \"{name}\"?'**
+  String adminSellersDeleteDialogMessage(String name);
+
+  /// No description provided for @adminSellersDeleteProductWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 product will be deactivated.} other{{count} products will be deactivated.}}'**
+  String adminSellersDeleteProductWarning(int count);
+
+  /// No description provided for @adminSellersDeleteUndoWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'This action cannot be undone.'**
+  String get adminSellersDeleteUndoWarning;
+
+  /// No description provided for @adminSellersCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get adminSellersCancel;
+
+  /// No description provided for @adminSellersDeleteConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get adminSellersDeleteConfirm;
+
+  /// No description provided for @adminSellersDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Seller deleted'**
+  String get adminSellersDeleted;
+
+  /// No description provided for @sellerProfileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Seller'**
+  String get sellerProfileTitle;
+
+  /// No description provided for @sellerProfileErrorLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading seller'**
+  String get sellerProfileErrorLoading;
+
+  /// No description provided for @sellerProfileGoBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Go Back'**
+  String get sellerProfileGoBack;
+
+  /// No description provided for @sellerProfileNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Seller not found'**
+  String get sellerProfileNotFound;
+
+  /// No description provided for @sellerProfileSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search products...'**
+  String get sellerProfileSearchHint;
+
+  /// No description provided for @sellerProfileProductsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Products ({count})'**
+  String sellerProfileProductsCount(int count);
+
+  /// No description provided for @sellerProfileUnableToLoad.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to load products'**
+  String get sellerProfileUnableToLoad;
+
+  /// No description provided for @sellerProfileNoProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'No products listed yet'**
+  String get sellerProfileNoProducts;
+
+  /// No description provided for @sellerProfileNoSearchResults.
+  ///
+  /// In en, this message translates to:
+  /// **'No products match \"{query}\"'**
+  String sellerProfileNoSearchResults(String query);
+
+  /// No description provided for @sellerProfileOfficialPartner.
+  ///
+  /// In en, this message translates to:
+  /// **'Official Partner'**
+  String get sellerProfileOfficialPartner;
+
+  /// No description provided for @sellerProfileReviewCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} reviews'**
+  String sellerProfileReviewCount(int count);
+
+  /// No description provided for @sellerProfileProductsStat.
+  ///
+  /// In en, this message translates to:
+  /// **'Products'**
+  String get sellerProfileProductsStat;
+
+  /// No description provided for @sellerProfileSalesStat.
+  ///
+  /// In en, this message translates to:
+  /// **'Sales'**
+  String get sellerProfileSalesStat;
+
+  /// No description provided for @sellerProfileFoundedStat.
+  ///
+  /// In en, this message translates to:
+  /// **'Founded'**
+  String get sellerProfileFoundedStat;
+
+  /// No description provided for @sellerProfileAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get sellerProfileAbout;
+
+  /// No description provided for @sellerProfileContactShipping.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact & Shipping'**
+  String get sellerProfileContactShipping;
+
+  /// No description provided for @sellerProfileWebsite.
+  ///
+  /// In en, this message translates to:
+  /// **'Website'**
+  String get sellerProfileWebsite;
+
+  /// No description provided for @sellerProfileEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get sellerProfileEmail;
+
+  /// No description provided for @sellerProfileShipsTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Ships to'**
+  String get sellerProfileShipsTo;
+
+  /// No description provided for @sellerProfilePartnerDiscount.
+  ///
+  /// In en, this message translates to:
+  /// **'Partner Discount'**
+  String get sellerProfilePartnerDiscount;
+
+  /// No description provided for @sellerProfileDiscountExclusive.
+  ///
+  /// In en, this message translates to:
+  /// **'Exclusive discount code for Socialmesh users'**
+  String get sellerProfileDiscountExclusive;
+
+  /// No description provided for @sellerProfileRevealCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Reveal Code'**
+  String get sellerProfileRevealCode;
+
+  /// No description provided for @sellerProfileCodeCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Code copied to clipboard'**
+  String get sellerProfileCodeCopied;
+
+  /// No description provided for @sellerProfileApplyCodeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply this code at checkout on the seller\'s store'**
+  String get sellerProfileApplyCodeHint;
+
+  /// No description provided for @shopAdminDashboardAccessDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Access Denied'**
+  String get shopAdminDashboardAccessDenied;
+
+  /// No description provided for @shopAdminDashboardAccessRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin Access Required'**
+  String get shopAdminDashboardAccessRequired;
+
+  /// No description provided for @shopAdminDashboardNoPermission.
+  ///
+  /// In en, this message translates to:
+  /// **'You do not have permission to access this area.'**
+  String get shopAdminDashboardNoPermission;
+
+  /// No description provided for @shopAdminDashboardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Shop Admin'**
+  String get shopAdminDashboardTitle;
+
+  /// No description provided for @shopAdminDashboardError.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get shopAdminDashboardError;
+
+  /// No description provided for @shopAdminDashboardRefresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get shopAdminDashboardRefresh;
+
+  /// No description provided for @shopAdminDashboardQuickActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Actions'**
+  String get shopAdminDashboardQuickActions;
+
+  /// No description provided for @shopAdminDashboardManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Management'**
+  String get shopAdminDashboardManagement;
+
+  /// No description provided for @shopAdminDashboardTotalProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Products'**
+  String get shopAdminDashboardTotalProducts;
+
+  /// No description provided for @shopAdminDashboardActiveCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} active'**
+  String shopAdminDashboardActiveCount(int count);
+
+  /// No description provided for @shopAdminDashboardTotalSellers.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Sellers'**
+  String get shopAdminDashboardTotalSellers;
+
+  /// No description provided for @shopAdminDashboardTotalSales.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Sales'**
+  String get shopAdminDashboardTotalSales;
+
+  /// No description provided for @shopAdminDashboardTotalViews.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Views'**
+  String get shopAdminDashboardTotalViews;
+
+  /// No description provided for @shopAdminDashboardReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviews'**
+  String get shopAdminDashboardReviews;
+
+  /// No description provided for @shopAdminDashboardEstRevenue.
+  ///
+  /// In en, this message translates to:
+  /// **'Est. Revenue'**
+  String get shopAdminDashboardEstRevenue;
+
+  /// No description provided for @shopAdminDashboardOutOfStock.
+  ///
+  /// In en, this message translates to:
+  /// **'Out of Stock'**
+  String get shopAdminDashboardOutOfStock;
+
+  /// No description provided for @shopAdminDashboardInactive.
+  ///
+  /// In en, this message translates to:
+  /// **'Inactive'**
+  String get shopAdminDashboardInactive;
+
+  /// No description provided for @shopAdminDashboardAddProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Product'**
+  String get shopAdminDashboardAddProduct;
+
+  /// No description provided for @shopAdminDashboardAddSeller.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Seller'**
+  String get shopAdminDashboardAddSeller;
+
+  /// No description provided for @shopAdminDashboardProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'Products'**
+  String get shopAdminDashboardProducts;
+
+  /// No description provided for @shopAdminDashboardProductsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage all product listings'**
+  String get shopAdminDashboardProductsSubtitle;
+
+  /// No description provided for @shopAdminDashboardSellers.
+  ///
+  /// In en, this message translates to:
+  /// **'Sellers'**
+  String get shopAdminDashboardSellers;
+
+  /// No description provided for @shopAdminDashboardSellersSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage seller profiles and partnerships'**
+  String get shopAdminDashboardSellersSubtitle;
+
+  /// No description provided for @shopAdminDashboardFeatured.
+  ///
+  /// In en, this message translates to:
+  /// **'Featured Products'**
+  String get shopAdminDashboardFeatured;
+
+  /// No description provided for @shopAdminDashboardFeaturedSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage featured product display order'**
+  String get shopAdminDashboardFeaturedSubtitle;
+
+  /// No description provided for @shopAdminDashboardReviewsMgmt.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviews'**
+  String get shopAdminDashboardReviewsMgmt;
+
+  /// No description provided for @shopAdminDashboardReviewsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Moderate product reviews'**
+  String get shopAdminDashboardReviewsSubtitle;
+
+  /// No description provided for @reviewModerationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Review Management'**
+  String get reviewModerationTitle;
+
+  /// No description provided for @reviewModerationPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get reviewModerationPending;
+
+  /// No description provided for @reviewModerationAllReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'All Reviews'**
+  String get reviewModerationAllReviews;
+
+  /// No description provided for @reviewModerationErrorLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading reviews'**
+  String get reviewModerationErrorLoading;
+
+  /// No description provided for @reviewModerationAllCaughtUp.
+  ///
+  /// In en, this message translates to:
+  /// **'All caught up!'**
+  String get reviewModerationAllCaughtUp;
+
+  /// No description provided for @reviewModerationNoReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'No reviews yet'**
+  String get reviewModerationNoReviews;
+
+  /// No description provided for @reviewModerationNoPending.
+  ///
+  /// In en, this message translates to:
+  /// **'No pending reviews to moderate'**
+  String get reviewModerationNoPending;
+
+  /// No description provided for @reviewModerationNoDatabase.
+  ///
+  /// In en, this message translates to:
+  /// **'No reviews in database'**
+  String get reviewModerationNoDatabase;
+
+  /// No description provided for @reviewModerationApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Review approved'**
+  String get reviewModerationApproved;
+
+  /// No description provided for @reviewModerationRejectTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject Review'**
+  String get reviewModerationRejectTitle;
+
+  /// No description provided for @reviewModerationRejectReasonLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason for rejection'**
+  String get reviewModerationRejectReasonLabel;
+
+  /// No description provided for @reviewModerationRejectReasonHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., Inappropriate content, spam, etc.'**
+  String get reviewModerationRejectReasonHint;
+
+  /// No description provided for @reviewModerationCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get reviewModerationCancel;
+
+  /// No description provided for @reviewModerationReject.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject'**
+  String get reviewModerationReject;
+
+  /// No description provided for @reviewModerationRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Review rejected'**
+  String get reviewModerationRejected;
+
+  /// No description provided for @reviewModerationDeleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Review'**
+  String get reviewModerationDeleteTitle;
+
+  /// No description provided for @reviewModerationDeleteMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to permanently delete this review?'**
+  String get reviewModerationDeleteMessage;
+
+  /// No description provided for @reviewModerationDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get reviewModerationDelete;
+
+  /// No description provided for @reviewModerationDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Review deleted'**
+  String get reviewModerationDeleted;
+
+  /// No description provided for @reviewModerationAnonymous.
+  ///
+  /// In en, this message translates to:
+  /// **'Anonymous'**
+  String get reviewModerationAnonymous;
+
+  /// No description provided for @reviewModerationVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified'**
+  String get reviewModerationVerified;
+
+  /// No description provided for @reviewModerationApprove.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get reviewModerationApprove;
+
+  /// No description provided for @reviewModerationLegacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Legacy (no status)'**
+  String get reviewModerationLegacy;
+
+  /// No description provided for @categoryProductsFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter'**
+  String get categoryProductsFilter;
+
+  /// No description provided for @categoryProductsSortPopular.
+  ///
+  /// In en, this message translates to:
+  /// **'Most Popular'**
+  String get categoryProductsSortPopular;
+
+  /// No description provided for @categoryProductsSortNewest.
+  ///
+  /// In en, this message translates to:
+  /// **'Newest First'**
+  String get categoryProductsSortNewest;
+
+  /// No description provided for @categoryProductsSortPriceLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Price: Low to High'**
+  String get categoryProductsSortPriceLow;
+
+  /// No description provided for @categoryProductsSortPriceHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'Price: High to Low'**
+  String get categoryProductsSortPriceHigh;
+
+  /// No description provided for @categoryProductsSortRating.
+  ///
+  /// In en, this message translates to:
+  /// **'Highest Rated'**
+  String get categoryProductsSortRating;
+
+  /// No description provided for @categoryProductsErrorLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading products'**
+  String get categoryProductsErrorLoading;
+
+  /// No description provided for @categoryProductsRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get categoryProductsRetry;
+
+  /// No description provided for @categoryProductsNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No products found'**
+  String get categoryProductsNotFound;
+
+  /// No description provided for @categoryProductsTryFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Try adjusting your filters'**
+  String get categoryProductsTryFilters;
+
+  /// No description provided for @categoryProductsClearFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Filters'**
+  String get categoryProductsClearFilters;
+
+  /// No description provided for @categoryProductsResultCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} products'**
+  String categoryProductsResultCount(int count);
+
+  /// No description provided for @categoryProductsFiltersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get categoryProductsFiltersTitle;
+
+  /// No description provided for @categoryProductsReset.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get categoryProductsReset;
+
+  /// No description provided for @categoryProductsInStockOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'In Stock Only'**
+  String get categoryProductsInStockOnly;
+
+  /// No description provided for @categoryProductsPriceRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Price Range'**
+  String get categoryProductsPriceRange;
+
+  /// No description provided for @categoryProductsFrequencyBands.
+  ///
+  /// In en, this message translates to:
+  /// **'Frequency Bands'**
+  String get categoryProductsFrequencyBands;
+
+  /// No description provided for @categoryProductsApplyFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply Filters'**
+  String get categoryProductsApplyFilters;
+
+  /// No description provided for @categoryProductsOutOfStock.
+  ///
+  /// In en, this message translates to:
+  /// **'OUT OF STOCK'**
+  String get categoryProductsOutOfStock;
+
+  /// No description provided for @featuredProductsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Featured Products'**
+  String get featuredProductsTitle;
+
+  /// No description provided for @featuredProductsSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get featuredProductsSave;
+
+  /// No description provided for @featuredProductsReorderInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Drag and drop products to reorder. Products at the top will appear first in the featured section.'**
+  String get featuredProductsReorderInfo;
+
+  /// No description provided for @featuredProductsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No featured products'**
+  String get featuredProductsEmpty;
+
+  /// No description provided for @featuredProductsEmptySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark products as featured to manage their order here'**
+  String get featuredProductsEmptySubtitle;
+
+  /// No description provided for @featuredProductsUnsavedChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'You have unsaved changes'**
+  String get featuredProductsUnsavedChanges;
+
+  /// No description provided for @featuredProductsDiscard.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard'**
+  String get featuredProductsDiscard;
+
+  /// No description provided for @featuredProductsOrderUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Featured order updated'**
+  String get featuredProductsOrderUpdated;
+
+  /// No description provided for @featuredProductsRemoveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from Featured'**
+  String get featuredProductsRemoveTitle;
+
+  /// No description provided for @featuredProductsRemoveMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove \"{name}\" from featured products?'**
+  String featuredProductsRemoveMessage(String name);
+
+  /// No description provided for @featuredProductsRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get featuredProductsRemove;
+
+  /// No description provided for @featuredProductsRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'Removed from featured'**
+  String get featuredProductsRemoved;
+
+  /// No description provided for @featuredProductsRemoveTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from featured'**
+  String get featuredProductsRemoveTooltip;
+
+  /// No description provided for @searchProductsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search devices, modules, antennas...'**
+  String get searchProductsHint;
+
+  /// No description provided for @searchProductsRecentSearches.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Searches'**
+  String get searchProductsRecentSearches;
+
+  /// No description provided for @searchProductsClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get searchProductsClear;
+
+  /// No description provided for @searchProductsTrending.
+  ///
+  /// In en, this message translates to:
+  /// **'Trending'**
+  String get searchProductsTrending;
+
+  /// No description provided for @searchProductsBrowseByCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse by Category'**
+  String get searchProductsBrowseByCategory;
+
+  /// No description provided for @searchProductsSearchFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Search failed'**
+  String get searchProductsSearchFailed;
+
+  /// No description provided for @searchProductsRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get searchProductsRetry;
+
+  /// No description provided for @searchProductsNoResults.
+  ///
+  /// In en, this message translates to:
+  /// **'No results for \"{query}\"'**
+  String searchProductsNoResults(String query);
+
+  /// No description provided for @searchProductsTryDifferent.
+  ///
+  /// In en, this message translates to:
+  /// **'Try different keywords or browse categories'**
+  String get searchProductsTryDifferent;
+
+  /// No description provided for @searchProductsResultCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 result for \"{query}\"} other{{count} results for \"{query}\"}}'**
+  String searchProductsResultCount(int count, String query);
+
+  /// No description provided for @searchProductsOutOfStock.
+  ///
+  /// In en, this message translates to:
+  /// **'Out of Stock'**
+  String get searchProductsOutOfStock;
+
+  /// No description provided for @shopFavoritesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get shopFavoritesTitle;
+
+  /// No description provided for @shopFavoritesSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to save favorites'**
+  String get shopFavoritesSignIn;
+
+  /// No description provided for @shopFavoritesSignInSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your favorite devices will appear here'**
+  String get shopFavoritesSignInSubtitle;
+
+  /// No description provided for @shopFavoritesErrorLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading favorites'**
+  String get shopFavoritesErrorLoading;
+
+  /// No description provided for @shopFavoritesRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get shopFavoritesRetry;
+
+  /// No description provided for @shopFavoritesEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No favorites yet'**
+  String get shopFavoritesEmpty;
+
+  /// No description provided for @shopFavoritesEmptySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the heart icon on products to save them'**
+  String get shopFavoritesEmptySubtitle;
+
+  /// No description provided for @shopFavoritesUnableToLoad.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to load product'**
+  String get shopFavoritesUnableToLoad;
+
+  /// No description provided for @shopFavoritesProductRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'Product no longer available'**
+  String get shopFavoritesProductRemoved;
+
+  /// No description provided for @shopFavoritesInStock.
+  ///
+  /// In en, this message translates to:
+  /// **'In Stock'**
+  String get shopFavoritesInStock;
+
+  /// No description provided for @shopFavoritesOutOfStock.
+  ///
+  /// In en, this message translates to:
+  /// **'Out of Stock'**
+  String get shopFavoritesOutOfStock;
 }
 
 class _AppLocalizationsDelegate

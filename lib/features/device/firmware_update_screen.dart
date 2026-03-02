@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/logging.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -89,10 +90,11 @@ class FirmwareUpdateScreen extends ConsumerWidget {
     final myNode = myNodeNum != null ? nodes[myNodeNum] : null;
     final firmwareCheck = ref.watch(firmwareCheckProvider);
 
-    final currentVersion = myNode?.firmwareVersion ?? 'Unknown';
+    final currentVersion =
+        myNode?.firmwareVersion ?? context.l10n.firmwareUpdateUnknown;
 
     return GlassScaffold(
-      title: 'Firmware Update',
+      title: context.l10n.firmwareUpdateTitle,
       actions: [
         IconButton(
           icon: Icon(Icons.refresh, color: context.textPrimary),
@@ -107,7 +109,10 @@ class FirmwareUpdateScreen extends ConsumerWidget {
           sliver: SliverList(
             delegate: SliverChildListDelegate([
               // Current Version Card
-              _buildSectionHeader(context, 'Current Version'),
+              _buildSectionHeader(
+                context,
+                context.l10n.firmwareUpdateSectionCurrentVersion,
+              ),
               Container(
                 decoration: BoxDecoration(
                   color: context.card,
@@ -136,7 +141,7 @@ class FirmwareUpdateScreen extends ConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Installed Firmware',
+                            context.l10n.firmwareUpdateInstalledFirmware,
                             style: TextStyle(
                               fontSize: 13,
                               color: context.textSecondary,
@@ -171,32 +176,36 @@ class FirmwareUpdateScreen extends ConsumerWidget {
                   children: [
                     _buildInfoRow(
                       icon: Icons.developer_board,
-                      label: 'Hardware',
-                      value: myNode?.hardwareModel ?? 'Unknown',
+                      label: context.l10n.firmwareUpdateHardware,
+                      value:
+                          myNode?.hardwareModel ??
+                          context.l10n.firmwareUpdateUnknown,
                       context: context,
                     ),
                     _buildDivider(context),
                     _buildInfoRow(
                       icon: Icons.tag,
-                      label: 'Node ID',
-                      value: myNode?.nodeNum.toString() ?? 'Unknown',
+                      label: context.l10n.firmwareUpdateNodeId,
+                      value:
+                          myNode?.nodeNum.toString() ??
+                          context.l10n.firmwareUpdateUnknown,
                       context: context,
                     ),
                     _buildDivider(context),
                     _buildInfoRow(
                       icon: Icons.schedule,
-                      label: 'Uptime',
+                      label: context.l10n.firmwareUpdateUptime,
                       value: myNode?.uptimeSeconds != null
                           ? _formatUptime(myNode!.uptimeSeconds!)
-                          : 'Unknown',
+                          : context.l10n.firmwareUpdateUnknown,
                       context: context,
                     ),
                     if (myNode?.hasWifi == true) ...[
                       _buildDivider(context),
                       _buildInfoRow(
                         icon: Icons.wifi,
-                        label: 'WiFi',
-                        value: 'Supported',
+                        label: context.l10n.firmwareUpdateWifi,
+                        value: context.l10n.firmwareUpdateSupported,
                         context: context,
                       ),
                     ],
@@ -204,8 +213,8 @@ class FirmwareUpdateScreen extends ConsumerWidget {
                       _buildDivider(context),
                       _buildInfoRow(
                         icon: Icons.bluetooth,
-                        label: 'Bluetooth',
-                        value: 'Supported',
+                        label: context.l10n.firmwareUpdateBluetooth,
+                        value: context.l10n.firmwareUpdateSupported,
                         context: context,
                       ),
                     ],
@@ -216,7 +225,10 @@ class FirmwareUpdateScreen extends ConsumerWidget {
               const SizedBox(height: AppTheme.spacing24),
 
               // Update Check
-              _buildSectionHeader(context, 'Available Update'),
+              _buildSectionHeader(
+                context,
+                context.l10n.firmwareUpdateSectionAvailableUpdate,
+              ),
               firmwareCheck.when(
                 data: (info) {
                   if (info == null) {
@@ -281,8 +293,12 @@ class FirmwareUpdateScreen extends ConsumerWidget {
                                     children: [
                                       Text(
                                         isNewer
-                                            ? 'Update Available'
-                                            : 'Up to Date',
+                                            ? context
+                                                  .l10n
+                                                  .firmwareUpdateAvailable
+                                            : context
+                                                  .l10n
+                                                  .firmwareUpdateUpToDate,
                                         style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w600,
@@ -293,7 +309,10 @@ class FirmwareUpdateScreen extends ConsumerWidget {
                                       ),
                                       SizedBox(height: AppTheme.spacing2),
                                       Text(
-                                        'Latest: ${info.latestVersion}',
+                                        context.l10n
+                                            .firmwareUpdateLatestVersion(
+                                              info.latestVersion,
+                                            ),
                                         style: TextStyle(
                                           fontSize: 13,
                                           color: context.textTertiary,
@@ -315,7 +334,7 @@ class FirmwareUpdateScreen extends ConsumerWidget {
                                       ),
                                     ),
                                     child: Text(
-                                      'NEW',
+                                      context.l10n.firmwareUpdateNewBadge,
                                       style: TextStyle(
                                         fontSize: 11,
                                         fontWeight: FontWeight.w700,
@@ -344,9 +363,9 @@ class FirmwareUpdateScreen extends ConsumerWidget {
                                     ),
                                   ),
                                   icon: const Icon(Icons.download),
-                                  label: const Text(
-                                    'Download Update',
-                                    style: TextStyle(
+                                  label: Text(
+                                    context.l10n.firmwareUpdateDownload,
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
@@ -382,7 +401,7 @@ class FirmwareUpdateScreen extends ConsumerWidget {
                                   ),
                                   SizedBox(width: AppTheme.spacing8),
                                   Text(
-                                    'Release Notes',
+                                    context.l10n.firmwareUpdateReleaseNotes,
                                     style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w600,
@@ -427,7 +446,7 @@ class FirmwareUpdateScreen extends ConsumerWidget {
                       LoadingIndicator(size: 32),
                       SizedBox(height: AppTheme.spacing16),
                       Text(
-                        'Checking for updates...',
+                        context.l10n.firmwareUpdateChecking,
                         style: TextStyle(
                           fontSize: 14,
                           color: context.textSecondary,
@@ -437,7 +456,7 @@ class FirmwareUpdateScreen extends ConsumerWidget {
                   ),
                 ),
                 error: (error, _) => StatusBanner.error(
-                  title: 'Failed to check for updates',
+                  title: context.l10n.firmwareUpdateCheckFailed,
                   subtitle: error.toString(),
                   margin: EdgeInsets.zero,
                 ),
@@ -446,7 +465,10 @@ class FirmwareUpdateScreen extends ConsumerWidget {
               SizedBox(height: AppTheme.spacing24),
 
               // Update Instructions
-              _buildSectionHeader(context, 'How to Update'),
+              _buildSectionHeader(
+                context,
+                context.l10n.firmwareUpdateSectionHowToUpdate,
+              ),
               Container(
                 decoration: BoxDecoration(
                   color: context.card,
@@ -456,25 +478,13 @@ class FirmwareUpdateScreen extends ConsumerWidget {
                 padding: const EdgeInsets.all(AppTheme.spacing16),
                 child: Column(
                   children: [
-                    _buildStep(
-                      1,
-                      'Download the firmware file for your device',
-                      context,
-                    ),
+                    _buildStep(1, context.l10n.firmwareUpdateStep1, context),
                     SizedBox(height: AppTheme.spacing12),
-                    _buildStep(2, 'Connect your device via USB', context),
+                    _buildStep(2, context.l10n.firmwareUpdateStep2, context),
                     const SizedBox(height: AppTheme.spacing12),
-                    _buildStep(
-                      3,
-                      'Use the Meshtastic Web Flasher or CLI to flash',
-                      context,
-                    ),
+                    _buildStep(3, context.l10n.firmwareUpdateStep3, context),
                     const SizedBox(height: AppTheme.spacing12),
-                    _buildStep(
-                      4,
-                      'Wait for device to reboot and reconnect',
-                      context,
-                    ),
+                    _buildStep(4, context.l10n.firmwareUpdateStep4, context),
                   ],
                 ),
               ),
@@ -493,17 +503,15 @@ class FirmwareUpdateScreen extends ConsumerWidget {
                   ),
                 ),
                 icon: const Icon(Icons.open_in_browser),
-                label: const Text('Open Web Flasher'),
+                label: Text(context.l10n.firmwareUpdateOpenWebFlasher),
               ),
 
               const SizedBox(height: AppTheme.spacing32),
 
               // Warning
               StatusBanner.warning(
-                title: 'Backup Your Settings',
-                subtitle:
-                    'Firmware updates may reset your device configuration. '
-                    'Consider exporting your settings before updating.',
+                title: context.l10n.firmwareUpdateBackupWarningTitle,
+                subtitle: context.l10n.firmwareUpdateBackupWarningSubtitle,
                 margin: EdgeInsets.zero,
               ),
 
@@ -586,7 +594,7 @@ class FirmwareUpdateScreen extends ConsumerWidget {
           ),
           SizedBox(height: AppTheme.spacing16),
           Text(
-            'Unable to check for updates',
+            context.l10n.firmwareUpdateUnableToCheck,
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
@@ -595,7 +603,7 @@ class FirmwareUpdateScreen extends ConsumerWidget {
           ),
           const SizedBox(height: AppTheme.spacing8),
           Text(
-            'Visit the Meshtastic website for the latest firmware.',
+            context.l10n.firmwareUpdateVisitWebsite,
             textAlign: TextAlign.center,
             style: Theme.of(
               context,

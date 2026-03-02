@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/app_bottom_sheet.dart';
@@ -59,15 +60,15 @@ class _ReviewModerationScreenState extends ConsumerState<ReviewModerationScreen>
     return GestureDetector(
       onTap: _dismissKeyboard,
       child: GlassScaffold(
-        title: 'Review Management',
+        title: context.l10n.reviewModerationTitle,
         bottom: TabBar(
           controller: _tabController,
           indicatorColor: context.accentColor,
           labelColor: context.accentColor,
           unselectedLabelColor: context.textSecondary,
-          tabs: const [
-            Tab(text: 'Pending'),
-            Tab(text: 'All Reviews'),
+          tabs: [
+            Tab(text: context.l10n.reviewModerationPending),
+            Tab(text: context.l10n.reviewModerationAllReviews),
           ],
         ),
         // Use hasScrollBody: true because each TabBarView child contains
@@ -116,7 +117,7 @@ class _ReviewList extends ConsumerWidget {
             Icon(Icons.error_outline, color: AppTheme.errorRed, size: 48),
             const SizedBox(height: AppTheme.spacing16),
             Text(
-              'Error loading reviews',
+              context.l10n.reviewModerationErrorLoading,
               style: TextStyle(color: context.textPrimary),
             ),
             const SizedBox(height: AppTheme.spacing8),
@@ -141,7 +142,9 @@ class _ReviewList extends ConsumerWidget {
                 ),
                 const SizedBox(height: AppTheme.spacing16),
                 Text(
-                  isPending ? 'All caught up!' : 'No reviews yet',
+                  isPending
+                      ? context.l10n.reviewModerationAllCaughtUp
+                      : context.l10n.reviewModerationNoReviews,
                   style: TextStyle(
                     color: context.textPrimary,
                     fontSize: 18,
@@ -151,8 +154,8 @@ class _ReviewList extends ConsumerWidget {
                 const SizedBox(height: AppTheme.spacing8),
                 Text(
                   isPending
-                      ? 'No pending reviews to moderate'
-                      : 'No reviews in database',
+                      ? context.l10n.reviewModerationNoPending
+                      : context.l10n.reviewModerationNoDatabase,
                   style: TextStyle(color: context.textSecondary),
                 ),
               ],
@@ -194,6 +197,7 @@ class _ReviewModerationCardState extends ConsumerState<_ReviewModerationCard>
   bool _isProcessing = false;
 
   Future<void> _approve() async {
+    final l10n = context.l10n;
     final user = ref.read(currentUserProvider);
     if (user == null) return;
 
@@ -205,7 +209,7 @@ class _ReviewModerationCardState extends ConsumerState<_ReviewModerationCard>
       await shopService.approveReview(widget.review.id, user.uid);
 
       if (mounted) {
-        showSuccessSnackBar(context, 'Review approved');
+        showSuccessSnackBar(context, l10n.reviewModerationApproved);
       }
     } catch (e) {
       if (mounted) {
@@ -217,6 +221,7 @@ class _ReviewModerationCardState extends ConsumerState<_ReviewModerationCard>
   }
 
   Future<void> _reject() async {
+    final l10n = context.l10n;
     final user = ref.read(currentUserProvider);
     if (user == null) return;
 
@@ -231,7 +236,7 @@ class _ReviewModerationCardState extends ConsumerState<_ReviewModerationCard>
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'Reject Review',
+              l10n.reviewModerationRejectTitle,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
@@ -243,9 +248,9 @@ class _ReviewModerationCardState extends ConsumerState<_ReviewModerationCard>
               onTapOutside: (_) =>
                   FocusManager.instance.primaryFocus?.unfocus(),
               controller: reasonController,
-              decoration: const InputDecoration(
-                labelText: 'Reason for rejection',
-                hintText: 'e.g., Inappropriate content, spam, etc.',
+              decoration: InputDecoration(
+                labelText: l10n.reviewModerationRejectReasonLabel,
+                hintText: l10n.reviewModerationRejectReasonHint,
                 counterText: '',
               ),
               maxLines: 3,
@@ -265,7 +270,7 @@ class _ReviewModerationCardState extends ConsumerState<_ReviewModerationCard>
                         borderRadius: BorderRadius.circular(AppTheme.radius12),
                       ),
                     ),
-                    child: const Text('Cancel'),
+                    child: Text(l10n.reviewModerationCancel),
                   ),
                 ),
                 const SizedBox(width: AppTheme.spacing12),
@@ -280,7 +285,7 @@ class _ReviewModerationCardState extends ConsumerState<_ReviewModerationCard>
                         borderRadius: BorderRadius.circular(AppTheme.radius12),
                       ),
                     ),
-                    child: const Text('Reject'),
+                    child: Text(l10n.reviewModerationReject),
                   ),
                 ),
               ],
@@ -299,7 +304,7 @@ class _ReviewModerationCardState extends ConsumerState<_ReviewModerationCard>
       await shopService.rejectReview(widget.review.id, user.uid, reason);
 
       if (mounted) {
-        showSuccessSnackBar(context, 'Review rejected');
+        showSuccessSnackBar(context, l10n.reviewModerationRejected);
       }
     } catch (e) {
       if (mounted) {
@@ -311,14 +316,15 @@ class _ReviewModerationCardState extends ConsumerState<_ReviewModerationCard>
   }
 
   Future<void> _delete() async {
+    final l10n = context.l10n;
     // Capture provider before async gap
     final shopService = ref.read(deviceShopServiceProvider);
 
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Delete Review',
-      message: 'Are you sure you want to permanently delete this review?',
-      confirmLabel: 'Delete',
+      title: l10n.reviewModerationDeleteTitle,
+      message: l10n.reviewModerationDeleteMessage,
+      confirmLabel: l10n.reviewModerationDelete,
       isDestructive: true,
     );
 
@@ -330,7 +336,7 @@ class _ReviewModerationCardState extends ConsumerState<_ReviewModerationCard>
       await shopService.deleteReview(widget.review.id);
 
       if (mounted) {
-        showSuccessSnackBar(context, 'Review deleted');
+        showSuccessSnackBar(context, l10n.reviewModerationDeleted);
       }
     } catch (e) {
       if (mounted) {
@@ -437,7 +443,8 @@ class _ReviewModerationCardState extends ConsumerState<_ReviewModerationCard>
                       Row(
                         children: [
                           Text(
-                            widget.review.userName ?? 'Anonymous',
+                            widget.review.userName ??
+                                context.l10n.reviewModerationAnonymous,
                             style: TextStyle(
                               color: context.textPrimary,
                               fontWeight: FontWeight.w600,
@@ -452,7 +459,7 @@ class _ReviewModerationCardState extends ConsumerState<_ReviewModerationCard>
                             ),
                             const SizedBox(width: AppTheme.spacing2),
                             Text(
-                              'Verified',
+                              context.l10n.reviewModerationVerified,
                               style: TextStyle(
                                 color: context.accentColor,
                                 fontSize: 11,
@@ -521,7 +528,7 @@ class _ReviewModerationCardState extends ConsumerState<_ReviewModerationCard>
                     child: OutlinedButton.icon(
                       onPressed: _reject,
                       icon: const Icon(Icons.close),
-                      label: const Text('Reject'),
+                      label: Text(context.l10n.reviewModerationReject),
                       style: OutlinedButton.styleFrom(
                         foregroundColor: AppTheme.errorRed,
                         side: const BorderSide(color: AppTheme.errorRed),
@@ -533,7 +540,7 @@ class _ReviewModerationCardState extends ConsumerState<_ReviewModerationCard>
                     child: ElevatedButton.icon(
                       onPressed: _approve,
                       icon: const Icon(Icons.check),
-                      label: const Text('Approve'),
+                      label: Text(context.l10n.reviewModerationApprove),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppTheme.successGreen,
                         foregroundColor: Colors.white,
@@ -570,7 +577,7 @@ class _ReviewModerationCardState extends ConsumerState<_ReviewModerationCard>
                     ),
                     child: Text(
                       widget.review.status == 'legacy'
-                          ? 'Legacy (no status)'
+                          ? context.l10n.reviewModerationLegacy
                           : widget.review.status.toUpperCase(),
                       style: TextStyle(
                         fontSize: 11,
@@ -589,7 +596,7 @@ class _ReviewModerationCardState extends ConsumerState<_ReviewModerationCard>
                   ElevatedButton.icon(
                     onPressed: _delete,
                     icon: const Icon(Icons.delete_outline),
-                    label: const Text('Delete'),
+                    label: Text(context.l10n.reviewModerationDelete),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppTheme.errorRed,
                       foregroundColor: Colors.white,

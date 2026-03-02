@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/app_bottom_sheet.dart';
@@ -32,7 +33,7 @@ class _FeaturedProductsScreenState extends ConsumerState<FeaturedProductsScreen>
     final featuredAsync = ref.watch(adminFeaturedProductsProvider);
 
     return GlassScaffold(
-      title: 'Featured Products',
+      title: context.l10n.featuredProductsTitle,
       actions: [
         if (_hasChanges)
           TextButton.icon(
@@ -44,7 +45,7 @@ class _FeaturedProductsScreenState extends ConsumerState<FeaturedProductsScreen>
                     child: CircularProgressIndicator(strokeWidth: 2),
                   )
                 : const Icon(Icons.save),
-            label: const Text('Save'),
+            label: Text(context.l10n.featuredProductsSave),
             style: TextButton.styleFrom(foregroundColor: context.accentColor),
           ),
       ],
@@ -62,7 +63,7 @@ class _FeaturedProductsScreenState extends ConsumerState<FeaturedProductsScreen>
                     const SizedBox(width: AppTheme.spacing12),
                     Expanded(
                       child: Text(
-                        'Drag and drop products to reorder. Products at the top will appear first in the featured section.',
+                        context.l10n.featuredProductsReorderInfo,
                         style: TextStyle(
                           color: context.textSecondary,
                           fontSize: 13,
@@ -94,10 +95,13 @@ class _FeaturedProductsScreenState extends ConsumerState<FeaturedProductsScreen>
                         color: context.textTertiary,
                       ),
                       const SizedBox(height: AppTheme.spacing16),
-                      Text('No featured products', style: context.titleStyle),
+                      Text(
+                        context.l10n.featuredProductsEmpty,
+                        style: context.titleStyle,
+                      ),
                       const SizedBox(height: AppTheme.spacing8),
                       Text(
-                        'Mark products as featured to manage their order here',
+                        context.l10n.featuredProductsEmptySubtitle,
                         style: TextStyle(color: context.textSecondary),
                       ),
                     ],
@@ -144,15 +148,15 @@ class _FeaturedProductsScreenState extends ConsumerState<FeaturedProductsScreen>
                     children: [
                       const Icon(Icons.warning, color: AppTheme.warningYellow),
                       const SizedBox(width: AppTheme.spacing8),
-                      const Expanded(
+                      Expanded(
                         child: Text(
-                          'You have unsaved changes',
-                          style: TextStyle(color: AppTheme.warningYellow),
+                          context.l10n.featuredProductsUnsavedChanges,
+                          style: const TextStyle(color: AppTheme.warningYellow),
                         ),
                       ),
                       TextButton(
                         onPressed: _discardChanges,
-                        child: const Text('Discard'),
+                        child: Text(context.l10n.featuredProductsDiscard),
                       ),
                     ],
                   ),
@@ -200,7 +204,7 @@ class _FeaturedProductsScreenState extends ConsumerState<FeaturedProductsScreen>
         _isSaving = false;
       });
 
-      showSuccessSnackBar(context, 'Featured order updated');
+      showSuccessSnackBar(context, context.l10n.featuredProductsOrderUpdated);
     } catch (e) {
       safeSetState(() => _isSaving = false);
       if (mounted) {
@@ -218,15 +222,16 @@ class _FeaturedProductsScreenState extends ConsumerState<FeaturedProductsScreen>
   }
 
   Future<void> _removeFromFeatured(ShopProduct product) async {
-    // Capture providers before async gap
+    // Capture providers and l10n before async gap
     final service = ref.read(deviceShopServiceProvider);
     final user = ref.read(currentUserProvider);
+    final l10n = context.l10n;
 
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Remove from Featured',
-      message: 'Remove "${product.name}" from featured products?',
-      confirmLabel: 'Remove',
+      title: l10n.featuredProductsRemoveTitle,
+      message: l10n.featuredProductsRemoveMessage(product.name),
+      confirmLabel: l10n.featuredProductsRemove,
     );
 
     if (confirmed == true && mounted) {
@@ -244,7 +249,7 @@ class _FeaturedProductsScreenState extends ConsumerState<FeaturedProductsScreen>
         ref.invalidate(featuredProductsProvider);
         ref.invalidate(adminAllProductsProvider);
 
-        showSuccessSnackBar(context, 'Removed from featured');
+        showSuccessSnackBar(context, l10n.featuredProductsRemoved);
       } catch (e) {
         if (mounted) {
           showErrorSnackBar(context, 'Error: $e');
@@ -325,7 +330,7 @@ class _FeaturedProductItem extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        product.formattedPrice,
+                        product.formattedPrice(context.l10n),
                         style: TextStyle(
                           color: context.accentColor,
                           fontWeight: FontWeight.w500,
@@ -351,7 +356,7 @@ class _FeaturedProductItem extends StatelessWidget {
               icon: const Icon(Icons.remove_circle_outline),
               color: AppTheme.errorRed.withValues(alpha: 0.7),
               onPressed: onRemove,
-              tooltip: 'Remove from featured',
+              tooltip: context.l10n.featuredProductsRemoveTooltip,
             ),
 
             // Drag handle

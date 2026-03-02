@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/animations.dart';
@@ -135,15 +136,15 @@ class _SerialConfigScreenState extends ConsumerState<SerialConfigScreen>
   String _getModeDescription(String mode) {
     switch (mode) {
       case 'SIMPLE':
-        return 'Simple serial output for basic terminal usage';
+        return context.l10n.serialConfigModeSimpleDesc;
       case 'PROTO':
-        return 'Protobuf binary protocol for programmatic access';
+        return context.l10n.serialConfigModeProtoDesc;
       case 'TEXTMSG':
-        return 'Text message mode for SMS-style communication';
+        return context.l10n.serialConfigModeTextmsgDesc;
       case 'NMEA':
-        return 'NMEA GPS sentence output for GPS applications';
+        return context.l10n.serialConfigModeNmeaDesc;
       case 'CALTOPO':
-        return 'CalTopo format for mapping applications';
+        return context.l10n.serialConfigModeCaltopoDesc;
       default:
         return '';
     }
@@ -177,7 +178,7 @@ class _SerialConfigScreenState extends ConsumerState<SerialConfigScreen>
 
       safeSetState(() => _hasChanges = false);
       if (mounted) {
-        showSuccessSnackBar(context, 'Serial configuration saved');
+        showSuccessSnackBar(context, context.l10n.serialConfigSaved);
         if (target.isLocal) {
           ref
               .read(countdownProvider.notifier)
@@ -186,7 +187,10 @@ class _SerialConfigScreenState extends ConsumerState<SerialConfigScreen>
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Error saving config: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.serialConfigSaveError(e.toString()),
+        );
       }
     } finally {
       safeSetState(() => _isSaving = false);
@@ -197,13 +201,13 @@ class _SerialConfigScreenState extends ConsumerState<SerialConfigScreen>
   Widget build(BuildContext context) {
     if (_isLoading) {
       return GlassScaffold(
-        title: 'Serial Config',
+        title: context.l10n.serialConfigTitle,
         slivers: [SliverFillRemaining(child: const ScreenLoadingIndicator())],
       );
     }
 
     return GlassScaffold(
-      title: 'Serial Config',
+      title: context.l10n.serialConfigTitle,
       actions: [
         if (_hasChanges)
           TextButton(
@@ -218,7 +222,7 @@ class _SerialConfigScreenState extends ConsumerState<SerialConfigScreen>
                     ),
                   )
                 : Text(
-                    'Save',
+                    context.l10n.serialConfigSave,
                     style: TextStyle(
                       color: context.accentColor,
                       fontWeight: FontWeight.w600,
@@ -232,7 +236,7 @@ class _SerialConfigScreenState extends ConsumerState<SerialConfigScreen>
           sliver: SliverList(
             delegate: SliverChildListDelegate([
               // Serial Enable
-              _buildSectionHeader('General'),
+              _buildSectionHeader(context.l10n.serialConfigSectionGeneral),
               Container(
                 decoration: BoxDecoration(
                   color: context.card,
@@ -243,8 +247,8 @@ class _SerialConfigScreenState extends ConsumerState<SerialConfigScreen>
                   children: [
                     _buildSwitchTile(
                       icon: Icons.usb_rounded,
-                      title: 'Serial Enabled',
-                      subtitle: 'Enable serial port communication',
+                      title: context.l10n.serialConfigEnabled,
+                      subtitle: context.l10n.serialConfigEnabledSubtitle,
                       value: _serialEnabled,
                       onChanged: (value) {
                         setState(() => _serialEnabled = value);
@@ -254,8 +258,8 @@ class _SerialConfigScreenState extends ConsumerState<SerialConfigScreen>
                     _buildDivider(),
                     _buildSwitchTile(
                       icon: Icons.repeat_rounded,
-                      title: 'Echo',
-                      subtitle: 'Echo sent packets back to the serial port',
+                      title: context.l10n.serialConfigEcho,
+                      subtitle: context.l10n.serialConfigEchoSubtitle,
                       value: _echo,
                       onChanged: (value) {
                         setState(() => _echo = value);
@@ -265,8 +269,8 @@ class _SerialConfigScreenState extends ConsumerState<SerialConfigScreen>
                     _buildDivider(),
                     _buildGpioPicker(
                       icon: Icons.input,
-                      title: 'RXD GPIO Pin',
-                      subtitle: 'Receive data GPIO pin number',
+                      title: context.l10n.serialConfigRxdGpio,
+                      subtitle: context.l10n.serialConfigRxdGpioSubtitle,
                       value: _rxdGpio,
                       onChanged: (value) {
                         setState(() => _rxdGpio = value);
@@ -276,8 +280,8 @@ class _SerialConfigScreenState extends ConsumerState<SerialConfigScreen>
                     _buildDivider(),
                     _buildGpioPicker(
                       icon: Icons.output,
-                      title: 'TXD GPIO Pin',
-                      subtitle: 'Transmit data GPIO pin number',
+                      title: context.l10n.serialConfigTxdGpio,
+                      subtitle: context.l10n.serialConfigTxdGpioSubtitle,
                       value: _txdGpio,
                       onChanged: (value) {
                         setState(() => _txdGpio = value);
@@ -287,8 +291,9 @@ class _SerialConfigScreenState extends ConsumerState<SerialConfigScreen>
                     _buildDivider(),
                     _buildSwitchTile(
                       icon: Icons.terminal,
-                      title: 'Override Console Serial',
-                      subtitle: 'Use serial module instead of console',
+                      title: context.l10n.serialConfigOverrideConsole,
+                      subtitle:
+                          context.l10n.serialConfigOverrideConsoleSubtitle,
                       value: _overrideConsoleSerialPort,
                       onChanged: (value) {
                         setState(() => _overrideConsoleSerialPort = value);
@@ -302,7 +307,7 @@ class _SerialConfigScreenState extends ConsumerState<SerialConfigScreen>
               SizedBox(height: AppTheme.spacing24),
 
               // Baud Rate
-              _buildSectionHeader('Baud Rate'),
+              _buildSectionHeader(context.l10n.serialConfigSectionBaudRate),
               Container(
                 decoration: BoxDecoration(
                   color: context.card,
@@ -336,7 +341,7 @@ class _SerialConfigScreenState extends ConsumerState<SerialConfigScreen>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Baud Rate',
+                                context.l10n.serialConfigBaudRate,
                                 style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w600,
@@ -345,7 +350,7 @@ class _SerialConfigScreenState extends ConsumerState<SerialConfigScreen>
                               ),
                               SizedBox(height: AppTheme.spacing2),
                               Text(
-                                'Serial communication speed',
+                                context.l10n.serialConfigBaudRateSubtitle,
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: context.textTertiary,
@@ -407,7 +412,7 @@ class _SerialConfigScreenState extends ConsumerState<SerialConfigScreen>
               SizedBox(height: AppTheme.spacing24),
 
               // Timeout
-              _buildSectionHeader('Timeout'),
+              _buildSectionHeader(context.l10n.serialConfigSectionTimeout),
               Container(
                 decoration: BoxDecoration(
                   color: context.card,
@@ -441,7 +446,7 @@ class _SerialConfigScreenState extends ConsumerState<SerialConfigScreen>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Timeout',
+                                context.l10n.serialConfigTimeout,
                                 style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w600,
@@ -450,7 +455,7 @@ class _SerialConfigScreenState extends ConsumerState<SerialConfigScreen>
                               ),
                               const SizedBox(height: AppTheme.spacing2),
                               Text(
-                                '$_timeout seconds',
+                                context.l10n.serialConfigTimeoutValue(_timeout),
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: context.textTertiary,
@@ -489,7 +494,7 @@ class _SerialConfigScreenState extends ConsumerState<SerialConfigScreen>
               SizedBox(height: AppTheme.spacing24),
 
               // Mode Selection
-              _buildSectionHeader('Serial Mode'),
+              _buildSectionHeader(context.l10n.serialConfigSectionSerialMode),
               Container(
                 decoration: BoxDecoration(
                   color: context.card,
@@ -722,7 +727,9 @@ class _SerialConfigScreenState extends ConsumerState<SerialConfigScreen>
                 return DropdownMenuItem<int>(
                   value: i,
                   child: Text(
-                    i == 0 ? 'Unset' : 'Pin $i',
+                    i == 0
+                        ? context.l10n.serialConfigGpioUnset
+                        : context.l10n.serialConfigGpioPin(i),
                     style: TextStyle(fontSize: 14, color: context.textPrimary),
                   ),
                 );

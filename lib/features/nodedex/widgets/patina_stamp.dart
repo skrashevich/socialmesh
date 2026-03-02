@@ -323,19 +323,31 @@ class PatinaIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
       decoration: BoxDecoration(
-        color: accentColor.withValues(alpha: 0.06),
-        borderRadius: BorderRadius.circular(AppTheme.radius4),
-      ),
-      child: Text(
-        '${result.score}',
-        style: TextStyle(
-          fontSize: 9,
-          fontWeight: FontWeight.w700,
-          fontFamily: AppTheme.fontFamily,
-          color: accentColor.withValues(alpha: 0.6),
+        color: accentColor.withValues(alpha: 0.10),
+        borderRadius: BorderRadius.circular(AppTheme.radius10),
+        border: Border.all(
+          color: accentColor.withValues(alpha: 0.25),
+          width: 0.5,
         ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.auto_awesome, size: 11, color: accentColor),
+          const SizedBox(width: AppTheme.spacing3),
+          Text(
+            '${result.score}',
+            style: TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.w600,
+              fontFamily: AppTheme.fontFamily,
+              color: accentColor,
+              letterSpacing: 0.2,
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+import '../../../l10n/app_localizations.dart';
+
 // Models for LILYGO Shopify API responses
 //
 // These models map directly to the Shopify JSON API structure.
@@ -99,8 +101,8 @@ class LilygoProduct {
   bool get isAvailable => variants.any((v) => v.available);
 
   /// Get price range as formatted string
-  String get priceRange {
-    if (variants.isEmpty) return 'Price unavailable';
+  String priceRange(AppLocalizations l10n) {
+    if (variants.isEmpty) return l10n.lilygoModelPriceUnavailable;
     final prices = variants.map((v) => v.priceValue).toList();
     final min = prices.reduce((a, b) => a < b ? a : b);
     final max = prices.reduce((a, b) => a > b ? a : b);
