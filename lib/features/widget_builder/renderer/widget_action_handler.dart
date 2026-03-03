@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../models/widget_schema.dart';
-import '../../../core/logging.dart';
+
 import '../../../core/widgets/app_bottom_sheet.dart';
 import '../../../core/widgets/action_sheets.dart';
 import '../../../core/widgets/node_selector_sheet.dart';
 import '../../../providers/app_providers.dart';
 import '../../../providers/countdown_providers.dart';
+import '../../../services/location/phone_position_governor.dart';
 import '../../../utils/snackbar.dart';
 
 /// Handles action execution for custom widgets
@@ -74,24 +75,9 @@ class WidgetActionHandler {
   Future<void> _handleShareLocation() async {
     if (!context.mounted) return;
 
-    // Gate: respect the providePhoneLocation opt-in setting.
-    // Without this check, widget actions would bypass the LocationService
-    // gate and emit POSITION_APP packets even when the user has not opted in.
-    final settings = ref.read(settingsServiceProvider).value;
-    if (settings != null && !settings.providePhoneLocation) {
-      AppLogging.protocol(
-        'Widget shareLocation blocked — providePhoneLocation is disabled',
-      );
-      if (context.mounted) {
-        showErrorSnackBar(
-          context,
-          'Enable "Provide phone location" in Settings to share your position',
-        );
-      }
-      return;
-    }
-
-    // Show node selector to choose who to share location with
+    // Show node selector to choose who to share location with.
+    // The governor handles the providePhoneLocation gate, so we no longer
+    // need a manual check here — it will deny with blockedDisabled.
     final selection = await NodeSelectorSheet.show(
       context,
       title: 'Share Location With',
@@ -104,29 +90,45 @@ class WidgetActionHandler {
 
     try {
       final locationService = ref.read(locationServiceProvider);
-      final position = await locationService.getCurrentPosition();
-
-      if (position == null) {
-        if (context.mounted) {
-          showErrorSnackBar(context, 'Unable to get your location');
-        }
-        return;
-      }
-
-      final protocol = ref.read(protocolServiceProvider);
 
       if (selection.isBroadcast) {
-        // Broadcast to all nodes
-        await protocol.sendPosition(
-          latitude: position.latitude,
-          longitude: position.longitude,
-          altitude: position.altitude.toInt(),
+        // Route broadcast through the governor for centralized rate limiting.
+        final decision = await locationService.publishWithReason(
+          PositionPublishReason.widgetAction,
         );
-        if (context.mounted) {
-          showSuccessSnackBar(context, 'Location shared with mesh');
+        if (!context.mounted) return;
+
+        switch (decision) {
+          case PublishDecision.allowed:
+            showSuccessSnackBar(context, 'Location shared with mesh');
+          case PublishDecision.blockedDisabled:
+            showErrorSnackBar(
+              context,
+              'Enable "Provide phone location" in Settings to share your position',
+            );
+          case PublishDecision.blockedInterval:
+            showWarningSnackBar(
+              context,
+              'Location was shared recently — please wait before sharing again',
+            );
+          case PublishDecision.blockedDistance:
+          case PublishDecision.blockedNoPosition:
+            showErrorSnackBar(context, 'Unable to get your location');
         }
       } else {
-        // Send to specific node
+        // Direct sends to a specific node use ProtocolService directly.
+        // These are already rate-limited by the 10s direct cooldown and
+        // are not subject to the broadcast governor (different use case).
+        final position = await locationService.getCurrentPosition();
+
+        if (position == null) {
+          if (context.mounted) {
+            showErrorSnackBar(context, 'Unable to get your location');
+          }
+          return;
+        }
+
+        final protocol = ref.read(protocolServiceProvider);
         await protocol.sendPositionToNode(
           nodeNum: selection.nodeNum!,
           latitude: position.latitude,

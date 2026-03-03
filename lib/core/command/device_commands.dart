@@ -5,6 +5,7 @@ import '../../providers/app_providers.dart';
 import '../../providers/connection_providers.dart';
 import '../../models/mesh_models.dart';
 import '../../services/protocol/admin_target.dart';
+import '../../services/location/phone_position_governor.dart';
 import 'command.dart';
 
 /// Command to send a text message via the mesh network
@@ -151,23 +152,21 @@ class SharePositionCommand extends DeviceCommand<void> {
 
   @override
   Future<void> execute(Ref ref) async {
-    // Gate: respect the same providePhoneLocation opt-in as LocationService.
-    // Without this, SharePositionCommand would bypass the LocationService
-    // gate and emit POSITION_APP packets even when the user has not opted in.
-    final settings = ref.read(settingsServiceProvider).value;
-    if (settings != null && !settings.providePhoneLocation) {
-      AppLogging.protocol(
-        'SharePositionCommand blocked — providePhoneLocation is disabled',
-      );
-      return;
-    }
-
-    final protocol = ref.read(protocolServiceProvider);
-    await protocol.sendPosition(
+    // Route through LocationService governor so all phone-GPS publishes
+    // are centrally rate-limited and distance-gated. The governor checks
+    // providePhoneLocation, enforces minInterval (60s for commands), and
+    // logs the decision with reason code.
+    final locationService = ref.read(locationServiceProvider);
+    final decision = await locationService.publishKnownPosition(
       latitude: latitude,
       longitude: longitude,
       altitude: altitude,
+      reason: PositionPublishReason.command,
     );
+
+    if (decision != PublishDecision.allowed) {
+      AppLogging.protocol('SharePositionCommand governed: ${decision.name}');
+    }
   }
 }
 

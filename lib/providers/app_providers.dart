@@ -23,6 +23,7 @@ import '../services/mesh_packet_dedupe_store.dart';
 import '../services/notifications/notification_service.dart';
 import '../services/messaging/offline_queue_service.dart';
 import '../services/location/location_service.dart';
+import '../services/location/phone_position_governor.dart';
 import '../services/live_activity/live_activity_service.dart';
 import '../models/presence_confidence.dart';
 import '../services/nodes/node_identity_store.dart';
@@ -2264,13 +2265,31 @@ final deviceLogStreamProvider = StreamProvider<mesh_pb.LogRecord>((ref) {
   return const Stream.empty();
 });
 
+// Phone position publish governor — centralized rate-limiting and distance
+// gating for all phone-GPS-to-mesh publish paths. Shared across
+// LocationService, SharePositionCommand, WidgetActionHandler, and dashboard
+// quick actions. Enforces minInterval (300s auto / 60s manual) and
+// minDistance (150m) so stationary users do not spam the mesh.
+final phonePositionGovernorProvider = Provider<PhonePositionGovernor>((ref) {
+  final protocol = ref.watch(protocolServiceProvider);
+  final governor = PhonePositionGovernor(
+    protocol,
+    isLocationSharingEnabled: () {
+      return _cachedSettingsService?.providePhoneLocation ?? false;
+    },
+  );
+  return governor;
+});
+
 // Location service - provides phone GPS to mesh devices
 // Like iOS Meshtastic app, sends phone GPS coordinates to mesh
 // when device doesn't have its own GPS hardware.
 // Gated by SettingsService.providePhoneLocation (default: false),
 // matching meshtastic-ios UserDefaults.provideLocation behaviour.
+// All publishes route through PhonePositionGovernor for rate limiting.
 final locationServiceProvider = Provider<LocationService>((ref) {
   final protocol = ref.watch(protocolServiceProvider);
+  final governor = ref.watch(phonePositionGovernorProvider);
   final service = LocationService(
     protocol,
     isLocationSharingEnabled: () {
@@ -2280,6 +2299,7 @@ final locationServiceProvider = Provider<LocationService>((ref) {
       // `UserDefaults.provideLocation` is checked inside the loop.
       return _cachedSettingsService?.providePhoneLocation ?? false;
     },
+    governor: governor,
   );
 
   ref.onDispose(() {

@@ -10,6 +10,7 @@ import '../../../core/widgets/action_sheets.dart';
 import '../../../providers/app_providers.dart';
 import '../../../providers/countdown_providers.dart';
 import '../../../core/transport.dart';
+import '../../../services/location/phone_position_governor.dart';
 
 /// Quick Actions Widget - Common mesh actions at a glance
 class QuickActionsContent extends ConsumerStatefulWidget {
@@ -118,12 +119,33 @@ class _QuickActionsContentState extends ConsumerState<QuickActionsContent>
   void _shareLocation(BuildContext context) async {
     try {
       final locationService = ref.read(locationServiceProvider);
-      await locationService.sendPositionOnce();
+      final decision = await locationService.sendPositionOnce();
       if (!mounted) return;
 
-      // Start global broadcast countdown — banner persists across
-      // navigation and confirms propagation to the mesh.
-      ref.read(countdownProvider.notifier).startPositionBroadcastCountdown();
+      switch (decision) {
+        case PublishDecision.allowed:
+          // Start global broadcast countdown — banner persists across
+          // navigation and confirms propagation to the mesh.
+          ref
+              .read(countdownProvider.notifier)
+              .startPositionBroadcastCountdown();
+        case PublishDecision.blockedDisabled:
+          safeShowSnackBar(
+            'Enable "Provide phone location" in Settings to share your position',
+            type: SnackBarType.error,
+          );
+        case PublishDecision.blockedInterval:
+          safeShowSnackBar(
+            'Location was shared recently — please wait before sharing again',
+            type: SnackBarType.warning,
+          );
+        case PublishDecision.blockedDistance:
+        case PublishDecision.blockedNoPosition:
+          safeShowSnackBar(
+            'Unable to get your location',
+            type: SnackBarType.error,
+          );
+      }
     } catch (e) {
       safeShowSnackBar(
         'Failed to share location: $e',
