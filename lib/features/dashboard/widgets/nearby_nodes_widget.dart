@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../providers/app_providers.dart';
 import '../../../models/mesh_models.dart';
@@ -25,9 +26,9 @@ class NearbyNodesContent extends ConsumerWidget {
     final topNodes = nearbyNodes.take(5).toList();
 
     if (topNodes.isEmpty) {
-      return const WidgetEmptyState(
+      return WidgetEmptyState(
         icon: Icons.near_me,
-        message: 'No nearby nodes detected',
+        message: context.l10n.dashboardNoNearbyNodes,
       );
     }
 

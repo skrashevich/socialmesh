@@ -50588,6 +50588,798 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Added'**
   String get globalLayerTemplateAdded;
+
+  /// No description provided for @adminFollowRequestFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'FROM'**
+  String get adminFollowRequestFrom;
+
+  /// No description provided for @adminFollowRequestTo.
+  ///
+  /// In en, this message translates to:
+  /// **'TO'**
+  String get adminFollowRequestTo;
+
+  /// No description provided for @adminPostsFilteredCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Filtered ({count})'**
+  String adminPostsFilteredCount(int count);
+
+  /// No description provided for @dashboardAddToFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to favorites'**
+  String get dashboardAddToFavorites;
+
+  /// No description provided for @dashboardAddWidget.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Widget'**
+  String get dashboardAddWidget;
+
+  /// No description provided for @dashboardAddWidgets.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Widgets'**
+  String get dashboardAddWidgets;
+
+  /// No description provided for @dashboardChLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Ch'**
+  String get dashboardChLabel;
+
+  /// No description provided for @dashboardChUtilLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Ch. Util'**
+  String get dashboardChUtilLabel;
+
+  /// No description provided for @dashboardDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get dashboardDone;
+
+  /// No description provided for @dashboardEditTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Dashboard'**
+  String get dashboardEditTitle;
+
+  /// No description provided for @dashboardEmptyDashboardMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Customize your dashboard with widgets that matter to you'**
+  String get dashboardEmptyDashboardMessage;
+
+  /// No description provided for @dashboardHealthConnection.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection'**
+  String get dashboardHealthConnection;
+
+  /// No description provided for @dashboardHealthNodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes'**
+  String get dashboardHealthNodes;
+
+  /// No description provided for @dashboardHealthOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline'**
+  String get dashboardHealthOffline;
+
+  /// No description provided for @dashboardHealthOnline.
+  ///
+  /// In en, this message translates to:
+  /// **'Online'**
+  String get dashboardHealthOnline;
+
+  /// No description provided for @dashboardHealthSignal.
+  ///
+  /// In en, this message translates to:
+  /// **'Signal'**
+  String get dashboardHealthSignal;
+
+  /// No description provided for @dashboardHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get dashboardHelp;
+
+  /// No description provided for @dashboardLastHour.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Hour'**
+  String get dashboardLastHour;
+
+  /// No description provided for @dashboardLive.
+  ///
+  /// In en, this message translates to:
+  /// **'LIVE'**
+  String get dashboardLive;
+
+  /// No description provided for @dashboardNoChannelsConfigured.
+  ///
+  /// In en, this message translates to:
+  /// **'No channels configured'**
+  String get dashboardNoChannelsConfigured;
+
+  /// No description provided for @dashboardNoMessagesYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No messages yet'**
+  String get dashboardNoMessagesYet;
+
+  /// No description provided for @dashboardNoNearbyNodes.
+  ///
+  /// In en, this message translates to:
+  /// **'No nearby nodes detected'**
+  String get dashboardNoNearbyNodes;
+
+  /// No description provided for @dashboardNoWidgetsAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'No Widgets Added'**
+  String get dashboardNoWidgetsAdded;
+
+  /// No description provided for @dashboardNoSignalData.
+  ///
+  /// In en, this message translates to:
+  /// **'No signal data available'**
+  String get dashboardNoSignalData;
+
+  /// No description provided for @dashboardNodesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes'**
+  String get dashboardNodesLabel;
+
+  /// No description provided for @dashboardQuickMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick\nMessage'**
+  String get dashboardQuickMessage;
+
+  /// No description provided for @dashboardRemoveConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get dashboardRemoveConfirm;
+
+  /// No description provided for @dashboardRemoveFromFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from favorites'**
+  String get dashboardRemoveFromFavorites;
+
+  /// No description provided for @dashboardRemoveWidget.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove widget'**
+  String get dashboardRemoveWidget;
+
+  /// No description provided for @dashboardRemoveWidgetMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to remove \"{displayName}\" from your dashboard?'**
+  String dashboardRemoveWidgetMessage(String displayName);
+
+  /// No description provided for @dashboardRemoveWidgetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Widget?'**
+  String get dashboardRemoveWidgetTitle;
+
+  /// No description provided for @dashboardRssiLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'RSSI'**
+  String get dashboardRssiLabel;
+
+  /// No description provided for @dashboardSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get dashboardSettings;
+
+  /// No description provided for @dashboardShareLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Share\nLocation'**
+  String get dashboardShareLocation;
+
+  /// No description provided for @dashboardSignalLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'SIGNAL'**
+  String get dashboardSignalLabel;
+
+  /// No description provided for @dashboardSnrLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'SNR'**
+  String get dashboardSnrLabel;
+
+  /// No description provided for @dashboardStatusLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get dashboardStatusLabel;
+
+  /// No description provided for @dashboardStatusOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline'**
+  String get dashboardStatusOffline;
+
+  /// No description provided for @dashboardStatusOnline.
+  ///
+  /// In en, this message translates to:
+  /// **'Online'**
+  String get dashboardStatusOnline;
+
+  /// No description provided for @dashboardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Dashboard'**
+  String get dashboardTitle;
+
+  /// No description provided for @dashboardTraceroute.
+  ///
+  /// In en, this message translates to:
+  /// **'Traceroute'**
+  String get dashboardTraceroute;
+
+  /// No description provided for @dashboardWidgetActiveNodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Nodes'**
+  String get dashboardWidgetActiveNodes;
+
+  /// No description provided for @dashboardWidgetActiveNodesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes heard in the last hour'**
+  String get dashboardWidgetActiveNodesDesc;
+
+  /// No description provided for @dashboardWidgetAirtimeUsage.
+  ///
+  /// In en, this message translates to:
+  /// **'Airtime Usage'**
+  String get dashboardWidgetAirtimeUsage;
+
+  /// No description provided for @dashboardWidgetAirtimeUsageDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Radio transmission time and limits'**
+  String get dashboardWidgetAirtimeUsageDesc;
+
+  /// No description provided for @dashboardWidgetChannelActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel Activity'**
+  String get dashboardWidgetChannelActivity;
+
+  /// No description provided for @dashboardWidgetChannelActivityDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Message activity per channel'**
+  String get dashboardWidgetChannelActivityDesc;
+
+  /// No description provided for @dashboardWidgetGpsPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'GPS Position'**
+  String get dashboardWidgetGpsPosition;
+
+  /// No description provided for @dashboardWidgetGpsPositionDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Current device location'**
+  String get dashboardWidgetGpsPositionDesc;
+
+  /// No description provided for @dashboardWidgetMeshHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh Health'**
+  String get dashboardWidgetMeshHealth;
+
+  /// No description provided for @dashboardWidgetMeshHealthDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Overall mesh network health score'**
+  String get dashboardWidgetMeshHealthDesc;
+
+  /// No description provided for @dashboardWidgetMessages.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages'**
+  String get dashboardWidgetMessages;
+
+  /// No description provided for @dashboardWidgetMessagesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Total messages sent and received'**
+  String get dashboardWidgetMessagesDesc;
+
+  /// No description provided for @dashboardWidgetNetworkTopology.
+  ///
+  /// In en, this message translates to:
+  /// **'Network Topology'**
+  String get dashboardWidgetNetworkTopology;
+
+  /// No description provided for @dashboardWidgetNetworkTopologyDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Visual mesh network graph'**
+  String get dashboardWidgetNetworkTopologyDesc;
+
+  /// No description provided for @dashboardWidgetNodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes'**
+  String get dashboardWidgetNodes;
+
+  /// No description provided for @dashboardWidgetNodesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Total discovered nodes on the mesh'**
+  String get dashboardWidgetNodesDesc;
+
+  /// No description provided for @dashboardWidgetPacketStats.
+  ///
+  /// In en, this message translates to:
+  /// **'Packet Statistics'**
+  String get dashboardWidgetPacketStats;
+
+  /// No description provided for @dashboardWidgetPacketStatsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent, received, and dropped packet counts'**
+  String get dashboardWidgetPacketStatsDesc;
+
+  /// No description provided for @dashboardWidgetQuickActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Actions'**
+  String get dashboardWidgetQuickActions;
+
+  /// No description provided for @dashboardWidgetQuickActionsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Fast access to common features'**
+  String get dashboardWidgetQuickActionsDesc;
+
+  /// No description provided for @dashboardWidgetRangeTest.
+  ///
+  /// In en, this message translates to:
+  /// **'Range Test'**
+  String get dashboardWidgetRangeTest;
+
+  /// No description provided for @dashboardWidgetRangeTestDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Test signal range with other nodes'**
+  String get dashboardWidgetRangeTestDesc;
+
+  /// No description provided for @dashboardWidgetRecentMessages.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Messages'**
+  String get dashboardWidgetRecentMessages;
+
+  /// No description provided for @dashboardWidgetRecentMessagesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Latest messages from the mesh'**
+  String get dashboardWidgetRecentMessagesDesc;
+
+  /// No description provided for @dashboardWidgetSignalStrength.
+  ///
+  /// In en, this message translates to:
+  /// **'Signal Strength'**
+  String get dashboardWidgetSignalStrength;
+
+  /// No description provided for @dashboardWidgetSignalStrengthDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Live RSSI, SNR, and channel utilization chart'**
+  String get dashboardWidgetSignalStrengthDesc;
+
+  /// No description provided for @dashboardWidgetWeatherData.
+  ///
+  /// In en, this message translates to:
+  /// **'Weather Data'**
+  String get dashboardWidgetWeatherData;
+
+  /// No description provided for @dashboardWidgetWeatherDataDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Environmental sensor readings'**
+  String get dashboardWidgetWeatherDataDesc;
+
+  /// No description provided for @discoveryFilterAllSources.
+  ///
+  /// In en, this message translates to:
+  /// **'All Sources'**
+  String get discoveryFilterAllSources;
+
+  /// No description provided for @draggableTextHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Type something...'**
+  String get draggableTextHint;
+
+  /// No description provided for @globalLayerAdvanced.
+  ///
+  /// In en, this message translates to:
+  /// **'ADVANCED'**
+  String get globalLayerAdvanced;
+
+  /// No description provided for @globalLayerAuth.
+  ///
+  /// In en, this message translates to:
+  /// **'Auth'**
+  String get globalLayerAuth;
+
+  /// No description provided for @globalLayerAuthentication.
+  ///
+  /// In en, this message translates to:
+  /// **'AUTHENTICATION'**
+  String get globalLayerAuthentication;
+
+  /// No description provided for @globalLayerBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get globalLayerBack;
+
+  /// No description provided for @globalLayerBrokerAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Broker Address'**
+  String get globalLayerBrokerAddress;
+
+  /// No description provided for @globalLayerClientId.
+  ///
+  /// In en, this message translates to:
+  /// **'Client ID'**
+  String get globalLayerClientId;
+
+  /// No description provided for @globalLayerClientIdHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-generated if empty'**
+  String get globalLayerClientIdHint;
+
+  /// No description provided for @globalLayerConnection.
+  ///
+  /// In en, this message translates to:
+  /// **'CONNECTION'**
+  String get globalLayerConnection;
+
+  /// No description provided for @globalLayerContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get globalLayerContinue;
+
+  /// No description provided for @globalLayerCustomiseConnection.
+  ///
+  /// In en, this message translates to:
+  /// **'Customise connection details'**
+  String get globalLayerCustomiseConnection;
+
+  /// No description provided for @globalLayerDataTypes.
+  ///
+  /// In en, this message translates to:
+  /// **'DATA TYPES'**
+  String get globalLayerDataTypes;
+
+  /// No description provided for @globalLayerEnable.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Global Layer'**
+  String get globalLayerEnable;
+
+  /// No description provided for @globalLayerMqttNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Under the hood, this uses an MQTT broker — a standard internet messaging server. You do not need to know how MQTT works to use the Global Layer.'**
+  String get globalLayerMqttNote;
+
+  /// No description provided for @globalLayerNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get globalLayerNext;
+
+  /// No description provided for @globalLayerOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional'**
+  String get globalLayerOptional;
+
+  /// No description provided for @globalLayerPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get globalLayerPassword;
+
+  /// No description provided for @globalLayerPort.
+  ///
+  /// In en, this message translates to:
+  /// **'Port'**
+  String get globalLayerPort;
+
+  /// No description provided for @globalLayerPreConfiguredAuth.
+  ///
+  /// In en, this message translates to:
+  /// **'Pre-configured (public credentials)'**
+  String get globalLayerPreConfiguredAuth;
+
+  /// No description provided for @globalLayerSaveConfigFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save configuration: {error}'**
+  String globalLayerSaveConfigFailed(String error);
+
+  /// No description provided for @globalLayerServer.
+  ///
+  /// In en, this message translates to:
+  /// **'Server'**
+  String get globalLayerServer;
+
+  /// No description provided for @globalLayerSetupTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Global Layer Setup'**
+  String get globalLayerSetupTitle;
+
+  /// No description provided for @globalLayerStepOf.
+  ///
+  /// In en, this message translates to:
+  /// **'Step {current} of {total}'**
+  String globalLayerStepOf(String current, int total);
+
+  /// No description provided for @globalLayerTopicRoot.
+  ///
+  /// In en, this message translates to:
+  /// **'TOPIC ROOT'**
+  String get globalLayerTopicRoot;
+
+  /// No description provided for @globalLayerTopicRootDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'The root prefix for all topics. Change this to keep your mesh traffic separate from others on the same broker.'**
+  String get globalLayerTopicRootDescription;
+
+  /// No description provided for @globalLayerTopicRootLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Topic Root'**
+  String get globalLayerTopicRootLabel;
+
+  /// No description provided for @globalLayerUsername.
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get globalLayerUsername;
+
+  /// No description provided for @globalLayerWhatItDoes.
+  ///
+  /// In en, this message translates to:
+  /// **'What it does'**
+  String get globalLayerWhatItDoes;
+
+  /// No description provided for @globalLayerWhatItDoesNot.
+  ///
+  /// In en, this message translates to:
+  /// **'What it does NOT do'**
+  String get globalLayerWhatItDoesNot;
+
+  /// No description provided for @helpCenterProgressLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{completed} / {total}'**
+  String helpCenterProgressLabel(int completed, int total);
+
+  /// No description provided for @mapControlsCenterOnMe.
+  ///
+  /// In en, this message translates to:
+  /// **'Center on me'**
+  String get mapControlsCenterOnMe;
+
+  /// No description provided for @mapControlsFitAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Fit all'**
+  String get mapControlsFitAll;
+
+  /// No description provided for @mapControlsResetNorth.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset north'**
+  String get mapControlsResetNorth;
+
+  /// No description provided for @mapNodeDrawerClosePanel.
+  ///
+  /// In en, this message translates to:
+  /// **'Close panel'**
+  String get mapNodeDrawerClosePanel;
+
+  /// No description provided for @messageDetailFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'From: {senderName}'**
+  String messageDetailFrom(String senderName);
+
+  /// No description provided for @messageDetailHops.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 hop} other{{count} hops}}'**
+  String messageDetailHops(int count);
+
+  /// No description provided for @messageDetailRssi.
+  ///
+  /// In en, this message translates to:
+  /// **'RSSI {value} dBm'**
+  String messageDetailRssi(double value);
+
+  /// No description provided for @messageDetailSnr.
+  ///
+  /// In en, this message translates to:
+  /// **'SNR {value} dB'**
+  String messageDetailSnr(double value);
+
+  /// No description provided for @nodeSelectorSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search nodes...'**
+  String get nodeSelectorSearchHint;
+
+  /// No description provided for @portalViewBroker.
+  ///
+  /// In en, this message translates to:
+  /// **'Broker'**
+  String get portalViewBroker;
+
+  /// No description provided for @portalViewLocalMesh.
+  ///
+  /// In en, this message translates to:
+  /// **'Local Mesh'**
+  String get portalViewLocalMesh;
+
+  /// No description provided for @portalViewRemote.
+  ///
+  /// In en, this message translates to:
+  /// **'Remote'**
+  String get portalViewRemote;
+
+  /// No description provided for @positionConfigAltitudeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., 100'**
+  String get positionConfigAltitudeHint;
+
+  /// No description provided for @positionConfigLatitudeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., 37.7749'**
+  String get positionConfigLatitudeHint;
+
+  /// No description provided for @positionConfigLongitudeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., -122.4194'**
+  String get positionConfigLongitudeHint;
+
+  /// No description provided for @privacySettingsFirebaseTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Firebase (Google)'**
+  String get privacySettingsFirebaseTitle;
+
+  /// No description provided for @privacySettingsRevenueCatTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'RevenueCat'**
+  String get privacySettingsRevenueCatTitle;
+
+  /// No description provided for @privacySettingsSigilTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sigil API (Socialmesh)'**
+  String get privacySettingsSigilTitle;
+
+  /// No description provided for @profileDeleteConfirmLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get profileDeleteConfirmLabel;
+
+  /// No description provided for @scannerFilteringByUuid.
+  ///
+  /// In en, this message translates to:
+  /// **'Filtering by Meshtastic UUID'**
+  String get scannerFilteringByUuid;
+
+  /// No description provided for @scannerScanningAllDevices.
+  ///
+  /// In en, this message translates to:
+  /// **'Scanning all devices (dev mode)'**
+  String get scannerScanningAllDevices;
+
+  /// No description provided for @scannerShowAllBleDevices.
+  ///
+  /// In en, this message translates to:
+  /// **'Show all BLE devices'**
+  String get scannerShowAllBleDevices;
+
+  /// No description provided for @settingsGlyphMatrixTestSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing Phone 3 LED patterns'**
+  String get settingsGlyphMatrixTestSubtitle;
+
+  /// No description provided for @signalQualityExcellent.
+  ///
+  /// In en, this message translates to:
+  /// **'Excellent'**
+  String get signalQualityExcellent;
+
+  /// No description provided for @signalQualityFair.
+  ///
+  /// In en, this message translates to:
+  /// **'Fair'**
+  String get signalQualityFair;
+
+  /// No description provided for @signalQualityGood.
+  ///
+  /// In en, this message translates to:
+  /// **'Good'**
+  String get signalQualityGood;
+
+  /// No description provided for @signalQualityPoor.
+  ///
+  /// In en, this message translates to:
+  /// **'Poor'**
+  String get signalQualityPoor;
+
+  /// No description provided for @signalQualityVeryGood.
+  ///
+  /// In en, this message translates to:
+  /// **'Very Good'**
+  String get signalQualityVeryGood;
+
+  /// No description provided for @signalQualityWeak.
+  ///
+  /// In en, this message translates to:
+  /// **'Weak'**
+  String get signalQualityWeak;
+
+  /// No description provided for @themeSettingsError.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {error}'**
+  String themeSettingsError(String error);
+
+  /// No description provided for @timelineWeakSignalFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Weak signal from {nodeName}'**
+  String timelineWeakSignalFrom(String nodeName);
+
+  /// No description provided for @widgetWizardAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get widgetWizardAdd;
 }
 
 class _AppLocalizationsDelegate

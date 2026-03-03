@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../providers/app_providers.dart';
 import 'dashboard_widget.dart';
@@ -20,9 +21,9 @@ class SignalChartContent extends ConsumerWidget {
     final channelUtil = channelUtilAsync.value;
 
     if (rssi == null && snr == null) {
-      return const WidgetEmptyState(
+      return WidgetEmptyState(
         icon: Icons.signal_cellular_off,
-        message: 'No signal data available',
+        message: context.l10n.dashboardNoSignalData,
       );
     }
 
@@ -38,7 +39,7 @@ class SignalChartContent extends ConsumerWidget {
             children: [
               Expanded(
                 child: _MetricCard(
-                  label: 'RSSI',
+                  label: context.l10n.dashboardRssiLabel,
                   value: rssi != null ? '${rssi}dBm' : '--',
                   quality: _getRssiQuality(rssi),
                 ),
@@ -46,7 +47,7 @@ class SignalChartContent extends ConsumerWidget {
               const SizedBox(width: AppTheme.spacing8),
               Expanded(
                 child: _MetricCard(
-                  label: 'SNR',
+                  label: context.l10n.dashboardSnrLabel,
                   value: snr != null ? '${snr.toStringAsFixed(1)}dB' : '--',
                   quality: _getSnrQuality(snr),
                 ),
@@ -54,7 +55,7 @@ class SignalChartContent extends ConsumerWidget {
               const SizedBox(width: AppTheme.spacing8),
               Expanded(
                 child: _MetricCard(
-                  label: 'Ch. Util',
+                  label: context.l10n.dashboardChUtilLabel,
                   value: channelUtil != null
                       ? '${channelUtil.toStringAsFixed(0)}%'
                       : '--',

@@ -66,12 +66,19 @@ class GlassScaffold extends StatelessWidget {
     this.primary = true,
     this.sigmaOverride,
     this.resizeToAvoidBottomInset = true,
-  }) : body = null;
+  }) : body = null,
+       hasScrollBody = false;
 
   /// Creates a GlassScaffold with a non-sliver body widget.
   ///
-  /// The [body] is wrapped in a SliverToBoxAdapter automatically.
+  /// The [body] is wrapped in a SliverFillRemaining automatically.
   /// Use this for simple screens that don't need sliver-level control.
+  ///
+  /// Set [hasScrollBody] to `true` when the body contains its own scrollable
+  /// (e.g. a `ListView` inside a `Column`). When `false` (the default), the
+  /// framework may attempt intrinsic-dimension computation which viewports
+  /// cannot satisfy, causing a null-check crash in
+  /// `RenderViewportBase.layoutChildSequence` on Android.
   const GlassScaffold.body({
     super.key,
     this.title,
@@ -79,6 +86,7 @@ class GlassScaffold extends StatelessWidget {
     this.leading,
     this.actions,
     required Widget this.body,
+    this.hasScrollBody = false,
     this.floatingActionButton,
     this.floatingActionButtonLocation,
     this.bottomNavigationBar,
@@ -117,6 +125,17 @@ class GlassScaffold extends StatelessWidget {
 
   /// A non-sliver body widget (used with GlassScaffold.body constructor).
   final Widget? body;
+
+  /// Whether the [body] contains its own scrollable widget.
+  ///
+  /// When `true`, the body is wrapped in `SliverFillRemaining(hasScrollBody: true)`
+  /// so the inner scrollable can negotiate scroll extent with the outer viewport.
+  /// When `false` (the default), the body is treated as non-scrollable content.
+  ///
+  /// Set this to `true` for screens whose body contains a `ListView`,
+  /// `CustomScrollView`, or any other `Scrollable` (e.g. a chat screen with
+  /// `Column > Expanded > ListView`).
+  final bool hasScrollBody;
 
   /// A floating action button.
   final Widget? floatingActionButton;
@@ -208,7 +227,7 @@ class GlassScaffold extends StatelessWidget {
 
     // Determine slivers to use
     final effectiveSlivers = body != null
-        ? [SliverFillRemaining(hasScrollBody: false, child: body)]
+        ? [SliverFillRemaining(hasScrollBody: hasScrollBody, child: body)]
         : slivers;
 
     // Default to kGlassScrollPhysics for consistent iOS bounce behavior

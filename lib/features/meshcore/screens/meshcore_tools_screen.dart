@@ -76,6 +76,7 @@ class _MeshCoreToolsScreenState extends ConsumerState<MeshCoreToolsScreen>
     }
 
     return GlassScaffold.body(
+      hasScrollBody: true,
       leading: const MeshCoreHamburgerMenuButton(),
       title: context.l10n.meshcoreToolsTitle,
       actions: const [MeshCoreDeviceStatusButton()],

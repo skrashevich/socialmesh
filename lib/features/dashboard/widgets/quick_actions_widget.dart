@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../utils/snackbar.dart';
 import '../../../core/widgets/animations.dart';
@@ -56,7 +57,7 @@ class _QuickActionsContentState extends ConsumerState<QuickActionsContent>
               Expanded(
                 child: _ActionButton(
                   icon: Icons.send,
-                  label: 'Quick\nMessage',
+                  label: context.l10n.dashboardQuickMessage,
                   enabled: isConnected,
                   onTap: () => _showQuickMessageSheet(context),
                 ),
@@ -65,7 +66,7 @@ class _QuickActionsContentState extends ConsumerState<QuickActionsContent>
               Expanded(
                 child: _ActionButton(
                   icon: Icons.location_on,
-                  label: 'Share\nLocation',
+                  label: context.l10n.dashboardShareLocation,
                   enabled: isConnected,
                   onTap: () => _shareLocation(context),
                 ),
@@ -79,7 +80,7 @@ class _QuickActionsContentState extends ConsumerState<QuickActionsContent>
                       )
                     : _ActionButton(
                         icon: Icons.route,
-                        label: 'Traceroute',
+                        label: context.l10n.dashboardTraceroute,
                         enabled: tracerouteEnabled,
                         onTap: () => _showTracerouteSheet(context),
                       ),
@@ -313,7 +314,7 @@ class _TracerouteCooldownButton extends StatelessWidget {
           ),
           const SizedBox(height: AppTheme.spacing2),
           Text(
-            'Traceroute',
+            context.l10n.dashboardTraceroute,
             style: TextStyle(
               fontSize: 8,
               fontWeight: FontWeight.w600,

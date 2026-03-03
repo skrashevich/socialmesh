@@ -28473,4 +28473,440 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get globalLayerTemplateAdded => 'Added';
+
+  @override
+  String get adminFollowRequestFrom => 'FROM';
+
+  @override
+  String get adminFollowRequestTo => 'TO';
+
+  @override
+  String adminPostsFilteredCount(int count) {
+    return 'Filtered ($count)';
+  }
+
+  @override
+  String get dashboardAddToFavorites => 'Add to favorites';
+
+  @override
+  String get dashboardAddWidget => 'Add Widget';
+
+  @override
+  String get dashboardAddWidgets => 'Add Widgets';
+
+  @override
+  String get dashboardChLabel => 'Ch';
+
+  @override
+  String get dashboardChUtilLabel => 'Ch. Util';
+
+  @override
+  String get dashboardDone => 'Done';
+
+  @override
+  String get dashboardEditTitle => 'Edit Dashboard';
+
+  @override
+  String get dashboardEmptyDashboardMessage =>
+      'Customize your dashboard with widgets that matter to you';
+
+  @override
+  String get dashboardHealthConnection => 'Connection';
+
+  @override
+  String get dashboardHealthNodes => 'Nodes';
+
+  @override
+  String get dashboardHealthOffline => 'Offline';
+
+  @override
+  String get dashboardHealthOnline => 'Online';
+
+  @override
+  String get dashboardHealthSignal => 'Signal';
+
+  @override
+  String get dashboardHelp => 'Help';
+
+  @override
+  String get dashboardLastHour => 'Last Hour';
+
+  @override
+  String get dashboardLive => 'LIVE';
+
+  @override
+  String get dashboardNoChannelsConfigured => 'No channels configured';
+
+  @override
+  String get dashboardNoMessagesYet => 'No messages yet';
+
+  @override
+  String get dashboardNoNearbyNodes => 'No nearby nodes detected';
+
+  @override
+  String get dashboardNoWidgetsAdded => 'No Widgets Added';
+
+  @override
+  String get dashboardNoSignalData => 'No signal data available';
+
+  @override
+  String get dashboardNodesLabel => 'Nodes';
+
+  @override
+  String get dashboardQuickMessage => 'Quick\nMessage';
+
+  @override
+  String get dashboardRemoveConfirm => 'Remove';
+
+  @override
+  String get dashboardRemoveFromFavorites => 'Remove from favorites';
+
+  @override
+  String get dashboardRemoveWidget => 'Remove widget';
+
+  @override
+  String dashboardRemoveWidgetMessage(String displayName) {
+    return 'Are you sure you want to remove \"$displayName\" from your dashboard?';
+  }
+
+  @override
+  String get dashboardRemoveWidgetTitle => 'Remove Widget?';
+
+  @override
+  String get dashboardRssiLabel => 'RSSI';
+
+  @override
+  String get dashboardSettings => 'Settings';
+
+  @override
+  String get dashboardShareLocation => 'Share\nLocation';
+
+  @override
+  String get dashboardSignalLabel => 'SIGNAL';
+
+  @override
+  String get dashboardSnrLabel => 'SNR';
+
+  @override
+  String get dashboardStatusLabel => 'Status';
+
+  @override
+  String get dashboardStatusOffline => 'Offline';
+
+  @override
+  String get dashboardStatusOnline => 'Online';
+
+  @override
+  String get dashboardTitle => 'Dashboard';
+
+  @override
+  String get dashboardTraceroute => 'Traceroute';
+
+  @override
+  String get dashboardWidgetActiveNodes => 'Active Nodes';
+
+  @override
+  String get dashboardWidgetActiveNodesDesc => 'Nodes heard in the last hour';
+
+  @override
+  String get dashboardWidgetAirtimeUsage => 'Airtime Usage';
+
+  @override
+  String get dashboardWidgetAirtimeUsageDesc =>
+      'Radio transmission time and limits';
+
+  @override
+  String get dashboardWidgetChannelActivity => 'Channel Activity';
+
+  @override
+  String get dashboardWidgetChannelActivityDesc =>
+      'Message activity per channel';
+
+  @override
+  String get dashboardWidgetGpsPosition => 'GPS Position';
+
+  @override
+  String get dashboardWidgetGpsPositionDesc => 'Current device location';
+
+  @override
+  String get dashboardWidgetMeshHealth => 'Mesh Health';
+
+  @override
+  String get dashboardWidgetMeshHealthDesc =>
+      'Overall mesh network health score';
+
+  @override
+  String get dashboardWidgetMessages => 'Messages';
+
+  @override
+  String get dashboardWidgetMessagesDesc => 'Total messages sent and received';
+
+  @override
+  String get dashboardWidgetNetworkTopology => 'Network Topology';
+
+  @override
+  String get dashboardWidgetNetworkTopologyDesc => 'Visual mesh network graph';
+
+  @override
+  String get dashboardWidgetNodes => 'Nodes';
+
+  @override
+  String get dashboardWidgetNodesDesc => 'Total discovered nodes on the mesh';
+
+  @override
+  String get dashboardWidgetPacketStats => 'Packet Statistics';
+
+  @override
+  String get dashboardWidgetPacketStatsDesc =>
+      'Sent, received, and dropped packet counts';
+
+  @override
+  String get dashboardWidgetQuickActions => 'Quick Actions';
+
+  @override
+  String get dashboardWidgetQuickActionsDesc =>
+      'Fast access to common features';
+
+  @override
+  String get dashboardWidgetRangeTest => 'Range Test';
+
+  @override
+  String get dashboardWidgetRangeTestDesc =>
+      'Test signal range with other nodes';
+
+  @override
+  String get dashboardWidgetRecentMessages => 'Recent Messages';
+
+  @override
+  String get dashboardWidgetRecentMessagesDesc =>
+      'Latest messages from the mesh';
+
+  @override
+  String get dashboardWidgetSignalStrength => 'Signal Strength';
+
+  @override
+  String get dashboardWidgetSignalStrengthDesc =>
+      'Live RSSI, SNR, and channel utilization chart';
+
+  @override
+  String get dashboardWidgetWeatherData => 'Weather Data';
+
+  @override
+  String get dashboardWidgetWeatherDataDesc => 'Environmental sensor readings';
+
+  @override
+  String get discoveryFilterAllSources => 'All Sources';
+
+  @override
+  String get draggableTextHint => 'Type something...';
+
+  @override
+  String get globalLayerAdvanced => 'ADVANCED';
+
+  @override
+  String get globalLayerAuth => 'Auth';
+
+  @override
+  String get globalLayerAuthentication => 'AUTHENTICATION';
+
+  @override
+  String get globalLayerBack => 'Back';
+
+  @override
+  String get globalLayerBrokerAddress => 'Broker Address';
+
+  @override
+  String get globalLayerClientId => 'Client ID';
+
+  @override
+  String get globalLayerClientIdHint => 'Auto-generated if empty';
+
+  @override
+  String get globalLayerConnection => 'CONNECTION';
+
+  @override
+  String get globalLayerContinue => 'Continue';
+
+  @override
+  String get globalLayerCustomiseConnection => 'Customise connection details';
+
+  @override
+  String get globalLayerDataTypes => 'DATA TYPES';
+
+  @override
+  String get globalLayerEnable => 'Enable Global Layer';
+
+  @override
+  String get globalLayerMqttNote =>
+      'Under the hood, this uses an MQTT broker — a standard internet messaging server. You do not need to know how MQTT works to use the Global Layer.';
+
+  @override
+  String get globalLayerNext => 'Next';
+
+  @override
+  String get globalLayerOptional => 'Optional';
+
+  @override
+  String get globalLayerPassword => 'Password';
+
+  @override
+  String get globalLayerPort => 'Port';
+
+  @override
+  String get globalLayerPreConfiguredAuth =>
+      'Pre-configured (public credentials)';
+
+  @override
+  String globalLayerSaveConfigFailed(String error) {
+    return 'Failed to save configuration: $error';
+  }
+
+  @override
+  String get globalLayerServer => 'Server';
+
+  @override
+  String get globalLayerSetupTitle => 'Global Layer Setup';
+
+  @override
+  String globalLayerStepOf(String current, int total) {
+    return 'Step $current of $total';
+  }
+
+  @override
+  String get globalLayerTopicRoot => 'TOPIC ROOT';
+
+  @override
+  String get globalLayerTopicRootDescription =>
+      'The root prefix for all topics. Change this to keep your mesh traffic separate from others on the same broker.';
+
+  @override
+  String get globalLayerTopicRootLabel => 'Topic Root';
+
+  @override
+  String get globalLayerUsername => 'Username';
+
+  @override
+  String get globalLayerWhatItDoes => 'What it does';
+
+  @override
+  String get globalLayerWhatItDoesNot => 'What it does NOT do';
+
+  @override
+  String helpCenterProgressLabel(int completed, int total) {
+    return '$completed / $total';
+  }
+
+  @override
+  String get mapControlsCenterOnMe => 'Center on me';
+
+  @override
+  String get mapControlsFitAll => 'Fit all';
+
+  @override
+  String get mapControlsResetNorth => 'Reset north';
+
+  @override
+  String get mapNodeDrawerClosePanel => 'Close panel';
+
+  @override
+  String messageDetailFrom(String senderName) {
+    return 'From: $senderName';
+  }
+
+  @override
+  String messageDetailHops(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count hops',
+      one: '1 hop',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String messageDetailRssi(double value) {
+    return 'RSSI $value dBm';
+  }
+
+  @override
+  String messageDetailSnr(double value) {
+    return 'SNR $value dB';
+  }
+
+  @override
+  String get nodeSelectorSearchHint => 'Search nodes...';
+
+  @override
+  String get portalViewBroker => 'Broker';
+
+  @override
+  String get portalViewLocalMesh => 'Local Mesh';
+
+  @override
+  String get portalViewRemote => 'Remote';
+
+  @override
+  String get positionConfigAltitudeHint => 'e.g., 100';
+
+  @override
+  String get positionConfigLatitudeHint => 'e.g., 37.7749';
+
+  @override
+  String get positionConfigLongitudeHint => 'e.g., -122.4194';
+
+  @override
+  String get privacySettingsFirebaseTitle => 'Firebase (Google)';
+
+  @override
+  String get privacySettingsRevenueCatTitle => 'RevenueCat';
+
+  @override
+  String get privacySettingsSigilTitle => 'Sigil API (Socialmesh)';
+
+  @override
+  String get profileDeleteConfirmLabel => 'Delete';
+
+  @override
+  String get scannerFilteringByUuid => 'Filtering by Meshtastic UUID';
+
+  @override
+  String get scannerScanningAllDevices => 'Scanning all devices (dev mode)';
+
+  @override
+  String get scannerShowAllBleDevices => 'Show all BLE devices';
+
+  @override
+  String get settingsGlyphMatrixTestSubtitle => 'Nothing Phone 3 LED patterns';
+
+  @override
+  String get signalQualityExcellent => 'Excellent';
+
+  @override
+  String get signalQualityFair => 'Fair';
+
+  @override
+  String get signalQualityGood => 'Good';
+
+  @override
+  String get signalQualityPoor => 'Poor';
+
+  @override
+  String get signalQualityVeryGood => 'Very Good';
+
+  @override
+  String get signalQualityWeak => 'Weak';
+
+  @override
+  String themeSettingsError(String error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String timelineWeakSignalFrom(String nodeName) {
+    return 'Weak signal from $nodeName';
+  }
+
+  @override
+  String get widgetWizardAdd => 'Add';
 }

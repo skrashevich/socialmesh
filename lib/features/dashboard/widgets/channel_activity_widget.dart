@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../providers/app_providers.dart';
 import 'dashboard_widget.dart';
@@ -15,9 +16,9 @@ class ChannelActivityContent extends ConsumerWidget {
     final messages = ref.watch(messagesProvider);
 
     if (channels.isEmpty) {
-      return const WidgetEmptyState(
+      return WidgetEmptyState(
         icon: Icons.wifi_tethering,
-        message: 'No channels configured',
+        message: context.l10n.dashboardNoChannelsConfigured,
       );
     }
 

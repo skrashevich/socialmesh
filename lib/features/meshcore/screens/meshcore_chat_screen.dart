@@ -460,6 +460,7 @@ class _MeshCoreChatScreenState extends ConsumerState<MeshCoreChatScreen>
     return GestureDetector(
       onTap: _dismissKeyboard,
       child: GlassScaffold.body(
+        hasScrollBody: true,
         title: _title,
         actions: [
           IconButton(

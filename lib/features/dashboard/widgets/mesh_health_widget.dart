@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../core/transport.dart';
 import '../../../providers/app_providers.dart';
@@ -103,19 +104,21 @@ class MeshHealthContent extends ConsumerWidget {
             children: [
               _HealthFactor(
                 icon: Icons.link,
-                label: 'Connection',
-                status: isConnected ? 'Online' : 'Offline',
+                label: context.l10n.dashboardHealthConnection,
+                status: isConnected
+                    ? context.l10n.dashboardHealthOnline
+                    : context.l10n.dashboardHealthOffline,
                 isGood: isConnected,
               ),
               _HealthFactor(
                 icon: Icons.people,
-                label: 'Nodes',
+                label: context.l10n.dashboardHealthNodes,
                 status: '${nodes.length}',
                 isGood: nodes.length > 1,
               ),
               _HealthFactor(
                 icon: Icons.signal_cellular_alt,
-                label: 'Signal',
+                label: context.l10n.dashboardHealthSignal,
                 status: rssi != null ? '${rssi}dBm' : '--',
                 isGood: rssi != null && rssi >= -75,
               ),

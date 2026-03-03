@@ -7,6 +7,7 @@ import '../../models/presence_confidence.dart';
 import '../../providers/app_providers.dart';
 import '../../providers/presence_providers.dart';
 import '../../utils/presence_utils.dart';
+import '../l10n/l10n_extension.dart';
 import 'animations.dart';
 import 'app_bottom_sheet.dart';
 
@@ -172,7 +173,7 @@ class _NodeSelectorSheetState extends ConsumerState<NodeSelectorSheet> {
               maxLength: 100,
               style: TextStyle(color: context.textPrimary, fontSize: 14),
               decoration: InputDecoration(
-                hintText: 'Search nodes...',
+                hintText: context.l10n.nodeSelectorSearchHint,
                 hintStyle: TextStyle(color: context.textTertiary, fontSize: 14),
                 prefixIcon: Icon(
                   Icons.search,

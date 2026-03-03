@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../providers/app_providers.dart';
 import '../../../models/mesh_models.dart';
@@ -25,9 +26,9 @@ class RecentMessagesContent extends ConsumerWidget {
         .toList();
 
     if (recentMessages.isEmpty) {
-      return const WidgetEmptyState(
+      return WidgetEmptyState(
         icon: Icons.chat_bubble_outline,
-        message: 'No messages yet',
+        message: context.l10n.dashboardNoMessagesYet,
       );
     }
 

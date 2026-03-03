@@ -1380,6 +1380,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
     return GestureDetector(
       onTap: _dismissKeyboard,
       child: GlassScaffold.body(
+        hasScrollBody: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: context.textPrimary),
           onPressed: () {

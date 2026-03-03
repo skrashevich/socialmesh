@@ -62,6 +62,7 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
     }
 
     return GlassScaffold.body(
+      hasScrollBody: true,
       resizeToAvoidBottomInset: false,
       leading: const MeshCoreHamburgerMenuButton(),
       title:

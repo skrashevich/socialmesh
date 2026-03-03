@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/app_bar_overflow_menu.dart';
@@ -65,15 +66,18 @@ class _WidgetDashboardScreenState extends ConsumerState<WidgetDashboardScreen>
       topicId: 'dashboard_overview',
       stepKeys: const {},
       child: GlassScaffold.body(
+        hasScrollBody: true,
         leading: canPop ? const BackButton() : const HamburgerMenuButton(),
         centerTitle: true,
-        title: _editMode ? 'Edit Dashboard' : 'Dashboard',
+        title: _editMode
+            ? context.l10n.dashboardEditTitle
+            : context.l10n.dashboardTitle,
         actions: [
           // Add widget button - always visible
           IconButton(
             icon: Icon(Icons.add, color: context.accentColor),
             onPressed: () => _showAddWidgetSheet(context),
-            tooltip: 'Add Widget',
+            tooltip: context.l10n.dashboardAddWidget,
           ),
           if (!_editMode) ...[
             // Device button
@@ -91,19 +95,19 @@ class _WidgetDashboardScreenState extends ConsumerState<WidgetDashboardScreen>
                 }
               },
               itemBuilder: (context) => [
-                const PopupMenuItem(
+                PopupMenuItem(
                   value: 'help',
                   child: ListTile(
                     leading: Icon(Icons.help_outline),
-                    title: Text('Help'),
+                    title: Text(context.l10n.dashboardHelp),
                     contentPadding: EdgeInsets.zero,
                   ),
                 ),
-                const PopupMenuItem(
+                PopupMenuItem(
                   value: 'settings',
                   child: ListTile(
                     leading: Icon(Icons.settings_outlined),
-                    title: Text('Settings'),
+                    title: Text(context.l10n.dashboardSettings),
                     contentPadding: EdgeInsets.zero,
                   ),
                 ),
@@ -114,7 +118,7 @@ class _WidgetDashboardScreenState extends ConsumerState<WidgetDashboardScreen>
             TextButton(
               onPressed: () => setState(() => _editMode = false),
               child: Text(
-                'Done',
+                context.l10n.dashboardDone,
                 style: TextStyle(
                   color: context.accentColor,
                   fontWeight: FontWeight.w600,
@@ -303,7 +307,7 @@ class _WidgetDashboardScreenState extends ConsumerState<WidgetDashboardScreen>
 
     final content = _getWidgetContent(config);
     final trailing = config.type == DashboardWidgetType.signalStrength
-        ? buildLiveIndicator()
+        ? buildLiveIndicator(context)
         : null;
 
     return DashboardWidget(

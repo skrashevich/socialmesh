@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/flip_3d_text.dart';
 import '../../../providers/app_providers.dart';
@@ -72,12 +73,12 @@ class SignalStrengthContentState extends ConsumerState<SignalStrengthContent> {
   }
 
   String _getSignalQuality(double rssi) {
-    if (rssi >= -50) return 'Excellent';
-    if (rssi >= -60) return 'Very Good';
-    if (rssi >= -70) return 'Good';
-    if (rssi >= -80) return 'Fair';
-    if (rssi >= -90) return 'Weak';
-    return 'Poor';
+    if (rssi >= -50) return context.l10n.signalQualityExcellent;
+    if (rssi >= -60) return context.l10n.signalQualityVeryGood;
+    if (rssi >= -70) return context.l10n.signalQualityGood;
+    if (rssi >= -80) return context.l10n.signalQualityFair;
+    if (rssi >= -90) return context.l10n.signalQualityWeak;
+    return context.l10n.signalQualityPoor;
   }
 
   /// Convert RSSI to a percentage (0-100%)
@@ -200,7 +201,7 @@ class SignalStrengthContentState extends ConsumerState<SignalStrengthContent> {
           // 3D Percentage display - minimalistic version
           Flip3DPercentageMinimal(
             value: signalPercentage,
-            label: 'SIGNAL',
+            label: context.l10n.dashboardSignalLabel,
             color: signalColor,
             size: Flip3DSize.medium,
           ),
@@ -248,7 +249,7 @@ class SignalStrengthContentState extends ConsumerState<SignalStrengthContent> {
                 Row(
                   children: [
                     _CompactStatChip(
-                      label: 'SNR',
+                      label: context.l10n.dashboardSnrLabel,
                       value: snr,
                       unit: 'dB',
                       color: AppTheme.graphBlue,
@@ -276,11 +277,20 @@ class SignalStrengthContentState extends ConsumerState<SignalStrengthContent> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _LegendItem(color: context.accentColor, label: 'RSSI'),
+          _LegendItem(
+            color: context.accentColor,
+            label: context.l10n.dashboardRssiLabel,
+          ),
           const SizedBox(width: AppTheme.spacing16),
-          _LegendItem(color: AppTheme.graphBlue, label: 'SNR'),
+          _LegendItem(
+            color: AppTheme.graphBlue,
+            label: context.l10n.dashboardSnrLabel,
+          ),
           const SizedBox(width: AppTheme.spacing16),
-          _LegendItem(color: AppTheme.accentOrange, label: 'Ch Util'),
+          _LegendItem(
+            color: AppTheme.accentOrange,
+            label: context.l10n.dashboardChUtilLabel,
+          ),
         ],
       ),
     );
@@ -323,7 +333,7 @@ class _CompactStatChip extends StatelessWidget {
 }
 
 /// Static LIVE indicator builder for use with DashboardWidget trailing
-Widget buildLiveIndicator() {
+Widget buildLiveIndicator(BuildContext context) {
   return Container(
     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
     decoration: BoxDecoration(
@@ -349,8 +359,8 @@ Widget buildLiveIndicator() {
           ),
         ),
         const SizedBox(width: AppTheme.spacing6),
-        const Text(
-          'LIVE',
+        Text(
+          context.l10n.dashboardLive,
           style: TextStyle(
             fontSize: 11,
             fontWeight: FontWeight.w700,

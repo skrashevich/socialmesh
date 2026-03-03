@@ -47,6 +47,7 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
         .toList();
 
     return GlassScaffold.body(
+      hasScrollBody: true,
       leading: const MeshCoreHamburgerMenuButton(),
       title:
           '${context.l10n.meshcoreChannelsTitle}${channels.isEmpty ? '' : ' (${channels.length})'}',

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../l10n/l10n_extension.dart';
 import '../theme.dart';
 
 /// Shared zoom controls widget for all map implementations.
@@ -88,7 +89,7 @@ class MapZoomControls extends StatelessWidget {
                 onFitAll!();
               },
               isBottom: true,
-              tooltip: 'Fit all',
+              tooltip: context.l10n.mapControlsFitAll,
             ),
           ],
         ],
@@ -212,7 +213,7 @@ class MapNavigationControls extends StatelessWidget {
             },
             isTop: onResetNorth == null,
             isBottom: onResetNorth == null,
-            tooltip: 'Center on me',
+            tooltip: context.l10n.mapControlsCenterOnMe,
             dimmed: !hasLocation,
           ),
           if (onResetNorth != null) ...[
@@ -224,7 +225,7 @@ class MapNavigationControls extends StatelessWidget {
                 onResetNorth!();
               },
               isBottom: true,
-              tooltip: 'Reset north',
+              tooltip: context.l10n.mapControlsResetNorth,
             ),
           ],
         ],

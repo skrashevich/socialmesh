@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../core/transport.dart';
 import '../../../providers/app_providers.dart';
@@ -48,8 +49,10 @@ class NetworkOverviewContent extends ConsumerWidget {
             child: _StatItem(
               icon: isConnected ? Icons.check_circle : Icons.error_outline,
               iconColor: isConnected ? context.accentColor : AppTheme.errorRed,
-              value: isConnected ? 'Online' : 'Offline',
-              label: 'Status',
+              value: isConnected
+                  ? context.l10n.dashboardStatusOnline
+                  : context.l10n.dashboardStatusOffline,
+              label: context.l10n.dashboardStatusLabel,
             ),
           ),
           _VerticalDivider(),
@@ -59,7 +62,7 @@ class NetworkOverviewContent extends ConsumerWidget {
               icon: Icons.people_outline,
               iconColor: context.accentColor,
               value: '$activeNodes/$totalNodes',
-              label: 'Nodes',
+              label: context.l10n.dashboardNodesLabel,
             ),
           ),
           _VerticalDivider(),
@@ -69,7 +72,7 @@ class NetworkOverviewContent extends ConsumerWidget {
               icon: Icons.chat_bubble_outline,
               iconColor: context.accentColor,
               value: recentMessages.toString(),
-              label: 'Last Hour',
+              label: context.l10n.dashboardLastHour,
               badge: unreadMessages > 0 ? unreadMessages : null,
             ),
           ),

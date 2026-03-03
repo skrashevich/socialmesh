@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/app_bottom_sheet.dart';
 import '../../../core/widgets/gradient_border_container.dart';
@@ -87,10 +88,9 @@ class _DashboardWidgetState extends State<DashboardWidget>
 
     final shouldRemove = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Remove Widget?',
-      message:
-          'Are you sure you want to remove "$displayName" from your dashboard?',
-      confirmLabel: 'Remove',
+      title: context.l10n.dashboardRemoveWidgetTitle,
+      message: context.l10n.dashboardRemoveWidgetMessage(displayName),
+      confirmLabel: context.l10n.dashboardRemoveConfirm,
       isDestructive: true,
     );
 
@@ -246,8 +246,8 @@ class _DashboardWidgetState extends State<DashboardWidget>
                 widget.onFavorite?.call();
               },
               tooltip: widget.config.isFavorite
-                  ? 'Remove from favorites'
-                  : 'Add to favorites',
+                  ? context.l10n.dashboardRemoveFromFavorites
+                  : context.l10n.dashboardAddToFavorites,
             ),
             // Remove button
             _EditButton(
@@ -257,7 +257,7 @@ class _DashboardWidgetState extends State<DashboardWidget>
                 HapticFeedback.mediumImpact();
                 _showRemoveConfirmation();
               },
-              tooltip: 'Remove widget',
+              tooltip: context.l10n.dashboardRemoveWidget,
             ),
           ],
         ],

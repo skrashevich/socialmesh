@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:vector_math/vector_math_64.dart' show Vector3;
 import 'package:socialmesh/core/theme.dart';
 
+import '../l10n/l10n_extension.dart';
+
 /// A draggable, resizable, and rotatable text widget for story creation.
 /// Based on sticker_view's gesture handling approach.
 class DraggableTextWidget extends StatefulWidget {
@@ -375,7 +377,7 @@ class _StoryTextEditorState extends State<StoryTextEditor> {
                                 height: 1.2,
                               ),
                               decoration: InputDecoration(
-                                hintText: 'Type something...',
+                                hintText: context.l10n.draggableTextHint,
                                 hintStyle: TextStyle(
                                   color: _selectedColor.withValues(alpha: 0.5),
                                   fontSize: _fontSize,

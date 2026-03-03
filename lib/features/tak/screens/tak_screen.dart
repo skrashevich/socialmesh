@@ -215,6 +215,7 @@ class _TakScreenState extends ConsumerState<TakScreen> with LifecycleSafeMixin {
       topicId: 'tak_gateway_overview',
       stepKeys: const {},
       child: GlassScaffold.body(
+        hasScrollBody: true,
         resizeToAvoidBottomInset: false,
         title: context.l10n.takScreenTitle,
         actions: [

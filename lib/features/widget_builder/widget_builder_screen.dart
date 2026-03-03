@@ -194,6 +194,7 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
       topicId: 'widget_builder_overview',
       stepKeys: const {},
       child: GlassScaffold.body(
+        hasScrollBody: true,
         title: context.l10n.widgetBuilderMyWidgets,
         actions: [
           IconButton(

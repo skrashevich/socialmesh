@@ -17,6 +17,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import '../l10n/l10n_extension.dart';
 import '../theme.dart';
 import 'search_filter_header.dart';
 
@@ -209,7 +210,7 @@ class _DrawerHeader extends StatelessWidget {
             color: context.textTertiary,
             onPressed: onClose,
             visualDensity: VisualDensity.compact,
-            tooltip: 'Close panel',
+            tooltip: context.l10n.mapNodeDrawerClosePanel,
           ),
         ],
       ),

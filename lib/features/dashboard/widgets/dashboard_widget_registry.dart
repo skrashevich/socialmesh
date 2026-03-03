@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
+import '../../../l10n/app_localizations.dart';
 
 /// Unique identifier for each dashboard widget type
 enum DashboardWidgetType {
@@ -287,5 +288,57 @@ class DashboardWidgetRegistry {
   /// Get widgets by tag
   static List<DashboardWidgetConfig> getByTag(String tag) {
     return allWidgets.where((w) => w.tags.contains(tag)).toList();
+  }
+
+  /// Get localized title for a widget type
+  static String localizedTitle(
+    DashboardWidgetType type,
+    AppLocalizations l10n,
+  ) {
+    return switch (type) {
+      DashboardWidgetType.signalStrength => l10n.dashboardWidgetSignalStrength,
+      DashboardWidgetType.meshHealth => l10n.dashboardWidgetMeshHealth,
+      DashboardWidgetType.nodeStats => l10n.dashboardWidgetNodes,
+      DashboardWidgetType.messageStats => l10n.dashboardWidgetMessages,
+      DashboardWidgetType.packetStats => l10n.dashboardWidgetPacketStats,
+      DashboardWidgetType.airtime => l10n.dashboardWidgetAirtimeUsage,
+      DashboardWidgetType.quickActions => l10n.dashboardWidgetQuickActions,
+      DashboardWidgetType.recentMessages => l10n.dashboardWidgetRecentMessages,
+      DashboardWidgetType.activeNodes => l10n.dashboardWidgetActiveNodes,
+      DashboardWidgetType.gpsPosition => l10n.dashboardWidgetGpsPosition,
+      DashboardWidgetType.channelActivity =>
+        l10n.dashboardWidgetChannelActivity,
+      DashboardWidgetType.networkTopology =>
+        l10n.dashboardWidgetNetworkTopology,
+      DashboardWidgetType.weatherStation => l10n.dashboardWidgetWeatherData,
+      DashboardWidgetType.rangeTest => l10n.dashboardWidgetRangeTest,
+    };
+  }
+
+  /// Get localized description for a widget type
+  static String localizedDescription(
+    DashboardWidgetType type,
+    AppLocalizations l10n,
+  ) {
+    return switch (type) {
+      DashboardWidgetType.signalStrength =>
+        l10n.dashboardWidgetSignalStrengthDesc,
+      DashboardWidgetType.meshHealth => l10n.dashboardWidgetMeshHealthDesc,
+      DashboardWidgetType.nodeStats => l10n.dashboardWidgetNodesDesc,
+      DashboardWidgetType.messageStats => l10n.dashboardWidgetMessagesDesc,
+      DashboardWidgetType.packetStats => l10n.dashboardWidgetPacketStatsDesc,
+      DashboardWidgetType.airtime => l10n.dashboardWidgetAirtimeUsageDesc,
+      DashboardWidgetType.quickActions => l10n.dashboardWidgetQuickActionsDesc,
+      DashboardWidgetType.recentMessages =>
+        l10n.dashboardWidgetRecentMessagesDesc,
+      DashboardWidgetType.activeNodes => l10n.dashboardWidgetActiveNodesDesc,
+      DashboardWidgetType.gpsPosition => l10n.dashboardWidgetGpsPositionDesc,
+      DashboardWidgetType.channelActivity =>
+        l10n.dashboardWidgetChannelActivityDesc,
+      DashboardWidgetType.networkTopology =>
+        l10n.dashboardWidgetNetworkTopologyDesc,
+      DashboardWidgetType.weatherStation => l10n.dashboardWidgetWeatherDataDesc,
+      DashboardWidgetType.rangeTest => l10n.dashboardWidgetRangeTestDesc,
+    };
   }
 }
