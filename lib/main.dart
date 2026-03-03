@@ -221,12 +221,27 @@ Future<void> _repairFirestoreCacheIfNeeded() async {
 Future<void> _deleteFirestoreCacheDirectory() async {
   try {
     final appSupportDir = await getApplicationSupportDirectory();
-    final firestoreDir = Directory(
+
+    // Firestore uses different cache directory names across SDK versions.
+    // The crash path shows `firestore/__FIRAPP_DEFAULT/social-mesh-app/main/LOCK`
+    // so we must delete both the legacy and current paths.
+    final candidatePaths = [
+      '${appSupportDir.path}/firestore',
       '${appSupportDir.path}/google-cloud-firestore',
-    );
-    if (await firestoreDir.exists()) {
-      await firestoreDir.delete(recursive: true);
-      AppLogging.debug('Deleted Firestore cache directory manually');
+    ];
+
+    var deleted = false;
+    for (final path in candidatePaths) {
+      final dir = Directory(path);
+      if (await dir.exists()) {
+        await dir.delete(recursive: true);
+        AppLogging.debug('Deleted Firestore cache directory: $path');
+        deleted = true;
+      }
+    }
+
+    if (!deleted) {
+      AppLogging.debug('No Firestore cache directories found to delete');
     }
   } catch (e) {
     AppLogging.debug('Manual Firestore cache deletion failed: $e');
@@ -277,6 +292,29 @@ Future<void> _initializeFirebaseServices() async {
     } catch (e2) {
       AppLogging.debug('Firestore unavailable: $e2');
     }
+  }
+
+  // Proactive LevelDB probe: force the native client to open the database
+  // NOW while the _kFirestoreInitOk flag is still false. If this crashes
+  // (LevelDB LOCK / corruption), the flag stays false and the next launch
+  // will run _repairFirestoreCacheIfNeeded() before retrying.
+  //
+  // Without this probe the flag was set to true immediately after Settings
+  // assignment, but LevelDB only opens on the first real query — by which
+  // point the flag was already true, so a crash there would never trigger
+  // repair on the next launch.
+  try {
+    await FirebaseFirestore.instance
+        .collection('_probe')
+        .doc('_init')
+        .get(const GetOptions(source: Source.cache))
+        .timeout(const Duration(seconds: 5));
+    AppLogging.debug('Firestore LevelDB probe succeeded');
+  } catch (e) {
+    // A "not found in cache" error is fine — it means LevelDB opened.
+    // Only a LevelDB / LOCK error is a real problem, and in that case
+    // the fatal assertion already crashed the process (flag stays false).
+    AppLogging.debug('Firestore probe completed with expected error: $e');
   }
 
   // Firestore initialized successfully — mark flag so next startup
