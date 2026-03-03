@@ -708,7 +708,7 @@ class _BugReportCardState extends ConsumerState<_BugReportCard>
                       focusNode: _replyFocusNode,
                       maxLines: 6,
                       minLines: 3,
-                      maxLength: 2000,
+                      maxLength: 4000,
                       enabled: !_isSending,
                       decoration: InputDecoration(
                         hintText: context.l10n.feedbackReplyHint,

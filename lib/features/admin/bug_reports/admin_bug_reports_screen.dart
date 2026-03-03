@@ -951,7 +951,7 @@ class _ReplyBoxState extends State<_ReplyBox> {
             controller: widget.controller,
             maxLines: 8,
             minLines: 4,
-            maxLength: 2000,
+            maxLength: 4000,
             enabled: !anyCountdown,
             style: const TextStyle(fontSize: 14),
             decoration: InputDecoration(
