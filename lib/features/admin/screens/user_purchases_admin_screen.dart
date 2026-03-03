@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/safety/lifecycle_mixin.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../../../core/widgets/search_filter_header.dart';
@@ -201,6 +202,8 @@ class _UserPurchasesAdminScreenState
     // Guard against multiple simultaneous loads
     if (_isLoading) return;
 
+    final l10n = context.l10n;
+
     safeSetState(() {
       _isLoading = true;
       _error = null;
@@ -283,7 +286,9 @@ class _UserPurchasesAdminScreenState
             }
           } else if (cloudSync != null && cloudSync.isNotEmpty) {
             // Fallback: just show cloud_sync status if no all_products
-            final productId = entData['product_id'] as String? ?? 'Cloud Sync';
+            final productId =
+                entData['product_id'] as String? ??
+                l10n.adminPurchasesFallbackCloudSync;
             purchases.add(
               _Purchase(
                 productId: productId,
@@ -373,7 +378,9 @@ class _UserPurchasesAdminScreenState
             // Fallback for old format
             purchases.add(
               _Purchase(
-                productId: entData['product_id'] as String? ?? 'Cloud Sync',
+                productId:
+                    entData['product_id'] as String? ??
+                    l10n.adminPurchasesFallbackCloudSync,
                 status: cloudSync,
                 purchasedAt: purchasedAt,
                 expiresAt: expiresAt,
@@ -387,7 +394,7 @@ class _UserPurchasesAdminScreenState
               userId: entUserId,
               email: null,
               displayName: entUserId.startsWith(r'$RCAnonymousID')
-                  ? 'Anonymous RevenueCat User'
+                  ? l10n.adminPurchasesAnonRcUser
                   : null,
               avatarUrl: null,
               revenueCatId: entData['revenuecat_app_user_id'] as String?,
@@ -467,15 +474,16 @@ class _UserPurchasesAdminScreenState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return GlassScaffold(
       resizeToAvoidBottomInset: false,
       titleWidget: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text(
-            'User Purchases',
-            style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+          Text(
+            l10n.adminPurchasesTitle,
+            style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
           ),
           if (!_isLoading && _error == null)
             Padding(
@@ -495,7 +503,7 @@ class _UserPurchasesAdminScreenState
                       style: const TextStyle(color: Colors.blue),
                     ),
                     TextSpan(
-                      text: ' TOTAL · ',
+                      text: ' ${l10n.adminPurchasesLabelTotal} · ',
                       style: TextStyle(color: context.textTertiary),
                     ),
                     TextSpan(
@@ -503,7 +511,7 @@ class _UserPurchasesAdminScreenState
                       style: const TextStyle(color: Colors.green),
                     ),
                     TextSpan(
-                      text: ' PAYING · ',
+                      text: ' ${l10n.adminPurchasesLabelPaying} · ',
                       style: TextStyle(color: context.textTertiary),
                     ),
                     TextSpan(
@@ -511,7 +519,7 @@ class _UserPurchasesAdminScreenState
                       style: const TextStyle(color: Colors.grey),
                     ),
                     TextSpan(
-                      text: ' FREE · ',
+                      text: ' ${l10n.adminPurchasesLabelFree} · ',
                       style: TextStyle(color: context.textTertiary),
                     ),
                     TextSpan(
@@ -519,7 +527,7 @@ class _UserPurchasesAdminScreenState
                       style: const TextStyle(color: Colors.green),
                     ),
                     TextSpan(
-                      text: ' REVENUE',
+                      text: ' ${l10n.adminPurchasesLabelRevenue}',
                       style: TextStyle(color: context.textTertiary),
                     ),
                     if (_hasExclusions) ...[
@@ -532,7 +540,7 @@ class _UserPurchasesAdminScreenState
                         style: const TextStyle(color: Colors.red),
                       ),
                       TextSpan(
-                        text: ' EXCLUDED',
+                        text: ' ${l10n.adminPurchasesLabelExcluded}',
                         style: TextStyle(color: context.textTertiary),
                       ),
                     ],
@@ -549,22 +557,24 @@ class _UserPurchasesAdminScreenState
             padding: const EdgeInsets.only(top: 16),
             child: _buildStatRow([
               _StatCard(
-                label: 'Total Users',
+                label: l10n.adminPurchasesStatTotalUsers,
                 value: _totalUsers.toString(),
                 icon: Icons.people,
                 color: Colors.blue,
               ),
               _StatCard(
-                label: 'Paying',
+                label: l10n.adminPurchasesStatPaying,
                 value: _hasExclusions
                     ? '$_netPayingUsers'
                     : '$_totalPayingUsers',
                 icon: Icons.shopping_bag,
                 color: Colors.green,
-                subtitle: _hasExclusions ? '$_excludedCount excluded' : null,
+                subtitle: _hasExclusions
+                    ? l10n.adminPurchasesStatExcludedCount(_excludedCount)
+                    : null,
               ),
               _StatCard(
-                label: 'Free',
+                label: l10n.adminPurchasesStatFree,
                 value: '$_freeUsers',
                 icon: Icons.person_outline,
                 color: Colors.grey,
@@ -577,17 +587,17 @@ class _UserPurchasesAdminScreenState
         SliverToBoxAdapter(
           child: _buildStatRow([
             _StatCard(
-              label: 'Conversion',
+              label: l10n.adminPurchasesStatConversion,
               value: '${_conversionRate.toStringAsFixed(1)}%',
               icon: Icons.trending_up,
               color: Colors.purple,
             ),
             _StatCard(
-              label: 'ARPU',
+              label: l10n.adminPurchasesStatArpu,
               value: 'A\$${_arpu.toStringAsFixed(2)}',
               icon: Icons.bar_chart,
               color: Colors.teal,
-              tooltip: 'Average Revenue Per User',
+              tooltip: l10n.adminPurchasesStatArpuTooltip,
             ),
           ]),
         ),
@@ -596,20 +606,20 @@ class _UserPurchasesAdminScreenState
         SliverToBoxAdapter(
           child: _buildStatRow([
             _StatCard(
-              label: 'Gross Revenue',
+              label: l10n.adminPurchasesStatGross,
               value: 'A\$${_grossRevenue.toStringAsFixed(2)}',
               icon: Icons.account_balance_wallet,
               color: Colors.orange,
             ),
             if (_hasExclusions)
               _StatCard(
-                label: 'Excluded',
+                label: l10n.adminPurchasesStatExcluded,
                 value: '-A\$${_excludedRevenue.toStringAsFixed(2)}',
                 icon: Icons.money_off,
                 color: Colors.red,
               ),
             _StatCard(
-              label: 'Net Revenue',
+              label: l10n.adminPurchasesStatNet,
               value: 'A\$${_netRevenue.toStringAsFixed(2)}',
               icon: Icons.attach_money,
               color: Colors.green,
@@ -621,19 +631,19 @@ class _UserPurchasesAdminScreenState
         SliverToBoxAdapter(
           child: _buildStatRow([
             _StatCard(
-              label: 'New Users (24h)',
+              label: l10n.adminPurchasesStatNewUsers24h,
               value: _newUsersLast24h.toString(),
               icon: Icons.person_add,
               color: Colors.blue,
             ),
             _StatCard(
-              label: 'Purchases (24h)',
+              label: l10n.adminPurchasesStatPurchases24h,
               value: _newPurchasesLast24h.toString(),
               icon: Icons.shopping_cart,
               color: Colors.deepPurple,
             ),
             _StatCard(
-              label: 'Revenue (24h)',
+              label: l10n.adminPurchasesStatRevenue24h,
               value: 'A\$${_revenueLast24h.toStringAsFixed(2)}',
               icon: Icons.trending_up,
               color: Colors.green,
@@ -648,7 +658,7 @@ class _UserPurchasesAdminScreenState
             searchController: _searchController,
             searchQuery: _searchQuery,
             onSearchChanged: (value) => setState(() => _searchQuery = value),
-            hintText: 'Search users...',
+            hintText: l10n.adminPurchasesSearchHint,
             textScaler: MediaQuery.textScalerOf(context),
             rebuildKey: Object.hashAll([
               _activeFilter,
@@ -657,27 +667,27 @@ class _UserPurchasesAdminScreenState
             ]),
             filterChips: [
               StatusFilterChip(
-                label: 'All',
+                label: l10n.adminPurchasesFilterAll,
                 count: _countForFilter(_UserFilter.all),
                 isSelected: _activeFilter == _UserFilter.all,
                 onTap: () => setState(() => _activeFilter = _UserFilter.all),
               ),
               StatusFilterChip(
-                label: 'Paying',
+                label: l10n.adminPurchasesFilterPaying,
                 count: _countForFilter(_UserFilter.paying),
                 isSelected: _activeFilter == _UserFilter.paying,
                 color: AccentColors.green,
                 onTap: () => setState(() => _activeFilter = _UserFilter.paying),
               ),
               StatusFilterChip(
-                label: 'Free',
+                label: l10n.adminPurchasesFilterFree,
                 count: _countForFilter(_UserFilter.free),
                 isSelected: _activeFilter == _UserFilter.free,
                 onTap: () => setState(() => _activeFilter = _UserFilter.free),
               ),
               if (_hasExclusions)
                 StatusFilterChip(
-                  label: 'Excluded',
+                  label: l10n.adminPurchasesFilterExcluded,
                   count: _countForFilter(_UserFilter.excluded),
                   isSelected: _activeFilter == _UserFilter.excluded,
                   color: AppTheme.errorRed,
@@ -685,7 +695,7 @@ class _UserPurchasesAdminScreenState
                       setState(() => _activeFilter = _UserFilter.excluded),
                 ),
               StatusFilterChip(
-                label: 'Anonymous',
+                label: l10n.adminPurchasesFilterAnonymous,
                 count: _countForFilter(_UserFilter.anonymous),
                 isSelected: _activeFilter == _UserFilter.anonymous,
                 onTap: () =>
@@ -693,7 +703,7 @@ class _UserPurchasesAdminScreenState
               ),
               if (_users.any((u) => u.isDeleted))
                 StatusFilterChip(
-                  label: 'Deleted',
+                  label: l10n.adminPurchasesFilterDeleted,
                   count: _countForFilter(_UserFilter.deleted),
                   isSelected: _activeFilter == _UserFilter.deleted,
                   color: AppTheme.errorRed,
@@ -710,10 +720,8 @@ class _UserPurchasesAdminScreenState
           child: Padding(
             padding: const EdgeInsets.fromLTRB(AppTheme.spacing16, 8, 16, 0),
             child: StatusBanner.info(
-              title:
-                  'Shows purchases synced via app login or RevenueCat webhooks.',
-              subtitle:
-                  'Users must open the app while signed in for their purchases to appear here.',
+              title: l10n.adminPurchasesBannerTitle,
+              subtitle: l10n.adminPurchasesBannerSubtitle,
               borderRadius: 8,
             ),
           ),
@@ -737,7 +745,7 @@ class _UserPurchasesAdminScreenState
                   ),
                   const SizedBox(height: AppTheme.spacing16),
                   Text(
-                    'Error loading users',
+                    l10n.adminPurchasesErrorLoading,
                     style: TextStyle(color: context.textSecondary),
                   ),
                   const SizedBox(height: AppTheme.spacing8),
@@ -749,7 +757,7 @@ class _UserPurchasesAdminScreenState
                   ElevatedButton.icon(
                     onPressed: _loadUsers,
                     icon: const Icon(Icons.refresh),
-                    label: const Text('Retry'),
+                    label: Text(l10n.adminPurchasesRetry),
                   ),
                 ],
               ),
@@ -769,8 +777,8 @@ class _UserPurchasesAdminScreenState
                   const SizedBox(height: AppTheme.spacing16),
                   Text(
                     _searchQuery.isNotEmpty
-                        ? 'No users match your search'
-                        : 'No users found',
+                        ? l10n.adminPurchasesNoSearchResults
+                        : l10n.adminPurchasesNoUsers,
                     style: TextStyle(color: context.textSecondary),
                   ),
                 ],
@@ -952,7 +960,8 @@ class _UserTile extends StatelessWidget {
                           children: [
                             Flexible(
                               child: Text(
-                                user.displayName ?? 'Unknown User',
+                                user.displayName ??
+                                    context.l10n.adminPurchasesUnknownUser,
                                 style: TextStyle(
                                   color: context.textPrimary,
                                   fontWeight: FontWeight.w500,
@@ -975,7 +984,7 @@ class _UserTile extends StatelessWidget {
                                   ),
                                 ),
                                 child: Text(
-                                  'Anonymous',
+                                  context.l10n.adminPurchasesAnonymousTag,
                                   style: TextStyle(
                                     fontSize: 10,
                                     color: Colors.orange.shade700,
@@ -998,7 +1007,7 @@ class _UserTile extends StatelessWidget {
                                   ),
                                 ),
                                 child: Text(
-                                  'Deleted',
+                                  context.l10n.adminPurchasesDeletedTag,
                                   style: TextStyle(
                                     fontSize: 10,
                                     color: Colors.red.shade700,
@@ -1191,7 +1200,10 @@ class _UserDetailSheet extends StatelessWidget {
                                   children: [
                                     Flexible(
                                       child: Text(
-                                        user.displayName ?? 'Unknown User',
+                                        user.displayName ??
+                                            context
+                                                .l10n
+                                                .adminPurchasesUnknownUser,
                                         style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
@@ -1215,7 +1227,9 @@ class _UserDetailSheet extends StatelessWidget {
                                           ),
                                         ),
                                         child: Text(
-                                          'Anonymous',
+                                          context
+                                              .l10n
+                                              .adminPurchasesAnonymousTag,
                                           style: TextStyle(
                                             fontSize: 12,
                                             color: Colors.orange.shade700,
@@ -1240,7 +1254,7 @@ class _UserDetailSheet extends StatelessWidget {
                                           ),
                                         ),
                                         child: Text(
-                                          'Deleted',
+                                          context.l10n.adminPurchasesDeletedTag,
                                           style: TextStyle(
                                             fontSize: 12,
                                             color: Colors.red.shade700,
@@ -1268,17 +1282,19 @@ class _UserDetailSheet extends StatelessWidget {
                       const SizedBox(height: AppTheme.spacing24),
 
                       // IDs section
-                      _SectionHeader(title: 'Identifiers'),
+                      _SectionHeader(
+                        title: context.l10n.adminPurchasesSectionIds,
+                      ),
                       _InfoTile(
                         icon: Icons.fingerprint,
-                        label: 'Firebase UID',
+                        label: context.l10n.adminPurchasesFirebaseUid,
                         value: user.userId,
                         onCopy: () => _copyToClipboard(context, user.userId),
                       ),
                       if (user.revenueCatId != null)
                         _InfoTile(
                           icon: Icons.receipt_long,
-                          label: 'RevenueCat ID',
+                          label: context.l10n.adminPurchasesRevenueCatId,
                           value: user.revenueCatId!,
                           onCopy: () =>
                               _copyToClipboard(context, user.revenueCatId!),
@@ -1286,7 +1302,7 @@ class _UserDetailSheet extends StatelessWidget {
                       if (user.createdAt != null)
                         _InfoTile(
                           icon: Icons.calendar_today,
-                          label: 'Member Since',
+                          label: context.l10n.adminPurchasesMemberSince,
                           value: dateFormat.format(user.createdAt!),
                         ),
 
@@ -1294,9 +1310,11 @@ class _UserDetailSheet extends StatelessWidget {
 
                       // Purchases section
                       _SectionHeader(
-                        title: 'Purchases',
+                        title: context.l10n.adminPurchasesSectionPurchases,
                         trailing: Text(
-                          '${user.purchases.length} items',
+                          context.l10n.adminPurchasesItemCount(
+                            user.purchases.length,
+                          ),
                           style: TextStyle(
                             color: context.textSecondary,
                             fontSize: 12,
@@ -1323,7 +1341,7 @@ class _UserDetailSheet extends StatelessWidget {
                                 ),
                                 const SizedBox(height: AppTheme.spacing8),
                                 Text(
-                                  'No purchases',
+                                  context.l10n.adminPurchasesNoPurchases,
                                   style: TextStyle(
                                     color: context.textSecondary,
                                   ),
@@ -1352,7 +1370,7 @@ class _UserDetailSheet extends StatelessWidget {
 
   void _copyToClipboard(BuildContext context, String text) {
     Clipboard.setData(ClipboardData(text: text));
-    showSuccessSnackBar(context, 'Copied to clipboard');
+    showSuccessSnackBar(context, context.l10n.adminPurchasesCopied);
   }
 }
 
@@ -1432,7 +1450,7 @@ class _InfoTile extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.copy, size: 18, color: context.textSecondary),
               onPressed: onCopy,
-              tooltip: 'Copy',
+              tooltip: context.l10n.adminPurchasesCopyTooltip,
             ),
         ],
       ),

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'dart:async';
 import 'package:flutter/material.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/logging.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/widgets/animations.dart';
@@ -122,6 +123,7 @@ class _PowerConfigScreenState extends ConsumerState<PowerConfigScreen>
 
     safeSetState(() => _saving = true);
 
+    final l10n = context.l10n;
     try {
       await protocol.setPowerConfig(
         isPowerSaving: _isPowerSaving,
@@ -137,7 +139,7 @@ class _PowerConfigScreenState extends ConsumerState<PowerConfigScreen>
       );
 
       if (mounted) {
-        showSuccessSnackBar(context, 'Power configuration saved');
+        showSuccessSnackBar(context, l10n.powerConfigSaved);
         if (target.isLocal) {
           ref
               .read(countdownProvider.notifier)
@@ -147,15 +149,15 @@ class _PowerConfigScreenState extends ConsumerState<PowerConfigScreen>
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to save: $e');
+        showErrorSnackBar(context, l10n.powerConfigSaveFailed(e.toString()));
       }
     } finally {
       safeSetState(() => _saving = false);
     }
   }
 
-  String _formatDuration(int seconds) {
-    if (seconds == 0) return 'Disabled';
+  String _formatDuration(int seconds, {required String disabledLabel}) {
+    if (seconds == 0) return disabledLabel;
     if (seconds < 60) return '${seconds}s';
     if (seconds < 3600) return '${(seconds / 60).round()} min';
     if (seconds < 86400) return '${(seconds / 3600).toStringAsFixed(1)} hr';
@@ -167,7 +169,7 @@ class _PowerConfigScreenState extends ConsumerState<PowerConfigScreen>
     return GestureDetector(
       onTap: _dismissKeyboard,
       child: GlassScaffold(
-        title: 'Power',
+        title: context.l10n.powerConfigTitle,
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 8),
@@ -176,7 +178,7 @@ class _PowerConfigScreenState extends ConsumerState<PowerConfigScreen>
               child: _saving
                   ? LoadingIndicator(size: 20)
                   : Text(
-                      'Save',
+                      context.l10n.powerConfigSave,
                       style: TextStyle(
                         color: context.accentColor,
                         fontWeight: FontWeight.w600,
@@ -193,15 +195,17 @@ class _PowerConfigScreenState extends ConsumerState<PowerConfigScreen>
                   sliver: SliverList(
                     delegate: SliverChildListDelegate([
                       // Power Section
-                      const _SectionHeader(title: 'POWER'),
+                      _SectionHeader(
+                        title: context.l10n.powerConfigSectionPower,
+                      ),
                       // Power saving mode toggle
                       _SettingsTile(
                         icon: _isPowerSaving
                             ? Icons.battery_saver
                             : Icons.battery_full,
                         iconColor: _isPowerSaving ? context.accentColor : null,
-                        title: 'Power Saving Mode',
-                        subtitle: 'Reduce power consumption when idle',
+                        title: context.l10n.powerConfigPowerSaving,
+                        subtitle: context.l10n.powerConfigPowerSavingSubtitle,
                         trailing: ThemedSwitch(
                           value: _isPowerSaving,
                           onChanged: (value) {
@@ -215,9 +219,9 @@ class _PowerConfigScreenState extends ConsumerState<PowerConfigScreen>
                         iconColor: _shutdownOnPowerLoss
                             ? context.accentColor
                             : null,
-                        title: 'Shutdown on Power Loss',
+                        title: context.l10n.powerConfigShutdownOnPowerLoss,
                         subtitle:
-                            'Power off device when external power removed',
+                            context.l10n.powerConfigShutdownOnPowerLossSubtitle,
                         trailing: ThemedSwitch(
                           value: _shutdownOnPowerLoss,
                           onChanged: (value) {
@@ -246,14 +250,17 @@ class _PowerConfigScreenState extends ConsumerState<PowerConfigScreen>
                             ),
                           ),
                           child: _buildSliderSetting(
-                            title: 'Shutdown Delay',
+                            title: context.l10n.powerConfigShutdownDelay,
                             subtitle:
-                                'Time to wait before shutdown after power loss',
+                                context.l10n.powerConfigShutdownDelaySubtitle,
                             value: _shutdownAfterSecs.toDouble(),
                             min: 10,
                             max: 3600,
                             divisions: 36,
-                            formatValue: (v) => _formatDuration(v.toInt()),
+                            formatValue: (v) => _formatDuration(
+                              v.toInt(),
+                              disabledLabel: context.l10n.powerConfigDisabled,
+                            ),
                             onChanged: (value) => setState(
                               () => _shutdownAfterSecs = value.toInt(),
                             ),
@@ -262,13 +269,16 @@ class _PowerConfigScreenState extends ConsumerState<PowerConfigScreen>
                       SizedBox(height: AppTheme.spacing16),
 
                       // Battery Section (ADC Multiplier)
-                      const _SectionHeader(title: 'BATTERY'),
+                      _SectionHeader(
+                        title: context.l10n.powerConfigSectionBattery,
+                      ),
                       _SettingsTile(
                         icon: Icons.battery_charging_full,
                         iconColor: _adcOverride ? context.accentColor : null,
-                        title: 'ADC Multiplier Override',
-                        subtitle:
-                            'Override voltage divider ratio for battery reading',
+                        title: context.l10n.powerConfigAdcMultiplierOverride,
+                        subtitle: context
+                            .l10n
+                            .powerConfigAdcMultiplierOverrideSubtitle,
                         trailing: ThemedSwitch(
                           value: _adcOverride,
                           onChanged: (value) {
@@ -304,7 +314,7 @@ class _PowerConfigScreenState extends ConsumerState<PowerConfigScreen>
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    'ADC Multiplier',
+                                    context.l10n.powerConfigAdcMultiplier,
                                     style: TextStyle(
                                       color: context.textPrimary,
                                       fontWeight: FontWeight.w500,
@@ -374,7 +384,7 @@ class _PowerConfigScreenState extends ConsumerState<PowerConfigScreen>
                               ),
                               SizedBox(height: AppTheme.spacing4),
                               Text(
-                                'Voltage divider ratio (2.0 - 6.0)',
+                                context.l10n.powerConfigAdcMultiplierHint,
                                 style: TextStyle(
                                   color: context.textSecondary,
                                   fontSize: 12,
@@ -386,7 +396,9 @@ class _PowerConfigScreenState extends ConsumerState<PowerConfigScreen>
                       SizedBox(height: AppTheme.spacing16),
 
                       // Sleep Settings Section
-                      const _SectionHeader(title: 'SLEEP SETTINGS'),
+                      _SectionHeader(
+                        title: context.l10n.powerConfigSectionSleep,
+                      ),
 
                       Container(
                         margin: const EdgeInsets.symmetric(
@@ -405,14 +417,17 @@ class _PowerConfigScreenState extends ConsumerState<PowerConfigScreen>
                           children: [
                             // Wait Bluetooth
                             _buildSliderSetting(
-                              title: 'Wait for Bluetooth',
+                              title: context.l10n.powerConfigWaitBluetooth,
                               subtitle:
-                                  'Time to wait for Bluetooth connection before sleep',
+                                  context.l10n.powerConfigWaitBluetoothSubtitle,
                               value: _waitBluetoothSecs.toDouble(),
                               min: 0,
                               max: 300,
                               divisions: 30,
-                              formatValue: (v) => _formatDuration(v.toInt()),
+                              formatValue: (v) => _formatDuration(
+                                v.toInt(),
+                                disabledLabel: context.l10n.powerConfigDisabled,
+                              ),
                               onChanged: (value) => setState(
                                 () => _waitBluetoothSecs = value.toInt(),
                               ),
@@ -423,14 +438,17 @@ class _PowerConfigScreenState extends ConsumerState<PowerConfigScreen>
 
                             // Light Sleep
                             _buildSliderSetting(
-                              title: 'Light Sleep Duration',
+                              title: context.l10n.powerConfigLightSleep,
                               subtitle:
-                                  'Duration of light sleep before deep sleep',
+                                  context.l10n.powerConfigLightSleepSubtitle,
                               value: _lsSecs.toDouble(),
                               min: 0,
                               max: 3600,
                               divisions: 36,
-                              formatValue: (v) => _formatDuration(v.toInt()),
+                              formatValue: (v) => _formatDuration(
+                                v.toInt(),
+                                disabledLabel: context.l10n.powerConfigDisabled,
+                              ),
                               onChanged: (value) =>
                                   setState(() => _lsSecs = value.toInt()),
                             ),
@@ -440,13 +458,17 @@ class _PowerConfigScreenState extends ConsumerState<PowerConfigScreen>
 
                             // Deep Sleep
                             _buildSliderSetting(
-                              title: 'Deep Sleep Duration',
-                              subtitle: 'Duration of deep sleep (SDS)',
+                              title: context.l10n.powerConfigDeepSleep,
+                              subtitle:
+                                  context.l10n.powerConfigDeepSleepSubtitle,
                               value: _sdsSecs.toDouble(),
                               min: 0,
                               max: 86400,
                               divisions: 24,
-                              formatValue: (v) => _formatDuration(v.toInt()),
+                              formatValue: (v) => _formatDuration(
+                                v.toInt(),
+                                disabledLabel: context.l10n.powerConfigDisabled,
+                              ),
                               onChanged: (value) =>
                                   setState(() => _sdsSecs = value.toInt()),
                             ),
@@ -456,8 +478,9 @@ class _PowerConfigScreenState extends ConsumerState<PowerConfigScreen>
 
                             // Min Wake
                             _buildSliderSetting(
-                              title: 'Minimum Wake Time',
-                              subtitle: 'Minimum time device stays awake',
+                              title: context.l10n.powerConfigMinWakeTime,
+                              subtitle:
+                                  context.l10n.powerConfigMinWakeTimeSubtitle,
                               value: _minWakeSecs,
                               min: 1,
                               max: 120,
@@ -478,8 +501,7 @@ class _PowerConfigScreenState extends ConsumerState<PowerConfigScreen>
                           vertical: 2,
                         ),
                         child: StatusBanner.warning(
-                          title:
-                              'Power settings affect battery life and device responsiveness. Aggressive sleep settings may cause delays in receiving messages.',
+                          title: context.l10n.powerConfigWarning,
                           margin: EdgeInsets.zero,
                         ),
                       ),

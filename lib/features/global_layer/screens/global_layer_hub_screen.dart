@@ -13,6 +13,7 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/mqtt/mqtt_constants.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/widgets/glass_scaffold.dart';
@@ -90,7 +91,7 @@ class _GlobalLayerHubScreenState extends ConsumerState<GlobalLayerHubScreen>
                 ),
                 const SizedBox(height: AppTheme.spacing16),
                 Text(
-                  'Failed to load Global Layer configuration',
+                  context.l10n.globalLayerFailedToLoadConfig,
                   style: Theme.of(context).textTheme.titleMedium,
                   textAlign: TextAlign.center,
                 ),
@@ -108,7 +109,7 @@ class _GlobalLayerHubScreenState extends ConsumerState<GlobalLayerHubScreen>
                     ref.invalidate(globalLayerConfigProvider);
                   },
                   icon: const Icon(Icons.refresh),
-                  label: const Text('Retry'),
+                  label: Text(context.l10n.globalLayerRetry),
                 ),
               ],
             ),

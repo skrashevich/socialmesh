@@ -382,7 +382,7 @@ class _WidgetMarketplaceScreenState
           ),
         ),
         title: Text(
-          WidgetCategories.getDisplayName(category),
+          WidgetCategories.localizedDisplayName(category, context.l10n),
           style: TextStyle(
             color: context.textPrimary,
             fontWeight: FontWeight.w500,
@@ -927,7 +927,10 @@ class _CategoryScreenState extends ConsumerState<_CategoryScreen>
     final asyncState = ref.watch(marketplaceProvider);
 
     return GlassScaffold(
-      title: WidgetCategories.getDisplayName(widget.category),
+      title: WidgetCategories.localizedDisplayName(
+        widget.category,
+        context.l10n,
+      ),
       slivers: asyncState.when(
         loading: () => [
           const SliverFillRemaining(child: ScreenLoadingIndicator()),

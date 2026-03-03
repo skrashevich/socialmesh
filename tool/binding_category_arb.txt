@@ -1,0 +1,32 @@
+  "widgetBuilderBindingCategoryNode": "Node Info",
+  "@widgetBuilderBindingCategoryNode": {
+    "description": "Binding category name: node"
+  },
+  "widgetBuilderBindingCategoryDevice": "Device Metrics",
+  "@widgetBuilderBindingCategoryDevice": {
+    "description": "Binding category name: device"
+  },
+  "widgetBuilderBindingCategoryNetwork": "Network",
+  "@widgetBuilderBindingCategoryNetwork": {
+    "description": "Binding category name: network"
+  },
+  "widgetBuilderBindingCategoryEnvironment": "Environment",
+  "@widgetBuilderBindingCategoryEnvironment": {
+    "description": "Binding category name: environment"
+  },
+  "widgetBuilderBindingCategoryPower": "Power & Battery",
+  "@widgetBuilderBindingCategoryPower": {
+    "description": "Binding category name: power"
+  },
+  "widgetBuilderBindingCategoryAirQuality": "Air Quality",
+  "@widgetBuilderBindingCategoryAirQuality": {
+    "description": "Binding category name: airQuality"
+  },
+  "widgetBuilderBindingCategoryGps": "GPS & Position",
+  "@widgetBuilderBindingCategoryGps": {
+    "description": "Binding category name: gps"
+  },
+  "widgetBuilderBindingCategoryMessaging": "Messaging",
+  "@widgetBuilderBindingCategoryMessaging": {
+    "description": "Binding category name: messaging"
+  },

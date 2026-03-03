@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'dart:async';
 import 'package:flutter/material.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/logging.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/widgets/animations.dart';
@@ -136,17 +137,15 @@ class _NetworkConfigScreenState extends ConsumerState<NetworkConfigScreen>
 
     safeSetState(() => _saving = true);
 
+    final l10n = context.l10n;
+
     // Guard: block WiFi on devices without WiFi hardware
     if (_wifiEnabled && !_targetDeviceHasWifi()) {
       final confirmed = await AppBottomSheet.showConfirm(
         context: context,
-        title: 'No WiFi Hardware',
-        message:
-            'This device does not have WiFi hardware. '
-            'Enabling WiFi may make the device unreachable via Bluetooth '
-            'and require reflashing to recover.\n\n'
-            'Are you sure you want to save this configuration?',
-        confirmLabel: 'Save Anyway',
+        title: l10n.networkConfigNoWifiTitle,
+        message: l10n.networkConfigNoWifiBody,
+        confirmLabel: l10n.networkConfigSaveAnyway,
         isDestructive: true,
       );
       if (confirmed != true) {
@@ -154,7 +153,6 @@ class _NetworkConfigScreenState extends ConsumerState<NetworkConfigScreen>
         return;
       }
     }
-
     try {
       final ntp = _ntpController.text.trim();
       final rsyslog = _rsyslogController.text.trim();
@@ -171,7 +169,7 @@ class _NetworkConfigScreenState extends ConsumerState<NetworkConfigScreen>
       );
 
       if (mounted) {
-        showSuccessSnackBar(context, 'Network configuration saved');
+        showSuccessSnackBar(context, l10n.networkConfigSaved);
         if (target.isLocal) {
           ref
               .read(countdownProvider.notifier)
@@ -181,7 +179,7 @@ class _NetworkConfigScreenState extends ConsumerState<NetworkConfigScreen>
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to save: $e');
+        showErrorSnackBar(context, l10n.networkConfigSaveFailed(e.toString()));
       }
     } finally {
       safeSetState(() => _saving = false);
@@ -193,7 +191,7 @@ class _NetworkConfigScreenState extends ConsumerState<NetworkConfigScreen>
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: GlassScaffold(
-        title: 'Network',
+        title: context.l10n.networkConfigTitle,
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 8),
@@ -202,7 +200,7 @@ class _NetworkConfigScreenState extends ConsumerState<NetworkConfigScreen>
               child: _saving
                   ? LoadingIndicator(size: 20)
                   : Text(
-                      'Save',
+                      context.l10n.networkConfigSave,
                       style: TextStyle(
                         color: context.accentColor,
                         fontWeight: FontWeight.w600,
@@ -220,7 +218,7 @@ class _NetworkConfigScreenState extends ConsumerState<NetworkConfigScreen>
               sliver: SliverList.list(
                 children: [
                   // WiFi Section
-                  const _SectionHeader(title: 'WI-FI'),
+                  _SectionHeader(title: context.l10n.networkConfigSectionWifi),
 
                   // Show warning if device lacks WiFi hardware
                   if (!_targetDeviceHasWifi())
@@ -250,10 +248,7 @@ class _NetworkConfigScreenState extends ConsumerState<NetworkConfigScreen>
                           const SizedBox(width: AppTheme.spacing10),
                           Expanded(
                             child: Text(
-                              'This device does not have WiFi hardware. '
-                              'Enabling WiFi will make the device '
-                              'unreachable via Bluetooth and may require '
-                              'reflashing to recover.',
+                              context.l10n.networkConfigNoWifiWarning,
                               style: TextStyle(
                                 color: context.textSecondary,
                                 fontSize: 12,
@@ -267,8 +262,8 @@ class _NetworkConfigScreenState extends ConsumerState<NetworkConfigScreen>
                   _SettingsTile(
                     icon: Icons.wifi,
                     iconColor: _wifiEnabled ? context.accentColor : null,
-                    title: 'WiFi Enabled',
-                    subtitle: 'Connect to a WiFi network',
+                    title: context.l10n.networkConfigWifiEnabled,
+                    subtitle: context.l10n.networkConfigWifiEnabledSubtitle,
                     trailing: ThemedSwitch(
                       value: _wifiEnabled,
                       onChanged: (value) {
@@ -296,7 +291,7 @@ class _NetworkConfigScreenState extends ConsumerState<NetworkConfigScreen>
                             textInputAction: TextInputAction.next,
                             style: TextStyle(color: context.textPrimary),
                             decoration: InputDecoration(
-                              labelText: 'Network Name (SSID)',
+                              labelText: context.l10n.networkConfigSsid,
                               labelStyle: TextStyle(
                                 color: context.textSecondary,
                               ),
@@ -339,7 +334,7 @@ class _NetworkConfigScreenState extends ConsumerState<NetworkConfigScreen>
                                 FocusScope.of(context).unfocus(),
                             style: TextStyle(color: context.textPrimary),
                             decoration: InputDecoration(
-                              labelText: 'Password',
+                              labelText: context.l10n.networkConfigPassword,
                               labelStyle: TextStyle(
                                 color: context.textSecondary,
                               ),
@@ -389,13 +384,15 @@ class _NetworkConfigScreenState extends ConsumerState<NetworkConfigScreen>
                   SizedBox(height: AppTheme.spacing16),
 
                   // Ethernet Section
-                  const _SectionHeader(title: 'ETHERNET'),
+                  _SectionHeader(
+                    title: context.l10n.networkConfigSectionEthernet,
+                  ),
 
                   _SettingsTile(
                     icon: Icons.settings_ethernet,
                     iconColor: _ethEnabled ? context.accentColor : null,
-                    title: 'Ethernet Enabled',
-                    subtitle: 'Use wired Ethernet connection',
+                    title: context.l10n.networkConfigEthernetEnabled,
+                    subtitle: context.l10n.networkConfigEthernetEnabledSubtitle,
                     trailing: ThemedSwitch(
                       value: _ethEnabled,
                       onChanged: (value) {
@@ -407,12 +404,16 @@ class _NetworkConfigScreenState extends ConsumerState<NetworkConfigScreen>
                   SizedBox(height: AppTheme.spacing16),
 
                   // Address Mode Section
-                  const _SectionHeader(title: 'IP ADDRESS'),
+                  _SectionHeader(
+                    title: context.l10n.networkConfigSectionIpAddress,
+                  ),
                   _buildAddressModeSelector(),
                   SizedBox(height: AppTheme.spacing16),
 
                   // NTP Server Section
-                  const _SectionHeader(title: 'TIME SYNC'),
+                  _SectionHeader(
+                    title: context.l10n.networkConfigSectionTimeSync,
+                  ),
 
                   Container(
                     margin: const EdgeInsets.symmetric(
@@ -428,7 +429,7 @@ class _NetworkConfigScreenState extends ConsumerState<NetworkConfigScreen>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'NTP Server',
+                          context.l10n.networkConfigNtpServer,
                           style: TextStyle(
                             color: context.textPrimary,
                             fontWeight: FontWeight.w500,
@@ -475,7 +476,7 @@ class _NetworkConfigScreenState extends ConsumerState<NetworkConfigScreen>
                         ),
                         SizedBox(height: AppTheme.spacing8),
                         Text(
-                          'Server used for time synchronization',
+                          context.l10n.networkConfigNtpServerSubtitle,
                           style: TextStyle(
                             color: context.textSecondary,
                             fontSize: 13,
@@ -487,12 +488,14 @@ class _NetworkConfigScreenState extends ConsumerState<NetworkConfigScreen>
                   SizedBox(height: AppTheme.spacing16),
 
                   // UDP Broadcast Section
-                  const _SectionHeader(title: 'UDP BROADCAST'),
+                  _SectionHeader(
+                    title: context.l10n.networkConfigSectionUdpBroadcast,
+                  ),
                   _SettingsTile(
                     icon: Icons.cell_tower,
                     iconColor: _udpEnabled ? context.accentColor : null,
-                    title: 'UDP Broadcast',
-                    subtitle: 'Broadcast packets over local network',
+                    title: context.l10n.networkConfigUdpBroadcast,
+                    subtitle: context.l10n.networkConfigUdpBroadcastSubtitle,
                     trailing: ThemedSwitch(
                       value: _udpEnabled,
                       onChanged: (value) {
@@ -525,7 +528,7 @@ class _NetworkConfigScreenState extends ConsumerState<NetworkConfigScreen>
                           const SizedBox(width: AppTheme.spacing10),
                           Expanded(
                             child: Text(
-                              'Enables broadcasting mesh packets via UDP over the local network when WiFi or Ethernet is connected.',
+                              context.l10n.networkConfigUdpBroadcastInfo,
                               style: TextStyle(
                                 color: context.textSecondary,
                                 fontSize: 12,
@@ -538,7 +541,9 @@ class _NetworkConfigScreenState extends ConsumerState<NetworkConfigScreen>
                   SizedBox(height: AppTheme.spacing16),
 
                   // Rsyslog Server Section
-                  const _SectionHeader(title: 'LOGGING'),
+                  _SectionHeader(
+                    title: context.l10n.networkConfigSectionLogging,
+                  ),
                   _buildRsyslogSettings(),
                   SizedBox(height: AppTheme.spacing16),
 
@@ -567,7 +572,7 @@ class _NetworkConfigScreenState extends ConsumerState<NetworkConfigScreen>
                         SizedBox(width: AppTheme.spacing12),
                         Expanded(
                           child: Text(
-                            'Network settings are only available on devices with WiFi or Ethernet hardware support.',
+                            context.l10n.networkConfigNoHardwareInfo,
                             style: TextStyle(
                               color: context.textSecondary,
                               fontSize: 13,
@@ -590,14 +595,14 @@ class _NetworkConfigScreenState extends ConsumerState<NetworkConfigScreen>
     final modes = [
       (
         config_pb.Config_NetworkConfig_AddressMode.DHCP,
-        'DHCP',
-        'Automatically obtain IP address',
+        context.l10n.networkConfigIpModeDhcp,
+        context.l10n.networkConfigIpModeDhcpDesc,
         Icons.auto_awesome,
       ),
       (
         config_pb.Config_NetworkConfig_AddressMode.STATIC,
-        'Static',
-        'Use manually configured IP address',
+        context.l10n.networkConfigIpModeStatic,
+        context.l10n.networkConfigIpModeStaticDesc,
         Icons.edit,
       ),
     ];
@@ -683,7 +688,7 @@ class _NetworkConfigScreenState extends ConsumerState<NetworkConfigScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Rsyslog Server',
+            context.l10n.networkConfigRsyslogServer,
             style: TextStyle(
               color: context.textPrimary,
               fontWeight: FontWeight.w500,
@@ -722,7 +727,7 @@ class _NetworkConfigScreenState extends ConsumerState<NetworkConfigScreen>
           ),
           const SizedBox(height: AppTheme.spacing8),
           Text(
-            'Remote syslog server for device logs',
+            context.l10n.networkConfigRsyslogServerSubtitle,
             style: TextStyle(color: context.textSecondary, fontSize: 13),
           ),
         ],

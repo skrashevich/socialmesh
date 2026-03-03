@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'dart:async';
 import 'package:flutter/material.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/logging.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/widgets/animations.dart';
@@ -104,7 +105,7 @@ class _BluetoothConfigScreenState extends ConsumerState<BluetoothConfigScreen>
     if (_mode == config_pbenum.Config_BluetoothConfig_PairingMode.FIXED_PIN) {
       final pinText = _pinController.text;
       if (pinText.isEmpty || pinText.length < 6) {
-        showErrorSnackBar(context, 'Please enter a valid 6-digit PIN');
+        showErrorSnackBar(context, context.l10n.bluetoothInvalidPin);
         return;
       }
     }
@@ -126,7 +127,7 @@ class _BluetoothConfigScreenState extends ConsumerState<BluetoothConfigScreen>
       );
 
       if (mounted) {
-        showSuccessSnackBar(context, 'Bluetooth configuration saved');
+        showSuccessSnackBar(context, context.l10n.bluetoothSaveSuccess);
         if (target.isLocal) {
           ref
               .read(countdownProvider.notifier)
@@ -136,36 +137,40 @@ class _BluetoothConfigScreenState extends ConsumerState<BluetoothConfigScreen>
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to save: $e');
+        showErrorSnackBar(context, context.l10n.bluetoothSaveFailed('$e'));
       }
     } finally {
       safeSetState(() => _saving = false);
     }
   }
 
-  String _getModeLabel(config_pbenum.Config_BluetoothConfig_PairingMode mode) {
-    switch (mode) {
-      case config_pbenum.Config_BluetoothConfig_PairingMode.RANDOM_PIN:
-        return 'Random PIN';
-      case config_pbenum.Config_BluetoothConfig_PairingMode.FIXED_PIN:
-        return 'Fixed PIN';
-      case config_pbenum.Config_BluetoothConfig_PairingMode.NO_PIN:
-        return 'No PIN';
-      default:
-        return 'Unknown';
-    }
-  }
-
-  String _getModeDescription(
+  String _getModeLabel(
+    BuildContext context,
     config_pbenum.Config_BluetoothConfig_PairingMode mode,
   ) {
     switch (mode) {
       case config_pbenum.Config_BluetoothConfig_PairingMode.RANDOM_PIN:
-        return 'Generate random PIN on each boot';
+        return context.l10n.bluetoothModeRandom;
       case config_pbenum.Config_BluetoothConfig_PairingMode.FIXED_PIN:
-        return 'Use a fixed PIN code';
+        return context.l10n.bluetoothModeFixed;
       case config_pbenum.Config_BluetoothConfig_PairingMode.NO_PIN:
-        return 'No PIN required (insecure)';
+        return context.l10n.bluetoothModeNone;
+      default:
+        return context.l10n.bluetoothModeUnknown;
+    }
+  }
+
+  String _getModeDescription(
+    BuildContext context,
+    config_pbenum.Config_BluetoothConfig_PairingMode mode,
+  ) {
+    switch (mode) {
+      case config_pbenum.Config_BluetoothConfig_PairingMode.RANDOM_PIN:
+        return context.l10n.bluetoothModeRandomDesc;
+      case config_pbenum.Config_BluetoothConfig_PairingMode.FIXED_PIN:
+        return context.l10n.bluetoothModeFixedDesc;
+      case config_pbenum.Config_BluetoothConfig_PairingMode.NO_PIN:
+        return context.l10n.bluetoothModeNoneDesc;
       default:
         return '';
     }
@@ -182,7 +187,7 @@ class _BluetoothConfigScreenState extends ConsumerState<BluetoothConfigScreen>
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: GlassScaffold(
-        title: 'Bluetooth',
+        title: context.l10n.bluetoothTitle,
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 8),
@@ -191,7 +196,7 @@ class _BluetoothConfigScreenState extends ConsumerState<BluetoothConfigScreen>
               child: _saving
                   ? LoadingIndicator(size: 20)
                   : Text(
-                      'Save',
+                      context.l10n.bluetoothSave,
                       style: TextStyle(
                         color: context.accentColor,
                         fontWeight: FontWeight.w600,
@@ -231,14 +236,14 @@ class _BluetoothConfigScreenState extends ConsumerState<BluetoothConfigScreen>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Bluetooth Enabled',
+                                context.l10n.bluetoothEnabled,
                                 style: TextStyle(
                                   color: context.textPrimary,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
                               Text(
-                                'Enable Bluetooth connectivity',
+                                context.l10n.bluetoothEnableSubtitle,
                                 style: TextStyle(
                                   color: context.textSecondary,
                                   fontSize: 13,
@@ -261,7 +266,7 @@ class _BluetoothConfigScreenState extends ConsumerState<BluetoothConfigScreen>
 
                   // Pairing mode section
                   Text(
-                    'PAIRING MODE',
+                    context.l10n.bluetoothPairingMode,
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
@@ -285,14 +290,14 @@ class _BluetoothConfigScreenState extends ConsumerState<BluetoothConfigScreen>
                           children: [
                             ListTile(
                               title: Text(
-                                _getModeLabel(mode),
+                                _getModeLabel(context, mode),
                                 style: TextStyle(
                                   color: context.textPrimary,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
                               subtitle: Text(
-                                _getModeDescription(mode),
+                                _getModeDescription(context, mode),
                                 style: TextStyle(
                                   color: context.textSecondary,
                                   fontSize: 13,
@@ -329,7 +334,7 @@ class _BluetoothConfigScreenState extends ConsumerState<BluetoothConfigScreen>
                           .Config_BluetoothConfig_PairingMode
                           .FIXED_PIN) ...[
                     Text(
-                      'FIXED PIN',
+                      context.l10n.bluetoothFixedPin,
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
@@ -397,7 +402,7 @@ class _BluetoothConfigScreenState extends ConsumerState<BluetoothConfigScreen>
                           ),
                           SizedBox(height: AppTheme.spacing8),
                           Text(
-                            'Enter a 6-digit PIN code for Bluetooth pairing',
+                            context.l10n.bluetoothPinHint,
                             style: TextStyle(
                               color: context.textSecondary,
                               fontSize: 13,
@@ -430,7 +435,7 @@ class _BluetoothConfigScreenState extends ConsumerState<BluetoothConfigScreen>
                         SizedBox(width: AppTheme.spacing12),
                         Expanded(
                           child: Text(
-                            'Bluetooth settings control how your device pairs with phones and other devices.',
+                            context.l10n.bluetoothInfoDescription,
                             style: TextStyle(
                               color: context.textSecondary,
                               fontSize: 13,

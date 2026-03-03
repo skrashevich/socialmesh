@@ -16,12 +16,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/mqtt/mqtt_config.dart';
 import '../../../core/mqtt/mqtt_diagnostics.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/animations.dart';
 import '../../../core/widgets/glass_scaffold.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../providers/mqtt_providers.dart';
 import '../../../services/haptic_service.dart';
 
@@ -51,6 +53,7 @@ class _GlobalLayerDiagnosticsScreenState
   // ---------------------------------------------------------------------------
 
   Future<void> _runDiagnostics() async {
+    final l10n = context.l10n;
     final haptics = ref.read(hapticServiceProvider);
     await haptics.trigger(HapticType.medium);
 
@@ -92,7 +95,7 @@ class _GlobalLayerDiagnosticsScreenState
       final runningResult = DiagnosticCheckResult(
         type: checkType,
         status: DiagnosticStatus.running,
-        message: 'Checking...',
+        message: l10n.globalLayerChecking,
       );
       _updateResult(runningResult);
 
@@ -105,8 +108,8 @@ class _GlobalLayerDiagnosticsScreenState
           final skippedResult = DiagnosticCheckResult(
             type: checkType,
             status: DiagnosticStatus.skipped,
-            message: 'Skipped because ${prereq.title} failed.',
-            suggestion: 'Fix ${prereq.title} first, then re-run diagnostics.',
+            message: l10n.globalLayerSkippedBecauseFailed(prereq.title),
+            suggestion: l10n.globalLayerFixCheckFirst(prereq.title),
           );
           _updateResult(skippedResult);
           continue;
@@ -114,7 +117,7 @@ class _GlobalLayerDiagnosticsScreenState
       }
 
       // Execute the check (simulated for V1)
-      final result = await _executeCheck(checkType, config);
+      final result = await _executeCheck(checkType, config, l10n);
       if (!mounted) return;
       _updateResult(result);
     }
@@ -150,6 +153,7 @@ class _GlobalLayerDiagnosticsScreenState
   Future<DiagnosticCheckResult> _executeCheck(
     DiagnosticCheckType checkType,
     GlobalLayerConfig config,
+    AppLocalizations l10n,
   ) async {
     final stopwatch = Stopwatch()..start();
 
@@ -168,8 +172,8 @@ class _GlobalLayerDiagnosticsScreenState
         if (config.host.isEmpty) {
           return DiagnosticCheckResult.failed(
             DiagnosticCheckType.dnsResolution,
-            message: 'No hostname configured.',
-            suggestion: 'Enter a broker hostname in the setup wizard.',
+            message: l10n.globalLayerNoHostnameConfigured,
+            suggestion: l10n.globalLayerEnterBrokerHostname,
             relatedFields: const ['host'],
             duration: stopwatch.elapsed,
           );
@@ -178,7 +182,7 @@ class _GlobalLayerDiagnosticsScreenState
         // Simulated success for V1
         return DiagnosticCheckResult.passed(
           DiagnosticCheckType.dnsResolution,
-          'Hostname "${config.host}" resolved successfully.',
+          l10n.globalLayerHostnameResolved(config.host),
           duration: stopwatch.elapsed,
         );
 
@@ -188,8 +192,10 @@ class _GlobalLayerDiagnosticsScreenState
 
         return DiagnosticCheckResult.passed(
           DiagnosticCheckType.tcpConnection,
-          'TCP connection to ${config.host}:${config.effectivePort} '
-          'established.',
+          l10n.globalLayerTcpConnectionEstablished(
+            config.host,
+            config.effectivePort,
+          ),
           duration: stopwatch.elapsed,
         );
 
@@ -199,7 +205,7 @@ class _GlobalLayerDiagnosticsScreenState
 
         return DiagnosticCheckResult.passed(
           DiagnosticCheckType.tlsHandshake,
-          'TLS handshake completed successfully.',
+          l10n.globalLayerTlsHandshakeCompleted,
           duration: stopwatch.elapsed,
         );
 
@@ -210,14 +216,14 @@ class _GlobalLayerDiagnosticsScreenState
         if (config.hasCredentials) {
           return DiagnosticCheckResult.passed(
             DiagnosticCheckType.authentication,
-            'Authenticated as "${config.username}".',
+            l10n.globalLayerAuthenticatedAs(config.username),
             duration: stopwatch.elapsed,
           );
         }
 
         return DiagnosticCheckResult.passed(
           DiagnosticCheckType.authentication,
-          'Anonymous connection accepted by broker.',
+          l10n.globalLayerAnonymousConnection,
           duration: stopwatch.elapsed,
         );
 
@@ -229,9 +235,8 @@ class _GlobalLayerDiagnosticsScreenState
         return DiagnosticCheckResult.passed(
           DiagnosticCheckType.subscribeTest,
           topicCount > 0
-              ? 'Subscribed to $topicCount '
-                    '${topicCount == 1 ? 'topic' : 'topics'} successfully.'
-              : 'Subscribe capability verified (no topics enabled).',
+              ? l10n.globalLayerSubscribedToTopics(topicCount)
+              : l10n.globalLayerSubscribeCapabilityVerified,
           duration: stopwatch.elapsed,
         );
 
@@ -241,7 +246,7 @@ class _GlobalLayerDiagnosticsScreenState
 
         return DiagnosticCheckResult.passed(
           DiagnosticCheckType.publishTest,
-          'Test message published and received on loopback.',
+          l10n.globalLayerPublishTestPassed,
           duration: stopwatch.elapsed,
         );
     }
@@ -255,6 +260,7 @@ class _GlobalLayerDiagnosticsScreenState
     if (_report == null) return;
 
     if (!mounted) return;
+    final l10n = context.l10n;
     final haptics = ref.read(hapticServiceProvider);
     await haptics.trigger(HapticType.light);
 
@@ -262,7 +268,7 @@ class _GlobalLayerDiagnosticsScreenState
     await Clipboard.setData(ClipboardData(text: summary));
 
     if (!mounted) return;
-    safeShowSnackBar('Diagnostics report copied to clipboard');
+    safeShowSnackBar(l10n.globalLayerDiagnosticsReportCopied);
   }
 
   // ---------------------------------------------------------------------------
@@ -272,12 +278,12 @@ class _GlobalLayerDiagnosticsScreenState
   @override
   Widget build(BuildContext context) {
     return GlassScaffold(
-      title: 'Diagnostics',
+      title: context.l10n.globalLayerDiagnosticsTitle,
       actions: [
         if (_report != null && !_isRunning)
           IconButton(
             icon: const Icon(Icons.copy_outlined),
-            tooltip: 'Copy report',
+            tooltip: context.l10n.globalLayerCopyReportTooltip,
             onPressed: _copyToClipboard,
           ),
       ],
@@ -294,7 +300,7 @@ class _GlobalLayerDiagnosticsScreenState
             child: Padding(
               padding: const EdgeInsets.fromLTRB(AppTheme.spacing20, 16, 20, 8),
               child: Text(
-                'Check Results',
+                context.l10n.globalLayerCheckResultsHeader,
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
                   color: context.textSecondary,
                   fontWeight: FontWeight.w600,
@@ -342,7 +348,7 @@ class _GlobalLayerDiagnosticsScreenState
                 Icon(Icons.troubleshoot, size: 20, color: context.accentColor),
                 const SizedBox(width: AppTheme.spacing8),
                 Text(
-                  'Connection Diagnostics',
+                  context.l10n.globalLayerConnectionDiagnosticsTitle,
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     color: context.textPrimary,
                     fontWeight: FontWeight.w600,
@@ -352,8 +358,7 @@ class _GlobalLayerDiagnosticsScreenState
             ),
             const SizedBox(height: AppTheme.spacing8),
             Text(
-              'Run a series of checks to verify your broker connection. '
-              'Each step tests a different layer of the connection stack.',
+              context.l10n.globalLayerConnectionDiagnosticsDescription,
               style: Theme.of(
                 context,
               ).textTheme.bodySmall?.copyWith(color: context.textSecondary),
@@ -390,8 +395,10 @@ class _GlobalLayerDiagnosticsScreenState
               ),
               const SizedBox(width: AppTheme.spacing12),
               Text(
-                'Running checks... '
-                '${_report?.passedCount ?? 0}/${_report?.results.length ?? 0}',
+                context.l10n.globalLayerRunningChecksProgress(
+                  _report?.passedCount ?? 0,
+                  _report?.results.length ?? 0,
+                ),
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: context.accentColor,
                   fontWeight: FontWeight.w500,
@@ -417,7 +424,7 @@ class _GlobalLayerDiagnosticsScreenState
               child: OutlinedButton.icon(
                 onPressed: _runDiagnostics,
                 icon: const Icon(Icons.refresh, size: 18),
-                label: const Text('Run Again'),
+                label: Text(context.l10n.globalLayerRunAgain),
               ),
             ),
           ],
@@ -449,7 +456,9 @@ class _GlobalLayerDiagnosticsScreenState
                 const Icon(Icons.play_arrow, color: Colors.white, size: 22),
                 const SizedBox(width: AppTheme.spacing8),
                 Text(
-                  _hasRun ? 'Run Again' : 'Start Diagnostics',
+                  _hasRun
+                      ? context.l10n.globalLayerRunAgain
+                      : context.l10n.globalLayerStartDiagnostics,
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
@@ -489,7 +498,7 @@ class _GlobalLayerDiagnosticsScreenState
                 ),
                 const SizedBox(width: AppTheme.spacing8),
                 Text(
-                  'Summary',
+                  context.l10n.globalLayerSummaryHeader,
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     color: context.textSecondary,
                     fontWeight: FontWeight.w600,
@@ -510,7 +519,9 @@ class _GlobalLayerDiagnosticsScreenState
             if (_report!.totalDuration != null) ...[
               const SizedBox(height: AppTheme.spacing10),
               Text(
-                'Total time: ${_report!.totalDuration!.inMilliseconds}ms',
+                context.l10n.globalLayerTotalTime(
+                  _report!.totalDuration!.inMilliseconds,
+                ),
                 style: Theme.of(
                   context,
                 ).textTheme.labelSmall?.copyWith(color: context.textTertiary),
@@ -546,19 +557,21 @@ class _OverallResultBanner extends StatelessWidget {
     if (allPassed) {
       color = AppTheme.successGreen;
       icon = Icons.check_circle_outline;
-      title = 'All Clear';
-      message = 'All ${report.passedCount} checks passed';
+      title = context.l10n.globalLayerAllClearTitle;
+      message = context.l10n.globalLayerAllChecksPassed(report.passedCount);
     } else if (hasWarning) {
       color = AppTheme.warningYellow;
       icon = Icons.warning_amber;
-      title = 'Warnings Found';
-      message = 'All checks passed but with warnings to review';
+      title = context.l10n.globalLayerWarningsFoundTitle;
+      message = context.l10n.globalLayerWarningsFoundMessage;
     } else {
       color = AppTheme.errorRed;
       icon = Icons.error_outline;
-      title = 'Issues Found';
-      message =
-          '${report.failedCount} of ${report.results.length} checks failed';
+      title = context.l10n.globalLayerIssuesFoundTitle;
+      message = context.l10n.globalLayerChecksFailedCount(
+        report.failedCount,
+        report.results.length,
+      );
     }
 
     return Container(

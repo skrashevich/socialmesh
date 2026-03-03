@@ -13,5 +13,5 @@ import '../../l10n/app_localizations.dart';
 /// This is equivalent to `AppLocalizations.of(context)!` but shorter and
 /// more readable at every callsite.
 extension L10nContext on BuildContext {
-  AppLocalizations get l10n => AppLocalizations.of(this)!;
+  AppLocalizations get l10n => AppLocalizations.of(this);
 }

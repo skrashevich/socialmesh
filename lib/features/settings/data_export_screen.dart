@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/theme.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/widgets/app_bottom_sheet.dart';
@@ -34,14 +35,14 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
   @override
   Widget build(BuildContext context) {
     return GlassScaffold(
-      title: 'Export Data',
+      title: context.l10n.dataExportTitle,
       slivers: [
         SliverPadding(
           padding: const EdgeInsets.all(AppTheme.spacing16),
           sliver: SliverList(
             delegate: SliverChildListDelegate([
               // Messages
-              _buildSectionHeader('Messages'),
+              _buildSectionHeader(context.l10n.dataExportSectionMessages),
               Container(
                 decoration: BoxDecoration(
                   color: context.card,
@@ -52,12 +53,15 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
                   children: [
                     _buildExportTile(
                       icon: Icons.message_outlined,
-                      title: 'All Messages',
-                      subtitle: 'Export all channel and direct messages',
-                      format: 'CSV',
+                      title: context.l10n.dataExportAllMessages,
+                      subtitle: context.l10n.dataExportAllMessagesSubtitle,
+                      format: context.l10n.dataExportFormatCsv,
                       type: 'messages',
                       onExport: _exportMessages,
-                      onClear: () => _confirmClear('messages', 'all messages'),
+                      onClear: () => _confirmClear(
+                        'messages',
+                        context.l10n.dataExportClearAllMessages,
+                      ),
                     ),
                   ],
                 ),
@@ -66,7 +70,7 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
               SizedBox(height: AppTheme.spacing24),
 
               // Telemetry
-              _buildSectionHeader('Telemetry'),
+              _buildSectionHeader(context.l10n.dataExportSectionTelemetry),
               Container(
                 decoration: BoxDecoration(
                   color: context.card,
@@ -77,48 +81,55 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
                   children: [
                     _buildExportTile(
                       icon: Icons.battery_charging_full,
-                      title: 'Device Metrics',
-                      subtitle: 'Battery, voltage, utilization logs',
-                      format: 'CSV',
+                      title: context.l10n.dataExportDeviceMetrics,
+                      subtitle: context.l10n.dataExportDeviceMetricsSubtitle,
+                      format: context.l10n.dataExportFormatCsv,
                       type: 'device_metrics',
                       onExport: _exportDeviceMetrics,
-                      onClear: () =>
-                          _confirmClear('device_metrics', 'device metrics'),
+                      onClear: () => _confirmClear(
+                        'device_metrics',
+                        context.l10n.dataExportClearDeviceMetrics,
+                      ),
                     ),
                     _buildDivider(),
                     _buildExportTile(
                       icon: Icons.thermostat,
-                      title: 'Environment Metrics',
-                      subtitle: 'Temperature, humidity, pressure logs',
-                      format: 'CSV',
+                      title: context.l10n.dataExportEnvironmentMetrics,
+                      subtitle:
+                          context.l10n.dataExportEnvironmentMetricsSubtitle,
+                      format: context.l10n.dataExportFormatCsv,
                       type: 'environment_metrics',
                       onExport: _exportEnvironmentMetrics,
                       onClear: () => _confirmClear(
                         'environment_metrics',
-                        'environment metrics',
+                        context.l10n.dataExportClearEnvironmentMetrics,
                       ),
                     ),
                     _buildDivider(),
                     _buildExportTile(
                       icon: Icons.air,
-                      title: 'Air Quality',
-                      subtitle: 'PM2.5, PM10, CO2 readings',
-                      format: 'CSV',
+                      title: context.l10n.dataExportAirQuality,
+                      subtitle: context.l10n.dataExportAirQualitySubtitle,
+                      format: context.l10n.dataExportFormatCsv,
                       type: 'air_quality',
                       onExport: _exportAirQuality,
-                      onClear: () =>
-                          _confirmClear('air_quality', 'air quality data'),
+                      onClear: () => _confirmClear(
+                        'air_quality',
+                        context.l10n.dataExportClearAirQualityData,
+                      ),
                     ),
                     _buildDivider(),
                     _buildExportTile(
                       icon: Icons.bolt,
-                      title: 'Power Metrics',
-                      subtitle: 'Channel voltage and current',
-                      format: 'CSV',
+                      title: context.l10n.dataExportPowerMetrics,
+                      subtitle: context.l10n.dataExportPowerMetricsSubtitle,
+                      format: context.l10n.dataExportFormatCsv,
                       type: 'power_metrics',
                       onExport: _exportPowerMetrics,
-                      onClear: () =>
-                          _confirmClear('power_metrics', 'power metrics'),
+                      onClear: () => _confirmClear(
+                        'power_metrics',
+                        context.l10n.dataExportClearPowerMetrics,
+                      ),
                     ),
                   ],
                 ),
@@ -127,7 +138,7 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
               SizedBox(height: AppTheme.spacing24),
 
               // Position Data
-              _buildSectionHeader('Position Data'),
+              _buildSectionHeader(context.l10n.dataExportSectionPositionData),
               Container(
                 decoration: BoxDecoration(
                   color: context.card,
@@ -138,34 +149,41 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
                   children: [
                     _buildExportTile(
                       icon: Icons.location_on_outlined,
-                      title: 'Position History',
-                      subtitle: 'GPS position logs with timestamps',
-                      format: 'CSV',
+                      title: context.l10n.dataExportPositionHistory,
+                      subtitle: context.l10n.dataExportPositionHistorySubtitle,
+                      format: context.l10n.dataExportFormatCsv,
                       type: 'positions',
                       onExport: _exportPositions,
-                      onClear: () =>
-                          _confirmClear('positions', 'position history'),
+                      onClear: () => _confirmClear(
+                        'positions',
+                        context.l10n.dataExportClearPositionHistory,
+                      ),
                     ),
                     _buildDivider(),
                     _buildExportTile(
                       icon: Icons.route,
-                      title: 'Routes',
-                      subtitle: 'Recorded routes and tracks',
-                      format: 'GPX',
+                      title: context.l10n.dataExportRoutes,
+                      subtitle: context.l10n.dataExportRoutesSubtitle,
+                      format: context.l10n.dataExportFormatGpx,
                       type: 'routes',
                       onExport: _exportRoutes,
-                      onClear: () => _confirmClear('routes', 'all routes'),
+                      onClear: () => _confirmClear(
+                        'routes',
+                        context.l10n.dataExportClearAllRoutes,
+                      ),
                     ),
                     _buildDivider(),
                     _buildExportTile(
                       icon: Icons.timeline,
-                      title: 'Traceroutes',
-                      subtitle: 'Network path analysis',
-                      format: 'CSV',
+                      title: context.l10n.dataExportTraceroutes,
+                      subtitle: context.l10n.dataExportTraceroutesSubtitle,
+                      format: context.l10n.dataExportFormatCsv,
                       type: 'traceroutes',
                       onExport: _exportTraceroutes,
-                      onClear: () =>
-                          _confirmClear('traceroutes', 'traceroute data'),
+                      onClear: () => _confirmClear(
+                        'traceroutes',
+                        context.l10n.dataExportClearTracerouteData,
+                      ),
                     ),
                   ],
                 ),
@@ -174,7 +192,7 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
               SizedBox(height: AppTheme.spacing24),
 
               // Automations
-              _buildSectionHeader('Automations'),
+              _buildSectionHeader(context.l10n.dataExportSectionAutomations),
               Container(
                 decoration: BoxDecoration(
                   color: context.card,
@@ -185,24 +203,28 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
                   children: [
                     _buildExportTile(
                       icon: Icons.auto_awesome,
-                      title: 'Automation Rules',
-                      subtitle: 'All automation configurations',
-                      format: 'JSON',
+                      title: context.l10n.dataExportAutomationRules,
+                      subtitle: context.l10n.dataExportAutomationRulesSubtitle,
+                      format: context.l10n.dataExportFormatJson,
                       type: 'automations',
                       onExport: _exportAutomations,
-                      onClear: () =>
-                          _confirmClear('automations', 'all automation rules'),
+                      onClear: () => _confirmClear(
+                        'automations',
+                        context.l10n.dataExportClearAllAutomationRules,
+                      ),
                     ),
                     _buildDivider(),
                     _buildExportTile(
                       icon: Icons.history,
-                      title: 'Execution Log',
-                      subtitle: 'Automation trigger history with results',
-                      format: 'JSON',
+                      title: context.l10n.dataExportExecutionLog,
+                      subtitle: context.l10n.dataExportExecutionLogSubtitle,
+                      format: context.l10n.dataExportFormatJson,
                       type: 'automation_log',
                       onExport: _exportAutomationLog,
-                      onClear: () =>
-                          _confirmClear('automation_log', 'automation log'),
+                      onClear: () => _confirmClear(
+                        'automation_log',
+                        context.l10n.dataExportClearAutomationLog,
+                      ),
                     ),
                   ],
                 ),
@@ -211,7 +233,7 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
               SizedBox(height: AppTheme.spacing24),
 
               // Nodes
-              _buildSectionHeader('Network'),
+              _buildSectionHeader(context.l10n.dataExportSectionNetwork),
               Container(
                 decoration: BoxDecoration(
                   color: context.card,
@@ -222,9 +244,9 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
                   children: [
                     _buildExportTile(
                       icon: Icons.hub_outlined,
-                      title: 'Node List',
-                      subtitle: 'All discovered nodes with details',
-                      format: 'CSV',
+                      title: context.l10n.dataExportNodeList,
+                      subtitle: context.l10n.dataExportNodeListSubtitle,
+                      format: context.l10n.dataExportFormatCsv,
                       type: 'nodes',
                       onExport: _exportNodes,
                       onClear: null, // Can't clear nodes - managed by protocol
@@ -236,7 +258,7 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
               SizedBox(height: AppTheme.spacing24),
 
               // All Data
-              _buildSectionHeader('Complete Export'),
+              _buildSectionHeader(context.l10n.dataExportSectionCompleteExport),
               Container(
                 decoration: BoxDecoration(
                   color: context.accentColor.withValues(alpha: 0.1),
@@ -247,9 +269,9 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
                 ),
                 child: _buildExportTile(
                   icon: Icons.archive_outlined,
-                  title: 'Export All Data',
-                  subtitle: 'Complete backup of all app data',
-                  format: 'JSON',
+                  title: context.l10n.dataExportExportAll,
+                  subtitle: context.l10n.dataExportExportAllSubtitle,
+                  format: context.l10n.dataExportFormatJson,
                   type: 'all',
                   onExport: _exportAll,
                   onClear: null,
@@ -260,7 +282,7 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
               SizedBox(height: AppTheme.spacing24),
 
               // Clear All Data
-              _buildSectionHeader('Clear Data'),
+              _buildSectionHeader(context.l10n.dataExportSectionClearData),
               Container(
                 decoration: BoxDecoration(
                   color: AppTheme.errorRed.withValues(alpha: 0.1),
@@ -297,7 +319,7 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Clear All Data',
+                                context.l10n.dataExportClearAll,
                                 style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w600,
@@ -306,7 +328,7 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
                               ),
                               SizedBox(height: AppTheme.spacing2),
                               Text(
-                                'Delete all stored telemetry, routes, and logs',
+                                context.l10n.dataExportClearAllSubtitle,
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: context.textTertiary,
@@ -348,7 +370,7 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
                     const SizedBox(width: AppTheme.spacing12),
                     Expanded(
                       child: Text(
-                        'Exported files can be shared via email, AirDrop, or saved to Files. Tap the trash icon to clear specific data.',
+                        context.l10n.dataExportInfoText,
                         style: TextStyle(
                           fontSize: 13,
                           color: context.textSecondary,
@@ -475,7 +497,7 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
                 onPressed: onClear,
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-                tooltip: 'Clear data',
+                tooltip: context.l10n.dataExportTooltipClearData,
               ),
           ],
           SizedBox(width: AppTheme.spacing4),
@@ -488,7 +510,7 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
               onPressed: () => _handleExport(type, onExport),
               padding: EdgeInsets.zero,
               constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-              tooltip: 'Export',
+              tooltip: context.l10n.dataExportTooltipExport,
             ),
         ],
       ),
@@ -507,7 +529,10 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
       await exportFn();
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Export failed: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.dataExportExportFailed(e.toString()),
+        );
       }
     } finally {
       if (mounted) {
@@ -519,12 +544,12 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
   }
 
   void _confirmClear(String type, String dataName) async {
+    final l10n = context.l10n;
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Clear $dataName?',
-      message:
-          'This will permanently delete all $dataName. This action cannot be undone.',
-      confirmLabel: 'Delete',
+      title: l10n.dataExportClearConfirmTitle(dataName),
+      message: l10n.dataExportClearConfirmMsg(dataName),
+      confirmLabel: l10n.dataExportClearConfirmBtn,
       isDestructive: true,
     );
     if (confirmed == true && mounted) {
@@ -533,12 +558,12 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
   }
 
   void _confirmClearAll() async {
+    final l10n = context.l10n;
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Clear All Data?',
-      message:
-          'This will permanently delete ALL stored data including telemetry, routes, and automation logs. This action cannot be undone.',
-      confirmLabel: 'Delete All',
+      title: l10n.dataExportClearAllConfirmTitle,
+      message: l10n.dataExportClearAllConfirmMsg,
+      confirmLabel: l10n.dataExportClearAllConfirmBtn,
       isDestructive: true,
     );
     if (confirmed == true && mounted) {
@@ -548,6 +573,7 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
 
   Future<void> _handleClear(String type) async {
     // Capture providers BEFORE await to avoid accessing disposed state
+    final l10n = context.l10n;
     final messagesNotifier = ref.read(messagesProvider.notifier);
     final routesNotifier = ref.read(routesProvider.notifier);
     final automationsNotifier = ref.read(automationsProvider.notifier);
@@ -606,9 +632,9 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
       }
 
       if (!mounted) return;
-      showSuccessSnackBar(context, 'Data cleared');
+      showSuccessSnackBar(context, l10n.dataExportDataCleared);
     } catch (e) {
-      showErrorSnackBar(context, 'Failed to clear data: $e');
+      showErrorSnackBar(context, l10n.dataExportClearFailed(e.toString()));
     } finally {
       safeSetState(() {
         _clearingTypes.remove(type);
@@ -630,6 +656,7 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
     ];
 
     // Capture providers BEFORE await
+    final l10n = context.l10n;
     final messagesNotifier = ref.read(messagesProvider.notifier);
     final routesNotifier = ref.read(routesProvider.notifier);
     final automationRepo = ref.read(automationRepositoryProvider);
@@ -658,9 +685,9 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
       await automationRepo.clearLog();
 
       if (!mounted) return;
-      showSuccessSnackBar(context, 'All data cleared');
+      showSuccessSnackBar(context, l10n.dataExportAllDataCleared);
     } catch (e) {
-      showErrorSnackBar(context, 'Failed to clear data: $e');
+      showErrorSnackBar(context, l10n.dataExportClearFailed(e.toString()));
     } finally {
       safeSetState(() {
         _clearingTypes.clear();
@@ -677,7 +704,10 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
 
     for (final msg in messages) {
       final fromNode = nodes[msg.from];
-      final fromName = fromNode?.longName ?? fromNode?.shortName ?? 'Unknown';
+      final fromName =
+          fromNode?.longName ??
+          fromNode?.shortName ??
+          context.l10n.dataExportUnknownSender;
       final timestamp = msg.timestamp.toIso8601String();
       final text = msg.text.replaceAll('"', '""');
       buffer.writeln(
@@ -685,10 +715,14 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
       );
     }
 
-    await _shareText(buffer.toString(), subject: 'Socialmesh Messages Export');
+    await _shareText(
+      buffer.toString(),
+      subject: context.l10n.dataExportShareSubjectMessages,
+    );
   }
 
   Future<void> _exportDeviceMetrics() async {
+    final subject = context.l10n.dataExportShareSubjectDeviceMetrics;
     final logs = await ref.read(deviceMetricsLogsProvider.future);
 
     final buffer = StringBuffer();
@@ -702,13 +736,11 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
       );
     }
 
-    await _shareText(
-      buffer.toString(),
-      subject: 'Socialmesh Device Metrics Export',
-    );
+    await _shareText(buffer.toString(), subject: subject);
   }
 
   Future<void> _exportEnvironmentMetrics() async {
+    final subject = context.l10n.dataExportShareSubjectEnvironmentMetrics;
     final logs = await ref.read(environmentMetricsLogsProvider.future);
 
     final buffer = StringBuffer();
@@ -722,13 +754,11 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
       );
     }
 
-    await _shareText(
-      buffer.toString(),
-      subject: 'Socialmesh Environment Metrics Export',
-    );
+    await _shareText(buffer.toString(), subject: subject);
   }
 
   Future<void> _exportAirQuality() async {
+    final subject = context.l10n.dataExportShareSubjectAirQuality;
     final logs = await ref.read(airQualityMetricsLogsProvider.future);
 
     final buffer = StringBuffer();
@@ -740,13 +770,11 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
       );
     }
 
-    await _shareText(
-      buffer.toString(),
-      subject: 'Socialmesh Air Quality Export',
-    );
+    await _shareText(buffer.toString(), subject: subject);
   }
 
   Future<void> _exportPowerMetrics() async {
+    final subject = context.l10n.dataExportShareSubjectPowerMetrics;
     final logs = await ref.read(powerMetricsLogsProvider.future);
 
     final buffer = StringBuffer();
@@ -760,13 +788,11 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
       );
     }
 
-    await _shareText(
-      buffer.toString(),
-      subject: 'Socialmesh Power Metrics Export',
-    );
+    await _shareText(buffer.toString(), subject: subject);
   }
 
   Future<void> _exportPositions() async {
+    final subject = context.l10n.dataExportShareSubjectPositionHistory;
     final logs = await ref.read(positionLogsProvider.future);
 
     final buffer = StringBuffer();
@@ -780,10 +806,7 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
       );
     }
 
-    await _shareText(
-      buffer.toString(),
-      subject: 'Socialmesh Position History Export',
-    );
+    await _shareText(buffer.toString(), subject: subject);
   }
 
   Future<void> _exportRoutes() async {
@@ -791,7 +814,7 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
 
     if (routes.isEmpty) {
       if (mounted) {
-        showInfoSnackBar(context, 'No routes to export');
+        showInfoSnackBar(context, context.l10n.dataExportNoRoutesToExport);
       }
       return;
     }
@@ -826,10 +849,14 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
 
     buffer.writeln('</gpx>');
 
-    await _shareText(buffer.toString(), subject: 'Socialmesh Routes Export');
+    await _shareText(
+      buffer.toString(),
+      subject: context.l10n.dataExportShareSubjectRoutes,
+    );
   }
 
   Future<void> _exportTraceroutes() async {
+    final l10n = context.l10n;
     final logs = await ref.read(traceRouteLogsProvider.future);
 
     final buffer = StringBuffer();
@@ -837,7 +864,9 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
 
     for (final log in logs) {
       final hopNodes = log.hops.map((h) => h.nodeNum).join('>');
-      final snrValues = log.hops.map((h) => h.snr ?? 'N/A').join(',');
+      final snrValues = log.hops
+          .map((h) => h.snr ?? l10n.dataExportSnrNotAvailable)
+          .join(',');
       buffer.writeln(
         '${log.timestamp.toIso8601String()},${log.targetNode},${log.hops.length},"$hopNodes","$snrValues"',
       );
@@ -845,7 +874,7 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
 
     await _shareText(
       buffer.toString(),
-      subject: 'Socialmesh Traceroute Export',
+      subject: l10n.dataExportShareSubjectTraceroutes,
     );
   }
 
@@ -855,7 +884,7 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
 
     if (automations.isEmpty) {
       if (mounted) {
-        showInfoSnackBar(context, 'No automations to export');
+        showInfoSnackBar(context, context.l10n.dataExportNoAutomationsToExport);
       }
       return;
     }
@@ -867,7 +896,10 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
     };
 
     final json = const JsonEncoder.withIndent('  ').convert(data);
-    await _shareText(json, subject: 'Socialmesh Automations Export');
+    await _shareText(
+      json,
+      subject: context.l10n.dataExportShareSubjectAutomations,
+    );
   }
 
   Future<void> _exportAutomationLog() async {
@@ -876,7 +908,10 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
 
     if (log.isEmpty) {
       if (mounted) {
-        showInfoSnackBar(context, 'No automation log entries');
+        showInfoSnackBar(
+          context,
+          context.l10n.dataExportNoAutomationLogEntries,
+        );
       }
       return;
     }
@@ -888,7 +923,10 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
     };
 
     final json = const JsonEncoder.withIndent('  ').convert(data);
-    await _shareText(json, subject: 'Socialmesh Automation Log Export');
+    await _shareText(
+      json,
+      subject: context.l10n.dataExportShareSubjectAutomationLog,
+    );
   }
 
   Future<void> _exportNodes() async {
@@ -905,7 +943,10 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
       );
     }
 
-    await _shareText(buffer.toString(), subject: 'Socialmesh Node List Export');
+    await _shareText(
+      buffer.toString(),
+      subject: context.l10n.dataExportShareSubjectNodeList,
+    );
   }
 
   Future<void> _exportAll() async {
@@ -942,7 +983,10 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
 
     final json = const JsonEncoder.withIndent('  ').convert(data);
 
-    await _shareText(json, subject: 'Socialmesh Complete Export');
+    await _shareText(
+      json,
+      subject: context.l10n.dataExportShareSubjectComplete,
+    );
   }
 
   Map<String, dynamic> _nodeToMap(MeshNode node) {

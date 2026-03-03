@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/app_bottom_sheet.dart';
@@ -55,13 +56,9 @@ class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen>
     if (!value) {
       final confirmed = await AppBottomSheet.showConfirm(
         context: context,
-        title: 'Disable Usage Analytics?',
-        message:
-            'Usage analytics help us understand how the app is used and '
-            'identify issues. No personal messages or location data are '
-            'collected.\n\n'
-            'You can re-enable this at any time.',
-        confirmLabel: 'Disable',
+        title: context.l10n.privacySettingsDisableAnalyticsTitle,
+        message: context.l10n.privacySettingsDisableAnalyticsMessage,
+        confirmLabel: context.l10n.privacySettingsDisable,
         isDestructive: true,
       );
       if (confirmed != true || !mounted) return;
@@ -74,7 +71,9 @@ class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen>
     if (mounted) {
       showSuccessSnackBar(
         context,
-        value ? 'Usage analytics enabled' : 'Usage analytics disabled',
+        value
+            ? context.l10n.privacySettingsAnalyticsEnabled
+            : context.l10n.privacySettingsAnalyticsDisabled,
       );
     }
   }
@@ -86,12 +85,9 @@ class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen>
     if (!value) {
       final confirmed = await AppBottomSheet.showConfirm(
         context: context,
-        title: 'Disable Crash Reporting?',
-        message:
-            'Crash reports help us fix bugs faster. No personal messages '
-            'or location data are included in crash reports.\n\n'
-            'You can re-enable this at any time.',
-        confirmLabel: 'Disable',
+        title: context.l10n.privacySettingsDisableCrashTitle,
+        message: context.l10n.privacySettingsDisableCrashMessage,
+        confirmLabel: context.l10n.privacySettingsDisable,
         isDestructive: true,
       );
       if (confirmed != true || !mounted) return;
@@ -104,7 +100,9 @@ class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen>
     if (mounted) {
       showSuccessSnackBar(
         context,
-        value ? 'Crash reporting enabled' : 'Crash reporting disabled',
+        value
+            ? context.l10n.privacySettingsCrashEnabled
+            : context.l10n.privacySettingsCrashDisabled,
       );
     }
   }
@@ -112,7 +110,7 @@ class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen>
   @override
   Widget build(BuildContext context) {
     return GlassScaffold(
-      title: 'Privacy',
+      title: context.l10n.privacySettingsTitle,
       slivers: [
         SliverPadding(
           padding: const EdgeInsets.all(AppTheme.spacing16),
@@ -136,9 +134,7 @@ class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen>
                     const SizedBox(width: AppTheme.spacing12),
                     Expanded(
                       child: Text(
-                        'Socialmesh collects minimal data to improve app '
-                        'stability and performance. You can control what is '
-                        'shared below.',
+                        context.l10n.privacySettingsInfoDescription,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: context.textSecondary,
                         ),
@@ -153,7 +149,7 @@ class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen>
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
-                  'DATA COLLECTION',
+                  context.l10n.privacySettingsDataCollection,
                   style: Theme.of(context).textTheme.labelSmall?.copyWith(
                     color: context.textTertiary,
                     fontWeight: FontWeight.w600,
@@ -166,10 +162,8 @@ class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen>
               // Analytics toggle
               _PrivacyToggleTile(
                 icon: Icons.analytics_outlined,
-                title: 'Usage Analytics',
-                subtitle:
-                    'Helps us understand which features are used most. '
-                    'No message content or precise location is collected.',
+                title: context.l10n.privacySettingsUsageAnalytics,
+                subtitle: context.l10n.privacySettingsUsageAnalyticsSubtitle,
                 value: _analyticsEnabled,
                 onChanged: _consentService != null ? _toggleAnalytics : null,
               ),
@@ -179,10 +173,8 @@ class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen>
               // Crashlytics toggle
               _PrivacyToggleTile(
                 icon: Icons.bug_report_outlined,
-                title: 'Crash Reporting',
-                subtitle:
-                    'Automatically sends crash data when the app encounters '
-                    'an error. Helps us fix bugs faster.',
+                title: context.l10n.privacySettingsCrashReporting,
+                subtitle: context.l10n.privacySettingsCrashReportingSubtitle,
                 value: _crashlyticsEnabled,
                 onChanged: _consentService != null ? _toggleCrashlytics : null,
               ),
@@ -217,7 +209,7 @@ class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen>
                           const SizedBox(width: AppTheme.spacing16),
                           Expanded(
                             child: Text(
-                              'Privacy Policy',
+                              context.l10n.privacySettingsPrivacyPolicy,
                               style: Theme.of(context).textTheme.titleSmall
                                   ?.copyWith(
                                     fontWeight: FontWeight.w500,
@@ -241,7 +233,7 @@ class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen>
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
-                  'THIRD-PARTY SERVICES',
+                  context.l10n.privacySettingsThirdPartyServices,
                   style: Theme.of(context).textTheme.labelSmall?.copyWith(
                     color: context.textTertiary,
                     fontWeight: FontWeight.w600,
@@ -252,15 +244,15 @@ class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen>
               const SizedBox(height: AppTheme.spacing8),
               _ThirdPartyInfoTile(
                 title: 'Firebase (Google)',
-                categories: 'Crash reports, usage analytics (if opted in)',
+                categories: context.l10n.privacySettingsFirebaseCategories,
               ),
               _ThirdPartyInfoTile(
                 title: 'RevenueCat',
-                categories: 'Purchase identifiers, subscription status',
+                categories: context.l10n.privacySettingsRevenueCatCategories,
               ),
               _ThirdPartyInfoTile(
                 title: 'Sigil API (Socialmesh)',
-                categories: 'Hashed node identifiers for artwork generation',
+                categories: context.l10n.privacySettingsSigilCategories,
               ),
 
               const SizedBox(height: AppTheme.spacing32),

@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/app_bottom_sheet.dart';
@@ -48,7 +49,7 @@ class _AdminPostsScreenState extends State<AdminPostsScreen>
 
     return GlassScaffold(
       resizeToAvoidBottomInset: false,
-      title: 'Signals',
+      title: context.l10n.adminPostsTitle,
       actions: [
         IconButton(
           icon: _isDeleting
@@ -58,12 +59,12 @@ class _AdminPostsScreenState extends State<AdminPostsScreen>
                   child: CircularProgressIndicator(strokeWidth: 2),
                 )
               : const Icon(Icons.delete_sweep_outlined),
-          tooltip: 'Delete all signals',
+          tooltip: context.l10n.adminPostsDeleteAll,
           onPressed: _isDeleting ? null : () => _confirmBulkDelete(context),
         ),
         IconButton(
           icon: const Icon(Icons.refresh_outlined),
-          tooltip: 'Refresh snapshot',
+          tooltip: context.l10n.adminPostsRefresh,
           onPressed: () => safeSetState(() {}),
         ),
       ],
@@ -76,7 +77,7 @@ class _AdminPostsScreenState extends State<AdminPostsScreen>
             searchQuery: _searchQuery,
             onSearchChanged: (value) =>
                 safeSetState(() => _searchQuery = value.trim()),
-            hintText: 'Filter by content or author ID',
+            hintText: context.l10n.adminPostsFilterHint,
             textScaler: MediaQuery.textScalerOf(context),
           ),
         ),
@@ -87,7 +88,7 @@ class _AdminPostsScreenState extends State<AdminPostsScreen>
               if (snapshot.hasError) {
                 return Center(
                   child: Text(
-                    'Failed to load posts: ${snapshot.error}',
+                    context.l10n.adminPostsLoadFailed('${snapshot.error}'),
                     style: TextStyle(color: context.textTertiary),
                   ),
                 );
@@ -154,7 +155,7 @@ class _AdminPostsScreenState extends State<AdminPostsScreen>
               if (entries.isEmpty) {
                 return Center(
                   child: Text(
-                    'No posts matched',
+                    context.l10n.adminPostsNoMatched,
                     style: TextStyle(color: context.textSecondary),
                   ),
                 );
@@ -175,7 +176,7 @@ class _AdminPostsScreenState extends State<AdminPostsScreen>
                               padding: const EdgeInsets.only(left: 16),
                               children: [
                                 _AdminFilterChip(
-                                  label: 'All',
+                                  label: context.l10n.adminPostsFilterAll,
                                   count: totalCount,
                                   isSelected:
                                       !_showSignalsOnly &&
@@ -191,7 +192,7 @@ class _AdminPostsScreenState extends State<AdminPostsScreen>
                                 ),
                                 const SizedBox(width: AppTheme.spacing8),
                                 _AdminFilterChip(
-                                  label: 'Signals',
+                                  label: context.l10n.adminPostsFilterSignals,
                                   count: signalCount,
                                   isSelected: _showSignalsOnly,
                                   color: AccentColors.cyan,
@@ -202,7 +203,7 @@ class _AdminPostsScreenState extends State<AdminPostsScreen>
                                 ),
                                 const SizedBox(width: AppTheme.spacing8),
                                 _AdminFilterChip(
-                                  label: 'Expired',
+                                  label: context.l10n.adminPostsFilterExpired,
                                   count: expiredCount,
                                   isSelected: _showExpiredOnly,
                                   color: AppTheme.warningYellow,
@@ -213,7 +214,7 @@ class _AdminPostsScreenState extends State<AdminPostsScreen>
                                 ),
                                 const SizedBox(width: AppTheme.spacing8),
                                 _AdminFilterChip(
-                                  label: 'Location',
+                                  label: context.l10n.adminPostsFilterLocation,
                                   count: locationCount,
                                   isSelected: _showWithLocation,
                                   color: AccentColors.green,
@@ -223,7 +224,7 @@ class _AdminPostsScreenState extends State<AdminPostsScreen>
                                 ),
                                 const SizedBox(width: AppTheme.spacing8),
                                 _AdminFilterChip(
-                                  label: 'Media',
+                                  label: context.l10n.adminPostsFilterMedia,
                                   count: mediaCount,
                                   isSelected: _showWithMedia,
                                   color: AccentColors.orange,
@@ -275,10 +276,9 @@ class _AdminPostsScreenState extends State<AdminPostsScreen>
     final confirmed =
         await AppBottomSheet.showConfirm(
           context: context,
-          title: 'Delete post?',
-          message:
-              'Deleting a post removes it from Firebase immediately. This cannot be undone.',
-          confirmLabel: 'Delete',
+          title: context.l10n.adminPostsDeletePostTitle,
+          message: context.l10n.adminPostsDeletePostMessage,
+          confirmLabel: context.l10n.adminPostsDeleteConfirm,
           isDestructive: true,
         ) ??
         false;
@@ -308,7 +308,7 @@ class _AdminPostsScreenState extends State<AdminPostsScreen>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Delete signals?',
+              context.l10n.adminPostsDeleteSignalsTitle,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
@@ -318,13 +318,16 @@ class _AdminPostsScreenState extends State<AdminPostsScreen>
             const SizedBox(height: AppTheme.spacing12),
             Text(
               hasFilters
-                  ? 'Delete filtered ($filteredCount) or all ($totalCount) signals.'
-                  : 'Delete all $totalCount signals.',
+                  ? context.l10n.adminPostsDeleteFilteredMessage(
+                      filteredCount,
+                      totalCount,
+                    )
+                  : context.l10n.adminPostsDeleteAllMessage(totalCount),
               style: TextStyle(color: context.textPrimary),
             ),
             const SizedBox(height: AppTheme.spacing12),
             Text(
-              'This cannot be undone. Type DELETE to confirm.',
+              context.l10n.adminPostsDeleteWarning,
               style: TextStyle(color: context.textSecondary),
             ),
             const SizedBox(height: AppTheme.spacing8),
@@ -333,8 +336,8 @@ class _AdminPostsScreenState extends State<AdminPostsScreen>
                   FocusManager.instance.primaryFocus?.unfocus(),
               maxLength: 100,
               onChanged: (value) => setSheetState(() => input = value.trim()),
-              decoration: const InputDecoration(
-                hintText: 'DELETE',
+              decoration: InputDecoration(
+                hintText: context.l10n.adminPostsDeleteHint,
                 counterText: '',
               ),
             ),
@@ -351,7 +354,7 @@ class _AdminPostsScreenState extends State<AdminPostsScreen>
                         borderRadius: BorderRadius.circular(AppTheme.radius12),
                       ),
                     ),
-                    child: const Text('Cancel'),
+                    child: Text(context.l10n.commonCancel),
                   ),
                 ),
                 if (hasFilters) ...[
@@ -505,7 +508,9 @@ class _AdminPostCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  post.content.isNotEmpty ? post.content : '(no text)',
+                  post.content.isNotEmpty
+                      ? post.content
+                      : context.l10n.adminPostsNoText,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -516,7 +521,7 @@ class _AdminPostCard extends StatelessWidget {
                 ),
                 const SizedBox(height: AppTheme.spacing6),
                 Text(
-                  'Author ${post.authorId}',
+                  context.l10n.adminPostsAuthor(post.authorId),
                   style: TextStyle(color: context.textSecondary, fontSize: 12),
                 ),
                 const SizedBox(height: AppTheme.spacing8),
@@ -557,7 +562,10 @@ class _AdminPostCard extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      'Comments ${post.commentCount} · Likes ${post.likeCount}',
+                      context.l10n.adminPostsStats(
+                        post.commentCount,
+                        post.likeCount,
+                      ),
                       style: TextStyle(
                         color: context.textTertiary,
                         fontSize: 12,
@@ -565,7 +573,7 @@ class _AdminPostCard extends StatelessWidget {
                     ),
                     const Spacer(),
                     IconButton(
-                      tooltip: 'Delete post',
+                      tooltip: context.l10n.adminPostsDeletePostTooltip,
                       icon: const Icon(Icons.delete_outline),
                       color: AppTheme.errorRed,
                       onPressed: onDelete,

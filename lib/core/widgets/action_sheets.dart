@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../l10n/l10n_extension.dart';
 import '../safety/lifecycle_mixin.dart';
 import '../theme.dart';
 import '../../utils/snackbar.dart';
@@ -42,13 +43,13 @@ class _QuickMessageSheetContentState extends State<QuickMessageSheetContent>
   bool _isSending = false;
   late int? _selectedNodeNum;
 
-  static const _presets = [
-    'On my way',
-    'Running late',
-    'Check in OK',
-    'Need assistance',
-    'At destination',
-    'Weather alert',
+  List<String> _localizedPresets(BuildContext context) => [
+    context.l10n.actionSheetPresetOnMyWay,
+    context.l10n.actionSheetPresetRunningLate,
+    context.l10n.actionSheetPresetCheckInOk,
+    context.l10n.actionSheetPresetNeedAssistance,
+    context.l10n.actionSheetPresetAtDestination,
+    context.l10n.actionSheetPresetWeatherAlert,
   ];
 
   @override
@@ -158,7 +159,7 @@ class _QuickMessageSheetContentState extends State<QuickMessageSheetContent>
           .where((n) => n.nodeNum != myNodeNum)
           .toList();
       final targetName = _selectedNodeNum == null
-          ? 'all nodes'
+          ? context.l10n.actionSheetAllNodes
           : availableNodes
                     .firstWhere(
                       (n) => n.nodeNum == _selectedNodeNum,
@@ -166,21 +167,21 @@ class _QuickMessageSheetContentState extends State<QuickMessageSheetContent>
                     )
                     .longName ??
                 'node';
-      showSuccessSnackBar(context, 'Sent to $targetName');
+      showSuccessSnackBar(context, context.l10n.actionSheetSentTo(targetName));
     } catch (e) {
       safeSetState(() => _isSending = false);
-      showErrorSnackBar(context, 'Failed to send: $e');
+      showErrorSnackBar(context, context.l10n.actionSheetSendFailed('$e'));
     }
   }
 
   void _showNodeSelector() async {
     final selection = await NodeSelectorSheet.show(
       context,
-      title: 'Send to',
+      title: context.l10n.actionSheetSendTo,
       allowBroadcast: true,
       initialSelection: _selectedNodeNum,
-      broadcastLabel: 'All Nodes',
-      broadcastSubtitle: 'Broadcast to everyone on channel',
+      broadcastLabel: context.l10n.actionSheetAllNodes,
+      broadcastSubtitle: context.l10n.actionSheetBroadcastToEveryone,
     );
 
     if (selection != null && mounted) {
@@ -194,7 +195,7 @@ class _QuickMessageSheetContentState extends State<QuickMessageSheetContent>
   Widget build(BuildContext context) {
     final nodes = _availableNodes;
     final selectedName = _selectedNodeNum == null
-        ? 'All Nodes'
+        ? context.l10n.actionSheetAllNodes
         : nodes
                   .firstWhere(
                     (n) => n.nodeNum == _selectedNodeNum,
@@ -233,7 +234,7 @@ class _QuickMessageSheetContentState extends State<QuickMessageSheetContent>
               const SizedBox(width: AppTheme.spacing12),
               Expanded(
                 child: Text(
-                  'Quick Message',
+                  context.l10n.actionSheetQuickMessage,
                   style: TextStyle(
                     color: context.textPrimary,
                     fontSize: 18,
@@ -258,7 +259,7 @@ class _QuickMessageSheetContentState extends State<QuickMessageSheetContent>
             children: [
               // Recipient selector
               Text(
-                'TO',
+                context.l10n.actionSheetTo,
                 style: TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.w600,
@@ -313,7 +314,7 @@ class _QuickMessageSheetContentState extends State<QuickMessageSheetContent>
                             ),
                             if (_selectedNodeNum == null)
                               Text(
-                                'Broadcast to all nodes',
+                                context.l10n.actionSheetBroadcastToAll,
                                 style: TextStyle(
                                   color: context.textTertiary,
                                   fontSize: 12,
@@ -335,7 +336,7 @@ class _QuickMessageSheetContentState extends State<QuickMessageSheetContent>
 
               // Quick presets
               Text(
-                'QUICK MESSAGE',
+                context.l10n.actionSheetQuickMessageLabel,
                 style: TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.w600,
@@ -347,7 +348,9 @@ class _QuickMessageSheetContentState extends State<QuickMessageSheetContent>
               Wrap(
                 spacing: 6,
                 runSpacing: 6,
-                children: List.generate(_presets.length, (index) {
+                children: List.generate(_localizedPresets(context).length, (
+                  index,
+                ) {
                   final isSelected = _selectedPreset == index;
                   return GestureDetector(
                     onTap: () {
@@ -357,7 +360,7 @@ class _QuickMessageSheetContentState extends State<QuickMessageSheetContent>
                           _controller.clear();
                         } else {
                           _selectedPreset = index;
-                          _controller.text = _presets[index];
+                          _controller.text = _localizedPresets(context)[index];
                         }
                       });
                     },
@@ -379,7 +382,7 @@ class _QuickMessageSheetContentState extends State<QuickMessageSheetContent>
                         ),
                       ),
                       child: Text(
-                        _presets[index],
+                        _localizedPresets(context)[index],
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
@@ -397,7 +400,7 @@ class _QuickMessageSheetContentState extends State<QuickMessageSheetContent>
 
               // Custom message input
               Text(
-                'OR TYPE CUSTOM',
+                context.l10n.actionSheetOrTypeCustom,
                 style: TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.w600,
@@ -410,7 +413,7 @@ class _QuickMessageSheetContentState extends State<QuickMessageSheetContent>
                 controller: _controller,
                 style: TextStyle(color: context.textPrimary, fontSize: 14),
                 decoration: InputDecoration(
-                  hintText: 'Type a message...',
+                  hintText: context.l10n.actionSheetTypeMessage,
                   hintStyle: TextStyle(
                     color: context.textTertiary,
                     fontSize: 14,
@@ -478,7 +481,9 @@ class _QuickMessageSheetContentState extends State<QuickMessageSheetContent>
                             const Icon(Icons.send_rounded, size: 18),
                             const SizedBox(width: AppTheme.spacing8),
                             Text(
-                              _selectedNodeNum == null ? 'Broadcast' : 'Send',
+                              _selectedNodeNum == null
+                                  ? context.l10n.actionSheetBroadcast
+                                  : context.l10n.actionSheetSend,
                               style: const TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
@@ -624,10 +629,10 @@ class _SosSheetContentState extends State<SosSheetContent>
         pendingMessage.copyWith(status: MessageStatus.sent, packetId: packetId),
       );
       Navigator.pop(context);
-      showErrorSnackBar(context, 'Emergency SOS sent to all nodes');
+      showErrorSnackBar(context, context.l10n.actionSheetSosSent);
     } catch (e) {
       safeSetState(() => _isSending = false);
-      showErrorSnackBar(context, 'Failed to send SOS: $e');
+      showErrorSnackBar(context, context.l10n.actionSheetSosFailed('$e'));
     }
   }
 
@@ -655,7 +660,7 @@ class _SosSheetContentState extends State<SosSheetContent>
               ),
               const SizedBox(width: AppTheme.spacing12),
               Text(
-                'Emergency SOS',
+                context.l10n.actionSheetEmergencySos,
                 style: TextStyle(
                   color: context.textPrimary,
                   fontSize: 20,
@@ -693,7 +698,7 @@ class _SosSheetContentState extends State<SosSheetContent>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'This will:',
+                      context.l10n.actionSheetThisWill,
                       style: TextStyle(
                         color: context.textPrimary,
                         fontSize: 14,
@@ -701,13 +706,9 @@ class _SosSheetContentState extends State<SosSheetContent>
                       ),
                     ),
                     const SizedBox(height: AppTheme.spacing8),
-                    _buildBulletPoint(
-                      'Broadcast an emergency message to ALL nodes',
-                    ),
-                    _buildBulletPoint(
-                      'Include your current location if available',
-                    ),
-                    _buildBulletPoint('Trigger IFTTT webhook (if configured)'),
+                    _buildBulletPoint(context.l10n.actionSheetSosBroadcast),
+                    _buildBulletPoint(context.l10n.actionSheetSosLocation),
+                    _buildBulletPoint(context.l10n.actionSheetSosIfttt),
                   ],
                 ),
               ),
@@ -718,8 +719,8 @@ class _SosSheetContentState extends State<SosSheetContent>
               Center(
                 child: Text(
                   _canSend
-                      ? 'Ready to send emergency alert'
-                      : 'Please wait $_countdown seconds...',
+                      ? context.l10n.actionSheetSosReady
+                      : context.l10n.actionSheetSosCountdown(_countdown),
                   style: TextStyle(
                     color: _canSend ? AppTheme.errorRed : context.textTertiary,
                     fontSize: 14,
@@ -749,7 +750,7 @@ class _SosSheetContentState extends State<SosSheetContent>
                         ),
                       ),
                       child: Text(
-                        'Cancel',
+                        context.l10n.commonCancel,
                         style: TextStyle(fontWeight: FontWeight.w600),
                       ),
                     ),
@@ -784,7 +785,9 @@ class _SosSheetContentState extends State<SosSheetContent>
                                 const Icon(Icons.emergency, size: 18),
                                 const SizedBox(width: AppTheme.spacing8),
                                 Text(
-                                  _canSend ? 'Send SOS' : '$_countdown',
+                                  _canSend
+                                      ? context.l10n.actionSheetSendSos
+                                      : '$_countdown',
                                   style: const TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w700,
@@ -873,7 +876,7 @@ class _TracerouteSheetContentState extends ConsumerState<TracerouteSheetContent>
   void _showNodeSelector() async {
     final selection = await NodeSelectorSheet.show(
       context,
-      title: 'Traceroute to',
+      title: context.l10n.actionSheetTracerouteTo,
       allowBroadcast: false,
       initialSelection: _selectedNodeNum,
     );
@@ -898,15 +901,16 @@ class _TracerouteSheetContentState extends ConsumerState<TracerouteSheetContent>
     final targetNode = nodes[_selectedNodeNum];
     final displayName =
         targetNode?.displayName ?? '!${_selectedNodeNum!.toRadixString(16)}';
+    final tracerouteSentMsg = context.l10n.actionSheetTracerouteSent(
+      displayName,
+    );
 
     try {
       await protocol.sendTraceroute(_selectedNodeNum!);
 
       // Show global snackbar so the user always sees feedback, even if the
       // parent widget (Quick Actions) was rebuilt while the sheet was open.
-      showGlobalSuccessSnackBar(
-        'Traceroute sent to $displayName — check Traceroute History for results',
-      );
+      showGlobalSuccessSnackBar(tracerouteSentMsg);
 
       if (!mounted) {
         // Sheet was dismissed during the await — still pop with the result
@@ -916,7 +920,10 @@ class _TracerouteSheetContentState extends ConsumerState<TracerouteSheetContent>
       navigator.pop(_selectedNodeNum);
     } catch (e) {
       safeSetState(() => _isSending = false);
-      showErrorSnackBar(context, 'Failed to send traceroute: $e');
+      showErrorSnackBar(
+        context,
+        context.l10n.actionSheetTracerouteFailed('$e'),
+      );
     }
   }
 
@@ -940,7 +947,7 @@ class _TracerouteSheetContentState extends ConsumerState<TracerouteSheetContent>
               ),
               const SizedBox(width: AppTheme.spacing12),
               Text(
-                'Traceroute',
+                context.l10n.actionSheetTraceroute,
                 style: TextStyle(
                   color: context.textPrimary,
                   fontSize: 18,
@@ -980,7 +987,7 @@ class _TracerouteSheetContentState extends ConsumerState<TracerouteSheetContent>
                     const SizedBox(width: AppTheme.spacing12),
                     Expanded(
                       child: Text(
-                        'Traceroute discovers the path packets take to reach a node through the mesh network.',
+                        context.l10n.actionSheetTracerouteInfo,
                         style: TextStyle(
                           color: context.textSecondary,
                           fontSize: 13,
@@ -996,7 +1003,7 @@ class _TracerouteSheetContentState extends ConsumerState<TracerouteSheetContent>
 
               // Node selector
               Text(
-                'TARGET NODE',
+                context.l10n.actionSheetTargetNode,
                 style: TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.w600,
@@ -1048,8 +1055,9 @@ class _TracerouteSheetContentState extends ConsumerState<TracerouteSheetContent>
                       Expanded(
                         child: Text(
                           _selectedNodeNum != null
-                              ? _selectedNodeName ?? 'Selected'
-                              : 'Tap to select a node',
+                              ? _selectedNodeName ??
+                                    context.l10n.actionSheetSelected
+                              : context.l10n.actionSheetTapToSelectNode,
                           style: TextStyle(
                             color: _selectedNodeNum != null
                                 ? context.textPrimary
@@ -1093,7 +1101,7 @@ class _TracerouteSheetContentState extends ConsumerState<TracerouteSheetContent>
                         ),
                       ),
                       child: Text(
-                        'Cancel',
+                        context.l10n.commonCancel,
                         style: TextStyle(fontWeight: FontWeight.w600),
                       ),
                     ),
@@ -1130,7 +1138,7 @@ class _TracerouteSheetContentState extends ConsumerState<TracerouteSheetContent>
                                 Icon(Icons.route, size: 18),
                                 SizedBox(width: AppTheme.spacing8),
                                 Text(
-                                  'Trace',
+                                  context.l10n.actionSheetTrace,
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w600,

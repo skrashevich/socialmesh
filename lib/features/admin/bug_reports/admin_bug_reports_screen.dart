@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/search_filter_header.dart';
@@ -129,7 +130,7 @@ class _AdminBugReportsScreenState extends ConsumerState<AdminBugReportsScreen>
     return GestureDetector(
       onTap: _dismissKeyboard,
       child: GlassScaffold(
-        title: 'Bug Reports',
+        title: context.l10n.adminBugReportsTitle,
         slivers: [
           reportsAsync.when(
             data: (reports) {
@@ -145,7 +146,7 @@ class _AdminBugReportsScreenState extends ConsumerState<AdminBugReportsScreen>
                       searchQuery: _searchQuery,
                       onSearchChanged: (value) =>
                           setState(() => _searchQuery = value),
-                      hintText: 'Search reports',
+                      hintText: context.l10n.adminBugReportsSearchHint,
                       textScaler: MediaQuery.textScalerOf(context),
                       rebuildKey: Object.hashAll([
                         _activeFilter,
@@ -217,7 +218,7 @@ class _AdminBugReportsScreenState extends ConsumerState<AdminBugReportsScreen>
                     ),
                     const SizedBox(height: AppTheme.spacing16),
                     Text(
-                      'Failed to load reports',
+                      context.l10n.adminBugReportsLoadError,
                       style: TextStyle(color: context.textSecondary),
                     ),
                     const SizedBox(height: AppTheme.spacing8),
@@ -286,7 +287,7 @@ class _AdminBugReportsScreenState extends ConsumerState<AdminBugReportsScreen>
     if (_sendingReply.contains(reportId)) return;
     if (message.length > 2000) {
       if (mounted) {
-        showErrorSnackBar(context, 'Message exceeds 2,000 characters.');
+        showErrorSnackBar(context, context.l10n.adminBugReportsMessageTooLong);
       }
       return;
     }
@@ -298,11 +299,14 @@ class _AdminBugReportsScreenState extends ConsumerState<AdminBugReportsScreen>
           .respondToReport(reportId: reportId, message: message);
       controller.clear();
       if (mounted) {
-        showSuccessSnackBar(context, 'Response sent.');
+        showSuccessSnackBar(context, context.l10n.adminBugReportsReplySent);
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to send: \$e');
+        showErrorSnackBar(
+          context,
+          context.l10n.adminBugReportsReplyFailed('$e'),
+        );
       }
     } finally {
       if (mounted) {
@@ -324,12 +328,17 @@ class _AdminBugReportsScreenState extends ConsumerState<AdminBugReportsScreen>
       if (mounted) {
         showSuccessSnackBar(
           context,
-          status == 'resolved' ? 'Report resolved.' : 'Report reopened.',
+          status == 'resolved'
+              ? context.l10n.adminBugReportsResolved
+              : context.l10n.adminBugReportsReopened,
         );
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to update status: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.adminBugReportsStatusFailed('$e'),
+        );
         // Revert optimistic status on failure
         setState(() => _optimisticStatuses.remove(reportId));
       }
@@ -384,28 +393,38 @@ class _ReportCard extends StatelessWidget {
     };
   }
 
-  String _statusLabel() {
+  String _statusLabel(BuildContext context) {
     return switch (_effectiveStatus) {
-      BugReportStatus.open => 'OPEN',
-      BugReportStatus.userReplied => 'USER REPLIED',
-      BugReportStatus.responded => 'RESPONDED',
-      BugReportStatus.resolved => 'RESOLVED',
+      BugReportStatus.open => context.l10n.adminBugReportsStatusOpen,
+      BugReportStatus.userReplied =>
+        context.l10n.adminBugReportsStatusUserReplied,
+      BugReportStatus.responded => context.l10n.adminBugReportsStatusResponded,
+      BugReportStatus.resolved => context.l10n.adminBugReportsStatusResolved,
     };
   }
 
-  String _formatDate(DateTime date) {
+  String _formatDate(BuildContext context, DateTime date) {
     final now = DateTime.now();
     final diff = now.difference(date);
-    if (diff.inMinutes < 1) return 'just now';
-    if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
-    if (diff.inHours < 24) return '${diff.inHours}h ago';
-    if (diff.inDays < 7) return '${diff.inDays}d ago';
+    if (diff.inMinutes < 1) {
+      return context.l10n.adminBugReportsTimeJustNow;
+    }
+    if (diff.inMinutes < 60) {
+      return context.l10n.adminBugReportsTimeMinutes(diff.inMinutes);
+    }
+    if (diff.inHours < 24) {
+      return context.l10n.adminBugReportsTimeHours(diff.inHours);
+    }
+    if (diff.inDays < 7) {
+      return context.l10n.adminBugReportsTimeDays(diff.inDays);
+    }
     return DateFormat('d MMM y, HH:mm').format(date);
   }
 
   @override
   Widget build(BuildContext context) {
     final statusColor = _statusColor();
+    final statusLabel = _statusLabel(context);
     final desc = report.description;
     final preview = desc.length > 120 ? '${desc.substring(0, 117)}…' : desc;
 
@@ -457,7 +476,7 @@ class _ReportCard extends StatelessWidget {
                             children: [
                               _MetaChip(
                                 icon: Icons.schedule,
-                                text: _formatDate(report.createdAt),
+                                text: _formatDate(context, report.createdAt),
                               ),
                               if (report.deviceModel != null ||
                                   report.platform != null)
@@ -527,7 +546,7 @@ class _ReportCard extends StatelessWidget {
                                 ),
                               ),
                               child: Text(
-                                _statusLabel(),
+                                statusLabel,
                                 style: TextStyle(
                                   color: statusColor,
                                   fontSize: 10,
@@ -561,7 +580,7 @@ class _ReportCard extends StatelessWidget {
 
               // Description
               _Section(
-                label: 'DESCRIPTION',
+                label: context.l10n.adminBugReportsSectionDesc,
                 child: SelectableText(
                   desc,
                   style: TextStyle(
@@ -575,7 +594,7 @@ class _ReportCard extends StatelessWidget {
               // Screenshot
               if (report.screenshotUrl != null)
                 _Section(
-                  label: 'SCREENSHOT',
+                  label: context.l10n.adminBugReportsSectionScreenshot,
                   child: ScreenshotThumbnail(
                     imageUrl: report.screenshotUrl!,
                     onTapOverride: () => _showScreenshot(context),
@@ -584,29 +603,40 @@ class _ReportCard extends StatelessWidget {
 
               // Details grid
               _Section(
-                label: 'DETAILS',
+                label: context.l10n.adminBugReportsSectionDetails,
                 child: Wrap(
                   spacing: 16,
                   runSpacing: 10,
                   children: [
-                    _DetailItem(label: 'Report ID', value: report.id),
                     _DetailItem(
-                      label: 'User ID',
-                      value: report.uid ?? 'anonymous',
+                      label: context.l10n.adminBugReportsDetailReportId,
+                      value: report.id,
+                    ),
+                    _DetailItem(
+                      label: context.l10n.adminBugReportsDetailUserId,
+                      value:
+                          report.uid ??
+                          context.l10n.adminBugReportsAnonymousValue,
                     ),
                     if (report.email != null)
-                      _DetailItem(label: 'Email', value: report.email!),
+                      _DetailItem(
+                        label: context.l10n.adminBugReportsDetailEmail,
+                        value: report.email!,
+                      ),
                     if (report.deviceModel != null)
-                      _DetailItem(label: 'Device', value: report.deviceModel!),
+                      _DetailItem(
+                        label: context.l10n.adminBugReportsDetailDevice,
+                        value: report.deviceModel!,
+                      ),
                     if (report.osVersion != null ||
                         report.platformVersion != null)
                       _DetailItem(
-                        label: 'OS Version',
+                        label: context.l10n.adminBugReportsDetailOs,
                         value: report.osVersion ?? report.platformVersion ?? '',
                       ),
                     if (report.appVersion != null)
                       _DetailItem(
-                        label: 'App Version',
+                        label: context.l10n.adminBugReportsDetailAppVer,
                         value:
                             'v${report.appVersion}${report.buildNumber != null ? ' (${report.buildNumber})' : ''}',
                       ),
@@ -617,7 +647,7 @@ class _ReportCard extends StatelessWidget {
               // Conversation thread
               if (report.responses.isNotEmpty)
                 _Section(
-                  label: 'CONVERSATION',
+                  label: context.l10n.adminBugReportsSectionConversation,
                   child: Column(
                     children: report.responses
                         .map((r) => _ThreadBubble(response: r))
@@ -799,7 +829,7 @@ class _ThreadBubble extends StatelessWidget {
             ),
             const SizedBox(height: AppTheme.spacing4),
             Text(
-              '${isFounder ? "You" : "User"} · ${_formatDate(response.createdAt)}',
+              '${isFounder ? context.l10n.adminBugReportsThreadYou : context.l10n.adminBugReportsThreadUser} · ${_formatDate(context, response.createdAt)}',
               style: TextStyle(fontSize: 10, color: context.textSecondary),
             ),
           ],
@@ -808,12 +838,20 @@ class _ThreadBubble extends StatelessWidget {
     );
   }
 
-  String _formatDate(DateTime date) {
+  String _formatDate(BuildContext context, DateTime date) {
     final diff = DateTime.now().difference(date);
-    if (diff.inMinutes < 1) return 'just now';
-    if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
-    if (diff.inHours < 24) return '${diff.inHours}h ago';
-    if (diff.inDays < 7) return '${diff.inDays}d ago';
+    if (diff.inMinutes < 1) {
+      return context.l10n.adminBugReportsTimeJustNow;
+    }
+    if (diff.inMinutes < 60) {
+      return context.l10n.adminBugReportsTimeMinutes(diff.inMinutes);
+    }
+    if (diff.inHours < 24) {
+      return context.l10n.adminBugReportsTimeHours(diff.inHours);
+    }
+    if (diff.inDays < 7) {
+      return context.l10n.adminBugReportsTimeDays(diff.inDays);
+    }
     return DateFormat('d MMM, HH:mm').format(date);
   }
 }
@@ -955,7 +993,7 @@ class _ReplyBoxState extends State<_ReplyBox> {
             enabled: !anyCountdown,
             style: const TextStyle(fontSize: 14),
             decoration: InputDecoration(
-              hintText: 'Write a response...',
+              hintText: context.l10n.adminBugReportsReplyHint,
               hintStyle: TextStyle(color: context.textSecondary),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AppTheme.radius12),
@@ -997,7 +1035,11 @@ class _ReplyBoxState extends State<_ReplyBox> {
                             ),
                           ),
                         ),
-                        child: Text('Cancel · $_statusCountdown'),
+                        child: Text(
+                          context.l10n.adminBugReportsCountdownCancel(
+                            _statusCountdown,
+                          ),
+                        ),
                       )
                     : widget.isResolved
                     ? OutlinedButton(
@@ -1028,7 +1070,7 @@ class _ReplyBoxState extends State<_ReplyBox> {
                                   color: Colors.amber,
                                 ),
                               )
-                            : const Text('Reopen'),
+                            : Text(context.l10n.adminBugReportsReopen),
                       )
                     : OutlinedButton(
                         onPressed:
@@ -1058,7 +1100,7 @@ class _ReplyBoxState extends State<_ReplyBox> {
                                   color: Colors.green,
                                 ),
                               )
-                            : const Text('Resolve'),
+                            : Text(context.l10n.adminBugReportsResolve),
                       ),
               ),
               const SizedBox(width: AppTheme.spacing12),
@@ -1067,7 +1109,11 @@ class _ReplyBoxState extends State<_ReplyBox> {
                     ? FilledButton.icon(
                         onPressed: _cancelSendCountdown,
                         icon: const Icon(Icons.close, size: 16),
-                        label: Text('Cancel · $_sendCountdown'),
+                        label: Text(
+                          context.l10n.adminBugReportsCountdownCancel(
+                            _sendCountdown,
+                          ),
+                        ),
                         style: FilledButton.styleFrom(
                           backgroundColor: AppTheme.errorRed,
                           padding: const EdgeInsets.symmetric(vertical: 16),
@@ -1093,7 +1139,7 @@ class _ReplyBoxState extends State<_ReplyBox> {
                                 ),
                               )
                             : const Icon(Icons.send, size: 16),
-                        label: const Text('Send'),
+                        label: Text(context.l10n.adminBugReportsSend),
                         style: FilledButton.styleFrom(
                           backgroundColor: Colors.pink,
                           disabledBackgroundColor: Colors.pink.withAlpha(120),
@@ -1193,26 +1239,26 @@ class _AnonymousReplyBoxState extends State<_AnonymousReplyBox> {
           const SizedBox(width: AppTheme.spacing8),
           Expanded(
             child: Text(
-              'Anonymous report — replies cannot be delivered.',
+              context.l10n.adminBugReportsAnonNotice,
               style: TextStyle(fontSize: 12, color: Colors.orange.shade400),
             ),
           ),
           if (_isCountingDown)
             _SmallActionButton(
-              label: 'Cancel · $_countdown',
+              label: context.l10n.adminBugReportsCountdownCancel(_countdown),
               color: AppTheme.errorRed,
               onTap: _cancelCountdown,
             )
           else if (widget.isResolved)
             _SmallActionButton(
-              label: 'Reopen',
+              label: context.l10n.adminBugReportsReopen,
               color: Colors.amber,
               isLoading: widget.isStatusUpdating,
               onTap: () => _startCountdown(widget.onReopen),
             )
           else
             _SmallActionButton(
-              label: 'Resolve',
+              label: context.l10n.adminBugReportsResolve,
               color: Colors.green,
               isLoading: widget.isStatusUpdating,
               onTap: () => _startCountdown(widget.onResolve),
@@ -1299,8 +1345,8 @@ class _EmptyState extends StatelessWidget {
             const SizedBox(height: AppTheme.spacing16),
             Text(
               hasReports
-                  ? 'No reports match your filter.'
-                  : 'No bug reports yet.',
+                  ? context.l10n.adminBugReportsEmptyFilter
+                  : context.l10n.adminBugReportsEmptyAll,
               style: TextStyle(color: context.textSecondary),
             ),
           ],

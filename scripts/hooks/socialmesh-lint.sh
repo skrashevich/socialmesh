@@ -1,6 +1,35 @@
 #!/usr/bin/env bash
 # socialmesh-lint.sh -- Check staged (or specified) files for Socialmesh coding violations.
 #
+# Rules:
+#   no-todo-fixme-hack        TODO/FIXME/HACK comments
+#   no-banned-riverpod         Riverpod 2.x patterns (StateNotifier, etc.)
+#   no-material-dialogs        showDialog/AlertDialog/SimpleDialog
+#   no-raw-snackbar            Raw SnackBar() construction
+#   no-fab                     FloatingActionButton
+#   no-hardcoded-ui-strings    Hardcoded user-facing strings (Text('...'), title: '...')
+#   no-unimplemented           throw UnimplementedError
+#   no-bare-scaffold           Bare Scaffold (use GlassScaffold)
+#   no-bare-switch             Bare Switch/SwitchListTile (use ThemedSwitch)
+#   no-ignore-directive        // ignore: outside lib/generated/
+#   no-railway-domains         Railway *.up.railway.app domains
+#   spdx-wrong-path            SPDX header in prohibited dirs
+#   spdx-missing               Missing SPDX header in lib/test
+#   magic-numbers              Hardcoded spacing/sizing numbers
+#   no-hardcoded-color         Hardcoded colors (use SemanticColors)
+#   async-safety               context/ref/setState after await
+#   require-glass-scaffold     Screen class without GlassScaffold
+#   textfield-maxlength        TextField without maxLength
+#   help-button-needs-controller  IcoHelpAppBarButton without controller
+#   require-lifecycle-mixin    ConsumerStatefulWidget async without mixin
+#   stream-subscription-cancel StreamSubscription without cancel
+#   keyboard-dismissal         Screen with text input, no dismissal
+#   haptic-feedback            GestureDetector onTap without haptics
+#   no-scrollable-in-glass-body  Scrollable in GlassScaffold.body()
+#   dart-format                File not formatted (--format flag)
+#   flutter-analyze            Flutter analyzer issues
+#
+#
 # Usage:
 #   scripts/hooks/socialmesh-lint.sh                    # Check git-staged files
 #   scripts/hooks/socialmesh-lint.sh --all              # Check all tracked files
@@ -417,6 +446,85 @@ check_file() {
         "no-fab" \
         "FloatingActionButton — primary actions belong in the app bar" \
         "error" true true
+    fi
+
+    # ------------------------------------------------------------------
+    # BLOCK: Hardcoded user-facing strings (i18n enforcement)
+    #
+    # Prevents regressions after Sprint 010 l10n extraction. Detects
+    # Text(), title:, hintText:, tooltip:, label:, and other UI-facing
+    # named parameters that take a raw string literal instead of a
+    # context.l10n call.
+    #
+    # Scope: lib/features/ and lib/core/widgets/ only.
+    # Sub-check B restricted to screen/widget files (not services,
+    # providers, models, repositories, or exporters where named params
+    # like title:/label:/message: are often data model fields).
+    # Honors: // lint-allow: hardcoded-string (line or file level)
+    #
+    # Sub-check A: Text() with a direct string literal argument.
+    # Sub-check B: Named UI parameters with string literal values.
+    # ------------------------------------------------------------------
+    if [[ "$file" == lib/features/* ]] || [[ "$file" == lib/core/widgets/* ]]; then
+      if ! grep -q 'lint-allow:.*hardcoded-string' "$file" 2>/dev/null; then
+
+        # Sub-check A: Text( with string literal
+        # Runs on all files in scope — Text() is always a widget.
+        while IFS=: read -r lineno matched_line; do
+          line_in_scope "$file" "$lineno" || continue
+          local trimmed="${matched_line#"${matched_line%%[![:space:]]*}"}"
+          [[ "$trimmed" == //* ]] && continue
+          [[ "$matched_line" == import* ]] && continue
+          # Skip logging/debug lines
+          [[ "$matched_line" =~ AppLogging ]] && continue
+          [[ "$matched_line" =~ log\.(info|debug|warning|severe|fine) ]] && continue
+          [[ "$matched_line" =~ debugPrint ]] && continue
+          # Skip technical identifiers (keys, tags)
+          [[ "$matched_line" =~ ValueKey ]] && continue
+          # Skip lines inside string literals (toString, interpolation)
+          [[ "$trimmed" == \'* ]] && continue
+          [[ "$trimmed" == \"* ]] && continue
+          # Line-level exemption
+          [[ "$matched_line" =~ lint-allow:.*hardcoded-string ]] && continue
+          record_hit "$file" "$lineno" "no-hardcoded-ui-strings" \
+            "Hardcoded user-facing string in Text() — use context.l10n instead" "error"
+        done < <(grep -nE '\bText\([[:space:]]*(const[[:space:]]+)?['"'"'"]' "$file" 2>/dev/null || true)
+
+        # Sub-check B: Named UI parameters with string literal values
+        # Only runs on screen/widget files — skips services, providers,
+        # models, repositories, exporters, validators, and storage files
+        # where title:/label:/message: are often data model fields.
+        local run_param_check=true
+        case "$file" in
+          */services/*|*_service.dart) run_param_check=false ;;
+          */providers/*|*_providers.dart|*_provider.dart) run_param_check=false ;;
+          */models/*|*_model.dart) run_param_check=false ;;
+          *_repository.dart|*_exporter.dart|*_validator.dart) run_param_check=false ;;
+          *_storage*.dart) run_param_check=false ;;
+        esac
+
+        if [ "$run_param_check" = true ]; then
+          # Checked params: title, subtitle, hintText, tooltip, label,
+          #   labelText, message, confirmLabel, errorText, semanticsLabel
+          while IFS=: read -r lineno matched_line; do
+            line_in_scope "$file" "$lineno" || continue
+            local trimmed="${matched_line#"${matched_line%%[![:space:]]*}"}"
+            [[ "$trimmed" == //* ]] && continue
+            [[ "$matched_line" == import* ]] && continue
+            [[ "$matched_line" =~ AppLogging ]] && continue
+            [[ "$matched_line" =~ log\.(info|debug|warning|severe|fine) ]] && continue
+            [[ "$matched_line" =~ debugPrint ]] && continue
+            # Skip lines inside string literals (toString patterns)
+            [[ "$trimmed" == \'* ]] && continue
+            [[ "$trimmed" == \"* ]] && continue
+            # Line-level exemption
+            [[ "$matched_line" =~ lint-allow:.*hardcoded-string ]] && continue
+            record_hit "$file" "$lineno" "no-hardcoded-ui-strings" \
+              "Hardcoded user-facing string in UI parameter — use context.l10n instead" "error"
+          done < <(grep -nE '(title|subtitle|hintText|tooltip|label|labelText|message|confirmLabel|errorText|semanticsLabel):[[:space:]]*['"'"'"]' "$file" 2>/dev/null || true)
+        fi
+
+      fi
     fi
 
     # BLOCK: throw UnimplementedError (skip noSuchMethod overrides in test fakes

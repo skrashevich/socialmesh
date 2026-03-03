@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/logging.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
@@ -162,7 +163,7 @@ class _DetectionSensorConfigScreenState
       await protocol.setModuleConfig(moduleConfig, target: target);
 
       if (mounted) {
-        showSuccessSnackBar(context, 'Detection Sensor configuration saved');
+        showSuccessSnackBar(context, context.l10n.detectionSensorSaveSuccess);
         if (target.isLocal) {
           ref
               .read(countdownProvider.notifier)
@@ -173,7 +174,10 @@ class _DetectionSensorConfigScreenState
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to save config: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.detectionSensorSaveFailed('$e'),
+        );
       }
     } finally {
       safeSetState(() => _isSaving = false);
@@ -185,13 +189,16 @@ class _DetectionSensorConfigScreenState
     return GestureDetector(
       onTap: _dismissKeyboard,
       child: GlassScaffold(
-        title: 'Detection Sensor',
+        title: context.l10n.detectionSensorTitle,
         actions: [
           TextButton(
             onPressed: _isSaving ? null : _saveConfig,
             child: _isSaving
                 ? LoadingIndicator(size: 20)
-                : Text('Save', style: TextStyle(color: context.accentColor)),
+                : Text(
+                    context.l10n.detectionSensorSave,
+                    style: TextStyle(color: context.accentColor),
+                  ),
           ),
         ],
         slivers: [
@@ -208,26 +215,28 @@ class _DetectionSensorConfigScreenState
                   const SizedBox(height: AppTheme.spacing16),
 
                   // Basic settings
-                  _buildSectionTitle('Basic Settings'),
+                  _buildSectionTitle(context.l10n.detectionSensorBasicSettings),
                   _buildBasicSettingsCard(),
 
                   const SizedBox(height: AppTheme.spacing16),
 
                   // Pin configuration (only shown if enabled)
                   if (_enabled) ...[
-                    _buildSectionTitle('Pin Configuration'),
+                    _buildSectionTitle(context.l10n.detectionSensorPinConfig),
                     _buildPinConfigCard(),
 
                     const SizedBox(height: AppTheme.spacing16),
 
                     // Timing settings
-                    _buildSectionTitle('Timing'),
+                    _buildSectionTitle(context.l10n.detectionSensorTiming),
                     _buildTimingCard(),
 
                     const SizedBox(height: AppTheme.spacing16),
 
                     // Client options (app-side settings)
-                    _buildSectionTitle('Client Options'),
+                    _buildSectionTitle(
+                      context.l10n.detectionSensorClientOptions,
+                    ),
                     _buildClientOptionsCard(),
                   ],
                 ]),
@@ -271,7 +280,7 @@ class _DetectionSensorConfigScreenState
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Detection Sensor',
+                  context.l10n.detectionSensorTitle,
                   style: TextStyle(
                     color: context.textPrimary,
                     fontWeight: FontWeight.w600,
@@ -280,8 +289,7 @@ class _DetectionSensorConfigScreenState
                 ),
                 const SizedBox(height: AppTheme.spacing4),
                 Text(
-                  'Monitor a GPIO pin and broadcast state changes to the mesh. '
-                  'Use with PIR motion sensors, door/window contacts, or other binary sensors.',
+                  context.l10n.detectionSensorInfoDescription,
                   style: TextStyle(
                     color: context.textSecondary,
                     fontSize: 13,
@@ -306,11 +314,11 @@ class _DetectionSensorConfigScreenState
         children: [
           ListTile(
             title: Text(
-              'Enable Detection Sensor',
+              context.l10n.detectionSensorEnable,
               style: TextStyle(color: context.textPrimary),
             ),
             subtitle: Text(
-              'Monitor GPIO pin and broadcast state changes',
+              context.l10n.detectionSensorEnableSubtitle,
               style: TextStyle(color: context.textTertiary, fontSize: 12),
             ),
             trailing: ThemedSwitch(
@@ -329,9 +337,9 @@ class _DetectionSensorConfigScreenState
                 controller: _nameController,
                 style: TextStyle(color: context.textPrimary),
                 decoration: InputDecoration(
-                  labelText: 'Sensor Name',
+                  labelText: context.l10n.detectionSensorName,
                   labelStyle: TextStyle(color: context.textSecondary),
-                  hintText: 'e.g., Front Door, Motion Sensor',
+                  hintText: context.l10n.detectionSensorNameHint,
                   hintStyle: TextStyle(
                     color: context.textTertiary.withValues(alpha: 0.5),
                   ),
@@ -373,12 +381,12 @@ class _DetectionSensorConfigScreenState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'GPIO Pin',
+                        context.l10n.detectionSensorGpioPin,
                         style: TextStyle(color: context.textPrimary),
                       ),
                       SizedBox(height: AppTheme.spacing4),
                       Text(
-                        'The GPIO pin number to monitor',
+                        context.l10n.detectionSensorGpioPinSubtitle,
                         style: TextStyle(
                           color: context.textTertiary,
                           fontSize: 12,
@@ -423,7 +431,7 @@ class _DetectionSensorConfigScreenState
           Divider(height: 1, color: context.border),
           ListTile(
             title: Text(
-              'Trigger Type',
+              context.l10n.detectionSensorTriggerType,
               style: TextStyle(color: context.textPrimary),
             ),
             subtitle: Text(
@@ -439,11 +447,11 @@ class _DetectionSensorConfigScreenState
           Divider(height: 1, color: context.border),
           ListTile(
             title: Text(
-              'Use Internal Pullup',
+              context.l10n.detectionSensorUsePullup,
               style: TextStyle(color: context.textPrimary),
             ),
             subtitle: Text(
-              'Enable internal pullup resistor on the pin',
+              context.l10n.detectionSensorUsePullupSubtitle,
               style: TextStyle(color: context.textTertiary, fontSize: 12),
             ),
             trailing: ThemedSwitch(
@@ -454,11 +462,11 @@ class _DetectionSensorConfigScreenState
           Divider(height: 1, color: context.border),
           ListTile(
             title: Text(
-              'Send Bell Character',
+              context.l10n.detectionSensorSendBell,
               style: TextStyle(color: context.textPrimary),
             ),
             subtitle: Text(
-              'Send bell (\\a) in detection messages',
+              context.l10n.detectionSensorSendBellSubtitle,
               style: TextStyle(color: context.textTertiary, fontSize: 12),
             ),
             trailing: ThemedSwitch(
@@ -481,11 +489,13 @@ class _DetectionSensorConfigScreenState
         children: [
           ListTile(
             title: Text(
-              'Minimum Broadcast Interval',
+              context.l10n.detectionSensorMinBroadcastInterval,
               style: TextStyle(color: context.textPrimary),
             ),
             subtitle: Text(
-              'Wait $_minimumBroadcastSecs seconds between broadcasts',
+              context.l10n.detectionSensorMinBroadcastIntervalSubtitle(
+                _minimumBroadcastSecs,
+              ),
               style: TextStyle(color: context.textTertiary, fontSize: 12),
             ),
             trailing: Row(
@@ -516,11 +526,13 @@ class _DetectionSensorConfigScreenState
           Divider(height: 1, color: context.border),
           ListTile(
             title: Text(
-              'State Broadcast Interval',
+              context.l10n.detectionSensorStateBroadcastInterval,
               style: TextStyle(color: context.textPrimary),
             ),
             subtitle: Text(
-              'Broadcast current state every ${_stateBroadcastSecs ~/ 60} minutes',
+              context.l10n.detectionSensorStateBroadcastIntervalSubtitle(
+                _stateBroadcastSecs ~/ 60,
+              ),
               style: TextStyle(color: context.textTertiary, fontSize: 12),
             ),
             trailing: Row(
@@ -569,11 +581,11 @@ class _DetectionSensorConfigScreenState
                   : context.textSecondary,
             ),
             title: Text(
-              'Enable Notifications',
+              context.l10n.detectionSensorEnableNotifications,
               style: TextStyle(color: context.textPrimary),
             ),
             subtitle: Text(
-              'Show notifications when sensor events are received',
+              context.l10n.detectionSensorEnableNotificationsSubtitle,
               style: TextStyle(color: context.textTertiary, fontSize: 12),
             ),
             trailing: ThemedSwitch(
@@ -601,27 +613,27 @@ class _DetectionSensorConfigScreenState
       case module_pbenum
           .ModuleConfig_DetectionSensorConfig_TriggerType
           .LOGIC_LOW:
-        return 'Logic Low (active when pin is LOW)';
+        return context.l10n.detectionSensorTriggerLogicLow;
       case module_pbenum
           .ModuleConfig_DetectionSensorConfig_TriggerType
           .LOGIC_HIGH:
-        return 'Logic High (active when pin is HIGH)';
+        return context.l10n.detectionSensorTriggerLogicHigh;
       case module_pbenum
           .ModuleConfig_DetectionSensorConfig_TriggerType
           .FALLING_EDGE:
-        return 'Falling Edge (trigger on HIGH→LOW)';
+        return context.l10n.detectionSensorTriggerFallingEdge;
       case module_pbenum
           .ModuleConfig_DetectionSensorConfig_TriggerType
           .RISING_EDGE:
-        return 'Rising Edge (trigger on LOW→HIGH)';
+        return context.l10n.detectionSensorTriggerRisingEdge;
       case module_pbenum
           .ModuleConfig_DetectionSensorConfig_TriggerType
           .EITHER_EDGE_ACTIVE_LOW:
-        return 'Either Edge (active LOW)';
+        return context.l10n.detectionSensorTriggerEitherEdgeLow;
       case module_pbenum
           .ModuleConfig_DetectionSensorConfig_TriggerType
           .EITHER_EDGE_ACTIVE_HIGH:
-        return 'Either Edge (active HIGH)';
+        return context.l10n.detectionSensorTriggerEitherEdgeHigh;
       default:
         return 'Unknown';
     }
@@ -643,7 +655,7 @@ class _DetectionSensorConfigScreenState
               child: Row(
                 children: [
                   Text(
-                    'Trigger Type',
+                    context.l10n.detectionSensorTriggerType,
                     style: TextStyle(
                       color: context.textPrimary,
                       fontSize: 18,

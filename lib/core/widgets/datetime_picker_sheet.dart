@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../l10n/l10n_extension.dart';
 import '../theme.dart';
 import 'app_bottom_sheet.dart';
 
@@ -112,18 +113,18 @@ class _DatePickerSheetState extends State<DatePickerSheet> {
   @override
   Widget build(BuildContext context) {
     final months = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
+      context.l10n.dateTimePickerMonthJanuary,
+      context.l10n.dateTimePickerMonthFebruary,
+      context.l10n.dateTimePickerMonthMarch,
+      context.l10n.dateTimePickerMonthApril,
+      context.l10n.dateTimePickerMonthMay,
+      context.l10n.dateTimePickerMonthJune,
+      context.l10n.dateTimePickerMonthJuly,
+      context.l10n.dateTimePickerMonthAugust,
+      context.l10n.dateTimePickerMonthSeptember,
+      context.l10n.dateTimePickerMonthOctober,
+      context.l10n.dateTimePickerMonthNovember,
+      context.l10n.dateTimePickerMonthDecember,
     ];
 
     final yearCount = _lastDate.year - _firstDate.year + 1;
@@ -524,18 +525,18 @@ class _DateTimePickerSheetState extends State<DateTimePickerSheet> {
   @override
   Widget build(BuildContext context) {
     final months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
+      context.l10n.dateTimePickerMonthJan,
+      context.l10n.dateTimePickerMonthFeb,
+      context.l10n.dateTimePickerMonthMar,
+      context.l10n.dateTimePickerMonthApr,
+      context.l10n.dateTimePickerMonthMayShort,
+      context.l10n.dateTimePickerMonthJun,
+      context.l10n.dateTimePickerMonthJul,
+      context.l10n.dateTimePickerMonthAug,
+      context.l10n.dateTimePickerMonthSep,
+      context.l10n.dateTimePickerMonthOct,
+      context.l10n.dateTimePickerMonthNov,
+      context.l10n.dateTimePickerMonthDec,
     ];
 
     final yearCount = _lastDate.year - _firstDate.year + 1;
@@ -566,7 +567,7 @@ class _DateTimePickerSheetState extends State<DateTimePickerSheet> {
               Icon(Icons.calendar_today, size: 16, color: context.textTertiary),
               const SizedBox(width: AppTheme.spacing8),
               Text(
-                'Date',
+                context.l10n.dateTimePickerDateSection,
                 style: TextStyle(
                   fontFamily: AppTheme.fontFamily,
                   fontSize: 13,
@@ -627,7 +628,7 @@ class _DateTimePickerSheetState extends State<DateTimePickerSheet> {
               Icon(Icons.access_time, size: 16, color: context.textTertiary),
               const SizedBox(width: AppTheme.spacing8),
               Text(
-                'Time',
+                context.l10n.dateTimePickerTimeSection,
                 style: TextStyle(
                   fontFamily: AppTheme.fontFamily,
                   fontSize: 13,
@@ -727,7 +728,7 @@ class _PickerHeader extends StatelessWidget {
           TextButton(
             onPressed: onCancel,
             child: Text(
-              'Cancel',
+              context.l10n.commonCancel,
               style: TextStyle(
                 fontFamily: AppTheme.fontFamily,
                 color: context.textSecondary,
@@ -750,7 +751,7 @@ class _PickerHeader extends StatelessWidget {
           TextButton(
             onPressed: onConfirm,
             child: Text(
-              'Done',
+              context.l10n.commonDone,
               style: TextStyle(
                 fontFamily: AppTheme.fontFamily,
                 color: context.accentColor,
@@ -827,7 +828,7 @@ class _AmPmSelector extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         _AmPmButton(
-          label: 'AM',
+          label: context.l10n.dateTimePickerAm,
           isSelected: !isPM,
           onTap: () {
             HapticFeedback.selectionClick();
@@ -836,7 +837,7 @@ class _AmPmSelector extends StatelessWidget {
         ),
         const SizedBox(height: AppTheme.spacing8),
         _AmPmButton(
-          label: 'PM',
+          label: context.l10n.dateTimePickerPm,
           isSelected: isPM,
           onTap: () {
             HapticFeedback.selectionClick();

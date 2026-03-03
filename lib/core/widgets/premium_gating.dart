@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../l10n/l10n_extension.dart';
 import '../safety/lifecycle_mixin.dart';
 import '../../models/subscription_models.dart';
 import '../../providers/connectivity_providers.dart';
@@ -47,18 +48,18 @@ class PremiumPreviewBanner extends ConsumerWidget {
     this.customMessage,
   });
 
-  String get _defaultMessage {
+  String _defaultMessage(BuildContext context) {
     switch (feature) {
       case PremiumFeature.automations:
-        return 'Preview Mode — Upgrade to create automations';
+        return context.l10n.premiumPreviewAutomations;
       case PremiumFeature.iftttIntegration:
-        return 'Preview Mode — Upgrade to connect services';
+        return context.l10n.premiumPreviewIfttt;
       case PremiumFeature.homeWidgets:
-        return 'Preview Mode — Upgrade to build widgets';
+        return context.l10n.premiumPreviewWidgets;
       case PremiumFeature.customRingtones:
-        return 'Preview Mode — Upgrade to access full library';
+        return context.l10n.premiumPreviewRingtones;
       case PremiumFeature.premiumThemes:
-        return 'Preview Mode — Upgrade to unlock all colors';
+        return context.l10n.premiumPreviewThemes;
     }
   }
 
@@ -87,7 +88,7 @@ class PremiumPreviewBanner extends ConsumerWidget {
             const SizedBox(width: AppTheme.spacing10),
             Expanded(
               child: Text(
-                customMessage ?? _defaultMessage,
+                customMessage ?? _defaultMessage(context),
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 13,
@@ -101,9 +102,9 @@ class PremiumPreviewBanner extends ConsumerWidget {
                 color: Colors.white.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(AppTheme.radius12),
               ),
-              child: const Text(
-                'Upgrade',
-                style: TextStyle(
+              child: Text(
+                context.l10n.premiumUpgrade,
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
@@ -520,15 +521,15 @@ class _PremiumInfoSheetState extends ConsumerState<PremiumInfoSheet>
   String get _headline {
     switch (widget.feature) {
       case PremiumFeature.automations:
-        return 'Automate Your Mesh';
+        return context.l10n.premiumHeadlineAutomations;
       case PremiumFeature.iftttIntegration:
-        return 'Connect Everything';
+        return context.l10n.premiumHeadlineIfttt;
       case PremiumFeature.homeWidgets:
-        return 'Build Your Dashboard';
+        return context.l10n.premiumHeadlineWidgetsAlt;
       case PremiumFeature.customRingtones:
-        return 'Unlock Sound Library';
+        return context.l10n.premiumHeadlineRingtonesAlt;
       case PremiumFeature.premiumThemes:
-        return 'Make It Yours';
+        return context.l10n.premiumHeadlineThemes;
     }
   }
 
@@ -537,15 +538,15 @@ class _PremiumInfoSheetState extends ConsumerState<PremiumInfoSheet>
 
     switch (widget.feature) {
       case PremiumFeature.automations:
-        return 'Create powerful automations that trigger alerts, send messages, and react to mesh events automatically.';
+        return context.l10n.premiumDescAutomations;
       case PremiumFeature.iftttIntegration:
-        return 'Connect your mesh network to 700+ apps and services via IFTTT webhooks.';
+        return context.l10n.premiumDescIfttt;
       case PremiumFeature.homeWidgets:
-        return 'Build custom dashboard widgets with live data, charts, and real-time monitoring.';
+        return context.l10n.premiumDescWidgets;
       case PremiumFeature.customRingtones:
-        return 'Access 7,000+ ringtones from classic tunes to TV themes and movie soundtracks.';
+        return context.l10n.premiumDescRingtones;
       case PremiumFeature.premiumThemes:
-        return 'Personalize your app with 12 stunning accent colors.';
+        return context.l10n.premiumDescThemes;
     }
   }
 
@@ -553,79 +554,87 @@ class _PremiumInfoSheetState extends ConsumerState<PremiumInfoSheet>
     switch (widget.feature) {
       case PremiumFeature.automations:
         return [
-          const _Benefit(
+          _Benefit(
             Icons.notifications_active,
-            'Smart Alerts',
-            'Battery low, node offline, and more',
+            context.l10n.premiumBenefitSmartAlerts,
+            context.l10n.premiumBenefitSmartAlertsDesc,
           ),
-          const _Benefit(
+          _Benefit(
             Icons.schedule,
-            'Scheduled Actions',
-            'Run at specific times',
+            context.l10n.premiumBenefitScheduledActions,
+            context.l10n.premiumBenefitScheduledActionsShort,
           ),
-          const _Benefit(
+          _Benefit(
             Icons.location_on,
-            'Geofence Triggers',
-            'React to location events',
+            context.l10n.premiumBenefitGeofenceTriggers,
+            context.l10n.premiumBenefitGeofenceTriggersShort,
           ),
         ];
       case PremiumFeature.iftttIntegration:
         return [
-          const _Benefit(
+          _Benefit(
             Icons.home,
-            'Smart Home',
-            'Control lights, locks, and devices',
+            context.l10n.premiumBenefitSmartHome,
+            context.l10n.premiumBenefitSmartHomeDesc,
           ),
-          const _Benefit(
+          _Benefit(
             Icons.notifications,
-            'Cross-Platform',
-            'Slack, Discord, email alerts',
+            context.l10n.premiumBenefitCrossPlatform,
+            context.l10n.premiumBenefitCrossPlatformDesc,
           ),
-          const _Benefit(
+          _Benefit(
             Icons.table_chart,
-            'Logging',
-            'Save events to spreadsheets',
+            context.l10n.premiumBenefitLogging,
+            context.l10n.premiumBenefitLoggingDesc,
           ),
         ];
       case PremiumFeature.homeWidgets:
         return [
-          const _Benefit(
+          _Benefit(
             Icons.show_chart,
-            'Live Charts',
-            'Real-time data visualization',
+            context.l10n.premiumBenefitLiveChartsAlt,
+            context.l10n.premiumBenefitLiveChartsAltDesc,
           ),
-          const _Benefit(
+          _Benefit(
             Icons.battery_full,
-            'Monitoring',
-            'Battery, sensors, telemetry',
+            context.l10n.premiumBenefitMonitoring,
+            context.l10n.premiumBenefitMonitoringDesc,
           ),
-          const _Benefit(
+          _Benefit(
             Icons.dashboard_customize,
-            'Custom Layouts',
-            'Build your own views',
+            context.l10n.premiumBenefitCustomLayouts,
+            context.l10n.premiumBenefitCustomLayoutsDesc,
           ),
         ];
       case PremiumFeature.customRingtones:
         return [
-          const _Benefit(
+          _Benefit(
             Icons.library_music,
-            '10,000+ Tones',
-            'Massive searchable library',
+            context.l10n.premiumBenefit10000Tones,
+            context.l10n.premiumBenefit10000TonesDesc,
           ),
-          const _Benefit(
+          _Benefit(
             Icons.search,
-            'Easy Search',
-            'Find any tune instantly',
+            context.l10n.premiumBenefitEasySearch,
+            context.l10n.premiumBenefitEasySearchDesc,
           ),
-          const _Benefit(Icons.star, 'Custom Presets', 'Save your favorites'),
+          _Benefit(
+            Icons.star,
+            context.l10n.premiumBenefitCustomPresets,
+            context.l10n.premiumBenefitCustomPresetsDesc,
+          ),
         ];
       case PremiumFeature.premiumThemes:
         return [
-          const _Benefit(Icons.palette, '15 Colors', 'Premium accent options'),
-          const _Benefit(
+          _Benefit(
+            Icons.palette,
+            context.l10n.premiumBenefit15Colors,
+            context.l10n.premiumBenefit15ColorsDesc,
+          ),
+          _Benefit(
             Icons.auto_awesome,
-            'Exclusive',
-            'Unique combinations',
+            context.l10n.premiumBenefitExclusive,
+            context.l10n.premiumBenefitExclusiveDesc,
           ),
         ];
     }
@@ -637,7 +646,7 @@ class _PremiumInfoSheetState extends ConsumerState<PremiumInfoSheet>
 
     final isOnline = ref.read(isOnlineProvider);
     if (!isOnline) {
-      showErrorSnackBar(context, 'Purchases require an internet connection.');
+      showErrorSnackBar(context, context.l10n.premiumPurchaseRequiresInternet);
       return;
     }
 
@@ -655,7 +664,10 @@ class _PremiumInfoSheetState extends ConsumerState<PremiumInfoSheet>
       switch (result) {
         case PurchaseResult.success:
           haptics.success();
-          showSuccessSnackBar(context, '${purchase.name} unlocked!');
+          showSuccessSnackBar(
+            context,
+            context.l10n.premiumPurchaseUnlocked(purchase.name),
+          );
           Navigator.of(context).pop(true);
 
         case PurchaseResult.canceled:
@@ -663,11 +675,11 @@ class _PremiumInfoSheetState extends ConsumerState<PremiumInfoSheet>
 
         case PurchaseResult.error:
           haptics.error();
-          showErrorSnackBar(context, 'Purchase failed. Please try again.');
+          showErrorSnackBar(context, context.l10n.premiumPurchaseFailed);
           safeSetState(() => _isLoading = false);
       }
     } catch (e) {
-      showErrorSnackBar(context, 'Something went wrong. Please try again.');
+      showErrorSnackBar(context, context.l10n.premiumPurchaseError);
       safeSetState(() => _isLoading = false);
     }
   }
@@ -675,10 +687,7 @@ class _PremiumInfoSheetState extends ConsumerState<PremiumInfoSheet>
   Future<void> _handleRestore() async {
     final isOnline = ref.read(isOnlineProvider);
     if (!isOnline) {
-      showErrorSnackBar(
-        context,
-        'Restoring purchases requires an internet connection.',
-      );
+      showErrorSnackBar(context, context.l10n.premiumRestoreRequiresInternet);
       return;
     }
 
@@ -692,16 +701,16 @@ class _PremiumInfoSheetState extends ConsumerState<PremiumInfoSheet>
       if (restored) {
         final hasFeature = ref.read(hasFeatureProvider(widget.feature));
         if (hasFeature) {
-          showSuccessSnackBar(context, 'Purchases restored!');
+          showSuccessSnackBar(context, context.l10n.premiumRestoreSuccess);
           Navigator.of(context).pop(true);
           return;
         }
       }
 
-      showInfoSnackBar(context, 'No purchases found to restore');
+      showInfoSnackBar(context, context.l10n.premiumRestoreNone);
       safeSetState(() => _isLoading = false);
     } catch (e) {
-      showErrorSnackBar(context, 'Failed to restore purchases');
+      showErrorSnackBar(context, context.l10n.premiumRestoreFailed);
       safeSetState(() => _isLoading = false);
     }
   }
@@ -879,7 +888,7 @@ class _PremiumInfoSheetState extends ConsumerState<PremiumInfoSheet>
                               ),
                               const SizedBox(width: AppTheme.spacing8),
                               Text(
-                                'Unlock for $displayPrice',
+                                context.l10n.premiumUnlockFor(displayPrice),
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
@@ -894,7 +903,7 @@ class _PremiumInfoSheetState extends ConsumerState<PremiumInfoSheet>
 
                 // One-time purchase note
                 Text(
-                  'One-time purchase • Yours forever',
+                  context.l10n.premiumOneTimePurchase,
                   textAlign: TextAlign.center,
                   style: TextStyle(color: context.textTertiary, fontSize: 12),
                 ),
@@ -907,7 +916,7 @@ class _PremiumInfoSheetState extends ConsumerState<PremiumInfoSheet>
                     TextButton(
                       onPressed: _isLoading ? null : _handleRestore,
                       child: Text(
-                        'Restore Purchases',
+                        context.l10n.premiumRestorePurchases,
                         style: TextStyle(
                           color: context.textSecondary,
                           fontSize: 13,
@@ -918,7 +927,7 @@ class _PremiumInfoSheetState extends ConsumerState<PremiumInfoSheet>
                     TextButton(
                       onPressed: () => Navigator.of(context).pop(false),
                       child: Text(
-                        'Not now',
+                        context.l10n.premiumNotNow,
                         style: TextStyle(
                           color: context.textTertiary,
                           fontSize: 13,
@@ -1048,7 +1057,7 @@ class PremiumExplanationCard extends ConsumerWidget {
                         ),
                         const SizedBox(width: AppTheme.spacing8),
                         Text(
-                          'Example',
+                          context.l10n.premiumExample,
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 12,
@@ -1087,7 +1096,7 @@ class PremiumExplanationCard extends ConsumerWidget {
                   feature: feature,
                 ),
                 icon: const Icon(Icons.lock_open, size: 18),
-                label: const Text('Unlock Feature'),
+                label: Text(context.l10n.premiumUnlockFeature),
               ),
             ),
           ],

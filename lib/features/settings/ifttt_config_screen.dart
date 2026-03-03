@@ -21,6 +21,7 @@ import '../../providers/auth_providers.dart';
 import '../../providers/profile_providers.dart';
 import '../../providers/subscription_providers.dart';
 import '../../utils/snackbar.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../services/ifttt/ifttt_service.dart';
 import 'geofence_picker_screen.dart';
 import '../../core/widgets/loading_indicator.dart';
@@ -104,6 +105,7 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
 
   Future<void> _saveConfig() async {
     // Capture provider refs before awaits
+    final l10n = context.l10n;
     final hasPremium = ref.read(
       hasFeatureProvider(PremiumFeature.iftttIntegration),
     );
@@ -126,14 +128,9 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
       if (!accepted) {
         final confirmed = await AppBottomSheet.showConfirm(
           context: context,
-          title: 'IFTTT Data Sharing',
-          message:
-              'When IFTTT Webhooks are enabled, mesh event data (messages, '
-              'node status, positions, battery levels) will be sent to '
-              'IFTTT servers via your personal webhook key.\n\n'
-              'IFTTT is a third-party service with its own privacy policy. '
-              'Only the event types you select will be transmitted.',
-          confirmLabel: 'I Understand',
+          title: l10n.iftttConfigDataSharingTitle,
+          message: l10n.iftttConfigDataSharingMsg,
+          confirmLabel: l10n.iftttConfigIUnderstand,
         );
         if (confirmed != true || !mounted) return;
         await prefs.setBool(_iftttDisclosureKey, true);
@@ -144,10 +141,7 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
 
     // Require valid webhook key when IFTTT is enabled
     if (_enabled && _webhookKeyController.text.trim().isEmpty) {
-      showErrorSnackBar(
-        context,
-        'Please enter your Webhook Key to enable IFTTT',
-      );
+      showErrorSnackBar(context, l10n.iftttConfigEnterKeyToEnable);
       return;
     }
 
@@ -187,19 +181,20 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
             );
       }
 
-      showSuccessSnackBar(context, 'IFTTT settings saved');
+      showSuccessSnackBar(context, l10n.iftttConfigSaved);
       Navigator.pop(context);
     } catch (e) {
       safeSetState(() => _isSaving = false);
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to save IFTTT settings');
+        showErrorSnackBar(context, l10n.iftttConfigSaveFailed);
       }
     }
   }
 
   Future<void> _testWebhook() async {
+    final l10n = context.l10n;
     if (_webhookKeyController.text.trim().isEmpty) {
-      showErrorSnackBar(context, 'Please enter your Webhook Key first');
+      showErrorSnackBar(context, l10n.iftttConfigEnterKeyFirst);
       return;
     }
 
@@ -233,15 +228,9 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
     safeSetState(() => _isTesting = false);
 
     if (success) {
-      showSuccessSnackBar(
-        context,
-        'Test webhook sent! Check your IFTTT applet.',
-      );
+      showSuccessSnackBar(context, l10n.iftttConfigTestSuccess);
     } else {
-      showErrorSnackBar(
-        context,
-        'Failed to send test webhook. Check your key.',
-      );
+      showErrorSnackBar(context, l10n.iftttConfigTestFailed);
     }
   }
 
@@ -263,7 +252,7 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: GlassScaffold(
-        title: 'IFTTT Integration',
+        title: context.l10n.iftttConfigTitle,
         actions: [
           if (hasPremium)
             TextButton(
@@ -274,7 +263,7 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
                       height: 18,
                       child: CircularProgressIndicator(strokeWidth: 2),
                     )
-                  : const Text('Save'),
+                  : Text(context.l10n.iftttConfigSave),
             )
           else
             TextButton.icon(
@@ -289,7 +278,7 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
                 color: SemanticColors.disabled,
               ),
               label: Text(
-                'Save',
+                context.l10n.iftttConfigSave,
                 style: TextStyle(color: context.textSecondary),
               ),
             ),
@@ -310,12 +299,11 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
                     ),
                     child: PremiumExplanationCard(
                       feature: PremiumFeature.iftttIntegration,
-                      title: 'Connect to 700+ Services',
-                      description:
-                          'Trigger smart home devices, log events to spreadsheets, send Discord/Slack messages, and more.',
-                      exampleTitle: 'Node goes offline',
+                      title: context.l10n.iftttConfigPremiumTitle,
+                      description: context.l10n.iftttConfigPremiumDesc,
+                      exampleTitle: context.l10n.iftttConfigPremiumExampleTitle,
                       exampleDescription:
-                          'Automatically turn on a smart light or send yourself a notification when your node is no longer heard.',
+                          context.l10n.iftttConfigPremiumExampleDesc,
                       initiallyExpanded: true,
                     ),
                   ),
@@ -323,19 +311,27 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
                 // Only show form fields when premium AND enabled
                 if (hasPremium && _enabled) ...[
                   const SizedBox(height: AppTheme.spacing16),
-                  const _SectionHeader(title: 'WEBHOOK'),
+                  _SectionHeader(title: context.l10n.iftttConfigSectionWebhook),
                   _buildWebhookSection(),
                   const SizedBox(height: AppTheme.spacing16),
-                  const _SectionHeader(title: 'MESSAGE TRIGGERS'),
+                  _SectionHeader(
+                    title: context.l10n.iftttConfigSectionMessageTriggers,
+                  ),
                   _buildMessageTriggers(),
                   const SizedBox(height: AppTheme.spacing16),
-                  const _SectionHeader(title: 'NODE STATUS TRIGGERS'),
+                  _SectionHeader(
+                    title: context.l10n.iftttConfigSectionNodeTriggers,
+                  ),
                   _buildNodeTriggers(),
                   const SizedBox(height: AppTheme.spacing16),
-                  const _SectionHeader(title: 'TELEMETRY TRIGGERS'),
+                  _SectionHeader(
+                    title: context.l10n.iftttConfigSectionTelemetryTriggers,
+                  ),
                   _buildTelemetryTriggers(),
                   const SizedBox(height: AppTheme.spacing16),
-                  const _SectionHeader(title: 'GEOFENCING'),
+                  _SectionHeader(
+                    title: context.l10n.iftttConfigSectionGeofencing,
+                  ),
                   _buildGeofenceSettings(),
                 ],
                 const SizedBox(height: AppTheme.spacing16),
@@ -359,8 +355,8 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
     return _SettingsTile(
       icon: Icons.webhook,
       iconColor: _enabled && hasPremium ? context.accentColor : null,
-      title: 'Enable IFTTT',
-      subtitle: 'Send events to IFTTT Webhooks service',
+      title: context.l10n.iftttConfigEnable,
+      subtitle: context.l10n.iftttConfigEnableSubtitle,
       trailing: hasPremium
           ? ThemedSwitch(
               value: _enabled,
@@ -410,11 +406,11 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
                 onSubmitted: (_) => FocusScope.of(context).unfocus(),
                 style: TextStyle(color: context.textPrimary),
                 decoration: InputDecoration(
-                  labelText: 'Webhook Key',
+                  labelText: context.l10n.iftttConfigWebhookKeyLabel,
                   labelStyle: TextStyle(color: context.textSecondary),
-                  hintText: 'e.g., cMcOnB_zaJTrZwsVvzVTHY',
+                  hintText: context.l10n.iftttConfigWebhookKeyHint,
                   hintStyle: TextStyle(color: SemanticColors.muted),
-                  helperText: 'Copy from IFTTT Webhooks URL after /use/',
+                  helperText: context.l10n.iftttConfigWebhookKeyHelper,
                   helperStyle: TextStyle(color: context.textTertiary),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(AppTheme.radius8),
@@ -447,7 +443,11 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
                   icon: _isTesting
                       ? LoadingIndicator(size: 16)
                       : const Icon(Icons.send, size: 18),
-                  label: Text(_isTesting ? 'Testing...' : 'Test Connection'),
+                  label: Text(
+                    _isTesting
+                        ? context.l10n.iftttConfigTesting
+                        : context.l10n.iftttConfigTestConnection,
+                  ),
                 ),
               ),
             ],
@@ -462,8 +462,8 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
       children: [
         _SettingsTile(
           icon: Icons.message_outlined,
-          title: 'Message Received',
-          subtitle: 'Trigger when a message is received',
+          title: context.l10n.iftttConfigMessageReceived,
+          subtitle: context.l10n.iftttConfigMessageReceivedSubtitle,
           trailing: ThemedSwitch(
             value: _messageReceived,
             onChanged: (value) {
@@ -474,8 +474,8 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
         ),
         _SettingsTile(
           icon: Icons.sos_outlined,
-          title: 'SOS / Emergency',
-          subtitle: 'Trigger on SOS, emergency, help, mayday keywords',
+          title: context.l10n.iftttConfigSosEmergency,
+          subtitle: context.l10n.iftttConfigSosEmergencySubtitle,
           trailing: ThemedSwitch(
             value: _sosEmergency,
             onChanged: (value) {
@@ -493,8 +493,8 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
       children: [
         _SettingsTile(
           icon: Icons.wifi_tethering,
-          title: 'Node Active',
-          subtitle: 'Trigger when a node is heard recently',
+          title: context.l10n.iftttConfigNodeActive,
+          subtitle: context.l10n.iftttConfigNodeActiveSubtitle,
           trailing: ThemedSwitch(
             value: _nodeOnline,
             onChanged: (value) {
@@ -505,8 +505,8 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
         ),
         _SettingsTile(
           icon: Icons.wifi_off_outlined,
-          title: 'Node Inactive',
-          subtitle: 'Trigger when a node is not heard for a while',
+          title: context.l10n.iftttConfigNodeInactive,
+          subtitle: context.l10n.iftttConfigNodeInactiveSubtitle,
           trailing: ThemedSwitch(
             value: _nodeOffline,
             onChanged: (value) {
@@ -524,8 +524,8 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
       children: [
         _SettingsTile(
           icon: Icons.battery_3_bar,
-          title: 'Battery Low',
-          subtitle: 'Trigger when battery drops below threshold',
+          title: context.l10n.iftttConfigBatteryLow,
+          subtitle: context.l10n.iftttConfigBatteryLowSubtitle,
           trailing: ThemedSwitch(
             value: _batteryLow,
             onChanged: (value) {
@@ -554,7 +554,7 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
                     ),
                     const SizedBox(width: AppTheme.spacing12),
                     Text(
-                      'Battery Threshold',
+                      context.l10n.iftttConfigBatteryThreshold,
                       style: TextStyle(
                         fontSize: 14,
                         color: context.textPrimary,
@@ -631,8 +631,8 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
           ),
         _SettingsTile(
           icon: Icons.device_thermostat,
-          title: 'Temperature Alert',
-          subtitle: 'Trigger when temperature exceeds threshold',
+          title: context.l10n.iftttConfigTemperatureAlert,
+          subtitle: context.l10n.iftttConfigTemperatureAlertSubtitle,
           trailing: ThemedSwitch(
             value: _temperatureAlert,
             onChanged: (value) {
@@ -661,7 +661,7 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
                     ),
                     const SizedBox(width: AppTheme.spacing12),
                     Text(
-                      'Temperature Threshold',
+                      context.l10n.iftttConfigTemperatureThreshold,
                       style: TextStyle(
                         fontSize: 14,
                         color: context.textPrimary,
@@ -745,8 +745,8 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
       children: [
         _SettingsTile(
           icon: Icons.radar,
-          title: 'Position Updates',
-          subtitle: 'Trigger when node exits geofence area',
+          title: context.l10n.iftttConfigPositionUpdates,
+          subtitle: context.l10n.iftttConfigPositionUpdatesSubtitle,
           trailing: ThemedSwitch(
             value: _positionUpdate,
             onChanged: (value) {
@@ -772,9 +772,9 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
                   textInputAction: TextInputAction.next,
                   style: TextStyle(color: context.textPrimary),
                   decoration: InputDecoration(
-                    labelText: 'Geofence Radius',
+                    labelText: context.l10n.iftttConfigGeofenceRadius,
                     labelStyle: TextStyle(color: context.textSecondary),
-                    hintText: '1000',
+                    hintText: context.l10n.iftttConfigGeofenceRadiusHint,
                     hintStyle: TextStyle(color: SemanticColors.muted),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(AppTheme.radius8),
@@ -789,7 +789,7 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
                       borderSide: BorderSide(color: context.accentColor),
                     ),
                     prefixIcon: Icon(Icons.radar, color: context.textSecondary),
-                    suffixText: 'm',
+                    suffixText: context.l10n.iftttConfigGeofenceUnitM,
                     suffixStyle: TextStyle(color: context.textSecondary),
                     filled: true,
                     fillColor: context.background,
@@ -807,9 +807,9 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
                   textInputAction: TextInputAction.next,
                   style: TextStyle(color: context.textPrimary),
                   decoration: InputDecoration(
-                    labelText: 'Center Latitude',
+                    labelText: context.l10n.iftttConfigCenterLatitude,
                     labelStyle: TextStyle(color: context.textSecondary),
-                    hintText: '-33.8688',
+                    hintText: context.l10n.iftttConfigCenterLatHint,
                     hintStyle: TextStyle(color: SemanticColors.muted),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(AppTheme.radius8),
@@ -844,9 +844,9 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
                   onSubmitted: (_) => FocusScope.of(context).unfocus(),
                   style: TextStyle(color: context.textPrimary),
                   decoration: InputDecoration(
-                    labelText: 'Center Longitude',
+                    labelText: context.l10n.iftttConfigCenterLongitude,
                     labelStyle: TextStyle(color: context.textSecondary),
-                    hintText: '151.2093',
+                    hintText: context.l10n.iftttConfigCenterLonHint,
                     hintStyle: TextStyle(color: SemanticColors.muted),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(AppTheme.radius8),
@@ -966,7 +966,7 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Monitored Node',
+                                context.l10n.iftttConfigMonitoredNode,
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: context.textTertiary,
@@ -1017,7 +1017,7 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
                         const SizedBox(width: AppTheme.spacing12),
                         Expanded(
                           child: Text(
-                            'No node selected. All nodes will be monitored.',
+                            context.l10n.iftttConfigNoNodeSelected,
                             style: TextStyle(
                               fontSize: 13,
                               color: context.textSecondary,
@@ -1040,7 +1040,7 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
                     SizedBox(width: AppTheme.spacing12),
                     Expanded(
                       child: Text(
-                        'Alert Cooldown',
+                        context.l10n.iftttConfigAlertCooldown,
                         style: TextStyle(
                           fontSize: 14,
                           color: context.textPrimary,
@@ -1066,17 +1066,40 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
                           color: context.textPrimary,
                           fontSize: 14,
                         ),
-                        items: const [
-                          DropdownMenuItem(value: 5, child: Text('5 min')),
-                          DropdownMenuItem(value: 15, child: Text('15 min')),
-                          DropdownMenuItem(value: 30, child: Text('30 min')),
-                          DropdownMenuItem(value: 60, child: Text('1 hour')),
-                          DropdownMenuItem(value: 120, child: Text('2 hours')),
-                          DropdownMenuItem(value: 240, child: Text('4 hours')),
-                          DropdownMenuItem(value: 480, child: Text('8 hours')),
+                        items: [
+                          DropdownMenuItem(
+                            value: 5,
+                            child: Text(context.l10n.iftttConfigCooldown5min),
+                          ),
+                          DropdownMenuItem(
+                            value: 15,
+                            child: Text(context.l10n.iftttConfigCooldown15min),
+                          ),
+                          DropdownMenuItem(
+                            value: 30,
+                            child: Text(context.l10n.iftttConfigCooldown30min),
+                          ),
+                          DropdownMenuItem(
+                            value: 60,
+                            child: Text(context.l10n.iftttConfigCooldown1hour),
+                          ),
+                          DropdownMenuItem(
+                            value: 120,
+                            child: Text(context.l10n.iftttConfigCooldown2hours),
+                          ),
+                          DropdownMenuItem(
+                            value: 240,
+                            child: Text(context.l10n.iftttConfigCooldown4hours),
+                          ),
+                          DropdownMenuItem(
+                            value: 480,
+                            child: Text(context.l10n.iftttConfigCooldown8hours),
+                          ),
                           DropdownMenuItem(
                             value: 1440,
-                            child: Text('24 hours'),
+                            child: Text(
+                              context.l10n.iftttConfigCooldown24hours,
+                            ),
                           ),
                         ],
                         onChanged: (value) {
@@ -1092,7 +1115,7 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
                 ),
                 SizedBox(height: AppTheme.spacing8),
                 Text(
-                  'Minimum time between geofence alerts for the same node',
+                  context.l10n.iftttConfigCooldownDesc,
                   style: context.bodySmallStyle?.copyWith(
                     color: context.textTertiary,
                   ),
@@ -1111,7 +1134,7 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
                       padding: const EdgeInsets.symmetric(vertical: 12),
                     ),
                     icon: const Icon(Icons.map_outlined, size: 18),
-                    label: const Text('Pick on Map'),
+                    label: Text(context.l10n.iftttConfigPickOnMap),
                   ),
                 ),
               ],
@@ -1177,7 +1200,7 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
               Icon(Icons.info_outline, color: context.accentColor, size: 20),
               SizedBox(width: AppTheme.spacing12),
               Text(
-                'Setup Guide',
+                context.l10n.iftttConfigSetupGuide,
                 style: TextStyle(
                   color: context.accentColor,
                   fontWeight: FontWeight.bold,
@@ -1187,10 +1210,10 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
             ],
           ),
           const SizedBox(height: AppTheme.spacing12),
-          _buildStep('1', 'Create an account at ifttt.com'),
-          _buildStep('2', 'Search for "Webhooks" service and connect it'),
-          _buildStep('3', 'Go to Webhooks settings to find your key'),
-          _buildStep('4', 'Create applets with Webhooks as the trigger'),
+          _buildStep('1', context.l10n.iftttConfigStep1),
+          _buildStep('2', context.l10n.iftttConfigStep2),
+          _buildStep('3', context.l10n.iftttConfigStep3),
+          _buildStep('4', context.l10n.iftttConfigStep4),
         ],
       ),
     );
@@ -1252,7 +1275,7 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
         child: ExpansionTile(
           leading: Icon(Icons.code, color: context.textSecondary),
           title: Text(
-            'Event Names Reference',
+            context.l10n.iftttConfigEventNamesRef,
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w500,
@@ -1260,7 +1283,7 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
             ),
           ),
           subtitle: Text(
-            'Use these names in your IFTTT applets',
+            context.l10n.iftttConfigEventNamesSubtitle,
             style: context.bodySmallStyle?.copyWith(
               color: context.textTertiary,
             ),

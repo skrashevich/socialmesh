@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'dart:async';
 import 'package:flutter/material.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/logging.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/widgets/animations.dart';
@@ -143,18 +144,15 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
 
   Future<void> _saveConfig() async {
     safeSetState(() => _isSaving = true);
+    final l10n = context.l10n;
 
     // Warn: MQTT on non-WiFi device without client proxy
     if (_enabled && !_proxyToClientEnabled && !_targetDeviceHasWifi()) {
       final confirmed = await AppBottomSheet.showConfirm(
         context: context,
-        title: 'No WiFi Hardware',
-        message:
-            'This device does not have WiFi hardware. '
-            'Without MQTT Client Proxy enabled, the device cannot reach '
-            'an MQTT broker on its own.\n\n'
-            'Save anyway without proxy?',
-        confirmLabel: 'Save Anyway',
+        title: l10n.mqttConfigNoWifiTitle,
+        message: l10n.mqttConfigNoWifiMsg,
+        confirmLabel: l10n.mqttConfigSaveAnyway,
         isDestructive: true,
       );
       if (confirmed != true) {
@@ -186,7 +184,7 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
       );
 
       if (mounted) {
-        showSuccessSnackBar(context, 'MQTT configuration saved');
+        showSuccessSnackBar(context, l10n.mqttConfigSaved);
         if (target.isLocal) {
           ref
               .read(countdownProvider.notifier)
@@ -196,7 +194,7 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to save: $e');
+        showErrorSnackBar(context, l10n.mqttConfigSaveFailed(e.toString()));
       }
     } finally {
       safeSetState(() => _isSaving = false);
@@ -208,7 +206,7 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: GlassScaffold(
-        title: 'MQTT',
+        title: context.l10n.mqttConfigTitle,
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 8),
@@ -217,7 +215,7 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
               child: _isSaving
                   ? LoadingIndicator(size: 20)
                   : Text(
-                      'Save',
+                      context.l10n.mqttConfigSave,
                       style: TextStyle(
                         color: context.accentColor,
                         fontWeight: FontWeight.w600,
@@ -246,11 +244,9 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
                             return Padding(
                               padding: const EdgeInsets.only(bottom: 12),
                               child: StatusBanner.warning(
-                                title:
-                                    'Your region has a $dutyCyclePercent% duty '
-                                    'cycle. MQTT is not advised when you are '
-                                    'duty cycle restricted — the extra traffic '
-                                    'will quickly overwhelm your LoRa mesh.',
+                                title: context.l10n.mqttConfigDutyCycleWarning(
+                                  dutyCyclePercent.toString(),
+                                ),
                                 icon: Icons.warning_amber_rounded,
                                 margin: const EdgeInsets.symmetric(
                                   horizontal: 16,
@@ -268,9 +264,8 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
                   _SettingsTile(
                     icon: Icons.cloud,
                     iconColor: _enabled ? context.accentColor : null,
-                    title: 'Enable MQTT',
-                    subtitle:
-                        'Connect device to an MQTT broker for mesh bridging',
+                    title: context.l10n.mqttConfigEnable,
+                    subtitle: context.l10n.mqttConfigEnableSubtitle,
                     trailing: ThemedSwitch(
                       value: _enabled,
                       onChanged: (value) {
@@ -312,10 +307,7 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
                             const SizedBox(width: AppTheme.spacing10),
                             Expanded(
                               child: Text(
-                                'This device has no WiFi hardware. '
-                                'Enable MQTT Client Proxy below so the '
-                                'app can relay messages on behalf of '
-                                'the device.',
+                                context.l10n.mqttConfigNoWifiAdvisory,
                                 style: TextStyle(
                                   color: context.textSecondary,
                                   fontSize: 12,
@@ -326,7 +318,7 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
                         ),
                       ),
                     SizedBox(height: AppTheme.spacing16),
-                    const _SectionHeader(title: 'SERVER'),
+                    _SectionHeader(title: context.l10n.mqttConfigSectionServer),
                     Container(
                       margin: const EdgeInsets.symmetric(
                         horizontal: 16,
@@ -346,11 +338,13 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
                             textInputAction: TextInputAction.next,
                             style: TextStyle(color: context.textPrimary),
                             decoration: InputDecoration(
-                              labelText: 'Server Address',
+                              labelText:
+                                  context.l10n.mqttConfigServerAddressLabel,
                               labelStyle: TextStyle(
                                 color: context.textSecondary,
                               ),
-                              hintText: 'mqtt.meshtastic.org',
+                              hintText:
+                                  context.l10n.mqttConfigServerAddressHint,
                               hintStyle: TextStyle(color: SemanticColors.muted),
                               filled: true,
                               fillColor: context.background,
@@ -390,11 +384,11 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
                                 FocusScope.of(context).unfocus(),
                             style: TextStyle(color: context.textPrimary),
                             decoration: InputDecoration(
-                              labelText: 'Topic Root',
+                              labelText: context.l10n.mqttConfigTopicRootLabel,
                               labelStyle: TextStyle(
                                 color: context.textSecondary,
                               ),
-                              hintText: 'msh',
+                              hintText: context.l10n.mqttConfigTopicRootHint,
                               hintStyle: TextStyle(color: SemanticColors.muted),
                               filled: true,
                               fillColor: context.background,
@@ -431,8 +425,8 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
                     _SettingsTile(
                       icon: Icons.lock_outline,
                       iconColor: _tlsEnabled ? context.accentColor : null,
-                      title: 'Use TLS',
-                      subtitle: 'Encrypt connection to broker',
+                      title: context.l10n.mqttConfigUseTls,
+                      subtitle: context.l10n.mqttConfigUseTlsSubtitle,
                       trailing: ThemedSwitch(
                         value: _tlsEnabled,
                         onChanged: (value) {
@@ -442,7 +436,7 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
                       ),
                     ),
                     SizedBox(height: AppTheme.spacing16),
-                    const _SectionHeader(title: 'AUTHENTICATION'),
+                    _SectionHeader(title: context.l10n.mqttConfigSectionAuth),
                     Container(
                       margin: const EdgeInsets.symmetric(
                         horizontal: 16,
@@ -462,11 +456,11 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
                             textInputAction: TextInputAction.next,
                             style: TextStyle(color: context.textPrimary),
                             decoration: InputDecoration(
-                              labelText: 'Username',
+                              labelText: context.l10n.mqttConfigUsernameLabel,
                               labelStyle: TextStyle(
                                 color: context.textSecondary,
                               ),
-                              hintText: 'Optional',
+                              hintText: context.l10n.mqttConfigOptionalHint,
                               hintStyle: TextStyle(color: SemanticColors.muted),
                               filled: true,
                               fillColor: context.background,
@@ -507,11 +501,11 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
                                 FocusScope.of(context).unfocus(),
                             style: TextStyle(color: context.textPrimary),
                             decoration: InputDecoration(
-                              labelText: 'Password',
+                              labelText: context.l10n.mqttConfigPasswordLabel,
                               labelStyle: TextStyle(
                                 color: context.textSecondary,
                               ),
-                              hintText: 'Optional',
+                              hintText: context.l10n.mqttConfigOptionalHint,
                               hintStyle: TextStyle(color: SemanticColors.muted),
                               filled: true,
                               fillColor: context.background,
@@ -559,14 +553,16 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
                       ),
                     ),
                     SizedBox(height: AppTheme.spacing16),
-                    const _SectionHeader(title: 'OPTIONS'),
+                    _SectionHeader(
+                      title: context.l10n.mqttConfigSectionOptions,
+                    ),
                     _SettingsTile(
                       icon: Icons.enhanced_encryption,
                       iconColor: _encryptionEnabled
                           ? context.accentColor
                           : null,
-                      title: 'Encryption',
-                      subtitle: 'Encrypt mesh messages over MQTT',
+                      title: context.l10n.mqttConfigEncryption,
+                      subtitle: context.l10n.mqttConfigEncryptionSubtitle,
                       trailing: ThemedSwitch(
                         value: _encryptionEnabled,
                         onChanged: (value) {
@@ -578,8 +574,8 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
                     _SettingsTile(
                       icon: Icons.data_object,
                       iconColor: _jsonEnabled ? context.accentColor : null,
-                      title: 'JSON Output',
-                      subtitle: 'Publish messages in JSON format',
+                      title: context.l10n.mqttConfigJsonOutput,
+                      subtitle: context.l10n.mqttConfigJsonOutputSubtitle,
                       trailing: ThemedSwitch(
                         value: _jsonEnabled,
                         onChanged: (value) {
@@ -593,9 +589,8 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
                       iconColor: _proxyToClientEnabled
                           ? context.accentColor
                           : null,
-                      title: 'MQTT Client Proxy',
-                      subtitle:
-                          "Use phone's network for MQTT\n(Required for devices without WiFi)",
+                      title: context.l10n.mqttConfigClientProxy,
+                      subtitle: context.l10n.mqttConfigClientProxySubtitle,
                       trailing: ThemedSwitch(
                         value: _proxyToClientEnabled,
                         onChanged: (value) {
@@ -617,8 +612,8 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
                       iconColor: _mapReportingEnabled
                           ? context.accentColor
                           : null,
-                      title: 'Map Reporting',
-                      subtitle: 'Report position to public mesh map',
+                      title: context.l10n.mqttConfigMapReporting,
+                      subtitle: context.l10n.mqttConfigMapReportingSubtitle,
                       trailing: ThemedSwitch(
                         value: _mapReportingEnabled,
                         onChanged: (value) {
@@ -656,9 +651,7 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
           SizedBox(width: AppTheme.spacing12),
           Expanded(
             child: Text(
-              'MQTT allows your device to bridge the local mesh network '
-              'to the internet. This enables communication with nodes '
-              'that are not in direct radio range.',
+              context.l10n.mqttConfigInfoText,
               style: TextStyle(color: context.textSecondary, fontSize: 13),
             ),
           ),
@@ -667,18 +660,19 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
     );
   }
 
-  String _getPositionPrecisionLabel(int precision) {
+  String _getPositionPrecisionLabel(BuildContext context, int precision) {
+    final l10n = context.l10n;
     switch (precision) {
       case 12:
-        return 'Within 5.8 km';
+        return l10n.mqttConfigPrecisionWithin5_8km;
       case 13:
-        return 'Within 2.9 km';
+        return l10n.mqttConfigPrecisionWithin2_9km;
       case 14:
-        return 'Within 1.5 km';
+        return l10n.mqttConfigPrecisionWithin1_5km;
       case 15:
-        return 'Within 700 m';
+        return l10n.mqttConfigPrecisionWithin700m;
       default:
-        return 'Unknown';
+        return l10n.mqttConfigPrecisionUnknown;
     }
   }
 
@@ -694,7 +688,7 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'MAP REPORT SETTINGS',
+            context.l10n.mqttConfigMapReportSettingsHeader,
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.bold,
@@ -705,7 +699,9 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
           SizedBox(height: AppTheme.spacing16),
           // Publish Interval
           Text(
-            'Publish Interval: ${_mapPublishIntervalSecs ~/ 60} minutes',
+            context.l10n.mqttConfigPublishInterval(
+              _mapPublishIntervalSecs ~/ 60,
+            ),
             style: TextStyle(
               color: context.textPrimary,
               fontSize: 14,
@@ -714,7 +710,7 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
           ),
           const SizedBox(height: AppTheme.spacing4),
           Text(
-            'How often to report position to map',
+            context.l10n.mqttConfigPublishIntervalDesc,
             style: TextStyle(color: context.textSecondary, fontSize: 12),
           ),
           SliderTheme(
@@ -742,7 +738,7 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
           SizedBox(height: AppTheme.spacing16),
           // Position Precision
           Text(
-            'Position Precision',
+            context.l10n.mqttConfigPositionPrecision,
             style: TextStyle(
               color: context.textPrimary,
               fontSize: 14,
@@ -751,7 +747,7 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
           ),
           const SizedBox(height: AppTheme.spacing4),
           Text(
-            'Approximate location accuracy for map',
+            context.l10n.mqttConfigPositionPrecisionDesc,
             style: TextStyle(color: context.textSecondary, fontSize: 12),
           ),
           SliderTheme(
@@ -776,7 +772,10 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
           ),
           Center(
             child: Text(
-              _getPositionPrecisionLabel(_mapPositionPrecision.round()),
+              _getPositionPrecisionLabel(
+                context,
+                _mapPositionPrecision.round(),
+              ),
               style: TextStyle(
                 fontSize: 13,
                 color: context.accentColor,

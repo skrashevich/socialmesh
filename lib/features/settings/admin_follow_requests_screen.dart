@@ -7,6 +7,7 @@ import '../../core/safety/lifecycle_mixin.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/logging.dart';
 import '../../core/constants.dart';
 import '../../core/theme.dart';
@@ -35,14 +36,14 @@ class _AdminFollowRequestsScreenState
     return DefaultTabController(
       length: 2,
       child: GlassScaffold(
-        title: 'Social Admin',
+        title: context.l10n.adminFollowTitle,
         bottom: TabBar(
           indicatorColor: context.accentColor,
           labelColor: context.textPrimary,
           unselectedLabelColor: context.textTertiary,
-          tabs: const [
-            Tab(text: 'Follow Requests'),
-            Tab(text: 'Seed Data'),
+          tabs: [
+            Tab(text: context.l10n.adminFollowTabRequests),
+            Tab(text: context.l10n.adminFollowTabSeedData),
           ],
         ),
         // Use hasScrollBody: true because each TabBarView child contains
@@ -82,7 +83,7 @@ class _AdminFollowRequestsScreenState
                   Icon(Icons.error_outline, size: 48, color: AppTheme.errorRed),
                   const SizedBox(height: AppTheme.spacing16),
                   Text(
-                    'Error loading requests',
+                    context.l10n.adminFollowErrorLoading,
                     style: TextStyle(
                       color: context.textPrimary,
                       fontSize: 16,
@@ -119,7 +120,7 @@ class _AdminFollowRequestsScreenState
                 ),
                 const SizedBox(height: AppTheme.spacing16),
                 Text(
-                  'No pending requests',
+                  context.l10n.adminFollowNoPending,
                   style: TextStyle(color: context.textSecondary, fontSize: 16),
                 ),
               ],
@@ -169,9 +170,12 @@ class _AdminFollowRequestsScreenState
       await batch.commit();
       if (!mounted) return;
 
-      showSuccessSnackBar(context, 'Request approved');
+      showSuccessSnackBar(context, context.l10n.adminFollowApproved);
     } catch (e) {
-      showErrorSnackBar(context, 'Failed to approve: $e');
+      showErrorSnackBar(
+        context,
+        context.l10n.adminFollowApproveFailed(e.toString()),
+      );
     }
   }
 
@@ -183,9 +187,12 @@ class _AdminFollowRequestsScreenState
           .delete();
       if (!mounted) return;
 
-      showSuccessSnackBar(context, 'Request declined');
+      showSuccessSnackBar(context, context.l10n.adminFollowDeclined);
     } catch (e) {
-      showErrorSnackBar(context, 'Failed to decline: $e');
+      showErrorSnackBar(
+        context,
+        context.l10n.adminFollowDeclineFailed(e.toString()),
+      );
     }
   }
 }
@@ -250,7 +257,9 @@ class _FollowRequestCard extends StatelessWidget {
               const SizedBox(height: AppTheme.spacing12),
               // Time
               Text(
-                'Requested ${_formatTime(request.createdAt)}',
+                context.l10n.adminFollowRequestedTime(
+                  _formatTime(context, request.createdAt),
+                ),
                 style: TextStyle(color: context.textTertiary, fontSize: 12),
               ),
               const SizedBox(height: AppTheme.spacing12),
@@ -266,7 +275,7 @@ class _FollowRequestCard extends StatelessWidget {
                           color: AppTheme.errorRed.withAlpha(100),
                         ),
                       ),
-                      child: const Text('Decline'),
+                      child: Text(context.l10n.adminFollowDecline),
                     ),
                   ),
                   const SizedBox(width: AppTheme.spacing12),
@@ -276,7 +285,7 @@ class _FollowRequestCard extends StatelessWidget {
                       style: FilledButton.styleFrom(
                         backgroundColor: AccentColors.green,
                       ),
-                      child: const Text('Accept'),
+                      child: Text(context.l10n.adminFollowAccept),
                     ),
                   ),
                 ],
@@ -303,12 +312,16 @@ class _FollowRequestCard extends StatelessWidget {
     return null;
   }
 
-  String _formatTime(DateTime time) {
+  String _formatTime(BuildContext context, DateTime time) {
     final diff = DateTime.now().difference(time);
-    if (diff.inMinutes < 1) return 'just now';
-    if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
-    if (diff.inHours < 24) return '${diff.inHours}h ago';
-    if (diff.inDays < 7) return '${diff.inDays}d ago';
+    if (diff.inMinutes < 1) return context.l10n.adminFollowJustNow;
+    if (diff.inMinutes < 60) {
+      return context.l10n.adminFollowMinutesAgo(diff.inMinutes);
+    }
+    if (diff.inHours < 24) {
+      return context.l10n.adminFollowHoursAgo(diff.inHours);
+    }
+    if (diff.inDays < 7) return context.l10n.adminFollowDaysAgo(diff.inDays);
     return '${time.day}/${time.month}/${time.year}';
   }
 }
@@ -683,7 +696,7 @@ class _SeedDataTabState extends State<_SeedDataTab>
                   Icon(Icons.dataset_outlined, color: context.accentColor),
                   const SizedBox(width: AppTheme.spacing8),
                   Text(
-                    'Test Data',
+                    context.l10n.adminFollowTestData,
                     style: TextStyle(
                       color: context.textPrimary,
                       fontSize: 16,
@@ -693,13 +706,25 @@ class _SeedDataTabState extends State<_SeedDataTab>
                 ],
               ),
               const SizedBox(height: AppTheme.spacing12),
-              _buildStatRow(context, '${_dummyUsers.length}', 'Profiles'),
-              _buildStatRow(context, '${_samplePosts.length}', 'Posts'),
-              _buildStatRow(context, '${_sampleStories.length}', 'Stories'),
+              _buildStatRow(
+                context,
+                '${_dummyUsers.length}',
+                context.l10n.adminFollowProfiles,
+              ),
+              _buildStatRow(
+                context,
+                '${_samplePosts.length}',
+                context.l10n.adminFollowPosts,
+              ),
+              _buildStatRow(
+                context,
+                '${_sampleStories.length}',
+                context.l10n.adminFollowStories,
+              ),
               _buildStatRow(
                 context,
                 '~${_sampleComments.length * 2}',
-                'Comments',
+                context.l10n.adminFollowComments,
               ),
             ],
           ),
@@ -719,7 +744,7 @@ class _SeedDataTabState extends State<_SeedDataTab>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Dummy Users',
+                context.l10n.adminFollowDummyUsers,
                 style: TextStyle(
                   color: context.textSecondary,
                   fontSize: 12,
@@ -789,7 +814,7 @@ class _SeedDataTabState extends State<_SeedDataTab>
                     ),
                     const SizedBox(width: AppTheme.spacing6),
                     Text(
-                      'Log',
+                      context.l10n.adminFollowLog,
                       style: TextStyle(
                         color: AppTheme.successGreen,
                         fontSize: 11,
@@ -850,7 +875,7 @@ class _SeedDataTabState extends State<_SeedDataTab>
               child: OutlinedButton.icon(
                 onPressed: _isSeeding ? null : _resetAndSeed,
                 icon: const Icon(Icons.refresh, size: 18),
-                label: const Text('Reset & Seed'),
+                label: Text(context.l10n.adminFollowResetAndSeed),
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 14),
                   side: BorderSide(color: context.border),
@@ -862,7 +887,7 @@ class _SeedDataTabState extends State<_SeedDataTab>
               child: FilledButton.icon(
                 onPressed: _isSeeding ? null : _seedUsers,
                 icon: const Icon(Icons.add, size: 18),
-                label: const Text('Seed Data'),
+                label: Text(context.l10n.adminFollowSeedData),
                 style: FilledButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 14),
                 ),
@@ -875,8 +900,7 @@ class _SeedDataTabState extends State<_SeedDataTab>
 
         // Help text
         Text(
-          'Reset & Seed: Clears all dummy data first, then seeds fresh.\n'
-          'Seed Data: Adds to existing data (may create duplicates).',
+          context.l10n.adminFollowSeedDescription,
           style: TextStyle(color: context.textTertiary, fontSize: 11),
           textAlign: TextAlign.center,
         ),
@@ -1439,7 +1463,12 @@ class _SeedDataTabState extends State<_SeedDataTab>
       if (mounted) {
         showSuccessSnackBar(
           context,
-          'Seeded ${_dummyUsers.length} users, ${_samplePosts.length} posts, ${_sampleStories.length} stories, $commentCount comments',
+          context.l10n.adminFollowSeededSummary(
+            _dummyUsers.length,
+            _samplePosts.length,
+            _sampleStories.length,
+            commentCount,
+          ),
         );
       }
     } catch (e) {

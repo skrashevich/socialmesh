@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/logging.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
@@ -140,6 +141,7 @@ class _TrafficManagementConfigScreenState
   }
 
   Future<void> _saveConfig() async {
+    final l10n = context.l10n;
     safeSetState(() => _isSaving = true);
     try {
       final protocol = ref.read(protocolServiceProvider);
@@ -165,7 +167,7 @@ class _TrafficManagementConfigScreenState
       );
 
       if (mounted) {
-        showSuccessSnackBar(context, 'Traffic management configuration saved');
+        showSuccessSnackBar(context, l10n.trafficMgmtSaved);
         if (target.isLocal) {
           ref
               .read(countdownProvider.notifier)
@@ -177,7 +179,7 @@ class _TrafficManagementConfigScreenState
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to save: $e');
+        showErrorSnackBar(context, l10n.trafficMgmtSaveFailed(e.toString()));
       }
     } finally {
       safeSetState(() => _isSaving = false);
@@ -187,12 +189,12 @@ class _TrafficManagementConfigScreenState
   @override
   Widget build(BuildContext context) {
     return GlassScaffold(
-      title: 'Traffic Management',
+      title: context.l10n.trafficMgmtTitle,
       actions: [
         TextButton(
           onPressed: (_isLoading || _isSaving) ? null : _saveConfig,
           child: Text(
-            'Save',
+            context.l10n.trafficMgmtSave,
             style: TextStyle(
               color: (_isLoading || _isSaving)
                   ? SemanticColors.disabled
@@ -210,27 +212,33 @@ class _TrafficManagementConfigScreenState
             padding: const EdgeInsets.all(AppTheme.spacing16),
             sliver: SliverList(
               delegate: SliverChildListDelegate([
-                _SectionHeader(title: 'GENERAL'),
+                _SectionHeader(title: context.l10n.trafficMgmtSectionGeneral),
                 const SizedBox(height: AppTheme.spacing8),
                 _buildGeneralSection(),
                 const SizedBox(height: AppTheme.spacing24),
-                _SectionHeader(title: 'POSITION DEDUPLICATION'),
+                _SectionHeader(
+                  title: context.l10n.trafficMgmtSectionPositionDedup,
+                ),
                 const SizedBox(height: AppTheme.spacing8),
                 _buildPositionDedupSection(),
                 const SizedBox(height: AppTheme.spacing24),
-                _SectionHeader(title: 'NODEINFO DIRECT RESPONSE'),
+                _SectionHeader(
+                  title: context.l10n.trafficMgmtSectionNodeinfoResponse,
+                ),
                 const SizedBox(height: AppTheme.spacing8),
                 _buildNodeinfoSection(),
                 const SizedBox(height: AppTheme.spacing24),
-                _SectionHeader(title: 'RATE LIMITING'),
+                _SectionHeader(title: context.l10n.trafficMgmtSectionRateLimit),
                 const SizedBox(height: AppTheme.spacing8),
                 _buildRateLimitSection(),
                 const SizedBox(height: AppTheme.spacing24),
-                _SectionHeader(title: 'UNKNOWN PACKETS'),
+                _SectionHeader(
+                  title: context.l10n.trafficMgmtSectionUnknownPackets,
+                ),
                 const SizedBox(height: AppTheme.spacing8),
                 _buildUnknownPacketsSection(),
                 const SizedBox(height: AppTheme.spacing24),
-                _SectionHeader(title: 'HOP MANAGEMENT'),
+                _SectionHeader(title: context.l10n.trafficMgmtSectionHopMgmt),
                 const SizedBox(height: AppTheme.spacing8),
                 _buildHopManagementSection(),
                 const SizedBox(height: AppTheme.spacing32),
@@ -250,8 +258,8 @@ class _TrafficManagementConfigScreenState
       padding: const EdgeInsets.all(AppTheme.spacing16),
       child: _SettingsTile(
         icon: Icons.traffic,
-        title: 'Enable Traffic Management',
-        subtitle: 'Master toggle for all traffic management features',
+        title: context.l10n.trafficMgmtEnable,
+        subtitle: context.l10n.trafficMgmtEnableSubtitle,
         trailing: ThemedSwitch(
           value: _enabled,
           onChanged: (value) {
@@ -275,8 +283,8 @@ class _TrafficManagementConfigScreenState
         children: [
           _SettingsTile(
             icon: Icons.filter_alt,
-            title: 'Position Deduplication',
-            subtitle: 'Drop duplicate position packets',
+            title: context.l10n.trafficMgmtPositionDedup,
+            subtitle: context.l10n.trafficMgmtPositionDedupSubtitle,
             trailing: ThemedSwitch(
               value: _positionDedupEnabled,
               onChanged: _enabled
@@ -292,7 +300,7 @@ class _TrafficManagementConfigScreenState
             Divider(color: context.border),
             const SizedBox(height: AppTheme.spacing8),
             Text(
-              'Precision Bits: $_positionPrecisionBits',
+              context.l10n.trafficMgmtPrecisionBits(_positionPrecisionBits),
               style: TextStyle(
                 color: context.textPrimary,
                 fontSize: 14,
@@ -301,7 +309,7 @@ class _TrafficManagementConfigScreenState
             ),
             const SizedBox(height: AppTheme.spacing4),
             Text(
-              'Lower values mean more aggressive deduplication',
+              context.l10n.trafficMgmtPrecisionBitsDesc,
               style: TextStyle(color: context.textSecondary, fontSize: 12),
             ),
             SliderTheme(
@@ -315,7 +323,9 @@ class _TrafficManagementConfigScreenState
                 min: 0,
                 max: 32,
                 divisions: 32,
-                label: '$_positionPrecisionBits bits',
+                label: context.l10n.trafficMgmtPrecisionBitsLabel(
+                  _positionPrecisionBits,
+                ),
                 onChanged: (value) {
                   setState(() => _positionPrecisionBits = value.toInt());
                 },
@@ -323,7 +333,7 @@ class _TrafficManagementConfigScreenState
             ),
             const SizedBox(height: AppTheme.spacing8),
             Text(
-              'Min Interval: ${_positionMinIntervalSecs}s',
+              context.l10n.trafficMgmtMinInterval(_positionMinIntervalSecs),
               style: TextStyle(
                 color: context.textPrimary,
                 fontSize: 14,
@@ -332,7 +342,7 @@ class _TrafficManagementConfigScreenState
             ),
             const SizedBox(height: AppTheme.spacing4),
             Text(
-              'Minimum seconds between position updates',
+              context.l10n.trafficMgmtMinIntervalDesc,
               style: TextStyle(color: context.textSecondary, fontSize: 12),
             ),
             SliderTheme(
@@ -370,8 +380,8 @@ class _TrafficManagementConfigScreenState
         children: [
           _SettingsTile(
             icon: Icons.info_outline,
-            title: 'Direct Response',
-            subtitle: 'Respond to NodeInfo requests directly',
+            title: context.l10n.trafficMgmtDirectResponse,
+            subtitle: context.l10n.trafficMgmtDirectResponseSubtitle,
             trailing: ThemedSwitch(
               value: _nodeinfoDirectResponse,
               onChanged: _enabled
@@ -387,7 +397,7 @@ class _TrafficManagementConfigScreenState
             Divider(color: context.border),
             const SizedBox(height: AppTheme.spacing8),
             Text(
-              'Max Hops: $_nodeinfoDirectResponseMaxHops',
+              context.l10n.trafficMgmtMaxHops(_nodeinfoDirectResponseMaxHops),
               style: TextStyle(
                 color: context.textPrimary,
                 fontSize: 14,
@@ -396,7 +406,7 @@ class _TrafficManagementConfigScreenState
             ),
             const SizedBox(height: AppTheme.spacing4),
             Text(
-              'Maximum hops for direct NodeInfo response',
+              context.l10n.trafficMgmtMaxHopsDesc,
               style: TextStyle(color: context.textSecondary, fontSize: 12),
             ),
             SliderTheme(
@@ -436,8 +446,8 @@ class _TrafficManagementConfigScreenState
         children: [
           _SettingsTile(
             icon: Icons.speed,
-            title: 'Per-Node Rate Limiting',
-            subtitle: 'Limit packet rate from individual nodes',
+            title: context.l10n.trafficMgmtPerNodeRateLimit,
+            subtitle: context.l10n.trafficMgmtPerNodeRateLimitSubtitle,
             trailing: ThemedSwitch(
               value: _rateLimitEnabled,
               onChanged: _enabled
@@ -453,7 +463,7 @@ class _TrafficManagementConfigScreenState
             Divider(color: context.border),
             const SizedBox(height: AppTheme.spacing8),
             Text(
-              'Window: ${_rateLimitWindowSecs}s',
+              context.l10n.trafficMgmtWindow(_rateLimitWindowSecs),
               style: TextStyle(
                 color: context.textPrimary,
                 fontSize: 14,
@@ -462,7 +472,7 @@ class _TrafficManagementConfigScreenState
             ),
             const SizedBox(height: AppTheme.spacing4),
             Text(
-              'Time window for rate limit calculation',
+              context.l10n.trafficMgmtWindowDesc,
               style: TextStyle(color: context.textSecondary, fontSize: 12),
             ),
             SliderTheme(
@@ -484,7 +494,7 @@ class _TrafficManagementConfigScreenState
             ),
             const SizedBox(height: AppTheme.spacing8),
             Text(
-              'Max Packets: $_rateLimitMaxPackets',
+              context.l10n.trafficMgmtMaxPackets(_rateLimitMaxPackets),
               style: TextStyle(
                 color: context.textPrimary,
                 fontSize: 14,
@@ -493,7 +503,7 @@ class _TrafficManagementConfigScreenState
             ),
             const SizedBox(height: AppTheme.spacing4),
             Text(
-              'Maximum packets per window before dropping',
+              context.l10n.trafficMgmtMaxPacketsDesc,
               style: TextStyle(color: context.textSecondary, fontSize: 12),
             ),
             SliderTheme(
@@ -531,8 +541,8 @@ class _TrafficManagementConfigScreenState
         children: [
           _SettingsTile(
             icon: Icons.help_outline,
-            title: 'Drop Unknown Packets',
-            subtitle: 'Drop packets from unknown sources',
+            title: context.l10n.trafficMgmtDropUnknown,
+            subtitle: context.l10n.trafficMgmtDropUnknownSubtitle,
             trailing: ThemedSwitch(
               value: _dropUnknownEnabled,
               onChanged: _enabled
@@ -548,7 +558,7 @@ class _TrafficManagementConfigScreenState
             Divider(color: context.border),
             const SizedBox(height: AppTheme.spacing8),
             Text(
-              'Threshold: $_unknownPacketThreshold',
+              context.l10n.trafficMgmtThreshold(_unknownPacketThreshold),
               style: TextStyle(
                 color: context.textPrimary,
                 fontSize: 14,
@@ -557,7 +567,7 @@ class _TrafficManagementConfigScreenState
             ),
             const SizedBox(height: AppTheme.spacing4),
             Text(
-              'Number of unknown packets before dropping',
+              context.l10n.trafficMgmtThresholdDesc,
               style: TextStyle(color: context.textSecondary, fontSize: 12),
             ),
             SliderTheme(
@@ -595,8 +605,8 @@ class _TrafficManagementConfigScreenState
         children: [
           _SettingsTile(
             icon: Icons.compress,
-            title: 'Exhaust Hop on Telemetry',
-            subtitle: 'Set hop limit to 0 for relayed telemetry',
+            title: context.l10n.trafficMgmtExhaustHopTelemetry,
+            subtitle: context.l10n.trafficMgmtExhaustHopTelemetrySub,
             trailing: ThemedSwitch(
               value: _exhaustHopTelemetry,
               onChanged: _enabled
@@ -610,8 +620,8 @@ class _TrafficManagementConfigScreenState
           const SizedBox(height: AppTheme.spacing8),
           _SettingsTile(
             icon: Icons.compress,
-            title: 'Exhaust Hop on Position',
-            subtitle: 'Set hop limit to 0 for relayed positions',
+            title: context.l10n.trafficMgmtExhaustHopPosition,
+            subtitle: context.l10n.trafficMgmtExhaustHopPositionSub,
             trailing: ThemedSwitch(
               value: _exhaustHopPosition,
               onChanged: _enabled
@@ -625,8 +635,8 @@ class _TrafficManagementConfigScreenState
           const SizedBox(height: AppTheme.spacing8),
           _SettingsTile(
             icon: Icons.route,
-            title: 'Preserve Router Hops',
-            subtitle: 'Preserve hop count for router nodes',
+            title: context.l10n.trafficMgmtPreserveRouterHops,
+            subtitle: context.l10n.trafficMgmtPreserveRouterHopsSub,
             trailing: ThemedSwitch(
               value: _routerPreserveHops,
               onChanged: _enabled

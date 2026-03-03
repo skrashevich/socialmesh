@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/l10n_extension.dart';
 import '../../../../core/logging.dart';
 import '../../../../core/safety/lifecycle_mixin.dart';
 import '../../../../core/theme.dart';
@@ -63,7 +64,7 @@ class _AdminConformanceScreenState extends ConsumerState<AdminConformanceScreen>
     final myNodeNum = ref.watch(myNodeNumProvider);
 
     return GlassScaffold(
-      title: 'Conformance Harness',
+      title: context.l10n.adminConformanceTitle,
       slivers: [
         SliverPadding(
           padding: const EdgeInsets.all(AppTheme.spacing16),
@@ -123,9 +124,7 @@ class _AdminConformanceScreenState extends ConsumerState<AdminConformanceScreen>
           const SizedBox(width: AppTheme.spacing8),
           Expanded(
             child: Text(
-              'Provider-bound device conformance testing. '
-              'All mutations flow through the same provider '
-              'entrypoints used by the actual screens.',
+              context.l10n.adminConformanceDescription,
               style: TextStyle(fontSize: 13, color: context.textSecondary),
             ),
           ),
@@ -161,7 +160,7 @@ class _AdminConformanceScreenState extends ConsumerState<AdminConformanceScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Target Device',
+            context.l10n.adminConformanceTargetDevice,
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w600,
@@ -194,8 +193,10 @@ class _AdminConformanceScreenState extends ConsumerState<AdminConformanceScreen>
                       children: [
                         Text(
                           _isRemoteTarget
-                              ? 'Remote: $_targetLabel'
-                              : 'Local device',
+                              ? context.l10n.adminConformanceTargetRemote(
+                                  _targetLabel,
+                                )
+                              : context.l10n.adminConformanceTargetLocal,
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -204,7 +205,9 @@ class _AdminConformanceScreenState extends ConsumerState<AdminConformanceScreen>
                         ),
                         if (!_isRemoteTarget && adminableNodes.isNotEmpty)
                           Text(
-                            '${adminableNodes.length} remote node(s) available',
+                            context.l10n.adminConformanceNodesAvailable(
+                              adminableNodes.length,
+                            ),
                             style: TextStyle(
                               fontSize: 12,
                               color: context.textSecondary,
@@ -212,7 +215,7 @@ class _AdminConformanceScreenState extends ConsumerState<AdminConformanceScreen>
                           ),
                         if (_isRemoteTarget)
                           Text(
-                            'Over-the-air admin via PKI',
+                            context.l10n.adminConformanceOtaPki,
                             style: TextStyle(
                               fontSize: 12,
                               color: context.textSecondary,
@@ -220,7 +223,7 @@ class _AdminConformanceScreenState extends ConsumerState<AdminConformanceScreen>
                           ),
                         if (adminableNodes.isEmpty)
                           Text(
-                            'No PKI-capable remote nodes',
+                            context.l10n.adminConformanceNoNodes,
                             style: TextStyle(
                               fontSize: 12,
                               color: context.textTertiary,
@@ -252,7 +255,7 @@ class _AdminConformanceScreenState extends ConsumerState<AdminConformanceScreen>
                   });
                 },
                 icon: const Icon(Icons.close, size: 16),
-                label: const Text('Switch to Local'),
+                label: Text(context.l10n.adminConformanceSwitchLocal),
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(
                     vertical: AppTheme.spacing4,
@@ -279,7 +282,7 @@ class _AdminConformanceScreenState extends ConsumerState<AdminConformanceScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Test Options',
+            context.l10n.adminConformanceTestOptions,
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w600,
@@ -294,7 +297,7 @@ class _AdminConformanceScreenState extends ConsumerState<AdminConformanceScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Destructive Tests',
+                      context.l10n.adminConformanceDestructive,
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
@@ -303,8 +306,7 @@ class _AdminConformanceScreenState extends ConsumerState<AdminConformanceScreen>
                     ),
                     const SizedBox(height: AppTheme.spacing2),
                     Text(
-                      'Randomized mutations, burst stress, node DB reset. '
-                      'May temporarily change device config.',
+                      context.l10n.adminConformanceDestructiveSub,
                       style: TextStyle(
                         fontSize: 12,
                         color: context.textSecondary,
@@ -328,13 +330,14 @@ class _AdminConformanceScreenState extends ConsumerState<AdminConformanceScreen>
   }
 
   Widget _buildRunButton(BuildContext context, int? myNodeNum) {
+    final l10n = context.l10n;
     final label = _isRemoteTarget
         ? _destructiveMode
-              ? 'Run Remote Conformance (Destructive)'
-              : 'Run Remote Conformance (Safe)'
+              ? l10n.adminConformanceRunRemoteDestructive
+              : l10n.adminConformanceRunRemoteSafe
         : _destructiveMode
-        ? 'Run Conformance (Destructive)'
-        : 'Run Conformance (Safe)';
+        ? l10n.adminConformanceRunLocalDestructive
+        : l10n.adminConformanceRunLocalSafe;
 
     return SizedBox(
       width: double.infinity,
@@ -392,8 +395,12 @@ class _AdminConformanceScreenState extends ConsumerState<AdminConformanceScreen>
           ),
           const SizedBox(height: AppTheme.spacing4),
           Text(
-            '$_completedTests / $_totalTests  '
-            '(pass: $_passCount, fail: $_failCount)',
+            context.l10n.adminConformanceProgress(
+              _completedTests,
+              _totalTests,
+              _passCount,
+              _failCount,
+            ),
             style: TextStyle(fontSize: 12, color: context.textSecondary),
           ),
           const SizedBox(height: AppTheme.spacing12),
@@ -401,7 +408,7 @@ class _AdminConformanceScreenState extends ConsumerState<AdminConformanceScreen>
             width: double.infinity,
             child: OutlinedButton(
               onPressed: _cancelRun,
-              child: const Text('Cancel'),
+              child: Text(context.l10n.adminConformanceCancel),
             ),
           ),
         ],
@@ -432,7 +439,9 @@ class _AdminConformanceScreenState extends ConsumerState<AdminConformanceScreen>
               ),
               const SizedBox(width: AppTheme.spacing8),
               Text(
-                allPassed ? 'All Tests Passed' : 'Some Tests Failed',
+                allPassed
+                    ? context.l10n.adminConformanceAllPassed
+                    : context.l10n.adminConformanceSomeFailed,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
@@ -442,14 +451,30 @@ class _AdminConformanceScreenState extends ConsumerState<AdminConformanceScreen>
             ],
           ),
           const SizedBox(height: AppTheme.spacing8),
-          _statRow(context, 'Passed', '${summary.passed}'),
-          _statRow(context, 'Failed', '${summary.failed}'),
-          _statRow(context, 'Skipped', '${summary.skipped}'),
-          _statRow(context, 'Timeouts', '${summary.timeoutCount}'),
+          _statRow(
+            context,
+            context.l10n.adminConformanceLabelPassed,
+            '${summary.passed}',
+          ),
+          _statRow(
+            context,
+            context.l10n.adminConformanceLabelFailed,
+            '${summary.failed}',
+          ),
+          _statRow(
+            context,
+            context.l10n.adminConformanceLabelSkipped,
+            '${summary.skipped}',
+          ),
+          _statRow(
+            context,
+            context.l10n.adminConformanceLabelTimeouts,
+            '${summary.timeoutCount}',
+          ),
           if (summary.suspectedAnomalies.isNotEmpty) ...[
             const SizedBox(height: AppTheme.spacing8),
             Text(
-              'Anomalies:',
+              context.l10n.adminConformanceAnomalies,
               style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
@@ -484,7 +509,7 @@ class _AdminConformanceScreenState extends ConsumerState<AdminConformanceScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Test Results',
+            context.l10n.adminConformanceTestResults,
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w600,
@@ -557,7 +582,7 @@ class _AdminConformanceScreenState extends ConsumerState<AdminConformanceScreen>
       child: FilledButton.icon(
         onPressed: _exportResults,
         icon: const Icon(Icons.share),
-        label: const Text('Export Bundle'),
+        label: Text(context.l10n.adminConformanceExportBundle),
         style: FilledButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: AppTheme.spacing12),
           backgroundColor: context.accentColor,
@@ -572,7 +597,7 @@ class _AdminConformanceScreenState extends ConsumerState<AdminConformanceScreen>
       child: OutlinedButton.icon(
         onPressed: _resetResults,
         icon: const Icon(Icons.refresh),
-        label: const Text('Run Again'),
+        label: Text(context.l10n.adminConformanceRunAgain),
       ),
     );
   }
@@ -607,6 +632,7 @@ class _AdminConformanceScreenState extends ConsumerState<AdminConformanceScreen>
   Future<void> _startRun(int myNodeNum) async {
     final protocol = ref.read(protocolServiceProvider);
     final target = AdminTarget.fromNullable(_selectedNodeNum);
+    final initLabel = context.l10n.adminConformanceInitializing;
 
     safeSetState(() {
       _isRunning = true;
@@ -615,7 +641,7 @@ class _AdminConformanceScreenState extends ConsumerState<AdminConformanceScreen>
       _totalTests = 0;
       _passCount = 0;
       _failCount = 0;
-      _currentPhase = 'Initializing';
+      _currentPhase = initLabel;
       _currentTest = '';
     });
 

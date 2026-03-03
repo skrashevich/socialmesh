@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/logging.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
@@ -40,6 +41,8 @@ class _DeviceManagementScreenState extends ConsumerState<DeviceManagementScreen>
 
     if (!mounted) return;
 
+    final l10n = context.l10n;
+
     if (requiresConfirmation) {
       final confirmed = await AppBottomSheet.show<bool>(
         context: context,
@@ -71,8 +74,7 @@ class _DeviceManagementScreenState extends ConsumerState<DeviceManagementScreen>
             ),
             const SizedBox(height: AppTheme.spacing12),
             Text(
-              warningMessage ??
-                  'Are you sure you want to $actionName? This action cannot be undone.',
+              warningMessage ?? l10n.deviceMgmtDefaultWarning(actionName),
               style: TextStyle(
                 color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
@@ -91,7 +93,7 @@ class _DeviceManagementScreenState extends ConsumerState<DeviceManagementScreen>
                       ),
                     ),
                     child: Text(
-                      'Cancel',
+                      l10n.accountSubCancel,
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
@@ -114,7 +116,7 @@ class _DeviceManagementScreenState extends ConsumerState<DeviceManagementScreen>
                         borderRadius: BorderRadius.circular(AppTheme.radius12),
                       ),
                     ),
-                    child: const Text('Confirm'),
+                    child: Text(l10n.accountSubConfirm),
                   ),
                 ),
               ],
@@ -141,8 +143,8 @@ class _DeviceManagementScreenState extends ConsumerState<DeviceManagementScreen>
 
       if (mounted) {
         final message = causesDisconnect
-            ? '$actionName - device will disconnect'
-            : '$actionName command sent';
+            ? l10n.deviceMgmtSuccessDisconnect(actionName)
+            : l10n.deviceMgmtSuccessCommandSent(actionName);
         showSuccessSnackBar(context, message);
 
         // Pop the screen after triggering actions that cause disconnect
@@ -159,7 +161,7 @@ class _DeviceManagementScreenState extends ConsumerState<DeviceManagementScreen>
     } catch (e) {
       AppLogging.connection('🔧 DeviceManagement: $actionName FAILED: $e');
       if (mounted) {
-        showErrorSnackBar(context, 'Failed: $e');
+        showErrorSnackBar(context, l10n.deviceMgmtFailed(e.toString()));
       }
     } finally {
       safeSetState(() => _isProcessing = false);
@@ -173,7 +175,7 @@ class _DeviceManagementScreenState extends ConsumerState<DeviceManagementScreen>
     final isConnected = protocol.isConnected;
 
     return GlassScaffold(
-      title: 'Device Management',
+      title: context.l10n.deviceMgmtTitle,
       slivers: [
         if (_isProcessing)
           const SliverFillRemaining(child: ScreenLoadingIndicator())
@@ -198,7 +200,7 @@ class _DeviceManagementScreenState extends ConsumerState<DeviceManagementScreen>
                             const SizedBox(width: AppTheme.spacing12),
                             Expanded(
                               child: Text(
-                                'Device not connected. Connect to a device to manage it.',
+                                context.l10n.deviceMgmtNotConnected,
                                 style: TextStyle(
                                   color: theme.colorScheme.onErrorContainer,
                                 ),
@@ -209,16 +211,16 @@ class _DeviceManagementScreenState extends ConsumerState<DeviceManagementScreen>
                       ),
                     ),
                   ),
-                _SectionHeader(title: 'POWER'),
+                _SectionHeader(title: context.l10n.deviceMgmtSectionPower),
                 const SizedBox(height: AppTheme.spacing8),
                 _ActionCard(
                   icon: Icons.refresh,
                   iconColor: theme.colorScheme.primary,
-                  title: 'Reboot Device',
-                  subtitle: 'Restart the device',
+                  title: context.l10n.deviceMgmtRebootTitle,
+                  subtitle: context.l10n.deviceMgmtRebootSubtitle,
                   enabled: isConnected,
                   onTap: () => _executeAction(
-                    'Reboot Device',
+                    context.l10n.deviceMgmtRebootTitle,
                     () async {
                       final target = AdminTarget.fromNullable(
                         ref.read(remoteAdminTargetProvider),
@@ -251,8 +253,7 @@ class _DeviceManagementScreenState extends ConsumerState<DeviceManagementScreen>
                         await protocol.reboot(delaySeconds: 2, target: target);
                       }
                     },
-                    warningMessage:
-                        'The device will reboot in 2 seconds. You will be briefly disconnected while the device restarts.',
+                    warningMessage: context.l10n.deviceMgmtRebootWarning,
                     causesDisconnect: true,
                   ),
                 ),
@@ -260,11 +261,11 @@ class _DeviceManagementScreenState extends ConsumerState<DeviceManagementScreen>
                 _ActionCard(
                   icon: Icons.power_settings_new,
                   iconColor: theme.colorScheme.secondary,
-                  title: 'Shutdown Device',
-                  subtitle: 'Turn off the device',
+                  title: context.l10n.deviceMgmtShutdownTitle,
+                  subtitle: context.l10n.deviceMgmtShutdownSubtitle,
                   enabled: isConnected,
                   onTap: () => _executeAction(
-                    'Shutdown Device',
+                    context.l10n.deviceMgmtShutdownTitle,
                     () async {
                       final target = AdminTarget.fromNullable(
                         ref.read(remoteAdminTargetProvider),
@@ -300,37 +301,36 @@ class _DeviceManagementScreenState extends ConsumerState<DeviceManagementScreen>
                         );
                       }
                     },
-                    warningMessage:
-                        'The device will shut down in 2 seconds. You will need to manually power it back on.',
+                    warningMessage: context.l10n.deviceMgmtShutdownWarning,
                     causesDisconnect: true,
                   ),
                 ),
                 const SizedBox(height: AppTheme.spacing24),
-                _SectionHeader(title: 'TIME'),
+                _SectionHeader(title: context.l10n.deviceMgmtSectionTime),
                 const SizedBox(height: AppTheme.spacing8),
                 _ActionCard(
                   icon: Icons.access_time,
                   iconColor: theme.colorScheme.tertiary,
-                  title: 'Sync Time',
-                  subtitle: 'Set device time to current time',
+                  title: context.l10n.deviceMgmtSyncTimeTitle,
+                  subtitle: context.l10n.deviceMgmtSyncTimeSubtitle,
                   enabled: isConnected,
                   onTap: () => _executeAction(
-                    'Sync Time',
+                    context.l10n.deviceMgmtSyncTimeTitle,
                     () => protocol.syncTime(),
                     requiresConfirmation: false,
                   ),
                 ),
                 const SizedBox(height: AppTheme.spacing24),
-                _SectionHeader(title: 'RESET'),
+                _SectionHeader(title: context.l10n.deviceMgmtSectionReset),
                 const SizedBox(height: AppTheme.spacing8),
                 _ActionCard(
                   icon: Icons.cleaning_services,
                   iconColor: AccentColors.orange,
-                  title: 'Reset Node Database',
-                  subtitle: 'Clear all known nodes from device and app',
+                  title: context.l10n.deviceMgmtResetNodeDbTitle,
+                  subtitle: context.l10n.deviceMgmtResetNodeDbSubtitle,
                   enabled: isConnected,
                   onTap: () => _executeAction(
-                    'Reset Node Database',
+                    context.l10n.deviceMgmtResetNodeDbTitle,
                     () async {
                       final target = AdminTarget.fromNullable(
                         ref.read(remoteAdminTargetProvider),
@@ -358,19 +358,18 @@ class _DeviceManagementScreenState extends ConsumerState<DeviceManagementScreen>
                             );
                       }
                     },
-                    warningMessage:
-                        'This will clear all discovered nodes from the device and app. Nodes will be rediscovered over time.',
+                    warningMessage: context.l10n.deviceMgmtResetNodeDbWarning,
                   ),
                 ),
                 const SizedBox(height: AppTheme.spacing8),
                 _ActionCard(
                   icon: Icons.settings_backup_restore,
                   iconColor: AccentColors.coral,
-                  title: 'Factory Reset Config',
-                  subtitle: 'Reset everything except the node database',
+                  title: context.l10n.deviceMgmtFactoryResetConfigTitle,
+                  subtitle: context.l10n.deviceMgmtFactoryResetConfigSubtitle,
                   enabled: isConnected,
                   onTap: () => _executeAction(
-                    'Factory Reset Config',
+                    context.l10n.deviceMgmtFactoryResetConfigTitle,
                     () async {
                       final target = AdminTarget.fromNullable(
                         ref.read(remoteAdminTargetProvider),
@@ -428,8 +427,7 @@ class _DeviceManagementScreenState extends ConsumerState<DeviceManagementScreen>
                       }
                     },
                     warningMessage:
-                        'This will wipe channels, region, and all settings but preserves the node database.\n\n'
-                        'The device will reboot in 5 seconds. You will need to set up the region again.',
+                        context.l10n.deviceMgmtFactoryResetConfigWarning,
                     causesDisconnect: true,
                   ),
                 ),
@@ -437,11 +435,11 @@ class _DeviceManagementScreenState extends ConsumerState<DeviceManagementScreen>
                 _ActionCard(
                   icon: Icons.delete_forever,
                   iconColor: theme.colorScheme.error,
-                  title: 'Full Factory Reset',
-                  subtitle: 'Erase everything and reset device',
+                  title: context.l10n.deviceMgmtFullFactoryResetTitle,
+                  subtitle: context.l10n.deviceMgmtFullFactoryResetSubtitle,
                   enabled: isConnected,
                   onTap: () => _executeAction(
-                    'Full Factory Reset',
+                    context.l10n.deviceMgmtFullFactoryResetTitle,
                     () async {
                       final target = AdminTarget.fromNullable(
                         ref.read(remoteAdminTargetProvider),
@@ -556,26 +554,21 @@ class _DeviceManagementScreenState extends ConsumerState<DeviceManagementScreen>
                       }
                     },
                     warningMessage:
-                        'WARNING: This will completely erase the device including:\n'
-                        '• All configuration\n'
-                        '• All channels\n'
-                        '• All known nodes\n'
-                        '• Device identity\n\n'
-                        'The device will reboot in 5 seconds. You will need to pair and set it up again.',
+                        context.l10n.deviceMgmtFullFactoryResetWarning,
                     causesDisconnect: false, // Navigation handled in action
                   ),
                 ),
                 const SizedBox(height: AppTheme.spacing24),
-                _SectionHeader(title: 'FIRMWARE'),
+                _SectionHeader(title: context.l10n.deviceMgmtSectionFirmware),
                 const SizedBox(height: AppTheme.spacing8),
                 _ActionCard(
                   icon: Icons.system_update,
                   iconColor: AccentColors.indigo,
-                  title: 'Enter DFU Mode',
-                  subtitle: 'Boot into firmware update mode',
+                  title: context.l10n.deviceMgmtEnterDfuTitle,
+                  subtitle: context.l10n.deviceMgmtEnterDfuSubtitle,
                   enabled: isConnected,
                   onTap: () => _executeAction(
-                    'Enter DFU Mode',
+                    context.l10n.deviceMgmtEnterDfuTitle,
                     () async {
                       final target = AdminTarget.fromNullable(
                         ref.read(remoteAdminTargetProvider),
@@ -591,10 +584,7 @@ class _DeviceManagementScreenState extends ConsumerState<DeviceManagementScreen>
                         'expecting disconnect shortly',
                       );
                     },
-                    warningMessage:
-                        'The device will enter Device Firmware Update (DFU) mode. '
-                        'You will need to use a firmware update tool to flash new firmware or reset the device.\n\n'
-                        'You will be disconnected from the device.',
+                    warningMessage: context.l10n.deviceMgmtEnterDfuWarning,
                     causesDisconnect: true,
                   ),
                 ),

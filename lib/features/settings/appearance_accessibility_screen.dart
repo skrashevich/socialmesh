@@ -3,14 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/animations.dart';
 import '../../core/widgets/glass_scaffold.dart';
 import '../../utils/snackbar.dart';
 import '../../core/widgets/app_bottom_sheet.dart';
+import '../../l10n/app_localizations.dart';
 import '../../models/accessibility_preferences.dart';
 import '../../providers/accessibility_providers.dart';
+import '../../providers/locale_provider.dart';
 import '../../services/haptic_service.dart';
 import '../nodedex/atmosphere/atmosphere_provider.dart';
 
@@ -33,14 +36,15 @@ class _AppearanceAccessibilityScreenState
   Widget build(BuildContext context) {
     final prefs = ref.watch(accessibilityPreferencesProvider);
     final hasCustomSettings = ref.watch(hasCustomAccessibilitySettingsProvider);
+    final currentLocale = ref.watch(localeProvider);
 
     return GlassScaffold(
-      title: 'Appearance & Accessibility',
+      title: context.l10n.appearanceTitle,
       actions: [
         if (hasCustomSettings)
           IconButton(
             icon: const Icon(Icons.refresh_rounded),
-            tooltip: 'Reset to defaults',
+            tooltip: context.l10n.appearanceResetTooltip,
             onPressed: () => _showResetConfirmation(context),
           ),
       ],
@@ -56,8 +60,24 @@ class _AppearanceAccessibilityScreenState
 
               const SizedBox(height: AppTheme.spacing24),
 
+              // Language Section
+              _SectionHeader(
+                title: context.l10n.appearanceLanguage,
+                icon: Icons.language_rounded,
+              ),
+              const SizedBox(height: AppTheme.spacing8),
+              _LanguageSelector(
+                currentLocale: currentLocale,
+                onChanged: (locale) => _updateLocale(locale),
+              ),
+
+              const SizedBox(height: AppTheme.spacing24),
+
               // Font Mode Section
-              _SectionHeader(title: 'Font', icon: Icons.text_fields_rounded),
+              _SectionHeader(
+                title: context.l10n.appearanceFont,
+                icon: Icons.text_fields_rounded,
+              ),
               const SizedBox(height: AppTheme.spacing8),
               _FontModeSelector(
                 currentMode: prefs.fontMode,
@@ -68,7 +88,7 @@ class _AppearanceAccessibilityScreenState
 
               // Text Size Section
               _SectionHeader(
-                title: 'Text Size',
+                title: context.l10n.appearanceTextSize,
                 icon: Icons.format_size_rounded,
               ),
               const SizedBox(height: AppTheme.spacing8),
@@ -81,7 +101,7 @@ class _AppearanceAccessibilityScreenState
 
               // Density Section
               _SectionHeader(
-                title: 'Display Density',
+                title: context.l10n.appearanceDisplayDensity,
                 icon: Icons.view_compact_rounded,
               ),
               const SizedBox(height: AppTheme.spacing8),
@@ -93,7 +113,10 @@ class _AppearanceAccessibilityScreenState
               const SizedBox(height: AppTheme.spacing24),
 
               // Contrast Section
-              _SectionHeader(title: 'Contrast', icon: Icons.contrast_rounded),
+              _SectionHeader(
+                title: context.l10n.appearanceContrast,
+                icon: Icons.contrast_rounded,
+              ),
               const SizedBox(height: AppTheme.spacing8),
               _ContrastToggle(
                 isHighContrast: prefs.contrastMode.isHighContrast,
@@ -103,7 +126,10 @@ class _AppearanceAccessibilityScreenState
               const SizedBox(height: AppTheme.spacing24),
 
               // Reduce Motion Section
-              _SectionHeader(title: 'Motion', icon: Icons.animation_rounded),
+              _SectionHeader(
+                title: context.l10n.appearanceMotion,
+                icon: Icons.animation_rounded,
+              ),
               const SizedBox(height: AppTheme.spacing8),
               _ReduceMotionToggle(
                 reduceMotion: prefs.reduceMotionMode.shouldReduceMotion,
@@ -132,6 +158,12 @@ class _AppearanceAccessibilityScreenState
         ),
       ],
     );
+  }
+
+  Future<void> _updateLocale(Locale? locale) async {
+    HapticFeedback.selectionClick();
+    final notifier = ref.read(localeProvider.notifier);
+    await notifier.setLocale(locale);
   }
 
   Future<void> _updateFontMode(FontMode mode) async {
@@ -191,7 +223,10 @@ class _AppearanceAccessibilityScreenState
           if (!mounted) return;
 
           ScaffoldMessenger.of(this.context).clearSnackBars();
-          showSuccessSnackBar(this.context, 'Settings reset to defaults');
+          showSuccessSnackBar(
+            this.context,
+            this.context.l10n.appearanceResetSuccess,
+          );
         },
       ),
     );
@@ -275,14 +310,14 @@ class _PreviewCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Live Preview',
+                      context.l10n.appearanceLivePreview,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     const SizedBox(height: AppTheme.spacing2),
                     Text(
-                      'Changes apply instantly',
+                      context.l10n.appearanceChangesApplyInstantly,
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ],
@@ -295,8 +330,7 @@ class _PreviewCard extends StatelessWidget {
                 AppTheme.spacing16 * preferences.densityMode.spacingMultiplier,
           ),
           Text(
-            'Sample body text to preview your settings. '
-            'Adjust the options below to find what works best for you.',
+            context.l10n.appearanceSampleText,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           SizedBox(
@@ -599,11 +633,11 @@ class _ContrastToggle extends StatelessWidget {
       ),
       child: ListTile(
         title: Text(
-          'High Contrast',
+          context.l10n.appearanceHighContrast,
           style: Theme.of(context).textTheme.titleSmall,
         ),
         subtitle: Text(
-          'Enhanced visibility for text and UI elements',
+          context.l10n.appearanceHighContrastDesc,
           style: Theme.of(context).textTheme.bodySmall,
         ),
         trailing: ThemedSwitch(value: isHighContrast, onChanged: onChanged),
@@ -642,13 +676,13 @@ class _AtmosphereToggle extends ConsumerWidget {
       ),
       child: ListTile(
         title: Text(
-          'Elemental Atmosphere',
+          context.l10n.appearanceElementalAtmosphere,
           style: Theme.of(context).textTheme.titleSmall,
         ),
         subtitle: Text(
           reduceMotionActive
-              ? 'Disabled while Reduce Motion is active'
-              : 'Ambient particle effects driven by mesh activity',
+              ? context.l10n.appearanceElementalDisabled
+              : context.l10n.appearanceElementalDesc,
           style: Theme.of(context).textTheme.bodySmall,
         ),
         leading: Icon(
@@ -694,11 +728,11 @@ class _ReduceMotionToggle extends StatelessWidget {
       ),
       child: ListTile(
         title: Text(
-          'Reduce Motion',
+          context.l10n.appearanceReduceMotion,
           style: Theme.of(context).textTheme.titleSmall,
         ),
         subtitle: Text(
-          'Minimize animations throughout the app',
+          context.l10n.appearanceReduceMotionDesc,
           style: Theme.of(context).textTheme.bodySmall,
         ),
         trailing: ThemedSwitch(value: reduceMotion, onChanged: onChanged),
@@ -731,7 +765,7 @@ class _ResetButton extends StatelessWidget {
           color: hasCustomSettings ? context.accentColor : context.textTertiary,
         ),
         title: Text(
-          'Reset to Recommended',
+          context.l10n.appearanceResetToRecommended,
           style: Theme.of(context).textTheme.titleSmall?.copyWith(
             color: hasCustomSettings
                 ? context.textPrimary
@@ -740,8 +774,8 @@ class _ResetButton extends StatelessWidget {
         ),
         subtitle: Text(
           hasCustomSettings
-              ? 'Restore default settings'
-              : 'Using recommended settings',
+              ? context.l10n.appearanceRestoreDefaults
+              : context.l10n.appearanceUsingRecommended,
           style: Theme.of(context).textTheme.bodySmall,
         ),
         trailing: hasCustomSettings
@@ -789,15 +823,14 @@ class _ResetConfirmationSheet extends StatelessWidget {
           ),
           const SizedBox(height: AppTheme.spacing16),
           Text(
-            'Reset to Defaults?',
+            context.l10n.appearanceResetDialogTitle,
             style: Theme.of(
               context,
             ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: AppTheme.spacing8),
           Text(
-            'This will restore all appearance and accessibility '
-            'settings to their recommended values.',
+            context.l10n.appearanceResetDialogMessage,
             textAlign: TextAlign.center,
             style: Theme.of(
               context,
@@ -809,19 +842,107 @@ class _ResetConfirmationSheet extends StatelessWidget {
               Expanded(
                 child: OutlinedButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('Cancel'),
+                  child: Text(context.l10n.appearanceResetDialogCancel),
                 ),
               ),
               const SizedBox(width: AppTheme.spacing12),
               Expanded(
                 child: FilledButton(
                   onPressed: onConfirm,
-                  child: const Text('Reset'),
+                  child: Text(context.l10n.appearanceResetDialogConfirm),
                 ),
               ),
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// Language selector — shows "System Default" plus each supported locale.
+class _LanguageSelector extends StatelessWidget {
+  const _LanguageSelector({
+    required this.currentLocale,
+    required this.onChanged,
+  });
+
+  final Locale? currentLocale;
+  final ValueChanged<Locale?> onChanged;
+
+  String _localeDisplayName(BuildContext context, Locale? locale) {
+    if (locale == null) return context.l10n.appearanceLanguageSystemDefault;
+    switch (locale.languageCode) {
+      case 'en':
+        return context.l10n.appearanceLanguageEnglish;
+      case 'it':
+        return context.l10n.appearanceLanguageItalian;
+      case 'ru':
+        return context.l10n.appearanceLanguageRussian;
+      default:
+        return locale.languageCode;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Build options: null (system default) + all supported locales
+    final options = <Locale?>[null, ...AppLocalizations.supportedLocales];
+
+    return Container(
+      decoration: BoxDecoration(
+        color: context.card,
+        borderRadius: BorderRadius.circular(AppTheme.radius12),
+        border: Border.all(color: context.border),
+      ),
+      child: Column(
+        children: options.map((locale) {
+          final isSelected =
+              currentLocale == locale ||
+              (currentLocale == null && locale == null);
+          final isLast = locale == options.last;
+
+          return Column(
+            children: [
+              InkWell(
+                onTap: () => onChanged(locale),
+                borderRadius: BorderRadius.vertical(
+                  top: locale == options.first
+                      ? const Radius.circular(12)
+                      : Radius.zero,
+                  bottom: isLast ? const Radius.circular(12) : Radius.zero,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          _localeDisplayName(context, locale),
+                          style: Theme.of(context).textTheme.titleSmall
+                              ?.copyWith(
+                                fontWeight: isSelected
+                                    ? FontWeight.w600
+                                    : FontWeight.w500,
+                              ),
+                        ),
+                      ),
+                      Radio<Locale?>(
+                        value: locale,
+                        groupValue: currentLocale,
+                        onChanged: (value) => onChanged(value),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              if (!isLast) Divider(height: 1, color: context.border),
+            ],
+          );
+        }).toList(),
       ),
     );
   }

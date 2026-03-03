@@ -20,6 +20,7 @@ import '../../generated/meshtastic/config.pb.dart' as config_pb;
 import '../../generated/meshtastic/admin.pbenum.dart' as admin_pbenum;
 import '../../services/protocol/admin_target.dart';
 import 'package:cryptography/cryptography.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/widgets/loading_indicator.dart';
 import '../../core/widgets/status_banner.dart';
 
@@ -138,6 +139,7 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
   Future<void> _regeneratePrivateKey() async {
     if (_isKeyOperating) return;
     safeSetState(() => _isKeyOperating = true);
+    final l10n = context.l10n;
     try {
       final algorithm = X25519();
       final keyPair = await algorithm.newKeyPair();
@@ -151,9 +153,9 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
         _privateKeyVisible = true;
       });
 
-      showSuccessSnackBar(context, 'New key pair generated');
+      showSuccessSnackBar(context, l10n.securityConfigNewKeyPairGenerated);
     } catch (e) {
-      showErrorSnackBar(context, 'Failed to generate key: $e');
+      showErrorSnackBar(context, l10n.securityConfigKeyGenFailed('$e'));
     } finally {
       safeSetState(() => _isKeyOperating = false);
     }
@@ -191,15 +193,16 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
   }
 
   Future<void> _saveConfig() async {
+    final l10n = context.l10n;
     // Validate keys
     if (!_isValidBase64Key(_privateKey)) {
-      showErrorSnackBar(context, 'Invalid private key format');
+      showErrorSnackBar(context, l10n.securityConfigInvalidPrivateKey);
       return;
     }
     if (!_isValidBase64Key(_adminKey1) ||
         !_isValidBase64Key(_adminKey2) ||
         !_isValidBase64Key(_adminKey3)) {
-      showErrorSnackBar(context, 'Invalid admin key format');
+      showErrorSnackBar(context, l10n.securityConfigInvalidAdminKey);
       return;
     }
 
@@ -232,7 +235,7 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
       );
 
       if (!mounted) return;
-      showSuccessSnackBar(context, 'Security configuration saved');
+      showSuccessSnackBar(context, l10n.securityConfigSaved);
       if (target.isLocal) {
         ref
             .read(countdownProvider.notifier)
@@ -240,7 +243,7 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
       }
       Navigator.pop(context);
     } catch (e) {
-      showErrorSnackBar(context, 'Failed to save: $e');
+      showErrorSnackBar(context, l10n.securityConfigSaveFailed('$e'));
     } finally {
       safeSetState(() => _saving = false);
     }
@@ -251,7 +254,7 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
     return GestureDetector(
       onTap: _dismissKeyboard,
       child: GlassScaffold(
-        title: 'Security',
+        title: context.l10n.securityConfigTitle,
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 8),
@@ -260,7 +263,7 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
               child: _saving
                   ? LoadingIndicator(size: 20)
                   : Text(
-                      'Save',
+                      context.l10n.securityConfigSave,
                       style: TextStyle(
                         color: context.accentColor,
                         fontWeight: FontWeight.w600,
@@ -278,23 +281,29 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
               sliver: SliverList(
                 delegate: SliverChildListDelegate([
                   // PKI Keys Section
-                  const _SectionHeader(title: 'DIRECT MESSAGE KEY'),
+                  _SectionHeader(
+                    title: context.l10n.securityConfigSectionDmKey,
+                  ),
                   _buildKeySection(),
                   SizedBox(height: AppTheme.spacing16),
 
                   // Admin Keys Section
-                  const _SectionHeader(title: 'ADMIN KEYS'),
+                  _SectionHeader(
+                    title: context.l10n.securityConfigSectionAdminKeys,
+                  ),
                   _buildAdminKeysSection(),
                   const SizedBox(height: AppTheme.spacing16),
 
                   // Managed Device
-                  const _SectionHeader(title: 'DEVICE MANAGEMENT'),
+                  _SectionHeader(
+                    title: context.l10n.securityConfigSectionDeviceMgmt,
+                  ),
 
                   _SettingsTile(
                     icon: Icons.admin_panel_settings,
                     iconColor: _isManaged ? context.accentColor : null,
-                    title: 'Managed Mode',
-                    subtitle: 'Device is managed by an external system',
+                    title: context.l10n.securityConfigManagedMode,
+                    subtitle: context.l10n.securityConfigManagedModeSubtitle,
                     trailing: ThemedSwitch(
                       value: _isManaged,
                       onChanged: (value) {
@@ -306,13 +315,15 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
                   SizedBox(height: AppTheme.spacing16),
 
                   // Access Controls
-                  const _SectionHeader(title: 'ACCESS CONTROLS'),
+                  _SectionHeader(
+                    title: context.l10n.securityConfigSectionAccessControls,
+                  ),
 
                   _SettingsTile(
                     icon: Icons.usb,
                     iconColor: _serialEnabled ? context.accentColor : null,
-                    title: 'Serial Console',
-                    subtitle: 'Enable USB serial console access',
+                    title: context.l10n.securityConfigSerialConsole,
+                    subtitle: context.l10n.securityConfigSerialConsoleSubtitle,
                     trailing: ThemedSwitch(
                       value: _serialEnabled,
                       onChanged: (value) {
@@ -324,8 +335,8 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
                   _SettingsTile(
                     icon: Icons.bug_report,
                     iconColor: _debugLogEnabled ? context.accentColor : null,
-                    title: 'Debug Logging',
-                    subtitle: 'Enable verbose debug log output',
+                    title: context.l10n.securityConfigDebugLogging,
+                    subtitle: context.l10n.securityConfigDebugLoggingSubtitle,
                     trailing: ThemedSwitch(
                       value: _debugLogEnabled,
                       onChanged: (value) {
@@ -339,8 +350,8 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
                     iconColor: _adminChannelEnabled
                         ? context.accentColor
                         : null,
-                    title: 'Admin Channel',
-                    subtitle: 'Allow remote admin via admin channel',
+                    title: context.l10n.securityConfigAdminChannel,
+                    subtitle: context.l10n.securityConfigAdminChannelSubtitle,
                     trailing: ThemedSwitch(
                       value: _adminChannelEnabled,
                       onChanged: (value) {
@@ -358,8 +369,7 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
                       vertical: 2,
                     ),
                     child: StatusBanner.error(
-                      title:
-                          'Disabling serial console or enabling managed mode may make it difficult to recover the device. Make sure you understand the implications before making changes.',
+                      title: context.l10n.securityConfigWarning,
                       margin: EdgeInsets.zero,
                     ),
                   ),
@@ -391,7 +401,7 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
               Icon(Icons.key, color: context.textSecondary, size: 20),
               SizedBox(width: AppTheme.spacing8),
               Text(
-                'Public Key',
+                context.l10n.securityConfigPublicKey,
                 style: TextStyle(
                   color: context.textPrimary,
                   fontWeight: FontWeight.w500,
@@ -409,7 +419,9 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
               border: Border.all(color: context.border),
             ),
             child: SelectableText(
-              _publicKey.isEmpty ? 'No key set' : _publicKey,
+              _publicKey.isEmpty
+                  ? context.l10n.securityConfigNoKeySet
+                  : _publicKey,
               style: TextStyle(
                 color: _publicKey.isEmpty
                     ? context.textTertiary
@@ -421,7 +433,7 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
           ),
           SizedBox(height: AppTheme.spacing4),
           Text(
-            'Your public key is sent to other nodes for secure messaging',
+            context.l10n.securityConfigPublicKeyDesc,
             style: TextStyle(color: context.textSecondary, fontSize: 12),
           ),
 
@@ -433,7 +445,7 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
               Icon(Icons.vpn_key, color: context.textSecondary, size: 20),
               SizedBox(width: AppTheme.spacing8),
               Text(
-                'Private Key',
+                context.l10n.securityConfigPrivateKey,
                 style: TextStyle(
                   color: context.textPrimary,
                   fontWeight: FontWeight.w500,
@@ -469,7 +481,7 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
               contentPadding: const EdgeInsets.all(AppTheme.spacing12),
               fillColor: context.background,
               filled: true,
-              hintText: 'Base64 encoded 32-byte key',
+              hintText: context.l10n.securityConfigPrivateKeyHint,
               hintStyle: TextStyle(color: context.textTertiary),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AppTheme.radius8),
@@ -492,7 +504,7 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
           ),
           SizedBox(height: AppTheme.spacing4),
           Text(
-            'Used to compute shared secret with remote devices',
+            context.l10n.securityConfigPrivateKeyDesc,
             style: TextStyle(color: context.textSecondary, fontSize: 12),
           ),
 
@@ -504,7 +516,7 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
               Icon(Icons.refresh, color: context.textSecondary, size: 20),
               SizedBox(width: AppTheme.spacing8),
               Text(
-                'Regenerate Key Pair',
+                context.l10n.securityConfigRegenKeyPair,
                 style: TextStyle(
                   color: context.textPrimary,
                   fontWeight: FontWeight.w500,
@@ -520,7 +532,11 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
                         child: CircularProgressIndicator(strokeWidth: 2),
                       )
                     : Icon(Icons.autorenew, size: 18),
-                label: Text(_isKeyOperating ? 'Generating...' : 'Generate'),
+                label: Text(
+                  _isKeyOperating
+                      ? context.l10n.securityConfigGenerating
+                      : context.l10n.securityConfigGenerate,
+                ),
                 style: TextButton.styleFrom(
                   foregroundColor: context.accentColor,
                 ),
@@ -528,7 +544,7 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
             ],
           ),
           Text(
-            'Generate a new key pair (public key will be automatically derived)',
+            context.l10n.securityConfigRegenDesc,
             style: TextStyle(color: context.textSecondary, fontSize: 12),
           ),
 
@@ -540,7 +556,7 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
               Icon(Icons.cloud_upload, color: context.textSecondary, size: 20),
               SizedBox(width: AppTheme.spacing8),
               Text(
-                'Key Backup',
+                context.l10n.securityConfigKeyBackup,
                 style: TextStyle(
                   color: context.textPrimary,
                   fontWeight: FontWeight.w500,
@@ -550,7 +566,7 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
           ),
           SizedBox(height: AppTheme.spacing8),
           Text(
-            'Backup your private key to secure storage for recovery. Keys are stored in the device keychain with iCloud sync enabled.',
+            context.l10n.securityConfigBackupDesc,
             style: TextStyle(color: context.textSecondary, fontSize: 12),
           ),
           SizedBox(height: AppTheme.spacing12),
@@ -562,7 +578,7 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
                       ? null
                       : _backupPrivateKey,
                   icon: Icon(Icons.backup, size: 18),
-                  label: Text('Backup'),
+                  label: Text(context.l10n.securityConfigBackupBtn),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: context.accentColor,
                     side: BorderSide(
@@ -576,7 +592,7 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
                 child: OutlinedButton.icon(
                   onPressed: _isKeyOperating ? null : _restorePrivateKey,
                   icon: Icon(Icons.restore, size: 18),
-                  label: Text('Restore'),
+                  label: Text(context.l10n.securityConfigRestoreBtn),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: context.textSecondary,
                     side: BorderSide(color: context.border),
@@ -588,7 +604,7 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
                 onPressed: _isKeyOperating ? null : _deleteBackup,
                 icon: Icon(Icons.delete_outline, size: 20),
                 color: AppTheme.errorRed,
-                tooltip: 'Delete backup',
+                tooltip: context.l10n.securityConfigDeleteBackupTooltip,
               ),
             ],
           ),
@@ -603,11 +619,12 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
 
     // Capture provider ref before awaits
     final nodeNum = ref.read(protocolServiceProvider).myNodeNum;
+    final l10n = context.l10n;
 
     safeSetState(() => _isKeyOperating = true);
     try {
       if (nodeNum == null) {
-        showErrorSnackBar(context, 'No connected device');
+        showErrorSnackBar(context, l10n.securityConfigNoDevice);
         return;
       }
 
@@ -623,11 +640,11 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
 
       AppLogging.settings('Backed up private key for node $nodeNum');
       if (!mounted) return;
-      showSuccessSnackBar(context, 'Private key backed up to secure storage');
+      showSuccessSnackBar(context, l10n.securityConfigBackedUp);
     } catch (e) {
       AppLogging.settings('Failed to backup private key: $e');
       if (!mounted) return;
-      showErrorSnackBar(context, 'Failed to backup key: $e');
+      showErrorSnackBar(context, l10n.securityConfigBackupFailed('$e'));
     } finally {
       safeSetState(() => _isKeyOperating = false);
     }
@@ -638,11 +655,12 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
     if (_isKeyOperating) return;
     // Capture provider ref before awaits
     final nodeNum = ref.read(protocolServiceProvider).myNodeNum;
+    final l10n = context.l10n;
 
     safeSetState(() => _isKeyOperating = true);
     try {
       if (nodeNum == null) {
-        showErrorSnackBar(context, 'No connected device');
+        showErrorSnackBar(context, l10n.securityConfigNoDevice);
         return;
       }
 
@@ -657,7 +675,7 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
       final storedKey = await storage.read(key: 'PrivateKeyNode$nodeNum');
       if (!mounted) return;
       if (storedKey == null) {
-        showErrorSnackBar(context, 'No backup found for this device');
+        showErrorSnackBar(context, l10n.securityConfigNoBackupFound);
         return;
       }
 
@@ -669,11 +687,11 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
 
       AppLogging.settings('Restored private key for node $nodeNum');
       if (!mounted) return;
-      showSuccessSnackBar(context, 'Private key restored from backup');
+      showSuccessSnackBar(context, l10n.securityConfigRestored);
     } catch (e) {
       AppLogging.settings('Failed to restore private key: $e');
       if (!mounted) return;
-      showErrorSnackBar(context, 'Failed to restore key: $e');
+      showErrorSnackBar(context, l10n.securityConfigRestoreFailed('$e'));
     } finally {
       safeSetState(() => _isKeyOperating = false);
     }
@@ -684,13 +702,13 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
     if (_isKeyOperating) return;
     // Capture provider ref before awaits
     final nodeNum = ref.read(protocolServiceProvider).myNodeNum;
+    final l10n = context.l10n;
 
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Delete Backup?',
-      message:
-          'This will permanently delete the backed up private key from secure storage. This cannot be undone.',
-      confirmLabel: 'Delete',
+      title: l10n.securityConfigDeleteBackupTitle,
+      message: l10n.securityConfigDeleteBackupMsg,
+      confirmLabel: l10n.securityConfigDeleteBtn,
       isDestructive: true,
     );
 
@@ -699,7 +717,7 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
     safeSetState(() => _isKeyOperating = true);
     try {
       if (nodeNum == null) {
-        showErrorSnackBar(context, 'No connected device');
+        showErrorSnackBar(context, l10n.securityConfigNoDevice);
         return;
       }
 
@@ -715,11 +733,11 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
 
       AppLogging.settings('Deleted private key backup for node $nodeNum');
       if (!mounted) return;
-      showSuccessSnackBar(context, 'Backup deleted');
+      showSuccessSnackBar(context, l10n.securityConfigBackupDeleted);
     } catch (e) {
       AppLogging.settings('Failed to delete backup: $e');
       if (!mounted) return;
-      showErrorSnackBar(context, 'Failed to delete backup: $e');
+      showErrorSnackBar(context, l10n.securityConfigDeleteBackupFailed('$e'));
     } finally {
       safeSetState(() => _isKeyOperating = false);
     }
@@ -737,14 +755,14 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Public keys authorized to send admin messages to this node',
+            context.l10n.securityConfigAdminKeysDesc,
             style: TextStyle(color: context.textSecondary, fontSize: 12),
           ),
           const SizedBox(height: AppTheme.spacing16),
 
           // Admin Key 1
           _buildAdminKeyField(
-            label: 'Primary Admin Key',
+            label: context.l10n.securityConfigPrimaryAdminKey,
             value: _adminKey1,
             onChanged: (v) => setState(() => _adminKey1 = v),
           ),
@@ -752,7 +770,7 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
 
           // Admin Key 2
           _buildAdminKeyField(
-            label: 'Secondary Admin Key',
+            label: context.l10n.securityConfigSecondaryAdminKey,
             value: _adminKey2,
             onChanged: (v) => setState(() => _adminKey2 = v),
           ),
@@ -760,7 +778,7 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
 
           // Admin Key 3
           _buildAdminKeyField(
-            label: 'Tertiary Admin Key',
+            label: context.l10n.securityConfigTertiaryAdminKey,
             value: _adminKey3,
             onChanged: (v) => setState(() => _adminKey3 = v),
           ),
@@ -813,7 +831,7 @@ class _SecurityConfigScreenState extends ConsumerState<SecurityConfigScreen>
             contentPadding: const EdgeInsets.all(AppTheme.spacing12),
             fillColor: context.background,
             filled: true,
-            hintText: 'Base64 encoded public key',
+            hintText: context.l10n.securityConfigAdminKeyHint,
             hintStyle: TextStyle(color: context.textTertiary, fontSize: 11),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(AppTheme.radius8),

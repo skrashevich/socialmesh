@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/logging.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
@@ -60,7 +61,7 @@ class _AccountSubscriptionsScreenState
       topicId: 'cloud_sync_overview',
       stepKeys: const {},
       child: GlassScaffold(
-        title: 'Account',
+        title: context.l10n.accountSubTitle,
         actions: const [IcoHelpAppBarButton(topicId: 'cloud_sync_overview')],
         slivers: [
           SliverPadding(
@@ -77,7 +78,7 @@ class _AccountSubscriptionsScreenState
                 // ═══════════════════════════════════════════════════════════════
                 // ACCOUNT SECTION - Sign in/out, linked accounts
                 // ═══════════════════════════════════════════════════════════════
-                _buildSectionHeader('ACCOUNT'),
+                _buildSectionHeader(context.l10n.accountSubSectionAccount),
                 const SizedBox(height: AppTheme.spacing8),
                 authState.when(
                   data: (user) => user != null
@@ -92,7 +93,7 @@ class _AccountSubscriptionsScreenState
                 // ═══════════════════════════════════════════════════════════════
                 // PREMIUM SECTION - Cloud Sync (subscription) + Feature Packs (one-time)
                 // ═══════════════════════════════════════════════════════════════
-                _buildSectionHeader('PREMIUM'),
+                _buildSectionHeader(context.l10n.accountSubSectionPremium),
                 const SizedBox(height: AppTheme.spacing8),
 
                 // Cloud Sync subscription card (monthly/yearly)
@@ -108,7 +109,7 @@ class _AccountSubscriptionsScreenState
                 // ═══════════════════════════════════════════════════════════════
                 // MANAGE SECTION - Restore, Terms, Privacy
                 // ═══════════════════════════════════════════════════════════════
-                _buildSectionHeader('MANAGE'),
+                _buildSectionHeader(context.l10n.accountSubSectionManage),
                 const SizedBox(height: AppTheme.spacing8),
                 _buildManageCard(),
               ]),
@@ -143,7 +144,7 @@ class _AccountSubscriptionsScreenState
       final fallback =
           firebaseUser.displayName ??
           firebaseUser.email?.split('@').first ??
-          'Guest';
+          context.l10n.accountSubGuestName;
       return profile.copyWith(displayName: fallback);
     }
 
@@ -235,7 +236,9 @@ class _AccountSubscriptionsScreenState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        isAnonymous ? 'Guest Account' : 'Signed In',
+                        isAnonymous
+                            ? context.l10n.accountSubGuestAccount
+                            : context.l10n.accountSubSignedIn,
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                           color: context.textPrimary,
@@ -264,7 +267,7 @@ class _AccountSubscriptionsScreenState
               child: Row(
                 children: [
                   Text(
-                    'Linked accounts',
+                    context.l10n.accountSubLinkedAccounts,
                     style: TextStyle(
                       fontSize: 12,
                       color: context.textSecondary,
@@ -308,7 +311,7 @@ class _AccountSubscriptionsScreenState
                         SizedBox(width: AppTheme.spacing12),
                         Expanded(
                           child: Text(
-                            'Link an email to keep your data across devices',
+                            context.l10n.accountSubLinkEmailPrompt,
                             style: TextStyle(
                               fontSize: 13,
                               color: context.textSecondary,
@@ -324,7 +327,7 @@ class _AccountSubscriptionsScreenState
                     child: FilledButton.icon(
                       onPressed: () => _showLinkAccountSheet(context),
                       icon: const Icon(Icons.link, size: 18),
-                      label: const Text('Link Account'),
+                      label: Text(context.l10n.accountSubLinkAccountBtn),
                     ),
                   ),
                 ],
@@ -340,7 +343,7 @@ class _AccountSubscriptionsScreenState
                         if (!mounted) return;
                         showErrorSnackBar(
                           context,
-                          'Two-factor authentication requires an internet connection.',
+                          context.l10n.accountSubMfaRequiresInternet,
                         );
                         return;
                       }
@@ -361,7 +364,7 @@ class _AccountSubscriptionsScreenState
                   child: OutlinedButton.icon(
                     onPressed: () => _signOut(context),
                     icon: const Icon(Icons.logout, size: 18),
-                    label: const Text('Sign Out'),
+                    label: Text(context.l10n.accountSubSignOutBtn),
                   ),
                 ),
               ],
@@ -389,7 +392,7 @@ class _AccountSubscriptionsScreenState
           ),
           SizedBox(height: AppTheme.spacing12),
           Text(
-            'Sign in to sync across devices',
+            context.l10n.accountSubSignInToSync,
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
@@ -398,7 +401,7 @@ class _AccountSubscriptionsScreenState
           ),
           const SizedBox(height: AppTheme.spacing4),
           Text(
-            'Your local data is always available',
+            context.l10n.accountSubLocalDataAvailable,
             style: context.bodySmallStyle?.copyWith(
               color: context.textSecondary,
             ),
@@ -416,7 +419,7 @@ class _AccountSubscriptionsScreenState
             _SocialSignInButton(
               onPressed: () => _signInWithGoogle(context),
               icon: _GoogleLogo(),
-              label: 'Continue with Google',
+              label: context.l10n.accountSubContinueGoogle,
               backgroundColor: Colors.white,
               textColor: Colors.black87,
             ),
@@ -427,7 +430,7 @@ class _AccountSubscriptionsScreenState
               _SocialSignInButton(
                 onPressed: () => _signInWithApple(context),
                 icon: const Icon(Icons.apple, color: Colors.white, size: 22),
-                label: 'Continue with Apple',
+                label: context.l10n.accountSubContinueApple,
                 backgroundColor: Colors.black,
                 textColor: Colors.white,
               ),
@@ -438,7 +441,7 @@ class _AccountSubscriptionsScreenState
             _SocialSignInButton(
               onPressed: () => _signInWithGitHub(context),
               icon: _GitHubLogo(),
-              label: 'Continue with GitHub',
+              label: context.l10n.accountSubContinueGitHub,
               backgroundColor: const Color(0xFF24292F),
               textColor: Colors.white,
             ),
@@ -448,7 +451,7 @@ class _AccountSubscriptionsScreenState
             _SocialSignInButton(
               onPressed: () => _signInWithTwitter(context),
               icon: _XLogo(),
-              label: 'Continue with X',
+              label: context.l10n.accountSubContinueX,
               backgroundColor: Colors.black,
               textColor: Colors.white,
             ),
@@ -487,12 +490,14 @@ class _AccountSubscriptionsScreenState
           final expiresAt = entitlement.expiresAt!;
           final daysLeft = expiresAt.difference(DateTime.now()).inDays;
           if (daysLeft <= 0) {
-            expiresText = 'Expires today';
+            expiresText = context.l10n.accountSubExpiresToday;
           } else if (daysLeft == 1) {
-            expiresText = 'Expires tomorrow';
+            expiresText = context.l10n.accountSubExpiresTomorrow;
           } else {
-            expiresText =
-                'Expires ${expiresAt.day} ${_monthName(expiresAt.month)}';
+            expiresText = context.l10n.accountSubExpiresDate(
+              expiresAt.day,
+              _monthName(context, expiresAt.month),
+            );
           }
         }
 
@@ -504,40 +509,40 @@ class _AccountSubscriptionsScreenState
         String badgeText;
 
         if (isCancelled) {
-          subtitle = 'Cancelled • $expiresText';
+          subtitle = context.l10n.accountSubCancelledExpires(expiresText!);
           subtitleColor = AccentColors.orange;
           borderColor = AccentColors.orange.withValues(alpha: 0.3);
-          badgeText = 'CANCELLED';
+          badgeText = context.l10n.accountSubBadgeCancelled;
         } else if (isGracePeriod) {
-          subtitle = 'Payment issue - please update';
+          subtitle = context.l10n.accountSubPaymentIssue;
           subtitleColor = AccentColors.orange;
           borderColor = AccentColors.green.withValues(alpha: 0.3);
-          badgeText = 'ACTIVE';
+          badgeText = context.l10n.accountSubBadgeActive;
         } else if (hasAccess && !isSignedIn) {
           // Subscription is active (billing) but user signed out — sync
           // cannot function without a Firebase user.
-          subtitle = 'Sign in to sync';
+          subtitle = context.l10n.accountSubSignInToSyncShort;
           subtitleColor = AccentColors.orange;
           borderColor = AccentColors.green.withValues(alpha: 0.3);
-          badgeText = 'ACTIVE';
+          badgeText = context.l10n.accountSubBadgeActive;
         } else if (hasAccess) {
-          subtitle = 'Monthly subscription';
+          subtitle = context.l10n.accountSubMonthlySubscription;
           subtitleColor = context.textSecondary;
           borderColor = AccentColors.green.withValues(alpha: 0.3);
-          badgeText = 'ACTIVE';
+          badgeText = context.l10n.accountSubBadgeActive;
         } else if (isExpired) {
-          subtitle = 'Subscription expired';
+          subtitle = context.l10n.accountSubSubscriptionExpired;
           subtitleColor = AppTheme.errorRed;
           borderColor = AppTheme.errorRed.withValues(alpha: 0.3);
-          badgeText = 'EXPIRED';
+          badgeText = context.l10n.accountSubBadgeExpired;
         } else if (!isSignedIn) {
           // Not signed in and no subscription
-          subtitle = 'Sign in above to enable';
+          subtitle = context.l10n.accountSubSignInToEnable;
           subtitleColor = context.textTertiary;
           borderColor = context.border;
           badgeText = '';
         } else {
-          subtitle = 'Sync across all your devices';
+          subtitle = context.l10n.accountSubSyncAllDevices;
           subtitleColor = context.textSecondary;
           borderColor = context.border;
           badgeText = '';
@@ -570,7 +575,7 @@ class _AccountSubscriptionsScreenState
                   ),
                 ),
                 title: Text(
-                  'Cloud Sync',
+                  context.l10n.accountSubCloudSync,
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     color: context.textPrimary,
@@ -624,8 +629,7 @@ class _AccountSubscriptionsScreenState
                   ),
                   child: StatusBanner.custom(
                     color: AccentColors.orange,
-                    title:
-                        'Your subscription won\'t renew. You can resubscribe anytime.',
+                    title: context.l10n.accountSubWontRenew,
                     borderRadius: 8,
                   ),
                 ),
@@ -645,23 +649,23 @@ class _AccountSubscriptionsScreenState
                     children: [
                       _FeatureRow(
                         icon: Icons.hexagon_outlined,
-                        text: 'NodeDex — encounters, tags, notes',
+                        text: context.l10n.accountSubFeatureNodedex,
                       ),
                       _FeatureRow(
                         icon: Icons.auto_awesome,
-                        text: 'Automations — rules and triggers',
+                        text: context.l10n.accountSubFeatureAutomations,
                       ),
                       _FeatureRow(
                         icon: Icons.widgets_outlined,
-                        text: 'Custom Widgets — layouts and data',
+                        text: context.l10n.accountSubFeatureWidgets,
                       ),
                       _FeatureRow(
                         icon: Icons.restore,
-                        text: 'Backup — restore after reinstall or new phone',
+                        text: context.l10n.accountSubFeatureBackup,
                       ),
                       _FeatureRow(
                         icon: Icons.offline_bolt,
-                        text: 'Works fully offline without it',
+                        text: context.l10n.accountSubFeatureOffline,
                       ),
                     ],
                   ),
@@ -678,15 +682,15 @@ class _AccountSubscriptionsScreenState
                           onPressed: () => _manageSubscription(entitlement),
                           child: Text(
                             isCancelled
-                                ? 'Renew Subscription'
-                                : 'Manage Subscription',
+                                ? context.l10n.accountSubRenewSubscription
+                                : context.l10n.accountSubManageSubscription,
                           ),
                         )
                       : !isSignedIn
                       // Not signed in - show disabled button with hint
                       ? OutlinedButton(
                           onPressed: null, // Disabled
-                          child: const Text('Sign in to subscribe'),
+                          child: Text(context.l10n.accountSubSignInToSubscribe),
                         )
                       : FilledButton.icon(
                           onPressed: _isPurchasing
@@ -696,7 +700,9 @@ class _AccountSubscriptionsScreenState
                                   if (!online) {
                                     showErrorSnackBar(
                                       context,
-                                      'Subscriptions require an internet connection.',
+                                      context
+                                          .l10n
+                                          .accountSubSubRequiresInternet,
                                     );
                                     return;
                                   }
@@ -712,7 +718,11 @@ class _AccountSubscriptionsScreenState
                                   ),
                                 )
                               : const Icon(Icons.cloud_sync, size: 18),
-                          label: Text(isExpired ? 'Renew' : 'Subscribe'),
+                          label: Text(
+                            isExpired
+                                ? context.l10n.accountSubRenew
+                                : context.l10n.accountSubSubscribe,
+                          ),
                         ),
                 ),
               ),
@@ -721,25 +731,27 @@ class _AccountSubscriptionsScreenState
         );
       },
       loading: () => const _LoadingCard(),
-      error: (e, _) => _buildErrorCard('Could not load subscription status'),
+      error: (e, _) =>
+          _buildErrorCard(context.l10n.accountSubCouldNotLoadStatus),
     );
   }
 
-  String _monthName(int month) {
-    const months = [
+  String _monthName(BuildContext context, int month) {
+    final l10n = context.l10n;
+    final months = [
       '',
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
+      l10n.accountSubMonthJanuary,
+      l10n.accountSubMonthFebruary,
+      l10n.accountSubMonthMarch,
+      l10n.accountSubMonthApril,
+      l10n.accountSubMonthMay,
+      l10n.accountSubMonthJune,
+      l10n.accountSubMonthJuly,
+      l10n.accountSubMonthAugust,
+      l10n.accountSubMonthSeptember,
+      l10n.accountSubMonthOctober,
+      l10n.accountSubMonthNovember,
+      l10n.accountSubMonthDecember,
     ];
     return months[month];
   }
@@ -793,7 +805,7 @@ class _AccountSubscriptionsScreenState
               ),
             ),
             title: Text(
-              'Feature Packs',
+              context.l10n.accountSubFeaturePacks,
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 color: context.textPrimary,
@@ -801,8 +813,11 @@ class _AccountSubscriptionsScreenState
             ),
             subtitle: Text(
               allUnlocked
-                  ? 'All features unlocked!'
-                  : 'One-time purchases • $ownedCount of $totalCount',
+                  ? context.l10n.accountSubAllUnlocked
+                  : context.l10n.accountSubOneTimePurchases(
+                      ownedCount,
+                      totalCount,
+                    ),
               style: context.bodySmallStyle?.copyWith(
                 color: context.textSecondary,
               ),
@@ -818,7 +833,7 @@ class _AccountSubscriptionsScreenState
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
                     child: Text(
-                      'ACTIVE',
+                      context.l10n.accountSubBadgeActive,
                       style: TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.w600,
@@ -863,7 +878,7 @@ class _AccountSubscriptionsScreenState
                           builder: (_) => const SubscriptionScreen(),
                         ),
                       ),
-                      child: const Text('View Features'),
+                      child: Text(context.l10n.accountSubViewFeatures),
                     )
                   : FilledButton.icon(
                       onPressed: () {
@@ -871,7 +886,7 @@ class _AccountSubscriptionsScreenState
                         if (!online) {
                           showErrorSnackBar(
                             context,
-                            'Premium features require an internet connection to purchase.',
+                            context.l10n.accountSubPremiumRequiresInternet,
                           );
                           return;
                         }
@@ -883,7 +898,7 @@ class _AccountSubscriptionsScreenState
                         );
                       },
                       icon: const Icon(Icons.shopping_bag_outlined, size: 18),
-                      label: const Text('View & Purchase'),
+                      label: Text(context.l10n.accountSubViewAndPurchase),
                     ),
             ),
           ),
@@ -909,8 +924,8 @@ class _AccountSubscriptionsScreenState
           children: [
             _ManageListTile(
               icon: Icons.restore,
-              title: 'Restore Purchases',
-              subtitle: 'Restore previously purchased items',
+              title: context.l10n.accountSubRestorePurchases,
+              subtitle: context.l10n.accountSubRestorePurchasesSubtitle,
               enabled: !_isRestoringPurchases,
               loading: _isRestoringPurchases,
               onTap: () async {
@@ -923,7 +938,7 @@ class _AccountSubscriptionsScreenState
                   );
                   showErrorSnackBar(
                     context,
-                    'Restoring purchases requires an internet connection.',
+                    context.l10n.accountSubRestoreRequiresInternet,
                   );
                   return;
                 }
@@ -962,15 +977,18 @@ class _AccountSubscriptionsScreenState
                   if (success && restoredNew) {
                     showSuccessSnackBar(
                       context,
-                      'Purchases restored successfully!',
+                      context.l10n.accountSubPurchasesRestored,
                     );
                   } else if (success) {
                     showInfoSnackBar(
                       context,
-                      'Your purchases are already active',
+                      context.l10n.accountSubPurchasesAlreadyActive,
                     );
                   } else {
-                    showInfoSnackBar(context, 'No purchases found to restore');
+                    showInfoSnackBar(
+                      context,
+                      context.l10n.accountSubNoPurchasesFound,
+                    );
                   }
                 } finally {
                   safeSetState(() => _isRestoringPurchases = false);
@@ -981,13 +999,13 @@ class _AccountSubscriptionsScreenState
             Divider(height: 1, color: context.border),
             _ManageListTile(
               icon: Icons.description_outlined,
-              title: 'Terms of Service',
+              title: context.l10n.accountSubTermsOfService,
               onTap: () => LegalDocumentSheet.showTerms(context),
             ),
             Divider(height: 1, color: context.border),
             _ManageListTile(
               icon: Icons.privacy_tip_outlined,
-              title: 'Privacy Policy',
+              title: context.l10n.accountSubPrivacyPolicy,
               onTap: () => LegalDocumentSheet.showPrivacy(context),
               isLast: true,
             ),
@@ -1056,18 +1074,14 @@ class _AccountSubscriptionsScreenState
     final online = ref.read(isOnlineProvider);
     if (!online) {
       AppLogging.subscriptions('║ ⚠️ Sign-in blocked — offline');
-      showErrorSnackBar(context, 'Sign-in requires an internet connection.');
+      showErrorSnackBar(context, context.l10n.accountSubSignInRequiresInternet);
       return null;
     }
     final isReady =
         ref.read(firebaseReadyProvider).whenOrNull(data: (v) => v) ?? false;
     if (!isReady) {
       AppLogging.subscriptions('║ ⚠️ Firebase not ready — sign-in blocked');
-      showErrorSnackBar(
-        context,
-        'Unable to connect to sign-in services. '
-        'Check your internet connection and try again.',
-      );
+      showErrorSnackBar(context, context.l10n.accountSubCannotConnectSignIn);
       return null;
     }
     return ref.read(authServiceProvider);
@@ -1076,6 +1090,7 @@ class _AccountSubscriptionsScreenState
   Future<void> _signInWithGoogle(BuildContext _) async {
     if (_isSigningIn) return;
     safeSetState(() => _isSigningIn = true);
+    final l10n = context.l10n;
     AppLogging.subscriptions('');
     AppLogging.subscriptions(
       '╔══════════════════════════════════════════════════════════════',
@@ -1128,7 +1143,10 @@ class _AccountSubscriptionsScreenState
       }
       AppLogging.subscriptions('║ ❌ Google sign-in FAILED: ${e.message}');
       if (mounted) {
-        showErrorSnackBar(context, 'Sign in failed: ${e.message}');
+        showErrorSnackBar(
+          context,
+          l10n.accountSubSignInFailed(e.message ?? ''),
+        );
       }
     } catch (e) {
       AppLogging.subscriptions(
@@ -1140,7 +1158,7 @@ class _AccountSubscriptionsScreenState
       );
       AppLogging.app('Google sign-in error: $e');
       if (mounted) {
-        showErrorSnackBar(context, 'Sign in failed. Please try again.');
+        showErrorSnackBar(context, l10n.accountSubSignInFailedRetry);
       }
     } finally {
       safeSetState(() => _isSigningIn = false);
@@ -1150,6 +1168,7 @@ class _AccountSubscriptionsScreenState
   Future<void> _signInWithApple(BuildContext _) async {
     if (_isSigningIn) return;
     safeSetState(() => _isSigningIn = true);
+    final l10n = context.l10n;
     AppLogging.subscriptions('');
     AppLogging.subscriptions(
       '╔══════════════════════════════════════════════════════════════',
@@ -1202,7 +1221,7 @@ class _AccountSubscriptionsScreenState
       }
       AppLogging.subscriptions('║ ❌ Apple sign-in FAILED: ${e.message}');
       if (mounted) {
-        showErrorSnackBar(context, 'Sign in failed: ${e.message}');
+        showErrorSnackBar(context, l10n.accountSubSignInFailed(e.message));
       }
     } catch (e) {
       AppLogging.subscriptions(
@@ -1214,7 +1233,7 @@ class _AccountSubscriptionsScreenState
       );
       AppLogging.app('Apple sign-in error: $e');
       if (mounted) {
-        showErrorSnackBar(context, 'Sign in failed. Please try again.');
+        showErrorSnackBar(context, l10n.accountSubSignInFailedRetry);
       }
     } finally {
       safeSetState(() => _isSigningIn = false);
@@ -1224,6 +1243,7 @@ class _AccountSubscriptionsScreenState
   Future<void> _signInWithGitHub(BuildContext _) async {
     if (_isSigningIn) return;
     safeSetState(() => _isSigningIn = true);
+    final l10n = context.l10n;
     AppLogging.subscriptions('');
     AppLogging.subscriptions(
       '╔══════════════════════════════════════════════════════════════',
@@ -1292,7 +1312,10 @@ class _AccountSubscriptionsScreenState
         '╚══════════════════════════════════════════════════════════════',
       );
       if (mounted && e.code != 'web-context-cancelled') {
-        showErrorSnackBar(context, 'Sign in failed: ${e.message}');
+        showErrorSnackBar(
+          context,
+          l10n.accountSubSignInFailed(e.message ?? ''),
+        );
       }
     } catch (e) {
       AppLogging.subscriptions(
@@ -1312,6 +1335,7 @@ class _AccountSubscriptionsScreenState
   Future<void> _signInWithTwitter(BuildContext _) async {
     if (_isSigningIn) return;
     safeSetState(() => _isSigningIn = true);
+    final l10n = context.l10n;
     AppLogging.subscriptions('');
     AppLogging.subscriptions(
       '╔══════════════════════════════════════════════════════════════',
@@ -1380,7 +1404,10 @@ class _AccountSubscriptionsScreenState
         '╚══════════════════════════════════════════════════════════════',
       );
       if (mounted && e.code != 'web-context-cancelled') {
-        showErrorSnackBar(context, 'Sign in failed: ${e.message}');
+        showErrorSnackBar(
+          context,
+          l10n.accountSubSignInFailed(e.message ?? ''),
+        );
       }
     } catch (e) {
       AppLogging.subscriptions(
@@ -1408,6 +1435,7 @@ class _AccountSubscriptionsScreenState
 
     // Capture before async gap
     final authService = ref.read(authServiceProvider);
+    final l10n = context.l10n;
 
     final shouldLink = await AppBottomSheet.show<bool>(
       context: context,
@@ -1415,7 +1443,7 @@ class _AccountSubscriptionsScreenState
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'Link GitHub Account',
+            l10n.accountSubLinkGitHubTitle,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -1424,8 +1452,7 @@ class _AccountSubscriptionsScreenState
           ),
           const SizedBox(height: AppTheme.spacing12),
           Text(
-            'An account with ${e.email} already exists using $providerName.\n\n'
-            'Sign in with $providerName to link your GitHub account?',
+            l10n.accountSubAccountExistsLinking(e.email, providerName),
             textAlign: TextAlign.center,
             style: TextStyle(color: context.textSecondary),
           ),
@@ -1442,7 +1469,7 @@ class _AccountSubscriptionsScreenState
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
                   ),
-                  child: const Text('Cancel'),
+                  child: Text(l10n.accountSubCancel),
                 ),
               ),
               const SizedBox(width: AppTheme.spacing12),
@@ -1455,7 +1482,7 @@ class _AccountSubscriptionsScreenState
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
                   ),
-                  child: Text('Sign in with $providerName'),
+                  child: Text(l10n.accountSubSignInWithProvider(providerName)),
                 ),
               ),
             ],
@@ -1477,16 +1504,13 @@ class _AccountSubscriptionsScreenState
         await authService.linkPendingCredential(e.pendingCredential);
 
         if (mounted) {
-          showSuccessSnackBar(
-            this.context,
-            'GitHub account linked successfully!',
-          );
+          showSuccessSnackBar(this.context, l10n.accountSubGitHubLinked);
           ref.invalidate(userProfileProvider);
           await syncRevenueCatWithFirebase(ref);
         }
       } catch (linkError) {
         if (mounted) {
-          showErrorSnackBar(this.context, 'Failed to link accounts');
+          showErrorSnackBar(this.context, l10n.accountSubFailedLinkAccounts);
           AppLogging.auth('Account linking error: $linkError');
         }
       }
@@ -1494,13 +1518,11 @@ class _AccountSubscriptionsScreenState
   }
 
   Future<void> _signOut(BuildContext _) async {
+    final l10n = context.l10n;
     final online = ref.read(isOnlineProvider);
     if (!online) {
       AppLogging.subscriptions('🚪 Sign out blocked — offline');
-      showErrorSnackBar(
-        context,
-        'Signing out requires an internet connection.',
-      );
+      showErrorSnackBar(context, l10n.accountSubSignOutRequiresInternet);
       return;
     }
 
@@ -1509,10 +1531,10 @@ class _AccountSubscriptionsScreenState
 
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Sign Out',
-      message: 'Are you sure you want to sign out?',
-      confirmLabel: 'Sign Out',
-      cancelLabel: 'Cancel',
+      title: l10n.accountSubSignOutConfirmTitle,
+      message: l10n.accountSubSignOutConfirmMsg,
+      confirmLabel: l10n.accountSubSignOutBtn,
+      cancelLabel: l10n.accountSubCancel,
     );
 
     if (confirmed == true && mounted) {
@@ -1537,7 +1559,7 @@ class _AccountSubscriptionsScreenState
         // Force the provider to rebuild with new auth state
         ref.invalidate(userProfileProvider);
         if (mounted) {
-          showSuccessSnackBar(context, 'Signed out');
+          showSuccessSnackBar(context, l10n.accountSubSignedOutSuccess);
         }
       } catch (e) {
         AppLogging.subscriptions(
@@ -1548,7 +1570,7 @@ class _AccountSubscriptionsScreenState
           '╚══════════════════════════════════════════════════════════════',
         );
         if (mounted) {
-          showErrorSnackBar(context, 'Error: $e');
+          showErrorSnackBar(context, l10n.accountSubGenericError(e.toString()));
         }
       }
     }
@@ -1560,7 +1582,7 @@ class _AccountSubscriptionsScreenState
       AppLogging.subscriptions('[LinkAccount] blocked — offline');
       showErrorSnackBar(
         context,
-        'Linking an account requires an internet connection.',
+        context.l10n.accountSubLinkingRequiresInternet,
       );
       return;
     }
@@ -1576,7 +1598,7 @@ class _AccountSubscriptionsScreenState
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'Link Account',
+              context.l10n.accountSubLinkAccountSheetTitle,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -1585,7 +1607,7 @@ class _AccountSubscriptionsScreenState
             ),
             SizedBox(height: AppTheme.spacing8),
             Text(
-              'Link a sign-in method to keep your data',
+              context.l10n.accountSubLinkSignInMethod,
               style: TextStyle(color: context.textSecondary),
             ),
             const SizedBox(height: AppTheme.spacing24),
@@ -1595,7 +1617,7 @@ class _AccountSubscriptionsScreenState
                 _signInWithGoogle(context);
               },
               icon: _GoogleLogo(),
-              label: 'Link with Google',
+              label: context.l10n.accountSubLinkWithGoogle,
               backgroundColor: Colors.white,
               textColor: Colors.black87,
             ),
@@ -1607,7 +1629,7 @@ class _AccountSubscriptionsScreenState
                   _signInWithApple(context);
                 },
                 icon: const Icon(Icons.apple, color: Colors.white, size: 22),
-                label: 'Link with Apple',
+                label: context.l10n.accountSubLinkWithApple,
                 backgroundColor: Colors.black,
                 textColor: Colors.white,
               ),
@@ -1619,7 +1641,7 @@ class _AccountSubscriptionsScreenState
                 _signInWithTwitter(context);
               },
               icon: _XLogo(),
-              label: 'Link with X',
+              label: context.l10n.accountSubLinkWithX,
               backgroundColor: Colors.black,
               textColor: Colors.white,
             ),
@@ -1633,10 +1655,7 @@ class _AccountSubscriptionsScreenState
   void _showCloudSyncPaywall() {
     final online = ref.read(isOnlineProvider);
     if (!online) {
-      showErrorSnackBar(
-        context,
-        'Subscriptions require an internet connection.',
-      );
+      showErrorSnackBar(context, context.l10n.accountSubSubRequiresInternet);
       return;
     }
     showModalBottomSheet(
@@ -1655,13 +1674,11 @@ class _AccountSubscriptionsScreenState
   }
 
   Future<void> _manageSubscription(CloudSyncEntitlement entitlement) async {
+    final l10n = context.l10n;
     final online = ref.read(isOnlineProvider);
     if (!online) {
       AppLogging.subscriptions('[ManageSubscription] blocked — offline');
-      showErrorSnackBar(
-        context,
-        'Managing subscriptions requires an internet connection.',
-      );
+      showErrorSnackBar(context, l10n.accountSubManageSubRequiresInternet);
       return;
     }
 
@@ -1715,8 +1732,8 @@ class _AccountSubscriptionsScreenState
       showInfoSnackBar(
         context,
         Platform.isIOS
-            ? 'Go to Settings > Apple ID > Subscriptions to manage'
-            : 'Go to Play Store > Payments & Subscriptions to manage',
+            ? l10n.accountSubIosManageHint
+            : l10n.accountSubAndroidManageHint,
         duration: const Duration(seconds: 4),
       );
     }
@@ -1742,8 +1759,8 @@ class _ProfilePreviewCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final accentColor = context.accentColor;
     final displayName = isSignedIn
-        ? (profile?.displayName ?? 'Guest')
-        : 'Guest';
+        ? (profile?.displayName ?? context.l10n.accountSubGuestName)
+        : context.l10n.accountSubGuestName;
     final avatarUrl = isSignedIn ? profile?.avatarUrl : null;
     final initials = isSignedIn ? (profile?.initials ?? '?') : 'G';
     final isInteractive = isSignedIn && onEditTap != null;
@@ -1823,8 +1840,8 @@ class _ProfilePreviewCard extends StatelessWidget {
                       else
                         Text(
                           isSignedIn
-                              ? 'Tap to edit profile'
-                              : 'Sign in to create profile',
+                              ? context.l10n.accountSubTapToEditProfile
+                              : context.l10n.accountSubSignInToCreateProfile,
                           style: TextStyle(
                             fontSize: 13,
                             color: context.textTertiary,
@@ -1925,7 +1942,7 @@ class _MFAStatusButton extends ConsumerWidget {
                   const SizedBox(width: AppTheme.spacing8),
                   Expanded(
                     child: Text(
-                      'Two-Factor Authentication',
+                      context.l10n.accountSubTwoFactorAuth,
                       style: TextStyle(color: context.textTertiary),
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -1941,7 +1958,7 @@ class _MFAStatusButton extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(AppTheme.radius6),
                     ),
                     child: Text(
-                      'Offline',
+                      context.l10n.accountSubBadgeOffline,
                       style: TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.w600,
@@ -1971,7 +1988,7 @@ class _MFAStatusButton extends ConsumerWidget {
                     const SizedBox(width: AppTheme.spacing8),
                     Expanded(
                       child: Text(
-                        'Two-Factor Authentication',
+                        context.l10n.accountSubTwoFactorAuth,
                         style: TextStyle(color: context.textSecondary),
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -1997,7 +2014,7 @@ class _MFAStatusButton extends ConsumerWidget {
                       const SizedBox(width: AppTheme.spacing8),
                       Expanded(
                         child: Text(
-                          'Two-Factor Authentication',
+                          context.l10n.accountSubTwoFactorAuth,
                           style: TextStyle(color: context.textSecondary),
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -2013,7 +2030,7 @@ class _MFAStatusButton extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(AppTheme.radius6),
                         ),
                         child: Text(
-                          'Unavailable',
+                          context.l10n.accountSubBadgeUnavailable,
                           style: TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.w600,
@@ -2046,7 +2063,7 @@ class _MFAStatusButton extends ConsumerWidget {
                       const SizedBox(width: AppTheme.spacing8),
                       Expanded(
                         child: Text(
-                          'Two-Factor Authentication',
+                          context.l10n.accountSubTwoFactorAuth,
                           style: TextStyle(
                             color: hasMFA ? AccentColors.green : null,
                           ),
@@ -2067,7 +2084,7 @@ class _MFAStatusButton extends ConsumerWidget {
                             ),
                           ),
                           child: Text(
-                            'ON',
+                            context.l10n.accountSubBadgeOn,
                             style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w700,
@@ -2107,11 +2124,22 @@ class _SyncStatusBadge extends ConsumerWidget {
     }
 
     final (color, text) = switch (status) {
-      SyncStatus.syncing => (AccentColors.blue, 'Syncing'),
-      SyncStatus.synced => (AccentColors.green, 'Synced'),
-      SyncStatus.error => (AppTheme.errorRed, 'Error'),
+      SyncStatus.syncing => (
+        AccentColors.blue,
+        context.l10n.accountSubSyncSyncing,
+      ),
+      SyncStatus.synced => (
+        AccentColors.green,
+        context.l10n.accountSubSyncSynced,
+      ),
+      SyncStatus.error => (AppTheme.errorRed, context.l10n.accountSubSyncError),
       // Idle + offline = show "Offline" instead of confusing "Idle"
-      SyncStatus.idle => (context.textTertiary, isOnline ? 'Ready' : 'Offline'),
+      SyncStatus.idle => (
+        context.textTertiary,
+        isOnline
+            ? context.l10n.accountSubSyncReady
+            : context.l10n.accountSubSyncOffline,
+      ),
     };
 
     return Container(
@@ -2643,7 +2671,7 @@ class _CloudSyncPaywallSheetState extends ConsumerState<_CloudSyncPaywallSheet>
         '[CloudSyncPaywall] _loadProducts blocked — offline',
       );
       safeSetState(() {
-        _error = 'Subscriptions require an internet connection.';
+        _error = context.l10n.accountSubSubRequiresInternet;
         _isLoading = false;
       });
       return;
@@ -2661,7 +2689,7 @@ class _CloudSyncPaywallSheetState extends ConsumerState<_CloudSyncPaywallSheet>
       });
     } catch (e) {
       safeSetState(() {
-        _error = 'Could not load prices';
+        _error = context.l10n.accountSubCouldNotLoadPrices;
         _isLoading = false;
       });
     }
@@ -2673,7 +2701,7 @@ class _CloudSyncPaywallSheetState extends ConsumerState<_CloudSyncPaywallSheet>
       AppLogging.subscriptions(
         '[CloudSyncPaywall] _purchase blocked — offline',
       );
-      showErrorSnackBar(context, 'Purchases require an internet connection.');
+      showErrorSnackBar(context, context.l10n.premiumPurchaseRequiresInternet);
       return;
     }
 
@@ -2682,11 +2710,11 @@ class _CloudSyncPaywallSheetState extends ConsumerState<_CloudSyncPaywallSheet>
       await Purchases.purchase(PurchaseParams.storeProduct(product));
       if (!mounted) return;
       Navigator.of(context).pop();
-      showSuccessSnackBar(context, 'Subscription activated!');
+      showSuccessSnackBar(context, context.l10n.accountSubSubActivated);
     } catch (e) {
       AppLogging.subscriptions('Purchase error: $e');
       if (!mounted) return;
-      showErrorSnackBar(context, 'Purchase failed');
+      showErrorSnackBar(context, context.l10n.accountSubPurchaseFailed);
     } finally {
       if (mounted) {
         widget.onPurchaseEnd();
@@ -2731,7 +2759,7 @@ class _CloudSyncPaywallSheetState extends ConsumerState<_CloudSyncPaywallSheet>
 
           // Title
           Text(
-            'Unlock Cloud Sync',
+            context.l10n.accountSubUnlockCloudSync,
             style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
@@ -2741,7 +2769,7 @@ class _CloudSyncPaywallSheetState extends ConsumerState<_CloudSyncPaywallSheet>
           const SizedBox(height: AppTheme.spacing8),
 
           Text(
-            'Sync and back up your mesh data across all your devices',
+            context.l10n.accountSubSyncBackupAll,
             textAlign: TextAlign.center,
             style: TextStyle(color: context.textSecondary),
           ),
@@ -2750,23 +2778,23 @@ class _CloudSyncPaywallSheetState extends ConsumerState<_CloudSyncPaywallSheet>
           // Features — list actual premium sync types
           _FeatureRow(
             icon: Icons.hexagon_outlined,
-            text: 'NodeDex — encounters, tags, notes',
+            text: context.l10n.accountSubFeatureNodedex,
           ),
           _FeatureRow(
             icon: Icons.auto_awesome,
-            text: 'Automations — rules and triggers',
+            text: context.l10n.accountSubFeatureAutomations,
           ),
           _FeatureRow(
             icon: Icons.widgets_outlined,
-            text: 'Custom Widgets — layouts and data',
+            text: context.l10n.accountSubFeatureWidgets,
           ),
           _FeatureRow(
             icon: Icons.restore,
-            text: 'Backup — restore after reinstall or new phone',
+            text: context.l10n.accountSubFeatureBackup,
           ),
           _FeatureRow(
             icon: Icons.offline_bolt,
-            text: 'Works fully offline without it',
+            text: context.l10n.accountSubFeatureOffline,
           ),
 
           const SizedBox(height: AppTheme.spacing24),
@@ -2788,7 +2816,7 @@ class _CloudSyncPaywallSheetState extends ConsumerState<_CloudSyncPaywallSheet>
 
           // Terms
           Text(
-            'Subscriptions auto-renew unless cancelled at least 24 hours before the end of the current period.',
+            context.l10n.accountSubAutoRenewDisclaimer,
             textAlign: TextAlign.center,
             style: context.captionStyle?.copyWith(color: context.textTertiary),
           ),
@@ -2821,7 +2849,9 @@ class _CloudSyncPaywallSheetState extends ConsumerState<_CloudSyncPaywallSheet>
           child: Column(
             children: [
               Text(
-                isYearly ? 'Yearly (Save 44%)' : 'Monthly',
+                isYearly
+                    ? context.l10n.accountSubYearlySave
+                    : context.l10n.accountSubMonthlyProduct,
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               Text(

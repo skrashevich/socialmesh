@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
 import '../../config/revenuecat_config.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/logging.dart';
 import '../../providers/connectivity_providers.dart';
 import '../../core/safety/lifecycle_mixin.dart';
@@ -74,7 +75,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen>
         purchaseState.hasPurchased(RevenueCatConfig.completePackProductId);
 
     return GlassScaffold.body(
-      title: 'Premium',
+      title: context.l10n.subscriptionPremiumTitle,
       body: Padding(
         padding: const EdgeInsets.all(AppTheme.spacing16),
         child: Column(
@@ -102,7 +103,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen>
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
-                      'or buy individually',
+                      context.l10n.subscriptionOrBuyIndividually,
                       style: TextStyle(
                         color: context.textTertiary,
                         fontSize: 12,
@@ -122,7 +123,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen>
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
-                      'Included Features',
+                      context.l10n.subscriptionIncludedFeatures,
                       style: TextStyle(
                         color: context.textTertiary,
                         fontSize: 12,
@@ -165,7 +166,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen>
                   TextButton(
                     onPressed: () => LegalDocumentSheet.showTerms(context),
                     child: Text(
-                      'Terms',
+                      context.l10n.subscriptionTerms,
                       style: TextStyle(
                         color: context.textTertiary,
                         fontSize: 12,
@@ -176,7 +177,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen>
                   TextButton(
                     onPressed: () => LegalDocumentSheet.showPrivacy(context),
                     child: Text(
-                      'Privacy',
+                      context.l10n.subscriptionPrivacy,
                       style: TextStyle(
                         color: context.textTertiary,
                         fontSize: 12,
@@ -228,7 +229,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Unlock Features',
+                  context.l10n.subscriptionUnlockFeatures,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -236,7 +237,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen>
                   ),
                 ),
                 Text(
-                  'One-time purchases, yours forever',
+                  context.l10n.subscriptionOneTimePurchases,
                   style: TextStyle(color: context.textSecondary, fontSize: 14),
                 ),
               ],
@@ -300,7 +301,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'All Features Unlocked',
+                    context.l10n.subscriptionAllUnlocked,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -308,7 +309,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen>
                     ),
                   ),
                   Text(
-                    'Thank you for your support!',
+                    context.l10n.subscriptionThankYou,
                     style: TextStyle(
                       color: context.textSecondary,
                       fontSize: 14,
@@ -397,10 +398,10 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen>
                     children: [
                       Row(
                         children: [
-                          const Flexible(
+                          Flexible(
                             child: Text(
-                              'Complete Pack',
-                              style: TextStyle(
+                              context.l10n.subscriptionCompletePack,
+                              style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
@@ -434,7 +435,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen>
                       ),
                       const SizedBox(height: AppTheme.spacing2),
                       Text(
-                        'Everything. Forever. One price.',
+                        context.l10n.subscriptionCompletePackSubtitle,
                         style: TextStyle(
                           color: Colors.white.withValues(alpha: 0.8),
                           fontSize: 14,
@@ -462,32 +463,32 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen>
                   storeProducts[RevenueCatConfig.ringtonePackProductId]
                           ?.title ??
                       'Ringtone Pack',
-                  '$_ringtoneCountFormatted tones',
+                  context.l10n.subscriptionTones(_ringtoneCountFormatted),
                 ),
                 _buildBundleFeature(
                   Icons.palette,
                   storeProducts[RevenueCatConfig.themePackProductId]?.title ??
                       'Theme Pack',
-                  '12 accent colors',
+                  context.l10n.subscriptionAccentColors,
                 ),
                 _buildBundleFeature(
                   Icons.widgets,
                   storeProducts[RevenueCatConfig.widgetPackProductId]?.title ??
                       'Widget Pack',
-                  'Unlimited custom widgets',
+                  context.l10n.subscriptionUnlimitedWidgets,
                 ),
                 _buildBundleFeature(
                   Icons.auto_awesome,
                   storeProducts[RevenueCatConfig.automationsPackProductId]
                           ?.title ??
                       'Automations',
-                  'Triggers & schedules',
+                  context.l10n.subscriptionTriggersSchedules,
                 ),
                 _buildBundleFeature(
                   Icons.webhook,
                   storeProducts[RevenueCatConfig.iftttPackProductId]?.title ??
                       'IFTTT',
-                  '700+ app integrations',
+                  context.l10n.subscriptionAppIntegrations,
                 ),
               ],
             ),
@@ -513,7 +514,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen>
                         ),
                       ),
                       Text(
-                        'Best value - all features',
+                        context.l10n.subscriptionBestValue,
                         style: TextStyle(
                           fontSize: 13,
                           color: AppTheme.warningYellow,
@@ -524,7 +525,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen>
                   ),
                 ),
                 AnimatedGoldButton(
-                  text: 'Get All',
+                  text: context.l10n.subscriptionGetAll,
                   isLoading: isLoading,
                   onTap: _purchaseBundle,
                 ),
@@ -594,7 +595,10 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen>
           '[SubscriptionScreen] Purchase blocked — offline',
         );
         if (!mounted) return;
-        showErrorSnackBar(context, 'Purchases require an internet connection.');
+        showErrorSnackBar(
+          context,
+          context.l10n.premiumPurchaseRequiresInternet,
+        );
         return;
       }
     }
@@ -629,7 +633,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen>
         break;
       case PurchaseResult.error:
         haptics.error();
-        showErrorSnackBar(context, 'Purchase failed. Please try again.');
+        showErrorSnackBar(context, context.l10n.premiumPurchaseFailed);
     }
   }
 
@@ -736,7 +740,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen>
                             ),
                           ),
                           child: Text(
-                            'OWNED',
+                            context.l10n.subscriptionOwned,
                             style: TextStyle(
                               color: context.accentColor,
                               fontWeight: FontWeight.w600,
@@ -779,7 +783,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen>
   String _getDescription(OneTimePurchase purchase) {
     // Dynamic description for ringtone pack with actual count
     if (purchase.id == 'ringtone_pack') {
-      return '$_ringtoneCountFormatted searchable RTTTL tones';
+      return context.l10n.subscriptionSearchableTones(_ringtoneCountFormatted);
     }
     return purchase.description;
   }
@@ -813,7 +817,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen>
         '(${purchase.productId})',
       );
       if (!mounted) return;
-      showErrorSnackBar(context, 'Purchases require an internet connection.');
+      showErrorSnackBar(context, context.l10n.premiumPurchaseRequiresInternet);
       return;
     }
 
@@ -840,7 +844,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen>
         break;
       case PurchaseResult.error:
         haptics.error();
-        showErrorSnackBar(context, 'Purchase failed. Please try again.');
+        showErrorSnackBar(context, context.l10n.premiumPurchaseFailed);
     }
   }
 
@@ -856,8 +860,8 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen>
 
     showActionSnackBar(
       context,
-      '${purchase.name} unlocked!',
-      actionLabel: 'View',
+      context.l10n.premiumPurchaseUnlocked(purchase.name),
+      actionLabel: context.l10n.subscriptionView,
       onAction: () {
         navigator.push(MaterialPageRoute(builder: (_) => targetScreen));
       },
@@ -884,7 +888,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen>
           ),
           SizedBox(height: AppTheme.spacing16),
           Text(
-            'All Features Unlocked!',
+            context.l10n.subscriptionAllUnlockedCelebration,
             style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
@@ -894,7 +898,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen>
           ),
           SizedBox(height: AppTheme.spacing12),
           Text(
-            'You now have access to everything Socialmesh has to offer. Thank you for your support!',
+            context.l10n.subscriptionCelebrationMessage,
             style: TextStyle(
               fontSize: 15,
               color: context.textSecondary,
@@ -916,7 +920,7 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen>
                 ),
               ),
               child: Text(
-                'Awesome!',
+                context.l10n.subscriptionAwesome,
                 style: context.titleSmallStyle?.copyWith(
                   fontWeight: FontWeight.w600,
                 ),

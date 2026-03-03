@@ -15,6 +15,7 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/mqtt/mqtt_config.dart';
 import '../../../core/mqtt/mqtt_connection_state.dart';
 import '../../../core/mqtt/mqtt_constants.dart';
@@ -26,6 +27,7 @@ import '../../../core/theme.dart';
 import '../../../core/widgets/animations.dart';
 import '../../../core/widgets/app_bottom_sheet.dart';
 import '../../../core/widgets/glass_scaffold.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../providers/accessibility_providers.dart';
 import '../../../providers/mqtt_providers.dart';
 import '../../../services/haptic_service.dart';
@@ -67,6 +69,7 @@ class _GlobalLayerTopicExplorerScreenState
 
   Future<void> _removeSubscription(int index) async {
     final haptics = ref.read(hapticServiceProvider);
+    final l10n = context.l10n;
     await haptics.trigger(HapticType.warning);
 
     if (!mounted) return;
@@ -80,11 +83,12 @@ class _GlobalLayerTopicExplorerScreenState
 
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Remove Topic',
-      message:
-          'Remove "${removedTopic.label}" (${removedTopic.topic}) from your '
-          'subscriptions? You can add it back later.',
-      confirmLabel: 'Remove',
+      title: l10n.globalLayerRemoveTopicTitle,
+      message: l10n.globalLayerRemoveTopicMessage(
+        removedTopic.label,
+        removedTopic.topic,
+      ),
+      confirmLabel: l10n.globalLayerRemoveConfirm,
       isDestructive: true,
     );
 
@@ -98,8 +102,8 @@ class _GlobalLayerTopicExplorerScreenState
     if (!mounted) return;
     showActionSnackBar(
       context,
-      'Removed "${removedTopic.label}"',
-      actionLabel: 'Undo',
+      l10n.globalLayerRemovedSnackbar(removedTopic.label),
+      actionLabel: l10n.globalLayerUndo,
       onAction: () {
         ref.read(globalLayerConfigProvider.notifier).updateConfig(config);
       },
@@ -176,7 +180,7 @@ class _GlobalLayerTopicExplorerScreenState
     return GestureDetector(
       onTap: _dismissKeyboard,
       child: GlassScaffold(
-        title: 'Topic Explorer',
+        title: context.l10n.globalLayerTopicExplorerTitle,
         actions: [
           PopupMenuButton<String>(
             icon: const Icon(Icons.more_vert),
@@ -189,20 +193,20 @@ class _GlobalLayerTopicExplorerScreenState
               }
             },
             itemBuilder: (_) => [
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'add_template',
                 child: ListTile(
-                  leading: Icon(Icons.library_add_outlined),
-                  title: Text('Add from Template'),
+                  leading: const Icon(Icons.library_add_outlined),
+                  title: Text(context.l10n.globalLayerAddFromTemplate),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'add_custom',
                 child: ListTile(
-                  leading: Icon(Icons.edit_outlined),
-                  title: Text('Add Custom Topic'),
+                  leading: const Icon(Icons.edit_outlined),
+                  title: Text(context.l10n.globalLayerAddCustomTopic),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
                 ),
@@ -236,7 +240,7 @@ class _GlobalLayerTopicExplorerScreenState
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Subscriptions',
+                    context.l10n.globalLayerSubscriptionsHeader,
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
                       color: context.textSecondary,
                       fontWeight: FontWeight.w600,
@@ -262,7 +266,7 @@ class _GlobalLayerTopicExplorerScreenState
                           Icon(Icons.add, size: 14, color: context.accentColor),
                           const SizedBox(width: AppTheme.spacing4),
                           Text(
-                            'Add',
+                            context.l10n.globalLayerAddButton,
                             style: Theme.of(context).textTheme.labelSmall
                                 ?.copyWith(
                                   color: context.accentColor,
@@ -318,7 +322,9 @@ class _GlobalLayerTopicExplorerScreenState
                 padding: const EdgeInsets.all(AppTheme.spacing24),
                 child: Center(
                   child: Text(
-                    'Failed to load topics: $error',
+                    context.l10n.globalLayerFailedToLoadTopics(
+                      error.toString(),
+                    ),
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Theme.of(context).colorScheme.error,
                     ),
@@ -456,7 +462,7 @@ class _SubscriptionStats extends StatelessWidget {
             Expanded(
               child: _StatColumn(
                 value: total.toString(),
-                label: 'Topics',
+                label: context.l10n.globalLayerStatsTopics,
                 icon: Icons.tag,
                 color: context.accentColor,
               ),
@@ -465,7 +471,7 @@ class _SubscriptionStats extends StatelessWidget {
             Expanded(
               child: _StatColumn(
                 value: enabled.toString(),
-                label: 'Active',
+                label: context.l10n.globalLayerStatsActive,
                 icon: Icons.check_circle_outline,
                 color: AppTheme.successGreen,
               ),
@@ -474,7 +480,7 @@ class _SubscriptionStats extends StatelessWidget {
             Expanded(
               child: _StatColumn(
                 value: _compactNumber(totalMessages),
-                label: 'Messages',
+                label: context.l10n.globalLayerStatsMessages,
                 icon: Icons.chat_bubble_outline,
                 color: const Color(0xFF60A5FA),
               ),
@@ -483,7 +489,7 @@ class _SubscriptionStats extends StatelessWidget {
             Expanded(
               child: _StatColumn(
                 value: metrics.throughputDisplay,
-                label: 'Rate',
+                label: context.l10n.globalLayerStatsRate,
                 icon: Icons.speed,
                 color: AppTheme.warningYellow,
               ),
@@ -767,7 +773,7 @@ class _TopicMetricsRow extends StatelessWidget {
         if (subscription.lastMessageAt != null) ...[
           _MetricChip(
             icon: Icons.access_time,
-            value: _formatTimestamp(subscription.lastMessageAt!),
+            value: _formatTimestamp(subscription.lastMessageAt!, context.l10n),
             color: context.textTertiary,
           ),
           const SizedBox(width: AppTheme.spacing8),
@@ -777,34 +783,34 @@ class _TopicMetricsRow extends StatelessWidget {
         if (!subscription.enabled)
           _MetricChip(
             icon: Icons.pause_circle_outline,
-            value: 'Paused',
+            value: context.l10n.globalLayerTopicPaused,
             color: context.textTertiary,
           )
         else if (isConnected && metrics == null)
           _MetricChip(
             icon: Icons.hearing,
-            value: 'Listening',
+            value: context.l10n.globalLayerTopicListening,
             color: AppTheme.successGreen.withValues(alpha: 0.7),
           )
         else if (!isConnected)
           _MetricChip(
             icon: Icons.cloud_off,
-            value: 'Offline',
+            value: context.l10n.globalLayerTopicOffline,
             color: context.textTertiary,
           ),
       ],
     );
   }
 
-  String _formatTimestamp(DateTime timestamp) {
+  String _formatTimestamp(DateTime timestamp, AppLocalizations l10n) {
     final now = DateTime.now();
     final diff = now.difference(timestamp);
 
-    if (diff.inSeconds < 60) return 'Just now';
-    if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
-    if (diff.inHours < 24) return '${diff.inHours}h ago';
-    if (diff.inDays < 7) return '${diff.inDays}d ago';
-    return '${timestamp.month}/${timestamp.day}';
+    if (diff.inSeconds < 60) return l10n.globalLayerJustNow;
+    if (diff.inMinutes < 60) return l10n.globalLayerMinutesAgo(diff.inMinutes);
+    if (diff.inHours < 24) return l10n.globalLayerHoursAgo(diff.inHours);
+    if (diff.inDays < 7) return l10n.globalLayerDaysAgo(diff.inDays);
+    return l10n.globalLayerShortDateFormat(timestamp.month, timestamp.day);
   }
 }
 
@@ -866,7 +872,7 @@ class _EmptyTopicsState extends StatelessWidget {
           ),
           const SizedBox(height: AppTheme.spacing16),
           Text(
-            'No Topic Subscriptions',
+            context.l10n.globalLayerNoTopicSubscriptions,
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
               color: context.textPrimary,
               fontWeight: FontWeight.w600,
@@ -875,9 +881,7 @@ class _EmptyTopicsState extends StatelessWidget {
           ),
           const SizedBox(height: AppTheme.spacing8),
           Text(
-            'Add topics to control which types of mesh data flow '
-            'through the Global Layer. Each topic corresponds to a '
-            'category like chat, telemetry, or position.',
+            context.l10n.globalLayerEmptyTopicsDescription,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: context.textSecondary,
               height: 1.5,
@@ -891,13 +895,13 @@ class _EmptyTopicsState extends StatelessWidget {
               OutlinedButton.icon(
                 onPressed: onAddTemplate,
                 icon: const Icon(Icons.library_add_outlined, size: 18),
-                label: const Text('From Template'),
+                label: Text(context.l10n.globalLayerFromTemplateButton),
               ),
               const SizedBox(width: AppTheme.spacing12),
               FilledButton.icon(
                 onPressed: onAddCustom,
                 icon: const Icon(Icons.edit_outlined, size: 18),
-                label: const Text('Custom'),
+                label: Text(context.l10n.globalLayerCustomButton),
               ),
             ],
           ),
@@ -974,7 +978,7 @@ class _AddTopicSheetState extends ConsumerState<_AddTopicSheet> {
         children: [
           // Title
           Text(
-            'Add Custom Topic',
+            context.l10n.globalLayerAddCustomTopic,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
               color: context.textPrimary,
               fontWeight: FontWeight.w600,
@@ -982,8 +986,7 @@ class _AddTopicSheetState extends ConsumerState<_AddTopicSheet> {
           ),
           const SizedBox(height: AppTheme.spacing4),
           Text(
-            'Subscribe to a custom MQTT topic. Wildcards (+, #) '
-            'are allowed for subscribe topics.',
+            context.l10n.globalLayerAddCustomTopicDescription,
             style: Theme.of(
               context,
             ).textTheme.bodySmall?.copyWith(color: context.textSecondary),
@@ -996,8 +999,8 @@ class _AddTopicSheetState extends ConsumerState<_AddTopicSheet> {
             maxLength: 100,
             controller: _labelController,
             decoration: InputDecoration(
-              labelText: 'Label',
-              hintText: 'e.g. Weather Reports',
+              labelText: context.l10n.globalLayerLabelFieldLabel,
+              hintText: context.l10n.globalLayerLabelFieldHint,
               prefixIcon: const Icon(Icons.label_outline, size: 20),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AppTheme.radius12),
@@ -1015,8 +1018,8 @@ class _AddTopicSheetState extends ConsumerState<_AddTopicSheet> {
             maxLength: 256,
             controller: _topicController,
             decoration: InputDecoration(
-              labelText: 'MQTT Topic',
-              hintText: 'e.g. msh/weather/+',
+              labelText: context.l10n.globalLayerMqttTopicFieldLabel,
+              hintText: context.l10n.globalLayerMqttTopicFieldHint,
               prefixIcon: const Icon(Icons.tag, size: 20),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AppTheme.radius12),
@@ -1047,7 +1050,7 @@ class _AddTopicSheetState extends ConsumerState<_AddTopicSheet> {
             width: double.infinity,
             child: FilledButton(
               onPressed: _canSubmit ? _submit : null,
-              child: const Text('Add Subscription'),
+              child: Text(context.l10n.globalLayerAddSubscriptionButton),
             ),
           ),
         ],
@@ -1100,7 +1103,7 @@ class _TemplatePickerSheetState extends State<_TemplatePickerSheet> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Add from Template',
+            context.l10n.globalLayerAddFromTemplate,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
               color: context.textPrimary,
               fontWeight: FontWeight.w600,
@@ -1108,8 +1111,7 @@ class _TemplatePickerSheetState extends State<_TemplatePickerSheet> {
           ),
           const SizedBox(height: AppTheme.spacing4),
           Text(
-            'Choose a predefined topic template. Placeholders will '
-            'be resolved using the values below.',
+            context.l10n.globalLayerAddFromTemplateDescription,
             style: Theme.of(
               context,
             ).textTheme.bodySmall?.copyWith(color: context.textSecondary),
@@ -1126,8 +1128,8 @@ class _TemplatePickerSheetState extends State<_TemplatePickerSheet> {
                   maxLength: 32,
                   controller: _channelController,
                   decoration: InputDecoration(
-                    labelText: 'Channel',
-                    hintText: 'LongFast',
+                    labelText: context.l10n.globalLayerChannelFieldLabel,
+                    hintText: context.l10n.globalLayerChannelFieldHint,
                     isDense: true,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(AppTheme.radius10),
@@ -1151,8 +1153,8 @@ class _TemplatePickerSheetState extends State<_TemplatePickerSheet> {
                   maxLength: 100,
                   controller: _nodeIdController,
                   decoration: InputDecoration(
-                    labelText: 'Node ID',
-                    hintText: '!a1b2c3d4',
+                    labelText: context.l10n.globalLayerNodeIdFieldLabel,
+                    hintText: context.l10n.globalLayerNodeIdFieldHint,
                     isDense: true,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(AppTheme.radius10),
@@ -1297,7 +1299,7 @@ class _TemplateTile extends StatelessWidget {
                       borderRadius: BorderRadius.circular(AppTheme.radius6),
                     ),
                     child: Text(
-                      'Added',
+                      context.l10n.globalLayerTemplateAdded,
                       style: Theme.of(context).textTheme.labelSmall?.copyWith(
                         color: context.textTertiary,
                         fontSize: 10,

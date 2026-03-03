@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/logging.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
@@ -69,6 +70,7 @@ class _StoreForwardConfigScreenState
 
   Future<void> _loadCurrentConfig() async {
     AppLogging.settings('[StoreForward] Loading config...');
+    final loadFailedMsg = context.l10n.storeForwardLoadFailed;
     try {
       final protocol = ref.read(protocolServiceProvider);
       final target = AdminTarget.fromNullable(
@@ -107,7 +109,7 @@ class _StoreForwardConfigScreenState
       }
     } catch (e) {
       AppLogging.settings('[StoreForward] Error loading config: $e');
-      safeShowSnackBar('Failed to load config');
+      safeShowSnackBar(loadFailedMsg);
     } finally {
       safeSetState(() => _isLoading = false);
     }
@@ -132,7 +134,7 @@ class _StoreForwardConfigScreenState
       );
 
       if (mounted) {
-        showSuccessSnackBar(context, 'Store & Forward configuration saved');
+        showSuccessSnackBar(context, context.l10n.storeForwardSaveSuccess);
         if (target.isLocal) {
           ref
               .read(countdownProvider.notifier)
@@ -143,7 +145,7 @@ class _StoreForwardConfigScreenState
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to save config: $e');
+        showErrorSnackBar(context, context.l10n.storeForwardSaveFailed('$e'));
       }
     } finally {
       safeSetState(() => _isSaving = false);
@@ -153,13 +155,16 @@ class _StoreForwardConfigScreenState
   @override
   Widget build(BuildContext context) {
     return GlassScaffold(
-      title: 'Store & Forward',
+      title: context.l10n.storeForwardTitle,
       actions: [
         TextButton(
           onPressed: _isSaving ? null : _saveConfig,
           child: _isSaving
               ? LoadingIndicator(size: 20)
-              : Text('Save', style: TextStyle(color: context.accentColor)),
+              : Text(
+                  context.l10n.storeForwardSave,
+                  style: TextStyle(color: context.accentColor),
+                ),
         ),
       ],
       slivers: _isLoading
@@ -175,14 +180,16 @@ class _StoreForwardConfigScreenState
                     const SizedBox(height: AppTheme.spacing16),
 
                     // Module settings
-                    _buildSectionTitle('Module Settings'),
+                    _buildSectionTitle(context.l10n.storeForwardModuleSettings),
                     _buildConfigCard(),
 
                     const SizedBox(height: AppTheme.spacing16),
 
                     // Server settings (only shown if server mode)
                     if (_isServer) ...[
-                      _buildSectionTitle('Server Settings'),
+                      _buildSectionTitle(
+                        context.l10n.storeForwardServerSettings,
+                      ),
                       _buildServerSettingsCard(),
                     ],
                   ]),
@@ -225,7 +232,7 @@ class _StoreForwardConfigScreenState
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Store & Forward',
+                  context.l10n.storeForwardTitle,
                   style: TextStyle(
                     color: context.textPrimary,
                     fontWeight: FontWeight.w600,
@@ -234,8 +241,7 @@ class _StoreForwardConfigScreenState
                 ),
                 const SizedBox(height: AppTheme.spacing4),
                 Text(
-                  'Allows nodes to store messages and forward them to devices that were offline. '
-                  'A "server" node stores messages, while "client" nodes can request missed messages.',
+                  context.l10n.storeForwardInfoDescription,
                   style: TextStyle(
                     color: context.textSecondary,
                     fontSize: 13,
@@ -260,11 +266,11 @@ class _StoreForwardConfigScreenState
         children: [
           ListTile(
             title: Text(
-              'Enable Store & Forward',
+              context.l10n.storeForwardEnable,
               style: TextStyle(color: context.textPrimary),
             ),
             subtitle: Text(
-              'Participate in the S&F network',
+              context.l10n.storeForwardEnableSubtitle,
               style: TextStyle(color: context.textTertiary, fontSize: 12),
             ),
             trailing: ThemedSwitch(
@@ -275,11 +281,11 @@ class _StoreForwardConfigScreenState
           Divider(height: 1, color: context.border),
           ListTile(
             title: Text(
-              'Act as Server',
+              context.l10n.storeForwardActAsServer,
               style: TextStyle(color: context.textPrimary),
             ),
             subtitle: Text(
-              'Store messages for other nodes (uses more RAM)',
+              context.l10n.storeForwardActAsServerSubtitle,
               style: TextStyle(color: context.textTertiary, fontSize: 12),
             ),
             trailing: ThemedSwitch(
@@ -290,11 +296,11 @@ class _StoreForwardConfigScreenState
           Divider(height: 1, color: context.border),
           ListTile(
             title: Text(
-              'Heartbeat',
+              context.l10n.storeForwardHeartbeat,
               style: TextStyle(color: context.textPrimary),
             ),
             subtitle: Text(
-              'Send periodic announcements to the mesh',
+              context.l10n.storeForwardHeartbeatSubtitle,
               style: TextStyle(color: context.textTertiary, fontSize: 12),
             ),
             trailing: ThemedSwitch(
@@ -319,11 +325,13 @@ class _StoreForwardConfigScreenState
         children: [
           ListTile(
             title: Text(
-              'Records Limit',
+              context.l10n.storeForwardRecordsLimit,
               style: TextStyle(color: context.textPrimary),
             ),
             subtitle: Text(
-              _records == 0 ? 'Use device default' : '$_records records',
+              _records == 0
+                  ? context.l10n.storeForwardRecordsLimitSubtitle
+                  : '$_records records',
               style: TextStyle(color: context.textTertiary, fontSize: 12),
             ),
             trailing: Row(
@@ -336,7 +344,7 @@ class _StoreForwardConfigScreenState
                       : null,
                 ),
                 Text(
-                  _records == 0 ? 'Auto' : '$_records',
+                  _records == 0 ? context.l10n.storeForwardAuto : '$_records',
                   style: TextStyle(
                     color: context.accentColor,
                     fontWeight: FontWeight.w600,
@@ -354,11 +362,13 @@ class _StoreForwardConfigScreenState
           Divider(height: 1, color: context.border),
           ListTile(
             title: Text(
-              'History Return Max',
+              context.l10n.storeForwardHistoryReturnMax,
               style: TextStyle(color: context.textPrimary),
             ),
             subtitle: Text(
-              'Max $_historyReturnMax messages per request',
+              context.l10n.storeForwardHistoryReturnMaxSubtitle(
+                _historyReturnMax,
+              ),
               style: TextStyle(color: context.textTertiary, fontSize: 12),
             ),
             trailing: Row(
@@ -389,11 +399,13 @@ class _StoreForwardConfigScreenState
           Divider(height: 1, color: context.border),
           ListTile(
             title: Text(
-              'History Window',
+              context.l10n.storeForwardHistoryWindow,
               style: TextStyle(color: context.textPrimary),
             ),
             subtitle: Text(
-              'Keep messages for ${_historyReturnWindow ~/ 60} hours',
+              context.l10n.storeForwardHistoryWindowSubtitle(
+                _historyReturnWindow ~/ 60,
+              ),
               style: TextStyle(color: context.textTertiary, fontSize: 12),
             ),
             trailing: Row(

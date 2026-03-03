@@ -1,0 +1,16 @@
+  /// Get localized category name.
+  static String localizedCategoryName(
+    BindingCategory category,
+    AppLocalizations l10n,
+  ) {
+    return switch (category) {
+      BindingCategory.node => l10n.widgetBuilderBindingCategoryNode,
+      BindingCategory.device => l10n.widgetBuilderBindingCategoryDevice,
+      BindingCategory.network => l10n.widgetBuilderBindingCategoryNetwork,
+      BindingCategory.environment => l10n.widgetBuilderBindingCategoryEnvironment,
+      BindingCategory.power => l10n.widgetBuilderBindingCategoryPower,
+      BindingCategory.airQuality => l10n.widgetBuilderBindingCategoryAirQuality,
+      BindingCategory.gps => l10n.widgetBuilderBindingCategoryGps,
+      BindingCategory.messaging => l10n.widgetBuilderBindingCategoryMessaging,
+    };
+  }

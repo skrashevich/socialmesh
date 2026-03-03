@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/logging.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/app_bottom_sheet.dart';
@@ -35,40 +36,40 @@ class _OemGuide {
 
 /// Returns the [_OemGuide] for the detected [manufacturer], or a generic
 /// guide for stock Android.
-_OemGuide _guideForManufacturer(String manufacturer) {
+_OemGuide _guideForManufacturer(String manufacturer, BuildContext context) {
   final m = manufacturer.toLowerCase().trim();
 
   if (m.contains('xiaomi') || m.contains('redmi') || m.contains('poco')) {
-    return const _OemGuide(
+    return _OemGuide(
       oemName: 'Xiaomi / Redmi / POCO',
       steps: [
-        'Open Settings > Apps > Manage apps > Socialmesh.',
-        'Tap "AutoStart" and enable it.',
-        'Go back and tap "Battery saver".',
-        'Select "No restrictions" for Socialmesh.',
+        context.l10n.batteryOptXiaomiStep1,
+        context.l10n.batteryOptXiaomiStep2,
+        context.l10n.batteryOptXiaomiStep3,
+        context.l10n.batteryOptXiaomiStep4,
       ],
     );
   }
 
   if (m.contains('samsung')) {
-    return const _OemGuide(
+    return _OemGuide(
       oemName: 'Samsung',
       steps: [
-        'Open Settings > Battery and device care > Battery.',
-        'Tap "Background usage limits".',
-        'Remove Socialmesh from the "Sleeping apps" and "Deep sleeping apps" lists.',
-        'Optionally disable "Adaptive battery" for best results.',
+        context.l10n.batteryOptSamsungStep1,
+        context.l10n.batteryOptSamsungStep2,
+        context.l10n.batteryOptSamsungStep3,
+        context.l10n.batteryOptSamsungStep4,
       ],
     );
   }
 
   if (m.contains('huawei') || m.contains('honor')) {
-    return const _OemGuide(
+    return _OemGuide(
       oemName: 'Huawei / Honor',
       steps: [
-        'Open Settings > Battery > App launch.',
-        'Find Socialmesh and set it to "Manage manually".',
-        'Enable all three toggles: Auto-launch, Secondary launch, and Run in background.',
+        context.l10n.batteryOptHuaweiStep1,
+        context.l10n.batteryOptHuaweiStep2,
+        context.l10n.batteryOptHuaweiStep3,
       ],
     );
   }
@@ -77,24 +78,24 @@ _OemGuide _guideForManufacturer(String manufacturer) {
       m.contains('realme') ||
       m.contains('oneplus') ||
       m.contains('one plus')) {
-    return const _OemGuide(
+    return _OemGuide(
       oemName: 'Oppo / Realme / OnePlus',
       steps: [
-        'Open Settings > Apps > App management > Socialmesh.',
-        'Enable "Auto-launch" and "Allow activity in background".',
-        'On OnePlus 14+: also check Settings > Battery > Battery optimization > Socialmesh > "Don\'t optimize".',
+        context.l10n.batteryOptOneplusStep1,
+        context.l10n.batteryOptOneplusStep2,
+        context.l10n.batteryOptOneplusStep3,
       ],
     );
   }
 
   // Generic / Stock Android
-  return const _OemGuide(
+  return _OemGuide(
     oemName: 'Android',
     deepLinkAction: 'android.settings.IGNORE_BATTERY_OPTIMIZATION_SETTINGS',
     steps: [
-      'Open Settings > Apps > Socialmesh > Battery.',
-      'Select "Unrestricted" or "Don\'t optimize".',
-      'This allows Socialmesh to maintain the mesh connection in the background.',
+      context.l10n.batteryOptGenericStep1,
+      context.l10n.batteryOptGenericStep2,
+      context.l10n.batteryOptGenericStep3,
     ],
   );
 }
@@ -129,14 +130,16 @@ Future<void> showBatteryOptimizationGuide(
   final deviceInfo = DeviceInfoPlugin();
   final androidInfo = await deviceInfo.androidInfo;
   final manufacturer = androidInfo.manufacturer;
-  final guide = _guideForManufacturer(manufacturer);
 
-  AppLogging.ble(
-    'BatteryOptimizationGuide: manufacturer="$manufacturer", '
-    'showing guide for ${guide.oemName}',
-  );
+  AppLogging.ble('BatteryOptimizationGuide: manufacturer="$manufacturer"');
 
   if (!context.mounted) return;
+
+  final guide = _guideForManufacturer(manufacturer, context);
+
+  AppLogging.ble(
+    'BatteryOptimizationGuide: showing guide for ${guide.oemName}',
+  );
 
   await AppBottomSheet.show<void>(
     context: context,
@@ -192,7 +195,7 @@ class _BatteryGuideContent extends StatelessWidget {
               const SizedBox(width: AppTheme.spacing12),
               Expanded(
                 child: Text(
-                  'Optimize for ${guide.oemName}',
+                  context.l10n.batteryOptTitle(guide.oemName),
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: context.textPrimary,
@@ -212,8 +215,7 @@ class _BatteryGuideContent extends StatelessWidget {
                 children: [
                   // Description
                   Text(
-                    'Your device manufacturer may aggressively limit background apps. '
-                    'Follow these steps to keep the mesh connection alive:',
+                    context.l10n.batteryOptDescription,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: context.textSecondary,
                     ),
@@ -276,7 +278,7 @@ class _BatteryGuideContent extends StatelessWidget {
                 _openBatterySettings();
               },
               icon: const Icon(Icons.settings, size: 18),
-              label: const Text('Open Battery Settings'),
+              label: Text(context.l10n.batteryOptOpenSettings),
             ),
           ),
           const SizedBox(height: AppTheme.spacing8),
@@ -290,7 +292,7 @@ class _BatteryGuideContent extends StatelessWidget {
                     HapticFeedback.selectionClick();
                     _dismiss(context, dontShowAgain: false);
                   },
-                  child: const Text('Dismiss'),
+                  child: Text(context.l10n.batteryOptDismiss),
                 ),
               ),
               const SizedBox(width: AppTheme.spacing8),
@@ -301,7 +303,7 @@ class _BatteryGuideContent extends StatelessWidget {
                     _dismiss(context, dontShowAgain: true);
                   },
                   child: Text(
-                    "Don't show again",
+                    context.l10n.batteryOptDontShowAgain,
                     style: TextStyle(color: context.textTertiary),
                   ),
                 ),

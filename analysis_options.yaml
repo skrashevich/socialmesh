@@ -24,6 +24,7 @@ analyzer:
     - meshtastic-ios/**
     - mesh-observer/**
     - sigil-api/**
+    - tool/**
   errors:
     # Suppress deprecation warnings from generated protobuf files
     # These are maintained upstream by the Meshtastic protobufs project

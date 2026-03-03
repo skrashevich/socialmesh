@@ -8476,7 +8476,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get messagingMessageDeleted => 'Message deleted';
 
   @override
-  String get messagingMessageHint => 'Message…';
+  String get messagingMessageHint => 'Message';
+
+  @override
+  String get messagingSendTooltip => 'Send (Ctrl/Cmd+Enter)';
 
   @override
   String get messagingMessageQueuedOffline =>
@@ -14690,7 +14693,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsSectionTools => 'TOOLS';
 
   @override
-  String get settingsSectionWhatsNew => 'WHAT’S NEW';
+  String get settingsSectionWhatsNew => 'WHAT\'S NEW';
 
   @override
   String get settingsSocialCommentsSubtitle =>
@@ -21752,4 +21755,6725 @@ class AppLocalizationsEn extends AppLocalizations {
   String worldMeshUptimeLabel(String uptime) {
     return 'Uptime: $uptime';
   }
+
+  @override
+  String get deepLinkLoadingSignal => 'Loading Signal';
+
+  @override
+  String deepLinkErrorLoadingSignal(String error) {
+    return 'Error loading signal: $error';
+  }
+
+  @override
+  String get deepLinkSignalNotFound => 'Signal not found';
+
+  @override
+  String get deepLinkLoadingFlight => 'Loading Flight';
+
+  @override
+  String deepLinkErrorLoadingFlight(String error) {
+    return 'Error loading flight: $error';
+  }
+
+  @override
+  String get deepLinkFlightNotFound => 'Flight not found';
+
+  @override
+  String get deepLinkImportChannel => 'Import Channel';
+
+  @override
+  String deepLinkErrorLoadingChannel(String error) {
+    return 'Error loading channel: $error';
+  }
+
+  @override
+  String get deepLinkChannelNotAvailable => 'Channel not available';
+
+  @override
+  String get deepLinkChannelNotAvailableDescription =>
+      'You may not have access to this channel,\nor the owner needs to re-share it.';
+
+  @override
+  String get deepLinkJoinChannel => 'Join Channel';
+
+  @override
+  String get deepLinkJoiningChannel => 'Joining channel...';
+
+  @override
+  String get deepLinkInviteExpired => 'This invite has expired';
+
+  @override
+  String get deepLinkInviteRevoked => 'This invite has been revoked';
+
+  @override
+  String get deepLinkInviteUsageLimitReached =>
+      'This invite has reached its usage limit';
+
+  @override
+  String get deepLinkInviteLinkInvalid => 'Invalid invite link';
+
+  @override
+  String get deepLinkChannelNoLongerExists => 'This channel no longer exists';
+
+  @override
+  String get deepLinkInviteNotFound => 'Invite not found';
+
+  @override
+  String get deepLinkPleaseSignIn => 'Please sign in to join';
+
+  @override
+  String get deepLinkFailedToJoinChannel => 'Failed to join channel';
+
+  @override
+  String get deepLinkLoadingWidget => 'Loading Widget';
+
+  @override
+  String deepLinkErrorLoadingWidget(String error) {
+    return 'Error loading widget: $error';
+  }
+
+  @override
+  String get deepLinkSomethingWentWrong => 'Something went wrong';
+
+  @override
+  String deepLinkProfileTitle(String displayName) {
+    return '@$displayName';
+  }
+
+  @override
+  String get deepLinkCloudServicesNotAvailable =>
+      'Cloud services not available yet';
+
+  @override
+  String deepLinkErrorLookingUpUser(String error) {
+    return 'Error looking up user: $error';
+  }
+
+  @override
+  String deepLinkUserNotFound(String displayName) {
+    return 'User \"@$displayName\" not found';
+  }
+
+  @override
+  String get blockedRouteDeviceRequired => 'Device Required';
+
+  @override
+  String get blockedRouteConnectDevice =>
+      'Connect device to access this screen';
+
+  @override
+  String get blockedRouteDeviceReset => 'Device Reset';
+
+  @override
+  String get blockedRouteDeviceNotConnected => 'Device Not Connected';
+
+  @override
+  String get blockedRouteDeviceResetDescription =>
+      'Your device was factory reset or replaced.\n\nGo to Settings → Bluetooth, forget the Meshtastic device, then scan again.';
+
+  @override
+  String get blockedRouteScanForDevices => 'Scan for Devices';
+
+  @override
+  String get blockedRouteConnectDeviceButton => 'Connect Device';
+
+  @override
+  String get deepLinkWidgetNotFound => 'Widget not found';
+
+  @override
+  String get deepLinkCouldNotDecryptChannel => 'Could not decrypt channel key';
+
+  @override
+  String get deepLinkAlreadyHaveChannel => 'You already have this channel';
+
+  @override
+  String get transformableTextDeleteTitle => 'Delete text?';
+
+  @override
+  String get transformableTextDeleteMessage =>
+      'This will remove the text overlay.';
+
+  @override
+  String get transformableTextDeleteConfirm => 'Delete';
+
+  @override
+  String get transformableTextDone => 'Done';
+
+  @override
+  String get transformableTextHint => 'Type something...';
+
+  @override
+  String get qrSharePreparingLink => 'Preparing share link...';
+
+  @override
+  String get qrShareSharing => 'Sharing...';
+
+  @override
+  String get qrShareShareLink => 'Share Link';
+
+  @override
+  String get qrShareCopyLink => 'Copy Link';
+
+  @override
+  String qrShareFailedToShare(String error) {
+    return 'Failed to share: $error';
+  }
+
+  @override
+  String get qrShareLinkCopied => 'Link copied to clipboard';
+
+  @override
+  String get legalDocumentTermsOfService => 'Terms of Service';
+
+  @override
+  String get legalDocumentPrivacyPolicy => 'Privacy Policy';
+
+  @override
+  String get legalDocumentHelpAndSupport => 'Help & Support';
+
+  @override
+  String get legalDocumentDocumentation => 'Documentation';
+
+  @override
+  String get legalDocumentFaq => 'FAQ';
+
+  @override
+  String get legalDocumentDeleteAccount => 'Delete Account';
+
+  @override
+  String get legalDocumentUnableToLoad => 'Unable to load page';
+
+  @override
+  String get legalDocumentRequiresInternet =>
+      'This content requires an internet connection. Please check your connection and try again.';
+
+  @override
+  String get legalDocumentGoBack => 'Go back';
+
+  @override
+  String get legalDocumentRefresh => 'Refresh';
+
+  @override
+  String get channelKeyEncryptionKey => 'Encryption Key';
+
+  @override
+  String get channelKeyEnterBase64 => 'Enter base64-encoded key';
+
+  @override
+  String get channelKeyBase64Encoded => 'Base64 encoded';
+
+  @override
+  String get channelKeyHint => 'e.g., AQ== or AAAAAAAAAAAAAAAAAAAAAA==';
+
+  @override
+  String get channelKeyNoKeySet => '(no key set)';
+
+  @override
+  String get channelKeyInvalidBase64 => 'Invalid base64 encoding';
+
+  @override
+  String channelKeyInvalidSize(int size) {
+    return 'Invalid key size ($size bytes). Use 1, 16, or 32 bytes.';
+  }
+
+  @override
+  String get channelKeyEmpty => 'Key cannot be empty';
+
+  @override
+  String get channelKeyHide => 'Hide';
+
+  @override
+  String get channelKeyShow => 'Show';
+
+  @override
+  String get channelKeyEdit => 'Edit';
+
+  @override
+  String get channelKeyGenerate => 'Generate';
+
+  @override
+  String get channelKeyNewGenerated => 'New key generated';
+
+  @override
+  String get channelKeyCopy => 'Copy';
+
+  @override
+  String get channelKeyCopied => 'Key copied to clipboard';
+
+  @override
+  String get remoteAdminTitle => 'Remote Administration';
+
+  @override
+  String get remoteAdminSearchHint => 'Search nodes...';
+
+  @override
+  String get remoteAdminConnectedDevice => 'Connected Device';
+
+  @override
+  String get remoteAdminLocalVia => 'Local (via BLE/USB)';
+
+  @override
+  String get remoteAdminPkiEnabledNodes => 'PKI-ENABLED NODES';
+
+  @override
+  String remoteAdminNodesAvailable(int count) {
+    return '$count available';
+  }
+
+  @override
+  String get remoteAdminRequiresPki =>
+      'Remote admin requires the target node to have your public key in its Admin Keys.';
+
+  @override
+  String get remoteAdminNoNodes => 'No PKI-enabled nodes available';
+
+  @override
+  String remoteAdminNoMatchingNodes(String query) {
+    return 'No nodes match \"$query\"';
+  }
+
+  @override
+  String get remoteAdminNodesNeedPki =>
+      'Nodes need PKI encryption enabled\nto accept remote admin commands';
+
+  @override
+  String get remoteAdminPkiEnabled => '• PKI enabled';
+
+  @override
+  String get contentModerationNotAllowedTitle => 'Content Not Allowed';
+
+  @override
+  String get contentModerationMayViolateTitle =>
+      'Content May Violate Guidelines';
+
+  @override
+  String get contentModerationBlockedMessage =>
+      'Your content violates our Community Guidelines and cannot be posted.';
+
+  @override
+  String get contentModerationWarningMessage =>
+      'Your content may violate our Community Guidelines. Please review before posting.';
+
+  @override
+  String get contentModerationIssuesDetected => 'Issues Detected';
+
+  @override
+  String get contentModerationRepeatedViolations =>
+      'Repeated violations may result in account restrictions.';
+
+  @override
+  String get contentModerationPostingViolations =>
+      'Posting content that violates our guidelines may result in content removal and account warnings.';
+
+  @override
+  String get contentModerationEditContent => 'Edit Content';
+
+  @override
+  String get contentModerationPostAnyway => 'Post Anyway';
+
+  @override
+  String get contentModerationSexualContent => 'Sexual Content';
+
+  @override
+  String get contentModerationHateSpeech => 'Hate Speech';
+
+  @override
+  String get contentModerationViolence => 'Violence';
+
+  @override
+  String get contentModerationProfanity => 'Profanity';
+
+  @override
+  String get contentModerationHarassment => 'Harassment';
+
+  @override
+  String get contentModerationSpam => 'Spam';
+
+  @override
+  String get contentModerationIllegalActivity => 'Illegal Activity';
+
+  @override
+  String get contentModerationSelfHarm => 'Self-Harm';
+
+  @override
+  String get contentModerationAdultContent => 'Adult Content';
+
+  @override
+  String get contentModerationSuggestiveContent => 'Suggestive Content';
+
+  @override
+  String contentModerationRemovedWithReason(String reason) {
+    return 'Content removed — $reason';
+  }
+
+  @override
+  String get contentModerationRemovedGeneric =>
+      'Content removed — your content violated our Community Guidelines.';
+
+  @override
+  String get contentModerationLearnMore => 'Learn More';
+
+  @override
+  String get devicePrivacyLocationSharing => 'Device Location Sharing';
+
+  @override
+  String get devicePrivacySharingEnabled =>
+      'This device is configured to share its GPS location.';
+
+  @override
+  String get devicePrivacySharingDisabled =>
+      'This device does not share GPS location data.';
+
+  @override
+  String get devicePrivacyWhatThisMeans => 'What This Means';
+
+  @override
+  String get devicePrivacyPublicVisibility => 'Public Visibility';
+
+  @override
+  String get devicePrivacyPublicDescription =>
+      'Device location will be visible to all users on the mesh network and in the app\'s World Map.';
+
+  @override
+  String get devicePrivacyFollowerAccess => 'Follower Access';
+
+  @override
+  String get devicePrivacyFollowerDescription =>
+      'Your followers will see this device\'s real-time position updates.';
+
+  @override
+  String get devicePrivacyUpdateFrequency => 'Update Frequency';
+
+  @override
+  String devicePrivacyUpdateFrequencyDescription(int seconds) {
+    return 'Location updates every $seconds seconds.';
+  }
+
+  @override
+  String get devicePrivacyPrivacyDependsNote =>
+      'Your location privacy depends on this device\'s Meshtastic configuration. To change sharing settings, update the device\'s Position Config.';
+
+  @override
+  String get devicePrivacyPrivacyProtected =>
+      'This device has location sharing disabled. Your privacy is protected.';
+
+  @override
+  String get devicePrivacyLinkDeviceLocationShared =>
+      'Link Device (Location Shared)';
+
+  @override
+  String get devicePrivacyLinkDevice => 'Link Device';
+
+  @override
+  String get dateTimePickerSelectDate => 'Select Date';
+
+  @override
+  String get dateTimePickerSelectTime => 'Select Time';
+
+  @override
+  String get dateTimePickerSelectDateTime => 'Select Date & Time';
+
+  @override
+  String get dateTimePickerMonthJanuary => 'January';
+
+  @override
+  String get dateTimePickerMonthFebruary => 'February';
+
+  @override
+  String get dateTimePickerMonthMarch => 'March';
+
+  @override
+  String get dateTimePickerMonthApril => 'April';
+
+  @override
+  String get dateTimePickerMonthMay => 'May';
+
+  @override
+  String get dateTimePickerMonthJune => 'June';
+
+  @override
+  String get dateTimePickerMonthJuly => 'July';
+
+  @override
+  String get dateTimePickerMonthAugust => 'August';
+
+  @override
+  String get dateTimePickerMonthSeptember => 'September';
+
+  @override
+  String get dateTimePickerMonthOctober => 'October';
+
+  @override
+  String get dateTimePickerMonthNovember => 'November';
+
+  @override
+  String get dateTimePickerMonthDecember => 'December';
+
+  @override
+  String get dateTimePickerMonthJan => 'Jan';
+
+  @override
+  String get dateTimePickerMonthFeb => 'Feb';
+
+  @override
+  String get dateTimePickerMonthMar => 'Mar';
+
+  @override
+  String get dateTimePickerMonthApr => 'Apr';
+
+  @override
+  String get dateTimePickerMonthMayShort => 'May';
+
+  @override
+  String get dateTimePickerMonthJun => 'Jun';
+
+  @override
+  String get dateTimePickerMonthJul => 'Jul';
+
+  @override
+  String get dateTimePickerMonthAug => 'Aug';
+
+  @override
+  String get dateTimePickerMonthSep => 'Sep';
+
+  @override
+  String get dateTimePickerMonthOct => 'Oct';
+
+  @override
+  String get dateTimePickerMonthNov => 'Nov';
+
+  @override
+  String get dateTimePickerMonthDec => 'Dec';
+
+  @override
+  String get dateTimePickerDateSection => 'Date';
+
+  @override
+  String get dateTimePickerTimeSection => 'Time';
+
+  @override
+  String get dateTimePickerAm => 'AM';
+
+  @override
+  String get dateTimePickerPm => 'PM';
+
+  @override
+  String get actionSheetQuickMessage => 'Quick Message';
+
+  @override
+  String get actionSheetTo => 'TO';
+
+  @override
+  String get actionSheetAllNodes => 'All Nodes';
+
+  @override
+  String get actionSheetBroadcastToAll => 'Broadcast to all nodes';
+
+  @override
+  String get actionSheetBroadcastToEveryone =>
+      'Broadcast to everyone on channel';
+
+  @override
+  String get actionSheetSendTo => 'Send to';
+
+  @override
+  String get actionSheetQuickMessageLabel => 'QUICK MESSAGE';
+
+  @override
+  String get actionSheetOrTypeCustom => 'OR TYPE CUSTOM';
+
+  @override
+  String get actionSheetTypeMessage => 'Type a message...';
+
+  @override
+  String get actionSheetBroadcast => 'Broadcast';
+
+  @override
+  String get actionSheetSend => 'Send';
+
+  @override
+  String actionSheetSentTo(String target) {
+    return 'Sent to $target';
+  }
+
+  @override
+  String actionSheetSendFailed(String error) {
+    return 'Failed to send: $error';
+  }
+
+  @override
+  String get actionSheetPresetOnMyWay => 'On my way';
+
+  @override
+  String get actionSheetPresetRunningLate => 'Running late';
+
+  @override
+  String get actionSheetPresetCheckInOk => 'Check in OK';
+
+  @override
+  String get actionSheetPresetNeedAssistance => 'Need assistance';
+
+  @override
+  String get actionSheetPresetAtDestination => 'At destination';
+
+  @override
+  String get actionSheetPresetWeatherAlert => 'Weather alert';
+
+  @override
+  String get actionSheetEmergencySos => 'Emergency SOS';
+
+  @override
+  String get actionSheetThisWill => 'This will:';
+
+  @override
+  String get actionSheetSosBroadcast =>
+      'Broadcast an emergency message to ALL nodes';
+
+  @override
+  String get actionSheetSosLocation =>
+      'Include your current location if available';
+
+  @override
+  String get actionSheetSosIfttt => 'Trigger IFTTT webhook (if configured)';
+
+  @override
+  String get actionSheetSosReady => 'Ready to send emergency alert';
+
+  @override
+  String actionSheetSosCountdown(int seconds) {
+    return 'Please wait $seconds seconds...';
+  }
+
+  @override
+  String get actionSheetSendSos => 'Send SOS';
+
+  @override
+  String get actionSheetSosSent => 'Emergency SOS sent to all nodes';
+
+  @override
+  String actionSheetSosFailed(String error) {
+    return 'Failed to send SOS: $error';
+  }
+
+  @override
+  String get actionSheetTraceroute => 'Traceroute';
+
+  @override
+  String get actionSheetTracerouteTo => 'Traceroute to';
+
+  @override
+  String get actionSheetTracerouteInfo =>
+      'Traceroute discovers the path packets take to reach a node through the mesh network.';
+
+  @override
+  String get actionSheetTargetNode => 'TARGET NODE';
+
+  @override
+  String get actionSheetSelected => 'Selected';
+
+  @override
+  String get actionSheetTapToSelectNode => 'Tap to select a node';
+
+  @override
+  String get actionSheetTrace => 'Trace';
+
+  @override
+  String actionSheetTracerouteSent(String target) {
+    return 'Traceroute sent to $target — check Traceroute History for results';
+  }
+
+  @override
+  String actionSheetTracerouteFailed(String error) {
+    return 'Failed to send traceroute: $error';
+  }
+
+  @override
+  String get premiumPreviewAutomations =>
+      'Preview Mode — Upgrade to create automations';
+
+  @override
+  String get premiumPreviewIfttt =>
+      'Preview Mode — Upgrade to connect services';
+
+  @override
+  String get premiumPreviewWidgets => 'Preview Mode — Upgrade to build widgets';
+
+  @override
+  String get premiumPreviewRingtones =>
+      'Preview Mode — Upgrade to access full library';
+
+  @override
+  String get premiumPreviewThemes =>
+      'Preview Mode — Upgrade to unlock all colors';
+
+  @override
+  String get premiumUpgrade => 'Upgrade';
+
+  @override
+  String get premiumExample => 'Example';
+
+  @override
+  String get premiumUnlockFeature => 'Unlock Feature';
+
+  @override
+  String get premiumNotNow => 'Not now';
+
+  @override
+  String get premiumRestorePurchases => 'Restore Purchases';
+
+  @override
+  String get premiumOneTimePurchase => 'One-time purchase • Yours forever';
+
+  @override
+  String premiumUnlockFor(String price) {
+    return 'Unlock for $price';
+  }
+
+  @override
+  String get premiumPurchaseRequiresInternet =>
+      'Purchases require an internet connection.';
+
+  @override
+  String premiumPurchaseUnlocked(String name) {
+    return '$name unlocked!';
+  }
+
+  @override
+  String get premiumPurchaseFailed => 'Purchase failed. Please try again.';
+
+  @override
+  String get premiumPurchaseError => 'Something went wrong. Please try again.';
+
+  @override
+  String get premiumRestoreRequiresInternet =>
+      'Restoring purchases requires an internet connection.';
+
+  @override
+  String get premiumRestoreSuccess => 'Purchases restored!';
+
+  @override
+  String get premiumRestoreNone => 'No purchases found to restore';
+
+  @override
+  String get premiumRestoreFailed => 'Failed to restore purchases';
+
+  @override
+  String get premiumConfigSaved =>
+      'Your configuration is saved. After purchase, just tap save again.';
+
+  @override
+  String get premiumHeadlineAutomations => 'Automate Your Mesh';
+
+  @override
+  String get premiumHeadlineIfttt => 'Connect Everything';
+
+  @override
+  String get premiumHeadlineThemes => 'Make It Yours';
+
+  @override
+  String get premiumHeadlineRingtones => 'Sound Library';
+
+  @override
+  String get premiumHeadlineWidgets => 'Your Dashboard';
+
+  @override
+  String get premiumHeadlineWidgetsAlt => 'Build Your Dashboard';
+
+  @override
+  String get premiumHeadlineRingtonesAlt => 'Unlock Sound Library';
+
+  @override
+  String get premiumSubtitleAutomations =>
+      'Save this automation and unlock the full power of automatic alerts, messages, and smart triggers.';
+
+  @override
+  String get premiumSubtitleIfttt =>
+      'Connect your mesh network to hundreds of apps and services.';
+
+  @override
+  String get premiumSubtitleThemes =>
+      'Express yourself with 12 stunning accent colors.';
+
+  @override
+  String get premiumSubtitleRingtones =>
+      'Access a massive library of notification sounds.';
+
+  @override
+  String get premiumSubtitleWidgets =>
+      'Build custom dashboards with live data visualizations.';
+
+  @override
+  String get premiumDescAutomations =>
+      'Create powerful automations that trigger alerts, send messages, and react to mesh events automatically.';
+
+  @override
+  String get premiumDescIfttt =>
+      'Connect your mesh network to 700+ apps and services via IFTTT webhooks.';
+
+  @override
+  String get premiumDescWidgets =>
+      'Build custom dashboard widgets with live data, charts, and real-time monitoring.';
+
+  @override
+  String get premiumDescRingtones =>
+      'Access 7,000+ ringtones from classic tunes to TV themes and movie soundtracks.';
+
+  @override
+  String get premiumDescThemes =>
+      'Personalize your app with 12 stunning accent colors.';
+
+  @override
+  String get premiumBenefitUnlimitedAutomations => 'Unlimited Automations';
+
+  @override
+  String get premiumBenefitUnlimitedAutomationsDesc =>
+      'Create as many rules as you need';
+
+  @override
+  String get premiumBenefitSmartNotifications => 'Smart Notifications';
+
+  @override
+  String get premiumBenefitSmartNotificationsDesc =>
+      'Get alerts for battery, offline nodes, and more';
+
+  @override
+  String get premiumBenefitScheduledActions => 'Scheduled Actions';
+
+  @override
+  String get premiumBenefitScheduledActionsDesc =>
+      'Run automations at specific times';
+
+  @override
+  String get premiumBenefitScheduledActionsShort => 'Run at specific times';
+
+  @override
+  String get premiumBenefitGeofenceTriggers => 'Geofence Triggers';
+
+  @override
+  String get premiumBenefitGeofenceTriggersDesc =>
+      'React when nodes enter or exit areas';
+
+  @override
+  String get premiumBenefitGeofenceTriggersShort => 'React to location events';
+
+  @override
+  String get premiumBenefitConnect700 => 'Connect 700+ Services';
+
+  @override
+  String get premiumBenefitConnect700Desc =>
+      'Smart home, notifications, spreadsheets & more';
+
+  @override
+  String get premiumBenefitSmartHome => 'Smart Home';
+
+  @override
+  String get premiumBenefitSmartHomeDesc =>
+      'Control lights, locks, and devices';
+
+  @override
+  String get premiumBenefitSmartHomeControl => 'Smart Home Control';
+
+  @override
+  String get premiumBenefitSmartHomeControlDesc =>
+      'Trigger lights, locks, and devices';
+
+  @override
+  String get premiumBenefitCrossPlatform => 'Cross-Platform';
+
+  @override
+  String get premiumBenefitCrossPlatformDesc => 'Slack, Discord, email alerts';
+
+  @override
+  String get premiumBenefitCrossPlatformAlerts => 'Cross-Platform Alerts';
+
+  @override
+  String get premiumBenefitCrossPlatformAlertsDesc =>
+      'Send to Slack, Discord, email, and more';
+
+  @override
+  String get premiumBenefitLogging => 'Logging';
+
+  @override
+  String get premiumBenefitLoggingDesc => 'Save events to spreadsheets';
+
+  @override
+  String get premiumBenefit12Colors => '12 Premium Colors';
+
+  @override
+  String get premiumBenefit12ColorsDesc =>
+      'Personalize every screen and button';
+
+  @override
+  String get premiumBenefit15Colors => '15 Colors';
+
+  @override
+  String get premiumBenefit15ColorsDesc => 'Premium accent options';
+
+  @override
+  String get premiumBenefitExclusiveStyles => 'Exclusive Styles';
+
+  @override
+  String get premiumBenefitExclusiveStylesDesc => 'Unique accent combinations';
+
+  @override
+  String get premiumBenefitExclusive => 'Exclusive';
+
+  @override
+  String get premiumBenefitExclusiveDesc => 'Unique combinations';
+
+  @override
+  String get premiumBenefit7000Ringtones => '7,000+ Ringtones';
+
+  @override
+  String get premiumBenefit7000RingtonesDesc =>
+      'Classic melodies, TV themes, games & more';
+
+  @override
+  String get premiumBenefit10000Tones => '10,000+ Tones';
+
+  @override
+  String get premiumBenefit10000TonesDesc => 'Massive searchable library';
+
+  @override
+  String get premiumBenefitSearchableLibrary => 'Searchable Library';
+
+  @override
+  String get premiumBenefitSearchableLibraryDesc => 'Find any tune instantly';
+
+  @override
+  String get premiumBenefitEasySearch => 'Easy Search';
+
+  @override
+  String get premiumBenefitEasySearchDesc => 'Find any tune instantly';
+
+  @override
+  String get premiumBenefitCustomPresets => 'Custom Presets';
+
+  @override
+  String get premiumBenefitCustomPresetsDesc => 'Save your favorites';
+
+  @override
+  String get premiumBenefitCustomDashboards => 'Custom Dashboards';
+
+  @override
+  String get premiumBenefitCustomDashboardsDesc =>
+      'Build your own widget layouts';
+
+  @override
+  String get premiumBenefitLiveCharts => 'Live Charts & Gauges';
+
+  @override
+  String get premiumBenefitLiveChartsDesc => 'Visualize telemetry in real-time';
+
+  @override
+  String get premiumBenefitLiveChartsAlt => 'Live Charts';
+
+  @override
+  String get premiumBenefitLiveChartsAltDesc => 'Real-time data visualization';
+
+  @override
+  String get premiumBenefitBatterySensors => 'Battery & Sensors';
+
+  @override
+  String get premiumBenefitBatterySensorsDesc =>
+      'Monitor everything at a glance';
+
+  @override
+  String get premiumBenefitMonitoring => 'Monitoring';
+
+  @override
+  String get premiumBenefitMonitoringDesc => 'Battery, sensors, telemetry';
+
+  @override
+  String get premiumBenefitCustomLayouts => 'Custom Layouts';
+
+  @override
+  String get premiumBenefitCustomLayoutsDesc => 'Build your own views';
+
+  @override
+  String get premiumBenefitSmartAlerts => 'Smart Alerts';
+
+  @override
+  String get premiumBenefitSmartAlertsDesc =>
+      'Battery low, node offline, and more';
+
+  @override
+  String get settingsPremiumFeatureRequired =>
+      'This feature requires a purchase';
+
+  @override
+  String get settingsPremiumViewUpgrades => 'View Upgrades';
+
+  @override
+  String get settingsPremiumPro => 'PRO';
+
+  @override
+  String get settingsPremiumFeatureTitle => 'Premium Feature';
+
+  @override
+  String get settingsPremiumFeatureDescription =>
+      'This feature requires a purchase to unlock.';
+
+  @override
+  String settingsPremiumUnlockPrice(String price) {
+    return 'Unlock \$$price';
+  }
+
+  @override
+  String get glyphMatrixTitle => 'GLYPH MATRIX';
+
+  @override
+  String get glyphMatrixTurnOff => 'Turn off';
+
+  @override
+  String get glyphMatrixInitializing => 'INITIALIZING GLYPH MATRIX...';
+
+  @override
+  String get glyphMatrixInitFailed => 'INIT FAILED';
+
+  @override
+  String get glyphMatrixNotSupported => 'DEVICE NOT SUPPORTED';
+
+  @override
+  String get glyphMatrixRequiresDevice =>
+      'Glyph Matrix requires\nNothing Phone (3)';
+
+  @override
+  String get glyphMatrixSwipeToExecute => '← SWIPE TO EXECUTE →';
+
+  @override
+  String batteryOptTitle(String oemName) {
+    return 'Optimize for $oemName';
+  }
+
+  @override
+  String get batteryOptDescription =>
+      'Your device manufacturer may aggressively limit background apps. Follow these steps to keep the mesh connection alive:';
+
+  @override
+  String get batteryOptOpenSettings => 'Open Battery Settings';
+
+  @override
+  String get batteryOptDismiss => 'Dismiss';
+
+  @override
+  String get batteryOptDontShowAgain => 'Don\'t show again';
+
+  @override
+  String get batteryOptXiaomiStep1 =>
+      'Open Settings > Apps > Manage apps > Socialmesh.';
+
+  @override
+  String get batteryOptXiaomiStep2 => 'Tap \"AutoStart\" and enable it.';
+
+  @override
+  String get batteryOptXiaomiStep3 => 'Go back and tap \"Battery saver\".';
+
+  @override
+  String get batteryOptXiaomiStep4 =>
+      'Select \"No restrictions\" for Socialmesh.';
+
+  @override
+  String get batteryOptSamsungStep1 =>
+      'Open Settings > Battery and device care > Battery.';
+
+  @override
+  String get batteryOptSamsungStep2 => 'Tap \"Background usage limits\".';
+
+  @override
+  String get batteryOptSamsungStep3 =>
+      'Remove Socialmesh from the \"Sleeping apps\" and \"Deep sleeping apps\" lists.';
+
+  @override
+  String get batteryOptSamsungStep4 =>
+      'Optionally disable \"Adaptive battery\" for best results.';
+
+  @override
+  String get batteryOptHuaweiStep1 => 'Open Settings > Battery > App launch.';
+
+  @override
+  String get batteryOptHuaweiStep2 =>
+      'Find Socialmesh and set it to \"Manage manually\".';
+
+  @override
+  String get batteryOptHuaweiStep3 =>
+      'Enable all three toggles: Auto-launch, Secondary launch, and Run in background.';
+
+  @override
+  String get batteryOptOneplusStep1 =>
+      'Open Settings > Apps > App management > Socialmesh.';
+
+  @override
+  String get batteryOptOneplusStep2 =>
+      'Enable \"Auto-launch\" and \"Allow activity in background\".';
+
+  @override
+  String get batteryOptOneplusStep3 =>
+      'On OnePlus 14+: also check Settings > Battery > Battery optimization > Socialmesh > \"Don\'t optimize\".';
+
+  @override
+  String get batteryOptGenericStep1 =>
+      'Open Settings > Apps > Socialmesh > Battery.';
+
+  @override
+  String get batteryOptGenericStep2 =>
+      'Select \"Unrestricted\" or \"Don\'t optimize\".';
+
+  @override
+  String get batteryOptGenericStep3 =>
+      'This allows Socialmesh to maintain the mesh connection in the background.';
+
+  @override
+  String get helpCenterNoResultsPrefix => 'No ';
+
+  @override
+  String get helpCenterNoResultsKeyword => 'results';
+
+  @override
+  String get helpCenterNoResultsSuffix => ' found';
+
+  @override
+  String helpCenterReadingTime(int minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String helpCenterMoreTours(int count) {
+    return '+ $count more tours';
+  }
+
+  @override
+  String helpCenterStepsCount(int count) {
+    return '$count steps';
+  }
+
+  @override
+  String get storeForwardTitle => 'Store & Forward';
+
+  @override
+  String get storeForwardSaveSuccess => 'Store & Forward configuration saved';
+
+  @override
+  String get storeForwardLoadFailed => 'Failed to load config';
+
+  @override
+  String storeForwardSaveFailed(String error) {
+    return 'Failed to save config: $error';
+  }
+
+  @override
+  String get storeForwardSave => 'Save';
+
+  @override
+  String get storeForwardModuleSettings => 'Module Settings';
+
+  @override
+  String get storeForwardServerSettings => 'Server Settings';
+
+  @override
+  String get storeForwardInfoDescription =>
+      'Allows nodes to store messages and forward them to devices that were offline. A \"server\" node stores messages, while \"client\" nodes can request missed messages.';
+
+  @override
+  String get storeForwardEnable => 'Enable Store & Forward';
+
+  @override
+  String get storeForwardEnableSubtitle => 'Participate in the S&F network';
+
+  @override
+  String get storeForwardActAsServer => 'Act as Server';
+
+  @override
+  String get storeForwardActAsServerSubtitle =>
+      'Store messages for other nodes (uses more RAM)';
+
+  @override
+  String get storeForwardHeartbeat => 'Heartbeat';
+
+  @override
+  String get storeForwardHeartbeatSubtitle =>
+      'Send periodic announcements to the mesh';
+
+  @override
+  String get storeForwardRecordsLimit => 'Records Limit';
+
+  @override
+  String get storeForwardRecordsLimitSubtitle => 'Use device default';
+
+  @override
+  String get storeForwardAuto => 'Auto';
+
+  @override
+  String get storeForwardHistoryReturnMax => 'History Return Max';
+
+  @override
+  String storeForwardHistoryReturnMaxSubtitle(int count) {
+    return 'Max $count messages per request';
+  }
+
+  @override
+  String get storeForwardHistoryWindow => 'History Window';
+
+  @override
+  String storeForwardHistoryWindowSubtitle(int hours) {
+    return 'Keep messages for $hours hours';
+  }
+
+  @override
+  String get geofenceTitle => 'Set Geofence';
+
+  @override
+  String get geofenceDone => 'Done';
+
+  @override
+  String get geofencePermissionDenied =>
+      'Location permission denied. Grant location access to set geofence center.';
+
+  @override
+  String get geofenceOpenSettings => 'Open Settings';
+
+  @override
+  String geofenceLocationFailed(String error) {
+    return 'Failed to get location: $error';
+  }
+
+  @override
+  String get geofenceTapToSet =>
+      'Please tap on the map to set a geofence center';
+
+  @override
+  String get geofenceTapToSetCenter => 'Tap to set geofence center';
+
+  @override
+  String get geofenceDragToAdjust => 'Drag the circle edge to adjust radius';
+
+  @override
+  String geofenceNodesCount(int count) {
+    return '$count nodes';
+  }
+
+  @override
+  String get geofenceMonitoredNode => 'Monitored Node';
+
+  @override
+  String get geofenceRadius => 'Radius';
+
+  @override
+  String get geofenceLocating => 'Locating...';
+
+  @override
+  String get geofenceUseMyLocation => 'Use My Location';
+
+  @override
+  String get geofenceSetGeofence => 'Set Geofence';
+
+  @override
+  String get geofenceSelectNode => 'Select Node';
+
+  @override
+  String get geofenceNoNodesWithGps => 'No nodes with GPS';
+
+  @override
+  String get geofenceYou => 'YOU';
+
+  @override
+  String get geofenceMonitored => 'Monitored';
+
+  @override
+  String get geofenceMonitor => 'Monitor';
+
+  @override
+  String get restorePurchasesTitle => 'Restore Purchases';
+
+  @override
+  String get restorePurchasesRequiresInternet =>
+      'Restoring purchases requires an internet connection.';
+
+  @override
+  String get restorePurchasesSuccess => 'Purchases restored successfully!';
+
+  @override
+  String get restorePurchasesAlreadyActive =>
+      'Your purchases are already active';
+
+  @override
+  String get restorePurchasesNone => 'No purchases found to restore';
+
+  @override
+  String get bluetoothTitle => 'Bluetooth';
+
+  @override
+  String get bluetoothSave => 'Save';
+
+  @override
+  String get bluetoothSaveSuccess => 'Bluetooth configuration saved';
+
+  @override
+  String bluetoothSaveFailed(String error) {
+    return 'Failed to save: $error';
+  }
+
+  @override
+  String get bluetoothInvalidPin => 'Please enter a valid 6-digit PIN';
+
+  @override
+  String get bluetoothEnabled => 'Bluetooth Enabled';
+
+  @override
+  String get bluetoothEnableSubtitle => 'Enable Bluetooth connectivity';
+
+  @override
+  String get bluetoothPairingMode => 'PAIRING MODE';
+
+  @override
+  String get bluetoothFixedPin => 'FIXED PIN';
+
+  @override
+  String get bluetoothPinHint =>
+      'Enter a 6-digit PIN code for Bluetooth pairing';
+
+  @override
+  String get bluetoothInfoDescription =>
+      'Bluetooth settings control how your device pairs with phones and other devices.';
+
+  @override
+  String get bluetoothModeRandom => 'Random PIN';
+
+  @override
+  String get bluetoothModeFixed => 'Fixed PIN';
+
+  @override
+  String get bluetoothModeNone => 'No PIN';
+
+  @override
+  String get bluetoothModeUnknown => 'Unknown';
+
+  @override
+  String get bluetoothModeRandomDesc => 'Generate random PIN on each boot';
+
+  @override
+  String get bluetoothModeFixedDesc => 'Use a fixed PIN code';
+
+  @override
+  String get bluetoothModeNoneDesc => 'No PIN required (insecure)';
+
+  @override
+  String get detectionSensorTitle => 'Detection Sensor';
+
+  @override
+  String get detectionSensorSave => 'Save';
+
+  @override
+  String get detectionSensorSaveSuccess =>
+      'Detection Sensor configuration saved';
+
+  @override
+  String detectionSensorSaveFailed(String error) {
+    return 'Failed to save config: $error';
+  }
+
+  @override
+  String get detectionSensorBasicSettings => 'Basic Settings';
+
+  @override
+  String get detectionSensorPinConfig => 'Pin Configuration';
+
+  @override
+  String get detectionSensorTiming => 'Timing';
+
+  @override
+  String get detectionSensorClientOptions => 'Client Options';
+
+  @override
+  String get detectionSensorInfoDescription =>
+      'Monitor a GPIO pin and broadcast state changes to the mesh. Use with PIR motion sensors, door/window contacts, or other binary sensors.';
+
+  @override
+  String get detectionSensorEnable => 'Enable Detection Sensor';
+
+  @override
+  String get detectionSensorEnableSubtitle =>
+      'Monitor GPIO pin and broadcast state changes';
+
+  @override
+  String get detectionSensorName => 'Sensor Name';
+
+  @override
+  String get detectionSensorNameHint => 'e.g., Front Door, Motion Sensor';
+
+  @override
+  String get detectionSensorGpioPin => 'GPIO Pin';
+
+  @override
+  String get detectionSensorGpioPinSubtitle => 'The GPIO pin number to monitor';
+
+  @override
+  String get detectionSensorTriggerType => 'Trigger Type';
+
+  @override
+  String get detectionSensorUsePullup => 'Use Internal Pullup';
+
+  @override
+  String get detectionSensorUsePullupSubtitle =>
+      'Enable internal pullup resistor on the pin';
+
+  @override
+  String get detectionSensorSendBell => 'Send Bell Character';
+
+  @override
+  String get detectionSensorSendBellSubtitle =>
+      'Send bell (\\a) in detection messages';
+
+  @override
+  String get detectionSensorMinBroadcastInterval =>
+      'Minimum Broadcast Interval';
+
+  @override
+  String detectionSensorMinBroadcastIntervalSubtitle(int seconds) {
+    return 'Wait $seconds seconds between broadcasts';
+  }
+
+  @override
+  String get detectionSensorStateBroadcastInterval =>
+      'State Broadcast Interval';
+
+  @override
+  String detectionSensorStateBroadcastIntervalSubtitle(int minutes) {
+    return 'Broadcast current state every $minutes minutes';
+  }
+
+  @override
+  String get detectionSensorEnableNotifications => 'Enable Notifications';
+
+  @override
+  String get detectionSensorEnableNotificationsSubtitle =>
+      'Show notifications when sensor events are received';
+
+  @override
+  String get detectionSensorTriggerLogicLow =>
+      'Logic Low (active when pin is LOW)';
+
+  @override
+  String get detectionSensorTriggerLogicHigh =>
+      'Logic High (active when pin is HIGH)';
+
+  @override
+  String get detectionSensorTriggerFallingEdge =>
+      'Falling Edge (trigger on HIGH→LOW)';
+
+  @override
+  String get detectionSensorTriggerRisingEdge =>
+      'Rising Edge (trigger on LOW→HIGH)';
+
+  @override
+  String get detectionSensorTriggerEitherEdgeLow => 'Either Edge (active LOW)';
+
+  @override
+  String get detectionSensorTriggerEitherEdgeHigh =>
+      'Either Edge (active HIGH)';
+
+  @override
+  String get subscriptionPremiumTitle => 'Premium';
+
+  @override
+  String get subscriptionOrBuyIndividually => 'or buy individually';
+
+  @override
+  String get subscriptionIncludedFeatures => 'Included Features';
+
+  @override
+  String get subscriptionUnlockFeatures => 'Unlock Features';
+
+  @override
+  String get subscriptionOneTimePurchases =>
+      'One-time purchases, yours forever';
+
+  @override
+  String get subscriptionTerms => 'Terms';
+
+  @override
+  String get subscriptionPrivacy => 'Privacy';
+
+  @override
+  String get subscriptionAllUnlocked => 'All Features Unlocked';
+
+  @override
+  String get subscriptionThankYou => 'Thank you for your support!';
+
+  @override
+  String get subscriptionCompletePack => 'Complete Pack';
+
+  @override
+  String get subscriptionCompletePackSubtitle =>
+      'Everything. Forever. One price.';
+
+  @override
+  String subscriptionTones(String count) {
+    return '$count tones';
+  }
+
+  @override
+  String get subscriptionAccentColors => '12 accent colors';
+
+  @override
+  String get subscriptionUnlimitedWidgets => 'Unlimited custom widgets';
+
+  @override
+  String get subscriptionTriggersSchedules => 'Triggers & schedules';
+
+  @override
+  String get subscriptionAppIntegrations => '700+ app integrations';
+
+  @override
+  String get subscriptionBestValue => 'Best value - all features';
+
+  @override
+  String get subscriptionGetAll => 'Get All';
+
+  @override
+  String get subscriptionOwned => 'OWNED';
+
+  @override
+  String subscriptionSearchableTones(String count) {
+    return '$count searchable RTTTL tones';
+  }
+
+  @override
+  String get subscriptionView => 'View';
+
+  @override
+  String get subscriptionAllUnlockedCelebration => 'All Features Unlocked!';
+
+  @override
+  String get subscriptionCelebrationMessage =>
+      'You now have access to everything Socialmesh has to offer. Thank you for your support!';
+
+  @override
+  String get subscriptionAwesome => 'Awesome!';
+
+  @override
+  String get cannedResponsesTitle => 'Quick Responses';
+
+  @override
+  String get cannedResponsesAddTooltip => 'Add response';
+
+  @override
+  String get cannedResponsesDoneTooltip => 'Done';
+
+  @override
+  String get cannedResponsesReorderTooltip => 'Reorder';
+
+  @override
+  String get cannedResponsesResetToDefaults => 'Reset to defaults';
+
+  @override
+  String get cannedResponsesDeleteTitle => 'Delete Response';
+
+  @override
+  String cannedResponsesDeleteMessage(String text) {
+    return 'Delete \"$text\"?';
+  }
+
+  @override
+  String get cannedResponsesDeleteConfirm => 'Delete';
+
+  @override
+  String get cannedResponsesResetTitle => 'Reset to Defaults';
+
+  @override
+  String get cannedResponsesResetMessage =>
+      'This will remove all custom responses and restore the default set.';
+
+  @override
+  String get cannedResponsesResetConfirm => 'Reset';
+
+  @override
+  String get cannedResponsesDragToReorder => 'Drag to reorder responses';
+
+  @override
+  String get cannedResponsesTapToEdit => 'Tap to edit, swipe to delete';
+
+  @override
+  String get cannedResponsesDefault => 'Default';
+
+  @override
+  String get cannedResponsesEditTitle => 'Edit Response';
+
+  @override
+  String get cannedResponsesAddTitle => 'Add Response';
+
+  @override
+  String get cannedResponsesCreateSubtitle =>
+      'Create a quick message for fast sending';
+
+  @override
+  String get cannedResponsesMessageLabel => 'Message';
+
+  @override
+  String get cannedResponsesMessageHint => 'e.g., On my way';
+
+  @override
+  String get cannedResponsesSave => 'Save';
+
+  @override
+  String get cannedResponsesAdd => 'Add';
+
+  @override
+  String get rangeTestTitle => 'Range Test';
+
+  @override
+  String get rangeTestSave => 'Save';
+
+  @override
+  String get rangeTestSaveSuccess => 'Range test configuration saved';
+
+  @override
+  String rangeTestSaveFailed(String error) {
+    return 'Failed to save config: $error';
+  }
+
+  @override
+  String get rangeTestNoNodes => 'No other nodes available';
+
+  @override
+  String get rangeTestSelectTarget => 'Select target';
+
+  @override
+  String get rangeTestConfiguration => 'Configuration';
+
+  @override
+  String rangeTestResultsCount(int count) {
+    return 'Results ($count)';
+  }
+
+  @override
+  String get rangeTestAbout => 'About Range Test';
+
+  @override
+  String get rangeTestRunning => 'Test Running';
+
+  @override
+  String get rangeTestReady => 'Ready to Test';
+
+  @override
+  String rangeTestPacketsReceived(int count) {
+    return '$count packets received';
+  }
+
+  @override
+  String get rangeTestSelectNode => 'Select Node';
+
+  @override
+  String get rangeTestStop => 'Stop';
+
+  @override
+  String get rangeTestStartTest => 'Start Test';
+
+  @override
+  String get rangeTestEnableModule => 'Enable Range Test Module';
+
+  @override
+  String get rangeTestEnableModuleSubtitle =>
+      'Allow this device to participate in range tests';
+
+  @override
+  String get rangeTestSenderInterval => 'Sender Interval';
+
+  @override
+  String rangeTestSenderIntervalSubtitle(int seconds) {
+    return 'Send test packet every $seconds seconds';
+  }
+
+  @override
+  String get rangeTestSaveResultsToSd => 'Save Results to SD';
+
+  @override
+  String get rangeTestSaveResultsToSdSubtitle =>
+      'Store test results on device SD card';
+
+  @override
+  String get rangeTestAvgSnr => 'Avg SNR';
+
+  @override
+  String get rangeTestAvgRssi => 'Avg RSSI';
+
+  @override
+  String get rangeTestMaxDist => 'Max Dist';
+
+  @override
+  String get rangeTestHowItWorks => 'How Range Test Works';
+
+  @override
+  String get rangeTestHowItWorksDescription =>
+      '1. Select a target node to test range with\n2. Start the test to begin sending packets\n3. View real-time signal metrics (SNR, RSSI)\n4. Track maximum distance achieved\n\nBoth nodes must have Range Test module enabled for best results.';
+
+  @override
+  String get rangeTestSelectTargetNode => 'Select Target Node';
+
+  @override
+  String get rangeTestSearchNodes => 'Search nodes…';
+
+  @override
+  String rangeTestNoNodesMatch(String query) {
+    return 'No nodes match \"$query\"';
+  }
+
+  @override
+  String get themeSettingsTitle => 'Theme Settings';
+
+  @override
+  String get themeSettingsCurrentAccent => 'Current accent color';
+
+  @override
+  String get themeSettingsAccentColor => 'ACCENT COLOR';
+
+  @override
+  String get themeSettingsQrCodeStyle => 'QR CODE STYLE';
+
+  @override
+  String get themeSettingsPreview => 'PREVIEW';
+
+  @override
+  String themeSettingsCompletePackOnly(String colorName) {
+    return '$colorName (Complete Pack only)';
+  }
+
+  @override
+  String themeSettingsThemePack(String colorName) {
+    return '$colorName (Theme Pack)';
+  }
+
+  @override
+  String get themeSettingsPattern => 'Pattern';
+
+  @override
+  String get themeSettingsStyleDots => 'Dots';
+
+  @override
+  String get themeSettingsStyleSmooth => 'Smooth';
+
+  @override
+  String get themeSettingsStyleClassic => 'Classic';
+
+  @override
+  String get themeSettingsStyleDotsDesc => 'Clean circular modules';
+
+  @override
+  String get themeSettingsStyleSmoothDesc => 'Premium liquid modules';
+
+  @override
+  String get themeSettingsStyleClassicDesc => 'Maximum compatibility';
+
+  @override
+  String get themeSettingsUseAccentGradient => 'Use Accent Gradient';
+
+  @override
+  String get themeSettingsApplyAccentToQr => 'Apply accent color to QR codes';
+
+  @override
+  String get themeSettingsButtons => 'Buttons';
+
+  @override
+  String get themeSettingsPrimary => 'Primary';
+
+  @override
+  String get themeSettingsSecondary => 'Secondary';
+
+  @override
+  String get themeSettingsText => 'Text';
+
+  @override
+  String get themeSettingsControls => 'Controls';
+
+  @override
+  String get themeSettingsProgress => 'Progress';
+
+  @override
+  String get themeSettingsBadges => 'Badges';
+
+  @override
+  String get themeSettingsOnline => 'Online';
+
+  @override
+  String get themeSettingsNewCount => '5 new';
+
+  @override
+  String get privacySettingsTitle => 'Privacy';
+
+  @override
+  String get privacySettingsInfoDescription =>
+      'Socialmesh collects minimal data to improve app stability and performance. You can control what is shared below.';
+
+  @override
+  String get privacySettingsDataCollection => 'DATA COLLECTION';
+
+  @override
+  String get privacySettingsUsageAnalytics => 'Usage Analytics';
+
+  @override
+  String get privacySettingsUsageAnalyticsSubtitle =>
+      'Helps us understand which features are used most. No message content or precise location is collected.';
+
+  @override
+  String get privacySettingsCrashReporting => 'Crash Reporting';
+
+  @override
+  String get privacySettingsCrashReportingSubtitle =>
+      'Automatically sends crash data when the app encounters an error. Helps us fix bugs faster.';
+
+  @override
+  String get privacySettingsDisableAnalyticsTitle => 'Disable Usage Analytics?';
+
+  @override
+  String get privacySettingsDisableAnalyticsMessage =>
+      'Usage analytics help us understand how the app is used and identify issues. No personal messages or location data are collected.\n\nYou can re-enable this at any time.';
+
+  @override
+  String get privacySettingsDisable => 'Disable';
+
+  @override
+  String get privacySettingsAnalyticsEnabled => 'Usage analytics enabled';
+
+  @override
+  String get privacySettingsAnalyticsDisabled => 'Usage analytics disabled';
+
+  @override
+  String get privacySettingsDisableCrashTitle => 'Disable Crash Reporting?';
+
+  @override
+  String get privacySettingsDisableCrashMessage =>
+      'Crash reports help us fix bugs faster. No personal messages or location data are included in crash reports.\n\nYou can re-enable this at any time.';
+
+  @override
+  String get privacySettingsCrashEnabled => 'Crash reporting enabled';
+
+  @override
+  String get privacySettingsCrashDisabled => 'Crash reporting disabled';
+
+  @override
+  String get privacySettingsPrivacyPolicy => 'Privacy Policy';
+
+  @override
+  String get privacySettingsThirdPartyServices => 'THIRD-PARTY SERVICES';
+
+  @override
+  String get privacySettingsFirebaseCategories =>
+      'Crash reports, usage analytics (if opted in)';
+
+  @override
+  String get privacySettingsRevenueCatCategories =>
+      'Purchase identifiers, subscription status';
+
+  @override
+  String get privacySettingsSigilCategories =>
+      'Hashed node identifiers for artwork generation';
+
+  @override
+  String get appearanceTitle => 'Appearance & Accessibility';
+
+  @override
+  String get appearanceResetTooltip => 'Reset to defaults';
+
+  @override
+  String get appearanceLanguage => 'Language';
+
+  @override
+  String get appearanceLanguageSystemDefault => 'System Default';
+
+  @override
+  String get appearanceLanguageEnglish => 'English';
+
+  @override
+  String get appearanceLanguageItalian => 'Italian';
+
+  @override
+  String get appearanceLanguageRussian => 'Russian';
+
+  @override
+  String get appearanceLanguagePickerTitle => 'Select Language';
+
+  @override
+  String get appearanceFont => 'Font';
+
+  @override
+  String get appearanceTextSize => 'Text Size';
+
+  @override
+  String get appearanceDisplayDensity => 'Display Density';
+
+  @override
+  String get appearanceContrast => 'Contrast';
+
+  @override
+  String get appearanceMotion => 'Motion';
+
+  @override
+  String get appearanceResetSuccess => 'Settings reset to defaults';
+
+  @override
+  String get appearanceLivePreview => 'Live Preview';
+
+  @override
+  String get appearanceChangesApplyInstantly => 'Changes apply instantly';
+
+  @override
+  String get appearanceSampleText =>
+      'Sample body text to preview your settings. Adjust the options below to find what works best for you.';
+
+  @override
+  String get appearanceHighContrast => 'High Contrast';
+
+  @override
+  String get appearanceHighContrastDesc =>
+      'Enhanced visibility for text and UI elements';
+
+  @override
+  String get appearanceElementalAtmosphere => 'Elemental Atmosphere';
+
+  @override
+  String get appearanceElementalDisabled =>
+      'Disabled while Reduce Motion is active';
+
+  @override
+  String get appearanceElementalDesc =>
+      'Ambient particle effects driven by mesh activity';
+
+  @override
+  String get appearanceReduceMotion => 'Reduce Motion';
+
+  @override
+  String get appearanceReduceMotionDesc =>
+      'Minimize animations throughout the app';
+
+  @override
+  String get appearanceResetToRecommended => 'Reset to Recommended';
+
+  @override
+  String get appearanceRestoreDefaults => 'Restore default settings';
+
+  @override
+  String get appearanceUsingRecommended => 'Using recommended settings';
+
+  @override
+  String get appearanceResetDialogTitle => 'Reset to Defaults?';
+
+  @override
+  String get appearanceResetDialogMessage =>
+      'This will restore all appearance and accessibility settings to their recommended values.';
+
+  @override
+  String get appearanceResetDialogCancel => 'Cancel';
+
+  @override
+  String get appearanceResetDialogConfirm => 'Reset';
+
+  @override
+  String get settingsSectionProfile => 'PROFILE';
+
+  @override
+  String get settingsSectionFileTransfer => 'FILE TRANSFER';
+
+  @override
+  String get settingsGlyphMatrixTest => 'Glyph Matrix Test';
+
+  @override
+  String get settingsGlyphMatrixSubtitle => 'Nothing Phone 3 LED patterns';
+
+  @override
+  String get cloudSyncUnableToLoad => 'Unable to load subscription options';
+
+  @override
+  String get cloudSyncTitle => 'Unlock Cloud Sync';
+
+  @override
+  String get cloudSyncDescription =>
+      'Sync your mesh data across devices. Your local data always stays free and accessible.';
+
+  @override
+  String get cloudSyncNodeDex => 'NodeDex — encounters, tags, notes';
+
+  @override
+  String get cloudSyncAutomations => 'Automations — rules and triggers';
+
+  @override
+  String get cloudSyncWidgets => 'Custom Widgets — layouts and data';
+
+  @override
+  String get cloudSyncOfflineNote => 'Works fully offline without it';
+
+  @override
+  String get cloudSyncAutoRenewNote =>
+      'Subscriptions auto-renew unless cancelled at least 24 hours before the end of the current period.';
+
+  @override
+  String get cloudSyncYearlySave => 'Yearly (Save 44%)';
+
+  @override
+  String get cloudSyncMonthly => 'Monthly';
+
+  @override
+  String get cloudSyncRequired => 'Cloud Sync Required';
+
+  @override
+  String get cloudSyncSubscriptionRestored => 'Subscription restored';
+
+  @override
+  String get cloudSyncNoSubscription => 'No Cloud Sync subscription found';
+
+  @override
+  String get cloudSyncRestoreFailed => 'Restore failed. Please try again.';
+
+  @override
+  String get cloudSyncExpiredMessage =>
+      'Your Cloud Sync subscription has expired. Your data is read-only.';
+
+  @override
+  String get cloudSyncRenew => 'Renew';
+
+  @override
+  String get cloudSyncPaymentIssue =>
+      'There\'s an issue with your payment. Please update your payment method.';
+
+  @override
+  String get signalSettingsTitle => 'Signals';
+
+  @override
+  String get signalSettingsPrivacy => 'SIGNAL PRIVACY';
+
+  @override
+  String get signalSettingsLocationRadius => 'Signal location radius';
+
+  @override
+  String get signalSettingsRadiusDescription =>
+      'Signals are rounded to this radius, not an exact address';
+
+  @override
+  String get signalSettingsContent => 'SIGNAL CONTENT';
+
+  @override
+  String get signalSettingsMaxImages => 'Max Images per Signal';
+
+  @override
+  String get signalSettingsImageLimit => 'Limit: 1-4 images';
+
+  @override
+  String get signalSettingsNotifications => 'SIGNAL NOTIFICATIONS';
+
+  @override
+  String get signalSettingsNotifySignals => 'Signals';
+
+  @override
+  String get signalSettingsNotifySignalsSubtitle =>
+      'Notify when someone posts a signal';
+
+  @override
+  String get signalSettingsNotifyVotes => 'Votes';
+
+  @override
+  String get signalSettingsNotifyVotesSubtitle =>
+      'When someone upvotes your signal comments';
+
+  @override
+  String get adminFollowTitle => 'Social Admin';
+
+  @override
+  String get adminFollowTabRequests => 'Follow Requests';
+
+  @override
+  String get adminFollowTabSeedData => 'Seed Data';
+
+  @override
+  String get adminFollowErrorLoading => 'Error loading requests';
+
+  @override
+  String get adminFollowNoPending => 'No pending requests';
+
+  @override
+  String get adminFollowApproved => 'Request approved';
+
+  @override
+  String adminFollowApproveFailed(String error) {
+    return 'Failed to approve: $error';
+  }
+
+  @override
+  String get adminFollowDeclined => 'Request declined';
+
+  @override
+  String adminFollowDeclineFailed(String error) {
+    return 'Failed to decline: $error';
+  }
+
+  @override
+  String adminFollowRequestedTime(String time) {
+    return 'Requested $time';
+  }
+
+  @override
+  String get adminFollowDecline => 'Decline';
+
+  @override
+  String get adminFollowAccept => 'Accept';
+
+  @override
+  String get adminFollowJustNow => 'just now';
+
+  @override
+  String adminFollowMinutesAgo(int minutes) {
+    return '${minutes}m ago';
+  }
+
+  @override
+  String adminFollowHoursAgo(int hours) {
+    return '${hours}h ago';
+  }
+
+  @override
+  String adminFollowDaysAgo(int days) {
+    return '${days}d ago';
+  }
+
+  @override
+  String get adminFollowTestData => 'Test Data';
+
+  @override
+  String get adminFollowProfiles => 'Profiles';
+
+  @override
+  String get adminFollowPosts => 'Posts';
+
+  @override
+  String get adminFollowStories => 'Stories';
+
+  @override
+  String get adminFollowComments => 'Comments';
+
+  @override
+  String get adminFollowDummyUsers => 'Dummy Users';
+
+  @override
+  String get adminFollowLog => 'Log';
+
+  @override
+  String get adminFollowResetAndSeed => 'Reset & Seed';
+
+  @override
+  String get adminFollowSeedData => 'Seed Data';
+
+  @override
+  String get adminFollowSeedDescription =>
+      'Reset & Seed: Clears all dummy data first, then seeds fresh.\nSeed Data: Adds to existing data (may create duplicates).';
+
+  @override
+  String adminFollowSeededSummary(
+    int users,
+    int posts,
+    int stories,
+    int comments,
+  ) {
+    return 'Seeded $users users, $posts posts, $stories stories, $comments comments';
+  }
+
+  @override
+  String get adminPostsTitle => 'Signals';
+
+  @override
+  String get adminPostsDeleteAll => 'Delete all signals';
+
+  @override
+  String get adminPostsRefresh => 'Refresh snapshot';
+
+  @override
+  String get adminPostsFilterHint => 'Filter by content or author ID';
+
+  @override
+  String adminPostsLoadFailed(String error) {
+    return 'Failed to load posts: $error';
+  }
+
+  @override
+  String get adminPostsNoMatched => 'No posts matched';
+
+  @override
+  String get adminPostsFilterAll => 'All';
+
+  @override
+  String get adminPostsFilterSignals => 'Signals';
+
+  @override
+  String get adminPostsFilterExpired => 'Expired';
+
+  @override
+  String get adminPostsFilterLocation => 'Location';
+
+  @override
+  String get adminPostsFilterMedia => 'Media';
+
+  @override
+  String get adminPostsDeletePostTitle => 'Delete post?';
+
+  @override
+  String get adminPostsDeletePostMessage =>
+      'Deleting a post removes it from Firebase immediately. This cannot be undone.';
+
+  @override
+  String get adminPostsDeleteConfirm => 'Delete';
+
+  @override
+  String get adminPostsDeleteSignalsTitle => 'Delete signals?';
+
+  @override
+  String adminPostsDeleteFilteredMessage(int filtered, int total) {
+    return 'Delete filtered ($filtered) or all ($total) signals.';
+  }
+
+  @override
+  String adminPostsDeleteAllMessage(int total) {
+    return 'Delete all $total signals.';
+  }
+
+  @override
+  String get adminPostsDeleteWarning =>
+      'This cannot be undone. Type DELETE to confirm.';
+
+  @override
+  String get adminPostsDeleteHint => 'DELETE';
+
+  @override
+  String get adminPostsNoText => '(no text)';
+
+  @override
+  String adminPostsAuthor(String authorId) {
+    return 'Author $authorId';
+  }
+
+  @override
+  String adminPostsStats(int comments, int likes) {
+    return 'Comments $comments · Likes $likes';
+  }
+
+  @override
+  String get adminPostsDeletePostTooltip => 'Delete post';
+
+  @override
+  String get bgConnDisableTitle => 'Disable Background Connection?';
+
+  @override
+  String get bgConnDisableBody =>
+      'The mesh connection may be lost when the app is in the background. You will not receive notifications for new messages.';
+
+  @override
+  String get bgConnDisableConfirm => 'Disable';
+
+  @override
+  String get bgConnTitle => 'Background Connection';
+
+  @override
+  String get bgConnSectionConnection => 'CONNECTION';
+
+  @override
+  String get bgConnToggleTitle => 'Background connection';
+
+  @override
+  String get bgConnToggleSubtitle =>
+      'Keep mesh radio connected when the app is in the background';
+
+  @override
+  String get bgConnSectionNotifications => 'BACKGROUND NOTIFICATIONS';
+
+  @override
+  String get bgConnDirectMessages => 'Direct messages';
+
+  @override
+  String get bgConnDirectMessagesSubtitle =>
+      'Notify for DMs received while backgrounded';
+
+  @override
+  String get bgConnChannelMessages => 'Channel messages';
+
+  @override
+  String get bgConnChannelMessagesSubtitle =>
+      'Notify for channel messages while backgrounded';
+
+  @override
+  String get bgConnNodeDiscovery => 'Node discovery';
+
+  @override
+  String get bgConnNodeDiscoverySubtitle => 'Notify when new nodes are heard';
+
+  @override
+  String get bgConnSectionPersistentNotification => 'PERSISTENT NOTIFICATION';
+
+  @override
+  String get bgConnSectionBattery => 'BATTERY';
+
+  @override
+  String get bgConnBatteryGuide => 'Battery optimization guide';
+
+  @override
+  String get bgConnBatteryGuideSubtitle =>
+      'OEM-specific instructions for reliable background operation';
+
+  @override
+  String get bgConnStyleMinimal => 'Minimal';
+
+  @override
+  String get bgConnStyleDetailed => 'Detailed';
+
+  @override
+  String get bgConnNotificationStyle => 'Notification style';
+
+  @override
+  String get bgConnStyleMinimalDesc => 'Shows \"Connected to [device]\"';
+
+  @override
+  String get bgConnStyleDetailedDesc =>
+      'Shows connection status with node count and last message time';
+
+  @override
+  String get linkedDevicesTitle => 'Linked Devices';
+
+  @override
+  String get linkedDevicesSignInRequired => 'Sign In Required';
+
+  @override
+  String get linkedDevicesSignInBody =>
+      'Sign in to link your Meshtastic devices to your social profile.';
+
+  @override
+  String get linkedDevicesLinkDescription =>
+      'Link your Meshtastic devices to your profile so others can find and follow you from the nodes list.';
+
+  @override
+  String get linkedDevicesNoDevices => 'No Linked Devices';
+
+  @override
+  String get linkedDevicesNoDevicesBody =>
+      'Connect to a Meshtastic device and tap \"Link Current Device\" above.';
+
+  @override
+  String get linkedDevicesLinkAnother =>
+      'To link another device, disconnect from your current device and connect to the new one.';
+
+  @override
+  String get linkedDevicesLoadFailed => 'Failed to load linked devices';
+
+  @override
+  String get linkedDevicesDeviceNotFound => 'Device not found';
+
+  @override
+  String get linkedDevicesUnknownDevice => 'Unknown Device';
+
+  @override
+  String get linkedDevicesLinked => 'Device linked to your profile';
+
+  @override
+  String linkedDevicesLinkFailed(String error) {
+    return 'Failed to link device: $error';
+  }
+
+  @override
+  String get linkedDevicesPrimaryUpdated => 'Primary device updated';
+
+  @override
+  String linkedDevicesSetPrimaryFailed(String error) {
+    return 'Failed to set primary: $error';
+  }
+
+  @override
+  String get linkedDevicesUnlinkTitle => 'Unlink Device';
+
+  @override
+  String get linkedDevicesUnlinkBody =>
+      'Remove this device from your profile? Others will no longer see your profile when viewing this node.';
+
+  @override
+  String get linkedDevicesUnlinkConfirm => 'Unlink';
+
+  @override
+  String get linkedDevicesUnlinked => 'Device unlinked';
+
+  @override
+  String linkedDevicesUnlinkFailed(String error) {
+    return 'Failed to unlink: $error';
+  }
+
+  @override
+  String get linkedDevicesConnectedDevice => 'Connected Device';
+
+  @override
+  String get linkedDevicesLinkButton => 'Link';
+
+  @override
+  String get linkedDevicesPrimaryBadge => 'PRIMARY';
+
+  @override
+  String get linkedDevicesSendMessage => 'Send Message';
+
+  @override
+  String get linkedDevicesViewOnMap => 'View on Map';
+
+  @override
+  String get linkedDevicesSetAsPrimary => 'Set as Primary';
+
+  @override
+  String get linkedDevicesSetAsPrimarySubtitle =>
+      'Show this device on your profile';
+
+  @override
+  String get homeWidgetsTitle => 'Home Widgets';
+
+  @override
+  String get homeWidgetsSectionAvailable => 'AVAILABLE WIDGETS';
+
+  @override
+  String get homeWidgetsMeshStatus => 'Mesh Status';
+
+  @override
+  String get homeWidgetsMeshStatusDesc =>
+      'Shows connected nodes count and mesh health';
+
+  @override
+  String get homeWidgetsSizeSmall => 'Small';
+
+  @override
+  String get homeWidgetsSizeMedium => 'Medium';
+
+  @override
+  String get homeWidgetsSizeLarge => 'Large';
+
+  @override
+  String get homeWidgetsRecentMessages => 'Recent Messages';
+
+  @override
+  String get homeWidgetsRecentMessagesDesc =>
+      'Displays latest messages from your mesh';
+
+  @override
+  String get homeWidgetsDeviceBattery => 'Device Battery';
+
+  @override
+  String get homeWidgetsDeviceBatteryDesc =>
+      'Shows battery level of your connected device';
+
+  @override
+  String get homeWidgetsQuickMessage => 'Quick Message';
+
+  @override
+  String get homeWidgetsQuickMessageDesc =>
+      'Send a canned response with one tap';
+
+  @override
+  String get homeWidgetsLocationBeacon => 'Location Beacon';
+
+  @override
+  String get homeWidgetsLocationBeaconDesc =>
+      'Share your location with a single tap';
+
+  @override
+  String get homeWidgetsSectionHowTo => 'HOW TO ADD WIDGETS';
+
+  @override
+  String get homeWidgetsSectionTips => 'TIPS';
+
+  @override
+  String get homeWidgetsAddToHomeScreen =>
+      'Add widgets to your home screen for quick access';
+
+  @override
+  String get homeWidgetsIosLongPress => 'Long press on home screen';
+
+  @override
+  String get homeWidgetsIosLongPressDesc =>
+      'Press and hold any empty area until apps jiggle';
+
+  @override
+  String get homeWidgetsIosTapPlus => 'Tap the + button';
+
+  @override
+  String get homeWidgetsIosTapPlusDesc => 'Located in the top-left corner';
+
+  @override
+  String get homeWidgetsIosSearch => 'Search for \"Socialmesh\"';
+
+  @override
+  String get homeWidgetsIosSearchDesc => 'Or scroll to find our widgets';
+
+  @override
+  String get homeWidgetsIosChooseSize => 'Choose a widget size';
+
+  @override
+  String get homeWidgetsIosChooseSizeDesc =>
+      'Swipe to see available sizes, tap \"Add Widget\"';
+
+  @override
+  String get homeWidgetsIosPosition => 'Position and tap Done';
+
+  @override
+  String get homeWidgetsIosPositionDesc => 'Drag to your preferred location';
+
+  @override
+  String get homeWidgetsAndroidLongPress => 'Press and hold any empty area';
+
+  @override
+  String get homeWidgetsAndroidTapWidgets => 'Tap \"Widgets\"';
+
+  @override
+  String get homeWidgetsAndroidTapWidgetsDesc => 'From the menu that appears';
+
+  @override
+  String get homeWidgetsAndroidLongPressDrag => 'Long press and drag';
+
+  @override
+  String get homeWidgetsAndroidLongPressDragDesc =>
+      'Hold the widget and place it on your home screen';
+
+  @override
+  String get homeWidgetsIosInstructions => 'iOS Instructions';
+
+  @override
+  String get homeWidgetsAndroidInstructions => 'Android Instructions';
+
+  @override
+  String get homeWidgetsTipAutoUpdate =>
+      'Widgets update automatically when connected';
+
+  @override
+  String get homeWidgetsTipOffline => 'Offline data shown when disconnected';
+
+  @override
+  String get homeWidgetsTipTapToOpen => 'Tap any widget to open the app';
+
+  @override
+  String get homeWidgetsTipAccentColor =>
+      'Widget colors match your accent color';
+
+  @override
+  String get radioConfigSaved => 'Radio configuration saved';
+
+  @override
+  String radioConfigSaveFailed(String error) {
+    return 'Failed to save: $error';
+  }
+
+  @override
+  String get radioConfigTitle => 'Radio';
+
+  @override
+  String get radioConfigHelp => 'Help';
+
+  @override
+  String get radioConfigSave => 'Save';
+
+  @override
+  String get radioConfigSectionRegion => 'REGION';
+
+  @override
+  String get radioConfigSectionModemPreset => 'MODEM PRESET';
+
+  @override
+  String get radioConfigSectionTransmission => 'TRANSMISSION';
+
+  @override
+  String get radioConfigTxEnabled => 'Transmission Enabled';
+
+  @override
+  String get radioConfigTxEnabledSubtitle => 'Allow device to transmit';
+
+  @override
+  String get radioConfigHopLimit => 'Hop Limit';
+
+  @override
+  String get radioConfigHopLimitSubtitle =>
+      'Number of times messages can be relayed';
+
+  @override
+  String get radioConfigTxPowerOverride => 'TX Power Override';
+
+  @override
+  String get radioConfigTxPowerDefault => 'Default';
+
+  @override
+  String get radioConfigTxPowerSubtitle =>
+      'Override transmit power (0 = use default)';
+
+  @override
+  String get radioConfigSectionAdvanced => 'ADVANCED';
+
+  @override
+  String get radioConfigUsePreset => 'Use Preset';
+
+  @override
+  String get radioConfigUsePresetSubtitle =>
+      'Use preset modem settings instead of custom';
+
+  @override
+  String get radioConfigBandwidth => 'Bandwidth';
+
+  @override
+  String get radioConfigSpreadFactor => 'Spread Factor';
+
+  @override
+  String get radioConfigCodingRate => 'Coding Rate';
+
+  @override
+  String get radioConfigFrequencySlot => 'Frequency Slot';
+
+  @override
+  String get radioConfigFrequencySlotSubtitle =>
+      'Your operating frequency is calculated from the region, modem preset, and this value. Most users should leave this as the default.';
+
+  @override
+  String get radioConfigRxBoostedGain => 'RX Boosted Gain';
+
+  @override
+  String get radioConfigRxBoostedGainSubtitle =>
+      'Enable boosted gain on SX126x receivers';
+
+  @override
+  String get radioConfigFrequencyOverride => 'Frequency Override';
+
+  @override
+  String get radioConfigFrequencyOverrideSubtitle =>
+      'Override frequency in MHz (0 = disabled)';
+
+  @override
+  String get radioConfigIgnoreMqtt => 'Ignore MQTT';
+
+  @override
+  String get radioConfigIgnoreMqttSubtitle =>
+      'Ignore messages via MQTT from this device';
+
+  @override
+  String get radioConfigOkToMqtt => 'Ok to MQTT';
+
+  @override
+  String get radioConfigOkToMqttSubtitle =>
+      'Config is ok to send via MQTT uplink';
+
+  @override
+  String get radioConfigRegionUnset => 'Unset';
+
+  @override
+  String get radioConfigRegionNotConfigured => 'Not configured';
+
+  @override
+  String get radioConfigRegionSelectHint =>
+      'Select the region that matches your country\'s regulations';
+
+  @override
+  String get radioConfigPresetLongFast => 'Long Fast';
+
+  @override
+  String get radioConfigPresetLongFastDesc => 'Best range with good speed';
+
+  @override
+  String get radioConfigPresetLongSlow => 'Long Slow';
+
+  @override
+  String get radioConfigPresetLongSlowDesc => 'Maximum range, slower';
+
+  @override
+  String get radioConfigPresetVeryLongSlow => 'Very Long Slow';
+
+  @override
+  String get radioConfigPresetVeryLongSlowDesc => 'Extreme range, very slow';
+
+  @override
+  String get radioConfigPresetLongModerate => 'Long Moderate';
+
+  @override
+  String get radioConfigPresetLongModerateDesc => 'Good balance';
+
+  @override
+  String get radioConfigPresetMediumFast => 'Medium Fast';
+
+  @override
+  String get radioConfigPresetMediumFastDesc => 'Medium range, fast';
+
+  @override
+  String get radioConfigPresetMediumSlow => 'Medium Slow';
+
+  @override
+  String get radioConfigPresetMediumSlowDesc => 'Medium range, reliable';
+
+  @override
+  String get radioConfigPresetShortFast => 'Short Fast';
+
+  @override
+  String get radioConfigPresetShortFastDesc => 'Short range, fastest';
+
+  @override
+  String get radioConfigPresetShortSlow => 'Short Slow';
+
+  @override
+  String get radioConfigPresetShortSlowDesc => 'Short range, reliable';
+
+  @override
+  String get radioConfigPresetMustMatch =>
+      'All devices in the mesh must use the same preset';
+
+  @override
+  String get radioConfigRebootWarning =>
+      'Changing radio settings will cause the device to reboot. All devices in your mesh network must use the same region and modem preset.';
+
+  @override
+  String get cannedModuleTitle => 'Canned Messages Module';
+
+  @override
+  String get cannedModuleSaved => 'Canned message configuration saved';
+
+  @override
+  String cannedModuleSaveFailed(String error) {
+    return 'Failed to save: $error';
+  }
+
+  @override
+  String get cannedModuleSave => 'Save';
+
+  @override
+  String get cannedModuleSectionOptions => 'OPTIONS';
+
+  @override
+  String get cannedModuleEnabled => 'Enabled';
+
+  @override
+  String get cannedModuleEnabledSubtitle =>
+      'Enable canned message module on device';
+
+  @override
+  String get cannedModuleSendBell => 'Send Bell';
+
+  @override
+  String get cannedModuleSendBellSubtitle =>
+      'Send bell character with messages';
+
+  @override
+  String get cannedModuleSectionDeviceMessages => 'DEVICE MESSAGES';
+
+  @override
+  String get cannedModuleMessages => 'Messages';
+
+  @override
+  String get cannedModuleMessagesHint => 'Message 1|Message 2|Message 3';
+
+  @override
+  String get cannedModuleMessagesHelp =>
+      'Separate messages with | (pipe). These messages will be stored on the device and can be sent using hardware inputs.';
+
+  @override
+  String get cannedModulePresetManual => 'Manual Configuration';
+
+  @override
+  String get cannedModulePresetManualDesc => 'Custom GPIO and event settings';
+
+  @override
+  String get cannedModulePresetRak => 'RAK Rotary Encoder';
+
+  @override
+  String get cannedModulePresetRakDesc =>
+      'Pre-configured for RAK rotary encoder';
+
+  @override
+  String get cannedModulePresetM5Stack => 'M5 Stack Card KB';
+
+  @override
+  String get cannedModulePresetM5StackDesc =>
+      'Pre-configured for Card KB / RAK Keypad';
+
+  @override
+  String get cannedModuleSectionPreset => 'CONFIGURATION PRESET';
+
+  @override
+  String get cannedModuleSectionControlType => 'CONTROL TYPE';
+
+  @override
+  String get cannedModuleControlRotary => 'Rotary Encoder';
+
+  @override
+  String get cannedModuleControlRotaryDesc =>
+      'Dumb encoder sending pulses on A/B pins';
+
+  @override
+  String get cannedModuleControlUpDown => 'Up/Down Buttons';
+
+  @override
+  String get cannedModuleControlUpDownDesc =>
+      'Uses A/B/Press definitions from input broker';
+
+  @override
+  String get cannedModuleSectionGpio => 'GPIO INPUTS';
+
+  @override
+  String get cannedModuleGpioPinA => 'Pin A';
+
+  @override
+  String get cannedModuleGpioPinB => 'Pin B';
+
+  @override
+  String get cannedModuleGpioPressPin => 'Press Pin';
+
+  @override
+  String get cannedModuleGpioPinUnset => 'Unset';
+
+  @override
+  String cannedModuleGpioPinLabel(int pin) {
+    return 'Pin $pin';
+  }
+
+  @override
+  String get cannedModuleEventNone => 'None';
+
+  @override
+  String get cannedModuleEventUp => 'Up';
+
+  @override
+  String get cannedModuleEventDown => 'Down';
+
+  @override
+  String get cannedModuleEventLeft => 'Left';
+
+  @override
+  String get cannedModuleEventRight => 'Right';
+
+  @override
+  String get cannedModuleEventSelect => 'Select';
+
+  @override
+  String get cannedModuleEventBack => 'Back';
+
+  @override
+  String get cannedModuleEventCancel => 'Cancel';
+
+  @override
+  String get cannedModuleSectionKeyMapping => 'KEY MAPPING';
+
+  @override
+  String get cannedModuleClockwiseEvent => 'Clockwise Event';
+
+  @override
+  String get cannedModuleCounterClockwiseEvent => 'Counter-Clockwise Event';
+
+  @override
+  String get cannedModulePressEvent => 'Press Event';
+
+  @override
+  String get cannedModuleInfoCard =>
+      'This configures the device-side canned message module which allows sending predefined messages using hardware inputs like rotary encoders or buttons.';
+
+  @override
+  String get positionConfigLocationDisabled =>
+      'Location services are disabled. Enable GPS in your device settings.';
+
+  @override
+  String get positionConfigOpenSettings => 'Open Settings';
+
+  @override
+  String get positionConfigPermissionDenied =>
+      'Location permission denied. Grant location access to use this feature.';
+
+  @override
+  String get positionConfigPermissionPermanentlyDenied =>
+      'Location permission permanently denied. Enable in your device settings.';
+
+  @override
+  String get positionConfigLocationUpdated => 'Location updated from phone GPS';
+
+  @override
+  String positionConfigLocationFailed(String error) {
+    return 'Failed to get location: $error';
+  }
+
+  @override
+  String get positionConfigSaved => 'Position configuration saved';
+
+  @override
+  String positionConfigSaveFailed(String error) {
+    return 'Failed to save: $error';
+  }
+
+  @override
+  String get positionConfigTitle => 'Position';
+
+  @override
+  String get positionConfigSave => 'Save';
+
+  @override
+  String get positionConfigSectionGpsMode => 'GPS MODE';
+
+  @override
+  String get positionConfigSectionBroadcast => 'BROADCAST SETTINGS';
+
+  @override
+  String get positionConfigSmartBroadcast => 'Smart Broadcast';
+
+  @override
+  String get positionConfigSmartBroadcastSubtitle =>
+      'Only broadcast when position changes significantly';
+
+  @override
+  String get positionConfigBroadcastInterval => 'Position Broadcast Interval';
+
+  @override
+  String get positionConfigBroadcastIntervalSubtitle =>
+      'The maximum time between position broadcasts';
+
+  @override
+  String get positionConfigGpsUpdateInterval => 'GPS Update Interval';
+
+  @override
+  String get positionConfigGpsUpdateIntervalSubtitle =>
+      'How often the device GPS checks for position';
+
+  @override
+  String get positionConfigSectionFixed => 'FIXED POSITION';
+
+  @override
+  String get positionConfigUseFixed => 'Use Fixed Position';
+
+  @override
+  String get positionConfigUseFixedSubtitle =>
+      'Manually set position instead of using GPS';
+
+  @override
+  String get positionConfigLatitude => 'Latitude';
+
+  @override
+  String get positionConfigLongitude => 'Longitude';
+
+  @override
+  String get positionConfigAltitude => 'Altitude (meters)';
+
+  @override
+  String get positionConfigGettingLocation => 'Getting Location...';
+
+  @override
+  String get positionConfigUseCurrentLocation => 'Use Current Location';
+
+  @override
+  String get positionConfigFixedInfo =>
+      'Fixed position is useful for stationary installations like routers or base stations.';
+
+  @override
+  String get positionConfigSectionSmartBroadcast => 'SMART BROADCAST SETTINGS';
+
+  @override
+  String get positionConfigMinDistance => 'Minimum Distance';
+
+  @override
+  String get positionConfigMinDistanceSubtitle =>
+      'Minimum distance moved before broadcasting';
+
+  @override
+  String get positionConfigMinInterval => 'Minimum Interval';
+
+  @override
+  String get positionConfigMinIntervalSubtitle =>
+      'The fastest position updates will be sent if the minimum distance has been satisfied';
+
+  @override
+  String get positionConfigSectionFlags => 'POSITION FLAGS';
+
+  @override
+  String get positionConfigFlagsInfo =>
+      'Optional fields to include in position messages. More flags means larger packets.';
+
+  @override
+  String get positionConfigFlagAltitude => 'Include Altitude';
+
+  @override
+  String get positionConfigFlagAltitudeDesc =>
+      'Include altitude in position reports';
+
+  @override
+  String get positionConfigFlagSatsInView => 'Include Sats in View';
+
+  @override
+  String get positionConfigFlagSatsInViewDesc =>
+      'Include number of satellites visible';
+
+  @override
+  String get positionConfigFlagSeqNumber => 'Include Sequence Number';
+
+  @override
+  String get positionConfigFlagSeqNumberDesc =>
+      'Include position sequence number';
+
+  @override
+  String get positionConfigFlagTimestamp => 'Include Timestamp';
+
+  @override
+  String get positionConfigFlagTimestampDesc => 'Include GPS timestamp';
+
+  @override
+  String get positionConfigFlagHeading => 'Include Heading';
+
+  @override
+  String get positionConfigFlagHeadingDesc =>
+      'Include heading/direction of travel';
+
+  @override
+  String get positionConfigFlagSpeed => 'Include Speed';
+
+  @override
+  String get positionConfigFlagSpeedDesc => 'Include ground speed';
+
+  @override
+  String get positionConfigFlagMsl => 'Altitude is Mean Sea Level';
+
+  @override
+  String get positionConfigFlagMslDesc =>
+      'Report altitude as MSL instead of HAE';
+
+  @override
+  String get positionConfigFlagGeoidalSep => 'Include Geoidal Separation';
+
+  @override
+  String get positionConfigFlagGeoidalSepDesc =>
+      'Include geoidal separation value';
+
+  @override
+  String get positionConfigFlagDop => 'Include DOP';
+
+  @override
+  String get positionConfigFlagDopDesc =>
+      'Include dilution of precision (PDOP)';
+
+  @override
+  String get positionConfigFlagHvdop => 'Use HDOP / VDOP';
+
+  @override
+  String get positionConfigFlagHvdopDesc =>
+      'Send separate HDOP/VDOP instead of PDOP';
+
+  @override
+  String get positionConfigSectionGpsGpio => 'GPS GPIO';
+
+  @override
+  String get positionConfigGpsRxGpio => 'GPS RX GPIO';
+
+  @override
+  String get positionConfigGpsRxGpioDesc => 'GPIO pin for GPS RX signal';
+
+  @override
+  String get positionConfigGpsTxGpio => 'GPS TX GPIO';
+
+  @override
+  String get positionConfigGpsTxGpioDesc => 'GPIO pin for GPS TX signal';
+
+  @override
+  String get positionConfigGpsEnableGpio => 'GPS Enable GPIO';
+
+  @override
+  String get positionConfigGpsEnableGpioDesc => 'GPIO pin to control GPS power';
+
+  @override
+  String get positionConfigGpioPinUnset => 'Unset';
+
+  @override
+  String positionConfigGpioPinLabel(int pin) {
+    return 'Pin $pin';
+  }
+
+  @override
+  String get positionConfigGpsModeEnabled => 'Enabled';
+
+  @override
+  String get positionConfigGpsModeEnabledDesc =>
+      'GPS is active and reports position';
+
+  @override
+  String get positionConfigGpsModeDisabled => 'Disabled';
+
+  @override
+  String get positionConfigGpsModeDisabledDesc =>
+      'GPS hardware is present but turned off';
+
+  @override
+  String get positionConfigGpsModeNotPresent => 'Not Present';
+
+  @override
+  String get positionConfigGpsModeNotPresentDesc =>
+      'No GPS hardware on this device';
+
+  @override
+  String get positionConfigIntervalNever => 'Never';
+
+  @override
+  String get positionConfigIntervalDefault => 'Default';
+
+  @override
+  String get positionConfigIntervalOnBoot => 'On Boot Only';
+
+  @override
+  String get powerConfigSaved => 'Power configuration saved';
+
+  @override
+  String powerConfigSaveFailed(String error) {
+    return 'Failed to save: $error';
+  }
+
+  @override
+  String get powerConfigDisabled => 'Disabled';
+
+  @override
+  String get powerConfigTitle => 'Power';
+
+  @override
+  String get powerConfigSave => 'Save';
+
+  @override
+  String get powerConfigSectionPower => 'POWER';
+
+  @override
+  String get powerConfigPowerSaving => 'Power Saving Mode';
+
+  @override
+  String get powerConfigPowerSavingSubtitle =>
+      'Reduce power consumption when idle';
+
+  @override
+  String get powerConfigShutdownOnPowerLoss => 'Shutdown on Power Loss';
+
+  @override
+  String get powerConfigShutdownOnPowerLossSubtitle =>
+      'Power off device when external power removed';
+
+  @override
+  String get powerConfigShutdownDelay => 'Shutdown Delay';
+
+  @override
+  String get powerConfigShutdownDelaySubtitle =>
+      'Time to wait before shutdown after power loss';
+
+  @override
+  String get powerConfigSectionBattery => 'BATTERY';
+
+  @override
+  String get powerConfigAdcMultiplierOverride => 'ADC Multiplier Override';
+
+  @override
+  String get powerConfigAdcMultiplierOverrideSubtitle =>
+      'Override voltage divider ratio for battery reading';
+
+  @override
+  String get powerConfigAdcMultiplier => 'ADC Multiplier';
+
+  @override
+  String get powerConfigAdcMultiplierHint =>
+      'Voltage divider ratio (2.0 - 6.0)';
+
+  @override
+  String get powerConfigSectionSleep => 'SLEEP SETTINGS';
+
+  @override
+  String get powerConfigWaitBluetooth => 'Wait for Bluetooth';
+
+  @override
+  String get powerConfigWaitBluetoothSubtitle =>
+      'Time to wait for Bluetooth connection before sleep';
+
+  @override
+  String get powerConfigLightSleep => 'Light Sleep Duration';
+
+  @override
+  String get powerConfigLightSleepSubtitle =>
+      'Duration of light sleep before deep sleep';
+
+  @override
+  String get powerConfigDeepSleep => 'Deep Sleep Duration';
+
+  @override
+  String get powerConfigDeepSleepSubtitle => 'Duration of deep sleep (SDS)';
+
+  @override
+  String get powerConfigMinWakeTime => 'Minimum Wake Time';
+
+  @override
+  String get powerConfigMinWakeTimeSubtitle =>
+      'Minimum time device stays awake';
+
+  @override
+  String get powerConfigWarning =>
+      'Power settings affect battery life and device responsiveness. Aggressive sleep settings may cause delays in receiving messages.';
+
+  @override
+  String get networkConfigNoWifiTitle => 'No WiFi Hardware';
+
+  @override
+  String get networkConfigNoWifiBody =>
+      'This device does not have WiFi hardware. Enabling WiFi will make the device unreachable via BLE. Continue?';
+
+  @override
+  String get networkConfigSaveAnyway => 'Save Anyway';
+
+  @override
+  String get networkConfigSaved => 'Network configuration saved';
+
+  @override
+  String networkConfigSaveFailed(String error) {
+    return 'Failed to save: $error';
+  }
+
+  @override
+  String get networkConfigTitle => 'Network';
+
+  @override
+  String get networkConfigSave => 'Save';
+
+  @override
+  String get networkConfigSectionWifi => 'WI-FI';
+
+  @override
+  String get networkConfigNoWifiWarning =>
+      'This device does not have WiFi hardware. Enabling WiFi will make the device unreachable via Bluetooth.';
+
+  @override
+  String get networkConfigWifiEnabled => 'WiFi Enabled';
+
+  @override
+  String get networkConfigWifiEnabledSubtitle => 'Connect to a WiFi network';
+
+  @override
+  String get networkConfigSsid => 'Network Name (SSID)';
+
+  @override
+  String get networkConfigPassword => 'Password';
+
+  @override
+  String get networkConfigSectionEthernet => 'ETHERNET';
+
+  @override
+  String get networkConfigEthernetEnabled => 'Ethernet Enabled';
+
+  @override
+  String get networkConfigEthernetEnabledSubtitle =>
+      'Use wired Ethernet connection';
+
+  @override
+  String get networkConfigSectionIpAddress => 'IP ADDRESS';
+
+  @override
+  String get networkConfigSectionTimeSync => 'TIME SYNC';
+
+  @override
+  String get networkConfigNtpServer => 'NTP Server';
+
+  @override
+  String get networkConfigNtpServerSubtitle =>
+      'Server used for time synchronization';
+
+  @override
+  String get networkConfigSectionUdpBroadcast => 'UDP BROADCAST';
+
+  @override
+  String get networkConfigUdpBroadcast => 'UDP Broadcast';
+
+  @override
+  String get networkConfigUdpBroadcastSubtitle =>
+      'Broadcast packets over local network';
+
+  @override
+  String get networkConfigUdpBroadcastInfo =>
+      'Enables broadcasting mesh packets via UDP over the local network. Useful for connecting multiple instances.';
+
+  @override
+  String get networkConfigSectionLogging => 'LOGGING';
+
+  @override
+  String get networkConfigNoHardwareInfo =>
+      'Network settings are only available on devices with WiFi or Ethernet hardware support.';
+
+  @override
+  String get networkConfigIpModeDhcp => 'DHCP';
+
+  @override
+  String get networkConfigIpModeDhcpDesc => 'Automatically obtain IP address';
+
+  @override
+  String get networkConfigIpModeStatic => 'Static';
+
+  @override
+  String get networkConfigIpModeStaticDesc =>
+      'Use manually configured IP address';
+
+  @override
+  String get networkConfigRsyslogServer => 'Rsyslog Server';
+
+  @override
+  String get networkConfigRsyslogServerSubtitle =>
+      'Remote syslog server for device logs';
+
+  @override
+  String get ringtoneTitle => 'Ringtone';
+
+  @override
+  String get ringtoneDeviceRingtone => 'Device Ringtone';
+
+  @override
+  String get ringtoneCurrentlySet => 'Currently set on device';
+
+  @override
+  String get ringtoneSaved => 'Ringtone saved to device';
+
+  @override
+  String ringtoneSaveFailed(String error) {
+    return 'Failed to save ringtone: $error';
+  }
+
+  @override
+  String get ringtoneAccessPremium => 'Access premium ringtone presets';
+
+  @override
+  String get ringtoneCustomAdded => 'Custom ringtone added';
+
+  @override
+  String get ringtoneRtttlGuideTitle => 'RTTTL Format Guide';
+
+  @override
+  String get ringtoneRtttlWhat => 'What is RTTTL?';
+
+  @override
+  String get ringtoneRtttlWhatContent =>
+      'Ring Tone Text Transfer Language (RTTTL) is a format developed by Nokia for encoding ringtones as text strings.';
+
+  @override
+  String get ringtoneRtttlFormat => 'Format';
+
+  @override
+  String get ringtoneRtttlHeader => 'Header';
+
+  @override
+  String get ringtoneRtttlHeaderContent => 'name:d=duration,o=octave,b=bpm';
+
+  @override
+  String get ringtoneRtttlNotes => 'Notes';
+
+  @override
+  String get ringtoneRtttlNotesContent =>
+      'duration, note, octave (e.g., 8c5 = eighth note C in octave 5)';
+
+  @override
+  String get ringtoneRtttlExample => 'Example';
+
+  @override
+  String get ringtoneRtttlComposerTip =>
+      'Try Nokia Composer online to create and preview RTTTL strings';
+
+  @override
+  String get ringtoneRtttlHelp => 'RTTTL Help';
+
+  @override
+  String get ringtoneSave => 'Save';
+
+  @override
+  String get ringtoneSectionRtttl => 'RTTTL STRING';
+
+  @override
+  String get ringtoneRtttlHint => 'Paste or select an RTTTL ringtone...';
+
+  @override
+  String get ringtoneStop => 'Stop';
+
+  @override
+  String get ringtonePreview => 'Preview';
+
+  @override
+  String get ringtoneClear => 'Clear';
+
+  @override
+  String get ringtoneTapPreview => 'Tap Preview to hear, then Save to device';
+
+  @override
+  String get ringtoneSectionLibrary => 'RINGTONE LIBRARY';
+
+  @override
+  String ringtoneBrowseCount(int count) {
+    return 'Browse $count Ringtones';
+  }
+
+  @override
+  String get ringtoneBrowseSubtitle =>
+      'Search classic tunes, TV themes, movie soundtracks, and more';
+
+  @override
+  String get ringtoneSectionSelected => 'SELECTED RINGTONE';
+
+  @override
+  String get ringtoneSectionBuiltIn => 'BUILT-IN PRESETS';
+
+  @override
+  String get ringtoneSectionCustom => 'CUSTOM PRESETS';
+
+  @override
+  String get ringtoneAdd => 'Add';
+
+  @override
+  String get ringtoneNoCustom => 'No custom ringtones';
+
+  @override
+  String get ringtoneNoCustomBody => 'Tap \"Add\" to create your own presets';
+
+  @override
+  String get ringtoneFindDeviceTip => 'Tip: Find your device';
+
+  @override
+  String get ringtoneFindDeviceBody =>
+      'Send a message with the bell emoji (🔔) to make your device play the ringtone.';
+
+  @override
+  String get ringtoneNameRequired => 'Name is required';
+
+  @override
+  String get ringtoneDefaultDescription => 'Custom ringtone';
+
+  @override
+  String get ringtoneAddCustomTitle => 'Add Custom Ringtone';
+
+  @override
+  String get ringtoneAddCustomSubtitle =>
+      'Create a custom RTTTL ringtone preset';
+
+  @override
+  String get ringtoneAddCustomName => 'Name';
+
+  @override
+  String get ringtoneAddCustomRtttl => 'RTTTL String';
+
+  @override
+  String get ringtoneAddCustomDescription => 'Description (optional)';
+
+  @override
+  String get ringtoneLibraryTitle => 'Ringtone Library';
+
+  @override
+  String get ringtoneLibrarySearchHint => 'Search by song, artist, or theme...';
+
+  @override
+  String get ringtoneLibraryPopularPicks => 'Popular Picks';
+
+  @override
+  String get ringtoneLibraryNoResults => 'No results found';
+
+  @override
+  String get ringtoneLibraryStartTyping => 'Start typing to search';
+
+  @override
+  String get ringtoneLibraryTryDifferent => 'Try a different search term';
+
+  @override
+  String ringtoneLibrarySearchCount(int count) {
+    return 'Search $count available tones';
+  }
+
+  @override
+  String get ringtoneValidationEmpty => 'RTTTL string cannot be empty';
+
+  @override
+  String ringtoneValidationTooLong(int length, int max) {
+    return 'Too long: $length/$max characters. Ringtone will be truncated.';
+  }
+
+  @override
+  String get ringtoneValidationMissingColons =>
+      'Invalid format: missing colons. Expected name:defaults:notes';
+
+  @override
+  String get ringtoneValidationInvalidFormat =>
+      'Invalid format: expected name:defaults:notes';
+
+  @override
+  String get ringtoneValidationInvalidDefaults =>
+      'Invalid defaults: expected d=duration, o=octave, b=bpm';
+
+  @override
+  String get ringtoneValidationNoNotes => 'No notes found in RTTTL string';
+
+  @override
+  String ringtoneValidationInvalidNote(String note) {
+    return 'Invalid note: \"$note\"';
+  }
+
+  @override
+  String get ringtoneValidationNoValidNotes => 'No valid notes found';
+
+  @override
+  String get accountSubTitle => 'Account';
+
+  @override
+  String get accountSubSectionAccount => 'ACCOUNT';
+
+  @override
+  String get accountSubSectionPremium => 'PREMIUM';
+
+  @override
+  String get accountSubSectionManage => 'MANAGE';
+
+  @override
+  String get accountSubGuestAccount => 'Guest Account';
+
+  @override
+  String get accountSubSignedIn => 'Signed In';
+
+  @override
+  String get accountSubLinkedAccounts => 'Linked accounts';
+
+  @override
+  String get accountSubLinkEmailPrompt =>
+      'Link an email to keep your data across devices';
+
+  @override
+  String get accountSubLinkAccountBtn => 'Link Account';
+
+  @override
+  String get accountSubMfaRequiresInternet =>
+      'Two-factor authentication requires an internet connection.';
+
+  @override
+  String get accountSubSignOutBtn => 'Sign Out';
+
+  @override
+  String get accountSubSignInToSync => 'Sign in to sync across devices';
+
+  @override
+  String get accountSubLocalDataAvailable =>
+      'Your local data is always available';
+
+  @override
+  String get accountSubContinueGoogle => 'Continue with Google';
+
+  @override
+  String get accountSubContinueApple => 'Continue with Apple';
+
+  @override
+  String get accountSubContinueGitHub => 'Continue with GitHub';
+
+  @override
+  String get accountSubContinueX => 'Continue with X';
+
+  @override
+  String get accountSubExpiresToday => 'Expires today';
+
+  @override
+  String get accountSubExpiresTomorrow => 'Expires tomorrow';
+
+  @override
+  String accountSubExpiresDate(int day, String month) {
+    return 'Expires $day $month';
+  }
+
+  @override
+  String accountSubCancelledExpires(String expiresText) {
+    return 'Cancelled · $expiresText';
+  }
+
+  @override
+  String get accountSubPaymentIssue => 'Payment issue - please update';
+
+  @override
+  String get accountSubSignInToSyncShort => 'Sign in to sync';
+
+  @override
+  String get accountSubMonthlySubscription => 'Monthly subscription';
+
+  @override
+  String get accountSubSubscriptionExpired => 'Subscription expired';
+
+  @override
+  String get accountSubSignInToEnable => 'Sign in above to enable';
+
+  @override
+  String get accountSubSyncAllDevices => 'Sync across all your devices';
+
+  @override
+  String get accountSubBadgeCancelled => 'CANCELLED';
+
+  @override
+  String get accountSubBadgeActive => 'ACTIVE';
+
+  @override
+  String get accountSubBadgeExpired => 'EXPIRED';
+
+  @override
+  String get accountSubCloudSync => 'Cloud Sync';
+
+  @override
+  String get accountSubWontRenew =>
+      'Your subscription won\'t renew. You can resubscribe anytime.';
+
+  @override
+  String get accountSubFeatureNodedex => 'NodeDex — encounters, tags, notes';
+
+  @override
+  String get accountSubFeatureAutomations => 'Automations — rules and triggers';
+
+  @override
+  String get accountSubFeatureWidgets => 'Custom Widgets — layouts and data';
+
+  @override
+  String get accountSubFeatureBackup =>
+      'Backup — restore after reinstall or new phone';
+
+  @override
+  String get accountSubFeatureOffline => 'Works fully offline without it';
+
+  @override
+  String get accountSubRenewSubscription => 'Renew Subscription';
+
+  @override
+  String get accountSubManageSubscription => 'Manage Subscription';
+
+  @override
+  String get accountSubSignInToSubscribe => 'Sign in to subscribe';
+
+  @override
+  String get accountSubSubRequiresInternet =>
+      'Subscriptions require an internet connection.';
+
+  @override
+  String get accountSubRenew => 'Renew';
+
+  @override
+  String get accountSubSubscribe => 'Subscribe';
+
+  @override
+  String get accountSubCouldNotLoadStatus =>
+      'Could not load subscription status';
+
+  @override
+  String get accountSubFeaturePacks => 'Feature Packs';
+
+  @override
+  String get accountSubAllUnlocked => 'All features unlocked!';
+
+  @override
+  String accountSubOneTimePurchases(int owned, int total) {
+    return 'One-time purchases · $owned of $total';
+  }
+
+  @override
+  String get accountSubViewFeatures => 'View Features';
+
+  @override
+  String get accountSubPremiumRequiresInternet =>
+      'Premium features require an internet connection to purchase.';
+
+  @override
+  String get accountSubViewAndPurchase => 'View & Purchase';
+
+  @override
+  String get accountSubRestorePurchases => 'Restore Purchases';
+
+  @override
+  String get accountSubRestorePurchasesSubtitle =>
+      'Restore previously purchased items';
+
+  @override
+  String get accountSubRestoreRequiresInternet =>
+      'Restoring purchases requires an internet connection.';
+
+  @override
+  String get accountSubPurchasesRestored => 'Purchases restored successfully!';
+
+  @override
+  String get accountSubPurchasesAlreadyActive =>
+      'Your purchases are already active';
+
+  @override
+  String get accountSubNoPurchasesFound => 'No purchases found to restore';
+
+  @override
+  String get accountSubTermsOfService => 'Terms of Service';
+
+  @override
+  String get accountSubPrivacyPolicy => 'Privacy Policy';
+
+  @override
+  String get accountSubSignInRequiresInternet =>
+      'Sign-in requires an internet connection.';
+
+  @override
+  String get accountSubCannotConnectSignIn =>
+      'Unable to connect to sign-in services. Check your internet connection and try again.';
+
+  @override
+  String accountSubSignInFailed(String message) {
+    return 'Sign in failed: $message';
+  }
+
+  @override
+  String get accountSubSignInFailedRetry => 'Sign in failed. Please try again.';
+
+  @override
+  String get accountSubLinkGitHubTitle => 'Link GitHub Account';
+
+  @override
+  String accountSubAccountExistsLinking(String email, String provider) {
+    return 'An account with $email already exists using $provider.\n\nSign in with $provider to link your GitHub account?';
+  }
+
+  @override
+  String accountSubSignInWithProvider(String provider) {
+    return 'Sign in with $provider';
+  }
+
+  @override
+  String get accountSubGitHubLinked => 'GitHub account linked successfully!';
+
+  @override
+  String get accountSubFailedLinkAccounts => 'Failed to link accounts';
+
+  @override
+  String get accountSubSignOutRequiresInternet =>
+      'Signing out requires an internet connection.';
+
+  @override
+  String get accountSubSignOutConfirmTitle => 'Sign Out';
+
+  @override
+  String get accountSubSignOutConfirmMsg =>
+      'Are you sure you want to sign out?';
+
+  @override
+  String get accountSubSignedOutSuccess => 'Signed out';
+
+  @override
+  String accountSubGenericError(String error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String get accountSubLinkAccountSheetTitle => 'Link Account';
+
+  @override
+  String get accountSubLinkSignInMethod =>
+      'Link a sign-in method to keep your data';
+
+  @override
+  String get accountSubLinkWithGoogle => 'Link with Google';
+
+  @override
+  String get accountSubLinkWithApple => 'Link with Apple';
+
+  @override
+  String get accountSubLinkWithX => 'Link with X';
+
+  @override
+  String get accountSubManageSubRequiresInternet =>
+      'Managing subscriptions requires an internet connection.';
+
+  @override
+  String get accountSubIosManageHint =>
+      'Go to Settings > Apple ID > Subscriptions to manage';
+
+  @override
+  String get accountSubAndroidManageHint =>
+      'Go to Play Store > Payments & Subscriptions to manage';
+
+  @override
+  String get accountSubGuestName => 'Guest';
+
+  @override
+  String get accountSubTapToEditProfile => 'Tap to edit profile';
+
+  @override
+  String get accountSubSignInToCreateProfile => 'Sign in to create profile';
+
+  @override
+  String get accountSubTwoFactorAuth => 'Two-Factor Authentication';
+
+  @override
+  String get accountSubBadgeOffline => 'Offline';
+
+  @override
+  String get accountSubBadgeUnavailable => 'Unavailable';
+
+  @override
+  String get accountSubBadgeOn => 'ON';
+
+  @override
+  String get accountSubSyncSyncing => 'Syncing';
+
+  @override
+  String get accountSubSyncSynced => 'Synced';
+
+  @override
+  String get accountSubSyncError => 'Error';
+
+  @override
+  String get accountSubSyncReady => 'Ready';
+
+  @override
+  String get accountSubSyncOffline => 'Offline';
+
+  @override
+  String get accountSubMonthJanuary => 'January';
+
+  @override
+  String get accountSubMonthFebruary => 'February';
+
+  @override
+  String get accountSubMonthMarch => 'March';
+
+  @override
+  String get accountSubMonthApril => 'April';
+
+  @override
+  String get accountSubMonthMay => 'May';
+
+  @override
+  String get accountSubMonthJune => 'June';
+
+  @override
+  String get accountSubMonthJuly => 'July';
+
+  @override
+  String get accountSubMonthAugust => 'August';
+
+  @override
+  String get accountSubMonthSeptember => 'September';
+
+  @override
+  String get accountSubMonthOctober => 'October';
+
+  @override
+  String get accountSubMonthNovember => 'November';
+
+  @override
+  String get accountSubMonthDecember => 'December';
+
+  @override
+  String get accountSubUnlockCloudSync => 'Unlock Cloud Sync';
+
+  @override
+  String get accountSubSyncBackupAll =>
+      'Sync and back up your mesh data across all your devices';
+
+  @override
+  String get accountSubCouldNotLoadPrices => 'Could not load prices';
+
+  @override
+  String get accountSubSubActivated => 'Subscription activated!';
+
+  @override
+  String get accountSubPurchaseFailed => 'Purchase failed';
+
+  @override
+  String get accountSubAutoRenewDisclaimer =>
+      'Subscriptions auto-renew unless cancelled at least 24 hours before the end of the current period.';
+
+  @override
+  String get accountSubYearlySave => 'Yearly (Save 44%)';
+
+  @override
+  String get accountSubMonthlyProduct => 'Monthly';
+
+  @override
+  String get accountSubLinkingRequiresInternet =>
+      'Linking an account requires an internet connection.';
+
+  @override
+  String get accountSubIftttDataSharing => 'IFTTT Data Sharing';
+
+  @override
+  String get accountSubIftttDisclosureMsg =>
+      'When IFTTT Webhooks are enabled, mesh event data (messages, node status, positions, battery levels) will be sent to IFTTT servers via your personal webhook key.\n\nIFTTT is a third-party service with its own privacy policy. Only the event types you select will be transmitted.';
+
+  @override
+  String get accountSubIUnderstand => 'I Understand';
+
+  @override
+  String get accountSubConfirm => 'Confirm';
+
+  @override
+  String get accountSubCancel => 'Cancel';
+
+  @override
+  String get dataExportTitle => 'Export Data';
+
+  @override
+  String get dataExportSectionMessages => 'Messages';
+
+  @override
+  String get dataExportSectionTelemetry => 'Telemetry';
+
+  @override
+  String get dataExportSectionPositionData => 'Position Data';
+
+  @override
+  String get dataExportSectionAutomations => 'Automations';
+
+  @override
+  String get dataExportSectionNetwork => 'Network';
+
+  @override
+  String get dataExportSectionCompleteExport => 'Complete Export';
+
+  @override
+  String get dataExportSectionClearData => 'Clear Data';
+
+  @override
+  String get dataExportAllMessages => 'All Messages';
+
+  @override
+  String get dataExportAllMessagesSubtitle =>
+      'Export all channel and direct messages';
+
+  @override
+  String get dataExportDeviceMetrics => 'Device Metrics';
+
+  @override
+  String get dataExportDeviceMetricsSubtitle =>
+      'Battery, voltage, utilization logs';
+
+  @override
+  String get dataExportEnvironmentMetrics => 'Environment Metrics';
+
+  @override
+  String get dataExportEnvironmentMetricsSubtitle =>
+      'Temperature, humidity, pressure logs';
+
+  @override
+  String get dataExportAirQuality => 'Air Quality';
+
+  @override
+  String get dataExportAirQualitySubtitle => 'PM2.5, PM10, CO2 readings';
+
+  @override
+  String get dataExportPowerMetrics => 'Power Metrics';
+
+  @override
+  String get dataExportPowerMetricsSubtitle => 'Channel voltage and current';
+
+  @override
+  String get dataExportPositionHistory => 'Position History';
+
+  @override
+  String get dataExportPositionHistorySubtitle =>
+      'GPS position logs with timestamps';
+
+  @override
+  String get dataExportRoutes => 'Routes';
+
+  @override
+  String get dataExportRoutesSubtitle => 'Recorded routes and tracks';
+
+  @override
+  String get dataExportTraceroutes => 'Traceroutes';
+
+  @override
+  String get dataExportTraceroutesSubtitle => 'Network path analysis';
+
+  @override
+  String get dataExportAutomationRules => 'Automation Rules';
+
+  @override
+  String get dataExportAutomationRulesSubtitle =>
+      'All automation configurations';
+
+  @override
+  String get dataExportExecutionLog => 'Execution Log';
+
+  @override
+  String get dataExportExecutionLogSubtitle =>
+      'Automation trigger history with results';
+
+  @override
+  String get dataExportNodeList => 'Node List';
+
+  @override
+  String get dataExportNodeListSubtitle => 'All discovered nodes with details';
+
+  @override
+  String get dataExportExportAll => 'Export All Data';
+
+  @override
+  String get dataExportExportAllSubtitle => 'Complete backup of all app data';
+
+  @override
+  String get dataExportClearAll => 'Clear All Data';
+
+  @override
+  String get dataExportClearAllSubtitle =>
+      'Delete all stored telemetry, routes, and logs';
+
+  @override
+  String get dataExportInfoText =>
+      'Exported files can be shared via email, AirDrop, or saved to Files. Tap the trash icon to clear specific data.';
+
+  @override
+  String get dataExportFormatCsv => 'CSV';
+
+  @override
+  String get dataExportFormatGpx => 'GPX';
+
+  @override
+  String get dataExportFormatJson => 'JSON';
+
+  @override
+  String get dataExportTooltipClearData => 'Clear data';
+
+  @override
+  String get dataExportTooltipExport => 'Export';
+
+  @override
+  String dataExportClearConfirmTitle(String dataName) {
+    return 'Clear $dataName?';
+  }
+
+  @override
+  String dataExportClearConfirmMsg(String dataName) {
+    return 'This will permanently delete all $dataName. This action cannot be undone.';
+  }
+
+  @override
+  String get dataExportClearConfirmBtn => 'Delete';
+
+  @override
+  String get dataExportClearAllConfirmTitle => 'Clear All Data?';
+
+  @override
+  String get dataExportClearAllConfirmMsg =>
+      'This will permanently delete ALL stored data including telemetry, routes, and automation logs. This action cannot be undone.';
+
+  @override
+  String get dataExportClearAllConfirmBtn => 'Delete All';
+
+  @override
+  String dataExportExportFailed(String error) {
+    return 'Export failed: $error';
+  }
+
+  @override
+  String get dataExportDataCleared => 'Data cleared';
+
+  @override
+  String dataExportClearFailed(String error) {
+    return 'Failed to clear data: $error';
+  }
+
+  @override
+  String get dataExportAllDataCleared => 'All data cleared';
+
+  @override
+  String get dataExportNoRoutesToExport => 'No routes to export';
+
+  @override
+  String get dataExportNoAutomationsToExport => 'No automations to export';
+
+  @override
+  String get dataExportNoAutomationLogEntries => 'No automation log entries';
+
+  @override
+  String get dataExportClearAllMessages => 'all messages';
+
+  @override
+  String get dataExportClearDeviceMetrics => 'device metrics';
+
+  @override
+  String get dataExportClearEnvironmentMetrics => 'environment metrics';
+
+  @override
+  String get dataExportClearAirQualityData => 'air quality data';
+
+  @override
+  String get dataExportClearPowerMetrics => 'power metrics';
+
+  @override
+  String get dataExportClearPositionHistory => 'position history';
+
+  @override
+  String get dataExportClearAllRoutes => 'all routes';
+
+  @override
+  String get dataExportClearTracerouteData => 'traceroute data';
+
+  @override
+  String get dataExportClearAllAutomationRules => 'all automation rules';
+
+  @override
+  String get dataExportClearAutomationLog => 'automation log';
+
+  @override
+  String get dataExportShareSubjectMessages => 'Socialmesh Messages Export';
+
+  @override
+  String get dataExportShareSubjectDeviceMetrics =>
+      'Socialmesh Device Metrics Export';
+
+  @override
+  String get dataExportShareSubjectEnvironmentMetrics =>
+      'Socialmesh Environment Metrics Export';
+
+  @override
+  String get dataExportShareSubjectAirQuality =>
+      'Socialmesh Air Quality Export';
+
+  @override
+  String get dataExportShareSubjectPowerMetrics =>
+      'Socialmesh Power Metrics Export';
+
+  @override
+  String get dataExportShareSubjectPositionHistory =>
+      'Socialmesh Position History Export';
+
+  @override
+  String get dataExportShareSubjectRoutes => 'Socialmesh Routes Export';
+
+  @override
+  String get dataExportShareSubjectTraceroutes =>
+      'Socialmesh Traceroute Export';
+
+  @override
+  String get dataExportShareSubjectAutomations =>
+      'Socialmesh Automations Export';
+
+  @override
+  String get dataExportShareSubjectAutomationLog =>
+      'Socialmesh Automation Log Export';
+
+  @override
+  String get dataExportShareSubjectNodeList => 'Socialmesh Node List Export';
+
+  @override
+  String get dataExportShareSubjectComplete => 'Socialmesh Complete Export';
+
+  @override
+  String get dataExportUnknownSender => 'Unknown';
+
+  @override
+  String get dataExportSnrNotAvailable => 'N/A';
+
+  @override
+  String get deviceMgmtTitle => 'Device Management';
+
+  @override
+  String deviceMgmtDefaultWarning(String action) {
+    return 'Are you sure you want to $action? This action cannot be undone.';
+  }
+
+  @override
+  String deviceMgmtSuccessDisconnect(String action) {
+    return '$action - device will disconnect';
+  }
+
+  @override
+  String deviceMgmtSuccessCommandSent(String action) {
+    return '$action command sent';
+  }
+
+  @override
+  String deviceMgmtFailed(String error) {
+    return 'Failed: $error';
+  }
+
+  @override
+  String get deviceMgmtNotConnected =>
+      'Device not connected. Connect to a device to manage it.';
+
+  @override
+  String get deviceMgmtSectionPower => 'POWER';
+
+  @override
+  String get deviceMgmtSectionTime => 'TIME';
+
+  @override
+  String get deviceMgmtSectionReset => 'RESET';
+
+  @override
+  String get deviceMgmtSectionFirmware => 'FIRMWARE';
+
+  @override
+  String get deviceMgmtRebootTitle => 'Reboot Device';
+
+  @override
+  String get deviceMgmtRebootSubtitle => 'Restart the device';
+
+  @override
+  String get deviceMgmtRebootWarning =>
+      'The device will reboot in 2 seconds. You will be briefly disconnected while the device restarts.';
+
+  @override
+  String get deviceMgmtShutdownTitle => 'Shutdown Device';
+
+  @override
+  String get deviceMgmtShutdownSubtitle => 'Turn off the device';
+
+  @override
+  String get deviceMgmtShutdownWarning =>
+      'The device will shut down in 2 seconds. You will need to manually power it back on.';
+
+  @override
+  String get deviceMgmtSyncTimeTitle => 'Sync Time';
+
+  @override
+  String get deviceMgmtSyncTimeSubtitle => 'Set device time to current time';
+
+  @override
+  String get deviceMgmtResetNodeDbTitle => 'Reset Node Database';
+
+  @override
+  String get deviceMgmtResetNodeDbSubtitle =>
+      'Clear all known nodes from device and app';
+
+  @override
+  String get deviceMgmtResetNodeDbWarning =>
+      'This will clear all discovered nodes from the device and app. Nodes will be rediscovered over time.';
+
+  @override
+  String get deviceMgmtFactoryResetConfigTitle => 'Factory Reset Config';
+
+  @override
+  String get deviceMgmtFactoryResetConfigSubtitle =>
+      'Reset everything except the node database';
+
+  @override
+  String get deviceMgmtFactoryResetConfigWarning =>
+      'This will wipe channels, region, and all settings but preserves the node database.\n\nThe device will reboot in 5 seconds. You will need to set up the region again.';
+
+  @override
+  String get deviceMgmtFullFactoryResetTitle => 'Full Factory Reset';
+
+  @override
+  String get deviceMgmtFullFactoryResetSubtitle =>
+      'Erase everything and reset device';
+
+  @override
+  String get deviceMgmtFullFactoryResetWarning =>
+      'WARNING: This will completely erase the device including:\n· All configuration\n· All channels\n· All known nodes\n· Device identity\n\nThe device will reboot in 5 seconds. You will need to pair and set it up again.';
+
+  @override
+  String get deviceMgmtEnterDfuTitle => 'Enter DFU Mode';
+
+  @override
+  String get deviceMgmtEnterDfuSubtitle => 'Boot into firmware update mode';
+
+  @override
+  String get deviceMgmtEnterDfuWarning =>
+      'The device will enter Device Firmware Update (DFU) mode. You will need to use a firmware update tool to flash new firmware or reset the device.\n\nYou will be disconnected from the device.';
+
+  @override
+  String get displayConfigTitle => 'Display Configuration';
+
+  @override
+  String get displayConfigSave => 'Save';
+
+  @override
+  String get displayConfigSectionScreen => 'SCREEN';
+
+  @override
+  String get displayConfigSectionTimeCompass => 'TIME & COMPASS';
+
+  @override
+  String get displayConfigSectionOledType => 'OLED SCREEN TYPE';
+
+  @override
+  String get displayConfigSectionUnitsFormat => 'UNITS & FORMAT';
+
+  @override
+  String get displayConfigSectionDisplayMode => 'DISPLAY MODE';
+
+  @override
+  String get displayConfigScreenTimeoutAlwaysOn => 'Always On';
+
+  @override
+  String displayConfigScreenTimeoutSeconds(int seconds) {
+    return '${seconds}s';
+  }
+
+  @override
+  String displayConfigScreenTimeoutLabel(String value) {
+    return 'Screen Timeout: $value';
+  }
+
+  @override
+  String get displayConfigScreenTimeoutDesc =>
+      'How long before screen turns off';
+
+  @override
+  String get displayConfigAutoCarouselDisabled => 'Disabled';
+
+  @override
+  String get displayConfigAutoCarouselOff => 'Off';
+
+  @override
+  String displayConfigAutoCarouselLabel(String value) {
+    return 'Auto Carousel: $value';
+  }
+
+  @override
+  String get displayConfigAutoCarouselDesc =>
+      'Automatically cycle through screens';
+
+  @override
+  String get displayConfigFlipScreen => 'Flip Screen';
+
+  @override
+  String get displayConfigFlipScreenSubtitle => 'Rotate display 180°';
+
+  @override
+  String get displayConfigWakeOnTap => 'Wake on Tap/Motion';
+
+  @override
+  String get displayConfigWakeOnTapSubtitle =>
+      'Turn on screen when device is moved';
+
+  @override
+  String get displayConfigLongNodeNames => 'Long Node Names';
+
+  @override
+  String get displayConfigLongNodeNamesSubtitle =>
+      'Show full node names on device screen';
+
+  @override
+  String get displayConfigMessageBubbles => 'Message Bubbles';
+
+  @override
+  String get displayConfigMessageBubblesSubtitle =>
+      'Display messages in bubble format on screen';
+
+  @override
+  String get displayConfig12hClock => '12 Hour Clock';
+
+  @override
+  String get displayConfig12hClockSubtitle =>
+      'Display time in 12-hour format (AM/PM)';
+
+  @override
+  String get displayConfigCompassNorth => 'Compass Always Points North';
+
+  @override
+  String get displayConfigCompassNorthSubtitle =>
+      'The compass heading outside the circle always points north';
+
+  @override
+  String get displayConfigCompassOrientation => 'Compass Orientation';
+
+  @override
+  String get displayConfigCompassOrientationDesc =>
+      'Adjust compass display rotation';
+
+  @override
+  String get displayConfigDeg0 => '0°';
+
+  @override
+  String get displayConfigDeg90 => '90°';
+
+  @override
+  String get displayConfigDeg180 => '180°';
+
+  @override
+  String get displayConfigDeg270 => '270°';
+
+  @override
+  String get displayConfigDeg0Inv => '0° Inverted';
+
+  @override
+  String get displayConfigDeg90Inv => '90° Inverted';
+
+  @override
+  String get displayConfigDeg180Inv => '180° Inverted';
+
+  @override
+  String get displayConfigDeg270Inv => '270° Inverted';
+
+  @override
+  String get displayConfigOledTypeTitle => 'OLED Type';
+
+  @override
+  String get displayConfigOledTypeDesc => 'Override automatic OLED detection';
+
+  @override
+  String get displayConfigOledAuto => 'Auto';
+
+  @override
+  String get displayConfigOledAutoDesc => 'Automatically detect OLED type';
+
+  @override
+  String get displayConfigOledSsd1306Desc => 'Common 128x64 OLED';
+
+  @override
+  String get displayConfigOledSh1106Desc => '132x64 OLED controller';
+
+  @override
+  String get displayConfigOledSh1107Desc => '64x128 vertical OLED';
+
+  @override
+  String get displayConfigOledSh1107_128Desc => '128x128 square OLED';
+
+  @override
+  String get displayConfigMeasurementUnits => 'Measurement Units';
+
+  @override
+  String get displayConfigMetric => 'Metric';
+
+  @override
+  String get displayConfigMetricDesc => 'Kilometers, Celsius';
+
+  @override
+  String get displayConfigImperial => 'Imperial';
+
+  @override
+  String get displayConfigImperialDesc => 'Miles, Fahrenheit';
+
+  @override
+  String get displayConfigBoldHeadings => 'Bold Headings';
+
+  @override
+  String get displayConfigBoldHeadingsSubtitle =>
+      'Show compass headings in bold';
+
+  @override
+  String get displayConfigDisplayModeTitle => 'Display Mode';
+
+  @override
+  String get displayConfigDisplayModeDesc =>
+      'Choose the display rendering mode';
+
+  @override
+  String get displayConfigModeDefault => 'Default';
+
+  @override
+  String get displayConfigModeDefaultDesc => 'Standard display layout';
+
+  @override
+  String get displayConfigModeTwoColor => 'Two Color';
+
+  @override
+  String get displayConfigModeTwoColorDesc =>
+      'Optimized for two-color displays';
+
+  @override
+  String get displayConfigModeInverted => 'Inverted';
+
+  @override
+  String get displayConfigModeInvertedDesc => 'Dark background, light text';
+
+  @override
+  String get displayConfigModeColor => 'Color';
+
+  @override
+  String get displayConfigModeColorDesc => 'Full color display mode';
+
+  @override
+  String get displayConfigSaved => 'Display configuration saved';
+
+  @override
+  String displayConfigSaveFailed(String error) {
+    return 'Failed to save: $error';
+  }
+
+  @override
+  String get extNotifTitle => 'External Notification';
+
+  @override
+  String get extNotifSave => 'Save';
+
+  @override
+  String get extNotifNotConnected =>
+      'Connect to a device to configure external notification settings';
+
+  @override
+  String get extNotifSectionOptions => 'Options';
+
+  @override
+  String get extNotifSectionPrimaryGpio => 'Primary GPIO';
+
+  @override
+  String get extNotifSectionOptionalGpio => 'Optional GPIO';
+
+  @override
+  String get extNotifEnabled => 'Enabled';
+
+  @override
+  String get extNotifEnabledSubtitle => 'Enable external notification module';
+
+  @override
+  String get extNotifAlertOnBell => 'Alert on Bell';
+
+  @override
+  String get extNotifAlertOnBellSubtitle =>
+      'Trigger notification when receiving a bell character';
+
+  @override
+  String get extNotifAlertOnMessage => 'Alert on Message';
+
+  @override
+  String get extNotifAlertOnMessageSubtitle =>
+      'Trigger notification when receiving a message';
+
+  @override
+  String get extNotifUsePwm => 'Use PWM Buzzer';
+
+  @override
+  String get extNotifUsePwmSubtitle =>
+      'Use PWM output for tunes instead of on/off';
+
+  @override
+  String get extNotifUseI2s => 'Use I2S as Buzzer';
+
+  @override
+  String get extNotifUseI2sSubtitle =>
+      'Use I2S audio output for RTTTL tunes (T-Watch, T-Deck)';
+
+  @override
+  String get extNotifActiveHigh => 'Active High';
+
+  @override
+  String get extNotifActiveHighSubtitle =>
+      'Output pin is pulled high when active';
+
+  @override
+  String get extNotifOutputGpioPin => 'Output GPIO Pin';
+
+  @override
+  String get extNotifGpioUnset => 'Unset';
+
+  @override
+  String extNotifGpioValue(int value) {
+    return 'GPIO $value';
+  }
+
+  @override
+  String extNotifGpioPinLabel(int pin) {
+    return 'Pin $pin';
+  }
+
+  @override
+  String get extNotifOutputDuration => 'Output Duration';
+
+  @override
+  String get extNotifOutputDurationSubtitle => 'How long to keep output active';
+
+  @override
+  String get extNotifDurationDefault => 'Default';
+
+  @override
+  String get extNotifDuration100ms => '100ms';
+
+  @override
+  String get extNotifDuration250ms => '250ms';
+
+  @override
+  String get extNotifDuration500ms => '500ms';
+
+  @override
+  String get extNotifDuration1s => '1 second';
+
+  @override
+  String get extNotifDuration2s => '2 seconds';
+
+  @override
+  String get extNotifDuration5s => '5 seconds';
+
+  @override
+  String get extNotifNagTimeout => 'Nag Timeout';
+
+  @override
+  String get extNotifNagTimeoutSubtitle => 'How often to repeat notification';
+
+  @override
+  String get extNotifTimeoutDisabled => 'Disabled';
+
+  @override
+  String get extNotifTimeout15s => '15 seconds';
+
+  @override
+  String get extNotifTimeout30s => '30 seconds';
+
+  @override
+  String get extNotifTimeout1m => '1 minute';
+
+  @override
+  String get extNotifTimeout2m => '2 minutes';
+
+  @override
+  String get extNotifTimeout5m => '5 minutes';
+
+  @override
+  String get extNotifTimeout10m => '10 minutes';
+
+  @override
+  String get extNotifBuzzerOnBell => 'Buzzer on Bell';
+
+  @override
+  String get extNotifBuzzerOnBellSubtitle =>
+      'Alert buzzer GPIO when receiving a bell';
+
+  @override
+  String get extNotifVibraOnBell => 'Vibra on Bell';
+
+  @override
+  String get extNotifVibraOnBellSubtitle =>
+      'Alert vibration motor when receiving a bell';
+
+  @override
+  String get extNotifBuzzerOnMsg => 'Buzzer on Message';
+
+  @override
+  String get extNotifBuzzerOnMsgSubtitle =>
+      'Alert buzzer GPIO when receiving a message';
+
+  @override
+  String get extNotifVibraOnMsg => 'Vibra on Message';
+
+  @override
+  String get extNotifVibraOnMsgSubtitle =>
+      'Alert vibration motor when receiving a message';
+
+  @override
+  String get extNotifBuzzerGpioPin => 'Buzzer GPIO Pin';
+
+  @override
+  String get extNotifVibraGpioPin => 'Vibra GPIO Pin';
+
+  @override
+  String get extNotifSaved => 'External notification settings saved';
+
+  @override
+  String extNotifSaveFailed(String error) {
+    return 'Failed to save: $error';
+  }
+
+  @override
+  String get extNotifLoadFailed => 'Failed to load config';
+
+  @override
+  String get iftttConfigTitle => 'IFTTT Integration';
+
+  @override
+  String get iftttConfigSave => 'Save';
+
+  @override
+  String get iftttConfigPremiumTitle => 'Connect to 700+ Services';
+
+  @override
+  String get iftttConfigPremiumDesc =>
+      'Trigger smart home devices, log events to spreadsheets, send Discord/Slack messages, and more.';
+
+  @override
+  String get iftttConfigPremiumExampleTitle => 'Node goes offline';
+
+  @override
+  String get iftttConfigPremiumExampleDesc =>
+      'Automatically turn on a smart light or send yourself a notification when your node is no longer heard.';
+
+  @override
+  String get iftttConfigSectionWebhook => 'WEBHOOK';
+
+  @override
+  String get iftttConfigSectionMessageTriggers => 'MESSAGE TRIGGERS';
+
+  @override
+  String get iftttConfigSectionNodeTriggers => 'NODE STATUS TRIGGERS';
+
+  @override
+  String get iftttConfigSectionTelemetryTriggers => 'TELEMETRY TRIGGERS';
+
+  @override
+  String get iftttConfigSectionGeofencing => 'GEOFENCING';
+
+  @override
+  String get iftttConfigEnable => 'Enable IFTTT';
+
+  @override
+  String get iftttConfigEnableSubtitle =>
+      'Send events to IFTTT Webhooks service';
+
+  @override
+  String get iftttConfigDataSharingTitle => 'IFTTT Data Sharing';
+
+  @override
+  String get iftttConfigDataSharingMsg =>
+      'When IFTTT Webhooks are enabled, mesh event data (messages, node status, positions, battery levels) will be sent to IFTTT servers via your personal webhook key.\n\nIFTTT is a third-party service with its own privacy policy. Only the event types you select will be transmitted.';
+
+  @override
+  String get iftttConfigIUnderstand => 'I Understand';
+
+  @override
+  String get iftttConfigWebhookKeyLabel => 'Webhook Key';
+
+  @override
+  String get iftttConfigWebhookKeyHint => 'e.g., cMcOnB_zaJTrZwsVvzVTHY';
+
+  @override
+  String get iftttConfigWebhookKeyHelper =>
+      'Copy from IFTTT Webhooks URL after /use/';
+
+  @override
+  String get iftttConfigTesting => 'Testing...';
+
+  @override
+  String get iftttConfigTestConnection => 'Test Connection';
+
+  @override
+  String get iftttConfigEnterKeyToEnable =>
+      'Please enter your Webhook Key to enable IFTTT';
+
+  @override
+  String get iftttConfigEnterKeyFirst => 'Please enter your Webhook Key first';
+
+  @override
+  String get iftttConfigTestSuccess =>
+      'Test webhook sent! Check your IFTTT applet.';
+
+  @override
+  String get iftttConfigTestFailed =>
+      'Failed to send test webhook. Check your key.';
+
+  @override
+  String get iftttConfigMessageReceived => 'Message Received';
+
+  @override
+  String get iftttConfigMessageReceivedSubtitle =>
+      'Trigger when a message is received';
+
+  @override
+  String get iftttConfigSosEmergency => 'SOS / Emergency';
+
+  @override
+  String get iftttConfigSosEmergencySubtitle =>
+      'Trigger on SOS, emergency, help, mayday keywords';
+
+  @override
+  String get iftttConfigNodeActive => 'Node Active';
+
+  @override
+  String get iftttConfigNodeActiveSubtitle =>
+      'Trigger when a node is heard recently';
+
+  @override
+  String get iftttConfigNodeInactive => 'Node Inactive';
+
+  @override
+  String get iftttConfigNodeInactiveSubtitle =>
+      'Trigger when a node is not heard for a while';
+
+  @override
+  String get iftttConfigBatteryLow => 'Battery Low';
+
+  @override
+  String get iftttConfigBatteryLowSubtitle =>
+      'Trigger when battery drops below threshold';
+
+  @override
+  String get iftttConfigBatteryThreshold => 'Battery Threshold';
+
+  @override
+  String get iftttConfigTemperatureAlert => 'Temperature Alert';
+
+  @override
+  String get iftttConfigTemperatureAlertSubtitle =>
+      'Trigger when temperature exceeds threshold';
+
+  @override
+  String get iftttConfigTemperatureThreshold => 'Temperature Threshold';
+
+  @override
+  String get iftttConfigPositionUpdates => 'Position Updates';
+
+  @override
+  String get iftttConfigPositionUpdatesSubtitle =>
+      'Trigger when node exits geofence area';
+
+  @override
+  String get iftttConfigGeofenceRadius => 'Geofence Radius';
+
+  @override
+  String get iftttConfigGeofenceRadiusHint => '1000';
+
+  @override
+  String get iftttConfigGeofenceUnitM => 'm';
+
+  @override
+  String get iftttConfigCenterLatitude => 'Center Latitude';
+
+  @override
+  String get iftttConfigCenterLatHint => '-33.8688';
+
+  @override
+  String get iftttConfigCenterLongitude => 'Center Longitude';
+
+  @override
+  String get iftttConfigCenterLonHint => '151.2093';
+
+  @override
+  String get iftttConfigMonitoredNode => 'Monitored Node';
+
+  @override
+  String get iftttConfigNoNodeSelected =>
+      'No node selected. All nodes will be monitored.';
+
+  @override
+  String get iftttConfigAlertCooldown => 'Alert Cooldown';
+
+  @override
+  String get iftttConfigCooldown5min => '5 min';
+
+  @override
+  String get iftttConfigCooldown15min => '15 min';
+
+  @override
+  String get iftttConfigCooldown30min => '30 min';
+
+  @override
+  String get iftttConfigCooldown1hour => '1 hour';
+
+  @override
+  String get iftttConfigCooldown2hours => '2 hours';
+
+  @override
+  String get iftttConfigCooldown4hours => '4 hours';
+
+  @override
+  String get iftttConfigCooldown8hours => '8 hours';
+
+  @override
+  String get iftttConfigCooldown24hours => '24 hours';
+
+  @override
+  String get iftttConfigCooldownDesc =>
+      'Minimum time between geofence alerts for the same node';
+
+  @override
+  String get iftttConfigPickOnMap => 'Pick on Map';
+
+  @override
+  String get iftttConfigSetupGuide => 'Setup Guide';
+
+  @override
+  String get iftttConfigStep1 => 'Create an account at ifttt.com';
+
+  @override
+  String get iftttConfigStep2 =>
+      'Search for \"Webhooks\" service and connect it';
+
+  @override
+  String get iftttConfigStep3 => 'Go to Webhooks settings to find your key';
+
+  @override
+  String get iftttConfigStep4 => 'Create applets with Webhooks as the trigger';
+
+  @override
+  String get iftttConfigEventNamesRef => 'Event Names Reference';
+
+  @override
+  String get iftttConfigEventNamesSubtitle =>
+      'Use these names in your IFTTT applets';
+
+  @override
+  String get iftttConfigSaved => 'IFTTT settings saved';
+
+  @override
+  String get iftttConfigSaveFailed => 'Failed to save IFTTT settings';
+
+  @override
+  String get mqttConfigTitle => 'MQTT';
+
+  @override
+  String get mqttConfigSave => 'Save';
+
+  @override
+  String mqttConfigDutyCycleWarning(String percent) {
+    return 'Your region has a $percent% duty cycle. MQTT is not advised when you are duty cycle restricted — the extra traffic will quickly overwhelm your LoRa mesh.';
+  }
+
+  @override
+  String get mqttConfigEnable => 'Enable MQTT';
+
+  @override
+  String get mqttConfigEnableSubtitle =>
+      'Connect device to an MQTT broker for mesh bridging';
+
+  @override
+  String get mqttConfigNoWifiAdvisory =>
+      'This device has no WiFi hardware. Enable MQTT Client Proxy below so the app can relay messages on behalf of the device.';
+
+  @override
+  String get mqttConfigNoWifiTitle => 'No WiFi Hardware';
+
+  @override
+  String get mqttConfigNoWifiMsg =>
+      'This device does not have WiFi hardware. Without MQTT Client Proxy enabled, the device cannot reach an MQTT broker on its own.\n\nSave anyway without proxy?';
+
+  @override
+  String get mqttConfigSaveAnyway => 'Save Anyway';
+
+  @override
+  String get mqttConfigSectionServer => 'SERVER';
+
+  @override
+  String get mqttConfigSectionAuth => 'AUTHENTICATION';
+
+  @override
+  String get mqttConfigSectionOptions => 'OPTIONS';
+
+  @override
+  String get mqttConfigServerAddressLabel => 'Server Address';
+
+  @override
+  String get mqttConfigServerAddressHint => 'mqtt.meshtastic.org';
+
+  @override
+  String get mqttConfigTopicRootLabel => 'Topic Root';
+
+  @override
+  String get mqttConfigTopicRootHint => 'msh';
+
+  @override
+  String get mqttConfigUseTls => 'Use TLS';
+
+  @override
+  String get mqttConfigUseTlsSubtitle => 'Encrypt connection to broker';
+
+  @override
+  String get mqttConfigUsernameLabel => 'Username';
+
+  @override
+  String get mqttConfigOptionalHint => 'Optional';
+
+  @override
+  String get mqttConfigPasswordLabel => 'Password';
+
+  @override
+  String get mqttConfigEncryption => 'Encryption';
+
+  @override
+  String get mqttConfigEncryptionSubtitle => 'Encrypt mesh messages over MQTT';
+
+  @override
+  String get mqttConfigJsonOutput => 'JSON Output';
+
+  @override
+  String get mqttConfigJsonOutputSubtitle => 'Publish messages in JSON format';
+
+  @override
+  String get mqttConfigClientProxy => 'MQTT Client Proxy';
+
+  @override
+  String get mqttConfigClientProxySubtitle =>
+      'Use phone\'s network for MQTT\n(Required for devices without WiFi)';
+
+  @override
+  String get mqttConfigMapReporting => 'Map Reporting';
+
+  @override
+  String get mqttConfigMapReportingSubtitle =>
+      'Report position to public mesh map';
+
+  @override
+  String get mqttConfigMapReportSettingsHeader => 'MAP REPORT SETTINGS';
+
+  @override
+  String mqttConfigPublishInterval(int minutes) {
+    return 'Publish Interval: $minutes minutes';
+  }
+
+  @override
+  String get mqttConfigPublishIntervalDesc =>
+      'How often to report position to map';
+
+  @override
+  String get mqttConfigPositionPrecision => 'Position Precision';
+
+  @override
+  String get mqttConfigPositionPrecisionDesc =>
+      'Approximate location accuracy for map';
+
+  @override
+  String get mqttConfigPrecisionWithin5_8km => 'Within 5.8 km';
+
+  @override
+  String get mqttConfigPrecisionWithin2_9km => 'Within 2.9 km';
+
+  @override
+  String get mqttConfigPrecisionWithin1_5km => 'Within 1.5 km';
+
+  @override
+  String get mqttConfigPrecisionWithin700m => 'Within 700 m';
+
+  @override
+  String get mqttConfigPrecisionUnknown => 'Unknown';
+
+  @override
+  String get mqttConfigInfoText =>
+      'MQTT allows your device to bridge the local mesh network to the internet. This enables communication with nodes that are not in direct radio range.';
+
+  @override
+  String get mqttConfigSaved => 'MQTT configuration saved';
+
+  @override
+  String mqttConfigSaveFailed(String error) {
+    return 'Failed to save: $error';
+  }
+
+  @override
+  String get securityConfigTitle => 'Security';
+
+  @override
+  String get securityConfigSave => 'Save';
+
+  @override
+  String get securityConfigSectionDmKey => 'DIRECT MESSAGE KEY';
+
+  @override
+  String get securityConfigSectionAdminKeys => 'ADMIN KEYS';
+
+  @override
+  String get securityConfigSectionDeviceMgmt => 'DEVICE MANAGEMENT';
+
+  @override
+  String get securityConfigSectionAccessControls => 'ACCESS CONTROLS';
+
+  @override
+  String get securityConfigPublicKey => 'Public Key';
+
+  @override
+  String get securityConfigNoKeySet => 'No key set';
+
+  @override
+  String get securityConfigPublicKeyDesc =>
+      'Your public key is sent to other nodes for secure messaging';
+
+  @override
+  String get securityConfigPrivateKey => 'Private Key';
+
+  @override
+  String get securityConfigPrivateKeyHint => 'Base64 encoded 32-byte key';
+
+  @override
+  String get securityConfigPrivateKeyDesc =>
+      'Used to compute shared secret with remote devices';
+
+  @override
+  String get securityConfigRegenKeyPair => 'Regenerate Key Pair';
+
+  @override
+  String get securityConfigGenerating => 'Generating...';
+
+  @override
+  String get securityConfigGenerate => 'Generate';
+
+  @override
+  String get securityConfigRegenDesc =>
+      'Generate a new key pair (public key will be automatically derived)';
+
+  @override
+  String get securityConfigKeyBackup => 'Key Backup';
+
+  @override
+  String get securityConfigBackupDesc =>
+      'Backup your private key to secure storage for recovery. Keys are stored in the device keychain with iCloud sync enabled.';
+
+  @override
+  String get securityConfigBackupBtn => 'Backup';
+
+  @override
+  String get securityConfigRestoreBtn => 'Restore';
+
+  @override
+  String get securityConfigDeleteBackupTooltip => 'Delete backup';
+
+  @override
+  String get securityConfigAdminKeysDesc =>
+      'Public keys authorized to send admin messages to this node';
+
+  @override
+  String get securityConfigPrimaryAdminKey => 'Primary Admin Key';
+
+  @override
+  String get securityConfigSecondaryAdminKey => 'Secondary Admin Key';
+
+  @override
+  String get securityConfigTertiaryAdminKey => 'Tertiary Admin Key';
+
+  @override
+  String get securityConfigAdminKeyHint => 'Base64 encoded public key';
+
+  @override
+  String get securityConfigManagedMode => 'Managed Mode';
+
+  @override
+  String get securityConfigManagedModeSubtitle =>
+      'Device is managed by an external system';
+
+  @override
+  String get securityConfigSerialConsole => 'Serial Console';
+
+  @override
+  String get securityConfigSerialConsoleSubtitle =>
+      'Enable USB serial console access';
+
+  @override
+  String get securityConfigDebugLogging => 'Debug Logging';
+
+  @override
+  String get securityConfigDebugLoggingSubtitle =>
+      'Enable verbose debug log output';
+
+  @override
+  String get securityConfigAdminChannel => 'Admin Channel';
+
+  @override
+  String get securityConfigAdminChannelSubtitle =>
+      'Allow remote admin via admin channel';
+
+  @override
+  String get securityConfigWarning =>
+      'Disabling serial console or enabling managed mode may make it difficult to recover the device. Make sure you understand the implications before making changes.';
+
+  @override
+  String get securityConfigDeleteBackupTitle => 'Delete Backup?';
+
+  @override
+  String get securityConfigDeleteBackupMsg =>
+      'This will permanently delete the backed up private key from secure storage. This cannot be undone.';
+
+  @override
+  String get securityConfigDeleteBtn => 'Delete';
+
+  @override
+  String get securityConfigNewKeyPairGenerated => 'New key pair generated';
+
+  @override
+  String securityConfigKeyGenFailed(String error) {
+    return 'Failed to generate key: $error';
+  }
+
+  @override
+  String get securityConfigSaved => 'Security configuration saved';
+
+  @override
+  String securityConfigSaveFailed(String error) {
+    return 'Failed to save: $error';
+  }
+
+  @override
+  String get securityConfigInvalidPrivateKey => 'Invalid private key format';
+
+  @override
+  String get securityConfigInvalidAdminKey => 'Invalid admin key format';
+
+  @override
+  String get securityConfigNoDevice => 'No connected device';
+
+  @override
+  String get securityConfigBackedUp =>
+      'Private key backed up to secure storage';
+
+  @override
+  String securityConfigBackupFailed(String error) {
+    return 'Failed to backup key: $error';
+  }
+
+  @override
+  String get securityConfigNoBackupFound => 'No backup found for this device';
+
+  @override
+  String get securityConfigRestored => 'Private key restored from backup';
+
+  @override
+  String securityConfigRestoreFailed(String error) {
+    return 'Failed to restore key: $error';
+  }
+
+  @override
+  String get securityConfigBackupDeleted => 'Backup deleted';
+
+  @override
+  String securityConfigDeleteBackupFailed(String error) {
+    return 'Failed to delete backup: $error';
+  }
+
+  @override
+  String get trafficMgmtTitle => 'Traffic Management';
+
+  @override
+  String get trafficMgmtSave => 'Save';
+
+  @override
+  String get trafficMgmtSectionGeneral => 'GENERAL';
+
+  @override
+  String get trafficMgmtSectionPositionDedup => 'POSITION DEDUPLICATION';
+
+  @override
+  String get trafficMgmtSectionNodeinfoResponse => 'NODEINFO DIRECT RESPONSE';
+
+  @override
+  String get trafficMgmtSectionRateLimit => 'RATE LIMITING';
+
+  @override
+  String get trafficMgmtSectionUnknownPackets => 'UNKNOWN PACKETS';
+
+  @override
+  String get trafficMgmtSectionHopMgmt => 'HOP MANAGEMENT';
+
+  @override
+  String get trafficMgmtEnable => 'Enable Traffic Management';
+
+  @override
+  String get trafficMgmtEnableSubtitle =>
+      'Master toggle for all traffic management features';
+
+  @override
+  String get trafficMgmtPositionDedup => 'Position Deduplication';
+
+  @override
+  String get trafficMgmtPositionDedupSubtitle =>
+      'Drop duplicate position packets';
+
+  @override
+  String trafficMgmtPrecisionBits(int value) {
+    return 'Precision Bits: $value';
+  }
+
+  @override
+  String get trafficMgmtPrecisionBitsDesc =>
+      'Lower values mean more aggressive deduplication';
+
+  @override
+  String trafficMgmtPrecisionBitsLabel(int value) {
+    return '$value bits';
+  }
+
+  @override
+  String trafficMgmtMinInterval(int seconds) {
+    return 'Min Interval: ${seconds}s';
+  }
+
+  @override
+  String get trafficMgmtMinIntervalDesc =>
+      'Minimum seconds between position updates';
+
+  @override
+  String get trafficMgmtDirectResponse => 'Direct Response';
+
+  @override
+  String get trafficMgmtDirectResponseSubtitle =>
+      'Respond to NodeInfo requests directly';
+
+  @override
+  String trafficMgmtMaxHops(int value) {
+    return 'Max Hops: $value';
+  }
+
+  @override
+  String get trafficMgmtMaxHopsDesc =>
+      'Maximum hops for direct NodeInfo response';
+
+  @override
+  String get trafficMgmtPerNodeRateLimit => 'Per-Node Rate Limiting';
+
+  @override
+  String get trafficMgmtPerNodeRateLimitSubtitle =>
+      'Limit packet rate from individual nodes';
+
+  @override
+  String trafficMgmtWindow(int seconds) {
+    return 'Window: ${seconds}s';
+  }
+
+  @override
+  String get trafficMgmtWindowDesc => 'Time window for rate limit calculation';
+
+  @override
+  String trafficMgmtMaxPackets(int value) {
+    return 'Max Packets: $value';
+  }
+
+  @override
+  String get trafficMgmtMaxPacketsDesc =>
+      'Maximum packets per window before dropping';
+
+  @override
+  String get trafficMgmtDropUnknown => 'Drop Unknown Packets';
+
+  @override
+  String get trafficMgmtDropUnknownSubtitle =>
+      'Drop packets from unknown sources';
+
+  @override
+  String trafficMgmtThreshold(int value) {
+    return 'Threshold: $value';
+  }
+
+  @override
+  String get trafficMgmtThresholdDesc =>
+      'Number of unknown packets before dropping';
+
+  @override
+  String get trafficMgmtExhaustHopTelemetry => 'Exhaust Hop on Telemetry';
+
+  @override
+  String get trafficMgmtExhaustHopTelemetrySub =>
+      'Set hop limit to 0 for relayed telemetry';
+
+  @override
+  String get trafficMgmtExhaustHopPosition => 'Exhaust Hop on Position';
+
+  @override
+  String get trafficMgmtExhaustHopPositionSub =>
+      'Set hop limit to 0 for relayed positions';
+
+  @override
+  String get trafficMgmtPreserveRouterHops => 'Preserve Router Hops';
+
+  @override
+  String get trafficMgmtPreserveRouterHopsSub =>
+      'Preserve hop count for router nodes';
+
+  @override
+  String get trafficMgmtSaved => 'Traffic management configuration saved';
+
+  @override
+  String trafficMgmtSaveFailed(String error) {
+    return 'Failed to save: $error';
+  }
+
+  @override
+  String get adminPanelTitle => 'Admin';
+
+  @override
+  String get adminPanelSectionShop => 'SHOP MANAGEMENT';
+
+  @override
+  String get adminPanelShopDashboard => 'Shop Admin Dashboard';
+
+  @override
+  String get adminPanelShopDashboardSub =>
+      'Manage products, orders, and inventory';
+
+  @override
+  String get adminPanelDeviceShop => 'Device Shop';
+
+  @override
+  String get adminPanelDeviceShopSub => 'View and manage device listings';
+
+  @override
+  String get adminPanelSectionModeration => 'CONTENT MODERATION';
+
+  @override
+  String get adminPanelBugReports => 'Bug Reports';
+
+  @override
+  String get adminPanelBugReportsSub => 'View and respond to user bug reports';
+
+  @override
+  String get adminPanelReviewMod => 'Review Moderation';
+
+  @override
+  String get adminPanelReviewModSub => 'Approve or reject user reviews';
+
+  @override
+  String get adminPanelReportedContent => 'Reported Content';
+
+  @override
+  String get adminPanelReportedContentSub =>
+      'Review flagged posts and comments';
+
+  @override
+  String get adminPanelWidgetReview => 'Widget Marketplace Review';
+
+  @override
+  String get adminPanelWidgetReviewSub => 'Approve pending widget submissions';
+
+  @override
+  String get adminPanelSectionUsers => 'USER MANAGEMENT';
+
+  @override
+  String get adminPanelSocialSeeding => 'Social Seeding';
+
+  @override
+  String get adminPanelSocialSeedingSub =>
+      'Manage follow requests and connections';
+
+  @override
+  String get adminPanelUserPurchases => 'User Purchases';
+
+  @override
+  String get adminPanelUserPurchasesSub => 'View and manage user transactions';
+
+  @override
+  String get adminPanelSectionConfig => 'APP CONFIGURATION';
+
+  @override
+  String get adminPanelBroadcast => 'Broadcast Notification';
+
+  @override
+  String get adminPanelBroadcastSub => 'Send push notification to all users';
+
+  @override
+  String get adminPanelQrStyles => 'QR Code Styles';
+
+  @override
+  String get adminPanelQrStylesSub => 'Preview branded QR code designs';
+
+  @override
+  String get adminPanelSectionDiag => 'DEVICE DIAGNOSTICS';
+
+  @override
+  String get adminPanelDiagHarness => 'Diagnostic Harness';
+
+  @override
+  String get adminPanelDiagHarnessSub =>
+      'Run protocol probes and export debug bundle';
+
+  @override
+  String get adminPanelConformance => 'Conformance Harness';
+
+  @override
+  String get adminPanelConformanceSub =>
+      'Provider-bound device conformance & stress tests';
+
+  @override
+  String get adminPanelBadgeOverflow => '99+';
+
+  @override
+  String get adminBroadcastTitle => 'Broadcast Notification';
+
+  @override
+  String get adminBroadcastSignInRequired =>
+      'You must be signed in to send notifications';
+
+  @override
+  String get adminBroadcastTestSentTitle => 'Test Sent';
+
+  @override
+  String get adminBroadcastSentTitle => 'Broadcast Sent';
+
+  @override
+  String get adminBroadcastTestSentBody =>
+      'Your test notification has been sent to all admins.';
+
+  @override
+  String get adminBroadcastSentBody =>
+      'Your notification has been sent to all Socialmesh users.';
+
+  @override
+  String get adminBroadcastDone => 'Done';
+
+  @override
+  String adminBroadcastFailedDetailed(String code, String message) {
+    return 'Failed to send: $code - $message';
+  }
+
+  @override
+  String adminBroadcastFailed(String error) {
+    return 'Failed to send: $error';
+  }
+
+  @override
+  String get adminBroadcastSelectDeepLink => 'Select Deep Link';
+
+  @override
+  String get adminBroadcastSelectIcon => 'Select Icon';
+
+  @override
+  String get adminBroadcastPreviewTitlePlaceholder => 'Notification Title';
+
+  @override
+  String get adminBroadcastPreviewBodyPlaceholder =>
+      'Notification message will appear here...';
+
+  @override
+  String get adminBroadcastWarning =>
+      'This will send a push notification to every Socialmesh user. Use sparingly for important announcements only.';
+
+  @override
+  String get adminBroadcastIconLabel => 'Icon';
+
+  @override
+  String get adminBroadcastClear => 'Clear';
+
+  @override
+  String get adminBroadcastFieldTitle => 'Title';
+
+  @override
+  String get adminBroadcastTitleHint => 'Notification title...';
+
+  @override
+  String get adminBroadcastTitleRequired => 'Title is required';
+
+  @override
+  String get adminBroadcastFieldMessage => 'Message';
+
+  @override
+  String get adminBroadcastMessageHint => 'Notification message...';
+
+  @override
+  String get adminBroadcastMessageRequired => 'Message is required';
+
+  @override
+  String get adminBroadcastDeepLinkLabel => 'Deep Link (Optional)';
+
+  @override
+  String get adminBroadcastDeepLinkHelper =>
+      'Screen to open when notification is tapped.';
+
+  @override
+  String get adminBroadcastDeepLinkNone => 'None';
+
+  @override
+  String get adminBroadcastSendingTest => 'Sending Test...';
+
+  @override
+  String get adminBroadcastTestButton => 'Test to Admins Only';
+
+  @override
+  String get adminBroadcastTestHint =>
+      'Send a test notification to admins before broadcasting to all users.';
+
+  @override
+  String adminBroadcastCountdownCancel(int seconds) {
+    return 'Cancel — sending in $seconds...';
+  }
+
+  @override
+  String get adminBroadcastSending => 'Sending...';
+
+  @override
+  String get adminBroadcastSendAll => 'Send to Everyone';
+
+  @override
+  String adminBroadcastSendHint(int seconds) {
+    return 'Sends a push notification to all Socialmesh users. A ${seconds}s countdown gives you time to cancel.';
+  }
+
+  @override
+  String get adminBroadcastPreviewLabel => 'PREVIEW';
+
+  @override
+  String get adminBroadcastPreviewAppName => 'SOCIALMESH';
+
+  @override
+  String get adminBroadcastPreviewNow => 'now';
+
+  @override
+  String get adminBroadcastIconCatGeneral => 'GENERAL';
+
+  @override
+  String get adminBroadcastIconCatSocial => 'SOCIAL';
+
+  @override
+  String get adminBroadcastIconCatPremium => 'PREMIUM';
+
+  @override
+  String get adminBroadcastIconAnnouncement => 'Announcement';
+
+  @override
+  String get adminBroadcastIconUpdate => 'App Update';
+
+  @override
+  String get adminBroadcastIconFeature => 'New Feature';
+
+  @override
+  String get adminBroadcastIconMaintenance => 'Maintenance';
+
+  @override
+  String get adminBroadcastIconAlert => 'Alert';
+
+  @override
+  String get adminBroadcastIconCelebration => 'Celebration';
+
+  @override
+  String get adminBroadcastIconTip => 'Tip';
+
+  @override
+  String get adminBroadcastIconSignals => 'Signals';
+
+  @override
+  String get adminBroadcastIconNodedex => 'NodeDex';
+
+  @override
+  String get adminBroadcastIconAether => 'Aether';
+
+  @override
+  String get adminBroadcastIconActivity => 'Activity';
+
+  @override
+  String get adminBroadcastIconPresence => 'Presence';
+
+  @override
+  String get adminBroadcastIconCommunity => 'Community';
+
+  @override
+  String get adminBroadcastIconWorldMap => 'World Map';
+
+  @override
+  String get adminBroadcastIconThemes => 'Theme Pack';
+
+  @override
+  String get adminBroadcastIconRingtones => 'Ringtone Pack';
+
+  @override
+  String get adminBroadcastIconWidgets => 'Widgets';
+
+  @override
+  String get adminBroadcastIconAutomations => 'Automations';
+
+  @override
+  String get adminBroadcastIconIfttt => 'IFTTT Integration';
+
+  @override
+  String get adminBroadcastDefTitleAnnouncement => 'Announcement';
+
+  @override
+  String get adminBroadcastDefTitleUpdate => 'App Update Available';
+
+  @override
+  String get adminBroadcastDefTitleFeature => 'New Feature';
+
+  @override
+  String get adminBroadcastDefTitleMaintenance => 'Scheduled Maintenance';
+
+  @override
+  String get adminBroadcastDefTitleAlert => 'Important Alert';
+
+  @override
+  String get adminBroadcastDefTitleCelebration => 'Celebration';
+
+  @override
+  String get adminBroadcastDefTitleTip => 'Pro Tip';
+
+  @override
+  String get adminBroadcastDefTitleSignals => 'Signals Update';
+
+  @override
+  String get adminBroadcastDefTitleNodedex => 'NodeDex Update';
+
+  @override
+  String get adminBroadcastDefTitleAether => 'Aether Update';
+
+  @override
+  String get adminBroadcastDefTitleActivity => 'Activity Update';
+
+  @override
+  String get adminBroadcastDefTitlePresence => 'Presence Update';
+
+  @override
+  String get adminBroadcastDefTitleCommunity => 'Community Update';
+
+  @override
+  String get adminBroadcastDefTitleWorldMap => 'World Map Update';
+
+  @override
+  String get adminBroadcastDefTitleThemes => 'New Theme Pack';
+
+  @override
+  String get adminBroadcastDefTitleRingtones => 'New Ringtone Pack';
+
+  @override
+  String get adminBroadcastDefTitleWidgets => 'New Widgets';
+
+  @override
+  String get adminBroadcastDefTitleAutomations => 'Automations Update';
+
+  @override
+  String get adminBroadcastDefTitleIfttt => 'IFTTT Integration';
+
+  @override
+  String get adminBroadcastDefBodyAnnouncement =>
+      'We have an important announcement for the Socialmesh community.';
+
+  @override
+  String get adminBroadcastDefBodyUpdate =>
+      'A new version of Socialmesh is available with improvements and bug fixes.';
+
+  @override
+  String get adminBroadcastDefBodyFeature =>
+      'We just launched a new feature in Socialmesh. Check it out!';
+
+  @override
+  String get adminBroadcastDefBodyMaintenance =>
+      'Socialmesh services will be briefly unavailable for scheduled maintenance.';
+
+  @override
+  String get adminBroadcastDefBodyAlert =>
+      'Please be aware of an important issue affecting Socialmesh.';
+
+  @override
+  String get adminBroadcastDefBodyCelebration =>
+      'We have something exciting to celebrate with the Socialmesh community!';
+
+  @override
+  String get adminBroadcastDefBodyTip =>
+      'Here is a helpful tip to get the most out of Socialmesh.';
+
+  @override
+  String get adminBroadcastDefBodySignals =>
+      'Check out what is new in Signals, your mesh presence feed.';
+
+  @override
+  String get adminBroadcastDefBodyNodedex =>
+      'NodeDex has new features for discovering and tracking mesh nodes.';
+
+  @override
+  String get adminBroadcastDefBodyAether =>
+      'New improvements to Aether flight sharing are now live.';
+
+  @override
+  String get adminBroadcastDefBodyActivity =>
+      'See what is happening in your Activity feed.';
+
+  @override
+  String get adminBroadcastDefBodyPresence =>
+      'Presence detection has been improved for better mesh awareness.';
+
+  @override
+  String get adminBroadcastDefBodyCommunity =>
+      'Join the latest Socialmesh community initiatives.';
+
+  @override
+  String get adminBroadcastDefBodyWorldMap =>
+      'The World Mesh Map has new features for exploring global mesh coverage.';
+
+  @override
+  String get adminBroadcastDefBodyThemes =>
+      'A new theme pack is now available in the Socialmesh store.';
+
+  @override
+  String get adminBroadcastDefBodyRingtones =>
+      'A new ringtone pack is now available for your mesh notifications.';
+
+  @override
+  String get adminBroadcastDefBodyWidgets =>
+      'New home screen widgets are now available for Socialmesh.';
+
+  @override
+  String get adminBroadcastDefBodyAutomations =>
+      'New automation triggers and actions are now available.';
+
+  @override
+  String get adminBroadcastDefBodyIfttt =>
+      'Connect Socialmesh with your favourite services via IFTTT.';
+
+  @override
+  String get adminBroadcastDeepLinkCatCore => 'CORE';
+
+  @override
+  String get adminBroadcastDeepLinkCatSocial => 'SOCIAL';
+
+  @override
+  String get adminBroadcastDeepLinkCatMesh => 'MESH';
+
+  @override
+  String get adminBroadcastDeepLinkCatPremium => 'PREMIUM';
+
+  @override
+  String get adminBroadcastLinkSettings => 'Settings';
+
+  @override
+  String get adminBroadcastLinkAccount => 'Account & Subscriptions';
+
+  @override
+  String get adminBroadcastLinkScanner => 'Scanner';
+
+  @override
+  String get adminBroadcastLinkMessages => 'Messages';
+
+  @override
+  String get adminBroadcastLinkChannels => 'Channels';
+
+  @override
+  String get adminBroadcastLinkNodes => 'Nodes';
+
+  @override
+  String get adminBroadcastLinkMap => 'Map';
+
+  @override
+  String get adminBroadcastLinkSignals => 'Signals';
+
+  @override
+  String get adminBroadcastLinkNodedex => 'NodeDex';
+
+  @override
+  String get adminBroadcastLinkAether => 'Aether';
+
+  @override
+  String get adminBroadcastLinkActivity => 'Activity';
+
+  @override
+  String get adminBroadcastLinkPresence => 'Presence';
+
+  @override
+  String get adminBroadcastLinkTimeline => 'Timeline';
+
+  @override
+  String get adminBroadcastLinkWorldMap => 'World Map';
+
+  @override
+  String get adminBroadcastLinkGlobe => '3D Globe';
+
+  @override
+  String get adminBroadcastLinkReachability => 'Reachability';
+
+  @override
+  String get adminBroadcastLinkThemes => 'Theme Pack';
+
+  @override
+  String get adminBroadcastLinkRingtones => 'Ringtone Pack';
+
+  @override
+  String get adminBroadcastLinkWidgets => 'Widgets';
+
+  @override
+  String get adminBroadcastLinkAutomations => 'Automations';
+
+  @override
+  String get adminBroadcastLinkIfttt => 'IFTTT Integration';
+
+  @override
+  String get adminDiagTitle => 'Admin Diagnostics';
+
+  @override
+  String get adminDiagTargetLocal => 'Local device';
+
+  @override
+  String adminDiagTargetRemote(String hexId) {
+    return 'Remote: $hexId';
+  }
+
+  @override
+  String get adminDiagDescription =>
+      'Run diagnostic probes against your connected device and export a detailed bundle for debugging protocol/transport issues.';
+
+  @override
+  String get adminDiagTargetLabel => 'Target';
+
+  @override
+  String get adminDiagMyNodeLabel => 'My Node';
+
+  @override
+  String get adminDiagStressToggle => 'Include stress tests';
+
+  @override
+  String get adminDiagStressToggleSub =>
+      'Burst reads and out-of-order correlation';
+
+  @override
+  String get adminDiagWriteToggle => 'Include write tests (reversible)';
+
+  @override
+  String get adminDiagWriteToggleSub =>
+      'No-op writes with read-back verification';
+
+  @override
+  String get adminDiagRunButton => 'Run Diagnostics';
+
+  @override
+  String get adminDiagNoDevice => 'No device connected';
+
+  @override
+  String adminDiagProbeProgress(int completed, int total) {
+    return '$completed / $total probes';
+  }
+
+  @override
+  String get adminDiagCancel => 'Cancel';
+
+  @override
+  String adminDiagResultSummary(int passed, int failed) {
+    return '$passed passed, $failed failed';
+  }
+
+  @override
+  String get adminDiagExportBundle => 'Export Bundle';
+
+  @override
+  String get adminDiagCopySummary => 'Copy Summary to Clipboard';
+
+  @override
+  String get adminDiagRunAgain => 'Run Again';
+
+  @override
+  String get adminDiagWriteTestsDialogTitle => 'Enable Write Tests?';
+
+  @override
+  String get adminDiagWriteTestsDialogBody =>
+      'Write tests perform no-op writes (same value) to verify round-trip behavior. They do not change device state, but they do send SET commands to the device.\n\nAre you sure you want to include write tests?';
+
+  @override
+  String get adminDiagWriteTestsCancel => 'Cancel';
+
+  @override
+  String get adminDiagWriteTestsEnable => 'Enable';
+
+  @override
+  String adminDiagExportFailed(String error) {
+    return 'Export failed: $error';
+  }
+
+  @override
+  String get adminDiagCopiedToClipboard => 'Summary copied to clipboard';
+
+  @override
+  String get adminPurchasesTitle => 'User Purchases';
+
+  @override
+  String get adminPurchasesLabelTotal => ' TOTAL · ';
+
+  @override
+  String get adminPurchasesLabelPaying => ' PAYING · ';
+
+  @override
+  String get adminPurchasesLabelFree => ' FREE · ';
+
+  @override
+  String get adminPurchasesLabelRevenue => ' REVENUE';
+
+  @override
+  String get adminPurchasesLabelExcluded => ' EXCLUDED';
+
+  @override
+  String get adminPurchasesStatTotalUsers => 'Total Users';
+
+  @override
+  String get adminPurchasesStatPaying => 'Paying';
+
+  @override
+  String adminPurchasesStatExcludedCount(int count) {
+    return '$count excluded';
+  }
+
+  @override
+  String get adminPurchasesStatFree => 'Free';
+
+  @override
+  String get adminPurchasesStatConversion => 'Conversion';
+
+  @override
+  String get adminPurchasesStatArpu => 'ARPU';
+
+  @override
+  String get adminPurchasesStatArpuTooltip => 'Average Revenue Per User';
+
+  @override
+  String get adminPurchasesStatGross => 'Gross Revenue';
+
+  @override
+  String get adminPurchasesStatExcluded => 'Excluded';
+
+  @override
+  String get adminPurchasesStatNet => 'Net Revenue';
+
+  @override
+  String get adminPurchasesStatNewUsers24h => 'New Users (24h)';
+
+  @override
+  String get adminPurchasesStatPurchases24h => 'Purchases (24h)';
+
+  @override
+  String get adminPurchasesStatRevenue24h => 'Revenue (24h)';
+
+  @override
+  String get adminPurchasesSearchHint => 'Search users...';
+
+  @override
+  String get adminPurchasesFilterAll => 'All';
+
+  @override
+  String get adminPurchasesFilterPaying => 'Paying';
+
+  @override
+  String get adminPurchasesFilterFree => 'Free';
+
+  @override
+  String get adminPurchasesFilterExcluded => 'Excluded';
+
+  @override
+  String get adminPurchasesFilterAnonymous => 'Anonymous';
+
+  @override
+  String get adminPurchasesFilterDeleted => 'Deleted';
+
+  @override
+  String get adminPurchasesBannerTitle =>
+      'Shows purchases synced via app login or RevenueCat webhooks.';
+
+  @override
+  String get adminPurchasesBannerSubtitle =>
+      'Users must open the app while signed in for their purchases to appear here.';
+
+  @override
+  String get adminPurchasesErrorLoading => 'Error loading users';
+
+  @override
+  String get adminPurchasesRetry => 'Retry';
+
+  @override
+  String get adminPurchasesNoSearchResults => 'No users match your search';
+
+  @override
+  String get adminPurchasesNoUsers => 'No users found';
+
+  @override
+  String get adminPurchasesUnknownUser => 'Unknown User';
+
+  @override
+  String get adminPurchasesAnonymousTag => 'Anonymous';
+
+  @override
+  String get adminPurchasesDeletedTag => 'Deleted';
+
+  @override
+  String get adminPurchasesAnonRcUser => 'Anonymous RevenueCat User';
+
+  @override
+  String get adminPurchasesFallbackCloudSync => 'Cloud Sync';
+
+  @override
+  String get adminPurchasesSectionIds => 'Identifiers';
+
+  @override
+  String get adminPurchasesFirebaseUid => 'Firebase UID';
+
+  @override
+  String get adminPurchasesRevenueCatId => 'RevenueCat ID';
+
+  @override
+  String get adminPurchasesMemberSince => 'Member Since';
+
+  @override
+  String get adminPurchasesSectionPurchases => 'Purchases';
+
+  @override
+  String adminPurchasesItemCount(int count) {
+    return '$count items';
+  }
+
+  @override
+  String get adminPurchasesNoPurchases => 'No purchases';
+
+  @override
+  String get adminPurchasesCopied => 'Copied to clipboard';
+
+  @override
+  String get adminPurchasesCopyTooltip => 'Copy';
+
+  @override
+  String get adminQrStyleTitle => 'QR Code Styles';
+
+  @override
+  String get adminQrStyleHeading => 'Branded QR Code Styles';
+
+  @override
+  String get adminQrStyleDescription =>
+      'Preview different QR code styles with the Socialmesh logo. All styles use Level H error correction for reliable scanning.';
+
+  @override
+  String get adminQrStyleSmooth => 'Smooth';
+
+  @override
+  String get adminQrStyleSmoothDesc =>
+      'Modern, rounded liquid-like modules. Premium feel.';
+
+  @override
+  String get adminQrStyleDots => 'Dots';
+
+  @override
+  String get adminQrStyleDotsDesc =>
+      'Circular dot modules. Clean and minimal look.';
+
+  @override
+  String get adminQrStyleSquares => 'Squares';
+
+  @override
+  String get adminQrStyleSquaresDesc =>
+      'Classic blocky QR style. Maximum compatibility.';
+
+  @override
+  String get adminQrStyleElevatedHeader => 'ELEVATED STYLES';
+
+  @override
+  String adminQrStyleElevatedSub(String styleName) {
+    return 'Premium color treatments using $styleName pattern';
+  }
+
+  @override
+  String get adminQrStyleNeonGlow => 'Neon Glow';
+
+  @override
+  String get adminQrStyleFrostedGlass => 'Frosted Glass';
+
+  @override
+  String get adminQrStyleInverted => 'Inverted';
+
+  @override
+  String get adminQrStyleHolographic => 'Holographic';
+
+  @override
+  String get adminQrStyleAccentBranded => 'Accent Branded';
+
+  @override
+  String get adminQrStyleMinimal => 'Minimal';
+
+  @override
+  String get adminQrStyleCyberpunk => 'Cyberpunk';
+
+  @override
+  String get adminQrStyleAccentGlow => 'Accent Glow';
+
+  @override
+  String get adminQrStyleOcean => 'Ocean';
+
+  @override
+  String get adminQrStyleLuxury => 'Luxury';
+
+  @override
+  String adminQrStyleSelected(String styleName) {
+    return 'Selected: $styleName';
+  }
+
+  @override
+  String get adminQrStyleScanToVerify => 'Scan to verify';
+
+  @override
+  String get adminBugReportsTitle => 'Bug Reports';
+
+  @override
+  String get adminBugReportsSearchHint => 'Search reports';
+
+  @override
+  String get adminBugReportsLoadError => 'Failed to load reports';
+
+  @override
+  String get adminBugReportsMessageTooLong =>
+      'Message exceeds 2,000 characters.';
+
+  @override
+  String get adminBugReportsReplySent => 'Response sent.';
+
+  @override
+  String adminBugReportsReplyFailed(String error) {
+    return 'Failed to send: $error';
+  }
+
+  @override
+  String get adminBugReportsResolved => 'Report resolved.';
+
+  @override
+  String get adminBugReportsReopened => 'Report reopened.';
+
+  @override
+  String adminBugReportsStatusFailed(String error) {
+    return 'Failed to update status: $error';
+  }
+
+  @override
+  String get adminBugReportsStatusOpen => 'OPEN';
+
+  @override
+  String get adminBugReportsStatusUserReplied => 'USER REPLIED';
+
+  @override
+  String get adminBugReportsStatusResponded => 'RESPONDED';
+
+  @override
+  String get adminBugReportsStatusResolved => 'RESOLVED';
+
+  @override
+  String get adminBugReportsTimeJustNow => 'just now';
+
+  @override
+  String adminBugReportsTimeMinutes(int minutes) {
+    return '${minutes}m ago';
+  }
+
+  @override
+  String adminBugReportsTimeHours(int hours) {
+    return '${hours}h ago';
+  }
+
+  @override
+  String adminBugReportsTimeDays(int days) {
+    return '${days}d ago';
+  }
+
+  @override
+  String get adminBugReportsSectionDesc => 'DESCRIPTION';
+
+  @override
+  String get adminBugReportsSectionScreenshot => 'SCREENSHOT';
+
+  @override
+  String get adminBugReportsSectionDetails => 'DETAILS';
+
+  @override
+  String get adminBugReportsDetailReportId => 'Report ID';
+
+  @override
+  String get adminBugReportsDetailUserId => 'User ID';
+
+  @override
+  String get adminBugReportsAnonymousValue => 'anonymous';
+
+  @override
+  String get adminBugReportsDetailEmail => 'Email';
+
+  @override
+  String get adminBugReportsDetailDevice => 'Device';
+
+  @override
+  String get adminBugReportsDetailOs => 'OS Version';
+
+  @override
+  String get adminBugReportsDetailAppVer => 'App Version';
+
+  @override
+  String get adminBugReportsSectionConversation => 'CONVERSATION';
+
+  @override
+  String get adminBugReportsThreadYou => 'You';
+
+  @override
+  String get adminBugReportsThreadUser => 'User';
+
+  @override
+  String get adminBugReportsReplyHint => 'Write a response...';
+
+  @override
+  String get adminBugReportsReopen => 'Reopen';
+
+  @override
+  String get adminBugReportsResolve => 'Resolve';
+
+  @override
+  String adminBugReportsCountdownCancel(int seconds) {
+    return 'Cancel · $seconds';
+  }
+
+  @override
+  String get adminBugReportsSend => 'Send';
+
+  @override
+  String get adminBugReportsAnonNotice =>
+      'Anonymous report — replies cannot be delivered.';
+
+  @override
+  String get adminBugReportsEmptyFilter => 'No reports match your filter.';
+
+  @override
+  String get adminBugReportsEmptyAll => 'No bug reports yet.';
+
+  @override
+  String get adminConformanceTitle => 'Conformance Harness';
+
+  @override
+  String get adminConformanceDescription =>
+      'Provider-bound device conformance testing. All mutations flow through the same provider entrypoints used by the actual screens.';
+
+  @override
+  String get adminConformanceTargetDevice => 'Target Device';
+
+  @override
+  String adminConformanceTargetRemote(String target) {
+    return 'Remote: $target';
+  }
+
+  @override
+  String get adminConformanceTargetLocal => 'Local device';
+
+  @override
+  String adminConformanceNodesAvailable(int count) {
+    return '$count remote node(s) available';
+  }
+
+  @override
+  String get adminConformanceOtaPki => 'Over-the-air admin via PKI';
+
+  @override
+  String get adminConformanceNoNodes => 'No PKI-capable remote nodes';
+
+  @override
+  String get adminConformanceSwitchLocal => 'Switch to Local';
+
+  @override
+  String get adminConformanceTestOptions => 'Test Options';
+
+  @override
+  String get adminConformanceDestructive => 'Destructive Tests';
+
+  @override
+  String get adminConformanceDestructiveSub =>
+      'Randomized mutations, burst stress, node DB reset. May temporarily change device config.';
+
+  @override
+  String get adminConformanceRunRemoteDestructive =>
+      'Run Remote Conformance (Destructive)';
+
+  @override
+  String get adminConformanceRunRemoteSafe => 'Run Remote Conformance (Safe)';
+
+  @override
+  String get adminConformanceRunLocalDestructive =>
+      'Run Conformance (Destructive)';
+
+  @override
+  String get adminConformanceRunLocalSafe => 'Run Conformance (Safe)';
+
+  @override
+  String adminConformanceProgress(
+    int completed,
+    int total,
+    int pass,
+    int fail,
+  ) {
+    return '$completed / $total  (pass: $pass, fail: $fail)';
+  }
+
+  @override
+  String get adminConformanceCancel => 'Cancel';
+
+  @override
+  String get adminConformanceAllPassed => 'All Tests Passed';
+
+  @override
+  String get adminConformanceSomeFailed => 'Some Tests Failed';
+
+  @override
+  String get adminConformanceLabelPassed => 'Passed';
+
+  @override
+  String get adminConformanceLabelFailed => 'Failed';
+
+  @override
+  String get adminConformanceLabelSkipped => 'Skipped';
+
+  @override
+  String get adminConformanceLabelTimeouts => 'Timeouts';
+
+  @override
+  String get adminConformanceAnomalies => 'Anomalies:';
+
+  @override
+  String get adminConformanceTestResults => 'Test Results';
+
+  @override
+  String get adminConformanceExportBundle => 'Export Bundle';
+
+  @override
+  String get adminConformanceRunAgain => 'Run Again';
+
+  @override
+  String get adminConformanceInitializing => 'Initializing';
+
+  @override
+  String get globalLayerDiagnosticsTitle => 'Diagnostics';
+
+  @override
+  String get globalLayerCopyReportTooltip => 'Copy report';
+
+  @override
+  String get globalLayerCheckResultsHeader => 'Check Results';
+
+  @override
+  String get globalLayerConnectionDiagnosticsTitle => 'Connection Diagnostics';
+
+  @override
+  String get globalLayerConnectionDiagnosticsDescription =>
+      'Run a series of checks to verify your broker connection. Each step tests a different layer of the connection stack.';
+
+  @override
+  String globalLayerRunningChecksProgress(int passed, int total) {
+    return 'Running checks... $passed/$total';
+  }
+
+  @override
+  String get globalLayerRunAgain => 'Run Again';
+
+  @override
+  String get globalLayerStartDiagnostics => 'Start Diagnostics';
+
+  @override
+  String get globalLayerSummaryHeader => 'Summary';
+
+  @override
+  String globalLayerTotalTime(int milliseconds) {
+    return 'Total time: ${milliseconds}ms';
+  }
+
+  @override
+  String get globalLayerAllClearTitle => 'All Clear';
+
+  @override
+  String globalLayerAllChecksPassed(int count) {
+    return 'All $count checks passed';
+  }
+
+  @override
+  String get globalLayerWarningsFoundTitle => 'Warnings Found';
+
+  @override
+  String get globalLayerWarningsFoundMessage =>
+      'All checks passed but with warnings to review';
+
+  @override
+  String get globalLayerIssuesFoundTitle => 'Issues Found';
+
+  @override
+  String globalLayerChecksFailedCount(int failed, int total) {
+    return '$failed of $total checks failed';
+  }
+
+  @override
+  String get globalLayerDiagnosticsReportCopied =>
+      'Diagnostics report copied to clipboard';
+
+  @override
+  String get globalLayerChecking => 'Checking...';
+
+  @override
+  String globalLayerSkippedBecauseFailed(String checkName) {
+    return 'Skipped because $checkName failed.';
+  }
+
+  @override
+  String globalLayerFixCheckFirst(String checkName) {
+    return 'Fix $checkName first, then re-run diagnostics.';
+  }
+
+  @override
+  String get globalLayerNoHostnameConfigured => 'No hostname configured.';
+
+  @override
+  String get globalLayerEnterBrokerHostname =>
+      'Enter a broker hostname in the setup wizard.';
+
+  @override
+  String globalLayerHostnameResolved(String host) {
+    return 'Hostname \"$host\" resolved successfully.';
+  }
+
+  @override
+  String globalLayerTcpConnectionEstablished(String host, int port) {
+    return 'TCP connection to $host:$port established.';
+  }
+
+  @override
+  String get globalLayerTlsHandshakeCompleted =>
+      'TLS handshake completed successfully.';
+
+  @override
+  String globalLayerAuthenticatedAs(String username) {
+    return 'Authenticated as \"$username\".';
+  }
+
+  @override
+  String get globalLayerAnonymousConnection =>
+      'Anonymous connection accepted by broker.';
+
+  @override
+  String globalLayerSubscribedToTopics(int count) {
+    return 'Subscribed to $count topic(s) successfully.';
+  }
+
+  @override
+  String get globalLayerSubscribeCapabilityVerified =>
+      'Subscribe capability verified (no topics enabled).';
+
+  @override
+  String get globalLayerPublishTestPassed =>
+      'Test message published and received on loopback.';
+
+  @override
+  String get globalLayerFailedToLoadConfig =>
+      'Failed to load Global Layer configuration';
+
+  @override
+  String get globalLayerRetry => 'Retry';
+
+  @override
+  String get globalLayerCopyDiagnosticsTooltip => 'Copy diagnostics';
+
+  @override
+  String get globalLayerTopicExplorerTitle => 'Topic Explorer';
+
+  @override
+  String get globalLayerRunDiagnosticsMenuItem => 'Run Diagnostics';
+
+  @override
+  String get globalLayerReconfigureMenuItem => 'Reconfigure';
+
+  @override
+  String get globalLayerReset => 'Reset';
+
+  @override
+  String get globalLayerRecentActivityHeader => 'Recent Activity';
+
+  @override
+  String get globalLayerPausedSnackbar => 'Global Layer paused';
+
+  @override
+  String get globalLayerResumedSnackbar => 'Global Layer resumed';
+
+  @override
+  String get globalLayerDiagnosticsCopiedSnackbar =>
+      'Diagnostics copied to clipboard';
+
+  @override
+  String get globalLayerResetTitle => 'Reset Global Layer';
+
+  @override
+  String get globalLayerResetMessage =>
+      'This will clear all broker configuration, credentials, and connection history. You will need to run the setup wizard again.';
+
+  @override
+  String get globalLayerQuickActionsHeader => 'Quick Actions';
+
+  @override
+  String get globalLayerDisconnectAction => 'Disconnect';
+
+  @override
+  String get globalLayerConnectAction => 'Connect';
+
+  @override
+  String get globalLayerPauseAction => 'Pause';
+
+  @override
+  String get globalLayerResumeAction => 'Resume';
+
+  @override
+  String get globalLayerDiagnoseAction => 'Diagnose';
+
+  @override
+  String get globalLayerTopicsAction => 'Topics';
+
+  @override
+  String get globalLayerBrokerHeader => 'Broker';
+
+  @override
+  String get globalLayerHostLabel => 'Host';
+
+  @override
+  String get globalLayerPortLabel => 'Port';
+
+  @override
+  String get globalLayerTlsLabel => 'TLS';
+
+  @override
+  String get globalLayerTlsEnabled => 'Enabled';
+
+  @override
+  String get globalLayerTlsDisabled => 'Disabled';
+
+  @override
+  String get globalLayerUserLabel => 'User';
+
+  @override
+  String get globalLayerLastConnectedLabel => 'Last connected';
+
+  @override
+  String get globalLayerTopicsLabel => 'Topics';
+
+  @override
+  String globalLayerActiveTopicsCount(int count) {
+    return '$count active';
+  }
+
+  @override
+  String get globalLayerJustNow => 'Just now';
+
+  @override
+  String globalLayerMinutesAgo(int minutes) {
+    return '${minutes}m ago';
+  }
+
+  @override
+  String globalLayerHoursAgo(int hours) {
+    return '${hours}h ago';
+  }
+
+  @override
+  String globalLayerDaysAgo(int days) {
+    return '${days}d ago';
+  }
+
+  @override
+  String globalLayerSecondsAgo(int seconds) {
+    return '${seconds}s ago';
+  }
+
+  @override
+  String globalLayerDateFormat(int day, int month, int year) {
+    return '$day/$month/$year';
+  }
+
+  @override
+  String globalLayerShortDateFormat(int month, int day) {
+    return '$month/$day';
+  }
+
+  @override
+  String get globalLayerHealthHeader => 'Health';
+
+  @override
+  String get globalLayerHealthy => 'Healthy';
+
+  @override
+  String get globalLayerUnhealthy => 'Unhealthy';
+
+  @override
+  String get globalLayerPingLabel => 'Ping';
+
+  @override
+  String get globalLayerReconnectsLabel => 'Reconnects';
+
+  @override
+  String get globalLayerInboundLabel => 'Inbound';
+
+  @override
+  String get globalLayerOutboundLabel => 'Outbound';
+
+  @override
+  String get globalLayerThroughputLabel => 'Throughput';
+
+  @override
+  String get globalLayerSessionLabel => 'Session';
+
+  @override
+  String globalLayerActiveErrors(int count) {
+    return '$count active error(s)';
+  }
+
+  @override
+  String get globalLayerPrivacyHeader => 'Privacy';
+
+  @override
+  String get globalLayerPrivacyAllOff => 'All Off';
+
+  @override
+  String get globalLayerShareMessagesLabel => 'Share Messages';
+
+  @override
+  String get globalLayerShareMessagesDescription =>
+      'Forward local messages to broker';
+
+  @override
+  String get globalLayerShareTelemetryLabel => 'Share Telemetry';
+
+  @override
+  String get globalLayerShareTelemetryDescription =>
+      'Publish device health data';
+
+  @override
+  String get globalLayerAcceptInboundLabel => 'Accept Inbound';
+
+  @override
+  String get globalLayerAcceptInboundDescription =>
+      'Receive messages from broker';
+
+  @override
+  String get globalLayerStatusOn => 'ON';
+
+  @override
+  String get globalLayerStatusOff => 'OFF';
+
+  @override
+  String get globalLayerAddFromTemplate => 'Add from Template';
+
+  @override
+  String get globalLayerAddCustomTopic => 'Add Custom Topic';
+
+  @override
+  String get globalLayerSubscriptionsHeader => 'Subscriptions';
+
+  @override
+  String get globalLayerAddButton => 'Add';
+
+  @override
+  String get globalLayerRemoveTopicTitle => 'Remove Topic';
+
+  @override
+  String globalLayerRemoveTopicMessage(String label, String topic) {
+    return 'Remove \"$label\" ($topic) from your subscriptions? You can add it back later.';
+  }
+
+  @override
+  String get globalLayerRemoveConfirm => 'Remove';
+
+  @override
+  String globalLayerRemovedSnackbar(String label) {
+    return 'Removed \"$label\"';
+  }
+
+  @override
+  String get globalLayerUndo => 'Undo';
+
+  @override
+  String globalLayerFailedToLoadTopics(String error) {
+    return 'Failed to load topics: $error';
+  }
+
+  @override
+  String get globalLayerNoTopicSubscriptions => 'No Topic Subscriptions';
+
+  @override
+  String get globalLayerEmptyTopicsDescription =>
+      'Add topics to control which types of mesh data flow through the Global Layer. Each topic corresponds to a category like chat, telemetry, or position.';
+
+  @override
+  String get globalLayerFromTemplateButton => 'From Template';
+
+  @override
+  String get globalLayerCustomButton => 'Custom';
+
+  @override
+  String get globalLayerTopicPaused => 'Paused';
+
+  @override
+  String get globalLayerTopicListening => 'Listening';
+
+  @override
+  String get globalLayerTopicOffline => 'Offline';
+
+  @override
+  String get globalLayerStatsTopics => 'Topics';
+
+  @override
+  String get globalLayerStatsActive => 'Active';
+
+  @override
+  String get globalLayerStatsMessages => 'Messages';
+
+  @override
+  String get globalLayerStatsRate => 'Rate';
+
+  @override
+  String get globalLayerAddCustomTopicDescription =>
+      'Subscribe to a custom MQTT topic. Wildcards (+, #) are allowed for subscribe topics.';
+
+  @override
+  String get globalLayerLabelFieldLabel => 'Label';
+
+  @override
+  String get globalLayerLabelFieldHint => 'e.g. Weather Reports';
+
+  @override
+  String get globalLayerMqttTopicFieldLabel => 'MQTT Topic';
+
+  @override
+  String get globalLayerMqttTopicFieldHint => 'e.g. msh/weather/+';
+
+  @override
+  String get globalLayerAddSubscriptionButton => 'Add Subscription';
+
+  @override
+  String get globalLayerAddFromTemplateDescription =>
+      'Choose a predefined topic template. Placeholders will be resolved using the values below.';
+
+  @override
+  String get globalLayerChannelFieldLabel => 'Channel';
+
+  @override
+  String get globalLayerChannelFieldHint => 'LongFast';
+
+  @override
+  String get globalLayerNodeIdFieldLabel => 'Node ID';
+
+  @override
+  String get globalLayerNodeIdFieldHint => '!a1b2c3d4';
+
+  @override
+  String get globalLayerTemplateAdded => 'Added';
 }

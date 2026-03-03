@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/glass_scaffold.dart';
@@ -112,7 +113,7 @@ class _SignalSettingsScreenState extends ConsumerState<SignalSettingsScreen>
     final isAdmin = isAdminAsync.value ?? false;
 
     return GlassScaffold(
-      title: 'Signals',
+      title: context.l10n.signalSettingsTitle,
       slivers: [
         if (_isLoading)
           const SliverFillRemaining(child: ScreenLoadingIndicator())
@@ -121,7 +122,7 @@ class _SignalSettingsScreenState extends ConsumerState<SignalSettingsScreen>
             padding: const EdgeInsets.symmetric(vertical: 8),
             sliver: SliverList(
               delegate: SliverChildListDelegate([
-                const _SectionHeader(title: 'SIGNAL PRIVACY'),
+                _SectionHeader(title: context.l10n.signalSettingsPrivacy),
                 Container(
                   margin: const EdgeInsets.symmetric(
                     horizontal: 16,
@@ -139,7 +140,7 @@ class _SignalSettingsScreenState extends ConsumerState<SignalSettingsScreen>
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Signal location radius',
+                            context.l10n.signalSettingsLocationRadius,
                             style: TextStyle(
                               color: context.textPrimary,
                               fontWeight: FontWeight.w500,
@@ -171,7 +172,7 @@ class _SignalSettingsScreenState extends ConsumerState<SignalSettingsScreen>
                       ),
                       SizedBox(height: AppTheme.spacing4),
                       Text(
-                        'Signals are rounded to this radius, not an exact address',
+                        context.l10n.signalSettingsRadiusDescription,
                         style: TextStyle(
                           color: context.textSecondary,
                           fontSize: 13,
@@ -203,7 +204,7 @@ class _SignalSettingsScreenState extends ConsumerState<SignalSettingsScreen>
                 const SizedBox(height: AppTheme.spacing16),
                 // Admin-only section
                 if (isAdmin) ...[
-                  const _SectionHeader(title: 'SIGNAL CONTENT'),
+                  _SectionHeader(title: context.l10n.signalSettingsContent),
                   Container(
                     margin: const EdgeInsets.symmetric(
                       horizontal: 16,
@@ -227,7 +228,7 @@ class _SignalSettingsScreenState extends ConsumerState<SignalSettingsScreen>
                               const SizedBox(width: AppTheme.spacing16),
                               Expanded(
                                 child: Text(
-                                  'Max Images per Signal',
+                                  context.l10n.signalSettingsMaxImages,
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w500,
@@ -261,7 +262,7 @@ class _SignalSettingsScreenState extends ConsumerState<SignalSettingsScreen>
                           ),
                           SizedBox(height: AppTheme.spacing8),
                           Text(
-                            'Limit: 1-4 images',
+                            context.l10n.signalSettingsImageLimit,
                             style: TextStyle(
                               fontSize: 13,
                               color: context.textTertiary,
@@ -305,12 +306,12 @@ class _SignalSettingsScreenState extends ConsumerState<SignalSettingsScreen>
                   ),
                   const SizedBox(height: AppTheme.spacing16),
                 ],
-                const _SectionHeader(title: 'SIGNAL NOTIFICATIONS'),
+                _SectionHeader(title: context.l10n.signalSettingsNotifications),
                 if (!_notificationsLoading) ...[
                   _SettingsTile(
                     icon: Icons.wifi_tethering_outlined,
-                    title: 'Signals',
-                    subtitle: 'Notify when someone posts a signal',
+                    title: context.l10n.signalSettingsNotifySignals,
+                    subtitle: context.l10n.signalSettingsNotifySignalsSubtitle,
                     trailing: ThemedSwitch(
                       value: _signalsEnabled,
                       onChanged: (value) =>
@@ -319,8 +320,8 @@ class _SignalSettingsScreenState extends ConsumerState<SignalSettingsScreen>
                   ),
                   _SettingsTile(
                     icon: Icons.arrow_upward,
-                    title: 'Votes',
-                    subtitle: 'When someone upvotes your signal comments',
+                    title: context.l10n.signalSettingsNotifyVotes,
+                    subtitle: context.l10n.signalSettingsNotifyVotesSubtitle,
                     trailing: ThemedSwitch(
                       value: _votesEnabled,
                       onChanged: (value) =>

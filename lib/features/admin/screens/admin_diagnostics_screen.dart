@@ -7,8 +7,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/logging.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
+import '../../../core/widgets/app_bottom_sheet.dart';
 import '../../../utils/snackbar.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/animations.dart';
@@ -60,12 +62,15 @@ class _AdminDiagnosticsScreenState extends ConsumerState<AdminDiagnosticsScreen>
     final myNodeNum = ref.watch(myNodeNumProvider);
     final remoteTarget = ref.watch(remoteAdminTargetProvider);
     final isRemote = remoteTarget != null;
+    final l10n = context.l10n;
     final targetLabel = isRemote
-        ? 'Remote: 0x${remoteTarget.toRadixString(16).toUpperCase()}'
-        : 'Local device';
+        ? l10n.adminDiagTargetRemote(
+            remoteTarget.toRadixString(16).toUpperCase(),
+          )
+        : l10n.adminDiagTargetLocal;
 
     return GlassScaffold(
-      title: 'Admin Diagnostics',
+      title: l10n.adminDiagTitle,
       slivers: [
         SliverPadding(
           padding: const EdgeInsets.all(AppTheme.spacing16),
@@ -92,9 +97,7 @@ class _AdminDiagnosticsScreenState extends ConsumerState<AdminDiagnosticsScreen>
                         const SizedBox(width: AppTheme.spacing8),
                         Expanded(
                           child: Text(
-                            'Run diagnostic probes against your connected '
-                            'device and export a detailed bundle for '
-                            'debugging protocol/transport issues.',
+                            l10n.adminDiagDescription,
                             style: TextStyle(
                               fontSize: 13,
                               color: context.textSecondary,
@@ -112,7 +115,7 @@ class _AdminDiagnosticsScreenState extends ConsumerState<AdminDiagnosticsScreen>
               _buildInfoTile(
                 context,
                 icon: Icons.router,
-                label: 'Target',
+                label: l10n.adminDiagTargetLabel,
                 value: targetLabel,
               ),
 
@@ -120,7 +123,7 @@ class _AdminDiagnosticsScreenState extends ConsumerState<AdminDiagnosticsScreen>
                 _buildInfoTile(
                   context,
                   icon: Icons.tag,
-                  label: 'My Node',
+                  label: l10n.adminDiagMyNodeLabel,
                   value: '0x${myNodeNum.toRadixString(16).toUpperCase()}',
                 ),
 
@@ -129,8 +132,8 @@ class _AdminDiagnosticsScreenState extends ConsumerState<AdminDiagnosticsScreen>
               // Toggles
               _buildToggle(
                 context,
-                label: 'Include stress tests',
-                subtitle: 'Burst reads and out-of-order correlation',
+                label: l10n.adminDiagStressToggle,
+                subtitle: l10n.adminDiagStressToggleSub,
                 value: _includeStressTests,
                 enabled: !_isRunning,
                 onChanged: (v) => setState(() => _includeStressTests = v),
@@ -138,8 +141,8 @@ class _AdminDiagnosticsScreenState extends ConsumerState<AdminDiagnosticsScreen>
               const SizedBox(height: AppTheme.spacing8),
               _buildToggle(
                 context,
-                label: 'Include write tests (reversible)',
-                subtitle: 'No-op writes with read-back verification',
+                label: l10n.adminDiagWriteToggle,
+                subtitle: l10n.adminDiagWriteToggleSub,
                 value: _includeWriteTests,
                 enabled: !_isRunning,
                 onChanged: (v) async {
@@ -254,12 +257,15 @@ class _AdminDiagnosticsScreenState extends ConsumerState<AdminDiagnosticsScreen>
 
   Widget _buildRunButton(BuildContext context, int? myNodeNum) {
     final connected = myNodeNum != null;
+    final l10n = context.l10n;
     return SizedBox(
       width: double.infinity,
       child: FilledButton.icon(
         onPressed: connected ? () => _startDiagnostics() : null,
         icon: const Icon(Icons.play_arrow),
-        label: Text(connected ? 'Run Diagnostics' : 'No device connected'),
+        label: Text(
+          connected ? l10n.adminDiagRunButton : l10n.adminDiagNoDevice,
+        ),
       ),
     );
   }
@@ -302,7 +308,10 @@ class _AdminDiagnosticsScreenState extends ConsumerState<AdminDiagnosticsScreen>
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '$_completedProbes / $_totalProbes probes',
+              context.l10n.adminDiagProbeProgress(
+                _completedProbes,
+                _totalProbes,
+              ),
               style: TextStyle(fontSize: 12, color: context.textSecondary),
             ),
             Row(
@@ -323,7 +332,7 @@ class _AdminDiagnosticsScreenState extends ConsumerState<AdminDiagnosticsScreen>
               ref.haptics.buttonTap();
             },
             icon: const Icon(Icons.stop, size: 18),
-            label: const Text('Cancel'),
+            label: Text(context.l10n.adminDiagCancel),
           ),
         ),
       ],
@@ -378,7 +387,7 @@ class _AdminDiagnosticsScreenState extends ConsumerState<AdminDiagnosticsScreen>
               ),
               const SizedBox(width: AppTheme.spacing8),
               Text(
-                '$_passCount passed, $_failCount failed',
+                context.l10n.adminDiagResultSummary(_passCount, _failCount),
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
@@ -401,7 +410,7 @@ class _AdminDiagnosticsScreenState extends ConsumerState<AdminDiagnosticsScreen>
           child: FilledButton.icon(
             onPressed: () => _exportBundle(context),
             icon: const Icon(Icons.ios_share),
-            label: const Text('Export Bundle'),
+            label: Text(context.l10n.adminDiagExportBundle),
           ),
         ),
         const SizedBox(height: AppTheme.spacing8),
@@ -412,7 +421,7 @@ class _AdminDiagnosticsScreenState extends ConsumerState<AdminDiagnosticsScreen>
           child: OutlinedButton.icon(
             onPressed: () => _copySummaryToClipboard(context),
             icon: const Icon(Icons.copy, size: 18),
-            label: const Text('Copy Summary to Clipboard'),
+            label: Text(context.l10n.adminDiagCopySummary),
           ),
         ),
         const SizedBox(height: AppTheme.spacing8),
@@ -432,7 +441,7 @@ class _AdminDiagnosticsScreenState extends ConsumerState<AdminDiagnosticsScreen>
               });
             },
             icon: const Icon(Icons.refresh, size: 18),
-            label: const Text('Run Again'),
+            label: Text(context.l10n.adminDiagRunAgain),
           ),
         ),
       ],
@@ -489,28 +498,13 @@ class _AdminDiagnosticsScreenState extends ConsumerState<AdminDiagnosticsScreen>
   }
 
   Future<bool> _confirmWriteTests(BuildContext context) async {
-    final navigator = Navigator.of(context);
-    final result = await showDialog<bool>(
-      context: navigator.context,
-      builder: (ctx) => AlertDialog.adaptive(
-        title: const Text('Enable Write Tests?'),
-        content: const Text(
-          'Write tests perform no-op writes (same value) to verify '
-          'round-trip behavior. They do not change device state, but '
-          'they do send SET commands to the device.\n\n'
-          'Are you sure you want to include write tests?',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(true),
-            child: const Text('Enable'),
-          ),
-        ],
-      ),
+    final l10n = context.l10n;
+    final result = await AppBottomSheet.showConfirm(
+      context: context,
+      title: l10n.adminDiagWriteTestsDialogTitle,
+      message: l10n.adminDiagWriteTestsDialogBody,
+      cancelLabel: l10n.adminDiagWriteTestsCancel,
+      confirmLabel: l10n.adminDiagWriteTestsEnable,
     );
     return result ?? false;
   }
@@ -668,6 +662,7 @@ class _AdminDiagnosticsScreenState extends ConsumerState<AdminDiagnosticsScreen>
 
   Future<void> _exportBundle(BuildContext context) async {
     final haptics = ref.haptics;
+    final l10n = context.l10n;
     final box = context.findRenderObject() as RenderBox?;
     final position = box != null
         ? box.localToGlobal(Offset.zero) & box.size
@@ -693,12 +688,16 @@ class _AdminDiagnosticsScreenState extends ConsumerState<AdminDiagnosticsScreen>
       );
     } catch (e) {
       if (!mounted) return;
-      safeShowSnackBar('Export failed: $e', type: SnackBarType.error);
+      safeShowSnackBar(
+        l10n.adminDiagExportFailed('$e'),
+        type: SnackBarType.error,
+      );
     }
   }
 
   Future<void> _copySummaryToClipboard(BuildContext context) async {
     final haptics = ref.haptics;
+    final l10n = context.l10n;
     await haptics.buttonTap();
 
     if (_summary == null) return;
@@ -706,6 +705,6 @@ class _AdminDiagnosticsScreenState extends ConsumerState<AdminDiagnosticsScreen>
     await Clipboard.setData(ClipboardData(text: _summary!.toJsonString()));
 
     if (!mounted) return;
-    safeShowSnackBar('Summary copied to clipboard');
+    safeShowSnackBar(l10n.adminDiagCopiedToClipboard);
   }
 }

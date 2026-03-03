@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import '../../../l10n/app_localizations.dart';
 import '../../../models/mesh_models.dart';
 import '../../../models/presence_confidence.dart';
 import '../models/widget_schema.dart';
@@ -697,10 +698,179 @@ class BindingRegistry {
         return 'Messaging';
     }
   }
+
+  /// Get localized label for a binding path.
+  static String localizedLabel(String path, AppLocalizations l10n) {
+    return switch (path) {
+      'node.longName' => l10n.widgetBuilderBindingNodeName,
+      'node.shortName' => l10n.widgetBuilderBindingShortName,
+      'node.nodeNum' => l10n.widgetBuilderBindingNodeNumber,
+      'node.presenceConfidence' => l10n.widgetBuilderBindingPresenceConfidence,
+      'node.lastHeard' => l10n.widgetBuilderBindingLastHeard,
+      'node.role' => l10n.widgetBuilderBindingNodeRole,
+      'node.hardwareModel' => l10n.widgetBuilderBindingHardwareModel,
+      'node.firmwareVersion' => l10n.widgetBuilderBindingFirmwareVersion,
+      'node.snr' => l10n.widgetBuilderBindingSnr,
+      'device.snr' => l10n.widgetBuilderBindingSnr,
+      'node.rssi' => l10n.widgetBuilderBindingRssi,
+      'device.rssi' => l10n.widgetBuilderBindingRssi,
+      'node.distance' => l10n.widgetBuilderBindingDistance,
+      'node.batteryLevel' => l10n.widgetBuilderBindingBatteryLevel,
+      'node.voltage' => l10n.widgetBuilderBindingBatteryVoltage,
+      'node.channelUtilization' => l10n.widgetBuilderBindingChannelUtil,
+      'device.channelUtilization' => l10n.widgetBuilderBindingChannelUtil,
+      'device.channelUtil' => l10n.widgetBuilderBindingChannelUtil,
+      'node.airUtilTx' => l10n.widgetBuilderBindingAirtimeTx,
+      'node.uptimeSeconds' => l10n.widgetBuilderBindingUptime,
+      'node.temperature' => l10n.widgetBuilderBindingTemperature,
+      'node.humidity' => l10n.widgetBuilderBindingHumidity,
+      'node.barometricPressure' => l10n.widgetBuilderBindingPressure,
+      'node.pressure' => l10n.widgetBuilderBindingPressure,
+      'node.lux' => l10n.widgetBuilderBindingLightLevel,
+      'node.iaq' => l10n.widgetBuilderBindingIaqIndex,
+      'node.windSpeed' => l10n.widgetBuilderBindingWindSpeed,
+      'node.windDirection' => l10n.widgetBuilderBindingWindDirection,
+      'node.windGust' => l10n.widgetBuilderBindingWindGust,
+      'node.rainfall1h' => l10n.widgetBuilderBindingRainfall1h,
+      'node.rainfall24h' => l10n.widgetBuilderBindingRainfall24h,
+      'node.soilMoisture' => l10n.widgetBuilderBindingSoilMoisture,
+      'node.soilTemperature' => l10n.widgetBuilderBindingSoilTemperature,
+      'node.pm25Standard' => l10n.widgetBuilderBindingPm25,
+      'node.pm10Standard' => l10n.widgetBuilderBindingPm10Small,
+      'node.pm100Standard' => l10n.widgetBuilderBindingPm10Large,
+      'node.co2' => l10n.widgetBuilderBindingCo2,
+      'node.latitude' => l10n.widgetBuilderBindingLatitude,
+      'node.longitude' => l10n.widgetBuilderBindingLongitude,
+      'node.altitude' => l10n.widgetBuilderBindingAltitude,
+      'node.satsInView' => l10n.widgetBuilderBindingSatellites,
+      'node.groundSpeed' => l10n.widgetBuilderBindingGroundSpeed,
+      'node.groundTrack' => l10n.widgetBuilderBindingHeading,
+      'node.ch1Voltage' => l10n.widgetBuilderBindingCh1Voltage,
+      'node.ch1Current' => l10n.widgetBuilderBindingCh1Current,
+      'node.numPacketsTx' => l10n.widgetBuilderBindingPacketsTx,
+      'node.numPacketsRx' => l10n.widgetBuilderBindingPacketsRx,
+      'node.numTxDropped' => l10n.widgetBuilderBindingPacketsTxDropped,
+      'node.noiseFloor' => l10n.widgetBuilderBindingNoiseFloor,
+      'node.nodeStatus' => l10n.widgetBuilderBindingNodeStatus,
+      'node.numOnlineNodes' => l10n.widgetBuilderBindingNodesHeard2h,
+      'node.numTotalNodes' => l10n.widgetBuilderBindingTotalNodes,
+      'network.totalNodes' => l10n.widgetBuilderBindingTotalMeshNodes,
+      'network.activeCount' => l10n.widgetBuilderBindingActiveMeshNodes,
+      'network.onlineNodes' => l10n.widgetBuilderBindingActiveMeshNodesLegacy,
+      'network.unreadMessages' => l10n.widgetBuilderBindingUnreadMessages,
+      'messaging.recentCount' => l10n.widgetBuilderBindingRecentMessages,
+      'node.displayName' => l10n.widgetBuilderBindingDisplayName,
+      'node.hopCount' => l10n.widgetBuilderBindingHopCount,
+      'node.viaMqtt' => l10n.widgetBuilderBindingViaMqtt,
+      'node.firstHeard' => l10n.widgetBuilderBindingFirstHeard,
+      'node.numPacketsRxBad' => l10n.widgetBuilderBindingBadPacketsRx,
+      'node.ch2Voltage' => l10n.widgetBuilderBindingCh2Voltage,
+      'node.ch2Current' => l10n.widgetBuilderBindingCh2Current,
+      'node.ch3Voltage' => l10n.widgetBuilderBindingCh3Voltage,
+      'node.ch3Current' => l10n.widgetBuilderBindingCh3Current,
+      _ => getByPath(path)?.label ?? path,
+    };
+  }
+
+  /// Get localized description for a binding path.
+  static String localizedDescription(String path, AppLocalizations l10n) {
+    return switch (path) {
+      'node.longName' => l10n.widgetBuilderBindingNodeNameDesc,
+      'node.shortName' => l10n.widgetBuilderBindingShortNameDesc,
+      'node.nodeNum' => l10n.widgetBuilderBindingNodeNumberDesc,
+      'node.presenceConfidence' =>
+        l10n.widgetBuilderBindingPresenceConfidenceDesc,
+      'node.lastHeard' => l10n.widgetBuilderBindingLastHeardDesc,
+      'node.role' => l10n.widgetBuilderBindingNodeRoleDesc,
+      'node.hardwareModel' => l10n.widgetBuilderBindingHardwareModelDesc,
+      'node.firmwareVersion' => l10n.widgetBuilderBindingFirmwareVersionDesc,
+      'node.snr' => l10n.widgetBuilderBindingSnrDesc,
+      'device.snr' => l10n.widgetBuilderBindingSnrDesc,
+      'node.rssi' => l10n.widgetBuilderBindingRssiDesc,
+      'device.rssi' => l10n.widgetBuilderBindingRssiDesc,
+      'node.distance' => l10n.widgetBuilderBindingDistanceDesc,
+      'node.batteryLevel' => l10n.widgetBuilderBindingBatteryLevelDesc,
+      'node.voltage' => l10n.widgetBuilderBindingBatteryVoltageDesc,
+      'node.channelUtilization' => l10n.widgetBuilderBindingChannelUtilDesc,
+      'device.channelUtilization' => l10n.widgetBuilderBindingChannelUtilDesc,
+      'device.channelUtil' => l10n.widgetBuilderBindingChannelUtilDesc,
+      'node.airUtilTx' => l10n.widgetBuilderBindingAirtimeTxDesc,
+      'node.uptimeSeconds' => l10n.widgetBuilderBindingUptimeDesc,
+      'node.temperature' => l10n.widgetBuilderBindingTemperatureDesc,
+      'node.humidity' => l10n.widgetBuilderBindingHumidityDesc,
+      'node.barometricPressure' => l10n.widgetBuilderBindingPressureDesc,
+      'node.pressure' => l10n.widgetBuilderBindingPressureDesc,
+      'node.lux' => l10n.widgetBuilderBindingLightLevelDesc,
+      'node.iaq' => l10n.widgetBuilderBindingIaqIndexDesc,
+      'node.windSpeed' => l10n.widgetBuilderBindingWindSpeedDesc,
+      'node.windDirection' => l10n.widgetBuilderBindingWindDirectionDesc,
+      'node.windGust' => l10n.widgetBuilderBindingWindGustDesc,
+      'node.rainfall1h' => l10n.widgetBuilderBindingRainfall1hDesc,
+      'node.rainfall24h' => l10n.widgetBuilderBindingRainfall24hDesc,
+      'node.soilMoisture' => l10n.widgetBuilderBindingSoilMoistureDesc,
+      'node.soilTemperature' => l10n.widgetBuilderBindingSoilTemperatureDesc,
+      'node.pm25Standard' => l10n.widgetBuilderBindingPm25Desc,
+      'node.pm10Standard' => l10n.widgetBuilderBindingPm10SmallDesc,
+      'node.pm100Standard' => l10n.widgetBuilderBindingPm10LargeDesc,
+      'node.co2' => l10n.widgetBuilderBindingCo2Desc,
+      'node.latitude' => l10n.widgetBuilderBindingLatitudeDesc,
+      'node.longitude' => l10n.widgetBuilderBindingLongitudeDesc,
+      'node.altitude' => l10n.widgetBuilderBindingAltitudeDesc,
+      'node.satsInView' => l10n.widgetBuilderBindingSatellitesDesc,
+      'node.groundSpeed' => l10n.widgetBuilderBindingGroundSpeedDesc,
+      'node.groundTrack' => l10n.widgetBuilderBindingHeadingDesc,
+      'node.ch1Voltage' => l10n.widgetBuilderBindingCh1VoltageDesc,
+      'node.ch1Current' => l10n.widgetBuilderBindingCh1CurrentDesc,
+      'node.numPacketsTx' => l10n.widgetBuilderBindingPacketsTxDesc,
+      'node.numPacketsRx' => l10n.widgetBuilderBindingPacketsRxDesc,
+      'node.numTxDropped' => l10n.widgetBuilderBindingPacketsTxDroppedDesc,
+      'node.noiseFloor' => l10n.widgetBuilderBindingNoiseFloorDesc,
+      'node.nodeStatus' => l10n.widgetBuilderBindingNodeStatusDesc,
+      'node.numOnlineNodes' => l10n.widgetBuilderBindingNodesHeard2hDesc,
+      'node.numTotalNodes' => l10n.widgetBuilderBindingTotalNodesDesc,
+      'network.totalNodes' => l10n.widgetBuilderBindingTotalMeshNodesDesc,
+      'network.activeCount' => l10n.widgetBuilderBindingActiveMeshNodesDesc,
+      'network.onlineNodes' =>
+        l10n.widgetBuilderBindingActiveMeshNodesLegacyDesc,
+      'network.unreadMessages' => l10n.widgetBuilderBindingUnreadMessagesDesc,
+      'messaging.recentCount' => l10n.widgetBuilderBindingRecentMessagesDesc,
+      'node.displayName' => l10n.widgetBuilderBindingDisplayNameDesc,
+      'node.hopCount' => l10n.widgetBuilderBindingHopCountDesc,
+      'node.viaMqtt' => l10n.widgetBuilderBindingViaMqttDesc,
+      'node.firstHeard' => l10n.widgetBuilderBindingFirstHeardDesc,
+      'node.numPacketsRxBad' => l10n.widgetBuilderBindingBadPacketsRxDesc,
+      'node.ch2Voltage' => l10n.widgetBuilderBindingCh2VoltageDesc,
+      'node.ch2Current' => l10n.widgetBuilderBindingCh2CurrentDesc,
+      'node.ch3Voltage' => l10n.widgetBuilderBindingCh3VoltageDesc,
+      'node.ch3Current' => l10n.widgetBuilderBindingCh3CurrentDesc,
+      _ => getByPath(path)?.description ?? path,
+    };
+  }
+
+  /// Get localized category name.
+  static String localizedCategoryName(
+    BindingCategory category,
+    AppLocalizations l10n,
+  ) {
+    return switch (category) {
+      BindingCategory.node => l10n.widgetBuilderBindingCategoryNodeInfo,
+      BindingCategory.device => l10n.widgetBuilderBindingCategoryDevice,
+      BindingCategory.network => l10n.widgetBuilderBindingCategoryNetwork,
+      BindingCategory.environment =>
+        l10n.widgetBuilderBindingCategoryEnvironment,
+      BindingCategory.power => l10n.widgetBuilderBindingCategoryPower,
+      BindingCategory.airQuality => l10n.widgetBuilderBindingCategoryAirQuality,
+      BindingCategory.gps => l10n.widgetBuilderBindingCategoryGps,
+      BindingCategory.messaging => l10n.widgetBuilderBindingCategoryMessages,
+    };
+  }
 }
 
 /// Data binding engine - resolves binding expressions to live data
 class DataBindingEngine {
+  /// Optional localizations for formatting
+  AppLocalizations? _l10n;
+
   /// Current context data
   MeshNode? _currentNode;
   Map<int, MeshNode>? _allNodes;
@@ -717,6 +887,11 @@ class DataBindingEngine {
   /// Enable placeholder data mode for previews
   void setUsePlaceholderData(bool value) {
     _usePlaceholderData = value;
+  }
+
+  /// Set localizations for formatted output
+  void setLocalizations(AppLocalizations l10n) {
+    _l10n = l10n;
   }
 
   /// Update context with current node data
@@ -1241,6 +1416,9 @@ class DataBindingEngine {
       return value.toStringAsFixed(1);
     }
     if (value is bool) {
+      if (_l10n != null) {
+        return value ? _l10n!.widgetBuilderBoolYes : _l10n!.widgetBuilderBoolNo;
+      }
       return value ? 'Yes' : 'No';
     }
     return value.toString();
@@ -1252,13 +1430,16 @@ class DataBindingEngine {
     final diff = now.difference(dt);
 
     if (diff.inSeconds < 60) {
-      return 'Just now';
+      return _l10n?.widgetBuilderMarketplaceJustNow ?? 'Just now';
     } else if (diff.inMinutes < 60) {
-      return '${diff.inMinutes}m ago';
+      return _l10n?.widgetBuilderMarketplaceMinutesAgo(diff.inMinutes) ??
+          '${diff.inMinutes}m ago';
     } else if (diff.inHours < 24) {
-      return '${diff.inHours}h ago';
+      return _l10n?.widgetBuilderMarketplaceHoursAgo(diff.inHours) ??
+          '${diff.inHours}h ago';
     } else {
-      return '${diff.inDays}d ago';
+      return _l10n?.widgetBuilderMarketplaceDaysAgo(diff.inDays) ??
+          '${diff.inDays}d ago';
     }
   }
 }

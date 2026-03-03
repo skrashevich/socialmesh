@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'dart:async';
 import 'package:flutter/material.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/logging.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/widgets/animations.dart';
@@ -116,6 +117,7 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
   }
 
   Future<void> _saveConfig() async {
+    final l10n = context.l10n;
     safeSetState(() => _isLoading = true);
     try {
       final protocol = ref.read(protocolServiceProvider);
@@ -145,7 +147,7 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
       );
 
       if (mounted) {
-        showSuccessSnackBar(context, 'Display configuration saved');
+        showSuccessSnackBar(context, l10n.displayConfigSaved);
         if (target.isLocal) {
           ref
               .read(countdownProvider.notifier)
@@ -155,7 +157,7 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to save: $e');
+        showErrorSnackBar(context, l10n.displayConfigSaveFailed(e.toString()));
       }
     } finally {
       safeSetState(() => _isLoading = false);
@@ -165,12 +167,12 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
   @override
   Widget build(BuildContext context) {
     return GlassScaffold(
-      title: 'Display Configuration',
+      title: context.l10n.displayConfigTitle,
       actions: [
         TextButton(
           onPressed: _isLoading ? null : _saveConfig,
           child: Text(
-            'Save',
+            context.l10n.displayConfigSave,
             style: TextStyle(
               color: _isLoading ? SemanticColors.disabled : context.accentColor,
               fontWeight: FontWeight.w600,
@@ -186,23 +188,31 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
             padding: const EdgeInsets.all(AppTheme.spacing16),
             sliver: SliverList(
               delegate: SliverChildListDelegate([
-                _SectionHeader(title: 'SCREEN'),
+                _SectionHeader(title: context.l10n.displayConfigSectionScreen),
                 const SizedBox(height: AppTheme.spacing8),
                 _buildScreenSettings(),
                 const SizedBox(height: AppTheme.spacing24),
-                _SectionHeader(title: 'TIME & COMPASS'),
+                _SectionHeader(
+                  title: context.l10n.displayConfigSectionTimeCompass,
+                ),
                 const SizedBox(height: AppTheme.spacing8),
                 _buildTimeAndCompassSettings(),
                 const SizedBox(height: AppTheme.spacing24),
-                _SectionHeader(title: 'OLED SCREEN TYPE'),
+                _SectionHeader(
+                  title: context.l10n.displayConfigSectionOledType,
+                ),
                 const SizedBox(height: AppTheme.spacing8),
                 _buildOledTypeSelector(),
                 const SizedBox(height: AppTheme.spacing24),
-                _SectionHeader(title: 'UNITS & FORMAT'),
+                _SectionHeader(
+                  title: context.l10n.displayConfigSectionUnitsFormat,
+                ),
                 const SizedBox(height: AppTheme.spacing8),
                 _buildUnitsSettings(),
                 const SizedBox(height: AppTheme.spacing24),
-                _SectionHeader(title: 'DISPLAY MODE'),
+                _SectionHeader(
+                  title: context.l10n.displayConfigSectionDisplayMode,
+                ),
                 const SizedBox(height: AppTheme.spacing8),
                 _buildDisplayModeSelector(),
                 const SizedBox(height: AppTheme.spacing32),
@@ -224,7 +234,13 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Screen Timeout: ${_screenOnSecs == 0 ? 'Always On' : '${_screenOnSecs}s'}',
+            context.l10n.displayConfigScreenTimeoutLabel(
+              _screenOnSecs == 0
+                  ? context.l10n.displayConfigScreenTimeoutAlwaysOn
+                  : context.l10n.displayConfigScreenTimeoutSeconds(
+                      _screenOnSecs,
+                    ),
+            ),
             style: TextStyle(
               color: context.textPrimary,
               fontSize: 14,
@@ -233,7 +249,7 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
           ),
           SizedBox(height: AppTheme.spacing4),
           Text(
-            'How long before screen turns off',
+            context.l10n.displayConfigScreenTimeoutDesc,
             style: TextStyle(color: context.textSecondary, fontSize: 12),
           ),
           SliderTheme(
@@ -247,7 +263,11 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
               min: 0,
               max: 300,
               divisions: 30,
-              label: _screenOnSecs == 0 ? 'Always On' : '${_screenOnSecs}s',
+              label: _screenOnSecs == 0
+                  ? context.l10n.displayConfigScreenTimeoutAlwaysOn
+                  : context.l10n.displayConfigScreenTimeoutSeconds(
+                      _screenOnSecs,
+                    ),
               onChanged: (value) {
                 setState(() => _screenOnSecs = value.toInt());
               },
@@ -256,7 +276,13 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
           Divider(color: context.border),
           SizedBox(height: AppTheme.spacing8),
           Text(
-            'Auto Carousel: ${_autoCarouselSecs == 0 ? 'Disabled' : '${_autoCarouselSecs}s'}',
+            context.l10n.displayConfigAutoCarouselLabel(
+              _autoCarouselSecs == 0
+                  ? context.l10n.displayConfigAutoCarouselDisabled
+                  : context.l10n.displayConfigScreenTimeoutSeconds(
+                      _autoCarouselSecs,
+                    ),
+            ),
             style: TextStyle(
               color: context.textPrimary,
               fontSize: 14,
@@ -265,7 +291,7 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
           ),
           SizedBox(height: AppTheme.spacing4),
           Text(
-            'Automatically cycle through screens',
+            context.l10n.displayConfigAutoCarouselDesc,
             style: TextStyle(color: context.textSecondary, fontSize: 12),
           ),
           SliderTheme(
@@ -279,7 +305,11 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
               min: 0,
               max: 60,
               divisions: 12,
-              label: _autoCarouselSecs == 0 ? 'Off' : '${_autoCarouselSecs}s',
+              label: _autoCarouselSecs == 0
+                  ? context.l10n.displayConfigAutoCarouselOff
+                  : context.l10n.displayConfigScreenTimeoutSeconds(
+                      _autoCarouselSecs,
+                    ),
               onChanged: (value) {
                 setState(() => _autoCarouselSecs = value.toInt());
               },
@@ -289,8 +319,8 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
           const SizedBox(height: AppTheme.spacing8),
           _SettingsTile(
             icon: Icons.screen_rotation,
-            title: 'Flip Screen',
-            subtitle: 'Rotate display 180°',
+            title: context.l10n.displayConfigFlipScreen,
+            subtitle: context.l10n.displayConfigFlipScreenSubtitle,
             trailing: ThemedSwitch(
               value: _flipScreen,
               onChanged: (value) {
@@ -302,8 +332,8 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
           const SizedBox(height: AppTheme.spacing8),
           _SettingsTile(
             icon: Icons.touch_app,
-            title: 'Wake on Tap/Motion',
-            subtitle: 'Turn on screen when device is moved',
+            title: context.l10n.displayConfigWakeOnTap,
+            subtitle: context.l10n.displayConfigWakeOnTapSubtitle,
             trailing: ThemedSwitch(
               value: _wakeOnTapOrMotion,
               onChanged: (value) {
@@ -315,8 +345,8 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
           const SizedBox(height: AppTheme.spacing8),
           _SettingsTile(
             icon: Icons.badge,
-            title: 'Long Node Names',
-            subtitle: 'Show full node names on device screen',
+            title: context.l10n.displayConfigLongNodeNames,
+            subtitle: context.l10n.displayConfigLongNodeNamesSubtitle,
             trailing: ThemedSwitch(
               value: _useLongNodeName,
               onChanged: (value) {
@@ -328,8 +358,8 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
           const SizedBox(height: AppTheme.spacing8),
           _SettingsTile(
             icon: Icons.chat_bubble_outline,
-            title: 'Message Bubbles',
-            subtitle: 'Display messages in bubble format on screen',
+            title: context.l10n.displayConfigMessageBubbles,
+            subtitle: context.l10n.displayConfigMessageBubblesSubtitle,
             trailing: ThemedSwitch(
               value: _enableMessageBubbles,
               onChanged: (value) {
@@ -345,39 +375,45 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
 
   Widget _buildTimeAndCompassSettings() {
     final compassOrientations = [
-      (config_pbenum.Config_DisplayConfig_CompassOrientation.DEGREES_0, '0°'),
-      (config_pbenum.Config_DisplayConfig_CompassOrientation.DEGREES_90, '90°'),
+      (
+        config_pbenum.Config_DisplayConfig_CompassOrientation.DEGREES_0,
+        context.l10n.displayConfigDeg0,
+      ),
+      (
+        config_pbenum.Config_DisplayConfig_CompassOrientation.DEGREES_90,
+        context.l10n.displayConfigDeg90,
+      ),
       (
         config_pbenum.Config_DisplayConfig_CompassOrientation.DEGREES_180,
-        '180°',
+        context.l10n.displayConfigDeg180,
       ),
       (
         config_pbenum.Config_DisplayConfig_CompassOrientation.DEGREES_270,
-        '270°',
+        context.l10n.displayConfigDeg270,
       ),
       (
         config_pbenum
             .Config_DisplayConfig_CompassOrientation
             .DEGREES_0_INVERTED,
-        '0° Inverted',
+        context.l10n.displayConfigDeg0Inv,
       ),
       (
         config_pbenum
             .Config_DisplayConfig_CompassOrientation
             .DEGREES_90_INVERTED,
-        '90° Inverted',
+        context.l10n.displayConfigDeg90Inv,
       ),
       (
         config_pbenum
             .Config_DisplayConfig_CompassOrientation
             .DEGREES_180_INVERTED,
-        '180° Inverted',
+        context.l10n.displayConfigDeg180Inv,
       ),
       (
         config_pbenum
             .Config_DisplayConfig_CompassOrientation
             .DEGREES_270_INVERTED,
-        '270° Inverted',
+        context.l10n.displayConfigDeg270Inv,
       ),
     ];
 
@@ -392,8 +428,8 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
         children: [
           _SettingsTile(
             icon: Icons.access_time,
-            title: '12 Hour Clock',
-            subtitle: 'Display time in 12-hour format (AM/PM)',
+            title: context.l10n.displayConfig12hClock,
+            subtitle: context.l10n.displayConfig12hClockSubtitle,
             trailing: ThemedSwitch(
               value: _use12hClock,
               onChanged: (value) {
@@ -405,9 +441,8 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
           SizedBox(height: AppTheme.spacing16),
           _SettingsTile(
             icon: Icons.explore,
-            title: 'Compass Always Points North',
-            subtitle:
-                'The compass heading outside the circle always points north',
+            title: context.l10n.displayConfigCompassNorth,
+            subtitle: context.l10n.displayConfigCompassNorthSubtitle,
             trailing: ThemedSwitch(
               value: _compassNorthTop,
               onChanged: (value) {
@@ -420,7 +455,7 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
           Divider(color: context.border),
           SizedBox(height: AppTheme.spacing16),
           Text(
-            'Compass Orientation',
+            context.l10n.displayConfigCompassOrientation,
             style: TextStyle(
               color: context.textPrimary,
               fontSize: 14,
@@ -429,7 +464,7 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
           ),
           const SizedBox(height: AppTheme.spacing4),
           Text(
-            'Adjust compass display rotation',
+            context.l10n.displayConfigCompassOrientationDesc,
             style: TextStyle(color: context.textSecondary, fontSize: 12),
           ),
           SizedBox(height: AppTheme.spacing12),
@@ -474,28 +509,28 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
     final oledTypes = [
       (
         config_pbenum.Config_DisplayConfig_OledType.OLED_AUTO,
-        'Auto',
-        'Automatically detect OLED type',
+        context.l10n.displayConfigOledAuto,
+        context.l10n.displayConfigOledAutoDesc,
       ),
       (
         config_pbenum.Config_DisplayConfig_OledType.OLED_SSD1306,
         'SSD1306',
-        'Common 128x64 OLED',
+        context.l10n.displayConfigOledSsd1306Desc,
       ),
       (
         config_pbenum.Config_DisplayConfig_OledType.OLED_SH1106,
         'SH1106',
-        '132x64 OLED controller',
+        context.l10n.displayConfigOledSh1106Desc,
       ),
       (
         config_pbenum.Config_DisplayConfig_OledType.OLED_SH1107,
         'SH1107',
-        '64x128 vertical OLED',
+        context.l10n.displayConfigOledSh1107Desc,
       ),
       (
         config_pbenum.Config_DisplayConfig_OledType.OLED_SH1107_128_128,
         'SH1107 128x128',
-        '128x128 square OLED',
+        context.l10n.displayConfigOledSh1107_128Desc,
       ),
     ];
 
@@ -509,7 +544,7 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'OLED Type',
+            context.l10n.displayConfigOledTypeTitle,
             style: TextStyle(
               color: context.textPrimary,
               fontSize: 16,
@@ -518,7 +553,7 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
           ),
           SizedBox(height: AppTheme.spacing4),
           Text(
-            'Override automatic OLED detection',
+            context.l10n.displayConfigOledTypeDesc,
             style: TextStyle(color: context.textSecondary, fontSize: 12),
           ),
           const SizedBox(height: AppTheme.spacing16),
@@ -604,7 +639,7 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Measurement Units',
+            context.l10n.displayConfigMeasurementUnits,
             style: TextStyle(
               color: context.textPrimary,
               fontSize: 16,
@@ -614,8 +649,8 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
           const SizedBox(height: AppTheme.spacing16),
           _buildUnitOption(
             icon: Icons.straighten,
-            title: 'Metric',
-            subtitle: 'Kilometers, Celsius',
+            title: context.l10n.displayConfigMetric,
+            subtitle: context.l10n.displayConfigMetricDesc,
             isSelected:
                 _units ==
                 config_pbenum.Config_DisplayConfig_DisplayUnits.METRIC,
@@ -627,8 +662,8 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
           const SizedBox(height: AppTheme.spacing8),
           _buildUnitOption(
             icon: Icons.square_foot,
-            title: 'Imperial',
-            subtitle: 'Miles, Fahrenheit',
+            title: context.l10n.displayConfigImperial,
+            subtitle: context.l10n.displayConfigImperialDesc,
             isSelected:
                 _units ==
                 config_pbenum.Config_DisplayConfig_DisplayUnits.IMPERIAL,
@@ -642,8 +677,8 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
           const SizedBox(height: AppTheme.spacing8),
           _SettingsTile(
             icon: Icons.format_bold,
-            title: 'Bold Headings',
-            subtitle: 'Show compass headings in bold',
+            title: context.l10n.displayConfigBoldHeadings,
+            subtitle: context.l10n.displayConfigBoldHeadingsSubtitle,
             trailing: ThemedSwitch(
               value: _headingBold,
               onChanged: (value) {
@@ -728,26 +763,26 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
     final modes = [
       (
         config_pbenum.Config_DisplayConfig_DisplayMode.DEFAULT,
-        'Default',
-        'Standard display layout',
+        context.l10n.displayConfigModeDefault,
+        context.l10n.displayConfigModeDefaultDesc,
         Icons.smartphone,
       ),
       (
         config_pbenum.Config_DisplayConfig_DisplayMode.TWOCOLOR,
-        'Two Color',
-        'Optimized for two-color displays',
+        context.l10n.displayConfigModeTwoColor,
+        context.l10n.displayConfigModeTwoColorDesc,
         Icons.contrast,
       ),
       (
         config_pbenum.Config_DisplayConfig_DisplayMode.INVERTED,
-        'Inverted',
-        'Dark background, light text',
+        context.l10n.displayConfigModeInverted,
+        context.l10n.displayConfigModeInvertedDesc,
         Icons.invert_colors,
       ),
       (
         config_pbenum.Config_DisplayConfig_DisplayMode.COLOR,
-        'Color',
-        'Full color display mode',
+        context.l10n.displayConfigModeColor,
+        context.l10n.displayConfigModeColorDesc,
         Icons.palette,
       ),
     ];
@@ -762,7 +797,7 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Display Mode',
+            context.l10n.displayConfigDisplayModeTitle,
             style: TextStyle(
               color: context.textPrimary,
               fontSize: 16,
@@ -771,7 +806,7 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
           ),
           SizedBox(height: AppTheme.spacing4),
           Text(
-            'Choose the display rendering mode',
+            context.l10n.displayConfigDisplayModeDesc,
             style: TextStyle(color: context.textSecondary, fontSize: 12),
           ),
           const SizedBox(height: AppTheme.spacing16),

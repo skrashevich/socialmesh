@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../providers/app_providers.dart';
+import '../l10n/l10n_extension.dart';
 import '../theme.dart';
 import '../../utils/share_utils.dart';
 import '../../utils/snackbar.dart';
@@ -233,7 +234,7 @@ class _AsyncQrShareSheetState extends State<_AsyncQrShareSheet> {
         const CircularProgressIndicator(),
         const SizedBox(height: AppTheme.spacing16),
         Text(
-          'Preparing share link...',
+          context.l10n.qrSharePreparingLink,
           style: TextStyle(color: context.textSecondary),
         ),
         const SizedBox(height: AppTheme.spacing48),
@@ -259,7 +260,7 @@ class _AsyncQrShareSheetState extends State<_AsyncQrShareSheet> {
             _loadData();
           },
           icon: const Icon(Icons.refresh),
-          label: const Text('Retry'),
+          label: Text(context.l10n.commonRetry),
         ),
         const SizedBox(height: AppTheme.spacing24),
         SizedBox(height: MediaQuery.of(context).padding.bottom),
@@ -344,7 +345,11 @@ class _QrShareContentState extends State<_QrShareContent> {
                     ),
                   )
                 : const Icon(Icons.share, size: 18),
-            label: Text(_isSharing ? 'Sharing...' : 'Share Link'),
+            label: Text(
+              _isSharing
+                  ? context.l10n.qrShareSharing
+                  : context.l10n.qrShareShareLink,
+            ),
             style: OutlinedButton.styleFrom(
               foregroundColor: context.accentColor,
               side: BorderSide(color: context.accentColor),
@@ -361,7 +366,7 @@ class _QrShareContentState extends State<_QrShareContent> {
           child: FilledButton.icon(
             onPressed: _isSharing ? null : () => _handleCopy(context),
             icon: const Icon(Icons.copy, size: 18),
-            label: const Text('Copy Link'),
+            label: Text(context.l10n.qrShareCopyLink),
             style: FilledButton.styleFrom(
               backgroundColor: context.accentColor,
               foregroundColor: Colors.white,
@@ -393,7 +398,7 @@ class _QrShareContentState extends State<_QrShareContent> {
       widget.onShareComplete?.call();
     } catch (e) {
       if (context.mounted) {
-        showErrorSnackBar(context, 'Failed to share: $e');
+        showErrorSnackBar(context, context.l10n.qrShareFailedToShare('$e'));
       }
     } finally {
       if (mounted) {
@@ -406,7 +411,7 @@ class _QrShareContentState extends State<_QrShareContent> {
     HapticFeedback.mediumImpact();
     Clipboard.setData(ClipboardData(text: widget.shareUrl));
     Navigator.pop(context);
-    showSuccessSnackBar(context, 'Link copied to clipboard');
+    showSuccessSnackBar(context, context.l10n.qrShareLinkCopied);
     widget.onCopyComplete?.call();
   }
 }

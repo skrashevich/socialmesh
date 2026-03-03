@@ -2,6 +2,7 @@
 // lint-allow: haptic-feedback — onTap delegates to parent callback
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/app_bottom_sheet.dart';
 import '../../models/subscription_models.dart';
@@ -41,7 +42,7 @@ class PremiumFeatureGate extends ConsumerWidget {
     return _LockedFeatureCard(
       featureName: purchase?.name ?? feature.name,
       featureDescription:
-          purchase?.description ?? 'This feature requires a purchase',
+          purchase?.description ?? context.l10n.settingsPremiumFeatureRequired,
       price: purchase?.price ?? 0,
       showUpgradeButton: showUpgradeButton,
     );
@@ -114,8 +115,10 @@ class _LockedFeatureCard extends StatelessWidget {
               icon: const Icon(Icons.shopping_bag_outlined, size: 18),
               label: Text(
                 price > 0
-                    ? 'Unlock for \$${price.toStringAsFixed(2)}'
-                    : 'View Upgrades',
+                    ? context.l10n.settingsPremiumUnlockPrice(
+                        price.toStringAsFixed(2),
+                      )
+                    : context.l10n.settingsPremiumViewUpgrades,
               ),
             ),
           ],
@@ -145,7 +148,7 @@ class PremiumBadge extends StatelessWidget {
           Icon(Icons.lock, size: size - 4, color: Colors.white),
           const SizedBox(width: AppTheme.spacing2),
           Text(
-            'PRO',
+            context.l10n.settingsPremiumPro,
             style: TextStyle(
               fontSize: size - 4,
               fontWeight: FontWeight.bold,
@@ -223,7 +226,7 @@ Future<bool> checkFeatureOrShowUpgrade(
             SizedBox(width: AppTheme.spacing12),
             Expanded(
               child: Text(
-                purchase?.name ?? 'Premium Feature',
+                purchase?.name ?? context.l10n.settingsPremiumFeatureTitle,
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
@@ -236,7 +239,7 @@ Future<bool> checkFeatureOrShowUpgrade(
         const SizedBox(height: AppTheme.spacing12),
         Text(
           purchase?.description ??
-              'This feature requires a purchase to unlock.',
+              context.l10n.settingsPremiumFeatureDescription,
           style: TextStyle(color: context.textSecondary),
         ),
         const SizedBox(height: AppTheme.spacing24),
@@ -252,7 +255,7 @@ Future<bool> checkFeatureOrShowUpgrade(
                     borderRadius: BorderRadius.circular(AppTheme.radius12),
                   ),
                 ),
-                child: const Text('Cancel'),
+                child: Text(context.l10n.commonCancel),
               ),
             ),
             const SizedBox(width: AppTheme.spacing12),
@@ -276,8 +279,10 @@ Future<bool> checkFeatureOrShowUpgrade(
                 ),
                 child: Text(
                   purchase != null
-                      ? 'Unlock \$${purchase.price.toStringAsFixed(2)}'
-                      : 'View Upgrades',
+                      ? context.l10n.settingsPremiumUnlockPrice(
+                          purchase.price.toStringAsFixed(2),
+                        )
+                      : context.l10n.settingsPremiumViewUpgrades,
                 ),
               ),
             ),

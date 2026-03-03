@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../l10n/l10n_extension.dart';
 import '../safety/lifecycle_mixin.dart';
 import '../../models/subscription_models.dart';
 import '../../providers/connectivity_providers.dart';
@@ -50,85 +51,85 @@ class _PremiumUpsellSheetState extends ConsumerState<PremiumUpsellSheet>
         return [
           _FeatureBenefit(
             icon: Icons.bolt,
-            title: 'Unlimited Automations',
-            description: 'Create as many rules as you need',
+            title: context.l10n.premiumBenefitUnlimitedAutomations,
+            description: context.l10n.premiumBenefitUnlimitedAutomationsDesc,
           ),
           _FeatureBenefit(
             icon: Icons.notifications_active,
-            title: 'Smart Notifications',
-            description: 'Get alerts for battery, offline nodes, and more',
+            title: context.l10n.premiumBenefitSmartNotifications,
+            description: context.l10n.premiumBenefitSmartNotificationsDesc,
           ),
           _FeatureBenefit(
             icon: Icons.schedule,
-            title: 'Scheduled Actions',
-            description: 'Run automations at specific times',
+            title: context.l10n.premiumBenefitScheduledActions,
+            description: context.l10n.premiumBenefitScheduledActionsDesc,
           ),
           _FeatureBenefit(
             icon: Icons.location_on,
-            title: 'Geofence Triggers',
-            description: 'React when nodes enter or exit areas',
+            title: context.l10n.premiumBenefitGeofenceTriggers,
+            description: context.l10n.premiumBenefitGeofenceTriggersDesc,
           ),
         ];
       case PremiumFeature.iftttIntegration:
         return [
           _FeatureBenefit(
             icon: Icons.webhook,
-            title: 'Connect 700+ Services',
-            description: 'Smart home, notifications, spreadsheets & more',
+            title: context.l10n.premiumBenefitConnect700,
+            description: context.l10n.premiumBenefitConnect700Desc,
           ),
           _FeatureBenefit(
             icon: Icons.home,
-            title: 'Smart Home Control',
-            description: 'Trigger lights, locks, and devices',
+            title: context.l10n.premiumBenefitSmartHomeControl,
+            description: context.l10n.premiumBenefitSmartHomeControlDesc,
           ),
           _FeatureBenefit(
             icon: Icons.notifications,
-            title: 'Cross-Platform Alerts',
-            description: 'Send to Slack, Discord, email, and more',
+            title: context.l10n.premiumBenefitCrossPlatformAlerts,
+            description: context.l10n.premiumBenefitCrossPlatformAlertsDesc,
           ),
         ];
       case PremiumFeature.premiumThemes:
         return [
           _FeatureBenefit(
             icon: Icons.palette,
-            title: '12 Premium Colors',
-            description: 'Personalize every screen and button',
+            title: context.l10n.premiumBenefit12Colors,
+            description: context.l10n.premiumBenefit12ColorsDesc,
           ),
           _FeatureBenefit(
             icon: Icons.auto_awesome,
-            title: 'Exclusive Styles',
-            description: 'Unique accent combinations',
+            title: context.l10n.premiumBenefitExclusiveStyles,
+            description: context.l10n.premiumBenefitExclusiveStylesDesc,
           ),
         ];
       case PremiumFeature.customRingtones:
         return [
           _FeatureBenefit(
             icon: Icons.library_music,
-            title: '7,000+ Ringtones',
-            description: 'Classic melodies, TV themes, games & more',
+            title: context.l10n.premiumBenefit7000Ringtones,
+            description: context.l10n.premiumBenefit7000RingtonesDesc,
           ),
           _FeatureBenefit(
             icon: Icons.search,
-            title: 'Searchable Library',
-            description: 'Find any tune instantly',
+            title: context.l10n.premiumBenefitSearchableLibrary,
+            description: context.l10n.premiumBenefitSearchableLibraryDesc,
           ),
         ];
       case PremiumFeature.homeWidgets:
         return [
           _FeatureBenefit(
             icon: Icons.dashboard_customize,
-            title: 'Custom Dashboards',
-            description: 'Build your own widget layouts',
+            title: context.l10n.premiumBenefitCustomDashboards,
+            description: context.l10n.premiumBenefitCustomDashboardsDesc,
           ),
           _FeatureBenefit(
             icon: Icons.show_chart,
-            title: 'Live Charts & Gauges',
-            description: 'Visualize telemetry in real-time',
+            title: context.l10n.premiumBenefitLiveCharts,
+            description: context.l10n.premiumBenefitLiveChartsDesc,
           ),
           _FeatureBenefit(
             icon: Icons.battery_charging_full,
-            title: 'Battery & Sensors',
-            description: 'Monitor everything at a glance',
+            title: context.l10n.premiumBenefitBatterySensors,
+            description: context.l10n.premiumBenefitBatterySensorsDesc,
           ),
         ];
     }
@@ -138,15 +139,15 @@ class _PremiumUpsellSheetState extends ConsumerState<PremiumUpsellSheet>
   String get _headline {
     switch (widget.feature) {
       case PremiumFeature.automations:
-        return 'Automate Your Mesh';
+        return context.l10n.premiumHeadlineAutomations;
       case PremiumFeature.iftttIntegration:
-        return 'Connect Everything';
+        return context.l10n.premiumHeadlineIfttt;
       case PremiumFeature.premiumThemes:
-        return 'Make It Yours';
+        return context.l10n.premiumHeadlineThemes;
       case PremiumFeature.customRingtones:
-        return 'Sound Library';
+        return context.l10n.premiumHeadlineRingtones;
       case PremiumFeature.homeWidgets:
-        return 'Your Dashboard';
+        return context.l10n.premiumHeadlineWidgets;
     }
   }
 
@@ -158,15 +159,15 @@ class _PremiumUpsellSheetState extends ConsumerState<PremiumUpsellSheet>
 
     switch (widget.feature) {
       case PremiumFeature.automations:
-        return 'Save this automation and unlock the full power of automatic alerts, messages, and smart triggers.';
+        return context.l10n.premiumSubtitleAutomations;
       case PremiumFeature.iftttIntegration:
-        return 'Connect your mesh network to hundreds of apps and services.';
+        return context.l10n.premiumSubtitleIfttt;
       case PremiumFeature.premiumThemes:
-        return 'Express yourself with 12 stunning accent colors.';
+        return context.l10n.premiumSubtitleThemes;
       case PremiumFeature.customRingtones:
-        return 'Access a massive library of notification sounds.';
+        return context.l10n.premiumSubtitleRingtones;
       case PremiumFeature.homeWidgets:
-        return 'Build custom dashboards with live data visualizations.';
+        return context.l10n.premiumSubtitleWidgets;
     }
   }
 
@@ -176,7 +177,7 @@ class _PremiumUpsellSheetState extends ConsumerState<PremiumUpsellSheet>
 
     final isOnline = ref.read(isOnlineProvider);
     if (!isOnline) {
-      showErrorSnackBar(context, 'Purchases require an internet connection.');
+      showErrorSnackBar(context, context.l10n.premiumPurchaseRequiresInternet);
       return;
     }
 
@@ -195,7 +196,10 @@ class _PremiumUpsellSheetState extends ConsumerState<PremiumUpsellSheet>
       switch (result) {
         case PurchaseResult.success:
           haptics.success();
-          showSuccessSnackBar(context, '${purchase.name} unlocked!');
+          showSuccessSnackBar(
+            context,
+            context.l10n.premiumPurchaseUnlocked(purchase.name),
+          );
           // Close sheet and return success
           Navigator.of(context).pop(true);
 
@@ -205,11 +209,11 @@ class _PremiumUpsellSheetState extends ConsumerState<PremiumUpsellSheet>
 
         case PurchaseResult.error:
           haptics.error();
-          showErrorSnackBar(context, 'Purchase failed. Please try again.');
+          showErrorSnackBar(context, context.l10n.premiumPurchaseFailed);
           safeSetState(() => _isLoading = false);
       }
     } catch (e) {
-      showErrorSnackBar(context, 'Something went wrong. Please try again.');
+      showErrorSnackBar(context, context.l10n.premiumPurchaseError);
       safeSetState(() => _isLoading = false);
     }
   }
@@ -217,10 +221,7 @@ class _PremiumUpsellSheetState extends ConsumerState<PremiumUpsellSheet>
   Future<void> _handleRestore() async {
     final isOnline = ref.read(isOnlineProvider);
     if (!isOnline) {
-      showErrorSnackBar(
-        context,
-        'Restoring purchases requires an internet connection.',
-      );
+      showErrorSnackBar(context, context.l10n.premiumRestoreRequiresInternet);
       return;
     }
 
@@ -235,16 +236,16 @@ class _PremiumUpsellSheetState extends ConsumerState<PremiumUpsellSheet>
         // Check if this specific feature was restored
         final hasFeature = ref.read(hasFeatureProvider(widget.feature));
         if (hasFeature) {
-          showSuccessSnackBar(context, 'Purchases restored!');
+          showSuccessSnackBar(context, context.l10n.premiumRestoreSuccess);
           Navigator.of(context).pop(true);
           return;
         }
       }
 
-      showInfoSnackBar(context, 'No purchases found to restore');
+      showInfoSnackBar(context, context.l10n.premiumRestoreNone);
       safeSetState(() => _isLoading = false);
     } catch (e) {
-      showErrorSnackBar(context, 'Failed to restore purchases');
+      showErrorSnackBar(context, context.l10n.premiumRestoreFailed);
       safeSetState(() => _isLoading = false);
     }
   }
@@ -411,7 +412,7 @@ class _PremiumUpsellSheetState extends ConsumerState<PremiumUpsellSheet>
                       const SizedBox(width: AppTheme.spacing8),
                       Expanded(
                         child: Text(
-                          'Your configuration is saved. After purchase, just tap save again.',
+                          context.l10n.premiumConfigSaved,
                           style: TextStyle(
                             color: AppTheme.successGreen,
                             fontSize: 13,
@@ -463,7 +464,7 @@ class _PremiumUpsellSheetState extends ConsumerState<PremiumUpsellSheet>
                               ),
                               const SizedBox(width: AppTheme.spacing8),
                               Text(
-                                'Unlock for $displayPrice',
+                                context.l10n.premiumUnlockFor(displayPrice),
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
@@ -479,7 +480,7 @@ class _PremiumUpsellSheetState extends ConsumerState<PremiumUpsellSheet>
 
                 // One-time purchase note
                 Text(
-                  'One-time purchase • Yours forever',
+                  context.l10n.premiumOneTimePurchase,
                   textAlign: TextAlign.center,
                   style: TextStyle(color: context.textTertiary, fontSize: 12),
                 ),
@@ -490,7 +491,7 @@ class _PremiumUpsellSheetState extends ConsumerState<PremiumUpsellSheet>
                 TextButton(
                   onPressed: _isLoading ? null : _handleRestore,
                   child: Text(
-                    'Restore Purchases',
+                    context.l10n.premiumRestorePurchases,
                     style: TextStyle(
                       color: context.textSecondary,
                       fontSize: 14,

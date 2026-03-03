@@ -417,7 +417,10 @@ class _PendingWidgetCard extends StatelessWidget {
                 ),
                 SizedBox(width: AppTheme.spacing4),
                 Text(
-                  WidgetCategories.getDisplayName(widget.category),
+                  WidgetCategories.localizedDisplayName(
+                    widget.category,
+                    context.l10n,
+                  ),
                   style: TextStyle(color: context.textSecondary, fontSize: 12),
                 ),
                 SizedBox(width: AppTheme.spacing16),

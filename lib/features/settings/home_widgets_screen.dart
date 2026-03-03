@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../config/revenuecat_config.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/glass_scaffold.dart';
 import '../../providers/subscription_providers.dart';
@@ -22,7 +23,7 @@ class _HomeWidgetsScreenState extends ConsumerState<HomeWidgetsScreen> {
     final accentColor = context.accentColor;
 
     return GlassScaffold(
-      title: 'Home Widgets',
+      title: context.l10n.homeWidgetsTitle,
       slivers: [
         SliverPadding(
           padding: const EdgeInsets.all(AppTheme.spacing16),
@@ -33,62 +34,71 @@ class _HomeWidgetsScreenState extends ConsumerState<HomeWidgetsScreen> {
               const SizedBox(height: AppTheme.spacing24),
 
               // Available Widgets Section
-              _buildSectionHeader('AVAILABLE WIDGETS'),
+              _buildSectionHeader(context.l10n.homeWidgetsSectionAvailable),
               const SizedBox(height: AppTheme.spacing12),
               _buildWidgetCard(
                 context,
                 icon: Icons.people,
-                title: 'Mesh Status',
-                description: 'Shows connected nodes count and mesh health',
-                sizes: ['Small', 'Medium'],
+                title: context.l10n.homeWidgetsMeshStatus,
+                description: context.l10n.homeWidgetsMeshStatusDesc,
+                sizes: [
+                  context.l10n.homeWidgetsSizeSmall,
+                  context.l10n.homeWidgetsSizeMedium,
+                ],
                 accentColor: accentColor,
               ),
               const SizedBox(height: AppTheme.spacing12),
               _buildWidgetCard(
                 context,
                 icon: Icons.message,
-                title: 'Recent Messages',
-                description: 'Displays latest messages from your mesh',
-                sizes: ['Medium', 'Large'],
+                title: context.l10n.homeWidgetsRecentMessages,
+                description: context.l10n.homeWidgetsRecentMessagesDesc,
+                sizes: [
+                  context.l10n.homeWidgetsSizeMedium,
+                  context.l10n.homeWidgetsSizeLarge,
+                ],
                 accentColor: accentColor,
               ),
               const SizedBox(height: AppTheme.spacing12),
               _buildWidgetCard(
                 context,
                 icon: Icons.battery_full,
-                title: 'Device Battery',
-                description: 'Shows battery level of your connected device',
-                sizes: ['Small'],
+                title: context.l10n.homeWidgetsDeviceBattery,
+                description: context.l10n.homeWidgetsDeviceBatteryDesc,
+                sizes: [context.l10n.homeWidgetsSizeSmall],
                 accentColor: accentColor,
               ),
               const SizedBox(height: AppTheme.spacing12),
               _buildWidgetCard(
                 context,
                 icon: Icons.send,
-                title: 'Quick Message',
-                description: 'Send a canned response with one tap',
-                sizes: ['Small', 'Medium'],
+                title: context.l10n.homeWidgetsQuickMessage,
+                description: context.l10n.homeWidgetsQuickMessageDesc,
+                sizes: [
+                  context.l10n.homeWidgetsSizeSmall,
+                  context.l10n.homeWidgetsSizeMedium,
+                ],
                 accentColor: accentColor,
               ),
               const SizedBox(height: AppTheme.spacing12),
               _buildWidgetCard(
                 context,
                 icon: Icons.gps_fixed,
-                title: 'Location Beacon',
-                description: 'Share your location with a single tap',
-                sizes: ['Small'],
+                title: context.l10n.homeWidgetsLocationBeacon,
+                description: context.l10n.homeWidgetsLocationBeaconDesc,
+                sizes: [context.l10n.homeWidgetsSizeSmall],
                 accentColor: accentColor,
               ),
               const SizedBox(height: AppTheme.spacing24),
 
               // How to Add Section
-              _buildSectionHeader('HOW TO ADD WIDGETS'),
+              _buildSectionHeader(context.l10n.homeWidgetsSectionHowTo),
               const SizedBox(height: AppTheme.spacing12),
               _buildInstructions(context, accentColor),
               const SizedBox(height: AppTheme.spacing24),
 
               // Tips Section
-              _buildSectionHeader('TIPS'),
+              _buildSectionHeader(context.l10n.homeWidgetsSectionTips),
               const SizedBox(height: AppTheme.spacing12),
               _buildTipsSection(context, accentColor),
             ]),
@@ -155,7 +165,7 @@ class _HomeWidgetsScreenState extends ConsumerState<HomeWidgetsScreen> {
                   ),
                 ),
                 Text(
-                  'Add widgets to your home screen for quick access',
+                  context.l10n.homeWidgetsAddToHomeScreen,
                   style: context.bodySecondaryStyle?.copyWith(
                     color: context.textSecondary,
                   ),
@@ -267,50 +277,50 @@ class _HomeWidgetsScreenState extends ConsumerState<HomeWidgetsScreen> {
         ? [
             _InstructionStep(
               number: 1,
-              title: 'Long press on home screen',
-              description: 'Press and hold any empty area until apps jiggle',
+              title: context.l10n.homeWidgetsIosLongPress,
+              description: context.l10n.homeWidgetsIosLongPressDesc,
             ),
             _InstructionStep(
               number: 2,
-              title: 'Tap the + button',
-              description: 'Located in the top-left corner',
+              title: context.l10n.homeWidgetsIosTapPlus,
+              description: context.l10n.homeWidgetsIosTapPlusDesc,
             ),
             _InstructionStep(
               number: 3,
-              title: 'Search for "Socialmesh"',
-              description: 'Or scroll to find our widgets',
+              title: context.l10n.homeWidgetsIosSearch,
+              description: context.l10n.homeWidgetsIosSearchDesc,
             ),
             _InstructionStep(
               number: 4,
-              title: 'Choose a widget size',
-              description: 'Swipe to see available sizes, tap "Add Widget"',
+              title: context.l10n.homeWidgetsIosChooseSize,
+              description: context.l10n.homeWidgetsIosChooseSizeDesc,
             ),
             _InstructionStep(
               number: 5,
-              title: 'Position and tap Done',
-              description: 'Drag to your preferred location',
+              title: context.l10n.homeWidgetsIosPosition,
+              description: context.l10n.homeWidgetsIosPositionDesc,
             ),
           ]
         : [
             _InstructionStep(
               number: 1,
-              title: 'Long press on home screen',
-              description: 'Press and hold any empty area',
+              title: context.l10n.homeWidgetsAndroidLongPress,
+              description: context.l10n.homeWidgetsIosLongPressDesc,
             ),
             _InstructionStep(
               number: 2,
-              title: 'Tap "Widgets"',
-              description: 'From the menu that appears',
+              title: context.l10n.homeWidgetsAndroidTapWidgets,
+              description: context.l10n.homeWidgetsAndroidTapWidgetsDesc,
             ),
             _InstructionStep(
               number: 3,
-              title: 'Search for "Socialmesh"',
-              description: 'Or scroll to find our widgets',
+              title: context.l10n.homeWidgetsIosSearch,
+              description: context.l10n.homeWidgetsIosSearchDesc,
             ),
             _InstructionStep(
               number: 4,
-              title: 'Long press and drag',
-              description: 'Hold the widget and place it on your home screen',
+              title: context.l10n.homeWidgetsAndroidLongPressDrag,
+              description: context.l10n.homeWidgetsAndroidLongPressDragDesc,
             ),
           ];
 
@@ -333,7 +343,9 @@ class _HomeWidgetsScreenState extends ConsumerState<HomeWidgetsScreen> {
               ),
               SizedBox(width: AppTheme.spacing8),
               Text(
-                isIOS ? 'iOS Instructions' : 'Android Instructions',
+                isIOS
+                    ? context.l10n.homeWidgetsIosInstructions
+                    : context.l10n.homeWidgetsAndroidInstructions,
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
@@ -412,25 +424,25 @@ class _HomeWidgetsScreenState extends ConsumerState<HomeWidgetsScreen> {
         children: [
           _buildTipRow(
             Icons.refresh,
-            'Widgets update automatically when connected',
+            context.l10n.homeWidgetsTipAutoUpdate,
             accentColor,
           ),
           const SizedBox(height: AppTheme.spacing12),
           _buildTipRow(
             Icons.wifi_off,
-            'Offline data shown when disconnected',
+            context.l10n.homeWidgetsTipOffline,
             accentColor,
           ),
           const SizedBox(height: AppTheme.spacing12),
           _buildTipRow(
             Icons.touch_app,
-            'Tap any widget to open the app',
+            context.l10n.homeWidgetsTipTapToOpen,
             accentColor,
           ),
           const SizedBox(height: AppTheme.spacing12),
           _buildTipRow(
             Icons.palette,
-            'Widget colors match your accent color',
+            context.l10n.homeWidgetsTipAccentColor,
             accentColor,
           ),
         ],

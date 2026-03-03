@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/logging.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/widgets/animations.dart';
@@ -131,6 +132,7 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
 
   Future<void> _useCurrentLocation() async {
     safeSetState(() => _isGettingLocation = true);
+    final l10n = context.l10n;
     try {
       // Check if location services are enabled
       final serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -138,8 +140,8 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
         if (mounted) {
           showActionSnackBar(
             context,
-            'Location services are disabled. Enable GPS in your device settings.',
-            actionLabel: 'Open Settings',
+            l10n.positionConfigLocationDisabled,
+            actionLabel: l10n.positionConfigOpenSettings,
             onAction: () => Geolocator.openLocationSettings(),
             type: SnackBarType.warning,
           );
@@ -155,8 +157,8 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
           if (mounted) {
             showActionSnackBar(
               context,
-              'Location permission denied. Grant location access to use this feature.',
-              actionLabel: 'Open Settings',
+              l10n.positionConfigPermissionDenied,
+              actionLabel: l10n.positionConfigOpenSettings,
               onAction: () => Geolocator.openAppSettings(),
               type: SnackBarType.warning,
             );
@@ -169,8 +171,8 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
         if (mounted) {
           showActionSnackBar(
             context,
-            'Location permission permanently denied. Enable in your device settings.',
-            actionLabel: 'Open Settings',
+            l10n.positionConfigPermissionPermanentlyDenied,
+            actionLabel: l10n.positionConfigOpenSettings,
             onAction: () => Geolocator.openAppSettings(),
             type: SnackBarType.warning,
           );
@@ -192,11 +194,14 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
         _altController.text = position.altitude.toInt().toString();
       });
       if (mounted) {
-        showSuccessSnackBar(context, 'Location updated from phone GPS');
+        showSuccessSnackBar(context, l10n.positionConfigLocationUpdated);
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to get location: $e');
+        showErrorSnackBar(
+          context,
+          l10n.positionConfigLocationFailed(e.toString()),
+        );
       }
     } finally {
       safeSetState(() => _isGettingLocation = false);
@@ -331,6 +336,7 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
 
   Future<void> _saveConfig() async {
     safeSetState(() => _isSaving = true);
+    final l10n = context.l10n;
     try {
       final protocol = ref.read(protocolServiceProvider);
       final target = AdminTarget.fromNullable(
@@ -373,7 +379,7 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
       );
 
       if (mounted) {
-        showSuccessSnackBar(context, 'Position configuration saved');
+        showSuccessSnackBar(context, l10n.positionConfigSaved);
         if (target.isLocal) {
           ref
               .read(countdownProvider.notifier)
@@ -383,7 +389,7 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to save: $e');
+        showErrorSnackBar(context, l10n.positionConfigSaveFailed(e.toString()));
       }
     } finally {
       safeSetState(() => _isSaving = false);
@@ -396,7 +402,7 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: GlassScaffold(
-        title: 'Position',
+        title: context.l10n.positionConfigTitle,
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 8),
@@ -405,7 +411,7 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
               child: _isSaving
                   ? LoadingIndicator(size: 20)
                   : Text(
-                      'Save',
+                      context.l10n.positionConfigSave,
                       style: TextStyle(
                         color: context.accentColor,
                         fontWeight: FontWeight.w600,
@@ -422,18 +428,21 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
               padding: const EdgeInsets.symmetric(vertical: 8),
               sliver: SliverList.list(
                 children: [
-                  const _SectionHeader(title: 'GPS MODE'),
+                  _SectionHeader(
+                    title: context.l10n.positionConfigSectionGpsMode,
+                  ),
                   _buildGpsModeSelector(),
                   SizedBox(height: AppTheme.spacing16),
-                  const _SectionHeader(title: 'BROADCAST SETTINGS'),
+                  _SectionHeader(
+                    title: context.l10n.positionConfigSectionBroadcast,
+                  ),
                   _SettingsTile(
                     icon: Icons.tune,
                     iconColor: _smartBroadcastEnabled
                         ? context.accentColor
                         : null,
-                    title: 'Smart Broadcast',
-                    subtitle:
-                        'Only broadcast when position changes significantly',
+                    title: context.l10n.positionConfigSmartBroadcast,
+                    subtitle: context.l10n.positionConfigSmartBroadcastSubtitle,
                     trailing: ThemedSwitch(
                       value: _smartBroadcastEnabled,
                       onChanged: (value) {
@@ -460,7 +469,7 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                           children: [
                             Expanded(
                               child: Text(
-                                'Position Broadcast Interval',
+                                context.l10n.positionConfigBroadcastInterval,
                                 style: TextStyle(
                                   color: context.textPrimary,
                                   fontWeight: FontWeight.w500,
@@ -474,7 +483,7 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                         ),
                         SizedBox(height: AppTheme.spacing4),
                         Text(
-                          'The maximum time between position broadcasts',
+                          context.l10n.positionConfigBroadcastIntervalSubtitle,
                           style: TextStyle(
                             color: context.textSecondary,
                             fontSize: 13,
@@ -495,7 +504,7 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                             children: [
                               Expanded(
                                 child: Text(
-                                  'GPS Update Interval',
+                                  context.l10n.positionConfigGpsUpdateInterval,
                                   style: TextStyle(
                                     color: context.textPrimary,
                                     fontWeight: FontWeight.w500,
@@ -509,7 +518,9 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                           ),
                           SizedBox(height: AppTheme.spacing4),
                           Text(
-                            'How often the device GPS checks for position',
+                            context
+                                .l10n
+                                .positionConfigGpsUpdateIntervalSubtitle,
                             style: TextStyle(
                               color: context.textSecondary,
                               fontSize: 13,
@@ -532,12 +543,14 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                   // already toggled on (matches official iOS behaviour).
                   // Local-only (uses localAdmin routing).
                   if (!isRemote && (!_isGpsEnabled || _fixedPosition)) ...[
-                    const _SectionHeader(title: 'FIXED POSITION'),
+                    _SectionHeader(
+                      title: context.l10n.positionConfigSectionFixed,
+                    ),
                     _SettingsTile(
                       icon: Icons.pin_drop,
                       iconColor: _fixedPosition ? context.accentColor : null,
-                      title: 'Use Fixed Position',
-                      subtitle: 'Manually set position instead of using GPS',
+                      title: context.l10n.positionConfigUseFixed,
+                      subtitle: context.l10n.positionConfigUseFixedSubtitle,
                       trailing: ThemedSwitch(
                         value: _fixedPosition,
                         onChanged: (value) {
@@ -571,7 +584,7 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                                   ),
                               textInputAction: TextInputAction.next,
                               decoration: InputDecoration(
-                                labelText: 'Latitude',
+                                labelText: context.l10n.positionConfigLatitude,
                                 labelStyle: TextStyle(
                                   color: context.textSecondary,
                                 ),
@@ -619,7 +632,7 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                                   ),
                               textInputAction: TextInputAction.next,
                               decoration: InputDecoration(
-                                labelText: 'Longitude',
+                                labelText: context.l10n.positionConfigLongitude,
                                 labelStyle: TextStyle(
                                   color: context.textSecondary,
                                 ),
@@ -666,7 +679,7 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                               onSubmitted: (_) =>
                                   FocusScope.of(context).unfocus(),
                               decoration: InputDecoration(
-                                labelText: 'Altitude (meters)',
+                                labelText: context.l10n.positionConfigAltitude,
                                 labelStyle: TextStyle(
                                   color: context.textSecondary,
                                 ),
@@ -732,8 +745,8 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                                 ),
                           label: Text(
                             _isGettingLocation
-                                ? 'Getting Location...'
-                                : 'Use Current Location',
+                                ? context.l10n.positionConfigGettingLocation
+                                : context.l10n.positionConfigUseCurrentLocation,
                             style: TextStyle(
                               color: context.accentColor,
                               fontWeight: FontWeight.w500,
@@ -776,7 +789,7 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                             SizedBox(width: AppTheme.spacing12),
                             Expanded(
                               child: Text(
-                                'Fixed position is useful for stationary installations like routers or base stations.',
+                                context.l10n.positionConfigFixedInfo,
                                 style: TextStyle(
                                   color: context.textSecondary,
                                   fontSize: 13,
@@ -790,7 +803,9 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                   ], // end if (!isRemote)
                   SizedBox(height: AppTheme.spacing16),
                   if (_smartBroadcastEnabled) ...[
-                    const _SectionHeader(title: 'SMART BROADCAST SETTINGS'),
+                    _SectionHeader(
+                      title: context.l10n.positionConfigSectionSmartBroadcast,
+                    ),
                     Container(
                       margin: const EdgeInsets.symmetric(
                         horizontal: 16,
@@ -808,7 +823,7 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Minimum Distance',
+                                context.l10n.positionConfigMinDistance,
                                 style: TextStyle(
                                   color: context.textPrimary,
                                   fontWeight: FontWeight.w500,
@@ -840,7 +855,7 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                           ),
                           SizedBox(height: AppTheme.spacing4),
                           Text(
-                            'Minimum distance moved before broadcasting',
+                            context.l10n.positionConfigMinDistanceSubtitle,
                             style: TextStyle(
                               color: context.textSecondary,
                               fontSize: 13,
@@ -883,7 +898,7 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                             children: [
                               Expanded(
                                 child: Text(
-                                  'Minimum Interval',
+                                  context.l10n.positionConfigMinInterval,
                                   style: TextStyle(
                                     color: context.textPrimary,
                                     fontWeight: FontWeight.w500,
@@ -899,8 +914,7 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                           ),
                           SizedBox(height: AppTheme.spacing4),
                           Text(
-                            'The fastest position updates will be sent if '
-                            'the minimum distance has been satisfied',
+                            context.l10n.positionConfigMinIntervalSubtitle,
                             style: TextStyle(
                               color: context.textSecondary,
                               fontSize: 13,
@@ -922,20 +936,22 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                   // GPS Settings and GPIO only shown when GPS is enabled
                   // (matches official Meshtastic iOS behaviour)
                   if (_isGpsEnabled) ...[
-                    const _SectionHeader(title: 'GPS GPIO'),
+                    _SectionHeader(
+                      title: context.l10n.positionConfigSectionGpsGpio,
+                    ),
                     _buildGpioSettings(),
                     SizedBox(height: AppTheme.spacing16),
                   ],
-                  const _SectionHeader(title: 'POSITION FLAGS'),
+                  _SectionHeader(
+                    title: context.l10n.positionConfigSectionFlags,
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 16,
                       vertical: 4,
                     ),
                     child: Text(
-                      'Optional fields to include in position messages. '
-                      'More fields means larger packets, longer airtime, '
-                      'and higher risk of packet loss.',
+                      context.l10n.positionConfigFlagsInfo,
                       style: TextStyle(
                         color: context.textSecondary,
                         fontSize: 13,
@@ -957,38 +973,38 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                         // Position Flags section: conditional visibility
                         // matches the official iOS app structure.
                         _buildFlagToggle(
-                          'Include Altitude',
-                          'Include altitude in position reports',
+                          context.l10n.positionConfigFlagAltitude,
+                          context.l10n.positionConfigFlagAltitudeDesc,
                           _includeAltitude,
                           (v) => setState(() => _includeAltitude = v),
                         ),
                         _buildFlagToggle(
-                          'Include Sats in View',
-                          'Include number of satellites visible',
+                          context.l10n.positionConfigFlagSatsInView,
+                          context.l10n.positionConfigFlagSatsInViewDesc,
                           _includeSatsinview,
                           (v) => setState(() => _includeSatsinview = v),
                         ),
                         _buildFlagToggle(
-                          'Include Sequence Number',
-                          'Include position sequence number',
+                          context.l10n.positionConfigFlagSeqNumber,
+                          context.l10n.positionConfigFlagSeqNumberDesc,
                           _includeSeqNo,
                           (v) => setState(() => _includeSeqNo = v),
                         ),
                         _buildFlagToggle(
-                          'Include Timestamp',
-                          'Include GPS timestamp',
+                          context.l10n.positionConfigFlagTimestamp,
+                          context.l10n.positionConfigFlagTimestampDesc,
                           _includeTimestamp,
                           (v) => setState(() => _includeTimestamp = v),
                         ),
                         _buildFlagToggle(
-                          'Include Heading',
-                          'Include heading/direction of travel',
+                          context.l10n.positionConfigFlagHeading,
+                          context.l10n.positionConfigFlagHeadingDesc,
                           _includeHeading,
                           (v) => setState(() => _includeHeading = v),
                         ),
                         _buildFlagToggle(
-                          'Include Speed',
-                          'Include ground speed',
+                          context.l10n.positionConfigFlagSpeed,
+                          context.l10n.positionConfigFlagSpeedDesc,
                           _includeSpeed,
                           (v) => setState(() => _includeSpeed = v),
                           isLast: !_includeAltitude && !_includeDop,
@@ -997,14 +1013,14 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                         // (iOS: MSL/Geoidal only when Altitude on)
                         if (_includeAltitude) ...[
                           _buildFlagToggle(
-                            'Altitude is Mean Sea Level',
-                            'Report altitude as MSL instead of HAE',
+                            context.l10n.positionConfigFlagMsl,
+                            context.l10n.positionConfigFlagMslDesc,
                             _includeAltitudeMsl,
                             (v) => setState(() => _includeAltitudeMsl = v),
                           ),
                           _buildFlagToggle(
-                            'Include Geoidal Separation',
-                            'Include geoidal separation value',
+                            context.l10n.positionConfigFlagGeoidalSep,
+                            context.l10n.positionConfigFlagGeoidalSepDesc,
                             _includeGeoidalSeparation,
                             (v) =>
                                 setState(() => _includeGeoidalSeparation = v),
@@ -1013,16 +1029,16 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                         ],
                         // iOS: HVDOP only when DOP is on
                         _buildFlagToggle(
-                          'Include DOP',
-                          'Include dilution of precision (PDOP)',
+                          context.l10n.positionConfigFlagDop,
+                          context.l10n.positionConfigFlagDopDesc,
                           _includeDop,
                           (v) => setState(() => _includeDop = v),
                           isLast: !_includeDop,
                         ),
                         if (_includeDop)
                           _buildFlagToggle(
-                            'Use HDOP / VDOP',
-                            'Send separate HDOP/VDOP instead of PDOP',
+                            context.l10n.positionConfigFlagHvdop,
+                            context.l10n.positionConfigFlagHvdopDesc,
                             _includeHvdop,
                             (v) => setState(() => _includeHvdop = v),
                             isLast: true,
@@ -1102,7 +1118,7 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'GPS RX GPIO',
+                context.l10n.positionConfigGpsRxGpio,
                 style: TextStyle(
                   color: context.textPrimary,
                   fontWeight: FontWeight.w500,
@@ -1123,7 +1139,11 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                   items: List.generate(49, (i) {
                     return DropdownMenuItem(
                       value: i,
-                      child: Text(i == 0 ? 'Unset' : 'Pin $i'),
+                      child: Text(
+                        i == 0
+                            ? context.l10n.positionConfigGpioPinUnset
+                            : context.l10n.positionConfigGpioPinLabel(i),
+                      ),
                     );
                   }),
                   onChanged: (value) {
@@ -1135,7 +1155,7 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
           ),
           const SizedBox(height: AppTheme.spacing4),
           Text(
-            'GPIO pin for GPS RX signal',
+            context.l10n.positionConfigGpsRxGpioDesc,
             style: TextStyle(color: context.textSecondary, fontSize: 13),
           ),
           Divider(height: 24, color: context.border),
@@ -1144,7 +1164,7 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'GPS TX GPIO',
+                context.l10n.positionConfigGpsTxGpio,
                 style: TextStyle(
                   color: context.textPrimary,
                   fontWeight: FontWeight.w500,
@@ -1165,7 +1185,11 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                   items: List.generate(49, (i) {
                     return DropdownMenuItem(
                       value: i,
-                      child: Text(i == 0 ? 'Unset' : 'Pin $i'),
+                      child: Text(
+                        i == 0
+                            ? context.l10n.positionConfigGpioPinUnset
+                            : context.l10n.positionConfigGpioPinLabel(i),
+                      ),
                     );
                   }),
                   onChanged: (value) {
@@ -1177,7 +1201,7 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
           ),
           const SizedBox(height: AppTheme.spacing4),
           Text(
-            'GPIO pin for GPS TX signal',
+            context.l10n.positionConfigGpsTxGpioDesc,
             style: TextStyle(color: context.textSecondary, fontSize: 13),
           ),
           Divider(height: 24, color: context.border),
@@ -1186,7 +1210,7 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'GPS Enable GPIO',
+                context.l10n.positionConfigGpsEnableGpio,
                 style: TextStyle(
                   color: context.textPrimary,
                   fontWeight: FontWeight.w500,
@@ -1207,7 +1231,11 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                   items: List.generate(49, (i) {
                     return DropdownMenuItem(
                       value: i,
-                      child: Text(i == 0 ? 'Unset' : 'Pin $i'),
+                      child: Text(
+                        i == 0
+                            ? context.l10n.positionConfigGpioPinUnset
+                            : context.l10n.positionConfigGpioPinLabel(i),
+                      ),
                     );
                   }),
                   onChanged: (value) {
@@ -1219,7 +1247,7 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
           ),
           const SizedBox(height: AppTheme.spacing4),
           Text(
-            'GPIO pin to control GPS power',
+            context.l10n.positionConfigGpsEnableGpioDesc,
             style: TextStyle(color: context.textSecondary, fontSize: 13),
           ),
         ],
@@ -1231,20 +1259,20 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
     final modes = [
       (
         config_pbenum.Config_PositionConfig_GpsMode.ENABLED,
-        'Enabled',
-        'GPS is active and reports position',
+        context.l10n.positionConfigGpsModeEnabled,
+        context.l10n.positionConfigGpsModeEnabledDesc,
         Icons.gps_fixed,
       ),
       (
         config_pbenum.Config_PositionConfig_GpsMode.DISABLED,
-        'Disabled',
-        'GPS hardware is present but turned off',
+        context.l10n.positionConfigGpsModeDisabled,
+        context.l10n.positionConfigGpsModeDisabledDesc,
         Icons.gps_off,
       ),
       (
         config_pbenum.Config_PositionConfig_GpsMode.NOT_PRESENT,
-        'Not Present',
-        'No GPS hardware on this device',
+        context.l10n.positionConfigGpsModeNotPresent,
+        context.l10n.positionConfigGpsModeNotPresentDesc,
         Icons.gps_not_fixed,
       ),
     ];
@@ -1326,7 +1354,7 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
   }
 
   String _formatDuration(int seconds) {
-    if (seconds >= 2147483647) return 'Never';
+    if (seconds >= 2147483647) return context.l10n.positionConfigIntervalNever;
     if (seconds < 60) return '${seconds}s';
     if (seconds < 3600) return '${seconds ~/ 60}m';
     if (seconds < 86400) return '${seconds ~/ 3600}h';
@@ -1334,8 +1362,8 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
   }
 
   String _formatGpsInterval(int seconds) {
-    if (seconds == 0) return 'Default';
-    if (seconds >= 2147483647) return 'On Boot Only';
+    if (seconds == 0) return context.l10n.positionConfigIntervalDefault;
+    if (seconds >= 2147483647) return context.l10n.positionConfigIntervalOnBoot;
     return _formatDuration(seconds);
   }
 }

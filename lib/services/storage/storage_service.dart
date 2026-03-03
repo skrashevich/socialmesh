@@ -178,6 +178,17 @@ class SettingsService {
 
   int get themeMode => _preferences.getInt('theme_mode') ?? 2; // Default dark
 
+  // Preferred Locale (null = system default)
+  Future<void> setPreferredLocale(String? localeCode) async {
+    if (localeCode != null) {
+      await _preferences.setString('preferred_locale', localeCode);
+    } else {
+      await _preferences.remove('preferred_locale');
+    }
+  }
+
+  String? get preferredLocale => _preferences.getString('preferred_locale');
+
   // Accent Color
   Future<void> setAccentColor(int colorValue) async {
     await _preferences.setInt('accent_color', colorValue);

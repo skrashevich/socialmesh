@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/safety/lifecycle_mixin.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/widgets/glass_scaffold.dart';
 import '../../providers/glyph_provider.dart';
 import '../../services/glyph_matrix_service.dart';
@@ -394,7 +395,7 @@ class _GlyphTestScreenState extends ConsumerState<GlyphTestScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'GLYPH MATRIX',
+            context.l10n.glyphMatrixTitle,
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -421,7 +422,7 @@ class _GlyphTestScreenState extends ConsumerState<GlyphTestScreen>
                 : Colors.white30,
           ),
           onPressed: _turnOff,
-          tooltip: 'Turn off',
+          tooltip: context.l10n.glyphMatrixTurnOff,
         ),
       ],
       body: initState.when(
@@ -449,7 +450,7 @@ class _GlyphTestScreenState extends ConsumerState<GlyphTestScreen>
           ),
           SizedBox(height: AppTheme.spacing24),
           Text(
-            'INITIALIZING GLYPH MATRIX...',
+            context.l10n.glyphMatrixInitializing,
             style: TextStyle(
               color: Colors.white30,
               fontSize: 12,
@@ -471,7 +472,7 @@ class _GlyphTestScreenState extends ConsumerState<GlyphTestScreen>
             Icon(Icons.error_outline, size: 64, color: AppTheme.errorRed),
             SizedBox(height: AppTheme.spacing16),
             Text(
-              'INIT FAILED',
+              context.l10n.glyphMatrixInitFailed,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 18,
@@ -501,7 +502,7 @@ class _GlyphTestScreenState extends ConsumerState<GlyphTestScreen>
             Icon(Icons.phonelink_off, size: 64, color: Colors.white30),
             SizedBox(height: AppTheme.spacing24),
             Text(
-              'DEVICE NOT SUPPORTED',
+              context.l10n.glyphMatrixNotSupported,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16,
@@ -511,7 +512,7 @@ class _GlyphTestScreenState extends ConsumerState<GlyphTestScreen>
             ),
             SizedBox(height: AppTheme.spacing12),
             Text(
-              'Glyph Matrix requires\nNothing Phone (3)',
+              context.l10n.glyphMatrixRequiresDevice,
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.white54, fontSize: 14),
             ),
@@ -593,7 +594,7 @@ class _GlyphTestScreenState extends ConsumerState<GlyphTestScreen>
 
         // Swipe hint
         Text(
-          '← SWIPE TO EXECUTE →',
+          context.l10n.glyphMatrixSwipeToExecute,
           style: TextStyle(
             color: Colors.white30,
             fontSize: 12,

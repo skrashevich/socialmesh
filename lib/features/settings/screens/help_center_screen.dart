@@ -252,9 +252,9 @@ class _HelpCenterScreenState extends ConsumerState<HelpCenterScreen>
               context.l10n.helpCenterNoArticlesMatchSearch,
               context.l10n.helpCenterSearchByTitle,
             ],
-            titlePrefix: 'No ',
-            titleKeyword: 'results',
-            titleSuffix: ' found',
+            titlePrefix: context.l10n.helpCenterNoResultsPrefix,
+            titleKeyword: context.l10n.helpCenterNoResultsKeyword,
+            titleSuffix: context.l10n.helpCenterNoResultsSuffix,
           ),
         ),
       );
@@ -805,7 +805,9 @@ class _HelpArticleTile extends StatelessWidget {
                     children: [
                       _MetadataChip(
                         icon: Icons.schedule,
-                        label: '${article.readingTimeMinutes} min',
+                        label: context.l10n.helpCenterReadingTime(
+                          article.readingTimeMinutes,
+                        ),
                       ),
                       _MetadataChip(
                         icon: isRead
@@ -1012,7 +1014,9 @@ class _InteractiveToursSection extends StatelessWidget {
                   padding: const EdgeInsets.only(top: AppTheme.spacing4),
                   child: Center(
                     child: Text(
-                      '+ ${HelpContent.allTopics.length - 8} more tours',
+                      context.l10n.helpCenterMoreTours(
+                        HelpContent.allTopics.length - 8,
+                      ),
                       style: TextStyle(
                         color: context.textTertiary,
                         fontSize: 12,
@@ -1069,7 +1073,7 @@ class _TourTopicRow extends StatelessWidget {
               ),
             ),
             Text(
-              '${topic.steps.length} steps',
+              context.l10n.helpCenterStepsCount(topic.steps.length),
               style: TextStyle(color: context.textTertiary, fontSize: 12),
             ),
           ],

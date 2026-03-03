@@ -29,6 +29,7 @@ import 'core/transport.dart';
 import 'services/transport/background_message_processor.dart';
 import 'core/accessibility_theme_adapter.dart';
 import 'l10n/app_localizations.dart';
+import 'core/l10n/l10n_extension.dart';
 import 'core/logging.dart';
 import 'core/safety/error_handler.dart';
 import 'core/safety/lifecycle_mixin.dart';
@@ -38,6 +39,7 @@ import 'core/routing/route_guard.dart';
 import 'providers/splash_mesh_provider.dart';
 import 'providers/connection_providers.dart' as conn;
 import 'providers/lifecycle_command_provider.dart';
+import 'providers/locale_provider.dart';
 import 'models/canned_response.dart';
 import 'models/tapback.dart';
 import 'models/user_profile.dart';
@@ -1622,6 +1624,7 @@ class _SocialmeshAppState extends ConsumerState<SocialmeshApp>
         theme: lightTheme,
         darkTheme: darkTheme,
         themeMode: themeMode,
+        locale: ref.watch(localeProvider),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         navigatorObservers: [
@@ -1878,7 +1881,7 @@ class _SocialmeshAppState extends ConsumerState<SocialmeshApp>
           routeName: routeName,
           message:
               RouteRegistry.getMetadata(routeName)?.blockedMessage ??
-              'Connect device to access this screen',
+              context.l10n.blockedRouteConnectDevice,
         );
       },
     );
@@ -1894,7 +1897,7 @@ class _SignalDetailLoader extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Loading Signal')),
+      appBar: AppBar(title: Text(context.l10n.deepLinkLoadingSignal)),
       body: FutureBuilder<Post?>(
         future: ref.read(signalServiceProvider).getSignalById(signalId),
         builder: (context, snapshot) {
@@ -1913,11 +1916,15 @@ class _SignalDetailLoader extends ConsumerWidget {
                     color: AppTheme.errorRed,
                   ),
                   const SizedBox(height: AppTheme.spacing16),
-                  Text('Error loading signal: ${snapshot.error}'),
+                  Text(
+                    context.l10n.deepLinkErrorLoadingSignal(
+                      '${snapshot.error}',
+                    ),
+                  ),
                   const SizedBox(height: AppTheme.spacing16),
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    child: const Text('Go Back'),
+                    child: Text(context.l10n.commonGoBack),
                   ),
                 ],
               ),
@@ -1932,11 +1939,11 @@ class _SignalDetailLoader extends ConsumerWidget {
                 children: [
                   const Icon(Icons.signal_wifi_off, size: 48),
                   const SizedBox(height: AppTheme.spacing16),
-                  const Text('Signal not found'),
+                  Text(context.l10n.deepLinkSignalNotFound),
                   const SizedBox(height: AppTheme.spacing16),
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    child: const Text('Go Back'),
+                    child: Text(context.l10n.commonGoBack),
                   ),
                 ],
               ),
@@ -1976,7 +1983,7 @@ class _AetherFlightDeepLinkLoader extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Loading Flight')),
+      appBar: AppBar(title: Text(context.l10n.deepLinkLoadingFlight)),
       body: FutureBuilder<AetherFlight>(
         future: ref.read(aetherShareServiceProvider).fetchFlight(shareId),
         builder: (context, snapshot) {
@@ -1997,13 +2004,15 @@ class _AetherFlightDeepLinkLoader extends ConsumerWidget {
                   const SizedBox(height: AppTheme.spacing16),
                   Text(
                     snapshot.hasError
-                        ? 'Error loading flight: ${snapshot.error}'
-                        : 'Flight not found',
+                        ? context.l10n.deepLinkErrorLoadingFlight(
+                            '${snapshot.error}',
+                          )
+                        : context.l10n.deepLinkFlightNotFound,
                   ),
                   const SizedBox(height: AppTheme.spacing16),
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    child: const Text('Go Back'),
+                    child: Text(context.l10n.commonGoBack),
                   ),
                 ],
               ),
@@ -2041,7 +2050,7 @@ class _ChannelImportLoader extends ConsumerWidget {
     final cryptoService = ref.read(channelCryptoServiceProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Import Channel')),
+      appBar: AppBar(title: Text(context.l10n.deepLinkImportChannel)),
       body: FutureBuilder<ChannelConfig?>(
         future: cryptoService.fetchSecureChannel(firestoreId),
         builder: (context, snapshot) {
@@ -2060,11 +2069,15 @@ class _ChannelImportLoader extends ConsumerWidget {
                     color: AppTheme.errorRed,
                   ),
                   const SizedBox(height: AppTheme.spacing16),
-                  Text('Error loading channel: ${snapshot.error}'),
+                  Text(
+                    context.l10n.deepLinkErrorLoadingChannel(
+                      '${snapshot.error}',
+                    ),
+                  ),
                   const SizedBox(height: AppTheme.spacing16),
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    child: const Text('Go Back'),
+                    child: Text(context.l10n.commonGoBack),
                   ),
                 ],
               ),
@@ -2079,17 +2092,16 @@ class _ChannelImportLoader extends ConsumerWidget {
                 children: [
                   const Icon(Icons.lock_outline, size: 48),
                   const SizedBox(height: AppTheme.spacing16),
-                  const Text('Channel not available'),
+                  Text(context.l10n.deepLinkChannelNotAvailable),
                   const SizedBox(height: AppTheme.spacing8),
-                  const Text(
-                    'You may not have access to this channel,\n'
-                    'or the owner needs to re-share it.',
+                  Text(
+                    context.l10n.deepLinkChannelNotAvailableDescription,
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: AppTheme.spacing16),
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    child: const Text('Go Back'),
+                    child: Text(context.l10n.commonGoBack),
                   ),
                 ],
               ),
@@ -2144,7 +2156,7 @@ class _ChannelInviteRedeemer extends ConsumerStatefulWidget {
 class _ChannelInviteRedeemerState extends ConsumerState<_ChannelInviteRedeemer>
     with LifecycleSafeMixin<_ChannelInviteRedeemer> {
   late Future<void> _redeemFuture;
-  String? _error;
+  Object? _error;
 
   @override
   void initState() {
@@ -2180,7 +2192,7 @@ class _ChannelInviteRedeemerState extends ConsumerState<_ChannelInviteRedeemer>
             navigator.pop();
             final ctx = navigatorKey.currentContext;
             if (ctx != null) {
-              showInfoSnackBar(ctx, 'You already have this channel');
+              showInfoSnackBar(ctx, ctx.l10n.deepLinkAlreadyHaveChannel);
             }
           });
           return;
@@ -2195,7 +2207,7 @@ class _ChannelInviteRedeemerState extends ConsumerState<_ChannelInviteRedeemer>
       if (!canUpdateUI) return;
 
       if (channel == null) {
-        setState(() => _error = 'Could not decrypt channel key');
+        setState(() => _error = Exception('could not decrypt'));
         return;
       }
 
@@ -2219,33 +2231,35 @@ class _ChannelInviteRedeemerState extends ConsumerState<_ChannelInviteRedeemer>
     } catch (e) {
       AppLogging.channels('[ChannelInvite] Redemption failed: $e');
       if (!canUpdateUI) return;
-      setState(() => _error = _friendlyError(e));
+      setState(() => _error = e);
     }
   }
 
-  String _friendlyError(Object error) {
+  String _friendlyError(Object error, AppLocalizations l10n) {
     final msg = error.toString().toLowerCase();
-    if (msg.contains('expired')) return 'This invite has expired';
-    if (msg.contains('revoked')) return 'This invite has been revoked';
+    if (msg.contains('expired')) return l10n.deepLinkInviteExpired;
+    if (msg.contains('revoked')) return l10n.deepLinkInviteRevoked;
     if (msg.contains('maximum')) {
-      return 'This invite has reached its usage limit';
+      return l10n.deepLinkInviteUsageLimitReached;
     }
-    if (msg.contains('invalid invite secret')) return 'Invalid invite link';
+    if (msg.contains('invalid invite secret')) {
+      return l10n.deepLinkInviteLinkInvalid;
+    }
     if (msg.contains('channel no longer exists') ||
         msg.contains('channel not found')) {
-      return 'This channel no longer exists';
+      return l10n.deepLinkChannelNoLongerExists;
     }
     if (msg.contains('not-found') || msg.contains('not found')) {
-      return 'Invite not found';
+      return l10n.deepLinkInviteNotFound;
     }
-    if (msg.contains('unauthenticated')) return 'Please sign in to join';
-    return 'Failed to join channel';
+    if (msg.contains('unauthenticated')) return l10n.deepLinkPleaseSignIn;
+    return l10n.deepLinkFailedToJoinChannel;
   }
 
   @override
   Widget build(BuildContext context) {
     return GlassScaffold.body(
-      title: 'Join Channel',
+      title: context.l10n.deepLinkJoinChannel,
       body: FutureBuilder<void>(
         future: _redeemFuture,
         builder: (context, snapshot) {
@@ -2273,7 +2287,7 @@ class _ChannelInviteRedeemerState extends ConsumerState<_ChannelInviteRedeemer>
                     ),
                     const SizedBox(height: AppTheme.spacing20),
                     Text(
-                      _error!,
+                      _friendlyError(_error!, context.l10n),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 16,
@@ -2297,7 +2311,7 @@ class _ChannelInviteRedeemerState extends ConsumerState<_ChannelInviteRedeemer>
                           ),
                         ),
                       ),
-                      child: const Text('Go Back'),
+                      child: Text(context.l10n.commonGoBack),
                     ),
                   ],
                 ),
@@ -2312,7 +2326,7 @@ class _ChannelInviteRedeemerState extends ConsumerState<_ChannelInviteRedeemer>
                 const LoadingIndicator(size: 32, strokeWidth: 3),
                 const SizedBox(height: AppTheme.spacing20),
                 Text(
-                  'Joining channel...',
+                  context.l10n.deepLinkJoiningChannel,
                   style: TextStyle(fontSize: 15, color: context.textSecondary),
                 ),
               ],
@@ -2402,7 +2416,7 @@ class _WidgetDetailLoaderState extends ConsumerState<_WidgetDetailLoader>
       );
       if (mounted) {
         setState(() {
-          _error = 'Widget not found';
+          _error = 'widget_not_found';
           _isLoading = false;
         });
       }
@@ -2410,7 +2424,7 @@ class _WidgetDetailLoaderState extends ConsumerState<_WidgetDetailLoader>
       AppLogging.widgets('[WidgetDetailLoader] Error loading widget: $e');
       if (mounted) {
         setState(() {
-          _error = 'Error loading widget: $e';
+          _error = '$e';
           _isLoading = false;
         });
       }
@@ -2421,14 +2435,17 @@ class _WidgetDetailLoaderState extends ConsumerState<_WidgetDetailLoader>
   Widget build(BuildContext context) {
     if (_isLoading) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Loading Widget')),
+        appBar: AppBar(title: Text(context.l10n.deepLinkLoadingWidget)),
         body: const Center(child: CircularProgressIndicator()),
       );
     }
 
     if (_error != null) {
+      final errorText = _error == 'widget_not_found'
+          ? context.l10n.deepLinkWidgetNotFound
+          : context.l10n.deepLinkErrorLoadingWidget(_error!);
       return Scaffold(
-        appBar: AppBar(title: const Text('Loading Widget')),
+        appBar: AppBar(title: Text(context.l10n.deepLinkLoadingWidget)),
         body: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -2439,11 +2456,11 @@ class _WidgetDetailLoaderState extends ConsumerState<_WidgetDetailLoader>
                 color: AppTheme.errorRed,
               ),
               const SizedBox(height: AppTheme.spacing16),
-              Text(_error!),
+              Text(errorText),
               const SizedBox(height: AppTheme.spacing16),
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: const Text('Go Back'),
+                child: Text(context.l10n.commonGoBack),
               ),
             ],
           ),
@@ -2464,7 +2481,7 @@ class _WidgetDetailLoaderState extends ConsumerState<_WidgetDetailLoader>
         );
       });
       return Scaffold(
-        appBar: AppBar(title: const Text('Loading Widget')),
+        appBar: AppBar(title: Text(context.l10n.deepLinkLoadingWidget)),
         body: const Center(child: CircularProgressIndicator()),
       );
     }
@@ -2482,15 +2499,15 @@ class _WidgetDetailLoaderState extends ConsumerState<_WidgetDetailLoader>
         );
       });
       return Scaffold(
-        appBar: AppBar(title: const Text('Loading Widget')),
+        appBar: AppBar(title: Text(context.l10n.deepLinkLoadingWidget)),
         body: const Center(child: CircularProgressIndicator()),
       );
     }
 
     // Shouldn't reach here
     return Scaffold(
-      appBar: AppBar(title: const Text('Loading Widget')),
-      body: const Center(child: Text('Something went wrong')),
+      appBar: AppBar(title: Text(context.l10n.deepLinkLoadingWidget)),
+      body: Center(child: Text(context.l10n.deepLinkSomethingWentWrong)),
     );
   }
 }
@@ -2509,7 +2526,9 @@ class _ProfileDisplayNameLoader extends ConsumerWidget {
     final profileSyncService = ref.watch(profileCloudSyncServiceProvider);
 
     return Scaffold(
-      appBar: AppBar(title: Text('@$displayName')),
+      appBar: AppBar(
+        title: Text(context.l10n.deepLinkProfileTitle(displayName)),
+      ),
       body: profileSyncService == null
           ? Center(
               child: Column(
@@ -2517,11 +2536,11 @@ class _ProfileDisplayNameLoader extends ConsumerWidget {
                 children: [
                   const Icon(Icons.cloud_off_outlined, size: 48),
                   const SizedBox(height: AppTheme.spacing16),
-                  const Text('Cloud services not available yet'),
+                  Text(context.l10n.deepLinkCloudServicesNotAvailable),
                   const SizedBox(height: AppTheme.spacing16),
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    child: const Text('Go Back'),
+                    child: Text(context.l10n.commonGoBack),
                   ),
                 ],
               ),
@@ -2555,11 +2574,15 @@ class _ProfileDisplayNameLoader extends ConsumerWidget {
                           color: AppTheme.errorRed,
                         ),
                         const SizedBox(height: AppTheme.spacing16),
-                        Text('Error looking up user: ${snapshot.error}'),
+                        Text(
+                          context.l10n.deepLinkErrorLookingUpUser(
+                            '${snapshot.error}',
+                          ),
+                        ),
                         const SizedBox(height: AppTheme.spacing16),
                         TextButton(
                           onPressed: () => Navigator.of(context).pop(),
-                          child: const Text('Go Back'),
+                          child: Text(context.l10n.commonGoBack),
                         ),
                       ],
                     ),
@@ -2577,11 +2600,11 @@ class _ProfileDisplayNameLoader extends ConsumerWidget {
                       children: [
                         const Icon(Icons.person_off, size: 48),
                         const SizedBox(height: AppTheme.spacing16),
-                        Text('User "@$displayName" not found'),
+                        Text(context.l10n.deepLinkUserNotFound(displayName)),
                         const SizedBox(height: AppTheme.spacing16),
                         TextButton(
                           onPressed: () => Navigator.of(context).pop(),
-                          child: const Text('Go Back'),
+                          child: Text(context.l10n.commonGoBack),
                         ),
                       ],
                     ),
@@ -2640,13 +2663,15 @@ class _BlockedRouteScreen extends ConsumerWidget {
     final bgColor = isInvalidated
         ? AppTheme.errorRed.withValues(alpha: 0.1)
         : AccentColors.orange.withValues(alpha: 0.1);
-    final title = isInvalidated ? 'Device Reset' : 'Device Not Connected';
+    final title = isInvalidated
+        ? context.l10n.blockedRouteDeviceReset
+        : context.l10n.blockedRouteDeviceNotConnected;
     final description = isInvalidated
-        ? 'Your device was factory reset or replaced.\n\nGo to Settings → Bluetooth, forget the Meshtastic device, then scan again.'
+        ? context.l10n.blockedRouteDeviceResetDescription
         : message;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Device Required')),
+      appBar: AppBar(title: Text(context.l10n.blockedRouteDeviceRequired)),
       body: SafeArea(
         child: Center(
           child: Padding(
@@ -2685,7 +2710,9 @@ class _BlockedRouteScreen extends ConsumerWidget {
                   },
                   icon: const Icon(Icons.bluetooth_searching),
                   label: Text(
-                    isInvalidated ? 'Scan for Devices' : 'Connect Device',
+                    isInvalidated
+                        ? context.l10n.blockedRouteScanForDevices
+                        : context.l10n.blockedRouteConnectDeviceButton,
                   ),
                 ),
                 const SizedBox(height: AppTheme.spacing12),
@@ -2697,7 +2724,7 @@ class _BlockedRouteScreen extends ConsumerWidget {
                       Navigator.of(context).pushReplacementNamed('/main');
                     }
                   },
-                  child: const Text('Go Back'),
+                  child: Text(context.l10n.commonGoBack),
                 ),
               ],
             ),
@@ -3939,7 +3966,7 @@ class _ErrorScreen extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(AppTheme.radius12),
                   ),
                 ),
-                child: const Text('Retry'),
+                child: Text(context.l10n.commonRetry),
               ),
             ],
           ),

@@ -55,6 +55,7 @@ class WidgetRenderer extends ConsumerWidget {
     // Create binding engine with current context
     final bindingEngine = DataBindingEngine();
     bindingEngine.setUsePlaceholderData(usePlaceholderData);
+    bindingEngine.setLocalizations(context.l10n);
     bindingEngine.setCurrentNode(node);
     bindingEngine.setAllNodes(allNodes);
     bindingEngine.setDeviceSignal(

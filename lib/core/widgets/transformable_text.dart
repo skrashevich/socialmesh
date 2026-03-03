@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../l10n/l10n_extension.dart';
 import '../theme.dart';
 import 'app_bottom_sheet.dart';
 
@@ -182,9 +183,9 @@ class TransformableTextState extends State<TransformableText> {
   Future<void> _showDeleteConfirmation() async {
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Delete text?',
-      message: 'This will remove the text overlay.',
-      confirmLabel: 'Delete',
+      title: context.l10n.transformableTextDeleteTitle,
+      message: context.l10n.transformableTextDeleteMessage,
+      confirmLabel: context.l10n.transformableTextDeleteConfirm,
       isDestructive: true,
     );
     if (confirmed == true) {
@@ -405,9 +406,9 @@ class _TextEditorSheetState extends State<_TextEditorSheet> {
                     const Spacer(),
                     TextButton(
                       onPressed: () => widget.onDone(widget.controller.text),
-                      child: const Text(
-                        'Done',
-                        style: TextStyle(
+                      child: Text(
+                        context.l10n.transformableTextDone,
+                        style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w600,
                           fontSize: 16,
@@ -433,7 +434,7 @@ class _TextEditorSheetState extends State<_TextEditorSheet> {
                     fontWeight: FontWeight.w600,
                   ),
                   decoration: InputDecoration(
-                    hintText: 'Type something...',
+                    hintText: context.l10n.transformableTextHint,
                     hintStyle: TextStyle(
                       color: Colors.white.withValues(alpha: 0.4),
                       fontSize: _fontSize,

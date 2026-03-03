@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/logging.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
@@ -89,6 +90,7 @@ class _ExternalNotificationConfigScreenState
   }
 
   Future<void> _loadCurrentConfig() async {
+    final l10n = context.l10n;
     AppLogging.settings('[ExternalNotification] Loading config...');
     try {
       final protocol = ref.read(protocolServiceProvider);
@@ -134,13 +136,14 @@ class _ExternalNotificationConfigScreenState
       }
     } catch (e) {
       AppLogging.settings('[ExternalNotification] Error loading config: $e');
-      safeShowSnackBar('Failed to load config');
+      safeShowSnackBar(l10n.extNotifLoadFailed);
     } finally {
       safeSetState(() => _isLoading = false);
     }
   }
 
   Future<void> _saveConfig() async {
+    final l10n = context.l10n;
     safeSetState(() => _isSaving = true);
 
     try {
@@ -173,7 +176,7 @@ class _ExternalNotificationConfigScreenState
       await protocol.setModuleConfig(moduleConfig, target: target);
 
       if (mounted) {
-        showSuccessSnackBar(context, 'External notification settings saved');
+        showSuccessSnackBar(context, l10n.extNotifSaved);
         if (target.isLocal) {
           ref
               .read(countdownProvider.notifier)
@@ -185,7 +188,7 @@ class _ExternalNotificationConfigScreenState
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to save: $e');
+        showErrorSnackBar(context, l10n.extNotifSaveFailed(e.toString()));
       }
     } finally {
       safeSetState(() => _isSaving = false);
@@ -198,14 +201,17 @@ class _ExternalNotificationConfigScreenState
     final isConnected = protocol.isConnected;
 
     return GlassScaffold(
-      title: 'External Notification',
+      title: context.l10n.extNotifTitle,
       actions: [
         if (isConnected)
           TextButton(
             onPressed: _isSaving ? null : _saveConfig,
             child: _isSaving
                 ? LoadingIndicator(size: 20)
-                : Text('Save', style: TextStyle(color: context.accentColor)),
+                : Text(
+                    context.l10n.extNotifSave,
+                    style: TextStyle(color: context.accentColor),
+                  ),
           ),
       ],
       slivers: [
@@ -220,19 +226,21 @@ class _ExternalNotificationConfigScreenState
                   Padding(
                     padding: const EdgeInsets.only(bottom: 16),
                     child: StatusBanner.warning(
-                      title:
-                          'Connect to a device to configure external notification settings',
+                      title: context.l10n.extNotifNotConnected,
                       margin: EdgeInsets.zero,
                     ),
                   ),
 
                 // Options Section
-                _buildSectionHeader(context, 'Options'),
+                _buildSectionHeader(
+                  context,
+                  context.l10n.extNotifSectionOptions,
+                ),
                 _buildCard([
                   _buildSwitch(
                     context,
-                    title: 'Enabled',
-                    subtitle: 'Enable external notification module',
+                    title: context.l10n.extNotifEnabled,
+                    subtitle: context.l10n.extNotifEnabledSubtitle,
                     value: _enabled,
                     icon: Icons.notifications_active,
                     onChanged: isConnected
@@ -242,9 +250,8 @@ class _ExternalNotificationConfigScreenState
                   _buildDivider(),
                   _buildSwitch(
                     context,
-                    title: 'Alert on Bell',
-                    subtitle:
-                        'Trigger notification when receiving a bell character',
+                    title: context.l10n.extNotifAlertOnBell,
+                    subtitle: context.l10n.extNotifAlertOnBellSubtitle,
                     value: _alertBell,
                     icon: Icons.notifications,
                     onChanged: isConnected
@@ -254,8 +261,8 @@ class _ExternalNotificationConfigScreenState
                   _buildDivider(),
                   _buildSwitch(
                     context,
-                    title: 'Alert on Message',
-                    subtitle: 'Trigger notification when receiving a message',
+                    title: context.l10n.extNotifAlertOnMessage,
+                    subtitle: context.l10n.extNotifAlertOnMessageSubtitle,
                     value: _alertMessage,
                     icon: Icons.message,
                     onChanged: isConnected
@@ -265,8 +272,8 @@ class _ExternalNotificationConfigScreenState
                   _buildDivider(),
                   _buildSwitch(
                     context,
-                    title: 'Use PWM Buzzer',
-                    subtitle: 'Use PWM output for tunes instead of on/off',
+                    title: context.l10n.extNotifUsePwm,
+                    subtitle: context.l10n.extNotifUsePwmSubtitle,
                     value: _usePwm,
                     icon: Icons.music_note,
                     onChanged: isConnected
@@ -276,9 +283,8 @@ class _ExternalNotificationConfigScreenState
                   _buildDivider(),
                   _buildSwitch(
                     context,
-                    title: 'Use I2S as Buzzer',
-                    subtitle:
-                        'Use I2S audio output for RTTTL tunes (T-Watch, T-Deck)',
+                    title: context.l10n.extNotifUseI2s,
+                    subtitle: context.l10n.extNotifUseI2sSubtitle,
                     value: _useI2sAsBuzzer,
                     icon: Icons.speaker,
                     onChanged: isConnected
@@ -290,12 +296,15 @@ class _ExternalNotificationConfigScreenState
                 const SizedBox(height: AppTheme.spacing24),
 
                 // Primary GPIO Section
-                _buildSectionHeader(context, 'Primary GPIO'),
+                _buildSectionHeader(
+                  context,
+                  context.l10n.extNotifSectionPrimaryGpio,
+                ),
                 _buildCard([
                   _buildSwitch(
                     context,
-                    title: 'Active High',
-                    subtitle: 'Output pin is pulled high when active',
+                    title: context.l10n.extNotifActiveHigh,
+                    subtitle: context.l10n.extNotifActiveHighSubtitle,
                     value: _active,
                     icon: Icons.power,
                     onChanged: isConnected
@@ -305,7 +314,7 @@ class _ExternalNotificationConfigScreenState
                   _buildDivider(),
                   _buildGpioPicker(
                     context,
-                    title: 'Output GPIO Pin',
+                    title: context.l10n.extNotifOutputGpioPin,
                     value: _output,
                     onChanged: isConnected
                         ? (v) => setState(() => _output = v)
@@ -314,8 +323,8 @@ class _ExternalNotificationConfigScreenState
                   _buildDivider(),
                   _buildDurationPicker(
                     context,
-                    title: 'Output Duration',
-                    subtitle: 'How long to keep output active',
+                    title: context.l10n.extNotifOutputDuration,
+                    subtitle: context.l10n.extNotifOutputDurationSubtitle,
                     valueMs: _outputMs,
                     onChanged: isConnected
                         ? (v) => setState(() => _outputMs = v)
@@ -324,8 +333,8 @@ class _ExternalNotificationConfigScreenState
                   _buildDivider(),
                   _buildNagTimeoutPicker(
                     context,
-                    title: 'Nag Timeout',
-                    subtitle: 'How often to repeat notification',
+                    title: context.l10n.extNotifNagTimeout,
+                    subtitle: context.l10n.extNotifNagTimeoutSubtitle,
                     valueSecs: _nagTimeout,
                     onChanged: isConnected
                         ? (v) => setState(() => _nagTimeout = v)
@@ -336,12 +345,15 @@ class _ExternalNotificationConfigScreenState
                 const SizedBox(height: AppTheme.spacing24),
 
                 // Optional GPIO Section
-                _buildSectionHeader(context, 'Optional GPIO'),
+                _buildSectionHeader(
+                  context,
+                  context.l10n.extNotifSectionOptionalGpio,
+                ),
                 _buildCard([
                   _buildSwitch(
                     context,
-                    title: 'Buzzer on Bell',
-                    subtitle: 'Alert buzzer GPIO when receiving a bell',
+                    title: context.l10n.extNotifBuzzerOnBell,
+                    subtitle: context.l10n.extNotifBuzzerOnBellSubtitle,
                     value: _alertBellBuzzer,
                     icon: Icons.volume_up,
                     onChanged: isConnected
@@ -351,8 +363,8 @@ class _ExternalNotificationConfigScreenState
                   _buildDivider(),
                   _buildSwitch(
                     context,
-                    title: 'Vibra on Bell',
-                    subtitle: 'Alert vibration motor when receiving a bell',
+                    title: context.l10n.extNotifVibraOnBell,
+                    subtitle: context.l10n.extNotifVibraOnBellSubtitle,
                     value: _alertBellVibra,
                     icon: Icons.vibration,
                     onChanged: isConnected
@@ -362,8 +374,8 @@ class _ExternalNotificationConfigScreenState
                   _buildDivider(),
                   _buildSwitch(
                     context,
-                    title: 'Buzzer on Message',
-                    subtitle: 'Alert buzzer GPIO when receiving a message',
+                    title: context.l10n.extNotifBuzzerOnMsg,
+                    subtitle: context.l10n.extNotifBuzzerOnMsgSubtitle,
                     value: _alertMessageBuzzer,
                     icon: Icons.volume_up,
                     onChanged: isConnected
@@ -373,8 +385,8 @@ class _ExternalNotificationConfigScreenState
                   _buildDivider(),
                   _buildSwitch(
                     context,
-                    title: 'Vibra on Message',
-                    subtitle: 'Alert vibration motor when receiving a message',
+                    title: context.l10n.extNotifVibraOnMsg,
+                    subtitle: context.l10n.extNotifVibraOnMsgSubtitle,
                     value: _alertMessageVibra,
                     icon: Icons.vibration,
                     onChanged: isConnected
@@ -384,7 +396,7 @@ class _ExternalNotificationConfigScreenState
                   _buildDivider(),
                   _buildGpioPicker(
                     context,
-                    title: 'Buzzer GPIO Pin',
+                    title: context.l10n.extNotifBuzzerGpioPin,
                     value: _outputBuzzer,
                     onChanged: isConnected
                         ? (v) => setState(() => _outputBuzzer = v)
@@ -393,7 +405,7 @@ class _ExternalNotificationConfigScreenState
                   _buildDivider(),
                   _buildGpioPicker(
                     context,
-                    title: 'Vibra GPIO Pin',
+                    title: context.l10n.extNotifVibraGpioPin,
                     value: _outputVibra,
                     onChanged: isConnected
                         ? (v) => setState(() => _outputVibra = v)
@@ -467,7 +479,9 @@ class _ExternalNotificationConfigScreenState
       leading: Icon(Icons.memory, color: context.accentColor),
       title: Text(title),
       subtitle: Text(
-        value == 0 ? 'Unset' : 'GPIO $value',
+        value == 0
+            ? context.l10n.extNotifGpioUnset
+            : context.l10n.extNotifGpioValue(value),
         style: TextStyle(color: context.textSecondary),
       ),
       trailing: DropdownButton<int>(
@@ -476,7 +490,11 @@ class _ExternalNotificationConfigScreenState
         items: List.generate(49, (i) => i).map((pin) {
           return DropdownMenuItem<int>(
             value: pin,
-            child: Text(pin == 0 ? 'Unset' : 'Pin $pin'),
+            child: Text(
+              pin == 0
+                  ? context.l10n.extNotifGpioUnset
+                  : context.l10n.extNotifGpioPinLabel(pin),
+            ),
           );
         }).toList(),
         onChanged: onChanged == null ? null : (v) => onChanged(v ?? 0),
@@ -492,13 +510,13 @@ class _ExternalNotificationConfigScreenState
     required ValueChanged<int>? onChanged,
   }) {
     final durations = [
-      (0, 'Default'),
-      (100, '100ms'),
-      (250, '250ms'),
-      (500, '500ms'),
-      (1000, '1 second'),
-      (2000, '2 seconds'),
-      (5000, '5 seconds'),
+      (0, context.l10n.extNotifDurationDefault),
+      (100, context.l10n.extNotifDuration100ms),
+      (250, context.l10n.extNotifDuration250ms),
+      (500, context.l10n.extNotifDuration500ms),
+      (1000, context.l10n.extNotifDuration1s),
+      (2000, context.l10n.extNotifDuration2s),
+      (5000, context.l10n.extNotifDuration5s),
     ];
 
     return ListTile(
@@ -527,13 +545,13 @@ class _ExternalNotificationConfigScreenState
     required ValueChanged<int>? onChanged,
   }) {
     final timeouts = [
-      (0, 'Disabled'),
-      (15, '15 seconds'),
-      (30, '30 seconds'),
-      (60, '1 minute'),
-      (120, '2 minutes'),
-      (300, '5 minutes'),
-      (600, '10 minutes'),
+      (0, context.l10n.extNotifTimeoutDisabled),
+      (15, context.l10n.extNotifTimeout15s),
+      (30, context.l10n.extNotifTimeout30s),
+      (60, context.l10n.extNotifTimeout1m),
+      (120, context.l10n.extNotifTimeout2m),
+      (300, context.l10n.extNotifTimeout5m),
+      (600, context.l10n.extNotifTimeout10m),
     ];
 
     return ListTile(

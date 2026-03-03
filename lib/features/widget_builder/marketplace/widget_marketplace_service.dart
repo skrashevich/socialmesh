@@ -6,6 +6,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import '../../../core/constants.dart';
 import '../../../core/logging.dart';
+import '../../../l10n/app_localizations.dart';
 import '../models/widget_schema.dart';
 
 /// Service for interacting with the widget marketplace
@@ -825,6 +826,30 @@ class WidgetCategories {
         return 'Utility';
       case other:
         return 'Other';
+      default:
+        return category;
+    }
+  }
+
+  /// Localized version of [getDisplayName] for UI rendering.
+  static String localizedDisplayName(String category, AppLocalizations l10n) {
+    switch (category) {
+      case deviceStatus:
+        return l10n.widgetBuilderCategoryDeviceStatus;
+      case metrics:
+        return l10n.widgetBuilderCategoryMetrics;
+      case charts:
+        return l10n.widgetBuilderCategoryCharts;
+      case mesh:
+        return l10n.widgetBuilderCategoryMeshNetwork;
+      case location:
+        return l10n.widgetBuilderCategoryLocation;
+      case weather:
+        return l10n.widgetBuilderCategoryWeather;
+      case utility:
+        return l10n.widgetBuilderCategoryUtility;
+      case other:
+        return l10n.widgetBuilderCategoryOther;
       default:
         return category;
     }

@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/mqtt/mqtt_config.dart';
 import '../../../core/mqtt/mqtt_connection_state.dart';
 import '../../../core/mqtt/mqtt_constants.dart';
@@ -24,6 +25,7 @@ import '../../../core/theme.dart';
 import '../../../core/widgets/animations.dart';
 import '../../../core/widgets/app_bottom_sheet.dart';
 import '../../../core/widgets/glass_scaffold.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../providers/mqtt_providers.dart';
 import '../../../services/haptic_service.dart';
 
@@ -97,6 +99,7 @@ class _GlobalLayerStatusScreenState
 
   Future<void> _handlePause() async {
     final haptics = ref.read(hapticServiceProvider);
+    final l10n = context.l10n;
     await haptics.trigger(HapticType.medium);
 
     if (!mounted) return;
@@ -113,11 +116,12 @@ class _GlobalLayerStatusScreenState
     await configNotifier.disable();
 
     if (!mounted) return;
-    safeShowSnackBar('Global Layer paused');
+    safeShowSnackBar(l10n.globalLayerPausedSnackbar);
   }
 
   Future<void> _handleResume() async {
     final haptics = ref.read(hapticServiceProvider);
+    final l10n = context.l10n;
     await haptics.trigger(HapticType.medium);
 
     if (!mounted) return;
@@ -125,7 +129,7 @@ class _GlobalLayerStatusScreenState
     await configNotifier.enable();
 
     if (!mounted) return;
-    safeShowSnackBar('Global Layer resumed');
+    safeShowSnackBar(l10n.globalLayerResumedSnackbar);
   }
 
   void _openDiagnostics() {
@@ -148,6 +152,7 @@ class _GlobalLayerStatusScreenState
 
   Future<void> _handleReset() async {
     final navigator = Navigator.of(context);
+    final l10n = context.l10n;
     final haptics = ref.read(hapticServiceProvider);
     await haptics.trigger(HapticType.warning);
 
@@ -155,11 +160,9 @@ class _GlobalLayerStatusScreenState
 
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Reset Global Layer',
-      message:
-          'This will clear all broker configuration, credentials, and '
-          'connection history. You will need to run the setup wizard again.',
-      confirmLabel: 'Reset',
+      title: l10n.globalLayerResetTitle,
+      message: l10n.globalLayerResetMessage,
+      confirmLabel: l10n.globalLayerReset,
       isDestructive: true,
     );
 
@@ -175,6 +178,7 @@ class _GlobalLayerStatusScreenState
   }
 
   Future<void> _copyDiagnosticsSummary() async {
+    final l10n = context.l10n;
     final haptics = ref.read(hapticServiceProvider);
     await haptics.trigger(HapticType.light);
 
@@ -186,7 +190,7 @@ class _GlobalLayerStatusScreenState
     await Clipboard.setData(ClipboardData(text: summary));
 
     if (!mounted) return;
-    safeShowSnackBar('Diagnostics copied to clipboard');
+    safeShowSnackBar(l10n.globalLayerDiagnosticsCopiedSnackbar);
   }
 
   // ---------------------------------------------------------------------------
@@ -205,7 +209,7 @@ class _GlobalLayerStatusScreenState
       actions: [
         IconButton(
           icon: const Icon(Icons.copy_outlined),
-          tooltip: 'Copy diagnostics',
+          tooltip: context.l10n.globalLayerCopyDiagnosticsTooltip,
           onPressed: _copyDiagnosticsSummary,
         ),
         PopupMenuButton<String>(
@@ -227,40 +231,43 @@ class _GlobalLayerStatusScreenState
             }
           },
           itemBuilder: (_) => [
-            const PopupMenuItem(
+            PopupMenuItem(
               value: 'topics',
               child: ListTile(
-                leading: Icon(Icons.rss_feed),
-                title: Text('Topic Explorer'),
+                leading: const Icon(Icons.rss_feed),
+                title: Text(context.l10n.globalLayerTopicExplorerTitle),
                 dense: true,
                 contentPadding: EdgeInsets.zero,
               ),
             ),
-            const PopupMenuItem(
+            PopupMenuItem(
               value: 'diagnostics',
               child: ListTile(
-                leading: Icon(Icons.troubleshoot),
-                title: Text('Run Diagnostics'),
+                leading: const Icon(Icons.troubleshoot),
+                title: Text(context.l10n.globalLayerRunDiagnosticsMenuItem),
                 dense: true,
                 contentPadding: EdgeInsets.zero,
               ),
             ),
-            const PopupMenuItem(
+            PopupMenuItem(
               value: 'reconfigure',
               child: ListTile(
-                leading: Icon(Icons.settings),
-                title: Text('Reconfigure'),
+                leading: const Icon(Icons.settings),
+                title: Text(context.l10n.globalLayerReconfigureMenuItem),
                 dense: true,
                 contentPadding: EdgeInsets.zero,
               ),
             ),
-            const PopupMenuItem(
+            PopupMenuItem(
               value: 'reset',
               child: ListTile(
-                leading: Icon(Icons.delete_outline, color: AppTheme.errorRed),
+                leading: const Icon(
+                  Icons.delete_outline,
+                  color: AppTheme.errorRed,
+                ),
                 title: Text(
-                  'Reset',
-                  style: TextStyle(color: AppTheme.errorRed),
+                  context.l10n.globalLayerReset,
+                  style: const TextStyle(color: AppTheme.errorRed),
                 ),
                 dense: true,
                 contentPadding: EdgeInsets.zero,
@@ -318,7 +325,11 @@ class _GlobalLayerStatusScreenState
 
         // Transition history
         if (transitions.isNotEmpty) ...[
-          SliverToBoxAdapter(child: _SectionHeader(title: 'Recent Activity')),
+          SliverToBoxAdapter(
+            child: _SectionHeader(
+              title: context.l10n.globalLayerRecentActivityHeader,
+            ),
+          ),
           SliverList(
             delegate: SliverChildBuilderDelegate((context, index) {
               // Show most recent first
@@ -473,7 +484,7 @@ class _BrokerInfoCard extends StatelessWidget {
                 ),
                 const SizedBox(width: AppTheme.spacing8),
                 Text(
-                  'Broker',
+                  context.l10n.globalLayerBrokerHeader,
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     color: context.textSecondary,
                     fontWeight: FontWeight.w600,
@@ -482,30 +493,43 @@ class _BrokerInfoCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: AppTheme.spacing12),
-            _InfoRow(label: 'Host', value: config.host),
-            const SizedBox(height: AppTheme.spacing6),
-            _InfoRow(label: 'Port', value: '${config.effectivePort}'),
+            _InfoRow(
+              label: context.l10n.globalLayerHostLabel,
+              value: config.host,
+            ),
             const SizedBox(height: AppTheme.spacing6),
             _InfoRow(
-              label: 'TLS',
-              value: config.useTls ? 'Enabled' : 'Disabled',
+              label: context.l10n.globalLayerPortLabel,
+              value: '${config.effectivePort}',
+            ),
+            const SizedBox(height: AppTheme.spacing6),
+            _InfoRow(
+              label: context.l10n.globalLayerTlsLabel,
+              value: config.useTls
+                  ? context.l10n.globalLayerTlsEnabled
+                  : context.l10n.globalLayerTlsDisabled,
               valueColor: config.useTls ? AppTheme.successGreen : null,
             ),
             if (config.username.isNotEmpty) ...[
               const SizedBox(height: AppTheme.spacing6),
-              _InfoRow(label: 'User', value: config.username),
+              _InfoRow(
+                label: context.l10n.globalLayerUserLabel,
+                value: config.username,
+              ),
             ],
             if (config.lastConnectedAt != null) ...[
               const SizedBox(height: AppTheme.spacing6),
               _InfoRow(
-                label: 'Last connected',
-                value: _formatTimestamp(config.lastConnectedAt!),
+                label: context.l10n.globalLayerLastConnectedLabel,
+                value: _formatTimestamp(config.lastConnectedAt!, context.l10n),
               ),
             ],
             const SizedBox(height: AppTheme.spacing6),
             _InfoRow(
-              label: 'Topics',
-              value: '${config.enabledSubscriptions.length} active',
+              label: context.l10n.globalLayerTopicsLabel,
+              value: context.l10n.globalLayerActiveTopicsCount(
+                config.enabledSubscriptions.length,
+              ),
             ),
           ],
         ),
@@ -513,16 +537,16 @@ class _BrokerInfoCard extends StatelessWidget {
     );
   }
 
-  String _formatTimestamp(DateTime dt) {
+  String _formatTimestamp(DateTime dt, AppLocalizations l10n) {
     final now = DateTime.now();
     final diff = now.difference(dt);
 
-    if (diff.inSeconds < 60) return 'Just now';
-    if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
-    if (diff.inHours < 24) return '${diff.inHours}h ago';
-    if (diff.inDays < 7) return '${diff.inDays}d ago';
+    if (diff.inSeconds < 60) return l10n.globalLayerJustNow;
+    if (diff.inMinutes < 60) return l10n.globalLayerMinutesAgo(diff.inMinutes);
+    if (diff.inHours < 24) return l10n.globalLayerHoursAgo(diff.inHours);
+    if (diff.inDays < 7) return l10n.globalLayerDaysAgo(diff.inDays);
 
-    return '${dt.day}/${dt.month}/${dt.year}';
+    return l10n.globalLayerDateFormat(dt.day, dt.month, dt.year);
   }
 }
 
@@ -596,7 +620,7 @@ class _QuickActionsSection extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 4, bottom: 8),
             child: Text(
-              'Quick Actions',
+              context.l10n.globalLayerQuickActionsHeader,
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
                 color: context.textSecondary,
                 fontWeight: FontWeight.w600,
@@ -611,7 +635,9 @@ class _QuickActionsSection extends StatelessWidget {
                   icon: connectionState.isActive
                       ? Icons.cloud_off_outlined
                       : Icons.cloud_outlined,
-                  label: connectionState.isActive ? 'Disconnect' : 'Connect',
+                  label: connectionState.isActive
+                      ? context.l10n.globalLayerDisconnectAction
+                      : context.l10n.globalLayerConnectAction,
                   onTap: allowsActions ? onConnectDisconnect : null,
                   color: connectionState.isActive
                       ? AppTheme.errorRed
@@ -625,7 +651,9 @@ class _QuickActionsSection extends StatelessWidget {
                   icon: isEnabled
                       ? Icons.pause_circle_outline
                       : Icons.play_circle_outline,
-                  label: isEnabled ? 'Pause' : 'Resume',
+                  label: isEnabled
+                      ? context.l10n.globalLayerPauseAction
+                      : context.l10n.globalLayerResumeAction,
                   onTap: isEnabled ? onPause : onResume,
                   color: AppTheme.warningYellow,
                 ),
@@ -635,7 +663,7 @@ class _QuickActionsSection extends StatelessWidget {
               Expanded(
                 child: _ActionButton(
                   icon: Icons.troubleshoot,
-                  label: 'Diagnose',
+                  label: context.l10n.globalLayerDiagnoseAction,
                   onTap: onDiagnostics,
                   color: context.accentColor,
                 ),
@@ -649,7 +677,7 @@ class _QuickActionsSection extends StatelessWidget {
               Expanded(
                 child: _ActionButton(
                   icon: Icons.rss_feed,
-                  label: 'Topics',
+                  label: context.l10n.globalLayerTopicsAction,
                   onTap: onTopics,
                   color: const Color(0xFF60A5FA),
                 ),
@@ -751,7 +779,7 @@ class _HealthMetricsCard extends StatelessWidget {
                 ),
                 const SizedBox(width: AppTheme.spacing8),
                 Text(
-                  'Health',
+                  context.l10n.globalLayerHealthHeader,
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     color: context.textSecondary,
                     fontWeight: FontWeight.w600,
@@ -770,7 +798,7 @@ class _HealthMetricsCard extends StatelessWidget {
                 Expanded(
                   child: _MetricTile(
                     icon: Icons.speed,
-                    label: 'Ping',
+                    label: context.l10n.globalLayerPingLabel,
                     value: metrics.lastPingMs != null
                         ? '${metrics.lastPingMs}ms'
                         : '--',
@@ -779,7 +807,7 @@ class _HealthMetricsCard extends StatelessWidget {
                 Expanded(
                   child: _MetricTile(
                     icon: Icons.sync,
-                    label: 'Reconnects',
+                    label: context.l10n.globalLayerReconnectsLabel,
                     value: '${metrics.reconnectCount}',
                   ),
                 ),
@@ -791,14 +819,14 @@ class _HealthMetricsCard extends StatelessWidget {
                 Expanded(
                   child: _MetricTile(
                     icon: Icons.arrow_downward,
-                    label: 'Inbound',
+                    label: context.l10n.globalLayerInboundLabel,
                     value: '${metrics.totalInbound}',
                   ),
                 ),
                 Expanded(
                   child: _MetricTile(
                     icon: Icons.arrow_upward,
-                    label: 'Outbound',
+                    label: context.l10n.globalLayerOutboundLabel,
                     value: '${metrics.totalOutbound}',
                   ),
                 ),
@@ -810,14 +838,14 @@ class _HealthMetricsCard extends StatelessWidget {
                 Expanded(
                   child: _MetricTile(
                     icon: Icons.data_usage,
-                    label: 'Throughput',
+                    label: context.l10n.globalLayerThroughputLabel,
                     value: metrics.throughputDisplay,
                   ),
                 ),
                 Expanded(
                   child: _MetricTile(
                     icon: Icons.timer_outlined,
-                    label: 'Session',
+                    label: context.l10n.globalLayerSessionLabel,
                     value: metrics.sessionDurationDisplay,
                   ),
                 ),
@@ -846,8 +874,9 @@ class _HealthMetricsCard extends StatelessWidget {
                     const SizedBox(width: AppTheme.spacing8),
                     Expanded(
                       child: Text(
-                        '${metrics.activeErrorCount} active '
-                        '${metrics.activeErrorCount == 1 ? 'error' : 'errors'}',
+                        context.l10n.globalLayerActiveErrors(
+                          metrics.activeErrorCount,
+                        ),
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: AppTheme.errorRed,
                           fontWeight: FontWeight.w500,
@@ -886,7 +915,9 @@ class _HealthBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = isHealthy ? AppTheme.successGreen : AppTheme.errorRed;
-    final label = isHealthy ? 'Healthy' : 'Unhealthy';
+    final label = isHealthy
+        ? context.l10n.globalLayerHealthy
+        : context.l10n.globalLayerUnhealthy;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
@@ -979,7 +1010,7 @@ class _PrivacySummaryCard extends StatelessWidget {
                 ),
                 const SizedBox(width: AppTheme.spacing8),
                 Text(
-                  'Privacy',
+                  context.l10n.globalLayerPrivacyHeader,
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     color: context.textSecondary,
                     fontWeight: FontWeight.w600,
@@ -1000,7 +1031,7 @@ class _PrivacySummaryCard extends StatelessWidget {
                       ),
                     ),
                     child: Text(
-                      'All Off',
+                      context.l10n.globalLayerPrivacyAllOff,
                       style: Theme.of(context).textTheme.labelSmall?.copyWith(
                         color: AppTheme.successGreen,
                         fontWeight: FontWeight.w600,
@@ -1011,20 +1042,20 @@ class _PrivacySummaryCard extends StatelessWidget {
             ),
             const SizedBox(height: AppTheme.spacing12),
             _PrivacyToggleRow(
-              label: 'Share Messages',
-              description: 'Forward local messages to broker',
+              label: context.l10n.globalLayerShareMessagesLabel,
+              description: context.l10n.globalLayerShareMessagesDescription,
               isEnabled: privacy.shareMessages,
             ),
             const SizedBox(height: AppTheme.spacing6),
             _PrivacyToggleRow(
-              label: 'Share Telemetry',
-              description: 'Publish device health data',
+              label: context.l10n.globalLayerShareTelemetryLabel,
+              description: context.l10n.globalLayerShareTelemetryDescription,
               isEnabled: privacy.shareTelemetry,
             ),
             const SizedBox(height: AppTheme.spacing6),
             _PrivacyToggleRow(
-              label: 'Accept Inbound',
-              description: 'Receive messages from broker',
+              label: context.l10n.globalLayerAcceptInboundLabel,
+              description: context.l10n.globalLayerAcceptInboundDescription,
               isEnabled: privacy.allowInboundGlobal,
             ),
           ],
@@ -1050,7 +1081,9 @@ class _PrivacyToggleRow extends StatelessWidget {
     final statusColor = isEnabled
         ? AppTheme.warningYellow
         : AppTheme.successGreen;
-    final statusLabel = isEnabled ? 'ON' : 'OFF';
+    final statusLabel = isEnabled
+        ? context.l10n.globalLayerStatusOn
+        : context.l10n.globalLayerStatusOff;
 
     return Row(
       children: [
@@ -1189,7 +1222,7 @@ class _TransitionTile extends StatelessWidget {
 
             // Timestamp
             Text(
-              _formatAge(transition.age),
+              _formatAge(transition.age, context.l10n),
               style: Theme.of(
                 context,
               ).textTheme.labelSmall?.copyWith(color: context.textTertiary),
@@ -1200,10 +1233,10 @@ class _TransitionTile extends StatelessWidget {
     );
   }
 
-  String _formatAge(Duration age) {
-    if (age.inSeconds < 60) return '${age.inSeconds}s ago';
-    if (age.inMinutes < 60) return '${age.inMinutes}m ago';
-    if (age.inHours < 24) return '${age.inHours}h ago';
-    return '${age.inDays}d ago';
+  String _formatAge(Duration age, AppLocalizations l10n) {
+    if (age.inSeconds < 60) return l10n.globalLayerSecondsAgo(age.inSeconds);
+    if (age.inMinutes < 60) return l10n.globalLayerMinutesAgo(age.inMinutes);
+    if (age.inHours < 24) return l10n.globalLayerHoursAgo(age.inHours);
+    return l10n.globalLayerDaysAgo(age.inDays);
   }
 }

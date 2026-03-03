@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/logging.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
@@ -45,7 +46,7 @@ class _LinkedDevicesScreenState extends ConsumerState<LinkedDevicesScreen>
 
     if (currentUser == null) {
       return GlassScaffold(
-        title: 'Linked Devices',
+        title: context.l10n.linkedDevicesTitle,
         slivers: [
           SliverFillRemaining(
             child: Center(
@@ -61,7 +62,7 @@ class _LinkedDevicesScreenState extends ConsumerState<LinkedDevicesScreen>
                     ),
                     const SizedBox(height: AppTheme.spacing16),
                     Text(
-                      'Sign In Required',
+                      context.l10n.linkedDevicesSignInRequired,
                       style: TextStyle(
                         color: context.textPrimary,
                         fontSize: 18,
@@ -70,7 +71,7 @@ class _LinkedDevicesScreenState extends ConsumerState<LinkedDevicesScreen>
                     ),
                     const SizedBox(height: AppTheme.spacing8),
                     Text(
-                      'Sign in to link your Meshtastic devices to your social profile.',
+                      context.l10n.linkedDevicesSignInBody,
                       style: TextStyle(
                         color: context.textSecondary,
                         fontSize: 14,
@@ -89,7 +90,7 @@ class _LinkedDevicesScreenState extends ConsumerState<LinkedDevicesScreen>
     final primaryNodeId = currentProfile.value?.primaryNodeId;
 
     return GlassScaffold(
-      title: 'Linked Devices',
+      title: context.l10n.linkedDevicesTitle,
       slivers: [
         linkedNodesAsync.when(
           data: (linkedNodeIds) {
@@ -118,7 +119,7 @@ class _LinkedDevicesScreenState extends ConsumerState<LinkedDevicesScreen>
                           const SizedBox(width: AppTheme.spacing12),
                           Expanded(
                             child: Text(
-                              'Link your Meshtastic devices to your profile so others can find and follow you from the nodes list.',
+                              context.l10n.linkedDevicesLinkDescription,
                               style: TextStyle(
                                 color: context.textSecondary,
                                 fontSize: 13,
@@ -157,7 +158,7 @@ class _LinkedDevicesScreenState extends ConsumerState<LinkedDevicesScreen>
                     child: Row(
                       children: [
                         Text(
-                          'Linked Devices',
+                          context.l10n.linkedDevicesTitle,
                           style: TextStyle(
                             color: context.textPrimary,
                             fontSize: 16,
@@ -207,7 +208,7 @@ class _LinkedDevicesScreenState extends ConsumerState<LinkedDevicesScreen>
                             ),
                             const SizedBox(height: AppTheme.spacing16),
                             Text(
-                              'No Linked Devices',
+                              context.l10n.linkedDevicesNoDevices,
                               style: TextStyle(
                                 color: context.textSecondary,
                                 fontSize: 16,
@@ -216,7 +217,7 @@ class _LinkedDevicesScreenState extends ConsumerState<LinkedDevicesScreen>
                             ),
                             const SizedBox(height: AppTheme.spacing8),
                             Text(
-                              'Connect to a Meshtastic device and tap "Link Current Device" above.',
+                              context.l10n.linkedDevicesNoDevicesBody,
                               style: TextStyle(
                                 color: context.textTertiary,
                                 fontSize: 13,
@@ -272,7 +273,7 @@ class _LinkedDevicesScreenState extends ConsumerState<LinkedDevicesScreen>
                           const SizedBox(width: AppTheme.spacing12),
                           Expanded(
                             child: Text(
-                              'To link another device, disconnect from your current device and connect to the new one.',
+                              context.l10n.linkedDevicesLinkAnother,
                               style: TextStyle(
                                 color: context.textTertiary,
                                 fontSize: 12,
@@ -302,13 +303,13 @@ class _LinkedDevicesScreenState extends ConsumerState<LinkedDevicesScreen>
                   ),
                   const SizedBox(height: AppTheme.spacing16),
                   Text(
-                    'Failed to load linked devices',
+                    context.l10n.linkedDevicesLoadFailed,
                     style: TextStyle(color: context.textSecondary),
                   ),
                   const SizedBox(height: AppTheme.spacing16),
                   OutlinedButton(
                     onPressed: () => ref.invalidate(linkedNodeIdsProvider),
-                    child: const Text('Retry'),
+                    child: Text(context.l10n.commonRetry),
                   ),
                 ],
               ),
@@ -328,7 +329,7 @@ class _LinkedDevicesScreenState extends ConsumerState<LinkedDevicesScreen>
 
     if (node == null) {
       if (mounted) {
-        showErrorSnackBar(context, 'Device not found');
+        showErrorSnackBar(context, context.l10n.linkedDevicesDeviceNotFound);
       }
       return;
     }
@@ -336,11 +337,13 @@ class _LinkedDevicesScreenState extends ConsumerState<LinkedDevicesScreen>
     // Check if device shares location based on position config
     final sharesLocation = node.hasPosition;
 
+    final l10n = context.l10n;
+
     // Show privacy warning before linking
     final action = await DevicePrivacyWarning.show(
       context,
       nodeNum: nodeNum,
-      deviceName: node.longName ?? 'Unknown Device',
+      deviceName: node.longName ?? l10n.linkedDevicesUnknownDevice,
       sharesLocation: sharesLocation,
       positionConfig: null, // Position config not available in MeshNode model
     );
@@ -354,11 +357,11 @@ class _LinkedDevicesScreenState extends ConsumerState<LinkedDevicesScreen>
     try {
       await linkNode(ref, nodeNum, setPrimary: true);
       if (mounted) {
-        showSuccessSnackBar(context, 'Device linked to your profile');
+        showSuccessSnackBar(context, l10n.linkedDevicesLinked);
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to link device: $e');
+        showErrorSnackBar(context, l10n.linkedDevicesLinkFailed(e.toString()));
       }
     } finally {
       safeSetState(() => _isLinking = false);
@@ -366,14 +369,18 @@ class _LinkedDevicesScreenState extends ConsumerState<LinkedDevicesScreen>
   }
 
   Future<void> _setPrimaryNode(int nodeId) async {
+    final l10n = context.l10n;
     try {
       await setPrimaryNode(ref, nodeId);
       if (mounted) {
-        showSuccessSnackBar(context, 'Primary device updated');
+        showSuccessSnackBar(context, l10n.linkedDevicesPrimaryUpdated);
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to set primary: $e');
+        showErrorSnackBar(
+          context,
+          l10n.linkedDevicesSetPrimaryFailed(e.toString()),
+        );
       }
     }
   }
@@ -391,12 +398,12 @@ class _LinkedDevicesScreenState extends ConsumerState<LinkedDevicesScreen>
     final currentUser = ref.read(currentUserProvider);
     final container = ProviderScope.containerOf(context);
 
+    final l10n = context.l10n;
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Unlink Device',
-      message:
-          'Remove this device from your profile? Others will no longer see your profile when viewing this node.',
-      confirmLabel: 'Unlink',
+      title: l10n.linkedDevicesUnlinkTitle,
+      message: l10n.linkedDevicesUnlinkBody,
+      confirmLabel: l10n.linkedDevicesUnlinkConfirm,
       isDestructive: true,
     );
 
@@ -471,14 +478,17 @@ class _LinkedDevicesScreenState extends ConsumerState<LinkedDevicesScreen>
       );
 
       if (mounted) {
-        showSuccessSnackBar(context, 'Device unlinked');
+        showSuccessSnackBar(context, l10n.linkedDevicesUnlinked);
         AppLogging.settings('🔗 [UnlinkDevice] Success snackbar shown');
       }
     } catch (e, stackTrace) {
       AppLogging.settings('🔗 [UnlinkDevice] ERROR: $e');
       AppLogging.settings('🔗 [UnlinkDevice] Stack trace: $stackTrace');
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to unlink: $e');
+        showErrorSnackBar(
+          context,
+          l10n.linkedDevicesUnlinkFailed(e.toString()),
+        );
       }
     } finally {
       if (mounted) {
@@ -532,7 +542,7 @@ class _LinkCurrentDeviceCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Connected Device',
+                  context.l10n.linkedDevicesConnectedDevice,
                   style: TextStyle(
                     color: context.textPrimary,
                     fontWeight: FontWeight.w600,
@@ -563,7 +573,7 @@ class _LinkCurrentDeviceCard extends StatelessWidget {
                       color: Colors.white,
                     ),
                   )
-                : const Text('Link'),
+                : Text(context.l10n.linkedDevicesLinkButton),
           ),
         ],
       ),
@@ -661,8 +671,8 @@ class _LinkedDeviceCard extends StatelessWidget {
                                     AppTheme.radius4,
                                   ),
                                 ),
-                                child: const Text(
-                                  'PRIMARY',
+                                child: Text(
+                                  context.l10n.linkedDevicesPrimaryBadge,
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 9,
@@ -725,7 +735,7 @@ class _LinkedDeviceCard extends StatelessWidget {
       BottomSheetAction(
         icon: Icons.message_outlined,
         iconColor: context.accentColor,
-        label: 'Send Message',
+        label: context.l10n.linkedDevicesSendMessage,
         onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
@@ -740,7 +750,7 @@ class _LinkedDeviceCard extends StatelessWidget {
       if (node?.hasPosition == true)
         BottomSheetAction(
           icon: Icons.map_outlined,
-          label: 'View on Map',
+          label: context.l10n.linkedDevicesViewOnMap,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
@@ -752,8 +762,8 @@ class _LinkedDeviceCard extends StatelessWidget {
         BottomSheetAction(
           icon: Icons.star_outline,
           iconColor: context.accentColor,
-          label: 'Set as Primary',
-          subtitle: 'Show this device on your profile',
+          label: context.l10n.linkedDevicesSetAsPrimary,
+          subtitle: context.l10n.linkedDevicesSetAsPrimarySubtitle,
           onTap: () {
             Navigator.pop(context);
             onSetPrimary();
@@ -761,7 +771,7 @@ class _LinkedDeviceCard extends StatelessWidget {
         ),
       BottomSheetAction(
         icon: Icons.link_off,
-        label: 'Unlink Device',
+        label: context.l10n.linkedDevicesUnlinkTitle,
         isDestructive: true,
         onTap: () {
           Navigator.pop(context);

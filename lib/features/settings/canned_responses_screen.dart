@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/app_bar_overflow_menu.dart';
@@ -89,9 +90,9 @@ class _CannedResponsesScreenState extends ConsumerState<CannedResponsesScreen>
     if (_settingsService == null) return;
     final profileNotifier = ref.read(userProfileProvider.notifier);
     final confirmed = await _showConfirmSheet(
-      title: 'Delete Response',
-      message: 'Delete "${response.text}"?',
-      confirmLabel: 'Delete',
+      title: context.l10n.cannedResponsesDeleteTitle,
+      message: context.l10n.cannedResponsesDeleteMessage(response.text),
+      confirmLabel: context.l10n.cannedResponsesDeleteConfirm,
       isDestructive: true,
     );
     if (!mounted) return;
@@ -107,10 +108,9 @@ class _CannedResponsesScreenState extends ConsumerState<CannedResponsesScreen>
     if (_settingsService == null) return;
     final profileNotifier = ref.read(userProfileProvider.notifier);
     final confirmed = await _showConfirmSheet(
-      title: 'Reset to Defaults',
-      message:
-          'This will remove all custom responses and restore the default set.',
-      confirmLabel: 'Reset',
+      title: context.l10n.cannedResponsesResetTitle,
+      message: context.l10n.cannedResponsesResetMessage,
+      confirmLabel: context.l10n.cannedResponsesResetConfirm,
       isDestructive: true,
     );
     if (!mounted) return;
@@ -147,11 +147,11 @@ class _CannedResponsesScreenState extends ConsumerState<CannedResponsesScreen>
   @override
   Widget build(BuildContext context) {
     return GlassScaffold(
-      title: 'Quick Responses',
+      title: context.l10n.cannedResponsesTitle,
       actions: [
         IconButton(
           icon: Icon(Icons.add, color: context.accentColor),
-          tooltip: 'Add response',
+          tooltip: context.l10n.cannedResponsesAddTooltip,
           onPressed: _addResponse,
         ),
         IconButton(
@@ -159,7 +159,9 @@ class _CannedResponsesScreenState extends ConsumerState<CannedResponsesScreen>
             _isReordering ? Icons.check : Icons.reorder,
             color: _isReordering ? context.accentColor : null,
           ),
-          tooltip: _isReordering ? 'Done' : 'Reorder',
+          tooltip: _isReordering
+              ? context.l10n.cannedResponsesDoneTooltip
+              : context.l10n.cannedResponsesReorderTooltip,
           onPressed: () {
             HapticFeedback.selectionClick();
             safeSetState(() => _isReordering = !_isReordering);
@@ -178,7 +180,7 @@ class _CannedResponsesScreenState extends ConsumerState<CannedResponsesScreen>
                 children: [
                   Icon(Icons.restore, color: context.textSecondary),
                   SizedBox(width: AppTheme.spacing12),
-                  Text('Reset to defaults'),
+                  Text(context.l10n.cannedResponsesResetToDefaults),
                 ],
               ),
             ),
@@ -191,8 +193,8 @@ class _CannedResponsesScreenState extends ConsumerState<CannedResponsesScreen>
             padding: const EdgeInsets.all(AppTheme.spacing16),
             child: Text(
               _isReordering
-                  ? 'Drag to reorder responses'
-                  : 'Tap to edit, swipe to delete',
+                  ? context.l10n.cannedResponsesDragToReorder
+                  : context.l10n.cannedResponsesTapToEdit,
               style: TextStyle(color: context.textSecondary, fontSize: 14),
             ),
           ),
@@ -311,7 +313,7 @@ class _ResponseTile extends StatelessWidget {
         ),
         subtitle: response.isDefault
             ? Text(
-                'Default',
+                context.l10n.cannedResponsesDefault,
                 style: TextStyle(color: context.textSecondary, fontSize: 12),
               )
             : null,
@@ -363,14 +365,16 @@ class _EditResponseContentState extends State<_EditResponseContent> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         BottomSheetHeader(
-          title: _isEditing ? 'Edit Response' : 'Add Response',
-          subtitle: 'Create a quick message for fast sending',
+          title: _isEditing
+              ? context.l10n.cannedResponsesEditTitle
+              : context.l10n.cannedResponsesAddTitle,
+          subtitle: context.l10n.cannedResponsesCreateSubtitle,
         ),
         const SizedBox(height: AppTheme.spacing24),
         BottomSheetTextField(
           controller: _textController,
-          label: 'Message',
-          hint: 'e.g., On my way',
+          label: context.l10n.cannedResponsesMessageLabel,
+          hint: context.l10n.cannedResponsesMessageHint,
           maxLength: 100,
           autofocus: true,
           onSubmitted: (_) => _submit(),
@@ -379,7 +383,9 @@ class _EditResponseContentState extends State<_EditResponseContent> {
         BottomSheetButtons(
           onCancel: () => Navigator.pop(context),
           onConfirm: _submit,
-          confirmLabel: _isEditing ? 'Save' : 'Add',
+          confirmLabel: _isEditing
+              ? context.l10n.cannedResponsesSave
+              : context.l10n.cannedResponsesAdd,
         ),
       ],
     );

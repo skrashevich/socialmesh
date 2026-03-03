@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'dart:async';
 import 'package:flutter/material.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/logging.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/widgets/animations.dart';
@@ -139,6 +140,7 @@ class _CannedMessageModuleConfigScreenState
 
   Future<void> _saveConfig() async {
     safeSetState(() => _isSaving = true);
+    final l10n = context.l10n;
     try {
       final protocol = ref.read(protocolServiceProvider);
       final target = AdminTarget.fromNullable(
@@ -183,7 +185,7 @@ class _CannedMessageModuleConfigScreenState
       }
 
       if (mounted) {
-        showSuccessSnackBar(context, 'Canned message configuration saved');
+        showSuccessSnackBar(context, l10n.cannedModuleSaved);
         if (target.isLocal) {
           ref
               .read(countdownProvider.notifier)
@@ -195,7 +197,7 @@ class _CannedMessageModuleConfigScreenState
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to save: $e');
+        showErrorSnackBar(context, l10n.cannedModuleSaveFailed(e.toString()));
       }
     } finally {
       safeSetState(() => _isSaving = false);
@@ -238,12 +240,12 @@ class _CannedMessageModuleConfigScreenState
   @override
   Widget build(BuildContext context) {
     return GlassScaffold(
-      title: 'Canned Messages Module',
+      title: context.l10n.cannedModuleTitle,
       actions: [
         TextButton(
           onPressed: (_isLoading || _isSaving) ? null : _saveConfig,
           child: Text(
-            'Save',
+            context.l10n.cannedModuleSave,
             style: TextStyle(
               color: (_isLoading || _isSaving)
                   ? SemanticColors.disabled
@@ -295,7 +297,7 @@ class _CannedMessageModuleConfigScreenState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'OPTIONS',
+            context.l10n.cannedModuleSectionOptions,
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.bold,
@@ -306,8 +308,8 @@ class _CannedMessageModuleConfigScreenState
           const SizedBox(height: AppTheme.spacing16),
           _SettingsTile(
             icon: Icons.message,
-            title: 'Enabled',
-            subtitle: 'Enable canned message module on device',
+            title: context.l10n.cannedModuleEnabled,
+            subtitle: context.l10n.cannedModuleEnabledSubtitle,
             trailing: ThemedSwitch(
               value: _enabled,
               onChanged: (value) {
@@ -319,8 +321,8 @@ class _CannedMessageModuleConfigScreenState
           const SizedBox(height: AppTheme.spacing8),
           _SettingsTile(
             icon: Icons.notifications,
-            title: 'Send Bell',
-            subtitle: 'Send bell character with messages',
+            title: context.l10n.cannedModuleSendBell,
+            subtitle: context.l10n.cannedModuleSendBellSubtitle,
             trailing: ThemedSwitch(
               value: _sendBell,
               onChanged: (value) {
@@ -345,7 +347,7 @@ class _CannedMessageModuleConfigScreenState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'DEVICE MESSAGES',
+            context.l10n.cannedModuleSectionDeviceMessages,
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.bold,
@@ -359,7 +361,7 @@ class _CannedMessageModuleConfigScreenState
               Icon(Icons.message, size: 20, color: context.accentColor),
               const SizedBox(width: AppTheme.spacing12),
               Text(
-                'Messages',
+                context.l10n.cannedModuleMessages,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
@@ -376,7 +378,7 @@ class _CannedMessageModuleConfigScreenState
             maxLength: 198,
             style: TextStyle(color: context.textPrimary),
             decoration: InputDecoration(
-              hintText: 'Message 1|Message 2|Message 3',
+              hintText: context.l10n.cannedModuleMessagesHint,
               hintStyle: TextStyle(color: context.textTertiary),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AppTheme.radius8),
@@ -401,8 +403,7 @@ class _CannedMessageModuleConfigScreenState
           ),
           const SizedBox(height: AppTheme.spacing8),
           Text(
-            'Separate messages with | (pipe). These messages will be stored '
-            'on the device for use with the canned message input controls.',
+            context.l10n.cannedModuleMessagesHelp,
             style: context.bodySmallStyle?.copyWith(
               color: context.textTertiary,
             ),
@@ -414,9 +415,21 @@ class _CannedMessageModuleConfigScreenState
 
   Widget _buildPresetSection() {
     final presets = [
-      (0, 'Manual Configuration', 'Custom GPIO and event settings'),
-      (1, 'RAK Rotary Encoder', 'Pre-configured for RAK rotary encoder'),
-      (2, 'M5 Stack Card KB', 'Pre-configured for Card KB / RAK Keypad'),
+      (
+        0,
+        context.l10n.cannedModulePresetManual,
+        context.l10n.cannedModulePresetManualDesc,
+      ),
+      (
+        1,
+        context.l10n.cannedModulePresetRak,
+        context.l10n.cannedModulePresetRakDesc,
+      ),
+      (
+        2,
+        context.l10n.cannedModulePresetM5Stack,
+        context.l10n.cannedModulePresetM5StackDesc,
+      ),
     ];
 
     return Container(
@@ -429,7 +442,7 @@ class _CannedMessageModuleConfigScreenState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'CONFIGURATION PRESET',
+            context.l10n.cannedModuleSectionPreset,
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.bold,
@@ -515,7 +528,7 @@ class _CannedMessageModuleConfigScreenState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'CONTROL TYPE',
+            context.l10n.cannedModuleSectionControlType,
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.bold,
@@ -526,8 +539,8 @@ class _CannedMessageModuleConfigScreenState
           const SizedBox(height: AppTheme.spacing16),
           _SettingsTile(
             icon: Icons.radio_button_checked,
-            title: 'Rotary Encoder',
-            subtitle: 'Dumb encoder sending pulses on A/B pins',
+            title: context.l10n.cannedModuleControlRotary,
+            subtitle: context.l10n.cannedModuleControlRotaryDesc,
             trailing: ThemedSwitch(
               value: _rotary1Enabled,
               onChanged: _updown1Enabled
@@ -541,8 +554,8 @@ class _CannedMessageModuleConfigScreenState
           const SizedBox(height: AppTheme.spacing8),
           _SettingsTile(
             icon: Icons.arrow_upward,
-            title: 'Up/Down Buttons',
-            subtitle: 'Uses A/B/Press definitions from input broker',
+            title: context.l10n.cannedModuleControlUpDown,
+            subtitle: context.l10n.cannedModuleControlUpDownDesc,
             trailing: ThemedSwitch(
               value: _updown1Enabled,
               onChanged: _rotary1Enabled
@@ -569,7 +582,7 @@ class _CannedMessageModuleConfigScreenState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'GPIO INPUTS',
+            context.l10n.cannedModuleSectionGpio,
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.bold,
@@ -578,17 +591,29 @@ class _CannedMessageModuleConfigScreenState
             ),
           ),
           const SizedBox(height: AppTheme.spacing16),
-          _buildGpioPicker('Pin A', _inputbrokerPinA, (value) {
-            setState(() => _inputbrokerPinA = value);
-          }),
+          _buildGpioPicker(
+            context.l10n.cannedModuleGpioPinA,
+            _inputbrokerPinA,
+            (value) {
+              setState(() => _inputbrokerPinA = value);
+            },
+          ),
           const SizedBox(height: AppTheme.spacing12),
-          _buildGpioPicker('Pin B', _inputbrokerPinB, (value) {
-            setState(() => _inputbrokerPinB = value);
-          }),
+          _buildGpioPicker(
+            context.l10n.cannedModuleGpioPinB,
+            _inputbrokerPinB,
+            (value) {
+              setState(() => _inputbrokerPinB = value);
+            },
+          ),
           const SizedBox(height: AppTheme.spacing12),
-          _buildGpioPicker('Press Pin', _inputbrokerPinPress, (value) {
-            setState(() => _inputbrokerPinPress = value);
-          }),
+          _buildGpioPicker(
+            context.l10n.cannedModuleGpioPressPin,
+            _inputbrokerPinPress,
+            (value) {
+              setState(() => _inputbrokerPinPress = value);
+            },
+          ),
         ],
       ),
     );
@@ -623,7 +648,11 @@ class _CannedMessageModuleConfigScreenState
             items: List.generate(49, (i) => i).map((pin) {
               return DropdownMenuItem(
                 value: pin,
-                child: Text(pin == 0 ? 'Unset' : 'Pin $pin'),
+                child: Text(
+                  pin == 0
+                      ? context.l10n.cannedModuleGpioPinUnset
+                      : context.l10n.cannedModuleGpioPinLabel(pin),
+                ),
               );
             }).toList(),
             onChanged: (v) {
@@ -640,22 +669,37 @@ class _CannedMessageModuleConfigScreenState
 
   Widget _buildKeyMappingSection() {
     final eventChars = [
-      (module_pb.ModuleConfig_CannedMessageConfig_InputEventChar.NONE, 'None'),
-      (module_pb.ModuleConfig_CannedMessageConfig_InputEventChar.UP, 'Up'),
-      (module_pb.ModuleConfig_CannedMessageConfig_InputEventChar.DOWN, 'Down'),
-      (module_pb.ModuleConfig_CannedMessageConfig_InputEventChar.LEFT, 'Left'),
+      (
+        module_pb.ModuleConfig_CannedMessageConfig_InputEventChar.NONE,
+        context.l10n.cannedModuleEventNone,
+      ),
+      (
+        module_pb.ModuleConfig_CannedMessageConfig_InputEventChar.UP,
+        context.l10n.cannedModuleEventUp,
+      ),
+      (
+        module_pb.ModuleConfig_CannedMessageConfig_InputEventChar.DOWN,
+        context.l10n.cannedModuleEventDown,
+      ),
+      (
+        module_pb.ModuleConfig_CannedMessageConfig_InputEventChar.LEFT,
+        context.l10n.cannedModuleEventLeft,
+      ),
       (
         module_pb.ModuleConfig_CannedMessageConfig_InputEventChar.RIGHT,
-        'Right',
+        context.l10n.cannedModuleEventRight,
       ),
       (
         module_pb.ModuleConfig_CannedMessageConfig_InputEventChar.SELECT,
-        'Select',
+        context.l10n.cannedModuleEventSelect,
       ),
-      (module_pb.ModuleConfig_CannedMessageConfig_InputEventChar.BACK, 'Back'),
+      (
+        module_pb.ModuleConfig_CannedMessageConfig_InputEventChar.BACK,
+        context.l10n.cannedModuleEventBack,
+      ),
       (
         module_pb.ModuleConfig_CannedMessageConfig_InputEventChar.CANCEL,
-        'Cancel',
+        context.l10n.cannedModuleEventCancel,
       ),
     ];
 
@@ -669,7 +713,7 @@ class _CannedMessageModuleConfigScreenState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'KEY MAPPING',
+            context.l10n.cannedModuleSectionKeyMapping,
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.bold,
@@ -679,7 +723,7 @@ class _CannedMessageModuleConfigScreenState
           ),
           const SizedBox(height: AppTheme.spacing16),
           _buildEventPicker(
-            'Clockwise Event',
+            context.l10n.cannedModuleClockwiseEvent,
             _inputbrokerEventCw ??
                 module_pb.ModuleConfig_CannedMessageConfig_InputEventChar.NONE,
             eventChars,
@@ -689,7 +733,7 @@ class _CannedMessageModuleConfigScreenState
           ),
           const SizedBox(height: AppTheme.spacing12),
           _buildEventPicker(
-            'Counter-Clockwise Event',
+            context.l10n.cannedModuleCounterClockwiseEvent,
             _inputbrokerEventCcw ??
                 module_pb.ModuleConfig_CannedMessageConfig_InputEventChar.NONE,
             eventChars,
@@ -699,7 +743,7 @@ class _CannedMessageModuleConfigScreenState
           ),
           const SizedBox(height: AppTheme.spacing12),
           _buildEventPicker(
-            'Press Event',
+            context.l10n.cannedModulePressEvent,
             _inputbrokerEventPress ??
                 module_pb.ModuleConfig_CannedMessageConfig_InputEventChar.NONE,
             eventChars,
@@ -778,9 +822,7 @@ class _CannedMessageModuleConfigScreenState
           SizedBox(width: AppTheme.spacing12),
           Expanded(
             child: Text(
-              'This configures the device-side canned message module which '
-              'allows sending predefined messages using hardware inputs like '
-              'rotary encoders or buttons.',
+              context.l10n.cannedModuleInfoCard,
               style: TextStyle(color: context.textSecondary, fontSize: 13),
             ),
           ),

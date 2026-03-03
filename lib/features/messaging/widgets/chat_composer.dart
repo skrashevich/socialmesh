@@ -1,0 +1,195 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import '../../../core/theme.dart';
+
+/// A chat message composer with multiline input, an explicit Send button,
+/// and keyboard shortcuts (Ctrl/Cmd+Enter to send).
+///
+/// Matches the Meshtastic iOS pattern:
+/// - Enter inserts a newline and the field grows vertically.
+/// - The Send button only appears when there is text to send.
+/// - Ctrl/Cmd+Enter sends on desktop / hardware keyboards.
+/// - The input grows from 1 line up to [maxLines] (default 6) before scrolling.
+class ChatComposer extends StatelessWidget {
+  const ChatComposer({
+    super.key,
+    required this.controller,
+    required this.focusNode,
+    required this.onSend,
+    required this.hintText,
+    this.maxLength = 500,
+    this.minLines = 1,
+    this.maxLines = 6,
+    this.leading,
+    this.sendTooltip,
+  });
+
+  /// Controller for the text input.
+  final TextEditingController controller;
+
+  /// Focus node for the text input.
+  final FocusNode focusNode;
+
+  /// Callback invoked when the user triggers send (button tap or Ctrl/Cmd+Enter).
+  /// The caller is responsible for validation, clearing the controller, and
+  /// managing focus.
+  final VoidCallback onSend;
+
+  /// Hint text displayed in the input when empty.
+  final String hintText;
+
+  /// Maximum character length for the input.
+  final int maxLength;
+
+  /// Minimum visible lines (default 1).
+  final int minLines;
+
+  /// Maximum visible lines before the input scrolls (default 6).
+  final int maxLines;
+
+  /// Optional widget placed before the text field (e.g. quick-responses button).
+  final Widget? leading;
+
+  /// Tooltip for the send button. Shown on long-press / hover.
+  final String? sendTooltip;
+
+  /// Handles the Ctrl/Cmd+Enter keyboard shortcut to send.
+  KeyEventResult _handleKeyEvent(FocusNode node, KeyEvent event) {
+    if (event is! KeyDownEvent && event is! KeyRepeatEvent) {
+      return KeyEventResult.ignored;
+    }
+
+    final isEnter =
+        event.logicalKey == LogicalKeyboardKey.enter ||
+        event.logicalKey == LogicalKeyboardKey.numpadEnter;
+
+    if (!isEnter) return KeyEventResult.ignored;
+
+    final isModifierPressed =
+        HardwareKeyboard.instance.isControlPressed ||
+        HardwareKeyboard.instance.isMetaPressed;
+
+    if (isModifierPressed) {
+      onSend();
+      return KeyEventResult.handled;
+    }
+
+    // Plain Enter → let the TextField handle it (inserts newline).
+    return KeyEventResult.ignored;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return ListenableBuilder(
+      listenable: controller,
+      builder: (context, _) {
+        final hasText = controller.text.trim().isNotEmpty;
+
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            // Leading widget (e.g. quick-responses ⚡ button), bottom-aligned.
+            if (leading != null) ...[
+              Padding(
+                padding: const EdgeInsets.only(bottom: AppTheme.spacing4),
+                child: leading!,
+              ),
+              const SizedBox(width: AppTheme.spacing8),
+            ],
+
+            // Text field with rounded background — grows vertically like
+            // Meshtastic iOS `TextField(..., axis: .vertical)`.
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: isDark
+                      ? AppTheme.darkBackground
+                      : AppTheme.lightBackground,
+                  borderRadius: BorderRadius.circular(AppTheme.radius24),
+                ),
+                child: Focus(
+                  onKeyEvent: _handleKeyEvent,
+                  child: TextField(
+                    maxLength: maxLength,
+                    controller: controller,
+                    focusNode: focusNode,
+                    style: TextStyle(
+                      color: isDark
+                          ? AppTheme.textPrimary
+                          : AppTheme.textPrimaryLight,
+                    ),
+                    textCapitalization: TextCapitalization.sentences,
+                    keyboardType: TextInputType.multiline,
+                    textInputAction: TextInputAction.newline,
+                    minLines: minLines,
+                    maxLines: maxLines,
+                    decoration: InputDecoration(
+                      hintText: hintText,
+                      hintStyle: TextStyle(
+                        color: isDark
+                            ? AppTheme.textTertiary
+                            : AppTheme.textTertiaryLight,
+                      ),
+                      border: InputBorder.none,
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 12,
+                      ),
+                      counterText: '',
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
+            // Send button — only visible when the field has non-empty text,
+            // matching the Meshtastic iOS pattern.
+            if (hasText) ...[
+              const SizedBox(width: AppTheme.spacing12),
+              Padding(
+                padding: const EdgeInsets.only(bottom: AppTheme.spacing0),
+                child: _SendButton(onTap: onSend, tooltip: sendTooltip),
+              ),
+            ],
+          ],
+        );
+      },
+    );
+  }
+}
+
+class _SendButton extends StatelessWidget {
+  const _SendButton({required this.onTap, this.tooltip});
+
+  final VoidCallback onTap;
+  final String? tooltip;
+
+  @override
+  Widget build(BuildContext context) {
+    final accentColor = Theme.of(context).colorScheme.primary;
+
+    final button = GestureDetector(
+      onTap: () {
+        HapticFeedback.lightImpact();
+        onTap();
+      },
+      child: Container(
+        width: 48,
+        height: 48,
+        decoration: BoxDecoration(color: accentColor, shape: BoxShape.circle),
+        child: const Icon(Icons.send, color: Colors.white, size: 20),
+      ),
+    );
+
+    if (tooltip != null) {
+      return Tooltip(message: tooltip!, child: button);
+    }
+
+    return button;
+  }
+}

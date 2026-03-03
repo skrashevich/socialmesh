@@ -6,6 +6,7 @@ import '../../core/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import 'package:flutter/services.dart';
+import 'widgets/chat_composer.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'dart:async';
@@ -1717,76 +1718,28 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
               ),
               child: SafeArea(
                 top: false,
-                child: Row(
-                  children: [
-                    // Quick responses button
-                    GestureDetector(
-                      onTap: () => _showQuickResponses(),
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: context.background,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          Icons.bolt,
-                          color: context.textSecondary,
-                          size: 20,
-                        ),
+                child: ChatComposer(
+                  controller: _messageController,
+                  focusNode: _messageFocusNode,
+                  onSend: _sendMessage,
+                  hintText: context.l10n.messagingMessageHint,
+                  sendTooltip: context.l10n.messagingSendTooltip,
+                  leading: GestureDetector(
+                    onTap: () => _showQuickResponses(),
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: context.background,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.bolt,
+                        color: context.textSecondary,
+                        size: 20,
                       ),
                     ),
-                    SizedBox(width: AppTheme.spacing8),
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: context.background,
-                          borderRadius: BorderRadius.circular(
-                            AppTheme.radius24,
-                          ),
-                        ),
-                        child: TextField(
-                          maxLength: 500,
-                          controller: _messageController,
-                          focusNode: _messageFocusNode,
-                          style: TextStyle(color: context.textPrimary),
-                          textCapitalization: TextCapitalization.sentences,
-                          decoration: InputDecoration(
-                            hintText: context.l10n.messagingMessageHint,
-                            hintStyle: TextStyle(color: context.textTertiary),
-                            border: InputBorder.none,
-                            contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 20,
-                              vertical: 12,
-                            ),
-                            counterText: '',
-                          ),
-                          maxLines: null,
-                          textInputAction: TextInputAction.send,
-                          onSubmitted: (_) => _sendMessage(),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: AppTheme.spacing12),
-                    // Voice messaging not practical over LoRa due to bandwidth limits
-                    // Show send button always
-                    GestureDetector(
-                      onTap: _sendMessage,
-                      child: Container(
-                        width: 48,
-                        height: 48,
-                        decoration: BoxDecoration(
-                          color: context.accentColor,
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(
-                          Icons.send,
-                          color: Colors.white,
-                          size: 20,
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),

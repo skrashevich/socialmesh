@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/map_config.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/bottom_action_bar.dart';
@@ -181,8 +182,8 @@ class _GeofencePickerScreenState extends ConsumerState<GeofencePickerScreen>
             requested == LocationPermission.deniedForever) {
           showActionSnackBar(
             context,
-            'Location permission denied. Grant location access to set geofence center.',
-            actionLabel: 'Open Settings',
+            context.l10n.geofencePermissionDenied,
+            actionLabel: context.l10n.geofenceOpenSettings,
             onAction: () => Geolocator.openAppSettings(),
             type: SnackBarType.warning,
           );
@@ -207,7 +208,7 @@ class _GeofencePickerScreenState extends ConsumerState<GeofencePickerScreen>
       _mapController.move(newCenter, _mapController.camera.zoom);
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to get location: $e');
+        showErrorSnackBar(context, context.l10n.geofenceLocationFailed('$e'));
       }
       safeSetState(() => _isLoadingLocation = false);
     }
@@ -324,10 +325,7 @@ class _GeofencePickerScreenState extends ConsumerState<GeofencePickerScreen>
 
   void _confirmGeofence() {
     if (_center == null) {
-      showWarningSnackBar(
-        context,
-        'Please tap on the map to set a geofence center',
-      );
+      showWarningSnackBar(context, context.l10n.geofenceTapToSet);
       return;
     }
 
@@ -360,13 +358,13 @@ class _GeofencePickerScreenState extends ConsumerState<GeofencePickerScreen>
 
     return GlassScaffold.body(
       resizeToAvoidBottomInset: false,
-      title: 'Set Geofence',
+      title: context.l10n.geofenceTitle,
       physics: const NeverScrollableScrollPhysics(),
       actions: [
         TextButton(
           onPressed: _center != null ? _confirmGeofence : null,
           child: Text(
-            'Done',
+            context.l10n.geofenceDone,
             style: TextStyle(
               color: _center != null
                   ? context.accentColor
@@ -501,8 +499,8 @@ class _GeofencePickerScreenState extends ConsumerState<GeofencePickerScreen>
                         Expanded(
                           child: Text(
                             _center == null
-                                ? 'Tap to set geofence center'
-                                : 'Drag the circle edge to adjust radius',
+                                ? context.l10n.geofenceTapToSetCenter
+                                : context.l10n.geofenceDragToAdjust,
                             style: TextStyle(
                               color: context.textSecondary,
                               fontSize: 13,
@@ -558,7 +556,9 @@ class _GeofencePickerScreenState extends ConsumerState<GeofencePickerScreen>
                       ),
                       const SizedBox(width: AppTheme.spacing8),
                       Text(
-                        '${allNodesWithPosition.length} nodes',
+                        context.l10n.geofenceNodesCount(
+                          allNodesWithPosition.length,
+                        ),
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w500,
@@ -652,7 +652,7 @@ class _GeofencePickerScreenState extends ConsumerState<GeofencePickerScreen>
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Monitored Node',
+                                  context.l10n.geofenceMonitoredNode,
                                   style: TextStyle(
                                     fontSize: 11,
                                     color: context.textTertiary,
@@ -697,7 +697,7 @@ class _GeofencePickerScreenState extends ConsumerState<GeofencePickerScreen>
                     Row(
                       children: [
                         Text(
-                          'Radius',
+                          context.l10n.geofenceRadius,
                           style: TextStyle(
                             color: context.textSecondary,
                             fontSize: 14,
@@ -760,8 +760,8 @@ class _GeofencePickerScreenState extends ConsumerState<GeofencePickerScreen>
                               : Icon(Icons.my_location, size: 18),
                           label: Text(
                             _isLoadingLocation
-                                ? 'Locating...'
-                                : 'Use My Location',
+                                ? context.l10n.geofenceLocating
+                                : context.l10n.geofenceUseMyLocation,
                           ),
                         ),
                       ),
@@ -777,7 +777,7 @@ class _GeofencePickerScreenState extends ConsumerState<GeofencePickerScreen>
                             padding: const EdgeInsets.symmetric(vertical: 12),
                           ),
                           icon: const Icon(Icons.check, size: 18),
-                          label: const Text('Set Geofence'),
+                          label: Text(context.l10n.geofenceSetGeofence),
                         ),
                       ),
                     ],
@@ -889,7 +889,7 @@ class _NodeListPanel extends StatelessWidget {
     final bottomPadding = MediaQuery.of(context).padding.bottom;
 
     return MapNodeDrawer(
-      title: 'Select Node',
+      title: context.l10n.geofenceSelectNode,
       headerIcon: Icons.hub,
       itemCount: sortedNodes.length,
       onClose: onClose,
@@ -897,7 +897,10 @@ class _NodeListPanel extends StatelessWidget {
       onSearchChanged: onSearchChanged,
       content: Expanded(
         child: sortedNodes.isEmpty
-            ? const DrawerEmptyState(message: 'No nodes with GPS', hint: null)
+            ? DrawerEmptyState(
+                message: context.l10n.geofenceNoNodesWithGps,
+                hint: null,
+              )
             : ListView.builder(
                 padding: EdgeInsets.only(top: 4, bottom: bottomPadding + 8),
                 itemCount: sortedNodes.length,
@@ -1025,7 +1028,7 @@ class _NodeListItem extends StatelessWidget {
                               ),
                             ),
                             child: Text(
-                              'YOU',
+                              context.l10n.geofenceYou,
                               style: TextStyle(
                                 fontSize: 8,
                                 fontWeight: FontWeight.bold,
@@ -1065,7 +1068,7 @@ class _NodeListItem extends StatelessWidget {
                       Icon(Icons.radar, size: 12, color: context.accentColor),
                       SizedBox(width: AppTheme.spacing4),
                       Text(
-                        'Monitored',
+                        context.l10n.geofenceMonitored,
                         style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.bold,
@@ -1088,7 +1091,7 @@ class _NodeListItem extends StatelessWidget {
                       borderRadius: BorderRadius.circular(AppTheme.radius4),
                     ),
                     child: Text(
-                      'Monitor',
+                      context.l10n.geofenceMonitor,
                       style: TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.w600,

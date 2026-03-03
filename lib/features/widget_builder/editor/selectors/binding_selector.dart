@@ -85,10 +85,13 @@ class _BindingSelectorContentState extends State<_BindingSelectorContent> {
     }
 
     if (query.isNotEmpty) {
+      final l10n = context.l10n;
       bindings = bindings.where((b) {
+        final localLabel = BindingRegistry.localizedLabel(b.path, l10n);
+        final localDesc = BindingRegistry.localizedDescription(b.path, l10n);
         return b.path.toLowerCase().contains(query) ||
-            b.label.toLowerCase().contains(query) ||
-            b.description.toLowerCase().contains(query);
+            localLabel.toLowerCase().contains(query) ||
+            localDesc.toLowerCase().contains(query);
       }).toList();
     }
 
@@ -447,7 +450,10 @@ class _BindingSelectorContentState extends State<_BindingSelectorContent> {
                     children: [
                       Expanded(
                         child: Text(
-                          binding.label,
+                          BindingRegistry.localizedLabel(
+                            binding.path,
+                            context.l10n,
+                          ),
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -490,7 +496,10 @@ class _BindingSelectorContentState extends State<_BindingSelectorContent> {
                   ),
                   SizedBox(height: AppTheme.spacing2),
                   Text(
-                    binding.description,
+                    BindingRegistry.localizedDescription(
+                      binding.path,
+                      context.l10n,
+                    ),
                     style: TextStyle(
                       fontSize: 12,
                       color: context.textSecondary,

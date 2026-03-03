@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/logging.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
@@ -94,11 +95,9 @@ class _BackgroundConnectionScreenState
       // Confirm before disabling background connection.
       final confirmed = await AppBottomSheet.showConfirm(
         context: context,
-        title: 'Disable Background Connection?',
-        message:
-            'The mesh connection may be lost when the app is in the '
-            'background. You will not receive notifications for new messages.',
-        confirmLabel: 'Disable',
+        title: context.l10n.bgConnDisableTitle,
+        message: context.l10n.bgConnDisableBody,
+        confirmLabel: context.l10n.bgConnDisableConfirm,
         isDestructive: true,
       );
       if (confirmed != true || !mounted) return;
@@ -180,7 +179,7 @@ class _BackgroundConnectionScreenState
   @override
   Widget build(BuildContext context) {
     return GlassScaffold(
-      title: 'Background Connection',
+      title: context.l10n.bgConnTitle,
       slivers: [
         SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -189,13 +188,11 @@ class _BackgroundConnectionScreenState
               const SizedBox(height: AppTheme.spacing16),
 
               // -- Connection toggle ----------------------------------------
-              _SectionHeader(title: 'CONNECTION'),
+              _SectionHeader(title: context.l10n.bgConnSectionConnection),
               _SettingTile(
                 icon: Icons.bluetooth_connected,
-                title: 'Background connection',
-                subtitle:
-                    'Keep mesh radio connected when the app is '
-                    'in the background',
+                title: context.l10n.bgConnToggleTitle,
+                subtitle: context.l10n.bgConnToggleSubtitle,
                 trailing: _loaded
                     ? ThemedSwitch(
                         value: _bgBleEnabled,
@@ -217,11 +214,11 @@ class _BackgroundConnectionScreenState
               const SizedBox(height: AppTheme.spacing24),
 
               // -- Notification toggles -------------------------------------
-              _SectionHeader(title: 'BACKGROUND NOTIFICATIONS'),
+              _SectionHeader(title: context.l10n.bgConnSectionNotifications),
               _SettingTile(
                 icon: Icons.chat_bubble_outline,
-                title: 'Direct messages',
-                subtitle: 'Notify for DMs received while backgrounded',
+                title: context.l10n.bgConnDirectMessages,
+                subtitle: context.l10n.bgConnDirectMessagesSubtitle,
                 trailing: ThemedSwitch(
                   value: _bgNotifyMessages && _bgBleEnabled,
                   onChanged: _bgBleEnabled ? _setBgNotifyMessages : null,
@@ -229,8 +226,8 @@ class _BackgroundConnectionScreenState
               ),
               _SettingTile(
                 icon: Icons.forum_outlined,
-                title: 'Channel messages',
-                subtitle: 'Notify for channel messages while backgrounded',
+                title: context.l10n.bgConnChannelMessages,
+                subtitle: context.l10n.bgConnChannelMessagesSubtitle,
                 trailing: ThemedSwitch(
                   value: _bgNotifyChannels && _bgBleEnabled,
                   onChanged: _bgBleEnabled ? _setBgNotifyChannels : null,
@@ -238,8 +235,8 @@ class _BackgroundConnectionScreenState
               ),
               _SettingTile(
                 icon: Icons.cell_tower,
-                title: 'Node discovery',
-                subtitle: 'Notify when new nodes are heard',
+                title: context.l10n.bgConnNodeDiscovery,
+                subtitle: context.l10n.bgConnNodeDiscoverySubtitle,
                 trailing: ThemedSwitch(
                   value: _bgNotifyNodes && _bgBleEnabled,
                   onChanged: _bgBleEnabled ? _setBgNotifyNodes : null,
@@ -249,20 +246,20 @@ class _BackgroundConnectionScreenState
               // -- Notification style (Android only) ------------------------
               if (Platform.isAndroid) ...[
                 const SizedBox(height: AppTheme.spacing24),
-                _SectionHeader(title: 'PERSISTENT NOTIFICATION'),
+                _SectionHeader(
+                  title: context.l10n.bgConnSectionPersistentNotification,
+                ),
                 _NotifStyleSelector(
                   style: _notifStyle,
                   enabled: _bgBleEnabled,
                   onChanged: _bgBleEnabled ? _setNotifStyle : null,
                 ),
                 const SizedBox(height: AppTheme.spacing24),
-                _SectionHeader(title: 'BATTERY'),
+                _SectionHeader(title: context.l10n.bgConnSectionBattery),
                 _SettingTile(
                   icon: Icons.battery_alert,
-                  title: 'Battery optimization guide',
-                  subtitle:
-                      'OEM-specific instructions for reliable background '
-                      'operation',
+                  title: context.l10n.bgConnBatteryGuide,
+                  subtitle: context.l10n.bgConnBatteryGuideSubtitle,
                   trailing: Icon(
                     Icons.chevron_right,
                     color: context.textTertiary,
@@ -401,7 +398,7 @@ class _NotifStyleSelector extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Notification style',
+              context.l10n.bgConnNotificationStyle,
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
                 fontWeight: FontWeight.w500,
                 color: context.textPrimary,
@@ -411,14 +408,14 @@ class _NotifStyleSelector extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: SegmentedButton<NotificationStyle>(
-                segments: const [
+                segments: [
                   ButtonSegment(
                     value: NotificationStyle.minimal,
-                    label: Text('Minimal'),
+                    label: Text(context.l10n.bgConnStyleMinimal),
                   ),
                   ButtonSegment(
                     value: NotificationStyle.detailed,
-                    label: Text('Detailed'),
+                    label: Text(context.l10n.bgConnStyleDetailed),
                   ),
                 ],
                 selected: {style},
@@ -434,8 +431,8 @@ class _NotifStyleSelector extends StatelessWidget {
             const SizedBox(height: AppTheme.spacing8),
             Text(
               style == NotificationStyle.minimal
-                  ? 'Shows "Connected to [device]"'
-                  : 'Shows connection status with node count and last message time',
+                  ? context.l10n.bgConnStyleMinimalDesc
+                  : context.l10n.bgConnStyleDetailedDesc,
               style: Theme.of(
                 context,
               ).textTheme.bodySmall?.copyWith(color: context.textTertiary),

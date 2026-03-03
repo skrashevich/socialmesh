@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../generated/meshtastic/config.pb.dart';
+import '../l10n/l10n_extension.dart';
 import 'app_bottom_sheet.dart';
 import 'package:socialmesh/core/theme.dart';
 
@@ -109,7 +110,7 @@ class _DevicePrivacyWarningContent extends StatelessWidget {
               ),
               const SizedBox(height: AppTheme.spacing16),
               Text(
-                'Device Location Sharing',
+                context.l10n.devicePrivacyLocationSharing,
                 style: theme.textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -118,8 +119,8 @@ class _DevicePrivacyWarningContent extends StatelessWidget {
               const SizedBox(height: AppTheme.spacing8),
               Text(
                 sharesLocation
-                    ? 'This device is configured to share its GPS location.'
-                    : 'This device does not share GPS location data.',
+                    ? context.l10n.devicePrivacySharingEnabled
+                    : context.l10n.devicePrivacySharingDisabled,
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: theme.hintColor,
                 ),
@@ -146,7 +147,7 @@ class _DevicePrivacyWarningContent extends StatelessWidget {
                     ),
                     const SizedBox(width: AppTheme.spacing8),
                     Text(
-                      'What This Means',
+                      context.l10n.devicePrivacyWhatThisMeans,
                       style: theme.textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -157,17 +158,15 @@ class _DevicePrivacyWarningContent extends StatelessWidget {
                 _buildInfoItem(
                   context,
                   icon: Icons.public,
-                  title: 'Public Visibility',
-                  description:
-                      'Device location will be visible to all users on the mesh network and in the app\'s World Map.',
+                  title: context.l10n.devicePrivacyPublicVisibility,
+                  description: context.l10n.devicePrivacyPublicDescription,
                 ),
                 const SizedBox(height: AppTheme.spacing12),
                 _buildInfoItem(
                   context,
                   icon: Icons.people_outline,
-                  title: 'Follower Access',
-                  description:
-                      'Your followers will see this device\'s real-time position updates.',
+                  title: context.l10n.devicePrivacyFollowerAccess,
+                  description: context.l10n.devicePrivacyFollowerDescription,
                 ),
                 if (positionConfig != null &&
                     positionConfig!.positionBroadcastSecs > 0) ...[
@@ -175,9 +174,11 @@ class _DevicePrivacyWarningContent extends StatelessWidget {
                   _buildInfoItem(
                     context,
                     icon: Icons.schedule,
-                    title: 'Update Frequency',
-                    description:
-                        'Location updates every ${positionConfig!.positionBroadcastSecs} seconds.',
+                    title: context.l10n.devicePrivacyUpdateFrequency,
+                    description: context.l10n
+                        .devicePrivacyUpdateFrequencyDescription(
+                          positionConfig!.positionBroadcastSecs,
+                        ),
                   ),
                 ],
               ],
@@ -216,8 +217,8 @@ class _DevicePrivacyWarningContent extends StatelessWidget {
                 Expanded(
                   child: Text(
                     sharesLocation
-                        ? 'Your location privacy depends on this device\'s Meshtastic configuration. To change sharing settings, update the device\'s Position Config.'
-                        : 'This device has location sharing disabled. Your privacy is protected.',
+                        ? context.l10n.devicePrivacyPrivacyDependsNote
+                        : context.l10n.devicePrivacyPrivacyProtected,
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: theme.hintColor,
                     ),
@@ -243,8 +244,8 @@ class _DevicePrivacyWarningContent extends StatelessWidget {
                   icon: const Icon(Icons.link, size: 18),
                   label: Text(
                     sharesLocation
-                        ? 'Link Device (Location Shared)'
-                        : 'Link Device',
+                        ? context.l10n.devicePrivacyLinkDeviceLocationShared
+                        : context.l10n.devicePrivacyLinkDevice,
                   ),
                   style: FilledButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 14),
@@ -262,7 +263,7 @@ class _DevicePrivacyWarningContent extends StatelessWidget {
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 14),
                   ),
-                  child: const Text('Cancel'),
+                  child: Text(context.l10n.commonCancel),
                 ),
               ),
             ],

@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../l10n/l10n_extension.dart';
 import '../theme.dart';
 import '../../utils/encoding.dart';
 import '../../utils/snackbar.dart';
@@ -183,7 +184,7 @@ class _ChannelKeyFieldState extends State<ChannelKeyField> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Encryption Key',
+                          context.l10n.channelKeyEncryptionKey,
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w600,
@@ -193,10 +194,10 @@ class _ChannelKeyFieldState extends State<ChannelKeyField> {
                         const SizedBox(height: AppTheme.spacing2),
                         Text(
                           _isEditingKey
-                              ? 'Enter base64-encoded key'
+                              ? context.l10n.channelKeyEnterBase64
                               : hasValidKey && detectedDisplay.isNotEmpty
                               ? detectedDisplay
-                              : 'Base64 encoded',
+                              : context.l10n.channelKeyBase64Encoded,
                           style: TextStyle(
                             fontSize: 12,
                             color: hasValidKey
@@ -262,7 +263,7 @@ class _ChannelKeyFieldState extends State<ChannelKeyField> {
                         contentPadding: const EdgeInsets.all(
                           AppTheme.spacing16,
                         ),
-                        hintText: 'e.g., AQ== or AAAAAAAAAAAAAAAAAAAAAA==',
+                        hintText: context.l10n.channelKeyHint,
                         hintStyle: TextStyle(
                           color: context.textTertiary.withAlpha(128),
                           fontFamily: AppTheme.fontFamily,
@@ -299,7 +300,7 @@ class _ChannelKeyFieldState extends State<ChannelKeyField> {
                         child: _showKey
                             ? SelectableText(
                                 _keyController.text.isEmpty
-                                    ? '(no key set)'
+                                    ? context.l10n.channelKeyNoKeySet
                                     : _keyController.text,
                                 style: TextStyle(
                                   fontSize: 14,
@@ -314,7 +315,7 @@ class _ChannelKeyFieldState extends State<ChannelKeyField> {
                               )
                             : Text(
                                 _keyController.text.isEmpty
-                                    ? '(no key set)'
+                                    ? context.l10n.channelKeyNoKeySet
                                     : '•' * min(32, _keyController.text.length),
                                 style: TextStyle(
                                   fontSize: 14,
@@ -366,7 +367,9 @@ class _ChannelKeyFieldState extends State<ChannelKeyField> {
                     // Show/Hide toggle
                     _buildActionButton(
                       icon: _showKey ? Icons.visibility_off : Icons.visibility,
-                      label: _showKey ? 'Hide' : 'Show',
+                      label: _showKey
+                          ? context.l10n.channelKeyHide
+                          : context.l10n.channelKeyShow,
                       onPressed: () => setState(() => _showKey = !_showKey),
                       isEnabled: true,
                     ),
@@ -374,7 +377,7 @@ class _ChannelKeyFieldState extends State<ChannelKeyField> {
                     // Edit manually
                     _buildActionButton(
                       icon: Icons.edit,
-                      label: 'Edit',
+                      label: context.l10n.channelKeyEdit,
                       onPressed: () {
                         setState(() {
                           _isEditingKey = true;
@@ -388,13 +391,13 @@ class _ChannelKeyFieldState extends State<ChannelKeyField> {
                       // Regenerate
                       _buildActionButton(
                         icon: Icons.refresh,
-                        label: 'Generate',
+                        label: context.l10n.channelKeyGenerate,
                         onPressed: !_isEditingKey
                             ? () {
                                 _generateRandomKey();
                                 showSuccessSnackBar(
                                   context,
-                                  'New key generated',
+                                  context.l10n.channelKeyNewGenerated,
                                   duration: const Duration(seconds: 1),
                                 );
                               }
@@ -406,7 +409,7 @@ class _ChannelKeyFieldState extends State<ChannelKeyField> {
                     // Copy
                     _buildActionButton(
                       icon: Icons.copy,
-                      label: 'Copy',
+                      label: context.l10n.channelKeyCopy,
                       onPressed:
                           _showKey &&
                               !_isEditingKey &&
@@ -417,7 +420,7 @@ class _ChannelKeyFieldState extends State<ChannelKeyField> {
                               );
                               showSuccessSnackBar(
                                 context,
-                                'Key copied to clipboard',
+                                context.l10n.channelKeyCopied,
                                 duration: const Duration(seconds: 1),
                               );
                             }

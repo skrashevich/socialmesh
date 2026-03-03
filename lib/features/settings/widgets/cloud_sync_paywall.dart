@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/logging.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../providers/cloud_sync_entitlement_providers.dart';
@@ -64,7 +65,7 @@ class _CloudSyncPaywallState extends ConsumerState<CloudSyncPaywall>
   Future<void> _purchase(StoreProduct product) async {
     final isOnline = ref.read(isOnlineProvider);
     if (!isOnline) {
-      showErrorSnackBar(context, 'Purchases require an internet connection.');
+      showErrorSnackBar(context, context.l10n.premiumPurchaseRequiresInternet);
       return;
     }
 
@@ -77,7 +78,7 @@ class _CloudSyncPaywallState extends ConsumerState<CloudSyncPaywall>
     } catch (e) {
       AppLogging.subscriptions('☁️ Purchase error: $e');
       if (!mounted) return;
-      showErrorSnackBar(context, 'Purchase failed. Please try again.');
+      showErrorSnackBar(context, context.l10n.premiumPurchaseFailed);
     } finally {
       safeSetState(() => _isLoading = false);
     }
@@ -86,10 +87,7 @@ class _CloudSyncPaywallState extends ConsumerState<CloudSyncPaywall>
   Future<void> _restore() async {
     final isOnline = ref.read(isOnlineProvider);
     if (!isOnline) {
-      showErrorSnackBar(
-        context,
-        'Restoring purchases requires an internet connection.',
-      );
+      showErrorSnackBar(context, context.l10n.premiumPurchaseRequiresInternet);
       return;
     }
 
@@ -116,7 +114,10 @@ class _CloudSyncPaywallState extends ConsumerState<CloudSyncPaywall>
         // Dismiss sheet first, then show snackbar
         widget.onSubscribed?.call();
         if (!mounted) return;
-        showSuccessSnackBar(context, 'Subscription restored');
+        showSuccessSnackBar(
+          context,
+          context.l10n.cloudSyncSubscriptionRestored,
+        );
       } else if (success) {
         // User has purchases but no cloud sync entitlement
         AppLogging.subscriptions(
@@ -127,19 +128,19 @@ class _CloudSyncPaywallState extends ConsumerState<CloudSyncPaywall>
         // Small delay to allow sheet to close before showing snackbar
         await Future<void>.delayed(const Duration(milliseconds: 100));
         if (!mounted) return;
-        showInfoSnackBar(context, 'No Cloud Sync subscription found');
+        showInfoSnackBar(context, context.l10n.cloudSyncNoSubscription);
       } else {
         AppLogging.subscriptions('☁️ Cloud Sync: Restore found no purchases');
         // Dismiss sheet first so snackbar is visible
         widget.onDismiss?.call();
         await Future<void>.delayed(const Duration(milliseconds: 100));
         if (!mounted) return;
-        showInfoSnackBar(context, 'No purchases found to restore');
+        showInfoSnackBar(context, context.l10n.premiumRestoreNone);
       }
     } catch (e) {
       AppLogging.subscriptions('☁️ Cloud Sync: Restore error: $e');
       if (!mounted) return;
-      showErrorSnackBar(context, 'Restore failed. Please try again.');
+      showErrorSnackBar(context, context.l10n.cloudSyncRestoreFailed);
     } finally {
       safeSetState(() => _isLoading = false);
     }
@@ -186,7 +187,7 @@ class _CloudSyncPaywallState extends ConsumerState<CloudSyncPaywall>
 
           // Title
           Text(
-            'Unlock Cloud Sync',
+            context.l10n.cloudSyncTitle,
             style: theme.textTheme.headlineSmall?.copyWith(
               fontWeight: FontWeight.bold,
             ),
@@ -195,7 +196,7 @@ class _CloudSyncPaywallState extends ConsumerState<CloudSyncPaywall>
 
           // Description
           Text(
-            'Sync your mesh data across devices. Your local data always stays free and accessible.',
+            context.l10n.cloudSyncDescription,
             textAlign: TextAlign.center,
             style: theme.textTheme.bodyMedium?.copyWith(
               color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
@@ -206,19 +207,19 @@ class _CloudSyncPaywallState extends ConsumerState<CloudSyncPaywall>
           // Features — list actual premium sync types
           _buildFeatureItem(
             Icons.hexagon_outlined,
-            'NodeDex — encounters, tags, notes',
+            context.l10n.cloudSyncNodeDex,
           ),
           _buildFeatureItem(
             Icons.auto_awesome,
-            'Automations — rules and triggers',
+            context.l10n.cloudSyncAutomations,
           ),
           _buildFeatureItem(
             Icons.widgets_outlined,
-            'Custom Widgets — layouts and data',
+            context.l10n.cloudSyncWidgets,
           ),
           _buildFeatureItem(
             Icons.offline_bolt,
-            'Works fully offline without it',
+            context.l10n.cloudSyncOfflineNote,
           ),
 
           const SizedBox(height: AppTheme.spacing24),
@@ -228,7 +229,7 @@ class _CloudSyncPaywallState extends ConsumerState<CloudSyncPaywall>
             const CircularProgressIndicator()
           else if (_errorMessage != null)
             Text(
-              _errorMessage!,
+              context.l10n.cloudSyncUnableToLoad,
               style: TextStyle(color: theme.colorScheme.error),
             )
           else ...[
@@ -240,7 +241,7 @@ class _CloudSyncPaywallState extends ConsumerState<CloudSyncPaywall>
             // Restore button
             TextButton(
               onPressed: _restore,
-              child: const Text('Restore Purchases'),
+              child: Text(context.l10n.premiumRestorePurchases),
             ),
           ],
 
@@ -248,7 +249,7 @@ class _CloudSyncPaywallState extends ConsumerState<CloudSyncPaywall>
 
           // Terms
           Text(
-            'Subscriptions auto-renew unless cancelled at least 24 hours before the end of the current period.',
+            context.l10n.cloudSyncAutoRenewNote,
             textAlign: TextAlign.center,
             style: theme.textTheme.bodySmall?.copyWith(
               color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
@@ -299,7 +300,9 @@ class _CloudSyncPaywallState extends ConsumerState<CloudSyncPaywall>
           child: Column(
             children: [
               Text(
-                isYearly ? 'Yearly (Save 44%)' : 'Monthly',
+                isYearly
+                    ? context.l10n.cloudSyncYearlySave
+                    : context.l10n.cloudSyncMonthly,
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               Text(
@@ -370,11 +373,14 @@ class CloudSyncGate extends ConsumerWidget {
         children: [
           Icon(Icons.lock_outline, size: 48, color: theme.colorScheme.outline),
           const SizedBox(height: AppTheme.spacing16),
-          Text('Cloud Sync Required', style: theme.textTheme.titleMedium),
+          Text(
+            context.l10n.cloudSyncRequired,
+            style: theme.textTheme.titleMedium,
+          ),
           const SizedBox(height: AppTheme.spacing8),
           TextButton(
             onPressed: () => showCloudSyncPaywall(context),
-            child: const Text('Unlock Cloud Sync'),
+            child: Text(context.l10n.cloudSyncTitle),
           ),
         ],
       ),
@@ -404,7 +410,7 @@ class CloudSyncExpiredBanner extends ConsumerWidget {
           const SizedBox(width: AppTheme.spacing12),
           Expanded(
             child: Text(
-              'Your Cloud Sync subscription has expired. Your data is read-only.',
+              context.l10n.cloudSyncExpiredMessage,
               style: TextStyle(color: theme.colorScheme.onErrorContainer),
             ),
           ),
@@ -413,7 +419,7 @@ class CloudSyncExpiredBanner extends ConsumerWidget {
             style: TextButton.styleFrom(
               foregroundColor: theme.colorScheme.onErrorContainer,
             ),
-            child: const Text('Renew'),
+            child: Text(context.l10n.cloudSyncRenew),
           ),
         ],
       ),
@@ -443,7 +449,7 @@ class CloudSyncGracePeriodBanner extends ConsumerWidget {
           const SizedBox(width: AppTheme.spacing12),
           Expanded(
             child: Text(
-              'There\'s an issue with your payment. Please update your payment method.',
+              context.l10n.cloudSyncPaymentIssue,
               style: TextStyle(color: theme.colorScheme.onTertiaryContainer),
             ),
           ),

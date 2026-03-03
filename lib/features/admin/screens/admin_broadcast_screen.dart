@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
 import '../../../utils/snackbar.dart';
@@ -35,6 +36,7 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
   final _titleController = TextEditingController();
   final _bodyController = TextEditingController();
 
+  bool _didSeedDefaults = false;
   bool _isSending = false;
   bool _isSendingTest = false;
   bool _isCountingDown = false;
@@ -54,12 +56,19 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
   @override
   void initState() {
     super.initState();
-    // Seed fields with the default icon's title/body
-    _titleController.text = _selectedIcon.defaultTitle;
-    _bodyController.text = _selectedIcon.defaultBody;
     // Add listeners to update preview live
     _titleController.addListener(_onTextChanged);
     _bodyController.addListener(_onTextChanged);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_didSeedDefaults) {
+      _didSeedDefaults = true;
+      _titleController.text = _selectedIcon.defaultTitleL10n(context);
+      _bodyController.text = _selectedIcon.defaultBodyL10n(context);
+    }
   }
 
   @override
@@ -127,6 +136,8 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
       }
     });
 
+    final l10n = context.l10n;
+
     try {
       // Force-refresh the auth token to avoid stale token errors
       final user = FirebaseAuth.instance.currentUser;
@@ -142,7 +153,7 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
         if (!mounted) return;
         ref.read(hapticServiceProvider).trigger(HapticType.error);
         safeShowSnackBar(
-          'You must be signed in to send notifications',
+          l10n.adminBroadcastSignInRequired,
           type: SnackBarType.error,
         );
         return;
@@ -184,7 +195,9 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
             Icon(Icons.check_circle, color: Colors.green.shade400, size: 48),
             const SizedBox(height: AppTheme.spacing16),
             Text(
-              testOnly ? 'Test Sent' : 'Broadcast Sent',
+              testOnly
+                  ? l10n.adminBroadcastTestSentTitle
+                  : l10n.adminBroadcastSentTitle,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
@@ -194,8 +207,8 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
             const SizedBox(height: AppTheme.spacing8),
             Text(
               testOnly
-                  ? 'Your test notification has been sent to all admins.'
-                  : 'Your notification has been sent to all Socialmesh users.',
+                  ? l10n.adminBroadcastTestSentBody
+                  : l10n.adminBroadcastSentBody,
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 14, color: context.textSecondary),
             ),
@@ -204,7 +217,7 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
               width: double.infinity,
               child: FilledButton(
                 onPressed: () => Navigator.pop(context),
-                child: const Text('Done'),
+                child: Text(l10n.adminBroadcastDone),
               ),
             ),
           ],
@@ -233,7 +246,7 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
 
       ref.read(hapticServiceProvider).trigger(HapticType.error);
       safeShowSnackBar(
-        'Failed to send: ${e.code} - ${e.message}',
+        l10n.adminBroadcastFailedDetailed(e.code, e.message ?? ''),
         type: SnackBarType.error,
       );
     } catch (e, stack) {
@@ -242,7 +255,10 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
       if (!mounted) return;
 
       ref.read(hapticServiceProvider).trigger(HapticType.error);
-      safeShowSnackBar('Failed to send: $e', type: SnackBarType.error);
+      safeShowSnackBar(
+        l10n.adminBroadcastFailed('$e'),
+        type: SnackBarType.error,
+      );
     } finally {
       if (mounted) {
         safeSetState(() {
@@ -264,8 +280,8 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
       _selectedIcon = _NotificationIcon.announcement;
       _selectedDeepLink = null;
     });
-    _titleController.text = _selectedIcon.defaultTitle;
-    _bodyController.text = _selectedIcon.defaultBody;
+    _titleController.text = _selectedIcon.defaultTitleL10n(context);
+    _bodyController.text = _selectedIcon.defaultBodyL10n(context);
   }
 
   void _showDeepLinkPicker() {
@@ -284,7 +300,7 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
             Padding(
               padding: const EdgeInsets.fromLTRB(AppTheme.spacing24, 0, 24, 16),
               child: Text(
-                'Select Deep Link',
+                context.l10n.adminBroadcastSelectDeepLink,
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
@@ -325,7 +341,7 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
             Padding(
               padding: const EdgeInsets.fromLTRB(AppTheme.spacing24, 0, 24, 16),
               child: Text(
-                'Select Icon',
+                context.l10n.adminBroadcastSelectIcon,
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
@@ -344,12 +360,12 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
                     final currentTitle = _titleController.text.trim();
                     final currentBody = _bodyController.text.trim();
                     if (currentTitle.isEmpty ||
-                        currentTitle == previous.defaultTitle) {
-                      _titleController.text = icon.defaultTitle;
+                        currentTitle == previous.defaultTitleL10n(context)) {
+                      _titleController.text = icon.defaultTitleL10n(context);
                     }
                     if (currentBody.isEmpty ||
-                        currentBody == previous.defaultBody) {
-                      _bodyController.text = icon.defaultBody;
+                        currentBody == previous.defaultBodyL10n(context)) {
+                      _bodyController.text = icon.defaultBodyL10n(context);
                     }
                     Navigator.of(context).pop();
                   },
@@ -369,7 +385,7 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: GlassScaffold(
-        title: 'Broadcast Notification',
+        title: context.l10n.adminBroadcastTitle,
         actions: const [],
         slivers: [
           // Pinned preview header
@@ -377,10 +393,10 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
             pinned: true,
             delegate: _PreviewHeaderDelegate(
               title: _titleController.text.isEmpty
-                  ? 'Notification Title'
+                  ? context.l10n.adminBroadcastPreviewTitlePlaceholder
                   : _titleController.text,
               body: _bodyController.text.isEmpty
-                  ? 'Notification message will appear here...'
+                  ? context.l10n.adminBroadcastPreviewBodyPlaceholder
                   : _bodyController.text,
               icon: _selectedIcon,
             ),
@@ -415,9 +431,7 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
                           const SizedBox(width: AppTheme.spacing12),
                           Expanded(
                             child: Text(
-                              'This will send a push notification to every '
-                              'Socialmesh user. Use sparingly for important '
-                              'announcements only.',
+                              context.l10n.adminBroadcastWarning,
                               style: TextStyle(
                                 fontSize: 13,
                                 color: context.textSecondary,
@@ -433,7 +447,7 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
 
                     // Icon selector
                     Text(
-                      'Icon',
+                      context.l10n.adminBroadcastIconLabel,
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
@@ -479,7 +493,7 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
                             const SizedBox(width: AppTheme.spacing12),
                             Expanded(
                               child: Text(
-                                _selectedIcon.label,
+                                _selectedIcon.labelL10n(context),
                                 style: TextStyle(
                                   fontSize: 15,
                                   color: context.textPrimary,
@@ -512,7 +526,7 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
                             color: context.textTertiary,
                           ),
                           label: Text(
-                            'Clear',
+                            context.l10n.adminBroadcastClear,
                             style: TextStyle(
                               fontSize: 13,
                               color: context.textTertiary,
@@ -533,7 +547,7 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
 
                     // Title field
                     Text(
-                      'Title',
+                      context.l10n.adminBroadcastFieldTitle,
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
@@ -546,7 +560,7 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
                       maxLength: _maxTitleLength,
                       enabled: canInteract,
                       decoration: InputDecoration(
-                        hintText: 'Notification title...',
+                        hintText: context.l10n.adminBroadcastTitleHint,
                         filled: true,
                         fillColor: context.card,
                         border: OutlineInputBorder(
@@ -588,7 +602,7 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
                       textInputAction: TextInputAction.next,
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
-                          return 'Title is required';
+                          return context.l10n.adminBroadcastTitleRequired;
                         }
                         return null;
                       },
@@ -598,7 +612,7 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
 
                     // Body field
                     Text(
-                      'Message',
+                      context.l10n.adminBroadcastFieldMessage,
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
@@ -612,7 +626,7 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
                       maxLines: 4,
                       enabled: canInteract,
                       decoration: InputDecoration(
-                        hintText: 'Notification message...',
+                        hintText: context.l10n.adminBroadcastMessageHint,
                         filled: true,
                         fillColor: context.card,
                         border: OutlineInputBorder(
@@ -654,7 +668,7 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
                       textInputAction: TextInputAction.next,
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
-                          return 'Message is required';
+                          return context.l10n.adminBroadcastMessageRequired;
                         }
                         return null;
                       },
@@ -667,7 +681,7 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
                       children: [
                         Expanded(
                           child: Text(
-                            'Deep Link (Optional)',
+                            context.l10n.adminBroadcastDeepLinkLabel,
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
@@ -697,7 +711,7 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
                     ),
                     const SizedBox(height: AppTheme.spacing4),
                     Text(
-                      'Screen to open when notification is tapped.',
+                      context.l10n.adminBroadcastDeepLinkHelper,
                       style: TextStyle(
                         fontSize: 12,
                         color: context.textTertiary,
@@ -748,7 +762,8 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    _selectedDeepLink?.label ?? 'None',
+                                    _selectedDeepLink?.labelL10n(context) ??
+                                        context.l10n.adminBroadcastDeepLinkNone,
                                     style: TextStyle(
                                       fontSize: 15,
                                       color: _selectedDeepLink != null
@@ -799,8 +814,8 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
                               ),
                         label: Text(
                           _isSendingTest
-                              ? 'Sending Test...'
-                              : 'Test to Admins Only',
+                              ? context.l10n.adminBroadcastSendingTest
+                              : context.l10n.adminBroadcastTestButton,
                           style: TextStyle(color: context.accentColor),
                         ),
                         style: OutlinedButton.styleFrom(
@@ -818,7 +833,7 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
                     ),
                     const SizedBox(height: AppTheme.spacing8),
                     Text(
-                      'Send a test notification to admins before broadcasting to all users.',
+                      context.l10n.adminBroadcastTestHint,
                       style: TextStyle(
                         fontSize: 12,
                         color: context.textTertiary,
@@ -835,7 +850,11 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
                         child: FilledButton.icon(
                           onPressed: _cancelCountdown,
                           icon: const Icon(Icons.cancel_outlined, size: 20),
-                          label: Text('Cancel — sending in $_countdown...'),
+                          label: Text(
+                            context.l10n.adminBroadcastCountdownCancel(
+                              _countdown,
+                            ),
+                          ),
                           style: FilledButton.styleFrom(
                             backgroundColor: Colors.red.shade700,
                             foregroundColor: Colors.white,
@@ -864,7 +883,9 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
                                 )
                               : const Icon(Icons.send_rounded, size: 20),
                           label: Text(
-                            _isSending ? 'Sending...' : 'Send to Everyone',
+                            _isSending
+                                ? context.l10n.adminBroadcastSending
+                                : context.l10n.adminBroadcastSendAll,
                           ),
                           style: FilledButton.styleFrom(
                             backgroundColor: Colors.orange.shade700,
@@ -880,8 +901,7 @@ class _AdminBroadcastScreenState extends ConsumerState<AdminBroadcastScreen>
                       ),
                     const SizedBox(height: AppTheme.spacing8),
                     Text(
-                      'Sends a push notification to all Socialmesh users. '
-                      'A ${_countdownSeconds}s countdown gives you time to cancel.',
+                      context.l10n.adminBroadcastSendHint(_countdownSeconds),
                       style: TextStyle(
                         fontSize: 12,
                         color: context.textTertiary,
@@ -911,205 +931,206 @@ enum _NotificationIcon {
   // === GENERAL ===
   announcement(
     icon: Icons.campaign,
-    label: 'Announcement',
     color: Colors.orange,
     fcmValue: 'announcement',
     category: _NotificationIconCategory.general,
-    defaultTitle: 'Announcement',
-    defaultBody:
-        'We have an important announcement for the Socialmesh community.',
   ),
   update(
     icon: Icons.system_update,
-    label: 'App Update',
     color: Colors.blue,
     fcmValue: 'update',
     category: _NotificationIconCategory.general,
-    defaultTitle: 'App Update Available',
-    defaultBody:
-        'A new version of Socialmesh is available with improvements and bug fixes.',
   ),
   feature(
     icon: Icons.auto_awesome,
-    label: 'New Feature',
     color: Colors.purple,
     fcmValue: 'feature',
     category: _NotificationIconCategory.general,
-    defaultTitle: 'New Feature',
-    defaultBody: 'We just launched a new feature in Socialmesh. Check it out!',
   ),
   maintenance(
     icon: Icons.build,
-    label: 'Maintenance',
     color: Colors.amber,
     fcmValue: 'maintenance',
     category: _NotificationIconCategory.general,
-    defaultTitle: 'Scheduled Maintenance',
-    defaultBody:
-        'Socialmesh services will be briefly unavailable for scheduled maintenance.',
   ),
   alert(
     icon: Icons.warning_amber,
-    label: 'Alert',
     color: Colors.red,
     fcmValue: 'alert',
     category: _NotificationIconCategory.general,
-    defaultTitle: 'Important Alert',
-    defaultBody: 'Please be aware of an important issue affecting Socialmesh.',
   ),
   celebration(
     icon: Icons.celebration,
-    label: 'Celebration',
     color: Colors.pink,
     fcmValue: 'celebration',
     category: _NotificationIconCategory.general,
-    defaultTitle: 'Celebration',
-    defaultBody:
-        'We have something exciting to celebrate with the Socialmesh community!',
   ),
   tip(
     icon: Icons.lightbulb,
-    label: 'Tip',
     color: Colors.yellow,
     fcmValue: 'tip',
     category: _NotificationIconCategory.general,
-    defaultTitle: 'Pro Tip',
-    defaultBody: 'Here is a helpful tip to get the most out of Socialmesh.',
   ),
 
   // === SOCIAL ===
   signals(
     icon: Icons.sensors,
-    label: 'Signals',
     color: Colors.purple,
     fcmValue: 'signals',
     category: _NotificationIconCategory.social,
-    defaultTitle: 'Signals Update',
-    defaultBody: 'Check out what is new in Signals, your mesh presence feed.',
   ),
   nodedex(
     icon: Icons.auto_stories,
-    label: 'NodeDex',
     color: Colors.amber,
     fcmValue: 'nodedex',
     category: _NotificationIconCategory.social,
-    defaultTitle: 'NodeDex Update',
-    defaultBody:
-        'NodeDex has new features for discovering and tracking mesh nodes.',
   ),
   aether(
     icon: Icons.flight_takeoff,
-    label: 'Aether',
     color: Colors.lightBlue,
     fcmValue: 'aether',
     category: _NotificationIconCategory.social,
-    defaultTitle: 'Aether Update',
-    defaultBody: 'New improvements to Aether flight sharing are now live.',
   ),
   activity(
     icon: Icons.favorite,
-    label: 'Activity',
     color: Colors.red,
     fcmValue: 'activity',
     category: _NotificationIconCategory.social,
-    defaultTitle: 'Activity Update',
-    defaultBody: 'See what is happening in your Activity feed.',
   ),
   presence(
     icon: Icons.people_alt,
-    label: 'Presence',
     color: Colors.green,
     fcmValue: 'presence',
     category: _NotificationIconCategory.social,
-    defaultTitle: 'Presence Update',
-    defaultBody:
-        'Presence detection has been improved for better mesh awareness.',
   ),
   community(
     icon: Icons.people,
-    label: 'Community',
     color: Colors.teal,
     fcmValue: 'community',
     category: _NotificationIconCategory.social,
-    defaultTitle: 'Community Update',
-    defaultBody: 'Join the latest Socialmesh community initiatives.',
   ),
   worldMap(
     icon: Icons.public,
-    label: 'World Map',
     color: Colors.blue,
     fcmValue: 'world_map',
     category: _NotificationIconCategory.social,
-    defaultTitle: 'World Map Update',
-    defaultBody:
-        'The World Mesh Map has new features for exploring global mesh coverage.',
   ),
 
   // === PREMIUM ===
   themes(
     icon: Icons.palette,
-    label: 'Theme Pack',
     color: Colors.purple,
     fcmValue: 'themes',
     category: _NotificationIconCategory.premium,
-    defaultTitle: 'New Theme Pack',
-    defaultBody: 'A new theme pack is now available in the Socialmesh store.',
   ),
   ringtones(
     icon: Icons.music_note,
-    label: 'Ringtone Pack',
     color: Colors.pink,
     fcmValue: 'ringtones',
     category: _NotificationIconCategory.premium,
-    defaultTitle: 'New Ringtone Pack',
-    defaultBody:
-        'A new ringtone pack is now available for your mesh notifications.',
   ),
   widgets(
     icon: Icons.widgets,
-    label: 'Widgets',
     color: Colors.deepOrange,
     fcmValue: 'widgets',
     category: _NotificationIconCategory.premium,
-    defaultTitle: 'New Widgets',
-    defaultBody: 'New home screen widgets are now available for Socialmesh.',
   ),
   automations(
     icon: Icons.auto_awesome,
-    label: 'Automations',
     color: Colors.yellow,
     fcmValue: 'automations',
     category: _NotificationIconCategory.premium,
-    defaultTitle: 'Automations Update',
-    defaultBody: 'New automation triggers and actions are now available.',
   ),
   ifttt(
     icon: Icons.webhook,
-    label: 'IFTTT Integration',
     color: Colors.blue,
     fcmValue: 'ifttt',
     category: _NotificationIconCategory.premium,
-    defaultTitle: 'IFTTT Integration',
-    defaultBody: 'Connect Socialmesh with your favourite services via IFTTT.',
   );
 
   const _NotificationIcon({
     required this.icon,
-    required this.label,
     required this.color,
     required this.fcmValue,
     required this.category,
-    required this.defaultTitle,
-    required this.defaultBody,
   });
 
   final IconData icon;
-  final String label;
   final Color color;
   final String fcmValue;
   final _NotificationIconCategory category;
-  final String defaultTitle;
-  final String defaultBody;
+
+  String labelL10n(BuildContext context) {
+    return switch (this) {
+      announcement => context.l10n.adminBroadcastIconAnnouncement,
+      update => context.l10n.adminBroadcastIconUpdate,
+      feature => context.l10n.adminBroadcastIconFeature,
+      maintenance => context.l10n.adminBroadcastIconMaintenance,
+      alert => context.l10n.adminBroadcastIconAlert,
+      celebration => context.l10n.adminBroadcastIconCelebration,
+      tip => context.l10n.adminBroadcastIconTip,
+      signals => context.l10n.adminBroadcastIconSignals,
+      nodedex => context.l10n.adminBroadcastIconNodedex,
+      aether => context.l10n.adminBroadcastIconAether,
+      activity => context.l10n.adminBroadcastIconActivity,
+      presence => context.l10n.adminBroadcastIconPresence,
+      community => context.l10n.adminBroadcastIconCommunity,
+      worldMap => context.l10n.adminBroadcastIconWorldMap,
+      themes => context.l10n.adminBroadcastIconThemes,
+      ringtones => context.l10n.adminBroadcastIconRingtones,
+      widgets => context.l10n.adminBroadcastIconWidgets,
+      automations => context.l10n.adminBroadcastIconAutomations,
+      ifttt => context.l10n.adminBroadcastIconIfttt,
+    };
+  }
+
+  String defaultTitleL10n(BuildContext context) {
+    return switch (this) {
+      announcement => context.l10n.adminBroadcastDefTitleAnnouncement,
+      update => context.l10n.adminBroadcastDefTitleUpdate,
+      feature => context.l10n.adminBroadcastDefTitleFeature,
+      maintenance => context.l10n.adminBroadcastDefTitleMaintenance,
+      alert => context.l10n.adminBroadcastDefTitleAlert,
+      celebration => context.l10n.adminBroadcastDefTitleCelebration,
+      tip => context.l10n.adminBroadcastDefTitleTip,
+      signals => context.l10n.adminBroadcastDefTitleSignals,
+      nodedex => context.l10n.adminBroadcastDefTitleNodedex,
+      aether => context.l10n.adminBroadcastDefTitleAether,
+      activity => context.l10n.adminBroadcastDefTitleActivity,
+      presence => context.l10n.adminBroadcastDefTitlePresence,
+      community => context.l10n.adminBroadcastDefTitleCommunity,
+      worldMap => context.l10n.adminBroadcastDefTitleWorldMap,
+      themes => context.l10n.adminBroadcastDefTitleThemes,
+      ringtones => context.l10n.adminBroadcastDefTitleRingtones,
+      widgets => context.l10n.adminBroadcastDefTitleWidgets,
+      automations => context.l10n.adminBroadcastDefTitleAutomations,
+      ifttt => context.l10n.adminBroadcastDefTitleIfttt,
+    };
+  }
+
+  String defaultBodyL10n(BuildContext context) {
+    return switch (this) {
+      announcement => context.l10n.adminBroadcastDefBodyAnnouncement,
+      update => context.l10n.adminBroadcastDefBodyUpdate,
+      feature => context.l10n.adminBroadcastDefBodyFeature,
+      maintenance => context.l10n.adminBroadcastDefBodyMaintenance,
+      alert => context.l10n.adminBroadcastDefBodyAlert,
+      celebration => context.l10n.adminBroadcastDefBodyCelebration,
+      tip => context.l10n.adminBroadcastDefBodyTip,
+      signals => context.l10n.adminBroadcastDefBodySignals,
+      nodedex => context.l10n.adminBroadcastDefBodyNodedex,
+      aether => context.l10n.adminBroadcastDefBodyAether,
+      activity => context.l10n.adminBroadcastDefBodyActivity,
+      presence => context.l10n.adminBroadcastDefBodyPresence,
+      community => context.l10n.adminBroadcastDefBodyCommunity,
+      worldMap => context.l10n.adminBroadcastDefBodyWorldMap,
+      themes => context.l10n.adminBroadcastDefBodyThemes,
+      ringtones => context.l10n.adminBroadcastDefBodyRingtones,
+      widgets => context.l10n.adminBroadcastDefBodyWidgets,
+      automations => context.l10n.adminBroadcastDefBodyAutomations,
+      ifttt => context.l10n.adminBroadcastDefBodyIfttt,
+    };
+  }
 
   static List<_NotificationIcon> byCategory(_NotificationIconCategory cat) {
     return values.where((v) => v.category == cat).toList();
@@ -1155,7 +1176,7 @@ class _PreviewHeaderDelegate extends SliverPersistentHeaderDelegate {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'PREVIEW',
+            context.l10n.adminBroadcastPreviewLabel,
             style: TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w600,
@@ -1224,7 +1245,7 @@ class _NotificationPreview extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      'SOCIALMESH',
+                      context.l10n.adminBroadcastPreviewAppName,
                       style: TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.w600,
@@ -1234,7 +1255,7 @@ class _NotificationPreview extends StatelessWidget {
                     ),
                     const Spacer(),
                     Text(
-                      'now',
+                      context.l10n.adminBroadcastPreviewNow,
                       style: TextStyle(
                         fontSize: 11,
                         color: context.textTertiary,
@@ -1290,11 +1311,23 @@ class _IconPickerContent extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildSection(context, 'GENERAL', _NotificationIconCategory.general),
+          _buildSection(
+            context,
+            context.l10n.adminBroadcastIconCatGeneral,
+            _NotificationIconCategory.general,
+          ),
           const SizedBox(height: AppTheme.spacing12),
-          _buildSection(context, 'SOCIAL', _NotificationIconCategory.social),
+          _buildSection(
+            context,
+            context.l10n.adminBroadcastIconCatSocial,
+            _NotificationIconCategory.social,
+          ),
           const SizedBox(height: AppTheme.spacing12),
-          _buildSection(context, 'PREMIUM', _NotificationIconCategory.premium),
+          _buildSection(
+            context,
+            context.l10n.adminBroadcastIconCatPremium,
+            _NotificationIconCategory.premium,
+          ),
           SizedBox(height: MediaQuery.of(context).padding.bottom + 8),
         ],
       ),
@@ -1359,7 +1392,7 @@ class _IconPickerContent extends StatelessWidget {
                     const SizedBox(width: AppTheme.spacing12),
                     Expanded(
                       child: Text(
-                        icon.label,
+                        icon.labelL10n(context),
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: isSelected
@@ -1390,49 +1423,42 @@ enum _DeepLink {
   // === CORE ===
   settings(
     path: '/settings',
-    label: 'Settings',
     icon: Icons.settings,
     color: Colors.blueGrey,
     category: _DeepLinkCategory.core,
   ),
   account(
     path: '/account',
-    label: 'Account & Subscriptions',
     icon: Icons.account_circle,
     color: Colors.indigo,
     category: _DeepLinkCategory.core,
   ),
   scanner(
     path: '/scanner',
-    label: 'Scanner',
     icon: Icons.bluetooth_searching,
     color: Colors.blue,
     category: _DeepLinkCategory.core,
   ),
   messages(
     path: '/messages',
-    label: 'Messages',
     icon: Icons.chat,
     color: Colors.green,
     category: _DeepLinkCategory.core,
   ),
   channels(
     path: '/channels',
-    label: 'Channels',
     icon: Icons.forum,
     color: Colors.teal,
     category: _DeepLinkCategory.core,
   ),
   nodes(
     path: '/nodes',
-    label: 'Nodes',
     icon: Icons.router,
     color: Colors.orange,
     category: _DeepLinkCategory.core,
   ),
   map(
     path: '/map',
-    label: 'Map',
     icon: Icons.map,
     color: Colors.green,
     category: _DeepLinkCategory.core,
@@ -1441,35 +1467,30 @@ enum _DeepLink {
   // === SOCIAL ===
   signals(
     path: '/signals',
-    label: 'Signals',
     icon: Icons.sensors,
     color: Colors.purple,
     category: _DeepLinkCategory.social,
   ),
   nodedex(
     path: '/nodedex',
-    label: 'NodeDex',
     icon: Icons.auto_stories,
     color: Colors.amber,
     category: _DeepLinkCategory.social,
   ),
   aether(
     path: '/aether',
-    label: 'Aether',
     icon: Icons.flight_takeoff,
     color: Colors.lightBlue,
     category: _DeepLinkCategory.social,
   ),
   activity(
     path: '/activity',
-    label: 'Activity',
     icon: Icons.favorite,
     color: Colors.red,
     category: _DeepLinkCategory.social,
   ),
   presence(
     path: '/presence',
-    label: 'Presence',
     icon: Icons.people_alt,
     color: Colors.green,
     category: _DeepLinkCategory.social,
@@ -1478,28 +1499,24 @@ enum _DeepLink {
   // === MESH ===
   timeline(
     path: '/timeline',
-    label: 'Timeline',
     icon: Icons.timeline,
     color: Colors.cyan,
     category: _DeepLinkCategory.mesh,
   ),
   worldMap(
     path: '/world-map',
-    label: 'World Map',
     icon: Icons.public,
     color: Colors.blue,
     category: _DeepLinkCategory.mesh,
   ),
   globe(
     path: '/globe',
-    label: '3D Globe',
     icon: Icons.language,
     color: Colors.indigo,
     category: _DeepLinkCategory.mesh,
   ),
   reachability(
     path: '/reachability',
-    label: 'Reachability',
     icon: Icons.cell_tower,
     color: Colors.deepOrange,
     category: _DeepLinkCategory.mesh,
@@ -1508,35 +1525,30 @@ enum _DeepLink {
   // === PREMIUM ===
   themes(
     path: '/themes',
-    label: 'Theme Pack',
     icon: Icons.palette,
     color: Colors.purple,
     category: _DeepLinkCategory.premium,
   ),
   ringtones(
     path: '/ringtones',
-    label: 'Ringtone Pack',
     icon: Icons.music_note,
     color: Colors.pink,
     category: _DeepLinkCategory.premium,
   ),
   widgets(
     path: '/widgets',
-    label: 'Widgets',
     icon: Icons.widgets,
     color: Colors.deepOrange,
     category: _DeepLinkCategory.premium,
   ),
   automations(
     path: '/automations',
-    label: 'Automations',
     icon: Icons.auto_awesome,
     color: Colors.yellow,
     category: _DeepLinkCategory.premium,
   ),
   ifttt(
     path: '/ifttt',
-    label: 'IFTTT Integration',
     icon: Icons.webhook,
     color: Colors.blue,
     category: _DeepLinkCategory.premium,
@@ -1544,17 +1556,41 @@ enum _DeepLink {
 
   const _DeepLink({
     required this.path,
-    required this.label,
     required this.icon,
     required this.color,
     required this.category,
   });
 
   final String path;
-  final String label;
   final IconData icon;
   final Color color;
   final _DeepLinkCategory category;
+
+  String labelL10n(BuildContext context) {
+    return switch (this) {
+      settings => context.l10n.adminBroadcastLinkSettings,
+      account => context.l10n.adminBroadcastLinkAccount,
+      scanner => context.l10n.adminBroadcastLinkScanner,
+      messages => context.l10n.adminBroadcastLinkMessages,
+      channels => context.l10n.adminBroadcastLinkChannels,
+      nodes => context.l10n.adminBroadcastLinkNodes,
+      map => context.l10n.adminBroadcastLinkMap,
+      signals => context.l10n.adminBroadcastLinkSignals,
+      nodedex => context.l10n.adminBroadcastLinkNodedex,
+      aether => context.l10n.adminBroadcastLinkAether,
+      activity => context.l10n.adminBroadcastLinkActivity,
+      presence => context.l10n.adminBroadcastLinkPresence,
+      timeline => context.l10n.adminBroadcastLinkTimeline,
+      worldMap => context.l10n.adminBroadcastLinkWorldMap,
+      globe => context.l10n.adminBroadcastLinkGlobe,
+      reachability => context.l10n.adminBroadcastLinkReachability,
+      themes => context.l10n.adminBroadcastLinkThemes,
+      ringtones => context.l10n.adminBroadcastLinkRingtones,
+      widgets => context.l10n.adminBroadcastLinkWidgets,
+      automations => context.l10n.adminBroadcastLinkAutomations,
+      ifttt => context.l10n.adminBroadcastLinkIfttt,
+    };
+  }
 
   static List<_DeepLink> byCategory(_DeepLinkCategory cat) {
     return values.where((v) => v.category == cat).toList();
@@ -1578,13 +1614,29 @@ class _DeepLinkPickerContent extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildSection(context, 'CORE', _DeepLinkCategory.core),
+          _buildSection(
+            context,
+            context.l10n.adminBroadcastDeepLinkCatCore,
+            _DeepLinkCategory.core,
+          ),
           const SizedBox(height: AppTheme.spacing12),
-          _buildSection(context, 'SOCIAL', _DeepLinkCategory.social),
+          _buildSection(
+            context,
+            context.l10n.adminBroadcastDeepLinkCatSocial,
+            _DeepLinkCategory.social,
+          ),
           const SizedBox(height: AppTheme.spacing12),
-          _buildSection(context, 'MESH', _DeepLinkCategory.mesh),
+          _buildSection(
+            context,
+            context.l10n.adminBroadcastDeepLinkCatMesh,
+            _DeepLinkCategory.mesh,
+          ),
           const SizedBox(height: AppTheme.spacing12),
-          _buildSection(context, 'PREMIUM', _DeepLinkCategory.premium),
+          _buildSection(
+            context,
+            context.l10n.adminBroadcastDeepLinkCatPremium,
+            _DeepLinkCategory.premium,
+          ),
           SizedBox(height: MediaQuery.of(context).padding.bottom + 8),
         ],
       ),
@@ -1652,7 +1704,7 @@ class _DeepLinkPickerContent extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            link.label,
+                            link.labelL10n(context),
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: isSelected

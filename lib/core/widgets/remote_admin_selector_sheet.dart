@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../l10n/l10n_extension.dart';
 import '../theme.dart';
 import '../../models/mesh_models.dart';
 import '../../models/presence_confidence.dart';
@@ -119,7 +120,7 @@ class _RemoteAdminSelectorSheetState
                 const SizedBox(width: AppTheme.spacing12),
                 Expanded(
                   child: Text(
-                    'Remote Administration',
+                    context.l10n.remoteAdminTitle,
                     style: TextStyle(
                       color: context.textPrimary,
                       fontSize: 18,
@@ -147,7 +148,7 @@ class _RemoteAdminSelectorSheetState
               controller: _searchController,
               style: TextStyle(color: context.textPrimary, fontSize: 14),
               decoration: InputDecoration(
-                hintText: 'Search nodes...',
+                hintText: context.l10n.remoteAdminSearchHint,
                 hintStyle: TextStyle(color: context.textTertiary, fontSize: 14),
                 prefixIcon: Icon(
                   Icons.search,
@@ -190,8 +191,10 @@ class _RemoteAdminSelectorSheetState
           _DeviceTile(
             icon: Icons.bluetooth_connected,
             iconColor: isLocalSelected ? accentColor : context.textSecondary,
-            title: connectedDevice?.name ?? 'Connected Device',
-            subtitle: 'Local (via BLE/USB)',
+            title:
+                connectedDevice?.name ??
+                context.l10n.remoteAdminConnectedDevice,
+            subtitle: context.l10n.remoteAdminLocalVia,
             isSelected: isLocalSelected,
             onTap: () {
               Navigator.pop(context, const RemoteAdminSelection.local());
@@ -206,7 +209,7 @@ class _RemoteAdminSelectorSheetState
                 Icon(Icons.lock, size: 14, color: accentColor),
                 const SizedBox(width: AppTheme.spacing6),
                 Text(
-                  'PKI-ENABLED NODES',
+                  context.l10n.remoteAdminPkiEnabledNodes,
                   style: TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w600,
@@ -216,7 +219,7 @@ class _RemoteAdminSelectorSheetState
                 ),
                 const Spacer(),
                 Text(
-                  '${nodes.length} available',
+                  context.l10n.remoteAdminNodesAvailable(nodes.length),
                   style: Theme.of(
                     context,
                   ).textTheme.labelSmall?.copyWith(color: context.textTertiary),
@@ -265,8 +268,7 @@ class _RemoteAdminSelectorSheetState
             padding: const EdgeInsets.all(AppTheme.spacing16),
             child: StatusBanner.custom(
               color: AccentColors.orange,
-              title:
-                  'Remote admin requires the target node to have your public key in its Admin Keys.',
+              title: context.l10n.remoteAdminRequiresPki,
               borderRadius: 8,
             ),
           ),
@@ -291,8 +293,8 @@ class _RemoteAdminSelectorSheetState
           const SizedBox(height: AppTheme.spacing12),
           Text(
             _searchQuery.isEmpty
-                ? 'No PKI-enabled nodes available'
-                : 'No nodes match "$_searchQuery"',
+                ? context.l10n.remoteAdminNoNodes
+                : context.l10n.remoteAdminNoMatchingNodes(_searchQuery),
             style: TextStyle(color: context.textSecondary, fontSize: 14),
             textAlign: TextAlign.center,
           ),
@@ -300,7 +302,7 @@ class _RemoteAdminSelectorSheetState
             Padding(
               padding: EdgeInsets.only(top: 8),
               child: Text(
-                'Nodes need PKI encryption enabled\nto accept remote admin commands',
+                context.l10n.remoteAdminNodesNeedPki,
                 style: TextStyle(color: context.textTertiary, fontSize: 12),
                 textAlign: TextAlign.center,
               ),
@@ -502,7 +504,7 @@ class _NodeAdminTile extends StatelessWidget {
                         ),
                         const SizedBox(width: AppTheme.spacing8),
                         Text(
-                          '• PKI enabled',
+                          context.l10n.remoteAdminPkiEnabled,
                           style: TextStyle(
                             color: context.textTertiary,
                             fontSize: 12,

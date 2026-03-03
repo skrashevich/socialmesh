@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'dart:async';
 import 'package:flutter/material.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/widgets/animations.dart';
 import '../../core/widgets/ico_help_system.dart';
 import 'package:flutter/services.dart';
@@ -129,6 +130,7 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
     );
     final settingsFuture = ref.read(settingsServiceProvider.future);
     final navigator = Navigator.of(context);
+    final l10n = context.l10n;
 
     safeSetState(() => _isSaving = true);
     try {
@@ -161,7 +163,7 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
       }
 
       if (!mounted) return;
-      showSuccessSnackBar(context, 'Radio configuration saved');
+      showSuccessSnackBar(context, l10n.radioConfigSaved);
       if (target.isLocal) {
         ref
             .read(countdownProvider.notifier)
@@ -170,7 +172,7 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
       navigator.pop();
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to save: $e');
+        showErrorSnackBar(context, l10n.radioConfigSaveFailed(e.toString()));
       }
     } finally {
       safeSetState(() => _isSaving = false);
@@ -185,14 +187,14 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: GlassScaffold(
-          title: 'Radio',
+          title: context.l10n.radioConfigTitle,
           actions: [
             IconButton(
               icon: const Icon(Icons.help_outline),
               onPressed: () => ref
                   .read(helpProvider.notifier)
                   .startTour('radio_config_overview'),
-              tooltip: 'Help',
+              tooltip: context.l10n.radioConfigHelp,
             ),
             Padding(
               padding: const EdgeInsets.only(right: 8),
@@ -201,7 +203,7 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
                 child: _isSaving
                     ? LoadingIndicator(size: 20)
                     : Text(
-                        'Save',
+                        context.l10n.radioConfigSave,
                         style: TextStyle(
                           color: context.accentColor,
                           fontWeight: FontWeight.w600,
@@ -218,18 +220,24 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 sliver: SliverList.list(
                   children: [
-                    const _SectionHeader(title: 'REGION'),
+                    _SectionHeader(
+                      title: context.l10n.radioConfigSectionRegion,
+                    ),
                     _buildRegionSelector(),
                     SizedBox(height: AppTheme.spacing16),
-                    const _SectionHeader(title: 'MODEM PRESET'),
+                    _SectionHeader(
+                      title: context.l10n.radioConfigSectionModemPreset,
+                    ),
                     _buildModemPresetSelector(),
                     SizedBox(height: AppTheme.spacing16),
-                    const _SectionHeader(title: 'TRANSMISSION'),
+                    _SectionHeader(
+                      title: context.l10n.radioConfigSectionTransmission,
+                    ),
                     _SettingsTile(
                       icon: Icons.cell_tower,
                       iconColor: _txEnabled ? context.accentColor : null,
-                      title: 'Transmission Enabled',
-                      subtitle: 'Allow device to transmit',
+                      title: context.l10n.radioConfigTxEnabled,
+                      subtitle: context.l10n.radioConfigTxEnabledSubtitle,
                       trailing: ThemedSwitch(
                         value: _txEnabled,
                         onChanged: (value) {
@@ -255,7 +263,7 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Hop Limit',
+                                context.l10n.radioConfigHopLimit,
                                 style: TextStyle(
                                   color: context.textPrimary,
                                   fontWeight: FontWeight.w500,
@@ -287,7 +295,7 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
                           ),
                           SizedBox(height: AppTheme.spacing4),
                           Text(
-                            'Number of times messages can be relayed',
+                            context.l10n.radioConfigHopLimitSubtitle,
                             style: TextStyle(
                               color: context.textSecondary,
                               fontSize: 13,
@@ -318,7 +326,7 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'TX Power Override',
+                                context.l10n.radioConfigTxPowerOverride,
                                 style: TextStyle(
                                   color: context.textPrimary,
                                   fontWeight: FontWeight.w500,
@@ -338,7 +346,9 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
                                   ),
                                 ),
                                 child: Text(
-                                  _txPower == 0 ? 'Default' : '${_txPower}dBm',
+                                  _txPower == 0
+                                      ? context.l10n.radioConfigTxPowerDefault
+                                      : '${_txPower}dBm',
                                   style: TextStyle(
                                     color: context.accentColor,
                                     fontWeight: FontWeight.w600,
@@ -350,7 +360,7 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
                           ),
                           SizedBox(height: AppTheme.spacing4),
                           Text(
-                            'Override transmit power (0 = use default)',
+                            context.l10n.radioConfigTxPowerSubtitle,
                             style: TextStyle(
                               color: context.textSecondary,
                               fontSize: 13,
@@ -380,7 +390,9 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
                       ),
                     ),
                     const SizedBox(height: AppTheme.spacing16),
-                    const _SectionHeader(title: 'ADVANCED'),
+                    _SectionHeader(
+                      title: context.l10n.radioConfigSectionAdvanced,
+                    ),
                     _buildAdvancedSettings(),
                     const SizedBox(height: AppTheme.spacing16),
                     _buildInfoCard(),
@@ -441,7 +453,7 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Use Preset',
+                      context.l10n.radioConfigUsePreset,
                       style: TextStyle(
                         color: context.textPrimary,
                         fontWeight: FontWeight.w500,
@@ -449,7 +461,7 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
                     ),
                     SizedBox(height: AppTheme.spacing2),
                     Text(
-                      'Use preset modem settings instead of custom',
+                      context.l10n.radioConfigUsePresetSubtitle,
                       style: TextStyle(
                         color: context.textSecondary,
                         fontSize: 13,
@@ -476,7 +488,7 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Bandwidth',
+                  context.l10n.radioConfigBandwidth,
                   style: TextStyle(
                     color: context.textPrimary,
                     fontWeight: FontWeight.w500,
@@ -510,7 +522,7 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Spread Factor',
+                  context.l10n.radioConfigSpreadFactor,
                   style: TextStyle(
                     color: context.textPrimary,
                     fontWeight: FontWeight.w500,
@@ -544,7 +556,7 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Coding Rate',
+                  context.l10n.radioConfigCodingRate,
                   style: TextStyle(
                     color: context.textPrimary,
                     fontWeight: FontWeight.w500,
@@ -585,7 +597,7 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Frequency Slot',
+                      context.l10n.radioConfigFrequencySlot,
                       style: TextStyle(
                         color: context.textPrimary,
                         fontWeight: FontWeight.w500,
@@ -593,10 +605,7 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
                     ),
                     SizedBox(height: AppTheme.spacing2),
                     Text(
-                      'Your operating frequency is calculated from '
-                      'the region, modem preset, and this value. '
-                      'When set to 0, the slot is automatically '
-                      'derived from the primary channel name.',
+                      context.l10n.radioConfigFrequencySlotSubtitle,
                       style: TextStyle(
                         color: context.textSecondary,
                         fontSize: 13,
@@ -664,7 +673,7 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'RX Boosted Gain',
+                      context.l10n.radioConfigRxBoostedGain,
                       style: TextStyle(
                         color: context.textPrimary,
                         fontWeight: FontWeight.w500,
@@ -672,7 +681,7 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
                     ),
                     SizedBox(height: AppTheme.spacing2),
                     Text(
-                      'Enable boosted gain on SX126x receivers',
+                      context.l10n.radioConfigRxBoostedGainSubtitle,
                       style: TextStyle(
                         color: context.textSecondary,
                         fontSize: 13,
@@ -702,7 +711,7 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Frequency Override',
+                      context.l10n.radioConfigFrequencyOverride,
                       style: TextStyle(
                         color: context.textPrimary,
                         fontWeight: FontWeight.w500,
@@ -710,7 +719,7 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
                     ),
                     SizedBox(height: AppTheme.spacing2),
                     Text(
-                      'Override frequency in MHz (0 = disabled)',
+                      context.l10n.radioConfigFrequencyOverrideSubtitle,
                       style: TextStyle(
                         color: context.textSecondary,
                         fontSize: 13,
@@ -778,7 +787,7 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Ignore MQTT',
+                      context.l10n.radioConfigIgnoreMqtt,
                       style: TextStyle(
                         color: context.textPrimary,
                         fontWeight: FontWeight.w500,
@@ -786,7 +795,7 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
                     ),
                     SizedBox(height: AppTheme.spacing2),
                     Text(
-                      'Ignore messages via MQTT from this device',
+                      context.l10n.radioConfigIgnoreMqttSubtitle,
                       style: TextStyle(
                         color: context.textSecondary,
                         fontSize: 13,
@@ -816,7 +825,7 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Ok to MQTT',
+                      context.l10n.radioConfigOkToMqtt,
                       style: TextStyle(
                         color: context.textPrimary,
                         fontWeight: FontWeight.w500,
@@ -824,7 +833,7 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
                     ),
                     SizedBox(height: AppTheme.spacing2),
                     Text(
-                      'Config is ok to send via MQTT uplink',
+                      context.l10n.radioConfigOkToMqttSubtitle,
                       style: TextStyle(
                         color: context.textSecondary,
                         fontSize: 13,
@@ -851,8 +860,8 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
     final regions = [
       (
         config_pbenum.Config_LoRaConfig_RegionCode.UNSET,
-        'Unset',
-        'Not configured',
+        context.l10n.radioConfigRegionUnset,
+        context.l10n.radioConfigRegionNotConfigured,
       ),
       (config_pbenum.Config_LoRaConfig_RegionCode.US, 'US', '915MHz'),
       (config_pbenum.Config_LoRaConfig_RegionCode.EU_433, 'EU 433', '433MHz'),
@@ -909,7 +918,7 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Select the region that matches your country\'s regulations',
+            context.l10n.radioConfigRegionSelectHint,
             style: TextStyle(color: context.textSecondary, fontSize: 13),
           ),
           SizedBox(height: AppTheme.spacing16),
@@ -953,43 +962,43 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
     final presets = [
       (
         config_pbenum.Config_LoRaConfig_ModemPreset.LONG_FAST,
-        'Long Fast',
-        'Best range with good speed',
+        context.l10n.radioConfigPresetLongFast,
+        context.l10n.radioConfigPresetLongFastDesc,
       ),
       (
         config_pbenum.Config_LoRaConfig_ModemPreset.LONG_SLOW,
-        'Long Slow',
-        'Maximum range, slower',
+        context.l10n.radioConfigPresetLongSlow,
+        context.l10n.radioConfigPresetLongSlowDesc,
       ),
       (
         config_pbenum.Config_LoRaConfig_ModemPreset.VERY_LONG_SLOW,
-        'Very Long Slow',
-        'Extreme range, very slow',
+        context.l10n.radioConfigPresetVeryLongSlow,
+        context.l10n.radioConfigPresetVeryLongSlowDesc,
       ),
       (
         config_pbenum.Config_LoRaConfig_ModemPreset.LONG_MODERATE,
-        'Long Moderate',
-        'Good balance',
+        context.l10n.radioConfigPresetLongModerate,
+        context.l10n.radioConfigPresetLongModerateDesc,
       ),
       (
         config_pbenum.Config_LoRaConfig_ModemPreset.MEDIUM_FAST,
-        'Medium Fast',
-        'Medium range, fast',
+        context.l10n.radioConfigPresetMediumFast,
+        context.l10n.radioConfigPresetMediumFastDesc,
       ),
       (
         config_pbenum.Config_LoRaConfig_ModemPreset.MEDIUM_SLOW,
-        'Medium Slow',
-        'Medium range, reliable',
+        context.l10n.radioConfigPresetMediumSlow,
+        context.l10n.radioConfigPresetMediumSlowDesc,
       ),
       (
         config_pbenum.Config_LoRaConfig_ModemPreset.SHORT_FAST,
-        'Short Fast',
-        'Short range, fastest',
+        context.l10n.radioConfigPresetShortFast,
+        context.l10n.radioConfigPresetShortFastDesc,
       ),
       (
         config_pbenum.Config_LoRaConfig_ModemPreset.SHORT_SLOW,
-        'Short Slow',
-        'Short range, reliable',
+        context.l10n.radioConfigPresetShortSlow,
+        context.l10n.radioConfigPresetShortSlowDesc,
       ),
     ];
 
@@ -1004,7 +1013,7 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'All devices in the mesh must use the same preset',
+            context.l10n.radioConfigPresetMustMatch,
             style: TextStyle(color: context.textSecondary, fontSize: 13),
           ),
           SizedBox(height: AppTheme.spacing16),
@@ -1062,9 +1071,7 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
       child: StatusBanner.warning(
-        title:
-            'Changing radio settings will cause the device to reboot. '
-            'All devices in your mesh network must use the same region and modem preset.',
+        title: context.l10n.radioConfigRebootWarning,
         margin: EdgeInsets.zero,
       ),
     );

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/animations.dart';
@@ -35,8 +36,8 @@ class _ThemeSettingsScreenState extends ConsumerState<ThemeSettingsScreen>
     final settingsAsync = ref.watch(settingsServiceProvider);
 
     return settingsAsync.when(
-      loading: () => const GlassScaffold(
-        title: 'Theme Settings',
+      loading: () => GlassScaffold(
+        title: context.l10n.themeSettingsTitle,
         slivers: [
           SliverFillRemaining(
             hasScrollBody: false,
@@ -45,7 +46,7 @@ class _ThemeSettingsScreenState extends ConsumerState<ThemeSettingsScreen>
         ],
       ),
       error: (e, _) => GlassScaffold(
-        title: 'Theme Settings',
+        title: context.l10n.themeSettingsTitle,
         slivers: [
           SliverFillRemaining(
             hasScrollBody: false,
@@ -54,7 +55,7 @@ class _ThemeSettingsScreenState extends ConsumerState<ThemeSettingsScreen>
         ],
       ),
       data: (settingsService) => GlassScaffold(
-        title: 'Theme Settings',
+        title: context.l10n.themeSettingsTitle,
         slivers: [
           SliverPadding(
             padding: const EdgeInsets.all(AppTheme.spacing16),
@@ -65,7 +66,7 @@ class _ThemeSettingsScreenState extends ConsumerState<ThemeSettingsScreen>
                 const SizedBox(height: AppTheme.spacing24),
 
                 // Accent Color Section
-                _buildSectionHeader('ACCENT COLOR'),
+                _buildSectionHeader(context.l10n.themeSettingsAccentColor),
                 const SizedBox(height: AppTheme.spacing12),
                 _buildAccentColorGrid(
                   context,
@@ -76,7 +77,7 @@ class _ThemeSettingsScreenState extends ConsumerState<ThemeSettingsScreen>
                 const SizedBox(height: AppTheme.spacing24),
 
                 // QR Code Style Section (Premium)
-                _buildSectionHeader('QR CODE STYLE'),
+                _buildSectionHeader(context.l10n.themeSettingsQrCodeStyle),
                 const SizedBox(height: AppTheme.spacing12),
                 _buildQrStyleSection(
                   context,
@@ -87,7 +88,7 @@ class _ThemeSettingsScreenState extends ConsumerState<ThemeSettingsScreen>
                 const SizedBox(height: AppTheme.spacing24),
 
                 // Theme Preview Section
-                _buildSectionHeader('PREVIEW'),
+                _buildSectionHeader(context.l10n.themeSettingsPreview),
                 const SizedBox(height: AppTheme.spacing12),
                 _buildPreviewElements(context, currentColor),
               ]),
@@ -147,7 +148,7 @@ class _ThemeSettingsScreenState extends ConsumerState<ThemeSettingsScreen>
                   ),
                 ),
                 Text(
-                  'Current accent color',
+                  context.l10n.themeSettingsCurrentAccent,
                   style: TextStyle(
                     fontSize: 14,
                     color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
@@ -236,8 +237,10 @@ class _ThemeSettingsScreenState extends ConsumerState<ThemeSettingsScreen>
             scaleFactor: 0.9,
             child: Tooltip(
               message: isGold
-                  ? '$colorName (Complete Pack only)'
-                  : (isLocked ? '$colorName (Theme Pack)' : colorName),
+                  ? context.l10n.themeSettingsCompletePackOnly(colorName)
+                  : (isLocked
+                        ? context.l10n.themeSettingsThemePack(colorName)
+                        : colorName),
               child: AnimatedScale(
                 scale: isSelected ? 1.15 : 1.0,
                 duration: const Duration(milliseconds: 200),
@@ -314,9 +317,21 @@ class _ThemeSettingsScreenState extends ConsumerState<ThemeSettingsScreen>
     final usesAccentColor = settingsService.qrUsesAccentColor;
 
     final styles = [
-      (QrStyle.dots, 'Dots', 'Clean circular modules'),
-      (QrStyle.smooth, 'Smooth', 'Premium liquid modules'),
-      (QrStyle.squares, 'Classic', 'Maximum compatibility'),
+      (
+        QrStyle.dots,
+        context.l10n.themeSettingsStyleDots,
+        context.l10n.themeSettingsStyleDotsDesc,
+      ),
+      (
+        QrStyle.smooth,
+        context.l10n.themeSettingsStyleSmooth,
+        context.l10n.themeSettingsStyleSmoothDesc,
+      ),
+      (
+        QrStyle.squares,
+        context.l10n.themeSettingsStyleClassic,
+        context.l10n.themeSettingsStyleClassicDesc,
+      ),
     ];
 
     return Container(
@@ -355,7 +370,7 @@ class _ThemeSettingsScreenState extends ConsumerState<ThemeSettingsScreen>
 
           // Style selector
           Text(
-            'Pattern',
+            context.l10n.themeSettingsPattern,
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w500,
@@ -511,7 +526,7 @@ class _ThemeSettingsScreenState extends ConsumerState<ThemeSettingsScreen>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Use Accent Gradient',
+                          context.l10n.themeSettingsUseAccentGradient,
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -519,7 +534,7 @@ class _ThemeSettingsScreenState extends ConsumerState<ThemeSettingsScreen>
                           ),
                         ),
                         Text(
-                          'Apply accent color to QR codes',
+                          context.l10n.themeSettingsApplyAccentToQr,
                           style: TextStyle(
                             fontSize: 12,
                             color: theme.colorScheme.onSurface.withValues(
@@ -569,7 +584,7 @@ class _ThemeSettingsScreenState extends ConsumerState<ThemeSettingsScreen>
         children: [
           // Buttons preview
           Text(
-            'Buttons',
+            context.l10n.themeSettingsButtons,
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w500,
@@ -588,7 +603,7 @@ class _ThemeSettingsScreenState extends ConsumerState<ThemeSettingsScreen>
                     borderRadius: BorderRadius.circular(AppTheme.radius8),
                   ),
                 ),
-                child: const Text('Primary'),
+                child: Text(context.l10n.themeSettingsPrimary),
               ),
               const SizedBox(width: AppTheme.spacing12),
               OutlinedButton(
@@ -600,13 +615,13 @@ class _ThemeSettingsScreenState extends ConsumerState<ThemeSettingsScreen>
                     borderRadius: BorderRadius.circular(AppTheme.radius8),
                   ),
                 ),
-                child: const Text('Secondary'),
+                child: Text(context.l10n.themeSettingsSecondary),
               ),
               const SizedBox(width: AppTheme.spacing12),
               TextButton(
                 onPressed: () {},
                 style: TextButton.styleFrom(foregroundColor: accentColor),
-                child: const Text('Text'),
+                child: Text(context.l10n.themeSettingsText),
               ),
             ],
           ),
@@ -614,7 +629,7 @@ class _ThemeSettingsScreenState extends ConsumerState<ThemeSettingsScreen>
 
           // Switch & Checkbox preview
           Text(
-            'Controls',
+            context.l10n.themeSettingsControls,
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w500,
@@ -661,7 +676,7 @@ class _ThemeSettingsScreenState extends ConsumerState<ThemeSettingsScreen>
 
           // Progress indicators
           Text(
-            'Progress',
+            context.l10n.themeSettingsProgress,
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w500,
@@ -686,7 +701,7 @@ class _ThemeSettingsScreenState extends ConsumerState<ThemeSettingsScreen>
 
           // Badge/Chip preview
           Text(
-            'Badges',
+            context.l10n.themeSettingsBadges,
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w500,
@@ -707,7 +722,7 @@ class _ThemeSettingsScreenState extends ConsumerState<ThemeSettingsScreen>
                   border: Border.all(color: accentColor.withValues(alpha: 0.5)),
                 ),
                 child: Text(
-                  'Online',
+                  context.l10n.themeSettingsOnline,
                   style: TextStyle(
                     color: accentColor,
                     fontSize: 12,
@@ -725,8 +740,8 @@ class _ThemeSettingsScreenState extends ConsumerState<ThemeSettingsScreen>
                   color: accentColor,
                   borderRadius: BorderRadius.circular(AppTheme.radius16),
                 ),
-                child: const Text(
-                  '5 new',
+                child: Text(
+                  context.l10n.themeSettingsNewCount,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 12,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/l10n/l10n_extension.dart';
 import '../../../../core/theme.dart';
 import '../../../../core/widgets/app_bottom_sheet.dart';
+import '../../../../l10n/app_localizations.dart';
 
 /// Icon category for organization
 class IconCategory {
@@ -299,16 +300,90 @@ class _IconSelectorContentState extends State<_IconSelectorContent> {
     final query = _searchQuery.toLowerCase();
     if (query.isEmpty) return [];
 
+    final l10n = context.l10n;
     final results = <IconOption>[];
     for (final category in _categories) {
       for (final icon in category.icons) {
+        final localDisplayName = _localizedIconName(icon.name, l10n);
         if (icon.name.toLowerCase().contains(query) ||
-            icon.displayName.toLowerCase().contains(query)) {
+            localDisplayName.toLowerCase().contains(query)) {
           results.add(icon);
         }
       }
     }
     return results;
+  }
+
+  String _localizedCategoryName(String name, AppLocalizations l10n) {
+    return switch (name) {
+      'Status' => l10n.widgetBuilderIconCategoryStatus,
+      'Battery & Power' => l10n.widgetBuilderIconCategoryBatteryPower,
+      'Connectivity' => l10n.widgetBuilderIconCategoryConnectivity,
+      'Location & Maps' => l10n.widgetBuilderIconCategoryLocationMaps,
+      'Environment' => l10n.widgetBuilderIconCategoryEnvironment,
+      'Communication' => l10n.widgetBuilderIconCategoryCommunication,
+      'Data & Charts' => l10n.widgetBuilderIconCategoryDataCharts,
+      'Actions' => l10n.widgetBuilderIconCategoryActions,
+      'Favorites' => l10n.widgetBuilderIconCategoryFavorites,
+      _ => name,
+    };
+  }
+
+  String _localizedIconName(String name, AppLocalizations l10n) {
+    return switch (name) {
+      'check_circle' => l10n.widgetBuilderIconCheck,
+      'warning' => l10n.widgetBuilderIconWarning,
+      'error' => l10n.widgetBuilderIconError,
+      'info' => l10n.widgetBuilderIconInfo,
+      'help_outline' => l10n.widgetBuilderIconHelp,
+      'battery_full' => l10n.widgetBuilderIconFull,
+      'battery_alert' => l10n.widgetBuilderIconAlert,
+      'battery_charging_full' => l10n.widgetBuilderIconCharging,
+      'bolt' => l10n.widgetBuilderIconPower,
+      'signal_cellular_alt' => l10n.widgetBuilderIconSignal,
+      'wifi' => l10n.widgetBuilderIconWifi,
+      'bluetooth' => l10n.widgetBuilderIconBluetooth,
+      'hub' => l10n.widgetBuilderIconHub,
+      'router' => l10n.widgetBuilderIconRouter,
+      'devices' => l10n.widgetBuilderIconDevices,
+      'lan' => l10n.widgetBuilderIconNetwork,
+      'gps_fixed' => l10n.widgetBuilderIconGps,
+      'map' => l10n.widgetBuilderIconMap,
+      'navigation' => l10n.widgetBuilderIconNavigate,
+      'explore' => l10n.widgetBuilderIconExplore,
+      'near_me' => l10n.widgetBuilderIconNearMe,
+      'location_on' => l10n.widgetBuilderIconLocation,
+      'route' => l10n.widgetBuilderIconRoute,
+      'thermostat' => l10n.widgetBuilderIconTemperature,
+      'water_drop' => l10n.widgetBuilderIconHumidity,
+      'air' => l10n.widgetBuilderIconAir,
+      'cloud' => l10n.widgetBuilderIconCloud,
+      'wb_sunny' => l10n.widgetBuilderIconSun,
+      'compress' => l10n.widgetBuilderIconPressure,
+      'message' => l10n.widgetBuilderIconMessage,
+      'chat' => l10n.widgetBuilderIconChat,
+      'send' => l10n.widgetBuilderIconSend,
+      'notifications' => l10n.widgetBuilderIconNotification,
+      'call' => l10n.widgetBuilderIconCall,
+      'speed' => l10n.widgetBuilderIconSpeed,
+      'timeline' => l10n.widgetBuilderIconTimeline,
+      'trending_up' => l10n.widgetBuilderIconUp,
+      'trending_down' => l10n.widgetBuilderIconDown,
+      'show_chart' => l10n.widgetBuilderIconChart,
+      'analytics' => l10n.widgetBuilderIconAnalytics,
+      'flash_on' => l10n.widgetBuilderIconFlash,
+      'refresh' => l10n.widgetBuilderIconRefresh,
+      'settings' => l10n.widgetBuilderIconSettings,
+      'edit' => l10n.widgetBuilderIconEdit,
+      'delete' => l10n.widgetBuilderIconDelete,
+      'add' => l10n.widgetBuilderIconAdd,
+      'remove' => l10n.widgetBuilderIconRemove,
+      'favorite' => l10n.widgetBuilderIconHeart,
+      'star' => l10n.widgetBuilderIconStar,
+      'bookmark' => l10n.widgetBuilderIconBookmark,
+      'thumb_up' => l10n.widgetBuilderIconThumbsUp,
+      _ => name,
+    };
   }
 
   @override
@@ -434,7 +509,7 @@ class _IconSelectorContentState extends State<_IconSelectorContent> {
             Padding(
               padding: const EdgeInsets.only(top: 8, bottom: 8),
               child: Text(
-                category.name,
+                _localizedCategoryName(category.name, context.l10n),
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
@@ -466,7 +541,7 @@ class _IconSelectorContentState extends State<_IconSelectorContent> {
     final isSelected = widget.selectedIcon == option.name;
 
     return Tooltip(
-      message: option.displayName,
+      message: _localizedIconName(option.name, context.l10n),
       child: InkWell(
         onTap: () => Navigator.pop(context, option.name),
         borderRadius: BorderRadius.circular(AppTheme.radius8),
@@ -491,7 +566,7 @@ class _IconSelectorContentState extends State<_IconSelectorContent> {
               ),
               SizedBox(height: AppTheme.spacing4),
               Text(
-                option.displayName,
+                _localizedIconName(option.name, context.l10n),
                 style: TextStyle(
                   fontSize: 9,
                   color: isSelected ? accentColor : context.textSecondary,

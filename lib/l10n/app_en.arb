@@ -69,6 +69,9 @@
   "adminProductsInvalid": "Invalid",
   "adminProductsLoraChipHint": "e.g., SX1262",
   "adminProductsLoraChipLabel": "LoRa Chip",
+  "@adminProductsLoraChipLabel": {
+    "description": "LoRa = Long Range radio technology used by mesh devices. This labels the specific LoRa radio chip model."
+  },
   "adminProductsMainImage": "Main",
   "adminProductsNameHint": "e.g., T-Beam Supreme",
   "adminProductsNameLabel": "Product Name *",
@@ -3646,7 +3649,13 @@
   "channelFormDeviceNotConnected": "Cannot save channel: Device not connected",
   "channelFormDeviceNotReady": "Device not ready - please wait for connection",
   "channelFormDownlinkSubtitle": "Receive messages from MQTT server",
+  "@channelFormDownlinkSubtitle": {
+    "description": "Downlink = receiving messages from an internet MQTT server and broadcasting them on the local mesh."
+  },
   "channelFormDownlinkTitle": "Downlink Enabled",
+  "@channelFormDownlinkTitle": {
+    "description": "Downlink = receiving internet MQTT messages and broadcasting them on the mesh radio channel."
+  },
   "channelFormEditTitle": "Edit Channel",
   "channelFormEncryptionLabel": "Encryption",
   "channelFormError": "Error: {error}",
@@ -3683,6 +3692,9 @@
   "channelFormKeySizeNoneDesc": "Messages sent in plaintext",
   "channelFormMaxChannelsReached": "Maximum 8 channels allowed",
   "channelFormMqttLabel": "MQTT",
+  "@channelFormMqttLabel": {
+    "description": "MQTT = Message Queuing Telemetry Transport, a protocol for bridging mesh messages to the internet."
+  },
   "channelFormMqttWarning": "Most devices have very limited processing power and RAM. Bridging a busy channel like LongFast via the default MQTT server can flood the device with 15-25 packets per second, causing it to stop responding. Consider using a private broker or a quieter channel.",
   "channelFormNameHint": "Enter channel name (no spaces)",
   "channelFormNameMaxHint": "Max 11 characters",
@@ -3704,7 +3716,13 @@
   "channelFormSaveButton": "Save",
   "channelFormUpdatedSnackbar": "Channel updated",
   "channelFormUplinkSubtitle": "Forward messages to MQTT server",
+  "@channelFormUplinkSubtitle": {
+    "description": "Uplink = forwarding local mesh radio messages to an internet MQTT server."
+  },
   "channelFormUplinkTitle": "Uplink Enabled",
+  "@channelFormUplinkTitle": {
+    "description": "Uplink = sending local mesh messages to an internet MQTT broker."
+  },
   "channelOptionsCopyButton": "Copy",
   "channelOptionsDefaultName": "Channel {index}",
   "@channelOptionsDefaultName": {
@@ -3825,7 +3843,13 @@
   "channelWizardKeySizeNoneDesc": "No encryption - messages are sent in plain text",
   "channelWizardMqttFloodWarning": "Most devices have very limited processing power and RAM. Bridging a busy channel like LongFast via the default MQTT server can flood the device with 15-25 packets per second, causing it to stop responding. Consider using a private broker or a quieter channel.",
   "channelWizardMqttHeader": "MQTT Settings",
+  "@channelWizardMqttHeader": {
+    "description": "MQTT = Message Queuing Telemetry Transport. Settings for internet bridging of this channel."
+  },
   "channelWizardMqttWarning": "MQTT must be configured on your device for uplink/downlink to work.",
+  "@channelWizardMqttWarning": {
+    "description": "MQTT must be separately configured in device settings. Uplink/downlink = internet message forwarding directions."
+  },
   "channelWizardNameBannerInfo": "Channel names are limited to 12 alphanumeric characters.",
   "channelWizardNameHeading": "Name Your Channel",
   "channelWizardNameHint": "e.g., Family, Friends, Hiking",
@@ -3851,7 +3875,13 @@
   "channelWizardReviewHeading": "Review & Create",
   "channelWizardReviewKeySize": "Key Size",
   "channelWizardReviewMqttDownlink": "MQTT Downlink",
+  "@channelWizardReviewMqttDownlink": {
+    "description": "MQTT Downlink = receive messages from internet and broadcast on mesh. Review setting before creating channel."
+  },
   "channelWizardReviewMqttUplink": "MQTT Uplink",
+  "@channelWizardReviewMqttUplink": {
+    "description": "MQTT Uplink = forward mesh messages to internet. Review setting before creating channel."
+  },
   "channelWizardReviewName": "Name",
   "channelWizardReviewPositionSharing": "Position Sharing",
   "channelWizardReviewPrivacyLevel": "Privacy Level",
@@ -3885,6 +3915,9 @@
   "channelsFilterAll": "All",
   "channelsFilterEncrypted": "Encrypted",
   "channelsFilterMqtt": "MQTT",
+  "@channelsFilterMqtt": {
+    "description": "MQTT = Message Queuing Telemetry Transport, an internet bridging protocol. Filter shows MQTT-enabled channels."
+  },
   "channelsFilterPosition": "Position",
   "channelsFilterPrimary": "Primary",
   "channelsMenuAddChannel": "Add Channel",
@@ -4194,6 +4227,9 @@
     "description": "Status banner explaining device log streaming"
   },
   "deviceConfigBleName": "BLE Name",
+  "@deviceConfigBleName": {
+    "description": "BLE = Bluetooth Low Energy. This is the Bluetooth broadcast name of the mesh device."
+  },
   "deviceConfigBroadcastEighteenHours": "Eighteen Hours",
   "deviceConfigBroadcastFiveHours": "Five Hours",
   "deviceConfigBroadcastFortyEightHours": "Forty Eight Hours",
@@ -4262,6 +4298,9 @@
   "deviceConfigRebroadcastAllSkipDecodingDesc": "Rebroadcast all messages without decoding. Faster, less CPU.",
   "deviceConfigRebroadcastCorePortnumsOnly": "Core Port Numbers Only",
   "deviceConfigRebroadcastCorePortnumsOnlyDesc": "Rebroadcast only core Meshtastic packets (position, telemetry, etc).",
+  "@deviceConfigRebroadcastCorePortnumsOnlyDesc": {
+    "description": "Core Meshtastic packets = essential protocol messages like position and telemetry. Portnum = packet type identifier."
+  },
   "deviceConfigRebroadcastKnownOnly": "Known Only",
   "deviceConfigRebroadcastKnownOnlyDesc": "Only rebroadcast messages from nodes in the node database.",
   "deviceConfigRebroadcastLocalOnly": "Local Only",
@@ -4294,23 +4333,56 @@
   "deviceConfigRoleClient": "Client",
   "deviceConfigRoleClientBase": "Client Base",
   "deviceConfigRoleClientBaseDesc": "Base station for favorited nodes. Routes their packets like a router, others as client.",
+  "@deviceConfigRoleClientBaseDesc": {
+    "description": "Base station = fixed node that prioritizes routing for 'favorited' nodes. Routes like a router for favorites, like a client for others."
+  },
   "deviceConfigRoleClientDesc": "Default role. Mesh packets are routed through this node. Can send and receive messages.",
+  "@deviceConfigRoleClientDesc": {
+    "description": "Mesh packets = radio data units relayed between Meshtastic nodes."
+  },
   "deviceConfigRoleClientHidden": "Client Hidden",
   "deviceConfigRoleClientHiddenDesc": "Acts as client but hides from the node list. Still routes traffic.",
   "deviceConfigRoleClientMute": "Client Mute",
+  "@deviceConfigRoleClientMute": {
+    "description": "Client Mute = a Meshtastic device role that receives but does not rebroadcast mesh packets."
+  },
   "deviceConfigRoleClientMuteDesc": "Same as client but will not transmit any messages from itself. Useful for monitoring.",
   "deviceConfigRoleLostAndFound": "Lost and Found",
   "deviceConfigRoleLostAndFoundDesc": "Optimized for finding lost devices. Sends periodic beacons.",
+  "@deviceConfigRoleLostAndFoundDesc": {
+    "description": "Lost and Found = device role that sends periodic radio beacons to help locate it."
+  },
   "deviceConfigRoleRouter": "Router",
   "deviceConfigRoleRouterDesc": "Routes mesh packets between nodes. Screen and Bluetooth disabled to conserve power.",
+  "@deviceConfigRoleRouterDesc": {
+    "description": "Router = a Meshtastic device role dedicated to relaying mesh packets. Disables screen and Bluetooth to save power."
+  },
   "deviceConfigRoleRouterLate": "Router Late",
   "deviceConfigRoleRouterLateDesc": "Rebroadcasts all packets after other routers. Extends coverage without consuming priority hops.",
+  "@deviceConfigRoleRouterLateDesc": {
+    "description": "Router Late = rebroadcasts after other routers, extending coverage without using priority hops."
+  },
   "deviceConfigRoleSensor": "Sensor",
   "deviceConfigRoleSensorDesc": "Designed for remote sensing. Reports telemetry data at defined intervals.",
+  "@deviceConfigRoleSensorDesc": {
+    "description": "Sensor role = device that periodically reports telemetry (sensor readings) to the mesh."
+  },
   "deviceConfigRoleTak": "TAK",
+  "@deviceConfigRoleTak": {
+    "description": "TAK = Team Awareness Kit, a military situational awareness system. Do not translate 'TAK'."
+  },
   "deviceConfigRoleTakDesc": "Team Awareness Kit integration. Bridges Meshtastic and TAK systems.",
+  "@deviceConfigRoleTakDesc": {
+    "description": "TAK = Team Awareness Kit. Bridges Meshtastic mesh radio with TAK military mapping systems."
+  },
   "deviceConfigRoleTakTracker": "TAK Tracker",
+  "@deviceConfigRoleTakTracker": {
+    "description": "TAK Tracker = combination of TAK (military situational awareness) and GPS tracker device roles."
+  },
   "deviceConfigRoleTakTrackerDesc": "Combination of TAK and Tracker modes.",
+  "@deviceConfigRoleTakTrackerDesc": {
+    "description": "TAK = Team Awareness Kit (military SA). Tracker = GPS position broadcasting mode."
+  },
   "deviceConfigRoleTracker": "Tracker",
   "deviceConfigRoleTrackerDesc": "Optimized for GPS tracking. Sends position updates at defined intervals.",
   "deviceConfigSave": "Save",
@@ -5697,6 +5769,9 @@
     }
   },
   "firmwareUpdateAvailable": "Update Available",
+  "@firmwareUpdateAvailable": {
+    "description": "Firmware = the software running on the Meshtastic radio device (not the phone app)."
+  },
   "firmwareUpdateBackupWarningSubtitle": "Firmware updates may reset your device configuration. Consider exporting your settings before updating.",
   "firmwareUpdateBackupWarningTitle": "Backup Your Settings",
   "firmwareUpdateBluetooth": "Bluetooth",
@@ -5718,6 +5793,9 @@
   "firmwareUpdateOpenWebFlasher": "Open Web Flasher",
   "firmwareUpdateReleaseNotes": "Release Notes",
   "firmwareUpdateSectionAvailableUpdate": "Available Update",
+  "@firmwareUpdateSectionAvailableUpdate": {
+    "description": "Firmware = software on the mesh radio device. This section shows newer firmware versions."
+  },
   "firmwareUpdateSectionCurrentVersion": "Current Version",
   "firmwareUpdateSectionHowToUpdate": "How to Update",
   "firmwareUpdateStep1": "Download the firmware file for your device",
@@ -6952,6 +7030,9 @@
   "mapHidePositionHistory": "Hide position history",
   "mapHideRangeCircles": "Hide range circles",
   "mapHideTakEntities": "Hide TAK entities",
+  "@mapHideTakEntities": {
+    "description": "TAK = Team Awareness Kit (military SA platform). Entities = friendly/hostile/unknown units on the map."
+  },
   "mapLastKnown": "• Last known",
   "mapLinkBudgetCopied": "Link budget copied to clipboard",
   "mapLocationTitle": "Location",
@@ -7047,10 +7128,19 @@
   "mapShowPositionHistory": "Show position history",
   "mapShowRangeCircles": "Show range circles",
   "mapShowTakEntities": "Show TAK entities",
+  "@mapShowTakEntities": {
+    "description": "TAK = Team Awareness Kit (military SA platform). Entities = tracked units/markers on the tactical map."
+  },
   "mapStyleTooltip": "Map style",
   "mapSwapAB": "Swap A ↔ B",
   "mapTakActive": "Active",
+  "@mapTakActive": {
+    "description": "TAK entity status: actively reporting position via Cursor on Target (CoT) protocol."
+  },
   "mapTakActiveBadge": "ACTIVE",
+  "@mapTakActiveBadge": {
+    "description": "Badge label for TAK entities currently sending position reports (not stale)."
+  },
   "mapTakEntityCount": "• {count} entities",
   "@mapTakEntityCount": {
     "placeholders": {
@@ -7060,9 +7150,21 @@
     }
   },
   "mapTakStale": "Stale",
+  "@mapTakStale": {
+    "description": "Stale = TAK entity whose last Cursor on Target (CoT) report has expired (past stale-out time)."
+  },
   "mapTakStaleBadge": "STALE",
+  "@mapTakStaleBadge": {
+    "description": "Badge for TAK entity past its CoT stale-out time (no recent position update)."
+  },
   "mapTakTrack": "Track",
+  "@mapTakTrack": {
+    "description": "Track = follow/display a TAK entity's movement trail on the map."
+  },
   "mapTakTracked": "Tracked",
+  "@mapTakTracked": {
+    "description": "Status label when a TAK entity is being actively followed on the map."
+  },
   "mapWaypointDefaultLabel": "WP {number}",
   "@mapWaypointDefaultLabel": {
     "placeholders": {
@@ -9093,9 +9195,13 @@
   "@messagingMessageDeleted": {
     "description": "Success snackbar after deleting a message."
   },
-  "messagingMessageHint": "Message…",
+  "messagingMessageHint": "Message",
   "@messagingMessageHint": {
     "description": "Hint text in the message compose field."
+  },
+  "messagingSendTooltip": "Send (Ctrl/Cmd+Enter)",
+  "@messagingSendTooltip": {
+    "description": "Tooltip on the send button in the chat composer."
   },
   "messagingMessageQueuedOffline": "Message queued - will send when connected",
   "@messagingMessageQueuedOffline": {
@@ -9457,6 +9563,9 @@
   "nodeAnalyticsBadgeLive": "LIVE",
   "nodeAnalyticsBattery": "Battery",
   "nodeAnalyticsChannelUtilization": "Channel Utilization",
+  "@nodeAnalyticsChannelUtilization": {
+    "description": "Channel utilization = percentage of radio airtime being used on a mesh channel."
+  },
   "nodeAnalyticsCharging": "Charging",
   "nodeAnalyticsClear": "Clear",
   "nodeAnalyticsClearConfirm": "Clear",
@@ -10384,6 +10493,9 @@
   "nodeIntelligenceActivityHot": "Hot",
   "nodeIntelligenceActivityQuiet": "Quiet",
   "nodeIntelligenceChannelUtil": "Channel Utilization",
+  "@nodeIntelligenceChannelUtil": {
+    "description": "Channel utilization = percentage of radio airtime currently in use on the mesh radio channel."
+  },
   "nodeIntelligenceConnectivity": "Connectivity",
   "nodeIntelligenceDerivedBadge": "DERIVED",
   "nodeIntelligenceGatewayCount": "{count} gateways",
@@ -10458,10 +10570,22 @@
   "nodedexAgeDiscoveredYesterday": "discovered yesterday",
   "nodedexAgeNewToday": "new today",
   "nodedexAirUtilTxLabel": "Air Util TX",
+  "@nodedexAirUtilTxLabel": {
+    "description": "Air Util TX = Airtime Utilization Transmit. Percentage of time the radio channel is used for transmitting."
+  },
   "nodedexBatteryLabel": "Battery",
   "nodedexBestRssi": "Best RSSI",
+  "@nodedexBestRssi": {
+    "description": "RSSI = Received Signal Strength Indicator. 'Best' means the strongest signal recorded."
+  },
   "nodedexBestSnr": "Best SNR",
+  "@nodedexBestSnr": {
+    "description": "SNR = Signal-to-Noise Ratio. 'Best' means the highest quality signal recorded."
+  },
   "nodedexBestSnrStatLabel": "Best SNR",
+  "@nodedexBestSnrStatLabel": {
+    "description": "SNR = Signal-to-Noise Ratio statistic label in analytics view."
+  },
   "nodedexBusiestDay": "Busiest {day}",
   "@nodedexBusiestDay": {
     "placeholders": {
@@ -10672,7 +10796,13 @@
   "nodedexEmptyAllSubtitle": "Connect to a Meshtastic device and nodes will appear here as they are discovered on the mesh.",
   "nodedexEmptyAllTitle": "No nodes discovered yet",
   "nodedexEmptyBeaconsSubtitle": "Beacons are nodes with very high activity and frequent encounters. They take time to classify.",
+  "@nodedexEmptyBeaconsSubtitle": {
+    "description": "Beacons = high-activity mesh nodes. Classification requires observing activity patterns over time."
+  },
   "nodedexEmptyBeaconsTitle": "No beacons found",
+  "@nodedexEmptyBeaconsTitle": {
+    "description": "Beacons = mesh nodes classified as having very high activity and frequent encounters in the Nodedex."
+  },
   "nodedexEmptyContactSubtitle": "Nodes you classify as Contact will appear here. Long-press a node to assign this tag.",
   "nodedexEmptyContactTitle": "No contacts",
   "nodedexEmptyFrequentPeerSubtitle": "Nodes you classify as Frequent Peer will appear here. Long-press a node to assign this tag.",
@@ -11051,8 +11181,14 @@
   "nodedexFieldNoteLabel": "Field Note",
   "nodedexFieldNoteRelay0": "Forwarding traffic. Router role confirmed.",
   "nodedexFieldNoteRelay1": "Active relay node. Channel utilization elevated.",
+  "@nodedexFieldNoteRelay1": {
+    "description": "Relay node = a mesh device that forwards traffic for other nodes. Channel utilization = radio airtime usage."
+  },
   "nodedexFieldNoteRelay2": "Infrastructure role: traffic forwarding observed.",
   "nodedexFieldNoteRelay3": "Router signature detected. High airtime usage.",
+  "@nodedexFieldNoteRelay3": {
+    "description": "Router signature = behavior pattern typical of a dedicated relay node. Airtime = radio transmission time."
+  },
   "nodedexFieldNoteRelay4": "Mesh backbone element. Facilitates connectivity.",
   "nodedexFieldNoteRelay5": "Relay behavior consistent across {encounters} sessions.",
   "@nodedexFieldNoteRelay5": {
@@ -11644,6 +11780,9 @@
     }
   },
   "nodedexRssiLabel": "RSSI",
+  "@nodedexRssiLabel": {
+    "description": "RSSI = Received Signal Strength Indicator, a measure of radio signal power in dBm. Do not translate the abbreviation."
+  },
   "nodedexSearchHint": "Find a node",
   "nodedexSectionDiscoveredNodes": "Discovered Nodes",
   "nodedexSectionYourDevice": "Your Device",
@@ -11705,7 +11844,13 @@
     }
   },
   "nodedexSnrLabel": "SNR",
+  "@nodedexSnrLabel": {
+    "description": "SNR = Signal-to-Noise Ratio, a measure of signal quality in dB. Do not translate the abbreviation."
+  },
   "nodedexSnrTrend": "SNR TREND",
+  "@nodedexSnrTrend": {
+    "description": "SNR = Signal-to-Noise Ratio. This is a section header for a signal quality trend chart."
+  },
   "nodedexSocialTagContactDescription": "A person you communicate with",
   "nodedexSocialTagFrequentPeerDescription": "Regularly seen on the mesh",
   "nodedexSocialTagKnownRelayDescription": "A node that forwards traffic reliably",
@@ -11913,6 +12058,9 @@
     }
   },
   "nodedexTitle": "NodeDex",
+  "@nodedexTitle": {
+    "description": "Nodedex = Socialmesh's node database/encyclopedia (portmanteau of 'node' + 'index'). Do not translate."
+  },
   "nodedexTotalCount": "{count} total",
   "@nodedexTotalCount": {
     "placeholders": {
@@ -12818,7 +12966,13 @@
   "paxCounterCardSubtitle": "Counts nearby WiFi and Bluetooth devices",
   "paxCounterCardTitle": "PAX Counter",
   "paxCounterEnable": "Enable PAX Counter",
+  "@paxCounterEnable": {
+    "description": "PAX counter = module that counts nearby Bluetooth/WiFi devices to estimate foot traffic. 'PAX' = passengers/people."
+  },
   "paxCounterEnableSubtitle": "Count nearby devices and report to mesh",
+  "@paxCounterEnableSubtitle": {
+    "description": "PAX counter counts BLE/WiFi devices nearby and reports the count to the mesh network."
+  },
   "paxCounterIntervalMinutes": "{minutes} minutes",
   "@paxCounterIntervalMinutes": {
     "placeholders": {
@@ -12971,6 +13125,9 @@
   },
   "productDetailIncludedAccessories": "Included Accessories",
   "productDetailLoraChip": "LoRa Chip",
+  "@productDetailLoraChip": {
+    "description": "LoRa = Long Range, a radio modulation technology. This labels the radio chip in the device."
+  },
   "productDetailMeshtasticCompatible": "Meshtastic Compatible",
   "productDetailMonthsAgo": "{count} months ago",
   "@productDetailMonthsAgo": {
@@ -13128,9 +13285,21 @@
   "profileBioHint": "Tell us about yourself",
   "profileBioLabel": "Bio",
   "profileCallsignHint": "Amateur radio callsign or identifier",
+  "@profileCallsignHint": {
+    "description": "Callsign = amateur radio license identifier or tactical radio handle."
+  },
   "profileCallsignInappropriate": "Callsign cannot contain inappropriate content",
+  "@profileCallsignInappropriate": {
+    "description": "Callsign = radio operator identifier. This error appears when profanity filter rejects the input."
+  },
   "profileCallsignLabel": "Callsign",
+  "@profileCallsignLabel": {
+    "description": "Callsign = radio operator identifier (amateur radio license ID or tactical name)."
+  },
   "profileCallsignMax": "Max 10 characters",
+  "@profileCallsignMax": {
+    "description": "Callsign = radio operator identifier. Maximum length constraint."
+  },
   "profileCloudBackup": "Cloud Backup",
   "profileCloudStartingUp": "Cloud services starting up — try again shortly",
   "profileContinueApple": "Continue with Apple",
@@ -14135,6 +14304,9 @@
   "serialConfigModeCaltopoDesc": "CalTopo format for mapping applications",
   "serialConfigModeNmeaDesc": "NMEA GPS sentence output for GPS applications",
   "serialConfigModeProtoDesc": "Protobuf binary protocol for programmatic access",
+  "@serialConfigModeProtoDesc": {
+    "description": "Protobuf = Protocol Buffers, a compact binary data format used by Meshtastic for serial communication."
+  },
   "serialConfigModeSimpleDesc": "Simple serial output for basic terminal usage",
   "serialConfigModeTextmsgDesc": "Text message mode for SMS-style communication",
   "serialConfigOverrideConsole": "Override Console Serial",
@@ -14831,7 +15003,7 @@
   "@settingsSectionTools": {
     "description": "Section header label for the Tools section in settings."
   },
-  "settingsSectionWhatsNew": "WHAT’S NEW",
+  "settingsSectionWhatsNew": "WHAT'S NEW",
   "@settingsSectionWhatsNew": {
     "description": "Section header label for the What's New section in settings."
   },
@@ -15624,6 +15796,9 @@
   "signalBackNearby": "Back nearby",
   "signalBeFirstToRespond": "Be the first to respond to this signal",
   "signalBleNoMeshTrafficIos": "Connected to BLE but no mesh traffic detected. On iOS, Airplane Mode can block BLE traffic even when connected. Turn off Airplane Mode or toggle Bluetooth.",
+  "@signalBleNoMeshTrafficIos": {
+    "description": "BLE = Bluetooth Low Energy. Mesh traffic = radio data packets. iOS Airplane Mode can interrupt BLE communication."
+  },
   "signalBroadcastYourSignal": "Broadcast your signal",
   "signalBroadcastingOverMesh": "Broadcasting over mesh...",
   "signalCancel": "Cancel",
@@ -15796,6 +15971,9 @@
   "signalImagesRestored": "Images restored!",
   "signalIntentLabel": "Intent",
   "signalIosAirplaneModeWarning": "iOS Airplane Mode can pause BLE mesh traffic even when connected. If signals stop, turn off Airplane Mode or toggle Bluetooth.",
+  "@signalIosAirplaneModeWarning": {
+    "description": "BLE = Bluetooth Low Energy connection to the mesh device. iOS Airplane Mode can pause BLE even when connected."
+  },
   "signalKeepEditing": "Keep editing",
   "signalLegendFiveMin": "< 5 min",
   "signalLegendOverTwoHrs": "> 2 hrs",
@@ -15833,6 +16011,9 @@
     }
   },
   "signalMeshOnlyDebugBanner": "Mesh-only debug mode enabled. Signals use local DB + mesh only.",
+  "@signalMeshOnlyDebugBanner": {
+    "description": "Mesh-only debug mode bypasses cloud features and uses only local database and mesh radio for testing."
+  },
   "signalMeshOnlyDebugCloudDisabled": "Mesh-only debug mode enabled. Cloud features disabled.",
   "signalNoCommentsYet": "No comments yet",
   "signalNoDeviceConnectedTooltip": "No device connected",
@@ -18305,8 +18486,17 @@
     }
   },
   "telemetryConfigAirQualityDesc": "PM1.0, PM2.5, PM10, particle counts, CO2",
+  "@telemetryConfigAirQualityDesc": {
+    "description": "PM1.0/PM2.5/PM10 = particulate matter sizes in micrometers. CO2 = carbon dioxide. Air quality sensor readings."
+  },
   "telemetryConfigAirtimeWarning": "Telemetry data is shared with all nodes on the mesh network. Shorter intervals increase airtime usage.",
+  "@telemetryConfigAirtimeWarning": {
+    "description": "Airtime = percentage of time the LoRa radio is transmitting. Shorter telemetry intervals use more airtime."
+  },
   "telemetryConfigDeviceMetricsDesc": "Battery level, voltage, channel utilization, air util TX",
+  "@telemetryConfigDeviceMetricsDesc": {
+    "description": "Channel utilization = mesh radio usage percentage. Air util TX = transmit airtime percentage."
+  },
   "telemetryConfigDisplayFahrenheit": "Display Fahrenheit",
   "telemetryConfigDisplayFahrenheitSubtitle": "Show temperature in Fahrenheit instead of Celsius",
   "telemetryConfigDisplayOnScreen": "Display on Screen",
@@ -18326,11 +18516,29 @@
   },
   "telemetryConfigSaved": "Telemetry config saved",
   "telemetryConfigSectionAirQuality": "Air Quality",
+  "@telemetryConfigSectionAirQuality": {
+    "description": "Air quality = particulate matter and gas sensor readings (PM2.5, CO2, etc.)."
+  },
   "telemetryConfigSectionDeviceMetrics": "Device Metrics",
+  "@telemetryConfigSectionDeviceMetrics": {
+    "description": "Device metrics = battery level, voltage, and radio utilization data from the mesh node."
+  },
   "telemetryConfigSectionEnvironmentMetrics": "Environment Metrics",
+  "@telemetryConfigSectionEnvironmentMetrics": {
+    "description": "Environment metrics = sensor readings (temperature, humidity, pressure) from the mesh device."
+  },
   "telemetryConfigSectionPowerMetrics": "Power Metrics",
+  "@telemetryConfigSectionPowerMetrics": {
+    "description": "Power metrics = voltage and current measurements from the device's power channels."
+  },
   "telemetryConfigTitle": "Telemetry",
+  "@telemetryConfigTitle": {
+    "description": "Telemetry = automated sensor data (battery, temperature, etc.) reported by mesh devices at intervals."
+  },
   "telemetryConfigUpdateInterval": "Update Interval",
+  "@telemetryConfigUpdateInterval": {
+    "description": "How frequently the mesh device broadcasts its telemetry (sensor data) to the network."
+  },
   "telemetryDateRangeTooltip": "Date range",
   "@telemetryDateRangeTooltip": {
     "description": "Tooltip for the date-range picker icon button."
@@ -21956,6 +22164,9 @@
   "worldMeshFilterCatFirmware": "Firmware",
   "worldMeshFilterCatHardware": "Hardware",
   "worldMeshFilterCatModemPreset": "Modem Preset",
+  "@worldMeshFilterCatModemPreset": {
+    "description": "Modem preset = predefined LoRa radio settings that control range vs. speed."
+  },
   "worldMeshFilterCatRegion": "Region",
   "worldMeshFilterCatRole": "Role",
   "worldMeshFilterCatStatus": "Status",
@@ -21964,6 +22175,9 @@
   "worldMeshFilterFirmwareVersion": "Firmware Version",
   "worldMeshFilterHardwareModel": "Hardware Model",
   "worldMeshFilterModemPreset": "Modem Preset",
+  "@worldMeshFilterModemPreset": {
+    "description": "Modem preset = predefined LoRa radio modulation configuration."
+  },
   "worldMeshFilterNo": "No",
   "worldMeshFilterNoOptions": "No options available",
   "worldMeshFilterNodeCount": "{filteredCount} of {totalCount} nodes",
@@ -22163,5 +22377,3335 @@
         "type": "String"
       }
     }
-  }
+  },
+  "deepLinkLoadingSignal": "Loading Signal",
+  "deepLinkErrorLoadingSignal": "Error loading signal: {error}",
+  "@deepLinkErrorLoadingSignal": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "deepLinkSignalNotFound": "Signal not found",
+  "deepLinkLoadingFlight": "Loading Flight",
+  "deepLinkErrorLoadingFlight": "Error loading flight: {error}",
+  "@deepLinkErrorLoadingFlight": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "deepLinkFlightNotFound": "Flight not found",
+  "deepLinkImportChannel": "Import Channel",
+  "deepLinkErrorLoadingChannel": "Error loading channel: {error}",
+  "@deepLinkErrorLoadingChannel": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "deepLinkChannelNotAvailable": "Channel not available",
+  "deepLinkChannelNotAvailableDescription": "You may not have access to this channel,\nor the owner needs to re-share it.",
+  "deepLinkJoinChannel": "Join Channel",
+  "deepLinkJoiningChannel": "Joining channel...",
+  "deepLinkInviteExpired": "This invite has expired",
+  "deepLinkInviteRevoked": "This invite has been revoked",
+  "deepLinkInviteUsageLimitReached": "This invite has reached its usage limit",
+  "deepLinkInviteLinkInvalid": "Invalid invite link",
+  "deepLinkChannelNoLongerExists": "This channel no longer exists",
+  "deepLinkInviteNotFound": "Invite not found",
+  "deepLinkPleaseSignIn": "Please sign in to join",
+  "deepLinkFailedToJoinChannel": "Failed to join channel",
+  "deepLinkLoadingWidget": "Loading Widget",
+  "deepLinkErrorLoadingWidget": "Error loading widget: {error}",
+  "@deepLinkErrorLoadingWidget": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "deepLinkSomethingWentWrong": "Something went wrong",
+  "deepLinkProfileTitle": "@{displayName}",
+  "@deepLinkProfileTitle": {
+    "placeholders": {
+      "displayName": {
+        "type": "String"
+      }
+    }
+  },
+  "deepLinkCloudServicesNotAvailable": "Cloud services not available yet",
+  "deepLinkErrorLookingUpUser": "Error looking up user: {error}",
+  "@deepLinkErrorLookingUpUser": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "deepLinkUserNotFound": "User \"@{displayName}\" not found",
+  "@deepLinkUserNotFound": {
+    "placeholders": {
+      "displayName": {
+        "type": "String"
+      }
+    }
+  },
+  "blockedRouteDeviceRequired": "Device Required",
+  "blockedRouteConnectDevice": "Connect device to access this screen",
+  "blockedRouteDeviceReset": "Device Reset",
+  "blockedRouteDeviceNotConnected": "Device Not Connected",
+  "blockedRouteDeviceResetDescription": "Your device was factory reset or replaced.\n\nGo to Settings → Bluetooth, forget the Meshtastic device, then scan again.",
+  "blockedRouteScanForDevices": "Scan for Devices",
+  "blockedRouteConnectDeviceButton": "Connect Device",
+  "deepLinkWidgetNotFound": "Widget not found",
+  "deepLinkCouldNotDecryptChannel": "Could not decrypt channel key",
+  "deepLinkAlreadyHaveChannel": "You already have this channel",
+  "transformableTextDeleteTitle": "Delete text?",
+  "transformableTextDeleteMessage": "This will remove the text overlay.",
+  "transformableTextDeleteConfirm": "Delete",
+  "transformableTextDone": "Done",
+  "transformableTextHint": "Type something...",
+  "qrSharePreparingLink": "Preparing share link...",
+  "qrShareSharing": "Sharing...",
+  "qrShareShareLink": "Share Link",
+  "qrShareCopyLink": "Copy Link",
+  "qrShareFailedToShare": "Failed to share: {error}",
+  "@qrShareFailedToShare": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "qrShareLinkCopied": "Link copied to clipboard",
+  "legalDocumentTermsOfService": "Terms of Service",
+  "legalDocumentPrivacyPolicy": "Privacy Policy",
+  "legalDocumentHelpAndSupport": "Help & Support",
+  "legalDocumentDocumentation": "Documentation",
+  "legalDocumentFaq": "FAQ",
+  "legalDocumentDeleteAccount": "Delete Account",
+  "legalDocumentUnableToLoad": "Unable to load page",
+  "legalDocumentRequiresInternet": "This content requires an internet connection. Please check your connection and try again.",
+  "legalDocumentGoBack": "Go back",
+  "legalDocumentRefresh": "Refresh",
+  "channelKeyEncryptionKey": "Encryption Key",
+  "channelKeyEnterBase64": "Enter base64-encoded key",
+  "channelKeyBase64Encoded": "Base64 encoded",
+  "channelKeyHint": "e.g., AQ== or AAAAAAAAAAAAAAAAAAAAAA==",
+  "channelKeyNoKeySet": "(no key set)",
+  "channelKeyInvalidBase64": "Invalid base64 encoding",
+  "channelKeyInvalidSize": "Invalid key size ({size} bytes). Use 1, 16, or 32 bytes.",
+  "@channelKeyInvalidSize": {
+    "placeholders": {
+      "size": {
+        "type": "int"
+      }
+    }
+  },
+  "channelKeyEmpty": "Key cannot be empty",
+  "channelKeyHide": "Hide",
+  "channelKeyShow": "Show",
+  "channelKeyEdit": "Edit",
+  "channelKeyGenerate": "Generate",
+  "channelKeyNewGenerated": "New key generated",
+  "channelKeyCopy": "Copy",
+  "channelKeyCopied": "Key copied to clipboard",
+  "remoteAdminTitle": "Remote Administration",
+  "remoteAdminSearchHint": "Search nodes...",
+  "remoteAdminConnectedDevice": "Connected Device",
+  "remoteAdminLocalVia": "Local (via BLE/USB)",
+  "@remoteAdminLocalVia": {
+    "description": "BLE = Bluetooth Low Energy. USB = wired serial connection. These are direct device connection methods."
+  },
+  "remoteAdminPkiEnabledNodes": "PKI-ENABLED NODES",
+  "@remoteAdminPkiEnabledNodes": {
+    "description": "PKI = Public Key Infrastructure. PKI-enabled nodes can receive encrypted remote admin commands."
+  },
+  "remoteAdminNodesAvailable": "{count} available",
+  "@remoteAdminNodesAvailable": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "remoteAdminRequiresPki": "Remote admin requires the target node to have your public key in its Admin Keys.",
+  "remoteAdminNoNodes": "No PKI-enabled nodes available",
+  "@remoteAdminNoNodes": {
+    "description": "PKI = Public Key Infrastructure encryption. Required for secure remote administration of mesh nodes."
+  },
+  "remoteAdminNoMatchingNodes": "No nodes match \"{query}\"",
+  "@remoteAdminNoMatchingNodes": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "remoteAdminNodesNeedPki": "Nodes need PKI encryption enabled\nto accept remote admin commands",
+  "@remoteAdminNodesNeedPki": {
+    "description": "PKI = Public Key Infrastructure. Nodes must have PKI encryption enabled to accept remote admin commands."
+  },
+  "remoteAdminPkiEnabled": "• PKI enabled",
+  "contentModerationNotAllowedTitle": "Content Not Allowed",
+  "contentModerationMayViolateTitle": "Content May Violate Guidelines",
+  "contentModerationBlockedMessage": "Your content violates our Community Guidelines and cannot be posted.",
+  "contentModerationWarningMessage": "Your content may violate our Community Guidelines. Please review before posting.",
+  "contentModerationIssuesDetected": "Issues Detected",
+  "contentModerationRepeatedViolations": "Repeated violations may result in account restrictions.",
+  "contentModerationPostingViolations": "Posting content that violates our guidelines may result in content removal and account warnings.",
+  "contentModerationEditContent": "Edit Content",
+  "contentModerationPostAnyway": "Post Anyway",
+  "contentModerationSexualContent": "Sexual Content",
+  "contentModerationHateSpeech": "Hate Speech",
+  "contentModerationViolence": "Violence",
+  "contentModerationProfanity": "Profanity",
+  "contentModerationHarassment": "Harassment",
+  "contentModerationSpam": "Spam",
+  "contentModerationIllegalActivity": "Illegal Activity",
+  "contentModerationSelfHarm": "Self-Harm",
+  "contentModerationAdultContent": "Adult Content",
+  "contentModerationSuggestiveContent": "Suggestive Content",
+  "contentModerationRemovedWithReason": "Content removed — {reason}",
+  "@contentModerationRemovedWithReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "contentModerationRemovedGeneric": "Content removed — your content violated our Community Guidelines.",
+  "contentModerationLearnMore": "Learn More",
+  "devicePrivacyLocationSharing": "Device Location Sharing",
+  "devicePrivacySharingEnabled": "This device is configured to share its GPS location.",
+  "devicePrivacySharingDisabled": "This device does not share GPS location data.",
+  "devicePrivacyWhatThisMeans": "What This Means",
+  "devicePrivacyPublicVisibility": "Public Visibility",
+  "devicePrivacyPublicDescription": "Device location will be visible to all users on the mesh network and in the app's World Map.",
+  "devicePrivacyFollowerAccess": "Follower Access",
+  "devicePrivacyFollowerDescription": "Your followers will see this device's real-time position updates.",
+  "devicePrivacyUpdateFrequency": "Update Frequency",
+  "devicePrivacyUpdateFrequencyDescription": "Location updates every {seconds} seconds.",
+  "@devicePrivacyUpdateFrequencyDescription": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "devicePrivacyPrivacyDependsNote": "Your location privacy depends on this device's Meshtastic configuration. To change sharing settings, update the device's Position Config.",
+  "devicePrivacyPrivacyProtected": "This device has location sharing disabled. Your privacy is protected.",
+  "devicePrivacyLinkDeviceLocationShared": "Link Device (Location Shared)",
+  "devicePrivacyLinkDevice": "Link Device",
+  "dateTimePickerSelectDate": "Select Date",
+  "dateTimePickerSelectTime": "Select Time",
+  "dateTimePickerSelectDateTime": "Select Date & Time",
+  "dateTimePickerMonthJanuary": "January",
+  "dateTimePickerMonthFebruary": "February",
+  "dateTimePickerMonthMarch": "March",
+  "dateTimePickerMonthApril": "April",
+  "dateTimePickerMonthMay": "May",
+  "dateTimePickerMonthJune": "June",
+  "dateTimePickerMonthJuly": "July",
+  "dateTimePickerMonthAugust": "August",
+  "dateTimePickerMonthSeptember": "September",
+  "dateTimePickerMonthOctober": "October",
+  "dateTimePickerMonthNovember": "November",
+  "dateTimePickerMonthDecember": "December",
+  "dateTimePickerMonthJan": "Jan",
+  "dateTimePickerMonthFeb": "Feb",
+  "dateTimePickerMonthMar": "Mar",
+  "dateTimePickerMonthApr": "Apr",
+  "dateTimePickerMonthMayShort": "May",
+  "dateTimePickerMonthJun": "Jun",
+  "dateTimePickerMonthJul": "Jul",
+  "dateTimePickerMonthAug": "Aug",
+  "dateTimePickerMonthSep": "Sep",
+  "dateTimePickerMonthOct": "Oct",
+  "dateTimePickerMonthNov": "Nov",
+  "dateTimePickerMonthDec": "Dec",
+  "dateTimePickerDateSection": "Date",
+  "dateTimePickerTimeSection": "Time",
+  "dateTimePickerAm": "AM",
+  "dateTimePickerPm": "PM",
+  "actionSheetQuickMessage": "Quick Message",
+  "actionSheetTo": "TO",
+  "actionSheetAllNodes": "All Nodes",
+  "actionSheetBroadcastToAll": "Broadcast to all nodes",
+  "actionSheetBroadcastToEveryone": "Broadcast to everyone on channel",
+  "actionSheetSendTo": "Send to",
+  "actionSheetQuickMessageLabel": "QUICK MESSAGE",
+  "actionSheetOrTypeCustom": "OR TYPE CUSTOM",
+  "actionSheetTypeMessage": "Type a message...",
+  "actionSheetBroadcast": "Broadcast",
+  "actionSheetSend": "Send",
+  "actionSheetSentTo": "Sent to {target}",
+  "@actionSheetSentTo": {
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "actionSheetSendFailed": "Failed to send: {error}",
+  "@actionSheetSendFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "actionSheetPresetOnMyWay": "On my way",
+  "actionSheetPresetRunningLate": "Running late",
+  "actionSheetPresetCheckInOk": "Check in OK",
+  "actionSheetPresetNeedAssistance": "Need assistance",
+  "actionSheetPresetAtDestination": "At destination",
+  "actionSheetPresetWeatherAlert": "Weather alert",
+  "actionSheetEmergencySos": "Emergency SOS",
+  "actionSheetThisWill": "This will:",
+  "actionSheetSosBroadcast": "Broadcast an emergency message to ALL nodes",
+  "actionSheetSosLocation": "Include your current location if available",
+  "actionSheetSosIfttt": "Trigger IFTTT webhook (if configured)",
+  "actionSheetSosReady": "Ready to send emergency alert",
+  "actionSheetSosCountdown": "Please wait {seconds} seconds...",
+  "@actionSheetSosCountdown": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "actionSheetSendSos": "Send SOS",
+  "actionSheetSosSent": "Emergency SOS sent to all nodes",
+  "actionSheetSosFailed": "Failed to send SOS: {error}",
+  "@actionSheetSosFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "actionSheetTraceroute": "Traceroute",
+  "@actionSheetTraceroute": {
+    "description": "Traceroute = diagnostic tool that discovers the path (sequence of relay nodes) a message takes through the mesh network."
+  },
+  "actionSheetTracerouteTo": "Traceroute to",
+  "@actionSheetTracerouteTo": {
+    "description": "Traceroute = network diagnostic that maps the multi-hop path to a node."
+  },
+  "actionSheetTracerouteInfo": "Traceroute discovers the path packets take to reach a node through the mesh network.",
+  "@actionSheetTracerouteInfo": {
+    "description": "Traceroute discovers which mesh nodes relay packets between source and destination."
+  },
+  "actionSheetTargetNode": "TARGET NODE",
+  "actionSheetSelected": "Selected",
+  "actionSheetTapToSelectNode": "Tap to select a node",
+  "actionSheetTrace": "Trace",
+  "actionSheetTracerouteSent": "Traceroute sent to {target} — check Traceroute History for results",
+  "@actionSheetTracerouteSent": {
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "actionSheetTracerouteFailed": "Failed to send traceroute: {error}",
+  "@actionSheetTracerouteFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "premiumPreviewAutomations": "Preview Mode — Upgrade to create automations",
+  "premiumPreviewIfttt": "Preview Mode — Upgrade to connect services",
+  "premiumPreviewWidgets": "Preview Mode — Upgrade to build widgets",
+  "premiumPreviewRingtones": "Preview Mode — Upgrade to access full library",
+  "premiumPreviewThemes": "Preview Mode — Upgrade to unlock all colors",
+  "premiumUpgrade": "Upgrade",
+  "premiumExample": "Example",
+  "premiumUnlockFeature": "Unlock Feature",
+  "premiumNotNow": "Not now",
+  "premiumRestorePurchases": "Restore Purchases",
+  "premiumOneTimePurchase": "One-time purchase • Yours forever",
+  "premiumUnlockFor": "Unlock for {price}",
+  "@premiumUnlockFor": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "premiumPurchaseRequiresInternet": "Purchases require an internet connection.",
+  "premiumPurchaseUnlocked": "{name} unlocked!",
+  "@premiumPurchaseUnlocked": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "premiumPurchaseFailed": "Purchase failed. Please try again.",
+  "premiumPurchaseError": "Something went wrong. Please try again.",
+  "premiumRestoreRequiresInternet": "Restoring purchases requires an internet connection.",
+  "premiumRestoreSuccess": "Purchases restored!",
+  "premiumRestoreNone": "No purchases found to restore",
+  "premiumRestoreFailed": "Failed to restore purchases",
+  "premiumConfigSaved": "Your configuration is saved. After purchase, just tap save again.",
+  "premiumHeadlineAutomations": "Automate Your Mesh",
+  "premiumHeadlineIfttt": "Connect Everything",
+  "premiumHeadlineThemes": "Make It Yours",
+  "premiumHeadlineRingtones": "Sound Library",
+  "premiumHeadlineWidgets": "Your Dashboard",
+  "premiumHeadlineWidgetsAlt": "Build Your Dashboard",
+  "premiumHeadlineRingtonesAlt": "Unlock Sound Library",
+  "premiumSubtitleAutomations": "Save this automation and unlock the full power of automatic alerts, messages, and smart triggers.",
+  "premiumSubtitleIfttt": "Connect your mesh network to hundreds of apps and services.",
+  "premiumSubtitleThemes": "Express yourself with 12 stunning accent colors.",
+  "premiumSubtitleRingtones": "Access a massive library of notification sounds.",
+  "premiumSubtitleWidgets": "Build custom dashboards with live data visualizations.",
+  "premiumDescAutomations": "Create powerful automations that trigger alerts, send messages, and react to mesh events automatically.",
+  "premiumDescIfttt": "Connect your mesh network to 700+ apps and services via IFTTT webhooks.",
+  "premiumDescWidgets": "Build custom dashboard widgets with live data, charts, and real-time monitoring.",
+  "premiumDescRingtones": "Access 7,000+ ringtones from classic tunes to TV themes and movie soundtracks.",
+  "premiumDescThemes": "Personalize your app with 12 stunning accent colors.",
+  "premiumBenefitUnlimitedAutomations": "Unlimited Automations",
+  "premiumBenefitUnlimitedAutomationsDesc": "Create as many rules as you need",
+  "premiumBenefitSmartNotifications": "Smart Notifications",
+  "premiumBenefitSmartNotificationsDesc": "Get alerts for battery, offline nodes, and more",
+  "premiumBenefitScheduledActions": "Scheduled Actions",
+  "premiumBenefitScheduledActionsDesc": "Run automations at specific times",
+  "premiumBenefitScheduledActionsShort": "Run at specific times",
+  "premiumBenefitGeofenceTriggers": "Geofence Triggers",
+  "premiumBenefitGeofenceTriggersDesc": "React when nodes enter or exit areas",
+  "premiumBenefitGeofenceTriggersShort": "React to location events",
+  "premiumBenefitConnect700": "Connect 700+ Services",
+  "premiumBenefitConnect700Desc": "Smart home, notifications, spreadsheets & more",
+  "premiumBenefitSmartHome": "Smart Home",
+  "premiumBenefitSmartHomeDesc": "Control lights, locks, and devices",
+  "premiumBenefitSmartHomeControl": "Smart Home Control",
+  "premiumBenefitSmartHomeControlDesc": "Trigger lights, locks, and devices",
+  "premiumBenefitCrossPlatform": "Cross-Platform",
+  "premiumBenefitCrossPlatformDesc": "Slack, Discord, email alerts",
+  "premiumBenefitCrossPlatformAlerts": "Cross-Platform Alerts",
+  "premiumBenefitCrossPlatformAlertsDesc": "Send to Slack, Discord, email, and more",
+  "premiumBenefitLogging": "Logging",
+  "premiumBenefitLoggingDesc": "Save events to spreadsheets",
+  "premiumBenefit12Colors": "12 Premium Colors",
+  "premiumBenefit12ColorsDesc": "Personalize every screen and button",
+  "premiumBenefit15Colors": "15 Colors",
+  "premiumBenefit15ColorsDesc": "Premium accent options",
+  "premiumBenefitExclusiveStyles": "Exclusive Styles",
+  "premiumBenefitExclusiveStylesDesc": "Unique accent combinations",
+  "premiumBenefitExclusive": "Exclusive",
+  "premiumBenefitExclusiveDesc": "Unique combinations",
+  "premiumBenefit7000Ringtones": "7,000+ Ringtones",
+  "premiumBenefit7000RingtonesDesc": "Classic melodies, TV themes, games & more",
+  "premiumBenefit10000Tones": "10,000+ Tones",
+  "premiumBenefit10000TonesDesc": "Massive searchable library",
+  "premiumBenefitSearchableLibrary": "Searchable Library",
+  "premiumBenefitSearchableLibraryDesc": "Find any tune instantly",
+  "premiumBenefitEasySearch": "Easy Search",
+  "premiumBenefitEasySearchDesc": "Find any tune instantly",
+  "premiumBenefitCustomPresets": "Custom Presets",
+  "premiumBenefitCustomPresetsDesc": "Save your favorites",
+  "premiumBenefitCustomDashboards": "Custom Dashboards",
+  "premiumBenefitCustomDashboardsDesc": "Build your own widget layouts",
+  "premiumBenefitLiveCharts": "Live Charts & Gauges",
+  "premiumBenefitLiveChartsDesc": "Visualize telemetry in real-time",
+  "premiumBenefitLiveChartsAlt": "Live Charts",
+  "premiumBenefitLiveChartsAltDesc": "Real-time data visualization",
+  "premiumBenefitBatterySensors": "Battery & Sensors",
+  "premiumBenefitBatterySensorsDesc": "Monitor everything at a glance",
+  "premiumBenefitMonitoring": "Monitoring",
+  "premiumBenefitMonitoringDesc": "Battery, sensors, telemetry",
+  "premiumBenefitCustomLayouts": "Custom Layouts",
+  "premiumBenefitCustomLayoutsDesc": "Build your own views",
+  "premiumBenefitSmartAlerts": "Smart Alerts",
+  "premiumBenefitSmartAlertsDesc": "Battery low, node offline, and more",
+  "settingsPremiumFeatureRequired": "This feature requires a purchase",
+  "settingsPremiumViewUpgrades": "View Upgrades",
+  "settingsPremiumPro": "PRO",
+  "settingsPremiumFeatureTitle": "Premium Feature",
+  "settingsPremiumFeatureDescription": "This feature requires a purchase to unlock.",
+  "settingsPremiumUnlockPrice": "Unlock ${price}",
+  "@settingsPremiumUnlockPrice": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "glyphMatrixTitle": "GLYPH MATRIX",
+  "glyphMatrixTurnOff": "Turn off",
+  "glyphMatrixInitializing": "INITIALIZING GLYPH MATRIX...",
+  "glyphMatrixInitFailed": "INIT FAILED",
+  "glyphMatrixNotSupported": "DEVICE NOT SUPPORTED",
+  "glyphMatrixRequiresDevice": "Glyph Matrix requires\nNothing Phone (3)",
+  "glyphMatrixSwipeToExecute": "← SWIPE TO EXECUTE →",
+  "batteryOptTitle": "Optimize for {oemName}",
+  "@batteryOptTitle": {
+    "placeholders": {
+      "oemName": {
+        "type": "String"
+      }
+    }
+  },
+  "batteryOptDescription": "Your device manufacturer may aggressively limit background apps. Follow these steps to keep the mesh connection alive:",
+  "batteryOptOpenSettings": "Open Battery Settings",
+  "batteryOptDismiss": "Dismiss",
+  "batteryOptDontShowAgain": "Don't show again",
+  "batteryOptXiaomiStep1": "Open Settings > Apps > Manage apps > Socialmesh.",
+  "batteryOptXiaomiStep2": "Tap \"AutoStart\" and enable it.",
+  "batteryOptXiaomiStep3": "Go back and tap \"Battery saver\".",
+  "batteryOptXiaomiStep4": "Select \"No restrictions\" for Socialmesh.",
+  "batteryOptSamsungStep1": "Open Settings > Battery and device care > Battery.",
+  "batteryOptSamsungStep2": "Tap \"Background usage limits\".",
+  "batteryOptSamsungStep3": "Remove Socialmesh from the \"Sleeping apps\" and \"Deep sleeping apps\" lists.",
+  "batteryOptSamsungStep4": "Optionally disable \"Adaptive battery\" for best results.",
+  "batteryOptHuaweiStep1": "Open Settings > Battery > App launch.",
+  "batteryOptHuaweiStep2": "Find Socialmesh and set it to \"Manage manually\".",
+  "batteryOptHuaweiStep3": "Enable all three toggles: Auto-launch, Secondary launch, and Run in background.",
+  "batteryOptOneplusStep1": "Open Settings > Apps > App management > Socialmesh.",
+  "batteryOptOneplusStep2": "Enable \"Auto-launch\" and \"Allow activity in background\".",
+  "batteryOptOneplusStep3": "On OnePlus 14+: also check Settings > Battery > Battery optimization > Socialmesh > \"Don't optimize\".",
+  "batteryOptGenericStep1": "Open Settings > Apps > Socialmesh > Battery.",
+  "batteryOptGenericStep2": "Select \"Unrestricted\" or \"Don't optimize\".",
+  "batteryOptGenericStep3": "This allows Socialmesh to maintain the mesh connection in the background.",
+  "helpCenterNoResultsPrefix": "No ",
+  "helpCenterNoResultsKeyword": "results",
+  "helpCenterNoResultsSuffix": " found",
+  "helpCenterReadingTime": "{minutes} min",
+  "@helpCenterReadingTime": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "helpCenterMoreTours": "+ {count} more tours",
+  "@helpCenterMoreTours": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "helpCenterStepsCount": "{count} steps",
+  "@helpCenterStepsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "storeForwardTitle": "Store & Forward",
+  "storeForwardSaveSuccess": "Store & Forward configuration saved",
+  "storeForwardLoadFailed": "Failed to load config",
+  "storeForwardSaveFailed": "Failed to save config: {error}",
+  "@storeForwardSaveFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "storeForwardSave": "Save",
+  "storeForwardModuleSettings": "Module Settings",
+  "storeForwardServerSettings": "Server Settings",
+  "storeForwardInfoDescription": "Allows nodes to store messages and forward them to devices that were offline. A \"server\" node stores messages, while \"client\" nodes can request missed messages.",
+  "storeForwardEnable": "Enable Store & Forward",
+  "@storeForwardEnable": {
+    "description": "Store & Forward = mesh module that stores messages for offline nodes and forwards them when they reconnect."
+  },
+  "storeForwardEnableSubtitle": "Participate in the S&F network",
+  "@storeForwardEnableSubtitle": {
+    "description": "S&F network = Store & Forward mesh message relay system for delivering to temporarily offline nodes."
+  },
+  "storeForwardActAsServer": "Act as Server",
+  "storeForwardActAsServerSubtitle": "Store messages for other nodes (uses more RAM)",
+  "storeForwardHeartbeat": "Heartbeat",
+  "storeForwardHeartbeatSubtitle": "Send periodic announcements to the mesh",
+  "storeForwardRecordsLimit": "Records Limit",
+  "storeForwardRecordsLimitSubtitle": "Use device default",
+  "storeForwardAuto": "Auto",
+  "storeForwardHistoryReturnMax": "History Return Max",
+  "storeForwardHistoryReturnMaxSubtitle": "Max {count} messages per request",
+  "@storeForwardHistoryReturnMaxSubtitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "storeForwardHistoryWindow": "History Window",
+  "storeForwardHistoryWindowSubtitle": "Keep messages for {hours} hours",
+  "@storeForwardHistoryWindowSubtitle": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "geofenceTitle": "Set Geofence",
+  "geofenceDone": "Done",
+  "geofencePermissionDenied": "Location permission denied. Grant location access to set geofence center.",
+  "geofenceOpenSettings": "Open Settings",
+  "geofenceLocationFailed": "Failed to get location: {error}",
+  "@geofenceLocationFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "geofenceTapToSet": "Please tap on the map to set a geofence center",
+  "geofenceTapToSetCenter": "Tap to set geofence center",
+  "geofenceDragToAdjust": "Drag the circle edge to adjust radius",
+  "geofenceNodesCount": "{count} nodes",
+  "@geofenceNodesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "geofenceMonitoredNode": "Monitored Node",
+  "geofenceRadius": "Radius",
+  "geofenceLocating": "Locating...",
+  "geofenceUseMyLocation": "Use My Location",
+  "geofenceSetGeofence": "Set Geofence",
+  "geofenceSelectNode": "Select Node",
+  "geofenceNoNodesWithGps": "No nodes with GPS",
+  "geofenceYou": "YOU",
+  "geofenceMonitored": "Monitored",
+  "geofenceMonitor": "Monitor",
+  "restorePurchasesTitle": "Restore Purchases",
+  "restorePurchasesRequiresInternet": "Restoring purchases requires an internet connection.",
+  "restorePurchasesSuccess": "Purchases restored successfully!",
+  "restorePurchasesAlreadyActive": "Your purchases are already active",
+  "restorePurchasesNone": "No purchases found to restore",
+  "bluetoothTitle": "Bluetooth",
+  "bluetoothSave": "Save",
+  "bluetoothSaveSuccess": "Bluetooth configuration saved",
+  "bluetoothSaveFailed": "Failed to save: {error}",
+  "@bluetoothSaveFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "bluetoothInvalidPin": "Please enter a valid 6-digit PIN",
+  "bluetoothEnabled": "Bluetooth Enabled",
+  "@bluetoothEnabled": {
+    "description": "Bluetooth connectivity to the Meshtastic/MeshCore mesh radio device."
+  },
+  "bluetoothEnableSubtitle": "Enable Bluetooth connectivity",
+  "@bluetoothEnableSubtitle": {
+    "description": "Bluetooth = wireless connection between the phone and the mesh radio device."
+  },
+  "bluetoothPairingMode": "PAIRING MODE",
+  "bluetoothFixedPin": "FIXED PIN",
+  "bluetoothPinHint": "Enter a 6-digit PIN code for Bluetooth pairing",
+  "bluetoothInfoDescription": "Bluetooth settings control how your device pairs with phones and other devices.",
+  "bluetoothModeRandom": "Random PIN",
+  "bluetoothModeFixed": "Fixed PIN",
+  "bluetoothModeNone": "No PIN",
+  "bluetoothModeUnknown": "Unknown",
+  "bluetoothModeRandomDesc": "Generate random PIN on each boot",
+  "bluetoothModeFixedDesc": "Use a fixed PIN code",
+  "bluetoothModeNoneDesc": "No PIN required (insecure)",
+  "detectionSensorTitle": "Detection Sensor",
+  "detectionSensorSave": "Save",
+  "detectionSensorSaveSuccess": "Detection Sensor configuration saved",
+  "detectionSensorSaveFailed": "Failed to save config: {error}",
+  "@detectionSensorSaveFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "detectionSensorBasicSettings": "Basic Settings",
+  "detectionSensorPinConfig": "Pin Configuration",
+  "detectionSensorTiming": "Timing",
+  "detectionSensorClientOptions": "Client Options",
+  "detectionSensorInfoDescription": "Monitor a GPIO pin and broadcast state changes to the mesh. Use with PIR motion sensors, door/window contacts, or other binary sensors.",
+  "detectionSensorEnable": "Enable Detection Sensor",
+  "@detectionSensorEnable": {
+    "description": "Detection sensor = hardware module that monitors a GPIO pin and broadcasts state changes to the mesh."
+  },
+  "detectionSensorEnableSubtitle": "Monitor GPIO pin and broadcast state changes",
+  "@detectionSensorEnableSubtitle": {
+    "description": "GPIO = General Purpose Input/Output pin on the mesh device hardware."
+  },
+  "detectionSensorName": "Sensor Name",
+  "detectionSensorNameHint": "e.g., Front Door, Motion Sensor",
+  "detectionSensorGpioPin": "GPIO Pin",
+  "detectionSensorGpioPinSubtitle": "The GPIO pin number to monitor",
+  "detectionSensorTriggerType": "Trigger Type",
+  "detectionSensorUsePullup": "Use Internal Pullup",
+  "detectionSensorUsePullupSubtitle": "Enable internal pullup resistor on the pin",
+  "detectionSensorSendBell": "Send Bell Character",
+  "detectionSensorSendBellSubtitle": "Send bell (\\a) in detection messages",
+  "detectionSensorMinBroadcastInterval": "Minimum Broadcast Interval",
+  "detectionSensorMinBroadcastIntervalSubtitle": "Wait {seconds} seconds between broadcasts",
+  "@detectionSensorMinBroadcastIntervalSubtitle": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "detectionSensorStateBroadcastInterval": "State Broadcast Interval",
+  "detectionSensorStateBroadcastIntervalSubtitle": "Broadcast current state every {minutes} minutes",
+  "@detectionSensorStateBroadcastIntervalSubtitle": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "detectionSensorEnableNotifications": "Enable Notifications",
+  "detectionSensorEnableNotificationsSubtitle": "Show notifications when sensor events are received",
+  "detectionSensorTriggerLogicLow": "Logic Low (active when pin is LOW)",
+  "detectionSensorTriggerLogicHigh": "Logic High (active when pin is HIGH)",
+  "detectionSensorTriggerFallingEdge": "Falling Edge (trigger on HIGH→LOW)",
+  "detectionSensorTriggerRisingEdge": "Rising Edge (trigger on LOW→HIGH)",
+  "detectionSensorTriggerEitherEdgeLow": "Either Edge (active LOW)",
+  "detectionSensorTriggerEitherEdgeHigh": "Either Edge (active HIGH)",
+  "subscriptionPremiumTitle": "Premium",
+  "subscriptionOrBuyIndividually": "or buy individually",
+  "subscriptionIncludedFeatures": "Included Features",
+  "subscriptionUnlockFeatures": "Unlock Features",
+  "subscriptionOneTimePurchases": "One-time purchases, yours forever",
+  "subscriptionTerms": "Terms",
+  "subscriptionPrivacy": "Privacy",
+  "subscriptionAllUnlocked": "All Features Unlocked",
+  "subscriptionThankYou": "Thank you for your support!",
+  "subscriptionCompletePack": "Complete Pack",
+  "subscriptionCompletePackSubtitle": "Everything. Forever. One price.",
+  "subscriptionTones": "{count} tones",
+  "@subscriptionTones": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "subscriptionAccentColors": "12 accent colors",
+  "subscriptionUnlimitedWidgets": "Unlimited custom widgets",
+  "subscriptionTriggersSchedules": "Triggers & schedules",
+  "subscriptionAppIntegrations": "700+ app integrations",
+  "subscriptionBestValue": "Best value - all features",
+  "subscriptionGetAll": "Get All",
+  "subscriptionOwned": "OWNED",
+  "subscriptionSearchableTones": "{count} searchable RTTTL tones",
+  "@subscriptionSearchableTones": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "subscriptionView": "View",
+  "subscriptionAllUnlockedCelebration": "All Features Unlocked!",
+  "subscriptionCelebrationMessage": "You now have access to everything Socialmesh has to offer. Thank you for your support!",
+  "subscriptionAwesome": "Awesome!",
+  "cannedResponsesTitle": "Quick Responses",
+  "cannedResponsesAddTooltip": "Add response",
+  "cannedResponsesDoneTooltip": "Done",
+  "cannedResponsesReorderTooltip": "Reorder",
+  "cannedResponsesResetToDefaults": "Reset to defaults",
+  "cannedResponsesDeleteTitle": "Delete Response",
+  "cannedResponsesDeleteMessage": "Delete \"{text}\"?",
+  "@cannedResponsesDeleteMessage": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "cannedResponsesDeleteConfirm": "Delete",
+  "cannedResponsesResetTitle": "Reset to Defaults",
+  "cannedResponsesResetMessage": "This will remove all custom responses and restore the default set.",
+  "cannedResponsesResetConfirm": "Reset",
+  "cannedResponsesDragToReorder": "Drag to reorder responses",
+  "cannedResponsesTapToEdit": "Tap to edit, swipe to delete",
+  "cannedResponsesDefault": "Default",
+  "cannedResponsesEditTitle": "Edit Response",
+  "cannedResponsesAddTitle": "Add Response",
+  "cannedResponsesCreateSubtitle": "Create a quick message for fast sending",
+  "cannedResponsesMessageLabel": "Message",
+  "cannedResponsesMessageHint": "e.g., On my way",
+  "cannedResponsesSave": "Save",
+  "cannedResponsesAdd": "Add",
+  "rangeTestTitle": "Range Test",
+  "rangeTestSave": "Save",
+  "rangeTestSaveSuccess": "Range test configuration saved",
+  "rangeTestSaveFailed": "Failed to save config: {error}",
+  "@rangeTestSaveFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "rangeTestNoNodes": "No other nodes available",
+  "rangeTestSelectTarget": "Select target",
+  "rangeTestConfiguration": "Configuration",
+  "rangeTestResultsCount": "Results ({count})",
+  "@rangeTestResultsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "rangeTestAbout": "About Range Test",
+  "rangeTestRunning": "Test Running",
+  "rangeTestReady": "Ready to Test",
+  "rangeTestPacketsReceived": "{count} packets received",
+  "@rangeTestPacketsReceived": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "rangeTestSelectNode": "Select Node",
+  "rangeTestStop": "Stop",
+  "rangeTestStartTest": "Start Test",
+  "rangeTestEnableModule": "Enable Range Test Module",
+  "rangeTestEnableModuleSubtitle": "Allow this device to participate in range tests",
+  "rangeTestSenderInterval": "Sender Interval",
+  "rangeTestSenderIntervalSubtitle": "Send test packet every {seconds} seconds",
+  "@rangeTestSenderIntervalSubtitle": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "rangeTestSaveResultsToSd": "Save Results to SD",
+  "rangeTestSaveResultsToSdSubtitle": "Store test results on device SD card",
+  "rangeTestAvgSnr": "Avg SNR",
+  "@rangeTestAvgSnr": {
+    "description": "SNR = Signal-to-Noise Ratio. 'Avg' = average over test duration."
+  },
+  "rangeTestAvgRssi": "Avg RSSI",
+  "@rangeTestAvgRssi": {
+    "description": "RSSI = Received Signal Strength Indicator. 'Avg' = average over test duration."
+  },
+  "rangeTestMaxDist": "Max Dist",
+  "rangeTestHowItWorks": "How Range Test Works",
+  "rangeTestHowItWorksDescription": "1. Select a target node to test range with\n2. Start the test to begin sending packets\n3. View real-time signal metrics (SNR, RSSI)\n4. Track maximum distance achieved\n\nBoth nodes must have Range Test module enabled for best results.",
+  "@rangeTestHowItWorksDescription": {
+    "description": "Range test sends mesh radio packets between two nodes to measure signal quality (SNR/RSSI) over distance."
+  },
+  "rangeTestSelectTargetNode": "Select Target Node",
+  "rangeTestSearchNodes": "Search nodes…",
+  "rangeTestNoNodesMatch": "No nodes match \"{query}\"",
+  "@rangeTestNoNodesMatch": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "themeSettingsTitle": "Theme Settings",
+  "themeSettingsCurrentAccent": "Current accent color",
+  "themeSettingsAccentColor": "ACCENT COLOR",
+  "themeSettingsQrCodeStyle": "QR CODE STYLE",
+  "themeSettingsPreview": "PREVIEW",
+  "themeSettingsCompletePackOnly": "{colorName} (Complete Pack only)",
+  "@themeSettingsCompletePackOnly": {
+    "placeholders": {
+      "colorName": {
+        "type": "String"
+      }
+    }
+  },
+  "themeSettingsThemePack": "{colorName} (Theme Pack)",
+  "@themeSettingsThemePack": {
+    "placeholders": {
+      "colorName": {
+        "type": "String"
+      }
+    }
+  },
+  "themeSettingsPattern": "Pattern",
+  "themeSettingsStyleDots": "Dots",
+  "themeSettingsStyleSmooth": "Smooth",
+  "themeSettingsStyleClassic": "Classic",
+  "themeSettingsStyleDotsDesc": "Clean circular modules",
+  "themeSettingsStyleSmoothDesc": "Premium liquid modules",
+  "themeSettingsStyleClassicDesc": "Maximum compatibility",
+  "themeSettingsUseAccentGradient": "Use Accent Gradient",
+  "themeSettingsApplyAccentToQr": "Apply accent color to QR codes",
+  "themeSettingsButtons": "Buttons",
+  "themeSettingsPrimary": "Primary",
+  "themeSettingsSecondary": "Secondary",
+  "themeSettingsText": "Text",
+  "themeSettingsControls": "Controls",
+  "themeSettingsProgress": "Progress",
+  "themeSettingsBadges": "Badges",
+  "themeSettingsOnline": "Online",
+  "themeSettingsNewCount": "5 new",
+  "privacySettingsTitle": "Privacy",
+  "privacySettingsInfoDescription": "Socialmesh collects minimal data to improve app stability and performance. You can control what is shared below.",
+  "privacySettingsDataCollection": "DATA COLLECTION",
+  "privacySettingsUsageAnalytics": "Usage Analytics",
+  "privacySettingsUsageAnalyticsSubtitle": "Helps us understand which features are used most. No message content or precise location is collected.",
+  "privacySettingsCrashReporting": "Crash Reporting",
+  "privacySettingsCrashReportingSubtitle": "Automatically sends crash data when the app encounters an error. Helps us fix bugs faster.",
+  "privacySettingsDisableAnalyticsTitle": "Disable Usage Analytics?",
+  "privacySettingsDisableAnalyticsMessage": "Usage analytics help us understand how the app is used and identify issues. No personal messages or location data are collected.\n\nYou can re-enable this at any time.",
+  "privacySettingsDisable": "Disable",
+  "privacySettingsAnalyticsEnabled": "Usage analytics enabled",
+  "privacySettingsAnalyticsDisabled": "Usage analytics disabled",
+  "privacySettingsDisableCrashTitle": "Disable Crash Reporting?",
+  "privacySettingsDisableCrashMessage": "Crash reports help us fix bugs faster. No personal messages or location data are included in crash reports.\n\nYou can re-enable this at any time.",
+  "privacySettingsCrashEnabled": "Crash reporting enabled",
+  "privacySettingsCrashDisabled": "Crash reporting disabled",
+  "privacySettingsPrivacyPolicy": "Privacy Policy",
+  "privacySettingsThirdPartyServices": "THIRD-PARTY SERVICES",
+  "privacySettingsFirebaseCategories": "Crash reports, usage analytics (if opted in)",
+  "privacySettingsRevenueCatCategories": "Purchase identifiers, subscription status",
+  "privacySettingsSigilCategories": "Hashed node identifiers for artwork generation",
+  "appearanceTitle": "Appearance & Accessibility",
+  "appearanceResetTooltip": "Reset to defaults",
+  "appearanceLanguage": "Language",
+  "appearanceLanguageSystemDefault": "System Default",
+  "appearanceLanguageEnglish": "English",
+  "appearanceLanguageItalian": "Italian",
+  "appearanceLanguageRussian": "Russian",
+  "appearanceLanguagePickerTitle": "Select Language",
+  "appearanceFont": "Font",
+  "appearanceTextSize": "Text Size",
+  "appearanceDisplayDensity": "Display Density",
+  "appearanceContrast": "Contrast",
+  "appearanceMotion": "Motion",
+  "appearanceResetSuccess": "Settings reset to defaults",
+  "appearanceLivePreview": "Live Preview",
+  "appearanceChangesApplyInstantly": "Changes apply instantly",
+  "appearanceSampleText": "Sample body text to preview your settings. Adjust the options below to find what works best for you.",
+  "appearanceHighContrast": "High Contrast",
+  "appearanceHighContrastDesc": "Enhanced visibility for text and UI elements",
+  "appearanceElementalAtmosphere": "Elemental Atmosphere",
+  "appearanceElementalDisabled": "Disabled while Reduce Motion is active",
+  "appearanceElementalDesc": "Ambient particle effects driven by mesh activity",
+  "appearanceReduceMotion": "Reduce Motion",
+  "appearanceReduceMotionDesc": "Minimize animations throughout the app",
+  "appearanceResetToRecommended": "Reset to Recommended",
+  "appearanceRestoreDefaults": "Restore default settings",
+  "appearanceUsingRecommended": "Using recommended settings",
+  "appearanceResetDialogTitle": "Reset to Defaults?",
+  "appearanceResetDialogMessage": "This will restore all appearance and accessibility settings to their recommended values.",
+  "appearanceResetDialogCancel": "Cancel",
+  "appearanceResetDialogConfirm": "Reset",
+  "settingsSectionProfile": "PROFILE",
+  "settingsSectionFileTransfer": "FILE TRANSFER",
+  "settingsGlyphMatrixTest": "Glyph Matrix Test",
+  "settingsGlyphMatrixSubtitle": "Nothing Phone 3 LED patterns",
+  "cloudSyncUnableToLoad": "Unable to load subscription options",
+  "cloudSyncTitle": "Unlock Cloud Sync",
+  "cloudSyncDescription": "Sync your mesh data across devices. Your local data always stays free and accessible.",
+  "cloudSyncNodeDex": "NodeDex — encounters, tags, notes",
+  "cloudSyncAutomations": "Automations — rules and triggers",
+  "cloudSyncWidgets": "Custom Widgets — layouts and data",
+  "cloudSyncOfflineNote": "Works fully offline without it",
+  "cloudSyncAutoRenewNote": "Subscriptions auto-renew unless cancelled at least 24 hours before the end of the current period.",
+  "cloudSyncYearlySave": "Yearly (Save 44%)",
+  "cloudSyncMonthly": "Monthly",
+  "cloudSyncRequired": "Cloud Sync Required",
+  "cloudSyncSubscriptionRestored": "Subscription restored",
+  "cloudSyncNoSubscription": "No Cloud Sync subscription found",
+  "cloudSyncRestoreFailed": "Restore failed. Please try again.",
+  "cloudSyncExpiredMessage": "Your Cloud Sync subscription has expired. Your data is read-only.",
+  "cloudSyncRenew": "Renew",
+  "cloudSyncPaymentIssue": "There's an issue with your payment. Please update your payment method.",
+  "signalSettingsTitle": "Signals",
+  "signalSettingsPrivacy": "SIGNAL PRIVACY",
+  "signalSettingsLocationRadius": "Signal location radius",
+  "signalSettingsRadiusDescription": "Signals are rounded to this radius, not an exact address",
+  "signalSettingsContent": "SIGNAL CONTENT",
+  "signalSettingsMaxImages": "Max Images per Signal",
+  "signalSettingsImageLimit": "Limit: 1-4 images",
+  "signalSettingsNotifications": "SIGNAL NOTIFICATIONS",
+  "signalSettingsNotifySignals": "Signals",
+  "signalSettingsNotifySignalsSubtitle": "Notify when someone posts a signal",
+  "signalSettingsNotifyVotes": "Votes",
+  "signalSettingsNotifyVotesSubtitle": "When someone upvotes your signal comments",
+  "adminFollowTitle": "Social Admin",
+  "adminFollowTabRequests": "Follow Requests",
+  "adminFollowTabSeedData": "Seed Data",
+  "adminFollowErrorLoading": "Error loading requests",
+  "adminFollowNoPending": "No pending requests",
+  "adminFollowApproved": "Request approved",
+  "adminFollowApproveFailed": "Failed to approve: {error}",
+  "@adminFollowApproveFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "adminFollowDeclined": "Request declined",
+  "adminFollowDeclineFailed": "Failed to decline: {error}",
+  "@adminFollowDeclineFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "adminFollowRequestedTime": "Requested {time}",
+  "@adminFollowRequestedTime": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "adminFollowDecline": "Decline",
+  "adminFollowAccept": "Accept",
+  "adminFollowJustNow": "just now",
+  "adminFollowMinutesAgo": "{minutes}m ago",
+  "@adminFollowMinutesAgo": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "adminFollowHoursAgo": "{hours}h ago",
+  "@adminFollowHoursAgo": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "adminFollowDaysAgo": "{days}d ago",
+  "@adminFollowDaysAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "adminFollowTestData": "Test Data",
+  "adminFollowProfiles": "Profiles",
+  "adminFollowPosts": "Posts",
+  "adminFollowStories": "Stories",
+  "adminFollowComments": "Comments",
+  "adminFollowDummyUsers": "Dummy Users",
+  "adminFollowLog": "Log",
+  "adminFollowResetAndSeed": "Reset & Seed",
+  "adminFollowSeedData": "Seed Data",
+  "adminFollowSeedDescription": "Reset & Seed: Clears all dummy data first, then seeds fresh.\nSeed Data: Adds to existing data (may create duplicates).",
+  "adminFollowSeededSummary": "Seeded {users} users, {posts} posts, {stories} stories, {comments} comments",
+  "@adminFollowSeededSummary": {
+    "placeholders": {
+      "users": {
+        "type": "int"
+      },
+      "posts": {
+        "type": "int"
+      },
+      "stories": {
+        "type": "int"
+      },
+      "comments": {
+        "type": "int"
+      }
+    }
+  },
+  "adminPostsTitle": "Signals",
+  "adminPostsDeleteAll": "Delete all signals",
+  "adminPostsRefresh": "Refresh snapshot",
+  "adminPostsFilterHint": "Filter by content or author ID",
+  "adminPostsLoadFailed": "Failed to load posts: {error}",
+  "@adminPostsLoadFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "adminPostsNoMatched": "No posts matched",
+  "adminPostsFilterAll": "All",
+  "adminPostsFilterSignals": "Signals",
+  "adminPostsFilterExpired": "Expired",
+  "adminPostsFilterLocation": "Location",
+  "adminPostsFilterMedia": "Media",
+  "adminPostsDeletePostTitle": "Delete post?",
+  "adminPostsDeletePostMessage": "Deleting a post removes it from Firebase immediately. This cannot be undone.",
+  "adminPostsDeleteConfirm": "Delete",
+  "adminPostsDeleteSignalsTitle": "Delete signals?",
+  "adminPostsDeleteFilteredMessage": "Delete filtered ({filtered}) or all ({total}) signals.",
+  "@adminPostsDeleteFilteredMessage": {
+    "placeholders": {
+      "filtered": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "adminPostsDeleteAllMessage": "Delete all {total} signals.",
+  "@adminPostsDeleteAllMessage": {
+    "placeholders": {
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "adminPostsDeleteWarning": "This cannot be undone. Type DELETE to confirm.",
+  "adminPostsDeleteHint": "DELETE",
+  "adminPostsNoText": "(no text)",
+  "adminPostsAuthor": "Author {authorId}",
+  "@adminPostsAuthor": {
+    "placeholders": {
+      "authorId": {
+        "type": "String"
+      }
+    }
+  },
+  "adminPostsStats": "Comments {comments} · Likes {likes}",
+  "@adminPostsStats": {
+    "placeholders": {
+      "comments": {
+        "type": "int"
+      },
+      "likes": {
+        "type": "int"
+      }
+    }
+  },
+  "adminPostsDeletePostTooltip": "Delete post",
+  "bgConnDisableTitle": "Disable Background Connection?",
+  "bgConnDisableBody": "The mesh connection may be lost when the app is in the background. You will not receive notifications for new messages.",
+  "bgConnDisableConfirm": "Disable",
+  "bgConnTitle": "Background Connection",
+  "bgConnSectionConnection": "CONNECTION",
+  "bgConnToggleTitle": "Background connection",
+  "bgConnToggleSubtitle": "Keep mesh radio connected when the app is in the background",
+  "bgConnSectionNotifications": "BACKGROUND NOTIFICATIONS",
+  "bgConnDirectMessages": "Direct messages",
+  "bgConnDirectMessagesSubtitle": "Notify for DMs received while backgrounded",
+  "bgConnChannelMessages": "Channel messages",
+  "bgConnChannelMessagesSubtitle": "Notify for channel messages while backgrounded",
+  "bgConnNodeDiscovery": "Node discovery",
+  "bgConnNodeDiscoverySubtitle": "Notify when new nodes are heard",
+  "bgConnSectionPersistentNotification": "PERSISTENT NOTIFICATION",
+  "bgConnSectionBattery": "BATTERY",
+  "bgConnBatteryGuide": "Battery optimization guide",
+  "bgConnBatteryGuideSubtitle": "OEM-specific instructions for reliable background operation",
+  "bgConnStyleMinimal": "Minimal",
+  "bgConnStyleDetailed": "Detailed",
+  "bgConnNotificationStyle": "Notification style",
+  "bgConnStyleMinimalDesc": "Shows \"Connected to [device]\"",
+  "bgConnStyleDetailedDesc": "Shows connection status with node count and last message time",
+  "linkedDevicesTitle": "Linked Devices",
+  "linkedDevicesSignInRequired": "Sign In Required",
+  "linkedDevicesSignInBody": "Sign in to link your Meshtastic devices to your social profile.",
+  "linkedDevicesLinkDescription": "Link your Meshtastic devices to your profile so others can find and follow you from the nodes list.",
+  "linkedDevicesNoDevices": "No Linked Devices",
+  "linkedDevicesNoDevicesBody": "Connect to a Meshtastic device and tap \"Link Current Device\" above.",
+  "linkedDevicesLinkAnother": "To link another device, disconnect from your current device and connect to the new one.",
+  "linkedDevicesLoadFailed": "Failed to load linked devices",
+  "linkedDevicesDeviceNotFound": "Device not found",
+  "linkedDevicesUnknownDevice": "Unknown Device",
+  "linkedDevicesLinked": "Device linked to your profile",
+  "linkedDevicesLinkFailed": "Failed to link device: {error}",
+  "@linkedDevicesLinkFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "linkedDevicesPrimaryUpdated": "Primary device updated",
+  "linkedDevicesSetPrimaryFailed": "Failed to set primary: {error}",
+  "@linkedDevicesSetPrimaryFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "linkedDevicesUnlinkTitle": "Unlink Device",
+  "linkedDevicesUnlinkBody": "Remove this device from your profile? Others will no longer see your profile when viewing this node.",
+  "linkedDevicesUnlinkConfirm": "Unlink",
+  "linkedDevicesUnlinked": "Device unlinked",
+  "linkedDevicesUnlinkFailed": "Failed to unlink: {error}",
+  "@linkedDevicesUnlinkFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "linkedDevicesConnectedDevice": "Connected Device",
+  "linkedDevicesLinkButton": "Link",
+  "linkedDevicesPrimaryBadge": "PRIMARY",
+  "linkedDevicesSendMessage": "Send Message",
+  "linkedDevicesViewOnMap": "View on Map",
+  "linkedDevicesSetAsPrimary": "Set as Primary",
+  "linkedDevicesSetAsPrimarySubtitle": "Show this device on your profile",
+  "homeWidgetsTitle": "Home Widgets",
+  "homeWidgetsSectionAvailable": "AVAILABLE WIDGETS",
+  "homeWidgetsMeshStatus": "Mesh Status",
+  "homeWidgetsMeshStatusDesc": "Shows connected nodes count and mesh health",
+  "homeWidgetsSizeSmall": "Small",
+  "homeWidgetsSizeMedium": "Medium",
+  "homeWidgetsSizeLarge": "Large",
+  "homeWidgetsRecentMessages": "Recent Messages",
+  "homeWidgetsRecentMessagesDesc": "Displays latest messages from your mesh",
+  "homeWidgetsDeviceBattery": "Device Battery",
+  "homeWidgetsDeviceBatteryDesc": "Shows battery level of your connected device",
+  "homeWidgetsQuickMessage": "Quick Message",
+  "homeWidgetsQuickMessageDesc": "Send a canned response with one tap",
+  "homeWidgetsLocationBeacon": "Location Beacon",
+  "@homeWidgetsLocationBeacon": {
+    "description": "Location Beacon = a home screen widget that displays the device's mesh-broadcast GPS position."
+  },
+  "homeWidgetsLocationBeaconDesc": "Share your location with a single tap",
+  "homeWidgetsSectionHowTo": "HOW TO ADD WIDGETS",
+  "homeWidgetsSectionTips": "TIPS",
+  "homeWidgetsAddToHomeScreen": "Add widgets to your home screen for quick access",
+  "homeWidgetsIosLongPress": "Long press on home screen",
+  "homeWidgetsIosLongPressDesc": "Press and hold any empty area until apps jiggle",
+  "homeWidgetsIosTapPlus": "Tap the + button",
+  "homeWidgetsIosTapPlusDesc": "Located in the top-left corner",
+  "homeWidgetsIosSearch": "Search for \"Socialmesh\"",
+  "homeWidgetsIosSearchDesc": "Or scroll to find our widgets",
+  "homeWidgetsIosChooseSize": "Choose a widget size",
+  "homeWidgetsIosChooseSizeDesc": "Swipe to see available sizes, tap \"Add Widget\"",
+  "homeWidgetsIosPosition": "Position and tap Done",
+  "homeWidgetsIosPositionDesc": "Drag to your preferred location",
+  "homeWidgetsAndroidLongPress": "Press and hold any empty area",
+  "homeWidgetsAndroidTapWidgets": "Tap \"Widgets\"",
+  "homeWidgetsAndroidTapWidgetsDesc": "From the menu that appears",
+  "homeWidgetsAndroidLongPressDrag": "Long press and drag",
+  "homeWidgetsAndroidLongPressDragDesc": "Hold the widget and place it on your home screen",
+  "homeWidgetsIosInstructions": "iOS Instructions",
+  "homeWidgetsAndroidInstructions": "Android Instructions",
+  "homeWidgetsTipAutoUpdate": "Widgets update automatically when connected",
+  "homeWidgetsTipOffline": "Offline data shown when disconnected",
+  "homeWidgetsTipTapToOpen": "Tap any widget to open the app",
+  "homeWidgetsTipAccentColor": "Widget colors match your accent color",
+  "radioConfigSaved": "Radio configuration saved",
+  "radioConfigSaveFailed": "Failed to save: {error}",
+  "@radioConfigSaveFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "radioConfigTitle": "Radio",
+  "radioConfigHelp": "Help",
+  "radioConfigSave": "Save",
+  "radioConfigSectionRegion": "REGION",
+  "radioConfigSectionModemPreset": "MODEM PRESET",
+  "@radioConfigSectionModemPreset": {
+    "description": "Modem preset = predefined radio modulation settings (speed vs. range tradeoff) for the LoRa radio."
+  },
+  "radioConfigSectionTransmission": "TRANSMISSION",
+  "radioConfigTxEnabled": "Transmission Enabled",
+  "radioConfigTxEnabledSubtitle": "Allow device to transmit",
+  "radioConfigHopLimit": "Hop Limit",
+  "@radioConfigHopLimit": {
+    "description": "Hop limit = maximum number of times a message is relayed between mesh nodes before being dropped."
+  },
+  "radioConfigHopLimitSubtitle": "Number of times messages can be relayed",
+  "radioConfigTxPowerOverride": "TX Power Override",
+  "radioConfigTxPowerDefault": "Default",
+  "radioConfigTxPowerSubtitle": "Override transmit power (0 = use default)",
+  "radioConfigSectionAdvanced": "ADVANCED",
+  "radioConfigUsePreset": "Use Preset",
+  "radioConfigUsePresetSubtitle": "Use preset modem settings instead of custom",
+  "radioConfigBandwidth": "Bandwidth",
+  "radioConfigSpreadFactor": "Spread Factor",
+  "radioConfigCodingRate": "Coding Rate",
+  "radioConfigFrequencySlot": "Frequency Slot",
+  "radioConfigFrequencySlotSubtitle": "Your operating frequency is calculated from the region, modem preset, and this value. Most users should leave this as the default.",
+  "@radioConfigFrequencySlotSubtitle": {
+    "description": "Frequency slot determines the exact radio frequency. Modem preset = LoRa modulation setting."
+  },
+  "radioConfigRxBoostedGain": "RX Boosted Gain",
+  "radioConfigRxBoostedGainSubtitle": "Enable boosted gain on SX126x receivers",
+  "radioConfigFrequencyOverride": "Frequency Override",
+  "radioConfigFrequencyOverrideSubtitle": "Override frequency in MHz (0 = disabled)",
+  "radioConfigIgnoreMqtt": "Ignore MQTT",
+  "@radioConfigIgnoreMqtt": {
+    "description": "MQTT = Message Queuing Telemetry Transport, a protocol for internet-bridged mesh messaging. 'Ignore' means discard messages relayed via MQTT."
+  },
+  "radioConfigIgnoreMqttSubtitle": "Ignore messages via MQTT from this device",
+  "@radioConfigIgnoreMqttSubtitle": {
+    "description": "MQTT messages are mesh messages relayed through an internet server."
+  },
+  "radioConfigOkToMqtt": "Ok to MQTT",
+  "@radioConfigOkToMqtt": {
+    "description": "MQTT = internet message broker protocol. 'Ok to MQTT' means this config can be sent via internet uplink."
+  },
+  "radioConfigOkToMqttSubtitle": "Config is ok to send via MQTT uplink",
+  "@radioConfigOkToMqttSubtitle": {
+    "description": "MQTT uplink = forwarding mesh messages to an internet broker server."
+  },
+  "radioConfigRegionUnset": "Unset",
+  "radioConfigRegionNotConfigured": "Not configured",
+  "radioConfigRegionSelectHint": "Select the region that matches your country's regulations",
+  "radioConfigPresetLongFast": "Long Fast",
+  "@radioConfigPresetLongFast": {
+    "description": "LoRa modem preset: long range, fast data rate. 'Long' = range, 'Fast' = speed."
+  },
+  "radioConfigPresetLongFastDesc": "Best range with good speed",
+  "radioConfigPresetLongSlow": "Long Slow",
+  "@radioConfigPresetLongSlow": {
+    "description": "LoRa modem preset: long range, slow data rate. Better range but lower throughput."
+  },
+  "radioConfigPresetLongSlowDesc": "Maximum range, slower",
+  "radioConfigPresetVeryLongSlow": "Very Long Slow",
+  "@radioConfigPresetVeryLongSlow": {
+    "description": "LoRa modem preset: maximum range, slowest data rate."
+  },
+  "radioConfigPresetVeryLongSlowDesc": "Extreme range, very slow",
+  "radioConfigPresetLongModerate": "Long Moderate",
+  "@radioConfigPresetLongModerate": {
+    "description": "LoRa modem preset: long range, moderate data rate. Balance of range and speed."
+  },
+  "radioConfigPresetLongModerateDesc": "Good balance",
+  "radioConfigPresetMediumFast": "Medium Fast",
+  "radioConfigPresetMediumFastDesc": "Medium range, fast",
+  "radioConfigPresetMediumSlow": "Medium Slow",
+  "radioConfigPresetMediumSlowDesc": "Medium range, reliable",
+  "radioConfigPresetShortFast": "Short Fast",
+  "@radioConfigPresetShortFast": {
+    "description": "LoRa modem preset: short range, fastest data rate. Best throughput but limited distance."
+  },
+  "radioConfigPresetShortFastDesc": "Short range, fastest",
+  "radioConfigPresetShortSlow": "Short Slow",
+  "@radioConfigPresetShortSlow": {
+    "description": "LoRa modem preset: short range, slow but reliable data rate."
+  },
+  "radioConfigPresetShortSlowDesc": "Short range, reliable",
+  "radioConfigPresetMustMatch": "All devices in the mesh must use the same preset",
+  "radioConfigRebootWarning": "Changing radio settings will cause the device to reboot. All devices in your mesh network must use the same region and modem preset.",
+  "@radioConfigRebootWarning": {
+    "description": "All devices in a mesh network must share the same radio settings (region, modem preset) to communicate."
+  },
+  "cannedModuleTitle": "Canned Messages Module",
+  "cannedModuleSaved": "Canned message configuration saved",
+  "cannedModuleSaveFailed": "Failed to save: {error}",
+  "@cannedModuleSaveFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "cannedModuleSave": "Save",
+  "cannedModuleSectionOptions": "OPTIONS",
+  "cannedModuleEnabled": "Enabled",
+  "cannedModuleEnabledSubtitle": "Enable canned message module on device",
+  "cannedModuleSendBell": "Send Bell",
+  "cannedModuleSendBellSubtitle": "Send bell character with messages",
+  "cannedModuleSectionDeviceMessages": "DEVICE MESSAGES",
+  "cannedModuleMessages": "Messages",
+  "cannedModuleMessagesHint": "Message 1|Message 2|Message 3",
+  "cannedModuleMessagesHelp": "Separate messages with | (pipe). These messages will be stored on the device and can be sent using hardware inputs.",
+  "cannedModulePresetManual": "Manual Configuration",
+  "cannedModulePresetManualDesc": "Custom GPIO and event settings",
+  "cannedModulePresetRak": "RAK Rotary Encoder",
+  "cannedModulePresetRakDesc": "Pre-configured for RAK rotary encoder",
+  "cannedModulePresetM5Stack": "M5 Stack Card KB",
+  "cannedModulePresetM5StackDesc": "Pre-configured for Card KB / RAK Keypad",
+  "cannedModuleSectionPreset": "CONFIGURATION PRESET",
+  "cannedModuleSectionControlType": "CONTROL TYPE",
+  "cannedModuleControlRotary": "Rotary Encoder",
+  "cannedModuleControlRotaryDesc": "Dumb encoder sending pulses on A/B pins",
+  "cannedModuleControlUpDown": "Up/Down Buttons",
+  "cannedModuleControlUpDownDesc": "Uses A/B/Press definitions from input broker",
+  "cannedModuleSectionGpio": "GPIO INPUTS",
+  "cannedModuleGpioPinA": "Pin A",
+  "cannedModuleGpioPinB": "Pin B",
+  "cannedModuleGpioPressPin": "Press Pin",
+  "cannedModuleGpioPinUnset": "Unset",
+  "cannedModuleGpioPinLabel": "Pin {pin}",
+  "@cannedModuleGpioPinLabel": {
+    "placeholders": {
+      "pin": {
+        "type": "int"
+      }
+    }
+  },
+  "cannedModuleEventNone": "None",
+  "cannedModuleEventUp": "Up",
+  "cannedModuleEventDown": "Down",
+  "cannedModuleEventLeft": "Left",
+  "cannedModuleEventRight": "Right",
+  "cannedModuleEventSelect": "Select",
+  "cannedModuleEventBack": "Back",
+  "cannedModuleEventCancel": "Cancel",
+  "cannedModuleSectionKeyMapping": "KEY MAPPING",
+  "cannedModuleClockwiseEvent": "Clockwise Event",
+  "cannedModuleCounterClockwiseEvent": "Counter-Clockwise Event",
+  "cannedModulePressEvent": "Press Event",
+  "cannedModuleInfoCard": "This configures the device-side canned message module which allows sending predefined messages using hardware inputs like rotary encoders or buttons.",
+  "positionConfigLocationDisabled": "Location services are disabled. Enable GPS in your device settings.",
+  "positionConfigOpenSettings": "Open Settings",
+  "positionConfigPermissionDenied": "Location permission denied. Grant location access to use this feature.",
+  "positionConfigPermissionPermanentlyDenied": "Location permission permanently denied. Enable in your device settings.",
+  "positionConfigLocationUpdated": "Location updated from phone GPS",
+  "positionConfigLocationFailed": "Failed to get location: {error}",
+  "@positionConfigLocationFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "positionConfigSaved": "Position configuration saved",
+  "positionConfigSaveFailed": "Failed to save: {error}",
+  "@positionConfigSaveFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "positionConfigTitle": "Position",
+  "positionConfigSave": "Save",
+  "positionConfigSectionGpsMode": "GPS MODE",
+  "positionConfigSectionBroadcast": "BROADCAST SETTINGS",
+  "positionConfigSmartBroadcast": "Smart Broadcast",
+  "positionConfigSmartBroadcastSubtitle": "Only broadcast when position changes significantly",
+  "positionConfigBroadcastInterval": "Position Broadcast Interval",
+  "positionConfigBroadcastIntervalSubtitle": "The maximum time between position broadcasts",
+  "positionConfigGpsUpdateInterval": "GPS Update Interval",
+  "positionConfigGpsUpdateIntervalSubtitle": "How often the device GPS checks for position",
+  "positionConfigSectionFixed": "FIXED POSITION",
+  "positionConfigUseFixed": "Use Fixed Position",
+  "positionConfigUseFixedSubtitle": "Manually set position instead of using GPS",
+  "positionConfigLatitude": "Latitude",
+  "positionConfigLongitude": "Longitude",
+  "positionConfigAltitude": "Altitude (meters)",
+  "positionConfigGettingLocation": "Getting Location...",
+  "positionConfigUseCurrentLocation": "Use Current Location",
+  "positionConfigFixedInfo": "Fixed position is useful for stationary installations like routers or base stations.",
+  "positionConfigSectionSmartBroadcast": "SMART BROADCAST SETTINGS",
+  "positionConfigMinDistance": "Minimum Distance",
+  "positionConfigMinDistanceSubtitle": "Minimum distance moved before broadcasting",
+  "positionConfigMinInterval": "Minimum Interval",
+  "positionConfigMinIntervalSubtitle": "The fastest position updates will be sent if the minimum distance has been satisfied",
+  "positionConfigSectionFlags": "POSITION FLAGS",
+  "positionConfigFlagsInfo": "Optional fields to include in position messages. More flags means larger packets.",
+  "positionConfigFlagAltitude": "Include Altitude",
+  "positionConfigFlagAltitudeDesc": "Include altitude in position reports",
+  "positionConfigFlagSatsInView": "Include Sats in View",
+  "positionConfigFlagSatsInViewDesc": "Include number of satellites visible",
+  "positionConfigFlagSeqNumber": "Include Sequence Number",
+  "positionConfigFlagSeqNumberDesc": "Include position sequence number",
+  "positionConfigFlagTimestamp": "Include Timestamp",
+  "positionConfigFlagTimestampDesc": "Include GPS timestamp",
+  "positionConfigFlagHeading": "Include Heading",
+  "positionConfigFlagHeadingDesc": "Include heading/direction of travel",
+  "positionConfigFlagSpeed": "Include Speed",
+  "positionConfigFlagSpeedDesc": "Include ground speed",
+  "positionConfigFlagMsl": "Altitude is Mean Sea Level",
+  "positionConfigFlagMslDesc": "Report altitude as MSL instead of HAE",
+  "positionConfigFlagGeoidalSep": "Include Geoidal Separation",
+  "positionConfigFlagGeoidalSepDesc": "Include geoidal separation value",
+  "positionConfigFlagDop": "Include DOP",
+  "positionConfigFlagDopDesc": "Include dilution of precision (PDOP)",
+  "positionConfigFlagHvdop": "Use HDOP / VDOP",
+  "positionConfigFlagHvdopDesc": "Send separate HDOP/VDOP instead of PDOP",
+  "positionConfigSectionGpsGpio": "GPS GPIO",
+  "positionConfigGpsRxGpio": "GPS RX GPIO",
+  "positionConfigGpsRxGpioDesc": "GPIO pin for GPS RX signal",
+  "positionConfigGpsTxGpio": "GPS TX GPIO",
+  "positionConfigGpsTxGpioDesc": "GPIO pin for GPS TX signal",
+  "positionConfigGpsEnableGpio": "GPS Enable GPIO",
+  "positionConfigGpsEnableGpioDesc": "GPIO pin to control GPS power",
+  "positionConfigGpioPinUnset": "Unset",
+  "positionConfigGpioPinLabel": "Pin {pin}",
+  "@positionConfigGpioPinLabel": {
+    "placeholders": {
+      "pin": {
+        "type": "int"
+      }
+    }
+  },
+  "positionConfigGpsModeEnabled": "Enabled",
+  "positionConfigGpsModeEnabledDesc": "GPS is active and reports position",
+  "positionConfigGpsModeDisabled": "Disabled",
+  "positionConfigGpsModeDisabledDesc": "GPS hardware is present but turned off",
+  "positionConfigGpsModeNotPresent": "Not Present",
+  "positionConfigGpsModeNotPresentDesc": "No GPS hardware on this device",
+  "positionConfigIntervalNever": "Never",
+  "positionConfigIntervalDefault": "Default",
+  "positionConfigIntervalOnBoot": "On Boot Only",
+  "powerConfigSaved": "Power configuration saved",
+  "powerConfigSaveFailed": "Failed to save: {error}",
+  "@powerConfigSaveFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "powerConfigDisabled": "Disabled",
+  "powerConfigTitle": "Power",
+  "powerConfigSave": "Save",
+  "powerConfigSectionPower": "POWER",
+  "powerConfigPowerSaving": "Power Saving Mode",
+  "powerConfigPowerSavingSubtitle": "Reduce power consumption when idle",
+  "powerConfigShutdownOnPowerLoss": "Shutdown on Power Loss",
+  "powerConfigShutdownOnPowerLossSubtitle": "Power off device when external power removed",
+  "powerConfigShutdownDelay": "Shutdown Delay",
+  "powerConfigShutdownDelaySubtitle": "Time to wait before shutdown after power loss",
+  "powerConfigSectionBattery": "BATTERY",
+  "powerConfigAdcMultiplierOverride": "ADC Multiplier Override",
+  "powerConfigAdcMultiplierOverrideSubtitle": "Override voltage divider ratio for battery reading",
+  "powerConfigAdcMultiplier": "ADC Multiplier",
+  "powerConfigAdcMultiplierHint": "Voltage divider ratio (2.0 - 6.0)",
+  "powerConfigSectionSleep": "SLEEP SETTINGS",
+  "powerConfigWaitBluetooth": "Wait for Bluetooth",
+  "powerConfigWaitBluetoothSubtitle": "Time to wait for Bluetooth connection before sleep",
+  "powerConfigLightSleep": "Light Sleep Duration",
+  "powerConfigLightSleepSubtitle": "Duration of light sleep before deep sleep",
+  "powerConfigDeepSleep": "Deep Sleep Duration",
+  "powerConfigDeepSleepSubtitle": "Duration of deep sleep (SDS)",
+  "powerConfigMinWakeTime": "Minimum Wake Time",
+  "powerConfigMinWakeTimeSubtitle": "Minimum time device stays awake",
+  "powerConfigWarning": "Power settings affect battery life and device responsiveness. Aggressive sleep settings may cause delays in receiving messages.",
+  "networkConfigNoWifiTitle": "No WiFi Hardware",
+  "networkConfigNoWifiBody": "This device does not have WiFi hardware. Enabling WiFi will make the device unreachable via BLE. Continue?",
+  "networkConfigSaveAnyway": "Save Anyway",
+  "networkConfigSaved": "Network configuration saved",
+  "networkConfigSaveFailed": "Failed to save: {error}",
+  "@networkConfigSaveFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "networkConfigTitle": "Network",
+  "networkConfigSave": "Save",
+  "networkConfigSectionWifi": "WI-FI",
+  "networkConfigNoWifiWarning": "This device does not have WiFi hardware. Enabling WiFi will make the device unreachable via Bluetooth.",
+  "networkConfigWifiEnabled": "WiFi Enabled",
+  "networkConfigWifiEnabledSubtitle": "Connect to a WiFi network",
+  "networkConfigSsid": "Network Name (SSID)",
+  "networkConfigPassword": "Password",
+  "networkConfigSectionEthernet": "ETHERNET",
+  "networkConfigEthernetEnabled": "Ethernet Enabled",
+  "networkConfigEthernetEnabledSubtitle": "Use wired Ethernet connection",
+  "networkConfigSectionIpAddress": "IP ADDRESS",
+  "networkConfigSectionTimeSync": "TIME SYNC",
+  "networkConfigNtpServer": "NTP Server",
+  "networkConfigNtpServerSubtitle": "Server used for time synchronization",
+  "networkConfigSectionUdpBroadcast": "UDP BROADCAST",
+  "networkConfigUdpBroadcast": "UDP Broadcast",
+  "networkConfigUdpBroadcastSubtitle": "Broadcast packets over local network",
+  "networkConfigUdpBroadcastInfo": "Enables broadcasting mesh packets via UDP over the local network. Useful for connecting multiple instances.",
+  "networkConfigSectionLogging": "LOGGING",
+  "networkConfigNoHardwareInfo": "Network settings are only available on devices with WiFi or Ethernet hardware support.",
+  "networkConfigIpModeDhcp": "DHCP",
+  "networkConfigIpModeDhcpDesc": "Automatically obtain IP address",
+  "networkConfigIpModeStatic": "Static",
+  "networkConfigIpModeStaticDesc": "Use manually configured IP address",
+  "networkConfigRsyslogServer": "Rsyslog Server",
+  "networkConfigRsyslogServerSubtitle": "Remote syslog server for device logs",
+  "ringtoneTitle": "Ringtone",
+  "ringtoneDeviceRingtone": "Device Ringtone",
+  "ringtoneCurrentlySet": "Currently set on device",
+  "ringtoneSaved": "Ringtone saved to device",
+  "ringtoneSaveFailed": "Failed to save ringtone: {error}",
+  "@ringtoneSaveFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "ringtoneAccessPremium": "Access premium ringtone presets",
+  "ringtoneCustomAdded": "Custom ringtone added",
+  "ringtoneRtttlGuideTitle": "RTTTL Format Guide",
+  "ringtoneRtttlWhat": "What is RTTTL?",
+  "ringtoneRtttlWhatContent": "Ring Tone Text Transfer Language (RTTTL) is a format developed by Nokia for encoding ringtones as text strings.",
+  "ringtoneRtttlFormat": "Format",
+  "ringtoneRtttlHeader": "Header",
+  "ringtoneRtttlHeaderContent": "name:d=duration,o=octave,b=bpm",
+  "ringtoneRtttlNotes": "Notes",
+  "ringtoneRtttlNotesContent": "duration, note, octave (e.g., 8c5 = eighth note C in octave 5)",
+  "ringtoneRtttlExample": "Example",
+  "ringtoneRtttlComposerTip": "Try Nokia Composer online to create and preview RTTTL strings",
+  "ringtoneRtttlHelp": "RTTTL Help",
+  "ringtoneSave": "Save",
+  "ringtoneSectionRtttl": "RTTTL STRING",
+  "ringtoneRtttlHint": "Paste or select an RTTTL ringtone...",
+  "ringtoneStop": "Stop",
+  "ringtonePreview": "Preview",
+  "ringtoneClear": "Clear",
+  "ringtoneTapPreview": "Tap Preview to hear, then Save to device",
+  "ringtoneSectionLibrary": "RINGTONE LIBRARY",
+  "ringtoneBrowseCount": "Browse {count} Ringtones",
+  "@ringtoneBrowseCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ringtoneBrowseSubtitle": "Search classic tunes, TV themes, movie soundtracks, and more",
+  "ringtoneSectionSelected": "SELECTED RINGTONE",
+  "ringtoneSectionBuiltIn": "BUILT-IN PRESETS",
+  "ringtoneSectionCustom": "CUSTOM PRESETS",
+  "ringtoneAdd": "Add",
+  "ringtoneNoCustom": "No custom ringtones",
+  "ringtoneNoCustomBody": "Tap \"Add\" to create your own presets",
+  "ringtoneFindDeviceTip": "Tip: Find your device",
+  "ringtoneFindDeviceBody": "Send a message with the bell emoji (🔔) to make your device play the ringtone.",
+  "ringtoneNameRequired": "Name is required",
+  "ringtoneDefaultDescription": "Custom ringtone",
+  "ringtoneAddCustomTitle": "Add Custom Ringtone",
+  "ringtoneAddCustomSubtitle": "Create a custom RTTTL ringtone preset",
+  "ringtoneAddCustomName": "Name",
+  "ringtoneAddCustomRtttl": "RTTTL String",
+  "ringtoneAddCustomDescription": "Description (optional)",
+  "ringtoneLibraryTitle": "Ringtone Library",
+  "ringtoneLibrarySearchHint": "Search by song, artist, or theme...",
+  "ringtoneLibraryPopularPicks": "Popular Picks",
+  "ringtoneLibraryNoResults": "No results found",
+  "ringtoneLibraryStartTyping": "Start typing to search",
+  "ringtoneLibraryTryDifferent": "Try a different search term",
+  "ringtoneLibrarySearchCount": "Search {count} available tones",
+  "@ringtoneLibrarySearchCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ringtoneValidationEmpty": "RTTTL string cannot be empty",
+  "ringtoneValidationTooLong": "Too long: {length}/{max} characters. Ringtone will be truncated.",
+  "@ringtoneValidationTooLong": {
+    "placeholders": {
+      "length": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "ringtoneValidationMissingColons": "Invalid format: missing colons. Expected name:defaults:notes",
+  "ringtoneValidationInvalidFormat": "Invalid format: expected name:defaults:notes",
+  "ringtoneValidationInvalidDefaults": "Invalid defaults: expected d=duration, o=octave, b=bpm",
+  "ringtoneValidationNoNotes": "No notes found in RTTTL string",
+  "ringtoneValidationInvalidNote": "Invalid note: \"{note}\"",
+  "@ringtoneValidationInvalidNote": {
+    "placeholders": {
+      "note": {
+        "type": "String"
+      }
+    }
+  },
+  "ringtoneValidationNoValidNotes": "No valid notes found",
+  "accountSubTitle": "Account",
+  "accountSubSectionAccount": "ACCOUNT",
+  "accountSubSectionPremium": "PREMIUM",
+  "accountSubSectionManage": "MANAGE",
+  "accountSubGuestAccount": "Guest Account",
+  "accountSubSignedIn": "Signed In",
+  "accountSubLinkedAccounts": "Linked accounts",
+  "accountSubLinkEmailPrompt": "Link an email to keep your data across devices",
+  "accountSubLinkAccountBtn": "Link Account",
+  "accountSubMfaRequiresInternet": "Two-factor authentication requires an internet connection.",
+  "accountSubSignOutBtn": "Sign Out",
+  "accountSubSignInToSync": "Sign in to sync across devices",
+  "accountSubLocalDataAvailable": "Your local data is always available",
+  "accountSubContinueGoogle": "Continue with Google",
+  "accountSubContinueApple": "Continue with Apple",
+  "accountSubContinueGitHub": "Continue with GitHub",
+  "accountSubContinueX": "Continue with X",
+  "accountSubExpiresToday": "Expires today",
+  "accountSubExpiresTomorrow": "Expires tomorrow",
+  "accountSubExpiresDate": "Expires {day} {month}",
+  "@accountSubExpiresDate": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      },
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "accountSubCancelledExpires": "Cancelled · {expiresText}",
+  "@accountSubCancelledExpires": {
+    "placeholders": {
+      "expiresText": {
+        "type": "String"
+      }
+    }
+  },
+  "accountSubPaymentIssue": "Payment issue - please update",
+  "accountSubSignInToSyncShort": "Sign in to sync",
+  "accountSubMonthlySubscription": "Monthly subscription",
+  "accountSubSubscriptionExpired": "Subscription expired",
+  "accountSubSignInToEnable": "Sign in above to enable",
+  "accountSubSyncAllDevices": "Sync across all your devices",
+  "accountSubBadgeCancelled": "CANCELLED",
+  "accountSubBadgeActive": "ACTIVE",
+  "accountSubBadgeExpired": "EXPIRED",
+  "accountSubCloudSync": "Cloud Sync",
+  "accountSubWontRenew": "Your subscription won't renew. You can resubscribe anytime.",
+  "accountSubFeatureNodedex": "NodeDex — encounters, tags, notes",
+  "accountSubFeatureAutomations": "Automations — rules and triggers",
+  "accountSubFeatureWidgets": "Custom Widgets — layouts and data",
+  "accountSubFeatureBackup": "Backup — restore after reinstall or new phone",
+  "accountSubFeatureOffline": "Works fully offline without it",
+  "accountSubRenewSubscription": "Renew Subscription",
+  "accountSubManageSubscription": "Manage Subscription",
+  "accountSubSignInToSubscribe": "Sign in to subscribe",
+  "accountSubSubRequiresInternet": "Subscriptions require an internet connection.",
+  "accountSubRenew": "Renew",
+  "accountSubSubscribe": "Subscribe",
+  "accountSubCouldNotLoadStatus": "Could not load subscription status",
+  "accountSubFeaturePacks": "Feature Packs",
+  "accountSubAllUnlocked": "All features unlocked!",
+  "accountSubOneTimePurchases": "One-time purchases · {owned} of {total}",
+  "@accountSubOneTimePurchases": {
+    "placeholders": {
+      "owned": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "accountSubViewFeatures": "View Features",
+  "accountSubPremiumRequiresInternet": "Premium features require an internet connection to purchase.",
+  "accountSubViewAndPurchase": "View & Purchase",
+  "accountSubRestorePurchases": "Restore Purchases",
+  "accountSubRestorePurchasesSubtitle": "Restore previously purchased items",
+  "accountSubRestoreRequiresInternet": "Restoring purchases requires an internet connection.",
+  "accountSubPurchasesRestored": "Purchases restored successfully!",
+  "accountSubPurchasesAlreadyActive": "Your purchases are already active",
+  "accountSubNoPurchasesFound": "No purchases found to restore",
+  "accountSubTermsOfService": "Terms of Service",
+  "accountSubPrivacyPolicy": "Privacy Policy",
+  "accountSubSignInRequiresInternet": "Sign-in requires an internet connection.",
+  "accountSubCannotConnectSignIn": "Unable to connect to sign-in services. Check your internet connection and try again.",
+  "accountSubSignInFailed": "Sign in failed: {message}",
+  "@accountSubSignInFailed": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "accountSubSignInFailedRetry": "Sign in failed. Please try again.",
+  "accountSubLinkGitHubTitle": "Link GitHub Account",
+  "accountSubAccountExistsLinking": "An account with {email} already exists using {provider}.\n\nSign in with {provider} to link your GitHub account?",
+  "@accountSubAccountExistsLinking": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      },
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "accountSubSignInWithProvider": "Sign in with {provider}",
+  "@accountSubSignInWithProvider": {
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "accountSubGitHubLinked": "GitHub account linked successfully!",
+  "accountSubFailedLinkAccounts": "Failed to link accounts",
+  "accountSubSignOutRequiresInternet": "Signing out requires an internet connection.",
+  "accountSubSignOutConfirmTitle": "Sign Out",
+  "accountSubSignOutConfirmMsg": "Are you sure you want to sign out?",
+  "accountSubSignedOutSuccess": "Signed out",
+  "accountSubGenericError": "Error: {error}",
+  "@accountSubGenericError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "accountSubLinkAccountSheetTitle": "Link Account",
+  "accountSubLinkSignInMethod": "Link a sign-in method to keep your data",
+  "accountSubLinkWithGoogle": "Link with Google",
+  "accountSubLinkWithApple": "Link with Apple",
+  "accountSubLinkWithX": "Link with X",
+  "accountSubManageSubRequiresInternet": "Managing subscriptions requires an internet connection.",
+  "accountSubIosManageHint": "Go to Settings > Apple ID > Subscriptions to manage",
+  "accountSubAndroidManageHint": "Go to Play Store > Payments & Subscriptions to manage",
+  "accountSubGuestName": "Guest",
+  "accountSubTapToEditProfile": "Tap to edit profile",
+  "accountSubSignInToCreateProfile": "Sign in to create profile",
+  "accountSubTwoFactorAuth": "Two-Factor Authentication",
+  "accountSubBadgeOffline": "Offline",
+  "accountSubBadgeUnavailable": "Unavailable",
+  "accountSubBadgeOn": "ON",
+  "accountSubSyncSyncing": "Syncing",
+  "accountSubSyncSynced": "Synced",
+  "accountSubSyncError": "Error",
+  "accountSubSyncReady": "Ready",
+  "accountSubSyncOffline": "Offline",
+  "accountSubMonthJanuary": "January",
+  "accountSubMonthFebruary": "February",
+  "accountSubMonthMarch": "March",
+  "accountSubMonthApril": "April",
+  "accountSubMonthMay": "May",
+  "accountSubMonthJune": "June",
+  "accountSubMonthJuly": "July",
+  "accountSubMonthAugust": "August",
+  "accountSubMonthSeptember": "September",
+  "accountSubMonthOctober": "October",
+  "accountSubMonthNovember": "November",
+  "accountSubMonthDecember": "December",
+  "accountSubUnlockCloudSync": "Unlock Cloud Sync",
+  "accountSubSyncBackupAll": "Sync and back up your mesh data across all your devices",
+  "accountSubCouldNotLoadPrices": "Could not load prices",
+  "accountSubSubActivated": "Subscription activated!",
+  "accountSubPurchaseFailed": "Purchase failed",
+  "accountSubAutoRenewDisclaimer": "Subscriptions auto-renew unless cancelled at least 24 hours before the end of the current period.",
+  "accountSubYearlySave": "Yearly (Save 44%)",
+  "accountSubMonthlyProduct": "Monthly",
+  "accountSubLinkingRequiresInternet": "Linking an account requires an internet connection.",
+  "accountSubIftttDataSharing": "IFTTT Data Sharing",
+  "accountSubIftttDisclosureMsg": "When IFTTT Webhooks are enabled, mesh event data (messages, node status, positions, battery levels) will be sent to IFTTT servers via your personal webhook key.\n\nIFTTT is a third-party service with its own privacy policy. Only the event types you select will be transmitted.",
+  "accountSubIUnderstand": "I Understand",
+  "accountSubConfirm": "Confirm",
+  "accountSubCancel": "Cancel",
+  "dataExportTitle": "Export Data",
+  "dataExportSectionMessages": "Messages",
+  "dataExportSectionTelemetry": "Telemetry",
+  "@dataExportSectionTelemetry": {
+    "description": "Telemetry = automated sensor data (battery, temperature, signal strength) collected from mesh devices."
+  },
+  "dataExportSectionPositionData": "Position Data",
+  "dataExportSectionAutomations": "Automations",
+  "dataExportSectionNetwork": "Network",
+  "dataExportSectionCompleteExport": "Complete Export",
+  "dataExportSectionClearData": "Clear Data",
+  "dataExportAllMessages": "All Messages",
+  "dataExportAllMessagesSubtitle": "Export all channel and direct messages",
+  "dataExportDeviceMetrics": "Device Metrics",
+  "dataExportDeviceMetricsSubtitle": "Battery, voltage, utilization logs",
+  "dataExportEnvironmentMetrics": "Environment Metrics",
+  "dataExportEnvironmentMetricsSubtitle": "Temperature, humidity, pressure logs",
+  "dataExportAirQuality": "Air Quality",
+  "dataExportAirQualitySubtitle": "PM2.5, PM10, CO2 readings",
+  "dataExportPowerMetrics": "Power Metrics",
+  "dataExportPowerMetricsSubtitle": "Channel voltage and current",
+  "dataExportPositionHistory": "Position History",
+  "dataExportPositionHistorySubtitle": "GPS position logs with timestamps",
+  "dataExportRoutes": "Routes",
+  "dataExportRoutesSubtitle": "Recorded routes and tracks",
+  "dataExportTraceroutes": "Traceroutes",
+  "@dataExportTraceroutes": {
+    "description": "Traceroutes = logs of network path discovery tests showing which nodes relay messages."
+  },
+  "dataExportTraceroutesSubtitle": "Network path analysis",
+  "dataExportAutomationRules": "Automation Rules",
+  "dataExportAutomationRulesSubtitle": "All automation configurations",
+  "dataExportExecutionLog": "Execution Log",
+  "dataExportExecutionLogSubtitle": "Automation trigger history with results",
+  "dataExportNodeList": "Node List",
+  "dataExportNodeListSubtitle": "All discovered nodes with details",
+  "dataExportExportAll": "Export All Data",
+  "dataExportExportAllSubtitle": "Complete backup of all app data",
+  "dataExportClearAll": "Clear All Data",
+  "dataExportClearAllSubtitle": "Delete all stored telemetry, routes, and logs",
+  "dataExportInfoText": "Exported files can be shared via email, AirDrop, or saved to Files. Tap the trash icon to clear specific data.",
+  "dataExportFormatCsv": "CSV",
+  "dataExportFormatGpx": "GPX",
+  "dataExportFormatJson": "JSON",
+  "dataExportTooltipClearData": "Clear data",
+  "dataExportTooltipExport": "Export",
+  "dataExportClearConfirmTitle": "Clear {dataName}?",
+  "@dataExportClearConfirmTitle": {
+    "placeholders": {
+      "dataName": {
+        "type": "String"
+      }
+    }
+  },
+  "dataExportClearConfirmMsg": "This will permanently delete all {dataName}. This action cannot be undone.",
+  "@dataExportClearConfirmMsg": {
+    "placeholders": {
+      "dataName": {
+        "type": "String"
+      }
+    }
+  },
+  "dataExportClearConfirmBtn": "Delete",
+  "dataExportClearAllConfirmTitle": "Clear All Data?",
+  "dataExportClearAllConfirmMsg": "This will permanently delete ALL stored data including telemetry, routes, and automation logs. This action cannot be undone.",
+  "dataExportClearAllConfirmBtn": "Delete All",
+  "dataExportExportFailed": "Export failed: {error}",
+  "@dataExportExportFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "dataExportDataCleared": "Data cleared",
+  "dataExportClearFailed": "Failed to clear data: {error}",
+  "@dataExportClearFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "dataExportAllDataCleared": "All data cleared",
+  "dataExportNoRoutesToExport": "No routes to export",
+  "dataExportNoAutomationsToExport": "No automations to export",
+  "dataExportNoAutomationLogEntries": "No automation log entries",
+  "dataExportClearAllMessages": "all messages",
+  "dataExportClearDeviceMetrics": "device metrics",
+  "dataExportClearEnvironmentMetrics": "environment metrics",
+  "dataExportClearAirQualityData": "air quality data",
+  "dataExportClearPowerMetrics": "power metrics",
+  "dataExportClearPositionHistory": "position history",
+  "dataExportClearAllRoutes": "all routes",
+  "dataExportClearTracerouteData": "traceroute data",
+  "@dataExportClearTracerouteData": {
+    "description": "Traceroute = diagnostic data showing the path messages take through the mesh network."
+  },
+  "dataExportClearAllAutomationRules": "all automation rules",
+  "dataExportClearAutomationLog": "automation log",
+  "dataExportShareSubjectMessages": "Socialmesh Messages Export",
+  "dataExportShareSubjectDeviceMetrics": "Socialmesh Device Metrics Export",
+  "dataExportShareSubjectEnvironmentMetrics": "Socialmesh Environment Metrics Export",
+  "dataExportShareSubjectAirQuality": "Socialmesh Air Quality Export",
+  "dataExportShareSubjectPowerMetrics": "Socialmesh Power Metrics Export",
+  "dataExportShareSubjectPositionHistory": "Socialmesh Position History Export",
+  "dataExportShareSubjectRoutes": "Socialmesh Routes Export",
+  "dataExportShareSubjectTraceroutes": "Socialmesh Traceroute Export",
+  "@dataExportShareSubjectTraceroutes": {
+    "description": "Traceroute = mesh network path discovery diagnostic. This is the email/share subject line."
+  },
+  "dataExportShareSubjectAutomations": "Socialmesh Automations Export",
+  "dataExportShareSubjectAutomationLog": "Socialmesh Automation Log Export",
+  "dataExportShareSubjectNodeList": "Socialmesh Node List Export",
+  "dataExportShareSubjectComplete": "Socialmesh Complete Export",
+  "dataExportUnknownSender": "Unknown",
+  "dataExportSnrNotAvailable": "N/A",
+  "deviceMgmtTitle": "Device Management",
+  "deviceMgmtDefaultWarning": "Are you sure you want to {action}? This action cannot be undone.",
+  "@deviceMgmtDefaultWarning": {
+    "placeholders": {
+      "action": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceMgmtSuccessDisconnect": "{action} - device will disconnect",
+  "@deviceMgmtSuccessDisconnect": {
+    "placeholders": {
+      "action": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceMgmtSuccessCommandSent": "{action} command sent",
+  "@deviceMgmtSuccessCommandSent": {
+    "placeholders": {
+      "action": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceMgmtFailed": "Failed: {error}",
+  "@deviceMgmtFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceMgmtNotConnected": "Device not connected. Connect to a device to manage it.",
+  "deviceMgmtSectionPower": "POWER",
+  "deviceMgmtSectionTime": "TIME",
+  "deviceMgmtSectionReset": "RESET",
+  "deviceMgmtSectionFirmware": "FIRMWARE",
+  "deviceMgmtRebootTitle": "Reboot Device",
+  "deviceMgmtRebootSubtitle": "Restart the device",
+  "deviceMgmtRebootWarning": "The device will reboot in 2 seconds. You will be briefly disconnected while the device restarts.",
+  "deviceMgmtShutdownTitle": "Shutdown Device",
+  "deviceMgmtShutdownSubtitle": "Turn off the device",
+  "deviceMgmtShutdownWarning": "The device will shut down in 2 seconds. You will need to manually power it back on.",
+  "deviceMgmtSyncTimeTitle": "Sync Time",
+  "deviceMgmtSyncTimeSubtitle": "Set device time to current time",
+  "deviceMgmtResetNodeDbTitle": "Reset Node Database",
+  "deviceMgmtResetNodeDbSubtitle": "Clear all known nodes from device and app",
+  "deviceMgmtResetNodeDbWarning": "This will clear all discovered nodes from the device and app. Nodes will be rediscovered over time.",
+  "deviceMgmtFactoryResetConfigTitle": "Factory Reset Config",
+  "deviceMgmtFactoryResetConfigSubtitle": "Reset everything except the node database",
+  "deviceMgmtFactoryResetConfigWarning": "This will wipe channels, region, and all settings but preserves the node database.\n\nThe device will reboot in 5 seconds. You will need to set up the region again.",
+  "deviceMgmtFullFactoryResetTitle": "Full Factory Reset",
+  "deviceMgmtFullFactoryResetSubtitle": "Erase everything and reset device",
+  "deviceMgmtFullFactoryResetWarning": "WARNING: This will completely erase the device including:\n· All configuration\n· All channels\n· All known nodes\n· Device identity\n\nThe device will reboot in 5 seconds. You will need to pair and set it up again.",
+  "deviceMgmtEnterDfuTitle": "Enter DFU Mode",
+  "deviceMgmtEnterDfuSubtitle": "Boot into firmware update mode",
+  "deviceMgmtEnterDfuWarning": "The device will enter Device Firmware Update (DFU) mode. You will need to use a firmware update tool to flash new firmware or reset the device.\n\nYou will be disconnected from the device.",
+  "displayConfigTitle": "Display Configuration",
+  "displayConfigSave": "Save",
+  "displayConfigSectionScreen": "SCREEN",
+  "displayConfigSectionTimeCompass": "TIME & COMPASS",
+  "displayConfigSectionOledType": "OLED SCREEN TYPE",
+  "displayConfigSectionUnitsFormat": "UNITS & FORMAT",
+  "displayConfigSectionDisplayMode": "DISPLAY MODE",
+  "displayConfigScreenTimeoutAlwaysOn": "Always On",
+  "displayConfigScreenTimeoutSeconds": "{seconds}s",
+  "@displayConfigScreenTimeoutSeconds": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "displayConfigScreenTimeoutLabel": "Screen Timeout: {value}",
+  "@displayConfigScreenTimeoutLabel": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "displayConfigScreenTimeoutDesc": "How long before screen turns off",
+  "displayConfigAutoCarouselDisabled": "Disabled",
+  "displayConfigAutoCarouselOff": "Off",
+  "displayConfigAutoCarouselLabel": "Auto Carousel: {value}",
+  "@displayConfigAutoCarouselLabel": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "displayConfigAutoCarouselDesc": "Automatically cycle through screens",
+  "displayConfigFlipScreen": "Flip Screen",
+  "displayConfigFlipScreenSubtitle": "Rotate display 180°",
+  "displayConfigWakeOnTap": "Wake on Tap/Motion",
+  "displayConfigWakeOnTapSubtitle": "Turn on screen when device is moved",
+  "displayConfigLongNodeNames": "Long Node Names",
+  "displayConfigLongNodeNamesSubtitle": "Show full node names on device screen",
+  "displayConfigMessageBubbles": "Message Bubbles",
+  "displayConfigMessageBubblesSubtitle": "Display messages in bubble format on screen",
+  "displayConfig12hClock": "12 Hour Clock",
+  "displayConfig12hClockSubtitle": "Display time in 12-hour format (AM/PM)",
+  "displayConfigCompassNorth": "Compass Always Points North",
+  "displayConfigCompassNorthSubtitle": "The compass heading outside the circle always points north",
+  "displayConfigCompassOrientation": "Compass Orientation",
+  "displayConfigCompassOrientationDesc": "Adjust compass display rotation",
+  "displayConfigDeg0": "0°",
+  "displayConfigDeg90": "90°",
+  "displayConfigDeg180": "180°",
+  "displayConfigDeg270": "270°",
+  "displayConfigDeg0Inv": "0° Inverted",
+  "displayConfigDeg90Inv": "90° Inverted",
+  "displayConfigDeg180Inv": "180° Inverted",
+  "displayConfigDeg270Inv": "270° Inverted",
+  "displayConfigOledTypeTitle": "OLED Type",
+  "displayConfigOledTypeDesc": "Override automatic OLED detection",
+  "displayConfigOledAuto": "Auto",
+  "displayConfigOledAutoDesc": "Automatically detect OLED type",
+  "displayConfigOledSsd1306Desc": "Common 128x64 OLED",
+  "displayConfigOledSh1106Desc": "132x64 OLED controller",
+  "displayConfigOledSh1107Desc": "64x128 vertical OLED",
+  "displayConfigOledSh1107_128Desc": "128x128 square OLED",
+  "displayConfigMeasurementUnits": "Measurement Units",
+  "displayConfigMetric": "Metric",
+  "displayConfigMetricDesc": "Kilometers, Celsius",
+  "displayConfigImperial": "Imperial",
+  "displayConfigImperialDesc": "Miles, Fahrenheit",
+  "displayConfigBoldHeadings": "Bold Headings",
+  "displayConfigBoldHeadingsSubtitle": "Show compass headings in bold",
+  "displayConfigDisplayModeTitle": "Display Mode",
+  "displayConfigDisplayModeDesc": "Choose the display rendering mode",
+  "displayConfigModeDefault": "Default",
+  "displayConfigModeDefaultDesc": "Standard display layout",
+  "displayConfigModeTwoColor": "Two Color",
+  "displayConfigModeTwoColorDesc": "Optimized for two-color displays",
+  "displayConfigModeInverted": "Inverted",
+  "displayConfigModeInvertedDesc": "Dark background, light text",
+  "displayConfigModeColor": "Color",
+  "displayConfigModeColorDesc": "Full color display mode",
+  "displayConfigSaved": "Display configuration saved",
+  "displayConfigSaveFailed": "Failed to save: {error}",
+  "@displayConfigSaveFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "extNotifTitle": "External Notification",
+  "extNotifSave": "Save",
+  "extNotifNotConnected": "Connect to a device to configure external notification settings",
+  "extNotifSectionOptions": "Options",
+  "extNotifSectionPrimaryGpio": "Primary GPIO",
+  "extNotifSectionOptionalGpio": "Optional GPIO",
+  "extNotifEnabled": "Enabled",
+  "extNotifEnabledSubtitle": "Enable external notification module",
+  "extNotifAlertOnBell": "Alert on Bell",
+  "extNotifAlertOnBellSubtitle": "Trigger notification when receiving a bell character",
+  "extNotifAlertOnMessage": "Alert on Message",
+  "extNotifAlertOnMessageSubtitle": "Trigger notification when receiving a message",
+  "extNotifUsePwm": "Use PWM Buzzer",
+  "extNotifUsePwmSubtitle": "Use PWM output for tunes instead of on/off",
+  "extNotifUseI2s": "Use I2S as Buzzer",
+  "extNotifUseI2sSubtitle": "Use I2S audio output for RTTTL tunes (T-Watch, T-Deck)",
+  "extNotifActiveHigh": "Active High",
+  "extNotifActiveHighSubtitle": "Output pin is pulled high when active",
+  "extNotifOutputGpioPin": "Output GPIO Pin",
+  "extNotifGpioUnset": "Unset",
+  "extNotifGpioValue": "GPIO {value}",
+  "@extNotifGpioValue": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "extNotifGpioPinLabel": "Pin {pin}",
+  "@extNotifGpioPinLabel": {
+    "placeholders": {
+      "pin": {
+        "type": "int"
+      }
+    }
+  },
+  "extNotifOutputDuration": "Output Duration",
+  "extNotifOutputDurationSubtitle": "How long to keep output active",
+  "extNotifDurationDefault": "Default",
+  "extNotifDuration100ms": "100ms",
+  "extNotifDuration250ms": "250ms",
+  "extNotifDuration500ms": "500ms",
+  "extNotifDuration1s": "1 second",
+  "extNotifDuration2s": "2 seconds",
+  "extNotifDuration5s": "5 seconds",
+  "extNotifNagTimeout": "Nag Timeout",
+  "extNotifNagTimeoutSubtitle": "How often to repeat notification",
+  "extNotifTimeoutDisabled": "Disabled",
+  "extNotifTimeout15s": "15 seconds",
+  "extNotifTimeout30s": "30 seconds",
+  "extNotifTimeout1m": "1 minute",
+  "extNotifTimeout2m": "2 minutes",
+  "extNotifTimeout5m": "5 minutes",
+  "extNotifTimeout10m": "10 minutes",
+  "extNotifBuzzerOnBell": "Buzzer on Bell",
+  "extNotifBuzzerOnBellSubtitle": "Alert buzzer GPIO when receiving a bell",
+  "extNotifVibraOnBell": "Vibra on Bell",
+  "extNotifVibraOnBellSubtitle": "Alert vibration motor when receiving a bell",
+  "extNotifBuzzerOnMsg": "Buzzer on Message",
+  "extNotifBuzzerOnMsgSubtitle": "Alert buzzer GPIO when receiving a message",
+  "extNotifVibraOnMsg": "Vibra on Message",
+  "extNotifVibraOnMsgSubtitle": "Alert vibration motor when receiving a message",
+  "extNotifBuzzerGpioPin": "Buzzer GPIO Pin",
+  "extNotifVibraGpioPin": "Vibra GPIO Pin",
+  "extNotifSaved": "External notification settings saved",
+  "extNotifSaveFailed": "Failed to save: {error}",
+  "@extNotifSaveFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "extNotifLoadFailed": "Failed to load config",
+  "iftttConfigTitle": "IFTTT Integration",
+  "iftttConfigSave": "Save",
+  "iftttConfigPremiumTitle": "Connect to 700+ Services",
+  "iftttConfigPremiumDesc": "Trigger smart home devices, log events to spreadsheets, send Discord/Slack messages, and more.",
+  "iftttConfigPremiumExampleTitle": "Node goes offline",
+  "iftttConfigPremiumExampleDesc": "Automatically turn on a smart light or send yourself a notification when your node is no longer heard.",
+  "iftttConfigSectionWebhook": "WEBHOOK",
+  "iftttConfigSectionMessageTriggers": "MESSAGE TRIGGERS",
+  "iftttConfigSectionNodeTriggers": "NODE STATUS TRIGGERS",
+  "iftttConfigSectionTelemetryTriggers": "TELEMETRY TRIGGERS",
+  "iftttConfigSectionGeofencing": "GEOFENCING",
+  "iftttConfigEnable": "Enable IFTTT",
+  "iftttConfigEnableSubtitle": "Send events to IFTTT Webhooks service",
+  "iftttConfigDataSharingTitle": "IFTTT Data Sharing",
+  "iftttConfigDataSharingMsg": "When IFTTT Webhooks are enabled, mesh event data (messages, node status, positions, battery levels) will be sent to IFTTT servers via your personal webhook key.\n\nIFTTT is a third-party service with its own privacy policy. Only the event types you select will be transmitted.",
+  "iftttConfigIUnderstand": "I Understand",
+  "iftttConfigWebhookKeyLabel": "Webhook Key",
+  "iftttConfigWebhookKeyHint": "e.g., cMcOnB_zaJTrZwsVvzVTHY",
+  "iftttConfigWebhookKeyHelper": "Copy from IFTTT Webhooks URL after /use/",
+  "iftttConfigTesting": "Testing...",
+  "iftttConfigTestConnection": "Test Connection",
+  "iftttConfigEnterKeyToEnable": "Please enter your Webhook Key to enable IFTTT",
+  "iftttConfigEnterKeyFirst": "Please enter your Webhook Key first",
+  "iftttConfigTestSuccess": "Test webhook sent! Check your IFTTT applet.",
+  "iftttConfigTestFailed": "Failed to send test webhook. Check your key.",
+  "iftttConfigMessageReceived": "Message Received",
+  "iftttConfigMessageReceivedSubtitle": "Trigger when a message is received",
+  "iftttConfigSosEmergency": "SOS / Emergency",
+  "iftttConfigSosEmergencySubtitle": "Trigger on SOS, emergency, help, mayday keywords",
+  "iftttConfigNodeActive": "Node Active",
+  "iftttConfigNodeActiveSubtitle": "Trigger when a node is heard recently",
+  "iftttConfigNodeInactive": "Node Inactive",
+  "iftttConfigNodeInactiveSubtitle": "Trigger when a node is not heard for a while",
+  "iftttConfigBatteryLow": "Battery Low",
+  "iftttConfigBatteryLowSubtitle": "Trigger when battery drops below threshold",
+  "iftttConfigBatteryThreshold": "Battery Threshold",
+  "iftttConfigTemperatureAlert": "Temperature Alert",
+  "iftttConfigTemperatureAlertSubtitle": "Trigger when temperature exceeds threshold",
+  "iftttConfigTemperatureThreshold": "Temperature Threshold",
+  "iftttConfigPositionUpdates": "Position Updates",
+  "iftttConfigPositionUpdatesSubtitle": "Trigger when node exits geofence area",
+  "iftttConfigGeofenceRadius": "Geofence Radius",
+  "iftttConfigGeofenceRadiusHint": "1000",
+  "iftttConfigGeofenceUnitM": "m",
+  "iftttConfigCenterLatitude": "Center Latitude",
+  "iftttConfigCenterLatHint": "-33.8688",
+  "iftttConfigCenterLongitude": "Center Longitude",
+  "iftttConfigCenterLonHint": "151.2093",
+  "iftttConfigMonitoredNode": "Monitored Node",
+  "iftttConfigNoNodeSelected": "No node selected. All nodes will be monitored.",
+  "iftttConfigAlertCooldown": "Alert Cooldown",
+  "iftttConfigCooldown5min": "5 min",
+  "iftttConfigCooldown15min": "15 min",
+  "iftttConfigCooldown30min": "30 min",
+  "iftttConfigCooldown1hour": "1 hour",
+  "iftttConfigCooldown2hours": "2 hours",
+  "iftttConfigCooldown4hours": "4 hours",
+  "iftttConfigCooldown8hours": "8 hours",
+  "iftttConfigCooldown24hours": "24 hours",
+  "iftttConfigCooldownDesc": "Minimum time between geofence alerts for the same node",
+  "iftttConfigPickOnMap": "Pick on Map",
+  "iftttConfigSetupGuide": "Setup Guide",
+  "iftttConfigStep1": "Create an account at ifttt.com",
+  "iftttConfigStep2": "Search for \"Webhooks\" service and connect it",
+  "iftttConfigStep3": "Go to Webhooks settings to find your key",
+  "iftttConfigStep4": "Create applets with Webhooks as the trigger",
+  "iftttConfigEventNamesRef": "Event Names Reference",
+  "iftttConfigEventNamesSubtitle": "Use these names in your IFTTT applets",
+  "iftttConfigSaved": "IFTTT settings saved",
+  "iftttConfigSaveFailed": "Failed to save IFTTT settings",
+  "mqttConfigTitle": "MQTT",
+  "@mqttConfigTitle": {
+    "description": "MQTT = Message Queuing Telemetry Transport, a protocol for bridging the mesh network to the internet."
+  },
+  "mqttConfigSave": "Save",
+  "mqttConfigDutyCycleWarning": "Your region has a {percent}% duty cycle. MQTT is not advised when you are duty cycle restricted — the extra traffic will quickly overwhelm your LoRa mesh.",
+  "@mqttConfigDutyCycleWarning": {
+    "description": "Duty cycle = regulatory limit on radio transmission time (e.g., 10% means transmit max 10% of the time). MQTT floods can exceed this.",
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "mqttConfigEnable": "Enable MQTT",
+  "@mqttConfigEnable": {
+    "description": "MQTT = internet message broker protocol that bridges the local mesh radio network to the internet."
+  },
+  "mqttConfigEnableSubtitle": "Connect device to an MQTT broker for mesh bridging",
+  "@mqttConfigEnableSubtitle": {
+    "description": "MQTT broker = internet server that relays mesh messages between geographically separated mesh networks."
+  },
+  "mqttConfigNoWifiAdvisory": "This device has no WiFi hardware. Enable MQTT Client Proxy below so the app can relay messages on behalf of the device.",
+  "mqttConfigNoWifiTitle": "No WiFi Hardware",
+  "mqttConfigNoWifiMsg": "This device does not have WiFi hardware. Without MQTT Client Proxy enabled, the device cannot reach an MQTT broker on its own.\n\nSave anyway without proxy?",
+  "mqttConfigSaveAnyway": "Save Anyway",
+  "mqttConfigSectionServer": "SERVER",
+  "mqttConfigSectionAuth": "AUTHENTICATION",
+  "mqttConfigSectionOptions": "OPTIONS",
+  "mqttConfigServerAddressLabel": "Server Address",
+  "mqttConfigServerAddressHint": "mqtt.meshtastic.org",
+  "mqttConfigTopicRootLabel": "Topic Root",
+  "@mqttConfigTopicRootLabel": {
+    "description": "MQTT topic root = base path for message routing on the MQTT broker (default: 'msh')."
+  },
+  "mqttConfigTopicRootHint": "msh",
+  "@mqttConfigTopicRootHint": {
+    "description": "'msh' is the default Meshtastic MQTT topic root."
+  },
+  "mqttConfigUseTls": "Use TLS",
+  "@mqttConfigUseTls": {
+    "description": "TLS = Transport Layer Security, encryption for the connection between device and MQTT server."
+  },
+  "mqttConfigUseTlsSubtitle": "Encrypt connection to broker",
+  "@mqttConfigUseTlsSubtitle": {
+    "description": "TLS encrypts the MQTT connection to prevent eavesdropping on internet-bridged mesh traffic."
+  },
+  "mqttConfigUsernameLabel": "Username",
+  "mqttConfigOptionalHint": "Optional",
+  "mqttConfigPasswordLabel": "Password",
+  "mqttConfigEncryption": "Encryption",
+  "@mqttConfigEncryption": {
+    "description": "Encryption for mesh messages sent over MQTT. Without this, messages are readable on the MQTT broker."
+  },
+  "mqttConfigEncryptionSubtitle": "Encrypt mesh messages over MQTT",
+  "@mqttConfigEncryptionSubtitle": {
+    "description": "Encrypts the mesh message payload before sending over the internet MQTT bridge."
+  },
+  "mqttConfigJsonOutput": "JSON Output",
+  "@mqttConfigJsonOutput": {
+    "description": "JSON Output = publish mesh messages in human-readable JSON format instead of binary protobuf."
+  },
+  "mqttConfigJsonOutputSubtitle": "Publish messages in JSON format",
+  "@mqttConfigJsonOutputSubtitle": {
+    "description": "JSON = human-readable text format. Protobuf = compact binary format. JSON uses more bandwidth."
+  },
+  "mqttConfigClientProxy": "MQTT Client Proxy",
+  "@mqttConfigClientProxy": {
+    "description": "MQTT Client Proxy = uses the phone's internet connection to relay mesh data to MQTT, for devices without WiFi."
+  },
+  "mqttConfigClientProxySubtitle": "Use phone's network for MQTT\n(Required for devices without WiFi)",
+  "@mqttConfigClientProxySubtitle": {
+    "description": "Client Proxy routes MQTT traffic through the phone when the mesh device lacks WiFi hardware."
+  },
+  "mqttConfigMapReporting": "Map Reporting",
+  "@mqttConfigMapReporting": {
+    "description": "Map reporting = periodically publishing device position to the public Meshtastic mesh map via MQTT."
+  },
+  "mqttConfigMapReportingSubtitle": "Report position to public mesh map",
+  "@mqttConfigMapReportingSubtitle": {
+    "description": "Reports this device's position to the public mesh map website via MQTT."
+  },
+  "mqttConfigMapReportSettingsHeader": "MAP REPORT SETTINGS",
+  "mqttConfigPublishInterval": "Publish Interval: {minutes} minutes",
+  "@mqttConfigPublishInterval": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "mqttConfigPublishIntervalDesc": "How often to report position to map",
+  "mqttConfigPositionPrecision": "Position Precision",
+  "mqttConfigPositionPrecisionDesc": "Approximate location accuracy for map",
+  "mqttConfigPrecisionWithin5_8km": "Within 5.8 km",
+  "mqttConfigPrecisionWithin2_9km": "Within 2.9 km",
+  "mqttConfigPrecisionWithin1_5km": "Within 1.5 km",
+  "mqttConfigPrecisionWithin700m": "Within 700 m",
+  "mqttConfigPrecisionUnknown": "Unknown",
+  "mqttConfigInfoText": "MQTT allows your device to bridge the local mesh network to the internet. This enables communication with nodes that are not in direct radio range.",
+  "@mqttConfigInfoText": {
+    "description": "MQTT bridges the local radio mesh to the internet, enabling communication between distant mesh networks."
+  },
+  "mqttConfigSaved": "MQTT configuration saved",
+  "mqttConfigSaveFailed": "Failed to save: {error}",
+  "@mqttConfigSaveFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "securityConfigTitle": "Security",
+  "securityConfigSave": "Save",
+  "securityConfigSectionDmKey": "DIRECT MESSAGE KEY",
+  "securityConfigSectionAdminKeys": "ADMIN KEYS",
+  "securityConfigSectionDeviceMgmt": "DEVICE MANAGEMENT",
+  "securityConfigSectionAccessControls": "ACCESS CONTROLS",
+  "securityConfigPublicKey": "Public Key",
+  "securityConfigNoKeySet": "No key set",
+  "securityConfigPublicKeyDesc": "Your public key is sent to other nodes for secure messaging",
+  "securityConfigPrivateKey": "Private Key",
+  "securityConfigPrivateKeyHint": "Base64 encoded 32-byte key",
+  "securityConfigPrivateKeyDesc": "Used to compute shared secret with remote devices",
+  "securityConfigRegenKeyPair": "Regenerate Key Pair",
+  "securityConfigGenerating": "Generating...",
+  "securityConfigGenerate": "Generate",
+  "securityConfigRegenDesc": "Generate a new key pair (public key will be automatically derived)",
+  "securityConfigKeyBackup": "Key Backup",
+  "securityConfigBackupDesc": "Backup your private key to secure storage for recovery. Keys are stored in the device keychain with iCloud sync enabled.",
+  "securityConfigBackupBtn": "Backup",
+  "securityConfigRestoreBtn": "Restore",
+  "securityConfigDeleteBackupTooltip": "Delete backup",
+  "securityConfigAdminKeysDesc": "Public keys authorized to send admin messages to this node",
+  "securityConfigPrimaryAdminKey": "Primary Admin Key",
+  "securityConfigSecondaryAdminKey": "Secondary Admin Key",
+  "securityConfigTertiaryAdminKey": "Tertiary Admin Key",
+  "securityConfigAdminKeyHint": "Base64 encoded public key",
+  "securityConfigManagedMode": "Managed Mode",
+  "securityConfigManagedModeSubtitle": "Device is managed by an external system",
+  "securityConfigSerialConsole": "Serial Console",
+  "securityConfigSerialConsoleSubtitle": "Enable USB serial console access",
+  "securityConfigDebugLogging": "Debug Logging",
+  "securityConfigDebugLoggingSubtitle": "Enable verbose debug log output",
+  "securityConfigAdminChannel": "Admin Channel",
+  "securityConfigAdminChannelSubtitle": "Allow remote admin via admin channel",
+  "securityConfigWarning": "Disabling serial console or enabling managed mode may make it difficult to recover the device. Make sure you understand the implications before making changes.",
+  "securityConfigDeleteBackupTitle": "Delete Backup?",
+  "securityConfigDeleteBackupMsg": "This will permanently delete the backed up private key from secure storage. This cannot be undone.",
+  "securityConfigDeleteBtn": "Delete",
+  "securityConfigNewKeyPairGenerated": "New key pair generated",
+  "securityConfigKeyGenFailed": "Failed to generate key: {error}",
+  "@securityConfigKeyGenFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "securityConfigSaved": "Security configuration saved",
+  "securityConfigSaveFailed": "Failed to save: {error}",
+  "@securityConfigSaveFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "securityConfigInvalidPrivateKey": "Invalid private key format",
+  "securityConfigInvalidAdminKey": "Invalid admin key format",
+  "securityConfigNoDevice": "No connected device",
+  "securityConfigBackedUp": "Private key backed up to secure storage",
+  "securityConfigBackupFailed": "Failed to backup key: {error}",
+  "@securityConfigBackupFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "securityConfigNoBackupFound": "No backup found for this device",
+  "securityConfigRestored": "Private key restored from backup",
+  "securityConfigRestoreFailed": "Failed to restore key: {error}",
+  "@securityConfigRestoreFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "securityConfigBackupDeleted": "Backup deleted",
+  "securityConfigDeleteBackupFailed": "Failed to delete backup: {error}",
+  "@securityConfigDeleteBackupFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "trafficMgmtTitle": "Traffic Management",
+  "trafficMgmtSave": "Save",
+  "trafficMgmtSectionGeneral": "GENERAL",
+  "trafficMgmtSectionPositionDedup": "POSITION DEDUPLICATION",
+  "trafficMgmtSectionNodeinfoResponse": "NODEINFO DIRECT RESPONSE",
+  "trafficMgmtSectionRateLimit": "RATE LIMITING",
+  "trafficMgmtSectionUnknownPackets": "UNKNOWN PACKETS",
+  "@trafficMgmtSectionUnknownPackets": {
+    "description": "Unknown packets = mesh data from unrecognized/unauthenticated sources."
+  },
+  "trafficMgmtSectionHopMgmt": "HOP MANAGEMENT",
+  "trafficMgmtEnable": "Enable Traffic Management",
+  "trafficMgmtEnableSubtitle": "Master toggle for all traffic management features",
+  "trafficMgmtPositionDedup": "Position Deduplication",
+  "@trafficMgmtPositionDedup": {
+    "description": "Deduplication = discarding duplicate position reports to reduce radio airtime usage."
+  },
+  "trafficMgmtPositionDedupSubtitle": "Drop duplicate position packets",
+  "@trafficMgmtPositionDedupSubtitle": {
+    "description": "Drop duplicate position packets to save mesh airtime."
+  },
+  "trafficMgmtPrecisionBits": "Precision Bits: {value}",
+  "@trafficMgmtPrecisionBits": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "trafficMgmtPrecisionBitsDesc": "Lower values mean more aggressive deduplication",
+  "trafficMgmtPrecisionBitsLabel": "{value} bits",
+  "@trafficMgmtPrecisionBitsLabel": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "trafficMgmtMinInterval": "Min Interval: {seconds}s",
+  "@trafficMgmtMinInterval": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "trafficMgmtMinIntervalDesc": "Minimum seconds between position updates",
+  "trafficMgmtDirectResponse": "Direct Response",
+  "trafficMgmtDirectResponseSubtitle": "Respond to NodeInfo requests directly",
+  "trafficMgmtMaxHops": "Max Hops: {value}",
+  "@trafficMgmtMaxHops": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "trafficMgmtMaxHopsDesc": "Maximum hops for direct NodeInfo response",
+  "trafficMgmtPerNodeRateLimit": "Per-Node Rate Limiting",
+  "trafficMgmtPerNodeRateLimitSubtitle": "Limit packet rate from individual nodes",
+  "trafficMgmtWindow": "Window: {seconds}s",
+  "@trafficMgmtWindow": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "trafficMgmtWindowDesc": "Time window for rate limit calculation",
+  "trafficMgmtMaxPackets": "Max Packets: {value}",
+  "@trafficMgmtMaxPackets": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "trafficMgmtMaxPacketsDesc": "Maximum packets per window before dropping",
+  "trafficMgmtDropUnknown": "Drop Unknown Packets",
+  "@trafficMgmtDropUnknown": {
+    "description": "Drop = silently discard. Unknown packets = mesh data from unrecognized sources."
+  },
+  "trafficMgmtDropUnknownSubtitle": "Drop packets from unknown sources",
+  "trafficMgmtThreshold": "Threshold: {value}",
+  "@trafficMgmtThreshold": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "trafficMgmtThresholdDesc": "Number of unknown packets before dropping",
+  "trafficMgmtExhaustHopTelemetry": "Exhaust Hop on Telemetry",
+  "@trafficMgmtExhaustHopTelemetry": {
+    "description": "Exhaust hop = set hop limit to 0 so telemetry is not relayed further. Reduces mesh network congestion."
+  },
+  "trafficMgmtExhaustHopTelemetrySub": "Set hop limit to 0 for relayed telemetry",
+  "@trafficMgmtExhaustHopTelemetrySub": {
+    "description": "Hop limit = max relay count. Setting to 0 prevents further forwarding of relayed telemetry."
+  },
+  "trafficMgmtExhaustHopPosition": "Exhaust Hop on Position",
+  "trafficMgmtExhaustHopPositionSub": "Set hop limit to 0 for relayed positions",
+  "@trafficMgmtExhaustHopPositionSub": {
+    "description": "Hop limit = max relay count. Setting to 0 prevents further forwarding of relayed position packets."
+  },
+  "trafficMgmtPreserveRouterHops": "Preserve Router Hops",
+  "trafficMgmtPreserveRouterHopsSub": "Preserve hop count for router nodes",
+  "@trafficMgmtPreserveRouterHopsSub": {
+    "description": "Hop count = number of times a packet has been relayed. Router nodes = dedicated relay infrastructure."
+  },
+  "trafficMgmtSaved": "Traffic management configuration saved",
+  "trafficMgmtSaveFailed": "Failed to save: {error}",
+  "@trafficMgmtSaveFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "adminPanelTitle": "Admin",
+  "adminPanelSectionShop": "SHOP MANAGEMENT",
+  "adminPanelShopDashboard": "Shop Admin Dashboard",
+  "adminPanelShopDashboardSub": "Manage products, orders, and inventory",
+  "adminPanelDeviceShop": "Device Shop",
+  "adminPanelDeviceShopSub": "View and manage device listings",
+  "adminPanelSectionModeration": "CONTENT MODERATION",
+  "adminPanelBugReports": "Bug Reports",
+  "adminPanelBugReportsSub": "View and respond to user bug reports",
+  "adminPanelReviewMod": "Review Moderation",
+  "adminPanelReviewModSub": "Approve or reject user reviews",
+  "adminPanelReportedContent": "Reported Content",
+  "adminPanelReportedContentSub": "Review flagged posts and comments",
+  "adminPanelWidgetReview": "Widget Marketplace Review",
+  "adminPanelWidgetReviewSub": "Approve pending widget submissions",
+  "adminPanelSectionUsers": "USER MANAGEMENT",
+  "adminPanelSocialSeeding": "Social Seeding",
+  "adminPanelSocialSeedingSub": "Manage follow requests and connections",
+  "adminPanelUserPurchases": "User Purchases",
+  "adminPanelUserPurchasesSub": "View and manage user transactions",
+  "adminPanelSectionConfig": "APP CONFIGURATION",
+  "adminPanelBroadcast": "Broadcast Notification",
+  "adminPanelBroadcastSub": "Send push notification to all users",
+  "adminPanelQrStyles": "QR Code Styles",
+  "adminPanelQrStylesSub": "Preview branded QR code designs",
+  "adminPanelSectionDiag": "DEVICE DIAGNOSTICS",
+  "adminPanelDiagHarness": "Diagnostic Harness",
+  "adminPanelDiagHarnessSub": "Run protocol probes and export debug bundle",
+  "adminPanelConformance": "Conformance Harness",
+  "adminPanelConformanceSub": "Provider-bound device conformance & stress tests",
+  "adminPanelBadgeOverflow": "99+",
+  "adminBroadcastTitle": "Broadcast Notification",
+  "adminBroadcastSignInRequired": "You must be signed in to send notifications",
+  "adminBroadcastTestSentTitle": "Test Sent",
+  "adminBroadcastSentTitle": "Broadcast Sent",
+  "adminBroadcastTestSentBody": "Your test notification has been sent to all admins.",
+  "adminBroadcastSentBody": "Your notification has been sent to all Socialmesh users.",
+  "adminBroadcastDone": "Done",
+  "adminBroadcastFailedDetailed": "Failed to send: {code} - {message}",
+  "@adminBroadcastFailedDetailed": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      },
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "adminBroadcastFailed": "Failed to send: {error}",
+  "@adminBroadcastFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "adminBroadcastSelectDeepLink": "Select Deep Link",
+  "adminBroadcastSelectIcon": "Select Icon",
+  "adminBroadcastPreviewTitlePlaceholder": "Notification Title",
+  "adminBroadcastPreviewBodyPlaceholder": "Notification message will appear here...",
+  "adminBroadcastWarning": "This will send a push notification to every Socialmesh user. Use sparingly for important announcements only.",
+  "adminBroadcastIconLabel": "Icon",
+  "adminBroadcastClear": "Clear",
+  "adminBroadcastFieldTitle": "Title",
+  "adminBroadcastTitleHint": "Notification title...",
+  "adminBroadcastTitleRequired": "Title is required",
+  "adminBroadcastFieldMessage": "Message",
+  "adminBroadcastMessageHint": "Notification message...",
+  "adminBroadcastMessageRequired": "Message is required",
+  "adminBroadcastDeepLinkLabel": "Deep Link (Optional)",
+  "adminBroadcastDeepLinkHelper": "Screen to open when notification is tapped.",
+  "adminBroadcastDeepLinkNone": "None",
+  "adminBroadcastSendingTest": "Sending Test...",
+  "adminBroadcastTestButton": "Test to Admins Only",
+  "adminBroadcastTestHint": "Send a test notification to admins before broadcasting to all users.",
+  "adminBroadcastCountdownCancel": "Cancel — sending in {seconds}...",
+  "@adminBroadcastCountdownCancel": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "adminBroadcastSending": "Sending...",
+  "adminBroadcastSendAll": "Send to Everyone",
+  "adminBroadcastSendHint": "Sends a push notification to all Socialmesh users. A {seconds}s countdown gives you time to cancel.",
+  "@adminBroadcastSendHint": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "adminBroadcastPreviewLabel": "PREVIEW",
+  "adminBroadcastPreviewAppName": "SOCIALMESH",
+  "adminBroadcastPreviewNow": "now",
+  "adminBroadcastIconCatGeneral": "GENERAL",
+  "adminBroadcastIconCatSocial": "SOCIAL",
+  "adminBroadcastIconCatPremium": "PREMIUM",
+  "adminBroadcastIconAnnouncement": "Announcement",
+  "adminBroadcastIconUpdate": "App Update",
+  "adminBroadcastIconFeature": "New Feature",
+  "adminBroadcastIconMaintenance": "Maintenance",
+  "adminBroadcastIconAlert": "Alert",
+  "adminBroadcastIconCelebration": "Celebration",
+  "adminBroadcastIconTip": "Tip",
+  "adminBroadcastIconSignals": "Signals",
+  "adminBroadcastIconNodedex": "NodeDex",
+  "adminBroadcastIconAether": "Aether",
+  "adminBroadcastIconActivity": "Activity",
+  "adminBroadcastIconPresence": "Presence",
+  "adminBroadcastIconCommunity": "Community",
+  "adminBroadcastIconWorldMap": "World Map",
+  "adminBroadcastIconThemes": "Theme Pack",
+  "adminBroadcastIconRingtones": "Ringtone Pack",
+  "adminBroadcastIconWidgets": "Widgets",
+  "adminBroadcastIconAutomations": "Automations",
+  "adminBroadcastIconIfttt": "IFTTT Integration",
+  "adminBroadcastDefTitleAnnouncement": "Announcement",
+  "adminBroadcastDefTitleUpdate": "App Update Available",
+  "adminBroadcastDefTitleFeature": "New Feature",
+  "adminBroadcastDefTitleMaintenance": "Scheduled Maintenance",
+  "adminBroadcastDefTitleAlert": "Important Alert",
+  "adminBroadcastDefTitleCelebration": "Celebration",
+  "adminBroadcastDefTitleTip": "Pro Tip",
+  "adminBroadcastDefTitleSignals": "Signals Update",
+  "adminBroadcastDefTitleNodedex": "NodeDex Update",
+  "adminBroadcastDefTitleAether": "Aether Update",
+  "adminBroadcastDefTitleActivity": "Activity Update",
+  "adminBroadcastDefTitlePresence": "Presence Update",
+  "adminBroadcastDefTitleCommunity": "Community Update",
+  "adminBroadcastDefTitleWorldMap": "World Map Update",
+  "adminBroadcastDefTitleThemes": "New Theme Pack",
+  "adminBroadcastDefTitleRingtones": "New Ringtone Pack",
+  "adminBroadcastDefTitleWidgets": "New Widgets",
+  "adminBroadcastDefTitleAutomations": "Automations Update",
+  "adminBroadcastDefTitleIfttt": "IFTTT Integration",
+  "adminBroadcastDefBodyAnnouncement": "We have an important announcement for the Socialmesh community.",
+  "adminBroadcastDefBodyUpdate": "A new version of Socialmesh is available with improvements and bug fixes.",
+  "adminBroadcastDefBodyFeature": "We just launched a new feature in Socialmesh. Check it out!",
+  "adminBroadcastDefBodyMaintenance": "Socialmesh services will be briefly unavailable for scheduled maintenance.",
+  "adminBroadcastDefBodyAlert": "Please be aware of an important issue affecting Socialmesh.",
+  "adminBroadcastDefBodyCelebration": "We have something exciting to celebrate with the Socialmesh community!",
+  "adminBroadcastDefBodyTip": "Here is a helpful tip to get the most out of Socialmesh.",
+  "adminBroadcastDefBodySignals": "Check out what is new in Signals, your mesh presence feed.",
+  "adminBroadcastDefBodyNodedex": "NodeDex has new features for discovering and tracking mesh nodes.",
+  "adminBroadcastDefBodyAether": "New improvements to Aether flight sharing are now live.",
+  "adminBroadcastDefBodyActivity": "See what is happening in your Activity feed.",
+  "adminBroadcastDefBodyPresence": "Presence detection has been improved for better mesh awareness.",
+  "adminBroadcastDefBodyCommunity": "Join the latest Socialmesh community initiatives.",
+  "adminBroadcastDefBodyWorldMap": "The World Mesh Map has new features for exploring global mesh coverage.",
+  "adminBroadcastDefBodyThemes": "A new theme pack is now available in the Socialmesh store.",
+  "adminBroadcastDefBodyRingtones": "A new ringtone pack is now available for your mesh notifications.",
+  "adminBroadcastDefBodyWidgets": "New home screen widgets are now available for Socialmesh.",
+  "adminBroadcastDefBodyAutomations": "New automation triggers and actions are now available.",
+  "adminBroadcastDefBodyIfttt": "Connect Socialmesh with your favourite services via IFTTT.",
+  "adminBroadcastDeepLinkCatCore": "CORE",
+  "adminBroadcastDeepLinkCatSocial": "SOCIAL",
+  "adminBroadcastDeepLinkCatMesh": "MESH",
+  "adminBroadcastDeepLinkCatPremium": "PREMIUM",
+  "adminBroadcastLinkSettings": "Settings",
+  "adminBroadcastLinkAccount": "Account & Subscriptions",
+  "adminBroadcastLinkScanner": "Scanner",
+  "adminBroadcastLinkMessages": "Messages",
+  "adminBroadcastLinkChannels": "Channels",
+  "adminBroadcastLinkNodes": "Nodes",
+  "adminBroadcastLinkMap": "Map",
+  "adminBroadcastLinkSignals": "Signals",
+  "adminBroadcastLinkNodedex": "NodeDex",
+  "adminBroadcastLinkAether": "Aether",
+  "adminBroadcastLinkActivity": "Activity",
+  "adminBroadcastLinkPresence": "Presence",
+  "adminBroadcastLinkTimeline": "Timeline",
+  "adminBroadcastLinkWorldMap": "World Map",
+  "adminBroadcastLinkGlobe": "3D Globe",
+  "adminBroadcastLinkReachability": "Reachability",
+  "adminBroadcastLinkThemes": "Theme Pack",
+  "adminBroadcastLinkRingtones": "Ringtone Pack",
+  "adminBroadcastLinkWidgets": "Widgets",
+  "adminBroadcastLinkAutomations": "Automations",
+  "adminBroadcastLinkIfttt": "IFTTT Integration",
+  "adminDiagTitle": "Admin Diagnostics",
+  "adminDiagTargetLocal": "Local device",
+  "adminDiagTargetRemote": "Remote: {hexId}",
+  "@adminDiagTargetRemote": {
+    "placeholders": {
+      "hexId": {
+        "type": "String"
+      }
+    }
+  },
+  "adminDiagDescription": "Run diagnostic probes against your connected device and export a detailed bundle for debugging protocol/transport issues.",
+  "adminDiagTargetLabel": "Target",
+  "adminDiagMyNodeLabel": "My Node",
+  "adminDiagStressToggle": "Include stress tests",
+  "adminDiagStressToggleSub": "Burst reads and out-of-order correlation",
+  "adminDiagWriteToggle": "Include write tests (reversible)",
+  "adminDiagWriteToggleSub": "No-op writes with read-back verification",
+  "adminDiagRunButton": "Run Diagnostics",
+  "adminDiagNoDevice": "No device connected",
+  "adminDiagProbeProgress": "{completed} / {total} probes",
+  "@adminDiagProbeProgress": {
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "adminDiagCancel": "Cancel",
+  "adminDiagResultSummary": "{passed} passed, {failed} failed",
+  "@adminDiagResultSummary": {
+    "placeholders": {
+      "passed": {
+        "type": "int"
+      },
+      "failed": {
+        "type": "int"
+      }
+    }
+  },
+  "adminDiagExportBundle": "Export Bundle",
+  "adminDiagCopySummary": "Copy Summary to Clipboard",
+  "adminDiagRunAgain": "Run Again",
+  "adminDiagWriteTestsDialogTitle": "Enable Write Tests?",
+  "adminDiagWriteTestsDialogBody": "Write tests perform no-op writes (same value) to verify round-trip behavior. They do not change device state, but they do send SET commands to the device.\n\nAre you sure you want to include write tests?",
+  "adminDiagWriteTestsCancel": "Cancel",
+  "adminDiagWriteTestsEnable": "Enable",
+  "adminDiagExportFailed": "Export failed: {error}",
+  "@adminDiagExportFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "adminDiagCopiedToClipboard": "Summary copied to clipboard",
+  "adminPurchasesTitle": "User Purchases",
+  "adminPurchasesLabelTotal": " TOTAL · ",
+  "adminPurchasesLabelPaying": " PAYING · ",
+  "adminPurchasesLabelFree": " FREE · ",
+  "adminPurchasesLabelRevenue": " REVENUE",
+  "adminPurchasesLabelExcluded": " EXCLUDED",
+  "adminPurchasesStatTotalUsers": "Total Users",
+  "adminPurchasesStatPaying": "Paying",
+  "adminPurchasesStatExcludedCount": "{count} excluded",
+  "@adminPurchasesStatExcludedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "adminPurchasesStatFree": "Free",
+  "adminPurchasesStatConversion": "Conversion",
+  "adminPurchasesStatArpu": "ARPU",
+  "adminPurchasesStatArpuTooltip": "Average Revenue Per User",
+  "adminPurchasesStatGross": "Gross Revenue",
+  "adminPurchasesStatExcluded": "Excluded",
+  "adminPurchasesStatNet": "Net Revenue",
+  "adminPurchasesStatNewUsers24h": "New Users (24h)",
+  "adminPurchasesStatPurchases24h": "Purchases (24h)",
+  "adminPurchasesStatRevenue24h": "Revenue (24h)",
+  "adminPurchasesSearchHint": "Search users...",
+  "adminPurchasesFilterAll": "All",
+  "adminPurchasesFilterPaying": "Paying",
+  "adminPurchasesFilterFree": "Free",
+  "adminPurchasesFilterExcluded": "Excluded",
+  "adminPurchasesFilterAnonymous": "Anonymous",
+  "adminPurchasesFilterDeleted": "Deleted",
+  "adminPurchasesBannerTitle": "Shows purchases synced via app login or RevenueCat webhooks.",
+  "adminPurchasesBannerSubtitle": "Users must open the app while signed in for their purchases to appear here.",
+  "adminPurchasesErrorLoading": "Error loading users",
+  "adminPurchasesRetry": "Retry",
+  "adminPurchasesNoSearchResults": "No users match your search",
+  "adminPurchasesNoUsers": "No users found",
+  "adminPurchasesUnknownUser": "Unknown User",
+  "adminPurchasesAnonymousTag": "Anonymous",
+  "adminPurchasesDeletedTag": "Deleted",
+  "adminPurchasesAnonRcUser": "Anonymous RevenueCat User",
+  "adminPurchasesFallbackCloudSync": "Cloud Sync",
+  "adminPurchasesSectionIds": "Identifiers",
+  "adminPurchasesFirebaseUid": "Firebase UID",
+  "adminPurchasesRevenueCatId": "RevenueCat ID",
+  "adminPurchasesMemberSince": "Member Since",
+  "adminPurchasesSectionPurchases": "Purchases",
+  "adminPurchasesItemCount": "{count} items",
+  "@adminPurchasesItemCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "adminPurchasesNoPurchases": "No purchases",
+  "adminPurchasesCopied": "Copied to clipboard",
+  "adminPurchasesCopyTooltip": "Copy",
+  "adminQrStyleTitle": "QR Code Styles",
+  "adminQrStyleHeading": "Branded QR Code Styles",
+  "adminQrStyleDescription": "Preview different QR code styles with the Socialmesh logo. All styles use Level H error correction for reliable scanning.",
+  "adminQrStyleSmooth": "Smooth",
+  "adminQrStyleSmoothDesc": "Modern, rounded liquid-like modules. Premium feel.",
+  "adminQrStyleDots": "Dots",
+  "adminQrStyleDotsDesc": "Circular dot modules. Clean and minimal look.",
+  "adminQrStyleSquares": "Squares",
+  "adminQrStyleSquaresDesc": "Classic blocky QR style. Maximum compatibility.",
+  "adminQrStyleElevatedHeader": "ELEVATED STYLES",
+  "adminQrStyleElevatedSub": "Premium color treatments using {styleName} pattern",
+  "@adminQrStyleElevatedSub": {
+    "placeholders": {
+      "styleName": {
+        "type": "String"
+      }
+    }
+  },
+  "adminQrStyleNeonGlow": "Neon Glow",
+  "adminQrStyleFrostedGlass": "Frosted Glass",
+  "adminQrStyleInverted": "Inverted",
+  "adminQrStyleHolographic": "Holographic",
+  "adminQrStyleAccentBranded": "Accent Branded",
+  "adminQrStyleMinimal": "Minimal",
+  "adminQrStyleCyberpunk": "Cyberpunk",
+  "adminQrStyleAccentGlow": "Accent Glow",
+  "adminQrStyleOcean": "Ocean",
+  "adminQrStyleLuxury": "Luxury",
+  "adminQrStyleSelected": "Selected: {styleName}",
+  "@adminQrStyleSelected": {
+    "placeholders": {
+      "styleName": {
+        "type": "String"
+      }
+    }
+  },
+  "adminQrStyleScanToVerify": "Scan to verify",
+  "adminBugReportsTitle": "Bug Reports",
+  "adminBugReportsSearchHint": "Search reports",
+  "adminBugReportsLoadError": "Failed to load reports",
+  "adminBugReportsMessageTooLong": "Message exceeds 2,000 characters.",
+  "adminBugReportsReplySent": "Response sent.",
+  "adminBugReportsReplyFailed": "Failed to send: {error}",
+  "@adminBugReportsReplyFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "adminBugReportsResolved": "Report resolved.",
+  "adminBugReportsReopened": "Report reopened.",
+  "adminBugReportsStatusFailed": "Failed to update status: {error}",
+  "@adminBugReportsStatusFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "adminBugReportsStatusOpen": "OPEN",
+  "adminBugReportsStatusUserReplied": "USER REPLIED",
+  "adminBugReportsStatusResponded": "RESPONDED",
+  "adminBugReportsStatusResolved": "RESOLVED",
+  "adminBugReportsTimeJustNow": "just now",
+  "adminBugReportsTimeMinutes": "{minutes}m ago",
+  "@adminBugReportsTimeMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "adminBugReportsTimeHours": "{hours}h ago",
+  "@adminBugReportsTimeHours": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "adminBugReportsTimeDays": "{days}d ago",
+  "@adminBugReportsTimeDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "adminBugReportsSectionDesc": "DESCRIPTION",
+  "adminBugReportsSectionScreenshot": "SCREENSHOT",
+  "adminBugReportsSectionDetails": "DETAILS",
+  "adminBugReportsDetailReportId": "Report ID",
+  "adminBugReportsDetailUserId": "User ID",
+  "adminBugReportsAnonymousValue": "anonymous",
+  "adminBugReportsDetailEmail": "Email",
+  "adminBugReportsDetailDevice": "Device",
+  "adminBugReportsDetailOs": "OS Version",
+  "adminBugReportsDetailAppVer": "App Version",
+  "adminBugReportsSectionConversation": "CONVERSATION",
+  "adminBugReportsThreadYou": "You",
+  "adminBugReportsThreadUser": "User",
+  "adminBugReportsReplyHint": "Write a response...",
+  "adminBugReportsReopen": "Reopen",
+  "adminBugReportsResolve": "Resolve",
+  "adminBugReportsCountdownCancel": "Cancel · {seconds}",
+  "@adminBugReportsCountdownCancel": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "adminBugReportsSend": "Send",
+  "adminBugReportsAnonNotice": "Anonymous report — replies cannot be delivered.",
+  "adminBugReportsEmptyFilter": "No reports match your filter.",
+  "adminBugReportsEmptyAll": "No bug reports yet.",
+  "adminConformanceTitle": "Conformance Harness",
+  "adminConformanceDescription": "Provider-bound device conformance testing. All mutations flow through the same provider entrypoints used by the actual screens.",
+  "adminConformanceTargetDevice": "Target Device",
+  "adminConformanceTargetRemote": "Remote: {target}",
+  "@adminConformanceTargetRemote": {
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "adminConformanceTargetLocal": "Local device",
+  "adminConformanceNodesAvailable": "{count} remote node(s) available",
+  "@adminConformanceNodesAvailable": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "adminConformanceOtaPki": "Over-the-air admin via PKI",
+  "adminConformanceNoNodes": "No PKI-capable remote nodes",
+  "adminConformanceSwitchLocal": "Switch to Local",
+  "adminConformanceTestOptions": "Test Options",
+  "adminConformanceDestructive": "Destructive Tests",
+  "adminConformanceDestructiveSub": "Randomized mutations, burst stress, node DB reset. May temporarily change device config.",
+  "adminConformanceRunRemoteDestructive": "Run Remote Conformance (Destructive)",
+  "adminConformanceRunRemoteSafe": "Run Remote Conformance (Safe)",
+  "adminConformanceRunLocalDestructive": "Run Conformance (Destructive)",
+  "adminConformanceRunLocalSafe": "Run Conformance (Safe)",
+  "adminConformanceProgress": "{completed} / {total}  (pass: {pass}, fail: {fail})",
+  "@adminConformanceProgress": {
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "pass": {
+        "type": "int"
+      },
+      "fail": {
+        "type": "int"
+      }
+    }
+  },
+  "adminConformanceCancel": "Cancel",
+  "adminConformanceAllPassed": "All Tests Passed",
+  "adminConformanceSomeFailed": "Some Tests Failed",
+  "adminConformanceLabelPassed": "Passed",
+  "adminConformanceLabelFailed": "Failed",
+  "adminConformanceLabelSkipped": "Skipped",
+  "adminConformanceLabelTimeouts": "Timeouts",
+  "adminConformanceAnomalies": "Anomalies:",
+  "adminConformanceTestResults": "Test Results",
+  "adminConformanceExportBundle": "Export Bundle",
+  "adminConformanceRunAgain": "Run Again",
+  "adminConformanceInitializing": "Initializing",
+  "globalLayerDiagnosticsTitle": "Diagnostics",
+  "globalLayerCopyReportTooltip": "Copy report",
+  "globalLayerCheckResultsHeader": "Check Results",
+  "globalLayerConnectionDiagnosticsTitle": "Connection Diagnostics",
+  "globalLayerConnectionDiagnosticsDescription": "Run a series of checks to verify your broker connection. Each step tests a different layer of the connection stack.",
+  "globalLayerRunningChecksProgress": "Running checks... {passed}/{total}",
+  "@globalLayerRunningChecksProgress": {
+    "placeholders": {
+      "passed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "globalLayerRunAgain": "Run Again",
+  "globalLayerStartDiagnostics": "Start Diagnostics",
+  "globalLayerSummaryHeader": "Summary",
+  "globalLayerTotalTime": "Total time: {milliseconds}ms",
+  "@globalLayerTotalTime": {
+    "placeholders": {
+      "milliseconds": {
+        "type": "int"
+      }
+    }
+  },
+  "globalLayerAllClearTitle": "All Clear",
+  "globalLayerAllChecksPassed": "All {count} checks passed",
+  "@globalLayerAllChecksPassed": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "globalLayerWarningsFoundTitle": "Warnings Found",
+  "globalLayerWarningsFoundMessage": "All checks passed but with warnings to review",
+  "globalLayerIssuesFoundTitle": "Issues Found",
+  "globalLayerChecksFailedCount": "{failed} of {total} checks failed",
+  "@globalLayerChecksFailedCount": {
+    "placeholders": {
+      "failed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "globalLayerDiagnosticsReportCopied": "Diagnostics report copied to clipboard",
+  "globalLayerChecking": "Checking...",
+  "globalLayerSkippedBecauseFailed": "Skipped because {checkName} failed.",
+  "@globalLayerSkippedBecauseFailed": {
+    "placeholders": {
+      "checkName": {
+        "type": "String"
+      }
+    }
+  },
+  "globalLayerFixCheckFirst": "Fix {checkName} first, then re-run diagnostics.",
+  "@globalLayerFixCheckFirst": {
+    "placeholders": {
+      "checkName": {
+        "type": "String"
+      }
+    }
+  },
+  "globalLayerNoHostnameConfigured": "No hostname configured.",
+  "globalLayerEnterBrokerHostname": "Enter a broker hostname in the setup wizard.",
+  "globalLayerHostnameResolved": "Hostname \"{host}\" resolved successfully.",
+  "@globalLayerHostnameResolved": {
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "globalLayerTcpConnectionEstablished": "TCP connection to {host}:{port} established.",
+  "@globalLayerTcpConnectionEstablished": {
+    "placeholders": {
+      "host": {
+        "type": "String"
+      },
+      "port": {
+        "type": "int"
+      }
+    }
+  },
+  "globalLayerTlsHandshakeCompleted": "TLS handshake completed successfully.",
+  "globalLayerAuthenticatedAs": "Authenticated as \"{username}\".",
+  "@globalLayerAuthenticatedAs": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      }
+    }
+  },
+  "globalLayerAnonymousConnection": "Anonymous connection accepted by broker.",
+  "globalLayerSubscribedToTopics": "Subscribed to {count} topic(s) successfully.",
+  "@globalLayerSubscribedToTopics": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "globalLayerSubscribeCapabilityVerified": "Subscribe capability verified (no topics enabled).",
+  "globalLayerPublishTestPassed": "Test message published and received on loopback.",
+  "globalLayerFailedToLoadConfig": "Failed to load Global Layer configuration",
+  "globalLayerRetry": "Retry",
+  "globalLayerCopyDiagnosticsTooltip": "Copy diagnostics",
+  "globalLayerTopicExplorerTitle": "Topic Explorer",
+  "globalLayerRunDiagnosticsMenuItem": "Run Diagnostics",
+  "globalLayerReconfigureMenuItem": "Reconfigure",
+  "globalLayerReset": "Reset",
+  "globalLayerRecentActivityHeader": "Recent Activity",
+  "globalLayerPausedSnackbar": "Global Layer paused",
+  "globalLayerResumedSnackbar": "Global Layer resumed",
+  "globalLayerDiagnosticsCopiedSnackbar": "Diagnostics copied to clipboard",
+  "globalLayerResetTitle": "Reset Global Layer",
+  "globalLayerResetMessage": "This will clear all broker configuration, credentials, and connection history. You will need to run the setup wizard again.",
+  "globalLayerQuickActionsHeader": "Quick Actions",
+  "globalLayerDisconnectAction": "Disconnect",
+  "globalLayerConnectAction": "Connect",
+  "globalLayerPauseAction": "Pause",
+  "globalLayerResumeAction": "Resume",
+  "globalLayerDiagnoseAction": "Diagnose",
+  "globalLayerTopicsAction": "Topics",
+  "globalLayerBrokerHeader": "Broker",
+  "globalLayerHostLabel": "Host",
+  "globalLayerPortLabel": "Port",
+  "globalLayerTlsLabel": "TLS",
+  "globalLayerTlsEnabled": "Enabled",
+  "@globalLayerTlsEnabled": {
+    "description": "TLS = Transport Layer Security encryption for the Global Layer connection. Status: enabled."
+  },
+  "globalLayerTlsDisabled": "Disabled",
+  "@globalLayerTlsDisabled": {
+    "description": "TLS = Transport Layer Security encryption for the Global Layer connection. Status: disabled."
+  },
+  "globalLayerUserLabel": "User",
+  "globalLayerLastConnectedLabel": "Last connected",
+  "globalLayerTopicsLabel": "Topics",
+  "globalLayerActiveTopicsCount": "{count} active",
+  "@globalLayerActiveTopicsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "globalLayerJustNow": "Just now",
+  "globalLayerMinutesAgo": "{minutes}m ago",
+  "@globalLayerMinutesAgo": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "globalLayerHoursAgo": "{hours}h ago",
+  "@globalLayerHoursAgo": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "globalLayerDaysAgo": "{days}d ago",
+  "@globalLayerDaysAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "globalLayerSecondsAgo": "{seconds}s ago",
+  "@globalLayerSecondsAgo": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "globalLayerDateFormat": "{day}/{month}/{year}",
+  "@globalLayerDateFormat": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      },
+      "month": {
+        "type": "int"
+      },
+      "year": {
+        "type": "int"
+      }
+    }
+  },
+  "globalLayerShortDateFormat": "{month}/{day}",
+  "@globalLayerShortDateFormat": {
+    "placeholders": {
+      "month": {
+        "type": "int"
+      },
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+  "globalLayerHealthHeader": "Health",
+  "globalLayerHealthy": "Healthy",
+  "globalLayerUnhealthy": "Unhealthy",
+  "globalLayerPingLabel": "Ping",
+  "globalLayerReconnectsLabel": "Reconnects",
+  "globalLayerInboundLabel": "Inbound",
+  "globalLayerOutboundLabel": "Outbound",
+  "globalLayerThroughputLabel": "Throughput",
+  "globalLayerSessionLabel": "Session",
+  "globalLayerActiveErrors": "{count} active error(s)",
+  "@globalLayerActiveErrors": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "globalLayerPrivacyHeader": "Privacy",
+  "globalLayerPrivacyAllOff": "All Off",
+  "globalLayerShareMessagesLabel": "Share Messages",
+  "globalLayerShareMessagesDescription": "Forward local messages to broker",
+  "globalLayerShareTelemetryLabel": "Share Telemetry",
+  "@globalLayerShareTelemetryLabel": {
+    "description": "Global Layer = Socialmesh's cloud mesh data sharing feature. Telemetry = device sensor data."
+  },
+  "globalLayerShareTelemetryDescription": "Publish device health data",
+  "globalLayerAcceptInboundLabel": "Accept Inbound",
+  "globalLayerAcceptInboundDescription": "Receive messages from broker",
+  "globalLayerStatusOn": "ON",
+  "globalLayerStatusOff": "OFF",
+  "globalLayerAddFromTemplate": "Add from Template",
+  "globalLayerAddCustomTopic": "Add Custom Topic",
+  "globalLayerSubscriptionsHeader": "Subscriptions",
+  "globalLayerAddButton": "Add",
+  "globalLayerRemoveTopicTitle": "Remove Topic",
+  "globalLayerRemoveTopicMessage": "Remove \"{label}\" ({topic}) from your subscriptions? You can add it back later.",
+  "@globalLayerRemoveTopicMessage": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "topic": {
+        "type": "String"
+      }
+    }
+  },
+  "globalLayerRemoveConfirm": "Remove",
+  "globalLayerRemovedSnackbar": "Removed \"{label}\"",
+  "@globalLayerRemovedSnackbar": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "globalLayerUndo": "Undo",
+  "globalLayerFailedToLoadTopics": "Failed to load topics: {error}",
+  "@globalLayerFailedToLoadTopics": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "globalLayerNoTopicSubscriptions": "No Topic Subscriptions",
+  "globalLayerEmptyTopicsDescription": "Add topics to control which types of mesh data flow through the Global Layer. Each topic corresponds to a category like chat, telemetry, or position.",
+  "@globalLayerEmptyTopicsDescription": {
+    "description": "Global Layer = cloud mesh sharing. Topics = MQTT-style data categories (positions, telemetry, messages)."
+  },
+  "globalLayerFromTemplateButton": "From Template",
+  "globalLayerCustomButton": "Custom",
+  "globalLayerTopicPaused": "Paused",
+  "globalLayerTopicListening": "Listening",
+  "globalLayerTopicOffline": "Offline",
+  "globalLayerStatsTopics": "Topics",
+  "globalLayerStatsActive": "Active",
+  "globalLayerStatsMessages": "Messages",
+  "globalLayerStatsRate": "Rate",
+  "globalLayerAddCustomTopicDescription": "Subscribe to a custom MQTT topic. Wildcards (+, #) are allowed for subscribe topics.",
+  "globalLayerLabelFieldLabel": "Label",
+  "globalLayerLabelFieldHint": "e.g. Weather Reports",
+  "globalLayerMqttTopicFieldLabel": "MQTT Topic",
+  "@globalLayerMqttTopicFieldLabel": {
+    "description": "MQTT topic = message routing path on the Global Layer broker. Used to filter mesh data streams."
+  },
+  "globalLayerMqttTopicFieldHint": "e.g. msh/weather/+",
+  "globalLayerAddSubscriptionButton": "Add Subscription",
+  "globalLayerAddFromTemplateDescription": "Choose a predefined topic template. Placeholders will be resolved using the values below.",
+  "globalLayerChannelFieldLabel": "Channel",
+  "globalLayerChannelFieldHint": "LongFast",
+  "globalLayerNodeIdFieldLabel": "Node ID",
+  "globalLayerNodeIdFieldHint": "!a1b2c3d4",
+  "globalLayerTemplateAdded": "Added"
 }

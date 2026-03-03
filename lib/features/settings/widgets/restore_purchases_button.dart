@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/logging.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
@@ -32,10 +33,7 @@ class _RestorePurchasesButtonState extends ConsumerState<RestorePurchasesButton>
     final isOnline = ref.read(isOnlineProvider);
     if (!isOnline) {
       AppLogging.subscriptions('[RestorePurchases] Blocked — offline');
-      showErrorSnackBar(
-        context,
-        'Restoring purchases requires an internet connection.',
-      );
+      showErrorSnackBar(context, context.l10n.restorePurchasesRequiresInternet);
       return;
     }
 
@@ -79,13 +77,13 @@ class _RestorePurchasesButtonState extends ConsumerState<RestorePurchasesButton>
     safePostFrame(() {
       if (success && restoredNew) {
         // New purchases were restored
-        showSuccessSnackBar(context, 'Purchases restored successfully!');
+        showSuccessSnackBar(context, context.l10n.restorePurchasesSuccess);
       } else if (success) {
         // Purchases exist but none were new
-        showInfoSnackBar(context, 'Your purchases are already active');
+        showInfoSnackBar(context, context.l10n.restorePurchasesAlreadyActive);
       } else {
         // No purchases found at all
-        showInfoSnackBar(context, 'No purchases found to restore');
+        showInfoSnackBar(context, context.l10n.restorePurchasesNone);
       }
     });
   }
@@ -108,7 +106,7 @@ class _RestorePurchasesButtonState extends ConsumerState<RestorePurchasesButton>
                     child: CircularProgressIndicator(strokeWidth: 2),
                   )
                 : const Icon(Icons.refresh, size: 18),
-            label: const Text('Restore Purchases'),
+            label: Text(context.l10n.restorePurchasesTitle),
             style: TextButton.styleFrom(foregroundColor: context.accentColor),
           ),
         ),

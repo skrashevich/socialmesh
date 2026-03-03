@@ -1,0 +1,528 @@
+  "widgetBuilderBindingNodeLongNameLabel": "Node Name",
+  "@widgetBuilderBindingNodeLongNameLabel": {
+    "description": "Binding label for node.longName"
+  },
+  "widgetBuilderBindingNodeLongNameDesc": "Full name of the node",
+  "@widgetBuilderBindingNodeLongNameDesc": {
+    "description": "Binding description for node.longName"
+  },
+  "widgetBuilderBindingNodeShortNameLabel": "Short Name",
+  "@widgetBuilderBindingNodeShortNameLabel": {
+    "description": "Binding label for node.shortName"
+  },
+  "widgetBuilderBindingNodeShortNameDesc": "Short 4-character node identifier",
+  "@widgetBuilderBindingNodeShortNameDesc": {
+    "description": "Binding description for node.shortName"
+  },
+  "widgetBuilderBindingNodeNodeNumLabel": "Node Number",
+  "@widgetBuilderBindingNodeNodeNumLabel": {
+    "description": "Binding label for node.nodeNum"
+  },
+  "widgetBuilderBindingNodeNodeNumDesc": "Unique node number",
+  "@widgetBuilderBindingNodeNodeNumDesc": {
+    "description": "Binding description for node.nodeNum"
+  },
+  "widgetBuilderBindingNodePresenceConfidenceLabel": "Presence Confidence",
+  "@widgetBuilderBindingNodePresenceConfidenceLabel": {
+    "description": "Binding label for node.presenceConfidence"
+  },
+  "widgetBuilderBindingNodePresenceConfidenceDesc": "Inferred presence: active, fading, stale, unknown",
+  "@widgetBuilderBindingNodePresenceConfidenceDesc": {
+    "description": "Binding description for node.presenceConfidence"
+  },
+  "widgetBuilderBindingNodeLastHeardLabel": "Last Heard",
+  "@widgetBuilderBindingNodeLastHeardLabel": {
+    "description": "Binding label for node.lastHeard"
+  },
+  "widgetBuilderBindingNodeLastHeardDesc": "When the node was last heard from",
+  "@widgetBuilderBindingNodeLastHeardDesc": {
+    "description": "Binding description for node.lastHeard"
+  },
+  "widgetBuilderBindingNodeRoleLabel": "Node Role",
+  "@widgetBuilderBindingNodeRoleLabel": {
+    "description": "Binding label for node.role"
+  },
+  "widgetBuilderBindingNodeRoleDesc": "Role in the mesh (CLIENT, ROUTER, etc.)",
+  "@widgetBuilderBindingNodeRoleDesc": {
+    "description": "Binding description for node.role"
+  },
+  "widgetBuilderBindingNodeHardwareModelLabel": "Hardware Model",
+  "@widgetBuilderBindingNodeHardwareModelLabel": {
+    "description": "Binding label for node.hardwareModel"
+  },
+  "widgetBuilderBindingNodeHardwareModelDesc": "Device hardware model",
+  "@widgetBuilderBindingNodeHardwareModelDesc": {
+    "description": "Binding description for node.hardwareModel"
+  },
+  "widgetBuilderBindingNodeFirmwareVersionLabel": "Firmware Version",
+  "@widgetBuilderBindingNodeFirmwareVersionLabel": {
+    "description": "Binding label for node.firmwareVersion"
+  },
+  "widgetBuilderBindingNodeFirmwareVersionDesc": "Current firmware version",
+  "@widgetBuilderBindingNodeFirmwareVersionDesc": {
+    "description": "Binding description for node.firmwareVersion"
+  },
+  "widgetBuilderBindingNodeSnrLabel": "SNR",
+  "@widgetBuilderBindingNodeSnrLabel": {
+    "description": "Binding label for node.snr"
+  },
+  "widgetBuilderBindingNodeSnrDesc": "Signal-to-noise ratio",
+  "@widgetBuilderBindingNodeSnrDesc": {
+    "description": "Binding description for node.snr"
+  },
+  "widgetBuilderBindingDeviceSnrLabel": "SNR",
+  "@widgetBuilderBindingDeviceSnrLabel": {
+    "description": "Binding label for device.snr"
+  },
+  "widgetBuilderBindingDeviceSnrDesc": "Signal-to-noise ratio",
+  "@widgetBuilderBindingDeviceSnrDesc": {
+    "description": "Binding description for device.snr"
+  },
+  "widgetBuilderBindingNodeRssiLabel": "RSSI",
+  "@widgetBuilderBindingNodeRssiLabel": {
+    "description": "Binding label for node.rssi"
+  },
+  "widgetBuilderBindingNodeRssiDesc": "Received signal strength indicator",
+  "@widgetBuilderBindingNodeRssiDesc": {
+    "description": "Binding description for node.rssi"
+  },
+  "widgetBuilderBindingDeviceRssiLabel": "RSSI",
+  "@widgetBuilderBindingDeviceRssiLabel": {
+    "description": "Binding label for device.rssi"
+  },
+  "widgetBuilderBindingDeviceRssiDesc": "Received signal strength indicator",
+  "@widgetBuilderBindingDeviceRssiDesc": {
+    "description": "Binding description for device.rssi"
+  },
+  "widgetBuilderBindingNodeDistanceLabel": "Distance",
+  "@widgetBuilderBindingNodeDistanceLabel": {
+    "description": "Binding label for node.distance"
+  },
+  "widgetBuilderBindingNodeDistanceDesc": "Distance to node in meters",
+  "@widgetBuilderBindingNodeDistanceDesc": {
+    "description": "Binding description for node.distance"
+  },
+  "widgetBuilderBindingNodeBatteryLevelLabel": "Battery Level",
+  "@widgetBuilderBindingNodeBatteryLevelLabel": {
+    "description": "Binding label for node.batteryLevel"
+  },
+  "widgetBuilderBindingNodeBatteryLevelDesc": "Battery percentage (0-100)",
+  "@widgetBuilderBindingNodeBatteryLevelDesc": {
+    "description": "Binding description for node.batteryLevel"
+  },
+  "widgetBuilderBindingNodeVoltageLabel": "Battery Voltage",
+  "@widgetBuilderBindingNodeVoltageLabel": {
+    "description": "Binding label for node.voltage"
+  },
+  "widgetBuilderBindingNodeVoltageDesc": "Battery voltage",
+  "@widgetBuilderBindingNodeVoltageDesc": {
+    "description": "Binding description for node.voltage"
+  },
+  "widgetBuilderBindingNodeChannelUtilizationLabel": "Channel Utilization",
+  "@widgetBuilderBindingNodeChannelUtilizationLabel": {
+    "description": "Binding label for node.channelUtilization"
+  },
+  "widgetBuilderBindingNodeChannelUtilizationDesc": "Current channel utilization percentage",
+  "@widgetBuilderBindingNodeChannelUtilizationDesc": {
+    "description": "Binding description for node.channelUtilization"
+  },
+  "widgetBuilderBindingDeviceChannelUtilizationLabel": "Channel Utilization",
+  "@widgetBuilderBindingDeviceChannelUtilizationLabel": {
+    "description": "Binding label for device.channelUtilization"
+  },
+  "widgetBuilderBindingDeviceChannelUtilizationDesc": "Current channel utilization percentage",
+  "@widgetBuilderBindingDeviceChannelUtilizationDesc": {
+    "description": "Binding description for device.channelUtilization"
+  },
+  "widgetBuilderBindingDeviceChannelUtilLabel": "Channel Util",
+  "@widgetBuilderBindingDeviceChannelUtilLabel": {
+    "description": "Binding label for device.channelUtil"
+  },
+  "widgetBuilderBindingDeviceChannelUtilDesc": "Current channel utilization percentage",
+  "@widgetBuilderBindingDeviceChannelUtilDesc": {
+    "description": "Binding description for device.channelUtil"
+  },
+  "widgetBuilderBindingNodeAirUtilTxLabel": "Airtime TX",
+  "@widgetBuilderBindingNodeAirUtilTxLabel": {
+    "description": "Binding label for node.airUtilTx"
+  },
+  "widgetBuilderBindingNodeAirUtilTxDesc": "Transmission airtime utilization",
+  "@widgetBuilderBindingNodeAirUtilTxDesc": {
+    "description": "Binding description for node.airUtilTx"
+  },
+  "widgetBuilderBindingNodeUptimeSecondsLabel": "Uptime",
+  "@widgetBuilderBindingNodeUptimeSecondsLabel": {
+    "description": "Binding label for node.uptimeSeconds"
+  },
+  "widgetBuilderBindingNodeUptimeSecondsDesc": "Device uptime in seconds",
+  "@widgetBuilderBindingNodeUptimeSecondsDesc": {
+    "description": "Binding description for node.uptimeSeconds"
+  },
+  "widgetBuilderBindingNodeTemperatureLabel": "Temperature",
+  "@widgetBuilderBindingNodeTemperatureLabel": {
+    "description": "Binding label for node.temperature"
+  },
+  "widgetBuilderBindingNodeTemperatureDesc": "Ambient temperature",
+  "@widgetBuilderBindingNodeTemperatureDesc": {
+    "description": "Binding description for node.temperature"
+  },
+  "widgetBuilderBindingNodeHumidityLabel": "Humidity",
+  "@widgetBuilderBindingNodeHumidityLabel": {
+    "description": "Binding label for node.humidity"
+  },
+  "widgetBuilderBindingNodeHumidityDesc": "Relative humidity percentage",
+  "@widgetBuilderBindingNodeHumidityDesc": {
+    "description": "Binding description for node.humidity"
+  },
+  "widgetBuilderBindingNodeBarometricPressureLabel": "Pressure",
+  "@widgetBuilderBindingNodeBarometricPressureLabel": {
+    "description": "Binding label for node.barometricPressure"
+  },
+  "widgetBuilderBindingNodeBarometricPressureDesc": "Barometric pressure",
+  "@widgetBuilderBindingNodeBarometricPressureDesc": {
+    "description": "Binding description for node.barometricPressure"
+  },
+  "widgetBuilderBindingNodePressureLabel": "Pressure",
+  "@widgetBuilderBindingNodePressureLabel": {
+    "description": "Binding label for node.pressure"
+  },
+  "widgetBuilderBindingNodePressureDesc": "Barometric pressure",
+  "@widgetBuilderBindingNodePressureDesc": {
+    "description": "Binding description for node.pressure"
+  },
+  "widgetBuilderBindingNodeLuxLabel": "Light Level",
+  "@widgetBuilderBindingNodeLuxLabel": {
+    "description": "Binding label for node.lux"
+  },
+  "widgetBuilderBindingNodeLuxDesc": "Ambient light level",
+  "@widgetBuilderBindingNodeLuxDesc": {
+    "description": "Binding description for node.lux"
+  },
+  "widgetBuilderBindingNodeIaqLabel": "IAQ Index",
+  "@widgetBuilderBindingNodeIaqLabel": {
+    "description": "Binding label for node.iaq"
+  },
+  "widgetBuilderBindingNodeIaqDesc": "Indoor air quality index",
+  "@widgetBuilderBindingNodeIaqDesc": {
+    "description": "Binding description for node.iaq"
+  },
+  "widgetBuilderBindingNodeWindSpeedLabel": "Wind Speed",
+  "@widgetBuilderBindingNodeWindSpeedLabel": {
+    "description": "Binding label for node.windSpeed"
+  },
+  "widgetBuilderBindingNodeWindSpeedDesc": "Current wind speed",
+  "@widgetBuilderBindingNodeWindSpeedDesc": {
+    "description": "Binding description for node.windSpeed"
+  },
+  "widgetBuilderBindingNodeWindDirectionLabel": "Wind Direction",
+  "@widgetBuilderBindingNodeWindDirectionLabel": {
+    "description": "Binding label for node.windDirection"
+  },
+  "widgetBuilderBindingNodeWindDirectionDesc": "Wind direction in degrees",
+  "@widgetBuilderBindingNodeWindDirectionDesc": {
+    "description": "Binding description for node.windDirection"
+  },
+  "widgetBuilderBindingNodeWindGustLabel": "Wind Gust",
+  "@widgetBuilderBindingNodeWindGustLabel": {
+    "description": "Binding label for node.windGust"
+  },
+  "widgetBuilderBindingNodeWindGustDesc": "Wind gust speed",
+  "@widgetBuilderBindingNodeWindGustDesc": {
+    "description": "Binding description for node.windGust"
+  },
+  "widgetBuilderBindingNodeRainfall1hLabel": "Rainfall (1h)",
+  "@widgetBuilderBindingNodeRainfall1hLabel": {
+    "description": "Binding label for node.rainfall1h"
+  },
+  "widgetBuilderBindingNodeRainfall1hDesc": "Rainfall in last hour",
+  "@widgetBuilderBindingNodeRainfall1hDesc": {
+    "description": "Binding description for node.rainfall1h"
+  },
+  "widgetBuilderBindingNodeRainfall24hLabel": "Rainfall (24h)",
+  "@widgetBuilderBindingNodeRainfall24hLabel": {
+    "description": "Binding label for node.rainfall24h"
+  },
+  "widgetBuilderBindingNodeRainfall24hDesc": "Rainfall in last 24 hours",
+  "@widgetBuilderBindingNodeRainfall24hDesc": {
+    "description": "Binding description for node.rainfall24h"
+  },
+  "widgetBuilderBindingNodeSoilMoistureLabel": "Soil Moisture",
+  "@widgetBuilderBindingNodeSoilMoistureLabel": {
+    "description": "Binding label for node.soilMoisture"
+  },
+  "widgetBuilderBindingNodeSoilMoistureDesc": "Soil moisture percentage",
+  "@widgetBuilderBindingNodeSoilMoistureDesc": {
+    "description": "Binding description for node.soilMoisture"
+  },
+  "widgetBuilderBindingNodeSoilTemperatureLabel": "Soil Temperature",
+  "@widgetBuilderBindingNodeSoilTemperatureLabel": {
+    "description": "Binding label for node.soilTemperature"
+  },
+  "widgetBuilderBindingNodeSoilTemperatureDesc": "Soil temperature",
+  "@widgetBuilderBindingNodeSoilTemperatureDesc": {
+    "description": "Binding description for node.soilTemperature"
+  },
+  "widgetBuilderBindingNodePm25StandardLabel": "PM2.5",
+  "@widgetBuilderBindingNodePm25StandardLabel": {
+    "description": "Binding label for node.pm25Standard"
+  },
+  "widgetBuilderBindingNodePm25StandardDesc": "PM2.5 particulate matter",
+  "@widgetBuilderBindingNodePm25StandardDesc": {
+    "description": "Binding description for node.pm25Standard"
+  },
+  "widgetBuilderBindingNodePm10StandardLabel": "PM1.0",
+  "@widgetBuilderBindingNodePm10StandardLabel": {
+    "description": "Binding label for node.pm10Standard"
+  },
+  "widgetBuilderBindingNodePm10StandardDesc": "PM1.0 particulate matter",
+  "@widgetBuilderBindingNodePm10StandardDesc": {
+    "description": "Binding description for node.pm10Standard"
+  },
+  "widgetBuilderBindingNodePm100StandardLabel": "PM10",
+  "@widgetBuilderBindingNodePm100StandardLabel": {
+    "description": "Binding label for node.pm100Standard"
+  },
+  "widgetBuilderBindingNodePm100StandardDesc": "PM10 particulate matter",
+  "@widgetBuilderBindingNodePm100StandardDesc": {
+    "description": "Binding description for node.pm100Standard"
+  },
+  "widgetBuilderBindingNodeCo2Label": "CO2",
+  "@widgetBuilderBindingNodeCo2Label": {
+    "description": "Binding label for node.co2"
+  },
+  "widgetBuilderBindingNodeCo2Desc": "CO2 concentration",
+  "@widgetBuilderBindingNodeCo2Desc": {
+    "description": "Binding description for node.co2"
+  },
+  "widgetBuilderBindingNodeLatitudeLabel": "Latitude",
+  "@widgetBuilderBindingNodeLatitudeLabel": {
+    "description": "Binding label for node.latitude"
+  },
+  "widgetBuilderBindingNodeLatitudeDesc": "GPS latitude coordinate",
+  "@widgetBuilderBindingNodeLatitudeDesc": {
+    "description": "Binding description for node.latitude"
+  },
+  "widgetBuilderBindingNodeLongitudeLabel": "Longitude",
+  "@widgetBuilderBindingNodeLongitudeLabel": {
+    "description": "Binding label for node.longitude"
+  },
+  "widgetBuilderBindingNodeLongitudeDesc": "GPS longitude coordinate",
+  "@widgetBuilderBindingNodeLongitudeDesc": {
+    "description": "Binding description for node.longitude"
+  },
+  "widgetBuilderBindingNodeAltitudeLabel": "Altitude",
+  "@widgetBuilderBindingNodeAltitudeLabel": {
+    "description": "Binding label for node.altitude"
+  },
+  "widgetBuilderBindingNodeAltitudeDesc": "Altitude above sea level",
+  "@widgetBuilderBindingNodeAltitudeDesc": {
+    "description": "Binding description for node.altitude"
+  },
+  "widgetBuilderBindingNodeSatsInViewLabel": "Satellites",
+  "@widgetBuilderBindingNodeSatsInViewLabel": {
+    "description": "Binding label for node.satsInView"
+  },
+  "widgetBuilderBindingNodeSatsInViewDesc": "Number of GPS satellites in view",
+  "@widgetBuilderBindingNodeSatsInViewDesc": {
+    "description": "Binding description for node.satsInView"
+  },
+  "widgetBuilderBindingNodeGroundSpeedLabel": "Ground Speed",
+  "@widgetBuilderBindingNodeGroundSpeedLabel": {
+    "description": "Binding label for node.groundSpeed"
+  },
+  "widgetBuilderBindingNodeGroundSpeedDesc": "Ground speed",
+  "@widgetBuilderBindingNodeGroundSpeedDesc": {
+    "description": "Binding description for node.groundSpeed"
+  },
+  "widgetBuilderBindingNodeGroundTrackLabel": "Heading",
+  "@widgetBuilderBindingNodeGroundTrackLabel": {
+    "description": "Binding label for node.groundTrack"
+  },
+  "widgetBuilderBindingNodeGroundTrackDesc": "Ground track/heading in degrees",
+  "@widgetBuilderBindingNodeGroundTrackDesc": {
+    "description": "Binding description for node.groundTrack"
+  },
+  "widgetBuilderBindingNodeCh1VoltageLabel": "Channel 1 Voltage",
+  "@widgetBuilderBindingNodeCh1VoltageLabel": {
+    "description": "Binding label for node.ch1Voltage"
+  },
+  "widgetBuilderBindingNodeCh1VoltageDesc": "Power channel 1 voltage",
+  "@widgetBuilderBindingNodeCh1VoltageDesc": {
+    "description": "Binding description for node.ch1Voltage"
+  },
+  "widgetBuilderBindingNodeCh1CurrentLabel": "Channel 1 Current",
+  "@widgetBuilderBindingNodeCh1CurrentLabel": {
+    "description": "Binding label for node.ch1Current"
+  },
+  "widgetBuilderBindingNodeCh1CurrentDesc": "Power channel 1 current",
+  "@widgetBuilderBindingNodeCh1CurrentDesc": {
+    "description": "Binding description for node.ch1Current"
+  },
+  "widgetBuilderBindingNodeNumPacketsTxLabel": "Packets TX",
+  "@widgetBuilderBindingNodeNumPacketsTxLabel": {
+    "description": "Binding label for node.numPacketsTx"
+  },
+  "widgetBuilderBindingNodeNumPacketsTxDesc": "Total packets transmitted",
+  "@widgetBuilderBindingNodeNumPacketsTxDesc": {
+    "description": "Binding description for node.numPacketsTx"
+  },
+  "widgetBuilderBindingNodeNumPacketsRxLabel": "Packets RX",
+  "@widgetBuilderBindingNodeNumPacketsRxLabel": {
+    "description": "Binding label for node.numPacketsRx"
+  },
+  "widgetBuilderBindingNodeNumPacketsRxDesc": "Total packets received",
+  "@widgetBuilderBindingNodeNumPacketsRxDesc": {
+    "description": "Binding description for node.numPacketsRx"
+  },
+  "widgetBuilderBindingNodeNumTxDroppedLabel": "Packets TX Dropped",
+  "@widgetBuilderBindingNodeNumTxDroppedLabel": {
+    "description": "Binding label for node.numTxDropped"
+  },
+  "widgetBuilderBindingNodeNumTxDroppedDesc": "Packets dropped due to full TX queue",
+  "@widgetBuilderBindingNodeNumTxDroppedDesc": {
+    "description": "Binding description for node.numTxDropped"
+  },
+  "widgetBuilderBindingNodeNoiseFloorLabel": "Noise Floor",
+  "@widgetBuilderBindingNodeNoiseFloorLabel": {
+    "description": "Binding label for node.noiseFloor"
+  },
+  "widgetBuilderBindingNodeNoiseFloorDesc": "Measured noise floor in dBm",
+  "@widgetBuilderBindingNodeNoiseFloorDesc": {
+    "description": "Binding description for node.noiseFloor"
+  },
+  "widgetBuilderBindingNodeNodeStatusLabel": "Node Status",
+  "@widgetBuilderBindingNodeNodeStatusLabel": {
+    "description": "Binding label for node.nodeStatus"
+  },
+  "widgetBuilderBindingNodeNodeStatusDesc": "Custom status message from the node",
+  "@widgetBuilderBindingNodeNodeStatusDesc": {
+    "description": "Binding description for node.nodeStatus"
+  },
+  "widgetBuilderBindingNodeNumOnlineNodesLabel": "Nodes Heard (2h)",
+  "@widgetBuilderBindingNodeNumOnlineNodesLabel": {
+    "description": "Binding label for node.numOnlineNodes"
+  },
+  "widgetBuilderBindingNodeNumOnlineNodesDesc": "Meshtastic metric: nodes heard in the last 2 hours",
+  "@widgetBuilderBindingNodeNumOnlineNodesDesc": {
+    "description": "Binding description for node.numOnlineNodes"
+  },
+  "widgetBuilderBindingNodeNumTotalNodesLabel": "Total Nodes",
+  "@widgetBuilderBindingNodeNumTotalNodesLabel": {
+    "description": "Binding label for node.numTotalNodes"
+  },
+  "widgetBuilderBindingNodeNumTotalNodesDesc": "Total number of known nodes",
+  "@widgetBuilderBindingNodeNumTotalNodesDesc": {
+    "description": "Binding description for node.numTotalNodes"
+  },
+  "widgetBuilderBindingNetworkTotalNodesLabel": "Total Mesh Nodes",
+  "@widgetBuilderBindingNetworkTotalNodesLabel": {
+    "description": "Binding label for network.totalNodes"
+  },
+  "widgetBuilderBindingNetworkTotalNodesDesc": "Total nodes in the mesh network",
+  "@widgetBuilderBindingNetworkTotalNodesDesc": {
+    "description": "Binding description for network.totalNodes"
+  },
+  "widgetBuilderBindingNetworkActiveCountLabel": "Active Mesh Nodes",
+  "@widgetBuilderBindingNetworkActiveCountLabel": {
+    "description": "Binding label for network.activeCount"
+  },
+  "widgetBuilderBindingNetworkActiveCountDesc": "Nodes heard recently",
+  "@widgetBuilderBindingNetworkActiveCountDesc": {
+    "description": "Binding description for network.activeCount"
+  },
+  "widgetBuilderBindingNetworkOnlineNodesLabel": "Active Mesh Nodes (legacy)",
+  "@widgetBuilderBindingNetworkOnlineNodesLabel": {
+    "description": "Binding label for network.onlineNodes"
+  },
+  "widgetBuilderBindingNetworkOnlineNodesDesc": "Alias for active node count (back-compat)",
+  "@widgetBuilderBindingNetworkOnlineNodesDesc": {
+    "description": "Binding description for network.onlineNodes"
+  },
+  "widgetBuilderBindingNetworkUnreadMessagesLabel": "Unread Messages",
+  "@widgetBuilderBindingNetworkUnreadMessagesLabel": {
+    "description": "Binding label for network.unreadMessages"
+  },
+  "widgetBuilderBindingNetworkUnreadMessagesDesc": "Number of unread messages",
+  "@widgetBuilderBindingNetworkUnreadMessagesDesc": {
+    "description": "Binding description for network.unreadMessages"
+  },
+  "widgetBuilderBindingMessagingRecentCountLabel": "Recent Messages",
+  "@widgetBuilderBindingMessagingRecentCountLabel": {
+    "description": "Binding label for messaging.recentCount"
+  },
+  "widgetBuilderBindingMessagingRecentCountDesc": "Number of recent messages",
+  "@widgetBuilderBindingMessagingRecentCountDesc": {
+    "description": "Binding description for messaging.recentCount"
+  },
+  "widgetBuilderBindingNodeDisplayNameLabel": "Display Name",
+  "@widgetBuilderBindingNodeDisplayNameLabel": {
+    "description": "Binding label for node.displayName"
+  },
+  "widgetBuilderBindingNodeDisplayNameDesc": "Node display name (long name or short name)",
+  "@widgetBuilderBindingNodeDisplayNameDesc": {
+    "description": "Binding description for node.displayName"
+  },
+  "widgetBuilderBindingNodeHopCountLabel": "Hop Count",
+  "@widgetBuilderBindingNodeHopCountLabel": {
+    "description": "Binding label for node.hopCount"
+  },
+  "widgetBuilderBindingNodeHopCountDesc": "Number of hops from this node (0 = direct neighbor)",
+  "@widgetBuilderBindingNodeHopCountDesc": {
+    "description": "Binding description for node.hopCount"
+  },
+  "widgetBuilderBindingNodeViaMqttLabel": "Via MQTT",
+  "@widgetBuilderBindingNodeViaMqttLabel": {
+    "description": "Binding label for node.viaMqtt"
+  },
+  "widgetBuilderBindingNodeViaMqttDesc": "Whether this node was last heard via MQTT transport",
+  "@widgetBuilderBindingNodeViaMqttDesc": {
+    "description": "Binding description for node.viaMqtt"
+  },
+  "widgetBuilderBindingNodeFirstHeardLabel": "First Heard",
+  "@widgetBuilderBindingNodeFirstHeardLabel": {
+    "description": "Binding label for node.firstHeard"
+  },
+  "widgetBuilderBindingNodeFirstHeardDesc": "When the node was first discovered",
+  "@widgetBuilderBindingNodeFirstHeardDesc": {
+    "description": "Binding description for node.firstHeard"
+  },
+  "widgetBuilderBindingNodeNumPacketsRxBadLabel": "Bad Packets RX",
+  "@widgetBuilderBindingNodeNumPacketsRxBadLabel": {
+    "description": "Binding label for node.numPacketsRxBad"
+  },
+  "widgetBuilderBindingNodeNumPacketsRxBadDesc": "Bad packets received",
+  "@widgetBuilderBindingNodeNumPacketsRxBadDesc": {
+    "description": "Binding description for node.numPacketsRxBad"
+  },
+  "widgetBuilderBindingNodeCh2VoltageLabel": "Channel 2 Voltage",
+  "@widgetBuilderBindingNodeCh2VoltageLabel": {
+    "description": "Binding label for node.ch2Voltage"
+  },
+  "widgetBuilderBindingNodeCh2VoltageDesc": "Power channel 2 voltage",
+  "@widgetBuilderBindingNodeCh2VoltageDesc": {
+    "description": "Binding description for node.ch2Voltage"
+  },
+  "widgetBuilderBindingNodeCh2CurrentLabel": "Channel 2 Current",
+  "@widgetBuilderBindingNodeCh2CurrentLabel": {
+    "description": "Binding label for node.ch2Current"
+  },
+  "widgetBuilderBindingNodeCh2CurrentDesc": "Power channel 2 current",
+  "@widgetBuilderBindingNodeCh2CurrentDesc": {
+    "description": "Binding description for node.ch2Current"
+  },
+  "widgetBuilderBindingNodeCh3VoltageLabel": "Channel 3 Voltage",
+  "@widgetBuilderBindingNodeCh3VoltageLabel": {
+    "description": "Binding label for node.ch3Voltage"
+  },
+  "widgetBuilderBindingNodeCh3VoltageDesc": "Power channel 3 voltage",
+  "@widgetBuilderBindingNodeCh3VoltageDesc": {
+    "description": "Binding description for node.ch3Voltage"
+  },
+  "widgetBuilderBindingNodeCh3CurrentLabel": "Channel 3 Current",
+  "@widgetBuilderBindingNodeCh3CurrentLabel": {
+    "description": "Binding label for node.ch3Current"
+  },
+  "widgetBuilderBindingNodeCh3CurrentDesc": "Power channel 3 current",
+  "@widgetBuilderBindingNodeCh3CurrentDesc": {
+    "description": "Binding description for node.ch3Current"
+  },

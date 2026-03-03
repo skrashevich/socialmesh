@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../../../providers/social_providers.dart';
@@ -31,33 +32,33 @@ class AdminScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return GlassScaffold(
-      title: 'Admin',
+      title: context.l10n.adminPanelTitle,
       slivers: [
         SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           sliver: SliverList(
             delegate: SliverChildListDelegate([
-              const _SectionHeader(title: 'SHOP MANAGEMENT'),
+              _SectionHeader(title: context.l10n.adminPanelSectionShop),
               _AdminTile(
                 icon: Icons.dashboard_customize,
-                label: 'Shop Admin Dashboard',
-                subtitle: 'Manage products, orders, and inventory',
+                label: context.l10n.adminPanelShopDashboard,
+                subtitle: context.l10n.adminPanelShopDashboardSub,
                 iconColor: Colors.purple.shade400,
                 onTap: () => _navigateTo(context, const ShopAdminDashboard()),
               ),
               _AdminTile(
                 icon: Icons.store,
-                label: 'Device Shop',
-                subtitle: 'View and manage device listings',
+                label: context.l10n.adminPanelDeviceShop,
+                subtitle: context.l10n.adminPanelDeviceShopSub,
                 iconColor: Colors.teal.shade400,
                 onTap: () => _navigateTo(context, const DeviceShopScreen()),
               ),
               const SizedBox(height: AppTheme.spacing16),
-              const _SectionHeader(title: 'CONTENT MODERATION'),
+              _SectionHeader(title: context.l10n.adminPanelSectionModeration),
               _AdminTile(
                 icon: Icons.bug_report,
-                label: 'Bug Reports',
-                subtitle: 'View and respond to user bug reports',
+                label: context.l10n.adminPanelBugReports,
+                subtitle: context.l10n.adminPanelBugReportsSub,
                 iconColor: Colors.pink.shade400,
                 badgeCount: ref.watch(adminOpenBugReportCountProvider),
                 onTap: () =>
@@ -65,8 +66,8 @@ class AdminScreen extends ConsumerWidget {
               ),
               _AdminTile(
                 icon: Icons.rate_review_outlined,
-                label: 'Review Moderation',
-                subtitle: 'Approve or reject user reviews',
+                label: context.l10n.adminPanelReviewMod,
+                subtitle: context.l10n.adminPanelReviewModSub,
                 iconColor: Colors.blue.shade400,
                 badgeCount: ref
                     .watch(pendingReviewCountProvider)
@@ -80,8 +81,8 @@ class AdminScreen extends ConsumerWidget {
               ),
               _AdminTile(
                 icon: Icons.flag_outlined,
-                label: 'Reported Content',
-                subtitle: 'Review flagged posts and comments',
+                label: context.l10n.adminPanelReportedContent,
+                subtitle: context.l10n.adminPanelReportedContentSub,
                 iconColor: Colors.red.shade400,
                 badgeCount: ref
                     .watch(pendingReportCountProvider)
@@ -95,59 +96,59 @@ class AdminScreen extends ConsumerWidget {
               ),
               _AdminTile(
                 icon: Icons.widgets_outlined,
-                label: 'Widget Marketplace Review',
-                subtitle: 'Approve pending widget submissions',
+                label: context.l10n.adminPanelWidgetReview,
+                subtitle: context.l10n.adminPanelWidgetReviewSub,
                 iconColor: Colors.deepPurple.shade400,
                 onTap: () => _navigateTo(context, const WidgetApprovalScreen()),
               ),
               const SizedBox(height: AppTheme.spacing16),
-              const _SectionHeader(title: 'USER MANAGEMENT'),
+              _SectionHeader(title: context.l10n.adminPanelSectionUsers),
               _AdminTile(
                 icon: Icons.group_add_rounded,
-                label: 'Social Seeding',
-                subtitle: 'Manage follow requests and connections',
+                label: context.l10n.adminPanelSocialSeeding,
+                subtitle: context.l10n.adminPanelSocialSeedingSub,
                 iconColor: Colors.teal.shade400,
                 onTap: () =>
                     _navigateTo(context, const AdminFollowRequestsScreen()),
               ),
               _AdminTile(
                 icon: Icons.receipt_long,
-                label: 'User Purchases',
-                subtitle: 'View and manage user transactions',
+                label: context.l10n.adminPanelUserPurchases,
+                subtitle: context.l10n.adminPanelUserPurchasesSub,
                 iconColor: Colors.amber.shade400,
                 onTap: () =>
                     _navigateTo(context, const UserPurchasesAdminScreen()),
               ),
               const SizedBox(height: AppTheme.spacing16),
-              const _SectionHeader(title: 'APP CONFIGURATION'),
+              _SectionHeader(title: context.l10n.adminPanelSectionConfig),
               _AdminTile(
                 icon: Icons.campaign_outlined,
-                label: 'Broadcast Notification',
-                subtitle: 'Send push notification to all users',
+                label: context.l10n.adminPanelBroadcast,
+                subtitle: context.l10n.adminPanelBroadcastSub,
                 iconColor: Colors.orange.shade400,
                 onTap: () => _navigateTo(context, const AdminBroadcastScreen()),
               ),
               _AdminTile(
                 icon: Icons.qr_code_2,
-                label: 'QR Code Styles',
-                subtitle: 'Preview branded QR code designs',
+                label: context.l10n.adminPanelQrStyles,
+                subtitle: context.l10n.adminPanelQrStylesSub,
                 iconColor: Colors.cyan.shade400,
                 onTap: () => _navigateTo(context, const QrStylePreviewScreen()),
               ),
               const SizedBox(height: AppTheme.spacing16),
-              const _SectionHeader(title: 'DEVICE DIAGNOSTICS'),
+              _SectionHeader(title: context.l10n.adminPanelSectionDiag),
               _AdminTile(
                 icon: Icons.biotech,
-                label: 'Diagnostic Harness',
-                subtitle: 'Run protocol probes and export debug bundle',
+                label: context.l10n.adminPanelDiagHarness,
+                subtitle: context.l10n.adminPanelDiagHarnessSub,
                 iconColor: Colors.lime.shade400,
                 onTap: () =>
                     _navigateTo(context, const AdminDiagnosticsScreen()),
               ),
               _AdminTile(
                 icon: Icons.verified,
-                label: 'Conformance Harness',
-                subtitle: 'Provider-bound device conformance & stress tests',
+                label: context.l10n.adminPanelConformance,
+                subtitle: context.l10n.adminPanelConformanceSub,
                 iconColor: Colors.amber.shade400,
                 onTap: () =>
                     _navigateTo(context, const AdminConformanceScreen()),
@@ -274,7 +275,9 @@ class _AdminTile extends StatelessWidget {
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
                     child: Text(
-                      badgeCount! > 99 ? '99+' : badgeCount.toString(),
+                      badgeCount! > 99
+                          ? context.l10n.adminPanelBadgeOverflow
+                          : badgeCount.toString(),
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 12,

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import '../constants.dart';
+import '../l10n/l10n_extension.dart';
 import '../theme.dart';
 import '../logging.dart';
 
@@ -14,7 +15,11 @@ class LegalDocumentSheet {
 
   /// Show Terms of Service
   static void showTerms(BuildContext context) {
-    _showWebView(context, 'Terms of Service', AppUrls.termsUrlInApp);
+    _showWebView(
+      context,
+      context.l10n.legalDocumentTermsOfService,
+      AppUrls.termsUrlInApp,
+    );
   }
 
   /// Show Terms of Service scrolled to a specific section anchor.
@@ -25,14 +30,18 @@ class LegalDocumentSheet {
   static void showTermsSection(BuildContext context, String sectionAnchor) {
     _showWebView(
       context,
-      'Terms of Service',
+      context.l10n.legalDocumentTermsOfService,
       AppUrls.termsUrlInAppWithSection(sectionAnchor),
     );
   }
 
   /// Show Privacy Policy
   static void showPrivacy(BuildContext context) {
-    _showWebView(context, 'Privacy Policy', AppUrls.privacyUrlInApp);
+    _showWebView(
+      context,
+      context.l10n.legalDocumentPrivacyPolicy,
+      AppUrls.privacyUrlInApp,
+    );
   }
 
   /// Show Privacy Policy scrolled to a specific section anchor.
@@ -42,29 +51,41 @@ class LegalDocumentSheet {
   static void showPrivacySection(BuildContext context, String sectionAnchor) {
     _showWebView(
       context,
-      'Privacy Policy',
+      context.l10n.legalDocumentPrivacyPolicy,
       AppUrls.privacyUrlInAppWithSection(sectionAnchor),
     );
   }
 
   /// Show Support / FAQ
   static void showSupport(BuildContext context) {
-    _showWebView(context, 'Help & Support', AppUrls.supportUrlInApp);
+    _showWebView(
+      context,
+      context.l10n.legalDocumentHelpAndSupport,
+      AppUrls.supportUrlInApp,
+    );
   }
 
   /// Show Documentation
   static void showDocs(BuildContext context) {
-    _showWebView(context, 'Documentation', AppUrls.docsUrlInApp);
+    _showWebView(
+      context,
+      context.l10n.legalDocumentDocumentation,
+      AppUrls.docsUrlInApp,
+    );
   }
 
   /// Show FAQ
   static void showFAQ(BuildContext context) {
-    _showWebView(context, 'FAQ', AppUrls.faqUrlInApp);
+    _showWebView(context, context.l10n.legalDocumentFaq, AppUrls.faqUrlInApp);
   }
 
   /// Show Delete Account page
   static void showDeleteAccount(BuildContext context) {
-    _showWebView(context, 'Delete Account', AppUrls.deleteAccountUrlInApp);
+    _showWebView(
+      context,
+      context.l10n.legalDocumentDeleteAccount,
+      AppUrls.deleteAccountUrlInApp,
+    );
   }
 
   static void _showWebView(BuildContext context, String title, String url) {
@@ -130,7 +151,7 @@ class _LegalWebViewScreenState extends State<_LegalWebViewScreen> {
             ),
             const SizedBox(height: AppTheme.spacing16),
             Text(
-              'Unable to load page',
+              context.l10n.legalDocumentUnableToLoad,
               style: TextStyle(
                 color: context.textSecondary,
                 fontSize: 16,
@@ -139,8 +160,7 @@ class _LegalWebViewScreenState extends State<_LegalWebViewScreen> {
             ),
             const SizedBox(height: AppTheme.spacing8),
             Text(
-              'This content requires an internet connection. '
-              'Please check your connection and try again.',
+              context.l10n.legalDocumentRequiresInternet,
               style: TextStyle(color: context.textTertiary, fontSize: 14),
               textAlign: TextAlign.center,
             ),
@@ -158,7 +178,7 @@ class _LegalWebViewScreenState extends State<_LegalWebViewScreen> {
             FilledButton.icon(
               onPressed: _retry,
               icon: const Icon(Icons.refresh, size: 18),
-              label: const Text('Retry'),
+              label: Text(context.l10n.commonRetry),
               style: FilledButton.styleFrom(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 24,
@@ -198,14 +218,14 @@ class _LegalWebViewScreenState extends State<_LegalWebViewScreen> {
             IconButton(
               icon: const Icon(Icons.arrow_back),
               onPressed: () => _webViewController?.goBack(),
-              tooltip: 'Go back',
+              tooltip: context.l10n.legalDocumentGoBack,
             ),
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: _hasLoadError
                 ? _retry
                 : () => _webViewController?.reload(),
-            tooltip: 'Refresh',
+            tooltip: context.l10n.legalDocumentRefresh,
           ),
         ],
       ),

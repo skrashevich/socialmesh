@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import '../../core/logging.dart';
+import '../../core/l10n/l10n_extension.dart';
 import 'dart:async';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
@@ -127,7 +128,7 @@ class _RangeTestScreenState extends ConsumerState<RangeTestScreen>
       );
 
       if (mounted) {
-        showSuccessSnackBar(context, 'Range test configuration saved');
+        showSuccessSnackBar(context, context.l10n.rangeTestSaveSuccess);
         if (target.isLocal) {
           ref
               .read(countdownProvider.notifier)
@@ -136,7 +137,7 @@ class _RangeTestScreenState extends ConsumerState<RangeTestScreen>
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to save config: $e');
+        showErrorSnackBar(context, context.l10n.rangeTestSaveFailed('$e'));
       }
     } finally {
       safeSetState(() => _isSaving = false);
@@ -283,7 +284,7 @@ class _RangeTestScreenState extends ConsumerState<RangeTestScreen>
           });
 
     if (otherNodes.isEmpty) {
-      showInfoSnackBar(context, 'No other nodes available');
+      showInfoSnackBar(context, context.l10n.rangeTestNoNodes);
       return;
     }
 
@@ -317,19 +318,22 @@ class _RangeTestScreenState extends ConsumerState<RangeTestScreen>
         targetNode?.shortName ??
         (_selectedTargetNode != null
             ? '!${_selectedTargetNode!.toRadixString(16)}'
-            : 'Select target');
+            : context.l10n.rangeTestSelectTarget);
 
     return GestureDetector(
       onTap: _dismissKeyboard,
       child: GlassScaffold(
-        title: 'Range Test',
+        title: context.l10n.rangeTestTitle,
         actions: [
           if (!_isRunning)
             TextButton(
               onPressed: _isSaving ? null : _saveConfig,
               child: _isSaving
                   ? LoadingIndicator(size: 20)
-                  : Text('Save', style: TextStyle(color: context.accentColor)),
+                  : Text(
+                      context.l10n.rangeTestSave,
+                      style: TextStyle(color: context.accentColor),
+                    ),
             ),
         ],
         slivers: [
@@ -347,20 +351,22 @@ class _RangeTestScreenState extends ConsumerState<RangeTestScreen>
 
                   // Configuration Section
                   if (!_isRunning) ...[
-                    _buildSectionTitle('Configuration'),
+                    _buildSectionTitle(context.l10n.rangeTestConfiguration),
                     _buildConfigCard(),
                     const SizedBox(height: AppTheme.spacing16),
                   ],
 
                   // Results Section
                   if (_results.isNotEmpty) ...[
-                    _buildSectionTitle('Results (${_results.length})'),
+                    _buildSectionTitle(
+                      context.l10n.rangeTestResultsCount(_results.length),
+                    ),
                     _buildResultsCard(),
                   ],
 
                   // Info Section
                   if (!_isRunning && _results.isEmpty) ...[
-                    _buildSectionTitle('About Range Test'),
+                    _buildSectionTitle(context.l10n.rangeTestAbout),
                     _buildInfoCard(),
                   ],
                 ]),
@@ -420,7 +426,9 @@ class _RangeTestScreenState extends ConsumerState<RangeTestScreen>
 
           // Status text
           Text(
-            _isRunning ? 'Test Running' : 'Ready to Test',
+            _isRunning
+                ? context.l10n.rangeTestRunning
+                : context.l10n.rangeTestReady,
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,
@@ -430,7 +438,7 @@ class _RangeTestScreenState extends ConsumerState<RangeTestScreen>
           SizedBox(height: AppTheme.spacing4),
           Text(
             _isRunning
-                ? '${_results.length} packets received'
+                ? context.l10n.rangeTestPacketsReceived(_results.length)
                 : 'Target: $targetName',
             style: context.bodySmallStyle?.copyWith(
               color: context.textSecondary,
@@ -447,7 +455,7 @@ class _RangeTestScreenState extends ConsumerState<RangeTestScreen>
                   child: OutlinedButton.icon(
                     onPressed: _showNodePicker,
                     icon: const Icon(Icons.person_search, size: 18),
-                    label: const Text('Select Node'),
+                    label: Text(context.l10n.rangeTestSelectNode),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: context.textSecondary,
                       side: BorderSide(color: context.border),
@@ -466,7 +474,11 @@ class _RangeTestScreenState extends ConsumerState<RangeTestScreen>
                     _isRunning ? Icons.stop : Icons.play_arrow,
                     size: 20,
                   ),
-                  label: Text(_isRunning ? 'Stop' : 'Start Test'),
+                  label: Text(
+                    _isRunning
+                        ? context.l10n.rangeTestStop
+                        : context.l10n.rangeTestStartTest,
+                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: _isRunning
                         ? AppTheme.errorRed
@@ -496,11 +508,11 @@ class _RangeTestScreenState extends ConsumerState<RangeTestScreen>
         children: [
           ListTile(
             title: Text(
-              'Enable Range Test Module',
+              context.l10n.rangeTestEnableModule,
               style: TextStyle(color: context.textPrimary),
             ),
             subtitle: Text(
-              'Allow this device to participate in range tests',
+              context.l10n.rangeTestEnableModuleSubtitle,
               style: TextStyle(color: context.textTertiary, fontSize: 12),
             ),
             trailing: ThemedSwitch(
@@ -511,11 +523,11 @@ class _RangeTestScreenState extends ConsumerState<RangeTestScreen>
           Divider(height: 1, color: context.border),
           ListTile(
             title: Text(
-              'Sender Interval',
+              context.l10n.rangeTestSenderInterval,
               style: TextStyle(color: context.textPrimary),
             ),
             subtitle: Text(
-              'Send test packet every $_senderInterval seconds',
+              context.l10n.rangeTestSenderIntervalSubtitle(_senderInterval),
               style: TextStyle(color: context.textTertiary, fontSize: 12),
             ),
             trailing: Row(
@@ -546,11 +558,11 @@ class _RangeTestScreenState extends ConsumerState<RangeTestScreen>
           Divider(height: 1, color: context.border),
           ListTile(
             title: Text(
-              'Save Results to SD',
+              context.l10n.rangeTestSaveResultsToSd,
               style: TextStyle(color: context.textPrimary),
             ),
             subtitle: Text(
-              'Store test results on device SD card',
+              context.l10n.rangeTestSaveResultsToSdSubtitle,
               style: TextStyle(color: context.textTertiary, fontSize: 12),
             ),
             trailing: ThemedSwitch(
@@ -577,19 +589,19 @@ class _RangeTestScreenState extends ConsumerState<RangeTestScreen>
             child: Row(
               children: [
                 _buildStatItem(
-                  'Avg SNR',
+                  context.l10n.rangeTestAvgSnr,
                   _results.isNotEmpty
                       ? '${(_results.map((r) => r.snr).reduce((a, b) => a + b) / _results.length).toStringAsFixed(1)} dB'
                       : '--',
                 ),
                 _buildStatItem(
-                  'Avg RSSI',
+                  context.l10n.rangeTestAvgRssi,
                   _results.isNotEmpty
                       ? '${(_results.map((r) => r.rssi).reduce((a, b) => a + b) / _results.length).toStringAsFixed(0)} dBm'
                       : '--',
                 ),
                 _buildStatItem(
-                  'Max Dist',
+                  context.l10n.rangeTestMaxDist,
                   _results.isNotEmpty
                       ? '${(_results.map((r) => r.distance).reduce((a, b) => a > b ? a : b) / 1000).toStringAsFixed(1)} km'
                       : '--',
@@ -680,7 +692,7 @@ class _RangeTestScreenState extends ConsumerState<RangeTestScreen>
               Icon(Icons.info_outline, color: AppTheme.primaryBlue, size: 20),
               SizedBox(width: AppTheme.spacing8),
               Text(
-                'How Range Test Works',
+                context.l10n.rangeTestHowItWorks,
                 style: TextStyle(
                   color: context.textPrimary,
                   fontWeight: FontWeight.w600,
@@ -690,11 +702,7 @@ class _RangeTestScreenState extends ConsumerState<RangeTestScreen>
           ),
           const SizedBox(height: AppTheme.spacing12),
           Text(
-            '1. Select a target node to test range with\n'
-            '2. Start the test to begin sending packets\n'
-            '3. View real-time signal metrics (SNR, RSSI)\n'
-            '4. Track maximum distance achieved\n\n'
-            'Both nodes must have Range Test module enabled for best results.',
+            context.l10n.rangeTestHowItWorksDescription,
             style: TextStyle(
               color: context.textSecondary,
               fontSize: 13,
@@ -759,7 +767,7 @@ class _NodePickerContentState extends State<_NodePickerContent> {
           child: Row(
             children: [
               Text(
-                'Select Target Node',
+                context.l10n.rangeTestSelectTargetNode,
                 style: TextStyle(
                   color: context.textPrimary,
                   fontSize: 18,
@@ -770,7 +778,7 @@ class _NodePickerContentState extends State<_NodePickerContent> {
               TextButton(
                 onPressed: () => Navigator.pop(context),
                 child: Text(
-                  'Cancel',
+                  context.l10n.commonCancel,
                   style: TextStyle(color: context.textSecondary),
                 ),
               ),
@@ -790,7 +798,7 @@ class _NodePickerContentState extends State<_NodePickerContent> {
             style: TextStyle(color: context.textPrimary, fontSize: 14),
             onTapOutside: (_) => FocusScope.of(context).unfocus(),
             decoration: InputDecoration(
-              hintText: 'Search nodes…',
+              hintText: context.l10n.rangeTestSearchNodes,
               hintStyle: TextStyle(color: context.textTertiary),
               prefixIcon: Icon(
                 Icons.search,
@@ -844,7 +852,7 @@ class _NodePickerContentState extends State<_NodePickerContent> {
                 Icon(Icons.search_off, color: context.textTertiary, size: 32),
                 const SizedBox(height: AppTheme.spacing8),
                 Text(
-                  'No nodes match "$_searchQuery"',
+                  context.l10n.rangeTestNoNodesMatch(_searchQuery),
                   style: TextStyle(color: context.textTertiary, fontSize: 13),
                 ),
               ],

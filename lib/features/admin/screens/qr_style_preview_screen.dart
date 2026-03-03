@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/branded_qr_code.dart';
 import '../../../core/widgets/glass_scaffold.dart';
@@ -24,10 +25,11 @@ class _QrStylePreviewScreenState extends ConsumerState<QrStylePreviewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     const sampleData = 'socialmesh://widget/id:SAMPLE_PREVIEW_DATA';
 
     return GlassScaffold(
-      title: 'QR Code Styles',
+      title: l10n.adminQrStyleTitle,
       // Use hasScrollBody: true because the child is a ListView.
       // hasScrollBody: false would force intrinsic dimension computation
       // which ListView cannot provide, causing a null check crash in
@@ -58,7 +60,7 @@ class _QrStylePreviewScreenState extends ConsumerState<QrStylePreviewScreen> {
                         ),
                         const SizedBox(width: AppTheme.spacing8),
                         Text(
-                          'Branded QR Code Styles',
+                          l10n.adminQrStyleHeading,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -69,9 +71,7 @@ class _QrStylePreviewScreenState extends ConsumerState<QrStylePreviewScreen> {
                     ),
                     const SizedBox(height: AppTheme.spacing8),
                     Text(
-                      'Preview different QR code styles with the Socialmesh '
-                      'logo. All styles use Level H error correction for '
-                      'reliable scanning.',
+                      l10n.adminQrStyleDescription,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: context.textSecondary,
                       ),
@@ -84,9 +84,8 @@ class _QrStylePreviewScreenState extends ConsumerState<QrStylePreviewScreen> {
               // Style cards
               _StyleCard(
                 style: QrStyle.smooth,
-                title: 'Smooth',
-                description:
-                    'Modern, rounded liquid-like modules. Premium feel.',
+                title: l10n.adminQrStyleSmooth,
+                description: l10n.adminQrStyleSmoothDesc,
                 sampleData: sampleData,
                 isSelected: _selectedStyle == QrStyle.smooth,
                 onTap: () => _selectStyle(QrStyle.smooth),
@@ -95,8 +94,8 @@ class _QrStylePreviewScreenState extends ConsumerState<QrStylePreviewScreen> {
 
               _StyleCard(
                 style: QrStyle.dots,
-                title: 'Dots',
-                description: 'Circular dot modules. Clean and minimal look.',
+                title: l10n.adminQrStyleDots,
+                description: l10n.adminQrStyleDotsDesc,
                 sampleData: sampleData,
                 isSelected: _selectedStyle == QrStyle.dots,
                 onTap: () => _selectStyle(QrStyle.dots),
@@ -105,8 +104,8 @@ class _QrStylePreviewScreenState extends ConsumerState<QrStylePreviewScreen> {
 
               _StyleCard(
                 style: QrStyle.squares,
-                title: 'Squares',
-                description: 'Classic blocky QR style. Maximum compatibility.',
+                title: l10n.adminQrStyleSquares,
+                description: l10n.adminQrStyleSquaresDesc,
                 sampleData: sampleData,
                 isSelected: _selectedStyle == QrStyle.squares,
                 onTap: () => _selectStyle(QrStyle.squares),
@@ -123,7 +122,7 @@ class _QrStylePreviewScreenState extends ConsumerState<QrStylePreviewScreen> {
                   ),
                   const SizedBox(width: AppTheme.spacing8),
                   Text(
-                    'ELEVATED STYLES',
+                    l10n.adminQrStyleElevatedHeader,
                     style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w700,
@@ -135,7 +134,7 @@ class _QrStylePreviewScreenState extends ConsumerState<QrStylePreviewScreen> {
               ),
               const SizedBox(height: AppTheme.spacing6),
               Text(
-                'Premium color treatments using ${_selectedStyle.name} pattern',
+                l10n.adminQrStyleElevatedSub(_selectedStyle.name),
                 style: Theme.of(
                   context,
                 ).textTheme.labelSmall?.copyWith(color: context.textSecondary),
@@ -151,7 +150,7 @@ class _QrStylePreviewScreenState extends ConsumerState<QrStylePreviewScreen> {
                   children: [
                     // 1. Neon Glow
                     _ElevatedStyleCard(
-                      title: 'Neon Glow',
+                      title: l10n.adminQrStyleNeonGlow,
                       icon: Icons.lightbulb,
                       sampleData: sampleData,
                       style: _selectedStyle,
@@ -182,7 +181,7 @@ class _QrStylePreviewScreenState extends ConsumerState<QrStylePreviewScreen> {
 
                     // 2. Frosted Glass
                     _ElevatedStyleCard(
-                      title: 'Frosted Glass',
+                      title: l10n.adminQrStyleFrostedGlass,
                       icon: Icons.blur_on,
                       sampleData: sampleData,
                       style: _selectedStyle,
@@ -208,7 +207,7 @@ class _QrStylePreviewScreenState extends ConsumerState<QrStylePreviewScreen> {
 
                     // 3. Inverted Dark
                     _ElevatedStyleCard(
-                      title: 'Inverted',
+                      title: l10n.adminQrStyleInverted,
                       icon: Icons.invert_colors,
                       sampleData: sampleData,
                       style: _selectedStyle,
@@ -227,7 +226,7 @@ class _QrStylePreviewScreenState extends ConsumerState<QrStylePreviewScreen> {
 
                     // 4. Holographic
                     _ElevatedStyleCard(
-                      title: 'Holographic',
+                      title: l10n.adminQrStyleHolographic,
                       icon: Icons.gradient,
                       sampleData: sampleData,
                       style: _selectedStyle,
@@ -251,7 +250,7 @@ class _QrStylePreviewScreenState extends ConsumerState<QrStylePreviewScreen> {
 
                     // 5. Accent Branded
                     _ElevatedStyleCard(
-                      title: 'Accent Branded',
+                      title: l10n.adminQrStyleAccentBranded,
                       icon: Icons.palette,
                       sampleData: sampleData,
                       style: _selectedStyle,
@@ -284,7 +283,7 @@ class _QrStylePreviewScreenState extends ConsumerState<QrStylePreviewScreen> {
 
                     // 6. Minimal Outline
                     _ElevatedStyleCard(
-                      title: 'Minimal',
+                      title: l10n.adminQrStyleMinimal,
                       icon: Icons.crop_square,
                       sampleData: sampleData,
                       style: _selectedStyle,
@@ -300,7 +299,7 @@ class _QrStylePreviewScreenState extends ConsumerState<QrStylePreviewScreen> {
 
                     // 7. Cyberpunk
                     _ElevatedStyleCard(
-                      title: 'Cyberpunk',
+                      title: l10n.adminQrStyleCyberpunk,
                       icon: Icons.electric_bolt,
                       sampleData: sampleData,
                       style: _selectedStyle,
@@ -333,7 +332,7 @@ class _QrStylePreviewScreenState extends ConsumerState<QrStylePreviewScreen> {
 
                     // 8. Accent Gradient (Sunset-style using accent colors)
                     _AccentGradientStyleCard(
-                      title: 'Accent Glow',
+                      title: l10n.adminQrStyleAccentGlow,
                       icon: Icons.wb_twilight,
                       sampleData: sampleData,
                       style: _selectedStyle,
@@ -342,7 +341,7 @@ class _QrStylePreviewScreenState extends ConsumerState<QrStylePreviewScreen> {
 
                     // 9. Ocean Deep
                     _ElevatedStyleCard(
-                      title: 'Ocean',
+                      title: l10n.adminQrStyleOcean,
                       icon: Icons.water,
                       sampleData: sampleData,
                       style: _selectedStyle,
@@ -374,7 +373,7 @@ class _QrStylePreviewScreenState extends ConsumerState<QrStylePreviewScreen> {
 
                     // 10. Monochrome Luxury
                     _ElevatedStyleCard(
-                      title: 'Luxury',
+                      title: l10n.adminQrStyleLuxury,
                       icon: Icons.diamond,
                       sampleData: sampleData,
                       style: _selectedStyle,
@@ -423,7 +422,9 @@ class _QrStylePreviewScreenState extends ConsumerState<QrStylePreviewScreen> {
                 child: Column(
                   children: [
                     Text(
-                      'Selected: ${_selectedStyle.name.toUpperCase()}',
+                      l10n.adminQrStyleSelected(
+                        _selectedStyle.name.toUpperCase(),
+                      ),
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
@@ -446,7 +447,7 @@ class _QrStylePreviewScreenState extends ConsumerState<QrStylePreviewScreen> {
                     ),
                     const SizedBox(height: AppTheme.spacing16),
                     Text(
-                      'Scan to verify',
+                      l10n.adminQrStyleScanToVerify,
                       style: Theme.of(context).textTheme.labelSmall?.copyWith(
                         color: context.textTertiary,
                       ),

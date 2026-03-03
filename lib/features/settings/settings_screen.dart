@@ -151,7 +151,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsPremiumUnlockFeaturesTitle,
           subtitle: context.l10n.settingsSearchPremiumSubtitle,
           keywords: ['premium', 'upgrade', 'purchase', 'buy', 'subscription'],
-          section: 'PREMIUM',
+          section: context.l10n.settingsSectionPremium,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const SubscriptionScreen()),
@@ -164,7 +164,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
               context.l10n.settingsSearchRingtonePackTitle,
           subtitle: context.l10n.settingsSearchRingtonePackSubtitle,
           keywords: ['sound', 'audio', 'tone', 'music', 'alert'],
-          section: 'PREMIUM',
+          section: context.l10n.settingsSectionPremium,
           onTap: () {
             if (purchaseState.hasFeature(PremiumFeature.customRingtones)) {
               Navigator.push(
@@ -184,7 +184,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileShakeToReportTitle,
           subtitle: context.l10n.settingsTileShakeToReportSubtitle,
           keywords: ['bug', 'report', 'shake', 'feedback', 'support'],
-          section: 'FEEDBACK',
+          section: context.l10n.settingsSectionFeedback,
           hasSwitch: true,
           switchBuilder: (context, ref, settingsService) => ThemedSwitch(
             value: settingsService.shakeToReportEnabled,
@@ -200,7 +200,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileMyBugReportsTitle,
           subtitle: context.l10n.settingsTileMyBugReportsSubtitle,
           keywords: ['bug', 'report', 'feedback', 'support', 'response'],
-          section: 'FEEDBACK',
+          section: context.l10n.settingsSectionFeedback,
           onTap: () {
             HapticFeedback.selectionClick();
             Navigator.pushNamed(context, '/my-bug-reports');
@@ -213,7 +213,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
               context.l10n.settingsSearchThemePackTitle,
           subtitle: context.l10n.settingsSearchThemePackSubtitle,
           keywords: ['color', 'accent', 'visual', 'appearance', 'dark'],
-          section: 'PREMIUM',
+          section: context.l10n.settingsSectionPremium,
           onTap: () {
             if (purchaseState.hasFeature(PremiumFeature.premiumThemes)) {
               Navigator.push(
@@ -235,7 +235,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
               context.l10n.settingsSearchAutomationsPackTitle,
           subtitle: context.l10n.settingsSearchAutomationsPackSubtitle,
           keywords: ['auto', 'trigger', 'action', 'rule', 'automatic'],
-          section: 'PREMIUM',
+          section: context.l10n.settingsSectionPremium,
           onTap: () {
             if (purchaseState.hasFeature(PremiumFeature.automations)) {
               Navigator.push(
@@ -257,7 +257,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
               context.l10n.settingsSearchIftttPackTitle,
           subtitle: context.l10n.settingsSearchIftttPackSubtitle,
           keywords: ['integration', 'webhook', 'external', 'connect'],
-          section: 'PREMIUM',
+          section: context.l10n.settingsSectionPremium,
           onTap: () {
             if (purchaseState.hasFeature(PremiumFeature.iftttIntegration)) {
               Navigator.push(
@@ -279,7 +279,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
               context.l10n.settingsSearchWidgetPackTitle,
           subtitle: context.l10n.settingsSearchWidgetPackSubtitle,
           keywords: ['home', 'widget', 'screen', 'launcher'],
-          section: 'PREMIUM',
+          section: context.l10n.settingsSectionPremium,
           onTap: () {
             if (purchaseState.hasFeature(PremiumFeature.homeWidgets)) {
               Navigator.push(
@@ -301,7 +301,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsProfileTitle,
           subtitle: context.l10n.settingsSearchProfileSubtitle,
           keywords: ['user', 'name', 'avatar', 'account', 'bio'],
-          section: 'ACCOUNT',
+          section: context.l10n.settingsSectionAccount,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
@@ -316,7 +316,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsSocialNewFollowersTitle,
           subtitle: context.l10n.settingsSearchNewFollowersSubtitle,
           keywords: ['social', 'notification', 'follow', 'follower'],
-          section: 'SOCIAL NOTIFICATIONS',
+          section: context.l10n.settingsSectionSocialNotifications,
           hasSwitch: true,
         ),
         _SearchableSettingItem(
@@ -324,7 +324,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsSocialLikesTitle,
           subtitle: context.l10n.settingsSearchLikesSubtitle,
           keywords: ['social', 'notification', 'like', 'heart'],
-          section: 'SOCIAL NOTIFICATIONS',
+          section: context.l10n.settingsSectionSocialNotifications,
           hasSwitch: true,
         ),
         _SearchableSettingItem(
@@ -332,7 +332,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsSocialCommentsTitle,
           subtitle: context.l10n.settingsSearchCommentsSubtitle,
           keywords: ['social', 'notification', 'comment', 'mention', 'reply'],
-          section: 'SOCIAL NOTIFICATIONS',
+          section: context.l10n.settingsSectionSocialNotifications,
           hasSwitch: true,
         ),
         _SearchableSettingItem(
@@ -340,7 +340,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsSearchLinkedDevicesTitle,
           subtitle: context.l10n.settingsSearchLinkedDevicesSubtitle,
           keywords: ['device', 'node', 'link', 'mesh', 'meshtastic', 'connect'],
-          section: 'PROFILE',
+          section: context.l10n.settingsSectionProfile,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const LinkedDevicesScreen()),
@@ -353,7 +353,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileAutoReconnectTitle,
           subtitle: context.l10n.settingsTileAutoReconnectSubtitle,
           keywords: ['bluetooth', 'connect', 'device', 'auto'],
-          section: 'CONNECTION',
+          section: context.l10n.settingsSectionConnection,
           hasSwitch: true,
         ),
         _SearchableSettingItem(
@@ -368,7 +368,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
             'notification',
             'battery',
           ],
-          section: 'CONNECTION',
+          section: context.l10n.settingsSectionConnection,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
@@ -388,7 +388,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
             'provide',
             'share',
           ],
-          section: 'CONNECTION',
+          section: context.l10n.settingsSectionConnection,
           hasSwitch: true,
           switchBuilder: (context, ref, settingsService) => ThemedSwitch(
             value: settingsService.providePhoneLocation,
@@ -415,7 +415,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
               'publish',
               'callsign',
             ],
-            section: 'CONNECTION',
+            section: context.l10n.settingsSectionConnection,
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(builder: (_) => const TakSettingsScreen()),
@@ -428,7 +428,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileHapticFeedbackTitle,
           subtitle: context.l10n.settingsTileHapticFeedbackSubtitle,
           keywords: ['vibration', 'haptic', 'touch', 'feedback'],
-          section: 'HAPTIC FEEDBACK',
+          section: context.l10n.settingsSectionHapticFeedback,
           hasSwitch: true,
         ),
         _SearchableSettingItem(
@@ -436,7 +436,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileIntensityTitle,
           subtitle: context.l10n.settingsSearchHapticIntensitySubtitle,
           keywords: ['vibration', 'strength', 'intensity'],
-          section: 'HAPTIC FEEDBACK',
+          section: context.l10n.settingsSectionHapticFeedback,
           onTap: () =>
               _showHapticIntensityPicker(context, ref, settingsService),
         ),
@@ -459,7 +459,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
             'appearance',
             'readable',
           ],
-          section: 'APPEARANCE',
+          section: context.l10n.settingsSectionAppearance,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
@@ -481,7 +481,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
             'release',
             'whats',
           ],
-          section: "WHAT'S NEW",
+          section: context.l10n.settingsSectionWhatsNew,
           onTap: () => WhatsNewSheet.showHistory(context),
         ),
 
@@ -491,7 +491,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileListAnimationsTitle,
           subtitle: context.l10n.settingsTileListAnimationsSubtitle,
           keywords: ['animation', 'motion', 'effect', 'slide', 'bounce'],
-          section: 'ANIMATIONS',
+          section: context.l10n.settingsSectionAnimations,
           hasSwitch: true,
         ),
         _SearchableSettingItem(
@@ -499,7 +499,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTile3dEffectsTitle,
           subtitle: context.l10n.settingsTile3dEffectsSubtitle,
           keywords: ['3d', 'depth', 'perspective', 'transform'],
-          section: 'ANIMATIONS',
+          section: context.l10n.settingsSectionAnimations,
           hasSwitch: true,
         ),
 
@@ -509,7 +509,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTilePushNotificationsTitle,
           subtitle: context.l10n.settingsTilePushNotificationsSubtitle,
           keywords: ['notification', 'alert', 'push', 'notify'],
-          section: 'NOTIFICATIONS',
+          section: context.l10n.settingsSectionNotifications,
           hasSwitch: true,
         ),
         _SearchableSettingItem(
@@ -517,7 +517,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsSearchNewNodesNotificationsTitle,
           subtitle: context.l10n.settingsSearchNewNodesNotificationsSubtitle,
           keywords: ['notification', 'node', 'join', 'new'],
-          section: 'NOTIFICATIONS',
+          section: context.l10n.settingsSectionNotifications,
           hasSwitch: true,
         ),
         _SearchableSettingItem(
@@ -525,7 +525,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsSearchDmNotificationsTitle,
           subtitle: context.l10n.settingsSearchDmNotificationsSubtitle,
           keywords: ['notification', 'dm', 'direct', 'message', 'private'],
-          section: 'NOTIFICATIONS',
+          section: context.l10n.settingsSectionNotifications,
           hasSwitch: true,
         ),
         _SearchableSettingItem(
@@ -533,7 +533,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsSearchChannelNotificationsTitle,
           subtitle: context.l10n.settingsSearchChannelNotificationsSubtitle,
           keywords: ['notification', 'channel', 'broadcast', 'group'],
-          section: 'NOTIFICATIONS',
+          section: context.l10n.settingsSectionNotifications,
           hasSwitch: true,
         ),
         _SearchableSettingItem(
@@ -541,7 +541,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsSearchNotificationSoundTitle,
           subtitle: context.l10n.settingsSearchNotificationSoundSubtitle,
           keywords: ['sound', 'audio', 'alert', 'ring'],
-          section: 'NOTIFICATIONS',
+          section: context.l10n.settingsSectionNotifications,
           hasSwitch: true,
         ),
         _SearchableSettingItem(
@@ -549,7 +549,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsSearchNotificationVibrationTitle,
           subtitle: context.l10n.settingsSearchNotificationVibrationSubtitle,
           keywords: ['vibrate', 'haptic', 'buzz'],
-          section: 'NOTIFICATIONS',
+          section: context.l10n.settingsSectionNotifications,
           hasSwitch: true,
         ),
 
@@ -559,7 +559,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileQuickResponsesTitle,
           subtitle: context.l10n.settingsTileQuickResponsesSubtitle,
           keywords: ['quick', 'response', 'reply', 'fast', 'canned'],
-          section: 'MESSAGING',
+          section: context.l10n.settingsSectionMessaging,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const CannedResponsesScreen()),
@@ -570,7 +570,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsSearchCannedMessagesTitle,
           subtitle: context.l10n.settingsSearchCannedMessagesSubtitle,
           keywords: ['canned', 'preset', 'template', 'message'],
-          section: 'MESSAGING',
+          section: context.l10n.settingsSectionMessaging,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
@@ -585,7 +585,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsSearchFileTransferTitle,
           subtitle: context.l10n.settingsSearchFileTransferSubtitle,
           keywords: ['file', 'transfer', 'send', 'receive', 'share'],
-          section: 'FILE TRANSFER',
+          section: context.l10n.settingsSectionFileTransfer,
           hasSwitch: true,
           switchBuilder: (context, ref, settingsService) => ThemedSwitch(
             value: settingsService.fileTransferEnabled,
@@ -608,7 +608,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
             'receive',
             'automatic',
           ],
-          section: 'FILE TRANSFER',
+          section: context.l10n.settingsSectionFileTransfer,
           hasSwitch: true,
           switchBuilder: (context, ref, settingsService) => ThemedSwitch(
             value: settingsService.fileTransferAutoAccept,
@@ -626,7 +626,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsSearchHistoryLimitTitle,
           subtitle: context.l10n.settingsSearchHistoryLimitSubtitle,
           keywords: ['history', 'limit', 'storage', 'message', 'keep'],
-          section: 'DATA & STORAGE',
+          section: context.l10n.settingsSectionDataStorage,
           onTap: () => _showHistoryLimitDialog(context, settingsService),
         ),
         _SearchableSettingItem(
@@ -634,7 +634,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileExportMessagesTitle,
           subtitle: context.l10n.settingsTileExportMessagesSubtitle,
           keywords: ['export', 'message', 'pdf', 'csv', 'download'],
-          section: 'DATA & STORAGE',
+          section: context.l10n.settingsSectionDataStorage,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const DataExportScreen()),
@@ -645,7 +645,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsSearchExportDataTitle,
           subtitle: context.l10n.settingsSearchExportDataSubtitle,
           keywords: ['export', 'backup', 'download', 'save'],
-          section: 'DATA & STORAGE',
+          section: context.l10n.settingsSectionDataStorage,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const DataExportScreen()),
@@ -656,7 +656,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsSearchClearAllMessagesTitle,
           subtitle: context.l10n.settingsSearchClearAllMessagesSubtitle,
           keywords: ['clear', 'delete', 'remove', 'message', 'clean'],
-          section: 'DATA & STORAGE',
+          section: context.l10n.settingsSectionDataStorage,
           onTap: () => _confirmClearMessages(context, ref),
         ),
         _SearchableSettingItem(
@@ -664,7 +664,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsSearchResetLocalDataTitle,
           subtitle: context.l10n.settingsSearchResetLocalDataSubtitle,
           keywords: ['reset', 'clear', 'local', 'data', 'factory'],
-          section: 'DATA & STORAGE',
+          section: context.l10n.settingsSectionDataStorage,
           onTap: () => _confirmResetLocalData(context, ref),
         ),
         _SearchableSettingItem(
@@ -680,7 +680,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
             'factory',
             'wipe',
           ],
-          section: 'DATA & STORAGE',
+          section: context.l10n.settingsSectionDataStorage,
           onTap: () => _confirmClearData(context, ref),
         ),
 
@@ -697,7 +697,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
             'pki',
             'configure',
           ],
-          section: 'REMOTE ADMINISTRATION',
+          section: context.l10n.settingsSectionRemoteAdmin,
           onTap: () async {
             final currentTarget = ref.read(remoteAdminProvider).targetNodeNum;
             final adminNotifier = ref.read(remoteAdminProvider.notifier);
@@ -722,7 +722,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsSearchForceSyncTitle,
           subtitle: context.l10n.settingsSearchForceSyncSubtitle,
           keywords: ['sync', 'force', 'refresh', 'update'],
-          section: 'DEVICE',
+          section: context.l10n.settingsSectionDevice,
           onTap: () => _forceSync(context, ref),
         ),
         _SearchableSettingItem(
@@ -730,7 +730,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsSearchScanForDeviceTitle,
           subtitle: context.l10n.settingsSearchScanForDeviceSubtitle,
           keywords: ['scan', 'qr', 'device', 'setup', 'connect'],
-          section: 'DEVICE',
+          section: context.l10n.settingsSectionDevice,
           onTap: () => Navigator.pushNamed(context, '/qr-scanner'),
         ),
         _SearchableSettingItem(
@@ -738,7 +738,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsSearchRegionTitle,
           subtitle: context.l10n.settingsSearchRegionSubtitle,
           keywords: ['region', 'frequency', 'country', 'radio'],
-          section: 'DEVICE',
+          section: context.l10n.settingsSectionDevice,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const RegionSelectionScreen()),
@@ -749,7 +749,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileDeviceRoleTitle,
           subtitle: context.l10n.settingsTileDeviceRoleSubtitle,
           keywords: ['device', 'config', 'name', 'role', 'settings'],
-          section: 'DEVICE',
+          section: context.l10n.settingsSectionDevice,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const DeviceConfigScreen()),
@@ -760,7 +760,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileRadioConfigTitle,
           subtitle: context.l10n.settingsTileRadioConfigSubtitle,
           keywords: ['radio', 'lora', 'modem', 'channel', 'frequency'],
-          section: 'DEVICE',
+          section: context.l10n.settingsSectionDevice,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const RadioConfigScreen()),
@@ -771,7 +771,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTilePositionTitle,
           subtitle: context.l10n.settingsTilePositionSubtitle,
           keywords: ['gps', 'position', 'location', 'share'],
-          section: 'DEVICE',
+          section: context.l10n.settingsSectionDevice,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const PositionConfigScreen()),
@@ -782,7 +782,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileDisplaySettingsTitle,
           subtitle: context.l10n.settingsTileDisplaySettingsSubtitle,
           keywords: ['display', 'screen', 'brightness', 'oled', 'timeout'],
-          section: 'DEVICE',
+          section: context.l10n.settingsSectionDevice,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const DisplayConfigScreen()),
@@ -793,7 +793,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileBluetoothTitle,
           subtitle: context.l10n.settingsTileBluetoothSubtitle,
           keywords: ['bluetooth', 'ble', 'pin', 'pairing'],
-          section: 'DEVICE',
+          section: context.l10n.settingsSectionDevice,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const BluetoothConfigScreen()),
@@ -804,7 +804,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileNetworkTitle,
           subtitle: context.l10n.settingsTileNetworkSubtitle,
           keywords: ['wifi', 'network', 'internet', 'ip', 'dhcp'],
-          section: 'DEVICE',
+          section: context.l10n.settingsSectionDevice,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const NetworkConfigScreen()),
@@ -815,7 +815,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTilePowerManagementTitle,
           subtitle: context.l10n.settingsTilePowerManagementSubtitle,
           keywords: ['power', 'battery', 'sleep', 'save', 'energy'],
-          section: 'DEVICE',
+          section: context.l10n.settingsSectionDevice,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const PowerConfigScreen()),
@@ -826,7 +826,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileSecurityTitle,
           subtitle: context.l10n.settingsTileSecuritySubtitle,
           keywords: ['security', 'access', 'lock', 'admin', 'managed'],
-          section: 'DEVICE',
+          section: context.l10n.settingsSectionDevice,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const SecurityConfigScreen()),
@@ -837,7 +837,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileDeviceManagementTitle,
           subtitle: context.l10n.settingsTileDeviceManagementSubtitle,
           keywords: ['reboot', 'shutdown', 'reset', 'restart', 'factory'],
-          section: 'DEVICE',
+          section: context.l10n.settingsSectionDevice,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const DeviceManagementScreen()),
@@ -848,7 +848,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileDeviceInfoTitle,
           subtitle: context.l10n.settingsTileDeviceInfoSubtitle,
           keywords: ['info', 'details', 'hardware', 'version'],
-          section: 'DEVICE',
+          section: context.l10n.settingsSectionDevice,
           onTap: () => _showDeviceInfo(context, ref),
         ),
         _SearchableSettingItem(
@@ -856,7 +856,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileScanQrCodeTitle,
           subtitle: context.l10n.settingsTileScanQrCodeSubtitle,
           keywords: ['qr', 'channel', 'import', 'scan'],
-          section: 'DEVICE',
+          section: context.l10n.settingsSectionDevice,
           onTap: () => Navigator.pushNamed(context, '/qr-scanner'),
         ),
 
@@ -866,7 +866,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileMqttTitle,
           subtitle: context.l10n.settingsTileMqttSubtitle,
           keywords: ['mqtt', 'internet', 'bridge', 'server', 'broker'],
-          section: 'MODULES',
+          section: context.l10n.settingsSectionModules,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const MqttConfigScreen()),
@@ -877,7 +877,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileRangeTestTitle,
           subtitle: context.l10n.settingsTileRangeTestSubtitle,
           keywords: ['range', 'test', 'signal', 'distance'],
-          section: 'MODULES',
+          section: context.l10n.settingsSectionModules,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const RangeTestScreen()),
@@ -888,7 +888,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileStoreForwardTitle,
           subtitle: context.l10n.settingsTileStoreForwardSubtitle,
           keywords: ['store', 'forward', 'relay', 'offline', 'cache'],
-          section: 'MODULES',
+          section: context.l10n.settingsSectionModules,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const StoreForwardConfigScreen()),
@@ -899,7 +899,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileDetectionSensorTitle,
           subtitle: context.l10n.settingsTileDetectionSensorSubtitle,
           keywords: ['sensor', 'motion', 'door', 'gpio', 'detection'],
-          section: 'MODULES',
+          section: context.l10n.settingsSectionModules,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
@@ -912,7 +912,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileExternalNotificationTitle,
           subtitle: context.l10n.settingsTileExternalNotificationSubtitle,
           keywords: ['buzzer', 'led', 'vibration', 'external', 'alert'],
-          section: 'MODULES',
+          section: context.l10n.settingsSectionModules,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
@@ -925,7 +925,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileAmbientLightingTitle,
           subtitle: context.l10n.settingsTileAmbientLightingSubtitle,
           keywords: ['led', 'rgb', 'light', 'ambient', 'neopixel'],
-          section: 'MODULES',
+          section: context.l10n.settingsSectionModules,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
@@ -938,7 +938,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTilePaxCounterTitle,
           subtitle: context.l10n.settingsTilePaxCounterSubtitle,
           keywords: ['pax', 'counter', 'wifi', 'ble', 'detection', 'people'],
-          section: 'MODULES',
+          section: context.l10n.settingsSectionModules,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const PaxCounterConfigScreen()),
@@ -949,7 +949,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileTelemetryIntervalsTitle,
           subtitle: context.l10n.settingsTileTelemetryIntervalsSubtitle,
           keywords: ['telemetry', 'interval', 'frequency', 'update'],
-          section: 'MODULES',
+          section: context.l10n.settingsSectionModules,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const TelemetryConfigScreen()),
@@ -960,7 +960,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileSerialTitle,
           subtitle: context.l10n.settingsTileSerialSubtitle,
           keywords: ['serial', 'usb', 'port', 'uart'],
-          section: 'MODULES',
+          section: context.l10n.settingsSectionModules,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const SerialConfigScreen()),
@@ -971,7 +971,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileTrafficManagementTitle,
           subtitle: context.l10n.settingsTileTrafficManagementSubtitle,
           keywords: ['traffic', 'management', 'rate', 'limit', 'dedup', 'hop'],
-          section: 'MODULES',
+          section: context.l10n.settingsSectionModules,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
@@ -986,7 +986,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileDeviceMetricsTitle,
           subtitle: context.l10n.settingsTileDeviceMetricsSubtitle,
           keywords: ['battery', 'voltage', 'metrics', 'device', 'history'],
-          section: 'TELEMETRY LOGS',
+          section: context.l10n.settingsSectionTelemetryLogs,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const DeviceMetricsLogScreen()),
@@ -1003,7 +1003,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
             'environment',
             'weather',
           ],
-          section: 'TELEMETRY LOGS',
+          section: context.l10n.settingsSectionTelemetryLogs,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
@@ -1016,7 +1016,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileAirQualityTitle,
           subtitle: context.l10n.settingsTileAirQualitySubtitle,
           keywords: ['air', 'quality', 'pm25', 'pm10', 'co2', 'pollution'],
-          section: 'TELEMETRY LOGS',
+          section: context.l10n.settingsSectionTelemetryLogs,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const AirQualityLogScreen()),
@@ -1027,7 +1027,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTilePositionHistoryTitle,
           subtitle: context.l10n.settingsTilePositionHistorySubtitle,
           keywords: ['position', 'gps', 'location', 'history', 'track'],
-          section: 'TELEMETRY LOGS',
+          section: context.l10n.settingsSectionTelemetryLogs,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const PositionLogScreen()),
@@ -1038,7 +1038,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileTracerouteHistoryTitle,
           subtitle: context.l10n.settingsTileTracerouteHistorySubtitle,
           keywords: ['traceroute', 'path', 'network', 'hop', 'route'],
-          section: 'TELEMETRY LOGS',
+          section: context.l10n.settingsSectionTelemetryLogs,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const TraceRouteLogScreen()),
@@ -1049,7 +1049,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTilePaxCounterLogsTitle,
           subtitle: context.l10n.settingsTilePaxCounterLogsSubtitle,
           keywords: ['pax', 'counter', 'log', 'detection', 'history'],
-          section: 'TELEMETRY LOGS',
+          section: context.l10n.settingsSectionTelemetryLogs,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const PaxCounterLogScreen()),
@@ -1060,7 +1060,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileDetectionSensorLogsTitle,
           subtitle: context.l10n.settingsTileDetectionSensorLogsSubtitle,
           keywords: ['sensor', 'detection', 'log', 'event', 'history'],
-          section: 'TELEMETRY LOGS',
+          section: context.l10n.settingsSectionTelemetryLogs,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const DetectionSensorLogScreen()),
@@ -1071,7 +1071,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileRoutesTitle,
           subtitle: context.l10n.settingsTileRoutesSubtitle,
           keywords: ['route', 'gps', 'track', 'record', 'path'],
-          section: 'TELEMETRY LOGS',
+          section: context.l10n.settingsSectionTelemetryLogs,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const RoutesScreen()),
@@ -1084,7 +1084,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileGpsStatusTitle,
           subtitle: context.l10n.settingsTileGpsStatusSubtitle,
           keywords: ['gps', 'status', 'satellite', 'location', 'fix'],
-          section: 'TOOLS',
+          section: context.l10n.settingsSectionTools,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const GpsStatusScreen()),
@@ -1095,7 +1095,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileFirmwareUpdateTitle,
           subtitle: context.l10n.settingsTileFirmwareUpdateSubtitle,
           keywords: ['firmware', 'update', 'ota', 'upgrade', 'version'],
-          section: 'TOOLS',
+          section: context.l10n.settingsSectionTools,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const FirmwareUpdateScreen()),
@@ -1106,7 +1106,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileExportDataTitle,
           subtitle: context.l10n.settingsTileExportDataSubtitle,
           keywords: ['export', 'data', 'backup', 'messages', 'telemetry'],
-          section: 'TOOLS',
+          section: context.l10n.settingsSectionTools,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const DataExportScreen()),
@@ -1117,7 +1117,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileAppLogTitle,
           subtitle: context.l10n.settingsTileAppLogSubtitle,
           keywords: ['log', 'debug', 'app', 'error', 'console'],
-          section: 'TOOLS',
+          section: context.l10n.settingsSectionTools,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const AppLogScreen()),
@@ -1130,7 +1130,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
             title: context.l10n.settingsTileGlyphMatrixTitle,
             subtitle: context.l10n.settingsTileGlyphMatrixSubtitle,
             keywords: ['glyph', 'nothing', 'led', 'test', 'light', 'matrix'],
-            section: 'TOOLS',
+            section: context.l10n.settingsSectionTools,
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(builder: (_) => const GlyphTestScreen()),
@@ -1143,7 +1143,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileSocialmeshTitle,
           subtitle: context.l10n.settingsTileSocialmeshSubtitle,
           keywords: ['about', 'version', 'app', 'info'],
-          section: 'ABOUT',
+          section: context.l10n.settingsSectionAbout,
           onTap: () {
             final appVersion = ref.read(appVersionProvider);
             final version = appVersion.maybeWhen(
@@ -1161,7 +1161,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileDeviceInfoTitle,
           subtitle: ref.watch(glyphServiceProvider).deviceModel,
           keywords: ['device', 'phone', 'model', 'hardware', 'nothing'],
-          section: 'ABOUT',
+          section: context.l10n.settingsSectionAbout,
           onTap: () => _showDeviceInfo(context, ref),
         ),
         _SearchableSettingItem(
@@ -1169,7 +1169,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileHelpCenterTitle,
           subtitle: context.l10n.settingsTileHelpCenterSubtitle,
           keywords: ['help', 'guide', 'tutorial', 'ico', 'learn', 'tour'],
-          section: 'ABOUT',
+          section: context.l10n.settingsSectionAbout,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const HelpCenterScreen()),
@@ -1180,7 +1180,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileHelpSupportTitle,
           subtitle: context.l10n.settingsTileHelpSupportSubtitle,
           keywords: ['help', 'support', 'faq', 'contact', 'troubleshoot'],
-          section: 'ABOUT',
+          section: context.l10n.settingsSectionAbout,
           onTap: () => LegalDocumentSheet.showSupport(context),
         ),
         _SearchableSettingItem(
@@ -1188,7 +1188,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileTermsOfServiceTitle,
           subtitle: context.l10n.settingsTileTermsOfServiceSubtitle,
           keywords: ['terms', 'service', 'legal', 'tos'],
-          section: 'ABOUT',
+          section: context.l10n.settingsSectionAbout,
           onTap: () => LegalDocumentSheet.showTerms(context),
         ),
         _SearchableSettingItem(
@@ -1196,7 +1196,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTilePrivacyPolicyTitle,
           subtitle: context.l10n.settingsTilePrivacyPolicySubtitle,
           keywords: ['privacy', 'policy', 'data', 'gdpr'],
-          section: 'ABOUT',
+          section: context.l10n.settingsSectionAbout,
           onTap: () => LegalDocumentSheet.showPrivacy(context),
         ),
         _SearchableSettingItem(
@@ -1204,7 +1204,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
           title: context.l10n.settingsTileOpenSourceTitle,
           subtitle: context.l10n.settingsTileOpenSourceSubtitle,
           keywords: ['license', 'open', 'source', 'library', 'attribution'],
-          section: 'ABOUT',
+          section: context.l10n.settingsSectionAbout,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(

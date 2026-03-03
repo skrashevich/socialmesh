@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/app_bottom_sheet.dart';
@@ -18,7 +19,6 @@ import '../../providers/subscription_providers.dart';
 import '../../services/audio/rtttl_library_service.dart';
 import '../../services/audio/rtttl_player.dart';
 import '../../utils/snackbar.dart';
-import '../../utils/number_format.dart';
 import '../../core/widgets/loading_indicator.dart';
 import '../../core/widgets/status_banner.dart';
 
@@ -599,22 +599,25 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
 
   /// Validate RTTTL format
   /// Returns null if valid, error message if invalid
-  String? _validateRtttl(String rtttl) {
+  String? _validateRtttl(String rtttl, BuildContext context) {
     if (rtttl.trim().isEmpty) {
-      return 'RTTTL string cannot be empty';
+      return context.l10n.ringtoneValidationEmpty;
     }
 
     final trimmed = rtttl.trim();
 
     // Check length first
     if (trimmed.length > _maxRtttlLength) {
-      return 'Too long: ${trimmed.length}/$_maxRtttlLength characters. Ringtone will be truncated.';
+      return context.l10n.ringtoneValidationTooLong(
+        trimmed.length,
+        _maxRtttlLength,
+      );
     }
 
     // Must have at least 2 colons (name:defaults:notes or defaults:notes)
     final colonCount = ':'.allMatches(trimmed).length;
     if (colonCount < 1) {
-      return 'Invalid format: missing colons. Expected format: name:d=4,o=5,b=120:notes';
+      return context.l10n.ringtoneValidationMissingColons;
     }
 
     final parts = trimmed.split(':');
@@ -630,7 +633,7 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
       defaults = parts[0].toLowerCase();
       notesSection = parts[1];
     } else {
-      return 'Invalid format: expected name:defaults:notes';
+      return context.l10n.ringtoneValidationInvalidFormat;
     }
 
     // Validate defaults section has proper key=value pairs
@@ -647,12 +650,12 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
     }
 
     if (!hasValidDefaults) {
-      return 'Invalid defaults: expected d=duration, o=octave, b=bpm';
+      return context.l10n.ringtoneValidationInvalidDefaults;
     }
 
     // Validate notes section has valid note characters
     if (notesSection.trim().isEmpty) {
-      return 'No notes found in RTTTL string';
+      return context.l10n.ringtoneValidationNoNotes;
     }
 
     // RTTTL note format: [duration]note[#][.][octave][.]
@@ -671,12 +674,12 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
       final trimmedNote = note.trim();
       if (trimmedNote.isEmpty) continue;
       if (!validNotePattern.hasMatch(trimmedNote)) {
-        return 'Invalid note: "$trimmedNote". Notes should be like c, 8e6, f#, 4p';
+        return context.l10n.ringtoneValidationInvalidNote(trimmedNote);
       }
     }
 
     if (notes.where((n) => n.trim().isNotEmpty).isEmpty) {
-      return 'No valid notes found';
+      return context.l10n.ringtoneValidationNoValidNotes;
     }
 
     return null; // Valid
@@ -684,7 +687,7 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
 
   void _onRtttlChanged(String value) {
     setState(() {
-      _validationError = value.isEmpty ? null : _validateRtttl(value);
+      _validationError = value.isEmpty ? null : _validateRtttl(value, context);
     });
   }
 
@@ -740,8 +743,8 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
             if (_rtttlController.text.isEmpty) {
               safeSetState(() {
                 _rtttlController.text = deviceRtttl;
-                _selectedName = 'Device Ringtone';
-                _selectedDescription = 'Currently set on device';
+                _selectedName = context.l10n.ringtoneDeviceRingtone;
+                _selectedDescription = context.l10n.ringtoneCurrentlySet;
                 _selectedSource = 'device';
               });
             }
@@ -794,7 +797,7 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
       });
     }
 
-    final validation = _validateRtttl(_rtttlController.text);
+    final validation = _validateRtttl(_rtttlController.text, context);
     if (validation != null) {
       showErrorSnackBar(context, validation);
       return;
@@ -925,7 +928,7 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
   Future<void> _saveRingtone() async {
     // Manual RTTTL paste is FREE - no premium check
     // Premium only gates: built-in presets and library browser
-    final validation = _validateRtttl(_rtttlController.text);
+    final validation = _validateRtttl(_rtttlController.text, context);
     if (validation != null) {
       showErrorSnackBar(context, validation);
       return;
@@ -935,15 +938,16 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
     final target = AdminTarget.fromNullable(
       ref.read(remoteAdminTargetProvider),
     );
+    final l10n = context.l10n;
     safeSetState(() => _saving = true);
 
     try {
       await protocol.setRingtone(_rtttlController.text.trim(), target: target);
       if (!mounted) return;
 
-      showSuccessSnackBar(context, 'Ringtone saved to device');
+      showSuccessSnackBar(context, l10n.ringtoneSaved);
     } catch (e) {
-      showErrorSnackBar(context, 'Failed to save ringtone: $e');
+      showErrorSnackBar(context, l10n.ringtoneSaveFailed(e.toString()));
     } finally {
       safeSetState(() => _saving = false);
     }
@@ -968,7 +972,7 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
           context: context,
           ref: ref,
           feature: PremiumFeature.customRingtones,
-          featureDescription: 'Access premium ringtone presets',
+          featureDescription: context.l10n.ringtoneAccessPremium,
         );
         if (!hasPremium || !mounted) return;
       }
@@ -996,7 +1000,7 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
         validateRtttl: _validateRtttl,
         onAdd: (preset) {
           ref.read(customRingtonesProvider.notifier).addPreset(preset);
-          showSuccessSnackBar(context, 'Custom ringtone added');
+          showSuccessSnackBar(context, context.l10n.ringtoneCustomAdded);
         },
       ),
     );
@@ -1049,7 +1053,7 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
       initialChildSize: 0.7,
       minChildSize: 0.5,
       maxChildSize: 0.9,
-      title: 'RTTTL Format Guide',
+      title: context.l10n.ringtoneRtttlGuideTitle,
       builder: (scrollController) => SingleChildScrollView(
         controller: scrollController,
         padding: const EdgeInsets.symmetric(horizontal: AppTheme.spacing24),
@@ -1057,30 +1061,26 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildHelpSection(
-              'What is RTTTL?',
-              'Ring Tone Text Transfer Language (RTTTL) is a format for creating musical output with simple text strings.',
-            ),
-            _buildHelpSection('Format', 'name:d=duration,o=octave,b=bpm:notes'),
-            _buildHelpSection(
-              'Header',
-              '• Name: Identifier (often ignored)\n'
-                  '• d=N: Default note duration (1,2,4,8,16,32)\n'
-                  '• o=N: Default octave (4,5,6,7)\n'
-                  '• b=N: Beats per minute',
+              context.l10n.ringtoneRtttlWhat,
+              context.l10n.ringtoneRtttlWhatContent,
             ),
             _buildHelpSection(
-              'Notes',
-              '• c, c#, d, d#, e, f, f#, g, g#, a, a#, b\n'
-                  '• p = pause/rest\n'
-                  '• Optional duration prefix (4c = quarter note C)\n'
-                  '• Optional octave suffix (c6 = C in octave 6)\n'
-                  '• Optional dot for 1.5x duration (c.)',
+              context.l10n.ringtoneRtttlFormat,
+              'name:d=duration,o=octave,b=bpm:notes',
             ),
             _buildHelpSection(
-              'Example',
+              context.l10n.ringtoneRtttlHeader,
+              context.l10n.ringtoneRtttlHeaderContent,
+            ),
+            _buildHelpSection(
+              context.l10n.ringtoneRtttlNotes,
+              context.l10n.ringtoneRtttlNotesContent,
+            ),
+            _buildHelpSection(
+              context.l10n.ringtoneRtttlExample,
               '24:d=4,o=5,b=120:c,e,g,c6\n\n'
-                  'Plays C, E, G, high C at 120 BPM\n'
-                  'Default quarter notes in octave 5',
+              'Plays C, E, G, high C at 120 BPM\n'
+              'Default quarter notes in octave 5',
             ),
             const SizedBox(height: AppTheme.spacing16),
             Container(
@@ -1102,7 +1102,7 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
                   SizedBox(width: AppTheme.spacing12),
                   Expanded(
                     child: Text(
-                      'Try Nokia Composer online to create and preview RTTTL strings',
+                      context.l10n.ringtoneRtttlComposerTip,
                       style: TextStyle(
                         color: context.textSecondary,
                         fontSize: 13,
@@ -1160,12 +1160,12 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
       behavior: HitTestBehavior.opaque,
       child: GlassScaffold(
         resizeToAvoidBottomInset: false,
-        title: 'Ringtone',
+        title: context.l10n.ringtoneTitle,
         actions: [
           IconButton(
             onPressed: _showRtttlHelp,
             icon: Icon(Icons.help_outline, color: context.textSecondary),
-            tooltip: 'RTTTL Help',
+            tooltip: context.l10n.ringtoneRtttlHelp,
           ),
           if (_saving)
             const Padding(
@@ -1174,7 +1174,10 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
             )
           else
             // Save is always available - manual RTTTL paste is free
-            TextButton(onPressed: _saveRingtone, child: const Text('Save')),
+            TextButton(
+              onPressed: _saveRingtone,
+              child: Text(context.l10n.ringtoneSave),
+            ),
         ],
         slivers: _loading
             ? [
@@ -1190,7 +1193,7 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
                     delegate: SliverChildListDelegate([
                       // Current RTTTL input
                       Text(
-                        'RTTTL STRING',
+                        context.l10n.ringtoneSectionRtttl,
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
@@ -1219,8 +1222,7 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
                               ),
                               maxLines: 4,
                               decoration: InputDecoration(
-                                hintText:
-                                    'Paste or select an RTTTL ringtone...',
+                                hintText: context.l10n.ringtoneRtttlHint,
                                 hintStyle: TextStyle(
                                   color: context.textTertiary.withValues(
                                     alpha: 0.5,
@@ -1300,7 +1302,11 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
                                     _playing ? Icons.stop : Icons.play_arrow,
                                     size: 20,
                                   ),
-                                  label: Text(_playing ? 'Stop' : 'Preview'),
+                                  label: Text(
+                                    _playing
+                                        ? context.l10n.ringtoneStop
+                                        : context.l10n.ringtonePreview,
+                                  ),
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: _playing
                                         ? AppTheme.errorRed
@@ -1327,7 +1333,7 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
                                     });
                                   },
                                   icon: Icon(Icons.clear, size: 16),
-                                  label: Text('Clear'),
+                                  label: Text(context.l10n.ringtoneClear),
                                   style: TextButton.styleFrom(
                                     foregroundColor: context.textSecondary,
                                     padding: const EdgeInsets.symmetric(
@@ -1342,7 +1348,7 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
                               children: [
                                 Expanded(
                                   child: Text(
-                                    'Tap Preview to hear, then Save to device',
+                                    context.l10n.ringtoneTapPreview,
                                     style: TextStyle(
                                       color: context.textSecondary.withValues(
                                         alpha: 0.7,
@@ -1380,7 +1386,7 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
 
                       // Browse Library section
                       Text(
-                        'RINGTONE LIBRARY',
+                        context.l10n.ringtoneSectionLibrary,
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
@@ -1430,7 +1436,9 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
                                     Row(
                                       children: [
                                         Text(
-                                          'Browse ${_libraryToneCount > 0 ? '${NumberFormatUtils.formatWithThousandsSeparators(_libraryToneCount)}+ ' : ''}Ringtones',
+                                          context.l10n.ringtoneBrowseCount(
+                                            _libraryToneCount,
+                                          ),
                                           style: TextStyle(
                                             color: context.textPrimary,
                                             fontSize: 16,
@@ -1453,7 +1461,7 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
                                     ),
                                     const SizedBox(height: AppTheme.spacing4),
                                     Text(
-                                      'Search classic tunes, TV themes, movie soundtracks, and more',
+                                      context.l10n.ringtoneBrowseSubtitle,
                                       style: TextStyle(
                                         color: context.textSecondary.withValues(
                                           alpha: 0.8,
@@ -1479,7 +1487,7 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
                       // Selected ringtone section (unified across all sources)
                       if (_selectedName != null) ...[
                         Text(
-                          'SELECTED RINGTONE',
+                          context.l10n.ringtoneSectionSelected,
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w600,
@@ -1632,7 +1640,7 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
                       Row(
                         children: [
                           Text(
-                            'BUILT-IN PRESETS',
+                            context.l10n.ringtoneSectionBuiltIn,
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w600,
@@ -1818,7 +1826,7 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'CUSTOM PRESETS',
+                            context.l10n.ringtoneSectionCustom,
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w600,
@@ -1831,7 +1839,7 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
                             child: TextButton.icon(
                               onPressed: _showAddCustomDialog,
                               icon: const Icon(Icons.add, size: 18),
-                              label: const Text('Add'),
+                              label: Text(context.l10n.ringtoneAdd),
                               style: TextButton.styleFrom(
                                 foregroundColor: context.accentColor,
                                 padding: const EdgeInsets.symmetric(
@@ -1864,7 +1872,7 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
                               ),
                               SizedBox(height: AppTheme.spacing12),
                               Text(
-                                'No custom ringtones',
+                                context.l10n.ringtoneNoCustom,
                                 style: TextStyle(
                                   color: context.textSecondary,
                                   fontSize: 14,
@@ -1872,7 +1880,7 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
                               ),
                               SizedBox(height: AppTheme.spacing4),
                               Text(
-                                'Tap "Add" to create your own presets',
+                                context.l10n.ringtoneNoCustomBody,
                                 style: TextStyle(
                                   color: context.textTertiary.withValues(
                                     alpha: 0.7,
@@ -2077,9 +2085,8 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
 
                       // Info card
                       StatusBanner.warning(
-                        title: 'Tip: Find your device',
-                        subtitle:
-                            'Send a message with the bell emoji (🔔) to trigger the ringtone on your device. Great for finding lost nodes!',
+                        title: context.l10n.ringtoneFindDeviceTip,
+                        subtitle: context.l10n.ringtoneFindDeviceBody,
                         icon: Icons.lightbulb_outline,
                         margin: EdgeInsets.zero,
                       ),
@@ -2094,7 +2101,7 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
 }
 
 class _AddCustomRingtoneContent extends StatefulWidget {
-  final String? Function(String) validateRtttl;
+  final String? Function(String, BuildContext) validateRtttl;
   final void Function(RingtonePreset) onAdd;
 
   const _AddCustomRingtoneContent({
@@ -2123,11 +2130,11 @@ class _AddCustomRingtoneContentState extends State<_AddCustomRingtoneContent> {
 
   void _submit() {
     if (_nameController.text.trim().isEmpty) {
-      setState(() => _error = 'Name is required');
+      setState(() => _error = context.l10n.ringtoneNameRequired);
       return;
     }
 
-    final validation = widget.validateRtttl(_rtttlController.text);
+    final validation = widget.validateRtttl(_rtttlController.text, context);
     if (validation != null) {
       setState(() => _error = validation);
       return;
@@ -2138,7 +2145,7 @@ class _AddCustomRingtoneContentState extends State<_AddCustomRingtoneContent> {
         name: _nameController.text.trim(),
         rtttl: _rtttlController.text.trim(),
         description: _descController.text.trim().isEmpty
-            ? 'Custom ringtone'
+            ? context.l10n.ringtoneDefaultDescription
             : _descController.text.trim(),
       ),
     );
@@ -2152,20 +2159,20 @@ class _AddCustomRingtoneContentState extends State<_AddCustomRingtoneContent> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const BottomSheetHeader(
-            title: 'Add Custom Ringtone',
-            subtitle: 'Create a custom RTTTL ringtone preset',
+          BottomSheetHeader(
+            title: context.l10n.ringtoneAddCustomTitle,
+            subtitle: context.l10n.ringtoneAddCustomSubtitle,
           ),
           const SizedBox(height: AppTheme.spacing24),
           BottomSheetTextField(
             controller: _nameController,
-            label: 'Name',
+            label: context.l10n.ringtoneAddCustomName,
             hint: 'e.g., My Ringtone',
           ),
           const SizedBox(height: AppTheme.spacing16),
           BottomSheetTextField(
             controller: _rtttlController,
-            label: 'RTTTL String',
+            label: context.l10n.ringtoneAddCustomRtttl,
             hint: '24:d=4,o=5,b=120:c,e,g',
             maxLines: 3,
             maxLength: 230,
@@ -2173,21 +2180,23 @@ class _AddCustomRingtoneContentState extends State<_AddCustomRingtoneContent> {
             errorText: _error,
             onChanged: (value) {
               setState(() {
-                _error = value.isEmpty ? null : widget.validateRtttl(value);
+                _error = value.isEmpty
+                    ? null
+                    : widget.validateRtttl(value, context);
               });
             },
           ),
           const SizedBox(height: AppTheme.spacing16),
           BottomSheetTextField(
             controller: _descController,
-            label: 'Description (optional)',
+            label: context.l10n.ringtoneAddCustomDescription,
             hint: 'e.g., Classic beep melody',
           ),
           const SizedBox(height: AppTheme.spacing24),
           BottomSheetButtons(
             onCancel: () => Navigator.pop(context),
             onConfirm: _submit,
-            confirmLabel: 'Add',
+            confirmLabel: context.l10n.ringtoneAdd,
           ),
         ],
       ),
@@ -2322,7 +2331,7 @@ class _LibraryBrowserContentState extends State<_LibraryBrowserContent>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Ringtone Library',
+                  context.l10n.ringtoneLibraryTitle,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
@@ -2332,8 +2341,8 @@ class _LibraryBrowserContentState extends State<_LibraryBrowserContent>
                 SizedBox(height: AppTheme.spacing4),
                 Text(
                   _totalCount > 0
-                      ? 'Search ${_totalCount.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (m) => '${m[1]},')} available tones'
-                      : 'Search thousands of available tones',
+                      ? context.l10n.ringtoneLibrarySearchCount(_totalCount)
+                      : context.l10n.ringtoneLibrarySearchCount(0),
                   style: context.bodySecondaryStyle?.copyWith(
                     color: context.textSecondary,
                   ),
@@ -2351,7 +2360,7 @@ class _LibraryBrowserContentState extends State<_LibraryBrowserContent>
               focusNode: _searchFocus,
               style: TextStyle(color: context.textPrimary, fontSize: 15),
               decoration: InputDecoration(
-                hintText: 'Search by song, artist, or theme...',
+                hintText: context.l10n.ringtoneLibrarySearchHint,
                 hintStyle: TextStyle(
                   color: context.textTertiary.withValues(alpha: 0.6),
                   fontSize: 15,
@@ -2401,7 +2410,7 @@ class _LibraryBrowserContentState extends State<_LibraryBrowserContent>
                 Text(
                   hasSearch
                       ? '${_results.length} result${_results.length == 1 ? '' : 's'}'
-                      : 'Popular Picks',
+                      : context.l10n.ringtoneLibraryPopularPicks,
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
@@ -2437,8 +2446,8 @@ class _LibraryBrowserContentState extends State<_LibraryBrowserContent>
                         SizedBox(height: AppTheme.spacing12),
                         Text(
                           hasSearch
-                              ? 'No results found'
-                              : 'Start typing to search',
+                              ? context.l10n.ringtoneLibraryNoResults
+                              : context.l10n.ringtoneLibraryStartTyping,
                           style: TextStyle(
                             color: context.textSecondary,
                             fontSize: 14,
@@ -2447,7 +2456,7 @@ class _LibraryBrowserContentState extends State<_LibraryBrowserContent>
                         if (hasSearch) ...[
                           SizedBox(height: AppTheme.spacing4),
                           Text(
-                            'Try a different search term',
+                            context.l10n.ringtoneLibraryTryDifferent,
                             style: TextStyle(
                               color: context.textTertiary.withValues(
                                 alpha: 0.7,

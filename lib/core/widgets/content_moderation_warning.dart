@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../l10n/l10n_extension.dart';
 import 'app_bottom_sheet.dart';
 import '../../utils/snackbar.dart';
 import 'package:socialmesh/core/theme.dart';
@@ -118,8 +119,8 @@ class _ContentModerationWarningContent extends StatelessWidget {
               const SizedBox(height: AppTheme.spacing16),
               Text(
                 isBlocked
-                    ? 'Content Not Allowed'
-                    : 'Content May Violate Guidelines',
+                    ? context.l10n.contentModerationNotAllowedTitle
+                    : context.l10n.contentModerationMayViolateTitle,
                 style: theme.textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -128,8 +129,8 @@ class _ContentModerationWarningContent extends StatelessWidget {
               const SizedBox(height: AppTheme.spacing8),
               Text(
                 isBlocked
-                    ? 'Your content violates our Community Guidelines and cannot be posted.'
-                    : 'Your content may violate our Community Guidelines. Please review before posting.',
+                    ? context.l10n.contentModerationBlockedMessage
+                    : context.l10n.contentModerationWarningMessage,
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: theme.hintColor,
                 ),
@@ -156,7 +157,7 @@ class _ContentModerationWarningContent extends StatelessWidget {
                     ),
                     const SizedBox(width: AppTheme.spacing8),
                     Text(
-                      'Issues Detected',
+                      context.l10n.contentModerationIssuesDetected,
                       style: theme.textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -181,7 +182,7 @@ class _ContentModerationWarningContent extends StatelessWidget {
                         ),
                       ),
                       child: Text(
-                        _formatCategory(category),
+                        _formatCategory(context, category),
                         style: TextStyle(
                           fontSize: 13,
                           color: theme.colorScheme.error,
@@ -212,8 +213,8 @@ class _ContentModerationWarningContent extends StatelessWidget {
                 Expanded(
                   child: Text(
                     isBlocked
-                        ? 'Repeated violations may result in account restrictions.'
-                        : 'Posting content that violates our guidelines may result in content removal and account warnings.',
+                        ? context.l10n.contentModerationRepeatedViolations
+                        : context.l10n.contentModerationPostingViolations,
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: theme.hintColor,
                     ),
@@ -241,7 +242,7 @@ class _ContentModerationWarningContent extends StatelessWidget {
                     }
                   },
                   icon: const Icon(Icons.edit_outlined, size: 18),
-                  label: const Text('Edit Content'),
+                  label: Text(context.l10n.contentModerationEditContent),
                   style: FilledButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 14),
                   ),
@@ -266,7 +267,7 @@ class _ContentModerationWarningContent extends StatelessWidget {
                       style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 14),
                       ),
-                      child: const Text('Cancel'),
+                      child: Text(context.l10n.commonCancel),
                     ),
                   ),
                   // Show "Post Anyway" for warnings (not blocks)
@@ -288,7 +289,7 @@ class _ContentModerationWarningContent extends StatelessWidget {
                           side: BorderSide(color: AccentColors.orange),
                           padding: const EdgeInsets.symmetric(vertical: 14),
                         ),
-                        child: const Text('Post Anyway'),
+                        child: Text(context.l10n.contentModerationPostAnyway),
                       ),
                     ),
                   ],
@@ -301,29 +302,29 @@ class _ContentModerationWarningContent extends StatelessWidget {
     );
   }
 
-  String _formatCategory(String category) {
+  String _formatCategory(BuildContext context, String category) {
     // Convert category names to user-friendly display
     switch (category.toLowerCase()) {
       case 'sexual':
-        return 'Sexual Content';
+        return context.l10n.contentModerationSexualContent;
       case 'hate':
-        return 'Hate Speech';
+        return context.l10n.contentModerationHateSpeech;
       case 'violence':
-        return 'Violence';
+        return context.l10n.contentModerationViolence;
       case 'profanity':
-        return 'Profanity';
+        return context.l10n.contentModerationProfanity;
       case 'harassment':
-        return 'Harassment';
+        return context.l10n.contentModerationHarassment;
       case 'spam':
-        return 'Spam';
+        return context.l10n.contentModerationSpam;
       case 'illegal':
-        return 'Illegal Activity';
+        return context.l10n.contentModerationIllegalActivity;
       case 'selfharm':
-        return 'Self-Harm';
+        return context.l10n.contentModerationSelfHarm;
       case 'adult':
-        return 'Adult Content';
+        return context.l10n.contentModerationAdultContent;
       case 'racy':
-        return 'Suggestive Content';
+        return context.l10n.contentModerationSuggestiveContent;
       default:
         return category
             .replaceAll('_', ' ')
@@ -341,13 +342,13 @@ class _ContentModerationWarningContent extends StatelessWidget {
 class ContentRejectionNotification {
   static void show(BuildContext context, {String? reason}) {
     final message = reason != null
-        ? 'Content removed — $reason'
-        : 'Content removed — your content violated our Community Guidelines.';
+        ? context.l10n.contentModerationRemovedWithReason(reason)
+        : context.l10n.contentModerationRemovedGeneric;
 
     showActionSnackBar(
       context,
       message,
-      actionLabel: 'Learn More',
+      actionLabel: context.l10n.contentModerationLearnMore,
       onAction: () {
         // Could navigate to community guidelines
       },
