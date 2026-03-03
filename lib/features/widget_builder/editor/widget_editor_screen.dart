@@ -1548,7 +1548,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
           properties.add(
             _buildTextField(
               maxLength: 100,
-              label: 'Text',
+              label: context.l10n.widgetBuilderLabelText,
               value: element.text ?? '',
               onChanged: (value) =>
                   _updateElement(element.id, element.copyWith(text: value)),
@@ -1560,7 +1560,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
       case ElementType.icon:
         properties.add(
           _buildIconSelectorField(
-            label: 'Icon',
+            label: context.l10n.widgetBuilderLabelIcon,
             value: element.iconName ?? 'help_outline',
             onChanged: (value) =>
                 _updateElement(element.id, element.copyWith(iconName: value)),
@@ -1571,7 +1571,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
       case ElementType.gauge:
         properties.add(
           _buildDropdownField(
-            label: 'Type',
+            label: context.l10n.widgetBuilderLabelType,
             value: (element.gaugeType ?? GaugeType.linear).name,
             options: GaugeType.values.map((e) => e.name).toList(),
             onChanged: (value) => _updateElement(
@@ -1585,7 +1585,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
         properties.add(const SizedBox(height: AppTheme.spacing8));
         properties.add(
           _buildSliderField(
-            label: 'Min',
+            label: context.l10n.widgetBuilderLabelMin,
             value: element.gaugeMin ?? 0,
             min: -100,
             max: 100,
@@ -1596,7 +1596,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
         properties.add(const SizedBox(height: AppTheme.spacing8));
         properties.add(
           _buildSliderField(
-            label: 'Max',
+            label: context.l10n.widgetBuilderLabelMax,
             value: element.gaugeMax ?? 100,
             min: 0,
             max: 1000,
@@ -1609,7 +1609,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
       case ElementType.chart:
         properties.add(
           _buildDropdownField(
-            label: 'Type',
+            label: context.l10n.widgetBuilderLabelType,
             value: (element.chartType ?? ChartType.sparkline).name,
             options: ChartType.values.map((e) => e.name).toList(),
             onChanged: (value) => _updateElement(
@@ -1625,7 +1625,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
       case ElementType.shape:
         properties.add(
           _buildDropdownField(
-            label: 'Shape',
+            label: context.l10n.widgetBuilderLabelShape,
             value: (element.shapeType ?? ShapeType.rectangle).name,
             options: ShapeType.values.map((e) => e.name).toList(),
             onChanged: (value) => _updateElement(
@@ -1684,7 +1684,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
           properties.add(const SizedBox(height: AppTheme.spacing12));
           properties.add(
             _buildSliderField(
-              label: 'Gap between items',
+              label: context.l10n.widgetBuilderLabelGap,
               value: element.style.spacing ?? 0,
               min: 0,
               max: 32,
@@ -1722,7 +1722,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
   List<Widget> _buildBindingProperties(ElementSchema element) {
     return [
       _buildBindingSelectorField(
-        label: 'Bind to',
+        label: context.l10n.widgetBuilderLabelBindTo,
         value: element.binding?.path ?? '',
         onChanged: (value) {
           if (value == null || value.isEmpty) {
@@ -1821,7 +1821,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
         const SizedBox(height: AppTheme.spacing8),
         _buildTextField(
           maxLength: 256,
-          label: 'URL',
+          label: context.l10n.widgetBuilderLabelUrl,
           value: element.action?.url ?? '',
           onChanged: (value) => _updateElement(
             element.id,
@@ -1840,7 +1840,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
         const SizedBox(height: AppTheme.spacing8),
         _buildTextField(
           maxLength: 100,
-          label: 'Screen',
+          label: context.l10n.widgetBuilderLabelScreen,
           value: element.action?.navigateTo ?? '',
           onChanged: (value) => _updateElement(
             element.id,
@@ -1870,7 +1870,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
 
     return [
       _buildThemeColorPicker(
-        label: 'Icon Color',
+        label: context.l10n.widgetBuilderLabelIconColor,
         value: element.style.textColor,
         onChanged: (value) => _updateElement(
           element.id,
@@ -1913,7 +1913,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
             // Accent color option (inherits from app settings)
             _buildColorOption(
               color: context.accentColor,
-              label: 'Accent',
+              label: context.l10n.widgetBuilderLabelAccent,
               isSelected: value == 'accent',
               onTap: () => onChanged('accent'),
             ),

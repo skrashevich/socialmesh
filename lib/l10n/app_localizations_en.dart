@@ -20166,6 +20166,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get widgetBuilderChooseColor => 'Choose Color';
 
   @override
+  String get widgetBuilderColorSectionLabel => 'COLOR';
+
+  @override
   String get widgetBuilderChooseStyle => 'Choose a style that fits your needs';
 
   @override
@@ -20555,6 +20558,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get widgetBuilderKeepCurrent => 'Keep Current';
 
   @override
+  String get widgetBuilderLabelAccent => 'Accent';
+
+  @override
   String get widgetBuilderLabelAddAction => 'Add Action';
 
   @override
@@ -20565,6 +20571,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get widgetBuilderLabelHorizontal => 'Horizontal';
+
+  @override
+  String get widgetBuilderLabelHintExample => 'e.g., \"Warning\", \"Critical\"';
 
   @override
   String get widgetBuilderLabelIcon => 'Icon';
@@ -20641,7 +20650,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get widgetBuilderMarketplaceDescription => 'Description';
 
   @override
+  String widgetBuilderMarketplaceRatingWithCount(String rating, int count) {
+    return '$rating ($count)';
+  }
+
+  @override
   String get widgetBuilderMarketplaceEnterReason => 'Enter reason...';
+
+  @override
+  String widgetBuilderMarketplaceFailedLoadPending(String error) {
+    return 'Failed to load pending widgets: $error';
+  }
 
   @override
   String get widgetBuilderMarketplaceFailedLoadCategory =>
@@ -20671,7 +20690,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get widgetBuilderMarketplaceInstallWidget => 'Install Widget';
 
   @override
+  String widgetBuilderMarketplaceDaysAgo(int count) {
+    return '${count}d ago';
+  }
+
+  @override
+  String widgetBuilderMarketplaceHoursAgo(int count) {
+    return '${count}h ago';
+  }
+
+  @override
+  String widgetBuilderMarketplaceInstallsCount(int count) {
+    return '$count installs';
+  }
+
+  @override
   String get widgetBuilderMarketplaceJustNow => 'Just now';
+
+  @override
+  String widgetBuilderMarketplaceMinutesAgo(int count) {
+    return '${count}m ago';
+  }
 
   @override
   String get widgetBuilderMarketplaceLoadingPreview => 'Loading preview...';
@@ -20926,6 +20965,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'Check out this widget on Socialmesh!';
 
   @override
+  String widgetBuilderShareSubject(String name) {
+    return 'Socialmesh Widget: $name';
+  }
+
+  @override
   String get widgetBuilderShareTitle => 'Share Widget';
 
   @override
@@ -20948,6 +20992,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get widgetBuilderShowNodePickerTraceDesc =>
       'Let user choose which node to trace';
+
+  @override
+  String get widgetBuilderSignInAction => 'Sign In';
 
   @override
   String get widgetBuilderSignInToShare => 'Sign in to share widgets';

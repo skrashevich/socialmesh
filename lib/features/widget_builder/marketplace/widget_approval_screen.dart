@@ -72,7 +72,7 @@ class _WidgetApprovalScreenState extends ConsumerState<WidgetApprovalScreen>
       });
     } catch (e) {
       safeSetState(() {
-        _error = 'Failed to load pending widgets: $e';
+        _error = context.l10n.widgetBuilderMarketplaceFailedLoadPending('$e');
         _isLoading = false;
       });
     }
@@ -97,10 +97,16 @@ class _WidgetApprovalScreenState extends ConsumerState<WidgetApprovalScreen>
       await _marketplaceService.approveWidget(widget.id, token);
       if (!mounted) return;
 
-      showSuccessSnackBar(context, '${widget.name} approved');
+      showSuccessSnackBar(
+        context,
+        context.l10n.widgetBuilderApprovedSuccess(widget.name),
+      );
       _loadPendingWidgets();
     } catch (e) {
-      showErrorSnackBar(context, 'Failed to approve: $e');
+      showErrorSnackBar(
+        context,
+        context.l10n.widgetBuilderFailedToApprove(e.toString()),
+      );
     } finally {
       safeSetState(() => _processingWidgetId = null);
     }
@@ -215,10 +221,16 @@ class _WidgetApprovalScreenState extends ConsumerState<WidgetApprovalScreen>
       await _marketplaceService.rejectWidget(widget.id, reason, token);
       if (!mounted) return;
 
-      showSuccessSnackBar(context, '${widget.name} rejected');
+      showSuccessSnackBar(
+        context,
+        context.l10n.widgetBuilderRejectedSuccess(widget.name),
+      );
       _loadPendingWidgets();
     } catch (e) {
-      showErrorSnackBar(context, 'Failed to reject: $e');
+      showErrorSnackBar(
+        context,
+        context.l10n.widgetBuilderFailedToReject(e.toString()),
+      );
     } finally {
       safeSetState(() => _processingWidgetId = null);
     }
@@ -504,11 +516,11 @@ class _PendingWidgetCard extends StatelessWidget {
     final diff = now.difference(date);
 
     if (diff.inDays > 0) {
-      return '${diff.inDays}d ago';
+      return context.l10n.widgetBuilderMarketplaceDaysAgo(diff.inDays);
     } else if (diff.inHours > 0) {
-      return '${diff.inHours}h ago';
+      return context.l10n.widgetBuilderMarketplaceHoursAgo(diff.inHours);
     } else if (diff.inMinutes > 0) {
-      return '${diff.inMinutes}m ago';
+      return context.l10n.widgetBuilderMarketplaceMinutesAgo(diff.inMinutes);
     } else {
       return context.l10n.widgetBuilderMarketplaceJustNow;
     }

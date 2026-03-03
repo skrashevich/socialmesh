@@ -20296,6 +20296,10 @@
   "@widgetBuilderChooseColor": {
     "description": "Color selector header"
   },
+  "widgetBuilderColorSectionLabel": "COLOR",
+  "@widgetBuilderColorSectionLabel": {
+    "description": "Section label for color picker"
+  },
   "widgetBuilderChooseStyle": "Choose a style that fits your needs",
   "@widgetBuilderChooseStyle": {
     "description": "Section subtitle"
@@ -20825,6 +20829,10 @@
   "@widgetBuilderKeepCurrent": {
     "description": "Button label to keep current widget style"
   },
+  "widgetBuilderLabelAccent": "Accent",
+  "@widgetBuilderLabelAccent": {
+    "description": "Label for accent color selector in widget editor"
+  },
   "widgetBuilderLabelAddAction": "Add Action",
   "@widgetBuilderLabelAddAction": {
     "description": "Property field label for action dropdown"
@@ -20840,6 +20848,10 @@
   "widgetBuilderLabelHorizontal": "Horizontal",
   "@widgetBuilderLabelHorizontal": {
     "description": "Alignment label for row"
+  },
+  "widgetBuilderLabelHintExample": "e.g., \"Warning\", \"Critical\"",
+  "@widgetBuilderLabelHintExample": {
+    "description": "Hint text for threshold label input field"
   },
   "widgetBuilderLabelIcon": "Icon",
   "@widgetBuilderLabelIcon": {
@@ -20938,9 +20950,30 @@
   "@widgetBuilderMarketplaceDescription": {
     "description": "Section header on details screen"
   },
+  "widgetBuilderMarketplaceRatingWithCount": "{rating} ({count})",
+  "@widgetBuilderMarketplaceRatingWithCount": {
+    "description": "Rating display with count",
+    "placeholders": {
+      "rating": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "widgetBuilderMarketplaceEnterReason": "Enter reason...",
   "@widgetBuilderMarketplaceEnterReason": {
     "description": "Reject reason hint text"
+  },
+  "widgetBuilderMarketplaceFailedLoadPending": "Failed to load pending widgets: {error}",
+  "@widgetBuilderMarketplaceFailedLoadPending": {
+    "description": "Error when loading pending widgets for approval",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
   },
   "widgetBuilderMarketplaceFailedLoadCategory": "Failed to load category",
   "@widgetBuilderMarketplaceFailedLoadCategory": {
@@ -20975,9 +21008,45 @@
   "@widgetBuilderMarketplaceInstallWidget": {
     "description": "Install button label"
   },
+  "widgetBuilderMarketplaceDaysAgo": "{count}d ago",
+  "@widgetBuilderMarketplaceDaysAgo": {
+    "description": "Relative time in days",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "widgetBuilderMarketplaceHoursAgo": "{count}h ago",
+  "@widgetBuilderMarketplaceHoursAgo": {
+    "description": "Relative time in hours",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "widgetBuilderMarketplaceInstallsCount": "{count} installs",
+  "@widgetBuilderMarketplaceInstallsCount": {
+    "description": "Install count display",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "widgetBuilderMarketplaceJustNow": "Just now",
   "@widgetBuilderMarketplaceJustNow": {
     "description": "Relative time for very recent actions"
+  },
+  "widgetBuilderMarketplaceMinutesAgo": "{count}m ago",
+  "@widgetBuilderMarketplaceMinutesAgo": {
+    "description": "Relative time in minutes",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "widgetBuilderMarketplaceLoadingPreview": "Loading preview...",
   "@widgetBuilderMarketplaceLoadingPreview": {
@@ -21305,6 +21374,15 @@
   "@widgetBuilderShareMessage": {
     "description": "Share message text"
   },
+  "widgetBuilderShareSubject": "Socialmesh Widget: {name}",
+  "@widgetBuilderShareSubject": {
+    "description": "Share subject line",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "widgetBuilderShareTitle": "Share Widget",
   "@widgetBuilderShareTitle": {
     "description": "Share sheet title"
@@ -21332,6 +21410,10 @@
   "widgetBuilderShowNodePickerTraceDesc": "Let user choose which node to trace",
   "@widgetBuilderShowNodePickerTraceDesc": {
     "description": "Toggle option subtitle for traceroute"
+  },
+  "widgetBuilderSignInAction": "Sign In",
+  "@widgetBuilderSignInAction": {
+    "description": "Action label for sign in button on snackbar"
   },
   "widgetBuilderSignInToShare": "Sign in to share widgets",
   "@widgetBuilderSignInToShare": {

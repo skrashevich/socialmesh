@@ -53,7 +53,7 @@ class ColorSelector extends StatelessWidget {
       children: [
         if (showLabel) ...[
           Text(
-            'COLOR',
+            context.l10n.widgetBuilderColorSectionLabel,
             style: TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w600,

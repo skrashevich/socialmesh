@@ -24,7 +24,7 @@ Future<void> showWidgetShareSheet(
     showActionSnackBar(
       context,
       context.l10n.widgetBuilderSignInToShare,
-      actionLabel: 'Sign In',
+      actionLabel: context.l10n.widgetBuilderSignInAction,
       onAction: () => Navigator.pushNamed(context, '/account'),
       type: SnackBarType.info,
     );
@@ -38,7 +38,7 @@ Future<void> showWidgetShareSheet(
     title: context.l10n.widgetBuilderShareTitle,
     subtitle: schema.name,
     infoText: context.l10n.widgetBuilderShareInfoText,
-    shareSubject: 'Socialmesh Widget: ${schema.name}',
+    shareSubject: context.l10n.widgetBuilderShareSubject(schema.name),
     shareMessage: context.l10n.widgetBuilderShareMessage,
     loader: () => _uploadAndGetShareData(schema, userId),
   );

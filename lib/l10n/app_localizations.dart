@@ -35678,6 +35678,12 @@ abstract class AppLocalizations {
   /// **'Choose Color'**
   String get widgetBuilderChooseColor;
 
+  /// Section label for color picker
+  ///
+  /// In en, this message translates to:
+  /// **'COLOR'**
+  String get widgetBuilderColorSectionLabel;
+
   /// Section subtitle
   ///
   /// In en, this message translates to:
@@ -36404,6 +36410,12 @@ abstract class AppLocalizations {
   /// **'Keep Current'**
   String get widgetBuilderKeepCurrent;
 
+  /// Label for accent color selector in widget editor
+  ///
+  /// In en, this message translates to:
+  /// **'Accent'**
+  String get widgetBuilderLabelAccent;
+
   /// Property field label for action dropdown
   ///
   /// In en, this message translates to:
@@ -36427,6 +36439,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Horizontal'**
   String get widgetBuilderLabelHorizontal;
+
+  /// Hint text for threshold label input field
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., \"Warning\", \"Critical\"'**
+  String get widgetBuilderLabelHintExample;
 
   /// Property field label for icon selector
   ///
@@ -36566,11 +36584,23 @@ abstract class AppLocalizations {
   /// **'Description'**
   String get widgetBuilderMarketplaceDescription;
 
+  /// Rating display with count
+  ///
+  /// In en, this message translates to:
+  /// **'{rating} ({count})'**
+  String widgetBuilderMarketplaceRatingWithCount(String rating, int count);
+
   /// Reject reason hint text
   ///
   /// In en, this message translates to:
   /// **'Enter reason...'**
   String get widgetBuilderMarketplaceEnterReason;
+
+  /// Error when loading pending widgets for approval
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load pending widgets: {error}'**
+  String widgetBuilderMarketplaceFailedLoadPending(String error);
 
   /// Error state for category screen
   ///
@@ -36614,11 +36644,35 @@ abstract class AppLocalizations {
   /// **'Install Widget'**
   String get widgetBuilderMarketplaceInstallWidget;
 
+  /// Relative time in days
+  ///
+  /// In en, this message translates to:
+  /// **'{count}d ago'**
+  String widgetBuilderMarketplaceDaysAgo(int count);
+
+  /// Relative time in hours
+  ///
+  /// In en, this message translates to:
+  /// **'{count}h ago'**
+  String widgetBuilderMarketplaceHoursAgo(int count);
+
+  /// Install count display
+  ///
+  /// In en, this message translates to:
+  /// **'{count} installs'**
+  String widgetBuilderMarketplaceInstallsCount(int count);
+
   /// Relative time for very recent actions
   ///
   /// In en, this message translates to:
   /// **'Just now'**
   String get widgetBuilderMarketplaceJustNow;
+
+  /// Relative time in minutes
+  ///
+  /// In en, this message translates to:
+  /// **'{count}m ago'**
+  String widgetBuilderMarketplaceMinutesAgo(int count);
 
   /// Loading text while preview renders
   ///
@@ -37094,6 +37148,12 @@ abstract class AppLocalizations {
   /// **'Check out this widget on Socialmesh!'**
   String get widgetBuilderShareMessage;
 
+  /// Share subject line
+  ///
+  /// In en, this message translates to:
+  /// **'Socialmesh Widget: {name}'**
+  String widgetBuilderShareSubject(String name);
+
   /// Share sheet title
   ///
   /// In en, this message translates to:
@@ -37135,6 +37195,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Let user choose which node to trace'**
   String get widgetBuilderShowNodePickerTraceDesc;
+
+  /// Action label for sign in button on snackbar
+  ///
+  /// In en, this message translates to:
+  /// **'Sign In'**
+  String get widgetBuilderSignInAction;
 
   /// Snackbar when not signed in
   ///

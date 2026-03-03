@@ -159,12 +159,18 @@ class WidgetActionHandler {
           final nodes = ref.read(nodesProvider);
           final targetNode = nodes[selection.nodeNum!];
           final targetName = targetNode?.displayName ?? 'node';
-          showSuccessSnackBar(context, 'Location shared with $targetName');
+          showSuccessSnackBar(
+            context,
+            context.l10n.widgetBuilderLocationSharedWithNode(targetName),
+          );
         }
       }
     } catch (e) {
       if (context.mounted) {
-        showErrorSnackBar(context, 'Failed to share location: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.widgetBuilderFailedToShareLocation(e.toString()),
+        );
       }
     }
   }
@@ -193,7 +199,10 @@ class WidgetActionHandler {
       notifier.startPositionRequestCountdown();
     } catch (e) {
       if (context.mounted) {
-        showErrorSnackBar(context, 'Failed to request positions: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.widgetBuilderFailedToRequestPositions(e.toString()),
+        );
       }
     }
   }

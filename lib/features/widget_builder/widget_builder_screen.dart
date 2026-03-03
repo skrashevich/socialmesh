@@ -1003,7 +1003,7 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
       if (mounted) {
         showSuccessSnackBar(
           context,
-          '${result.schema.name} added to dashboard',
+          context.l10n.widgetBuilderAddedToDashboard(result.schema.name),
         );
       }
     }
@@ -1178,7 +1178,10 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
     if (!mounted) return;
     ref.read(dashboardWidgetsProvider.notifier).addCustomWidget(config);
 
-    showSuccessSnackBar(context, '${schema.name} added to Dashboard');
+    showSuccessSnackBar(
+      context,
+      context.l10n.widgetBuilderAddedToDashboard(schema.name),
+    );
   }
 
   void _removeFromDashboard(WidgetSchema schema) {
@@ -1190,7 +1193,10 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
 
     ref.read(dashboardWidgetsProvider.notifier).removeWidget(widgetToRemove.id);
 
-    showInfoSnackBar(context, '${schema.name} removed from Dashboard');
+    showInfoSnackBar(
+      context,
+      context.l10n.widgetBuilderRemovedFromDashboard(schema.name),
+    );
   }
 
   void _confirmDelete(WidgetSchema schema) {
@@ -1626,7 +1632,10 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
       AppLogging.marketplace('═══════════════════════════════════════════════');
 
       if (mounted) {
-        showSuccessSnackBar(context, '${schema.name} submitted for review');
+        showSuccessSnackBar(
+          context,
+          context.l10n.widgetBuilderSubmittedForReview(schema.name),
+        );
       }
     } on MarketplaceDuplicateException catch (e) {
       AppLogging.marketplace('❌ MarketplaceDuplicateException: ${e.message}');
@@ -1634,7 +1643,9 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
       if (mounted) {
         showErrorSnackBar(
           context,
-          'Similar widget already exists: ${e.duplicateName}',
+          context.l10n.widgetBuilderSimilarWidgetExistsError(
+            e.duplicateName ?? '',
+          ),
         );
       }
     } on MarketplaceException catch (e) {
@@ -1646,7 +1657,10 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
       AppLogging.marketplace('❌ Unexpected error: $e');
       AppLogging.marketplace('   Stack trace: $stackTrace');
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to submit: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.widgetBuilderFailedToSubmit(e.toString()),
+        );
       }
     }
   }

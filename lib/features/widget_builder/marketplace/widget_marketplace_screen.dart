@@ -123,7 +123,12 @@ class _WidgetMarketplaceScreenState
                     Icon(Icons.favorite, size: 16),
                     const SizedBox(width: AppTheme.spacing4),
                     Text(
-                      'Favorites${favoritesCount > 0 ? ' ($favoritesCount)' : ''}',
+                      favoritesCount > 0
+                          ? context.l10n
+                                .widgetBuilderMarketplaceFavoritesWithCount(
+                                  favoritesCount,
+                                )
+                          : context.l10n.widgetBuilderMarketplaceTabFavorites,
                     ),
                   ],
                 ),
@@ -486,14 +491,14 @@ class _MarketplaceWidgetCard extends ConsumerWidget {
           return WidgetPreviewCardLoading(
             height: 120,
             title: widget.name,
-            subtitle: 'by ${widget.author}',
+            subtitle: context.l10n.widgetBuilderByAuthor(widget.author),
           );
         }
 
         return WidgetPreviewCard(
           schema: snapshot.data!,
           title: snapshot.data!.name,
-          subtitle: 'by ${widget.author}',
+          subtitle: context.l10n.widgetBuilderByAuthor(widget.author),
           onTap: onTap,
           trailing: WidgetMarketplaceStats(
             rating: widget.rating,
@@ -625,7 +630,7 @@ class _WidgetDetailsScreenState extends ConsumerState<WidgetDetailsScreen>
                 const SizedBox(height: AppTheme.spacing8),
                 // Author
                 Text(
-                  'by ${mWidget.author}',
+                  context.l10n.widgetBuilderByAuthor(mWidget.author),
                   style: TextStyle(color: context.textSecondary, fontSize: 14),
                 ),
                 SizedBox(height: AppTheme.spacing16),
@@ -634,13 +639,18 @@ class _WidgetDetailsScreenState extends ConsumerState<WidgetDetailsScreen>
                   children: [
                     _buildStatItem(
                       Icons.star,
-                      '${mWidget.rating.toStringAsFixed(1)} (${mWidget.ratingCount})',
+                      context.l10n.widgetBuilderMarketplaceRatingWithCount(
+                        mWidget.rating.toStringAsFixed(1),
+                        mWidget.ratingCount,
+                      ),
                       AppTheme.warningYellow,
                     ),
                     const SizedBox(width: AppTheme.spacing24),
                     _buildStatItem(
                       Icons.download_done,
-                      '${mWidget.installs} installs',
+                      context.l10n.widgetBuilderMarketplaceInstallsCount(
+                        mWidget.installs,
+                      ),
                       context.textSecondary,
                     ),
                   ],
@@ -844,7 +854,9 @@ class _WidgetDetailsScreenState extends ConsumerState<WidgetDetailsScreen>
       if (mounted) {
         showSuccessSnackBar(
           context,
-          '${widget.marketplaceWidget.name} installed!',
+          context.l10n.widgetBuilderInstalledSuccess(
+            widget.marketplaceWidget.name,
+          ),
         );
         // Pop back to Widget Builder screen (2 pops: detail sheet + marketplace)
         // This preserves the navigation stack better than pushAndRemoveUntil
@@ -858,7 +870,10 @@ class _WidgetDetailsScreenState extends ConsumerState<WidgetDetailsScreen>
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to install: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.widgetBuilderFailedToInstall(e.toString()),
+        );
       }
     } finally {
       safeSetState(() => _isInstalling = false);

@@ -168,7 +168,10 @@ class _WidgetImportScreenState extends ConsumerState<WidgetImportScreen>
       showSuccessSnackBar(context, context.l10n.widgetBuilderImportedSuccess);
       navigator.pop();
     } catch (e) {
-      showErrorSnackBar(context, 'Failed to import: $e');
+      showErrorSnackBar(
+        context,
+        context.l10n.widgetBuilderFailedToImport(e.toString()),
+      );
     }
   }
 
