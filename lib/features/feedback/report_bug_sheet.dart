@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
+
+import '../../core/l10n/l10n_extension.dart';
 import 'package:flutter/services.dart';
 
 import '../../core/logging.dart';
@@ -73,7 +75,7 @@ class _ReportBugPromptSheetState extends State<ReportBugPromptSheet> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Report a bug?',
+                context.l10n.feedbackReportBugTitle,
                 style: TextStyle(
                   color: context.textPrimary,
                   fontSize: 20,
@@ -82,7 +84,7 @@ class _ReportBugPromptSheetState extends State<ReportBugPromptSheet> {
               ),
               const SizedBox(height: AppTheme.spacing8),
               Text(
-                "If something isn't working correctly, you can report it to help improve Socialmesh for everyone.",
+                context.l10n.feedbackReportBugDescription,
                 style: TextStyle(color: context.textSecondary, fontSize: 14),
               ),
               const SizedBox(height: AppTheme.spacing20),
@@ -98,17 +100,17 @@ class _ReportBugPromptSheetState extends State<ReportBugPromptSheet> {
                       borderRadius: BorderRadius.circular(AppTheme.radius18),
                     ),
                   ),
-                  child: const Text(
-                    'Report bug',
-                    style: TextStyle(fontWeight: FontWeight.w600),
+                  child: Text(
+                    context.l10n.feedbackReportBugAction,
+                    style: const TextStyle(fontWeight: FontWeight.w600),
                   ),
                 ),
               ),
               const SizedBox(height: AppTheme.spacing16),
               ListTile(
                 contentPadding: EdgeInsets.zero,
-                title: const Text('Shake device to report a bug'),
-                subtitle: const Text('Toggle off to disable'),
+                title: Text(context.l10n.feedbackShakeToReport),
+                subtitle: Text(context.l10n.feedbackToggleOff),
                 trailing: ThemedSwitch(
                   value: _shakeEnabled,
                   onChanged: (value) async {
@@ -157,7 +159,7 @@ class _ReportBugSheetState extends State<ReportBugSheet> {
       return;
     }
     setState(() => _isSending = true);
-    showLoadingSnackBar(context, 'Sending bug report...');
+    showLoadingSnackBar(context, context.l10n.feedbackSendingReport);
     try {
       final result = await widget.onSubmit(
         description: text,
@@ -234,7 +236,7 @@ class _ReportBugSheetState extends State<ReportBugSheet> {
                           children: [
                             Expanded(
                               child: Text(
-                                'Report bug',
+                                context.l10n.feedbackFormTitle,
                                 style: TextStyle(
                                   color: context.textPrimary,
                                   fontSize: 18,
@@ -255,7 +257,7 @@ class _ReportBugSheetState extends State<ReportBugSheet> {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            'What happened?',
+                            context.l10n.feedbackFormWhatHappened,
                             style: TextStyle(
                               color: context.textSecondary,
                               fontSize: 13,
@@ -270,11 +272,11 @@ class _ReportBugSheetState extends State<ReportBugSheet> {
                           maxLines: 6,
                           maxLength: 2000,
                           decoration: InputDecoration(
-                            hintText: 'Tell us about the issue you encountered',
+                            hintText: context.l10n.feedbackFormHint,
                             filled: true,
                             fillColor: context.background,
                             errorText: _showDescriptionError
-                                ? 'Please describe the issue.'
+                                ? context.l10n.feedbackFormValidationError
                                 : null,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(
@@ -298,8 +300,10 @@ class _ReportBugSheetState extends State<ReportBugSheet> {
                             dense: true,
                             visualDensity: VisualDensity.compact,
                             contentPadding: EdgeInsets.zero,
-                            title: const Text('Include screenshot in report'),
-                            subtitle: const Text('Helps us debug faster'),
+                            title: Text(context.l10n.feedbackIncludeScreenshot),
+                            subtitle: Text(
+                              context.l10n.feedbackScreenshotSubtitle,
+                            ),
                             trailing: ThemedSwitch(
                               value: _includeScreenshot,
                               onChanged: _isSending
@@ -347,8 +351,8 @@ class _ReportBugSheetState extends State<ReportBugSheet> {
                         dense: true,
                         visualDensity: VisualDensity.compact,
                         contentPadding: EdgeInsets.zero,
-                        title: const Text('Shake device to report a bug'),
-                        subtitle: const Text('Toggle off to disable'),
+                        title: Text(context.l10n.feedbackShakeToReport),
+                        subtitle: Text(context.l10n.feedbackToggleOff),
                         trailing: ThemedSwitch(
                           value: _shakeEnabled,
                           onChanged: _isSending
@@ -384,7 +388,7 @@ class _ReportBugSheetState extends State<ReportBugSheet> {
                                     strokeWidth: 2,
                                   ),
                                 )
-                              : const Text('Send'),
+                              : Text(context.l10n.feedbackSendButton),
                         ),
                       ),
                     ],

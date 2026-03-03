@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import '../../core/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -193,12 +194,12 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
       topicId: 'widget_builder_overview',
       stepKeys: const {},
       child: GlassScaffold.body(
-        title: 'My Widgets',
+        title: context.l10n.widgetBuilderMyWidgets,
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: _createNewWidget,
-            tooltip: 'Create Widget',
+            tooltip: context.l10n.widgetBuilderCreateWidgetTooltip,
           ),
           AppBarOverflowMenu<String>(
             onSelected: (value) {
@@ -216,15 +217,15 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
                 value: 'marketplace',
                 child: ListTile(
                   leading: Icon(Icons.store, color: context.accentColor),
-                  title: const Text('Marketplace'),
+                  title: Text(context.l10n.widgetBuilderMarketplace),
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'help',
                 child: ListTile(
                   leading: Icon(Icons.help_outline),
-                  title: Text('Help'),
+                  title: Text(context.l10n.widgetBuilderHelp),
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
@@ -282,7 +283,7 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
           ? TextButton(
               onPressed: () => _useTemplate(schema),
               child: Text(
-                'Use',
+                context.l10n.widgetBuilderUse,
                 style: TextStyle(
                   color: context.accentColor,
                   fontWeight: FontWeight.w600,
@@ -311,8 +312,8 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
                       SizedBox(width: AppTheme.spacing8),
                       Text(
                         isOnDashboard
-                            ? 'Remove from Dashboard'
-                            : 'Add to Dashboard',
+                            ? context.l10n.widgetBuilderRemoveFromDashboard
+                            : context.l10n.widgetBuilderAddToDashboard,
                         style: TextStyle(
                           color: isOnDashboard
                               ? AppTheme.errorRed
@@ -329,7 +330,7 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
                       Icon(Icons.edit, size: 18, color: context.textPrimary),
                       SizedBox(width: AppTheme.spacing8),
                       Text(
-                        'Edit',
+                        context.l10n.widgetBuilderEdit,
                         style: TextStyle(color: context.textPrimary),
                       ),
                     ],
@@ -342,7 +343,7 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
                       Icon(Icons.copy, size: 18, color: context.textPrimary),
                       SizedBox(width: AppTheme.spacing8),
                       Text(
-                        'Duplicate',
+                        context.l10n.widgetBuilderDuplicate,
                         style: TextStyle(color: context.textPrimary),
                       ),
                     ],
@@ -360,7 +361,7 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
                         ),
                         SizedBox(width: AppTheme.spacing8),
                         Text(
-                          'Submit to Marketplace',
+                          context.l10n.widgetBuilderSubmitToMarketplace,
                           style: TextStyle(color: context.accentColor),
                         ),
                       ],
@@ -373,7 +374,7 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
                       Icon(Icons.delete, size: 18, color: AppTheme.errorRed),
                       const SizedBox(width: AppTheme.spacing8),
                       Text(
-                        'Delete',
+                        context.l10n.widgetBuilderDeleteAction,
                         style: TextStyle(color: AppTheme.errorRed),
                       ),
                     ],
@@ -465,15 +466,14 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
           ),
           const SizedBox(height: AppTheme.spacing16),
           Text(
-            'Custom Dashboard Widgets',
+            context.l10n.widgetBuilderCustomDashboardWidgets,
             style: Theme.of(
               context,
             ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: AppTheme.spacing8),
           Text(
-            'Build personalized widgets to display mesh data exactly how you want. '
-            'Monitor battery, signal strength, location, and more at a glance.',
+            context.l10n.widgetBuilderHeroDescription,
             textAlign: TextAlign.center,
             style: Theme.of(
               context,
@@ -516,13 +516,16 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Create Your First Widget',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  Text(
+                    context.l10n.widgetBuilderCreateFirstWidget,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
                   ),
                   const SizedBox(height: AppTheme.spacing4),
                   Text(
-                    'Use the wizard to build a custom widget with your preferred data and layout',
+                    context.l10n.widgetBuilderCreateFirstWidgetDesc,
                     style: TextStyle(
                       color: context.textSecondary,
                       fontSize: 13,
@@ -552,7 +555,7 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
               Icon(Icons.flash_on, size: 18, color: AppTheme.warningYellow),
               const SizedBox(width: AppTheme.spacing6),
               Text(
-                'Quick Start Templates',
+                context.l10n.widgetBuilderQuickStartTemplates,
                 style: Theme.of(
                   context,
                 ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
@@ -564,7 +567,7 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
         Padding(
           padding: const EdgeInsets.only(left: 4),
           child: Text(
-            'Pre-built widgets ready to customize',
+            context.l10n.widgetBuilderPrebuiltWidgets,
             style: Theme.of(
               context,
             ).textTheme.bodySmall?.copyWith(color: context.textTertiary),
@@ -658,7 +661,7 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
               Icon(Icons.category, size: 18, color: context.accentColor),
               const SizedBox(width: AppTheme.spacing6),
               Text(
-                'Widget Types',
+                context.l10n.widgetBuilderWidgetTypes,
                 style: Theme.of(
                   context,
                 ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
@@ -670,7 +673,7 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
         Padding(
           padding: const EdgeInsets.only(left: 4),
           child: Text(
-            'Choose a style that fits your needs',
+            context.l10n.widgetBuilderChooseStyle,
             style: Theme.of(
               context,
             ).textTheme.bodySmall?.copyWith(color: context.textTertiary),
@@ -767,13 +770,16 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Browse Marketplace',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  Text(
+                    context.l10n.widgetBuilderBrowseMarketplace,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
                   ),
                   const SizedBox(height: AppTheme.spacing2),
                   Text(
-                    'Discover widgets created by the community',
+                    context.l10n.widgetBuilderDiscoverCommunity,
                     style: TextStyle(
                       color: context.textSecondary,
                       fontSize: 13,
@@ -794,36 +800,36 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
     return [
       _WidgetTemplateInfo(
         id: 'battery',
-        name: 'Battery Status',
-        description: 'Monitor power levels',
+        name: context.l10n.widgetBuilderTemplateBatteryStatus,
+        description: context.l10n.widgetBuilderTemplateBatteryStatusDesc,
         icon: Icons.battery_full,
         color: ChartColors.green,
       ),
       _WidgetTemplateInfo(
         id: 'signal',
-        name: 'Signal Strength',
-        description: 'Track connectivity',
+        name: context.l10n.widgetBuilderTemplateSignalStrength,
+        description: context.l10n.widgetBuilderTemplateSignalStrengthDesc,
         icon: Icons.signal_cellular_alt,
         color: ChartColors.categoryNode,
       ),
       _WidgetTemplateInfo(
         id: 'environment',
-        name: 'Environment',
-        description: 'Weather & sensors',
+        name: context.l10n.widgetBuilderTemplateEnvironment,
+        description: context.l10n.widgetBuilderTemplateEnvironmentDesc,
         icon: Icons.thermostat,
         color: ChartColors.cyan,
       ),
       _WidgetTemplateInfo(
         id: 'network',
-        name: 'Network Overview',
-        description: 'Mesh at a glance',
+        name: context.l10n.widgetBuilderTemplateNetworkOverview,
+        description: context.l10n.widgetBuilderTemplateNetworkOverviewDesc,
         icon: Icons.hub,
         color: ChartColors.purple,
       ),
       _WidgetTemplateInfo(
         id: 'gps',
-        name: 'GPS Position',
-        description: 'Location tracking',
+        name: context.l10n.widgetBuilderTemplateGpsPosition,
+        description: context.l10n.widgetBuilderTemplateGpsPositionDesc,
         icon: Icons.location_on,
         color: ChartColors.orange,
       ),
@@ -835,43 +841,43 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
     return [
       _WidgetTypeInfo(
         id: 'status',
-        name: 'Status Display',
-        description: 'Values with progress bars',
+        name: context.l10n.widgetBuilderTypeStatusDisplay,
+        description: context.l10n.widgetBuilderTypeStatusDisplayDesc,
         icon: Icons.speed,
         color: ChartColors.green,
       ),
       _WidgetTypeInfo(
         id: 'gauge',
-        name: 'Gauge',
-        description: 'Big visual meter',
+        name: context.l10n.widgetBuilderTypeGauge,
+        description: context.l10n.widgetBuilderTypeGaugeDesc,
         icon: Icons.data_usage,
         color: ChartColors.yellow,
       ),
       _WidgetTypeInfo(
         id: 'graph',
-        name: 'Graph',
-        description: 'Charts over time',
+        name: context.l10n.widgetBuilderTypeGraph,
+        description: context.l10n.widgetBuilderTypeGraphDesc,
         icon: Icons.show_chart,
         color: ChartColors.orange,
       ),
       _WidgetTypeInfo(
         id: 'actions',
-        name: 'Quick Actions',
-        description: 'Tap to trigger',
+        name: context.l10n.widgetBuilderTypeQuickActions,
+        description: context.l10n.widgetBuilderTypeQuickActionsDesc,
         icon: Icons.flash_on,
         color: ChartColors.pink,
       ),
       _WidgetTypeInfo(
         id: 'info',
-        name: 'Info Card',
-        description: 'Text & details',
+        name: context.l10n.widgetBuilderTypeInfoCard,
+        description: context.l10n.widgetBuilderTypeInfoCardDesc,
         icon: Icons.info_outline,
         color: ChartColors.categoryNode,
       ),
       _WidgetTypeInfo(
         id: 'location',
-        name: 'Location',
-        description: 'GPS coordinates',
+        name: context.l10n.widgetBuilderTypeLocation,
+        description: context.l10n.widgetBuilderTypeLocationDesc,
         icon: Icons.location_on,
         color: ChartColors.purple,
       ),
@@ -1221,7 +1227,7 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
                 SizedBox(width: AppTheme.spacing8),
               ],
               Text(
-                'Delete Widget?',
+                context.l10n.widgetBuilderDeleteWidgetTitle,
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
@@ -1250,7 +1256,7 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
                     ),
                   ),
                   child: Text(
-                    'Cancel',
+                    context.l10n.widgetBuilderCancel,
                     style: TextStyle(color: context.textSecondary),
                   ),
                 ),
@@ -1334,9 +1340,9 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
                     });
                     showGlobalSuccessSnackBar('Deleted "$schemaName"');
                   },
-                  child: const Text(
-                    'Delete',
-                    style: TextStyle(color: Colors.white),
+                  child: Text(
+                    context.l10n.widgetBuilderDeleteButton,
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ),
               ),
@@ -1373,7 +1379,7 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'Submit to Marketplace',
+            context.l10n.widgetBuilderSubmitTitle,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -1406,7 +1412,7 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
                     ),
                     SizedBox(width: AppTheme.spacing8),
                     Text(
-                      'Review Guidelines',
+                      context.l10n.widgetBuilderReviewGuidelines,
                       style: TextStyle(
                         color: context.accentColor,
                         fontWeight: FontWeight.w600,
@@ -1417,9 +1423,7 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
                 ),
                 SizedBox(height: AppTheme.spacing8),
                 Text(
-                  '• Widget will be reviewed for quality\n'
-                  '• Similar widgets may be rejected\n'
-                  '• You\'ll be credited as the author',
+                  context.l10n.widgetBuilderReviewGuidelinesText,
                   style: TextStyle(
                     color: context.textTertiary,
                     fontSize: 12,
@@ -1442,7 +1446,7 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
                   ),
-                  child: const Text('Cancel'),
+                  child: Text(context.l10n.widgetBuilderSubmitCancel),
                 ),
               ),
               const SizedBox(width: AppTheme.spacing12),
@@ -1456,7 +1460,7 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
                   ),
-                  child: const Text('Submit'),
+                  child: Text(context.l10n.widgetBuilderSubmitButton),
                 ),
               ),
             ],
@@ -1495,7 +1499,10 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
         AppLogging.marketplace('❌ No auth token - user not signed in');
         if (mounted) Navigator.pop(context);
         if (mounted) {
-          showSignInRequiredSnackBar(context, 'Sign in to submit widgets');
+          showSignInRequiredSnackBar(
+            context,
+            context.l10n.widgetBuilderSignInToSubmit,
+          );
         }
         return;
       }
@@ -1536,7 +1543,7 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
                     ),
                     SizedBox(width: AppTheme.spacing8),
                     Text(
-                      'Similar Widget Found',
+                      context.l10n.widgetBuilderSimilarWidgetFound,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
@@ -1547,7 +1554,7 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
                 ),
                 const SizedBox(height: AppTheme.spacing16),
                 Text(
-                  'A similar widget already exists in the marketplace:',
+                  context.l10n.widgetBuilderSimilarWidgetExists,
                   style: TextStyle(color: context.textSecondary),
                 ),
                 const SizedBox(height: AppTheme.spacing12),
@@ -1582,7 +1589,7 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
                 ),
                 const SizedBox(height: AppTheme.spacing12),
                 Text(
-                  'Consider making your widget more unique before submitting.',
+                  context.l10n.widgetBuilderMakeUnique,
                   style: TextStyle(color: context.textTertiary, fontSize: 13),
                 ),
                 const SizedBox(height: AppTheme.spacing24),
@@ -1597,7 +1604,7 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
                         borderRadius: BorderRadius.circular(AppTheme.radius12),
                       ),
                     ),
-                    child: const Text('OK'),
+                    child: Text(context.l10n.widgetBuilderOk),
                   ),
                 ),
               ],

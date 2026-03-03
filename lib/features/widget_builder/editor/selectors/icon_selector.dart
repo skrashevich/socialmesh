@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
+import '../../../../core/l10n/l10n_extension.dart';
 import '../../../../core/theme.dart';
 import '../../../../core/widgets/app_bottom_sheet.dart';
 
@@ -329,7 +330,7 @@ class _IconSelectorContentState extends State<_IconSelectorContent> {
           Padding(
             padding: EdgeInsets.only(bottom: 16),
             child: Text(
-              'Select Icon',
+              context.l10n.widgetBuilderSelectIcon,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
@@ -345,7 +346,7 @@ class _IconSelectorContentState extends State<_IconSelectorContent> {
             onChanged: (value) => setState(() => _searchQuery = value),
             style: TextStyle(color: context.textPrimary),
             decoration: InputDecoration(
-              hintText: 'Search icons...',
+              hintText: context.l10n.widgetBuilderSearchIcons,
               hintStyle: TextStyle(color: context.textSecondary),
               counterText: '',
               prefixIcon: Icon(
@@ -399,7 +400,7 @@ class _IconSelectorContentState extends State<_IconSelectorContent> {
             Icon(Icons.search_off, size: 48, color: context.textSecondary),
             SizedBox(height: AppTheme.spacing8),
             Text(
-              'No icons found',
+              context.l10n.widgetBuilderNoIconsFound,
               style: TextStyle(color: context.textSecondary),
             ),
           ],

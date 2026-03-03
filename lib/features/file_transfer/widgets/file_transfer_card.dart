@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
+
 import '../../../core/theme.dart';
 import '../../../core/widgets/animations.dart';
 import '../../../providers/app_providers.dart';
@@ -573,7 +575,9 @@ class _DirectionBadge extends StatelessWidget {
           ),
           const SizedBox(width: AppTheme.spacing4),
           Text(
-            isOutbound ? 'Sent' : 'Received',
+            isOutbound
+                ? context.l10n.fileTransferDirectionSent
+                : context.l10n.fileTransferDirectionReceived,
             style: TextStyle(
               color: isOutbound ? AppTheme.primaryBlue : AppTheme.primaryPurple,
               fontSize: 10,
@@ -665,7 +669,7 @@ class _ActionRow extends StatelessWidget {
         if (transfer.state == TransferState.offerPending) ...[
           if (onReject != null)
             _ActionButton(
-              label: 'Reject',
+              label: context.l10n.fileTransferActionReject,
               icon: Icons.close,
               color: SemanticColors.error,
               onTap: onReject!,
@@ -673,7 +677,7 @@ class _ActionRow extends StatelessWidget {
           if (onAccept != null) ...[
             const SizedBox(width: AppTheme.spacing8),
             _ActionButton(
-              label: 'Accept',
+              label: context.l10n.fileTransferActionAccept,
               icon: Icons.check,
               color: SemanticColors.success,
               onTap: onAccept!,
@@ -685,7 +689,7 @@ class _ActionRow extends StatelessWidget {
             transfer.state != TransferState.offerPending &&
             onCancel != null)
           _ActionButton(
-            label: 'Cancel',
+            label: context.l10n.fileTransferActionCancel,
             icon: Icons.close,
             color: SemanticColors.error,
             onTap: onCancel!,
@@ -693,7 +697,7 @@ class _ActionRow extends StatelessWidget {
         if (transfer.state == TransferState.failed && onRetry != null) ...[
           const SizedBox(width: AppTheme.spacing8),
           _ActionButton(
-            label: 'Retry',
+            label: context.l10n.fileTransferActionRetry,
             icon: Icons.refresh,
             color: context.accentColor,
             onTap: onRetry!,
@@ -703,7 +707,7 @@ class _ActionRow extends StatelessWidget {
           if (onShare != null) ...[
             const SizedBox(width: AppTheme.spacing8),
             _ActionButton(
-              label: 'Share',
+              label: context.l10n.fileTransferActionShare,
               icon: Icons.share,
               color: context.accentColor,
               onTap: onShare!,
@@ -714,7 +718,7 @@ class _ActionRow extends StatelessWidget {
         if (onInfo != null) ...[
           const SizedBox(width: AppTheme.spacing8),
           _ActionButton(
-            label: 'Info',
+            label: context.l10n.fileTransferActionInfo,
             icon: Icons.info_outline,
             color: context.textSecondary,
             onTap: onInfo!,
@@ -724,7 +728,7 @@ class _ActionRow extends StatelessWidget {
         if (!transfer.isActive && onDelete != null) ...[
           const SizedBox(width: AppTheme.spacing8),
           _ActionButton(
-            label: 'Delete',
+            label: context.l10n.fileTransferActionDelete,
             icon: Icons.delete_outline,
             color: SemanticColors.error,
             onTap: onDelete!,
@@ -853,7 +857,10 @@ class FileAttachmentPreview extends StatelessWidget {
                 ),
                 const SizedBox(height: AppTheme.spacing2),
                 Text(
-                  '${_formatSize(fileSize)} · $chunkCount chunks over mesh',
+                  context.l10n.fileTransferAttachmentMeta(
+                    fileSize,
+                    chunkCount.toString(),
+                  ),
                   style: TextStyle(color: context.textTertiary, fontSize: 11),
                 ),
               ],
@@ -869,11 +876,5 @@ class FileAttachmentPreview extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  String _formatSize(int bytes) {
-    if (bytes < 1024) return '$bytes B';
-    final kb = bytes / 1024.0;
-    return '${kb.toStringAsFixed(1)} KB';
   }
 }

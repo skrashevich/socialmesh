@@ -11,6 +11,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/theme.dart';
 import '../../models/mesh_models.dart';
 import '../../models/presence_confidence.dart';
@@ -126,21 +127,21 @@ class Mesh3DStatsCard extends StatelessWidget {
                 _CompactStat(
                   icon: Icons.hub,
                   value: stats.totalNodes.toString(),
-                  label: 'Total',
+                  label: context.l10n.mesh3dStatTotal,
                   color: context.accentColor,
                 ),
                 _separator(context),
                 _CompactStat(
                   icon: Icons.wifi,
                   value: stats.activeNodes.toString(),
-                  label: 'Active',
+                  label: context.l10n.mesh3dStatActive,
                   color: AppTheme.successGreen,
                 ),
                 _separator(context),
                 _CompactStat(
                   icon: Icons.gps_fixed,
                   value: stats.gpsNodes.toString(),
-                  label: 'GPS',
+                  label: context.l10n.mesh3dStatGps,
                   color: AccentColors.cyan,
                 ),
                 if (stats.avgSnr != null) ...[
@@ -148,7 +149,7 @@ class Mesh3DStatsCard extends StatelessWidget {
                   _CompactStat(
                     icon: Icons.signal_cellular_alt,
                     value: '${stats.avgSnr!.toStringAsFixed(1)}dB',
-                    label: 'SNR',
+                    label: context.l10n.mesh3dStatSnr,
                     color: _snrColor(stats.avgSnr!),
                   ),
                 ],
@@ -157,7 +158,7 @@ class Mesh3DStatsCard extends StatelessWidget {
                   _CompactStat(
                     icon: Icons.stacked_bar_chart,
                     value: '${stats.channelUtil!.toStringAsFixed(0)}%',
-                    label: 'Ch Util',
+                    label: context.l10n.mesh3dStatChUtil,
                     color: _channelUtilColor(stats.channelUtil!),
                   ),
                 ],

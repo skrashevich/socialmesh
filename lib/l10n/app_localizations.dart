@@ -2354,6 +2354,1230 @@ abstract class AppLocalizations {
   /// **'Socialmesh'**
   String get appTitle;
 
+  /// Alert message for low battery (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'Low battery: {percent}%'**
+  String arAlertLowBattery(String percent);
+
+  /// Alert message for new node
+  ///
+  /// In en, this message translates to:
+  /// **'New node discovered'**
+  String get arAlertNewNodeDiscovered;
+
+  /// Alert message for moving node
+  ///
+  /// In en, this message translates to:
+  /// **'Node in motion'**
+  String get arAlertNodeInMotion;
+
+  /// Loading overlay subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Calibrating sensors...'**
+  String get arCalibratingSensors;
+
+  /// Calibration result message
+  ///
+  /// In en, this message translates to:
+  /// **'Calibration acceptable - can improve'**
+  String get arCalibrationAcceptable;
+
+  /// Calibration progress message
+  ///
+  /// In en, this message translates to:
+  /// **'Almost there - keep moving'**
+  String get arCalibrationAlmostThere;
+
+  /// Calibration analysis phase message
+  ///
+  /// In en, this message translates to:
+  /// **'Analyzing calibration data...'**
+  String get arCalibrationAnalyzing;
+
+  /// Calibration result message
+  ///
+  /// In en, this message translates to:
+  /// **'Calibration complete - Excellent!'**
+  String get arCalibrationCompleteExcellent;
+
+  /// Calibration result message
+  ///
+  /// In en, this message translates to:
+  /// **'Calibration complete - Good'**
+  String get arCalibrationCompleteGood;
+
+  /// Compass status display text
+  ///
+  /// In en, this message translates to:
+  /// **'Excellent accuracy'**
+  String get arCalibrationExcellentAccuracy;
+
+  /// Calibration progress message
+  ///
+  /// In en, this message translates to:
+  /// **'Excellent! Finishing up...'**
+  String get arCalibrationExcellentFinishing;
+
+  /// Calibration result message
+  ///
+  /// In en, this message translates to:
+  /// **'Calibration failed'**
+  String get arCalibrationFailed;
+
+  /// Compass status display text
+  ///
+  /// In en, this message translates to:
+  /// **'Fair accuracy'**
+  String get arCalibrationFairAccuracy;
+
+  /// Compass status display text
+  ///
+  /// In en, this message translates to:
+  /// **'Good accuracy'**
+  String get arCalibrationGoodAccuracy;
+
+  /// Calibration progress message
+  ///
+  /// In en, this message translates to:
+  /// **'Good progress - continue rotating'**
+  String get arCalibrationGoodProgress;
+
+  /// GPS status text when unknown
+  ///
+  /// In en, this message translates to:
+  /// **'Acquiring...'**
+  String get arCalibrationGpsAcquiring;
+
+  /// GPS accuracy display (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'±{meters}m (Excellent)'**
+  String arCalibrationGpsExcellent(String meters);
+
+  /// GPS accuracy display (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'±{meters}m (Fair)'**
+  String arCalibrationGpsFair(String meters);
+
+  /// GPS accuracy display (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'±{meters}m (Good)'**
+  String arCalibrationGpsGood(String meters);
+
+  /// GPS accuracy display (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'±{meters}m (Poor)'**
+  String arCalibrationGpsPoor(String meters);
+
+  /// Calibration result message
+  ///
+  /// In en, this message translates to:
+  /// **'Calibration incomplete - please try again'**
+  String get arCalibrationIncomplete;
+
+  /// Calibration progress message
+  ///
+  /// In en, this message translates to:
+  /// **'Keep rotating - try all orientations'**
+  String get arCalibrationKeepRotating;
+
+  /// Calibration instruction
+  ///
+  /// In en, this message translates to:
+  /// **'Move device in figure-8 pattern'**
+  String get arCalibrationMoveFigure8;
+
+  /// Calibration progress message
+  ///
+  /// In en, this message translates to:
+  /// **'Move device in figure-8 pattern...'**
+  String get arCalibrationMoveFigure8Ellipsis;
+
+  /// Compass status display text
+  ///
+  /// In en, this message translates to:
+  /// **'Not calibrated'**
+  String get arCalibrationNotCalibrated;
+
+  /// Compass status display text
+  ///
+  /// In en, this message translates to:
+  /// **'Poor accuracy'**
+  String get arCalibrationPoorAccuracy;
+
+  /// Success subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Compass accuracy improved'**
+  String get arCalibrationScreenAccuracyImproved;
+
+  /// Calibration complete title
+  ///
+  /// In en, this message translates to:
+  /// **'CALIBRATION COMPLETE'**
+  String get arCalibrationScreenComplete;
+
+  /// Continue button label after completion
+  ///
+  /// In en, this message translates to:
+  /// **'CONTINUE TO AR'**
+  String get arCalibrationScreenContinue;
+
+  /// Instruction near completion
+  ///
+  /// In en, this message translates to:
+  /// **'Almost there!\nJust a bit more.'**
+  String get arCalibrationScreenInstructionAlmost;
+
+  /// Instruction text before starting
+  ///
+  /// In en, this message translates to:
+  /// **'Move your device in a figure-8 pattern to calibrate the compass for accurate AR navigation.'**
+  String get arCalibrationScreenInstructionIdle;
+
+  /// Instruction during early calibration
+  ///
+  /// In en, this message translates to:
+  /// **'Keep moving in a figure-8 pattern...\nFollow the glowing dot.'**
+  String get arCalibrationScreenInstructionMoving;
+
+  /// Instruction at mid-calibration
+  ///
+  /// In en, this message translates to:
+  /// **'Great progress!\nContinue the figure-8 motion.'**
+  String get arCalibrationScreenInstructionProgress;
+
+  /// Skip button label
+  ///
+  /// In en, this message translates to:
+  /// **'Skip for now'**
+  String get arCalibrationScreenSkip;
+
+  /// Start button label
+  ///
+  /// In en, this message translates to:
+  /// **'START CALIBRATION'**
+  String get arCalibrationScreenStart;
+
+  /// Calibration screen title
+  ///
+  /// In en, this message translates to:
+  /// **'COMPASS CALIBRATION'**
+  String get arCalibrationScreenTitle;
+
+  /// Calibration message
+  ///
+  /// In en, this message translates to:
+  /// **'Starting calibration...'**
+  String get arCalibrationStarting;
+
+  /// Compass badge label when calibration needed
+  ///
+  /// In en, this message translates to:
+  /// **'CALIBRATE'**
+  String get arCompassBadgeCalibrate;
+
+  /// Compass badge label default
+  ///
+  /// In en, this message translates to:
+  /// **'COMPASS'**
+  String get arCompassBadgeCompass;
+
+  /// Compass badge label when calibrated
+  ///
+  /// In en, this message translates to:
+  /// **'COMPASS OK'**
+  String get arCompassBadgeOk;
+
+  /// Info snackbar when maps fails (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open maps for {name}'**
+  String arCouldNotOpenMaps(String name);
+
+  /// Error overlay title
+  ///
+  /// In en, this message translates to:
+  /// **'AR ENGINE ERROR'**
+  String get arEngineError;
+
+  /// Error message (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to start AR: {error}'**
+  String arFailedToStart(String error);
+
+  /// FOV preset name
+  ///
+  /// In en, this message translates to:
+  /// **'iPhone (0.5x)'**
+  String get arFovPresetIphone05x;
+
+  /// FOV preset name
+  ///
+  /// In en, this message translates to:
+  /// **'iPhone (1x)'**
+  String get arFovPresetIphone1x;
+
+  /// FOV preset name
+  ///
+  /// In en, this message translates to:
+  /// **'Narrow'**
+  String get arFovPresetNarrow;
+
+  /// FOV preset name
+  ///
+  /// In en, this message translates to:
+  /// **'Google Pixel'**
+  String get arFovPresetPixel;
+
+  /// FOV preset name
+  ///
+  /// In en, this message translates to:
+  /// **'Samsung Galaxy'**
+  String get arFovPresetSamsung;
+
+  /// FOV preset name
+  ///
+  /// In en, this message translates to:
+  /// **'Wide (default)'**
+  String get arFovPresetWide;
+
+  /// GPS accuracy badge label when no signal
+  ///
+  /// In en, this message translates to:
+  /// **'NO GPS'**
+  String get arGpsBadgeNoGps;
+
+  /// Altimeter HUD label
+  ///
+  /// In en, this message translates to:
+  /// **'ALT'**
+  String get arHudAltLabel;
+
+  /// Fallback node name in HUD painter
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get arHudUnknownNode;
+
+  /// Loading overlay title
+  ///
+  /// In en, this message translates to:
+  /// **'INITIALIZING AR ENGINE'**
+  String get arInitializingEngine;
+
+  /// Camera error message
+  ///
+  /// In en, this message translates to:
+  /// **'No cameras available'**
+  String get arNoCamerasAvailable;
+
+  /// Node badge label
+  ///
+  /// In en, this message translates to:
+  /// **'CRITICAL'**
+  String get arNodeBadgeCritical;
+
+  /// Node badge label
+  ///
+  /// In en, this message translates to:
+  /// **'MOVING'**
+  String get arNodeBadgeMoving;
+
+  /// Node badge label
+  ///
+  /// In en, this message translates to:
+  /// **'NEW'**
+  String get arNodeBadgeNew;
+
+  /// Node badge label
+  ///
+  /// In en, this message translates to:
+  /// **'OFFLINE'**
+  String get arNodeBadgeOffline;
+
+  /// Node badge label
+  ///
+  /// In en, this message translates to:
+  /// **'WARNING'**
+  String get arNodeBadgeWarning;
+
+  /// Detail row label
+  ///
+  /// In en, this message translates to:
+  /// **'Altitude'**
+  String get arNodeDetailAltitude;
+
+  /// Detail row label
+  ///
+  /// In en, this message translates to:
+  /// **'Battery'**
+  String get arNodeDetailBattery;
+
+  /// Stat label in node detail card
+  ///
+  /// In en, this message translates to:
+  /// **'BEARING'**
+  String get arNodeDetailBearing;
+
+  /// Stat label in node detail card
+  ///
+  /// In en, this message translates to:
+  /// **'DISTANCE'**
+  String get arNodeDetailDistance;
+
+  /// Stat label in node detail card
+  ///
+  /// In en, this message translates to:
+  /// **'ELEVATION'**
+  String get arNodeDetailElevation;
+
+  /// Detail row label
+  ///
+  /// In en, this message translates to:
+  /// **'Last Heard'**
+  String get arNodeDetailLastHeard;
+
+  /// Action button label
+  ///
+  /// In en, this message translates to:
+  /// **'Navigate'**
+  String get arNodeDetailNavigate;
+
+  /// Detail row label
+  ///
+  /// In en, this message translates to:
+  /// **'RSSI'**
+  String get arNodeDetailRssi;
+
+  /// Detail row label
+  ///
+  /// In en, this message translates to:
+  /// **'SNR'**
+  String get arNodeDetailSnr;
+
+  /// Detail row label
+  ///
+  /// In en, this message translates to:
+  /// **'Speed'**
+  String get arNodeDetailSpeed;
+
+  /// Fallback node name
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown Node'**
+  String get arNodeDetailUnknownNode;
+
+  /// Info snackbar when navigating to node without position
+  ///
+  /// In en, this message translates to:
+  /// **'Node has no GPS position'**
+  String get arNodeNoGpsPosition;
+
+  /// Error overlay retry button
+  ///
+  /// In en, this message translates to:
+  /// **'RETRY'**
+  String get arRetry;
+
+  /// HUD element toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Alerts'**
+  String get arSettingsAlerts;
+
+  /// HUD element toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Altimeter'**
+  String get arSettingsAltimeter;
+
+  /// HUD element toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Compass'**
+  String get arSettingsCompass;
+
+  /// Settings section header
+  ///
+  /// In en, this message translates to:
+  /// **'DISTANCE FILTER'**
+  String get arSettingsDistanceFilter;
+
+  /// View mode button label
+  ///
+  /// In en, this message translates to:
+  /// **'Explorer'**
+  String get arSettingsExplorer;
+
+  /// Node filter toggle label
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites Only'**
+  String get arSettingsFavoritesOnly;
+
+  /// HUD element toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Horizon'**
+  String get arSettingsHorizon;
+
+  /// Settings section header
+  ///
+  /// In en, this message translates to:
+  /// **'HUD ELEMENTS'**
+  String get arSettingsHudElements;
+
+  /// Distance slider label
+  ///
+  /// In en, this message translates to:
+  /// **'Max Distance'**
+  String get arSettingsMaxDistance;
+
+  /// Distance slider max label
+  ///
+  /// In en, this message translates to:
+  /// **'100km'**
+  String get arSettingsMaxDistanceLabel;
+
+  /// Distance slider min label
+  ///
+  /// In en, this message translates to:
+  /// **'100m'**
+  String get arSettingsMinDistanceLabel;
+
+  /// View mode button label
+  ///
+  /// In en, this message translates to:
+  /// **'Minimal'**
+  String get arSettingsMinimal;
+
+  /// Settings section header
+  ///
+  /// In en, this message translates to:
+  /// **'NODE FILTERS'**
+  String get arSettingsNodeFilters;
+
+  /// Node filter toggle label
+  ///
+  /// In en, this message translates to:
+  /// **'Show Offline Nodes'**
+  String get arSettingsShowOfflineNodes;
+
+  /// View mode button label
+  ///
+  /// In en, this message translates to:
+  /// **'Tactical'**
+  String get arSettingsTactical;
+
+  /// Settings section header
+  ///
+  /// In en, this message translates to:
+  /// **'VIEW MODE'**
+  String get arSettingsViewMode;
+
+  /// Share sheet subject (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh Node: {name}'**
+  String arShareSubjectMeshNode(String name);
+
+  /// Share text footer
+  ///
+  /// In en, this message translates to:
+  /// **'Shared via Socialmesh AR'**
+  String get arSharedViaSocialmesh;
+
+  /// Snackbar when touch lock activated
+  ///
+  /// In en, this message translates to:
+  /// **'Touch locked'**
+  String get arTouchLocked;
+
+  /// Snackbar when touch lock deactivated
+  ///
+  /// In en, this message translates to:
+  /// **'Touch unlocked'**
+  String get arTouchUnlocked;
+
+  /// View mode display name
+  ///
+  /// In en, this message translates to:
+  /// **'Explorer'**
+  String get arViewModeExplorer;
+
+  /// View mode description
+  ///
+  /// In en, this message translates to:
+  /// **'Navigation-focused with large markers and trails'**
+  String get arViewModeExplorerDesc;
+
+  /// View mode display name
+  ///
+  /// In en, this message translates to:
+  /// **'Minimal'**
+  String get arViewModeMinimal;
+
+  /// View mode description
+  ///
+  /// In en, this message translates to:
+  /// **'Clean view with simple markers only'**
+  String get arViewModeMinimalDesc;
+
+  /// Explorer mode abbreviation
+  ///
+  /// In en, this message translates to:
+  /// **'EXP'**
+  String get arViewModeSelectorExp;
+
+  /// Minimal mode abbreviation
+  ///
+  /// In en, this message translates to:
+  /// **'MIN'**
+  String get arViewModeSelectorMin;
+
+  /// Tactical mode abbreviation
+  ///
+  /// In en, this message translates to:
+  /// **'TAC'**
+  String get arViewModeSelectorTac;
+
+  /// View mode display name
+  ///
+  /// In en, this message translates to:
+  /// **'Tactical'**
+  String get arViewModeTactical;
+
+  /// View mode description
+  ///
+  /// In en, this message translates to:
+  /// **'Full HUD with compass, horizon, and detailed info'**
+  String get arViewModeTacticalDesc;
+
+  /// Section heading for the list of enrolled MFA factors
+  ///
+  /// In en, this message translates to:
+  /// **'Active Methods'**
+  String get authMfaActiveMethods;
+
+  /// Cancel button label in the MFA verification dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get authMfaCancelButton;
+
+  /// Text button to go back and enter a different phone number
+  ///
+  /// In en, this message translates to:
+  /// **'Change Phone Number'**
+  String get authMfaChangePhoneNumber;
+
+  /// Hint text placeholder for the 6-digit verification code input field
+  ///
+  /// In en, this message translates to:
+  /// **'000000'**
+  String get authMfaCodeHint;
+
+  /// Success snackbar confirming the SMS code was sent to the given phone number
+  ///
+  /// In en, this message translates to:
+  /// **'Verification code sent to {phoneNumber}'**
+  String authMfaCodeSentTo(String phoneNumber);
+
+  /// Relative date label for days ago
+  ///
+  /// In en, this message translates to:
+  /// **'{count} days ago'**
+  String authMfaDateDaysAgo(int count);
+
+  /// Relative time: months ago
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 month ago} other{{count} months ago}}'**
+  String authMfaDateMonthsAgo(int count);
+
+  /// Relative date label for today
+  ///
+  /// In en, this message translates to:
+  /// **'today'**
+  String get authMfaDateToday;
+
+  /// Relative time: weeks ago
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 week ago} other{{count} weeks ago}}'**
+  String authMfaDateWeeksAgo(int count);
+
+  /// Relative date label for yesterday
+  ///
+  /// In en, this message translates to:
+  /// **'yesterday'**
+  String get authMfaDateYesterday;
+
+  /// Button label to begin MFA enrollment
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Two-Factor Auth'**
+  String get authMfaEnableButton;
+
+  /// Success snackbar after MFA enrollment is complete
+  ///
+  /// In en, this message translates to:
+  /// **'Two-factor authentication enabled'**
+  String get authMfaEnabled;
+
+  /// Heading text on the MFA enrollment screen
+  ///
+  /// In en, this message translates to:
+  /// **'Add an extra layer of security'**
+  String get authMfaEnrollmentHeading;
+
+  /// Subheading explaining MFA works via SMS codes at sign-in
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ll receive a verification code via SMS when signing in'**
+  String get authMfaEnrollmentSubheading;
+
+  /// Screen title for the MFA enrollment flow
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Two-Factor Auth'**
+  String get authMfaEnrollmentTitle;
+
+  /// Instruction telling user to enter the SMS code sent to their phone number
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the code sent to {phone}'**
+  String authMfaEnterCodeSentTo(String phone);
+
+  /// Instruction text showing which phone number received the code
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the 6-digit code sent to {phoneNumber}'**
+  String authMfaEnterCodeSentToPhone(String phoneNumber);
+
+  /// Validation error when user submits MFA code that is not 6 digits
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter the 6-digit code'**
+  String get authMfaEnterSixDigitCode;
+
+  /// Warning snackbar when the entered code is not 6 digits during enrollment
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter the 6-digit code'**
+  String get authMfaEnterSixDigitCodeWarning;
+
+  /// Error when an account with the same email uses a different auth provider
+  ///
+  /// In en, this message translates to:
+  /// **'An account already exists with the same email but a different sign-in method. Please sign in with your original method.'**
+  String get authMfaErrorAccountExistsDifferentCredential;
+
+  /// Error when trying to enroll a phone number that is already an MFA factor
+  ///
+  /// In en, this message translates to:
+  /// **'This phone number is already enrolled for two-factor auth.'**
+  String get authMfaErrorAlreadyEnrolled;
+
+  /// Error when reCAPTCHA or app attestation check fails
+  ///
+  /// In en, this message translates to:
+  /// **'App verification failed. Please try again.'**
+  String get authMfaErrorAppVerificationFailed;
+
+  /// Message when user cancels the verification flow
+  ///
+  /// In en, this message translates to:
+  /// **'Verification was cancelled.'**
+  String get authMfaErrorCancelled;
+
+  /// Error when the MFA code has timed out
+  ///
+  /// In en, this message translates to:
+  /// **'The verification code has expired. Please request a new one.'**
+  String get authMfaErrorCodeExpired;
+
+  /// Error when the phone number is linked to a different account
+  ///
+  /// In en, this message translates to:
+  /// **'This phone number is already used by another account.'**
+  String get authMfaErrorCredentialInUse;
+
+  /// Error when the email is already registered to a different account
+  ///
+  /// In en, this message translates to:
+  /// **'This email is already associated with another account.'**
+  String get authMfaErrorEmailInUse;
+
+  /// Generic fallback error message for unexpected exceptions
+  ///
+  /// In en, this message translates to:
+  /// **'Verification failed. Please try again.'**
+  String get authMfaErrorGeneric;
+
+  /// Error when MFA factor data cannot be found on the server
+  ///
+  /// In en, this message translates to:
+  /// **'Two-factor authentication info not found. Please re-enroll your second factor.'**
+  String get authMfaErrorInfoNotFound;
+
+  /// Generic internal error during MFA operations
+  ///
+  /// In en, this message translates to:
+  /// **'An internal error occurred. Please try again.'**
+  String get authMfaErrorInternal;
+
+  /// Error when APNs token or reCAPTCHA credential is invalid
+  ///
+  /// In en, this message translates to:
+  /// **'App verification failed. Please restart the app and try again.'**
+  String get authMfaErrorInvalidAppCredential;
+
+  /// Error when Android SHA certificate hash does not match Firebase config
+  ///
+  /// In en, this message translates to:
+  /// **'App signing verification failed. This build may not be properly configured for phone authentication.'**
+  String get authMfaErrorInvalidCertHash;
+
+  /// Error when the entered MFA verification code is wrong
+  ///
+  /// In en, this message translates to:
+  /// **'That code is incorrect. Please check and try again.'**
+  String get authMfaErrorInvalidCode;
+
+  /// Error when MFA credential is invalid or expired
+  ///
+  /// In en, this message translates to:
+  /// **'The code you entered is incorrect or has expired. Please try again.'**
+  String get authMfaErrorInvalidCredential;
+
+  /// Error when verification data is malformed (ArgumentError)
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid verification data. Please request a new code.'**
+  String get authMfaErrorInvalidData;
+
+  /// Error when phone number format is invalid
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid phone number with country code (e.g. +1 234 567 890).'**
+  String get authMfaErrorInvalidPhoneNumber;
+
+  /// Error when TOTP authenticator code is wrong
+  ///
+  /// In en, this message translates to:
+  /// **'That authenticator code is incorrect. Please check and try again.'**
+  String get authMfaErrorInvalidTotpCode;
+
+  /// Error when the account has the maximum allowed MFA factors
+  ///
+  /// In en, this message translates to:
+  /// **'You have reached the maximum number of second factors.'**
+  String get authMfaErrorMaxFactors;
+
+  /// Error when app credential configuration is missing
+  ///
+  /// In en, this message translates to:
+  /// **'App verification is not configured. Please try again later.'**
+  String get authMfaErrorMissingAppCredential;
+
+  /// Error when client identifier is missing for phone auth
+  ///
+  /// In en, this message translates to:
+  /// **'App verification failed. Please restart the app and try again.'**
+  String get authMfaErrorMissingClientId;
+
+  /// Error when verification code field is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter the verification code sent to your phone.'**
+  String get authMfaErrorMissingCode;
+
+  /// Error when phone number field is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your phone number.'**
+  String get authMfaErrorMissingPhone;
+
+  /// Error when authenticator app code is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter the code from your authenticator app.'**
+  String get authMfaErrorMissingTotpCode;
+
+  /// Error when trying to manage MFA while not signed in
+  ///
+  /// In en, this message translates to:
+  /// **'Please sign in first to manage two-factor auth.'**
+  String get authMfaErrorNoCurrentUser;
+
+  /// Error when network request fails during MFA operations
+  ///
+  /// In en, this message translates to:
+  /// **'No internet connection. Please check your network and try again.'**
+  String get authMfaErrorNoInternet;
+
+  /// Error when phone auth provider is not enabled in the project
+  ///
+  /// In en, this message translates to:
+  /// **'Phone verification is not enabled. Please contact support.'**
+  String get authMfaErrorPhoneNotEnabled;
+
+  /// Error when trying to link a provider that is already linked
+  ///
+  /// In en, this message translates to:
+  /// **'This sign-in method is already linked to your account.'**
+  String get authMfaErrorProviderAlreadyLinked;
+
+  /// Error when SMS quota is exceeded
+  ///
+  /// In en, this message translates to:
+  /// **'Service temporarily unavailable. Please try again later.'**
+  String get authMfaErrorQuotaExceeded;
+
+  /// Error when user cancels the re-authentication flow
+  ///
+  /// In en, this message translates to:
+  /// **'Re-authentication was cancelled. Please try again.'**
+  String get authMfaErrorReauthCancelled;
+
+  /// Error when automatic re-authentication fails during MFA operations
+  ///
+  /// In en, this message translates to:
+  /// **'Re-authentication failed. Please sign out, sign back in, and try again.'**
+  String get authMfaErrorReauthFailed;
+
+  /// Error when MFA sign-in resolution fails due to bad code
+  ///
+  /// In en, this message translates to:
+  /// **'The verification code is incorrect or has expired. Please try again or request a new code.'**
+  String get authMfaErrorResolveSignInFailed;
+
+  /// Message when sign-in requires a second factor that was not provided
+  ///
+  /// In en, this message translates to:
+  /// **'Two-factor verification is required to complete sign-in.'**
+  String get authMfaErrorSecondFactorRequired;
+
+  /// Error when the verification session or ID has expired
+  ///
+  /// In en, this message translates to:
+  /// **'Your verification session has expired. Please request a new code.'**
+  String get authMfaErrorSessionExpired;
+
+  /// Error when the multi-factor sign-in session has expired
+  ///
+  /// In en, this message translates to:
+  /// **'Your sign-in session has expired. Please start the sign-in again.'**
+  String get authMfaErrorSignInSessionExpired;
+
+  /// Error when a verification request times out
+  ///
+  /// In en, this message translates to:
+  /// **'The request timed out. Please try again.'**
+  String get authMfaErrorTimeout;
+
+  /// Error when rate limited by too many verification attempts
+  ///
+  /// In en, this message translates to:
+  /// **'Too many attempts. Please wait a few minutes and try again.'**
+  String get authMfaErrorTooManyRequests;
+
+  /// Fallback error message with the raw error code for unrecognized errors
+  ///
+  /// In en, this message translates to:
+  /// **'Verification failed (error: {errorCode}). Please try again.'**
+  String authMfaErrorUnknown(String errorCode);
+
+  /// Error when the primary auth method does not support MFA
+  ///
+  /// In en, this message translates to:
+  /// **'Your sign-in method does not support two-factor auth.'**
+  String get authMfaErrorUnsupportedFirstFactor;
+
+  /// Error when the user's account has been disabled by an admin
+  ///
+  /// In en, this message translates to:
+  /// **'This account has been disabled. Please contact support.'**
+  String get authMfaErrorUserDisabled;
+
+  /// Error when phone verification process fails
+  ///
+  /// In en, this message translates to:
+  /// **'Phone verification failed. Please check your number and try again.'**
+  String get authMfaErrorVerificationFailed;
+
+  /// Error when user selects a different account during re-authentication
+  ///
+  /// In en, this message translates to:
+  /// **'That account doesn\'t match the one you\'re signed into. Please try again and select the correct account.'**
+  String get authMfaErrorWrongAccount;
+
+  /// Subtitle showing when an MFA factor was enrolled, with relative time
+  ///
+  /// In en, this message translates to:
+  /// **'Added {relativeTime}'**
+  String authMfaFactorAdded(String relativeTime);
+
+  /// Section heading for the MFA explanation cards
+  ///
+  /// In en, this message translates to:
+  /// **'How it works'**
+  String get authMfaHowItWorks;
+
+  /// Info card description about verification speed
+  ///
+  /// In en, this message translates to:
+  /// **'Takes just a few seconds to verify during sign-in'**
+  String get authMfaInfoQuickDescription;
+
+  /// Info card title about MFA ease of use
+  ///
+  /// In en, this message translates to:
+  /// **'Quick & Easy'**
+  String get authMfaInfoQuickTitle;
+
+  /// Info card description about password compromise protection
+  ///
+  /// In en, this message translates to:
+  /// **'Protects your account even if your password is compromised'**
+  String get authMfaInfoSecurityDescription;
+
+  /// Info card title about additional account security
+  ///
+  /// In en, this message translates to:
+  /// **'Extra Security'**
+  String get authMfaInfoSecurityTitle;
+
+  /// Info card description for SMS verification
+  ///
+  /// In en, this message translates to:
+  /// **'Receive a verification code via text message when signing in'**
+  String get authMfaInfoSmsDescription;
+
+  /// Info card title explaining SMS-based MFA
+  ///
+  /// In en, this message translates to:
+  /// **'SMS Verification'**
+  String get authMfaInfoSmsTitle;
+
+  /// Screen title for the MFA management screen
+  ///
+  /// In en, this message translates to:
+  /// **'Two-Factor Authentication'**
+  String get authMfaManagementTitle;
+
+  /// Body text explaining MFA management is unavailable offline
+  ///
+  /// In en, this message translates to:
+  /// **'Two-factor authentication management requires an internet connection. Please connect and try again.'**
+  String get authMfaNoInternetBody;
+
+  /// Heading shown when MFA management screen loads while offline
+  ///
+  /// In en, this message translates to:
+  /// **'No Internet Connection'**
+  String get authMfaNoInternetTitle;
+
+  /// Error shown when no phone second factor is enrolled during MFA verification
+  ///
+  /// In en, this message translates to:
+  /// **'No phone factor found'**
+  String get authMfaNoPhoneFactorFound;
+
+  /// Error when verification session is missing and user should request a new code
+  ///
+  /// In en, this message translates to:
+  /// **'No verification ID. Try resending.'**
+  String get authMfaNoVerificationId;
+
+  /// Description text encouraging user to enable MFA
+  ///
+  /// In en, this message translates to:
+  /// **'Add an extra layer of security'**
+  String get authMfaNotEnabledDescription;
+
+  /// Banner text shown when viewing cached MFA factors while offline
+  ///
+  /// In en, this message translates to:
+  /// **'You are offline. Changes cannot be made until you reconnect.'**
+  String get authMfaOfflineBanner;
+
+  /// Validation error when phone number does not start with country code
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number must include country code (+1, +44, etc.)'**
+  String get authMfaPhoneCountryCodeRequired;
+
+  /// Fallback display name for an enrolled phone factor with no custom name
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get authMfaPhoneFallback;
+
+  /// Hint text showing example phone number format
+  ///
+  /// In en, this message translates to:
+  /// **'+1 234 567 890'**
+  String get authMfaPhoneNumberHint;
+
+  /// Label for the phone number input field
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get authMfaPhoneNumberLabel;
+
+  /// Validation error when phone number field is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your phone number'**
+  String get authMfaPhoneRequired;
+
+  /// Description text when MFA is active
+  ///
+  /// In en, this message translates to:
+  /// **'Your account is protected with 2FA'**
+  String get authMfaProtectedDescription;
+
+  /// Destructive confirm button label in the remove MFA dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get authMfaRemoveConfirmLabel;
+
+  /// Confirmation dialog body warning about reduced security when removing MFA
+  ///
+  /// In en, this message translates to:
+  /// **'Your account will be less secure. You can re-enable it anytime.'**
+  String get authMfaRemoveConfirmMessage;
+
+  /// Confirmation dialog title when removing MFA
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Two-Factor Auth?'**
+  String get authMfaRemoveConfirmTitle;
+
+  /// Error when user tries to remove MFA while offline
+  ///
+  /// In en, this message translates to:
+  /// **'Removing two-factor authentication requires an internet connection.'**
+  String get authMfaRemoveRequiresInternet;
+
+  /// Success snackbar after MFA is removed from the account
+  ///
+  /// In en, this message translates to:
+  /// **'Two-factor authentication removed'**
+  String get authMfaRemoved;
+
+  /// Error when user tries to enable MFA while offline
+  ///
+  /// In en, this message translates to:
+  /// **'Two-factor authentication requires an internet connection.'**
+  String get authMfaRequiresInternet;
+
+  /// Retry button label on the offline MFA management screen
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get authMfaRetryButton;
+
+  /// Button label to send the SMS verification code
+  ///
+  /// In en, this message translates to:
+  /// **'Send Code'**
+  String get authMfaSendCodeButton;
+
+  /// Error when user tries to send an MFA code while offline
+  ///
+  /// In en, this message translates to:
+  /// **'Sending verification codes requires an internet connection.'**
+  String get authMfaSendCodeRequiresInternet;
+
+  /// Button label while SMS code is being sent
+  ///
+  /// In en, this message translates to:
+  /// **'Sending...'**
+  String get authMfaSendingButton;
+
+  /// Loading text while SMS verification code is being sent
+  ///
+  /// In en, this message translates to:
+  /// **'Sending verification code...'**
+  String get authMfaSendingCode;
+
+  /// Status heading when MFA is not enabled on the account
+  ///
+  /// In en, this message translates to:
+  /// **'Not Enabled'**
+  String get authMfaStatusNotEnabled;
+
+  /// Status heading when MFA is enabled on the account
+  ///
+  /// In en, this message translates to:
+  /// **'Protected'**
+  String get authMfaStatusProtected;
+
+  /// Error when user taps Retry but device is still offline
+  ///
+  /// In en, this message translates to:
+  /// **'Still offline. Please check your connection.'**
+  String get authMfaStillOffline;
+
+  /// Hint text placeholder for the 6-digit verification code
+  ///
+  /// In en, this message translates to:
+  /// **'000000'**
+  String get authMfaVerificationCodeHint;
+
+  /// Label for the SMS verification code input field
+  ///
+  /// In en, this message translates to:
+  /// **'Verification Code'**
+  String get authMfaVerificationCodeLabel;
+
+  /// Button label to verify the code and enable MFA
+  ///
+  /// In en, this message translates to:
+  /// **'Verify & Enable'**
+  String get authMfaVerifyAndEnableButton;
+
+  /// Verify button label to submit the MFA verification code
+  ///
+  /// In en, this message translates to:
+  /// **'Verify'**
+  String get authMfaVerifyButton;
+
+  /// Title for the MFA SMS verification dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Verify Identity'**
+  String get authMfaVerifyIdentityTitle;
+
+  /// Error when user tries to verify an MFA code while offline
+  ///
+  /// In en, this message translates to:
+  /// **'Verifying codes requires an internet connection.'**
+  String get authMfaVerifyRequiresInternet;
+
+  /// Button label while verification code is being validated
+  ///
+  /// In en, this message translates to:
+  /// **'Verifying...'**
+  String get authMfaVerifyingButton;
+
+  /// Fallback text when the masked phone number is unavailable
+  ///
+  /// In en, this message translates to:
+  /// **'your phone'**
+  String get authMfaYourPhone;
+
   /// Label for the notification body field
   ///
   /// In en, this message translates to:
@@ -3410,6 +4634,18 @@ abstract class AppLocalizations {
   /// **'Delete Automation'**
   String get automationScreenDeleteTitle;
 
+  /// Success snackbar after deleting an automation
+  ///
+  /// In en, this message translates to:
+  /// **'Deleted \"{name}\"'**
+  String automationScreenDeleted(String name);
+
+  /// Loading snackbar while deleting an automation
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting \"{name}\"...'**
+  String automationScreenDeleting(String name);
+
   /// Hero body text explaining what automations do
   ///
   /// In en, this message translates to:
@@ -3488,6 +4724,24 @@ abstract class AppLocalizations {
   /// **'Retry'**
   String get automationScreenRetry;
 
+  /// Error snackbar when automation execution fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to run: {error}'**
+  String automationScreenRunFailed(String error);
+
+  /// Success snackbar after running an automation
+  ///
+  /// In en, this message translates to:
+  /// **'Ran \"{name}\" successfully'**
+  String automationScreenRunSuccess(String name);
+
+  /// Loading snackbar while running an automation
+  ///
+  /// In en, this message translates to:
+  /// **'Running \"{name}\"...'**
+  String automationScreenRunning(String name);
+
   /// Menu item to scan a QR code for importing an automation
   ///
   /// In en, this message translates to:
@@ -3529,36 +4783,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Automations'**
   String get automationScreenTitle;
-
-  /// Loading snackbar while running an automation
-  ///
-  /// In en, this message translates to:
-  /// **'Running \"{name}\"...'**
-  String automationScreenRunning(String name);
-
-  /// Success snackbar after running an automation
-  ///
-  /// In en, this message translates to:
-  /// **'Ran \"{name}\" successfully'**
-  String automationScreenRunSuccess(String name);
-
-  /// Error snackbar when automation execution fails
-  ///
-  /// In en, this message translates to:
-  /// **'Failed to run: {error}'**
-  String automationScreenRunFailed(String error);
-
-  /// Loading snackbar while deleting an automation
-  ///
-  /// In en, this message translates to:
-  /// **'Deleting \"{name}\"...'**
-  String automationScreenDeleting(String name);
-
-  /// Success snackbar after deleting an automation
-  ///
-  /// In en, this message translates to:
-  /// **'Deleted \"{name}\"'**
-  String automationScreenDeleted(String name);
 
   /// Share body text when sharing an automation
   ///
@@ -5540,6 +6764,330 @@ abstract class AppLocalizations {
   /// **'Save'**
   String get commonSave;
 
+  /// Screen title
+  ///
+  /// In en, this message translates to:
+  /// **'App Log'**
+  String get debugScreenAppLogTitle;
+
+  /// Filter confirm button label
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get debugScreenApply;
+
+  /// Tooltip when auto-scroll is disabled
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-scroll off'**
+  String get debugScreenAutoScrollOff;
+
+  /// Tooltip when auto-scroll is enabled
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-scroll on'**
+  String get debugScreenAutoScrollOn;
+
+  /// Clear logs confirm button label
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get debugScreenClear;
+
+  /// Menu item: clear logs
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Logs'**
+  String get debugScreenClearLogsMenuItem;
+
+  /// Clear logs confirm dialog body
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to clear all logs?'**
+  String get debugScreenClearLogsMessage;
+
+  /// Clear logs confirm dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Logs'**
+  String get debugScreenClearLogsTitle;
+
+  /// Overflow menu item: clear logs
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get debugScreenClearMenuItem;
+
+  /// Overflow menu item: copy
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get debugScreenCopy;
+
+  /// Menu item: copy to clipboard
+  ///
+  /// In en, this message translates to:
+  /// **'Copy to Clipboard'**
+  String get debugScreenCopyToClipboard;
+
+  /// Debug export confirm dialog body
+  ///
+  /// In en, this message translates to:
+  /// **'This export includes device info, connection state, node list, route metadata, and recent app logs.\n\nMessage text is redacted and GPS coordinates are coarsened. Review the file before sharing with anyone.'**
+  String get debugScreenDebugExportMessage;
+
+  /// Debug export confirm dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Debug Export'**
+  String get debugScreenDebugExportTitle;
+
+  /// Device log filter confirm button
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get debugScreenDeviceApply;
+
+  /// Tooltip when auto-scroll is disabled
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-scroll OFF'**
+  String get debugScreenDeviceAutoScrollOff;
+
+  /// Tooltip when auto-scroll is enabled
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-scroll ON'**
+  String get debugScreenDeviceAutoScrollOn;
+
+  /// Clear device logs confirm button label
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get debugScreenDeviceClear;
+
+  /// Clear device logs confirm dialog body
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to clear all device logs?'**
+  String get debugScreenDeviceClearMessage;
+
+  /// Clear device logs confirm dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Logs'**
+  String get debugScreenDeviceClearTitle;
+
+  /// Device log entry count subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'{count} entries'**
+  String debugScreenDeviceEntryCount(int count);
+
+  /// Device log filter bottom sheet subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Select which levels to display'**
+  String get debugScreenDeviceFilterSubtitle;
+
+  /// Device log filter bottom sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Filter Log Levels'**
+  String get debugScreenDeviceFilterTitle;
+
+  /// Device log level label: critical
+  ///
+  /// In en, this message translates to:
+  /// **'CRIT'**
+  String get debugScreenDeviceLogCrit;
+
+  /// Device log level label: debug
+  ///
+  /// In en, this message translates to:
+  /// **'DEBUG'**
+  String get debugScreenDeviceLogDebug;
+
+  /// Device log level label: error
+  ///
+  /// In en, this message translates to:
+  /// **'ERROR'**
+  String get debugScreenDeviceLogError;
+
+  /// Device log level label: info
+  ///
+  /// In en, this message translates to:
+  /// **'INFO'**
+  String get debugScreenDeviceLogInfo;
+
+  /// Device log level label: trace
+  ///
+  /// In en, this message translates to:
+  /// **'TRACE'**
+  String get debugScreenDeviceLogTrace;
+
+  /// Device log level label: unset
+  ///
+  /// In en, this message translates to:
+  /// **'UNSET'**
+  String get debugScreenDeviceLogUnset;
+
+  /// Device log level label: warning
+  ///
+  /// In en, this message translates to:
+  /// **'WARN'**
+  String get debugScreenDeviceLogWarn;
+
+  /// Success snackbar after copying device logs
+  ///
+  /// In en, this message translates to:
+  /// **'Device logs copied to clipboard'**
+  String get debugScreenDeviceLogsCopied;
+
+  /// Screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Device Logs'**
+  String get debugScreenDeviceLogsTitle;
+
+  /// Device log search field hint text
+  ///
+  /// In en, this message translates to:
+  /// **'Search logs...'**
+  String get debugScreenDeviceSearchHint;
+
+  /// Log entry count label
+  ///
+  /// In en, this message translates to:
+  /// **'{count} entries'**
+  String debugScreenEntryCount(int count);
+
+  /// Debug export confirm button label
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get debugScreenExport;
+
+  /// Overflow menu item: export debug JSON
+  ///
+  /// In en, this message translates to:
+  /// **'Export Debug JSON'**
+  String get debugScreenExportDebugJson;
+
+  /// Error snackbar when export fails
+  ///
+  /// In en, this message translates to:
+  /// **'Export failed: {error}'**
+  String debugScreenExportFailed(String error);
+
+  /// Overflow menu item: filter
+  ///
+  /// In en, this message translates to:
+  /// **'Filter'**
+  String get debugScreenFilter;
+
+  /// Tooltip for filter button
+  ///
+  /// In en, this message translates to:
+  /// **'Filter levels'**
+  String get debugScreenFilterLevelsTooltip;
+
+  /// Filter bottom sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Filter Log Levels'**
+  String get debugScreenFilterLogLevels;
+
+  /// Filter bottom sheet subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Select which levels to display'**
+  String get debugScreenFilterSubtitle;
+
+  /// Label shown when log level filters are active
+  ///
+  /// In en, this message translates to:
+  /// **'Filtered'**
+  String get debugScreenFiltered;
+
+  /// Snackbar while generating export
+  ///
+  /// In en, this message translates to:
+  /// **'Generating debug export...'**
+  String get debugScreenGeneratingExport;
+
+  /// Success snackbar after copying log
+  ///
+  /// In en, this message translates to:
+  /// **'Log copied to clipboard'**
+  String get debugScreenLogCopied;
+
+  /// Log level label for debug
+  ///
+  /// In en, this message translates to:
+  /// **'DEBUG'**
+  String get debugScreenLogLevelDebug;
+
+  /// Log level label for error
+  ///
+  /// In en, this message translates to:
+  /// **'ERROR'**
+  String get debugScreenLogLevelError;
+
+  /// Log level label for info
+  ///
+  /// In en, this message translates to:
+  /// **'INFO'**
+  String get debugScreenLogLevelInfo;
+
+  /// Log level label for warning
+  ///
+  /// In en, this message translates to:
+  /// **'WARN'**
+  String get debugScreenLogLevelWarn;
+
+  /// Empty state subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Logs will appear here as your device sends them'**
+  String get debugScreenLogsWillAppear;
+
+  /// Empty state title
+  ///
+  /// In en, this message translates to:
+  /// **'No device logs yet'**
+  String get debugScreenNoDeviceLogs;
+
+  /// Empty state title when no logs
+  ///
+  /// In en, this message translates to:
+  /// **'No log entries'**
+  String get debugScreenNoLogEntries;
+
+  /// Search field hint text
+  ///
+  /// In en, this message translates to:
+  /// **'Search logs...'**
+  String get debugScreenSearchLogsHint;
+
+  /// Menu item: share
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get debugScreenShare;
+
+  /// Overflow menu item: share log
+  ///
+  /// In en, this message translates to:
+  /// **'Share Log'**
+  String get debugScreenShareLog;
+
+  /// Status banner explaining device log streaming
+  ///
+  /// In en, this message translates to:
+  /// **'Streaming firmware debug logs from your connected device via BLE'**
+  String get debugScreenStreamingBanner;
+
   /// No description provided for @deviceConfigBleName.
   ///
   /// In en, this message translates to:
@@ -7286,6 +8834,1192 @@ abstract class AppLocalizations {
   /// **'You have unsaved changes'**
   String get featuredProductsUnsavedChanges;
 
+  /// Screen title
+  ///
+  /// In en, this message translates to:
+  /// **'My Bug Reports'**
+  String get feedbackBugReportsTitle;
+
+  /// Section label for response thread
+  ///
+  /// In en, this message translates to:
+  /// **'Conversation'**
+  String get feedbackConversation;
+
+  /// Error message
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load reports'**
+  String get feedbackFailedToLoad;
+
+  /// Filter chip label
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get feedbackFilterAll;
+
+  /// Filter chip label
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting'**
+  String get feedbackFilterAwaiting;
+
+  /// Filter chip label
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get feedbackFilterOpen;
+
+  /// Filter chip label
+  ///
+  /// In en, this message translates to:
+  /// **'Resolved'**
+  String get feedbackFilterResolved;
+
+  /// Filter chip label
+  ///
+  /// In en, this message translates to:
+  /// **'Responded'**
+  String get feedbackFilterResponded;
+
+  /// Text field hint
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us about the issue you encountered'**
+  String get feedbackFormHint;
+
+  /// Report form title
+  ///
+  /// In en, this message translates to:
+  /// **'Report bug'**
+  String get feedbackFormTitle;
+
+  /// Validation error text
+  ///
+  /// In en, this message translates to:
+  /// **'Please describe the issue.'**
+  String get feedbackFormValidationError;
+
+  /// Form section header
+  ///
+  /// In en, this message translates to:
+  /// **'What happened?'**
+  String get feedbackFormWhatHappened;
+
+  /// Toggle tile title
+  ///
+  /// In en, this message translates to:
+  /// **'Include screenshot in report'**
+  String get feedbackIncludeScreenshot;
+
+  /// Exception message shown to user
+  ///
+  /// In en, this message translates to:
+  /// **'You must be signed in to reply'**
+  String get feedbackMustBeSignedIn;
+
+  /// Empty state headline
+  ///
+  /// In en, this message translates to:
+  /// **'No bug reports yet'**
+  String get feedbackNoBugReports;
+
+  /// Empty state description
+  ///
+  /// In en, this message translates to:
+  /// **'Shake your device to report a bug.\nYour reports and any responses will appear here.'**
+  String get feedbackNoBugReportsDesc;
+
+  /// Empty state with filter
+  ///
+  /// In en, this message translates to:
+  /// **'No reports match this filter'**
+  String get feedbackNoMatchFilter;
+
+  /// Empty state with search query
+  ///
+  /// In en, this message translates to:
+  /// **'No reports match your search'**
+  String get feedbackNoMatchSearch;
+
+  /// Error snackbar (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to send reply: {error}'**
+  String feedbackReplyFailed(String error);
+
+  /// Reply text field hint
+  ///
+  /// In en, this message translates to:
+  /// **'Write a reply...'**
+  String get feedbackReplyHint;
+
+  /// Success snackbar after sending reply
+  ///
+  /// In en, this message translates to:
+  /// **'Reply sent'**
+  String get feedbackReplySent;
+
+  /// Action button label
+  ///
+  /// In en, this message translates to:
+  /// **'Report bug'**
+  String get feedbackReportBugAction;
+
+  /// Prompt sheet description
+  ///
+  /// In en, this message translates to:
+  /// **'If something isn\'t working correctly, you can report it to help improve Socialmesh for everyone.'**
+  String get feedbackReportBugDescription;
+
+  /// Prompt sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Report a bug?'**
+  String get feedbackReportBugTitle;
+
+  /// Status message for resolved reports
+  ///
+  /// In en, this message translates to:
+  /// **'This report has been resolved'**
+  String get feedbackReportResolved;
+
+  /// Response bubble author for founder
+  ///
+  /// In en, this message translates to:
+  /// **'Socialmesh'**
+  String get feedbackResponseAuthorSocialmesh;
+
+  /// Response bubble author for user
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get feedbackResponseAuthorYou;
+
+  /// Retry button label
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get feedbackRetry;
+
+  /// Toggle tile subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Helps us debug faster'**
+  String get feedbackScreenshotSubtitle;
+
+  /// Search bar hint text
+  ///
+  /// In en, this message translates to:
+  /// **'Search reports'**
+  String get feedbackSearchReports;
+
+  /// Submit button label
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get feedbackSendButton;
+
+  /// Loading snackbar while submitting
+  ///
+  /// In en, this message translates to:
+  /// **'Sending bug report...'**
+  String get feedbackSendingReport;
+
+  /// Toggle tile title
+  ///
+  /// In en, this message translates to:
+  /// **'Shake device to report a bug'**
+  String get feedbackShakeToReport;
+
+  /// Bug report status label
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting Response'**
+  String get feedbackStatusAwaitingResponse;
+
+  /// Bug report status label
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get feedbackStatusOpen;
+
+  /// Bug report status label
+  ///
+  /// In en, this message translates to:
+  /// **'Resolved'**
+  String get feedbackStatusResolved;
+
+  /// Bug report status label
+  ///
+  /// In en, this message translates to:
+  /// **'Responded'**
+  String get feedbackStatusResponded;
+
+  /// Toggle tile subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Toggle off to disable'**
+  String get feedbackToggleOff;
+
+  /// Status message when awaiting response
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for admin response'**
+  String get feedbackWaitingForAdmin;
+
+  /// Section label in expanded report
+  ///
+  /// In en, this message translates to:
+  /// **'Your report'**
+  String get feedbackYourReport;
+
+  /// Success snackbar (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted: {filename}'**
+  String fileTransferAccepted(String filename);
+
+  /// Action button label
+  ///
+  /// In en, this message translates to:
+  /// **'Accept'**
+  String get fileTransferActionAccept;
+
+  /// Action button label
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get fileTransferActionCancel;
+
+  /// Action button label
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get fileTransferActionDelete;
+
+  /// Action button label
+  ///
+  /// In en, this message translates to:
+  /// **'Info'**
+  String get fileTransferActionInfo;
+
+  /// Action button label
+  ///
+  /// In en, this message translates to:
+  /// **'Reject'**
+  String get fileTransferActionReject;
+
+  /// Action button label
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get fileTransferActionRetry;
+
+  /// Action button label
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get fileTransferActionShare;
+
+  /// Attachment preview metadata (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'{size} · {chunkCount} chunks over mesh'**
+  String fileTransferAttachmentMeta(int size, String chunkCount);
+
+  /// Description shown for binary/hex file preview
+  ///
+  /// In en, this message translates to:
+  /// **'Binary file — save to open with an external app'**
+  String get fileTransferBinaryFileHint;
+
+  /// Confirmation dialog confirm button
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel Transfer'**
+  String get fileTransferCancelConfirm;
+
+  /// Confirmation dialog message (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel the transfer of \"{filename}\"? '**
+  String fileTransferCancelMessage(String filename);
+
+  /// Confirmation dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel Transfer?'**
+  String get fileTransferCancelTitle;
+
+  /// Success snackbar after cancellation
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer cancelled'**
+  String get fileTransferCancelled;
+
+  /// Card status text for cancelled transfer
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get fileTransferCardCancelled;
+
+  /// Card status text for completed transfer
+  ///
+  /// In en, this message translates to:
+  /// **'Complete'**
+  String get fileTransferCardComplete;
+
+  /// Card status text for pending offer
+  ///
+  /// In en, this message translates to:
+  /// **'Incoming file — tap to review'**
+  String get fileTransferCardOfferPending;
+
+  /// Card status text for offer sent state
+  ///
+  /// In en, this message translates to:
+  /// **'Offer sent, waiting...'**
+  String get fileTransferCardOfferSent;
+
+  /// Card status text for created state
+  ///
+  /// In en, this message translates to:
+  /// **'Preparing...'**
+  String get fileTransferCardPreparing;
+
+  /// Card status text for inbound chunking (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'Receiving {pct}%'**
+  String fileTransferCardReceivingPercent(String pct);
+
+  /// Card status text during recovery
+  ///
+  /// In en, this message translates to:
+  /// **'Recovering missing chunks...'**
+  String get fileTransferCardRecovering;
+
+  /// Card status text for outbound chunking (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'Sending {pct}%'**
+  String fileTransferCardSendingPercent(String pct);
+
+  /// Chunk progress indicator (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'{completed}/{total} chunks'**
+  String fileTransferChunkProgress(String completed, int total);
+
+  /// Overflow menu item
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Completed'**
+  String get fileTransferClearCompleted;
+
+  /// Confirmation dialog confirm button
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get fileTransferClearConfirm;
+
+  /// Confirmation dialog message
+  ///
+  /// In en, this message translates to:
+  /// **'Remove all completed, failed, and cancelled transfers? This cannot be undone.'**
+  String get fileTransferClearMessage;
+
+  /// Confirmation dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Completed Transfers?'**
+  String get fileTransferClearTitle;
+
+  /// Success snackbar (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'Cleared {count} transfers'**
+  String fileTransferClearedCount(int count);
+
+  /// Empty state action button
+  ///
+  /// In en, this message translates to:
+  /// **'Clear search'**
+  String get fileTransferContactsClearSearch;
+
+  /// Relative time: days ago
+  ///
+  /// In en, this message translates to:
+  /// **'{count}d ago'**
+  String fileTransferContactsDaysAgo(int count);
+
+  /// Detail stat label
+  ///
+  /// In en, this message translates to:
+  /// **'Received'**
+  String get fileTransferContactsDetailReceived;
+
+  /// Detail stat label
+  ///
+  /// In en, this message translates to:
+  /// **'Sent'**
+  String get fileTransferContactsDetailSent;
+
+  /// Detail stat label
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get fileTransferContactsDetailTotal;
+
+  /// Empty state description
+  ///
+  /// In en, this message translates to:
+  /// **'Discovered nodes will appear here'**
+  String get fileTransferContactsDiscoveredHint;
+
+  /// Filter chip label
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get fileTransferContactsFilterActive;
+
+  /// Filter chip label
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get fileTransferContactsFilterAll;
+
+  /// Filter chip label
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get fileTransferContactsFilterFavorites;
+
+  /// Filter chip label
+  ///
+  /// In en, this message translates to:
+  /// **'Has Files'**
+  String get fileTransferContactsFilterHasFiles;
+
+  /// Relative time: hours ago
+  ///
+  /// In en, this message translates to:
+  /// **'{count}h ago'**
+  String fileTransferContactsHoursAgo(int count);
+
+  /// Relative time in detail sheet
+  ///
+  /// In en, this message translates to:
+  /// **'just now'**
+  String get fileTransferContactsJustNow;
+
+  /// Relative time: minutes ago
+  ///
+  /// In en, this message translates to:
+  /// **'{count}m ago'**
+  String fileTransferContactsMinutesAgo(int count);
+
+  /// Empty state with filter name (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'No {filter} contacts'**
+  String fileTransferContactsNoMatchFilter(String filter);
+
+  /// Empty state with search query (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'No contacts match \"{query}\"'**
+  String fileTransferContactsNoMatchSearch(String query);
+
+  /// Empty state when no nodes discovered
+  ///
+  /// In en, this message translates to:
+  /// **'No nodes on the mesh yet'**
+  String get fileTransferContactsNoNodes;
+
+  /// Section header in detail sheet
+  ///
+  /// In en, this message translates to:
+  /// **'RECENT TRANSFERS'**
+  String get fileTransferContactsRecentTransfers;
+
+  /// Search bar hint text
+  ///
+  /// In en, this message translates to:
+  /// **'Search contacts'**
+  String get fileTransferContactsSearchHint;
+
+  /// Section header
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get fileTransferContactsSectionActive;
+
+  /// Section header
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get fileTransferContactsSectionFavorites;
+
+  /// Section header
+  ///
+  /// In en, this message translates to:
+  /// **'Inactive'**
+  String get fileTransferContactsSectionInactive;
+
+  /// Section header
+  ///
+  /// In en, this message translates to:
+  /// **'With Files'**
+  String get fileTransferContactsSectionWithFiles;
+
+  /// Action button in detail sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Send File'**
+  String get fileTransferContactsSendFile;
+
+  /// Success snackbar (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer started: {filename}'**
+  String fileTransferContactsStarted(String filename);
+
+  /// Contact subtitle showing transfer count (interpolated, pluralized)
+  ///
+  /// In en, this message translates to:
+  /// **'{count} file(s) transferred'**
+  String fileTransferContactsTransferCount(int count);
+
+  /// Overflow menu item
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Completed'**
+  String get fileTransferContainerClearCompleted;
+
+  /// Confirmation dialog message
+  ///
+  /// In en, this message translates to:
+  /// **'Remove all completed, failed, and cancelled transfers? This cannot be undone.'**
+  String get fileTransferContainerClearMessage;
+
+  /// Confirmation dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Completed Transfers?'**
+  String get fileTransferContainerClearTitle;
+
+  /// Success snackbar (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'Cleared {count} transfers'**
+  String fileTransferContainerCleared(int count);
+
+  /// Overflow menu item
+  ///
+  /// In en, this message translates to:
+  /// **'Purge Expired'**
+  String get fileTransferContainerPurgeExpired;
+
+  /// Success snackbar after purge
+  ///
+  /// In en, this message translates to:
+  /// **'Expired transfers purged'**
+  String get fileTransferContainerPurged;
+
+  /// Overflow menu item
+  ///
+  /// In en, this message translates to:
+  /// **'Send File'**
+  String get fileTransferContainerSendFile;
+
+  /// Node picker dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Send to Node'**
+  String get fileTransferContainerSendToNode;
+
+  /// Success snackbar (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer started: {filename}'**
+  String fileTransferContainerStarted(String filename);
+
+  /// Container screen title
+  ///
+  /// In en, this message translates to:
+  /// **'File Transfers'**
+  String get fileTransferContainerTitle;
+
+  /// Snackbar after copying text content
+  ///
+  /// In en, this message translates to:
+  /// **'Copied to clipboard'**
+  String get fileTransferCopiedToClipboard;
+
+  /// Copy button label in text viewer
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get fileTransferCopyAction;
+
+  /// Error when file cannot be loaded from disk (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'Could not read file: {error}'**
+  String fileTransferCouldNotReadFile(String error);
+
+  /// Error snackbar when share fails
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save file for sharing'**
+  String get fileTransferCouldNotSaveForSharing;
+
+  /// Error snackbar when transfer fails to start
+  ///
+  /// In en, this message translates to:
+  /// **'Could not start transfer. Check that a node is connected and try again.'**
+  String get fileTransferCouldNotStart;
+
+  /// Confirmation dialog confirm button
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get fileTransferDeleteConfirm;
+
+  /// Confirmation dialog message (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'Delete \"{filename}\"? This cannot be undone.'**
+  String fileTransferDeleteMessage(String filename);
+
+  /// Confirmation dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Transfer?'**
+  String get fileTransferDeleteTitle;
+
+  /// Success snackbar (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'Deleted: {filename}'**
+  String fileTransferDeleted(String filename);
+
+  /// Info sheet section label
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer Details'**
+  String get fileTransferDetailsSection;
+
+  /// Direction badge label for inbound
+  ///
+  /// In en, this message translates to:
+  /// **'Received'**
+  String get fileTransferDirectionReceived;
+
+  /// Direction badge label for outbound
+  ///
+  /// In en, this message translates to:
+  /// **'Sent'**
+  String get fileTransferDirectionSent;
+
+  /// Empty state description for inbound filter
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Contacts, tap a node, and\nchoose Send File to get started'**
+  String get fileTransferEmptyDescriptionContacts;
+
+  /// Empty state description for other filters
+  ///
+  /// In en, this message translates to:
+  /// **'Send files to other nodes from the\noverflow menu or via NodeDex'**
+  String get fileTransferEmptyDescriptionOverflow;
+
+  /// Empty state headline with filter name (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'No {filter} Transfers'**
+  String fileTransferEmptyFilterTitle(String filter);
+
+  /// Empty state headline
+  ///
+  /// In en, this message translates to:
+  /// **'No File Transfers'**
+  String get fileTransferEmptyTitle;
+
+  /// Success snackbar after purge
+  ///
+  /// In en, this message translates to:
+  /// **'Expired transfers purged'**
+  String get fileTransferExpiredPurged;
+
+  /// Failure reason text
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer expired'**
+  String get fileTransferFailExpired;
+
+  /// Generic failure reason text
+  ///
+  /// In en, this message translates to:
+  /// **'Failed'**
+  String get fileTransferFailGeneric;
+
+  /// Failure reason text
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid data received'**
+  String get fileTransferFailInvalidData;
+
+  /// Failure reason text
+  ///
+  /// In en, this message translates to:
+  /// **'Max retries exceeded'**
+  String get fileTransferFailMaxRetries;
+
+  /// Failure reason text
+  ///
+  /// In en, this message translates to:
+  /// **'Rate limited — try again later'**
+  String get fileTransferFailRateLimited;
+
+  /// Failure reason text
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer timed out'**
+  String get fileTransferFailTimedOut;
+
+  /// Failure reason text
+  ///
+  /// In en, this message translates to:
+  /// **'File too large for mesh transfer'**
+  String get fileTransferFailTooLarge;
+
+  /// Failure reason text
+  ///
+  /// In en, this message translates to:
+  /// **'File verification failed'**
+  String get fileTransferFailVerification;
+
+  /// Warning snackbar for empty files
+  ///
+  /// In en, this message translates to:
+  /// **'The selected file is empty.'**
+  String get fileTransferFileEmpty;
+
+  /// Error snackbar for oversized files (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'{filename} is {fileSize} KB — mesh transfer limit is {limit} KB.'**
+  String fileTransferFileTooLarge(
+    String filename,
+    String fileSize,
+    String limit,
+  );
+
+  /// Filter chip label
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get fileTransferFilterActive;
+
+  /// Filter chip label
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get fileTransferFilterAll;
+
+  /// Filter chip label
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get fileTransferFilterDone;
+
+  /// Filter chip label
+  ///
+  /// In en, this message translates to:
+  /// **'Received'**
+  String get fileTransferFilterReceived;
+
+  /// Filter chip label
+  ///
+  /// In en, this message translates to:
+  /// **'Sent'**
+  String get fileTransferFilterSent;
+
+  /// Empty state action button
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Contacts'**
+  String get fileTransferGoToContacts;
+
+  /// Error placeholder when image cannot be decoded
+  ///
+  /// In en, this message translates to:
+  /// **'Could not decode image'**
+  String get fileTransferImageDecodeError;
+
+  /// Info sheet row label
+  ///
+  /// In en, this message translates to:
+  /// **'Chunk Size'**
+  String get fileTransferInfoChunkSize;
+
+  /// Info sheet row label
+  ///
+  /// In en, this message translates to:
+  /// **'Chunks'**
+  String get fileTransferInfoChunks;
+
+  /// Info sheet row label
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get fileTransferInfoCompleted;
+
+  /// Info sheet row label
+  ///
+  /// In en, this message translates to:
+  /// **'Created'**
+  String get fileTransferInfoCreated;
+
+  /// Info sheet row label
+  ///
+  /// In en, this message translates to:
+  /// **'Direction'**
+  String get fileTransferInfoDirection;
+
+  /// Info sheet direction value
+  ///
+  /// In en, this message translates to:
+  /// **'Received'**
+  String get fileTransferInfoDirectionReceived;
+
+  /// Info sheet direction value
+  ///
+  /// In en, this message translates to:
+  /// **'Sent'**
+  String get fileTransferInfoDirectionSent;
+
+  /// Info sheet row label
+  ///
+  /// In en, this message translates to:
+  /// **'Expires'**
+  String get fileTransferInfoExpires;
+
+  /// Info sheet row label
+  ///
+  /// In en, this message translates to:
+  /// **'Failure'**
+  String get fileTransferInfoFailure;
+
+  /// Info sheet row label
+  ///
+  /// In en, this message translates to:
+  /// **'MIME Type'**
+  String get fileTransferInfoMimeType;
+
+  /// Info sheet row label
+  ///
+  /// In en, this message translates to:
+  /// **'NACK Rounds'**
+  String get fileTransferInfoNackRounds;
+
+  /// Info sheet row label
+  ///
+  /// In en, this message translates to:
+  /// **'Size'**
+  String get fileTransferInfoSize;
+
+  /// Info sheet row label
+  ///
+  /// In en, this message translates to:
+  /// **'Source Node'**
+  String get fileTransferInfoSourceNode;
+
+  /// Info sheet row label
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get fileTransferInfoStatus;
+
+  /// Info sheet row label
+  ///
+  /// In en, this message translates to:
+  /// **'Target Node'**
+  String get fileTransferInfoTargetNode;
+
+  /// Info sheet row label
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer ID'**
+  String get fileTransferInfoTransferId;
+
+  /// Metadata text for inbound direction (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'from {nodeName}'**
+  String fileTransferMetaFrom(String nodeName);
+
+  /// Metadata text for outbound direction (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'to {nodeName}'**
+  String fileTransferMetaTo(String nodeName);
+
+  /// Truncation indicator in hex viewer (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'... {count} more bytes'**
+  String fileTransferMoreBytes(int count);
+
+  /// Empty state when filter yields no results
+  ///
+  /// In en, this message translates to:
+  /// **'No transfers match this filter'**
+  String get fileTransferNoMatchFilter;
+
+  /// Hint text below image viewer
+  ///
+  /// In en, this message translates to:
+  /// **'Pinch to zoom'**
+  String get fileTransferPinchToZoom;
+
+  /// Overflow menu item
+  ///
+  /// In en, this message translates to:
+  /// **'Purge Expired'**
+  String get fileTransferPurgeExpired;
+
+  /// Confirmation dialog confirm button
+  ///
+  /// In en, this message translates to:
+  /// **'Reject'**
+  String get fileTransferRejectConfirm;
+
+  /// Confirmation dialog message (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'Reject the incoming file \"{filename}\"? The sender will be notified.'**
+  String fileTransferRejectMessage(String filename);
+
+  /// Confirmation dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Reject Transfer?'**
+  String get fileTransferRejectTitle;
+
+  /// Success snackbar
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer rejected'**
+  String get fileTransferRejected;
+
+  /// Search bar hint text
+  ///
+  /// In en, this message translates to:
+  /// **'Search transfers'**
+  String get fileTransferSearchHint;
+
+  /// Empty state action button
+  ///
+  /// In en, this message translates to:
+  /// **'Send a File'**
+  String get fileTransferSendAFile;
+
+  /// Overflow menu item
+  ///
+  /// In en, this message translates to:
+  /// **'Send File'**
+  String get fileTransferSendFile;
+
+  /// Node picker dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Send to Node'**
+  String get fileTransferSendToNode;
+
+  /// Success snackbar after initiating transfer (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer started: {filename}'**
+  String fileTransferStarted(String filename);
+
+  /// Transfer state label in info sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get fileTransferStateCancelled;
+
+  /// Transfer state label in info sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Complete'**
+  String get fileTransferStateComplete;
+
+  /// Transfer state label in info sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Failed'**
+  String get fileTransferStateFailed;
+
+  /// Transfer state label in info sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Offer Sent'**
+  String get fileTransferStateOfferSent;
+
+  /// Transfer state label in info sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Pending Acceptance'**
+  String get fileTransferStatePendingAcceptance;
+
+  /// Transfer state label in info sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Preparing'**
+  String get fileTransferStatePreparing;
+
+  /// Transfer state label in info sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Recovering'**
+  String get fileTransferStateRecovering;
+
+  /// Transfer state label in info sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Transferring'**
+  String get fileTransferStateTransferring;
+
+  /// Tab label
+  ///
+  /// In en, this message translates to:
+  /// **'Contacts'**
+  String get fileTransferTabContacts;
+
+  /// Tab label
+  ///
+  /// In en, this message translates to:
+  /// **'Files'**
+  String get fileTransferTabFiles;
+
+  /// Relative time label
+  ///
+  /// In en, this message translates to:
+  /// **'just now'**
+  String get fileTransferTimeJustNow;
+
+  /// Screen title
+  ///
+  /// In en, this message translates to:
+  /// **'File Transfers'**
+  String get fileTransferTitle;
+
+  /// File type label for ZIP/TAR/etc
+  ///
+  /// In en, this message translates to:
+  /// **'Archive'**
+  String get fileTransferTypeArchive;
+
+  /// File type label for audio
+  ///
+  /// In en, this message translates to:
+  /// **'Audio'**
+  String get fileTransferTypeAudio;
+
+  /// File type label for firmware/binary
+  ///
+  /// In en, this message translates to:
+  /// **'Binary'**
+  String get fileTransferTypeBinary;
+
+  /// Generic file type label
+  ///
+  /// In en, this message translates to:
+  /// **'File'**
+  String get fileTransferTypeFile;
+
+  /// File type label for GPX files
+  ///
+  /// In en, this message translates to:
+  /// **'GPS Track'**
+  String get fileTransferTypeGpsTrack;
+
+  /// File type label for HTML
+  ///
+  /// In en, this message translates to:
+  /// **'HTML'**
+  String get fileTransferTypeHtml;
+
+  /// File type label for images
+  ///
+  /// In en, this message translates to:
+  /// **'Image'**
+  String get fileTransferTypeImage;
+
+  /// File type label for JSON
+  ///
+  /// In en, this message translates to:
+  /// **'JSON'**
+  String get fileTransferTypeJson;
+
+  /// File type label for KML/KMZ
+  ///
+  /// In en, this message translates to:
+  /// **'Map'**
+  String get fileTransferTypeMap;
+
+  /// File type label for Markdown
+  ///
+  /// In en, this message translates to:
+  /// **'Markdown'**
+  String get fileTransferTypeMarkdown;
+
+  /// File type label for PDF
+  ///
+  /// In en, this message translates to:
+  /// **'PDF'**
+  String get fileTransferTypePdf;
+
+  /// File type label for Protobuf
+  ///
+  /// In en, this message translates to:
+  /// **'Protobuf'**
+  String get fileTransferTypeProtobuf;
+
+  /// File type label for CSV
+  ///
+  /// In en, this message translates to:
+  /// **'Spreadsheet'**
+  String get fileTransferTypeSpreadsheet;
+
+  /// File type label for plain text
+  ///
+  /// In en, this message translates to:
+  /// **'Text'**
+  String get fileTransferTypeText;
+
+  /// File type label for video
+  ///
+  /// In en, this message translates to:
+  /// **'Video'**
+  String get fileTransferTypeVideo;
+
+  /// File type label for XML
+  ///
+  /// In en, this message translates to:
+  /// **'XML'**
+  String get fileTransferTypeXml;
+
+  /// File type label for YAML
+  ///
+  /// In en, this message translates to:
+  /// **'YAML'**
+  String get fileTransferTypeYaml;
+
   /// No description provided for @firmwareUpdateAvailable.
   ///
   /// In en, this message translates to:
@@ -8684,6 +11418,216 @@ abstract class AppLocalizations {
   /// **'Failed to load transitions: {error}'**
   String incidentTransitionsLoadError(String error);
 
+  /// Primary action button to accept the Terms of Service and Privacy Policy and proceed into the app
+  ///
+  /// In en, this message translates to:
+  /// **'I Agree'**
+  String get legalAcceptanceAgreeButton;
+
+  /// Month name used in formatting effective dates of legal documents
+  ///
+  /// In en, this message translates to:
+  /// **'April'**
+  String get legalAcceptanceDateFormatApril;
+
+  /// Month name used in formatting effective dates of legal documents
+  ///
+  /// In en, this message translates to:
+  /// **'August'**
+  String get legalAcceptanceDateFormatAugust;
+
+  /// Month name used in formatting effective dates of legal documents
+  ///
+  /// In en, this message translates to:
+  /// **'December'**
+  String get legalAcceptanceDateFormatDecember;
+
+  /// Month name used in formatting effective dates of legal documents
+  ///
+  /// In en, this message translates to:
+  /// **'February'**
+  String get legalAcceptanceDateFormatFebruary;
+
+  /// Month name used in formatting effective dates of legal documents
+  ///
+  /// In en, this message translates to:
+  /// **'January'**
+  String get legalAcceptanceDateFormatJanuary;
+
+  /// Month name used in formatting effective dates of legal documents
+  ///
+  /// In en, this message translates to:
+  /// **'July'**
+  String get legalAcceptanceDateFormatJuly;
+
+  /// Month name used in formatting effective dates of legal documents
+  ///
+  /// In en, this message translates to:
+  /// **'June'**
+  String get legalAcceptanceDateFormatJune;
+
+  /// Month name used in formatting effective dates of legal documents
+  ///
+  /// In en, this message translates to:
+  /// **'March'**
+  String get legalAcceptanceDateFormatMarch;
+
+  /// Month name used in formatting effective dates of legal documents
+  ///
+  /// In en, this message translates to:
+  /// **'May'**
+  String get legalAcceptanceDateFormatMay;
+
+  /// Month name used in formatting effective dates of legal documents
+  ///
+  /// In en, this message translates to:
+  /// **'November'**
+  String get legalAcceptanceDateFormatNovember;
+
+  /// Month name used in formatting effective dates of legal documents
+  ///
+  /// In en, this message translates to:
+  /// **'October'**
+  String get legalAcceptanceDateFormatOctober;
+
+  /// Month name used in formatting effective dates of legal documents
+  ///
+  /// In en, this message translates to:
+  /// **'September'**
+  String get legalAcceptanceDateFormatSeptember;
+
+  /// Explanation on the iOS decline screen informing the user that acceptance is required but they can return at any time
+  ///
+  /// In en, this message translates to:
+  /// **'Accepting the Terms of Service and Privacy Policy is required to use Socialmesh. You can review them and accept whenever you are ready.'**
+  String get legalAcceptanceDeclineBody;
+
+  /// Secondary button to decline the terms and exit the app gracefully
+  ///
+  /// In en, this message translates to:
+  /// **'Not Now'**
+  String get legalAcceptanceDeclineButton;
+
+  /// Title of the iOS-only decline explanation screen shown when user taps Not Now
+  ///
+  /// In en, this message translates to:
+  /// **'Terms Required'**
+  String get legalAcceptanceDeclineTitle;
+
+  /// Fine print below the action buttons explaining the legal effect of tapping I Agree; no dark patterns, plain English
+  ///
+  /// In en, this message translates to:
+  /// **'By tapping \"I Agree\", you accept our Terms of Service and acknowledge our Privacy Policy.'**
+  String get legalAcceptanceFinePrint;
+
+  /// Subtitle showing the effective date of the Privacy Policy document
+  ///
+  /// In en, this message translates to:
+  /// **'Effective {date}'**
+  String legalAcceptancePrivacyEffective(String date);
+
+  /// Title text for the Privacy Policy document link tile on the acceptance screen
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get legalAcceptancePrivacyPolicy;
+
+  /// Button to return from the decline explanation screen to review and accept the terms
+  ///
+  /// In en, this message translates to:
+  /// **'Review Terms'**
+  String get legalAcceptanceReviewButton;
+
+  /// Subtitle on first launch prompting the user to review the legal documents before proceeding
+  ///
+  /// In en, this message translates to:
+  /// **'Before you get started, please review our Terms of Service and Privacy Policy.'**
+  String get legalAcceptanceSubtitleInitial;
+
+  /// Subtitle explaining that the terms have been updated and re-acceptance is required to continue using the app
+  ///
+  /// In en, this message translates to:
+  /// **'We have updated our Terms of Service. Please review and accept the changes to continue using Socialmesh.'**
+  String get legalAcceptanceSubtitleUpdate;
+
+  /// Subtitle showing the effective date of the Terms of Service document
+  ///
+  /// In en, this message translates to:
+  /// **'Effective {date}'**
+  String legalAcceptanceTermsEffective(String date);
+
+  /// Title text for the Terms of Service document link tile on the acceptance screen
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Service'**
+  String get legalAcceptanceTermsOfService;
+
+  /// Screen title shown on first launch when the user has never accepted the terms
+  ///
+  /// In en, this message translates to:
+  /// **'Terms & Privacy'**
+  String get legalAcceptanceTitleInitial;
+
+  /// Screen title shown when the terms or privacy policy version has been bumped and the user must re-accept
+  ///
+  /// In en, this message translates to:
+  /// **'Updated Terms'**
+  String get legalAcceptanceTitleUpdate;
+
+  /// Body text explaining the age requirement and that confirmation is needed to proceed
+  ///
+  /// In en, this message translates to:
+  /// **'Socialmesh is intended for people aged 16 or older. You must confirm you are 16+ to continue.'**
+  String get legalEligibilityBody;
+
+  /// Primary action button confirming the user meets the minimum age requirement to use the app
+  ///
+  /// In en, this message translates to:
+  /// **'I Am 16 or Older'**
+  String get legalEligibilityConfirmButton;
+
+  /// Explanation shown on iOS when user taps Exit, since iOS cannot force-quit; informs them they can return and confirm later
+  ///
+  /// In en, this message translates to:
+  /// **'You must confirm you are 16 or older to use Socialmesh. You can confirm whenever you are ready.'**
+  String get legalEligibilityExitBody;
+
+  /// Secondary button to exit the app if the user does not meet the age requirement
+  ///
+  /// In en, this message translates to:
+  /// **'Exit'**
+  String get legalEligibilityExitButton;
+
+  /// Title shown on the iOS exit explanation screen when user taps Exit
+  ///
+  /// In en, this message translates to:
+  /// **'Age Confirmation Required'**
+  String get legalEligibilityExitTitle;
+
+  /// Button to return from the exit explanation screen to the age confirmation screen
+  ///
+  /// In en, this message translates to:
+  /// **'Go Back'**
+  String get legalEligibilityGoBackButton;
+
+  /// Tappable link text to view the Privacy Policy from the eligibility gate
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy'**
+  String get legalEligibilityPrivacyLink;
+
+  /// Tappable link text to view the Terms of Service from the eligibility gate
+  ///
+  /// In en, this message translates to:
+  /// **'Terms'**
+  String get legalEligibilityTermsLink;
+
+  /// Title on the age eligibility gate screen indicating the minimum age requirement
+  ///
+  /// In en, this message translates to:
+  /// **'Ages 16+'**
+  String get legalEligibilityTitle;
+
   /// No description provided for @lilygoModelPriceUnavailable.
   ///
   /// In en, this message translates to:
@@ -9337,6 +12281,744 @@ abstract class AppLocalizations {
   /// **'YOU'**
   String get mapYouBadge;
 
+  /// Menu item to start auto-rotation
+  ///
+  /// In en, this message translates to:
+  /// **'Auto Rotate'**
+  String get mesh3dAutoRotate;
+
+  /// Tooltip for view selector button
+  ///
+  /// In en, this message translates to:
+  /// **'Change View'**
+  String get mesh3dChangeViewTooltip;
+
+  /// Activity view mode description
+  ///
+  /// In en, this message translates to:
+  /// **'Node activity sorted by recency'**
+  String get mesh3dDescActivity;
+
+  /// Signal bars view mode description
+  ///
+  /// In en, this message translates to:
+  /// **'RSSI and SNR bars per node'**
+  String get mesh3dDescSignalBars;
+
+  /// Terrain view mode description
+  ///
+  /// In en, this message translates to:
+  /// **'GPS nodes on interpolated terrain'**
+  String get mesh3dDescTerrain;
+
+  /// Topology view mode description
+  ///
+  /// In en, this message translates to:
+  /// **'Star layout from your node — signal quality as distance'**
+  String get mesh3dDescTopology;
+
+  /// Node filter label: active only
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get mesh3dFilterActive;
+
+  /// Node filter label: all
+  ///
+  /// In en, this message translates to:
+  /// **'All Nodes'**
+  String get mesh3dFilterAllNodes;
+
+  /// Node filter label: GPS nodes only
+  ///
+  /// In en, this message translates to:
+  /// **'GPS Only'**
+  String get mesh3dFilterGpsOnly;
+
+  /// Node filter label: active + fading
+  ///
+  /// In en, this message translates to:
+  /// **'Recent'**
+  String get mesh3dFilterRecent;
+
+  /// Node count badge when filter is active
+  ///
+  /// In en, this message translates to:
+  /// **'{filtered}/{total} nodes'**
+  String mesh3dFilteredNodeCount(int filtered, int total);
+
+  /// Menu item for help
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get mesh3dHelp;
+
+  /// Menu item to hide connection lines
+  ///
+  /// In en, this message translates to:
+  /// **'Hide Connections'**
+  String get mesh3dHideConnections;
+
+  /// Terrain legend: active node
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get mesh3dLegendActive;
+
+  /// Activity legend: active
+  ///
+  /// In en, this message translates to:
+  /// **'Active now'**
+  String get mesh3dLegendActiveNow;
+
+  /// Topology legend: active peer node
+  ///
+  /// In en, this message translates to:
+  /// **'Active peer'**
+  String get mesh3dLegendActivePeer;
+
+  /// Terrain legend: fading node
+  ///
+  /// In en, this message translates to:
+  /// **'Fading'**
+  String get mesh3dLegendFading;
+
+  /// Topology legend: fading peer node
+  ///
+  /// In en, this message translates to:
+  /// **'Fading peer'**
+  String get mesh3dLegendFadingPeer;
+
+  /// Signal strength legend: fair
+  ///
+  /// In en, this message translates to:
+  /// **'Fair signal'**
+  String get mesh3dLegendFairSignal;
+
+  /// Signal strength legend: good
+  ///
+  /// In en, this message translates to:
+  /// **'Good signal'**
+  String get mesh3dLegendGoodSignal;
+
+  /// Terrain legend: high altitude
+  ///
+  /// In en, this message translates to:
+  /// **'High altitude'**
+  String get mesh3dLegendHighAltitude;
+
+  /// Terrain legend: low altitude
+  ///
+  /// In en, this message translates to:
+  /// **'Low altitude'**
+  String get mesh3dLegendLowAltitude;
+
+  /// Topology/terrain legend: offline node
+  ///
+  /// In en, this message translates to:
+  /// **'Offline'**
+  String get mesh3dLegendOffline;
+
+  /// Signal strength legend: poor
+  ///
+  /// In en, this message translates to:
+  /// **'Poor signal'**
+  String get mesh3dLegendPoorSignal;
+
+  /// Signal strength legend: SNR bar
+  ///
+  /// In en, this message translates to:
+  /// **'SNR bar'**
+  String get mesh3dLegendSnrBar;
+
+  /// Activity legend: stale or idle
+  ///
+  /// In en, this message translates to:
+  /// **'Stale / idle'**
+  String get mesh3dLegendStaleIdle;
+
+  /// Topology/terrain legend: user's own node
+  ///
+  /// In en, this message translates to:
+  /// **'Your node'**
+  String get mesh3dLegendYourNode;
+
+  /// Badge label for user's own node
+  ///
+  /// In en, this message translates to:
+  /// **'ME'**
+  String get mesh3dMyNodeBadge;
+
+  /// Node count badge showing total
+  ///
+  /// In en, this message translates to:
+  /// **'{count} nodes'**
+  String mesh3dNodeCount(int count);
+
+  /// Node panel drawer title
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes'**
+  String get mesh3dNodesDrawerTitle;
+
+  /// Menu item to show connection lines
+  ///
+  /// In en, this message translates to:
+  /// **'Show Connections'**
+  String get mesh3dShowConnections;
+
+  /// Stats card label: active node count
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get mesh3dStatActive;
+
+  /// Stats card label: channel utilization
+  ///
+  /// In en, this message translates to:
+  /// **'Ch Util'**
+  String get mesh3dStatChUtil;
+
+  /// Stats card label: GPS node count
+  ///
+  /// In en, this message translates to:
+  /// **'GPS'**
+  String get mesh3dStatGps;
+
+  /// Stats card label: average SNR
+  ///
+  /// In en, this message translates to:
+  /// **'SNR'**
+  String get mesh3dStatSnr;
+
+  /// Stats card label: total node count
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get mesh3dStatTotal;
+
+  /// Menu item to stop auto-rotation
+  ///
+  /// In en, this message translates to:
+  /// **'Stop Rotation'**
+  String get mesh3dStopRotation;
+
+  /// View mode label: activity
+  ///
+  /// In en, this message translates to:
+  /// **'Activity'**
+  String get mesh3dViewActivity;
+
+  /// View mode selector bottom sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'View Mode'**
+  String get mesh3dViewModeTitle;
+
+  /// View mode label: signal strength
+  ///
+  /// In en, this message translates to:
+  /// **'Signal Bars'**
+  String get mesh3dViewSignalBars;
+
+  /// View mode label: terrain
+  ///
+  /// In en, this message translates to:
+  /// **'Terrain'**
+  String get mesh3dViewTerrain;
+
+  /// View mode label: topology
+  ///
+  /// In en, this message translates to:
+  /// **'Topology'**
+  String get mesh3dViewTopology;
+
+  /// Status subtitle showing active nodes and packet count
+  ///
+  /// In en, this message translates to:
+  /// **'{activeNodeCount} active nodes • {totalPackets} packets'**
+  String meshHealthActiveNodesPackets(int activeNodeCount, int totalPackets);
+
+  /// Battery reminder banner subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh Health monitoring uses extra battery. Pause when not needed.'**
+  String get meshHealthBatteryUsageSubtitle;
+
+  /// Battery reminder banner title
+  ///
+  /// In en, this message translates to:
+  /// **'Battery usage'**
+  String get meshHealthBatteryUsageTitle;
+
+  /// Utilization chart section header
+  ///
+  /// In en, this message translates to:
+  /// **'Channel Utilization'**
+  String get meshHealthChannelUtilization;
+
+  /// Status header when critical issues found
+  ///
+  /// In en, this message translates to:
+  /// **'Critical Issues Detected'**
+  String get meshHealthCriticalIssues;
+
+  /// Issues section header
+  ///
+  /// In en, this message translates to:
+  /// **'Detected Issues'**
+  String get meshHealthDetectedIssues;
+
+  /// Dismiss battery reminder permanently
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t remind me again'**
+  String get meshHealthDontRemindAgain;
+
+  /// Badge for hop-flooding nodes
+  ///
+  /// In en, this message translates to:
+  /// **'FLOOD'**
+  String get meshHealthFloodBadge;
+
+  /// Status header when mesh is healthy
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh Healthy'**
+  String get meshHealthHealthy;
+
+  /// Compact health indicator label when inactive
+  ///
+  /// In en, this message translates to:
+  /// **'Health'**
+  String get meshHealthIndicatorLabel;
+
+  /// Issue count badge label
+  ///
+  /// In en, this message translates to:
+  /// **'{count} issues'**
+  String meshHealthIssueCount(int count);
+
+  /// Status header when non-critical issues found
+  ///
+  /// In en, this message translates to:
+  /// **'Issues Detected'**
+  String get meshHealthIssuesDetected;
+
+  /// Button to keep monitoring and navigate back
+  ///
+  /// In en, this message translates to:
+  /// **'Keep Running'**
+  String get meshHealthKeepRunning;
+
+  /// Battery reminder dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Monitoring is still active'**
+  String get meshHealthMonitoringActiveTitle;
+
+  /// Battery reminder dialog body
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh Health monitoring uses extra battery while running in the background.'**
+  String get meshHealthMonitoringBatteryWarning;
+
+  /// Status header when monitoring is paused
+  ///
+  /// In en, this message translates to:
+  /// **'Monitoring Paused'**
+  String get meshHealthMonitoringPaused;
+
+  /// Empty state for utilization chart
+  ///
+  /// In en, this message translates to:
+  /// **'No data yet'**
+  String get meshHealthNoDataYet;
+
+  /// Empty state for issues section
+  ///
+  /// In en, this message translates to:
+  /// **'No issues detected'**
+  String get meshHealthNoIssuesDetected;
+
+  /// Empty state for contributors section
+  ///
+  /// In en, this message translates to:
+  /// **'No nodes detected'**
+  String get meshHealthNoNodesDetected;
+
+  /// Issue card node identifier prefix
+  ///
+  /// In en, this message translates to:
+  /// **'Node: {nodeId}'**
+  String meshHealthNodePrefix(String nodeId);
+
+  /// Utilization subtitle when channel is normal
+  ///
+  /// In en, this message translates to:
+  /// **'Normal'**
+  String get meshHealthNormal;
+
+  /// Label below contribution percentage
+  ///
+  /// In en, this message translates to:
+  /// **'of airtime'**
+  String get meshHealthOfAirtime;
+
+  /// Contributor row showing packet count and airtime
+  ///
+  /// In en, this message translates to:
+  /// **'{packetCount} packets • {airtimeMs}ms airtime'**
+  String meshHealthPacketsAirtime(int packetCount, int airtimeMs);
+
+  /// Button to pause monitoring and navigate back
+  ///
+  /// In en, this message translates to:
+  /// **'Pause & Leave'**
+  String get meshHealthPauseAndLeave;
+
+  /// Tooltip for pause monitoring button
+  ///
+  /// In en, this message translates to:
+  /// **'Pause'**
+  String get meshHealthPauseTooltip;
+
+  /// Metric card title for reliability
+  ///
+  /// In en, this message translates to:
+  /// **'Reliability'**
+  String get meshHealthReliability;
+
+  /// Reliability label when between 50-80%
+  ///
+  /// In en, this message translates to:
+  /// **'Fair'**
+  String get meshHealthReliabilityFair;
+
+  /// Reliability label when above 80%
+  ///
+  /// In en, this message translates to:
+  /// **'Good'**
+  String get meshHealthReliabilityGood;
+
+  /// Reliability label when below 50%
+  ///
+  /// In en, this message translates to:
+  /// **'Poor'**
+  String get meshHealthReliabilityPoor;
+
+  /// Tooltip for reset data button
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Data'**
+  String get meshHealthResetDataTooltip;
+
+  /// Tooltip for resume monitoring button
+  ///
+  /// In en, this message translates to:
+  /// **'Resume'**
+  String get meshHealthResumeTooltip;
+
+  /// Utilization subtitle when channel is saturated
+  ///
+  /// In en, this message translates to:
+  /// **'SATURATED'**
+  String get meshHealthSaturated;
+
+  /// Badge for spamming nodes
+  ///
+  /// In en, this message translates to:
+  /// **'SPAM'**
+  String get meshHealthSpamBadge;
+
+  /// Utilization chart threshold label
+  ///
+  /// In en, this message translates to:
+  /// **'50% threshold'**
+  String get meshHealthThresholdLabel;
+
+  /// Screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh Health'**
+  String get meshHealthTitle;
+
+  /// Contributors section header
+  ///
+  /// In en, this message translates to:
+  /// **'Top Contributors'**
+  String get meshHealthTopContributors;
+
+  /// Metric card title for channel utilization
+  ///
+  /// In en, this message translates to:
+  /// **'Utilization'**
+  String get meshHealthUtilization;
+
+  /// About section title
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get meshcoreAbout;
+
+  /// About dialog description text
+  ///
+  /// In en, this message translates to:
+  /// **'SocialMesh is a mesh radio companion app supporting Meshtastic and MeshCore devices.'**
+  String get meshcoreAboutDescription;
+
+  /// About dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'About SocialMesh'**
+  String get meshcoreAboutSocialMesh;
+
+  /// Actions card header
+  ///
+  /// In en, this message translates to:
+  /// **'Actions'**
+  String get meshcoreActions;
+
+  /// Info row label for capture active status
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get meshcoreActiveLabel;
+
+  /// Button label to add a contact from code
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get meshcoreAdd;
+
+  /// Overflow menu item to add a contact
+  ///
+  /// In en, this message translates to:
+  /// **'Add Contact'**
+  String get meshcoreAddContact;
+
+  /// Button label to add a contact
+  ///
+  /// In en, this message translates to:
+  /// **'Add Contact'**
+  String get meshcoreAddContactButton;
+
+  /// Bottom sheet title for adding a contact
+  ///
+  /// In en, this message translates to:
+  /// **'Add Contact'**
+  String get meshcoreAddContactSheetTitle;
+
+  /// Success snackbar after sending advertisement
+  ///
+  /// In en, this message translates to:
+  /// **'Advertisement sent'**
+  String get meshcoreAdvertisementSent;
+
+  /// Success snackbar after sending advertisement in tools
+  ///
+  /// In en, this message translates to:
+  /// **'Advertisement sent'**
+  String get meshcoreAdvertisementSentTools;
+
+  /// Section header for analysis tools
+  ///
+  /// In en, this message translates to:
+  /// **'Analysis'**
+  String get meshcoreAnalysis;
+
+  /// Info row label for bandwidth
+  ///
+  /// In en, this message translates to:
+  /// **'Bandwidth'**
+  String get meshcoreBandwidthLabel;
+
+  /// Info text explaining battery percentage calculation
+  ///
+  /// In en, this message translates to:
+  /// **'Based on LiPo voltage range (3.0V - 4.2V)'**
+  String get meshcoreBasedOnLiPoVoltage;
+
+  /// Tool card title for battery and storage
+  ///
+  /// In en, this message translates to:
+  /// **'Battery & Storage'**
+  String get meshcoreBatteryAndStorage;
+
+  /// Error snackbar when battery info is unavailable
+  ///
+  /// In en, this message translates to:
+  /// **'Battery info not available'**
+  String get meshcoreBatteryInfoNotAvailable;
+
+  /// Info row label for battery
+  ///
+  /// In en, this message translates to:
+  /// **'Battery'**
+  String get meshcoreBatteryLabel;
+
+  /// Sheet title for battery status
+  ///
+  /// In en, this message translates to:
+  /// **'Battery Status'**
+  String get meshcoreBatteryStatus;
+
+  /// Status item label for battery in device status card
+  ///
+  /// In en, this message translates to:
+  /// **'Battery'**
+  String get meshcoreBatteryStatusLabel;
+
+  /// Battery status when unavailable
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get meshcoreBatteryUnknown;
+
+  /// Tool card subtitle for sending advertisement
+  ///
+  /// In en, this message translates to:
+  /// **'Broadcast your presence to the mesh'**
+  String get meshcoreBroadcastPresenceToMesh;
+
+  /// Settings tile subtitle for sending advertisement
+  ///
+  /// In en, this message translates to:
+  /// **'Broadcast your presence'**
+  String get meshcoreBroadcastYourPresence;
+
+  /// Cancel button label
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get meshcoreCancel;
+
+  /// Cancel button label in settings dialogs
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get meshcoreCancelButton;
+
+  /// Button label to center map on a contact
+  ///
+  /// In en, this message translates to:
+  /// **'Center'**
+  String get meshcoreCenter;
+
+  /// Info snackbar when scanned channel already exists
+  ///
+  /// In en, this message translates to:
+  /// **'{channelName} is already in your channels'**
+  String meshcoreChannelAlreadyExists(String channelName);
+
+  /// Success snackbar after copying channel code
+  ///
+  /// In en, this message translates to:
+  /// **'Channel code copied'**
+  String get meshcoreChannelCodeCopied;
+
+  /// Success snackbar after creating a channel
+  ///
+  /// In en, this message translates to:
+  /// **'Channel \"{channelName}\" created'**
+  String meshcoreChannelCreated(String channelName);
+
+  /// Hint text for private channel name input
+  ///
+  /// In en, this message translates to:
+  /// **'Channel name'**
+  String get meshcoreChannelNameHint;
+
+  /// Hint text for hashtag channel name input in join dialog
+  ///
+  /// In en, this message translates to:
+  /// **'general'**
+  String get meshcoreChannelNameHintGeneral;
+
+  /// Hint text for hashtag channel name input
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. general'**
+  String get meshcoreChannelNameHintHashtag;
+
+  /// Text field label for channel name input
+  ///
+  /// In en, this message translates to:
+  /// **'Channel Name'**
+  String get meshcoreChannelNameLabel;
+
+  /// Success snackbar after copying channel PSK
+  ///
+  /// In en, this message translates to:
+  /// **'Channel PSK copied'**
+  String get meshcoreChannelPskCopied;
+
+  /// Overflow menu item to create a channel
+  ///
+  /// In en, this message translates to:
+  /// **'Create Channel'**
+  String get meshcoreChannelsCreateChannel;
+
+  /// Overflow menu item to join a channel
+  ///
+  /// In en, this message translates to:
+  /// **'Join Channel'**
+  String get meshcoreChannelsJoinChannel;
+
+  /// Info row label for channels count
+  ///
+  /// In en, this message translates to:
+  /// **'Channels'**
+  String get meshcoreChannelsLabel;
+
+  /// Overflow menu item to refresh channels
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh Channels'**
+  String get meshcoreChannelsRefreshChannels;
+
+  /// Channels screen title (with optional count suffix)
+  ///
+  /// In en, this message translates to:
+  /// **'Channels'**
+  String get meshcoreChannelsTitle;
+
+  /// Device type label for chat nodes
+  ///
+  /// In en, this message translates to:
+  /// **'Chat Node'**
+  String get meshcoreChatNode;
+
+  /// Button label to clear protocol capture
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get meshcoreClear;
+
+  /// Close button label
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get meshcoreClose;
+
+  /// Info row label for coding rate
+  ///
+  /// In en, this message translates to:
+  /// **'Coding Rate'**
+  String get meshcoreCodingRateLabel;
+
+  /// Status value when connected
+  ///
+  /// In en, this message translates to:
+  /// **'Connected'**
+  String get meshcoreConnected;
+
+  /// Status indicator showing connected device name
+  ///
+  /// In en, this message translates to:
+  /// **'Connected to {deviceName}'**
+  String meshcoreConnectedTo(String deviceName);
+
   /// No description provided for @meshcoreConsoleCaptureCleared.
   ///
   /// In en, this message translates to:
@@ -9390,6 +13072,1230 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'MeshCore Console'**
   String get meshcoreConsoleTitle;
+
+  /// Success snackbar after adding a contact
+  ///
+  /// In en, this message translates to:
+  /// **'{contactName} added'**
+  String meshcoreContactAdded(String contactName);
+
+  /// Success snackbar after adding contact via QR
+  ///
+  /// In en, this message translates to:
+  /// **'{contactName} added to contacts'**
+  String meshcoreContactAddedToContacts(String contactName);
+
+  /// Info snackbar when scanned contact already exists
+  ///
+  /// In en, this message translates to:
+  /// **'{contactName} is already in your contacts'**
+  String meshcoreContactAlreadyExists(String contactName);
+
+  /// Success snackbar after copying contact code
+  ///
+  /// In en, this message translates to:
+  /// **'Contact code copied'**
+  String get meshcoreContactCodeCopied;
+
+  /// Legend contact count (singular)
+  ///
+  /// In en, this message translates to:
+  /// **'{count} contact'**
+  String meshcoreContactCount(int count);
+
+  /// Legend contact count (plural)
+  ///
+  /// In en, this message translates to:
+  /// **'{count} contacts'**
+  String meshcoreContactCountPlural(int count);
+
+  /// Success snackbar after removing a contact
+  ///
+  /// In en, this message translates to:
+  /// **'{contactName} removed'**
+  String meshcoreContactRemoved(String contactName);
+
+  /// Info row label for contacts count
+  ///
+  /// In en, this message translates to:
+  /// **'Contacts'**
+  String get meshcoreContactsLabel;
+
+  /// Contacts screen title (with optional count suffix)
+  ///
+  /// In en, this message translates to:
+  /// **'Contacts'**
+  String get meshcoreContactsTitle;
+
+  /// Settings tile subtitle for privacy mode
+  ///
+  /// In en, this message translates to:
+  /// **'Control advertisement visibility'**
+  String get meshcoreControlAdvertVisibility;
+
+  /// Success snackbar after copying coordinates
+  ///
+  /// In en, this message translates to:
+  /// **'Coordinates copied to clipboard'**
+  String get meshcoreCoordinatesCopied;
+
+  /// Button label to copy device info
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get meshcoreCopy;
+
+  /// Button label to copy channel code
+  ///
+  /// In en, this message translates to:
+  /// **'Copy Channel Code'**
+  String get meshcoreCopyChannelCode;
+
+  /// Action label to copy coordinates
+  ///
+  /// In en, this message translates to:
+  /// **'Copy Coordinates'**
+  String get meshcoreCopyCoordinates;
+
+  /// Subtitle for copy coordinates action
+  ///
+  /// In en, this message translates to:
+  /// **'Both A and B coordinates'**
+  String get meshcoreCopyCoordinatesSubtitle;
+
+  /// Button label to copy public key
+  ///
+  /// In en, this message translates to:
+  /// **'Copy Public Key'**
+  String get meshcoreCopyPublicKey;
+
+  /// Action label to copy measurement summary
+  ///
+  /// In en, this message translates to:
+  /// **'Copy Summary'**
+  String get meshcoreCopySummary;
+
+  /// Create button label
+  ///
+  /// In en, this message translates to:
+  /// **'Create'**
+  String get meshcoreCreate;
+
+  /// Button label to create a channel
+  ///
+  /// In en, this message translates to:
+  /// **'Create Channel'**
+  String get meshcoreCreateChannelButton;
+
+  /// Dialog title for creating a channel
+  ///
+  /// In en, this message translates to:
+  /// **'Create Channel'**
+  String get meshcoreCreateChannelDialogTitle;
+
+  /// Debug card header
+  ///
+  /// In en, this message translates to:
+  /// **'Debug'**
+  String get meshcoreDebug;
+
+  /// Device info card header
+  ///
+  /// In en, this message translates to:
+  /// **'Device Info'**
+  String get meshcoreDeviceInfo;
+
+  /// Success snackbar after copying device info
+  ///
+  /// In en, this message translates to:
+  /// **'Device info copied'**
+  String get meshcoreDeviceInfoCopied;
+
+  /// Error snackbar when device info is unavailable
+  ///
+  /// In en, this message translates to:
+  /// **'Device info not available'**
+  String get meshcoreDeviceInfoNotAvailable;
+
+  /// Tool card title for device info
+  ///
+  /// In en, this message translates to:
+  /// **'Device Info'**
+  String get meshcoreDeviceInfoTool;
+
+  /// Sheet title for device information
+  ///
+  /// In en, this message translates to:
+  /// **'Device Information'**
+  String get meshcoreDeviceInformation;
+
+  /// Section header for diagnostics tools
+  ///
+  /// In en, this message translates to:
+  /// **'Diagnostics'**
+  String get meshcoreDiagnostics;
+
+  /// Overflow menu item to disconnect from device
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect'**
+  String get meshcoreDisconnect;
+
+  /// Overflow menu item to disconnect
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect'**
+  String get meshcoreDisconnectMenuItem;
+
+  /// Disconnected state description on channels screen
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to a MeshCore device to view channels'**
+  String get meshcoreDisconnectedChannelsDescription;
+
+  /// Disconnected state description on contacts screen
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to a MeshCore device to view contacts'**
+  String get meshcoreDisconnectedContactsDescription;
+
+  /// Disconnected state title on contacts screen
+  ///
+  /// In en, this message translates to:
+  /// **'MeshCore Disconnected'**
+  String get meshcoreDisconnectedContactsTitle;
+
+  /// Disconnected state description on map screen
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to a MeshCore device to view the map'**
+  String get meshcoreDisconnectedMapDescription;
+
+  /// Disconnected state title on map screen
+  ///
+  /// In en, this message translates to:
+  /// **'MeshCore Disconnected'**
+  String get meshcoreDisconnectedMapTitle;
+
+  /// Banner text when device is disconnected in chat
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnected - Messages will queue'**
+  String get meshcoreDisconnectedMessagesWillQueue;
+
+  /// Status value when disconnected
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnected'**
+  String get meshcoreDisconnectedStatus;
+
+  /// Disconnected state title
+  ///
+  /// In en, this message translates to:
+  /// **'MeshCore Disconnected'**
+  String get meshcoreDisconnectedTitle;
+
+  /// Disconnected state description on tools screen
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to a MeshCore device to access tools'**
+  String get meshcoreDisconnectedToolsDescription;
+
+  /// Disconnected state title on tools screen
+  ///
+  /// In en, this message translates to:
+  /// **'MeshCore Disconnected'**
+  String get meshcoreDisconnectedToolsTitle;
+
+  /// Section header for discovery tools
+  ///
+  /// In en, this message translates to:
+  /// **'Discovery'**
+  String get meshcoreDiscovery;
+
+  /// Button label to dismiss filter dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get meshcoreDone;
+
+  /// Dialog title for editing node name
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Node Name'**
+  String get meshcoreEditNodeName;
+
+  /// Join option title for entering channel code
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Channel Code'**
+  String get meshcoreEnterChannelCode;
+
+  /// Join option subtitle for entering channel code
+  ///
+  /// In en, this message translates to:
+  /// **'Paste a channel invite code'**
+  String get meshcoreEnterChannelCodeSubtitle;
+
+  /// Option title for entering contact code manually
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Code Manually'**
+  String get meshcoreEnterCodeManually;
+
+  /// Dialog title for entering contact code
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Contact Code'**
+  String get meshcoreEnterContactCode;
+
+  /// Hint text for node name input field
+  ///
+  /// In en, this message translates to:
+  /// **'Enter node name...'**
+  String get meshcoreEnterNodeNameHint;
+
+  /// Error snackbar when channel code is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a channel code'**
+  String get meshcoreErrorEnterChannelCode;
+
+  /// Error snackbar when channel name is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a channel name'**
+  String get meshcoreErrorEnterChannelName;
+
+  /// Tooltip for exit measure mode button
+  ///
+  /// In en, this message translates to:
+  /// **'Exit measure mode'**
+  String get meshcoreExitMeasureMode;
+
+  /// Error snackbar when reboot fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to reboot device'**
+  String get meshcoreFailedToRebootDevice;
+
+  /// Error snackbar when advertisement fails in tools
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to send advertisement'**
+  String get meshcoreFailedToSendAdTools;
+
+  /// Error snackbar when advertisement send fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to send advertisement'**
+  String get meshcoreFailedToSendAdvertisement;
+
+  /// Error snackbar when message send fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to send message'**
+  String get meshcoreFailedToSendMessage;
+
+  /// Error snackbar when name update fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to set name'**
+  String get meshcoreFailedToSetName;
+
+  /// Error snackbar when time sync fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to sync time'**
+  String get meshcoreFailedToSyncTime;
+
+  /// Filter switch label for chat nodes
+  ///
+  /// In en, this message translates to:
+  /// **'Chat Nodes'**
+  String get meshcoreFilterChatNodes;
+
+  /// Filter dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Filter Map'**
+  String get meshcoreFilterMap;
+
+  /// Filter switch label for other nodes
+  ///
+  /// In en, this message translates to:
+  /// **'Other Nodes'**
+  String get meshcoreFilterOtherNodes;
+
+  /// Filter switch label for repeaters
+  ///
+  /// In en, this message translates to:
+  /// **'Repeaters'**
+  String get meshcoreFilterRepeaters;
+
+  /// Tooltip for filter button on map
+  ///
+  /// In en, this message translates to:
+  /// **'Filter'**
+  String get meshcoreFilterTooltip;
+
+  /// Info row label for frame count
+  ///
+  /// In en, this message translates to:
+  /// **'Frames'**
+  String get meshcoreFramesLabel;
+
+  /// Info row label for radio frequency
+  ///
+  /// In en, this message translates to:
+  /// **'Frequency'**
+  String get meshcoreFrequencyLabel;
+
+  /// Info row label for channel index
+  ///
+  /// In en, this message translates to:
+  /// **'Index'**
+  String get meshcoreIndexLabel;
+
+  /// Error snackbar for invalid channel code format
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid channel code format (expected: name:pskHex)'**
+  String get meshcoreInvalidChannelCodeFormat;
+
+  /// Error snackbar for invalid contact code
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid contact code'**
+  String get meshcoreInvalidContactCode;
+
+  /// Error snackbar for unrecognized QR code
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid QR code format'**
+  String get meshcoreInvalidQrCodeFormat;
+
+  /// Button label to join a channel
+  ///
+  /// In en, this message translates to:
+  /// **'Join'**
+  String get meshcoreJoin;
+
+  /// Button label to join a channel
+  ///
+  /// In en, this message translates to:
+  /// **'Join'**
+  String get meshcoreJoinButton;
+
+  /// Join option title for hashtag channels
+  ///
+  /// In en, this message translates to:
+  /// **'Join Hashtag Channel'**
+  String get meshcoreJoinHashtagChannel;
+
+  /// Join option subtitle for hashtag channels
+  ///
+  /// In en, this message translates to:
+  /// **'Enter channel name (e.g. #general)'**
+  String get meshcoreJoinHashtagChannelSubtitle;
+
+  /// Success snackbar after joining channel via QR
+  ///
+  /// In en, this message translates to:
+  /// **'Joined {channelName}'**
+  String meshcoreJoinedChannel(String channelName);
+
+  /// Success snackbar after joining a hashtag channel
+  ///
+  /// In en, this message translates to:
+  /// **'Joined #{name}'**
+  String meshcoreJoinedHashtagChannel(String name);
+
+  /// Relative time label for recent activity
+  ///
+  /// In en, this message translates to:
+  /// **'Just now'**
+  String get meshcoreJustNow;
+
+  /// Info row label for last seen time
+  ///
+  /// In en, this message translates to:
+  /// **'Last Seen'**
+  String get meshcoreLastSeenLabel;
+
+  /// Confirm button label for leaving a channel
+  ///
+  /// In en, this message translates to:
+  /// **'Leave'**
+  String get meshcoreLeave;
+
+  /// Channel options destructive action label
+  ///
+  /// In en, this message translates to:
+  /// **'Leave Channel'**
+  String get meshcoreLeaveChannel;
+
+  /// Confirm dialog message for leaving a channel
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to leave {channelName}?'**
+  String meshcoreLeaveChannelMessage(String channelName);
+
+  /// Confirm dialog title for leaving a channel
+  ///
+  /// In en, this message translates to:
+  /// **'Leave Channel?'**
+  String get meshcoreLeaveChannelTitle;
+
+  /// Success snackbar after leaving a channel
+  ///
+  /// In en, this message translates to:
+  /// **'Left {channelName}'**
+  String meshcoreLeftChannel(String channelName);
+
+  /// Map legend label for chat nodes
+  ///
+  /// In en, this message translates to:
+  /// **'Chat'**
+  String get meshcoreLegendChat;
+
+  /// Map legend label for repeater nodes
+  ///
+  /// In en, this message translates to:
+  /// **'Repeater'**
+  String get meshcoreLegendRepeater;
+
+  /// Map legend label for room nodes
+  ///
+  /// In en, this message translates to:
+  /// **'Room'**
+  String get meshcoreLegendRoom;
+
+  /// Map legend label for sensor nodes
+  ///
+  /// In en, this message translates to:
+  /// **'Sensor'**
+  String get meshcoreLegendSensor;
+
+  /// Loading state text while channels load
+  ///
+  /// In en, this message translates to:
+  /// **'Loading channels...'**
+  String get meshcoreLoadingChannels;
+
+  /// Loading state text while contacts load
+  ///
+  /// In en, this message translates to:
+  /// **'Loading contacts...'**
+  String get meshcoreLoadingContacts;
+
+  /// Loading state text while messages load
+  ///
+  /// In en, this message translates to:
+  /// **'Loading messages...'**
+  String get meshcoreLoadingMessages;
+
+  /// Placeholder text for unimplemented location settings
+  ///
+  /// In en, this message translates to:
+  /// **'Location settings coming soon.\n\nThis will allow you to manually set your node position or use GPS.'**
+  String get meshcoreLocationComingSoon;
+
+  /// Info row label for location on map contact sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get meshcoreLocationInfoLabel;
+
+  /// Detail row label for contact location
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get meshcoreLocationLabel;
+
+  /// Settings tile title for location
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get meshcoreLocationSetting;
+
+  /// Hint text on measurement card
+  ///
+  /// In en, this message translates to:
+  /// **'Long-press for actions'**
+  String get meshcoreLongPressForActions;
+
+  /// Map screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Map'**
+  String get meshcoreMapTitle;
+
+  /// Info row label for max TX power
+  ///
+  /// In en, this message translates to:
+  /// **'Max TX Power'**
+  String get meshcoreMaxTxPowerLabel;
+
+  /// Actions sheet header for measurement
+  ///
+  /// In en, this message translates to:
+  /// **'Measurement Actions'**
+  String get meshcoreMeasurementActions;
+
+  /// Success snackbar after copying measurement
+  ///
+  /// In en, this message translates to:
+  /// **'Measurement copied to clipboard'**
+  String get meshcoreMeasurementCopied;
+
+  /// Default device type label
+  ///
+  /// In en, this message translates to:
+  /// **'MeshCore Device'**
+  String get meshcoreMeshCoreDevice;
+
+  /// Button label to send a message to a contact
+  ///
+  /// In en, this message translates to:
+  /// **'Message'**
+  String get meshcoreMessage;
+
+  /// Button label to message a contact from map
+  ///
+  /// In en, this message translates to:
+  /// **'Message'**
+  String get meshcoreMessageButton;
+
+  /// Tool card subtitle for battery and storage
+  ///
+  /// In en, this message translates to:
+  /// **'Monitor power and storage status'**
+  String get meshcoreMonitorPowerStorage;
+
+  /// Overflow menu item to show own contact code
+  ///
+  /// In en, this message translates to:
+  /// **'My Contact Code'**
+  String get meshcoreMyContactCode;
+
+  /// Info row label for device name
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get meshcoreNameLabel;
+
+  /// Tooltip for new measurement button
+  ///
+  /// In en, this message translates to:
+  /// **'New measurement'**
+  String get meshcoreNewMeasurement;
+
+  /// Boolean value label for no
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get meshcoreNo;
+
+  /// Empty state title when no channels exist
+  ///
+  /// In en, this message translates to:
+  /// **'No Channels'**
+  String get meshcoreNoChannels;
+
+  /// Empty state description when no channels exist
+  ///
+  /// In en, this message translates to:
+  /// **'Channels are shared spaces for group communication.\n\nCreate a new channel or join an existing one.'**
+  String get meshcoreNoChannelsDescription;
+
+  /// Empty state title when no contacts exist
+  ///
+  /// In en, this message translates to:
+  /// **'No Contacts'**
+  String get meshcoreNoContacts;
+
+  /// Empty state description when no contacts exist
+  ///
+  /// In en, this message translates to:
+  /// **'Contacts will appear here when discovered via advertisements.\n\nYou can also add contacts manually using their contact code.'**
+  String get meshcoreNoContactsDescription;
+
+  /// Info snackbar when no contacts exist for trace
+  ///
+  /// In en, this message translates to:
+  /// **'No contacts available for trace'**
+  String get meshcoreNoContactsForTrace;
+
+  /// Empty state title when no contacts have location
+  ///
+  /// In en, this message translates to:
+  /// **'No Contacts with Location'**
+  String get meshcoreNoContactsWithLocation;
+
+  /// Empty state description when no contacts have location
+  ///
+  /// In en, this message translates to:
+  /// **'Contacts with GPS coordinates will appear on the map.\nMake sure your contacts have location sharing enabled.'**
+  String get meshcoreNoContactsWithLocationDescription;
+
+  /// Empty state title when no messages exist
+  ///
+  /// In en, this message translates to:
+  /// **'No messages yet'**
+  String get meshcoreNoMessagesYet;
+
+  /// Info row label for node name
+  ///
+  /// In en, this message translates to:
+  /// **'Node Name'**
+  String get meshcoreNodeNameLabel;
+
+  /// Settings tile title for node name
+  ///
+  /// In en, this message translates to:
+  /// **'Node Name'**
+  String get meshcoreNodeNameSetting;
+
+  /// Success snackbar after updating node name
+  ///
+  /// In en, this message translates to:
+  /// **'Node name updated'**
+  String get meshcoreNodeNameUpdated;
+
+  /// Node settings card header
+  ///
+  /// In en, this message translates to:
+  /// **'Node Settings'**
+  String get meshcoreNodeSettings;
+
+  /// Error snackbar when device is not connected
+  ///
+  /// In en, this message translates to:
+  /// **'Not connected'**
+  String get meshcoreNotConnected;
+
+  /// Error snackbar when device is not connected
+  ///
+  /// In en, this message translates to:
+  /// **'Not connected to MeshCore device'**
+  String get meshcoreNotConnectedToDevice;
+
+  /// Error snackbar when not connected in tools screen
+  ///
+  /// In en, this message translates to:
+  /// **'Not connected'**
+  String get meshcoreNotConnectedTools;
+
+  /// Subtitle fallback when node name is not set
+  ///
+  /// In en, this message translates to:
+  /// **'Not set'**
+  String get meshcoreNotSet;
+
+  /// Error snackbar for invalid channel QR code
+  ///
+  /// In en, this message translates to:
+  /// **'Not a valid MeshCore channel QR code'**
+  String get meshcoreNotValidChannelQr;
+
+  /// Error snackbar for invalid contact QR code
+  ///
+  /// In en, this message translates to:
+  /// **'Not a valid MeshCore contact QR code'**
+  String get meshcoreNotValidContactQr;
+
+  /// Placeholder value for unimplemented features
+  ///
+  /// In en, this message translates to:
+  /// **'Not yet implemented'**
+  String get meshcoreNotYetImplemented;
+
+  /// Channel options action label
+  ///
+  /// In en, this message translates to:
+  /// **'Open Channel'**
+  String get meshcoreOpenChannel;
+
+  /// Subtitle for open midpoint action
+  ///
+  /// In en, this message translates to:
+  /// **'Open in external map app'**
+  String get meshcoreOpenInExternalMapApp;
+
+  /// Action label to open midpoint in maps app
+  ///
+  /// In en, this message translates to:
+  /// **'Open Midpoint in Maps'**
+  String get meshcoreOpenMidpointInMaps;
+
+  /// Hint text for channel code input field
+  ///
+  /// In en, this message translates to:
+  /// **'Paste channel code here...'**
+  String get meshcorePasteChannelCodeHint;
+
+  /// Hint text for contact code input field
+  ///
+  /// In en, this message translates to:
+  /// **'Paste contact code here...'**
+  String get meshcorePasteContactCodeHint;
+
+  /// Info row label for path on map contact sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Path'**
+  String get meshcorePathInfoLabel;
+
+  /// Info row label for path
+  ///
+  /// In en, this message translates to:
+  /// **'Path'**
+  String get meshcorePathLabel;
+
+  /// Instruction text for channel QR scanning
+  ///
+  /// In en, this message translates to:
+  /// **'Point your camera at a MeshCore channel QR code'**
+  String get meshcorePointCameraAtChannelQr;
+
+  /// Instruction text for contact QR scanning
+  ///
+  /// In en, this message translates to:
+  /// **'Point your camera at a MeshCore contact QR code'**
+  String get meshcorePointCameraAtContactQr;
+
+  /// Placeholder text for unimplemented privacy settings
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy settings coming soon.\n\nThis will control whether your node broadcasts advertisements.'**
+  String get meshcorePrivacyComingSoon;
+
+  /// Settings tile title for privacy mode
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Mode'**
+  String get meshcorePrivacyMode;
+
+  /// Dialog title for privacy mode settings
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Mode'**
+  String get meshcorePrivacyModeDialogTitle;
+
+  /// Channel card type label for private channel
+  ///
+  /// In en, this message translates to:
+  /// **'Private'**
+  String get meshcorePrivate;
+
+  /// Channel type label for private channels
+  ///
+  /// In en, this message translates to:
+  /// **'Private Channel'**
+  String get meshcorePrivateChannel;
+
+  /// Channel info type label for private channel
+  ///
+  /// In en, this message translates to:
+  /// **'Private Channel'**
+  String get meshcorePrivateChannelLabel;
+
+  /// Settings tile title for protocol capture
+  ///
+  /// In en, this message translates to:
+  /// **'Protocol Capture'**
+  String get meshcoreProtocolCapture;
+
+  /// Dialog title for protocol capture
+  ///
+  /// In en, this message translates to:
+  /// **'Protocol Capture'**
+  String get meshcoreProtocolCaptureDialogTitle;
+
+  /// Subtitle for public hashtag channel toggle
+  ///
+  /// In en, this message translates to:
+  /// **'PSK derived from name (discoverable)'**
+  String get meshcorePskDerivedFromName;
+
+  /// Channel card type label for public channel
+  ///
+  /// In en, this message translates to:
+  /// **'Public'**
+  String get meshcorePublic;
+
+  /// Channel type label for public channels
+  ///
+  /// In en, this message translates to:
+  /// **'Public Channel'**
+  String get meshcorePublicChannel;
+
+  /// Channel info type label for public channel
+  ///
+  /// In en, this message translates to:
+  /// **'Public Channel'**
+  String get meshcorePublicChannelLabel;
+
+  /// Toggle label for public hashtag channel option
+  ///
+  /// In en, this message translates to:
+  /// **'Public Hashtag Channel'**
+  String get meshcorePublicHashtagChannel;
+
+  /// Success snackbar after copying public key
+  ///
+  /// In en, this message translates to:
+  /// **'Public key copied'**
+  String get meshcorePublicKeyCopied;
+
+  /// Success snackbar after copying public key in settings
+  ///
+  /// In en, this message translates to:
+  /// **'Public key copied'**
+  String get meshcorePublicKeyCopiedSettings;
+
+  /// Info row label for public key on map contact sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Public Key'**
+  String get meshcorePublicKeyInfoLabel;
+
+  /// Info row label for public key
+  ///
+  /// In en, this message translates to:
+  /// **'Public Key'**
+  String get meshcorePublicKeyLabel;
+
+  /// Info row label for public key in settings
+  ///
+  /// In en, this message translates to:
+  /// **'Public Key'**
+  String get meshcorePublicKeySettingsLabel;
+
+  /// Info text about radio settings source
+  ///
+  /// In en, this message translates to:
+  /// **'Radio settings are configured on the device firmware.'**
+  String get meshcoreRadioConfiguredOnFirmware;
+
+  /// Settings tile title for radio settings
+  ///
+  /// In en, this message translates to:
+  /// **'Radio Settings'**
+  String get meshcoreRadioSettings;
+
+  /// Dialog title for radio settings
+  ///
+  /// In en, this message translates to:
+  /// **'Radio Settings'**
+  String get meshcoreRadioSettingsDialogTitle;
+
+  /// Error snackbar when radio settings are unavailable
+  ///
+  /// In en, this message translates to:
+  /// **'Radio settings not available'**
+  String get meshcoreRadioSettingsNotAvailable;
+
+  /// Settings tile subtitle for radio settings
+  ///
+  /// In en, this message translates to:
+  /// **'Frequency, TX power, bandwidth'**
+  String get meshcoreRadioSettingsSubtitle;
+
+  /// Sheet title for radio settings in tools
+  ///
+  /// In en, this message translates to:
+  /// **'Radio Settings'**
+  String get meshcoreRadioSettingsTitle;
+
+  /// Tool card title for radio settings
+  ///
+  /// In en, this message translates to:
+  /// **'Radio Settings'**
+  String get meshcoreRadioSettingsTool;
+
+  /// Subtitle for private channel toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Random PSK (private)'**
+  String get meshcoreRandomPskPrivate;
+
+  /// Confirm button label for rebooting device
+  ///
+  /// In en, this message translates to:
+  /// **'Reboot'**
+  String get meshcoreReboot;
+
+  /// Success snackbar after sending reboot command
+  ///
+  /// In en, this message translates to:
+  /// **'Reboot command sent'**
+  String get meshcoreRebootCommandSent;
+
+  /// Settings tile title for rebooting device
+  ///
+  /// In en, this message translates to:
+  /// **'Reboot Device'**
+  String get meshcoreRebootDevice;
+
+  /// Confirm dialog message for rebooting device
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to reboot the MeshCore device?'**
+  String get meshcoreRebootDeviceMessage;
+
+  /// Confirm dialog title for rebooting device
+  ///
+  /// In en, this message translates to:
+  /// **'Reboot Device'**
+  String get meshcoreRebootDeviceTitle;
+
+  /// Button label to refresh protocol capture
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get meshcoreRefresh;
+
+  /// Button label to refresh contacts
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get meshcoreRefreshButton;
+
+  /// Overflow menu item to refresh contacts
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh Contacts'**
+  String get meshcoreRefreshContacts;
+
+  /// Settings tile title for refreshing contacts
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh Contacts'**
+  String get meshcoreRefreshContactsSetting;
+
+  /// Loading indicator during refresh
+  ///
+  /// In en, this message translates to:
+  /// **'Refreshing...'**
+  String get meshcoreRefreshing;
+
+  /// Info snackbar while refreshing contacts
+  ///
+  /// In en, this message translates to:
+  /// **'Refreshing contacts...'**
+  String get meshcoreRefreshingContacts;
+
+  /// Settings tile subtitle for refreshing contacts
+  ///
+  /// In en, this message translates to:
+  /// **'Reload contacts from device'**
+  String get meshcoreReloadContactsFromDevice;
+
+  /// Confirm button label for removing a contact
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get meshcoreRemove;
+
+  /// Contact options destructive action label
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Contact'**
+  String get meshcoreRemoveContact;
+
+  /// Confirm dialog message for removing a contact
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to remove {contactName}?'**
+  String meshcoreRemoveContactMessage(String contactName);
+
+  /// Confirm dialog title for removing a contact
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Contact?'**
+  String get meshcoreRemoveContactTitle;
+
+  /// Device type label for repeater nodes
+  ///
+  /// In en, this message translates to:
+  /// **'Repeater Node'**
+  String get meshcoreRepeaterNode;
+
+  /// Settings tile subtitle for rebooting device
+  ///
+  /// In en, this message translates to:
+  /// **'Restart the MeshCore device'**
+  String get meshcoreRestartMeshCoreDevice;
+
+  /// Subtitle for swap A/B action
+  ///
+  /// In en, this message translates to:
+  /// **'Reverse measurement direction'**
+  String get meshcoreReverseMeasurementDirection;
+
+  /// Device type label for room nodes
+  ///
+  /// In en, this message translates to:
+  /// **'Room Node'**
+  String get meshcoreRoomNode;
+
+  /// Save button label
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get meshcoreSave;
+
+  /// Join option subtitle for channel QR scanning
+  ///
+  /// In en, this message translates to:
+  /// **'Scan a channel QR code'**
+  String get meshcoreScanChannelQrSubtitle;
+
+  /// QR scanner screen title for channel mode
+  ///
+  /// In en, this message translates to:
+  /// **'Scan Channel QR'**
+  String get meshcoreScanChannelQrTitle;
+
+  /// Option subtitle for scanning a contact QR code
+  ///
+  /// In en, this message translates to:
+  /// **'Scan a contact\'s QR code'**
+  String get meshcoreScanContactQrSubtitle;
+
+  /// QR scanner screen title for contact mode
+  ///
+  /// In en, this message translates to:
+  /// **'Scan Contact QR'**
+  String get meshcoreScanContactQrTitle;
+
+  /// Join option title for QR scanning
+  ///
+  /// In en, this message translates to:
+  /// **'Scan QR Code'**
+  String get meshcoreScanQrCode;
+
+  /// Option title for scanning a contact QR code
+  ///
+  /// In en, this message translates to:
+  /// **'Scan QR Code'**
+  String get meshcoreScanQrCodeOption;
+
+  /// QR share sheet info text for channel sharing
+  ///
+  /// In en, this message translates to:
+  /// **'Scan this QR code to join the channel'**
+  String get meshcoreScanQrToJoinChannel;
+
+  /// QR share sheet subtitle for own contact code
+  ///
+  /// In en, this message translates to:
+  /// **'Scan this code to add me as a contact'**
+  String get meshcoreScanToAddMeSubtitle;
+
+  /// Hint text for contacts search field
+  ///
+  /// In en, this message translates to:
+  /// **'Search contacts...'**
+  String get meshcoreSearchContactsHint;
+
+  /// Description text in trace path dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Select a contact to trace the route through the mesh.'**
+  String get meshcoreSelectContactToTrace;
+
+  /// Info snackbar when self info is not loaded yet
+  ///
+  /// In en, this message translates to:
+  /// **'Self info not available'**
+  String get meshcoreSelfInfoNotAvailable;
+
+  /// Settings tile title for sending advertisement
+  ///
+  /// In en, this message translates to:
+  /// **'Send Advertisement'**
+  String get meshcoreSendAdvertisement;
+
+  /// Tool card title for sending advertisement
+  ///
+  /// In en, this message translates to:
+  /// **'Send Advertisement'**
+  String get meshcoreSendAdvertisementTool;
+
+  /// Contact options action label
+  ///
+  /// In en, this message translates to:
+  /// **'Send Message'**
+  String get meshcoreSendMessage;
+
+  /// Empty state description for chat
+  ///
+  /// In en, this message translates to:
+  /// **'Send a message to start the conversation'**
+  String get meshcoreSendMessageToStart;
+
+  /// Subtitle while sending advertisement
+  ///
+  /// In en, this message translates to:
+  /// **'Sending...'**
+  String get meshcoreSending;
+
+  /// Error snackbar when session is not active
+  ///
+  /// In en, this message translates to:
+  /// **'MeshCore session not active'**
+  String get meshcoreSessionNotActive;
+
+  /// Dialog title for setting location
+  ///
+  /// In en, this message translates to:
+  /// **'Set Location'**
+  String get meshcoreSetLocation;
+
+  /// Settings tile subtitle for location
+  ///
+  /// In en, this message translates to:
+  /// **'Set node position'**
+  String get meshcoreSetNodePosition;
+
+  /// Settings screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get meshcoreSettingsTitle;
+
+  /// Status item label for spreading factor/coding rate
+  ///
+  /// In en, this message translates to:
+  /// **'SF/CR'**
+  String get meshcoreSfCrLabel;
+
+  /// Button label to share a contact
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get meshcoreShare;
+
+  /// Channel options action label
+  ///
+  /// In en, this message translates to:
+  /// **'Share Channel'**
+  String get meshcoreShareChannel;
+
+  /// Contact options action label
+  ///
+  /// In en, this message translates to:
+  /// **'Share Contact'**
+  String get meshcoreShareContact;
+
+  /// QR share sheet info text for own contact code
+  ///
+  /// In en, this message translates to:
+  /// **'Share your contact code so others can message you'**
+  String get meshcoreShareContactCodeInfo;
 
   /// Info snackbar hint after navigating to channels tab.
   ///
@@ -9732,6 +14638,192 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unnamed Node'**
   String get meshcoreShellUnnamedNode;
+
+  /// Channel card slot index label
+  ///
+  /// In en, this message translates to:
+  /// **'Slot {index}'**
+  String meshcoreSlotIndex(int index);
+
+  /// Info row label for spreading factor
+  ///
+  /// In en, this message translates to:
+  /// **'Spreading Factor'**
+  String get meshcoreSpreadingFactorLabel;
+
+  /// Info row label for connection status
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get meshcoreStatusLabel;
+
+  /// Action label to swap measurement points
+  ///
+  /// In en, this message translates to:
+  /// **'Swap A ↔ B'**
+  String get meshcoreSwapAB;
+
+  /// Settings tile title for time sync
+  ///
+  /// In en, this message translates to:
+  /// **'Sync Time'**
+  String get meshcoreSyncTime;
+
+  /// Subtitle while syncing time
+  ///
+  /// In en, this message translates to:
+  /// **'Syncing...'**
+  String get meshcoreSyncing;
+
+  /// Instruction text for setting measurement point A
+  ///
+  /// In en, this message translates to:
+  /// **'Tap node or map for point A'**
+  String get meshcoreTapForPointA;
+
+  /// Instruction text for setting measurement point B
+  ///
+  /// In en, this message translates to:
+  /// **'Tap node or map for point B'**
+  String get meshcoreTapForPointB;
+
+  /// Relative time format for days ago
+  ///
+  /// In en, this message translates to:
+  /// **'{count}d ago'**
+  String meshcoreTimeAgoDays(int count);
+
+  /// Relative time format for hours ago
+  ///
+  /// In en, this message translates to:
+  /// **'{count}h ago'**
+  String meshcoreTimeAgoHours(int count);
+
+  /// Relative time format for minutes ago
+  ///
+  /// In en, this message translates to:
+  /// **'{count}m ago'**
+  String meshcoreTimeAgoMinutes(int count);
+
+  /// Success snackbar after time sync
+  ///
+  /// In en, this message translates to:
+  /// **'Time synchronized'**
+  String get meshcoreTimeSynchronized;
+
+  /// Tools screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Tools'**
+  String get meshcoreToolsTitle;
+
+  /// Tool card subtitle for trace path
+  ///
+  /// In en, this message translates to:
+  /// **'Trace packet routes through the mesh'**
+  String get meshcoreTracePacketRoutes;
+
+  /// Tool card title for trace path
+  ///
+  /// In en, this message translates to:
+  /// **'Trace Path'**
+  String get meshcoreTracePath;
+
+  /// Info snackbar after initiating trace path
+  ///
+  /// In en, this message translates to:
+  /// **'Trace path to {name} initiated'**
+  String meshcoreTracePathInitiated(String name);
+
+  /// Sheet title for trace path
+  ///
+  /// In en, this message translates to:
+  /// **'Trace Path'**
+  String get meshcoreTracePathTitle;
+
+  /// Info row label for TX power in device info sheet
+  ///
+  /// In en, this message translates to:
+  /// **'TX Power'**
+  String get meshcoreTxPowerInfoLabel;
+
+  /// Info row label for TX power
+  ///
+  /// In en, this message translates to:
+  /// **'TX Power'**
+  String get meshcoreTxPowerLabel;
+
+  /// Status item label for TX power in device status card
+  ///
+  /// In en, this message translates to:
+  /// **'TX Power'**
+  String get meshcoreTxPowerStatusLabel;
+
+  /// Option subtitle for entering contact code manually
+  ///
+  /// In en, this message translates to:
+  /// **'Type a contact code'**
+  String get meshcoreTypeContactCode;
+
+  /// Detail row label for contact type
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get meshcoreTypeLabel;
+
+  /// Hint text for message input field
+  ///
+  /// In en, this message translates to:
+  /// **'Type a message...'**
+  String get meshcoreTypeMessageHint;
+
+  /// Fallback name for unnamed contacts
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get meshcoreUnknown;
+
+  /// Fallback name for unnamed contacts on map
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get meshcoreUnknownContact;
+
+  /// Settings tile subtitle for time sync
+  ///
+  /// In en, this message translates to:
+  /// **'Update device clock'**
+  String get meshcoreUpdateDeviceClock;
+
+  /// Version display text
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version}'**
+  String meshcoreVersion(String version);
+
+  /// Tool card subtitle for device info
+  ///
+  /// In en, this message translates to:
+  /// **'View detailed device information'**
+  String get meshcoreViewDeviceInfo;
+
+  /// Settings tile subtitle for protocol capture
+  ///
+  /// In en, this message translates to:
+  /// **'View MeshCore frame logs'**
+  String get meshcoreViewFrameLogs;
+
+  /// Tool card subtitle for radio settings
+  ///
+  /// In en, this message translates to:
+  /// **'View LoRa radio configuration'**
+  String get meshcoreViewLoRaConfig;
+
+  /// Boolean value label for yes
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get meshcoreYes;
 
   /// Label for the Copy action in the message context menu.
   ///
@@ -15545,6 +20637,828 @@ abstract class AppLocalizations {
   /// **'YOU'**
   String get nodesScreenYouBadge;
 
+  /// Display name of the mesh brain advisor character shown in the speech bubble header
+  ///
+  /// In en, this message translates to:
+  /// **'Ico'**
+  String get onboardingAdvisorName;
+
+  /// Demo automation name in the automations showcase
+  ///
+  /// In en, this message translates to:
+  /// **'Base Camp Geofence'**
+  String get onboardingAutomationGeofence;
+
+  /// Demo automation trigger description
+  ///
+  /// In en, this message translates to:
+  /// **'Enters designated area'**
+  String get onboardingAutomationGeofenceDesc;
+
+  /// Demo automation name in the automations showcase
+  ///
+  /// In en, this message translates to:
+  /// **'Low Battery Alert'**
+  String get onboardingAutomationLowBattery;
+
+  /// Demo automation trigger description
+  ///
+  /// In en, this message translates to:
+  /// **'Battery drops below 20%'**
+  String get onboardingAutomationLowBatteryDesc;
+
+  /// Demo automation name in the automations showcase
+  ///
+  /// In en, this message translates to:
+  /// **'Node Silent Watch'**
+  String get onboardingAutomationSilentWatch;
+
+  /// Demo automation trigger description
+  ///
+  /// In en, this message translates to:
+  /// **'No contact for 30 min'**
+  String get onboardingAutomationSilentWatchDesc;
+
+  /// Demo automation name in the automations showcase
+  ///
+  /// In en, this message translates to:
+  /// **'SOS Keyword'**
+  String get onboardingAutomationSosKeyword;
+
+  /// Demo automation trigger description
+  ///
+  /// In en, this message translates to:
+  /// **'Message contains \"SOS\"'**
+  String get onboardingAutomationSosKeywordDesc;
+
+  /// Ico advisor speech listing automation use cases
+  ///
+  /// In en, this message translates to:
+  /// **'Set up rules once, and I\'ll monitor everything. Low battery? I\'ll alert you. Node goes silent? I\'ll let you know. SOS received? I\'ll trigger your webhook.'**
+  String get onboardingAutomationsAdvisor;
+
+  /// Description of the automation triggers system
+  ///
+  /// In en, this message translates to:
+  /// **'Trigger actions based on mesh events.\nBattery alerts, geofences, keywords, and more.'**
+  String get onboardingAutomationsDescription;
+
+  /// Title for the automations feature page
+  ///
+  /// In en, this message translates to:
+  /// **'Intelligent Automations'**
+  String get onboardingAutomationsTitle;
+
+  /// Loading overlay subtitle while checking LoRa radio settings
+  ///
+  /// In en, this message translates to:
+  /// **'Checking radio configuration'**
+  String get onboardingCheckingRadio;
+
+  /// Ico advisor speech for the final page before device pairing
+  ///
+  /// In en, this message translates to:
+  /// **'Once connected, we operate completely offline. The mesh is waiting.'**
+  String get onboardingConnectAdvisor;
+
+  /// Description prompting the user to pair their device
+  ///
+  /// In en, this message translates to:
+  /// **'Pair your Meshtastic device to begin.\nBluetooth or USB - your choice.'**
+  String get onboardingConnectDescription;
+
+  /// Action button on the last onboarding page to begin device pairing
+  ///
+  /// In en, this message translates to:
+  /// **'Connect Device'**
+  String get onboardingConnectDeviceButton;
+
+  /// Title for the final onboarding page prompting device connection
+  ///
+  /// In en, this message translates to:
+  /// **'Ready to Connect'**
+  String get onboardingConnectTitle;
+
+  /// Action button to advance to the next onboarding page
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get onboardingContinueButton;
+
+  /// Ico advisor speech about dashboard customization
+  ///
+  /// In en, this message translates to:
+  /// **'Widgets, maps, stats - arrange them however you work. Your mesh, your view, your control.'**
+  String get onboardingDashboardAdvisor;
+
+  /// Description of the dashboard and telemetry features
+  ///
+  /// In en, this message translates to:
+  /// **'Customizable dashboard with live telemetry.\nTrack nodes, monitor channels, visualize the network.'**
+  String get onboardingDashboardDescription;
+
+  /// Title for the customizable dashboard page
+  ///
+  /// In en, this message translates to:
+  /// **'Your Command Center'**
+  String get onboardingDashboardTitle;
+
+  /// Device name in the compatible hardware showcase
+  ///
+  /// In en, this message translates to:
+  /// **'Heltec V3'**
+  String get onboardingDeviceHeltec;
+
+  /// Device category label for the Heltec card
+  ///
+  /// In en, this message translates to:
+  /// **'All-Purpose'**
+  String get onboardingDeviceHeltecCategory;
+
+  /// Description for the Heltec device card
+  ///
+  /// In en, this message translates to:
+  /// **'Versatile node with built-in display'**
+  String get onboardingDeviceHeltecDescription;
+
+  /// Device name in the compatible hardware showcase
+  ///
+  /// In en, this message translates to:
+  /// **'LilyGo T-Beam'**
+  String get onboardingDeviceLilygo;
+
+  /// Device category label for the LilyGo card
+  ///
+  /// In en, this message translates to:
+  /// **'Long Range'**
+  String get onboardingDeviceLilygoCategory;
+
+  /// Description for the LilyGo T-Beam device card
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum range with external antenna'**
+  String get onboardingDeviceLilygoDescription;
+
+  /// Badge label on the most popular device card
+  ///
+  /// In en, this message translates to:
+  /// **'POPULAR'**
+  String get onboardingDevicePopularBadge;
+
+  /// Device name in the compatible hardware showcase
+  ///
+  /// In en, this message translates to:
+  /// **'RAK WisMesh'**
+  String get onboardingDeviceRak;
+
+  /// Device category label for the RAK card
+  ///
+  /// In en, this message translates to:
+  /// **'Professional'**
+  String get onboardingDeviceRakCategory;
+
+  /// Description for the RAK WisMesh device card
+  ///
+  /// In en, this message translates to:
+  /// **'Industrial-grade reliability'**
+  String get onboardingDeviceRakDescription;
+
+  /// Device name in the compatible hardware showcase
+  ///
+  /// In en, this message translates to:
+  /// **'SenseCAP T1000-E'**
+  String get onboardingDeviceSensecap;
+
+  /// Device category label for the SenseCAP card
+  ///
+  /// In en, this message translates to:
+  /// **'Tracker'**
+  String get onboardingDeviceSensecapCategory;
+
+  /// Description for the SenseCAP device card
+  ///
+  /// In en, this message translates to:
+  /// **'Compact GPS tracker with long battery life'**
+  String get onboardingDeviceSensecapDescription;
+
+  /// Settings bottom sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Brain Settings'**
+  String get onboardingEmotionBrainSettings;
+
+  /// Filter chip label to show all mood categories
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get onboardingEmotionCategoryAll;
+
+  /// Tooltip for the settings icon button
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get onboardingEmotionConfiguratorSettings;
+
+  /// Screen title for the Ico emotion test/preview screen
+  ///
+  /// In en, this message translates to:
+  /// **'Emotion Configurator'**
+  String get onboardingEmotionConfiguratorTitle;
+
+  /// Button label to reset all brain settings to default values
+  ///
+  /// In en, this message translates to:
+  /// **'Reset to Defaults'**
+  String get onboardingEmotionResetDefaults;
+
+  /// Toggle label for facial expression overlay visibility
+  ///
+  /// In en, this message translates to:
+  /// **'Show Expression Effects'**
+  String get onboardingEmotionSettingsExpression;
+
+  /// Slider label for glow intensity adjustment
+  ///
+  /// In en, this message translates to:
+  /// **'Glow Intensity'**
+  String get onboardingEmotionSettingsGlow;
+
+  /// Toggle label for thought particle visibility
+  ///
+  /// In en, this message translates to:
+  /// **'Show Particles'**
+  String get onboardingEmotionSettingsParticles;
+
+  /// Slider label for brain size adjustment
+  ///
+  /// In en, this message translates to:
+  /// **'Size'**
+  String get onboardingEmotionSettingsSize;
+
+  /// Ico advisor speech recommending specific hardware by use case
+  ///
+  /// In en, this message translates to:
+  /// **'Pick up a SenseCAP T1000-E for tracking, a Heltec V3 for range, or a RAK WisMesh for reliability. I\'ll work with any of them.'**
+  String get onboardingHardwareAdvisor;
+
+  /// Description of supported hardware types
+  ///
+  /// In en, this message translates to:
+  /// **'Works with all Meshtastic-compatible devices.\nFrom compact trackers to long-range stations.'**
+  String get onboardingHardwareDescription;
+
+  /// Title for the compatible devices page
+  ///
+  /// In en, this message translates to:
+  /// **'Compatible Hardware'**
+  String get onboardingHardwareTitle;
+
+  /// Display name for Ico's alarmed mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Alarmed'**
+  String get onboardingMoodAlarmed;
+
+  /// Display name for Ico's alert mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Alert'**
+  String get onboardingMoodAlert;
+
+  /// Display name for Ico's angry mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Angry'**
+  String get onboardingMoodAngry;
+
+  /// Display name for Ico's annoyed mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Annoyed'**
+  String get onboardingMoodAnnoyed;
+
+  /// Display name for Ico's approving mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Approving'**
+  String get onboardingMoodApproving;
+
+  /// Display name for Ico's bored mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Bored'**
+  String get onboardingMoodBored;
+
+  /// Category label for alert mood states
+  ///
+  /// In en, this message translates to:
+  /// **'Alert'**
+  String get onboardingMoodCategoryAlert;
+
+  /// Category label for negative/low-energy mood states
+  ///
+  /// In en, this message translates to:
+  /// **'Negative'**
+  String get onboardingMoodCategoryNegative;
+
+  /// Category label for neutral/communicative mood states
+  ///
+  /// In en, this message translates to:
+  /// **'Neutral'**
+  String get onboardingMoodCategoryNeutral;
+
+  /// Category label for positive mood states
+  ///
+  /// In en, this message translates to:
+  /// **'Positive'**
+  String get onboardingMoodCategoryPositive;
+
+  /// Category label for special effect mood states
+  ///
+  /// In en, this message translates to:
+  /// **'Special'**
+  String get onboardingMoodCategorySpecial;
+
+  /// Display name for Ico's celebrating mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Celebrating'**
+  String get onboardingMoodCelebrating;
+
+  /// Display name for Ico's confused mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Confused'**
+  String get onboardingMoodConfused;
+
+  /// Display name for Ico's curious mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Curious'**
+  String get onboardingMoodCurious;
+
+  /// Display name for Ico's dizzy mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Dizzy'**
+  String get onboardingMoodDizzy;
+
+  /// Display name for Ico's dormant mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Dormant'**
+  String get onboardingMoodDormant;
+
+  /// Display name for Ico's embarrassed mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Embarrassed'**
+  String get onboardingMoodEmbarrassed;
+
+  /// Display name for Ico's energized mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Energized'**
+  String get onboardingMoodEnergized;
+
+  /// Display name for Ico's error mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get onboardingMoodError;
+
+  /// Display name for Ico's excited mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Excited'**
+  String get onboardingMoodExcited;
+
+  /// Display name for Ico's focused mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Focused'**
+  String get onboardingMoodFocused;
+
+  /// Display name for Ico's glitching mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Glitching'**
+  String get onboardingMoodGlitching;
+
+  /// Display name for Ico's grateful mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Grateful'**
+  String get onboardingMoodGrateful;
+
+  /// Display name for Ico's grumpy mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Grumpy'**
+  String get onboardingMoodGrumpy;
+
+  /// Display name for Ico's happy mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Happy'**
+  String get onboardingMoodHappy;
+
+  /// Display name for Ico's hopeful mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Hopeful'**
+  String get onboardingMoodHopeful;
+
+  /// Display name for Ico's hypnotized mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Hypnotized'**
+  String get onboardingMoodHypnotized;
+
+  /// Display name for Ico's idle mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Idle'**
+  String get onboardingMoodIdle;
+
+  /// Display name for Ico's inviting mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Inviting'**
+  String get onboardingMoodInviting;
+
+  /// Display name for Ico's laughing mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Laughing'**
+  String get onboardingMoodLaughing;
+
+  /// Display name for Ico's listening mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Listening'**
+  String get onboardingMoodListening;
+
+  /// Display name for Ico's loading mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Loading'**
+  String get onboardingMoodLoading;
+
+  /// Display name for Ico's love mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Love'**
+  String get onboardingMoodLove;
+
+  /// Display name for Ico's mischievous mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Mischievous'**
+  String get onboardingMoodMischievous;
+
+  /// Display name for Ico's nervous mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Nervous'**
+  String get onboardingMoodNervous;
+
+  /// Display name for Ico's playful mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Playful'**
+  String get onboardingMoodPlayful;
+
+  /// Display name for Ico's proud mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Proud'**
+  String get onboardingMoodProud;
+
+  /// Display name for Ico's sad mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Sad'**
+  String get onboardingMoodSad;
+
+  /// Display name for Ico's sassy mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Sassy'**
+  String get onboardingMoodSassy;
+
+  /// Display name for Ico's scared mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Scared'**
+  String get onboardingMoodScared;
+
+  /// Display name for Ico's shy mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Shy'**
+  String get onboardingMoodShy;
+
+  /// Display name for Ico's smiling mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Smiling'**
+  String get onboardingMoodSmiling;
+
+  /// Display name for Ico's speaking mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Speaking'**
+  String get onboardingMoodSpeaking;
+
+  /// Display name for Ico's success mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Success'**
+  String get onboardingMoodSuccess;
+
+  /// Display name for Ico's surprised mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Surprised'**
+  String get onboardingMoodSurprised;
+
+  /// Display name for Ico's thinking mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Thinking'**
+  String get onboardingMoodThinking;
+
+  /// Display name for Ico's tickled mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Tickled'**
+  String get onboardingMoodTickled;
+
+  /// Display name for Ico's tired mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Tired'**
+  String get onboardingMoodTired;
+
+  /// Display name for Ico's winking mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Winking'**
+  String get onboardingMoodWinking;
+
+  /// Display name for Ico's zen mood state
+  ///
+  /// In en, this message translates to:
+  /// **'Zen'**
+  String get onboardingMoodZen;
+
+  /// Ico advisor speech explaining NodeDex sigils, rarity, and patina
+  ///
+  /// In en, this message translates to:
+  /// **'Each node gets a unique sigil, a rarity tier, and a patina that deepens with every encounter. Collect them all — your NodeDex is your story across the mesh.'**
+  String get onboardingNodedexAdvisor;
+
+  /// Demo node name in the NodeDex showcase
+  ///
+  /// In en, this message translates to:
+  /// **'Base Camp Node'**
+  String get onboardingNodedexBaseCamp;
+
+  /// Description of the NodeDex collection feature
+  ///
+  /// In en, this message translates to:
+  /// **'Every node you encounter becomes a collectible card.\nBuild your field journal across the mesh.'**
+  String get onboardingNodedexDescription;
+
+  /// Rarity tier label for the epic demo node card
+  ///
+  /// In en, this message translates to:
+  /// **'EPIC'**
+  String get onboardingNodedexEpic;
+
+  /// Rarity tier label for the legendary demo node card
+  ///
+  /// In en, this message translates to:
+  /// **'LEGENDARY'**
+  String get onboardingNodedexLegendary;
+
+  /// Rarity tier label for the rare demo node card
+  ///
+  /// In en, this message translates to:
+  /// **'RARE'**
+  String get onboardingNodedexRare;
+
+  /// Rarity tier label for the standard demo node card
+  ///
+  /// In en, this message translates to:
+  /// **'STANDARD'**
+  String get onboardingNodedexStandard;
+
+  /// Demo node name in the NodeDex showcase
+  ///
+  /// In en, this message translates to:
+  /// **'Summit Relay'**
+  String get onboardingNodedexSummitRelay;
+
+  /// Title for the NodeDex collectible node cards page
+  ///
+  /// In en, this message translates to:
+  /// **'NodeDex — Collector Album'**
+  String get onboardingNodedexTitle;
+
+  /// Demo node name in the NodeDex showcase
+  ///
+  /// In en, this message translates to:
+  /// **'Trail Marker'**
+  String get onboardingNodedexTrailMarker;
+
+  /// Demo node name in the NodeDex showcase
+  ///
+  /// In en, this message translates to:
+  /// **'Valley Scout'**
+  String get onboardingNodedexValleyScout;
+
+  /// Ico advisor speech explaining mesh message hopping
+  ///
+  /// In en, this message translates to:
+  /// **'Every message hops through the mesh until it reaches its destination. Range measured in kilometers, not bars.'**
+  String get onboardingOffGridAdvisor;
+
+  /// Description highlighting offline mesh radio capabilities
+  ///
+  /// In en, this message translates to:
+  /// **'No cellular towers. No internet required.\nTrue peer-to-peer radio communication.'**
+  String get onboardingOffGridDescription;
+
+  /// Title for the off-grid mesh networking page
+  ///
+  /// In en, this message translates to:
+  /// **'Off-Grid by Design'**
+  String get onboardingOffGridTitle;
+
+  /// Ico advisor speech emphasizing local-only data by default
+  ///
+  /// In en, this message translates to:
+  /// **'Everything is local unless you explicitly enable cloud sync. No tracking, no analytics, no compromise.'**
+  String get onboardingPrivacyAdvisor;
+
+  /// Description of the privacy-first data philosophy
+  ///
+  /// In en, this message translates to:
+  /// **'No accounts required. No cloud by default.\nYour data stays on your device.'**
+  String get onboardingPrivacyDescription;
+
+  /// Title for the privacy-focused onboarding page
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy First'**
+  String get onboardingPrivacyTitle;
+
+  /// Loading overlay text while configuring the paired device
+  ///
+  /// In en, this message translates to:
+  /// **'Setting up your device...'**
+  String get onboardingSettingUpDevice;
+
+  /// Demo author name in the Signals showcase
+  ///
+  /// In en, this message translates to:
+  /// **'Alex'**
+  String get onboardingSignalAuthorAlex;
+
+  /// Demo author name in the Signals showcase
+  ///
+  /// In en, this message translates to:
+  /// **'Mike'**
+  String get onboardingSignalAuthorMike;
+
+  /// Demo author name in the Signals showcase
+  ///
+  /// In en, this message translates to:
+  /// **'Sarah'**
+  String get onboardingSignalAuthorSarah;
+
+  /// Demo signal message content in the Signals showcase
+  ///
+  /// In en, this message translates to:
+  /// **'On my way, ETA 15 min'**
+  String get onboardingSignalContentAlex;
+
+  /// Demo signal message content in the Signals showcase
+  ///
+  /// In en, this message translates to:
+  /// **'Base camp is set. Ready when you are.'**
+  String get onboardingSignalContentMike;
+
+  /// Demo signal message content in the Signals showcase
+  ///
+  /// In en, this message translates to:
+  /// **'Just reached the summit! Signal is crystal clear up here.'**
+  String get onboardingSignalContentSarah;
+
+  /// Proximity badge label for a direct (0-hop) signal
+  ///
+  /// In en, this message translates to:
+  /// **'Direct'**
+  String get onboardingSignalDirect;
+
+  /// Proximity badge label showing number of mesh hops (pluralized)
+  ///
+  /// In en, this message translates to:
+  /// **'{count} hop'**
+  String onboardingSignalHopCount(int count);
+
+  /// Label indicating a signal includes a shared location
+  ///
+  /// In en, this message translates to:
+  /// **'Location shared'**
+  String get onboardingSignalLocationShared;
+
+  /// Label for photo attachment indicator in the signal showcase card
+  ///
+  /// In en, this message translates to:
+  /// **'Photo'**
+  String get onboardingSignalPhoto;
+
+  /// Time-to-live countdown label showing minutes until signal expires
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes}m remaining'**
+  String onboardingSignalTtlRemaining(int minutes);
+
+  /// Ico advisor speech explaining the Signals differentiator
+  ///
+  /// In en, this message translates to:
+  /// **'Signals are what set us apart. Broadcast to everyone in range, watch them ripple through the network, then disappear on your terms.'**
+  String get onboardingSignalsAdvisor;
+
+  /// Description of the ephemeral Signals feature
+  ///
+  /// In en, this message translates to:
+  /// **'Ephemeral broadcasts across the mesh.\nShare presence, photos, and location - then let them fade.'**
+  String get onboardingSignalsDescription;
+
+  /// Title for the Signals feature page
+  ///
+  /// In en, this message translates to:
+  /// **'Signals'**
+  String get onboardingSignalsTitle;
+
+  /// Skip button to jump to the last onboarding page
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get onboardingSkipButton;
+
+  /// Ico advisor speech for the welcome page introducing itself
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m Ico, and I\'ll be your guide. Let me show you a communication platform that works when nothing else does.'**
+  String get onboardingWelcomeAdvisor;
+
+  /// Description for the welcome onboarding page
+  ///
+  /// In en, this message translates to:
+  /// **'The most advanced Meshtastic companion app.\nBuilt for professionals. Designed for everyone.'**
+  String get onboardingWelcomeDescription;
+
+  /// Title for the first onboarding page
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Socialmesh'**
+  String get onboardingWelcomeTitle;
+
+  /// Dashboard widget label for battery percentage
+  ///
+  /// In en, this message translates to:
+  /// **'Battery'**
+  String get onboardingWidgetBattery;
+
+  /// Header label for the widgets showcase dashboard preview
+  ///
+  /// In en, this message translates to:
+  /// **'Dashboard'**
+  String get onboardingWidgetDashboard;
+
+  /// Live indicator badge in the dashboard showcase
+  ///
+  /// In en, this message translates to:
+  /// **'LIVE'**
+  String get onboardingWidgetLiveBadge;
+
+  /// Dashboard widget label for online node count
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes Online'**
+  String get onboardingWidgetNodesOnline;
+
+  /// Dashboard widget label for signal-to-noise ratio in decibels
+  ///
+  /// In en, this message translates to:
+  /// **'SNR dB'**
+  String get onboardingWidgetSnrDb;
+
   /// No description provided for @paxCounterAboutSubtitle.
   ///
   /// In en, this message translates to:
@@ -16936,6 +22850,192 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Website'**
   String get profileWebsiteLabel;
+
+  /// Dialog confirm button
+  ///
+  /// In en, this message translates to:
+  /// **'Add Node'**
+  String get qrScannerAddNodeConfirm;
+
+  /// Dialog message (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'Add \"{name}\" to your tracked nodes?'**
+  String qrScannerAddNodePrompt(String name);
+
+  /// Dialog title for new node
+  ///
+  /// In en, this message translates to:
+  /// **'Add Node'**
+  String get qrScannerAddNodeTitle;
+
+  /// Dialog cancel button
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get qrScannerCancel;
+
+  /// Dialog cancel button for add node
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get qrScannerCancelAdd;
+
+  /// Info snackbar for duplicate channel (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'You already have this channel as \"{name}\"'**
+  String qrScannerChannelAlreadyExists(String name);
+
+  /// Channel import cancel button
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get qrScannerChannelCancel;
+
+  /// Channel import edit first button
+  ///
+  /// In en, this message translates to:
+  /// **'Edit First'**
+  String get qrScannerChannelEditFirst;
+
+  /// Channel import confirm button
+  ///
+  /// In en, this message translates to:
+  /// **'Import'**
+  String get qrScannerChannelImport;
+
+  /// Success snackbar (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'Channel \"{name}\" imported'**
+  String qrScannerChannelImported(String name);
+
+  /// Channel info row label
+  ///
+  /// In en, this message translates to:
+  /// **'Encryption'**
+  String get qrScannerChannelInfoEncryption;
+
+  /// Channel info row label
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get qrScannerChannelInfoName;
+
+  /// Info notice in channel import dialog
+  ///
+  /// In en, this message translates to:
+  /// **'The channel will be synced to your connected device.'**
+  String get qrScannerChannelSyncNotice;
+
+  /// Error snackbar when not connected
+  ///
+  /// In en, this message translates to:
+  /// **'Connect a device to import this channel'**
+  String get qrScannerConnectDeviceToImport;
+
+  /// Error snackbar (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to process QR code: {error}'**
+  String qrScannerFailedToProcess(String error);
+
+  /// Dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Import Channel'**
+  String get qrScannerImportChannelTitle;
+
+  /// Error snackbar (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'Import failed: {error}'**
+  String qrScannerImportFailed(String error);
+
+  /// Default channel name when none provided
+  ///
+  /// In en, this message translates to:
+  /// **'Imported'**
+  String get qrScannerImportedChannelName;
+
+  /// Exception message
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid channel data'**
+  String get qrScannerInvalidChannelData;
+
+  /// Exception message for channel limit
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum 8 channels - delete one first'**
+  String get qrScannerMaxChannels;
+
+  /// Success snackbar (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'Node \"{name}\" added to favorites'**
+  String qrScannerNodeAddedToFavorites(String name);
+
+  /// Dialog title for duplicate node
+  ///
+  /// In en, this message translates to:
+  /// **'Node Already Exists'**
+  String get qrScannerNodeAlreadyExists;
+
+  /// Dialog message (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'This node is already in your list as \"{name}\".'**
+  String qrScannerNodeAlreadyInList(String name);
+
+  /// Info row label
+  ///
+  /// In en, this message translates to:
+  /// **'Node ID'**
+  String get qrScannerNodeInfoId;
+
+  /// Info row label
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get qrScannerNodeInfoName;
+
+  /// Info row label
+  ///
+  /// In en, this message translates to:
+  /// **'Short'**
+  String get qrScannerNodeInfoShort;
+
+  /// Instruction text
+  ///
+  /// In en, this message translates to:
+  /// **'Point your camera at a QR code'**
+  String get qrScannerPrompt;
+
+  /// Subtitle hint text
+  ///
+  /// In en, this message translates to:
+  /// **'Supports nodes, channels, automations, and more'**
+  String get qrScannerSupportsHint;
+
+  /// Screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Scan QR Code'**
+  String get qrScannerTitle;
+
+  /// Dialog update button
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get qrScannerUpdate;
+
+  /// Dialog message for name update (interpolated)
+  ///
+  /// In en, this message translates to:
+  /// **'Update name to \"{name}\" and add to favorites?'**
+  String qrScannerUpdateNamePrompt(String name);
 
   /// No description provided for @reachabilityAboutTitle.
   ///
@@ -20908,6 +27008,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'From \${price}'**
   String shopModelPriceFrom(String price);
+
+  /// Demo card subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Amplify your reach'**
+  String get showcaseCardAmplify;
+
+  /// Demo card title
+  ///
+  /// In en, this message translates to:
+  /// **'BROADCAST'**
+  String get showcaseCardBroadcast;
+
+  /// Demo card subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Connected to network'**
+  String get showcaseCardConnected;
+
+  /// Demo card subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'End-to-end encrypted'**
+  String get showcaseCardEncrypted;
+
+  /// Demo card title
+  ///
+  /// In en, this message translates to:
+  /// **'MESH NETWORK'**
+  String get showcaseCardMeshNetwork;
+
+  /// Demo card title
+  ///
+  /// In en, this message translates to:
+  /// **'NODE ONLINE'**
+  String get showcaseCardNodeOnline;
+
+  /// Demo card subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Off-grid communication'**
+  String get showcaseCardOffGrid;
+
+  /// Demo card subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Reach everyone'**
+  String get showcaseCardReachEveryone;
+
+  /// Demo card title
+  ///
+  /// In en, this message translates to:
+  /// **'SECURE CHANNEL'**
+  String get showcaseCardSecureChannel;
+
+  /// Demo card title
+  ///
+  /// In en, this message translates to:
+  /// **'SIGNAL BOOST'**
+  String get showcaseCardSignalBoost;
+
+  /// Tooltip for reset button
+  ///
+  /// In en, this message translates to:
+  /// **'Reset all cards'**
+  String get showcaseResetAllCards;
+
+  /// Screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Snap Effect'**
+  String get showcaseSnapEffectTitle;
+
+  /// Instruction text
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a card to snap it away (Thanos style)'**
+  String get showcaseTapInstruction;
 
   /// No description provided for @sigilStageHeraldic.
   ///
@@ -26266,6 +32444,12 @@ abstract class AppLocalizations {
   /// **'Air Quality Log'**
   String get telemetryAirQualityLogTitle;
 
+  /// Empty-state message when no air quality data exists.
+  ///
+  /// In en, this message translates to:
+  /// **'No air quality data recorded yet'**
+  String get telemetryAirQualityNoData;
+
   /// Particle size chip label for particles larger than 0.3 micrometres
   ///
   /// In en, this message translates to:
@@ -26337,6 +32521,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'PM2.5'**
   String get telemetryAirQualityPm25Label;
+
+  /// Section header for environmental particulate matter readings.
+  ///
+  /// In en, this message translates to:
+  /// **'Particulate Matter (Environmental)'**
+  String get telemetryAirQualityPmEnvironmental;
+
+  /// Section header for standard particulate matter readings.
+  ///
+  /// In en, this message translates to:
+  /// **'Particulate Matter (Standard)'**
+  String get telemetryAirQualityPmStandard;
+
+  /// Screen title for the air quality log.
+  ///
+  /// In en, this message translates to:
+  /// **'Air Quality Log'**
+  String get telemetryAirQualityTitle;
 
   /// Unit label for micrograms per cubic metre.
   ///
@@ -26427,6 +32629,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Good'**
   String get telemetryCo2Good;
+
+  /// CO₂ indicator label combining unit and quality rating.
+  ///
+  /// In en, this message translates to:
+  /// **'CO₂ - {rating}'**
+  String telemetryCo2Label(String rating);
 
   /// CO₂ quality label combining the CO₂ prefix with the quality rating (e.g. CO₂ - Good)
   ///
@@ -26578,11 +32786,35 @@ abstract class AppLocalizations {
   /// **'Clear'**
   String get telemetryDetectionClear;
 
+  /// Badge label when a detection sensor is in clear state.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get telemetryDetectionClearBadge;
+
+  /// Empty-state subtitle for detection sensor screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Detection sensors report motion and presence'**
+  String get telemetryDetectionDescription;
+
   /// Badge label when a detection sensor has triggered.
   ///
   /// In en, this message translates to:
   /// **'DETECTED'**
   String get telemetryDetectionDetected;
+
+  /// Empty-state message when no detection sensor data exists.
+  ///
+  /// In en, this message translates to:
+  /// **'No sensor events recorded yet'**
+  String get telemetryDetectionNoData;
+
+  /// Default name for unnamed detection sensors.
+  ///
+  /// In en, this message translates to:
+  /// **'Detection Sensor'**
+  String get telemetryDetectionSensor;
 
   /// Default name shown for a detection sensor when no name is provided
   ///
@@ -26608,6 +32840,72 @@ abstract class AppLocalizations {
   /// **'Detection sensors report motion and presence'**
   String get telemetryDetectionSensorSubtitle;
 
+  /// Screen title for the detection sensor log.
+  ///
+  /// In en, this message translates to:
+  /// **'Detection Sensor Log'**
+  String get telemetryDetectionTitle;
+
+  /// Battery status label when device is charging.
+  ///
+  /// In en, this message translates to:
+  /// **'Charging'**
+  String get telemetryDeviceCharging;
+
+  /// Filter chip label for air utilization metrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Air Util'**
+  String get telemetryDeviceFilterAirUtil;
+
+  /// Filter chip label for battery metrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery'**
+  String get telemetryDeviceFilterBattery;
+
+  /// Filter chip label for channel utilization metrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel'**
+  String get telemetryDeviceFilterChannel;
+
+  /// Filter chip label for uptime metrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Uptime'**
+  String get telemetryDeviceFilterUptime;
+
+  /// Filter chip label for voltage metrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Voltage'**
+  String get telemetryDeviceFilterVoltage;
+
+  /// Chart legend label for air utilization series.
+  ///
+  /// In en, this message translates to:
+  /// **'Air Util'**
+  String get telemetryDeviceLegendAirUtil;
+
+  /// Chart legend label for battery series.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery'**
+  String get telemetryDeviceLegendBattery;
+
+  /// Chart legend label for channel utilization series.
+  ///
+  /// In en, this message translates to:
+  /// **'Ch Util'**
+  String get telemetryDeviceLegendChUtil;
+
+  /// Chart legend label for voltage series.
+  ///
+  /// In en, this message translates to:
+  /// **'Voltage'**
+  String get telemetryDeviceLegendVoltage;
+
   /// Metric chip label showing air utilization TX percentage with Air prefix
   ///
   /// In en, this message translates to:
@@ -26631,6 +32929,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{voltage}V'**
   String telemetryDeviceMetricsVoltageValue(double voltage);
+
+  /// Empty-state headline when no device metrics exist.
+  ///
+  /// In en, this message translates to:
+  /// **'No device metrics yet'**
+  String get telemetryDeviceNoMetrics;
 
   /// Title for the end-date picker sheet.
   ///
@@ -26680,11 +32984,83 @@ abstract class AppLocalizations {
   /// **'{value} m/s'**
   String telemetryEnvWindSpeedValue(int value);
 
+  /// Filter chip label for gas resistance metrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Gas'**
+  String get telemetryEnvironmentFilterGas;
+
+  /// Filter chip label for humidity metrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Humidity'**
+  String get telemetryEnvironmentFilterHumidity;
+
+  /// Filter chip label for indoor air quality metrics.
+  ///
+  /// In en, this message translates to:
+  /// **'IAQ'**
+  String get telemetryEnvironmentFilterIaq;
+
+  /// Filter chip label for light/lux metrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get telemetryEnvironmentFilterLight;
+
+  /// Filter chip label for barometric pressure metrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Pressure'**
+  String get telemetryEnvironmentFilterPressure;
+
+  /// Filter chip label for temperature metrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Temp'**
+  String get telemetryEnvironmentFilterTemp;
+
+  /// Filter chip label for wind speed metrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Wind'**
+  String get telemetryEnvironmentFilterWind;
+
+  /// Chart legend label for humidity series.
+  ///
+  /// In en, this message translates to:
+  /// **'Humidity'**
+  String get telemetryEnvironmentLegendHumidity;
+
+  /// Chart legend label for temperature series.
+  ///
+  /// In en, this message translates to:
+  /// **'Temperature'**
+  String get telemetryEnvironmentLegendTemperature;
+
   /// Screen title for the environment metrics history screen
   ///
   /// In en, this message translates to:
   /// **'Environment Metrics'**
   String get telemetryEnvironmentMetricsTitle;
+
+  /// Empty-state headline when no environment metrics exist.
+  ///
+  /// In en, this message translates to:
+  /// **'No environment metrics yet'**
+  String get telemetryEnvironmentNoMetrics;
+
+  /// Screen title for environment metrics log.
+  ///
+  /// In en, this message translates to:
+  /// **'Environment Metrics'**
+  String get telemetryEnvironmentTitle;
+
+  /// Generic error message shown in telemetry screens.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {error}'**
+  String telemetryError(String error);
 
   /// Generic error message prefix shown in error states (used across all telemetry screens)
   ///
@@ -26709,6 +33085,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Exporting...'**
   String get telemetryExporting;
+
+  /// Snackbar message when clearing data fails.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to clear data: {error}'**
+  String telemetryFailedToClear(String error);
 
   /// Error snackbar message when clearing data fails (used in position and traceroute)
   ///
@@ -26890,6 +33272,24 @@ abstract class AppLocalizations {
   /// **'PAX counter detects nearby devices'**
   String get telemetryPaxCounterSubtitle;
 
+  /// Empty-state subtitle for PAX counter screen.
+  ///
+  /// In en, this message translates to:
+  /// **'PAX counter detects nearby devices'**
+  String get telemetryPaxDescription;
+
+  /// Empty-state message when no PAX counter data exists.
+  ///
+  /// In en, this message translates to:
+  /// **'No PAX data recorded yet'**
+  String get telemetryPaxNoData;
+
+  /// Screen title for the PAX counter log.
+  ///
+  /// In en, this message translates to:
+  /// **'PAX Counter Log'**
+  String get telemetryPaxTitle;
+
   /// Uptime label in PAX counter card.
   ///
   /// In en, this message translates to:
@@ -26926,11 +33326,29 @@ abstract class AppLocalizations {
   /// **'WiFi'**
   String get telemetryPaxWifi;
 
+  /// Drawer subtitle for the all-nodes option.
+  ///
+  /// In en, this message translates to:
+  /// **'Show positions from all nodes'**
+  String get telemetryPositionAllNodesDescription;
+
+  /// Drawer option to show positions from all nodes.
+  ///
+  /// In en, this message translates to:
+  /// **'All Nodes'**
+  String get telemetryPositionAllNodesOption;
+
   /// Altitude badge showing elevation in metres
   ///
   /// In en, this message translates to:
   /// **'{meters}m'**
   String telemetryPositionAltitude(double meters);
+
+  /// Confirm button label for the clear-position-data sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get telemetryPositionClearLabel;
 
   /// Bottom sheet confirmation message for clearing position data.
   ///
@@ -26943,6 +33361,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Clear Position Data'**
   String get telemetryPositionClearTitle;
+
+  /// Snackbar message after position data is cleared.
+  ///
+  /// In en, this message translates to:
+  /// **'Position data cleared'**
+  String get telemetryPositionCleared;
 
   /// Position count label per node in drawer (singular/plural).
   ///
@@ -26961,6 +33385,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Date range'**
   String get telemetryPositionDateRange;
+
+  /// Drawer header title in the position map node list.
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes'**
+  String get telemetryPositionDrawerTitle;
 
   /// Share sheet subject for position CSV export.
   ///
@@ -26998,11 +33428,29 @@ abstract class AppLocalizations {
   /// **'Today'**
   String get telemetryPositionFilterToday;
 
+  /// Tooltip for switching to list view.
+  ///
+  /// In en, this message translates to:
+  /// **'List view'**
+  String get telemetryPositionListView;
+
   /// Tooltip for the button to switch to list view (shown when in map mode)
   ///
   /// In en, this message translates to:
   /// **'List view'**
   String get telemetryPositionListViewTooltip;
+
+  /// Popup menu section header for map style options.
+  ///
+  /// In en, this message translates to:
+  /// **'Map Style'**
+  String get telemetryPositionMapStyle;
+
+  /// Tooltip for switching to map view.
+  ///
+  /// In en, this message translates to:
+  /// **'Map view'**
+  String get telemetryPositionMapView;
 
   /// Tooltip for the button to switch to map view (shown when in list mode)
   ///
@@ -27016,11 +33464,29 @@ abstract class AppLocalizations {
   /// **'No position data to export'**
   String get telemetryPositionNoDataExport;
 
+  /// Map empty-state message when no positions are visible.
+  ///
+  /// In en, this message translates to:
+  /// **'No positions to display'**
+  String get telemetryPositionNoDisplay;
+
+  /// Snackbar message when there is no data to export.
+  ///
+  /// In en, this message translates to:
+  /// **'No position data to export'**
+  String get telemetryPositionNoExportData;
+
   /// Empty-state headline when no positions exist.
   ///
   /// In en, this message translates to:
   /// **'No position history'**
   String get telemetryPositionNoHistory;
+
+  /// Empty-state headline when filters exclude all positions.
+  ///
+  /// In en, this message translates to:
+  /// **'No positions match filters'**
+  String get telemetryPositionNoMatch;
 
   /// Empty state message when active filters exclude all positions
   ///
@@ -27045,6 +33511,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nodes'**
   String get telemetryPositionNodeDrawerTitle;
+
+  /// Node count pill label on the position map.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} nodes'**
+  String telemetryPositionNodesCount(int count);
 
   /// Badge showing number of GPS satellites in view
   ///
@@ -27124,6 +33596,12 @@ abstract class AppLocalizations {
   /// **'Start Date'**
   String get telemetryStartDate;
 
+  /// Confirm button label for the clear-traceroute-data sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get telemetryTracerouteClearLabel;
+
   /// Bottom sheet confirmation message for clearing traceroute data.
   ///
   /// In en, this message translates to:
@@ -27135,6 +33613,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Clear Traceroute Data'**
   String get telemetryTracerouteClearTitle;
+
+  /// Snackbar message after traceroute data is cleared.
+  ///
+  /// In en, this message translates to:
+  /// **'Traceroute data cleared'**
+  String get telemetryTracerouteCleared;
 
   /// Success snackbar message after clearing traceroute data
   ///
@@ -27159,6 +33643,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No traceroutes recorded yet'**
   String get telemetryTracerouteEmpty;
+
+  /// Empty-state subtitle for the traceroute screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Send a traceroute from a node to see network paths'**
+  String get telemetryTracerouteEmptyHint;
 
   /// Empty state subtitle explaining how to get traceroute data
   ///
@@ -27226,17 +33716,41 @@ abstract class AppLocalizations {
   /// **'More actions'**
   String get telemetryTracerouteMoreActions;
 
+  /// Empty-state headline when no traceroutes exist.
+  ///
+  /// In en, this message translates to:
+  /// **'No traceroutes recorded yet'**
+  String get telemetryTracerouteNoData;
+
   /// Snackbar message when attempting to export but no traceroute data exists
   ///
   /// In en, this message translates to:
   /// **'No traceroute data to export'**
   String get telemetryTracerouteNoDataExport;
 
+  /// Snackbar message when there is no traceroute data to export.
+  ///
+  /// In en, this message translates to:
+  /// **'No traceroute data to export'**
+  String get telemetryTracerouteNoExportData;
+
   /// Empty-state headline when filters exclude all traceroutes.
   ///
   /// In en, this message translates to:
   /// **'No traceroutes match filters'**
   String get telemetryTracerouteNoMatch;
+
+  /// Badge label when a traceroute received no response.
+  ///
+  /// In en, this message translates to:
+  /// **'No Response'**
+  String get telemetryTracerouteNoResponseBadge;
+
+  /// Badge label when a traceroute received a response.
+  ///
+  /// In en, this message translates to:
+  /// **'Response'**
+  String get telemetryTracerouteResponseBadge;
 
   /// Section title for the return hop path in a traceroute card.
   ///
@@ -27249,6 +33763,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'SNR: {value} dB'**
   String telemetryTracerouteSnr(int value);
+
+  /// Screen title for traceroute log.
+  ///
+  /// In en, this message translates to:
+  /// **'Traceroute History'**
+  String get telemetryTracerouteTitle;
+
+  /// Label for the destination node in a traceroute card.
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get telemetryTracerouteTo;
 
   /// Empty-state subtitle suggesting the user change filters.
   ///
@@ -27273,6 +33799,3432 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{minutes}m'**
   String telemetryUptimeMinutes(int minutes);
+
+  /// Empty state subtitle when no events
+  ///
+  /// In en, this message translates to:
+  /// **'Activity will appear here as it happens'**
+  String get timelineActivityWillAppear;
+
+  /// Relative time: days ago
+  ///
+  /// In en, this message translates to:
+  /// **'{count}d ago'**
+  String timelineDaysAgo(int count);
+
+  /// Event title for a direct message between two nodes
+  ///
+  /// In en, this message translates to:
+  /// **'{from} → {to}'**
+  String timelineDirectMessage(String from, String to);
+
+  /// Filter label: all events
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get timelineFilterAll;
+
+  /// Filter label: messages only
+  ///
+  /// In en, this message translates to:
+  /// **'Messages'**
+  String get timelineFilterMessages;
+
+  /// Filter label: node events only
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes'**
+  String get timelineFilterNodes;
+
+  /// Filter label: signal events only
+  ///
+  /// In en, this message translates to:
+  /// **'Signals'**
+  String get timelineFilterSignals;
+
+  /// Filter label: waypoint events only
+  ///
+  /// In en, this message translates to:
+  /// **'Waypoints'**
+  String get timelineFilterWaypoints;
+
+  /// Weekday name for date group header
+  ///
+  /// In en, this message translates to:
+  /// **'Friday'**
+  String get timelineFriday;
+
+  /// Relative time: hours ago
+  ///
+  /// In en, this message translates to:
+  /// **'{count}h ago'**
+  String timelineHoursAgo(int count);
+
+  /// Relative time: less than 1 minute ago
+  ///
+  /// In en, this message translates to:
+  /// **'just now'**
+  String get timelineJustNow;
+
+  /// Event subtitle showing when node was last heard
+  ///
+  /// In en, this message translates to:
+  /// **'Last heard {timeAgo}'**
+  String timelineLastHeard(String timeAgo);
+
+  /// Relative time: minutes ago
+  ///
+  /// In en, this message translates to:
+  /// **'{count}m ago'**
+  String timelineMinutesAgo(int count);
+
+  /// Weekday name for date group header
+  ///
+  /// In en, this message translates to:
+  /// **'Monday'**
+  String get timelineMonday;
+
+  /// Empty state when no events exist
+  ///
+  /// In en, this message translates to:
+  /// **'No events yet'**
+  String get timelineNoEvents;
+
+  /// Empty state when filter has no results
+  ///
+  /// In en, this message translates to:
+  /// **'No events match this filter'**
+  String get timelineNoFilterResults;
+
+  /// Empty state when search has no results
+  ///
+  /// In en, this message translates to:
+  /// **'No events match your search'**
+  String get timelineNoSearchResults;
+
+  /// Event title when a node becomes active
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is active'**
+  String timelineNodeActive(String name);
+
+  /// Event title when a node goes offline
+  ///
+  /// In en, this message translates to:
+  /// **'{name} became inactive'**
+  String timelineNodeInactive(String name);
+
+  /// Signal info showing RSSI value
+  ///
+  /// In en, this message translates to:
+  /// **'RSSI: {value} dBm'**
+  String timelineRssiValue(double value);
+
+  /// Weekday name for date group header
+  ///
+  /// In en, this message translates to:
+  /// **'Saturday'**
+  String get timelineSaturday;
+
+  /// Search field hint text
+  ///
+  /// In en, this message translates to:
+  /// **'Search events'**
+  String get timelineSearchHint;
+
+  /// Event title when another node sent a message
+  ///
+  /// In en, this message translates to:
+  /// **'{name} sent a message'**
+  String timelineSentMessage(String name);
+
+  /// Button to clear filter and show all events
+  ///
+  /// In en, this message translates to:
+  /// **'Show all events'**
+  String get timelineShowAllEvents;
+
+  /// Signal info showing SNR value
+  ///
+  /// In en, this message translates to:
+  /// **'SNR: {value} dB'**
+  String timelineSnrSignalInfo(double value);
+
+  /// Event subtitle showing SNR value
+  ///
+  /// In en, this message translates to:
+  /// **'SNR: {value} dB'**
+  String timelineSnrValue(double value);
+
+  /// Weekday name for date group header
+  ///
+  /// In en, this message translates to:
+  /// **'Sunday'**
+  String get timelineSunday;
+
+  /// Weekday name for date group header
+  ///
+  /// In en, this message translates to:
+  /// **'Thursday'**
+  String get timelineThursday;
+
+  /// Screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Timeline'**
+  String get timelineTitle;
+
+  /// Date group header for today
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get timelineToday;
+
+  /// Empty state subtitle for search/filter miss
+  ///
+  /// In en, this message translates to:
+  /// **'Try a different search or filter'**
+  String get timelineTryDifferent;
+
+  /// Weekday name for date group header
+  ///
+  /// In en, this message translates to:
+  /// **'Tuesday'**
+  String get timelineTuesday;
+
+  /// Event title when a node updates GPS position
+  ///
+  /// In en, this message translates to:
+  /// **'{name} updated position'**
+  String timelineUpdatedPosition(String name);
+
+  /// Event title for weak signal detection
+  ///
+  /// In en, this message translates to:
+  /// **'Weak signal from {name}'**
+  String timelineWeakSignal(String name);
+
+  /// Weekday name for date group header
+  ///
+  /// In en, this message translates to:
+  /// **'Wednesday'**
+  String get timelineWednesday;
+
+  /// Date group header for yesterday
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get timelineYesterday;
+
+  /// Event title when user sent a message
+  ///
+  /// In en, this message translates to:
+  /// **'You sent a message'**
+  String get timelineYouSentMessage;
+
+  /// Color option label for accent color
+  ///
+  /// In en, this message translates to:
+  /// **'Accent'**
+  String get widgetBuilderAccent;
+
+  /// Action type label
+  ///
+  /// In en, this message translates to:
+  /// **'Copy to Clipboard'**
+  String get widgetBuilderActionCopyToClipboard;
+
+  /// Action type label
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency SOS'**
+  String get widgetBuilderActionEmergencySos;
+
+  /// Action type label
+  ///
+  /// In en, this message translates to:
+  /// **'Navigate'**
+  String get widgetBuilderActionNavigateLabel;
+
+  /// Action type label
+  ///
+  /// In en, this message translates to:
+  /// **'No Action'**
+  String get widgetBuilderActionNoAction;
+
+  /// Action type label
+  ///
+  /// In en, this message translates to:
+  /// **'Open URL'**
+  String get widgetBuilderActionOpenUrl;
+
+  /// Action option title
+  ///
+  /// In en, this message translates to:
+  /// **'Request Positions'**
+  String get widgetBuilderActionRequestPositions;
+
+  /// Action option description
+  ///
+  /// In en, this message translates to:
+  /// **'Ask all nodes to report their position'**
+  String get widgetBuilderActionRequestPositionsDesc;
+
+  /// Action type label
+  ///
+  /// In en, this message translates to:
+  /// **'Request Positions'**
+  String get widgetBuilderActionRequestPositionsLabel;
+
+  /// Action option title
+  ///
+  /// In en, this message translates to:
+  /// **'Send Message'**
+  String get widgetBuilderActionSendMessage;
+
+  /// Action option description
+  ///
+  /// In en, this message translates to:
+  /// **'Open message composer to send a message'**
+  String get widgetBuilderActionSendMessageDesc;
+
+  /// Action type label
+  ///
+  /// In en, this message translates to:
+  /// **'Send Message'**
+  String get widgetBuilderActionSendMessageLabel;
+
+  /// Action option title
+  ///
+  /// In en, this message translates to:
+  /// **'Share Location'**
+  String get widgetBuilderActionShareLocation;
+
+  /// Action option description
+  ///
+  /// In en, this message translates to:
+  /// **'Share your current GPS position'**
+  String get widgetBuilderActionShareLocationDesc;
+
+  /// Action type label
+  ///
+  /// In en, this message translates to:
+  /// **'Share Location'**
+  String get widgetBuilderActionShareLocationLabel;
+
+  /// Action option title
+  ///
+  /// In en, this message translates to:
+  /// **'SOS Alert'**
+  String get widgetBuilderActionSosAlert;
+
+  /// Action option description
+  ///
+  /// In en, this message translates to:
+  /// **'Send emergency alert to all nodes'**
+  String get widgetBuilderActionSosAlertDesc;
+
+  /// Action option title
+  ///
+  /// In en, this message translates to:
+  /// **'Traceroute'**
+  String get widgetBuilderActionTraceroute;
+
+  /// Action option description
+  ///
+  /// In en, this message translates to:
+  /// **'Trace the route to a node'**
+  String get widgetBuilderActionTracerouteDesc;
+
+  /// Action type label
+  ///
+  /// In en, this message translates to:
+  /// **'Traceroute'**
+  String get widgetBuilderActionTracerouteLabel;
+
+  /// Button label when action selected
+  ///
+  /// In en, this message translates to:
+  /// **'Add Action'**
+  String get widgetBuilderAddAction;
+
+  /// Block picker header
+  ///
+  /// In en, this message translates to:
+  /// **'Add Block'**
+  String get widgetBuilderAddBlock;
+
+  /// Button label to add element
+  ///
+  /// In en, this message translates to:
+  /// **'Add Element'**
+  String get widgetBuilderAddElement;
+
+  /// Add element option
+  ///
+  /// In en, this message translates to:
+  /// **'Icon'**
+  String get widgetBuilderAddIcon;
+
+  /// Add element description
+  ///
+  /// In en, this message translates to:
+  /// **'Add a symbol or emoji'**
+  String get widgetBuilderAddIconDesc;
+
+  /// Button to add an item to a list element, showing current count
+  ///
+  /// In en, this message translates to:
+  /// **'Add item ({count} items)'**
+  String widgetBuilderAddItemCount(int count);
+
+  /// Add element option
+  ///
+  /// In en, this message translates to:
+  /// **'Progress Bar'**
+  String get widgetBuilderAddProgressBar;
+
+  /// Add element description
+  ///
+  /// In en, this message translates to:
+  /// **'Show a value visually'**
+  String get widgetBuilderAddProgressBarDesc;
+
+  /// Add element option
+  ///
+  /// In en, this message translates to:
+  /// **'Space'**
+  String get widgetBuilderAddSpace;
+
+  /// Add element description
+  ///
+  /// In en, this message translates to:
+  /// **'Add empty space between items'**
+  String get widgetBuilderAddSpaceDesc;
+
+  /// Placeholder text for action selector
+  ///
+  /// In en, this message translates to:
+  /// **'Add tap action...'**
+  String get widgetBuilderAddTapAction;
+
+  /// Add element option
+  ///
+  /// In en, this message translates to:
+  /// **'Text'**
+  String get widgetBuilderAddText;
+
+  /// Add element description
+  ///
+  /// In en, this message translates to:
+  /// **'Add a label or value'**
+  String get widgetBuilderAddTextDesc;
+
+  /// Context menu action
+  ///
+  /// In en, this message translates to:
+  /// **'Add to Dashboard'**
+  String get widgetBuilderAddToDashboard;
+
+  /// Alignment option label (vertical end)
+  ///
+  /// In en, this message translates to:
+  /// **'Bottom'**
+  String get widgetBuilderAlignBottom;
+
+  /// Alignment option label
+  ///
+  /// In en, this message translates to:
+  /// **'Center'**
+  String get widgetBuilderAlignCenter;
+
+  /// Alignment option label (horizontal start)
+  ///
+  /// In en, this message translates to:
+  /// **'Left'**
+  String get widgetBuilderAlignLeft;
+
+  /// Alignment option label (horizontal end)
+  ///
+  /// In en, this message translates to:
+  /// **'Right'**
+  String get widgetBuilderAlignRight;
+
+  /// Alignment option label for space-between
+  ///
+  /// In en, this message translates to:
+  /// **'Spread'**
+  String get widgetBuilderAlignSpread;
+
+  /// Alignment option label (vertical start)
+  ///
+  /// In en, this message translates to:
+  /// **'Top'**
+  String get widgetBuilderAlignTop;
+
+  /// Category filter chip label for showing all bindings
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get widgetBuilderAll;
+
+  /// Broadcast option label
+  ///
+  /// In en, this message translates to:
+  /// **'All Nodes'**
+  String get widgetBuilderAllNodes;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Active Mesh Nodes'**
+  String get widgetBuilderBindingActiveMeshNodes;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes heard recently'**
+  String get widgetBuilderBindingActiveMeshNodesDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Active Mesh Nodes (legacy)'**
+  String get widgetBuilderBindingActiveMeshNodesLegacy;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Alias for active node count (back-compat)'**
+  String get widgetBuilderBindingActiveMeshNodesLegacyDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Airtime TX'**
+  String get widgetBuilderBindingAirtimeTx;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Transmission airtime utilization'**
+  String get widgetBuilderBindingAirtimeTxDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Altitude'**
+  String get widgetBuilderBindingAltitude;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Altitude above sea level'**
+  String get widgetBuilderBindingAltitudeDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Bad Packets RX'**
+  String get widgetBuilderBindingBadPacketsRx;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Bad packets received'**
+  String get widgetBuilderBindingBadPacketsRxDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Battery Level'**
+  String get widgetBuilderBindingBatteryLevel;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Battery percentage (0-100)'**
+  String get widgetBuilderBindingBatteryLevelDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Battery Voltage'**
+  String get widgetBuilderBindingBatteryVoltage;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Battery voltage'**
+  String get widgetBuilderBindingBatteryVoltageDesc;
+
+  /// Binding category display name
+  ///
+  /// In en, this message translates to:
+  /// **'Air Quality'**
+  String get widgetBuilderBindingCategoryAirQuality;
+
+  /// Binding category display name
+  ///
+  /// In en, this message translates to:
+  /// **'Device'**
+  String get widgetBuilderBindingCategoryDevice;
+
+  /// Binding category display name
+  ///
+  /// In en, this message translates to:
+  /// **'Environment'**
+  String get widgetBuilderBindingCategoryEnvironment;
+
+  /// Binding category display name
+  ///
+  /// In en, this message translates to:
+  /// **'GPS'**
+  String get widgetBuilderBindingCategoryGps;
+
+  /// Binding category display name
+  ///
+  /// In en, this message translates to:
+  /// **'Messages'**
+  String get widgetBuilderBindingCategoryMessages;
+
+  /// Binding category display name
+  ///
+  /// In en, this message translates to:
+  /// **'Network'**
+  String get widgetBuilderBindingCategoryNetwork;
+
+  /// Binding category display name
+  ///
+  /// In en, this message translates to:
+  /// **'Node Info'**
+  String get widgetBuilderBindingCategoryNodeInfo;
+
+  /// Binding category display name
+  ///
+  /// In en, this message translates to:
+  /// **'Power'**
+  String get widgetBuilderBindingCategoryPower;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Channel 1 Current'**
+  String get widgetBuilderBindingCh1Current;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Power channel 1 current'**
+  String get widgetBuilderBindingCh1CurrentDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Channel 1 Voltage'**
+  String get widgetBuilderBindingCh1Voltage;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Power channel 1 voltage'**
+  String get widgetBuilderBindingCh1VoltageDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Channel 2 Current'**
+  String get widgetBuilderBindingCh2Current;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Power channel 2 current'**
+  String get widgetBuilderBindingCh2CurrentDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Channel 2 Voltage'**
+  String get widgetBuilderBindingCh2Voltage;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Power channel 2 voltage'**
+  String get widgetBuilderBindingCh2VoltageDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Channel 3 Current'**
+  String get widgetBuilderBindingCh3Current;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Power channel 3 current'**
+  String get widgetBuilderBindingCh3CurrentDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Channel 3 Voltage'**
+  String get widgetBuilderBindingCh3Voltage;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Power channel 3 voltage'**
+  String get widgetBuilderBindingCh3VoltageDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Channel Utilization'**
+  String get widgetBuilderBindingChannelUtil;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Current channel utilization percentage'**
+  String get widgetBuilderBindingChannelUtilDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'CO2'**
+  String get widgetBuilderBindingCo2;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'CO2 concentration'**
+  String get widgetBuilderBindingCo2Desc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Display Name'**
+  String get widgetBuilderBindingDisplayName;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Node display name (long name or short name)'**
+  String get widgetBuilderBindingDisplayNameDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Distance'**
+  String get widgetBuilderBindingDistance;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Distance to node in meters'**
+  String get widgetBuilderBindingDistanceDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Firmware Version'**
+  String get widgetBuilderBindingFirmwareVersion;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Current firmware version'**
+  String get widgetBuilderBindingFirmwareVersionDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'First Heard'**
+  String get widgetBuilderBindingFirstHeard;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'When the node was first discovered'**
+  String get widgetBuilderBindingFirstHeardDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Ground Speed'**
+  String get widgetBuilderBindingGroundSpeed;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Ground speed'**
+  String get widgetBuilderBindingGroundSpeedDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Hardware Model'**
+  String get widgetBuilderBindingHardwareModel;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Device hardware model'**
+  String get widgetBuilderBindingHardwareModelDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Heading'**
+  String get widgetBuilderBindingHeading;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Ground track/heading in degrees'**
+  String get widgetBuilderBindingHeadingDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Hop Count'**
+  String get widgetBuilderBindingHopCount;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Number of hops from this node (0 = direct neighbor)'**
+  String get widgetBuilderBindingHopCountDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Humidity'**
+  String get widgetBuilderBindingHumidity;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Relative humidity percentage'**
+  String get widgetBuilderBindingHumidityDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'IAQ Index'**
+  String get widgetBuilderBindingIaqIndex;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Indoor air quality index'**
+  String get widgetBuilderBindingIaqIndexDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Last Heard'**
+  String get widgetBuilderBindingLastHeard;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'When the node was last heard from'**
+  String get widgetBuilderBindingLastHeardDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Latitude'**
+  String get widgetBuilderBindingLatitude;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'GPS latitude coordinate'**
+  String get widgetBuilderBindingLatitudeDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Light Level'**
+  String get widgetBuilderBindingLightLevel;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Ambient light level'**
+  String get widgetBuilderBindingLightLevelDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Longitude'**
+  String get widgetBuilderBindingLongitude;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'GPS longitude coordinate'**
+  String get widgetBuilderBindingLongitudeDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Node Name'**
+  String get widgetBuilderBindingNodeName;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Full name of the node'**
+  String get widgetBuilderBindingNodeNameDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Node Number'**
+  String get widgetBuilderBindingNodeNumber;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Unique node number'**
+  String get widgetBuilderBindingNodeNumberDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Node Role'**
+  String get widgetBuilderBindingNodeRole;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Role in the mesh (CLIENT, ROUTER, etc.)'**
+  String get widgetBuilderBindingNodeRoleDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Node Status'**
+  String get widgetBuilderBindingNodeStatus;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Custom status message from the node'**
+  String get widgetBuilderBindingNodeStatusDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes Heard (2h)'**
+  String get widgetBuilderBindingNodesHeard2h;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Meshtastic metric: nodes heard in the last 2 hours'**
+  String get widgetBuilderBindingNodesHeard2hDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Noise Floor'**
+  String get widgetBuilderBindingNoiseFloor;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Measured noise floor in dBm'**
+  String get widgetBuilderBindingNoiseFloorDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Packets RX'**
+  String get widgetBuilderBindingPacketsRx;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Total packets received'**
+  String get widgetBuilderBindingPacketsRxDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Packets TX'**
+  String get widgetBuilderBindingPacketsTx;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Total packets transmitted'**
+  String get widgetBuilderBindingPacketsTxDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Packets TX Dropped'**
+  String get widgetBuilderBindingPacketsTxDropped;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Packets dropped due to full TX queue'**
+  String get widgetBuilderBindingPacketsTxDroppedDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'PM10'**
+  String get widgetBuilderBindingPm10Large;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'PM10 particulate matter'**
+  String get widgetBuilderBindingPm10LargeDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'PM1.0'**
+  String get widgetBuilderBindingPm10Small;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'PM1.0 particulate matter'**
+  String get widgetBuilderBindingPm10SmallDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'PM2.5'**
+  String get widgetBuilderBindingPm25;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'PM2.5 particulate matter'**
+  String get widgetBuilderBindingPm25Desc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Presence Confidence'**
+  String get widgetBuilderBindingPresenceConfidence;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Inferred presence: active, fading, stale, unknown'**
+  String get widgetBuilderBindingPresenceConfidenceDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Pressure'**
+  String get widgetBuilderBindingPressure;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Barometric pressure'**
+  String get widgetBuilderBindingPressureDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Rainfall (1h)'**
+  String get widgetBuilderBindingRainfall1h;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Rainfall in last hour'**
+  String get widgetBuilderBindingRainfall1hDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Rainfall (24h)'**
+  String get widgetBuilderBindingRainfall24h;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Rainfall in last 24 hours'**
+  String get widgetBuilderBindingRainfall24hDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Messages'**
+  String get widgetBuilderBindingRecentMessages;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Number of recent messages'**
+  String get widgetBuilderBindingRecentMessagesDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'RSSI'**
+  String get widgetBuilderBindingRssi;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Received signal strength indicator'**
+  String get widgetBuilderBindingRssiDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Satellites'**
+  String get widgetBuilderBindingSatellites;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Number of GPS satellites in view'**
+  String get widgetBuilderBindingSatellitesDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Short Name'**
+  String get widgetBuilderBindingShortName;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Short 4-character node identifier'**
+  String get widgetBuilderBindingShortNameDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'SNR'**
+  String get widgetBuilderBindingSnr;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Signal-to-noise ratio'**
+  String get widgetBuilderBindingSnrDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Soil Moisture'**
+  String get widgetBuilderBindingSoilMoisture;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Soil moisture percentage'**
+  String get widgetBuilderBindingSoilMoistureDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Soil Temperature'**
+  String get widgetBuilderBindingSoilTemperature;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Soil temperature'**
+  String get widgetBuilderBindingSoilTemperatureDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Temperature'**
+  String get widgetBuilderBindingTemperature;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Ambient temperature'**
+  String get widgetBuilderBindingTemperatureDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Total Mesh Nodes'**
+  String get widgetBuilderBindingTotalMeshNodes;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Total nodes in the mesh network'**
+  String get widgetBuilderBindingTotalMeshNodesDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Total Nodes'**
+  String get widgetBuilderBindingTotalNodes;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Total number of known nodes'**
+  String get widgetBuilderBindingTotalNodesDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Unread Messages'**
+  String get widgetBuilderBindingUnreadMessages;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Number of unread messages'**
+  String get widgetBuilderBindingUnreadMessagesDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Uptime'**
+  String get widgetBuilderBindingUptime;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Device uptime in seconds'**
+  String get widgetBuilderBindingUptimeDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Via MQTT'**
+  String get widgetBuilderBindingViaMqtt;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Whether this node was last heard via MQTT transport'**
+  String get widgetBuilderBindingViaMqttDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Wind Direction'**
+  String get widgetBuilderBindingWindDirection;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Wind direction in degrees'**
+  String get widgetBuilderBindingWindDirectionDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Wind Gust'**
+  String get widgetBuilderBindingWindGust;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Wind gust speed'**
+  String get widgetBuilderBindingWindGustDesc;
+
+  /// Data binding label
+  ///
+  /// In en, this message translates to:
+  /// **'Wind Speed'**
+  String get widgetBuilderBindingWindSpeed;
+
+  /// Data binding description
+  ///
+  /// In en, this message translates to:
+  /// **'Current wind speed'**
+  String get widgetBuilderBindingWindSpeedDesc;
+
+  /// Block name in picker
+  ///
+  /// In en, this message translates to:
+  /// **'Action Button'**
+  String get widgetBuilderBlockActionButton;
+
+  /// Block description
+  ///
+  /// In en, this message translates to:
+  /// **'Tappable button with action'**
+  String get widgetBuilderBlockActionButtonDesc;
+
+  /// Block name in picker
+  ///
+  /// In en, this message translates to:
+  /// **'Info Block'**
+  String get widgetBuilderBlockInfoBlock;
+
+  /// Block description
+  ///
+  /// In en, this message translates to:
+  /// **'Icon + Label + Data Value'**
+  String get widgetBuilderBlockInfoBlockDesc;
+
+  /// Block name in picker
+  ///
+  /// In en, this message translates to:
+  /// **'Metric'**
+  String get widgetBuilderBlockMetric;
+
+  /// Block description
+  ///
+  /// In en, this message translates to:
+  /// **'Large value with label'**
+  String get widgetBuilderBlockMetricDesc;
+
+  /// Block name in picker
+  ///
+  /// In en, this message translates to:
+  /// **'New Row'**
+  String get widgetBuilderBlockNewRow;
+
+  /// Block description
+  ///
+  /// In en, this message translates to:
+  /// **'Add a row for more blocks'**
+  String get widgetBuilderBlockNewRowDesc;
+
+  /// Block name in picker
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get widgetBuilderBlockStatus;
+
+  /// Block description
+  ///
+  /// In en, this message translates to:
+  /// **'Status indicator with binding'**
+  String get widgetBuilderBlockStatusDesc;
+
+  /// Boolean false display value
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get widgetBuilderBoolNo;
+
+  /// Boolean true display value
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get widgetBuilderBoolYes;
+
+  /// Broadcast option subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Broadcast to everyone on channel'**
+  String get widgetBuilderBroadcastSubtitle;
+
+  /// CTA title
+  ///
+  /// In en, this message translates to:
+  /// **'Browse Marketplace'**
+  String get widgetBuilderBrowseMarketplace;
+
+  /// Cancel button label
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get widgetBuilderCancel;
+
+  /// Cancel button label
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get widgetBuilderCancelButton;
+
+  /// Category name for binding categories
+  ///
+  /// In en, this message translates to:
+  /// **'Air Quality'**
+  String get widgetBuilderCatAirQuality;
+
+  /// Category name for binding categories
+  ///
+  /// In en, this message translates to:
+  /// **'Device Metrics'**
+  String get widgetBuilderCatDeviceMetrics;
+
+  /// Category name for binding categories
+  ///
+  /// In en, this message translates to:
+  /// **'Environment'**
+  String get widgetBuilderCatEnvironment;
+
+  /// Category name for binding categories
+  ///
+  /// In en, this message translates to:
+  /// **'GPS & Position'**
+  String get widgetBuilderCatGpsPosition;
+
+  /// Category name for binding categories
+  ///
+  /// In en, this message translates to:
+  /// **'Messaging'**
+  String get widgetBuilderCatMessaging;
+
+  /// Category name for binding categories
+  ///
+  /// In en, this message translates to:
+  /// **'Network'**
+  String get widgetBuilderCatNetwork;
+
+  /// Category name for binding categories
+  ///
+  /// In en, this message translates to:
+  /// **'Node Info'**
+  String get widgetBuilderCatNodeInfo;
+
+  /// Category name for binding categories
+  ///
+  /// In en, this message translates to:
+  /// **'Power & Battery'**
+  String get widgetBuilderCatPowerBattery;
+
+  /// Category display name
+  ///
+  /// In en, this message translates to:
+  /// **'Charts'**
+  String get widgetBuilderCategoryCharts;
+
+  /// Category display name
+  ///
+  /// In en, this message translates to:
+  /// **'Device Status'**
+  String get widgetBuilderCategoryDeviceStatus;
+
+  /// Category display name
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get widgetBuilderCategoryLocation;
+
+  /// Category display name
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh Network'**
+  String get widgetBuilderCategoryMeshNetwork;
+
+  /// Category display name
+  ///
+  /// In en, this message translates to:
+  /// **'Metrics'**
+  String get widgetBuilderCategoryMetrics;
+
+  /// Category display name
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get widgetBuilderCategoryOther;
+
+  /// Category display name
+  ///
+  /// In en, this message translates to:
+  /// **'Utility'**
+  String get widgetBuilderCategoryUtility;
+
+  /// Category display name
+  ///
+  /// In en, this message translates to:
+  /// **'Weather'**
+  String get widgetBuilderCategoryWeather;
+
+  /// Action selector subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Choose an action for this element'**
+  String get widgetBuilderChooseAction;
+
+  /// Color selector header
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Color'**
+  String get widgetBuilderChooseColor;
+
+  /// Section subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a style that fits your needs'**
+  String get widgetBuilderChooseStyle;
+
+  /// CTA title
+  ///
+  /// In en, this message translates to:
+  /// **'Create Your First Widget'**
+  String get widgetBuilderCreateFirstWidget;
+
+  /// CTA description
+  ///
+  /// In en, this message translates to:
+  /// **'Use the wizard to build a custom widget with your preferred data and layout'**
+  String get widgetBuilderCreateFirstWidgetDesc;
+
+  /// Tooltip for create widget button
+  ///
+  /// In en, this message translates to:
+  /// **'Create Widget'**
+  String get widgetBuilderCreateWidgetTooltip;
+
+  /// Hero section title
+  ///
+  /// In en, this message translates to:
+  /// **'Custom Dashboard Widgets'**
+  String get widgetBuilderCustomDashboardWidgets;
+
+  /// Default description for new widget
+  ///
+  /// In en, this message translates to:
+  /// **'Custom widget'**
+  String get widgetBuilderCustomWidget;
+
+  /// Context menu action
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get widgetBuilderDeleteAction;
+
+  /// Delete button label
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get widgetBuilderDeleteButton;
+
+  /// Delete dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Widget?'**
+  String get widgetBuilderDeleteWidgetTitle;
+
+  /// CTA subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Discover widgets created by the community'**
+  String get widgetBuilderDiscoverCommunity;
+
+  /// Context menu action
+  ///
+  /// In en, this message translates to:
+  /// **'Duplicate'**
+  String get widgetBuilderDuplicate;
+
+  /// Button label to edit selected element
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get widgetBuilderEdit;
+
+  /// Context menu action
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get widgetBuilderEditAction;
+
+  /// Element type display name
+  ///
+  /// In en, this message translates to:
+  /// **'Button'**
+  String get widgetBuilderElementButton;
+
+  /// Element type display name
+  ///
+  /// In en, this message translates to:
+  /// **'Chart'**
+  String get widgetBuilderElementChart;
+
+  /// Element type display name
+  ///
+  /// In en, this message translates to:
+  /// **'Gauge'**
+  String get widgetBuilderElementGauge;
+
+  /// Element type display name for container
+  ///
+  /// In en, this message translates to:
+  /// **'Group'**
+  String get widgetBuilderElementGroup;
+
+  /// Element type display name for row
+  ///
+  /// In en, this message translates to:
+  /// **'Horizontal Stack'**
+  String get widgetBuilderElementHorizontalStack;
+
+  /// Element type display name
+  ///
+  /// In en, this message translates to:
+  /// **'Icon'**
+  String get widgetBuilderElementIcon;
+
+  /// Element type display name
+  ///
+  /// In en, this message translates to:
+  /// **'Image'**
+  String get widgetBuilderElementImage;
+
+  /// Element type display name for stack
+  ///
+  /// In en, this message translates to:
+  /// **'Layer Stack'**
+  String get widgetBuilderElementLayerStack;
+
+  /// Element type display name
+  ///
+  /// In en, this message translates to:
+  /// **'Map'**
+  String get widgetBuilderElementMap;
+
+  /// Error state when selected element cannot be located
+  ///
+  /// In en, this message translates to:
+  /// **'Element not found'**
+  String get widgetBuilderElementNotFound;
+
+  /// Element type display name
+  ///
+  /// In en, this message translates to:
+  /// **'Shape'**
+  String get widgetBuilderElementShape;
+
+  /// Element type display name
+  ///
+  /// In en, this message translates to:
+  /// **'Show/Hide'**
+  String get widgetBuilderElementShowHide;
+
+  /// Element type display name for spacer
+  ///
+  /// In en, this message translates to:
+  /// **'Space'**
+  String get widgetBuilderElementSpace;
+
+  /// Element type display name
+  ///
+  /// In en, this message translates to:
+  /// **'Text'**
+  String get widgetBuilderElementText;
+
+  /// Element type display name for column
+  ///
+  /// In en, this message translates to:
+  /// **'Vertical Stack'**
+  String get widgetBuilderElementVerticalStack;
+
+  /// Toolbox header
+  ///
+  /// In en, this message translates to:
+  /// **'Elements'**
+  String get widgetBuilderElements;
+
+  /// Warning when location sharing is disabled
+  ///
+  /// In en, this message translates to:
+  /// **'Enable \"Provide phone location\" in Settings to share your position'**
+  String get widgetBuilderEnablePhoneLocation;
+
+  /// Rename dialog hint text
+  ///
+  /// In en, this message translates to:
+  /// **'Enter widget name'**
+  String get widgetBuilderEnterWidgetName;
+
+  /// Overflow menu item label
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get widgetBuilderHelp;
+
+  /// Hero section description
+  ///
+  /// In en, this message translates to:
+  /// **'Build personalized widgets to display mesh data exactly how you want. Monitor battery, signal strength, location, and more at a glance.'**
+  String get widgetBuilderHeroDescription;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get widgetBuilderIconAdd;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Air'**
+  String get widgetBuilderIconAir;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Alert'**
+  String get widgetBuilderIconAlert;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Analytics'**
+  String get widgetBuilderIconAnalytics;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Bluetooth'**
+  String get widgetBuilderIconBluetooth;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Bookmark'**
+  String get widgetBuilderIconBookmark;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Call'**
+  String get widgetBuilderIconCall;
+
+  /// Icon category name
+  ///
+  /// In en, this message translates to:
+  /// **'Actions'**
+  String get widgetBuilderIconCategoryActions;
+
+  /// Icon category name
+  ///
+  /// In en, this message translates to:
+  /// **'Battery & Power'**
+  String get widgetBuilderIconCategoryBatteryPower;
+
+  /// Icon category name
+  ///
+  /// In en, this message translates to:
+  /// **'Communication'**
+  String get widgetBuilderIconCategoryCommunication;
+
+  /// Icon category name
+  ///
+  /// In en, this message translates to:
+  /// **'Connectivity'**
+  String get widgetBuilderIconCategoryConnectivity;
+
+  /// Icon category name
+  ///
+  /// In en, this message translates to:
+  /// **'Data & Charts'**
+  String get widgetBuilderIconCategoryDataCharts;
+
+  /// Icon category name
+  ///
+  /// In en, this message translates to:
+  /// **'Environment'**
+  String get widgetBuilderIconCategoryEnvironment;
+
+  /// Icon category name
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get widgetBuilderIconCategoryFavorites;
+
+  /// Icon category name
+  ///
+  /// In en, this message translates to:
+  /// **'Location & Maps'**
+  String get widgetBuilderIconCategoryLocationMaps;
+
+  /// Icon category name
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get widgetBuilderIconCategoryStatus;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Charging'**
+  String get widgetBuilderIconCharging;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Chart'**
+  String get widgetBuilderIconChart;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Chat'**
+  String get widgetBuilderIconChat;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Check'**
+  String get widgetBuilderIconCheck;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Cloud'**
+  String get widgetBuilderIconCloud;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get widgetBuilderIconDelete;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Devices'**
+  String get widgetBuilderIconDevices;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Down'**
+  String get widgetBuilderIconDown;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get widgetBuilderIconEdit;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get widgetBuilderIconError;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Explore'**
+  String get widgetBuilderIconExplore;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Flash'**
+  String get widgetBuilderIconFlash;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Full'**
+  String get widgetBuilderIconFull;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'GPS'**
+  String get widgetBuilderIconGps;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Heart'**
+  String get widgetBuilderIconHeart;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get widgetBuilderIconHelp;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Hub'**
+  String get widgetBuilderIconHub;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Humidity'**
+  String get widgetBuilderIconHumidity;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Info'**
+  String get widgetBuilderIconInfo;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get widgetBuilderIconLocation;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Map'**
+  String get widgetBuilderIconMap;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Message'**
+  String get widgetBuilderIconMessage;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Navigate'**
+  String get widgetBuilderIconNavigate;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Near Me'**
+  String get widgetBuilderIconNearMe;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Network'**
+  String get widgetBuilderIconNetwork;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Notification'**
+  String get widgetBuilderIconNotification;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Power'**
+  String get widgetBuilderIconPower;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Pressure'**
+  String get widgetBuilderIconPressure;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get widgetBuilderIconRefresh;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get widgetBuilderIconRemove;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Route'**
+  String get widgetBuilderIconRoute;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Router'**
+  String get widgetBuilderIconRouter;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get widgetBuilderIconSend;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get widgetBuilderIconSettings;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Signal'**
+  String get widgetBuilderIconSignal;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Speed'**
+  String get widgetBuilderIconSpeed;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Star'**
+  String get widgetBuilderIconStar;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Sun'**
+  String get widgetBuilderIconSun;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Temperature'**
+  String get widgetBuilderIconTemperature;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Thumbs Up'**
+  String get widgetBuilderIconThumbsUp;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Timeline'**
+  String get widgetBuilderIconTimeline;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Up'**
+  String get widgetBuilderIconUp;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'Warning'**
+  String get widgetBuilderIconWarning;
+
+  /// Icon display name
+  ///
+  /// In en, this message translates to:
+  /// **'WiFi'**
+  String get widgetBuilderIconWifi;
+
+  /// Button label to import widget
+  ///
+  /// In en, this message translates to:
+  /// **'Import'**
+  String get widgetBuilderImportButton;
+
+  /// Button label to edit before importing
+  ///
+  /// In en, this message translates to:
+  /// **'Edit First'**
+  String get widgetBuilderImportEditFirst;
+
+  /// Error state title
+  ///
+  /// In en, this message translates to:
+  /// **'Import Failed'**
+  String get widgetBuilderImportFailed2;
+
+  /// Button label on error state
+  ///
+  /// In en, this message translates to:
+  /// **'Go Back'**
+  String get widgetBuilderImportGoBack;
+
+  /// Info notice on import preview
+  ///
+  /// In en, this message translates to:
+  /// **'This widget will be added to your custom widgets. You can edit it anytime.'**
+  String get widgetBuilderImportInfoNotice;
+
+  /// Error when no data in import link
+  ///
+  /// In en, this message translates to:
+  /// **'No widget data provided'**
+  String get widgetBuilderImportNoData;
+
+  /// Error when shared widget not found
+  ///
+  /// In en, this message translates to:
+  /// **'Widget not found or has been deleted'**
+  String get widgetBuilderImportNotFound;
+
+  /// Label for preview section
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get widgetBuilderImportPreview;
+
+  /// Label for widget size field
+  ///
+  /// In en, this message translates to:
+  /// **'Size'**
+  String get widgetBuilderImportSize;
+
+  /// Label for tags section
+  ///
+  /// In en, this message translates to:
+  /// **'Tags'**
+  String get widgetBuilderImportTags;
+
+  /// Screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Import Widget'**
+  String get widgetBuilderImportTitle;
+
+  /// Success snackbar on import
+  ///
+  /// In en, this message translates to:
+  /// **'Widget imported successfully'**
+  String get widgetBuilderImportedSuccess;
+
+  /// Success snackbar with action on import via edit
+  ///
+  /// In en, this message translates to:
+  /// **'Widget imported successfully'**
+  String get widgetBuilderImportedSuccessAction;
+
+  /// Relative time for recent events
+  ///
+  /// In en, this message translates to:
+  /// **'Just now'**
+  String get widgetBuilderJustNow;
+
+  /// Button label to keep current widget style
+  ///
+  /// In en, this message translates to:
+  /// **'Keep Current'**
+  String get widgetBuilderKeepCurrent;
+
+  /// Property field label for action dropdown
+  ///
+  /// In en, this message translates to:
+  /// **'Add Action'**
+  String get widgetBuilderLabelAddAction;
+
+  /// Property field label for data binding
+  ///
+  /// In en, this message translates to:
+  /// **'Bind to'**
+  String get widgetBuilderLabelBindTo;
+
+  /// Property field label for spacing slider
+  ///
+  /// In en, this message translates to:
+  /// **'Gap between items'**
+  String get widgetBuilderLabelGap;
+
+  /// Alignment label for row
+  ///
+  /// In en, this message translates to:
+  /// **'Horizontal'**
+  String get widgetBuilderLabelHorizontal;
+
+  /// Property field label for icon selector
+  ///
+  /// In en, this message translates to:
+  /// **'Icon'**
+  String get widgetBuilderLabelIcon;
+
+  /// Property field label for icon color picker
+  ///
+  /// In en, this message translates to:
+  /// **'Icon Color'**
+  String get widgetBuilderLabelIconColor;
+
+  /// Property field label for gauge maximum
+  ///
+  /// In en, this message translates to:
+  /// **'Max'**
+  String get widgetBuilderLabelMax;
+
+  /// Property field label for gauge minimum
+  ///
+  /// In en, this message translates to:
+  /// **'Min'**
+  String get widgetBuilderLabelMin;
+
+  /// Property field label for navigate-to screen
+  ///
+  /// In en, this message translates to:
+  /// **'Screen'**
+  String get widgetBuilderLabelScreen;
+
+  /// Property field label for shape type
+  ///
+  /// In en, this message translates to:
+  /// **'Shape'**
+  String get widgetBuilderLabelShape;
+
+  /// Property field label for text content
+  ///
+  /// In en, this message translates to:
+  /// **'Text'**
+  String get widgetBuilderLabelText;
+
+  /// Property field label for gauge type
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get widgetBuilderLabelType;
+
+  /// Property field label for URL input
+  ///
+  /// In en, this message translates to:
+  /// **'URL'**
+  String get widgetBuilderLabelUrl;
+
+  /// Alignment label for column
+  ///
+  /// In en, this message translates to:
+  /// **'Vertical'**
+  String get widgetBuilderLabelVertical;
+
+  /// Size constraint info text
+  ///
+  /// In en, this message translates to:
+  /// **'Large widgets allow max 2 rows'**
+  String get widgetBuilderLargeMaxTwoRows;
+
+  /// Snackbar message for row limit on large
+  ///
+  /// In en, this message translates to:
+  /// **'Large widgets only allow 2 rows max'**
+  String get widgetBuilderLargeOnlyTwoRowsMax;
+
+  /// Success snackbar after broadcast share
+  ///
+  /// In en, this message translates to:
+  /// **'Location shared with mesh'**
+  String get widgetBuilderLocationSharedMesh;
+
+  /// Warning for rate-limited location sharing
+  ///
+  /// In en, this message translates to:
+  /// **'Location was shared recently — please wait before sharing again'**
+  String get widgetBuilderLocationSharedRecently;
+
+  /// Hint text for duplicate widget
+  ///
+  /// In en, this message translates to:
+  /// **'Consider making your widget more unique before submitting.'**
+  String get widgetBuilderMakeUnique;
+
+  /// Label shown on map element placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'Map View'**
+  String get widgetBuilderMapView;
+
+  /// Overflow menu item label
+  ///
+  /// In en, this message translates to:
+  /// **'Marketplace'**
+  String get widgetBuilderMarketplace;
+
+  /// Install button label when already installed
+  ///
+  /// In en, this message translates to:
+  /// **'Already Installed'**
+  String get widgetBuilderMarketplaceAlreadyInstalled;
+
+  /// Approve button label
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get widgetBuilderMarketplaceApprove;
+
+  /// Cancel button label
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get widgetBuilderMarketplaceCancel;
+
+  /// Section header on details screen
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get widgetBuilderMarketplaceDescription;
+
+  /// Reject reason hint text
+  ///
+  /// In en, this message translates to:
+  /// **'Enter reason...'**
+  String get widgetBuilderMarketplaceEnterReason;
+
+  /// Error state for category screen
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load category'**
+  String get widgetBuilderMarketplaceFailedLoadCategory;
+
+  /// Error state for newest tab
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load newest widgets'**
+  String get widgetBuilderMarketplaceFailedNewest;
+
+  /// Error state for popular tab
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load popular widgets'**
+  String get widgetBuilderMarketplaceFailedPopular;
+
+  /// Empty state hint for favorites tab
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the heart icon on any widget to add it here'**
+  String get widgetBuilderMarketplaceFavoritesHint;
+
+  /// Tooltip for help button
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get widgetBuilderMarketplaceHelpTooltip;
+
+  /// Install button label
+  ///
+  /// In en, this message translates to:
+  /// **'Install Widget'**
+  String get widgetBuilderMarketplaceInstallWidget;
+
+  /// Relative time for very recent actions
+  ///
+  /// In en, this message translates to:
+  /// **'Just now'**
+  String get widgetBuilderMarketplaceJustNow;
+
+  /// Loading text while preview renders
+  ///
+  /// In en, this message translates to:
+  /// **'Loading preview...'**
+  String get widgetBuilderMarketplaceLoadingPreview;
+
+  /// Empty state for favorites tab
+  ///
+  /// In en, this message translates to:
+  /// **'No favorite widgets yet'**
+  String get widgetBuilderMarketplaceNoFavorites;
+
+  /// Empty state for featured tab
+  ///
+  /// In en, this message translates to:
+  /// **'No featured widgets'**
+  String get widgetBuilderMarketplaceNoFeatured;
+
+  /// Empty state for newest tab
+  ///
+  /// In en, this message translates to:
+  /// **'No new widgets yet'**
+  String get widgetBuilderMarketplaceNoNew;
+
+  /// Empty state message
+  ///
+  /// In en, this message translates to:
+  /// **'No widgets pending approval'**
+  String get widgetBuilderMarketplaceNoPending;
+
+  /// Empty state for popular tab
+  ///
+  /// In en, this message translates to:
+  /// **'No popular widgets yet'**
+  String get widgetBuilderMarketplaceNoPopular;
+
+  /// Empty state for widget grid
+  ///
+  /// In en, this message translates to:
+  /// **'No widgets available'**
+  String get widgetBuilderMarketplaceNoWidgets;
+
+  /// Empty search results message
+  ///
+  /// In en, this message translates to:
+  /// **'No widgets found'**
+  String get widgetBuilderMarketplaceNoWidgetsFound;
+
+  /// Empty state for category screen
+  ///
+  /// In en, this message translates to:
+  /// **'No widgets in this category'**
+  String get widgetBuilderMarketplaceNoWidgetsInCategory;
+
+  /// Error message when user is not signed in
+  ///
+  /// In en, this message translates to:
+  /// **'Not authenticated'**
+  String get widgetBuilderMarketplaceNotAuthenticated;
+
+  /// Status badge label
+  ///
+  /// In en, this message translates to:
+  /// **'PENDING'**
+  String get widgetBuilderMarketplacePending;
+
+  /// Validation error when no reason provided
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a reason'**
+  String get widgetBuilderMarketplacePleaseEnterReason;
+
+  /// Button label while processing
+  ///
+  /// In en, this message translates to:
+  /// **'Processing...'**
+  String get widgetBuilderMarketplaceProcessing;
+
+  /// Reject button label
+  ///
+  /// In en, this message translates to:
+  /// **'Reject'**
+  String get widgetBuilderMarketplaceReject;
+
+  /// Card reject button label
+  ///
+  /// In en, this message translates to:
+  /// **'Reject'**
+  String get widgetBuilderMarketplaceRejectButton;
+
+  /// Reject dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Reject Widget'**
+  String get widgetBuilderMarketplaceRejectWidget;
+
+  /// Error message when offline
+  ///
+  /// In en, this message translates to:
+  /// **'Installing widgets requires an internet connection.'**
+  String get widgetBuilderMarketplaceRequiresInternet;
+
+  /// Retry button label
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get widgetBuilderMarketplaceRetry;
+
+  /// Retry button label
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get widgetBuilderMarketplaceRetryButton;
+
+  /// Search bar hint text
+  ///
+  /// In en, this message translates to:
+  /// **'Search widgets...'**
+  String get widgetBuilderMarketplaceSearchHint;
+
+  /// Tooltip for share button on details screen
+  ///
+  /// In en, this message translates to:
+  /// **'Share Widget'**
+  String get widgetBuilderMarketplaceShareTooltip;
+
+  /// Error message when offline for sharing
+  ///
+  /// In en, this message translates to:
+  /// **'Sharing widgets requires an internet connection.'**
+  String get widgetBuilderMarketplaceSharingRequiresInternet;
+
+  /// Tab label
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get widgetBuilderMarketplaceTabCategories;
+
+  /// Tab label (with optional count)
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get widgetBuilderMarketplaceTabFavorites;
+
+  /// Tab label
+  ///
+  /// In en, this message translates to:
+  /// **'Featured'**
+  String get widgetBuilderMarketplaceTabFeatured;
+
+  /// Tab label
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get widgetBuilderMarketplaceTabNew;
+
+  /// Tab label
+  ///
+  /// In en, this message translates to:
+  /// **'Popular'**
+  String get widgetBuilderMarketplaceTabPopular;
+
+  /// Section header on details screen
+  ///
+  /// In en, this message translates to:
+  /// **'Tags'**
+  String get widgetBuilderMarketplaceTags;
+
+  /// Screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Widget Marketplace'**
+  String get widgetBuilderMarketplaceTitle;
+
+  /// Error state message
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to load marketplace'**
+  String get widgetBuilderMarketplaceUnableToLoad;
+
+  /// Screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Widget Approval'**
+  String get widgetBuilderMarketplaceWidgetApproval;
+
+  /// Size constraint info text
+  ///
+  /// In en, this message translates to:
+  /// **'Medium widgets only allow 1 row'**
+  String get widgetBuilderMediumOnlyOneRow;
+
+  /// Snackbar message for row limit on medium
+  ///
+  /// In en, this message translates to:
+  /// **'Medium widgets only allow 1 row'**
+  String get widgetBuilderMediumOnlyOneRowLimit;
+
+  /// Button label to merge widget data
+  ///
+  /// In en, this message translates to:
+  /// **'Merge'**
+  String get widgetBuilderMerge;
+
+  /// Screen title
+  ///
+  /// In en, this message translates to:
+  /// **'My Widgets'**
+  String get widgetBuilderMyWidgets;
+
+  /// Default name for new widget
+  ///
+  /// In en, this message translates to:
+  /// **'New Widget'**
+  String get widgetBuilderNewWidget;
+
+  /// Message when action has no configurable options
+  ///
+  /// In en, this message translates to:
+  /// **'No additional options'**
+  String get widgetBuilderNoAdditionalOptions;
+
+  /// Description for no-binding option
+  ///
+  /// In en, this message translates to:
+  /// **'No data binding - use static text'**
+  String get widgetBuilderNoDataBinding;
+
+  /// Empty state when icon search yields no results
+  ///
+  /// In en, this message translates to:
+  /// **'No icons found'**
+  String get widgetBuilderNoIconsFound;
+
+  /// Empty state when variable search yields no results
+  ///
+  /// In en, this message translates to:
+  /// **'No variables found'**
+  String get widgetBuilderNoVariablesFound;
+
+  /// Option label for no binding selected
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get widgetBuilderNone;
+
+  /// OK button on similar widget dialog
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get widgetBuilderOk;
+
+  /// Options section header
+  ///
+  /// In en, this message translates to:
+  /// **'Options'**
+  String get widgetBuilderOptions;
+
+  /// Action description when node picker is enabled
+  ///
+  /// In en, this message translates to:
+  /// **'Pick node, then send'**
+  String get widgetBuilderPickNodeThenSend;
+
+  /// Traceroute description with node picker
+  ///
+  /// In en, this message translates to:
+  /// **'Pick node to trace'**
+  String get widgetBuilderPickNodeToTrace;
+
+  /// Section subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Pre-built widgets ready to customize'**
+  String get widgetBuilderPrebuiltWidgets;
+
+  /// Action description when node picker is disabled
+  ///
+  /// In en, this message translates to:
+  /// **'Quick message sheet'**
+  String get widgetBuilderQuickMessageSheet;
+
+  /// Section title
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Start Templates'**
+  String get widgetBuilderQuickStartTemplates;
+
+  /// Snackbar message when downsizing with too many rows
+  ///
+  /// In en, this message translates to:
+  /// **'Remove extra rows first - medium allows only 1 row'**
+  String get widgetBuilderRemoveExtraRows;
+
+  /// Context menu action
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from Dashboard'**
+  String get widgetBuilderRemoveFromDashboard;
+
+  /// Review guidelines section title
+  ///
+  /// In en, this message translates to:
+  /// **'Review Guidelines'**
+  String get widgetBuilderReviewGuidelines;
+
+  /// Review guidelines bullet points
+  ///
+  /// In en, this message translates to:
+  /// **'• Widget will be reviewed for quality\n• Similar widgets may be rejected\n• You\'ll be credited as the author'**
+  String get widgetBuilderReviewGuidelinesText;
+
+  /// Save button label
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get widgetBuilderSave;
+
+  /// Icon search hint text
+  ///
+  /// In en, this message translates to:
+  /// **'Search icons...'**
+  String get widgetBuilderSearchIcons;
+
+  /// Binding search hint text
+  ///
+  /// In en, this message translates to:
+  /// **'Search variables...'**
+  String get widgetBuilderSearchVariables;
+
+  /// Property section title
+  ///
+  /// In en, this message translates to:
+  /// **'Action'**
+  String get widgetBuilderSectionAction;
+
+  /// Block picker section title
+  ///
+  /// In en, this message translates to:
+  /// **'Action Blocks'**
+  String get widgetBuilderSectionActionBlocks;
+
+  /// Property section title
+  ///
+  /// In en, this message translates to:
+  /// **'Content'**
+  String get widgetBuilderSectionContent;
+
+  /// Property section title
+  ///
+  /// In en, this message translates to:
+  /// **'Data Binding'**
+  String get widgetBuilderSectionDataBinding;
+
+  /// Block picker section title
+  ///
+  /// In en, this message translates to:
+  /// **'Display Blocks'**
+  String get widgetBuilderSectionDisplayBlocks;
+
+  /// Action section label
+  ///
+  /// In en, this message translates to:
+  /// **'EMERGENCY'**
+  String get widgetBuilderSectionEmergency;
+
+  /// Block picker section title
+  ///
+  /// In en, this message translates to:
+  /// **'Layout'**
+  String get widgetBuilderSectionLayout;
+
+  /// Action section label
+  ///
+  /// In en, this message translates to:
+  /// **'MESSAGING'**
+  String get widgetBuilderSectionMessaging;
+
+  /// Action section label
+  ///
+  /// In en, this message translates to:
+  /// **'NETWORK'**
+  String get widgetBuilderSectionNetwork;
+
+  /// Property section title
+  ///
+  /// In en, this message translates to:
+  /// **'Style'**
+  String get widgetBuilderSectionStyle;
+
+  /// Button label when no action selected
+  ///
+  /// In en, this message translates to:
+  /// **'Select an action'**
+  String get widgetBuilderSelectAnAction;
+
+  /// Icon selector header
+  ///
+  /// In en, this message translates to:
+  /// **'Select Icon'**
+  String get widgetBuilderSelectIcon;
+
+  /// Binding selector header
+  ///
+  /// In en, this message translates to:
+  /// **'Select Variable'**
+  String get widgetBuilderSelectVariable;
+
+  /// Share sheet info text
+  ///
+  /// In en, this message translates to:
+  /// **'Scan this QR code in Socialmesh to import this widget'**
+  String get widgetBuilderShareInfoText;
+
+  /// Node selector title for share location action
+  ///
+  /// In en, this message translates to:
+  /// **'Share Location With'**
+  String get widgetBuilderShareLocationWith;
+
+  /// Share message text
+  ///
+  /// In en, this message translates to:
+  /// **'Check out this widget on Socialmesh!'**
+  String get widgetBuilderShareMessage;
+
+  /// Share sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Share Widget'**
+  String get widgetBuilderShareTitle;
+
+  /// Toggle option label for channel selection
+  ///
+  /// In en, this message translates to:
+  /// **'Show channel picker'**
+  String get widgetBuilderShowChannelPicker;
+
+  /// Toggle option subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Let user choose which channel'**
+  String get widgetBuilderShowChannelPickerDesc;
+
+  /// Toggle option label for message action
+  ///
+  /// In en, this message translates to:
+  /// **'Show node picker first'**
+  String get widgetBuilderShowNodePickerFirst;
+
+  /// Toggle option subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Let user choose which node to message'**
+  String get widgetBuilderShowNodePickerFirstDesc;
+
+  /// Toggle option label for traceroute
+  ///
+  /// In en, this message translates to:
+  /// **'Show node picker first'**
+  String get widgetBuilderShowNodePickerTrace;
+
+  /// Toggle option subtitle for traceroute
+  ///
+  /// In en, this message translates to:
+  /// **'Let user choose which node to trace'**
+  String get widgetBuilderShowNodePickerTraceDesc;
+
+  /// Snackbar when not signed in
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to share widgets'**
+  String get widgetBuilderSignInToShare;
+
+  /// Snackbar msg when not signed in
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to submit widgets'**
+  String get widgetBuilderSignInToSubmit;
+
+  /// Similar widget warning message
+  ///
+  /// In en, this message translates to:
+  /// **'A similar widget already exists in the marketplace:'**
+  String get widgetBuilderSimilarWidgetExists;
+
+  /// Similar widget warning title
+  ///
+  /// In en, this message translates to:
+  /// **'Similar Widget Found'**
+  String get widgetBuilderSimilarWidgetFound;
+
+  /// Size display name
+  ///
+  /// In en, this message translates to:
+  /// **'Custom size'**
+  String get widgetBuilderSizeCustom;
+
+  /// Size display name
+  ///
+  /// In en, this message translates to:
+  /// **'Large (2x2)'**
+  String get widgetBuilderSizeLarge;
+
+  /// Size display name
+  ///
+  /// In en, this message translates to:
+  /// **'Medium (2x1)'**
+  String get widgetBuilderSizeMedium;
+
+  /// Submit button label
+  ///
+  /// In en, this message translates to:
+  /// **'Submit'**
+  String get widgetBuilderSubmitButton;
+
+  /// Cancel button on submit dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get widgetBuilderSubmitCancel;
+
+  /// Submit dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Submit to Marketplace'**
+  String get widgetBuilderSubmitTitle;
+
+  /// Context menu action
+  ///
+  /// In en, this message translates to:
+  /// **'Submit to Marketplace'**
+  String get widgetBuilderSubmitToMarketplace;
+
+  /// Button label to switch widget style
+  ///
+  /// In en, this message translates to:
+  /// **'Switch'**
+  String get widgetBuilderSwitch;
+
+  /// Template name
+  ///
+  /// In en, this message translates to:
+  /// **'Battery Status'**
+  String get widgetBuilderTemplateBatteryStatus;
+
+  /// Template description
+  ///
+  /// In en, this message translates to:
+  /// **'Monitor power levels'**
+  String get widgetBuilderTemplateBatteryStatusDesc;
+
+  /// Template name
+  ///
+  /// In en, this message translates to:
+  /// **'Environment'**
+  String get widgetBuilderTemplateEnvironment;
+
+  /// Template description
+  ///
+  /// In en, this message translates to:
+  /// **'Weather & sensors'**
+  String get widgetBuilderTemplateEnvironmentDesc;
+
+  /// Template name
+  ///
+  /// In en, this message translates to:
+  /// **'GPS Position'**
+  String get widgetBuilderTemplateGpsPosition;
+
+  /// Template description
+  ///
+  /// In en, this message translates to:
+  /// **'Location tracking'**
+  String get widgetBuilderTemplateGpsPositionDesc;
+
+  /// Template name
+  ///
+  /// In en, this message translates to:
+  /// **'Network Overview'**
+  String get widgetBuilderTemplateNetworkOverview;
+
+  /// Template description
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh at a glance'**
+  String get widgetBuilderTemplateNetworkOverviewDesc;
+
+  /// Template name
+  ///
+  /// In en, this message translates to:
+  /// **'Signal Strength'**
+  String get widgetBuilderTemplateSignalStrength;
+
+  /// Template description
+  ///
+  /// In en, this message translates to:
+  /// **'Track connectivity'**
+  String get widgetBuilderTemplateSignalStrengthDesc;
+
+  /// Tooltip for toolbox toggle button
+  ///
+  /// In en, this message translates to:
+  /// **'Toggle Toolbox'**
+  String get widgetBuilderToggleToolbox;
+
+  /// Toolbox element label
+  ///
+  /// In en, this message translates to:
+  /// **'Chart'**
+  String get widgetBuilderToolboxChart;
+
+  /// Toolbox element label
+  ///
+  /// In en, this message translates to:
+  /// **'Column'**
+  String get widgetBuilderToolboxColumn;
+
+  /// Toolbox element label
+  ///
+  /// In en, this message translates to:
+  /// **'Conditional'**
+  String get widgetBuilderToolboxConditional;
+
+  /// Toolbox element label
+  ///
+  /// In en, this message translates to:
+  /// **'Container'**
+  String get widgetBuilderToolboxContainer;
+
+  /// Toolbox section title
+  ///
+  /// In en, this message translates to:
+  /// **'Content'**
+  String get widgetBuilderToolboxContent;
+
+  /// Toolbox section title
+  ///
+  /// In en, this message translates to:
+  /// **'Data Display'**
+  String get widgetBuilderToolboxDataDisplay;
+
+  /// Toolbox element label
+  ///
+  /// In en, this message translates to:
+  /// **'Gauge'**
+  String get widgetBuilderToolboxGauge;
+
+  /// Toolbox element label
+  ///
+  /// In en, this message translates to:
+  /// **'Icon'**
+  String get widgetBuilderToolboxIcon;
+
+  /// Toolbox element label
+  ///
+  /// In en, this message translates to:
+  /// **'Image'**
+  String get widgetBuilderToolboxImage;
+
+  /// Toolbox section title
+  ///
+  /// In en, this message translates to:
+  /// **'Layout'**
+  String get widgetBuilderToolboxLayout;
+
+  /// Toolbox section title
+  ///
+  /// In en, this message translates to:
+  /// **'Logic'**
+  String get widgetBuilderToolboxLogic;
+
+  /// Toolbox element label
+  ///
+  /// In en, this message translates to:
+  /// **'Map'**
+  String get widgetBuilderToolboxMap;
+
+  /// Toolbox element label
+  ///
+  /// In en, this message translates to:
+  /// **'Row'**
+  String get widgetBuilderToolboxRow;
+
+  /// Toolbox element label
+  ///
+  /// In en, this message translates to:
+  /// **'Shape'**
+  String get widgetBuilderToolboxShape;
+
+  /// Toolbox element label
+  ///
+  /// In en, this message translates to:
+  /// **'Spacer'**
+  String get widgetBuilderToolboxSpacer;
+
+  /// Toolbox element label
+  ///
+  /// In en, this message translates to:
+  /// **'Stack'**
+  String get widgetBuilderToolboxStack;
+
+  /// Toolbox element label
+  ///
+  /// In en, this message translates to:
+  /// **'Text'**
+  String get widgetBuilderToolboxText;
+
+  /// Traceroute description without node picker
+  ///
+  /// In en, this message translates to:
+  /// **'Trace route to node'**
+  String get widgetBuilderTraceRouteToNode;
+
+  /// Data type display label for double
+  ///
+  /// In en, this message translates to:
+  /// **'decimal'**
+  String get widgetBuilderTypeDecimal;
+
+  /// Widget type name
+  ///
+  /// In en, this message translates to:
+  /// **'Gauge'**
+  String get widgetBuilderTypeGauge;
+
+  /// Widget type description
+  ///
+  /// In en, this message translates to:
+  /// **'Big visual meter'**
+  String get widgetBuilderTypeGaugeDesc;
+
+  /// Widget type name
+  ///
+  /// In en, this message translates to:
+  /// **'Graph'**
+  String get widgetBuilderTypeGraph;
+
+  /// Widget type description
+  ///
+  /// In en, this message translates to:
+  /// **'Charts over time'**
+  String get widgetBuilderTypeGraphDesc;
+
+  /// Widget type name
+  ///
+  /// In en, this message translates to:
+  /// **'Info Card'**
+  String get widgetBuilderTypeInfoCard;
+
+  /// Widget type description
+  ///
+  /// In en, this message translates to:
+  /// **'Text & details'**
+  String get widgetBuilderTypeInfoCardDesc;
+
+  /// Widget type name
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get widgetBuilderTypeLocation;
+
+  /// Widget type description
+  ///
+  /// In en, this message translates to:
+  /// **'GPS coordinates'**
+  String get widgetBuilderTypeLocationDesc;
+
+  /// Data type display label for int
+  ///
+  /// In en, this message translates to:
+  /// **'number'**
+  String get widgetBuilderTypeNumber;
+
+  /// Widget type name
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Actions'**
+  String get widgetBuilderTypeQuickActions;
+
+  /// Widget type description
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to trigger'**
+  String get widgetBuilderTypeQuickActionsDesc;
+
+  /// Widget type name
+  ///
+  /// In en, this message translates to:
+  /// **'Status Display'**
+  String get widgetBuilderTypeStatusDisplay;
+
+  /// Widget type description
+  ///
+  /// In en, this message translates to:
+  /// **'Values with progress bars'**
+  String get widgetBuilderTypeStatusDisplayDesc;
+
+  /// Data type display label for String
+  ///
+  /// In en, this message translates to:
+  /// **'text'**
+  String get widgetBuilderTypeText;
+
+  /// Data type display label for DateTime
+  ///
+  /// In en, this message translates to:
+  /// **'time'**
+  String get widgetBuilderTypeTime;
+
+  /// Data type display label for unknown type
+  ///
+  /// In en, this message translates to:
+  /// **'value'**
+  String get widgetBuilderTypeValue;
+
+  /// Data type display label for bool
+  ///
+  /// In en, this message translates to:
+  /// **'yes/no'**
+  String get widgetBuilderTypeYesNo;
+
+  /// Error when location unavailable
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to get your location'**
+  String get widgetBuilderUnableToGetLocation;
+
+  /// Template use button label
+  ///
+  /// In en, this message translates to:
+  /// **'Use'**
+  String get widgetBuilderUse;
+
+  /// Validation error message
+  ///
+  /// In en, this message translates to:
+  /// **'Chart has no data binding'**
+  String get widgetBuilderValidationChartNoBinding;
+
+  /// Validation fix suggestion
+  ///
+  /// In en, this message translates to:
+  /// **'Bind to data like SNR history'**
+  String get widgetBuilderValidationChartNoBindingFix;
+
+  /// Validation fix suggestion
+  ///
+  /// In en, this message translates to:
+  /// **'Shorten the description'**
+  String get widgetBuilderValidationDescTooLongFix;
+
+  /// Validation error message
+  ///
+  /// In en, this message translates to:
+  /// **'Widget is empty'**
+  String get widgetBuilderValidationEmpty;
+
+  /// Validation fix suggestion
+  ///
+  /// In en, this message translates to:
+  /// **'Add elements inside'**
+  String get widgetBuilderValidationEmptyContainerFix;
+
+  /// Validation fix suggestion
+  ///
+  /// In en, this message translates to:
+  /// **'Add some elements to your widget'**
+  String get widgetBuilderValidationEmptyFix;
+
+  /// Validation error message
+  ///
+  /// In en, this message translates to:
+  /// **'Gauge min must be less than max'**
+  String get widgetBuilderValidationGaugeMinMax;
+
+  /// Validation fix suggestion
+  ///
+  /// In en, this message translates to:
+  /// **'Set min < max'**
+  String get widgetBuilderValidationGaugeMinMaxFix;
+
+  /// Validation error message
+  ///
+  /// In en, this message translates to:
+  /// **'Gauge has no data binding'**
+  String get widgetBuilderValidationGaugeNoBinding;
+
+  /// Validation fix suggestion
+  ///
+  /// In en, this message translates to:
+  /// **'Bind to a numeric value like battery or signal'**
+  String get widgetBuilderValidationGaugeNoBindingFix;
+
+  /// Validation warning message
+  ///
+  /// In en, this message translates to:
+  /// **'Gauge is bound to non-numeric data'**
+  String get widgetBuilderValidationGaugeNonNumeric;
+
+  /// Validation fix suggestion
+  ///
+  /// In en, this message translates to:
+  /// **'Gauges work best with numeric values'**
+  String get widgetBuilderValidationGaugeNonNumericFix;
+
+  /// Validation fix suggestion
+  ///
+  /// In en, this message translates to:
+  /// **'Select a valid data source'**
+  String get widgetBuilderValidationInvalidBindingFix;
+
+  /// Validation warning message
+  ///
+  /// In en, this message translates to:
+  /// **'URL may be invalid'**
+  String get widgetBuilderValidationInvalidUrl;
+
+  /// Success message when no validation issues
+  ///
+  /// In en, this message translates to:
+  /// **'Widget looks good!'**
+  String get widgetBuilderValidationLooksGood;
+
+  /// Validation fix suggestion
+  ///
+  /// In en, this message translates to:
+  /// **'Use a shorter name'**
+  String get widgetBuilderValidationNameTooLongFix;
+
+  /// Validation error message
+  ///
+  /// In en, this message translates to:
+  /// **'Give your widget a descriptive name'**
+  String get widgetBuilderValidationNeedName;
+
+  /// Validation fix suggestion
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the title to rename'**
+  String get widgetBuilderValidationNeedNameFix;
+
+  /// Validation fix suggestion
+  ///
+  /// In en, this message translates to:
+  /// **'Flatten your widget structure'**
+  String get widgetBuilderValidationNestingFix;
+
+  /// Validation error message
+  ///
+  /// In en, this message translates to:
+  /// **'Action button has no action configured'**
+  String get widgetBuilderValidationNoAction;
+
+  /// Validation fix suggestion
+  ///
+  /// In en, this message translates to:
+  /// **'Configure what happens when tapped'**
+  String get widgetBuilderValidationNoActionFix;
+
+  /// Validation error message
+  ///
+  /// In en, this message translates to:
+  /// **'Navigate action has no destination'**
+  String get widgetBuilderValidationNoDestination;
+
+  /// Validation fix suggestion
+  ///
+  /// In en, this message translates to:
+  /// **'Select where to navigate'**
+  String get widgetBuilderValidationNoDestinationFix;
+
+  /// Validation error message
+  ///
+  /// In en, this message translates to:
+  /// **'Icon element has no icon selected'**
+  String get widgetBuilderValidationNoIcon;
+
+  /// Validation fix suggestion
+  ///
+  /// In en, this message translates to:
+  /// **'Select an icon'**
+  String get widgetBuilderValidationNoIconFix;
+
+  /// Validation error message
+  ///
+  /// In en, this message translates to:
+  /// **'Button has no label or icon'**
+  String get widgetBuilderValidationNoLabel;
+
+  /// Validation fix suggestion
+  ///
+  /// In en, this message translates to:
+  /// **'Add text or an icon'**
+  String get widgetBuilderValidationNoLabelFix;
+
+  /// Validation error message
+  ///
+  /// In en, this message translates to:
+  /// **'Text element has no content'**
+  String get widgetBuilderValidationNoText;
+
+  /// Validation fix suggestion
+  ///
+  /// In en, this message translates to:
+  /// **'Add text or bind to data'**
+  String get widgetBuilderValidationNoTextFix;
+
+  /// Validation error message
+  ///
+  /// In en, this message translates to:
+  /// **'Open URL action has no URL'**
+  String get widgetBuilderValidationNoUrl;
+
+  /// Validation fix suggestion
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the URL to open'**
+  String get widgetBuilderValidationNoUrlFix;
+
+  /// Validation fix suggestion
+  ///
+  /// In en, this message translates to:
+  /// **'Shorten the text content'**
+  String get widgetBuilderValidationTextTooLongFix;
+
+  /// Validation fix suggestion
+  ///
+  /// In en, this message translates to:
+  /// **'Split into multiple containers'**
+  String get widgetBuilderValidationTooManyChildrenFix;
+
+  /// Validation fix suggestion
+  ///
+  /// In en, this message translates to:
+  /// **'Simplify your widget by removing unnecessary elements'**
+  String get widgetBuilderValidationTooManyElementsFix;
+
+  /// Validation fix suggestion
+  ///
+  /// In en, this message translates to:
+  /// **'Remove some tags'**
+  String get widgetBuilderValidationTooManyTagsFix;
+
+  /// Action label for settings navigation
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get widgetBuilderView;
+
+  /// Action selector header
+  ///
+  /// In en, this message translates to:
+  /// **'What should happen when tapped?'**
+  String get widgetBuilderWhatShouldHappen;
+
+  /// Add child dialog header
+  ///
+  /// In en, this message translates to:
+  /// **'What would you like to add?'**
+  String get widgetBuilderWhatToAdd;
+
+  /// Rename dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Widget Name'**
+  String get widgetBuilderWidgetName;
+
+  /// Section title
+  ///
+  /// In en, this message translates to:
+  /// **'Widget Types'**
+  String get widgetBuilderWidgetTypes;
+
+  /// Wizard step 1 subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'How do you want your widget to look?'**
+  String get widgetBuilderWizardStep1Subtitle;
+
+  /// Wizard step 1 title
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a Style'**
+  String get widgetBuilderWizardStep1Title;
+
+  /// Wizard step 2 subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Give it a memorable name'**
+  String get widgetBuilderWizardStep2Subtitle;
+
+  /// Wizard step 2 title
+  ///
+  /// In en, this message translates to:
+  /// **'Name Your Widget'**
+  String get widgetBuilderWizardStep2Title;
+
+  /// Wizard step 3 subtitle for actions
+  ///
+  /// In en, this message translates to:
+  /// **'Which actions do you want quick access to?'**
+  String get widgetBuilderWizardStep3SubtitleActions;
+
+  /// Wizard step 3 subtitle for data
+  ///
+  /// In en, this message translates to:
+  /// **'What info do you want to see?'**
+  String get widgetBuilderWizardStep3SubtitleData;
+
+  /// Wizard step 3 title for quick actions
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Actions'**
+  String get widgetBuilderWizardStep3TitleActions;
+
+  /// Wizard step 3 title for data widgets
+  ///
+  /// In en, this message translates to:
+  /// **'Pick Your Data'**
+  String get widgetBuilderWizardStep3TitleData;
 
   /// No description provided for @worldMeshAddToFavorites.
   ///
@@ -27914,354 +37866,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Uptime: {uptime}'**
   String worldMeshUptimeLabel(String uptime);
-
-  /// Generic error message shown in telemetry screens.
-  ///
-  /// In en, this message translates to:
-  /// **'Error: {error}'**
-  String telemetryError(String error);
-
-  /// Snackbar message when clearing data fails.
-  ///
-  /// In en, this message translates to:
-  /// **'Failed to clear data: {error}'**
-  String telemetryFailedToClear(String error);
-
-  /// Screen title for the air quality log.
-  ///
-  /// In en, this message translates to:
-  /// **'Air Quality Log'**
-  String get telemetryAirQualityTitle;
-
-  /// Empty-state message when no air quality data exists.
-  ///
-  /// In en, this message translates to:
-  /// **'No air quality data recorded yet'**
-  String get telemetryAirQualityNoData;
-
-  /// Section header for standard particulate matter readings.
-  ///
-  /// In en, this message translates to:
-  /// **'Particulate Matter (Standard)'**
-  String get telemetryAirQualityPmStandard;
-
-  /// Section header for environmental particulate matter readings.
-  ///
-  /// In en, this message translates to:
-  /// **'Particulate Matter (Environmental)'**
-  String get telemetryAirQualityPmEnvironmental;
-
-  /// CO₂ indicator label combining unit and quality rating.
-  ///
-  /// In en, this message translates to:
-  /// **'CO₂ - {rating}'**
-  String telemetryCo2Label(String rating);
-
-  /// Screen title for the detection sensor log.
-  ///
-  /// In en, this message translates to:
-  /// **'Detection Sensor Log'**
-  String get telemetryDetectionTitle;
-
-  /// Empty-state message when no detection sensor data exists.
-  ///
-  /// In en, this message translates to:
-  /// **'No sensor events recorded yet'**
-  String get telemetryDetectionNoData;
-
-  /// Empty-state subtitle for detection sensor screen.
-  ///
-  /// In en, this message translates to:
-  /// **'Detection sensors report motion and presence'**
-  String get telemetryDetectionDescription;
-
-  /// Default name for unnamed detection sensors.
-  ///
-  /// In en, this message translates to:
-  /// **'Detection Sensor'**
-  String get telemetryDetectionSensor;
-
-  /// Badge label when a detection sensor is in clear state.
-  ///
-  /// In en, this message translates to:
-  /// **'Clear'**
-  String get telemetryDetectionClearBadge;
-
-  /// Screen title for the PAX counter log.
-  ///
-  /// In en, this message translates to:
-  /// **'PAX Counter Log'**
-  String get telemetryPaxTitle;
-
-  /// Empty-state message when no PAX counter data exists.
-  ///
-  /// In en, this message translates to:
-  /// **'No PAX data recorded yet'**
-  String get telemetryPaxNoData;
-
-  /// Empty-state subtitle for PAX counter screen.
-  ///
-  /// In en, this message translates to:
-  /// **'PAX counter detects nearby devices'**
-  String get telemetryPaxDescription;
-
-  /// Empty-state headline when no device metrics exist.
-  ///
-  /// In en, this message translates to:
-  /// **'No device metrics yet'**
-  String get telemetryDeviceNoMetrics;
-
-  /// Filter chip label for battery metrics.
-  ///
-  /// In en, this message translates to:
-  /// **'Battery'**
-  String get telemetryDeviceFilterBattery;
-
-  /// Filter chip label for voltage metrics.
-  ///
-  /// In en, this message translates to:
-  /// **'Voltage'**
-  String get telemetryDeviceFilterVoltage;
-
-  /// Filter chip label for channel utilization metrics.
-  ///
-  /// In en, this message translates to:
-  /// **'Channel'**
-  String get telemetryDeviceFilterChannel;
-
-  /// Filter chip label for air utilization metrics.
-  ///
-  /// In en, this message translates to:
-  /// **'Air Util'**
-  String get telemetryDeviceFilterAirUtil;
-
-  /// Filter chip label for uptime metrics.
-  ///
-  /// In en, this message translates to:
-  /// **'Uptime'**
-  String get telemetryDeviceFilterUptime;
-
-  /// Chart legend label for battery series.
-  ///
-  /// In en, this message translates to:
-  /// **'Battery'**
-  String get telemetryDeviceLegendBattery;
-
-  /// Chart legend label for voltage series.
-  ///
-  /// In en, this message translates to:
-  /// **'Voltage'**
-  String get telemetryDeviceLegendVoltage;
-
-  /// Chart legend label for channel utilization series.
-  ///
-  /// In en, this message translates to:
-  /// **'Ch Util'**
-  String get telemetryDeviceLegendChUtil;
-
-  /// Chart legend label for air utilization series.
-  ///
-  /// In en, this message translates to:
-  /// **'Air Util'**
-  String get telemetryDeviceLegendAirUtil;
-
-  /// Battery status label when device is charging.
-  ///
-  /// In en, this message translates to:
-  /// **'Charging'**
-  String get telemetryDeviceCharging;
-
-  /// Screen title for environment metrics log.
-  ///
-  /// In en, this message translates to:
-  /// **'Environment Metrics'**
-  String get telemetryEnvironmentTitle;
-
-  /// Empty-state headline when no environment metrics exist.
-  ///
-  /// In en, this message translates to:
-  /// **'No environment metrics yet'**
-  String get telemetryEnvironmentNoMetrics;
-
-  /// Filter chip label for temperature metrics.
-  ///
-  /// In en, this message translates to:
-  /// **'Temp'**
-  String get telemetryEnvironmentFilterTemp;
-
-  /// Filter chip label for humidity metrics.
-  ///
-  /// In en, this message translates to:
-  /// **'Humidity'**
-  String get telemetryEnvironmentFilterHumidity;
-
-  /// Filter chip label for barometric pressure metrics.
-  ///
-  /// In en, this message translates to:
-  /// **'Pressure'**
-  String get telemetryEnvironmentFilterPressure;
-
-  /// Filter chip label for gas resistance metrics.
-  ///
-  /// In en, this message translates to:
-  /// **'Gas'**
-  String get telemetryEnvironmentFilterGas;
-
-  /// Filter chip label for indoor air quality metrics.
-  ///
-  /// In en, this message translates to:
-  /// **'IAQ'**
-  String get telemetryEnvironmentFilterIaq;
-
-  /// Filter chip label for light/lux metrics.
-  ///
-  /// In en, this message translates to:
-  /// **'Light'**
-  String get telemetryEnvironmentFilterLight;
-
-  /// Filter chip label for wind speed metrics.
-  ///
-  /// In en, this message translates to:
-  /// **'Wind'**
-  String get telemetryEnvironmentFilterWind;
-
-  /// Chart legend label for temperature series.
-  ///
-  /// In en, this message translates to:
-  /// **'Temperature'**
-  String get telemetryEnvironmentLegendTemperature;
-
-  /// Chart legend label for humidity series.
-  ///
-  /// In en, this message translates to:
-  /// **'Humidity'**
-  String get telemetryEnvironmentLegendHumidity;
-
-  /// Tooltip for switching to list view.
-  ///
-  /// In en, this message translates to:
-  /// **'List view'**
-  String get telemetryPositionListView;
-
-  /// Tooltip for switching to map view.
-  ///
-  /// In en, this message translates to:
-  /// **'Map view'**
-  String get telemetryPositionMapView;
-
-  /// Popup menu section header for map style options.
-  ///
-  /// In en, this message translates to:
-  /// **'Map Style'**
-  String get telemetryPositionMapStyle;
-
-  /// Empty-state headline when filters exclude all positions.
-  ///
-  /// In en, this message translates to:
-  /// **'No positions match filters'**
-  String get telemetryPositionNoMatch;
-
-  /// Snackbar message when there is no data to export.
-  ///
-  /// In en, this message translates to:
-  /// **'No position data to export'**
-  String get telemetryPositionNoExportData;
-
-  /// Confirm button label for the clear-position-data sheet.
-  ///
-  /// In en, this message translates to:
-  /// **'Clear'**
-  String get telemetryPositionClearLabel;
-
-  /// Snackbar message after position data is cleared.
-  ///
-  /// In en, this message translates to:
-  /// **'Position data cleared'**
-  String get telemetryPositionCleared;
-
-  /// Map empty-state message when no positions are visible.
-  ///
-  /// In en, this message translates to:
-  /// **'No positions to display'**
-  String get telemetryPositionNoDisplay;
-
-  /// Drawer header title in the position map node list.
-  ///
-  /// In en, this message translates to:
-  /// **'Nodes'**
-  String get telemetryPositionDrawerTitle;
-
-  /// Drawer option to show positions from all nodes.
-  ///
-  /// In en, this message translates to:
-  /// **'All Nodes'**
-  String get telemetryPositionAllNodesOption;
-
-  /// Drawer subtitle for the all-nodes option.
-  ///
-  /// In en, this message translates to:
-  /// **'Show positions from all nodes'**
-  String get telemetryPositionAllNodesDescription;
-
-  /// Node count pill label on the position map.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} nodes'**
-  String telemetryPositionNodesCount(int count);
-
-  /// Screen title for traceroute log.
-  ///
-  /// In en, this message translates to:
-  /// **'Traceroute History'**
-  String get telemetryTracerouteTitle;
-
-  /// Empty-state headline when no traceroutes exist.
-  ///
-  /// In en, this message translates to:
-  /// **'No traceroutes recorded yet'**
-  String get telemetryTracerouteNoData;
-
-  /// Empty-state subtitle for the traceroute screen.
-  ///
-  /// In en, this message translates to:
-  /// **'Send a traceroute from a node to see network paths'**
-  String get telemetryTracerouteEmptyHint;
-
-  /// Snackbar message when there is no traceroute data to export.
-  ///
-  /// In en, this message translates to:
-  /// **'No traceroute data to export'**
-  String get telemetryTracerouteNoExportData;
-
-  /// Confirm button label for the clear-traceroute-data sheet.
-  ///
-  /// In en, this message translates to:
-  /// **'Clear'**
-  String get telemetryTracerouteClearLabel;
-
-  /// Snackbar message after traceroute data is cleared.
-  ///
-  /// In en, this message translates to:
-  /// **'Traceroute data cleared'**
-  String get telemetryTracerouteCleared;
-
-  /// Label for the destination node in a traceroute card.
-  ///
-  /// In en, this message translates to:
-  /// **'To'**
-  String get telemetryTracerouteTo;
-
-  /// Badge label when a traceroute received a response.
-  ///
-  /// In en, this message translates to:
-  /// **'Response'**
-  String get telemetryTracerouteResponseBadge;
-
-  /// Badge label when a traceroute received no response.
-  ///
-  /// In en, this message translates to:
-  /// **'No Response'**
-  String get telemetryTracerouteNoResponseBadge;
 }
 
 class _AppLocalizationsDelegate

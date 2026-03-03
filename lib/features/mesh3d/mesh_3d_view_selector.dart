@@ -10,6 +10,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/app_bottom_sheet.dart';
 import 'mesh_3d_models.dart';
@@ -49,7 +50,7 @@ class _ViewSelectorContent extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: 16),
           child: Text(
-            'View Mode',
+            context.l10n.mesh3dViewModeTitle,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w700,

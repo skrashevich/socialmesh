@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/legal/legal_constants.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
@@ -48,11 +49,13 @@ class _LegalAcceptanceScreenState extends ConsumerState<LegalAcceptanceScreen>
     return termsState.hasAccepted && termsState.needsAcceptance;
   }
 
-  String get _title => _isUpdate ? 'Updated Terms' : 'Terms & Privacy';
+  String get _title => _isUpdate
+      ? context.l10n.legalAcceptanceTitleUpdate
+      : context.l10n.legalAcceptanceTitleInitial;
 
   String get _subtitle => _isUpdate
-      ? 'We have updated our Terms of Service. Please review and accept the changes to continue using Socialmesh.'
-      : 'Before you get started, please review our Terms of Service and Privacy Policy.';
+      ? context.l10n.legalAcceptanceSubtitleUpdate
+      : context.l10n.legalAcceptanceSubtitleInitial;
 
   Future<void> _handleAgree() async {
     if (_accepting) return;
@@ -231,8 +234,10 @@ class _LegalAcceptanceScreenState extends ConsumerState<LegalAcceptanceScreen>
           label: 'View Terms of Service',
           child: _DocumentLinkTile(
             icon: Icons.description_outlined,
-            title: 'Terms of Service',
-            subtitle: 'Effective ${_formatDate(termsV)}',
+            title: context.l10n.legalAcceptanceTermsOfService,
+            subtitle: context.l10n.legalAcceptanceTermsEffective(
+              _formatDate(termsV),
+            ),
             onTap: _openTerms,
           ),
         ),
@@ -244,8 +249,10 @@ class _LegalAcceptanceScreenState extends ConsumerState<LegalAcceptanceScreen>
           label: 'View Privacy Policy',
           child: _DocumentLinkTile(
             icon: Icons.privacy_tip_outlined,
-            title: 'Privacy Policy',
-            subtitle: 'Effective ${_formatDate(privacyV)}',
+            title: context.l10n.legalAcceptancePrivacyPolicy,
+            subtitle: context.l10n.legalAcceptancePrivacyEffective(
+              _formatDate(privacyV),
+            ),
             onTap: _openPrivacy,
           ),
         ),
@@ -285,8 +292,8 @@ class _LegalAcceptanceScreenState extends ConsumerState<LegalAcceptanceScreen>
                         color: Colors.white.withValues(alpha: 0.8),
                       ),
                     )
-                  : const Text(
-                      'I Agree',
+                  : Text(
+                      context.l10n.legalAcceptanceAgreeButton,
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w600,
@@ -311,7 +318,10 @@ class _LegalAcceptanceScreenState extends ConsumerState<LegalAcceptanceScreen>
                   borderRadius: BorderRadius.circular(AppTheme.radius14),
                 ),
               ),
-              child: const Text('Not Now', style: TextStyle(fontSize: 16)),
+              child: Text(
+                context.l10n.legalAcceptanceDeclineButton,
+                style: TextStyle(fontSize: 16),
+              ),
             ),
           ),
         ),
@@ -323,7 +333,7 @@ class _LegalAcceptanceScreenState extends ConsumerState<LegalAcceptanceScreen>
             label:
                 'By tapping I Agree, you accept our Terms of Service and acknowledge our Privacy Policy.',
             child: Text(
-              'By tapping "I Agree", you accept our Terms of Service and acknowledge our Privacy Policy.',
+              context.l10n.legalAcceptanceFinePrint,
               style: TextStyle(
                 color: context.textTertiary,
                 fontSize: 12,
@@ -363,7 +373,7 @@ class _LegalAcceptanceScreenState extends ConsumerState<LegalAcceptanceScreen>
               Semantics(
                 header: true,
                 child: Text(
-                  'Terms Required',
+                  context.l10n.legalAcceptanceDeclineTitle,
                   style: theme.textTheme.headlineSmall?.copyWith(
                     color: context.textPrimary,
                     fontWeight: FontWeight.bold,
@@ -373,7 +383,7 @@ class _LegalAcceptanceScreenState extends ConsumerState<LegalAcceptanceScreen>
               ),
               const SizedBox(height: AppTheme.spacing16),
               Text(
-                'Accepting the Terms of Service and Privacy Policy is required to use Socialmesh. You can review them and accept whenever you are ready.',
+                context.l10n.legalAcceptanceDeclineBody,
                 style: theme.textTheme.bodyLarge?.copyWith(
                   color: context.textSecondary,
                   height: 1.6,
@@ -398,8 +408,8 @@ class _LegalAcceptanceScreenState extends ConsumerState<LegalAcceptanceScreen>
                         borderRadius: BorderRadius.circular(AppTheme.radius14),
                       ),
                     ),
-                    child: const Text(
-                      'Review Terms',
+                    child: Text(
+                      context.l10n.legalAcceptanceReviewButton,
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w600,
@@ -426,19 +436,19 @@ class _LegalAcceptanceScreenState extends ConsumerState<LegalAcceptanceScreen>
 
     if (month == null || day == null) return version;
 
-    const months = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
+    final months = [
+      context.l10n.legalAcceptanceDateFormatJanuary,
+      context.l10n.legalAcceptanceDateFormatFebruary,
+      context.l10n.legalAcceptanceDateFormatMarch,
+      context.l10n.legalAcceptanceDateFormatApril,
+      context.l10n.legalAcceptanceDateFormatMay,
+      context.l10n.legalAcceptanceDateFormatJune,
+      context.l10n.legalAcceptanceDateFormatJuly,
+      context.l10n.legalAcceptanceDateFormatAugust,
+      context.l10n.legalAcceptanceDateFormatSeptember,
+      context.l10n.legalAcceptanceDateFormatOctober,
+      context.l10n.legalAcceptanceDateFormatNovember,
+      context.l10n.legalAcceptanceDateFormatDecember,
     ];
 
     if (month < 1 || month > 12) return version;

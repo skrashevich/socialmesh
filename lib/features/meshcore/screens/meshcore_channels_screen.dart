@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // lint-allow: keyboard-dismissal — TextFields are in bottom-sheet sub-widgets, not the main screen
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 
 import 'package:flutter/material.dart';
@@ -47,7 +48,8 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
 
     return GlassScaffold.body(
       leading: const MeshCoreHamburgerMenuButton(),
-      title: 'Channels${channels.isEmpty ? '' : ' (${channels.length})'}',
+      title:
+          '${context.l10n.meshcoreChannelsTitle}${channels.isEmpty ? '' : ' (${channels.length})'}',
       actions: [
         const MeshCoreDeviceStatusButton(),
         AppBarOverflowMenu<String>(
@@ -75,7 +77,7 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
                   ),
                   const SizedBox(width: AppTheme.spacing12),
                   Text(
-                    'Create Channel',
+                    context.l10n.meshcoreChannelsCreateChannel,
                     style: TextStyle(color: context.textPrimary),
                   ),
                 ],
@@ -92,7 +94,7 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
                   ),
                   const SizedBox(width: AppTheme.spacing12),
                   Text(
-                    'Join Channel',
+                    context.l10n.meshcoreChannelsJoinChannel,
                     style: TextStyle(color: context.textPrimary),
                   ),
                 ],
@@ -109,7 +111,7 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
                   ),
                   const SizedBox(width: AppTheme.spacing12),
                   Text(
-                    'Refresh Channels',
+                    context.l10n.meshcoreChannelsRefreshChannels,
                     style: TextStyle(color: context.textPrimary),
                   ),
                 ],
@@ -127,7 +129,7 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
                   ),
                   const SizedBox(width: AppTheme.spacing12),
                   Text(
-                    'Disconnect',
+                    context.l10n.meshcoreDisconnect,
                     style: TextStyle(color: context.textPrimary),
                   ),
                 ],
@@ -147,13 +149,16 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
   }
 
   Widget _buildLoadingState() {
-    return const Center(
+    return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircularProgressIndicator(),
-          SizedBox(height: AppTheme.spacing16),
-          Text('Loading channels...', style: TextStyle(color: Colors.white70)),
+          const CircularProgressIndicator(),
+          const SizedBox(height: AppTheme.spacing16),
+          Text(
+            context.l10n.meshcoreLoadingChannels,
+            style: const TextStyle(color: Colors.white70),
+          ),
         ],
       ),
     );
@@ -173,14 +178,14 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
             ),
             const SizedBox(height: AppTheme.spacing16),
             Text(
-              'MeshCore Disconnected',
+              context.l10n.meshcoreDisconnectedTitle,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 color: Colors.white.withValues(alpha: 0.8),
               ),
             ),
             const SizedBox(height: AppTheme.spacing8),
             Text(
-              'Connect to a MeshCore device to view channels',
+              context.l10n.meshcoreDisconnectedChannelsDescription,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: Colors.white.withValues(alpha: 0.6),
@@ -212,7 +217,7 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
             ),
             const SizedBox(height: AppTheme.spacing24),
             Text(
-              'No Channels',
+              context.l10n.meshcoreNoChannels,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 color: Colors.white.withValues(alpha: 0.9),
                 fontWeight: FontWeight.bold,
@@ -220,8 +225,7 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
             ),
             const SizedBox(height: AppTheme.spacing12),
             Text(
-              'Channels are shared spaces for group communication.\n\n'
-              'Create a new channel or join an existing one.',
+              context.l10n.meshcoreNoChannelsDescription,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: Colors.white.withValues(alpha: 0.6),
@@ -235,7 +239,7 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
                 FilledButton.icon(
                   onPressed: _showCreateChannelDialog,
                   icon: const Icon(Icons.add_rounded),
-                  label: const Text('Create Channel'),
+                  label: Text(context.l10n.meshcoreCreateChannelButton),
                   style: FilledButton.styleFrom(
                     backgroundColor: AccentColors.purple.withValues(alpha: 0.3),
                     foregroundColor: AccentColors.purple,
@@ -245,7 +249,7 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
                 OutlinedButton.icon(
                   onPressed: _showJoinChannelDialog,
                   icon: const Icon(Icons.login_rounded),
-                  label: const Text('Join'),
+                  label: Text(context.l10n.meshcoreJoinButton),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: Colors.white.withValues(alpha: 0.8),
                     side: BorderSide(
@@ -275,7 +279,7 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
                   ),
                   const SizedBox(width: AppTheme.spacing8),
                   Text(
-                    'Connected to $deviceName',
+                    context.l10n.meshcoreConnectedTo(deviceName),
                     style: TextStyle(
                       color: AccentColors.green,
                       fontWeight: FontWeight.w500,
@@ -323,7 +327,7 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
                 ),
                 const SizedBox(width: AppTheme.spacing8),
                 Text(
-                  'Refreshing...',
+                  context.l10n.meshcoreRefreshing,
                   style: TextStyle(color: context.textTertiary),
                 ),
               ],
@@ -350,7 +354,7 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Create Channel',
+              context.l10n.meshcoreCreateChannelDialogTitle,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
@@ -362,11 +366,13 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
               controller: nameController,
               autofocus: true,
               decoration: InputDecoration(
-                labelText: 'Channel Name',
+                labelText: context.l10n.meshcoreChannelNameLabel,
                 labelStyle: TextStyle(
                   color: Colors.white.withValues(alpha: 0.6),
                 ),
-                hintText: isHashtag ? 'e.g. general' : 'Channel name',
+                hintText: isHashtag
+                    ? context.l10n.meshcoreChannelNameHintHashtag
+                    : context.l10n.meshcoreChannelNameHint,
                 hintStyle: TextStyle(
                   color: Colors.white.withValues(alpha: 0.4),
                 ),
@@ -383,14 +389,14 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
             ),
             const SizedBox(height: AppTheme.spacing16),
             ListTile(
-              title: const Text(
-                'Public Hashtag Channel',
-                style: TextStyle(color: Colors.white, fontSize: 14),
+              title: Text(
+                context.l10n.meshcorePublicHashtagChannel,
+                style: const TextStyle(color: Colors.white, fontSize: 14),
               ),
               subtitle: Text(
                 isHashtag
-                    ? 'PSK derived from name (discoverable)'
-                    : 'Random PSK (private)',
+                    ? context.l10n.meshcorePskDerivedFromName
+                    : context.l10n.meshcoreRandomPskPrivate,
                 style: TextStyle(
                   color: Colors.white.withValues(alpha: 0.5),
                   fontSize: 12,
@@ -415,7 +421,7 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
                         borderRadius: BorderRadius.circular(AppTheme.radius12),
                       ),
                     ),
-                    child: const Text('Cancel'),
+                    child: Text(context.l10n.meshcoreCancel),
                   ),
                 ),
                 const SizedBox(width: AppTheme.spacing12),
@@ -424,7 +430,10 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
                     onPressed: () async {
                       final name = nameController.text.trim();
                       if (name.isEmpty) {
-                        showErrorSnackBar(ctx, 'Please enter a channel name');
+                        showErrorSnackBar(
+                          ctx,
+                          context.l10n.meshcoreErrorEnterChannelName,
+                        );
                         return;
                       }
 
@@ -460,7 +469,7 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
                       if (mounted) {
                         showSuccessSnackBar(
                           context,
-                          'Channel "${channel.name}" created',
+                          context.l10n.meshcoreChannelCreated(channel.name),
                         );
                       }
                     },
@@ -471,7 +480,7 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
                         borderRadius: BorderRadius.circular(AppTheme.radius12),
                       ),
                     ),
-                    child: const Text('Create'),
+                    child: Text(context.l10n.meshcoreCreate),
                   ),
                 ),
               ],
@@ -490,7 +499,7 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Join Channel',
+            context.l10n.meshcoreChannelsJoinChannel,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -499,8 +508,8 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
           const SizedBox(height: AppTheme.spacing16),
           _buildJoinOption(
             icon: Icons.tag_rounded,
-            title: 'Join Hashtag Channel',
-            subtitle: 'Enter channel name (e.g. #general)',
+            title: context.l10n.meshcoreJoinHashtagChannel,
+            subtitle: context.l10n.meshcoreJoinHashtagChannelSubtitle,
             onTap: () {
               Navigator.pop(context);
               _showJoinHashtagDialog();
@@ -508,8 +517,8 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
           ),
           _buildJoinOption(
             icon: Icons.qr_code_scanner_rounded,
-            title: 'Scan QR Code',
-            subtitle: 'Scan a channel QR code',
+            title: context.l10n.meshcoreScanQrCode,
+            subtitle: context.l10n.meshcoreScanChannelQrSubtitle,
             onTap: () {
               Navigator.pop(context);
               Navigator.of(context).push(
@@ -523,8 +532,8 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
           ),
           _buildJoinOption(
             icon: Icons.keyboard_rounded,
-            title: 'Enter Channel Code',
-            subtitle: 'Paste a channel invite code',
+            title: context.l10n.meshcoreEnterChannelCode,
+            subtitle: context.l10n.meshcoreEnterChannelCodeSubtitle,
             onTap: () {
               Navigator.pop(context);
               _showEnterCodeDialog();
@@ -562,6 +571,7 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
 
   void _showJoinHashtagDialog() async {
     final controller = TextEditingController();
+    final l10n = context.l10n;
 
     final name = await AppBottomSheet.show<String>(
       context: context,
@@ -570,7 +580,7 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'Join Hashtag Channel',
+              l10n.meshcoreJoinHashtagChannel,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
@@ -583,10 +593,10 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
               autofocus: true,
               maxLength: 32,
               decoration: InputDecoration(
-                labelText: 'Channel Name',
+                labelText: l10n.meshcoreChannelNameLabel,
                 prefixText: '#',
                 prefixStyle: TextStyle(color: AccentColors.purple),
-                hintText: 'general',
+                hintText: l10n.meshcoreChannelNameHintGeneral,
                 counterText: '',
               ),
               style: TextStyle(color: context.textPrimary),
@@ -604,7 +614,7 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
                         borderRadius: BorderRadius.circular(AppTheme.radius12),
                       ),
                     ),
-                    child: const Text('Cancel'),
+                    child: Text(context.l10n.meshcoreCancel),
                   ),
                 ),
                 const SizedBox(width: AppTheme.spacing12),
@@ -615,7 +625,7 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
                       if (text.isEmpty) {
                         showErrorSnackBar(
                           sheetContext,
-                          'Please enter a channel name',
+                          l10n.meshcoreErrorEnterChannelName,
                         );
                         return;
                       }
@@ -628,7 +638,7 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
                         borderRadius: BorderRadius.circular(AppTheme.radius12),
                       ),
                     ),
-                    child: const Text('Join'),
+                    child: Text(context.l10n.meshcoreJoin),
                   ),
                 ),
               ],
@@ -656,7 +666,10 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
     await ref.read(meshCoreChannelsProvider.notifier).setChannel(channel);
 
     if (mounted) {
-      showSuccessSnackBar(context, 'Joined #$name');
+      showSuccessSnackBar(
+        context,
+        context.l10n.meshcoreJoinedHashtagChannel(name),
+      );
     }
   }
 
@@ -669,7 +682,7 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'Enter Channel Code',
+            context.l10n.meshcoreEnterChannelCode,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -683,7 +696,7 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
             maxLines: 3,
             maxLength: 256,
             decoration: InputDecoration(
-              hintText: 'Paste channel code here...',
+              hintText: context.l10n.meshcorePasteChannelCodeHint,
               hintStyle: TextStyle(color: Colors.white.withValues(alpha: 0.4)),
               filled: true,
               fillColor: Colors.white.withValues(alpha: 0.05),
@@ -711,7 +724,7 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
                   ),
-                  child: const Text('Cancel'),
+                  child: Text(context.l10n.meshcoreCancel),
                 ),
               ),
               const SizedBox(width: AppTheme.spacing12),
@@ -720,7 +733,10 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
                   onPressed: () {
                     final code = controller.text.trim();
                     if (code.isEmpty) {
-                      showErrorSnackBar(context, 'Please enter a channel code');
+                      showErrorSnackBar(
+                        context,
+                        context.l10n.meshcoreErrorEnterChannelCode,
+                      );
                       return;
                     }
 
@@ -745,12 +761,12 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
                           .setChannel(channel);
                       showSuccessSnackBar(
                         context,
-                        'Joined ${channel.displayName}',
+                        context.l10n.meshcoreJoinedChannel(channel.displayName),
                       );
                     } else {
                       showErrorSnackBar(
                         context,
-                        'Invalid channel code format (expected: name:pskHex)',
+                        context.l10n.meshcoreInvalidChannelCodeFormat,
                       );
                     }
                   },
@@ -761,7 +777,7 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
                   ),
-                  child: const Text('Join'),
+                  child: Text(context.l10n.meshcoreJoin),
                 ),
               ),
             ],
@@ -777,9 +793,11 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
     QrShareSheet.show(
       context: context,
       title: channel.displayName,
-      subtitle: channel.isPublic ? 'Public Channel' : 'Private Channel',
+      subtitle: channel.isPublic
+          ? context.l10n.meshcorePublicChannel
+          : context.l10n.meshcorePrivateChannel,
       qrData: channelCode,
-      infoText: 'Scan this QR code to join the channel',
+      infoText: context.l10n.meshcoreScanQrToJoinChannel,
     );
   }
 
@@ -801,9 +819,9 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
           ListTile(
             contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.chat_rounded, color: AccentColors.purple),
-            title: const Text(
-              'Open Channel',
-              style: TextStyle(color: Colors.white),
+            title: Text(
+              context.l10n.meshcoreOpenChannel,
+              style: const TextStyle(color: Colors.white),
             ),
             onTap: () {
               Navigator.pop(context);
@@ -818,22 +836,25 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
           ListTile(
             contentPadding: EdgeInsets.zero,
             leading: Icon(Icons.share_rounded, color: context.textSecondary),
-            title: const Text(
-              'Share Channel',
-              style: TextStyle(color: Colors.white),
+            title: Text(
+              context.l10n.meshcoreShareChannel,
+              style: const TextStyle(color: Colors.white),
             ),
             onTap: () {
               Navigator.pop(context);
               final code = generateChannelCode(channel);
               Clipboard.setData(ClipboardData(text: code));
-              showSuccessSnackBar(context, 'Channel code copied');
+              showSuccessSnackBar(
+                context,
+                context.l10n.meshcoreChannelCodeCopied,
+              );
             },
           ),
           ListTile(
             contentPadding: EdgeInsets.zero,
             leading: Icon(Icons.delete_rounded, color: AppTheme.errorRed),
             title: Text(
-              'Leave Channel',
+              context.l10n.meshcoreLeaveChannel,
               style: TextStyle(color: AppTheme.errorRed),
             ),
             onTap: () {
@@ -849,9 +870,9 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
   void _confirmLeaveChannel(MeshCoreChannel channel) async {
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Leave Channel?',
-      message: 'Are you sure you want to leave ${channel.displayName}?',
-      confirmLabel: 'Leave',
+      title: context.l10n.meshcoreLeaveChannelTitle,
+      message: context.l10n.meshcoreLeaveChannelMessage(channel.displayName),
+      confirmLabel: context.l10n.meshcoreLeave,
       isDestructive: true,
     );
 
@@ -862,7 +883,10 @@ class _MeshCoreChannelsScreenState extends ConsumerState<MeshCoreChannelsScreen>
         .read(meshCoreChannelsProvider.notifier)
         .setChannel(MeshCoreChannel.empty(channel.index));
     if (mounted) {
-      showSuccessSnackBar(context, 'Left ${channel.displayName}');
+      showSuccessSnackBar(
+        context,
+        context.l10n.meshcoreLeftChannel(channel.displayName),
+      );
     }
   }
 
@@ -947,7 +971,9 @@ class _ChannelCard extends StatelessWidget {
                         ),
                         const SizedBox(width: AppTheme.spacing4),
                         Text(
-                          isPublic ? 'Public' : 'Private',
+                          isPublic
+                              ? context.l10n.meshcorePublic
+                              : context.l10n.meshcorePrivate,
                           style: TextStyle(
                             color: context.textTertiary,
                             fontSize: 12,
@@ -961,7 +987,7 @@ class _ChannelCard extends StatelessWidget {
                         ),
                         const SizedBox(width: AppTheme.spacing4),
                         Text(
-                          'Slot ${channel.index}',
+                          context.l10n.meshcoreSlotIndex(channel.index),
                           style: TextStyle(
                             color: context.textTertiary,
                             fontSize: 12,

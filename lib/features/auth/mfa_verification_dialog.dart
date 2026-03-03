@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/widgets/app_bottom_sheet.dart';
 
@@ -75,7 +76,7 @@ class _MFAVerificationDialogState extends ConsumerState<MFAVerificationDialog>
     if (phoneHint == null) {
       safeSetState(() {
         _isSendingCode = false;
-        _errorMessage = 'No phone factor found';
+        _errorMessage = context.l10n.authMfaNoPhoneFactorFound;
       });
       return;
     }
@@ -113,12 +114,12 @@ class _MFAVerificationDialogState extends ConsumerState<MFAVerificationDialog>
   Future<void> _verifyCode() async {
     final code = _codeController.text.trim();
     if (code.length != 6) {
-      safeSetState(() => _errorMessage = 'Please enter the 6-digit code');
+      safeSetState(() => _errorMessage = context.l10n.authMfaEnterSixDigitCode);
       return;
     }
 
     if (_verificationId == null) {
-      safeSetState(() => _errorMessage = 'No verification ID. Try resending.');
+      safeSetState(() => _errorMessage = context.l10n.authMfaNoVerificationId);
       return;
     }
 
@@ -159,7 +160,7 @@ class _MFAVerificationDialogState extends ConsumerState<MFAVerificationDialog>
     final phoneHint = widget.resolver.hints
         .whereType<PhoneMultiFactorInfo>()
         .firstOrNull;
-    return phoneHint?.phoneNumber ?? 'your phone';
+    return phoneHint?.phoneNumber ?? context.l10n.authMfaYourPhone;
   }
 
   @override
@@ -173,7 +174,7 @@ class _MFAVerificationDialogState extends ConsumerState<MFAVerificationDialog>
             Icon(Icons.security, color: context.accentColor),
             const SizedBox(width: AppTheme.spacing12),
             Text(
-              'Verify Identity',
+              context.l10n.authMfaVerifyIdentityTitle,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
@@ -191,13 +192,13 @@ class _MFAVerificationDialogState extends ConsumerState<MFAVerificationDialog>
             ),
           ),
           Text(
-            'Sending verification code...',
+            context.l10n.authMfaSendingCode,
             style: TextStyle(color: context.textSecondary),
             textAlign: TextAlign.center,
           ),
         ] else ...[
           Text(
-            'Enter the code sent to ${_getMaskedPhone()}',
+            context.l10n.authMfaEnterCodeSentTo(_getMaskedPhone()),
             style: TextStyle(fontSize: 14, color: context.textSecondary),
           ),
           const SizedBox(height: AppTheme.spacing16),
@@ -253,7 +254,7 @@ class _MFAVerificationDialogState extends ConsumerState<MFAVerificationDialog>
                     borderRadius: BorderRadius.circular(AppTheme.radius12),
                   ),
                 ),
-                child: const Text('Cancel'),
+                child: Text(context.l10n.authMfaCancelButton),
               ),
             ),
             if (!_isSendingCode) ...[
@@ -273,7 +274,7 @@ class _MFAVerificationDialogState extends ConsumerState<MFAVerificationDialog>
                           height: 20,
                           child: CircularProgressIndicator(strokeWidth: 2),
                         )
-                      : const Text('Verify'),
+                      : Text(context.l10n.authMfaVerifyButton),
                 ),
               ),
             ],

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // lint-allow: scaffold — immersive camera scanner with transparent AppBar
+import '../../../core/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -98,7 +99,7 @@ class _MeshCoreQrScannerScreenState
       }
     } catch (e) {
       AppLogging.ble('MeshCore QR Scanner ERROR: $e');
-      showErrorSnackBar(context, 'Invalid QR code format');
+      showErrorSnackBar(context, context.l10n.meshcoreInvalidQrCodeFormat);
       _resetScanner();
     }
   }
@@ -116,7 +117,7 @@ class _MeshCoreQrScannerScreenState
       if (exists) {
         showInfoSnackBar(
           context,
-          '${contact.name} is already in your contacts',
+          context.l10n.meshcoreContactAlreadyExists(contact.name),
         );
         _resetScanner();
         return;
@@ -124,7 +125,10 @@ class _MeshCoreQrScannerScreenState
 
       // Add the contact
       ref.read(meshCoreContactsProvider.notifier).addContact(contact);
-      showSuccessSnackBar(context, '${contact.name} added to contacts');
+      showSuccessSnackBar(
+        context,
+        context.l10n.meshcoreContactAddedToContacts(contact.name),
+      );
       Navigator.of(context).pop(contact);
       return;
     }
@@ -147,7 +151,7 @@ class _MeshCoreQrScannerScreenState
         if (exists) {
           showInfoSnackBar(
             context,
-            '${decodedContact.name} is already in your contacts',
+            context.l10n.meshcoreContactAlreadyExists(decodedContact.name),
           );
           _resetScanner();
           return;
@@ -156,14 +160,14 @@ class _MeshCoreQrScannerScreenState
         ref.read(meshCoreContactsProvider.notifier).addContact(decodedContact);
         showSuccessSnackBar(
           context,
-          '${decodedContact.name} added to contacts',
+          context.l10n.meshcoreContactAddedToContacts(decodedContact.name),
         );
         Navigator.of(context).pop(decodedContact);
         return;
       }
     }
 
-    showErrorSnackBar(context, 'Not a valid MeshCore contact QR code');
+    showErrorSnackBar(context, context.l10n.meshcoreNotValidContactQr);
     _resetScanner();
   }
 
@@ -190,7 +194,7 @@ class _MeshCoreQrScannerScreenState
       if (exists) {
         showInfoSnackBar(
           context,
-          '${channel.displayName} is already in your channels',
+          context.l10n.meshcoreChannelAlreadyExists(channel.displayName),
         );
         _resetScanner();
         return;
@@ -198,7 +202,10 @@ class _MeshCoreQrScannerScreenState
 
       // Add the channel
       ref.read(meshCoreChannelsProvider.notifier).setChannel(channel);
-      showSuccessSnackBar(context, 'Joined ${channel.displayName}');
+      showSuccessSnackBar(
+        context,
+        context.l10n.meshcoreJoinedChannel(channel.displayName),
+      );
       Navigator.of(context).pop(channel);
       return;
     }
@@ -221,20 +228,25 @@ class _MeshCoreQrScannerScreenState
         if (exists) {
           showInfoSnackBar(
             context,
-            '${decodedChannel.displayName} is already in your channels',
+            context.l10n.meshcoreChannelAlreadyExists(
+              decodedChannel.displayName,
+            ),
           );
           _resetScanner();
           return;
         }
 
         ref.read(meshCoreChannelsProvider.notifier).setChannel(decodedChannel);
-        showSuccessSnackBar(context, 'Joined ${decodedChannel.displayName}');
+        showSuccessSnackBar(
+          context,
+          context.l10n.meshcoreJoinedChannel(decodedChannel.displayName),
+        );
         Navigator.of(context).pop(decodedChannel);
         return;
       }
     }
 
-    showErrorSnackBar(context, 'Not a valid MeshCore channel QR code');
+    showErrorSnackBar(context, context.l10n.meshcoreNotValidChannelQr);
     _resetScanner();
   }
 
@@ -252,8 +264,8 @@ class _MeshCoreQrScannerScreenState
   @override
   Widget build(BuildContext context) {
     final title = widget.mode == MeshCoreScanMode.contact
-        ? 'Scan Contact QR'
-        : 'Scan Channel QR';
+        ? context.l10n.meshcoreScanContactQrTitle
+        : context.l10n.meshcoreScanChannelQrTitle;
 
     final accentColor = widget.mode == MeshCoreScanMode.contact
         ? AccentColors.cyan
@@ -329,8 +341,8 @@ class _MeshCoreQrScannerScreenState
               ),
               child: Text(
                 widget.mode == MeshCoreScanMode.contact
-                    ? 'Point your camera at a MeshCore contact QR code'
-                    : 'Point your camera at a MeshCore channel QR code',
+                    ? context.l10n.meshcorePointCameraAtContactQr
+                    : context.l10n.meshcorePointCameraAtChannelQr,
                 textAlign: TextAlign.center,
                 style: const TextStyle(color: Colors.white70, fontSize: 14),
               ),

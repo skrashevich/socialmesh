@@ -3,6 +3,8 @@ import 'package:socialmesh/core/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
+
 import '../ar_state.dart';
 
 /// Visual view mode selector widget
@@ -33,19 +35,19 @@ class ARViewModeSelector extends StatelessWidget {
           _buildModeButton(
             mode: ARViewMode.tactical,
             icon: Icons.grid_view,
-            label: 'TAC',
+            label: context.l10n.arViewModeSelectorTac,
           ),
           const SizedBox(height: AppTheme.spacing4),
           _buildModeButton(
             mode: ARViewMode.explorer,
             icon: Icons.explore,
-            label: 'EXP',
+            label: context.l10n.arViewModeSelectorExp,
           ),
           const SizedBox(height: AppTheme.spacing4),
           _buildModeButton(
             mode: ARViewMode.minimal,
             icon: Icons.radio_button_unchecked,
-            label: 'MIN',
+            label: context.l10n.arViewModeSelectorMin,
           ),
         ],
       ),

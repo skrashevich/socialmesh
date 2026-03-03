@@ -30,6 +30,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vector_math/vector_math_64.dart' as vector;
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/app_bar_overflow_menu.dart';
@@ -350,7 +351,7 @@ class _Mesh3DScreenState extends ConsumerState<Mesh3DScreen>
           // View selector — most important action.
           IconButton(
             icon: const Icon(Icons.view_carousel),
-            tooltip: 'Change View',
+            tooltip: context.l10n.mesh3dChangeViewTooltip,
             onPressed: () async {
               final selected = await showMesh3DViewSelector(
                 context: context,
@@ -383,8 +384,8 @@ class _Mesh3DScreenState extends ConsumerState<Mesh3DScreen>
                     ),
                     title: Text(
                       _showConnections
-                          ? 'Hide Connections'
-                          : 'Show Connections',
+                          ? context.l10n.mesh3dHideConnections
+                          : context.l10n.mesh3dShowConnections,
                     ),
                     contentPadding: EdgeInsets.zero,
                     visualDensity: VisualDensity.compact,
@@ -394,17 +395,21 @@ class _Mesh3DScreenState extends ConsumerState<Mesh3DScreen>
                 value: 'rotate',
                 child: ListTile(
                   leading: const Icon(Icons.rotate_right),
-                  title: Text(_autoRotate ? 'Stop Rotation' : 'Auto Rotate'),
+                  title: Text(
+                    _autoRotate
+                        ? context.l10n.mesh3dStopRotation
+                        : context.l10n.mesh3dAutoRotate,
+                  ),
                   contentPadding: EdgeInsets.zero,
                   visualDensity: VisualDensity.compact,
                 ),
               ),
               const PopupMenuDivider(),
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'help',
                 child: ListTile(
-                  leading: Icon(Icons.help_outline),
-                  title: Text('Help'),
+                  leading: const Icon(Icons.help_outline),
+                  title: Text(context.l10n.mesh3dHelp),
                   contentPadding: EdgeInsets.zero,
                   visualDensity: VisualDensity.compact,
                 ),
@@ -701,8 +706,11 @@ class _NodeCountBadge extends StatelessWidget {
                 const SizedBox(width: AppTheme.spacing8),
                 Text(
                   isFiltered
-                      ? '$filteredCount/$totalCount nodes'
-                      : '$filteredCount nodes',
+                      ? context.l10n.mesh3dFilteredNodeCount(
+                          filteredCount,
+                          totalCount,
+                        )
+                      : context.l10n.mesh3dNodeCount(filteredCount),
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w600,

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+import '../../core/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -121,21 +122,21 @@ class _MyBugReportsScreenState extends ConsumerState<MyBugReportsScreen>
 
     return [
       StatusFilterChip(
-        label: 'All',
+        label: context.l10n.feedbackFilterAll,
         count: reports.length,
         isSelected: _activeFilter == _BugReportFilter.all,
         color: _filterColor(context, _BugReportFilter.all),
         onTap: () => safeSetState(() => _activeFilter = _BugReportFilter.all),
       ),
       StatusFilterChip(
-        label: 'Open',
+        label: context.l10n.feedbackFilterOpen,
         count: openCount,
         isSelected: _activeFilter == _BugReportFilter.open,
         color: _filterColor(context, _BugReportFilter.open),
         onTap: () => safeSetState(() => _activeFilter = _BugReportFilter.open),
       ),
       StatusFilterChip(
-        label: 'Responded',
+        label: context.l10n.feedbackFilterResponded,
         count: respondedCount,
         isSelected: _activeFilter == _BugReportFilter.responded,
         color: _filterColor(context, _BugReportFilter.responded),
@@ -143,7 +144,7 @@ class _MyBugReportsScreenState extends ConsumerState<MyBugReportsScreen>
             safeSetState(() => _activeFilter = _BugReportFilter.responded),
       ),
       StatusFilterChip(
-        label: 'Awaiting',
+        label: context.l10n.feedbackFilterAwaiting,
         count: awaitingCount,
         isSelected: _activeFilter == _BugReportFilter.awaiting,
         color: _filterColor(context, _BugReportFilter.awaiting),
@@ -151,7 +152,7 @@ class _MyBugReportsScreenState extends ConsumerState<MyBugReportsScreen>
             safeSetState(() => _activeFilter = _BugReportFilter.awaiting),
       ),
       StatusFilterChip(
-        label: 'Resolved',
+        label: context.l10n.feedbackFilterResolved,
         count: resolvedCount,
         isSelected: _activeFilter == _BugReportFilter.resolved,
         color: _filterColor(context, _BugReportFilter.resolved),
@@ -168,7 +169,7 @@ class _MyBugReportsScreenState extends ConsumerState<MyBugReportsScreen>
 
     return GlassScaffold(
       resizeToAvoidBottomInset: false,
-      title: 'My Bug Reports',
+      title: context.l10n.feedbackBugReportsTitle,
       slivers: [
         ...reportsAsync.when(
           data: (reports) {
@@ -189,7 +190,7 @@ class _MyBugReportsScreenState extends ConsumerState<MyBugReportsScreen>
                           ),
                           const SizedBox(height: AppTheme.spacing16),
                           Text(
-                            'No bug reports yet',
+                            context.l10n.feedbackNoBugReports,
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
@@ -198,8 +199,7 @@ class _MyBugReportsScreenState extends ConsumerState<MyBugReportsScreen>
                           ),
                           const SizedBox(height: AppTheme.spacing8),
                           Text(
-                            'Shake your device to report a bug.\n'
-                            'Your reports and any responses will appear here.',
+                            context.l10n.feedbackNoBugReportsDesc,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 14,
@@ -225,7 +225,7 @@ class _MyBugReportsScreenState extends ConsumerState<MyBugReportsScreen>
                   searchQuery: _searchQuery,
                   onSearchChanged: (value) =>
                       safeSetState(() => _searchQuery = value),
-                  hintText: 'Search reports',
+                  hintText: context.l10n.feedbackSearchReports,
                   textScaler: MediaQuery.textScalerOf(context),
                   rebuildKey: Object.hashAll([_activeFilter, reports.length]),
                   filterChips: _buildFilterChips(context, reports),
@@ -247,8 +247,8 @@ class _MyBugReportsScreenState extends ConsumerState<MyBugReportsScreen>
                         const SizedBox(height: AppTheme.spacing12),
                         Text(
                           _searchQuery.isNotEmpty
-                              ? 'No reports match your search'
-                              : 'No reports match this filter',
+                              ? context.l10n.feedbackNoMatchSearch
+                              : context.l10n.feedbackNoMatchFilter,
                           style: TextStyle(
                             fontSize: 15,
                             color: context.textSecondary,
@@ -300,7 +300,7 @@ class _MyBugReportsScreenState extends ConsumerState<MyBugReportsScreen>
                       ),
                       const SizedBox(height: AppTheme.spacing16),
                       Text(
-                        'Failed to load reports',
+                        context.l10n.feedbackFailedToLoad,
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
@@ -320,7 +320,7 @@ class _MyBugReportsScreenState extends ConsumerState<MyBugReportsScreen>
                       TextButton.icon(
                         onPressed: () => ref.invalidate(myBugReportsProvider),
                         icon: const Icon(Icons.refresh),
-                        label: const Text('Retry'),
+                        label: Text(context.l10n.feedbackRetry),
                       ),
                     ],
                   ),
@@ -408,9 +408,12 @@ class _BugReportCardState extends ConsumerState<_BugReportCard>
       _replyFocusNode.unfocus();
       ref.invalidate(myBugReportsProvider);
 
-      safeShowSnackBar('Reply sent', type: SnackBarType.success);
+      safeShowSnackBar(
+        context.l10n.feedbackReplySent,
+        type: SnackBarType.success,
+      );
     } catch (e) {
-      showErrorSnackBar(context, 'Failed to send reply: $e');
+      showErrorSnackBar(context, context.l10n.feedbackReplyFailed('$e'));
     } finally {
       if (mounted) {
         safeSetState(() => _isSending = false);
@@ -569,7 +572,7 @@ class _BugReportCardState extends ConsumerState<_BugReportCard>
             Padding(
               padding: const EdgeInsets.fromLTRB(AppTheme.spacing16, 12, 16, 4),
               child: Text(
-                'Your report',
+                context.l10n.feedbackYourReport,
                 style: TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.w700,
@@ -631,7 +634,7 @@ class _BugReportCardState extends ConsumerState<_BugReportCard>
                   4,
                 ),
                 child: Text(
-                  'Conversation',
+                  context.l10n.feedbackConversation,
                   style: TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w700,
@@ -661,7 +664,7 @@ class _BugReportCardState extends ConsumerState<_BugReportCard>
                     ),
                     const SizedBox(width: AppTheme.spacing8),
                     Text(
-                      'This report has been resolved',
+                      context.l10n.feedbackReportResolved,
                       style: TextStyle(
                         fontSize: 13,
                         color: context.textTertiary,
@@ -684,7 +687,7 @@ class _BugReportCardState extends ConsumerState<_BugReportCard>
                     ),
                     const SizedBox(width: AppTheme.spacing8),
                     Text(
-                      'Waiting for admin response',
+                      context.l10n.feedbackWaitingForAdmin,
                       style: TextStyle(
                         fontSize: 13,
                         color: context.textTertiary,
@@ -708,7 +711,7 @@ class _BugReportCardState extends ConsumerState<_BugReportCard>
                       maxLength: 2000,
                       enabled: !_isSending,
                       decoration: InputDecoration(
-                        hintText: 'Write a reply...',
+                        hintText: context.l10n.feedbackReplyHint,
                         hintStyle: TextStyle(color: context.textTertiary),
                         filled: true,
                         fillColor: context.background,
@@ -885,7 +888,9 @@ class _ResponseBubble extends StatelessWidget {
                   ),
                   const SizedBox(width: AppTheme.spacing6),
                   Text(
-                    isFounder ? 'Socialmesh' : 'You',
+                    isFounder
+                        ? context.l10n.feedbackResponseAuthorSocialmesh
+                        : context.l10n.feedbackResponseAuthorYou,
                     style: TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.w700,

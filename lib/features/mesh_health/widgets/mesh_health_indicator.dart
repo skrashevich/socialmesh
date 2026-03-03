@@ -8,6 +8,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
+
 import '../../../services/mesh_health/mesh_health_models.dart';
 import '../../../services/mesh_health/mesh_health_providers.dart';
 import 'mesh_health_dashboard.dart';
@@ -51,8 +53,8 @@ class MeshHealthIndicator extends ConsumerWidget {
             ),
             if (showLabel) ...[
               const SizedBox(width: AppTheme.spacing6),
-              const Text(
-                'Health',
+              Text(
+                context.l10n.meshHealthIndicatorLabel,
                 style: TextStyle(color: SemanticColors.disabled, fontSize: 12),
               ),
             ],

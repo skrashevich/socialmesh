@@ -9,6 +9,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/map_node_drawer.dart';
 import '../../models/mesh_models.dart';
@@ -106,7 +107,7 @@ class _Mesh3DNodePanelState extends State<Mesh3DNodePanel> {
     final bottomPadding = MediaQuery.of(context).padding.bottom;
 
     return MapNodeDrawer(
-      title: 'Nodes',
+      title: context.l10n.mesh3dNodesDrawerTitle,
       headerIcon: Icons.hub,
       itemCount: filteredNodes.length,
       onClose: widget.onClose,
@@ -237,7 +238,7 @@ class _NodeListTile extends StatelessWidget {
                               ),
                             ),
                             child: Text(
-                              'ME',
+                              context.l10n.mesh3dMyNodeBadge,
                               style: TextStyle(
                                 fontSize: 9,
                                 fontWeight: FontWeight.bold,

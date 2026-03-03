@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../../../core/widgets/search_filter_header.dart';
@@ -94,14 +95,14 @@ class _WidgetMarketplaceScreenState
         stepKeys: const {},
         child: GlassScaffold(
           resizeToAvoidBottomInset: false,
-          title: 'Widget Marketplace',
+          title: context.l10n.widgetBuilderMarketplaceTitle,
           actions: [
             IconButton(
               icon: const Icon(Icons.help_outline),
               onPressed: () => ref
                   .read(helpProvider.notifier)
                   .startTour('marketplace_overview'),
-              tooltip: 'Help',
+              tooltip: context.l10n.widgetBuilderMarketplaceHelpTooltip,
             ),
           ],
           bottom: TabBar(
@@ -112,9 +113,9 @@ class _WidgetMarketplaceScreenState
             isScrollable: true,
             tabAlignment: TabAlignment.start,
             tabs: [
-              const Tab(text: 'Featured'),
-              const Tab(text: 'Popular'),
-              const Tab(text: 'New'),
+              Tab(text: context.l10n.widgetBuilderMarketplaceTabFeatured),
+              Tab(text: context.l10n.widgetBuilderMarketplaceTabPopular),
+              Tab(text: context.l10n.widgetBuilderMarketplaceTabNew),
               Tab(
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -127,7 +128,7 @@ class _WidgetMarketplaceScreenState
                   ],
                 ),
               ),
-              const Tab(text: 'Categories'),
+              Tab(text: context.l10n.widgetBuilderMarketplaceTabCategories),
             ],
           ),
           slivers: [
@@ -138,7 +139,7 @@ class _WidgetMarketplaceScreenState
                 searchController: _searchController,
                 searchQuery: _searchQuery,
                 onSearchChanged: _search,
-                hintText: 'Search widgets...',
+                hintText: context.l10n.widgetBuilderMarketplaceSearchHint,
                 textScaler: MediaQuery.textScalerOf(context),
               ),
             ),
@@ -150,7 +151,7 @@ class _WidgetMarketplaceScreenState
                   : marketplaceAsync.when(
                       loading: () => const ScreenLoadingIndicator(),
                       error: (error, stack) => _buildErrorState(
-                        'Unable to load marketplace',
+                        context.l10n.widgetBuilderMarketplaceUnableToLoad,
                         onRetry: () => ref.invalidate(marketplaceProvider),
                       ),
                       data: (state) => TabBarView(
@@ -184,7 +185,7 @@ class _WidgetMarketplaceScreenState
             Icon(Icons.search_off, size: 48, color: context.textTertiary),
             SizedBox(height: AppTheme.spacing16),
             Text(
-              'No widgets found',
+              context.l10n.widgetBuilderMarketplaceNoWidgetsFound,
               style: TextStyle(color: context.textSecondary, fontSize: 16),
             ),
           ],
@@ -197,7 +198,7 @@ class _WidgetMarketplaceScreenState
 
   Widget _buildFeaturedTab(MarketplaceState state) {
     if (state.featured.isEmpty) {
-      return _buildEmptyState('No featured widgets');
+      return _buildEmptyState(context.l10n.widgetBuilderMarketplaceNoFeatured);
     }
 
     return RefreshIndicator(
@@ -216,7 +217,7 @@ class _WidgetMarketplaceScreenState
 
     if (state.popularError != null) {
       return _buildErrorState(
-        'Failed to load popular widgets',
+        context.l10n.widgetBuilderMarketplaceFailedPopular,
         onRetry: () {
           ref.invalidate(marketplaceProvider);
         },
@@ -224,7 +225,7 @@ class _WidgetMarketplaceScreenState
     }
 
     if (state.popular.isEmpty) {
-      return _buildEmptyState('No popular widgets yet');
+      return _buildEmptyState(context.l10n.widgetBuilderMarketplaceNoPopular);
     }
 
     return _buildWidgetGrid(state.popular);
@@ -238,7 +239,7 @@ class _WidgetMarketplaceScreenState
 
     if (state.newestError != null) {
       return _buildErrorState(
-        'Failed to load newest widgets',
+        context.l10n.widgetBuilderMarketplaceFailedNewest,
         onRetry: () {
           ref.invalidate(marketplaceProvider);
         },
@@ -246,7 +247,7 @@ class _WidgetMarketplaceScreenState
     }
 
     if (state.newest.isEmpty) {
-      return _buildEmptyState('No new widgets yet');
+      return _buildEmptyState(context.l10n.widgetBuilderMarketplaceNoNew);
     }
 
     return _buildWidgetGrid(state.newest);
@@ -284,13 +285,13 @@ class _WidgetMarketplaceScreenState
               ),
               SizedBox(height: AppTheme.spacing16),
               Text(
-                'No favorite widgets yet',
+                context.l10n.widgetBuilderMarketplaceNoFavorites,
                 style: TextStyle(color: context.textSecondary, fontSize: 16),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: AppTheme.spacing8),
               Text(
-                'Tap the heart icon on any widget to add it here',
+                context.l10n.widgetBuilderMarketplaceFavoritesHint,
                 style: TextStyle(color: context.textTertiary, fontSize: 14),
                 textAlign: TextAlign.center,
               ),
@@ -322,7 +323,7 @@ class _WidgetMarketplaceScreenState
               TextButton.icon(
                 onPressed: onRetry,
                 icon: const Icon(Icons.refresh),
-                label: const Text('Retry'),
+                label: Text(context.l10n.widgetBuilderMarketplaceRetry),
               ),
             ],
           ],
@@ -429,7 +430,7 @@ class _WidgetMarketplaceScreenState
             Icon(Icons.widgets_outlined, size: 48, color: context.textTertiary),
             SizedBox(height: AppTheme.spacing16),
             Text(
-              'No widgets available',
+              context.l10n.widgetBuilderMarketplaceNoWidgets,
               style: TextStyle(color: context.textSecondary, fontSize: 16),
             ),
           ],
@@ -544,7 +545,7 @@ class _WidgetDetailsScreenState extends ConsumerState<WidgetDetailsScreen>
       actions: [
         IconButton(
           icon: const Icon(Icons.share),
-          tooltip: 'Share Widget',
+          tooltip: context.l10n.widgetBuilderMarketplaceShareTooltip,
           onPressed: () => _shareWidget(context),
         ),
       ],
@@ -581,7 +582,9 @@ class _WidgetDetailsScreenState extends ConsumerState<WidgetDetailsScreen>
                                 ),
                                 SizedBox(height: AppTheme.spacing8),
                                 Text(
-                                  'Loading preview...',
+                                  context
+                                      .l10n
+                                      .widgetBuilderMarketplaceLoadingPreview,
                                   style: TextStyle(
                                     color: context.textTertiary,
                                     fontSize: 12,
@@ -645,7 +648,7 @@ class _WidgetDetailsScreenState extends ConsumerState<WidgetDetailsScreen>
                 SizedBox(height: AppTheme.spacing24),
                 // Description
                 Text(
-                  'Description',
+                  context.l10n.widgetBuilderMarketplaceDescription,
                   style: TextStyle(
                     color: context.textPrimary,
                     fontSize: 16,
@@ -665,7 +668,7 @@ class _WidgetDetailsScreenState extends ConsumerState<WidgetDetailsScreen>
                 // Tags
                 if (mWidget.tags.isNotEmpty) ...[
                   Text(
-                    'Tags',
+                    context.l10n.widgetBuilderMarketplaceTags,
                     style: TextStyle(
                       color: context.textPrimary,
                       fontSize: 16,
@@ -755,8 +758,12 @@ class _WidgetDetailsScreenState extends ConsumerState<WidgetDetailsScreen>
                                     const SizedBox(width: AppTheme.spacing8),
                                   Text(
                                     isAlreadyInstalled
-                                        ? 'Already Installed'
-                                        : 'Install Widget',
+                                        ? context
+                                              .l10n
+                                              .widgetBuilderMarketplaceAlreadyInstalled
+                                        : context
+                                              .l10n
+                                              .widgetBuilderMarketplaceInstallWidget,
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
@@ -797,7 +804,7 @@ class _WidgetDetailsScreenState extends ConsumerState<WidgetDetailsScreen>
     if (!isOnline) {
       showErrorSnackBar(
         context,
-        'Installing widgets requires an internet connection.',
+        context.l10n.widgetBuilderMarketplaceRequiresInternet,
       );
       return;
     }
@@ -863,7 +870,7 @@ class _WidgetDetailsScreenState extends ConsumerState<WidgetDetailsScreen>
     if (!isOnline) {
       showErrorSnackBar(
         context,
-        'Sharing widgets requires an internet connection.',
+        context.l10n.widgetBuilderMarketplaceSharingRequiresInternet,
       );
       return;
     }
@@ -923,7 +930,7 @@ class _CategoryScreenState extends ConsumerState<_CategoryScreen>
                   ),
                   SizedBox(height: AppTheme.spacing16),
                   Text(
-                    'Failed to load category',
+                    context.l10n.widgetBuilderMarketplaceFailedLoadCategory,
                     style: TextStyle(
                       color: context.textSecondary,
                       fontSize: 16,
@@ -956,7 +963,9 @@ class _CategoryScreenState extends ConsumerState<_CategoryScreen>
                       ),
                       SizedBox(height: AppTheme.spacing16),
                       Text(
-                        'No widgets in this category',
+                        context
+                            .l10n
+                            .widgetBuilderMarketplaceNoWidgetsInCategory,
                         style: TextStyle(
                           color: context.textSecondary,
                           fontSize: 16,

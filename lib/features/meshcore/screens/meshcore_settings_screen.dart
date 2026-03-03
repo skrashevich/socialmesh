@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 
 import 'package:flutter/material.dart';
@@ -70,7 +71,7 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
       onTap: _dismissKeyboard,
       child: GlassScaffold(
         leading: const MeshCoreHamburgerMenuButton(),
-        title: 'Settings',
+        title: context.l10n.meshcoreSettingsTitle,
         actions: [const MeshCoreDeviceStatusButton()],
         // Use hasScrollBody: true because the child is a ListView.
         // hasScrollBody: false would force intrinsic dimension computation
@@ -127,7 +128,7 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
               Icon(Icons.info_outline_rounded, color: AccentColors.cyan),
               const SizedBox(width: AppTheme.spacing8),
               Text(
-                'Device Info',
+                context.l10n.meshcoreDeviceInfo,
                 style: TextStyle(
                   color: AccentColors.cyan,
                   fontSize: 16,
@@ -138,32 +139,40 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
           ),
           const SizedBox(height: AppTheme.spacing16),
           _buildInfoRow(
-            'Status',
-            isConnected ? 'Connected' : 'Disconnected',
+            context.l10n.meshcoreStatusLabel,
+            isConnected
+                ? context.l10n.meshcoreConnected
+                : context.l10n.meshcoreDisconnectedStatus,
             valueColor: isConnected ? AccentColors.green : AppTheme.errorRed,
           ),
           if (selfInfo != null) ...[
-            _buildInfoRow('Node Name', selfInfo.nodeName),
+            _buildInfoRow(
+              context.l10n.meshcoreNodeNameLabel,
+              selfInfo.nodeName,
+            ),
             () {
               final hex = _bytesToHex(selfInfo.pubKey);
               final display = hex.length >= 16
                   ? '${hex.substring(0, 16)}…'
                   : hex;
               return _buildInfoRow(
-                'Public Key',
+                context.l10n.meshcorePublicKeySettingsLabel,
                 display,
                 onTap: () {
                   Clipboard.setData(
                     ClipboardData(text: _bytesToHex(selfInfo.pubKey)),
                   );
-                  showSuccessSnackBar(context, 'Public key copied');
+                  showSuccessSnackBar(
+                    context,
+                    context.l10n.meshcorePublicKeyCopiedSettings,
+                  );
                 },
               );
             }(),
           ],
           _buildBatteryRow(batteryState),
-          _buildInfoRow('Contacts', '$contactCount'),
-          _buildInfoRow('Channels', '$channelCount'),
+          _buildInfoRow(context.l10n.meshcoreContactsLabel, '$contactCount'),
+          _buildInfoRow(context.l10n.meshcoreChannelsLabel, '$channelCount'),
         ],
       ),
     );
@@ -176,7 +185,7 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
     Color? valueColor;
 
     if (state == null || state.voltageMillivolts == null) {
-      displayValue = 'Unknown';
+      displayValue = context.l10n.meshcoreBatteryUnknown;
       icon = Icons.battery_unknown_rounded;
       iconColor = SemanticColors.disabled;
     } else if (_showBatteryVoltage) {
@@ -199,7 +208,7 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
     }
 
     return _buildInfoRow(
-      'Battery',
+      context.l10n.meshcoreBatteryStatusLabel,
       displayValue,
       leading: Icon(icon, size: 18, color: iconColor),
       valueColor: valueColor,
@@ -228,7 +237,7 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
                 Icon(Icons.tune_rounded, color: AccentColors.purple),
                 const SizedBox(width: AppTheme.spacing8),
                 Text(
-                  'Node Settings',
+                  context.l10n.meshcoreNodeSettings,
                   style: TextStyle(
                     color: AccentColors.purple,
                     fontSize: 16,
@@ -240,29 +249,29 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
           ),
           _buildSettingsTile(
             icon: Icons.person_outline_rounded,
-            title: 'Node Name',
-            subtitle: selfInfo?.nodeName ?? 'Not set',
+            title: context.l10n.meshcoreNodeNameSetting,
+            subtitle: selfInfo?.nodeName ?? context.l10n.meshcoreNotSet,
             onTap: () => _editNodeName(context, selfInfo?.nodeName),
           ),
           _buildDivider(),
           _buildSettingsTile(
             icon: Icons.radio_rounded,
-            title: 'Radio Settings',
-            subtitle: 'Frequency, TX power, bandwidth',
+            title: context.l10n.meshcoreRadioSettings,
+            subtitle: context.l10n.meshcoreRadioSettingsSubtitle,
             onTap: () => _showRadioSettings(context),
           ),
           _buildDivider(),
           _buildSettingsTile(
             icon: Icons.location_on_outlined,
-            title: 'Location',
-            subtitle: 'Set node position',
+            title: context.l10n.meshcoreLocationSetting,
+            subtitle: context.l10n.meshcoreSetNodePosition,
             onTap: () => _editLocation(context),
           ),
           _buildDivider(),
           _buildSettingsTile(
             icon: Icons.visibility_off_outlined,
-            title: 'Privacy Mode',
-            subtitle: 'Control advertisement visibility',
+            title: context.l10n.meshcorePrivacyMode,
+            subtitle: context.l10n.meshcoreControlAdvertVisibility,
             onTap: () => _togglePrivacy(context),
           ),
         ],
@@ -286,7 +295,7 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
                 Icon(Icons.bolt_rounded, color: AccentColors.green),
                 const SizedBox(width: AppTheme.spacing8),
                 Text(
-                  'Actions',
+                  context.l10n.meshcoreActions,
                   style: TextStyle(
                     color: AccentColors.green,
                     fontSize: 16,
@@ -298,26 +307,28 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
           ),
           _buildSettingsTile(
             icon: Icons.cell_tower_rounded,
-            title: 'Send Advertisement',
+            title: context.l10n.meshcoreSendAdvertisement,
             subtitle: _isSendingAdvert
-                ? 'Sending...'
-                : 'Broadcast your presence',
+                ? context.l10n.meshcoreSending
+                : context.l10n.meshcoreBroadcastYourPresence,
             enabled: isConnected && !_isSendingAdvert,
             onTap: _sendAdvert,
           ),
           _buildDivider(),
           _buildSettingsTile(
             icon: Icons.sync_rounded,
-            title: 'Sync Time',
-            subtitle: _isSyncingTime ? 'Syncing...' : 'Update device clock',
+            title: context.l10n.meshcoreSyncTime,
+            subtitle: _isSyncingTime
+                ? context.l10n.meshcoreSyncing
+                : context.l10n.meshcoreUpdateDeviceClock,
             enabled: isConnected && !_isSyncingTime,
             onTap: _syncTime,
           ),
           _buildDivider(),
           _buildSettingsTile(
             icon: Icons.refresh_rounded,
-            title: 'Refresh Contacts',
-            subtitle: 'Reload contacts from device',
+            title: context.l10n.meshcoreRefreshContactsSetting,
+            subtitle: context.l10n.meshcoreReloadContactsFromDevice,
             enabled: isConnected,
             onTap: () => _refreshContacts(context),
           ),
@@ -325,8 +336,8 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
           _buildSettingsTile(
             icon: Icons.restart_alt_rounded,
             iconColor: AccentColors.orange,
-            title: 'Reboot Device',
-            subtitle: 'Restart the MeshCore device',
+            title: context.l10n.meshcoreRebootDevice,
+            subtitle: context.l10n.meshcoreRestartMeshCoreDevice,
             enabled: isConnected,
             onTap: () => _confirmReboot(context),
           ),
@@ -354,7 +365,7 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
                 ),
                 const SizedBox(width: AppTheme.spacing8),
                 Text(
-                  'Debug',
+                  context.l10n.meshcoreDebug,
                   style: TextStyle(
                     color: SemanticColors.disabled,
                     fontSize: 16,
@@ -366,8 +377,8 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
           ),
           _buildSettingsTile(
             icon: Icons.code_rounded,
-            title: 'Protocol Capture',
-            subtitle: 'View MeshCore frame logs',
+            title: context.l10n.meshcoreProtocolCapture,
+            subtitle: context.l10n.meshcoreViewFrameLogs,
             onTap: () => _showProtocolCapture(context),
           ),
         ],
@@ -384,7 +395,10 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
       child: ListTile(
         contentPadding: EdgeInsets.zero,
         leading: Icon(Icons.info_outline_rounded, color: AccentColors.slate),
-        title: const Text('About', style: TextStyle(color: Colors.white)),
+        title: Text(
+          context.l10n.meshcoreAbout,
+          style: const TextStyle(color: Colors.white),
+        ),
         subtitle: Text(
           'SocialMesh v${_appVersion.isEmpty ? '...' : _appVersion}',
           style: TextStyle(color: Colors.white.withValues(alpha: 0.6)),
@@ -504,7 +518,7 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Edit Node Name',
+            context.l10n.meshcoreEditNodeName,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -518,7 +532,7 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
             maxLength: 31,
             style: const TextStyle(color: Colors.white),
             decoration: InputDecoration(
-              hintText: 'Enter node name...',
+              hintText: context.l10n.meshcoreEnterNodeNameHint,
               hintStyle: TextStyle(color: Colors.white.withValues(alpha: 0.4)),
               filled: true,
               fillColor: Colors.white.withValues(alpha: 0.1),
@@ -541,7 +555,7 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
                       color: Colors.white.withValues(alpha: 0.3),
                     ),
                   ),
-                  child: const Text('Cancel'),
+                  child: Text(context.l10n.meshcoreCancel),
                 ),
               ),
               const SizedBox(width: AppTheme.spacing12),
@@ -555,7 +569,7 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
                     backgroundColor: AccentColors.cyan.withValues(alpha: 0.3),
                     foregroundColor: AccentColors.cyan,
                   ),
-                  child: const Text('Save'),
+                  child: Text(context.l10n.meshcoreSave),
                 ),
               ),
             ],
@@ -575,7 +589,7 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
 
     if (session == null || !session.isActive) {
       if (mounted) {
-        showErrorSnackBar(context, 'Not connected');
+        showErrorSnackBar(context, context.l10n.meshcoreNotConnected);
       }
       return;
     }
@@ -592,10 +606,10 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
       if (!mounted) return;
       // Refresh self info
       selfInfoNotifier.refresh();
-      showSuccessSnackBar(context, 'Node name updated');
+      showSuccessSnackBar(context, context.l10n.meshcoreNodeNameUpdated);
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to set name');
+        showErrorSnackBar(context, context.l10n.meshcoreFailedToSetName);
       }
     }
   }
@@ -608,7 +622,7 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Radio Settings',
+            context.l10n.meshcoreRadioSettingsDialogTitle,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -623,9 +637,18 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
             ),
             child: Column(
               children: [
-                _buildInfoRow('Frequency', 'Not yet implemented'),
-                _buildInfoRow('TX Power', 'Not yet implemented'),
-                _buildInfoRow('Bandwidth', 'Not yet implemented'),
+                _buildInfoRow(
+                  context.l10n.meshcoreFrequencyLabel,
+                  context.l10n.meshcoreNotYetImplemented,
+                ),
+                _buildInfoRow(
+                  context.l10n.meshcoreTxPowerLabel,
+                  context.l10n.meshcoreNotYetImplemented,
+                ),
+                _buildInfoRow(
+                  context.l10n.meshcoreBandwidthLabel,
+                  context.l10n.meshcoreNotYetImplemented,
+                ),
               ],
             ),
           ),
@@ -638,7 +661,7 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
                 foregroundColor: Colors.white.withValues(alpha: 0.8),
                 side: BorderSide(color: Colors.white.withValues(alpha: 0.3)),
               ),
-              child: const Text('Close'),
+              child: Text(context.l10n.meshcoreClose),
             ),
           ),
         ],
@@ -654,7 +677,7 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Set Location',
+            context.l10n.meshcoreSetLocation,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -667,9 +690,9 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
               color: Colors.white.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(AppTheme.radius12),
             ),
-            child: const Text(
-              'Location settings coming soon.\n\nThis will allow you to manually set your node position or use GPS.',
-              style: TextStyle(color: Colors.white70),
+            child: Text(
+              context.l10n.meshcoreLocationComingSoon,
+              style: const TextStyle(color: Colors.white70),
             ),
           ),
           const SizedBox(height: AppTheme.spacing16),
@@ -681,7 +704,7 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
                 foregroundColor: Colors.white.withValues(alpha: 0.8),
                 side: BorderSide(color: Colors.white.withValues(alpha: 0.3)),
               ),
-              child: const Text('Close'),
+              child: Text(context.l10n.meshcoreClose),
             ),
           ),
         ],
@@ -697,7 +720,7 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Privacy Mode',
+            context.l10n.meshcorePrivacyModeDialogTitle,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -710,9 +733,9 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
               color: Colors.white.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(AppTheme.radius12),
             ),
-            child: const Text(
-              'Privacy settings coming soon.\n\nThis will control whether your node broadcasts advertisements.',
-              style: TextStyle(color: Colors.white70),
+            child: Text(
+              context.l10n.meshcorePrivacyComingSoon,
+              style: const TextStyle(color: Colors.white70),
             ),
           ),
           const SizedBox(height: AppTheme.spacing16),
@@ -724,7 +747,7 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
                 foregroundColor: Colors.white.withValues(alpha: 0.8),
                 side: BorderSide(color: Colors.white.withValues(alpha: 0.3)),
               ),
-              child: const Text('Close'),
+              child: Text(context.l10n.meshcoreClose),
             ),
           ),
         ],
@@ -736,7 +759,9 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
     if (_isSendingAdvert) return;
     final session = ref.read(meshCoreSessionProvider);
     if (session == null || !session.isActive) {
-      if (mounted) showErrorSnackBar(context, 'Not connected');
+      if (mounted) {
+        showErrorSnackBar(context, context.l10n.meshcoreNotConnected);
+      }
       return;
     }
 
@@ -744,11 +769,14 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
     try {
       await session.sendCommand(MeshCoreCommands.sendSelfAdvert);
       if (mounted) {
-        showSuccessSnackBar(context, 'Advertisement sent');
+        showSuccessSnackBar(context, context.l10n.meshcoreAdvertisementSent);
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to send advertisement');
+        showErrorSnackBar(
+          context,
+          context.l10n.meshcoreFailedToSendAdvertisement,
+        );
       }
     } finally {
       safeSetState(() => _isSendingAdvert = false);
@@ -759,7 +787,9 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
     if (_isSyncingTime) return;
     final session = ref.read(meshCoreSessionProvider);
     if (session == null || !session.isActive) {
-      if (mounted) showErrorSnackBar(context, 'Not connected');
+      if (mounted) {
+        showErrorSnackBar(context, context.l10n.meshcoreNotConnected);
+      }
       return;
     }
 
@@ -779,11 +809,11 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
         ),
       );
       if (mounted) {
-        showSuccessSnackBar(context, 'Time synchronized');
+        showSuccessSnackBar(context, context.l10n.meshcoreTimeSynchronized);
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to sync time');
+        showErrorSnackBar(context, context.l10n.meshcoreFailedToSyncTime);
       }
     } finally {
       safeSetState(() => _isSyncingTime = false);
@@ -792,15 +822,15 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
 
   void _refreshContacts(BuildContext context) {
     ref.read(meshCoreContactsProvider.notifier).refresh();
-    showSuccessSnackBar(context, 'Refreshing contacts...');
+    showSuccessSnackBar(context, context.l10n.meshcoreRefreshingContacts);
   }
 
   Future<void> _confirmReboot(BuildContext context) async {
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Reboot Device',
-      message: 'Are you sure you want to reboot the MeshCore device?',
-      confirmLabel: 'Reboot',
+      title: context.l10n.meshcoreRebootDeviceTitle,
+      message: context.l10n.meshcoreRebootDeviceMessage,
+      confirmLabel: context.l10n.meshcoreReboot,
     );
 
     if (confirmed != true) return;
@@ -812,18 +842,18 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
   Future<void> _rebootDevice() async {
     final session = ref.read(meshCoreSessionProvider);
     if (session == null || !session.isActive) {
-      showErrorSnackBar(context, 'Not connected');
+      showErrorSnackBar(context, context.l10n.meshcoreNotConnected);
       return;
     }
 
     try {
       await session.sendCommand(MeshCoreCommands.reboot);
       if (mounted) {
-        showSuccessSnackBar(context, 'Reboot command sent');
+        showSuccessSnackBar(context, context.l10n.meshcoreRebootCommandSent);
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to reboot device');
+        showErrorSnackBar(context, context.l10n.meshcoreFailedToRebootDevice);
       }
     }
   }
@@ -838,7 +868,7 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Protocol Capture',
+            context.l10n.meshcoreProtocolCaptureDialogTitle,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -854,8 +884,14 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildInfoRow('Active', captureState.isActive ? 'Yes' : 'No'),
-                _buildInfoRow('Frames', '${captureState.totalCount}'),
+                _buildInfoRow(
+                  context.l10n.meshcoreActiveLabel,
+                  captureState.isActive ? 'Yes' : 'No',
+                ),
+                _buildInfoRow(
+                  context.l10n.meshcoreFramesLabel,
+                  '${captureState.totalCount}',
+                ),
               ],
             ),
           ),
@@ -876,7 +912,7 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
                       color: Colors.white.withValues(alpha: 0.3),
                     ),
                   ),
-                  child: const Text('Refresh'),
+                  child: Text(context.l10n.meshcoreRefresh),
                 ),
               ),
               if (captureState.hasFrames) ...[
@@ -893,7 +929,7 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
                       foregroundColor: AccentColors.orange,
                       side: const BorderSide(color: AccentColors.orange),
                     ),
-                    child: const Text('Clear'),
+                    child: Text(context.l10n.meshcoreClear),
                   ),
                 ),
               ],
@@ -911,7 +947,7 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'About SocialMesh',
+            context.l10n.meshcoreAboutSocialMesh,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -920,13 +956,12 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
           ),
           const SizedBox(height: AppTheme.spacing12),
           Text(
-            'Version $_appVersion',
+            context.l10n.meshcoreVersion(_appVersion),
             style: TextStyle(color: context.textSecondary),
           ),
           const SizedBox(height: AppTheme.spacing12),
           Text(
-            'SocialMesh is a mesh radio companion app supporting '
-            'Meshtastic and MeshCore devices.',
+            context.l10n.meshcoreAboutDescription,
             textAlign: TextAlign.center,
             style: TextStyle(color: context.textSecondary),
           ),
@@ -942,7 +977,7 @@ class _MeshCoreSettingsScreenState extends ConsumerState<MeshCoreSettingsScreen>
                   borderRadius: BorderRadius.circular(AppTheme.radius12),
                 ),
               ),
-              child: const Text('Close'),
+              child: Text(context.l10n.meshcoreClose),
             ),
           ),
         ],

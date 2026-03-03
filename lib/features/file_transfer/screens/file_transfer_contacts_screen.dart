@@ -4,6 +4,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
+
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/animations.dart';
@@ -230,7 +232,7 @@ class _FileTransferContactsScreenState
             searchController: _searchController,
             searchQuery: _searchQuery,
             onSearchChanged: (v) => setState(() => _searchQuery = v),
-            hintText: 'Search contacts',
+            hintText: context.l10n.fileTransferContactsSearchHint,
             textScaler: textScaler,
             rebuildKey: Object.hashAll([
               _currentFilter,
@@ -249,14 +251,14 @@ class _FileTransferContactsScreenState
             ],
             filterChips: [
               StatusFilterChip(
-                label: 'All',
+                label: context.l10n.fileTransferContactsFilterAll,
                 count: contacts.length,
                 isSelected: _currentFilter == _FileContactFilter.all,
                 onTap: () =>
                     setState(() => _currentFilter = _FileContactFilter.all),
               ),
               StatusFilterChip(
-                label: 'Active',
+                label: context.l10n.fileTransferContactsFilterActive,
                 count: activeCount,
                 isSelected: _currentFilter == _FileContactFilter.active,
                 color: AccentColors.green,
@@ -264,7 +266,7 @@ class _FileTransferContactsScreenState
                     setState(() => _currentFilter = _FileContactFilter.active),
               ),
               StatusFilterChip(
-                label: 'Has Files',
+                label: context.l10n.fileTransferContactsFilterHasFiles,
                 count: hasFilesCount,
                 isSelected: _currentFilter == _FileContactFilter.hasFiles,
                 icon: Icons.attach_file,
@@ -274,7 +276,7 @@ class _FileTransferContactsScreenState
                 ),
               ),
               StatusFilterChip(
-                label: 'Favorites',
+                label: context.l10n.fileTransferContactsFilterFavorites,
                 count: favoritesCount,
                 isSelected: _currentFilter == _FileContactFilter.favorites,
                 icon: Icons.star,
@@ -311,10 +313,14 @@ class _FileTransferContactsScreenState
                   const SizedBox(height: AppTheme.spacing24),
                   Text(
                     _searchQuery.isNotEmpty
-                        ? 'No contacts match "$_searchQuery"'
+                        ? context.l10n.fileTransferContactsNoMatchSearch(
+                            _searchQuery,
+                          )
                         : _currentFilter != _FileContactFilter.all
-                        ? 'No ${_currentFilter.name} contacts'
-                        : 'No nodes on the mesh yet',
+                        ? context.l10n.fileTransferContactsNoMatchFilter(
+                            _currentFilter.name,
+                          )
+                        : context.l10n.fileTransferContactsNoNodes,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -324,7 +330,7 @@ class _FileTransferContactsScreenState
                   if (_searchQuery.isEmpty) ...[
                     const SizedBox(height: AppTheme.spacing8),
                     Text(
-                      'Discovered nodes will appear here',
+                      context.l10n.fileTransferContactsDiscoveredHint,
                       style: TextStyle(
                         fontSize: 14,
                         color: context.textTertiary,
@@ -335,7 +341,7 @@ class _FileTransferContactsScreenState
                     const SizedBox(height: AppTheme.spacing12),
                     TextButton(
                       onPressed: () => setState(() => _searchQuery = ''),
-                      child: const Text('Clear search'),
+                      child: Text(context.l10n.fileTransferContactsClearSearch),
                     ),
                   ],
                 ],
@@ -415,10 +421,23 @@ class _FileTransferContactsScreenState
     }
 
     return [
-      if (favorites.isNotEmpty) buildSection('Favorites', favorites),
-      if (active.isNotEmpty) buildSection('Active', active),
-      if (withFiles.isNotEmpty) buildSection('With Files', withFiles),
-      if (inactive.isNotEmpty) buildSection('Inactive', inactive),
+      if (favorites.isNotEmpty)
+        buildSection(
+          context.l10n.fileTransferContactsSectionFavorites,
+          favorites,
+        ),
+      if (active.isNotEmpty)
+        buildSection(context.l10n.fileTransferContactsSectionActive, active),
+      if (withFiles.isNotEmpty)
+        buildSection(
+          context.l10n.fileTransferContactsSectionWithFiles,
+          withFiles,
+        ),
+      if (inactive.isNotEmpty)
+        buildSection(
+          context.l10n.fileTransferContactsSectionInactive,
+          inactive,
+        ),
     ];
   }
 
@@ -443,7 +462,10 @@ class _FileTransferContactsScreenState
     final transfer = await notifier.pickAndSendFile(targetNodeNum: nodeNum);
     if (!mounted) return;
     if (transfer != null) {
-      showSuccessSnackBar(context, 'Transfer started: ${transfer.filename}');
+      showSuccessSnackBar(
+        context,
+        context.l10n.fileTransferContactsStarted(transfer.filename),
+      );
     }
   }
 }
@@ -682,12 +704,18 @@ class _ContactDetailSheet extends StatelessWidget {
     return '${mb.toStringAsFixed(1)} MB';
   }
 
-  String _relativeTime(DateTime dt) {
+  String _relativeTime(BuildContext context, DateTime dt) {
     final diff = DateTime.now().difference(dt);
-    if (diff.inSeconds < 60) return 'just now';
-    if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
-    if (diff.inHours < 24) return '${diff.inHours}h ago';
-    if (diff.inDays < 7) return '${diff.inDays}d ago';
+    if (diff.inSeconds < 60) return context.l10n.fileTransferContactsJustNow;
+    if (diff.inMinutes < 60) {
+      return context.l10n.fileTransferContactsMinutesAgo(diff.inMinutes);
+    }
+    if (diff.inHours < 24) {
+      return context.l10n.fileTransferContactsHoursAgo(diff.inHours);
+    }
+    if (diff.inDays < 7) {
+      return context.l10n.fileTransferContactsDaysAgo(diff.inDays);
+    }
     return '${dt.month}/${dt.day}';
   }
 
@@ -750,19 +778,19 @@ class _ContactDetailSheet extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     _DetailStat(
-                      label: 'Sent',
+                      label: context.l10n.fileTransferContactsDetailSent,
                       value: '${contact.sentCount}',
                       icon: Icons.arrow_upward,
                       color: AppTheme.primaryBlue,
                     ),
                     _DetailStat(
-                      label: 'Received',
+                      label: context.l10n.fileTransferContactsDetailReceived,
                       value: '${contact.receivedCount}',
                       icon: Icons.arrow_downward,
                       color: AppTheme.primaryPurple,
                     ),
                     _DetailStat(
-                      label: 'Total',
+                      label: context.l10n.fileTransferContactsDetailTotal,
                       value: _formatBytes(contact.totalBytes),
                       icon: Icons.data_usage,
                       color: context.textTertiary,
@@ -809,7 +837,7 @@ class _ContactDetailSheet extends StatelessWidget {
                       onSendFile();
                     },
                     icon: const Icon(Icons.attach_file, size: 18),
-                    label: const Text('Send File'),
+                    label: Text(context.l10n.fileTransferContactsSendFile),
                   ),
                 ),
               ],
@@ -853,7 +881,7 @@ class _ContactDetailSheet extends StatelessWidget {
                   t.savedFilePath != null;
               return _CompactTransferRow(
                 transfer: t,
-                relativeTime: _relativeTime(t.completedAt ?? t.createdAt),
+                relativeTime: _relativeTime(ctx, t.completedAt ?? t.createdAt),
                 onTap: canPreview
                     ? () => FileContentPreview.show(context: ctx, transfer: t)
                     : null,

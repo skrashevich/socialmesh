@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import '../../../core/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -81,10 +82,10 @@ class WidgetActionHandler {
     // need a manual check here — it will deny with blockedDisabled.
     final selection = await NodeSelectorSheet.show(
       context,
-      title: 'Share Location With',
+      title: context.l10n.widgetBuilderShareLocationWith,
       allowBroadcast: true,
-      broadcastLabel: 'All Nodes',
-      broadcastSubtitle: 'Broadcast to everyone on channel',
+      broadcastLabel: context.l10n.widgetBuilderAllNodes,
+      broadcastSubtitle: context.l10n.widgetBuilderBroadcastSubtitle,
     );
 
     if (selection == null || !context.mounted) return;
@@ -101,12 +102,15 @@ class WidgetActionHandler {
 
         switch (decision) {
           case PublishDecision.allowed:
-            showSuccessSnackBar(context, 'Location shared with mesh');
+            showSuccessSnackBar(
+              context,
+              context.l10n.widgetBuilderLocationSharedMesh,
+            );
           case PublishDecision.blockedDisabled:
             showActionSnackBar(
               context,
-              'Enable "Provide phone location" in Settings to share your position',
-              actionLabel: 'View',
+              context.l10n.widgetBuilderEnablePhoneLocation,
+              actionLabel: context.l10n.widgetBuilderView,
               onAction: () => Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_) => const SettingsScreen(
@@ -119,11 +123,14 @@ class WidgetActionHandler {
           case PublishDecision.blockedInterval:
             showWarningSnackBar(
               context,
-              'Location was shared recently — please wait before sharing again',
+              context.l10n.widgetBuilderLocationSharedRecently,
             );
           case PublishDecision.blockedDistance:
           case PublishDecision.blockedNoPosition:
-            showErrorSnackBar(context, 'Unable to get your location');
+            showErrorSnackBar(
+              context,
+              context.l10n.widgetBuilderUnableToGetLocation,
+            );
         }
       } else {
         // Direct sends to a specific node use ProtocolService directly.
@@ -133,7 +140,10 @@ class WidgetActionHandler {
 
         if (position == null) {
           if (context.mounted) {
-            showErrorSnackBar(context, 'Unable to get your location');
+            showErrorSnackBar(
+              context,
+              context.l10n.widgetBuilderUnableToGetLocation,
+            );
           }
           return;
         }

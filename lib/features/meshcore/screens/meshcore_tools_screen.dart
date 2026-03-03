@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // lint-allow: haptic-feedback — GestureDetector onTap delegates to parent callback
 
+import '../../../core/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -34,14 +35,15 @@ class _MeshCoreToolsScreenState extends ConsumerState<MeshCoreToolsScreen>
   Widget build(BuildContext context) {
     final linkStatus = ref.watch(linkStatusProvider);
     final isConnected = linkStatus.isConnected;
-    final deviceName = linkStatus.deviceName ?? 'MeshCore Device';
+    final deviceName =
+        linkStatus.deviceName ?? context.l10n.meshcoreMeshCoreDevice;
     final selfInfoState = ref.watch(meshCoreSelfInfoProvider);
     final battInfoState = ref.watch(meshCoreBatteryProvider);
 
     if (!isConnected) {
       return GlassScaffold.body(
         leading: const MeshCoreHamburgerMenuButton(),
-        title: 'Tools',
+        title: context.l10n.meshcoreToolsTitle,
         actions: const [MeshCoreDeviceStatusButton()],
         body: Center(
           child: Column(
@@ -54,14 +56,14 @@ class _MeshCoreToolsScreenState extends ConsumerState<MeshCoreToolsScreen>
               ),
               const SizedBox(height: AppTheme.spacing16),
               Text(
-                'MeshCore Disconnected',
+                context.l10n.meshcoreDisconnectedToolsTitle,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   color: Colors.white.withValues(alpha: 0.8),
                 ),
               ),
               const SizedBox(height: AppTheme.spacing8),
               Text(
-                'Connect to a MeshCore device to access tools',
+                context.l10n.meshcoreDisconnectedToolsDescription,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: Colors.white.withValues(alpha: 0.6),
@@ -75,7 +77,7 @@ class _MeshCoreToolsScreenState extends ConsumerState<MeshCoreToolsScreen>
 
     return GlassScaffold.body(
       leading: const MeshCoreHamburgerMenuButton(),
-      title: 'Tools',
+      title: context.l10n.meshcoreToolsTitle,
       actions: const [MeshCoreDeviceStatusButton()],
       body: RefreshIndicator(
         onRefresh: _refreshDeviceInfo,
@@ -92,13 +94,13 @@ class _MeshCoreToolsScreenState extends ConsumerState<MeshCoreToolsScreen>
             const SizedBox(height: AppTheme.spacing24),
 
             // Diagnostics Section
-            _buildSectionHeader(context, 'Diagnostics'),
+            _buildSectionHeader(context, context.l10n.meshcoreDiagnostics),
             const SizedBox(height: AppTheme.spacing12),
             _buildToolCard(
               context: context,
               icon: Icons.info_rounded,
-              title: 'Device Info',
-              subtitle: 'View detailed device information',
+              title: context.l10n.meshcoreDeviceInfoTool,
+              subtitle: context.l10n.meshcoreViewDeviceInfo,
               color: AccentColors.cyan,
               onTap: () => _showDeviceInfo(selfInfoState),
             ),
@@ -106,8 +108,8 @@ class _MeshCoreToolsScreenState extends ConsumerState<MeshCoreToolsScreen>
             _buildToolCard(
               context: context,
               icon: Icons.battery_full_rounded,
-              title: 'Battery & Storage',
-              subtitle: 'Monitor power and storage status',
+              title: context.l10n.meshcoreBatteryAndStorage,
+              subtitle: context.l10n.meshcoreMonitorPowerStorage,
               color: AccentColors.green,
               onTap: () => _showBatteryInfo(battInfoState),
             ),
@@ -115,34 +117,34 @@ class _MeshCoreToolsScreenState extends ConsumerState<MeshCoreToolsScreen>
             _buildToolCard(
               context: context,
               icon: Icons.route_rounded,
-              title: 'Trace Path',
-              subtitle: 'Trace packet routes through the mesh',
+              title: context.l10n.meshcoreTracePath,
+              subtitle: context.l10n.meshcoreTracePacketRoutes,
               color: AccentColors.purple,
               onTap: () => _showTracePathDialog(),
             ),
             const SizedBox(height: AppTheme.spacing24),
 
             // Discovery Section
-            _buildSectionHeader(context, 'Discovery'),
+            _buildSectionHeader(context, context.l10n.meshcoreDiscovery),
             const SizedBox(height: AppTheme.spacing12),
             _buildToolCard(
               context: context,
               icon: Icons.radar_rounded,
-              title: 'Send Advertisement',
-              subtitle: 'Broadcast your presence to the mesh',
+              title: context.l10n.meshcoreSendAdvertisementTool,
+              subtitle: context.l10n.meshcoreBroadcastPresenceToMesh,
               color: AccentColors.orange,
               onTap: () => _sendAdvertisement(),
             ),
             const SizedBox(height: AppTheme.spacing24),
 
             // Analysis Section
-            _buildSectionHeader(context, 'Analysis'),
+            _buildSectionHeader(context, context.l10n.meshcoreAnalysis),
             const SizedBox(height: AppTheme.spacing12),
             _buildToolCard(
               context: context,
               icon: Icons.settings_input_antenna_rounded,
-              title: 'Radio Settings',
-              subtitle: 'View LoRa radio configuration',
+              title: context.l10n.meshcoreRadioSettingsTool,
+              subtitle: context.l10n.meshcoreViewLoRaConfig,
               color: AccentColors.pink,
               onTap: () => _showRadioSettings(selfInfoState),
             ),
@@ -168,7 +170,7 @@ class _MeshCoreToolsScreenState extends ConsumerState<MeshCoreToolsScreen>
                   ),
                   const SizedBox(width: AppTheme.spacing8),
                   Text(
-                    'Connected to $deviceName',
+                    context.l10n.meshcoreConnectedTo(deviceName),
                     style: TextStyle(
                       color: AccentColors.green,
                       fontWeight: FontWeight.w500,
@@ -228,7 +230,7 @@ class _MeshCoreToolsScreenState extends ConsumerState<MeshCoreToolsScreen>
                     ),
                     const SizedBox(height: AppTheme.spacing2),
                     Text(
-                      _getDeviceTypeLabel(selfInfo),
+                      _getDeviceTypeLabel(context, selfInfo),
                       style: TextStyle(
                         color: Colors.white.withValues(alpha: 0.6),
                         fontSize: 13,
@@ -261,7 +263,7 @@ class _MeshCoreToolsScreenState extends ConsumerState<MeshCoreToolsScreen>
               Expanded(
                 child: _buildStatusItem(
                   icon: Icons.battery_charging_full_rounded,
-                  label: 'Battery',
+                  label: context.l10n.meshcoreBatteryLabel,
                   value: _getBatteryDisplay(battInfoState),
                   color: _getBatteryColor(battInfoState),
                 ),
@@ -269,7 +271,7 @@ class _MeshCoreToolsScreenState extends ConsumerState<MeshCoreToolsScreen>
               Expanded(
                 child: _buildStatusItem(
                   icon: Icons.bolt_rounded,
-                  label: 'TX Power',
+                  label: context.l10n.meshcoreTxPowerStatusLabel,
                   value: _getTxPowerDisplay(selfInfo),
                   color: AccentColors.orange,
                 ),
@@ -277,7 +279,7 @@ class _MeshCoreToolsScreenState extends ConsumerState<MeshCoreToolsScreen>
               Expanded(
                 child: _buildStatusItem(
                   icon: Icons.signal_cellular_alt_rounded,
-                  label: 'SF/CR',
+                  label: context.l10n.meshcoreSfCrLabel,
                   value: _getSfCrDisplay(selfInfo),
                   color: AccentColors.purple,
                 ),
@@ -394,17 +396,17 @@ class _MeshCoreToolsScreenState extends ConsumerState<MeshCoreToolsScreen>
     );
   }
 
-  String _getDeviceTypeLabel(MeshCoreSelfInfo? selfInfo) {
-    if (selfInfo == null) return 'MeshCore Device';
+  String _getDeviceTypeLabel(BuildContext context, MeshCoreSelfInfo? selfInfo) {
+    if (selfInfo == null) return context.l10n.meshcoreMeshCoreDevice;
     switch (selfInfo.advType) {
       case 1:
-        return 'Chat Node';
+        return context.l10n.meshcoreChatNode;
       case 2:
-        return 'Repeater Node';
+        return context.l10n.meshcoreRepeaterNode;
       case 3:
-        return 'Room Node';
+        return context.l10n.meshcoreRoomNode;
       default:
-        return 'MeshCore Device';
+        return context.l10n.meshcoreMeshCoreDevice;
     }
   }
 
@@ -458,7 +460,7 @@ class _MeshCoreToolsScreenState extends ConsumerState<MeshCoreToolsScreen>
   void _showDeviceInfo(MeshCoreSelfInfoState selfInfoState) {
     final info = selfInfoState.selfInfo;
     if (info == null) {
-      showErrorSnackBar(context, 'Device info not available');
+      showErrorSnackBar(context, context.l10n.meshcoreDeviceInfoNotAvailable);
       return;
     }
 
@@ -469,29 +471,47 @@ class _MeshCoreToolsScreenState extends ConsumerState<MeshCoreToolsScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Device Information',
+            context.l10n.meshcoreDeviceInformation,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: AppTheme.spacing20),
-          _buildInfoRow('Name', info.nodeName.isNotEmpty ? info.nodeName : '-'),
-          _buildInfoRow('Type', _getDeviceTypeLabel(info)),
-          _buildInfoRow('TX Power', '${info.txPowerDbm} dBm'),
-          _buildInfoRow('Max TX Power', '${info.maxLoraTxPower} dBm'),
+          _buildInfoRow(
+            context.l10n.meshcoreNameLabel,
+            info.nodeName.isNotEmpty ? info.nodeName : '-',
+          ),
+          _buildInfoRow(
+            context.l10n.meshcoreTypeLabel,
+            _getDeviceTypeLabel(context, info),
+          ),
+          _buildInfoRow(
+            context.l10n.meshcoreTxPowerLabel,
+            '${info.txPowerDbm} dBm',
+          ),
+          _buildInfoRow(
+            context.l10n.meshcoreMaxTxPowerLabel,
+            '${info.maxLoraTxPower} dBm',
+          ),
           if (info.spreadingFactor != null)
-            _buildInfoRow('Spreading Factor', 'SF${info.spreadingFactor}'),
+            _buildInfoRow(
+              context.l10n.meshcoreSpreadingFactorLabel,
+              'SF${info.spreadingFactor}',
+            ),
           if (info.codingRate != null)
-            _buildInfoRow('Coding Rate', '4/${info.codingRate}'),
+            _buildInfoRow(
+              context.l10n.meshcoreCodingRateLabel,
+              '4/${info.codingRate}',
+            ),
           if (info.latitude != null && info.longitude != null) ...[
             const SizedBox(height: AppTheme.spacing8),
             const Divider(color: Colors.white12),
             const SizedBox(height: AppTheme.spacing8),
             _buildInfoRow(
-              'Location',
+              context.l10n.meshcoreLocationInfoLabel,
               '${(info.latitude! / 1e7).toStringAsFixed(6)}, '
-                  '${(info.longitude! / 1e7).toStringAsFixed(6)}',
+              '${(info.longitude! / 1e7).toStringAsFixed(6)}',
             ),
           ],
           const SizedBox(height: AppTheme.spacing16),
@@ -511,10 +531,13 @@ class _MeshCoreToolsScreenState extends ConsumerState<MeshCoreToolsScreen>
                             'Public Key: $pubKeyHex',
                       ),
                     );
-                    showSuccessSnackBar(context, 'Device info copied');
+                    showSuccessSnackBar(
+                      context,
+                      context.l10n.meshcoreDeviceInfoCopied,
+                    );
                   },
                   icon: const Icon(Icons.copy_rounded),
-                  label: const Text('Copy'),
+                  label: Text(context.l10n.meshcoreCopy),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: Colors.white.withValues(alpha: 0.8),
                     side: BorderSide(
@@ -532,7 +555,7 @@ class _MeshCoreToolsScreenState extends ConsumerState<MeshCoreToolsScreen>
 
   void _showBatteryInfo(MeshCoreBatteryState battInfo) {
     if (!battInfo.isSuccess) {
-      showErrorSnackBar(context, 'Battery info not available');
+      showErrorSnackBar(context, context.l10n.meshcoreBatteryInfoNotAvailable);
       return;
     }
 
@@ -546,7 +569,7 @@ class _MeshCoreToolsScreenState extends ConsumerState<MeshCoreToolsScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Battery Status',
+            context.l10n.meshcoreBatteryStatus,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -574,7 +597,7 @@ class _MeshCoreToolsScreenState extends ConsumerState<MeshCoreToolsScreen>
                       ),
                     ),
                     Text(
-                      'Battery ${battPct != null && battInfo.voltageMillivolts != null ? '(${battInfo.voltageMillivolts}mV)' : ''}',
+                      '${context.l10n.meshcoreBatteryStatusLabel} ${battPct != null && battInfo.voltageMillivolts != null ? '(${battInfo.voltageMillivolts}mV)' : ''}',
                       style: TextStyle(
                         color: Colors.white.withValues(alpha: 0.6),
                       ),
@@ -616,7 +639,7 @@ class _MeshCoreToolsScreenState extends ConsumerState<MeshCoreToolsScreen>
                 const SizedBox(width: AppTheme.spacing8),
                 Expanded(
                   child: Text(
-                    'Based on LiPo voltage range (3.0V - 4.2V)',
+                    context.l10n.meshcoreBasedOnLiPoVoltage,
                     style: TextStyle(
                       color: AccentColors.cyan.withValues(alpha: 0.9),
                       fontSize: 12,
@@ -635,7 +658,7 @@ class _MeshCoreToolsScreenState extends ConsumerState<MeshCoreToolsScreen>
     final contacts = ref.read(meshCoreContactsProvider).contacts;
 
     if (contacts.isEmpty) {
-      showInfoSnackBar(context, 'No contacts available for trace');
+      showInfoSnackBar(context, context.l10n.meshcoreNoContactsForTrace);
       return;
     }
 
@@ -646,7 +669,7 @@ class _MeshCoreToolsScreenState extends ConsumerState<MeshCoreToolsScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Trace Path',
+            context.l10n.meshcoreTracePathTitle,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -654,7 +677,7 @@ class _MeshCoreToolsScreenState extends ConsumerState<MeshCoreToolsScreen>
           ),
           const SizedBox(height: AppTheme.spacing8),
           Text(
-            'Select a contact to trace the route through the mesh.',
+            context.l10n.meshcoreSelectContactToTrace,
             style: TextStyle(color: Colors.white.withValues(alpha: 0.6)),
           ),
           const SizedBox(height: AppTheme.spacing16),
@@ -673,7 +696,9 @@ class _MeshCoreToolsScreenState extends ConsumerState<MeshCoreToolsScreen>
                     ),
                   ),
                   title: Text(
-                    contact.name.isNotEmpty ? contact.name : 'Unknown',
+                    contact.name.isNotEmpty
+                        ? contact.name
+                        : context.l10n.meshcoreUnknown,
                     style: const TextStyle(color: Colors.white),
                   ),
                   subtitle: Text(
@@ -704,7 +729,7 @@ class _MeshCoreToolsScreenState extends ConsumerState<MeshCoreToolsScreen>
   void _startTracePath(String name, String pubKeyHex) {
     showInfoSnackBar(
       context,
-      'Trace path to ${name.isNotEmpty ? name : 'node'} initiated',
+      context.l10n.meshcoreTracePathInitiated(name.isNotEmpty ? name : 'node'),
     );
     // The actual trace path implementation would call:
     // session.sendCommandWithPayload(MeshCoreCommands.sendTracePath, publicKey)
@@ -714,7 +739,7 @@ class _MeshCoreToolsScreenState extends ConsumerState<MeshCoreToolsScreen>
   void _sendAdvertisement() async {
     final session = ref.read(meshCoreSessionProvider);
     if (session == null) {
-      showErrorSnackBar(context, 'Not connected');
+      showErrorSnackBar(context, context.l10n.meshcoreNotConnectedTools);
       return;
     }
 
@@ -722,11 +747,14 @@ class _MeshCoreToolsScreenState extends ConsumerState<MeshCoreToolsScreen>
       // Send self advertisement command (0x07)
       await session.sendCommand(0x07);
       if (mounted) {
-        showSuccessSnackBar(context, 'Advertisement sent');
+        showSuccessSnackBar(
+          context,
+          context.l10n.meshcoreAdvertisementSentTools,
+        );
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to send advertisement');
+        showErrorSnackBar(context, context.l10n.meshcoreFailedToSendAdTools);
       }
     }
   }
@@ -734,7 +762,10 @@ class _MeshCoreToolsScreenState extends ConsumerState<MeshCoreToolsScreen>
   void _showRadioSettings(MeshCoreSelfInfoState selfInfoState) {
     final info = selfInfoState.selfInfo;
     if (info == null) {
-      showErrorSnackBar(context, 'Radio settings not available');
+      showErrorSnackBar(
+        context,
+        context.l10n.meshcoreRadioSettingsNotAvailable,
+      );
       return;
     }
 
@@ -745,19 +776,31 @@ class _MeshCoreToolsScreenState extends ConsumerState<MeshCoreToolsScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Radio Settings',
+            context.l10n.meshcoreRadioSettingsTitle,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: AppTheme.spacing20),
-          _buildInfoRow('TX Power', '${info.txPowerDbm} dBm'),
-          _buildInfoRow('Max TX Power', '${info.maxLoraTxPower} dBm'),
+          _buildInfoRow(
+            context.l10n.meshcoreTxPowerLabel,
+            '${info.txPowerDbm} dBm',
+          ),
+          _buildInfoRow(
+            context.l10n.meshcoreMaxTxPowerLabel,
+            '${info.maxLoraTxPower} dBm',
+          ),
           if (info.spreadingFactor != null)
-            _buildInfoRow('Spreading Factor', 'SF${info.spreadingFactor}'),
+            _buildInfoRow(
+              context.l10n.meshcoreSpreadingFactorLabel,
+              'SF${info.spreadingFactor}',
+            ),
           if (info.codingRate != null)
-            _buildInfoRow('Coding Rate', '4/${info.codingRate}'),
+            _buildInfoRow(
+              context.l10n.meshcoreCodingRateLabel,
+              '4/${info.codingRate}',
+            ),
           const SizedBox(height: AppTheme.spacing16),
           Container(
             padding: const EdgeInsets.all(AppTheme.spacing12),
@@ -778,7 +821,7 @@ class _MeshCoreToolsScreenState extends ConsumerState<MeshCoreToolsScreen>
                 const SizedBox(width: AppTheme.spacing8),
                 Expanded(
                   child: Text(
-                    'Radio settings are configured on the device firmware.',
+                    context.l10n.meshcoreRadioConfiguredOnFirmware,
                     style: TextStyle(
                       color: AccentColors.pink.withValues(alpha: 0.9),
                       fontSize: 12,

@@ -7,6 +7,7 @@
 #   scripts/hooks/socialmesh-lint.sh --diff-only        # Check only changed lines in staged files
 #   scripts/hooks/socialmesh-lint.sh file1 file2        # Check specific files
 #   scripts/hooks/socialmesh-lint.sh --format           # Also run dart format check
+#   scripts/hooks/socialmesh-lint.sh --no-analyze       # Skip flutter analyze step
 #   scripts/hooks/socialmesh-lint.sh --diff-only --format  # Combined
 #
 # Exit codes:
@@ -47,15 +48,17 @@ fi
 MODE="staged"       # staged | all | explicit
 DIFF_ONLY=false
 RUN_FORMAT=false
+RUN_ANALYZE=true
 EXPLICIT_FILES=()
 
 while [ $# -gt 0 ]; do
   case "$1" in
-    --all)        MODE="all"; shift ;;
-    --diff-only)  DIFF_ONLY=true; shift ;;
-    --format)     RUN_FORMAT=true; shift ;;
-    -*)           echo "Unknown flag: $1" >&2; exit 2 ;;
-    *)            MODE="explicit"; EXPLICIT_FILES+=("$1"); shift ;;
+    --all)          MODE="all"; shift ;;
+    --diff-only)    DIFF_ONLY=true; shift ;;
+    --format)       RUN_FORMAT=true; shift ;;
+    --no-analyze)   RUN_ANALYZE=false; shift ;;
+    -*)             echo "Unknown flag: $1" >&2; exit 2 ;;
+    *)              MODE="explicit"; EXPLICIT_FILES+=("$1"); shift ;;
   esac
 done
 
@@ -1112,6 +1115,89 @@ if [ ${#FORMAT_FAILURES[@]} -gt 0 ]; then
     echo -e "${RED}${BOLD}ERROR${NC} ${ff}:1 [dart-format] File is not formatted — run: dart format ${ff}" >&2
   done
   FILES_WITH_HITS=$((FILES_WITH_HITS + ${#FORMAT_FAILURES[@]}))
+fi
+
+# ---------------------------------------------------------------------------
+# flutter analyze (runs last, after all custom checks)
+#
+# Runs flutter analyze on the Dart files in scope. In --all mode it runs
+# project-wide (no file list). In staged/explicit mode it runs on the
+# specific files. Skip with --no-analyze for quick iteration.
+# ---------------------------------------------------------------------------
+
+ANALYZE_VIOLATIONS=0
+
+if [ "$RUN_ANALYZE" = true ]; then
+  # Collect Dart files to analyze
+  DART_FILES_FOR_ANALYZE=()
+  for file in "${FILES[@]}"; do
+    case "$file" in
+      *.dart)
+        [ -f "$file" ] && DART_FILES_FOR_ANALYZE+=("$file")
+        ;;
+    esac
+  done
+
+  if [ ${#DART_FILES_FOR_ANALYZE[@]} -gt 0 ]; then
+    if ! command -v flutter &>/dev/null; then
+      echo -e "${YELLOW}WARN${NC}  flutter not found — skipping analyze" >&2
+    else
+      echo -e "${CYAN}Running flutter analyze...${NC}" >&2
+
+      # In --all mode, run project-wide analyze (faster and more thorough)
+      if [ "$MODE" = "all" ]; then
+        ANALYZE_OUTPUT=$(flutter analyze --no-pub 2>&1) || true
+      else
+        # For staged/explicit, analyze only the specific files
+        ANALYZE_OUTPUT=$(flutter analyze --no-pub "${DART_FILES_FOR_ANALYZE[@]}" 2>&1) || true
+      fi
+
+      # Parse flutter analyze output for issues.
+      # flutter analyze outputs lines like:
+      #   info • Unused import • lib/foo.dart:3:8 • unused_import
+      #   warning • ... • lib/foo.dart:10:5 • some_warning
+      #   error • ... • lib/foo.dart:20:3 • some_error
+      # Also handles the newer format:
+      #   lib/foo.dart:3:8 - Unused import. Try removing... - unused_import (info)
+      ANALYZE_HAS_ISSUES=false
+
+      while IFS= read -r aline; do
+        # Match classic format: severity • message • location • code
+        if [[ "$aline" =~ ^[[:space:]]*(info|warning|error)[[:space:]]*•[[:space:]]*(.+)[[:space:]]*•[[:space:]]*(.+)[[:space:]]*•[[:space:]]*(.+)$ ]]; then
+          ANALYZE_HAS_ISSUES=true
+          local_severity="${BASH_REMATCH[1]}"
+          local_msg="${BASH_REMATCH[2]}"
+          local_location="${BASH_REMATCH[3]}"
+          local_code="${BASH_REMATCH[4]}"
+          # Trim whitespace
+          local_msg="${local_msg%"${local_msg##*[![:space:]]}"}"
+          local_location="${local_location%"${local_location##*[![:space:]]}"}"
+          local_code="${local_code%"${local_code##*[![:space:]]}"}"
+          ANALYZE_VIOLATIONS=$((ANALYZE_VIOLATIONS + 1))
+          echo -e "${RED}${BOLD}ERROR${NC} ${local_location} [flutter-analyze/${local_code}] ${local_msg} (${local_severity})" >&2
+        # Match newer format: location - message - code (severity)
+        elif [[ "$aline" =~ ^[[:space:]]*([a-zA-Z_/.]+:[0-9]+:[0-9]+)[[:space:]]*-[[:space:]]*(.+)[[:space:]]*-[[:space:]]*([a-z_]+)[[:space:]]*\((info|warning|error)\) ]]; then
+          ANALYZE_HAS_ISSUES=true
+          local_location="${BASH_REMATCH[1]}"
+          local_msg="${BASH_REMATCH[2]}"
+          local_code="${BASH_REMATCH[3]}"
+          local_severity="${BASH_REMATCH[4]}"
+          local_msg="${local_msg%"${local_msg##*[![:space:]]}"}"
+          ANALYZE_VIOLATIONS=$((ANALYZE_VIOLATIONS + 1))
+          echo -e "${RED}${BOLD}ERROR${NC} ${local_location} [flutter-analyze/${local_code}] ${local_msg} (${local_severity})" >&2
+        fi
+      done <<< "$ANALYZE_OUTPUT"
+
+      if [ "$ANALYZE_HAS_ISSUES" = false ]; then
+        echo -e "${GREEN}flutter analyze: no issues found${NC}" >&2
+      fi
+    fi
+  fi
+fi
+
+TOTAL_VIOLATIONS=$((TOTAL_VIOLATIONS + ANALYZE_VIOLATIONS))
+if [ $ANALYZE_VIOLATIONS -gt 0 ]; then
+  FILES_WITH_HITS=$((FILES_WITH_HITS + 1))
 fi
 
 # ---------------------------------------------------------------------------

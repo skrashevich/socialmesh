@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../../../core/l10n/l10n_extension.dart';
 import '../../../../core/theme.dart';
 import '../../../../core/widgets/app_bottom_sheet.dart' as app_sheets;
 
@@ -148,7 +149,7 @@ class _ColorSelectorSheet extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Choose Color',
+          context.l10n.widgetBuilderChooseColor,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,

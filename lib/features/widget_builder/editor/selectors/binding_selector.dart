@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
+import '../../../../core/l10n/l10n_extension.dart';
 import '../../../../core/theme.dart';
 import '../../../../core/widgets/app_bottom_sheet.dart';
 import '../../models/data_binding.dart';
@@ -97,21 +98,21 @@ class _BindingSelectorContentState extends State<_BindingSelectorContent> {
   String _categoryDisplayName(BindingCategory category) {
     switch (category) {
       case BindingCategory.node:
-        return 'Node Info';
+        return context.l10n.widgetBuilderBindingCategoryNodeInfo;
       case BindingCategory.device:
-        return 'Device';
+        return context.l10n.widgetBuilderBindingCategoryDevice;
       case BindingCategory.network:
-        return 'Network';
+        return context.l10n.widgetBuilderBindingCategoryNetwork;
       case BindingCategory.environment:
-        return 'Environment';
+        return context.l10n.widgetBuilderBindingCategoryEnvironment;
       case BindingCategory.power:
-        return 'Power';
+        return context.l10n.widgetBuilderBindingCategoryPower;
       case BindingCategory.airQuality:
-        return 'Air Quality';
+        return context.l10n.widgetBuilderBindingCategoryAirQuality;
       case BindingCategory.gps:
-        return 'GPS';
+        return context.l10n.widgetBuilderBindingCategoryGps;
       case BindingCategory.messaging:
-        return 'Messages';
+        return context.l10n.widgetBuilderBindingCategoryMessages;
     }
   }
 
@@ -185,7 +186,7 @@ class _BindingSelectorContentState extends State<_BindingSelectorContent> {
           Padding(
             padding: EdgeInsets.only(bottom: 16),
             child: Text(
-              'Select Variable',
+              context.l10n.widgetBuilderSelectVariable,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
@@ -201,7 +202,7 @@ class _BindingSelectorContentState extends State<_BindingSelectorContent> {
             onChanged: (value) => setState(() => _searchQuery = value),
             style: TextStyle(color: context.textPrimary),
             decoration: InputDecoration(
-              hintText: 'Search variables...',
+              hintText: context.l10n.widgetBuilderSearchVariables,
               hintStyle: TextStyle(color: context.textSecondary),
               counterText: '',
               prefixIcon: Icon(
@@ -239,7 +240,12 @@ class _BindingSelectorContentState extends State<_BindingSelectorContent> {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                _buildCategoryChip(null, 'All', Icons.apps, accentColor),
+                _buildCategoryChip(
+                  null,
+                  context.l10n.widgetBuilderAll,
+                  Icons.apps,
+                  accentColor,
+                ),
                 ...BindingCategory.values.map(
                   (cat) => _buildCategoryChip(
                     cat,
@@ -372,7 +378,7 @@ class _BindingSelectorContentState extends State<_BindingSelectorContent> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'None',
+                      context.l10n.widgetBuilderNone,
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
@@ -380,7 +386,7 @@ class _BindingSelectorContentState extends State<_BindingSelectorContent> {
                       ),
                     ),
                     Text(
-                      'No data binding - use static text',
+                      context.l10n.widgetBuilderNoDataBinding,
                       style: TextStyle(
                         fontSize: 12,
                         color: context.textSecondary,
@@ -541,11 +547,11 @@ class _BindingSelectorContentState extends State<_BindingSelectorContent> {
   }
 
   String _typeName(Type type) {
-    if (type == String) return 'text';
-    if (type == int) return 'number';
-    if (type == double) return 'decimal';
-    if (type == bool) return 'yes/no';
-    if (type == DateTime) return 'time';
-    return 'value';
+    if (type == String) return context.l10n.widgetBuilderTypeText;
+    if (type == int) return context.l10n.widgetBuilderTypeNumber;
+    if (type == double) return context.l10n.widgetBuilderTypeDecimal;
+    if (type == bool) return context.l10n.widgetBuilderTypeYesNo;
+    if (type == DateTime) return context.l10n.widgetBuilderTypeTime;
+    return context.l10n.widgetBuilderTypeValue;
   }
 }

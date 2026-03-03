@@ -2,6 +2,7 @@
 // lint-allow: keyboard-dismissal — complex editor with custom focus management
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../models/widget_schema.dart';
 import '../models/data_binding.dart';
@@ -62,8 +63,8 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
 
   WidgetSchema _createDefaultSchema() {
     return WidgetSchema(
-      name: 'New Widget',
-      description: 'Custom widget',
+      name: context.l10n.widgetBuilderNewWidget,
+      description: context.l10n.widgetBuilderCustomWidget,
       root: ElementSchema(
         type: ElementType.container,
         style: const StyleSchema(padding: 12, backgroundColor: '#1E1E2E'),
@@ -109,7 +110,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
           onPressed: _saveWidget,
           icon: Icon(Icons.save, color: context.accentColor, size: 20),
           label: Text(
-            'Save',
+            context.l10n.widgetBuilderSave,
             style: TextStyle(
               color: context.accentColor,
               fontWeight: FontWeight.w600,
@@ -269,7 +270,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
             child: FilledButton.icon(
               onPressed: _showElementPicker,
               icon: Icon(Icons.add, size: 20),
-              label: const Text('Add Element'),
+              label: Text(context.l10n.widgetBuilderAddElement),
               style: FilledButton.styleFrom(
                 backgroundColor: context.accentColor,
                 padding: const EdgeInsets.symmetric(vertical: 12),
@@ -282,7 +283,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
             OutlinedButton.icon(
               onPressed: _showPropertySheet,
               icon: const Icon(Icons.tune, size: 20),
-              label: const Text('Edit'),
+              label: Text(context.l10n.widgetBuilderEdit),
               style: OutlinedButton.styleFrom(
                 foregroundColor: Colors.white,
                 side: BorderSide(color: context.border),
@@ -954,7 +955,9 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
                   _selectedElementId!,
                 );
                 if (element == null) {
-                  return const Center(child: Text('Element not found'));
+                  return Center(
+                    child: Text(context.l10n.widgetBuilderElementNotFound),
+                  );
                 }
 
                 return Column(
@@ -1689,7 +1692,9 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
           FilledButton.icon(
             onPressed: () => _showAddChildDialog(element),
             icon: Icon(Icons.add, size: 18),
-            label: Text('Add item (${element.children.length} items)'),
+            label: Text(
+              context.l10n.widgetBuilderAddItemCount(element.children.length),
+            ),
             style: FilledButton.styleFrom(
               backgroundColor: context.accentColor,
               minimumSize: const Size(double.infinity, 44),
@@ -2923,7 +2928,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
                   ),
-                  child: const Text('Cancel'),
+                  child: Text(context.l10n.widgetBuilderCancel),
                 ),
               ),
               const SizedBox(width: AppTheme.spacing12),
@@ -2937,7 +2942,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
                   ),
-                  child: const Text('Save'),
+                  child: Text(context.l10n.widgetBuilderSave),
                 ),
               ),
             ],

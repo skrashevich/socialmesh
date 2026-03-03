@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import 'widget_marketplace_service.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
@@ -52,7 +53,7 @@ class _WidgetApprovalScreenState extends ConsumerState<WidgetApprovalScreen>
 
       if (token == null) {
         safeSetState(() {
-          _error = 'Not authenticated';
+          _error = context.l10n.widgetBuilderMarketplaceNotAuthenticated;
           _isLoading = false;
         });
         return;
@@ -86,7 +87,10 @@ class _WidgetApprovalScreenState extends ConsumerState<WidgetApprovalScreen>
       if (!mounted) return;
 
       if (token == null) {
-        showErrorSnackBar(context, 'Not authenticated');
+        showErrorSnackBar(
+          context,
+          context.l10n.widgetBuilderMarketplaceNotAuthenticated,
+        );
         return;
       }
 
@@ -112,7 +116,7 @@ class _WidgetApprovalScreenState extends ConsumerState<WidgetApprovalScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Reject Widget',
+            context.l10n.widgetBuilderMarketplaceRejectWidget,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -131,7 +135,7 @@ class _WidgetApprovalScreenState extends ConsumerState<WidgetApprovalScreen>
             controller: controller,
             maxLines: 3,
             decoration: InputDecoration(
-              hintText: 'Enter reason...',
+              hintText: context.l10n.widgetBuilderMarketplaceEnterReason,
               hintStyle: TextStyle(color: context.textSecondary),
               filled: true,
               fillColor: context.background,
@@ -156,7 +160,7 @@ class _WidgetApprovalScreenState extends ConsumerState<WidgetApprovalScreen>
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
                   ),
-                  child: const Text('Cancel'),
+                  child: Text(context.l10n.widgetBuilderMarketplaceCancel),
                 ),
               ),
               const SizedBox(width: AppTheme.spacing12),
@@ -164,7 +168,10 @@ class _WidgetApprovalScreenState extends ConsumerState<WidgetApprovalScreen>
                 child: FilledButton(
                   onPressed: () {
                     if (controller.text.trim().isEmpty) {
-                      showErrorSnackBar(context, 'Please enter a reason');
+                      showErrorSnackBar(
+                        context,
+                        context.l10n.widgetBuilderMarketplacePleaseEnterReason,
+                      );
                       return;
                     }
                     Navigator.pop(context, controller.text.trim());
@@ -176,7 +183,9 @@ class _WidgetApprovalScreenState extends ConsumerState<WidgetApprovalScreen>
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
                   ),
-                  child: const Text('Reject'),
+                  child: Text(
+                    context.l10n.widgetBuilderMarketplaceRejectButton,
+                  ),
                 ),
               ),
             ],
@@ -196,7 +205,10 @@ class _WidgetApprovalScreenState extends ConsumerState<WidgetApprovalScreen>
       if (!mounted) return;
 
       if (token == null) {
-        showErrorSnackBar(context, 'Not authenticated');
+        showErrorSnackBar(
+          context,
+          context.l10n.widgetBuilderMarketplaceNotAuthenticated,
+        );
         return;
       }
 
@@ -217,7 +229,7 @@ class _WidgetApprovalScreenState extends ConsumerState<WidgetApprovalScreen>
     return GestureDetector(
       onTap: _dismissKeyboard,
       child: GlassScaffold(
-        title: 'Widget Approval',
+        title: context.l10n.widgetBuilderMarketplaceWidgetApproval,
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -251,7 +263,7 @@ class _WidgetApprovalScreenState extends ConsumerState<WidgetApprovalScreen>
                 const SizedBox(height: AppTheme.spacing16),
                 TextButton(
                   onPressed: _loadPendingWidgets,
-                  child: const Text('Retry'),
+                  child: Text(context.l10n.widgetBuilderMarketplaceRetry),
                 ),
               ],
             ),
@@ -274,7 +286,7 @@ class _WidgetApprovalScreenState extends ConsumerState<WidgetApprovalScreen>
                 ),
                 SizedBox(height: AppTheme.spacing16),
                 Text(
-                  'No widgets pending approval',
+                  context.l10n.widgetBuilderMarketplaceNoPending,
                   style: TextStyle(color: context.textSecondary, fontSize: 18),
                 ),
               ],
@@ -350,7 +362,7 @@ class _PendingWidgetCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(AppTheme.radius4),
                   ),
                   child: Text(
-                    'PENDING',
+                    context.l10n.widgetBuilderMarketplacePending,
                     style: TextStyle(
                       color: AppTheme.warningYellow,
                       fontSize: 10,
@@ -400,7 +412,7 @@ class _PendingWidgetCard extends StatelessWidget {
                 Icon(Icons.schedule, size: 16, color: context.textSecondary),
                 SizedBox(width: AppTheme.spacing4),
                 Text(
-                  _formatDate(widget.createdAt),
+                  _formatDate(context, widget.createdAt),
                   style: TextStyle(color: context.textSecondary, fontSize: 12),
                 ),
               ],
@@ -441,7 +453,9 @@ class _PendingWidgetCard extends StatelessWidget {
                 OutlinedButton.icon(
                   onPressed: isProcessing ? null : onReject,
                   icon: const Icon(Icons.close, size: 18),
-                  label: const Text('Reject'),
+                  label: Text(
+                    context.l10n.widgetBuilderMarketplaceRejectButton,
+                  ),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppTheme.errorRed,
                     side: BorderSide(color: AppTheme.errorRed),
@@ -464,7 +478,11 @@ class _PendingWidgetCard extends StatelessWidget {
                           ),
                         )
                       : const Icon(Icons.check, size: 18),
-                  label: Text(isProcessing ? 'Processing...' : 'Approve'),
+                  label: Text(
+                    isProcessing
+                        ? context.l10n.widgetBuilderMarketplaceProcessing
+                        : context.l10n.widgetBuilderMarketplaceApprove,
+                  ),
                   style: FilledButton.styleFrom(
                     backgroundColor: AppTheme.successGreen,
                     padding: const EdgeInsets.symmetric(
@@ -481,7 +499,7 @@ class _PendingWidgetCard extends StatelessWidget {
     );
   }
 
-  String _formatDate(DateTime date) {
+  String _formatDate(BuildContext context, DateTime date) {
     final now = DateTime.now();
     final diff = now.difference(date);
 
@@ -492,7 +510,7 @@ class _PendingWidgetCard extends StatelessWidget {
     } else if (diff.inMinutes > 0) {
       return '${diff.inMinutes}m ago';
     } else {
-      return 'Just now';
+      return context.l10n.widgetBuilderMarketplaceJustNow;
     }
   }
 }

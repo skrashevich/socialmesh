@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import '../../core/l10n/l10n_extension.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,7 +23,7 @@ Future<void> showWidgetShareSheet(
   if (user == null) {
     showActionSnackBar(
       context,
-      'Sign in to share widgets',
+      context.l10n.widgetBuilderSignInToShare,
       actionLabel: 'Sign In',
       onAction: () => Navigator.pushNamed(context, '/account'),
       type: SnackBarType.info,
@@ -34,11 +35,11 @@ Future<void> showWidgetShareSheet(
 
   await QrShareSheet.showWithLoader(
     context: context,
-    title: 'Share Widget',
+    title: context.l10n.widgetBuilderShareTitle,
     subtitle: schema.name,
-    infoText: 'Scan this QR code in Socialmesh to import this widget',
+    infoText: context.l10n.widgetBuilderShareInfoText,
     shareSubject: 'Socialmesh Widget: ${schema.name}',
-    shareMessage: 'Check out this widget on Socialmesh!',
+    shareMessage: context.l10n.widgetBuilderShareMessage,
     loader: () => _uploadAndGetShareData(schema, userId),
   );
 }

@@ -1264,6 +1264,722 @@ class AppLocalizationsRu extends AppLocalizations {
   String get appTitle => 'Socialmesh';
 
   @override
+  String arAlertLowBattery(String percent) {
+    return 'Low battery: $percent%';
+  }
+
+  @override
+  String get arAlertNewNodeDiscovered => 'New node discovered';
+
+  @override
+  String get arAlertNodeInMotion => 'Node in motion';
+
+  @override
+  String get arCalibratingSensors => 'Calibrating sensors...';
+
+  @override
+  String get arCalibrationAcceptable => 'Calibration acceptable - can improve';
+
+  @override
+  String get arCalibrationAlmostThere => 'Almost there - keep moving';
+
+  @override
+  String get arCalibrationAnalyzing => 'Analyzing calibration data...';
+
+  @override
+  String get arCalibrationCompleteExcellent =>
+      'Calibration complete - Excellent!';
+
+  @override
+  String get arCalibrationCompleteGood => 'Calibration complete - Good';
+
+  @override
+  String get arCalibrationExcellentAccuracy => 'Excellent accuracy';
+
+  @override
+  String get arCalibrationExcellentFinishing => 'Excellent! Finishing up...';
+
+  @override
+  String get arCalibrationFailed => 'Calibration failed';
+
+  @override
+  String get arCalibrationFairAccuracy => 'Fair accuracy';
+
+  @override
+  String get arCalibrationGoodAccuracy => 'Good accuracy';
+
+  @override
+  String get arCalibrationGoodProgress => 'Good progress - continue rotating';
+
+  @override
+  String get arCalibrationGpsAcquiring => 'Acquiring...';
+
+  @override
+  String arCalibrationGpsExcellent(String meters) {
+    return '±${meters}m (Excellent)';
+  }
+
+  @override
+  String arCalibrationGpsFair(String meters) {
+    return '±${meters}m (Fair)';
+  }
+
+  @override
+  String arCalibrationGpsGood(String meters) {
+    return '±${meters}m (Good)';
+  }
+
+  @override
+  String arCalibrationGpsPoor(String meters) {
+    return '±${meters}m (Poor)';
+  }
+
+  @override
+  String get arCalibrationIncomplete =>
+      'Calibration incomplete - please try again';
+
+  @override
+  String get arCalibrationKeepRotating =>
+      'Keep rotating - try all orientations';
+
+  @override
+  String get arCalibrationMoveFigure8 => 'Move device in figure-8 pattern';
+
+  @override
+  String get arCalibrationMoveFigure8Ellipsis =>
+      'Move device in figure-8 pattern...';
+
+  @override
+  String get arCalibrationNotCalibrated => 'Not calibrated';
+
+  @override
+  String get arCalibrationPoorAccuracy => 'Poor accuracy';
+
+  @override
+  String get arCalibrationScreenAccuracyImproved => 'Compass accuracy improved';
+
+  @override
+  String get arCalibrationScreenComplete => 'CALIBRATION COMPLETE';
+
+  @override
+  String get arCalibrationScreenContinue => 'CONTINUE TO AR';
+
+  @override
+  String get arCalibrationScreenInstructionAlmost =>
+      'Almost there!\nJust a bit more.';
+
+  @override
+  String get arCalibrationScreenInstructionIdle =>
+      'Move your device in a figure-8 pattern to calibrate the compass for accurate AR navigation.';
+
+  @override
+  String get arCalibrationScreenInstructionMoving =>
+      'Keep moving in a figure-8 pattern...\nFollow the glowing dot.';
+
+  @override
+  String get arCalibrationScreenInstructionProgress =>
+      'Great progress!\nContinue the figure-8 motion.';
+
+  @override
+  String get arCalibrationScreenSkip => 'Skip for now';
+
+  @override
+  String get arCalibrationScreenStart => 'START CALIBRATION';
+
+  @override
+  String get arCalibrationScreenTitle => 'COMPASS CALIBRATION';
+
+  @override
+  String get arCalibrationStarting => 'Starting calibration...';
+
+  @override
+  String get arCompassBadgeCalibrate => 'CALIBRATE';
+
+  @override
+  String get arCompassBadgeCompass => 'COMPASS';
+
+  @override
+  String get arCompassBadgeOk => 'COMPASS OK';
+
+  @override
+  String arCouldNotOpenMaps(String name) {
+    return 'Could not open maps for $name';
+  }
+
+  @override
+  String get arEngineError => 'AR ENGINE ERROR';
+
+  @override
+  String arFailedToStart(String error) {
+    return 'Failed to start AR: $error';
+  }
+
+  @override
+  String get arFovPresetIphone05x => 'iPhone (0.5x)';
+
+  @override
+  String get arFovPresetIphone1x => 'iPhone (1x)';
+
+  @override
+  String get arFovPresetNarrow => 'Narrow';
+
+  @override
+  String get arFovPresetPixel => 'Google Pixel';
+
+  @override
+  String get arFovPresetSamsung => 'Samsung Galaxy';
+
+  @override
+  String get arFovPresetWide => 'Wide (default)';
+
+  @override
+  String get arGpsBadgeNoGps => 'NO GPS';
+
+  @override
+  String get arHudAltLabel => 'ALT';
+
+  @override
+  String get arHudUnknownNode => 'Unknown';
+
+  @override
+  String get arInitializingEngine => 'INITIALIZING AR ENGINE';
+
+  @override
+  String get arNoCamerasAvailable => 'No cameras available';
+
+  @override
+  String get arNodeBadgeCritical => 'CRITICAL';
+
+  @override
+  String get arNodeBadgeMoving => 'MOVING';
+
+  @override
+  String get arNodeBadgeNew => 'NEW';
+
+  @override
+  String get arNodeBadgeOffline => 'OFFLINE';
+
+  @override
+  String get arNodeBadgeWarning => 'WARNING';
+
+  @override
+  String get arNodeDetailAltitude => 'Altitude';
+
+  @override
+  String get arNodeDetailBattery => 'Battery';
+
+  @override
+  String get arNodeDetailBearing => 'BEARING';
+
+  @override
+  String get arNodeDetailDistance => 'DISTANCE';
+
+  @override
+  String get arNodeDetailElevation => 'ELEVATION';
+
+  @override
+  String get arNodeDetailLastHeard => 'Last Heard';
+
+  @override
+  String get arNodeDetailNavigate => 'Navigate';
+
+  @override
+  String get arNodeDetailRssi => 'RSSI';
+
+  @override
+  String get arNodeDetailSnr => 'SNR';
+
+  @override
+  String get arNodeDetailSpeed => 'Speed';
+
+  @override
+  String get arNodeDetailUnknownNode => 'Unknown Node';
+
+  @override
+  String get arNodeNoGpsPosition => 'Node has no GPS position';
+
+  @override
+  String get arRetry => 'RETRY';
+
+  @override
+  String get arSettingsAlerts => 'Alerts';
+
+  @override
+  String get arSettingsAltimeter => 'Altimeter';
+
+  @override
+  String get arSettingsCompass => 'Compass';
+
+  @override
+  String get arSettingsDistanceFilter => 'DISTANCE FILTER';
+
+  @override
+  String get arSettingsExplorer => 'Explorer';
+
+  @override
+  String get arSettingsFavoritesOnly => 'Favorites Only';
+
+  @override
+  String get arSettingsHorizon => 'Horizon';
+
+  @override
+  String get arSettingsHudElements => 'HUD ELEMENTS';
+
+  @override
+  String get arSettingsMaxDistance => 'Max Distance';
+
+  @override
+  String get arSettingsMaxDistanceLabel => '100km';
+
+  @override
+  String get arSettingsMinDistanceLabel => '100m';
+
+  @override
+  String get arSettingsMinimal => 'Minimal';
+
+  @override
+  String get arSettingsNodeFilters => 'NODE FILTERS';
+
+  @override
+  String get arSettingsShowOfflineNodes => 'Show Offline Nodes';
+
+  @override
+  String get arSettingsTactical => 'Tactical';
+
+  @override
+  String get arSettingsViewMode => 'VIEW MODE';
+
+  @override
+  String arShareSubjectMeshNode(String name) {
+    return 'Mesh Node: $name';
+  }
+
+  @override
+  String get arSharedViaSocialmesh => 'Shared via Socialmesh AR';
+
+  @override
+  String get arTouchLocked => 'Touch locked';
+
+  @override
+  String get arTouchUnlocked => 'Touch unlocked';
+
+  @override
+  String get arViewModeExplorer => 'Explorer';
+
+  @override
+  String get arViewModeExplorerDesc =>
+      'Navigation-focused with large markers and trails';
+
+  @override
+  String get arViewModeMinimal => 'Minimal';
+
+  @override
+  String get arViewModeMinimalDesc => 'Clean view with simple markers only';
+
+  @override
+  String get arViewModeSelectorExp => 'EXP';
+
+  @override
+  String get arViewModeSelectorMin => 'MIN';
+
+  @override
+  String get arViewModeSelectorTac => 'TAC';
+
+  @override
+  String get arViewModeTactical => 'Tactical';
+
+  @override
+  String get arViewModeTacticalDesc =>
+      'Full HUD with compass, horizon, and detailed info';
+
+  @override
+  String get authMfaActiveMethods => 'Active Methods';
+
+  @override
+  String get authMfaCancelButton => 'Cancel';
+
+  @override
+  String get authMfaChangePhoneNumber => 'Change Phone Number';
+
+  @override
+  String get authMfaCodeHint => '000000';
+
+  @override
+  String authMfaCodeSentTo(String phoneNumber) {
+    return 'Verification code sent to $phoneNumber';
+  }
+
+  @override
+  String authMfaDateDaysAgo(int count) {
+    return '$count days ago';
+  }
+
+  @override
+  String authMfaDateMonthsAgo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count months ago',
+      one: '1 month ago',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get authMfaDateToday => 'today';
+
+  @override
+  String authMfaDateWeeksAgo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count weeks ago',
+      one: '1 week ago',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get authMfaDateYesterday => 'yesterday';
+
+  @override
+  String get authMfaEnableButton => 'Enable Two-Factor Auth';
+
+  @override
+  String get authMfaEnabled => 'Two-factor authentication enabled';
+
+  @override
+  String get authMfaEnrollmentHeading => 'Add an extra layer of security';
+
+  @override
+  String get authMfaEnrollmentSubheading =>
+      'You\'ll receive a verification code via SMS when signing in';
+
+  @override
+  String get authMfaEnrollmentTitle => 'Enable Two-Factor Auth';
+
+  @override
+  String authMfaEnterCodeSentTo(String phone) {
+    return 'Enter the code sent to $phone';
+  }
+
+  @override
+  String authMfaEnterCodeSentToPhone(String phoneNumber) {
+    return 'Enter the 6-digit code sent to $phoneNumber';
+  }
+
+  @override
+  String get authMfaEnterSixDigitCode => 'Please enter the 6-digit code';
+
+  @override
+  String get authMfaEnterSixDigitCodeWarning => 'Please enter the 6-digit code';
+
+  @override
+  String get authMfaErrorAccountExistsDifferentCredential =>
+      'An account already exists with the same email but a different sign-in method. Please sign in with your original method.';
+
+  @override
+  String get authMfaErrorAlreadyEnrolled =>
+      'This phone number is already enrolled for two-factor auth.';
+
+  @override
+  String get authMfaErrorAppVerificationFailed =>
+      'App verification failed. Please try again.';
+
+  @override
+  String get authMfaErrorCancelled => 'Verification was cancelled.';
+
+  @override
+  String get authMfaErrorCodeExpired =>
+      'The verification code has expired. Please request a new one.';
+
+  @override
+  String get authMfaErrorCredentialInUse =>
+      'This phone number is already used by another account.';
+
+  @override
+  String get authMfaErrorEmailInUse =>
+      'This email is already associated with another account.';
+
+  @override
+  String get authMfaErrorGeneric => 'Verification failed. Please try again.';
+
+  @override
+  String get authMfaErrorInfoNotFound =>
+      'Two-factor authentication info not found. Please re-enroll your second factor.';
+
+  @override
+  String get authMfaErrorInternal =>
+      'An internal error occurred. Please try again.';
+
+  @override
+  String get authMfaErrorInvalidAppCredential =>
+      'App verification failed. Please restart the app and try again.';
+
+  @override
+  String get authMfaErrorInvalidCertHash =>
+      'App signing verification failed. This build may not be properly configured for phone authentication.';
+
+  @override
+  String get authMfaErrorInvalidCode =>
+      'That code is incorrect. Please check and try again.';
+
+  @override
+  String get authMfaErrorInvalidCredential =>
+      'The code you entered is incorrect or has expired. Please try again.';
+
+  @override
+  String get authMfaErrorInvalidData =>
+      'Invalid verification data. Please request a new code.';
+
+  @override
+  String get authMfaErrorInvalidPhoneNumber =>
+      'Please enter a valid phone number with country code (e.g. +1 234 567 890).';
+
+  @override
+  String get authMfaErrorInvalidTotpCode =>
+      'That authenticator code is incorrect. Please check and try again.';
+
+  @override
+  String get authMfaErrorMaxFactors =>
+      'You have reached the maximum number of second factors.';
+
+  @override
+  String get authMfaErrorMissingAppCredential =>
+      'App verification is not configured. Please try again later.';
+
+  @override
+  String get authMfaErrorMissingClientId =>
+      'App verification failed. Please restart the app and try again.';
+
+  @override
+  String get authMfaErrorMissingCode =>
+      'Please enter the verification code sent to your phone.';
+
+  @override
+  String get authMfaErrorMissingPhone => 'Please enter your phone number.';
+
+  @override
+  String get authMfaErrorMissingTotpCode =>
+      'Please enter the code from your authenticator app.';
+
+  @override
+  String get authMfaErrorNoCurrentUser =>
+      'Please sign in first to manage two-factor auth.';
+
+  @override
+  String get authMfaErrorNoInternet =>
+      'No internet connection. Please check your network and try again.';
+
+  @override
+  String get authMfaErrorPhoneNotEnabled =>
+      'Phone verification is not enabled. Please contact support.';
+
+  @override
+  String get authMfaErrorProviderAlreadyLinked =>
+      'This sign-in method is already linked to your account.';
+
+  @override
+  String get authMfaErrorQuotaExceeded =>
+      'Service temporarily unavailable. Please try again later.';
+
+  @override
+  String get authMfaErrorReauthCancelled =>
+      'Re-authentication was cancelled. Please try again.';
+
+  @override
+  String get authMfaErrorReauthFailed =>
+      'Re-authentication failed. Please sign out, sign back in, and try again.';
+
+  @override
+  String get authMfaErrorResolveSignInFailed =>
+      'The verification code is incorrect or has expired. Please try again or request a new code.';
+
+  @override
+  String get authMfaErrorSecondFactorRequired =>
+      'Two-factor verification is required to complete sign-in.';
+
+  @override
+  String get authMfaErrorSessionExpired =>
+      'Your verification session has expired. Please request a new code.';
+
+  @override
+  String get authMfaErrorSignInSessionExpired =>
+      'Your sign-in session has expired. Please start the sign-in again.';
+
+  @override
+  String get authMfaErrorTimeout => 'The request timed out. Please try again.';
+
+  @override
+  String get authMfaErrorTooManyRequests =>
+      'Too many attempts. Please wait a few minutes and try again.';
+
+  @override
+  String authMfaErrorUnknown(String errorCode) {
+    return 'Verification failed (error: $errorCode). Please try again.';
+  }
+
+  @override
+  String get authMfaErrorUnsupportedFirstFactor =>
+      'Your sign-in method does not support two-factor auth.';
+
+  @override
+  String get authMfaErrorUserDisabled =>
+      'This account has been disabled. Please contact support.';
+
+  @override
+  String get authMfaErrorVerificationFailed =>
+      'Phone verification failed. Please check your number and try again.';
+
+  @override
+  String get authMfaErrorWrongAccount =>
+      'That account doesn\'t match the one you\'re signed into. Please try again and select the correct account.';
+
+  @override
+  String authMfaFactorAdded(String relativeTime) {
+    return 'Added $relativeTime';
+  }
+
+  @override
+  String get authMfaHowItWorks => 'How it works';
+
+  @override
+  String get authMfaInfoQuickDescription =>
+      'Takes just a few seconds to verify during sign-in';
+
+  @override
+  String get authMfaInfoQuickTitle => 'Quick & Easy';
+
+  @override
+  String get authMfaInfoSecurityDescription =>
+      'Protects your account even if your password is compromised';
+
+  @override
+  String get authMfaInfoSecurityTitle => 'Extra Security';
+
+  @override
+  String get authMfaInfoSmsDescription =>
+      'Receive a verification code via text message when signing in';
+
+  @override
+  String get authMfaInfoSmsTitle => 'SMS Verification';
+
+  @override
+  String get authMfaManagementTitle => 'Two-Factor Authentication';
+
+  @override
+  String get authMfaNoInternetBody =>
+      'Two-factor authentication management requires an internet connection. Please connect and try again.';
+
+  @override
+  String get authMfaNoInternetTitle => 'No Internet Connection';
+
+  @override
+  String get authMfaNoPhoneFactorFound => 'No phone factor found';
+
+  @override
+  String get authMfaNoVerificationId => 'No verification ID. Try resending.';
+
+  @override
+  String get authMfaNotEnabledDescription => 'Add an extra layer of security';
+
+  @override
+  String get authMfaOfflineBanner =>
+      'You are offline. Changes cannot be made until you reconnect.';
+
+  @override
+  String get authMfaPhoneCountryCodeRequired =>
+      'Phone number must include country code (+1, +44, etc.)';
+
+  @override
+  String get authMfaPhoneFallback => 'Phone';
+
+  @override
+  String get authMfaPhoneNumberHint => '+1 234 567 890';
+
+  @override
+  String get authMfaPhoneNumberLabel => 'Phone Number';
+
+  @override
+  String get authMfaPhoneRequired => 'Please enter your phone number';
+
+  @override
+  String get authMfaProtectedDescription =>
+      'Your account is protected with 2FA';
+
+  @override
+  String get authMfaRemoveConfirmLabel => 'Remove';
+
+  @override
+  String get authMfaRemoveConfirmMessage =>
+      'Your account will be less secure. You can re-enable it anytime.';
+
+  @override
+  String get authMfaRemoveConfirmTitle => 'Remove Two-Factor Auth?';
+
+  @override
+  String get authMfaRemoveRequiresInternet =>
+      'Removing two-factor authentication requires an internet connection.';
+
+  @override
+  String get authMfaRemoved => 'Two-factor authentication removed';
+
+  @override
+  String get authMfaRequiresInternet =>
+      'Two-factor authentication requires an internet connection.';
+
+  @override
+  String get authMfaRetryButton => 'Retry';
+
+  @override
+  String get authMfaSendCodeButton => 'Send Code';
+
+  @override
+  String get authMfaSendCodeRequiresInternet =>
+      'Sending verification codes requires an internet connection.';
+
+  @override
+  String get authMfaSendingButton => 'Sending...';
+
+  @override
+  String get authMfaSendingCode => 'Sending verification code...';
+
+  @override
+  String get authMfaStatusNotEnabled => 'Not Enabled';
+
+  @override
+  String get authMfaStatusProtected => 'Protected';
+
+  @override
+  String get authMfaStillOffline =>
+      'Still offline. Please check your connection.';
+
+  @override
+  String get authMfaVerificationCodeHint => '000000';
+
+  @override
+  String get authMfaVerificationCodeLabel => 'Verification Code';
+
+  @override
+  String get authMfaVerifyAndEnableButton => 'Verify & Enable';
+
+  @override
+  String get authMfaVerifyButton => 'Verify';
+
+  @override
+  String get authMfaVerifyIdentityTitle => 'Verify Identity';
+
+  @override
+  String get authMfaVerifyRequiresInternet =>
+      'Verifying codes requires an internet connection.';
+
+  @override
+  String get authMfaVerifyingButton => 'Verifying...';
+
+  @override
+  String get authMfaYourPhone => 'your phone';
+
+  @override
   String get automationActionBodyLabel => 'Body';
 
   @override
@@ -1857,6 +2573,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get automationScreenDeleteTitle => 'Delete Automation';
 
   @override
+  String automationScreenDeleted(String name) {
+    return 'Deleted \"$name\"';
+  }
+
+  @override
+  String automationScreenDeleting(String name) {
+    return 'Deleting \"$name\"...';
+  }
+
+  @override
   String get automationScreenEmptyDescription =>
       'Create automations to trigger actions automatically when events occur on your mesh network.';
 
@@ -1902,6 +2628,21 @@ class AppLocalizationsRu extends AppLocalizations {
   String get automationScreenRetry => 'Retry';
 
   @override
+  String automationScreenRunFailed(String error) {
+    return 'Failed to run: $error';
+  }
+
+  @override
+  String automationScreenRunSuccess(String name) {
+    return 'Ran \"$name\" successfully';
+  }
+
+  @override
+  String automationScreenRunning(String name) {
+    return 'Running \"$name\"...';
+  }
+
+  @override
   String get automationScreenScanQrCode => 'Scan QR Code';
 
   @override
@@ -1922,31 +2663,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get automationScreenTitle => 'Automations';
-
-  @override
-  String automationScreenRunning(String name) {
-    return 'Running \"$name\"...';
-  }
-
-  @override
-  String automationScreenRunSuccess(String name) {
-    return 'Ran \"$name\" successfully';
-  }
-
-  @override
-  String automationScreenRunFailed(String error) {
-    return 'Failed to run: $error';
-  }
-
-  @override
-  String automationScreenDeleting(String name) {
-    return 'Deleting \"$name\"...';
-  }
-
-  @override
-  String automationScreenDeleted(String name) {
-    return 'Deleted \"$name\"';
-  }
 
   @override
   String get automationShareMessage =>
@@ -3053,6 +3769,180 @@ class AppLocalizationsRu extends AppLocalizations {
   String get commonSave => 'Сохранить';
 
   @override
+  String get debugScreenAppLogTitle => 'App Log';
+
+  @override
+  String get debugScreenApply => 'Apply';
+
+  @override
+  String get debugScreenAutoScrollOff => 'Auto-scroll off';
+
+  @override
+  String get debugScreenAutoScrollOn => 'Auto-scroll on';
+
+  @override
+  String get debugScreenClear => 'Clear';
+
+  @override
+  String get debugScreenClearLogsMenuItem => 'Clear Logs';
+
+  @override
+  String get debugScreenClearLogsMessage =>
+      'Are you sure you want to clear all logs?';
+
+  @override
+  String get debugScreenClearLogsTitle => 'Clear Logs';
+
+  @override
+  String get debugScreenClearMenuItem => 'Clear';
+
+  @override
+  String get debugScreenCopy => 'Copy';
+
+  @override
+  String get debugScreenCopyToClipboard => 'Copy to Clipboard';
+
+  @override
+  String get debugScreenDebugExportMessage =>
+      'This export includes device info, connection state, node list, route metadata, and recent app logs.\n\nMessage text is redacted and GPS coordinates are coarsened. Review the file before sharing with anyone.';
+
+  @override
+  String get debugScreenDebugExportTitle => 'Debug Export';
+
+  @override
+  String get debugScreenDeviceApply => 'Apply';
+
+  @override
+  String get debugScreenDeviceAutoScrollOff => 'Auto-scroll OFF';
+
+  @override
+  String get debugScreenDeviceAutoScrollOn => 'Auto-scroll ON';
+
+  @override
+  String get debugScreenDeviceClear => 'Clear';
+
+  @override
+  String get debugScreenDeviceClearMessage =>
+      'Are you sure you want to clear all device logs?';
+
+  @override
+  String get debugScreenDeviceClearTitle => 'Clear Logs';
+
+  @override
+  String debugScreenDeviceEntryCount(int count) {
+    return '$count entries';
+  }
+
+  @override
+  String get debugScreenDeviceFilterSubtitle =>
+      'Select which levels to display';
+
+  @override
+  String get debugScreenDeviceFilterTitle => 'Filter Log Levels';
+
+  @override
+  String get debugScreenDeviceLogCrit => 'CRIT';
+
+  @override
+  String get debugScreenDeviceLogDebug => 'DEBUG';
+
+  @override
+  String get debugScreenDeviceLogError => 'ERROR';
+
+  @override
+  String get debugScreenDeviceLogInfo => 'INFO';
+
+  @override
+  String get debugScreenDeviceLogTrace => 'TRACE';
+
+  @override
+  String get debugScreenDeviceLogUnset => 'UNSET';
+
+  @override
+  String get debugScreenDeviceLogWarn => 'WARN';
+
+  @override
+  String get debugScreenDeviceLogsCopied => 'Device logs copied to clipboard';
+
+  @override
+  String get debugScreenDeviceLogsTitle => 'Device Logs';
+
+  @override
+  String get debugScreenDeviceSearchHint => 'Search logs...';
+
+  @override
+  String debugScreenEntryCount(int count) {
+    return '$count entries';
+  }
+
+  @override
+  String get debugScreenExport => 'Export';
+
+  @override
+  String get debugScreenExportDebugJson => 'Export Debug JSON';
+
+  @override
+  String debugScreenExportFailed(String error) {
+    return 'Export failed: $error';
+  }
+
+  @override
+  String get debugScreenFilter => 'Filter';
+
+  @override
+  String get debugScreenFilterLevelsTooltip => 'Filter levels';
+
+  @override
+  String get debugScreenFilterLogLevels => 'Filter Log Levels';
+
+  @override
+  String get debugScreenFilterSubtitle => 'Select which levels to display';
+
+  @override
+  String get debugScreenFiltered => 'Filtered';
+
+  @override
+  String get debugScreenGeneratingExport => 'Generating debug export...';
+
+  @override
+  String get debugScreenLogCopied => 'Log copied to clipboard';
+
+  @override
+  String get debugScreenLogLevelDebug => 'DEBUG';
+
+  @override
+  String get debugScreenLogLevelError => 'ERROR';
+
+  @override
+  String get debugScreenLogLevelInfo => 'INFO';
+
+  @override
+  String get debugScreenLogLevelWarn => 'WARN';
+
+  @override
+  String get debugScreenLogsWillAppear =>
+      'Logs will appear here as your device sends them';
+
+  @override
+  String get debugScreenNoDeviceLogs => 'No device logs yet';
+
+  @override
+  String get debugScreenNoLogEntries => 'No log entries';
+
+  @override
+  String get debugScreenSearchLogsHint => 'Search logs...';
+
+  @override
+  String get debugScreenShare => 'Share';
+
+  @override
+  String get debugScreenShareLog => 'Share Log';
+
+  @override
+  String get debugScreenStreamingBanner =>
+      'Streaming firmware debug logs from your connected device via BLE';
+
+  @override
   String get deviceConfigBleName => 'BLE Name';
 
   @override
@@ -4014,6 +4904,665 @@ class AppLocalizationsRu extends AppLocalizations {
   String get featuredProductsUnsavedChanges => 'You have unsaved changes';
 
   @override
+  String get feedbackBugReportsTitle => 'My Bug Reports';
+
+  @override
+  String get feedbackConversation => 'Conversation';
+
+  @override
+  String get feedbackFailedToLoad => 'Failed to load reports';
+
+  @override
+  String get feedbackFilterAll => 'All';
+
+  @override
+  String get feedbackFilterAwaiting => 'Awaiting';
+
+  @override
+  String get feedbackFilterOpen => 'Open';
+
+  @override
+  String get feedbackFilterResolved => 'Resolved';
+
+  @override
+  String get feedbackFilterResponded => 'Responded';
+
+  @override
+  String get feedbackFormHint => 'Tell us about the issue you encountered';
+
+  @override
+  String get feedbackFormTitle => 'Report bug';
+
+  @override
+  String get feedbackFormValidationError => 'Please describe the issue.';
+
+  @override
+  String get feedbackFormWhatHappened => 'What happened?';
+
+  @override
+  String get feedbackIncludeScreenshot => 'Include screenshot in report';
+
+  @override
+  String get feedbackMustBeSignedIn => 'You must be signed in to reply';
+
+  @override
+  String get feedbackNoBugReports => 'No bug reports yet';
+
+  @override
+  String get feedbackNoBugReportsDesc =>
+      'Shake your device to report a bug.\nYour reports and any responses will appear here.';
+
+  @override
+  String get feedbackNoMatchFilter => 'No reports match this filter';
+
+  @override
+  String get feedbackNoMatchSearch => 'No reports match your search';
+
+  @override
+  String feedbackReplyFailed(String error) {
+    return 'Failed to send reply: $error';
+  }
+
+  @override
+  String get feedbackReplyHint => 'Write a reply...';
+
+  @override
+  String get feedbackReplySent => 'Reply sent';
+
+  @override
+  String get feedbackReportBugAction => 'Report bug';
+
+  @override
+  String get feedbackReportBugDescription =>
+      'If something isn\'t working correctly, you can report it to help improve Socialmesh for everyone.';
+
+  @override
+  String get feedbackReportBugTitle => 'Report a bug?';
+
+  @override
+  String get feedbackReportResolved => 'This report has been resolved';
+
+  @override
+  String get feedbackResponseAuthorSocialmesh => 'Socialmesh';
+
+  @override
+  String get feedbackResponseAuthorYou => 'You';
+
+  @override
+  String get feedbackRetry => 'Retry';
+
+  @override
+  String get feedbackScreenshotSubtitle => 'Helps us debug faster';
+
+  @override
+  String get feedbackSearchReports => 'Search reports';
+
+  @override
+  String get feedbackSendButton => 'Send';
+
+  @override
+  String get feedbackSendingReport => 'Sending bug report...';
+
+  @override
+  String get feedbackShakeToReport => 'Shake device to report a bug';
+
+  @override
+  String get feedbackStatusAwaitingResponse => 'Awaiting Response';
+
+  @override
+  String get feedbackStatusOpen => 'Open';
+
+  @override
+  String get feedbackStatusResolved => 'Resolved';
+
+  @override
+  String get feedbackStatusResponded => 'Responded';
+
+  @override
+  String get feedbackToggleOff => 'Toggle off to disable';
+
+  @override
+  String get feedbackWaitingForAdmin => 'Waiting for admin response';
+
+  @override
+  String get feedbackYourReport => 'Your report';
+
+  @override
+  String fileTransferAccepted(String filename) {
+    return 'Accepted: $filename';
+  }
+
+  @override
+  String get fileTransferActionAccept => 'Accept';
+
+  @override
+  String get fileTransferActionCancel => 'Cancel';
+
+  @override
+  String get fileTransferActionDelete => 'Delete';
+
+  @override
+  String get fileTransferActionInfo => 'Info';
+
+  @override
+  String get fileTransferActionReject => 'Reject';
+
+  @override
+  String get fileTransferActionRetry => 'Retry';
+
+  @override
+  String get fileTransferActionShare => 'Share';
+
+  @override
+  String fileTransferAttachmentMeta(int size, String chunkCount) {
+    return '$size · $chunkCount chunks over mesh';
+  }
+
+  @override
+  String get fileTransferBinaryFileHint =>
+      'Binary file — save to open with an external app';
+
+  @override
+  String get fileTransferCancelConfirm => 'Cancel Transfer';
+
+  @override
+  String fileTransferCancelMessage(String filename) {
+    return 'Cancel the transfer of \"$filename\"? ';
+  }
+
+  @override
+  String get fileTransferCancelTitle => 'Cancel Transfer?';
+
+  @override
+  String get fileTransferCancelled => 'Transfer cancelled';
+
+  @override
+  String get fileTransferCardCancelled => 'Cancelled';
+
+  @override
+  String get fileTransferCardComplete => 'Complete';
+
+  @override
+  String get fileTransferCardOfferPending => 'Incoming file — tap to review';
+
+  @override
+  String get fileTransferCardOfferSent => 'Offer sent, waiting...';
+
+  @override
+  String get fileTransferCardPreparing => 'Preparing...';
+
+  @override
+  String fileTransferCardReceivingPercent(String pct) {
+    return 'Receiving $pct%';
+  }
+
+  @override
+  String get fileTransferCardRecovering => 'Recovering missing chunks...';
+
+  @override
+  String fileTransferCardSendingPercent(String pct) {
+    return 'Sending $pct%';
+  }
+
+  @override
+  String fileTransferChunkProgress(String completed, int total) {
+    return '$completed/$total chunks';
+  }
+
+  @override
+  String get fileTransferClearCompleted => 'Clear Completed';
+
+  @override
+  String get fileTransferClearConfirm => 'Clear';
+
+  @override
+  String get fileTransferClearMessage =>
+      'Remove all completed, failed, and cancelled transfers? This cannot be undone.';
+
+  @override
+  String get fileTransferClearTitle => 'Clear Completed Transfers?';
+
+  @override
+  String fileTransferClearedCount(int count) {
+    return 'Cleared $count transfers';
+  }
+
+  @override
+  String get fileTransferContactsClearSearch => 'Clear search';
+
+  @override
+  String fileTransferContactsDaysAgo(int count) {
+    return '${count}d ago';
+  }
+
+  @override
+  String get fileTransferContactsDetailReceived => 'Received';
+
+  @override
+  String get fileTransferContactsDetailSent => 'Sent';
+
+  @override
+  String get fileTransferContactsDetailTotal => 'Total';
+
+  @override
+  String get fileTransferContactsDiscoveredHint =>
+      'Discovered nodes will appear here';
+
+  @override
+  String get fileTransferContactsFilterActive => 'Active';
+
+  @override
+  String get fileTransferContactsFilterAll => 'All';
+
+  @override
+  String get fileTransferContactsFilterFavorites => 'Favorites';
+
+  @override
+  String get fileTransferContactsFilterHasFiles => 'Has Files';
+
+  @override
+  String fileTransferContactsHoursAgo(int count) {
+    return '${count}h ago';
+  }
+
+  @override
+  String get fileTransferContactsJustNow => 'just now';
+
+  @override
+  String fileTransferContactsMinutesAgo(int count) {
+    return '${count}m ago';
+  }
+
+  @override
+  String fileTransferContactsNoMatchFilter(String filter) {
+    return 'No $filter contacts';
+  }
+
+  @override
+  String fileTransferContactsNoMatchSearch(String query) {
+    return 'No contacts match \"$query\"';
+  }
+
+  @override
+  String get fileTransferContactsNoNodes => 'No nodes on the mesh yet';
+
+  @override
+  String get fileTransferContactsRecentTransfers => 'RECENT TRANSFERS';
+
+  @override
+  String get fileTransferContactsSearchHint => 'Search contacts';
+
+  @override
+  String get fileTransferContactsSectionActive => 'Active';
+
+  @override
+  String get fileTransferContactsSectionFavorites => 'Favorites';
+
+  @override
+  String get fileTransferContactsSectionInactive => 'Inactive';
+
+  @override
+  String get fileTransferContactsSectionWithFiles => 'With Files';
+
+  @override
+  String get fileTransferContactsSendFile => 'Send File';
+
+  @override
+  String fileTransferContactsStarted(String filename) {
+    return 'Transfer started: $filename';
+  }
+
+  @override
+  String fileTransferContactsTransferCount(int count) {
+    return '$count file(s) transferred';
+  }
+
+  @override
+  String get fileTransferContainerClearCompleted => 'Clear Completed';
+
+  @override
+  String get fileTransferContainerClearMessage =>
+      'Remove all completed, failed, and cancelled transfers? This cannot be undone.';
+
+  @override
+  String get fileTransferContainerClearTitle => 'Clear Completed Transfers?';
+
+  @override
+  String fileTransferContainerCleared(int count) {
+    return 'Cleared $count transfers';
+  }
+
+  @override
+  String get fileTransferContainerPurgeExpired => 'Purge Expired';
+
+  @override
+  String get fileTransferContainerPurged => 'Expired transfers purged';
+
+  @override
+  String get fileTransferContainerSendFile => 'Send File';
+
+  @override
+  String get fileTransferContainerSendToNode => 'Send to Node';
+
+  @override
+  String fileTransferContainerStarted(String filename) {
+    return 'Transfer started: $filename';
+  }
+
+  @override
+  String get fileTransferContainerTitle => 'File Transfers';
+
+  @override
+  String get fileTransferCopiedToClipboard => 'Copied to clipboard';
+
+  @override
+  String get fileTransferCopyAction => 'Copy';
+
+  @override
+  String fileTransferCouldNotReadFile(String error) {
+    return 'Could not read file: $error';
+  }
+
+  @override
+  String get fileTransferCouldNotSaveForSharing =>
+      'Could not save file for sharing';
+
+  @override
+  String get fileTransferCouldNotStart =>
+      'Could not start transfer. Check that a node is connected and try again.';
+
+  @override
+  String get fileTransferDeleteConfirm => 'Delete';
+
+  @override
+  String fileTransferDeleteMessage(String filename) {
+    return 'Delete \"$filename\"? This cannot be undone.';
+  }
+
+  @override
+  String get fileTransferDeleteTitle => 'Delete Transfer?';
+
+  @override
+  String fileTransferDeleted(String filename) {
+    return 'Deleted: $filename';
+  }
+
+  @override
+  String get fileTransferDetailsSection => 'Transfer Details';
+
+  @override
+  String get fileTransferDirectionReceived => 'Received';
+
+  @override
+  String get fileTransferDirectionSent => 'Sent';
+
+  @override
+  String get fileTransferEmptyDescriptionContacts =>
+      'Go to Contacts, tap a node, and\nchoose Send File to get started';
+
+  @override
+  String get fileTransferEmptyDescriptionOverflow =>
+      'Send files to other nodes from the\noverflow menu or via NodeDex';
+
+  @override
+  String fileTransferEmptyFilterTitle(String filter) {
+    return 'No $filter Transfers';
+  }
+
+  @override
+  String get fileTransferEmptyTitle => 'No File Transfers';
+
+  @override
+  String get fileTransferExpiredPurged => 'Expired transfers purged';
+
+  @override
+  String get fileTransferFailExpired => 'Transfer expired';
+
+  @override
+  String get fileTransferFailGeneric => 'Failed';
+
+  @override
+  String get fileTransferFailInvalidData => 'Invalid data received';
+
+  @override
+  String get fileTransferFailMaxRetries => 'Max retries exceeded';
+
+  @override
+  String get fileTransferFailRateLimited => 'Rate limited — try again later';
+
+  @override
+  String get fileTransferFailTimedOut => 'Transfer timed out';
+
+  @override
+  String get fileTransferFailTooLarge => 'File too large for mesh transfer';
+
+  @override
+  String get fileTransferFailVerification => 'File verification failed';
+
+  @override
+  String get fileTransferFileEmpty => 'The selected file is empty.';
+
+  @override
+  String fileTransferFileTooLarge(
+    String filename,
+    String fileSize,
+    String limit,
+  ) {
+    return '$filename is $fileSize KB — mesh transfer limit is $limit KB.';
+  }
+
+  @override
+  String get fileTransferFilterActive => 'Active';
+
+  @override
+  String get fileTransferFilterAll => 'All';
+
+  @override
+  String get fileTransferFilterDone => 'Done';
+
+  @override
+  String get fileTransferFilterReceived => 'Received';
+
+  @override
+  String get fileTransferFilterSent => 'Sent';
+
+  @override
+  String get fileTransferGoToContacts => 'Go to Contacts';
+
+  @override
+  String get fileTransferImageDecodeError => 'Could not decode image';
+
+  @override
+  String get fileTransferInfoChunkSize => 'Chunk Size';
+
+  @override
+  String get fileTransferInfoChunks => 'Chunks';
+
+  @override
+  String get fileTransferInfoCompleted => 'Completed';
+
+  @override
+  String get fileTransferInfoCreated => 'Created';
+
+  @override
+  String get fileTransferInfoDirection => 'Direction';
+
+  @override
+  String get fileTransferInfoDirectionReceived => 'Received';
+
+  @override
+  String get fileTransferInfoDirectionSent => 'Sent';
+
+  @override
+  String get fileTransferInfoExpires => 'Expires';
+
+  @override
+  String get fileTransferInfoFailure => 'Failure';
+
+  @override
+  String get fileTransferInfoMimeType => 'MIME Type';
+
+  @override
+  String get fileTransferInfoNackRounds => 'NACK Rounds';
+
+  @override
+  String get fileTransferInfoSize => 'Size';
+
+  @override
+  String get fileTransferInfoSourceNode => 'Source Node';
+
+  @override
+  String get fileTransferInfoStatus => 'Status';
+
+  @override
+  String get fileTransferInfoTargetNode => 'Target Node';
+
+  @override
+  String get fileTransferInfoTransferId => 'Transfer ID';
+
+  @override
+  String fileTransferMetaFrom(String nodeName) {
+    return 'from $nodeName';
+  }
+
+  @override
+  String fileTransferMetaTo(String nodeName) {
+    return 'to $nodeName';
+  }
+
+  @override
+  String fileTransferMoreBytes(int count) {
+    return '... $count more bytes';
+  }
+
+  @override
+  String get fileTransferNoMatchFilter => 'No transfers match this filter';
+
+  @override
+  String get fileTransferPinchToZoom => 'Pinch to zoom';
+
+  @override
+  String get fileTransferPurgeExpired => 'Purge Expired';
+
+  @override
+  String get fileTransferRejectConfirm => 'Reject';
+
+  @override
+  String fileTransferRejectMessage(String filename) {
+    return 'Reject the incoming file \"$filename\"? The sender will be notified.';
+  }
+
+  @override
+  String get fileTransferRejectTitle => 'Reject Transfer?';
+
+  @override
+  String get fileTransferRejected => 'Transfer rejected';
+
+  @override
+  String get fileTransferSearchHint => 'Search transfers';
+
+  @override
+  String get fileTransferSendAFile => 'Send a File';
+
+  @override
+  String get fileTransferSendFile => 'Send File';
+
+  @override
+  String get fileTransferSendToNode => 'Send to Node';
+
+  @override
+  String fileTransferStarted(String filename) {
+    return 'Transfer started: $filename';
+  }
+
+  @override
+  String get fileTransferStateCancelled => 'Cancelled';
+
+  @override
+  String get fileTransferStateComplete => 'Complete';
+
+  @override
+  String get fileTransferStateFailed => 'Failed';
+
+  @override
+  String get fileTransferStateOfferSent => 'Offer Sent';
+
+  @override
+  String get fileTransferStatePendingAcceptance => 'Pending Acceptance';
+
+  @override
+  String get fileTransferStatePreparing => 'Preparing';
+
+  @override
+  String get fileTransferStateRecovering => 'Recovering';
+
+  @override
+  String get fileTransferStateTransferring => 'Transferring';
+
+  @override
+  String get fileTransferTabContacts => 'Contacts';
+
+  @override
+  String get fileTransferTabFiles => 'Files';
+
+  @override
+  String get fileTransferTimeJustNow => 'just now';
+
+  @override
+  String get fileTransferTitle => 'File Transfers';
+
+  @override
+  String get fileTransferTypeArchive => 'Archive';
+
+  @override
+  String get fileTransferTypeAudio => 'Audio';
+
+  @override
+  String get fileTransferTypeBinary => 'Binary';
+
+  @override
+  String get fileTransferTypeFile => 'File';
+
+  @override
+  String get fileTransferTypeGpsTrack => 'GPS Track';
+
+  @override
+  String get fileTransferTypeHtml => 'HTML';
+
+  @override
+  String get fileTransferTypeImage => 'Image';
+
+  @override
+  String get fileTransferTypeJson => 'JSON';
+
+  @override
+  String get fileTransferTypeMap => 'Map';
+
+  @override
+  String get fileTransferTypeMarkdown => 'Markdown';
+
+  @override
+  String get fileTransferTypePdf => 'PDF';
+
+  @override
+  String get fileTransferTypeProtobuf => 'Protobuf';
+
+  @override
+  String get fileTransferTypeSpreadsheet => 'Spreadsheet';
+
+  @override
+  String get fileTransferTypeText => 'Text';
+
+  @override
+  String get fileTransferTypeVideo => 'Video';
+
+  @override
+  String get fileTransferTypeXml => 'XML';
+
+  @override
+  String get fileTransferTypeYaml => 'YAML';
+
+  @override
   String get firmwareUpdateAvailable => 'Update Available';
 
   @override
@@ -4801,6 +6350,121 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
+  String get legalAcceptanceAgreeButton => 'I Agree';
+
+  @override
+  String get legalAcceptanceDateFormatApril => 'April';
+
+  @override
+  String get legalAcceptanceDateFormatAugust => 'August';
+
+  @override
+  String get legalAcceptanceDateFormatDecember => 'December';
+
+  @override
+  String get legalAcceptanceDateFormatFebruary => 'February';
+
+  @override
+  String get legalAcceptanceDateFormatJanuary => 'January';
+
+  @override
+  String get legalAcceptanceDateFormatJuly => 'July';
+
+  @override
+  String get legalAcceptanceDateFormatJune => 'June';
+
+  @override
+  String get legalAcceptanceDateFormatMarch => 'March';
+
+  @override
+  String get legalAcceptanceDateFormatMay => 'May';
+
+  @override
+  String get legalAcceptanceDateFormatNovember => 'November';
+
+  @override
+  String get legalAcceptanceDateFormatOctober => 'October';
+
+  @override
+  String get legalAcceptanceDateFormatSeptember => 'September';
+
+  @override
+  String get legalAcceptanceDeclineBody =>
+      'Accepting the Terms of Service and Privacy Policy is required to use Socialmesh. You can review them and accept whenever you are ready.';
+
+  @override
+  String get legalAcceptanceDeclineButton => 'Not Now';
+
+  @override
+  String get legalAcceptanceDeclineTitle => 'Terms Required';
+
+  @override
+  String get legalAcceptanceFinePrint =>
+      'By tapping \"I Agree\", you accept our Terms of Service and acknowledge our Privacy Policy.';
+
+  @override
+  String legalAcceptancePrivacyEffective(String date) {
+    return 'Effective $date';
+  }
+
+  @override
+  String get legalAcceptancePrivacyPolicy => 'Privacy Policy';
+
+  @override
+  String get legalAcceptanceReviewButton => 'Review Terms';
+
+  @override
+  String get legalAcceptanceSubtitleInitial =>
+      'Before you get started, please review our Terms of Service and Privacy Policy.';
+
+  @override
+  String get legalAcceptanceSubtitleUpdate =>
+      'We have updated our Terms of Service. Please review and accept the changes to continue using Socialmesh.';
+
+  @override
+  String legalAcceptanceTermsEffective(String date) {
+    return 'Effective $date';
+  }
+
+  @override
+  String get legalAcceptanceTermsOfService => 'Terms of Service';
+
+  @override
+  String get legalAcceptanceTitleInitial => 'Terms & Privacy';
+
+  @override
+  String get legalAcceptanceTitleUpdate => 'Updated Terms';
+
+  @override
+  String get legalEligibilityBody =>
+      'Socialmesh is intended for people aged 16 or older. You must confirm you are 16+ to continue.';
+
+  @override
+  String get legalEligibilityConfirmButton => 'I Am 16 or Older';
+
+  @override
+  String get legalEligibilityExitBody =>
+      'You must confirm you are 16 or older to use Socialmesh. You can confirm whenever you are ready.';
+
+  @override
+  String get legalEligibilityExitButton => 'Exit';
+
+  @override
+  String get legalEligibilityExitTitle => 'Age Confirmation Required';
+
+  @override
+  String get legalEligibilityGoBackButton => 'Go Back';
+
+  @override
+  String get legalEligibilityPrivacyLink => 'Privacy';
+
+  @override
+  String get legalEligibilityTermsLink => 'Terms';
+
+  @override
+  String get legalEligibilityTitle => 'Ages 16+';
+
+  @override
   String get lilygoModelPriceUnavailable => 'Price unavailable';
 
   @override
@@ -5170,6 +6834,399 @@ class AppLocalizationsRu extends AppLocalizations {
   String get mapYouBadge => 'YOU';
 
   @override
+  String get mesh3dAutoRotate => 'Auto Rotate';
+
+  @override
+  String get mesh3dChangeViewTooltip => 'Change View';
+
+  @override
+  String get mesh3dDescActivity => 'Node activity sorted by recency';
+
+  @override
+  String get mesh3dDescSignalBars => 'RSSI and SNR bars per node';
+
+  @override
+  String get mesh3dDescTerrain => 'GPS nodes on interpolated terrain';
+
+  @override
+  String get mesh3dDescTopology =>
+      'Star layout from your node — signal quality as distance';
+
+  @override
+  String get mesh3dFilterActive => 'Active';
+
+  @override
+  String get mesh3dFilterAllNodes => 'All Nodes';
+
+  @override
+  String get mesh3dFilterGpsOnly => 'GPS Only';
+
+  @override
+  String get mesh3dFilterRecent => 'Recent';
+
+  @override
+  String mesh3dFilteredNodeCount(int filtered, int total) {
+    return '$filtered/$total nodes';
+  }
+
+  @override
+  String get mesh3dHelp => 'Help';
+
+  @override
+  String get mesh3dHideConnections => 'Hide Connections';
+
+  @override
+  String get mesh3dLegendActive => 'Active';
+
+  @override
+  String get mesh3dLegendActiveNow => 'Active now';
+
+  @override
+  String get mesh3dLegendActivePeer => 'Active peer';
+
+  @override
+  String get mesh3dLegendFading => 'Fading';
+
+  @override
+  String get mesh3dLegendFadingPeer => 'Fading peer';
+
+  @override
+  String get mesh3dLegendFairSignal => 'Fair signal';
+
+  @override
+  String get mesh3dLegendGoodSignal => 'Good signal';
+
+  @override
+  String get mesh3dLegendHighAltitude => 'High altitude';
+
+  @override
+  String get mesh3dLegendLowAltitude => 'Low altitude';
+
+  @override
+  String get mesh3dLegendOffline => 'Offline';
+
+  @override
+  String get mesh3dLegendPoorSignal => 'Poor signal';
+
+  @override
+  String get mesh3dLegendSnrBar => 'SNR bar';
+
+  @override
+  String get mesh3dLegendStaleIdle => 'Stale / idle';
+
+  @override
+  String get mesh3dLegendYourNode => 'Your node';
+
+  @override
+  String get mesh3dMyNodeBadge => 'ME';
+
+  @override
+  String mesh3dNodeCount(int count) {
+    return '$count nodes';
+  }
+
+  @override
+  String get mesh3dNodesDrawerTitle => 'Nodes';
+
+  @override
+  String get mesh3dShowConnections => 'Show Connections';
+
+  @override
+  String get mesh3dStatActive => 'Active';
+
+  @override
+  String get mesh3dStatChUtil => 'Ch Util';
+
+  @override
+  String get mesh3dStatGps => 'GPS';
+
+  @override
+  String get mesh3dStatSnr => 'SNR';
+
+  @override
+  String get mesh3dStatTotal => 'Total';
+
+  @override
+  String get mesh3dStopRotation => 'Stop Rotation';
+
+  @override
+  String get mesh3dViewActivity => 'Activity';
+
+  @override
+  String get mesh3dViewModeTitle => 'View Mode';
+
+  @override
+  String get mesh3dViewSignalBars => 'Signal Bars';
+
+  @override
+  String get mesh3dViewTerrain => 'Terrain';
+
+  @override
+  String get mesh3dViewTopology => 'Topology';
+
+  @override
+  String meshHealthActiveNodesPackets(int activeNodeCount, int totalPackets) {
+    return '$activeNodeCount active nodes • $totalPackets packets';
+  }
+
+  @override
+  String get meshHealthBatteryUsageSubtitle =>
+      'Mesh Health monitoring uses extra battery. Pause when not needed.';
+
+  @override
+  String get meshHealthBatteryUsageTitle => 'Battery usage';
+
+  @override
+  String get meshHealthChannelUtilization => 'Channel Utilization';
+
+  @override
+  String get meshHealthCriticalIssues => 'Critical Issues Detected';
+
+  @override
+  String get meshHealthDetectedIssues => 'Detected Issues';
+
+  @override
+  String get meshHealthDontRemindAgain => 'Don\'t remind me again';
+
+  @override
+  String get meshHealthFloodBadge => 'FLOOD';
+
+  @override
+  String get meshHealthHealthy => 'Mesh Healthy';
+
+  @override
+  String get meshHealthIndicatorLabel => 'Health';
+
+  @override
+  String meshHealthIssueCount(int count) {
+    return '$count issues';
+  }
+
+  @override
+  String get meshHealthIssuesDetected => 'Issues Detected';
+
+  @override
+  String get meshHealthKeepRunning => 'Keep Running';
+
+  @override
+  String get meshHealthMonitoringActiveTitle => 'Monitoring is still active';
+
+  @override
+  String get meshHealthMonitoringBatteryWarning =>
+      'Mesh Health monitoring uses extra battery while running in the background.';
+
+  @override
+  String get meshHealthMonitoringPaused => 'Monitoring Paused';
+
+  @override
+  String get meshHealthNoDataYet => 'No data yet';
+
+  @override
+  String get meshHealthNoIssuesDetected => 'No issues detected';
+
+  @override
+  String get meshHealthNoNodesDetected => 'No nodes detected';
+
+  @override
+  String meshHealthNodePrefix(String nodeId) {
+    return 'Node: $nodeId';
+  }
+
+  @override
+  String get meshHealthNormal => 'Normal';
+
+  @override
+  String get meshHealthOfAirtime => 'of airtime';
+
+  @override
+  String meshHealthPacketsAirtime(int packetCount, int airtimeMs) {
+    return '$packetCount packets • ${airtimeMs}ms airtime';
+  }
+
+  @override
+  String get meshHealthPauseAndLeave => 'Pause & Leave';
+
+  @override
+  String get meshHealthPauseTooltip => 'Pause';
+
+  @override
+  String get meshHealthReliability => 'Reliability';
+
+  @override
+  String get meshHealthReliabilityFair => 'Fair';
+
+  @override
+  String get meshHealthReliabilityGood => 'Good';
+
+  @override
+  String get meshHealthReliabilityPoor => 'Poor';
+
+  @override
+  String get meshHealthResetDataTooltip => 'Reset Data';
+
+  @override
+  String get meshHealthResumeTooltip => 'Resume';
+
+  @override
+  String get meshHealthSaturated => 'SATURATED';
+
+  @override
+  String get meshHealthSpamBadge => 'SPAM';
+
+  @override
+  String get meshHealthThresholdLabel => '50% threshold';
+
+  @override
+  String get meshHealthTitle => 'Mesh Health';
+
+  @override
+  String get meshHealthTopContributors => 'Top Contributors';
+
+  @override
+  String get meshHealthUtilization => 'Utilization';
+
+  @override
+  String get meshcoreAbout => 'About';
+
+  @override
+  String get meshcoreAboutDescription =>
+      'SocialMesh is a mesh radio companion app supporting Meshtastic and MeshCore devices.';
+
+  @override
+  String get meshcoreAboutSocialMesh => 'About SocialMesh';
+
+  @override
+  String get meshcoreActions => 'Actions';
+
+  @override
+  String get meshcoreActiveLabel => 'Active';
+
+  @override
+  String get meshcoreAdd => 'Add';
+
+  @override
+  String get meshcoreAddContact => 'Add Contact';
+
+  @override
+  String get meshcoreAddContactButton => 'Add Contact';
+
+  @override
+  String get meshcoreAddContactSheetTitle => 'Add Contact';
+
+  @override
+  String get meshcoreAdvertisementSent => 'Advertisement sent';
+
+  @override
+  String get meshcoreAdvertisementSentTools => 'Advertisement sent';
+
+  @override
+  String get meshcoreAnalysis => 'Analysis';
+
+  @override
+  String get meshcoreBandwidthLabel => 'Bandwidth';
+
+  @override
+  String get meshcoreBasedOnLiPoVoltage =>
+      'Based on LiPo voltage range (3.0V - 4.2V)';
+
+  @override
+  String get meshcoreBatteryAndStorage => 'Battery & Storage';
+
+  @override
+  String get meshcoreBatteryInfoNotAvailable => 'Battery info not available';
+
+  @override
+  String get meshcoreBatteryLabel => 'Battery';
+
+  @override
+  String get meshcoreBatteryStatus => 'Battery Status';
+
+  @override
+  String get meshcoreBatteryStatusLabel => 'Battery';
+
+  @override
+  String get meshcoreBatteryUnknown => 'Unknown';
+
+  @override
+  String get meshcoreBroadcastPresenceToMesh =>
+      'Broadcast your presence to the mesh';
+
+  @override
+  String get meshcoreBroadcastYourPresence => 'Broadcast your presence';
+
+  @override
+  String get meshcoreCancel => 'Cancel';
+
+  @override
+  String get meshcoreCancelButton => 'Cancel';
+
+  @override
+  String get meshcoreCenter => 'Center';
+
+  @override
+  String meshcoreChannelAlreadyExists(String channelName) {
+    return '$channelName is already in your channels';
+  }
+
+  @override
+  String get meshcoreChannelCodeCopied => 'Channel code copied';
+
+  @override
+  String meshcoreChannelCreated(String channelName) {
+    return 'Channel \"$channelName\" created';
+  }
+
+  @override
+  String get meshcoreChannelNameHint => 'Channel name';
+
+  @override
+  String get meshcoreChannelNameHintGeneral => 'general';
+
+  @override
+  String get meshcoreChannelNameHintHashtag => 'e.g. general';
+
+  @override
+  String get meshcoreChannelNameLabel => 'Channel Name';
+
+  @override
+  String get meshcoreChannelPskCopied => 'Channel PSK copied';
+
+  @override
+  String get meshcoreChannelsCreateChannel => 'Create Channel';
+
+  @override
+  String get meshcoreChannelsJoinChannel => 'Join Channel';
+
+  @override
+  String get meshcoreChannelsLabel => 'Channels';
+
+  @override
+  String get meshcoreChannelsRefreshChannels => 'Refresh Channels';
+
+  @override
+  String get meshcoreChannelsTitle => 'Channels';
+
+  @override
+  String get meshcoreChatNode => 'Chat Node';
+
+  @override
+  String get meshcoreClear => 'Clear';
+
+  @override
+  String get meshcoreClose => 'Close';
+
+  @override
+  String get meshcoreCodingRateLabel => 'Coding Rate';
+
+  @override
+  String get meshcoreConnected => 'Connected';
+
+  @override
+  String meshcoreConnectedTo(String deviceName) {
+    return 'Connected to $deviceName';
+  }
+
+  @override
   String get meshcoreConsoleCaptureCleared => 'Capture cleared';
 
   @override
@@ -5197,6 +7254,668 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get meshcoreConsoleTitle => 'MeshCore Console';
+
+  @override
+  String meshcoreContactAdded(String contactName) {
+    return '$contactName added';
+  }
+
+  @override
+  String meshcoreContactAddedToContacts(String contactName) {
+    return '$contactName added to contacts';
+  }
+
+  @override
+  String meshcoreContactAlreadyExists(String contactName) {
+    return '$contactName is already in your contacts';
+  }
+
+  @override
+  String get meshcoreContactCodeCopied => 'Contact code copied';
+
+  @override
+  String meshcoreContactCount(int count) {
+    return '$count contact';
+  }
+
+  @override
+  String meshcoreContactCountPlural(int count) {
+    return '$count contacts';
+  }
+
+  @override
+  String meshcoreContactRemoved(String contactName) {
+    return '$contactName removed';
+  }
+
+  @override
+  String get meshcoreContactsLabel => 'Contacts';
+
+  @override
+  String get meshcoreContactsTitle => 'Contacts';
+
+  @override
+  String get meshcoreControlAdvertVisibility =>
+      'Control advertisement visibility';
+
+  @override
+  String get meshcoreCoordinatesCopied => 'Coordinates copied to clipboard';
+
+  @override
+  String get meshcoreCopy => 'Copy';
+
+  @override
+  String get meshcoreCopyChannelCode => 'Copy Channel Code';
+
+  @override
+  String get meshcoreCopyCoordinates => 'Copy Coordinates';
+
+  @override
+  String get meshcoreCopyCoordinatesSubtitle => 'Both A and B coordinates';
+
+  @override
+  String get meshcoreCopyPublicKey => 'Copy Public Key';
+
+  @override
+  String get meshcoreCopySummary => 'Copy Summary';
+
+  @override
+  String get meshcoreCreate => 'Create';
+
+  @override
+  String get meshcoreCreateChannelButton => 'Create Channel';
+
+  @override
+  String get meshcoreCreateChannelDialogTitle => 'Create Channel';
+
+  @override
+  String get meshcoreDebug => 'Debug';
+
+  @override
+  String get meshcoreDeviceInfo => 'Device Info';
+
+  @override
+  String get meshcoreDeviceInfoCopied => 'Device info copied';
+
+  @override
+  String get meshcoreDeviceInfoNotAvailable => 'Device info not available';
+
+  @override
+  String get meshcoreDeviceInfoTool => 'Device Info';
+
+  @override
+  String get meshcoreDeviceInformation => 'Device Information';
+
+  @override
+  String get meshcoreDiagnostics => 'Diagnostics';
+
+  @override
+  String get meshcoreDisconnect => 'Disconnect';
+
+  @override
+  String get meshcoreDisconnectMenuItem => 'Disconnect';
+
+  @override
+  String get meshcoreDisconnectedChannelsDescription =>
+      'Connect to a MeshCore device to view channels';
+
+  @override
+  String get meshcoreDisconnectedContactsDescription =>
+      'Connect to a MeshCore device to view contacts';
+
+  @override
+  String get meshcoreDisconnectedContactsTitle => 'MeshCore Disconnected';
+
+  @override
+  String get meshcoreDisconnectedMapDescription =>
+      'Connect to a MeshCore device to view the map';
+
+  @override
+  String get meshcoreDisconnectedMapTitle => 'MeshCore Disconnected';
+
+  @override
+  String get meshcoreDisconnectedMessagesWillQueue =>
+      'Disconnected - Messages will queue';
+
+  @override
+  String get meshcoreDisconnectedStatus => 'Disconnected';
+
+  @override
+  String get meshcoreDisconnectedTitle => 'MeshCore Disconnected';
+
+  @override
+  String get meshcoreDisconnectedToolsDescription =>
+      'Connect to a MeshCore device to access tools';
+
+  @override
+  String get meshcoreDisconnectedToolsTitle => 'MeshCore Disconnected';
+
+  @override
+  String get meshcoreDiscovery => 'Discovery';
+
+  @override
+  String get meshcoreDone => 'Done';
+
+  @override
+  String get meshcoreEditNodeName => 'Edit Node Name';
+
+  @override
+  String get meshcoreEnterChannelCode => 'Enter Channel Code';
+
+  @override
+  String get meshcoreEnterChannelCodeSubtitle => 'Paste a channel invite code';
+
+  @override
+  String get meshcoreEnterCodeManually => 'Enter Code Manually';
+
+  @override
+  String get meshcoreEnterContactCode => 'Enter Contact Code';
+
+  @override
+  String get meshcoreEnterNodeNameHint => 'Enter node name...';
+
+  @override
+  String get meshcoreErrorEnterChannelCode => 'Please enter a channel code';
+
+  @override
+  String get meshcoreErrorEnterChannelName => 'Please enter a channel name';
+
+  @override
+  String get meshcoreExitMeasureMode => 'Exit measure mode';
+
+  @override
+  String get meshcoreFailedToRebootDevice => 'Failed to reboot device';
+
+  @override
+  String get meshcoreFailedToSendAdTools => 'Failed to send advertisement';
+
+  @override
+  String get meshcoreFailedToSendAdvertisement =>
+      'Failed to send advertisement';
+
+  @override
+  String get meshcoreFailedToSendMessage => 'Failed to send message';
+
+  @override
+  String get meshcoreFailedToSetName => 'Failed to set name';
+
+  @override
+  String get meshcoreFailedToSyncTime => 'Failed to sync time';
+
+  @override
+  String get meshcoreFilterChatNodes => 'Chat Nodes';
+
+  @override
+  String get meshcoreFilterMap => 'Filter Map';
+
+  @override
+  String get meshcoreFilterOtherNodes => 'Other Nodes';
+
+  @override
+  String get meshcoreFilterRepeaters => 'Repeaters';
+
+  @override
+  String get meshcoreFilterTooltip => 'Filter';
+
+  @override
+  String get meshcoreFramesLabel => 'Frames';
+
+  @override
+  String get meshcoreFrequencyLabel => 'Frequency';
+
+  @override
+  String get meshcoreIndexLabel => 'Index';
+
+  @override
+  String get meshcoreInvalidChannelCodeFormat =>
+      'Invalid channel code format (expected: name:pskHex)';
+
+  @override
+  String get meshcoreInvalidContactCode => 'Invalid contact code';
+
+  @override
+  String get meshcoreInvalidQrCodeFormat => 'Invalid QR code format';
+
+  @override
+  String get meshcoreJoin => 'Join';
+
+  @override
+  String get meshcoreJoinButton => 'Join';
+
+  @override
+  String get meshcoreJoinHashtagChannel => 'Join Hashtag Channel';
+
+  @override
+  String get meshcoreJoinHashtagChannelSubtitle =>
+      'Enter channel name (e.g. #general)';
+
+  @override
+  String meshcoreJoinedChannel(String channelName) {
+    return 'Joined $channelName';
+  }
+
+  @override
+  String meshcoreJoinedHashtagChannel(String name) {
+    return 'Joined #$name';
+  }
+
+  @override
+  String get meshcoreJustNow => 'Just now';
+
+  @override
+  String get meshcoreLastSeenLabel => 'Last Seen';
+
+  @override
+  String get meshcoreLeave => 'Leave';
+
+  @override
+  String get meshcoreLeaveChannel => 'Leave Channel';
+
+  @override
+  String meshcoreLeaveChannelMessage(String channelName) {
+    return 'Are you sure you want to leave $channelName?';
+  }
+
+  @override
+  String get meshcoreLeaveChannelTitle => 'Leave Channel?';
+
+  @override
+  String meshcoreLeftChannel(String channelName) {
+    return 'Left $channelName';
+  }
+
+  @override
+  String get meshcoreLegendChat => 'Chat';
+
+  @override
+  String get meshcoreLegendRepeater => 'Repeater';
+
+  @override
+  String get meshcoreLegendRoom => 'Room';
+
+  @override
+  String get meshcoreLegendSensor => 'Sensor';
+
+  @override
+  String get meshcoreLoadingChannels => 'Loading channels...';
+
+  @override
+  String get meshcoreLoadingContacts => 'Loading contacts...';
+
+  @override
+  String get meshcoreLoadingMessages => 'Loading messages...';
+
+  @override
+  String get meshcoreLocationComingSoon =>
+      'Location settings coming soon.\n\nThis will allow you to manually set your node position or use GPS.';
+
+  @override
+  String get meshcoreLocationInfoLabel => 'Location';
+
+  @override
+  String get meshcoreLocationLabel => 'Location';
+
+  @override
+  String get meshcoreLocationSetting => 'Location';
+
+  @override
+  String get meshcoreLongPressForActions => 'Long-press for actions';
+
+  @override
+  String get meshcoreMapTitle => 'Map';
+
+  @override
+  String get meshcoreMaxTxPowerLabel => 'Max TX Power';
+
+  @override
+  String get meshcoreMeasurementActions => 'Measurement Actions';
+
+  @override
+  String get meshcoreMeasurementCopied => 'Measurement copied to clipboard';
+
+  @override
+  String get meshcoreMeshCoreDevice => 'MeshCore Device';
+
+  @override
+  String get meshcoreMessage => 'Message';
+
+  @override
+  String get meshcoreMessageButton => 'Message';
+
+  @override
+  String get meshcoreMonitorPowerStorage => 'Monitor power and storage status';
+
+  @override
+  String get meshcoreMyContactCode => 'My Contact Code';
+
+  @override
+  String get meshcoreNameLabel => 'Name';
+
+  @override
+  String get meshcoreNewMeasurement => 'New measurement';
+
+  @override
+  String get meshcoreNo => 'No';
+
+  @override
+  String get meshcoreNoChannels => 'No Channels';
+
+  @override
+  String get meshcoreNoChannelsDescription =>
+      'Channels are shared spaces for group communication.\n\nCreate a new channel or join an existing one.';
+
+  @override
+  String get meshcoreNoContacts => 'No Contacts';
+
+  @override
+  String get meshcoreNoContactsDescription =>
+      'Contacts will appear here when discovered via advertisements.\n\nYou can also add contacts manually using their contact code.';
+
+  @override
+  String get meshcoreNoContactsForTrace => 'No contacts available for trace';
+
+  @override
+  String get meshcoreNoContactsWithLocation => 'No Contacts with Location';
+
+  @override
+  String get meshcoreNoContactsWithLocationDescription =>
+      'Contacts with GPS coordinates will appear on the map.\nMake sure your contacts have location sharing enabled.';
+
+  @override
+  String get meshcoreNoMessagesYet => 'No messages yet';
+
+  @override
+  String get meshcoreNodeNameLabel => 'Node Name';
+
+  @override
+  String get meshcoreNodeNameSetting => 'Node Name';
+
+  @override
+  String get meshcoreNodeNameUpdated => 'Node name updated';
+
+  @override
+  String get meshcoreNodeSettings => 'Node Settings';
+
+  @override
+  String get meshcoreNotConnected => 'Not connected';
+
+  @override
+  String get meshcoreNotConnectedToDevice => 'Not connected to MeshCore device';
+
+  @override
+  String get meshcoreNotConnectedTools => 'Not connected';
+
+  @override
+  String get meshcoreNotSet => 'Not set';
+
+  @override
+  String get meshcoreNotValidChannelQr =>
+      'Not a valid MeshCore channel QR code';
+
+  @override
+  String get meshcoreNotValidContactQr =>
+      'Not a valid MeshCore contact QR code';
+
+  @override
+  String get meshcoreNotYetImplemented => 'Not yet implemented';
+
+  @override
+  String get meshcoreOpenChannel => 'Open Channel';
+
+  @override
+  String get meshcoreOpenInExternalMapApp => 'Open in external map app';
+
+  @override
+  String get meshcoreOpenMidpointInMaps => 'Open Midpoint in Maps';
+
+  @override
+  String get meshcorePasteChannelCodeHint => 'Paste channel code here...';
+
+  @override
+  String get meshcorePasteContactCodeHint => 'Paste contact code here...';
+
+  @override
+  String get meshcorePathInfoLabel => 'Path';
+
+  @override
+  String get meshcorePathLabel => 'Path';
+
+  @override
+  String get meshcorePointCameraAtChannelQr =>
+      'Point your camera at a MeshCore channel QR code';
+
+  @override
+  String get meshcorePointCameraAtContactQr =>
+      'Point your camera at a MeshCore contact QR code';
+
+  @override
+  String get meshcorePrivacyComingSoon =>
+      'Privacy settings coming soon.\n\nThis will control whether your node broadcasts advertisements.';
+
+  @override
+  String get meshcorePrivacyMode => 'Privacy Mode';
+
+  @override
+  String get meshcorePrivacyModeDialogTitle => 'Privacy Mode';
+
+  @override
+  String get meshcorePrivate => 'Private';
+
+  @override
+  String get meshcorePrivateChannel => 'Private Channel';
+
+  @override
+  String get meshcorePrivateChannelLabel => 'Private Channel';
+
+  @override
+  String get meshcoreProtocolCapture => 'Protocol Capture';
+
+  @override
+  String get meshcoreProtocolCaptureDialogTitle => 'Protocol Capture';
+
+  @override
+  String get meshcorePskDerivedFromName =>
+      'PSK derived from name (discoverable)';
+
+  @override
+  String get meshcorePublic => 'Public';
+
+  @override
+  String get meshcorePublicChannel => 'Public Channel';
+
+  @override
+  String get meshcorePublicChannelLabel => 'Public Channel';
+
+  @override
+  String get meshcorePublicHashtagChannel => 'Public Hashtag Channel';
+
+  @override
+  String get meshcorePublicKeyCopied => 'Public key copied';
+
+  @override
+  String get meshcorePublicKeyCopiedSettings => 'Public key copied';
+
+  @override
+  String get meshcorePublicKeyInfoLabel => 'Public Key';
+
+  @override
+  String get meshcorePublicKeyLabel => 'Public Key';
+
+  @override
+  String get meshcorePublicKeySettingsLabel => 'Public Key';
+
+  @override
+  String get meshcoreRadioConfiguredOnFirmware =>
+      'Radio settings are configured on the device firmware.';
+
+  @override
+  String get meshcoreRadioSettings => 'Radio Settings';
+
+  @override
+  String get meshcoreRadioSettingsDialogTitle => 'Radio Settings';
+
+  @override
+  String get meshcoreRadioSettingsNotAvailable =>
+      'Radio settings not available';
+
+  @override
+  String get meshcoreRadioSettingsSubtitle => 'Frequency, TX power, bandwidth';
+
+  @override
+  String get meshcoreRadioSettingsTitle => 'Radio Settings';
+
+  @override
+  String get meshcoreRadioSettingsTool => 'Radio Settings';
+
+  @override
+  String get meshcoreRandomPskPrivate => 'Random PSK (private)';
+
+  @override
+  String get meshcoreReboot => 'Reboot';
+
+  @override
+  String get meshcoreRebootCommandSent => 'Reboot command sent';
+
+  @override
+  String get meshcoreRebootDevice => 'Reboot Device';
+
+  @override
+  String get meshcoreRebootDeviceMessage =>
+      'Are you sure you want to reboot the MeshCore device?';
+
+  @override
+  String get meshcoreRebootDeviceTitle => 'Reboot Device';
+
+  @override
+  String get meshcoreRefresh => 'Refresh';
+
+  @override
+  String get meshcoreRefreshButton => 'Refresh';
+
+  @override
+  String get meshcoreRefreshContacts => 'Refresh Contacts';
+
+  @override
+  String get meshcoreRefreshContactsSetting => 'Refresh Contacts';
+
+  @override
+  String get meshcoreRefreshing => 'Refreshing...';
+
+  @override
+  String get meshcoreRefreshingContacts => 'Refreshing contacts...';
+
+  @override
+  String get meshcoreReloadContactsFromDevice => 'Reload contacts from device';
+
+  @override
+  String get meshcoreRemove => 'Remove';
+
+  @override
+  String get meshcoreRemoveContact => 'Remove Contact';
+
+  @override
+  String meshcoreRemoveContactMessage(String contactName) {
+    return 'Are you sure you want to remove $contactName?';
+  }
+
+  @override
+  String get meshcoreRemoveContactTitle => 'Remove Contact?';
+
+  @override
+  String get meshcoreRepeaterNode => 'Repeater Node';
+
+  @override
+  String get meshcoreRestartMeshCoreDevice => 'Restart the MeshCore device';
+
+  @override
+  String get meshcoreReverseMeasurementDirection =>
+      'Reverse measurement direction';
+
+  @override
+  String get meshcoreRoomNode => 'Room Node';
+
+  @override
+  String get meshcoreSave => 'Save';
+
+  @override
+  String get meshcoreScanChannelQrSubtitle => 'Scan a channel QR code';
+
+  @override
+  String get meshcoreScanChannelQrTitle => 'Scan Channel QR';
+
+  @override
+  String get meshcoreScanContactQrSubtitle => 'Scan a contact\'s QR code';
+
+  @override
+  String get meshcoreScanContactQrTitle => 'Scan Contact QR';
+
+  @override
+  String get meshcoreScanQrCode => 'Scan QR Code';
+
+  @override
+  String get meshcoreScanQrCodeOption => 'Scan QR Code';
+
+  @override
+  String get meshcoreScanQrToJoinChannel =>
+      'Scan this QR code to join the channel';
+
+  @override
+  String get meshcoreScanToAddMeSubtitle =>
+      'Scan this code to add me as a contact';
+
+  @override
+  String get meshcoreSearchContactsHint => 'Search contacts...';
+
+  @override
+  String get meshcoreSelectContactToTrace =>
+      'Select a contact to trace the route through the mesh.';
+
+  @override
+  String get meshcoreSelfInfoNotAvailable => 'Self info not available';
+
+  @override
+  String get meshcoreSendAdvertisement => 'Send Advertisement';
+
+  @override
+  String get meshcoreSendAdvertisementTool => 'Send Advertisement';
+
+  @override
+  String get meshcoreSendMessage => 'Send Message';
+
+  @override
+  String get meshcoreSendMessageToStart =>
+      'Send a message to start the conversation';
+
+  @override
+  String get meshcoreSending => 'Sending...';
+
+  @override
+  String get meshcoreSessionNotActive => 'MeshCore session not active';
+
+  @override
+  String get meshcoreSetLocation => 'Set Location';
+
+  @override
+  String get meshcoreSetNodePosition => 'Set node position';
+
+  @override
+  String get meshcoreSettingsTitle => 'Settings';
+
+  @override
+  String get meshcoreSfCrLabel => 'SF/CR';
+
+  @override
+  String get meshcoreShare => 'Share';
+
+  @override
+  String get meshcoreShareChannel => 'Share Channel';
+
+  @override
+  String get meshcoreShareContact => 'Share Contact';
+
+  @override
+  String get meshcoreShareContactCodeInfo =>
+      'Share your contact code so others can message you';
 
   @override
   String get meshcoreShellAddChannelHint =>
@@ -5384,6 +8103,112 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get meshcoreShellUnnamedNode => 'Unnamed Node';
+
+  @override
+  String meshcoreSlotIndex(int index) {
+    return 'Slot $index';
+  }
+
+  @override
+  String get meshcoreSpreadingFactorLabel => 'Spreading Factor';
+
+  @override
+  String get meshcoreStatusLabel => 'Status';
+
+  @override
+  String get meshcoreSwapAB => 'Swap A ↔ B';
+
+  @override
+  String get meshcoreSyncTime => 'Sync Time';
+
+  @override
+  String get meshcoreSyncing => 'Syncing...';
+
+  @override
+  String get meshcoreTapForPointA => 'Tap node or map for point A';
+
+  @override
+  String get meshcoreTapForPointB => 'Tap node or map for point B';
+
+  @override
+  String meshcoreTimeAgoDays(int count) {
+    return '${count}d ago';
+  }
+
+  @override
+  String meshcoreTimeAgoHours(int count) {
+    return '${count}h ago';
+  }
+
+  @override
+  String meshcoreTimeAgoMinutes(int count) {
+    return '${count}m ago';
+  }
+
+  @override
+  String get meshcoreTimeSynchronized => 'Time synchronized';
+
+  @override
+  String get meshcoreToolsTitle => 'Tools';
+
+  @override
+  String get meshcoreTracePacketRoutes =>
+      'Trace packet routes through the mesh';
+
+  @override
+  String get meshcoreTracePath => 'Trace Path';
+
+  @override
+  String meshcoreTracePathInitiated(String name) {
+    return 'Trace path to $name initiated';
+  }
+
+  @override
+  String get meshcoreTracePathTitle => 'Trace Path';
+
+  @override
+  String get meshcoreTxPowerInfoLabel => 'TX Power';
+
+  @override
+  String get meshcoreTxPowerLabel => 'TX Power';
+
+  @override
+  String get meshcoreTxPowerStatusLabel => 'TX Power';
+
+  @override
+  String get meshcoreTypeContactCode => 'Type a contact code';
+
+  @override
+  String get meshcoreTypeLabel => 'Type';
+
+  @override
+  String get meshcoreTypeMessageHint => 'Type a message...';
+
+  @override
+  String get meshcoreUnknown => 'Unknown';
+
+  @override
+  String get meshcoreUnknownContact => 'Unknown';
+
+  @override
+  String get meshcoreUpdateDeviceClock => 'Update device clock';
+
+  @override
+  String meshcoreVersion(String version) {
+    return 'Version $version';
+  }
+
+  @override
+  String get meshcoreViewDeviceInfo => 'View detailed device information';
+
+  @override
+  String get meshcoreViewFrameLogs => 'View MeshCore frame logs';
+
+  @override
+  String get meshcoreViewLoRaConfig => 'View LoRa radio configuration';
+
+  @override
+  String get meshcoreYes => 'Yes';
 
   @override
   String get messageContextMenuCopy => 'Copy';
@@ -8829,6 +11654,444 @@ class AppLocalizationsRu extends AppLocalizations {
   String get nodesScreenYouBadge => 'YOU';
 
   @override
+  String get onboardingAdvisorName => 'Ico';
+
+  @override
+  String get onboardingAutomationGeofence => 'Base Camp Geofence';
+
+  @override
+  String get onboardingAutomationGeofenceDesc => 'Enters designated area';
+
+  @override
+  String get onboardingAutomationLowBattery => 'Low Battery Alert';
+
+  @override
+  String get onboardingAutomationLowBatteryDesc => 'Battery drops below 20%';
+
+  @override
+  String get onboardingAutomationSilentWatch => 'Node Silent Watch';
+
+  @override
+  String get onboardingAutomationSilentWatchDesc => 'No contact for 30 min';
+
+  @override
+  String get onboardingAutomationSosKeyword => 'SOS Keyword';
+
+  @override
+  String get onboardingAutomationSosKeywordDesc => 'Message contains \"SOS\"';
+
+  @override
+  String get onboardingAutomationsAdvisor =>
+      'Set up rules once, and I\'ll monitor everything. Low battery? I\'ll alert you. Node goes silent? I\'ll let you know. SOS received? I\'ll trigger your webhook.';
+
+  @override
+  String get onboardingAutomationsDescription =>
+      'Trigger actions based on mesh events.\nBattery alerts, geofences, keywords, and more.';
+
+  @override
+  String get onboardingAutomationsTitle => 'Intelligent Automations';
+
+  @override
+  String get onboardingCheckingRadio => 'Checking radio configuration';
+
+  @override
+  String get onboardingConnectAdvisor =>
+      'Once connected, we operate completely offline. The mesh is waiting.';
+
+  @override
+  String get onboardingConnectDescription =>
+      'Pair your Meshtastic device to begin.\nBluetooth or USB - your choice.';
+
+  @override
+  String get onboardingConnectDeviceButton => 'Connect Device';
+
+  @override
+  String get onboardingConnectTitle => 'Ready to Connect';
+
+  @override
+  String get onboardingContinueButton => 'Continue';
+
+  @override
+  String get onboardingDashboardAdvisor =>
+      'Widgets, maps, stats - arrange them however you work. Your mesh, your view, your control.';
+
+  @override
+  String get onboardingDashboardDescription =>
+      'Customizable dashboard with live telemetry.\nTrack nodes, monitor channels, visualize the network.';
+
+  @override
+  String get onboardingDashboardTitle => 'Your Command Center';
+
+  @override
+  String get onboardingDeviceHeltec => 'Heltec V3';
+
+  @override
+  String get onboardingDeviceHeltecCategory => 'All-Purpose';
+
+  @override
+  String get onboardingDeviceHeltecDescription =>
+      'Versatile node with built-in display';
+
+  @override
+  String get onboardingDeviceLilygo => 'LilyGo T-Beam';
+
+  @override
+  String get onboardingDeviceLilygoCategory => 'Long Range';
+
+  @override
+  String get onboardingDeviceLilygoDescription =>
+      'Maximum range with external antenna';
+
+  @override
+  String get onboardingDevicePopularBadge => 'POPULAR';
+
+  @override
+  String get onboardingDeviceRak => 'RAK WisMesh';
+
+  @override
+  String get onboardingDeviceRakCategory => 'Professional';
+
+  @override
+  String get onboardingDeviceRakDescription => 'Industrial-grade reliability';
+
+  @override
+  String get onboardingDeviceSensecap => 'SenseCAP T1000-E';
+
+  @override
+  String get onboardingDeviceSensecapCategory => 'Tracker';
+
+  @override
+  String get onboardingDeviceSensecapDescription =>
+      'Compact GPS tracker with long battery life';
+
+  @override
+  String get onboardingEmotionBrainSettings => 'Brain Settings';
+
+  @override
+  String get onboardingEmotionCategoryAll => 'All';
+
+  @override
+  String get onboardingEmotionConfiguratorSettings => 'Settings';
+
+  @override
+  String get onboardingEmotionConfiguratorTitle => 'Emotion Configurator';
+
+  @override
+  String get onboardingEmotionResetDefaults => 'Reset to Defaults';
+
+  @override
+  String get onboardingEmotionSettingsExpression => 'Show Expression Effects';
+
+  @override
+  String get onboardingEmotionSettingsGlow => 'Glow Intensity';
+
+  @override
+  String get onboardingEmotionSettingsParticles => 'Show Particles';
+
+  @override
+  String get onboardingEmotionSettingsSize => 'Size';
+
+  @override
+  String get onboardingHardwareAdvisor =>
+      'Pick up a SenseCAP T1000-E for tracking, a Heltec V3 for range, or a RAK WisMesh for reliability. I\'ll work with any of them.';
+
+  @override
+  String get onboardingHardwareDescription =>
+      'Works with all Meshtastic-compatible devices.\nFrom compact trackers to long-range stations.';
+
+  @override
+  String get onboardingHardwareTitle => 'Compatible Hardware';
+
+  @override
+  String get onboardingMoodAlarmed => 'Alarmed';
+
+  @override
+  String get onboardingMoodAlert => 'Alert';
+
+  @override
+  String get onboardingMoodAngry => 'Angry';
+
+  @override
+  String get onboardingMoodAnnoyed => 'Annoyed';
+
+  @override
+  String get onboardingMoodApproving => 'Approving';
+
+  @override
+  String get onboardingMoodBored => 'Bored';
+
+  @override
+  String get onboardingMoodCategoryAlert => 'Alert';
+
+  @override
+  String get onboardingMoodCategoryNegative => 'Negative';
+
+  @override
+  String get onboardingMoodCategoryNeutral => 'Neutral';
+
+  @override
+  String get onboardingMoodCategoryPositive => 'Positive';
+
+  @override
+  String get onboardingMoodCategorySpecial => 'Special';
+
+  @override
+  String get onboardingMoodCelebrating => 'Celebrating';
+
+  @override
+  String get onboardingMoodConfused => 'Confused';
+
+  @override
+  String get onboardingMoodCurious => 'Curious';
+
+  @override
+  String get onboardingMoodDizzy => 'Dizzy';
+
+  @override
+  String get onboardingMoodDormant => 'Dormant';
+
+  @override
+  String get onboardingMoodEmbarrassed => 'Embarrassed';
+
+  @override
+  String get onboardingMoodEnergized => 'Energized';
+
+  @override
+  String get onboardingMoodError => 'Error';
+
+  @override
+  String get onboardingMoodExcited => 'Excited';
+
+  @override
+  String get onboardingMoodFocused => 'Focused';
+
+  @override
+  String get onboardingMoodGlitching => 'Glitching';
+
+  @override
+  String get onboardingMoodGrateful => 'Grateful';
+
+  @override
+  String get onboardingMoodGrumpy => 'Grumpy';
+
+  @override
+  String get onboardingMoodHappy => 'Happy';
+
+  @override
+  String get onboardingMoodHopeful => 'Hopeful';
+
+  @override
+  String get onboardingMoodHypnotized => 'Hypnotized';
+
+  @override
+  String get onboardingMoodIdle => 'Idle';
+
+  @override
+  String get onboardingMoodInviting => 'Inviting';
+
+  @override
+  String get onboardingMoodLaughing => 'Laughing';
+
+  @override
+  String get onboardingMoodListening => 'Listening';
+
+  @override
+  String get onboardingMoodLoading => 'Loading';
+
+  @override
+  String get onboardingMoodLove => 'Love';
+
+  @override
+  String get onboardingMoodMischievous => 'Mischievous';
+
+  @override
+  String get onboardingMoodNervous => 'Nervous';
+
+  @override
+  String get onboardingMoodPlayful => 'Playful';
+
+  @override
+  String get onboardingMoodProud => 'Proud';
+
+  @override
+  String get onboardingMoodSad => 'Sad';
+
+  @override
+  String get onboardingMoodSassy => 'Sassy';
+
+  @override
+  String get onboardingMoodScared => 'Scared';
+
+  @override
+  String get onboardingMoodShy => 'Shy';
+
+  @override
+  String get onboardingMoodSmiling => 'Smiling';
+
+  @override
+  String get onboardingMoodSpeaking => 'Speaking';
+
+  @override
+  String get onboardingMoodSuccess => 'Success';
+
+  @override
+  String get onboardingMoodSurprised => 'Surprised';
+
+  @override
+  String get onboardingMoodThinking => 'Thinking';
+
+  @override
+  String get onboardingMoodTickled => 'Tickled';
+
+  @override
+  String get onboardingMoodTired => 'Tired';
+
+  @override
+  String get onboardingMoodWinking => 'Winking';
+
+  @override
+  String get onboardingMoodZen => 'Zen';
+
+  @override
+  String get onboardingNodedexAdvisor =>
+      'Each node gets a unique sigil, a rarity tier, and a patina that deepens with every encounter. Collect them all — your NodeDex is your story across the mesh.';
+
+  @override
+  String get onboardingNodedexBaseCamp => 'Base Camp Node';
+
+  @override
+  String get onboardingNodedexDescription =>
+      'Every node you encounter becomes a collectible card.\nBuild your field journal across the mesh.';
+
+  @override
+  String get onboardingNodedexEpic => 'EPIC';
+
+  @override
+  String get onboardingNodedexLegendary => 'LEGENDARY';
+
+  @override
+  String get onboardingNodedexRare => 'RARE';
+
+  @override
+  String get onboardingNodedexStandard => 'STANDARD';
+
+  @override
+  String get onboardingNodedexSummitRelay => 'Summit Relay';
+
+  @override
+  String get onboardingNodedexTitle => 'NodeDex — Collector Album';
+
+  @override
+  String get onboardingNodedexTrailMarker => 'Trail Marker';
+
+  @override
+  String get onboardingNodedexValleyScout => 'Valley Scout';
+
+  @override
+  String get onboardingOffGridAdvisor =>
+      'Every message hops through the mesh until it reaches its destination. Range measured in kilometers, not bars.';
+
+  @override
+  String get onboardingOffGridDescription =>
+      'No cellular towers. No internet required.\nTrue peer-to-peer radio communication.';
+
+  @override
+  String get onboardingOffGridTitle => 'Off-Grid by Design';
+
+  @override
+  String get onboardingPrivacyAdvisor =>
+      'Everything is local unless you explicitly enable cloud sync. No tracking, no analytics, no compromise.';
+
+  @override
+  String get onboardingPrivacyDescription =>
+      'No accounts required. No cloud by default.\nYour data stays on your device.';
+
+  @override
+  String get onboardingPrivacyTitle => 'Privacy First';
+
+  @override
+  String get onboardingSettingUpDevice => 'Setting up your device...';
+
+  @override
+  String get onboardingSignalAuthorAlex => 'Alex';
+
+  @override
+  String get onboardingSignalAuthorMike => 'Mike';
+
+  @override
+  String get onboardingSignalAuthorSarah => 'Sarah';
+
+  @override
+  String get onboardingSignalContentAlex => 'On my way, ETA 15 min';
+
+  @override
+  String get onboardingSignalContentMike =>
+      'Base camp is set. Ready when you are.';
+
+  @override
+  String get onboardingSignalContentSarah =>
+      'Just reached the summit! Signal is crystal clear up here.';
+
+  @override
+  String get onboardingSignalDirect => 'Direct';
+
+  @override
+  String onboardingSignalHopCount(int count) {
+    return '$count hop';
+  }
+
+  @override
+  String get onboardingSignalLocationShared => 'Location shared';
+
+  @override
+  String get onboardingSignalPhoto => 'Photo';
+
+  @override
+  String onboardingSignalTtlRemaining(int minutes) {
+    return '${minutes}m remaining';
+  }
+
+  @override
+  String get onboardingSignalsAdvisor =>
+      'Signals are what set us apart. Broadcast to everyone in range, watch them ripple through the network, then disappear on your terms.';
+
+  @override
+  String get onboardingSignalsDescription =>
+      'Ephemeral broadcasts across the mesh.\nShare presence, photos, and location - then let them fade.';
+
+  @override
+  String get onboardingSignalsTitle => 'Signals';
+
+  @override
+  String get onboardingSkipButton => 'Skip';
+
+  @override
+  String get onboardingWelcomeAdvisor =>
+      'I\'m Ico, and I\'ll be your guide. Let me show you a communication platform that works when nothing else does.';
+
+  @override
+  String get onboardingWelcomeDescription =>
+      'The most advanced Meshtastic companion app.\nBuilt for professionals. Designed for everyone.';
+
+  @override
+  String get onboardingWelcomeTitle => 'Welcome to Socialmesh';
+
+  @override
+  String get onboardingWidgetBattery => 'Battery';
+
+  @override
+  String get onboardingWidgetDashboard => 'Dashboard';
+
+  @override
+  String get onboardingWidgetLiveBadge => 'LIVE';
+
+  @override
+  String get onboardingWidgetNodesOnline => 'Nodes Online';
+
+  @override
+  String get onboardingWidgetSnrDb => 'SNR dB';
+
+  @override
   String get paxCounterAboutSubtitle =>
       'PAX Counter passively listens for WiFi and Bluetooth probe requests from nearby devices. It does not store MAC addresses or any personal data.';
 
@@ -9617,6 +12880,118 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get profileWebsiteLabel => 'Website';
+
+  @override
+  String get qrScannerAddNodeConfirm => 'Add Node';
+
+  @override
+  String qrScannerAddNodePrompt(String name) {
+    return 'Add \"$name\" to your tracked nodes?';
+  }
+
+  @override
+  String get qrScannerAddNodeTitle => 'Add Node';
+
+  @override
+  String get qrScannerCancel => 'Cancel';
+
+  @override
+  String get qrScannerCancelAdd => 'Cancel';
+
+  @override
+  String qrScannerChannelAlreadyExists(String name) {
+    return 'You already have this channel as \"$name\"';
+  }
+
+  @override
+  String get qrScannerChannelCancel => 'Cancel';
+
+  @override
+  String get qrScannerChannelEditFirst => 'Edit First';
+
+  @override
+  String get qrScannerChannelImport => 'Import';
+
+  @override
+  String qrScannerChannelImported(String name) {
+    return 'Channel \"$name\" imported';
+  }
+
+  @override
+  String get qrScannerChannelInfoEncryption => 'Encryption';
+
+  @override
+  String get qrScannerChannelInfoName => 'Name';
+
+  @override
+  String get qrScannerChannelSyncNotice =>
+      'The channel will be synced to your connected device.';
+
+  @override
+  String get qrScannerConnectDeviceToImport =>
+      'Connect a device to import this channel';
+
+  @override
+  String qrScannerFailedToProcess(String error) {
+    return 'Failed to process QR code: $error';
+  }
+
+  @override
+  String get qrScannerImportChannelTitle => 'Import Channel';
+
+  @override
+  String qrScannerImportFailed(String error) {
+    return 'Import failed: $error';
+  }
+
+  @override
+  String get qrScannerImportedChannelName => 'Imported';
+
+  @override
+  String get qrScannerInvalidChannelData => 'Invalid channel data';
+
+  @override
+  String get qrScannerMaxChannels => 'Maximum 8 channels - delete one first';
+
+  @override
+  String qrScannerNodeAddedToFavorites(String name) {
+    return 'Node \"$name\" added to favorites';
+  }
+
+  @override
+  String get qrScannerNodeAlreadyExists => 'Node Already Exists';
+
+  @override
+  String qrScannerNodeAlreadyInList(String name) {
+    return 'This node is already in your list as \"$name\".';
+  }
+
+  @override
+  String get qrScannerNodeInfoId => 'Node ID';
+
+  @override
+  String get qrScannerNodeInfoName => 'Name';
+
+  @override
+  String get qrScannerNodeInfoShort => 'Short';
+
+  @override
+  String get qrScannerPrompt => 'Point your camera at a QR code';
+
+  @override
+  String get qrScannerSupportsHint =>
+      'Supports nodes, channels, automations, and more';
+
+  @override
+  String get qrScannerTitle => 'Scan QR Code';
+
+  @override
+  String get qrScannerUpdate => 'Update';
+
+  @override
+  String qrScannerUpdateNamePrompt(String name) {
+    return 'Update name to \"$name\" and add to favorites?';
+  }
 
   @override
   String get reachabilityAboutTitle => 'About Reachability';
@@ -11852,6 +15227,46 @@ class AppLocalizationsRu extends AppLocalizations {
   String shopModelPriceFrom(String price) {
     return 'From \$$price';
   }
+
+  @override
+  String get showcaseCardAmplify => 'Amplify your reach';
+
+  @override
+  String get showcaseCardBroadcast => 'BROADCAST';
+
+  @override
+  String get showcaseCardConnected => 'Connected to network';
+
+  @override
+  String get showcaseCardEncrypted => 'End-to-end encrypted';
+
+  @override
+  String get showcaseCardMeshNetwork => 'MESH NETWORK';
+
+  @override
+  String get showcaseCardNodeOnline => 'NODE ONLINE';
+
+  @override
+  String get showcaseCardOffGrid => 'Off-grid communication';
+
+  @override
+  String get showcaseCardReachEveryone => 'Reach everyone';
+
+  @override
+  String get showcaseCardSecureChannel => 'SECURE CHANNEL';
+
+  @override
+  String get showcaseCardSignalBoost => 'SIGNAL BOOST';
+
+  @override
+  String get showcaseResetAllCards => 'Reset all cards';
+
+  @override
+  String get showcaseSnapEffectTitle => 'Snap Effect';
+
+  @override
+  String get showcaseTapInstruction =>
+      'Tap a card to snap it away (Thanos style)';
 
   @override
   String get sigilStageHeraldic => 'Heraldic';
@@ -14900,6 +18315,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get telemetryAirQualityLogTitle => 'Air Quality Log';
 
   @override
+  String get telemetryAirQualityNoData => 'No air quality data recorded yet';
+
+  @override
   String get telemetryAirQualityParticle03um => '>0.3µm';
 
   @override
@@ -14936,6 +18354,16 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get telemetryAirQualityPm25Label => 'PM2.5';
+
+  @override
+  String get telemetryAirQualityPmEnvironmental =>
+      'Particulate Matter (Environmental)';
+
+  @override
+  String get telemetryAirQualityPmStandard => 'Particulate Matter (Standard)';
+
+  @override
+  String get telemetryAirQualityTitle => 'Air Quality Log';
 
   @override
   String get telemetryAirQualityUnitMicrogram => 'µg/m³';
@@ -14981,6 +18409,11 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get telemetryCo2Good => 'Good';
+
+  @override
+  String telemetryCo2Label(String rating) {
+    return 'CO₂ - $rating';
+  }
 
   @override
   String telemetryCo2LabelPrefix(String quality) {
@@ -15071,7 +18504,20 @@ class AppLocalizationsRu extends AppLocalizations {
   String get telemetryDetectionClear => 'Clear';
 
   @override
+  String get telemetryDetectionClearBadge => 'Clear';
+
+  @override
+  String get telemetryDetectionDescription =>
+      'Detection sensors report motion and presence';
+
+  @override
   String get telemetryDetectionDetected => 'DETECTED';
+
+  @override
+  String get telemetryDetectionNoData => 'No sensor events recorded yet';
+
+  @override
+  String get telemetryDetectionSensor => 'Detection Sensor';
 
   @override
   String get telemetryDetectionSensorDefault => 'Detection Sensor';
@@ -15085,6 +18531,39 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get telemetryDetectionSensorSubtitle =>
       'Detection sensors report motion and presence';
+
+  @override
+  String get telemetryDetectionTitle => 'Detection Sensor Log';
+
+  @override
+  String get telemetryDeviceCharging => 'Charging';
+
+  @override
+  String get telemetryDeviceFilterAirUtil => 'Air Util';
+
+  @override
+  String get telemetryDeviceFilterBattery => 'Battery';
+
+  @override
+  String get telemetryDeviceFilterChannel => 'Channel';
+
+  @override
+  String get telemetryDeviceFilterUptime => 'Uptime';
+
+  @override
+  String get telemetryDeviceFilterVoltage => 'Voltage';
+
+  @override
+  String get telemetryDeviceLegendAirUtil => 'Air Util';
+
+  @override
+  String get telemetryDeviceLegendBattery => 'Battery';
+
+  @override
+  String get telemetryDeviceLegendChUtil => 'Ch Util';
+
+  @override
+  String get telemetryDeviceLegendVoltage => 'Voltage';
 
   @override
   String telemetryDeviceMetricsAirUtil(int percent) {
@@ -15103,6 +18582,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String telemetryDeviceMetricsVoltageValue(double voltage) {
     return '${voltage}V';
   }
+
+  @override
+  String get telemetryDeviceNoMetrics => 'No device metrics yet';
 
   @override
   String get telemetryEndDate => 'End Date';
@@ -15143,7 +18625,45 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
+  String get telemetryEnvironmentFilterGas => 'Gas';
+
+  @override
+  String get telemetryEnvironmentFilterHumidity => 'Humidity';
+
+  @override
+  String get telemetryEnvironmentFilterIaq => 'IAQ';
+
+  @override
+  String get telemetryEnvironmentFilterLight => 'Light';
+
+  @override
+  String get telemetryEnvironmentFilterPressure => 'Pressure';
+
+  @override
+  String get telemetryEnvironmentFilterTemp => 'Temp';
+
+  @override
+  String get telemetryEnvironmentFilterWind => 'Wind';
+
+  @override
+  String get telemetryEnvironmentLegendHumidity => 'Humidity';
+
+  @override
+  String get telemetryEnvironmentLegendTemperature => 'Temperature';
+
+  @override
   String get telemetryEnvironmentMetricsTitle => 'Environment Metrics';
+
+  @override
+  String get telemetryEnvironmentNoMetrics => 'No environment metrics yet';
+
+  @override
+  String get telemetryEnvironmentTitle => 'Environment Metrics';
+
+  @override
+  String telemetryError(String error) {
+    return 'Error: $error';
+  }
 
   @override
   String telemetryErrorPrefix(String error) {
@@ -15160,6 +18680,11 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get telemetryExporting => 'Exporting...';
+
+  @override
+  String telemetryFailedToClear(String error) {
+    return 'Failed to clear data: $error';
+  }
 
   @override
   String telemetryFailedToClearData(String error) {
@@ -15256,6 +18781,15 @@ class AppLocalizationsRu extends AppLocalizations {
       'PAX counter detects nearby devices';
 
   @override
+  String get telemetryPaxDescription => 'PAX counter detects nearby devices';
+
+  @override
+  String get telemetryPaxNoData => 'No PAX data recorded yet';
+
+  @override
+  String get telemetryPaxTitle => 'PAX Counter Log';
+
+  @override
   String telemetryPaxUptime(String uptime) {
     return 'Uptime: $uptime';
   }
@@ -15284,9 +18818,19 @@ class AppLocalizationsRu extends AppLocalizations {
   String get telemetryPaxWifi => 'WiFi';
 
   @override
+  String get telemetryPositionAllNodesDescription =>
+      'Show positions from all nodes';
+
+  @override
+  String get telemetryPositionAllNodesOption => 'All Nodes';
+
+  @override
   String telemetryPositionAltitude(double meters) {
     return '${meters}m';
   }
+
+  @override
+  String get telemetryPositionClearLabel => 'Clear';
 
   @override
   String get telemetryPositionClearMessage =>
@@ -15294,6 +18838,9 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get telemetryPositionClearTitle => 'Clear Position Data';
+
+  @override
+  String get telemetryPositionCleared => 'Position data cleared';
 
   @override
   String telemetryPositionCount(int count) {
@@ -15311,6 +18858,9 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get telemetryPositionDateRange => 'Date range';
+
+  @override
+  String get telemetryPositionDrawerTitle => 'Nodes';
 
   @override
   String get telemetryPositionExportSubject => 'Socialmesh Position Export';
@@ -15333,7 +18883,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get telemetryPositionFilterToday => 'Today';
 
   @override
+  String get telemetryPositionListView => 'List view';
+
+  @override
   String get telemetryPositionListViewTooltip => 'List view';
+
+  @override
+  String get telemetryPositionMapStyle => 'Map Style';
+
+  @override
+  String get telemetryPositionMapView => 'Map view';
 
   @override
   String get telemetryPositionMapViewTooltip => 'Map view';
@@ -15342,7 +18901,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get telemetryPositionNoDataExport => 'No position data to export';
 
   @override
+  String get telemetryPositionNoDisplay => 'No positions to display';
+
+  @override
+  String get telemetryPositionNoExportData => 'No position data to export';
+
+  @override
   String get telemetryPositionNoHistory => 'No position history';
+
+  @override
+  String get telemetryPositionNoMatch => 'No positions match filters';
 
   @override
   String get telemetryPositionNoMatchFilters => 'No positions match filters';
@@ -15357,6 +18925,11 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get telemetryPositionNodeDrawerTitle => 'Nodes';
+
+  @override
+  String telemetryPositionNodesCount(int count) {
+    return '$count nodes';
+  }
 
   @override
   String telemetryPositionSats(int count) {
@@ -15405,12 +18978,18 @@ class AppLocalizationsRu extends AppLocalizations {
   String get telemetryStartDate => 'Start Date';
 
   @override
+  String get telemetryTracerouteClearLabel => 'Clear';
+
+  @override
   String telemetryTracerouteClearMessage(String scope) {
     return 'This will permanently delete all traceroute history for $scope. This cannot be undone.';
   }
 
   @override
   String get telemetryTracerouteClearTitle => 'Clear Traceroute Data';
+
+  @override
+  String get telemetryTracerouteCleared => 'Traceroute data cleared';
 
   @override
   String get telemetryTracerouteDataCleared => 'Traceroute data cleared';
@@ -15424,6 +19003,10 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get telemetryTracerouteEmpty => 'No traceroutes recorded yet';
+
+  @override
+  String get telemetryTracerouteEmptyHint =>
+      'Send a traceroute from a node to see network paths';
 
   @override
   String get telemetryTracerouteEmptySubtitle =>
@@ -15466,10 +19049,22 @@ class AppLocalizationsRu extends AppLocalizations {
   String get telemetryTracerouteMoreActions => 'More actions';
 
   @override
+  String get telemetryTracerouteNoData => 'No traceroutes recorded yet';
+
+  @override
   String get telemetryTracerouteNoDataExport => 'No traceroute data to export';
 
   @override
+  String get telemetryTracerouteNoExportData => 'No traceroute data to export';
+
+  @override
   String get telemetryTracerouteNoMatch => 'No traceroutes match filters';
+
+  @override
+  String get telemetryTracerouteNoResponseBadge => 'No Response';
+
+  @override
+  String get telemetryTracerouteResponseBadge => 'Response';
 
   @override
   String get telemetryTracerouteReturnPath => 'Return Path';
@@ -15478,6 +19073,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String telemetryTracerouteSnr(int value) {
     return 'SNR: $value dB';
   }
+
+  @override
+  String get telemetryTracerouteTitle => 'Traceroute History';
+
+  @override
+  String get telemetryTracerouteTo => 'To';
 
   @override
   String get telemetryTryAdjustingFilters =>
@@ -15497,6 +19098,1831 @@ class AppLocalizationsRu extends AppLocalizations {
   String telemetryUptimeMinutes(int minutes) {
     return '${minutes}m';
   }
+
+  @override
+  String get timelineActivityWillAppear =>
+      'Activity will appear here as it happens';
+
+  @override
+  String timelineDaysAgo(int count) {
+    return '${count}d ago';
+  }
+
+  @override
+  String timelineDirectMessage(String from, String to) {
+    return '$from → $to';
+  }
+
+  @override
+  String get timelineFilterAll => 'All';
+
+  @override
+  String get timelineFilterMessages => 'Messages';
+
+  @override
+  String get timelineFilterNodes => 'Nodes';
+
+  @override
+  String get timelineFilterSignals => 'Signals';
+
+  @override
+  String get timelineFilterWaypoints => 'Waypoints';
+
+  @override
+  String get timelineFriday => 'Friday';
+
+  @override
+  String timelineHoursAgo(int count) {
+    return '${count}h ago';
+  }
+
+  @override
+  String get timelineJustNow => 'just now';
+
+  @override
+  String timelineLastHeard(String timeAgo) {
+    return 'Last heard $timeAgo';
+  }
+
+  @override
+  String timelineMinutesAgo(int count) {
+    return '${count}m ago';
+  }
+
+  @override
+  String get timelineMonday => 'Monday';
+
+  @override
+  String get timelineNoEvents => 'No events yet';
+
+  @override
+  String get timelineNoFilterResults => 'No events match this filter';
+
+  @override
+  String get timelineNoSearchResults => 'No events match your search';
+
+  @override
+  String timelineNodeActive(String name) {
+    return '$name is active';
+  }
+
+  @override
+  String timelineNodeInactive(String name) {
+    return '$name became inactive';
+  }
+
+  @override
+  String timelineRssiValue(double value) {
+    return 'RSSI: $value dBm';
+  }
+
+  @override
+  String get timelineSaturday => 'Saturday';
+
+  @override
+  String get timelineSearchHint => 'Search events';
+
+  @override
+  String timelineSentMessage(String name) {
+    return '$name sent a message';
+  }
+
+  @override
+  String get timelineShowAllEvents => 'Show all events';
+
+  @override
+  String timelineSnrSignalInfo(double value) {
+    return 'SNR: $value dB';
+  }
+
+  @override
+  String timelineSnrValue(double value) {
+    return 'SNR: $value dB';
+  }
+
+  @override
+  String get timelineSunday => 'Sunday';
+
+  @override
+  String get timelineThursday => 'Thursday';
+
+  @override
+  String get timelineTitle => 'Timeline';
+
+  @override
+  String get timelineToday => 'Today';
+
+  @override
+  String get timelineTryDifferent => 'Try a different search or filter';
+
+  @override
+  String get timelineTuesday => 'Tuesday';
+
+  @override
+  String timelineUpdatedPosition(String name) {
+    return '$name updated position';
+  }
+
+  @override
+  String timelineWeakSignal(String name) {
+    return 'Weak signal from $name';
+  }
+
+  @override
+  String get timelineWednesday => 'Wednesday';
+
+  @override
+  String get timelineYesterday => 'Yesterday';
+
+  @override
+  String get timelineYouSentMessage => 'You sent a message';
+
+  @override
+  String get widgetBuilderAccent => 'Accent';
+
+  @override
+  String get widgetBuilderActionCopyToClipboard => 'Copy to Clipboard';
+
+  @override
+  String get widgetBuilderActionEmergencySos => 'Emergency SOS';
+
+  @override
+  String get widgetBuilderActionNavigateLabel => 'Navigate';
+
+  @override
+  String get widgetBuilderActionNoAction => 'No Action';
+
+  @override
+  String get widgetBuilderActionOpenUrl => 'Open URL';
+
+  @override
+  String get widgetBuilderActionRequestPositions => 'Request Positions';
+
+  @override
+  String get widgetBuilderActionRequestPositionsDesc =>
+      'Ask all nodes to report their position';
+
+  @override
+  String get widgetBuilderActionRequestPositionsLabel => 'Request Positions';
+
+  @override
+  String get widgetBuilderActionSendMessage => 'Send Message';
+
+  @override
+  String get widgetBuilderActionSendMessageDesc =>
+      'Open message composer to send a message';
+
+  @override
+  String get widgetBuilderActionSendMessageLabel => 'Send Message';
+
+  @override
+  String get widgetBuilderActionShareLocation => 'Share Location';
+
+  @override
+  String get widgetBuilderActionShareLocationDesc =>
+      'Share your current GPS position';
+
+  @override
+  String get widgetBuilderActionShareLocationLabel => 'Share Location';
+
+  @override
+  String get widgetBuilderActionSosAlert => 'SOS Alert';
+
+  @override
+  String get widgetBuilderActionSosAlertDesc =>
+      'Send emergency alert to all nodes';
+
+  @override
+  String get widgetBuilderActionTraceroute => 'Traceroute';
+
+  @override
+  String get widgetBuilderActionTracerouteDesc => 'Trace the route to a node';
+
+  @override
+  String get widgetBuilderActionTracerouteLabel => 'Traceroute';
+
+  @override
+  String get widgetBuilderAddAction => 'Add Action';
+
+  @override
+  String get widgetBuilderAddBlock => 'Add Block';
+
+  @override
+  String get widgetBuilderAddElement => 'Add Element';
+
+  @override
+  String get widgetBuilderAddIcon => 'Icon';
+
+  @override
+  String get widgetBuilderAddIconDesc => 'Add a symbol or emoji';
+
+  @override
+  String widgetBuilderAddItemCount(int count) {
+    return 'Add item ($count items)';
+  }
+
+  @override
+  String get widgetBuilderAddProgressBar => 'Progress Bar';
+
+  @override
+  String get widgetBuilderAddProgressBarDesc => 'Show a value visually';
+
+  @override
+  String get widgetBuilderAddSpace => 'Space';
+
+  @override
+  String get widgetBuilderAddSpaceDesc => 'Add empty space between items';
+
+  @override
+  String get widgetBuilderAddTapAction => 'Add tap action...';
+
+  @override
+  String get widgetBuilderAddText => 'Text';
+
+  @override
+  String get widgetBuilderAddTextDesc => 'Add a label or value';
+
+  @override
+  String get widgetBuilderAddToDashboard => 'Add to Dashboard';
+
+  @override
+  String get widgetBuilderAlignBottom => 'Bottom';
+
+  @override
+  String get widgetBuilderAlignCenter => 'Center';
+
+  @override
+  String get widgetBuilderAlignLeft => 'Left';
+
+  @override
+  String get widgetBuilderAlignRight => 'Right';
+
+  @override
+  String get widgetBuilderAlignSpread => 'Spread';
+
+  @override
+  String get widgetBuilderAlignTop => 'Top';
+
+  @override
+  String get widgetBuilderAll => 'All';
+
+  @override
+  String get widgetBuilderAllNodes => 'All Nodes';
+
+  @override
+  String get widgetBuilderBindingActiveMeshNodes => 'Active Mesh Nodes';
+
+  @override
+  String get widgetBuilderBindingActiveMeshNodesDesc => 'Nodes heard recently';
+
+  @override
+  String get widgetBuilderBindingActiveMeshNodesLegacy =>
+      'Active Mesh Nodes (legacy)';
+
+  @override
+  String get widgetBuilderBindingActiveMeshNodesLegacyDesc =>
+      'Alias for active node count (back-compat)';
+
+  @override
+  String get widgetBuilderBindingAirtimeTx => 'Airtime TX';
+
+  @override
+  String get widgetBuilderBindingAirtimeTxDesc =>
+      'Transmission airtime utilization';
+
+  @override
+  String get widgetBuilderBindingAltitude => 'Altitude';
+
+  @override
+  String get widgetBuilderBindingAltitudeDesc => 'Altitude above sea level';
+
+  @override
+  String get widgetBuilderBindingBadPacketsRx => 'Bad Packets RX';
+
+  @override
+  String get widgetBuilderBindingBadPacketsRxDesc => 'Bad packets received';
+
+  @override
+  String get widgetBuilderBindingBatteryLevel => 'Battery Level';
+
+  @override
+  String get widgetBuilderBindingBatteryLevelDesc =>
+      'Battery percentage (0-100)';
+
+  @override
+  String get widgetBuilderBindingBatteryVoltage => 'Battery Voltage';
+
+  @override
+  String get widgetBuilderBindingBatteryVoltageDesc => 'Battery voltage';
+
+  @override
+  String get widgetBuilderBindingCategoryAirQuality => 'Air Quality';
+
+  @override
+  String get widgetBuilderBindingCategoryDevice => 'Device';
+
+  @override
+  String get widgetBuilderBindingCategoryEnvironment => 'Environment';
+
+  @override
+  String get widgetBuilderBindingCategoryGps => 'GPS';
+
+  @override
+  String get widgetBuilderBindingCategoryMessages => 'Messages';
+
+  @override
+  String get widgetBuilderBindingCategoryNetwork => 'Network';
+
+  @override
+  String get widgetBuilderBindingCategoryNodeInfo => 'Node Info';
+
+  @override
+  String get widgetBuilderBindingCategoryPower => 'Power';
+
+  @override
+  String get widgetBuilderBindingCh1Current => 'Channel 1 Current';
+
+  @override
+  String get widgetBuilderBindingCh1CurrentDesc => 'Power channel 1 current';
+
+  @override
+  String get widgetBuilderBindingCh1Voltage => 'Channel 1 Voltage';
+
+  @override
+  String get widgetBuilderBindingCh1VoltageDesc => 'Power channel 1 voltage';
+
+  @override
+  String get widgetBuilderBindingCh2Current => 'Channel 2 Current';
+
+  @override
+  String get widgetBuilderBindingCh2CurrentDesc => 'Power channel 2 current';
+
+  @override
+  String get widgetBuilderBindingCh2Voltage => 'Channel 2 Voltage';
+
+  @override
+  String get widgetBuilderBindingCh2VoltageDesc => 'Power channel 2 voltage';
+
+  @override
+  String get widgetBuilderBindingCh3Current => 'Channel 3 Current';
+
+  @override
+  String get widgetBuilderBindingCh3CurrentDesc => 'Power channel 3 current';
+
+  @override
+  String get widgetBuilderBindingCh3Voltage => 'Channel 3 Voltage';
+
+  @override
+  String get widgetBuilderBindingCh3VoltageDesc => 'Power channel 3 voltage';
+
+  @override
+  String get widgetBuilderBindingChannelUtil => 'Channel Utilization';
+
+  @override
+  String get widgetBuilderBindingChannelUtilDesc =>
+      'Current channel utilization percentage';
+
+  @override
+  String get widgetBuilderBindingCo2 => 'CO2';
+
+  @override
+  String get widgetBuilderBindingCo2Desc => 'CO2 concentration';
+
+  @override
+  String get widgetBuilderBindingDisplayName => 'Display Name';
+
+  @override
+  String get widgetBuilderBindingDisplayNameDesc =>
+      'Node display name (long name or short name)';
+
+  @override
+  String get widgetBuilderBindingDistance => 'Distance';
+
+  @override
+  String get widgetBuilderBindingDistanceDesc => 'Distance to node in meters';
+
+  @override
+  String get widgetBuilderBindingFirmwareVersion => 'Firmware Version';
+
+  @override
+  String get widgetBuilderBindingFirmwareVersionDesc =>
+      'Current firmware version';
+
+  @override
+  String get widgetBuilderBindingFirstHeard => 'First Heard';
+
+  @override
+  String get widgetBuilderBindingFirstHeardDesc =>
+      'When the node was first discovered';
+
+  @override
+  String get widgetBuilderBindingGroundSpeed => 'Ground Speed';
+
+  @override
+  String get widgetBuilderBindingGroundSpeedDesc => 'Ground speed';
+
+  @override
+  String get widgetBuilderBindingHardwareModel => 'Hardware Model';
+
+  @override
+  String get widgetBuilderBindingHardwareModelDesc => 'Device hardware model';
+
+  @override
+  String get widgetBuilderBindingHeading => 'Heading';
+
+  @override
+  String get widgetBuilderBindingHeadingDesc =>
+      'Ground track/heading in degrees';
+
+  @override
+  String get widgetBuilderBindingHopCount => 'Hop Count';
+
+  @override
+  String get widgetBuilderBindingHopCountDesc =>
+      'Number of hops from this node (0 = direct neighbor)';
+
+  @override
+  String get widgetBuilderBindingHumidity => 'Humidity';
+
+  @override
+  String get widgetBuilderBindingHumidityDesc => 'Relative humidity percentage';
+
+  @override
+  String get widgetBuilderBindingIaqIndex => 'IAQ Index';
+
+  @override
+  String get widgetBuilderBindingIaqIndexDesc => 'Indoor air quality index';
+
+  @override
+  String get widgetBuilderBindingLastHeard => 'Last Heard';
+
+  @override
+  String get widgetBuilderBindingLastHeardDesc =>
+      'When the node was last heard from';
+
+  @override
+  String get widgetBuilderBindingLatitude => 'Latitude';
+
+  @override
+  String get widgetBuilderBindingLatitudeDesc => 'GPS latitude coordinate';
+
+  @override
+  String get widgetBuilderBindingLightLevel => 'Light Level';
+
+  @override
+  String get widgetBuilderBindingLightLevelDesc => 'Ambient light level';
+
+  @override
+  String get widgetBuilderBindingLongitude => 'Longitude';
+
+  @override
+  String get widgetBuilderBindingLongitudeDesc => 'GPS longitude coordinate';
+
+  @override
+  String get widgetBuilderBindingNodeName => 'Node Name';
+
+  @override
+  String get widgetBuilderBindingNodeNameDesc => 'Full name of the node';
+
+  @override
+  String get widgetBuilderBindingNodeNumber => 'Node Number';
+
+  @override
+  String get widgetBuilderBindingNodeNumberDesc => 'Unique node number';
+
+  @override
+  String get widgetBuilderBindingNodeRole => 'Node Role';
+
+  @override
+  String get widgetBuilderBindingNodeRoleDesc =>
+      'Role in the mesh (CLIENT, ROUTER, etc.)';
+
+  @override
+  String get widgetBuilderBindingNodeStatus => 'Node Status';
+
+  @override
+  String get widgetBuilderBindingNodeStatusDesc =>
+      'Custom status message from the node';
+
+  @override
+  String get widgetBuilderBindingNodesHeard2h => 'Nodes Heard (2h)';
+
+  @override
+  String get widgetBuilderBindingNodesHeard2hDesc =>
+      'Meshtastic metric: nodes heard in the last 2 hours';
+
+  @override
+  String get widgetBuilderBindingNoiseFloor => 'Noise Floor';
+
+  @override
+  String get widgetBuilderBindingNoiseFloorDesc =>
+      'Measured noise floor in dBm';
+
+  @override
+  String get widgetBuilderBindingPacketsRx => 'Packets RX';
+
+  @override
+  String get widgetBuilderBindingPacketsRxDesc => 'Total packets received';
+
+  @override
+  String get widgetBuilderBindingPacketsTx => 'Packets TX';
+
+  @override
+  String get widgetBuilderBindingPacketsTxDesc => 'Total packets transmitted';
+
+  @override
+  String get widgetBuilderBindingPacketsTxDropped => 'Packets TX Dropped';
+
+  @override
+  String get widgetBuilderBindingPacketsTxDroppedDesc =>
+      'Packets dropped due to full TX queue';
+
+  @override
+  String get widgetBuilderBindingPm10Large => 'PM10';
+
+  @override
+  String get widgetBuilderBindingPm10LargeDesc => 'PM10 particulate matter';
+
+  @override
+  String get widgetBuilderBindingPm10Small => 'PM1.0';
+
+  @override
+  String get widgetBuilderBindingPm10SmallDesc => 'PM1.0 particulate matter';
+
+  @override
+  String get widgetBuilderBindingPm25 => 'PM2.5';
+
+  @override
+  String get widgetBuilderBindingPm25Desc => 'PM2.5 particulate matter';
+
+  @override
+  String get widgetBuilderBindingPresenceConfidence => 'Presence Confidence';
+
+  @override
+  String get widgetBuilderBindingPresenceConfidenceDesc =>
+      'Inferred presence: active, fading, stale, unknown';
+
+  @override
+  String get widgetBuilderBindingPressure => 'Pressure';
+
+  @override
+  String get widgetBuilderBindingPressureDesc => 'Barometric pressure';
+
+  @override
+  String get widgetBuilderBindingRainfall1h => 'Rainfall (1h)';
+
+  @override
+  String get widgetBuilderBindingRainfall1hDesc => 'Rainfall in last hour';
+
+  @override
+  String get widgetBuilderBindingRainfall24h => 'Rainfall (24h)';
+
+  @override
+  String get widgetBuilderBindingRainfall24hDesc => 'Rainfall in last 24 hours';
+
+  @override
+  String get widgetBuilderBindingRecentMessages => 'Recent Messages';
+
+  @override
+  String get widgetBuilderBindingRecentMessagesDesc =>
+      'Number of recent messages';
+
+  @override
+  String get widgetBuilderBindingRssi => 'RSSI';
+
+  @override
+  String get widgetBuilderBindingRssiDesc =>
+      'Received signal strength indicator';
+
+  @override
+  String get widgetBuilderBindingSatellites => 'Satellites';
+
+  @override
+  String get widgetBuilderBindingSatellitesDesc =>
+      'Number of GPS satellites in view';
+
+  @override
+  String get widgetBuilderBindingShortName => 'Short Name';
+
+  @override
+  String get widgetBuilderBindingShortNameDesc =>
+      'Short 4-character node identifier';
+
+  @override
+  String get widgetBuilderBindingSnr => 'SNR';
+
+  @override
+  String get widgetBuilderBindingSnrDesc => 'Signal-to-noise ratio';
+
+  @override
+  String get widgetBuilderBindingSoilMoisture => 'Soil Moisture';
+
+  @override
+  String get widgetBuilderBindingSoilMoistureDesc => 'Soil moisture percentage';
+
+  @override
+  String get widgetBuilderBindingSoilTemperature => 'Soil Temperature';
+
+  @override
+  String get widgetBuilderBindingSoilTemperatureDesc => 'Soil temperature';
+
+  @override
+  String get widgetBuilderBindingTemperature => 'Temperature';
+
+  @override
+  String get widgetBuilderBindingTemperatureDesc => 'Ambient temperature';
+
+  @override
+  String get widgetBuilderBindingTotalMeshNodes => 'Total Mesh Nodes';
+
+  @override
+  String get widgetBuilderBindingTotalMeshNodesDesc =>
+      'Total nodes in the mesh network';
+
+  @override
+  String get widgetBuilderBindingTotalNodes => 'Total Nodes';
+
+  @override
+  String get widgetBuilderBindingTotalNodesDesc =>
+      'Total number of known nodes';
+
+  @override
+  String get widgetBuilderBindingUnreadMessages => 'Unread Messages';
+
+  @override
+  String get widgetBuilderBindingUnreadMessagesDesc =>
+      'Number of unread messages';
+
+  @override
+  String get widgetBuilderBindingUptime => 'Uptime';
+
+  @override
+  String get widgetBuilderBindingUptimeDesc => 'Device uptime in seconds';
+
+  @override
+  String get widgetBuilderBindingViaMqtt => 'Via MQTT';
+
+  @override
+  String get widgetBuilderBindingViaMqttDesc =>
+      'Whether this node was last heard via MQTT transport';
+
+  @override
+  String get widgetBuilderBindingWindDirection => 'Wind Direction';
+
+  @override
+  String get widgetBuilderBindingWindDirectionDesc =>
+      'Wind direction in degrees';
+
+  @override
+  String get widgetBuilderBindingWindGust => 'Wind Gust';
+
+  @override
+  String get widgetBuilderBindingWindGustDesc => 'Wind gust speed';
+
+  @override
+  String get widgetBuilderBindingWindSpeed => 'Wind Speed';
+
+  @override
+  String get widgetBuilderBindingWindSpeedDesc => 'Current wind speed';
+
+  @override
+  String get widgetBuilderBlockActionButton => 'Action Button';
+
+  @override
+  String get widgetBuilderBlockActionButtonDesc =>
+      'Tappable button with action';
+
+  @override
+  String get widgetBuilderBlockInfoBlock => 'Info Block';
+
+  @override
+  String get widgetBuilderBlockInfoBlockDesc => 'Icon + Label + Data Value';
+
+  @override
+  String get widgetBuilderBlockMetric => 'Metric';
+
+  @override
+  String get widgetBuilderBlockMetricDesc => 'Large value with label';
+
+  @override
+  String get widgetBuilderBlockNewRow => 'New Row';
+
+  @override
+  String get widgetBuilderBlockNewRowDesc => 'Add a row for more blocks';
+
+  @override
+  String get widgetBuilderBlockStatus => 'Status';
+
+  @override
+  String get widgetBuilderBlockStatusDesc => 'Status indicator with binding';
+
+  @override
+  String get widgetBuilderBoolNo => 'No';
+
+  @override
+  String get widgetBuilderBoolYes => 'Yes';
+
+  @override
+  String get widgetBuilderBroadcastSubtitle =>
+      'Broadcast to everyone on channel';
+
+  @override
+  String get widgetBuilderBrowseMarketplace => 'Browse Marketplace';
+
+  @override
+  String get widgetBuilderCancel => 'Cancel';
+
+  @override
+  String get widgetBuilderCancelButton => 'Cancel';
+
+  @override
+  String get widgetBuilderCatAirQuality => 'Air Quality';
+
+  @override
+  String get widgetBuilderCatDeviceMetrics => 'Device Metrics';
+
+  @override
+  String get widgetBuilderCatEnvironment => 'Environment';
+
+  @override
+  String get widgetBuilderCatGpsPosition => 'GPS & Position';
+
+  @override
+  String get widgetBuilderCatMessaging => 'Messaging';
+
+  @override
+  String get widgetBuilderCatNetwork => 'Network';
+
+  @override
+  String get widgetBuilderCatNodeInfo => 'Node Info';
+
+  @override
+  String get widgetBuilderCatPowerBattery => 'Power & Battery';
+
+  @override
+  String get widgetBuilderCategoryCharts => 'Charts';
+
+  @override
+  String get widgetBuilderCategoryDeviceStatus => 'Device Status';
+
+  @override
+  String get widgetBuilderCategoryLocation => 'Location';
+
+  @override
+  String get widgetBuilderCategoryMeshNetwork => 'Mesh Network';
+
+  @override
+  String get widgetBuilderCategoryMetrics => 'Metrics';
+
+  @override
+  String get widgetBuilderCategoryOther => 'Other';
+
+  @override
+  String get widgetBuilderCategoryUtility => 'Utility';
+
+  @override
+  String get widgetBuilderCategoryWeather => 'Weather';
+
+  @override
+  String get widgetBuilderChooseAction => 'Choose an action for this element';
+
+  @override
+  String get widgetBuilderChooseColor => 'Choose Color';
+
+  @override
+  String get widgetBuilderChooseStyle => 'Choose a style that fits your needs';
+
+  @override
+  String get widgetBuilderCreateFirstWidget => 'Create Your First Widget';
+
+  @override
+  String get widgetBuilderCreateFirstWidgetDesc =>
+      'Use the wizard to build a custom widget with your preferred data and layout';
+
+  @override
+  String get widgetBuilderCreateWidgetTooltip => 'Create Widget';
+
+  @override
+  String get widgetBuilderCustomDashboardWidgets => 'Custom Dashboard Widgets';
+
+  @override
+  String get widgetBuilderCustomWidget => 'Custom widget';
+
+  @override
+  String get widgetBuilderDeleteAction => 'Delete';
+
+  @override
+  String get widgetBuilderDeleteButton => 'Delete';
+
+  @override
+  String get widgetBuilderDeleteWidgetTitle => 'Delete Widget?';
+
+  @override
+  String get widgetBuilderDiscoverCommunity =>
+      'Discover widgets created by the community';
+
+  @override
+  String get widgetBuilderDuplicate => 'Duplicate';
+
+  @override
+  String get widgetBuilderEdit => 'Edit';
+
+  @override
+  String get widgetBuilderEditAction => 'Edit';
+
+  @override
+  String get widgetBuilderElementButton => 'Button';
+
+  @override
+  String get widgetBuilderElementChart => 'Chart';
+
+  @override
+  String get widgetBuilderElementGauge => 'Gauge';
+
+  @override
+  String get widgetBuilderElementGroup => 'Group';
+
+  @override
+  String get widgetBuilderElementHorizontalStack => 'Horizontal Stack';
+
+  @override
+  String get widgetBuilderElementIcon => 'Icon';
+
+  @override
+  String get widgetBuilderElementImage => 'Image';
+
+  @override
+  String get widgetBuilderElementLayerStack => 'Layer Stack';
+
+  @override
+  String get widgetBuilderElementMap => 'Map';
+
+  @override
+  String get widgetBuilderElementNotFound => 'Element not found';
+
+  @override
+  String get widgetBuilderElementShape => 'Shape';
+
+  @override
+  String get widgetBuilderElementShowHide => 'Show/Hide';
+
+  @override
+  String get widgetBuilderElementSpace => 'Space';
+
+  @override
+  String get widgetBuilderElementText => 'Text';
+
+  @override
+  String get widgetBuilderElementVerticalStack => 'Vertical Stack';
+
+  @override
+  String get widgetBuilderElements => 'Elements';
+
+  @override
+  String get widgetBuilderEnablePhoneLocation =>
+      'Enable \"Provide phone location\" in Settings to share your position';
+
+  @override
+  String get widgetBuilderEnterWidgetName => 'Enter widget name';
+
+  @override
+  String get widgetBuilderHelp => 'Help';
+
+  @override
+  String get widgetBuilderHeroDescription =>
+      'Build personalized widgets to display mesh data exactly how you want. Monitor battery, signal strength, location, and more at a glance.';
+
+  @override
+  String get widgetBuilderIconAdd => 'Add';
+
+  @override
+  String get widgetBuilderIconAir => 'Air';
+
+  @override
+  String get widgetBuilderIconAlert => 'Alert';
+
+  @override
+  String get widgetBuilderIconAnalytics => 'Analytics';
+
+  @override
+  String get widgetBuilderIconBluetooth => 'Bluetooth';
+
+  @override
+  String get widgetBuilderIconBookmark => 'Bookmark';
+
+  @override
+  String get widgetBuilderIconCall => 'Call';
+
+  @override
+  String get widgetBuilderIconCategoryActions => 'Actions';
+
+  @override
+  String get widgetBuilderIconCategoryBatteryPower => 'Battery & Power';
+
+  @override
+  String get widgetBuilderIconCategoryCommunication => 'Communication';
+
+  @override
+  String get widgetBuilderIconCategoryConnectivity => 'Connectivity';
+
+  @override
+  String get widgetBuilderIconCategoryDataCharts => 'Data & Charts';
+
+  @override
+  String get widgetBuilderIconCategoryEnvironment => 'Environment';
+
+  @override
+  String get widgetBuilderIconCategoryFavorites => 'Favorites';
+
+  @override
+  String get widgetBuilderIconCategoryLocationMaps => 'Location & Maps';
+
+  @override
+  String get widgetBuilderIconCategoryStatus => 'Status';
+
+  @override
+  String get widgetBuilderIconCharging => 'Charging';
+
+  @override
+  String get widgetBuilderIconChart => 'Chart';
+
+  @override
+  String get widgetBuilderIconChat => 'Chat';
+
+  @override
+  String get widgetBuilderIconCheck => 'Check';
+
+  @override
+  String get widgetBuilderIconCloud => 'Cloud';
+
+  @override
+  String get widgetBuilderIconDelete => 'Delete';
+
+  @override
+  String get widgetBuilderIconDevices => 'Devices';
+
+  @override
+  String get widgetBuilderIconDown => 'Down';
+
+  @override
+  String get widgetBuilderIconEdit => 'Edit';
+
+  @override
+  String get widgetBuilderIconError => 'Error';
+
+  @override
+  String get widgetBuilderIconExplore => 'Explore';
+
+  @override
+  String get widgetBuilderIconFlash => 'Flash';
+
+  @override
+  String get widgetBuilderIconFull => 'Full';
+
+  @override
+  String get widgetBuilderIconGps => 'GPS';
+
+  @override
+  String get widgetBuilderIconHeart => 'Heart';
+
+  @override
+  String get widgetBuilderIconHelp => 'Help';
+
+  @override
+  String get widgetBuilderIconHub => 'Hub';
+
+  @override
+  String get widgetBuilderIconHumidity => 'Humidity';
+
+  @override
+  String get widgetBuilderIconInfo => 'Info';
+
+  @override
+  String get widgetBuilderIconLocation => 'Location';
+
+  @override
+  String get widgetBuilderIconMap => 'Map';
+
+  @override
+  String get widgetBuilderIconMessage => 'Message';
+
+  @override
+  String get widgetBuilderIconNavigate => 'Navigate';
+
+  @override
+  String get widgetBuilderIconNearMe => 'Near Me';
+
+  @override
+  String get widgetBuilderIconNetwork => 'Network';
+
+  @override
+  String get widgetBuilderIconNotification => 'Notification';
+
+  @override
+  String get widgetBuilderIconPower => 'Power';
+
+  @override
+  String get widgetBuilderIconPressure => 'Pressure';
+
+  @override
+  String get widgetBuilderIconRefresh => 'Refresh';
+
+  @override
+  String get widgetBuilderIconRemove => 'Remove';
+
+  @override
+  String get widgetBuilderIconRoute => 'Route';
+
+  @override
+  String get widgetBuilderIconRouter => 'Router';
+
+  @override
+  String get widgetBuilderIconSend => 'Send';
+
+  @override
+  String get widgetBuilderIconSettings => 'Settings';
+
+  @override
+  String get widgetBuilderIconSignal => 'Signal';
+
+  @override
+  String get widgetBuilderIconSpeed => 'Speed';
+
+  @override
+  String get widgetBuilderIconStar => 'Star';
+
+  @override
+  String get widgetBuilderIconSun => 'Sun';
+
+  @override
+  String get widgetBuilderIconTemperature => 'Temperature';
+
+  @override
+  String get widgetBuilderIconThumbsUp => 'Thumbs Up';
+
+  @override
+  String get widgetBuilderIconTimeline => 'Timeline';
+
+  @override
+  String get widgetBuilderIconUp => 'Up';
+
+  @override
+  String get widgetBuilderIconWarning => 'Warning';
+
+  @override
+  String get widgetBuilderIconWifi => 'WiFi';
+
+  @override
+  String get widgetBuilderImportButton => 'Import';
+
+  @override
+  String get widgetBuilderImportEditFirst => 'Edit First';
+
+  @override
+  String get widgetBuilderImportFailed2 => 'Import Failed';
+
+  @override
+  String get widgetBuilderImportGoBack => 'Go Back';
+
+  @override
+  String get widgetBuilderImportInfoNotice =>
+      'This widget will be added to your custom widgets. You can edit it anytime.';
+
+  @override
+  String get widgetBuilderImportNoData => 'No widget data provided';
+
+  @override
+  String get widgetBuilderImportNotFound =>
+      'Widget not found or has been deleted';
+
+  @override
+  String get widgetBuilderImportPreview => 'Preview';
+
+  @override
+  String get widgetBuilderImportSize => 'Size';
+
+  @override
+  String get widgetBuilderImportTags => 'Tags';
+
+  @override
+  String get widgetBuilderImportTitle => 'Import Widget';
+
+  @override
+  String get widgetBuilderImportedSuccess => 'Widget imported successfully';
+
+  @override
+  String get widgetBuilderImportedSuccessAction =>
+      'Widget imported successfully';
+
+  @override
+  String get widgetBuilderJustNow => 'Just now';
+
+  @override
+  String get widgetBuilderKeepCurrent => 'Keep Current';
+
+  @override
+  String get widgetBuilderLabelAddAction => 'Add Action';
+
+  @override
+  String get widgetBuilderLabelBindTo => 'Bind to';
+
+  @override
+  String get widgetBuilderLabelGap => 'Gap between items';
+
+  @override
+  String get widgetBuilderLabelHorizontal => 'Horizontal';
+
+  @override
+  String get widgetBuilderLabelIcon => 'Icon';
+
+  @override
+  String get widgetBuilderLabelIconColor => 'Icon Color';
+
+  @override
+  String get widgetBuilderLabelMax => 'Max';
+
+  @override
+  String get widgetBuilderLabelMin => 'Min';
+
+  @override
+  String get widgetBuilderLabelScreen => 'Screen';
+
+  @override
+  String get widgetBuilderLabelShape => 'Shape';
+
+  @override
+  String get widgetBuilderLabelText => 'Text';
+
+  @override
+  String get widgetBuilderLabelType => 'Type';
+
+  @override
+  String get widgetBuilderLabelUrl => 'URL';
+
+  @override
+  String get widgetBuilderLabelVertical => 'Vertical';
+
+  @override
+  String get widgetBuilderLargeMaxTwoRows => 'Large widgets allow max 2 rows';
+
+  @override
+  String get widgetBuilderLargeOnlyTwoRowsMax =>
+      'Large widgets only allow 2 rows max';
+
+  @override
+  String get widgetBuilderLocationSharedMesh => 'Location shared with mesh';
+
+  @override
+  String get widgetBuilderLocationSharedRecently =>
+      'Location was shared recently — please wait before sharing again';
+
+  @override
+  String get widgetBuilderMakeUnique =>
+      'Consider making your widget more unique before submitting.';
+
+  @override
+  String get widgetBuilderMapView => 'Map View';
+
+  @override
+  String get widgetBuilderMarketplace => 'Marketplace';
+
+  @override
+  String get widgetBuilderMarketplaceAlreadyInstalled => 'Already Installed';
+
+  @override
+  String get widgetBuilderMarketplaceApprove => 'Approve';
+
+  @override
+  String get widgetBuilderMarketplaceCancel => 'Cancel';
+
+  @override
+  String get widgetBuilderMarketplaceDescription => 'Description';
+
+  @override
+  String get widgetBuilderMarketplaceEnterReason => 'Enter reason...';
+
+  @override
+  String get widgetBuilderMarketplaceFailedLoadCategory =>
+      'Failed to load category';
+
+  @override
+  String get widgetBuilderMarketplaceFailedNewest =>
+      'Failed to load newest widgets';
+
+  @override
+  String get widgetBuilderMarketplaceFailedPopular =>
+      'Failed to load popular widgets';
+
+  @override
+  String get widgetBuilderMarketplaceFavoritesHint =>
+      'Tap the heart icon on any widget to add it here';
+
+  @override
+  String get widgetBuilderMarketplaceHelpTooltip => 'Help';
+
+  @override
+  String get widgetBuilderMarketplaceInstallWidget => 'Install Widget';
+
+  @override
+  String get widgetBuilderMarketplaceJustNow => 'Just now';
+
+  @override
+  String get widgetBuilderMarketplaceLoadingPreview => 'Loading preview...';
+
+  @override
+  String get widgetBuilderMarketplaceNoFavorites => 'No favorite widgets yet';
+
+  @override
+  String get widgetBuilderMarketplaceNoFeatured => 'No featured widgets';
+
+  @override
+  String get widgetBuilderMarketplaceNoNew => 'No new widgets yet';
+
+  @override
+  String get widgetBuilderMarketplaceNoPending => 'No widgets pending approval';
+
+  @override
+  String get widgetBuilderMarketplaceNoPopular => 'No popular widgets yet';
+
+  @override
+  String get widgetBuilderMarketplaceNoWidgets => 'No widgets available';
+
+  @override
+  String get widgetBuilderMarketplaceNoWidgetsFound => 'No widgets found';
+
+  @override
+  String get widgetBuilderMarketplaceNoWidgetsInCategory =>
+      'No widgets in this category';
+
+  @override
+  String get widgetBuilderMarketplaceNotAuthenticated => 'Not authenticated';
+
+  @override
+  String get widgetBuilderMarketplacePending => 'PENDING';
+
+  @override
+  String get widgetBuilderMarketplacePleaseEnterReason =>
+      'Please enter a reason';
+
+  @override
+  String get widgetBuilderMarketplaceProcessing => 'Processing...';
+
+  @override
+  String get widgetBuilderMarketplaceReject => 'Reject';
+
+  @override
+  String get widgetBuilderMarketplaceRejectButton => 'Reject';
+
+  @override
+  String get widgetBuilderMarketplaceRejectWidget => 'Reject Widget';
+
+  @override
+  String get widgetBuilderMarketplaceRequiresInternet =>
+      'Installing widgets requires an internet connection.';
+
+  @override
+  String get widgetBuilderMarketplaceRetry => 'Retry';
+
+  @override
+  String get widgetBuilderMarketplaceRetryButton => 'Retry';
+
+  @override
+  String get widgetBuilderMarketplaceSearchHint => 'Search widgets...';
+
+  @override
+  String get widgetBuilderMarketplaceShareTooltip => 'Share Widget';
+
+  @override
+  String get widgetBuilderMarketplaceSharingRequiresInternet =>
+      'Sharing widgets requires an internet connection.';
+
+  @override
+  String get widgetBuilderMarketplaceTabCategories => 'Categories';
+
+  @override
+  String get widgetBuilderMarketplaceTabFavorites => 'Favorites';
+
+  @override
+  String get widgetBuilderMarketplaceTabFeatured => 'Featured';
+
+  @override
+  String get widgetBuilderMarketplaceTabNew => 'New';
+
+  @override
+  String get widgetBuilderMarketplaceTabPopular => 'Popular';
+
+  @override
+  String get widgetBuilderMarketplaceTags => 'Tags';
+
+  @override
+  String get widgetBuilderMarketplaceTitle => 'Widget Marketplace';
+
+  @override
+  String get widgetBuilderMarketplaceUnableToLoad =>
+      'Unable to load marketplace';
+
+  @override
+  String get widgetBuilderMarketplaceWidgetApproval => 'Widget Approval';
+
+  @override
+  String get widgetBuilderMediumOnlyOneRow => 'Medium widgets only allow 1 row';
+
+  @override
+  String get widgetBuilderMediumOnlyOneRowLimit =>
+      'Medium widgets only allow 1 row';
+
+  @override
+  String get widgetBuilderMerge => 'Merge';
+
+  @override
+  String get widgetBuilderMyWidgets => 'My Widgets';
+
+  @override
+  String get widgetBuilderNewWidget => 'New Widget';
+
+  @override
+  String get widgetBuilderNoAdditionalOptions => 'No additional options';
+
+  @override
+  String get widgetBuilderNoDataBinding => 'No data binding - use static text';
+
+  @override
+  String get widgetBuilderNoIconsFound => 'No icons found';
+
+  @override
+  String get widgetBuilderNoVariablesFound => 'No variables found';
+
+  @override
+  String get widgetBuilderNone => 'None';
+
+  @override
+  String get widgetBuilderOk => 'OK';
+
+  @override
+  String get widgetBuilderOptions => 'Options';
+
+  @override
+  String get widgetBuilderPickNodeThenSend => 'Pick node, then send';
+
+  @override
+  String get widgetBuilderPickNodeToTrace => 'Pick node to trace';
+
+  @override
+  String get widgetBuilderPrebuiltWidgets =>
+      'Pre-built widgets ready to customize';
+
+  @override
+  String get widgetBuilderQuickMessageSheet => 'Quick message sheet';
+
+  @override
+  String get widgetBuilderQuickStartTemplates => 'Quick Start Templates';
+
+  @override
+  String get widgetBuilderRemoveExtraRows =>
+      'Remove extra rows first - medium allows only 1 row';
+
+  @override
+  String get widgetBuilderRemoveFromDashboard => 'Remove from Dashboard';
+
+  @override
+  String get widgetBuilderReviewGuidelines => 'Review Guidelines';
+
+  @override
+  String get widgetBuilderReviewGuidelinesText =>
+      '• Widget will be reviewed for quality\n• Similar widgets may be rejected\n• You\'ll be credited as the author';
+
+  @override
+  String get widgetBuilderSave => 'Save';
+
+  @override
+  String get widgetBuilderSearchIcons => 'Search icons...';
+
+  @override
+  String get widgetBuilderSearchVariables => 'Search variables...';
+
+  @override
+  String get widgetBuilderSectionAction => 'Action';
+
+  @override
+  String get widgetBuilderSectionActionBlocks => 'Action Blocks';
+
+  @override
+  String get widgetBuilderSectionContent => 'Content';
+
+  @override
+  String get widgetBuilderSectionDataBinding => 'Data Binding';
+
+  @override
+  String get widgetBuilderSectionDisplayBlocks => 'Display Blocks';
+
+  @override
+  String get widgetBuilderSectionEmergency => 'EMERGENCY';
+
+  @override
+  String get widgetBuilderSectionLayout => 'Layout';
+
+  @override
+  String get widgetBuilderSectionMessaging => 'MESSAGING';
+
+  @override
+  String get widgetBuilderSectionNetwork => 'NETWORK';
+
+  @override
+  String get widgetBuilderSectionStyle => 'Style';
+
+  @override
+  String get widgetBuilderSelectAnAction => 'Select an action';
+
+  @override
+  String get widgetBuilderSelectIcon => 'Select Icon';
+
+  @override
+  String get widgetBuilderSelectVariable => 'Select Variable';
+
+  @override
+  String get widgetBuilderShareInfoText =>
+      'Scan this QR code in Socialmesh to import this widget';
+
+  @override
+  String get widgetBuilderShareLocationWith => 'Share Location With';
+
+  @override
+  String get widgetBuilderShareMessage =>
+      'Check out this widget on Socialmesh!';
+
+  @override
+  String get widgetBuilderShareTitle => 'Share Widget';
+
+  @override
+  String get widgetBuilderShowChannelPicker => 'Show channel picker';
+
+  @override
+  String get widgetBuilderShowChannelPickerDesc =>
+      'Let user choose which channel';
+
+  @override
+  String get widgetBuilderShowNodePickerFirst => 'Show node picker first';
+
+  @override
+  String get widgetBuilderShowNodePickerFirstDesc =>
+      'Let user choose which node to message';
+
+  @override
+  String get widgetBuilderShowNodePickerTrace => 'Show node picker first';
+
+  @override
+  String get widgetBuilderShowNodePickerTraceDesc =>
+      'Let user choose which node to trace';
+
+  @override
+  String get widgetBuilderSignInToShare => 'Sign in to share widgets';
+
+  @override
+  String get widgetBuilderSignInToSubmit => 'Sign in to submit widgets';
+
+  @override
+  String get widgetBuilderSimilarWidgetExists =>
+      'A similar widget already exists in the marketplace:';
+
+  @override
+  String get widgetBuilderSimilarWidgetFound => 'Similar Widget Found';
+
+  @override
+  String get widgetBuilderSizeCustom => 'Custom size';
+
+  @override
+  String get widgetBuilderSizeLarge => 'Large (2x2)';
+
+  @override
+  String get widgetBuilderSizeMedium => 'Medium (2x1)';
+
+  @override
+  String get widgetBuilderSubmitButton => 'Submit';
+
+  @override
+  String get widgetBuilderSubmitCancel => 'Cancel';
+
+  @override
+  String get widgetBuilderSubmitTitle => 'Submit to Marketplace';
+
+  @override
+  String get widgetBuilderSubmitToMarketplace => 'Submit to Marketplace';
+
+  @override
+  String get widgetBuilderSwitch => 'Switch';
+
+  @override
+  String get widgetBuilderTemplateBatteryStatus => 'Battery Status';
+
+  @override
+  String get widgetBuilderTemplateBatteryStatusDesc => 'Monitor power levels';
+
+  @override
+  String get widgetBuilderTemplateEnvironment => 'Environment';
+
+  @override
+  String get widgetBuilderTemplateEnvironmentDesc => 'Weather & sensors';
+
+  @override
+  String get widgetBuilderTemplateGpsPosition => 'GPS Position';
+
+  @override
+  String get widgetBuilderTemplateGpsPositionDesc => 'Location tracking';
+
+  @override
+  String get widgetBuilderTemplateNetworkOverview => 'Network Overview';
+
+  @override
+  String get widgetBuilderTemplateNetworkOverviewDesc => 'Mesh at a glance';
+
+  @override
+  String get widgetBuilderTemplateSignalStrength => 'Signal Strength';
+
+  @override
+  String get widgetBuilderTemplateSignalStrengthDesc => 'Track connectivity';
+
+  @override
+  String get widgetBuilderToggleToolbox => 'Toggle Toolbox';
+
+  @override
+  String get widgetBuilderToolboxChart => 'Chart';
+
+  @override
+  String get widgetBuilderToolboxColumn => 'Column';
+
+  @override
+  String get widgetBuilderToolboxConditional => 'Conditional';
+
+  @override
+  String get widgetBuilderToolboxContainer => 'Container';
+
+  @override
+  String get widgetBuilderToolboxContent => 'Content';
+
+  @override
+  String get widgetBuilderToolboxDataDisplay => 'Data Display';
+
+  @override
+  String get widgetBuilderToolboxGauge => 'Gauge';
+
+  @override
+  String get widgetBuilderToolboxIcon => 'Icon';
+
+  @override
+  String get widgetBuilderToolboxImage => 'Image';
+
+  @override
+  String get widgetBuilderToolboxLayout => 'Layout';
+
+  @override
+  String get widgetBuilderToolboxLogic => 'Logic';
+
+  @override
+  String get widgetBuilderToolboxMap => 'Map';
+
+  @override
+  String get widgetBuilderToolboxRow => 'Row';
+
+  @override
+  String get widgetBuilderToolboxShape => 'Shape';
+
+  @override
+  String get widgetBuilderToolboxSpacer => 'Spacer';
+
+  @override
+  String get widgetBuilderToolboxStack => 'Stack';
+
+  @override
+  String get widgetBuilderToolboxText => 'Text';
+
+  @override
+  String get widgetBuilderTraceRouteToNode => 'Trace route to node';
+
+  @override
+  String get widgetBuilderTypeDecimal => 'decimal';
+
+  @override
+  String get widgetBuilderTypeGauge => 'Gauge';
+
+  @override
+  String get widgetBuilderTypeGaugeDesc => 'Big visual meter';
+
+  @override
+  String get widgetBuilderTypeGraph => 'Graph';
+
+  @override
+  String get widgetBuilderTypeGraphDesc => 'Charts over time';
+
+  @override
+  String get widgetBuilderTypeInfoCard => 'Info Card';
+
+  @override
+  String get widgetBuilderTypeInfoCardDesc => 'Text & details';
+
+  @override
+  String get widgetBuilderTypeLocation => 'Location';
+
+  @override
+  String get widgetBuilderTypeLocationDesc => 'GPS coordinates';
+
+  @override
+  String get widgetBuilderTypeNumber => 'number';
+
+  @override
+  String get widgetBuilderTypeQuickActions => 'Quick Actions';
+
+  @override
+  String get widgetBuilderTypeQuickActionsDesc => 'Tap to trigger';
+
+  @override
+  String get widgetBuilderTypeStatusDisplay => 'Status Display';
+
+  @override
+  String get widgetBuilderTypeStatusDisplayDesc => 'Values with progress bars';
+
+  @override
+  String get widgetBuilderTypeText => 'text';
+
+  @override
+  String get widgetBuilderTypeTime => 'time';
+
+  @override
+  String get widgetBuilderTypeValue => 'value';
+
+  @override
+  String get widgetBuilderTypeYesNo => 'yes/no';
+
+  @override
+  String get widgetBuilderUnableToGetLocation => 'Unable to get your location';
+
+  @override
+  String get widgetBuilderUse => 'Use';
+
+  @override
+  String get widgetBuilderValidationChartNoBinding =>
+      'Chart has no data binding';
+
+  @override
+  String get widgetBuilderValidationChartNoBindingFix =>
+      'Bind to data like SNR history';
+
+  @override
+  String get widgetBuilderValidationDescTooLongFix => 'Shorten the description';
+
+  @override
+  String get widgetBuilderValidationEmpty => 'Widget is empty';
+
+  @override
+  String get widgetBuilderValidationEmptyContainerFix => 'Add elements inside';
+
+  @override
+  String get widgetBuilderValidationEmptyFix =>
+      'Add some elements to your widget';
+
+  @override
+  String get widgetBuilderValidationGaugeMinMax =>
+      'Gauge min must be less than max';
+
+  @override
+  String get widgetBuilderValidationGaugeMinMaxFix => 'Set min < max';
+
+  @override
+  String get widgetBuilderValidationGaugeNoBinding =>
+      'Gauge has no data binding';
+
+  @override
+  String get widgetBuilderValidationGaugeNoBindingFix =>
+      'Bind to a numeric value like battery or signal';
+
+  @override
+  String get widgetBuilderValidationGaugeNonNumeric =>
+      'Gauge is bound to non-numeric data';
+
+  @override
+  String get widgetBuilderValidationGaugeNonNumericFix =>
+      'Gauges work best with numeric values';
+
+  @override
+  String get widgetBuilderValidationInvalidBindingFix =>
+      'Select a valid data source';
+
+  @override
+  String get widgetBuilderValidationInvalidUrl => 'URL may be invalid';
+
+  @override
+  String get widgetBuilderValidationLooksGood => 'Widget looks good!';
+
+  @override
+  String get widgetBuilderValidationNameTooLongFix => 'Use a shorter name';
+
+  @override
+  String get widgetBuilderValidationNeedName =>
+      'Give your widget a descriptive name';
+
+  @override
+  String get widgetBuilderValidationNeedNameFix => 'Tap the title to rename';
+
+  @override
+  String get widgetBuilderValidationNestingFix =>
+      'Flatten your widget structure';
+
+  @override
+  String get widgetBuilderValidationNoAction =>
+      'Action button has no action configured';
+
+  @override
+  String get widgetBuilderValidationNoActionFix =>
+      'Configure what happens when tapped';
+
+  @override
+  String get widgetBuilderValidationNoDestination =>
+      'Navigate action has no destination';
+
+  @override
+  String get widgetBuilderValidationNoDestinationFix =>
+      'Select where to navigate';
+
+  @override
+  String get widgetBuilderValidationNoIcon =>
+      'Icon element has no icon selected';
+
+  @override
+  String get widgetBuilderValidationNoIconFix => 'Select an icon';
+
+  @override
+  String get widgetBuilderValidationNoLabel => 'Button has no label or icon';
+
+  @override
+  String get widgetBuilderValidationNoLabelFix => 'Add text or an icon';
+
+  @override
+  String get widgetBuilderValidationNoText => 'Text element has no content';
+
+  @override
+  String get widgetBuilderValidationNoTextFix => 'Add text or bind to data';
+
+  @override
+  String get widgetBuilderValidationNoUrl => 'Open URL action has no URL';
+
+  @override
+  String get widgetBuilderValidationNoUrlFix => 'Enter the URL to open';
+
+  @override
+  String get widgetBuilderValidationTextTooLongFix =>
+      'Shorten the text content';
+
+  @override
+  String get widgetBuilderValidationTooManyChildrenFix =>
+      'Split into multiple containers';
+
+  @override
+  String get widgetBuilderValidationTooManyElementsFix =>
+      'Simplify your widget by removing unnecessary elements';
+
+  @override
+  String get widgetBuilderValidationTooManyTagsFix => 'Remove some tags';
+
+  @override
+  String get widgetBuilderView => 'View';
+
+  @override
+  String get widgetBuilderWhatShouldHappen => 'What should happen when tapped?';
+
+  @override
+  String get widgetBuilderWhatToAdd => 'What would you like to add?';
+
+  @override
+  String get widgetBuilderWidgetName => 'Widget Name';
+
+  @override
+  String get widgetBuilderWidgetTypes => 'Widget Types';
+
+  @override
+  String get widgetBuilderWizardStep1Subtitle =>
+      'How do you want your widget to look?';
+
+  @override
+  String get widgetBuilderWizardStep1Title => 'Choose a Style';
+
+  @override
+  String get widgetBuilderWizardStep2Subtitle => 'Give it a memorable name';
+
+  @override
+  String get widgetBuilderWizardStep2Title => 'Name Your Widget';
+
+  @override
+  String get widgetBuilderWizardStep3SubtitleActions =>
+      'Which actions do you want quick access to?';
+
+  @override
+  String get widgetBuilderWizardStep3SubtitleData =>
+      'What info do you want to see?';
+
+  @override
+  String get widgetBuilderWizardStep3TitleActions => 'Choose Actions';
+
+  @override
+  String get widgetBuilderWizardStep3TitleData => 'Pick Your Data';
 
   @override
   String get worldMeshAddToFavorites => 'Add to favorites';
@@ -15852,190 +21278,4 @@ class AppLocalizationsRu extends AppLocalizations {
   String worldMeshUptimeLabel(String uptime) {
     return 'Uptime: $uptime';
   }
-
-  @override
-  String telemetryError(String error) {
-    return 'Error: $error';
-  }
-
-  @override
-  String telemetryFailedToClear(String error) {
-    return 'Failed to clear data: $error';
-  }
-
-  @override
-  String get telemetryAirQualityTitle => 'Air Quality Log';
-
-  @override
-  String get telemetryAirQualityNoData => 'No air quality data recorded yet';
-
-  @override
-  String get telemetryAirQualityPmStandard => 'Particulate Matter (Standard)';
-
-  @override
-  String get telemetryAirQualityPmEnvironmental =>
-      'Particulate Matter (Environmental)';
-
-  @override
-  String telemetryCo2Label(String rating) {
-    return 'CO₂ - $rating';
-  }
-
-  @override
-  String get telemetryDetectionTitle => 'Detection Sensor Log';
-
-  @override
-  String get telemetryDetectionNoData => 'No sensor events recorded yet';
-
-  @override
-  String get telemetryDetectionDescription =>
-      'Detection sensors report motion and presence';
-
-  @override
-  String get telemetryDetectionSensor => 'Detection Sensor';
-
-  @override
-  String get telemetryDetectionClearBadge => 'Clear';
-
-  @override
-  String get telemetryPaxTitle => 'PAX Counter Log';
-
-  @override
-  String get telemetryPaxNoData => 'No PAX data recorded yet';
-
-  @override
-  String get telemetryPaxDescription => 'PAX counter detects nearby devices';
-
-  @override
-  String get telemetryDeviceNoMetrics => 'No device metrics yet';
-
-  @override
-  String get telemetryDeviceFilterBattery => 'Battery';
-
-  @override
-  String get telemetryDeviceFilterVoltage => 'Voltage';
-
-  @override
-  String get telemetryDeviceFilterChannel => 'Channel';
-
-  @override
-  String get telemetryDeviceFilterAirUtil => 'Air Util';
-
-  @override
-  String get telemetryDeviceFilterUptime => 'Uptime';
-
-  @override
-  String get telemetryDeviceLegendBattery => 'Battery';
-
-  @override
-  String get telemetryDeviceLegendVoltage => 'Voltage';
-
-  @override
-  String get telemetryDeviceLegendChUtil => 'Ch Util';
-
-  @override
-  String get telemetryDeviceLegendAirUtil => 'Air Util';
-
-  @override
-  String get telemetryDeviceCharging => 'Charging';
-
-  @override
-  String get telemetryEnvironmentTitle => 'Environment Metrics';
-
-  @override
-  String get telemetryEnvironmentNoMetrics => 'No environment metrics yet';
-
-  @override
-  String get telemetryEnvironmentFilterTemp => 'Temp';
-
-  @override
-  String get telemetryEnvironmentFilterHumidity => 'Humidity';
-
-  @override
-  String get telemetryEnvironmentFilterPressure => 'Pressure';
-
-  @override
-  String get telemetryEnvironmentFilterGas => 'Gas';
-
-  @override
-  String get telemetryEnvironmentFilterIaq => 'IAQ';
-
-  @override
-  String get telemetryEnvironmentFilterLight => 'Light';
-
-  @override
-  String get telemetryEnvironmentFilterWind => 'Wind';
-
-  @override
-  String get telemetryEnvironmentLegendTemperature => 'Temperature';
-
-  @override
-  String get telemetryEnvironmentLegendHumidity => 'Humidity';
-
-  @override
-  String get telemetryPositionListView => 'List view';
-
-  @override
-  String get telemetryPositionMapView => 'Map view';
-
-  @override
-  String get telemetryPositionMapStyle => 'Map Style';
-
-  @override
-  String get telemetryPositionNoMatch => 'No positions match filters';
-
-  @override
-  String get telemetryPositionNoExportData => 'No position data to export';
-
-  @override
-  String get telemetryPositionClearLabel => 'Clear';
-
-  @override
-  String get telemetryPositionCleared => 'Position data cleared';
-
-  @override
-  String get telemetryPositionNoDisplay => 'No positions to display';
-
-  @override
-  String get telemetryPositionDrawerTitle => 'Nodes';
-
-  @override
-  String get telemetryPositionAllNodesOption => 'All Nodes';
-
-  @override
-  String get telemetryPositionAllNodesDescription =>
-      'Show positions from all nodes';
-
-  @override
-  String telemetryPositionNodesCount(int count) {
-    return '$count nodes';
-  }
-
-  @override
-  String get telemetryTracerouteTitle => 'Traceroute History';
-
-  @override
-  String get telemetryTracerouteNoData => 'No traceroutes recorded yet';
-
-  @override
-  String get telemetryTracerouteEmptyHint =>
-      'Send a traceroute from a node to see network paths';
-
-  @override
-  String get telemetryTracerouteNoExportData => 'No traceroute data to export';
-
-  @override
-  String get telemetryTracerouteClearLabel => 'Clear';
-
-  @override
-  String get telemetryTracerouteCleared => 'Traceroute data cleared';
-
-  @override
-  String get telemetryTracerouteTo => 'To';
-
-  @override
-  String get telemetryTracerouteResponseBadge => 'Response';
-
-  @override
-  String get telemetryTracerouteNoResponseBadge => 'No Response';
 }

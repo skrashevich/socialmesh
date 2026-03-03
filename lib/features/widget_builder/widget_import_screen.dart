@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import '../../core/l10n/l10n_extension.dart';
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -62,7 +63,7 @@ class _WidgetImportScreenState extends ConsumerState<WidgetImportScreen>
 
         if (!doc.exists) {
           safeSetState(() {
-            _error = 'Widget not found or has been deleted';
+            _error = context.l10n.widgetBuilderImportNotFound;
             _isLoading = false;
           });
           return;
@@ -99,7 +100,7 @@ class _WidgetImportScreenState extends ConsumerState<WidgetImportScreen>
         AppLogging.widgets('Imported widget schema: ${_widget!.name}');
       } else {
         safeSetState(() {
-          _error = 'No widget data provided';
+          _error = context.l10n.widgetBuilderImportNoData;
           _isLoading = false;
         });
       }
@@ -164,7 +165,7 @@ class _WidgetImportScreenState extends ConsumerState<WidgetImportScreen>
       // Trigger refresh on any watching screens
       ref.read(widgetRefreshTriggerProvider.notifier).refresh();
 
-      showSuccessSnackBar(context, 'Widget imported successfully');
+      showSuccessSnackBar(context, context.l10n.widgetBuilderImportedSuccess);
       navigator.pop();
     } catch (e) {
       showErrorSnackBar(context, 'Failed to import: $e');
@@ -203,8 +204,8 @@ class _WidgetImportScreenState extends ConsumerState<WidgetImportScreen>
       // Widget was saved in editor, just pop back
       showActionSnackBar(
         context,
-        'Widget imported successfully',
-        actionLabel: 'View',
+        context.l10n.widgetBuilderImportedSuccessAction,
+        actionLabel: context.l10n.widgetBuilderView,
         onAction: () {
           navigator.push(
             MaterialPageRoute(builder: (_) => const WidgetBuilderScreen()),
@@ -219,7 +220,7 @@ class _WidgetImportScreenState extends ConsumerState<WidgetImportScreen>
   @override
   Widget build(BuildContext context) {
     return GlassScaffold(
-      title: 'Import Widget',
+      title: context.l10n.widgetBuilderImportTitle,
       slivers: [
         SliverFillRemaining(
           hasScrollBody: false,
@@ -245,7 +246,7 @@ class _WidgetImportScreenState extends ConsumerState<WidgetImportScreen>
             const Icon(Icons.error_outline, size: 64, color: AppTheme.errorRed),
             const SizedBox(height: AppTheme.spacing16),
             Text(
-              'Import Failed',
+              context.l10n.widgetBuilderImportFailed2,
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: AppTheme.spacing8),
@@ -257,7 +258,7 @@ class _WidgetImportScreenState extends ConsumerState<WidgetImportScreen>
             const SizedBox(height: AppTheme.spacing24),
             ElevatedButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Go Back'),
+              child: Text(context.l10n.widgetBuilderImportGoBack),
             ),
           ],
         ),
@@ -316,7 +317,7 @@ class _WidgetImportScreenState extends ConsumerState<WidgetImportScreen>
                 const Divider(),
                 const SizedBox(height: AppTheme.spacing8),
                 Text(
-                  'Size',
+                  context.l10n.widgetBuilderImportSize,
                   style: Theme.of(
                     context,
                   ).textTheme.titleSmall?.copyWith(color: context.accentColor),
@@ -326,7 +327,7 @@ class _WidgetImportScreenState extends ConsumerState<WidgetImportScreen>
                 if (widgetSchema.tags.isNotEmpty) ...[
                   const SizedBox(height: AppTheme.spacing16),
                   Text(
-                    'Tags',
+                    context.l10n.widgetBuilderImportTags,
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
                       color: context.accentColor,
                     ),
@@ -354,7 +355,7 @@ class _WidgetImportScreenState extends ConsumerState<WidgetImportScreen>
 
           // Widget preview
           Text(
-            'Preview',
+            context.l10n.widgetBuilderImportPreview,
             style: Theme.of(
               context,
             ).textTheme.titleSmall?.copyWith(color: context.accentColor),
@@ -383,7 +384,7 @@ class _WidgetImportScreenState extends ConsumerState<WidgetImportScreen>
                 const SizedBox(width: AppTheme.spacing12),
                 Expanded(
                   child: Text(
-                    'This widget will be added to your custom widgets. You can edit it anytime.',
+                    context.l10n.widgetBuilderImportInfoNotice,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),
@@ -400,7 +401,7 @@ class _WidgetImportScreenState extends ConsumerState<WidgetImportScreen>
                 child: OutlinedButton.icon(
                   onPressed: _editBeforeImport,
                   icon: const Icon(Icons.edit),
-                  label: const Text('Edit First'),
+                  label: Text(context.l10n.widgetBuilderImportEditFirst),
                 ),
               ),
               const SizedBox(width: AppTheme.spacing12),
@@ -408,7 +409,7 @@ class _WidgetImportScreenState extends ConsumerState<WidgetImportScreen>
                 child: FilledButton.icon(
                   onPressed: _importWidget,
                   icon: const Icon(Icons.download),
-                  label: const Text('Import'),
+                  label: Text(context.l10n.widgetBuilderImportButton),
                 ),
               ),
             ],
@@ -423,11 +424,11 @@ class _WidgetImportScreenState extends ConsumerState<WidgetImportScreen>
   String _getSizeDisplayName(CustomWidgetSize size) {
     switch (size) {
       case CustomWidgetSize.medium:
-        return 'Medium (2x1)';
+        return context.l10n.widgetBuilderSizeMedium;
       case CustomWidgetSize.large:
-        return 'Large (2x2)';
+        return context.l10n.widgetBuilderSizeLarge;
       case CustomWidgetSize.custom:
-        return 'Custom size';
+        return context.l10n.widgetBuilderSizeCustom;
     }
   }
 }

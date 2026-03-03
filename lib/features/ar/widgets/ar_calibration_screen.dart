@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
+
 import '../ar_calibration.dart';
 import '../ar_state.dart';
 
@@ -150,9 +152,9 @@ class _ARCalibrationScreenState extends ConsumerState<ARCalibrationScreen>
             onPressed: widget.onSkip,
             icon: const Icon(Icons.close, color: Colors.white54),
           ),
-          const Expanded(
+          Expanded(
             child: Text(
-              'COMPASS CALIBRATION',
+              context.l10n.arCalibrationScreenTitle,
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Color(0xFF00E5FF),
@@ -321,8 +323,8 @@ class _ARCalibrationScreenState extends ConsumerState<ARCalibrationScreen>
                 ),
               ),
               const SizedBox(height: AppTheme.spacing24),
-              const Text(
-                'CALIBRATION COMPLETE',
+              Text(
+                context.l10n.arCalibrationScreenComplete,
                 style: TextStyle(
                   color: Color(0xFF00E676),
                   fontSize: 20,
@@ -333,7 +335,7 @@ class _ARCalibrationScreenState extends ConsumerState<ARCalibrationScreen>
               ),
               const SizedBox(height: AppTheme.spacing8),
               Text(
-                'Compass accuracy improved',
+                context.l10n.arCalibrationScreenAccuracyImproved,
                 style: TextStyle(
                   color: Colors.white.withValues(alpha: 0.7),
                   fontSize: 14,
@@ -386,9 +388,9 @@ class _ARCalibrationScreenState extends ConsumerState<ARCalibrationScreen>
                   borderRadius: BorderRadius.circular(AppTheme.radius12),
                 ),
               ),
-              child: const Text(
-                'START CALIBRATION',
-                style: TextStyle(
+              child: Text(
+                context.l10n.arCalibrationScreenStart,
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                   fontFamily: AppTheme.fontFamily,
@@ -400,7 +402,7 @@ class _ARCalibrationScreenState extends ConsumerState<ARCalibrationScreen>
             TextButton(
               onPressed: widget.onSkip,
               child: Text(
-                'Skip for now',
+                context.l10n.arCalibrationScreenSkip,
                 style: TextStyle(
                   color: Colors.white.withValues(alpha: 0.5),
                   fontSize: 14,
@@ -418,9 +420,9 @@ class _ARCalibrationScreenState extends ConsumerState<ARCalibrationScreen>
                   borderRadius: BorderRadius.circular(AppTheme.radius12),
                 ),
               ),
-              child: const Text(
-                'CONTINUE TO AR',
-                style: TextStyle(
+              child: Text(
+                context.l10n.arCalibrationScreenContinue,
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                   fontFamily: AppTheme.fontFamily,
@@ -435,15 +437,15 @@ class _ARCalibrationScreenState extends ConsumerState<ARCalibrationScreen>
 
   String _getInstructions() {
     if (!_isCalibrating) {
-      return 'Move your device in a figure-8 pattern to calibrate the compass for accurate AR navigation.';
+      return context.l10n.arCalibrationScreenInstructionIdle;
     }
 
     if (_progress < 0.3) {
-      return 'Keep moving in a figure-8 pattern...\nFollow the glowing dot.';
+      return context.l10n.arCalibrationScreenInstructionMoving;
     } else if (_progress < 0.7) {
-      return 'Great progress!\nContinue the figure-8 motion.';
+      return context.l10n.arCalibrationScreenInstructionProgress;
     } else {
-      return 'Almost there!\nJust a bit more.';
+      return context.l10n.arCalibrationScreenInstructionAlmost;
     }
   }
 

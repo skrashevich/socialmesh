@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:socialmesh/core/logging.dart';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/widgets/glass_scaffold.dart';
 import '../../core/widgets/snappable.dart';
 import 'package:socialmesh/core/theme.dart';
@@ -22,18 +23,24 @@ class _SnapEffectScreenState extends State<SnapEffectScreen> {
   @override
   void initState() {
     super.initState();
-    _generateCards();
+    _initKeys(5);
   }
 
-  void _generateCards() {
-    _cards.clear();
+  void _initKeys(int count) {
     _keys.clear();
+    for (int i = 0; i < count; i++) {
+      _keys.add(GlobalKey<SnappableState>());
+    }
+  }
+
+  void _generateCards(BuildContext context) {
+    _cards.clear();
 
     _cards.addAll([
       _DemoCard(
         id: 0,
-        title: 'MESH NETWORK',
-        subtitle: 'Off-grid communication',
+        title: context.l10n.showcaseCardMeshNetwork,
+        subtitle: context.l10n.showcaseCardOffGrid,
         gradient: const LinearGradient(
           colors: [Color(0xFF667eea), Color(0xFF764ba2)],
           begin: Alignment.topLeft,
@@ -43,8 +50,8 @@ class _SnapEffectScreenState extends State<SnapEffectScreen> {
       ),
       _DemoCard(
         id: 1,
-        title: 'SIGNAL BOOST',
-        subtitle: 'Amplify your reach',
+        title: context.l10n.showcaseCardSignalBoost,
+        subtitle: context.l10n.showcaseCardAmplify,
         gradient: const LinearGradient(
           colors: [Color(0xFFf093fb), Color(0xFFf5576c)],
           begin: Alignment.topLeft,
@@ -54,8 +61,8 @@ class _SnapEffectScreenState extends State<SnapEffectScreen> {
       ),
       _DemoCard(
         id: 2,
-        title: 'NODE ONLINE',
-        subtitle: 'Connected to network',
+        title: context.l10n.showcaseCardNodeOnline,
+        subtitle: context.l10n.showcaseCardConnected,
         gradient: const LinearGradient(
           colors: [Color(0xFF11998e), Color(0xFF38ef7d)],
           begin: Alignment.topLeft,
@@ -65,8 +72,8 @@ class _SnapEffectScreenState extends State<SnapEffectScreen> {
       ),
       _DemoCard(
         id: 3,
-        title: 'SECURE CHANNEL',
-        subtitle: 'End-to-end encrypted',
+        title: context.l10n.showcaseCardSecureChannel,
+        subtitle: context.l10n.showcaseCardEncrypted,
         gradient: const LinearGradient(
           colors: [Color(0xFFFC466B), Color(0xFF3F5EFB)],
           begin: Alignment.topLeft,
@@ -76,8 +83,8 @@ class _SnapEffectScreenState extends State<SnapEffectScreen> {
       ),
       _DemoCard(
         id: 4,
-        title: 'BROADCAST',
-        subtitle: 'Reach everyone',
+        title: context.l10n.showcaseCardBroadcast,
+        subtitle: context.l10n.showcaseCardReachEveryone,
         gradient: const LinearGradient(
           colors: [Color(0xFFff9a9e), Color(0xFFfecfef)],
           begin: Alignment.topLeft,
@@ -86,11 +93,6 @@ class _SnapEffectScreenState extends State<SnapEffectScreen> {
         icon: Icons.cell_tower,
       ),
     ]);
-
-    // Create keys for each card
-    for (int i = 0; i < _cards.length; i++) {
-      _keys.add(GlobalKey<SnappableState>());
-    }
   }
 
   void _snapCard(int index) {
@@ -115,9 +117,10 @@ class _SnapEffectScreenState extends State<SnapEffectScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (_cards.isEmpty) _generateCards(context);
     return GlassScaffold(
-      titleWidget: const Text(
-        'Snap Effect',
+      titleWidget: Text(
+        context.l10n.showcaseSnapEffectTitle,
         style: TextStyle(
           fontFamily: 'JetBrains Mono',
           fontWeight: FontWeight.w300,
@@ -127,7 +130,7 @@ class _SnapEffectScreenState extends State<SnapEffectScreen> {
       actions: [
         IconButton(
           icon: const Icon(Icons.refresh),
-          tooltip: 'Reset all cards',
+          tooltip: context.l10n.showcaseResetAllCards,
           onPressed: _resetAll,
         ),
       ],
@@ -153,7 +156,7 @@ class _SnapEffectScreenState extends State<SnapEffectScreen> {
                   const SizedBox(width: AppTheme.spacing12),
                   Expanded(
                     child: Text(
-                      'Tap a card to snap it away (Thanos style)',
+                      context.l10n.showcaseTapInstruction,
                       style: TextStyle(
                         color: Colors.white.withValues(alpha: 0.6),
                         fontSize: 13,

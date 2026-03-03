@@ -3,6 +3,8 @@ import 'package:socialmesh/core/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
+
 import '../ar_state.dart';
 
 /// Settings panel for AR configuration
@@ -31,24 +33,24 @@ class ARSettingsPanel extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildSectionHeader('VIEW MODE'),
+          _buildSectionHeader(context.l10n.arSettingsViewMode),
           const SizedBox(height: AppTheme.spacing12),
-          _buildViewModeSelector(),
+          _buildViewModeSelector(context),
 
           const SizedBox(height: AppTheme.spacing24),
-          _buildSectionHeader('DISTANCE FILTER'),
+          _buildSectionHeader(context.l10n.arSettingsDistanceFilter),
           const SizedBox(height: AppTheme.spacing12),
-          _buildDistanceSlider(),
+          _buildDistanceSlider(context),
 
           const SizedBox(height: AppTheme.spacing24),
-          _buildSectionHeader('NODE FILTERS'),
+          _buildSectionHeader(context.l10n.arSettingsNodeFilters),
           const SizedBox(height: AppTheme.spacing12),
-          _buildFilterToggles(),
+          _buildFilterToggles(context),
 
           const SizedBox(height: AppTheme.spacing24),
-          _buildSectionHeader('HUD ELEMENTS'),
+          _buildSectionHeader(context.l10n.arSettingsHudElements),
           const SizedBox(height: AppTheme.spacing12),
-          _buildHudToggles(),
+          _buildHudToggles(context),
 
           const SizedBox(height: AppTheme.spacing24),
         ],
@@ -69,23 +71,23 @@ class ARSettingsPanel extends StatelessWidget {
     );
   }
 
-  Widget _buildViewModeSelector() {
+  Widget _buildViewModeSelector(BuildContext context) {
     return Row(
       children: [
         _buildModeChip(
-          label: 'Tactical',
+          label: context.l10n.arSettingsTactical,
           icon: Icons.grid_view,
           mode: ARViewMode.tactical,
         ),
         const SizedBox(width: AppTheme.spacing8),
         _buildModeChip(
-          label: 'Explorer',
+          label: context.l10n.arSettingsExplorer,
           icon: Icons.explore,
           mode: ARViewMode.explorer,
         ),
         const SizedBox(width: AppTheme.spacing8),
         _buildModeChip(
-          label: 'Minimal',
+          label: context.l10n.arSettingsMinimal,
           icon: Icons.radio_button_unchecked,
           mode: ARViewMode.minimal,
         ),
@@ -146,7 +148,7 @@ class ARSettingsPanel extends StatelessWidget {
     );
   }
 
-  Widget _buildDistanceSlider() {
+  Widget _buildDistanceSlider(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -154,7 +156,7 @@ class ARSettingsPanel extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Max Distance',
+              context.l10n.arSettingsMaxDistance,
               style: TextStyle(
                 color: Colors.white.withValues(alpha: 0.7),
                 fontSize: 14,
@@ -192,14 +194,14 @@ class ARSettingsPanel extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '100m',
+              context.l10n.arSettingsMinDistanceLabel,
               style: TextStyle(
                 color: Colors.white.withValues(alpha: 0.4),
                 fontSize: 10,
               ),
             ),
             Text(
-              '100km',
+              context.l10n.arSettingsMaxDistanceLabel,
               style: TextStyle(
                 color: Colors.white.withValues(alpha: 0.4),
                 fontSize: 10,
@@ -211,19 +213,19 @@ class ARSettingsPanel extends StatelessWidget {
     );
   }
 
-  Widget _buildFilterToggles() {
+  Widget _buildFilterToggles(BuildContext context) {
     return Column(
       children: [
         _buildToggleRow(
           icon: Icons.wifi_off,
-          label: 'Show Offline Nodes',
+          label: context.l10n.arSettingsShowOfflineNodes,
           value: state.showOfflineNodes,
           onTap: onToggleOfflineNodes,
         ),
         const SizedBox(height: AppTheme.spacing8),
         _buildToggleRow(
           icon: Icons.star,
-          label: 'Favorites Only',
+          label: context.l10n.arSettingsFavoritesOnly,
           value: state.showOnlyFavorites,
           onTap: onToggleFavoritesOnly,
         ),
@@ -231,17 +233,33 @@ class ARSettingsPanel extends StatelessWidget {
     );
   }
 
-  Widget _buildHudToggles() {
+  Widget _buildHudToggles(BuildContext context) {
     final config = state.hudConfig;
 
     return Wrap(
       spacing: 8,
       runSpacing: 8,
       children: [
-        _buildHudChip('Horizon', config.showHorizon, 'horizon'),
-        _buildHudChip('Compass', config.showCompass, 'compass'),
-        _buildHudChip('Altimeter', config.showAltimeter, 'altimeter'),
-        _buildHudChip('Alerts', config.showAlerts, 'alerts'),
+        _buildHudChip(
+          context.l10n.arSettingsHorizon,
+          config.showHorizon,
+          'horizon',
+        ),
+        _buildHudChip(
+          context.l10n.arSettingsCompass,
+          config.showCompass,
+          'compass',
+        ),
+        _buildHudChip(
+          context.l10n.arSettingsAltimeter,
+          config.showAltimeter,
+          'altimeter',
+        ),
+        _buildHudChip(
+          context.l10n.arSettingsAlerts,
+          config.showAlerts,
+          'alerts',
+        ),
       ],
     );
   }

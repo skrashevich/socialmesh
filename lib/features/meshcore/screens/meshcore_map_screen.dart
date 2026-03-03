@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+import '../../../core/l10n/l10n_extension.dart';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -178,14 +179,14 @@ class _MeshCoreMapScreenState extends ConsumerState<MeshCoreMapScreen> {
 
     return GlassScaffold.body(
       leading: const MeshCoreHamburgerMenuButton(),
-      title: 'Map',
+      title: context.l10n.meshcoreMapTitle,
       physics: const NeverScrollableScrollPhysics(),
       actions: [
         const MeshCoreDeviceStatusButton(),
         IconButton(
           icon: const Icon(Icons.filter_list),
           onPressed: () => _showFilterDialog(context),
-          tooltip: 'Filter',
+          tooltip: context.l10n.meshcoreFilterTooltip,
         ),
       ],
       body: !isConnected
@@ -340,8 +341,8 @@ class _MeshCoreMapScreenState extends ConsumerState<MeshCoreMapScreen> {
                             Flexible(
                               child: Text(
                                 _measureStart == null
-                                    ? 'Tap node or map for point A'
-                                    : 'Tap node or map for point B',
+                                    ? context.l10n.meshcoreTapForPointA
+                                    : context.l10n.meshcoreTapForPointB,
                                 style: const TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w600,
@@ -435,14 +436,14 @@ class _MeshCoreMapScreenState extends ConsumerState<MeshCoreMapScreen> {
             ),
             const SizedBox(height: AppTheme.spacing16),
             Text(
-              'MeshCore Disconnected',
+              context.l10n.meshcoreDisconnectedMapTitle,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 color: Colors.white.withValues(alpha: 0.8),
               ),
             ),
             const SizedBox(height: AppTheme.spacing8),
             Text(
-              'Connect to a MeshCore device to view the map',
+              context.l10n.meshcoreDisconnectedMapDescription,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: Colors.white.withValues(alpha: 0.6),
@@ -468,15 +469,14 @@ class _MeshCoreMapScreenState extends ConsumerState<MeshCoreMapScreen> {
             ),
             const SizedBox(height: AppTheme.spacing16),
             Text(
-              'No Contacts with Location',
+              context.l10n.meshcoreNoContactsWithLocation,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 color: Colors.white.withValues(alpha: 0.8),
               ),
             ),
             const SizedBox(height: AppTheme.spacing8),
             Text(
-              'Contacts with GPS coordinates will appear on the map.\n'
-              'Make sure your contacts have location sharing enabled.',
+              context.l10n.meshcoreNoContactsWithLocationDescription,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: Colors.white.withValues(alpha: 0.6),
@@ -605,7 +605,9 @@ class _MeshCoreMapScreenState extends ConsumerState<MeshCoreMapScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                '$contactCount ${contactCount == 1 ? 'contact' : 'contacts'}',
+                contactCount == 1
+                    ? context.l10n.meshcoreContactCount(contactCount)
+                    : context.l10n.meshcoreContactCountPlural(contactCount),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
@@ -613,14 +615,26 @@ class _MeshCoreMapScreenState extends ConsumerState<MeshCoreMapScreen> {
                 ),
               ),
               const SizedBox(height: AppTheme.spacing8),
-              _buildLegendItem(Icons.person, 'Chat', AccentColors.blue),
+              _buildLegendItem(
+                Icons.person,
+                context.l10n.meshcoreLegendChat,
+                AccentColors.blue,
+              ),
               _buildLegendItem(
                 Icons.cell_tower_rounded,
-                'Repeater',
+                context.l10n.meshcoreLegendRepeater,
                 AppTheme.successGreen,
               ),
-              _buildLegendItem(Icons.meeting_room, 'Room', AccentColors.purple),
-              _buildLegendItem(Icons.sensors, 'Sensor', AccentColors.orange),
+              _buildLegendItem(
+                Icons.meeting_room,
+                context.l10n.meshcoreLegendRoom,
+                AccentColors.purple,
+              ),
+              _buildLegendItem(
+                Icons.sensors,
+                context.l10n.meshcoreLegendSensor,
+                AccentColors.orange,
+              ),
             ],
           ),
         ),
@@ -733,7 +747,7 @@ class _MeshCoreMapScreenState extends ConsumerState<MeshCoreMapScreen> {
                       );
                     },
                     icon: const Icon(Icons.chat_rounded),
-                    label: const Text('Message'),
+                    label: Text(context.l10n.meshcoreMessageButton),
                     style: FilledButton.styleFrom(
                       backgroundColor: context.accentColor.withValues(
                         alpha: 0.3,
@@ -749,7 +763,7 @@ class _MeshCoreMapScreenState extends ConsumerState<MeshCoreMapScreen> {
                     _centerOnContact(contact);
                   },
                   icon: const Icon(Icons.center_focus_strong),
-                  label: const Text('Center'),
+                  label: Text(context.l10n.meshcoreCenter),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: context.textSecondary,
                     side: BorderSide(color: context.border),
@@ -808,7 +822,7 @@ class _MeshCoreMapScreenState extends ConsumerState<MeshCoreMapScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Filter Map',
+                context.l10n.meshcoreFilterMap,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -819,7 +833,7 @@ class _MeshCoreMapScreenState extends ConsumerState<MeshCoreMapScreen> {
               _buildFilterSwitch(
                 ctx,
                 setSheetState,
-                'Chat Nodes',
+                context.l10n.meshcoreFilterChatNodes,
                 Icons.person,
                 AccentColors.blue,
                 _showChatNodes,
@@ -831,7 +845,7 @@ class _MeshCoreMapScreenState extends ConsumerState<MeshCoreMapScreen> {
               _buildFilterSwitch(
                 ctx,
                 setSheetState,
-                'Repeaters',
+                context.l10n.meshcoreFilterRepeaters,
                 Icons.cell_tower_rounded,
                 AppTheme.successGreen,
                 _showRepeaters,
@@ -843,7 +857,7 @@ class _MeshCoreMapScreenState extends ConsumerState<MeshCoreMapScreen> {
               _buildFilterSwitch(
                 ctx,
                 setSheetState,
-                'Other Nodes',
+                context.l10n.meshcoreFilterOtherNodes,
                 Icons.device_unknown,
                 SemanticColors.disabled,
                 _showOtherNodes,
@@ -857,7 +871,7 @@ class _MeshCoreMapScreenState extends ConsumerState<MeshCoreMapScreen> {
                 width: double.infinity,
                 child: FilledButton(
                   onPressed: () => Navigator.pop(ctx),
-                  child: const Text('Done'),
+                  child: Text(context.l10n.meshcoreDone),
                 ),
               ),
             ],
@@ -1007,7 +1021,7 @@ class _MeshCoreMeasurementCard extends StatelessWidget {
       header: Padding(
         padding: const EdgeInsets.only(bottom: AppTheme.spacing4),
         child: Text(
-          'Measurement Actions',
+          context.l10n.meshcoreMeasurementActions,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -1018,7 +1032,7 @@ class _MeshCoreMeasurementCard extends StatelessWidget {
       actions: [
         BottomSheetAction(
           icon: Icons.copy,
-          label: 'Copy Summary',
+          label: context.l10n.meshcoreCopySummary,
           subtitle: _formatDist(distanceKm),
           onTap: () {
             Clipboard.setData(
@@ -1031,14 +1045,17 @@ class _MeshCoreMeasurementCard extends StatelessWidget {
               ),
             );
             if (context.mounted) {
-              showSuccessSnackBar(context, 'Measurement copied to clipboard');
+              showSuccessSnackBar(
+                context,
+                context.l10n.meshcoreMeasurementCopied,
+              );
             }
           },
         ),
         BottomSheetAction(
           icon: Icons.pin_drop,
-          label: 'Copy Coordinates',
-          subtitle: 'Both A and B coordinates',
+          label: context.l10n.meshcoreCopyCoordinates,
+          subtitle: context.l10n.meshcoreCopyCoordinatesSubtitle,
           onTap: () {
             Clipboard.setData(
               ClipboardData(
@@ -1050,14 +1067,17 @@ class _MeshCoreMeasurementCard extends StatelessWidget {
               ),
             );
             if (context.mounted) {
-              showSuccessSnackBar(context, 'Coordinates copied to clipboard');
+              showSuccessSnackBar(
+                context,
+                context.l10n.meshcoreCoordinatesCopied,
+              );
             }
           },
         ),
         BottomSheetAction(
           icon: Icons.open_in_new,
-          label: 'Open Midpoint in Maps',
-          subtitle: 'Open in external map app',
+          label: context.l10n.meshcoreOpenMidpointInMaps,
+          subtitle: context.l10n.meshcoreOpenInExternalMapApp,
           onTap: () {
             final midLat = (start.latitude + end.latitude) / 2.0;
             final midLon = (start.longitude + end.longitude) / 2.0;
@@ -1070,8 +1090,8 @@ class _MeshCoreMeasurementCard extends StatelessWidget {
         if (onSwap != null)
           BottomSheetAction(
             icon: Icons.swap_horiz,
-            label: 'Swap A \u2194 B',
-            subtitle: 'Reverse measurement direction',
+            label: context.l10n.meshcoreSwapAB,
+            subtitle: context.l10n.meshcoreReverseMeasurementDirection,
             onTap: onSwap,
           ),
       ],
@@ -1170,19 +1190,19 @@ class _MeshCoreMeasurementCard extends StatelessWidget {
                   icon: Icon(Icons.refresh, size: 20),
                   color: context.textTertiary,
                   onPressed: onClear,
-                  tooltip: 'New measurement',
+                  tooltip: context.l10n.meshcoreNewMeasurement,
                 ),
                 IconButton(
                   icon: const Icon(Icons.close, size: 20),
                   color: AppTheme.errorRed,
                   onPressed: onExitMeasureMode,
-                  tooltip: 'Exit measure mode',
+                  tooltip: context.l10n.meshcoreExitMeasureMode,
                 ),
               ],
             ),
             const SizedBox(height: AppTheme.spacing4),
             Text(
-              'Long-press for actions',
+              context.l10n.meshcoreLongPressForActions,
               style: TextStyle(fontSize: 10, color: context.textTertiary),
             ),
           ],

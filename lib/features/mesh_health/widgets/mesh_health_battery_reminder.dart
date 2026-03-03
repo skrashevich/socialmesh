@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import '../../../core/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -78,10 +79,8 @@ class _MeshHealthBatteryReminderState
       child: Padding(
         padding: const EdgeInsets.only(bottom: 16),
         child: StatusBanner.warning(
-          title: 'Battery usage',
-          subtitle:
-              'Mesh Health monitoring uses extra battery. '
-              'Pause when not needed.',
+          title: context.l10n.meshHealthBatteryUsageTitle,
+          subtitle: context.l10n.meshHealthBatteryUsageSubtitle,
           onDismiss: _dismiss,
         ),
       ),

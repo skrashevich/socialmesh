@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/legal_document_sheet.dart';
@@ -103,7 +104,7 @@ class _EligibilityGateScreenState extends ConsumerState<EligibilityGateScreen>
                     Semantics(
                       header: true,
                       child: Text(
-                        'Ages 16+',
+                        context.l10n.legalEligibilityTitle,
                         style: theme.textTheme.headlineMedium?.copyWith(
                           color: context.textPrimary,
                           fontWeight: FontWeight.bold,
@@ -117,8 +118,7 @@ class _EligibilityGateScreenState extends ConsumerState<EligibilityGateScreen>
                     Semantics(
                       label: 'Age eligibility notice',
                       child: Text(
-                        'Socialmesh is intended for people aged 16 or older. '
-                        'You must confirm you are 16+ to continue.',
+                        context.l10n.legalEligibilityBody,
                         style: theme.textTheme.bodyLarge?.copyWith(
                           color: context.textSecondary,
                           height: 1.6,
@@ -191,7 +191,7 @@ class _EligibilityGateScreenState extends ConsumerState<EligibilityGateScreen>
           child: TextButton(
             onPressed: _openTerms,
             child: Text(
-              'Terms',
+              context.l10n.legalEligibilityTermsLink,
               style: TextStyle(
                 color: context.accentColor,
                 fontSize: 14,
@@ -213,7 +213,7 @@ class _EligibilityGateScreenState extends ConsumerState<EligibilityGateScreen>
           child: TextButton(
             onPressed: _openPrivacy,
             child: Text(
-              'Privacy',
+              context.l10n.legalEligibilityPrivacyLink,
               style: TextStyle(
                 color: context.accentColor,
                 fontSize: 14,
@@ -257,8 +257,8 @@ class _EligibilityGateScreenState extends ConsumerState<EligibilityGateScreen>
                         color: Colors.white.withValues(alpha: 0.8),
                       ),
                     )
-                  : const Text(
-                      'I Am 16 or Older',
+                  : Text(
+                      context.l10n.legalEligibilityConfirmButton,
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w600,
@@ -283,7 +283,10 @@ class _EligibilityGateScreenState extends ConsumerState<EligibilityGateScreen>
                   borderRadius: BorderRadius.circular(AppTheme.radius14),
                 ),
               ),
-              child: const Text('Exit', style: TextStyle(fontSize: 16)),
+              child: Text(
+                context.l10n.legalEligibilityExitButton,
+                style: TextStyle(fontSize: 16),
+              ),
             ),
           ),
         ),
@@ -315,7 +318,7 @@ class _EligibilityGateScreenState extends ConsumerState<EligibilityGateScreen>
               Semantics(
                 header: true,
                 child: Text(
-                  'Age Confirmation Required',
+                  context.l10n.legalEligibilityExitTitle,
                   style: theme.textTheme.headlineSmall?.copyWith(
                     color: context.textPrimary,
                     fontWeight: FontWeight.bold,
@@ -325,8 +328,7 @@ class _EligibilityGateScreenState extends ConsumerState<EligibilityGateScreen>
               ),
               const SizedBox(height: AppTheme.spacing16),
               Text(
-                'You must confirm you are 16 or older to use Socialmesh. '
-                'You can confirm whenever you are ready.',
+                context.l10n.legalEligibilityExitBody,
                 style: theme.textTheme.bodyLarge?.copyWith(
                   color: context.textSecondary,
                   height: 1.6,
@@ -351,8 +353,8 @@ class _EligibilityGateScreenState extends ConsumerState<EligibilityGateScreen>
                         borderRadius: BorderRadius.circular(AppTheme.radius14),
                       ),
                     ),
-                    child: const Text(
-                      'Go Back',
+                    child: Text(
+                      context.l10n.legalEligibilityGoBackButton,
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w600,

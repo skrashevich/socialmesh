@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'dart:async';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -241,12 +242,12 @@ class _DeviceLogsScreenState extends ConsumerState<DeviceLogsScreen>
         builder: (context, setSheetState) => Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
               child: BottomSheetHeader(
                 icon: Icons.filter_list,
-                title: 'Filter Log Levels',
-                subtitle: 'Select which levels to display',
+                title: context.l10n.debugScreenDeviceFilterTitle,
+                subtitle: context.l10n.debugScreenDeviceFilterSubtitle,
               ),
             ),
             const SizedBox(height: AppTheme.spacing16),
@@ -273,7 +274,7 @@ class _DeviceLogsScreenState extends ConsumerState<DeviceLogsScreen>
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: BottomSheetButtons(
-                confirmLabel: 'Apply',
+                confirmLabel: context.l10n.debugScreenDeviceApply,
                 onConfirm: () {
                   ref
                       .read(deviceLogFilterProvider.notifier)
@@ -298,15 +299,15 @@ class _DeviceLogsScreenState extends ConsumerState<DeviceLogsScreen>
     final logger = ref.read(deviceLoggerProvider);
     final content = logger.export();
     Clipboard.setData(ClipboardData(text: content));
-    showSuccessSnackBar(context, 'Device logs copied to clipboard');
+    showSuccessSnackBar(context, context.l10n.debugScreenDeviceLogsCopied);
   }
 
   Future<void> _clearLogs() async {
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Clear Logs',
-      message: 'Are you sure you want to clear all device logs?',
-      confirmLabel: 'Clear',
+      title: context.l10n.debugScreenDeviceClearTitle,
+      message: context.l10n.debugScreenDeviceClearMessage,
+      confirmLabel: context.l10n.debugScreenDeviceClear,
       isDestructive: true,
     );
     if (confirmed == true && canUpdateUI) {
@@ -336,9 +337,12 @@ class _DeviceLogsScreenState extends ConsumerState<DeviceLogsScreen>
       titleWidget: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Device Logs', style: TextStyle(color: context.textPrimary)),
           Text(
-            '${logs.length} entries',
+            context.l10n.debugScreenDeviceLogsTitle,
+            style: TextStyle(color: context.textPrimary),
+          ),
+          Text(
+            context.l10n.debugScreenDeviceEntryCount(logs.length),
             style: TextStyle(color: context.textSecondary, fontSize: 12),
           ),
         ],
@@ -350,7 +354,9 @@ class _DeviceLogsScreenState extends ConsumerState<DeviceLogsScreen>
             _autoScroll ? Icons.vertical_align_bottom : Icons.pause,
             color: _autoScroll ? context.accentColor : context.textSecondary,
           ),
-          tooltip: _autoScroll ? 'Auto-scroll ON' : 'Auto-scroll OFF',
+          tooltip: _autoScroll
+              ? context.l10n.debugScreenDeviceAutoScrollOn
+              : context.l10n.debugScreenDeviceAutoScrollOff,
           onPressed: () {
             setState(() => _autoScroll = !_autoScroll);
           },
@@ -363,7 +369,7 @@ class _DeviceLogsScreenState extends ConsumerState<DeviceLogsScreen>
             label: Text('${6 - filters.length}'),
             child: const Icon(Icons.filter_list),
           ),
-          tooltip: 'Filter levels',
+          tooltip: context.l10n.debugScreenFilterLevelsTooltip,
           onPressed: _showFilterDialog,
         ),
         // More menu
@@ -391,7 +397,7 @@ class _DeviceLogsScreenState extends ConsumerState<DeviceLogsScreen>
                   Icon(Icons.copy, color: context.textSecondary),
                   const SizedBox(width: AppTheme.spacing12),
                   Text(
-                    'Copy to Clipboard',
+                    context.l10n.debugScreenCopyToClipboard,
                     style: TextStyle(color: context.textPrimary),
                   ),
                 ],
@@ -403,7 +409,10 @@ class _DeviceLogsScreenState extends ConsumerState<DeviceLogsScreen>
                 children: [
                   Icon(Icons.share, color: context.textSecondary),
                   const SizedBox(width: AppTheme.spacing12),
-                  Text('Share', style: TextStyle(color: context.textPrimary)),
+                  Text(
+                    context.l10n.debugScreenShare,
+                    style: TextStyle(color: context.textPrimary),
+                  ),
                 ],
               ),
             ),
@@ -415,7 +424,7 @@ class _DeviceLogsScreenState extends ConsumerState<DeviceLogsScreen>
                   const Icon(Icons.delete_outline, color: AppTheme.errorRed),
                   const SizedBox(width: AppTheme.spacing12),
                   Text(
-                    'Clear Logs',
+                    context.l10n.debugScreenClearLogsMenuItem,
                     style: TextStyle(color: context.textPrimary),
                   ),
                 ],
@@ -432,7 +441,7 @@ class _DeviceLogsScreenState extends ConsumerState<DeviceLogsScreen>
             searchController: _searchController,
             searchQuery: _searchQuery,
             onSearchChanged: (value) => setState(() => _searchQuery = value),
-            hintText: 'Search logs...',
+            hintText: context.l10n.debugScreenDeviceSearchHint,
             textScaler: MediaQuery.textScalerOf(context),
           ),
         ),
@@ -442,8 +451,7 @@ class _DeviceLogsScreenState extends ConsumerState<DeviceLogsScreen>
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: StatusBanner.info(
-              title:
-                  'Streaming firmware debug logs from your connected device via BLE',
+              title: context.l10n.debugScreenStreamingBanner,
               borderRadius: 8,
             ),
           ),
@@ -462,7 +470,7 @@ class _DeviceLogsScreenState extends ConsumerState<DeviceLogsScreen>
                   Icon(Icons.terminal, size: 64, color: context.textTertiary),
                   const SizedBox(height: AppTheme.spacing16),
                   Text(
-                    'No device logs yet',
+                    context.l10n.debugScreenNoDeviceLogs,
                     style: TextStyle(
                       color: context.textSecondary,
                       fontSize: 16,
@@ -470,7 +478,7 @@ class _DeviceLogsScreenState extends ConsumerState<DeviceLogsScreen>
                   ),
                   const SizedBox(height: AppTheme.spacing8),
                   Text(
-                    'Logs will appear here as your device sends them',
+                    context.l10n.debugScreenLogsWillAppear,
                     style: TextStyle(color: context.textTertiary, fontSize: 14),
                   ),
                 ],

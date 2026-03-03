@@ -2,6 +2,8 @@
 
 import 'dart:io';
 
+import '../../../core/l10n/l10n_extension.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
@@ -85,7 +87,7 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
             onSearchChanged: (value) {
               safeSetState(() => _searchQuery = value);
             },
-            hintText: 'Search transfers',
+            hintText: context.l10n.fileTransferSearchHint,
             textScaler: MediaQuery.textScalerOf(context),
             rebuildKey: Object.hashAll([
               _filter,
@@ -157,7 +159,7 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
       onTap: _dismissKeyboard,
       child: GlassScaffold(
         resizeToAvoidBottomInset: false,
-        title: 'File Transfers',
+        title: context.l10n.fileTransferTitle,
         actions: [
           AppBarOverflowMenu<String>(
             onSelected: (value) => _handleOverflowAction(value),
@@ -170,7 +172,7 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
                     color: context.accentColor,
                     size: 20,
                   ),
-                  title: const Text('Send File'),
+                  title: Text(context.l10n.fileTransferSendFile),
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
@@ -182,7 +184,7 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
                     color: context.textSecondary,
                     size: 20,
                   ),
-                  title: const Text('Clear Completed'),
+                  title: Text(context.l10n.fileTransferClearCompleted),
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
@@ -194,7 +196,7 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
                     color: context.textSecondary,
                     size: 20,
                   ),
-                  title: const Text('Purge Expired'),
+                  title: Text(context.l10n.fileTransferPurgeExpired),
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
@@ -226,20 +228,20 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
 
     return [
       StatusFilterChip(
-        label: 'All',
+        label: context.l10n.fileTransferFilterAll,
         count: allCount,
         isSelected: _filter == _TransferFilter.all,
         onTap: () => safeSetState(() => _filter = _TransferFilter.all),
       ),
       StatusFilterChip(
-        label: 'Active',
+        label: context.l10n.fileTransferFilterActive,
         count: activeCount,
         color: AccentColors.cyan,
         isSelected: _filter == _TransferFilter.active,
         onTap: () => safeSetState(() => _filter = _TransferFilter.active),
       ),
       StatusFilterChip(
-        label: 'Done',
+        label: context.l10n.fileTransferFilterDone,
         count: doneCount,
         color: SemanticColors.success,
         icon: Icons.check_circle_outline,
@@ -247,7 +249,7 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
         onTap: () => safeSetState(() => _filter = _TransferFilter.completed),
       ),
       StatusFilterChip(
-        label: 'Received',
+        label: context.l10n.fileTransferFilterReceived,
         count: inboundCount,
         color: AppTheme.primaryPurple,
         icon: Icons.arrow_downward,
@@ -255,7 +257,7 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
         onTap: () => safeSetState(() => _filter = _TransferFilter.inbound),
       ),
       StatusFilterChip(
-        label: 'Sent',
+        label: context.l10n.fileTransferFilterSent,
         count: outboundCount,
         color: AppTheme.primaryBlue,
         icon: Icons.arrow_upward,
@@ -321,8 +323,8 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
           const SizedBox(height: AppTheme.spacing24),
           Text(
             _filter == _TransferFilter.all
-                ? 'No File Transfers'
-                : 'No ${_filter.label} Transfers',
+                ? context.l10n.fileTransferEmptyTitle
+                : context.l10n.fileTransferEmptyFilterTitle(_filter.label),
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -333,9 +335,9 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
           Text(
             _filter == _TransferFilter.all
                 ? widget.embedded
-                      ? 'Go to Contacts, tap a node, and\nchoose Send File to get started'
-                      : 'Send files to other nodes from the\noverflow menu or via NodeDex'
-                : 'No transfers match this filter',
+                      ? context.l10n.fileTransferEmptyDescriptionContacts
+                      : context.l10n.fileTransferEmptyDescriptionOverflow
+                : context.l10n.fileTransferNoMatchFilter,
             textAlign: TextAlign.center,
             style: context.bodySecondaryStyle?.copyWith(
               color: context.textTertiary,
@@ -347,13 +349,13 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
               FilledButton.icon(
                 onPressed: widget.onSwitchToContacts,
                 icon: const Icon(Icons.people_outline),
-                label: const Text('Go to Contacts'),
+                label: Text(context.l10n.fileTransferGoToContacts),
               )
             else
               FilledButton.icon(
                 onPressed: _pickAndSendFile,
                 icon: const Icon(Icons.attach_file),
-                label: const Text('Send a File'),
+                label: Text(context.l10n.fileTransferSendAFile),
               ),
           ],
         ],
@@ -382,7 +384,7 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
     // Step 1: Pick destination node
     final selection = await NodeSelectorSheet.show(
       context,
-      title: 'Send to Node',
+      title: context.l10n.fileTransferSendToNode,
       allowBroadcast: false,
     );
     final nodeNum = selection?.nodeNum;
@@ -394,7 +396,10 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
 
     if (!mounted) return;
     if (transfer != null) {
-      showSuccessSnackBar(context, 'Transfer started: ${transfer.filename}');
+      showSuccessSnackBar(
+        context,
+        context.l10n.fileTransferStarted(transfer.filename),
+      );
     }
   }
 
@@ -407,11 +412,9 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
 
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Cancel Transfer?',
-      message:
-          'Cancel the transfer of "${transfer.filename}"? '
-          'This cannot be undone.',
-      confirmLabel: 'Cancel Transfer',
+      title: context.l10n.fileTransferCancelTitle,
+      message: context.l10n.fileTransferCancelMessage(transfer.filename),
+      confirmLabel: context.l10n.fileTransferCancelConfirm,
       isDestructive: true,
     );
 
@@ -419,7 +422,7 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
     if (!mounted) return;
 
     notifier.cancelTransfer(transfer.fileIdHex);
-    showSuccessSnackBar(context, 'Transfer cancelled');
+    showSuccessSnackBar(context, context.l10n.fileTransferCancelled);
   }
 
   Future<void> _shareFile(FileTransferState transfer) async {
@@ -443,7 +446,10 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
     }
 
     if (path == null) {
-      showErrorSnackBar(context, 'Could not save file for sharing');
+      showErrorSnackBar(
+        context,
+        context.l10n.fileTransferCouldNotSaveForSharing,
+      );
       return;
     }
 
@@ -460,7 +466,7 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
     await notifier.purgeExpired();
     if (!mounted) return;
 
-    showSuccessSnackBar(context, 'Expired transfers purged');
+    showSuccessSnackBar(context, context.l10n.fileTransferExpiredPurged);
   }
 
   Future<void> _clearTerminal() async {
@@ -472,11 +478,9 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
 
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Clear Completed Transfers?',
-      message:
-          'Remove all completed, failed, and cancelled transfers? '
-          'Active transfers will not be affected.',
-      confirmLabel: 'Clear',
+      title: context.l10n.fileTransferClearTitle,
+      message: context.l10n.fileTransferClearMessage,
+      confirmLabel: context.l10n.fileTransferClearConfirm,
       isDestructive: true,
     );
 
@@ -486,7 +490,7 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
     final count = await notifier.clearTerminalTransfers();
     if (!mounted) return;
 
-    showSuccessSnackBar(context, 'Cleared $count transfers');
+    showSuccessSnackBar(context, context.l10n.fileTransferClearedCount(count));
   }
 
   Future<void> _deleteTransfer(FileTransferState transfer) async {
@@ -498,11 +502,9 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
 
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Delete Transfer?',
-      message:
-          'Delete "${transfer.filename}"? '
-          'This cannot be undone.',
-      confirmLabel: 'Delete',
+      title: context.l10n.fileTransferDeleteTitle,
+      message: context.l10n.fileTransferDeleteMessage(transfer.filename),
+      confirmLabel: context.l10n.fileTransferDeleteConfirm,
       isDestructive: true,
     );
 
@@ -512,7 +514,10 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
     await notifier.deleteTransfer(transfer.fileIdHex);
     if (!mounted) return;
 
-    showSuccessSnackBar(context, 'Deleted: ${transfer.filename}');
+    showSuccessSnackBar(
+      context,
+      context.l10n.fileTransferDeleted(transfer.filename),
+    );
   }
 
   void _acceptTransfer(FileTransferState transfer) {
@@ -521,7 +526,10 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
 
     haptics.trigger(HapticType.medium);
     notifier.acceptTransfer(transfer.fileIdHex);
-    showSuccessSnackBar(context, 'Accepted: ${transfer.filename}');
+    showSuccessSnackBar(
+      context,
+      context.l10n.fileTransferAccepted(transfer.filename),
+    );
   }
 
   void _rejectTransfer(FileTransferState transfer) async {
@@ -533,11 +541,9 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
 
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Reject Transfer?',
-      message:
-          'Reject the incoming file "${transfer.filename}"? '
-          'The sender will be notified.',
-      confirmLabel: 'Reject',
+      title: context.l10n.fileTransferRejectTitle,
+      message: context.l10n.fileTransferRejectMessage(transfer.filename),
+      confirmLabel: context.l10n.fileTransferRejectConfirm,
       isDestructive: true,
     );
 
@@ -545,7 +551,7 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
     if (!mounted) return;
 
     notifier.rejectTransfer(transfer.fileIdHex);
-    showSuccessSnackBar(context, 'Transfer rejected');
+    showSuccessSnackBar(context, context.l10n.fileTransferRejected);
   }
 
   void _showTransferDetail(FileTransferState transfer) {
@@ -568,82 +574,84 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
     final isOutbound = transfer.direction == TransferDirection.outbound;
     final rows = <InfoTableRow>[
       InfoTableRow(
-        label: 'Direction',
-        value: isOutbound ? 'Sent' : 'Received',
+        label: context.l10n.fileTransferInfoDirection,
+        value: isOutbound
+            ? context.l10n.fileTransferInfoDirectionSent
+            : context.l10n.fileTransferInfoDirectionReceived,
         icon: isOutbound ? Icons.arrow_upward : Icons.arrow_downward,
         iconColor: isOutbound ? AppTheme.primaryBlue : AppTheme.primaryPurple,
       ),
       InfoTableRow(
-        label: 'Status',
+        label: context.l10n.fileTransferInfoStatus,
         value: _transferStateLabel(transfer.state),
         icon: _transferStateIcon(transfer.state, isOutbound),
         iconColor: _transferStateColor(context, transfer.state),
       ),
       InfoTableRow(
-        label: 'Size',
+        label: context.l10n.fileTransferInfoSize,
         value: _formatTransferSize(transfer.totalBytes),
         icon: Icons.storage,
       ),
       InfoTableRow(
-        label: 'MIME Type',
+        label: context.l10n.fileTransferInfoMimeType,
         value: transfer.mimeType,
         icon: Icons.description_outlined,
       ),
       InfoTableRow(
-        label: 'Chunks',
+        label: context.l10n.fileTransferInfoChunks,
         value: '${transfer.completedChunks.length}/${transfer.chunkCount}',
         icon: Icons.grid_view,
       ),
       InfoTableRow(
-        label: 'Chunk Size',
+        label: context.l10n.fileTransferInfoChunkSize,
         value: '${transfer.chunkSize} B',
         icon: Icons.straighten,
       ),
       if (transfer.targetNodeNum != null)
         InfoTableRow(
-          label: 'Target Node',
+          label: context.l10n.fileTransferInfoTargetNode,
           value: '!${transfer.targetNodeNum!.toRadixString(16)}',
           icon: Icons.tag,
         ),
       if (transfer.sourceNodeNum != null)
         InfoTableRow(
-          label: 'Source Node',
+          label: context.l10n.fileTransferInfoSourceNode,
           value: '!${transfer.sourceNodeNum!.toRadixString(16)}',
           icon: Icons.tag,
         ),
       InfoTableRow(
-        label: 'Created',
+        label: context.l10n.fileTransferInfoCreated,
         value: _formatTransferDateTime(transfer.createdAt),
         icon: Icons.schedule,
       ),
       InfoTableRow(
-        label: 'Expires',
+        label: context.l10n.fileTransferInfoExpires,
         value: _formatTransferDateTime(transfer.expiresAt),
         icon: Icons.timer_off_outlined,
       ),
       if (transfer.completedAt != null)
         InfoTableRow(
-          label: 'Completed',
+          label: context.l10n.fileTransferInfoCompleted,
           value: _formatTransferDateTime(transfer.completedAt!),
           icon: Icons.check_circle_outline,
           iconColor: SemanticColors.success,
         ),
       if (transfer.failReason != null)
         InfoTableRow(
-          label: 'Failure',
+          label: context.l10n.fileTransferInfoFailure,
           value: transfer.failReason!.name,
           icon: Icons.error_outline,
           iconColor: SemanticColors.error,
         ),
       if (transfer.nackRounds > 0)
         InfoTableRow(
-          label: 'NACK Rounds',
+          label: context.l10n.fileTransferInfoNackRounds,
           value: '${transfer.nackRounds}',
           icon: Icons.sync_problem,
           iconColor: SemanticColors.warning,
         ),
       InfoTableRow(
-        label: 'Transfer ID',
+        label: context.l10n.fileTransferInfoTransferId,
         value: transfer.fileIdHex.substring(
           0,
           transfer.fileIdHex.length.clamp(0, 16),
@@ -654,7 +662,7 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
     InfoTableSheet.show(
       context: context,
       title: transfer.filename,
-      sectionLabel: 'Transfer Details',
+      sectionLabel: context.l10n.fileTransferDetailsSection,
       rows: rows,
       footer: transfer.isActive
           ? _TransferProgressFooter(transfer: transfer)

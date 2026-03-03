@@ -11,6 +11,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/theme.dart';
 import 'mesh_3d_models.dart';
 
@@ -91,31 +92,79 @@ class Mesh3DLegend extends StatelessWidget {
     switch (mode) {
       case Mesh3DViewMode.signalStrength:
         return [
-          _LegendEntry(color: AppTheme.successGreen, label: 'Good signal'),
-          _LegendEntry(color: AppTheme.warningYellow, label: 'Fair signal'),
-          _LegendEntry(color: AppTheme.errorRed, label: 'Poor signal'),
-          _LegendEntry(color: AccentColors.cyan, label: 'SNR bar'),
+          _LegendEntry(
+            color: AppTheme.successGreen,
+            label: context.l10n.mesh3dLegendGoodSignal,
+          ),
+          _LegendEntry(
+            color: AppTheme.warningYellow,
+            label: context.l10n.mesh3dLegendFairSignal,
+          ),
+          _LegendEntry(
+            color: AppTheme.errorRed,
+            label: context.l10n.mesh3dLegendPoorSignal,
+          ),
+          _LegendEntry(
+            color: AccentColors.cyan,
+            label: context.l10n.mesh3dLegendSnrBar,
+          ),
         ];
       case Mesh3DViewMode.activity:
         return [
-          _LegendEntry(color: AppTheme.errorRed, label: 'Active now'),
-          _LegendEntry(color: Colors.blue.shade700, label: 'Stale / idle'),
+          _LegendEntry(
+            color: AppTheme.errorRed,
+            label: context.l10n.mesh3dLegendActiveNow,
+          ),
+          _LegendEntry(
+            color: Colors.blue.shade700,
+            label: context.l10n.mesh3dLegendStaleIdle,
+          ),
         ];
       case Mesh3DViewMode.topology:
         return [
-          _LegendEntry(color: AppTheme.primaryBlue, label: 'Your node'),
-          _LegendEntry(color: AppTheme.successGreen, label: 'Active peer'),
-          _LegendEntry(color: AppTheme.warningYellow, label: 'Fading peer'),
-          _LegendEntry(color: Colors.grey.shade500, label: 'Offline'),
+          _LegendEntry(
+            color: AppTheme.primaryBlue,
+            label: context.l10n.mesh3dLegendYourNode,
+          ),
+          _LegendEntry(
+            color: AppTheme.successGreen,
+            label: context.l10n.mesh3dLegendActivePeer,
+          ),
+          _LegendEntry(
+            color: AppTheme.warningYellow,
+            label: context.l10n.mesh3dLegendFadingPeer,
+          ),
+          _LegendEntry(
+            color: Colors.grey.shade500,
+            label: context.l10n.mesh3dLegendOffline,
+          ),
         ];
       case Mesh3DViewMode.terrain:
         return [
-          _LegendEntry(color: AppTheme.primaryBlue, label: 'Your node'),
-          _LegendEntry(color: AppTheme.successGreen, label: 'Active'),
-          _LegendEntry(color: AppTheme.warningYellow, label: 'Fading'),
-          _LegendEntry(color: Colors.grey.shade500, label: 'Offline'),
-          _LegendEntry(color: Colors.green.shade800, label: 'Low altitude'),
-          _LegendEntry(color: Colors.brown.shade400, label: 'High altitude'),
+          _LegendEntry(
+            color: AppTheme.primaryBlue,
+            label: context.l10n.mesh3dLegendYourNode,
+          ),
+          _LegendEntry(
+            color: AppTheme.successGreen,
+            label: context.l10n.mesh3dLegendActive,
+          ),
+          _LegendEntry(
+            color: AppTheme.warningYellow,
+            label: context.l10n.mesh3dLegendFading,
+          ),
+          _LegendEntry(
+            color: Colors.grey.shade500,
+            label: context.l10n.mesh3dLegendOffline,
+          ),
+          _LegendEntry(
+            color: Colors.green.shade800,
+            label: context.l10n.mesh3dLegendLowAltitude,
+          ),
+          _LegendEntry(
+            color: Colors.brown.shade400,
+            label: context.l10n.mesh3dLegendHighAltitude,
+          ),
         ];
     }
   }

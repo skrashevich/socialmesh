@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import '../../../core/l10n/l10n_extension.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
@@ -382,7 +383,7 @@ class _MeshCoreChatScreenState extends ConsumerState<MeshCoreChatScreen>
       if (adapter == null) {
         _markMessageFailed(message.id);
         if (mounted) {
-          showErrorSnackBar(context, 'Not connected to MeshCore device');
+          showErrorSnackBar(context, context.l10n.meshcoreNotConnectedToDevice);
         }
         return;
       }
@@ -392,7 +393,7 @@ class _MeshCoreChatScreenState extends ConsumerState<MeshCoreChatScreen>
       if (session == null || !session.isActive) {
         _markMessageFailed(message.id);
         if (mounted) {
-          showErrorSnackBar(context, 'MeshCore session not active');
+          showErrorSnackBar(context, context.l10n.meshcoreSessionNotActive);
         }
         return;
       }
@@ -426,7 +427,7 @@ class _MeshCoreChatScreenState extends ConsumerState<MeshCoreChatScreen>
     } catch (e) {
       AppLogging.protocol('MeshCore Chat: Error sending message: $e');
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to send message');
+        showErrorSnackBar(context, context.l10n.meshcoreFailedToSendMessage);
       }
     } finally {
       if (mounted) {
@@ -485,7 +486,7 @@ class _MeshCoreChatScreenState extends ConsumerState<MeshCoreChatScreen>
                     ),
                     const SizedBox(width: AppTheme.spacing8),
                     Text(
-                      'Disconnected - Messages will queue',
+                      context.l10n.meshcoreDisconnectedMessagesWillQueue,
                       style: TextStyle(color: AppTheme.errorRed, fontSize: 12),
                     ),
                   ],
@@ -516,15 +517,15 @@ class _MeshCoreChatScreenState extends ConsumerState<MeshCoreChatScreen>
 
   Widget _buildEmptyState() {
     if (_isLoading) {
-      return const Center(
+      return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CircularProgressIndicator(),
-            SizedBox(height: AppTheme.spacing16),
+            const CircularProgressIndicator(),
+            const SizedBox(height: AppTheme.spacing16),
             Text(
-              'Loading messages...',
-              style: TextStyle(color: Colors.white70),
+              context.l10n.meshcoreLoadingMessages,
+              style: const TextStyle(color: Colors.white70),
             ),
           ],
         ),
@@ -543,14 +544,14 @@ class _MeshCoreChatScreenState extends ConsumerState<MeshCoreChatScreen>
           ),
           const SizedBox(height: AppTheme.spacing16),
           Text(
-            'No messages yet',
+            context.l10n.meshcoreNoMessagesYet,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
               color: Colors.white.withValues(alpha: 0.6),
             ),
           ),
           const SizedBox(height: AppTheme.spacing8),
           Text(
-            'Send a message to start the conversation',
+            context.l10n.meshcoreSendMessageToStart,
             style: TextStyle(
               color: Colors.white.withValues(alpha: 0.4),
               fontSize: 14,
@@ -681,7 +682,7 @@ class _MeshCoreChatScreenState extends ConsumerState<MeshCoreChatScreen>
               minLines: 1,
               textCapitalization: TextCapitalization.sentences,
               decoration: InputDecoration(
-                hintText: 'Type a message...',
+                hintText: context.l10n.meshcoreTypeMessageHint,
                 hintStyle: TextStyle(
                   color: Colors.white.withValues(alpha: 0.4),
                 ),
@@ -781,10 +782,13 @@ class _MeshCoreChatScreenState extends ConsumerState<MeshCoreChatScreen>
             child: OutlinedButton.icon(
               onPressed: () {
                 Clipboard.setData(ClipboardData(text: contact.publicKeyHex));
-                showSuccessSnackBar(context, 'Public key copied');
+                showSuccessSnackBar(
+                  context,
+                  context.l10n.meshcorePublicKeyCopied,
+                );
               },
               icon: const Icon(Icons.copy_rounded),
-              label: const Text('Copy Public Key'),
+              label: Text(context.l10n.meshcoreCopyPublicKey),
               style: OutlinedButton.styleFrom(
                 foregroundColor: Colors.white.withValues(alpha: 0.8),
                 side: BorderSide(color: Colors.white.withValues(alpha: 0.3)),
@@ -823,7 +827,9 @@ class _MeshCoreChatScreenState extends ConsumerState<MeshCoreChatScreen>
           ),
           const SizedBox(height: AppTheme.spacing8),
           Text(
-            channel.isPublic ? 'Public Channel' : 'Private Channel',
+            channel.isPublic
+                ? context.l10n.meshcorePublicChannel
+                : context.l10n.meshcorePrivateChannel,
             style: TextStyle(color: _accentColor, fontSize: 14),
           ),
           const SizedBox(height: AppTheme.spacing16),
@@ -840,10 +846,13 @@ class _MeshCoreChatScreenState extends ConsumerState<MeshCoreChatScreen>
             child: OutlinedButton.icon(
               onPressed: () {
                 Clipboard.setData(ClipboardData(text: channel.pskHex));
-                showSuccessSnackBar(context, 'Channel PSK copied');
+                showSuccessSnackBar(
+                  context,
+                  context.l10n.meshcoreChannelPskCopied,
+                );
               },
               icon: const Icon(Icons.copy_rounded),
-              label: const Text('Copy Channel Code'),
+              label: Text(context.l10n.meshcoreCopyChannelCode),
               style: OutlinedButton.styleFrom(
                 foregroundColor: Colors.white.withValues(alpha: 0.8),
                 side: BorderSide(color: Colors.white.withValues(alpha: 0.3)),
@@ -885,13 +894,13 @@ class _MeshCoreChatScreenState extends ConsumerState<MeshCoreChatScreen>
     final diff = now.difference(time);
 
     if (diff.inDays > 0) {
-      return '${diff.inDays}d ago';
+      return context.l10n.meshcoreTimeAgoDays(diff.inDays);
     } else if (diff.inHours > 0) {
-      return '${diff.inHours}h ago';
+      return context.l10n.meshcoreTimeAgoHours(diff.inHours);
     } else if (diff.inMinutes > 0) {
-      return '${diff.inMinutes}m ago';
+      return context.l10n.meshcoreTimeAgoMinutes(diff.inMinutes);
     } else {
-      return 'Just now';
+      return context.l10n.meshcoreJustNow;
     }
   }
 

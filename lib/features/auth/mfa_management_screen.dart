@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/logging.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
@@ -81,10 +82,7 @@ class _MFAManagementScreenState extends ConsumerState<MFAManagementScreen>
     final isOnline = ref.read(isOnlineProvider);
     if (!isOnline) {
       AppLogging.mfa('_enrollMFA — blocked, device is offline');
-      showErrorSnackBar(
-        context,
-        'Two-factor authentication requires an internet connection.',
-      );
+      showErrorSnackBar(context, context.l10n.authMfaRequiresInternet);
       return;
     }
 
@@ -123,10 +121,7 @@ class _MFAManagementScreenState extends ConsumerState<MFAManagementScreen>
     final isOnline = ref.read(isOnlineProvider);
     if (!isOnline) {
       AppLogging.mfa('_removeFactor — blocked, device is offline');
-      showErrorSnackBar(
-        context,
-        'Removing two-factor authentication requires an internet connection.',
-      );
+      showErrorSnackBar(context, context.l10n.authMfaRemoveRequiresInternet);
       return;
     }
 
@@ -142,10 +137,9 @@ class _MFAManagementScreenState extends ConsumerState<MFAManagementScreen>
     AppLogging.mfa('_removeFactor — showing confirmation dialog');
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Remove Two-Factor Auth?',
-      message:
-          'Your account will be less secure. You can re-enable it anytime.',
-      confirmLabel: 'Remove',
+      title: context.l10n.authMfaRemoveConfirmTitle,
+      message: context.l10n.authMfaRemoveConfirmMessage,
+      confirmLabel: context.l10n.authMfaRemoveConfirmLabel,
       isDestructive: true,
     );
 
@@ -187,7 +181,7 @@ class _MFAManagementScreenState extends ConsumerState<MFAManagementScreen>
         );
         return;
       }
-      safeShowSnackBar('Two-factor authentication removed');
+      safeShowSnackBar(context.l10n.authMfaRemoved);
       AppLogging.mfa(
         '_removeFactor — success snackbar shown, '
         'invalidating provider and reloading factors',
@@ -235,7 +229,7 @@ class _MFAManagementScreenState extends ConsumerState<MFAManagementScreen>
 
         await haptics.trigger(HapticType.success);
         if (!mounted) return;
-        safeShowSnackBar('Two-factor authentication removed');
+        safeShowSnackBar(context.l10n.authMfaRemoved);
 
         ref.invalidate(enrolledMFAFactorsProvider);
         await _loadFactors();
@@ -341,7 +335,7 @@ class _MFAManagementScreenState extends ConsumerState<MFAManagementScreen>
     if (!isOnline && _isLoadingFactors) {
       AppLogging.mfa('build — rendering offline state (no cached factors)');
       return GlassScaffold.body(
-        title: 'Two-Factor Authentication',
+        title: context.l10n.authMfaManagementTitle,
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(AppTheme.spacing32),
@@ -355,7 +349,7 @@ class _MFAManagementScreenState extends ConsumerState<MFAManagementScreen>
                 ),
                 const SizedBox(height: AppTheme.spacing16),
                 Text(
-                  'No Internet Connection',
+                  context.l10n.authMfaNoInternetTitle,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -364,8 +358,7 @@ class _MFAManagementScreenState extends ConsumerState<MFAManagementScreen>
                 ),
                 const SizedBox(height: AppTheme.spacing8),
                 Text(
-                  'Two-factor authentication management requires an internet connection. '
-                  'Please connect and try again.',
+                  context.l10n.authMfaNoInternetBody,
                   style: TextStyle(fontSize: 14, color: context.textSecondary),
                   textAlign: TextAlign.center,
                 ),
@@ -378,12 +371,12 @@ class _MFAManagementScreenState extends ConsumerState<MFAManagementScreen>
                     } else {
                       showErrorSnackBar(
                         context,
-                        'Still offline. Please check your connection.',
+                        context.l10n.authMfaStillOffline,
                       );
                     }
                   },
                   icon: const Icon(Icons.refresh),
-                  label: const Text('Retry'),
+                  label: Text(context.l10n.authMfaRetryButton),
                 ),
               ],
             ),
@@ -408,7 +401,7 @@ class _MFAManagementScreenState extends ConsumerState<MFAManagementScreen>
     if (_isLoadingFactors) {
       AppLogging.mfa('build — rendering loading state');
       return GlassScaffold.body(
-        title: 'Two-Factor Authentication',
+        title: context.l10n.authMfaManagementTitle,
         body: const Center(child: CircularProgressIndicator()),
       );
     }
@@ -428,7 +421,7 @@ class _MFAManagementScreenState extends ConsumerState<MFAManagementScreen>
     required bool offlineBanner,
   }) {
     return GlassScaffold(
-      title: 'Two-Factor Authentication',
+      title: context.l10n.authMfaManagementTitle,
       slivers: [
         SliverPadding(
           padding: const EdgeInsets.all(AppTheme.spacing16),
@@ -455,7 +448,7 @@ class _MFAManagementScreenState extends ConsumerState<MFAManagementScreen>
                       const SizedBox(width: AppTheme.spacing12),
                       Expanded(
                         child: Text(
-                          'You are offline. Changes cannot be made until you reconnect.',
+                          context.l10n.authMfaOfflineBanner,
                           style: TextStyle(
                             fontSize: 13,
                             color: context.textSecondary,
@@ -491,7 +484,9 @@ class _MFAManagementScreenState extends ConsumerState<MFAManagementScreen>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            hasMFA ? 'Protected' : 'Not Enabled',
+                            hasMFA
+                                ? context.l10n.authMfaStatusProtected
+                                : context.l10n.authMfaStatusNotEnabled,
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -501,8 +496,8 @@ class _MFAManagementScreenState extends ConsumerState<MFAManagementScreen>
                           const SizedBox(height: AppTheme.spacing4),
                           Text(
                             hasMFA
-                                ? 'Your account is protected with 2FA'
-                                : 'Add an extra layer of security',
+                                ? context.l10n.authMfaProtectedDescription
+                                : context.l10n.authMfaNotEnabledDescription,
                             style: TextStyle(
                               fontSize: 14,
                               color: context.textSecondary,
@@ -519,7 +514,7 @@ class _MFAManagementScreenState extends ConsumerState<MFAManagementScreen>
               // Enrolled Factors List
               if (enrolledFactors.isNotEmpty) ...[
                 Text(
-                  'Active Methods',
+                  context.l10n.authMfaActiveMethods,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -548,7 +543,7 @@ class _MFAManagementScreenState extends ConsumerState<MFAManagementScreen>
                         ),
                       ),
                       title: Text(
-                        factor.displayName ?? 'Phone',
+                        factor.displayName ?? context.l10n.authMfaPhoneFallback,
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                           color: context.textPrimary,
@@ -579,7 +574,7 @@ class _MFAManagementScreenState extends ConsumerState<MFAManagementScreen>
                 FilledButton.icon(
                   onPressed: _enrollMFA,
                   icon: const Icon(Icons.add_circle_outline),
-                  label: const Text('Enable Two-Factor Auth'),
+                  label: Text(context.l10n.authMfaEnableButton),
                   style: FilledButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
@@ -591,7 +586,7 @@ class _MFAManagementScreenState extends ConsumerState<MFAManagementScreen>
               // Info Section
               const SizedBox(height: AppTheme.spacing32),
               Text(
-                'How it works',
+                context.l10n.authMfaHowItWorks,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -602,25 +597,22 @@ class _MFAManagementScreenState extends ConsumerState<MFAManagementScreen>
               _buildInfoTile(
                 context,
                 icon: Icons.phone_android,
-                title: 'SMS Verification',
-                description:
-                    'Receive a verification code via text message when signing in',
+                title: context.l10n.authMfaInfoSmsTitle,
+                description: context.l10n.authMfaInfoSmsDescription,
               ),
               const SizedBox(height: AppTheme.spacing8),
               _buildInfoTile(
                 context,
                 icon: Icons.security,
-                title: 'Extra Security',
-                description:
-                    'Protects your account even if your password is compromised',
+                title: context.l10n.authMfaInfoSecurityTitle,
+                description: context.l10n.authMfaInfoSecurityDescription,
               ),
               const SizedBox(height: AppTheme.spacing8),
               _buildInfoTile(
                 context,
                 icon: Icons.access_time,
-                title: 'Quick & Easy',
-                description:
-                    'Takes just a few seconds to verify during sign-in',
+                title: context.l10n.authMfaInfoQuickTitle,
+                description: context.l10n.authMfaInfoQuickDescription,
               ),
             ]),
           ),
@@ -675,7 +667,7 @@ class _MFAManagementScreenState extends ConsumerState<MFAManagementScreen>
     final date = DateTime.fromMillisecondsSinceEpoch(
       enrollmentTime.toInt() * 1000,
     );
-    return 'Added ${_formatDate(date)}';
+    return context.l10n.authMfaFactorAdded(_formatDate(date));
   }
 
   String _formatDate(DateTime date) {
@@ -683,17 +675,17 @@ class _MFAManagementScreenState extends ConsumerState<MFAManagementScreen>
     final difference = now.difference(date);
 
     if (difference.inDays == 0) {
-      return 'today';
+      return context.l10n.authMfaDateToday;
     } else if (difference.inDays == 1) {
-      return 'yesterday';
+      return context.l10n.authMfaDateYesterday;
     } else if (difference.inDays < 7) {
-      return '${difference.inDays} days ago';
+      return context.l10n.authMfaDateDaysAgo(difference.inDays);
     } else if (difference.inDays < 30) {
       final weeks = (difference.inDays / 7).floor();
-      return '$weeks ${weeks == 1 ? 'week' : 'weeks'} ago';
+      return context.l10n.authMfaDateWeeksAgo(weeks);
     } else {
       final months = (difference.inDays / 30).floor();
-      return '$months ${months == 1 ? 'month' : 'months'} ago';
+      return context.l10n.authMfaDateMonthsAgo(months);
     }
   }
 }

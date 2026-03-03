@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/logging.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
@@ -39,98 +40,80 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
   // Brain mood state
   MeshBrainMood _brainMood = MeshBrainMood.inviting;
 
-  final List<_OnboardingPage> _pages = [
+  List<_OnboardingPage> get _pages => [
     _OnboardingPage(
-      title: 'Welcome to Socialmesh',
-      description:
-          'The most advanced Meshtastic companion app.\nBuilt for professionals. Designed for everyone.',
-      advisorText:
-          "I'm Ico, and I'll be your guide. Let me show you a communication platform that works when nothing else does.",
+      title: context.l10n.onboardingWelcomeTitle,
+      description: context.l10n.onboardingWelcomeDescription,
+      advisorText: context.l10n.onboardingWelcomeAdvisor,
       mood: MeshBrainMood.focused,
       accentColor: AppTheme.primaryMagenta,
     ),
 
     _OnboardingPage(
-      title: 'Off-Grid by Design',
-      description:
-          'No cellular towers. No internet required.\nTrue peer-to-peer radio communication.',
-      advisorText:
-          "Every message hops through the mesh until it reaches its destination. Range measured in kilometers, not bars.",
+      title: context.l10n.onboardingOffGridTitle,
+      description: context.l10n.onboardingOffGridDescription,
+      advisorText: context.l10n.onboardingOffGridAdvisor,
       mood: MeshBrainMood.speaking,
       accentColor: AccentColors.cyan,
     ),
 
     _OnboardingPage(
-      title: 'Compatible Hardware',
-      description:
-          'Works with all Meshtastic-compatible devices.\nFrom compact trackers to long-range stations.',
-      advisorText:
-          "Pick up a SenseCAP T1000-E for tracking, a Heltec V3 for range, or a RAK WisMesh for reliability. I'll work with any of them.",
+      title: context.l10n.onboardingHardwareTitle,
+      description: context.l10n.onboardingHardwareDescription,
+      advisorText: context.l10n.onboardingHardwareAdvisor,
       mood: MeshBrainMood.approving,
       showcaseType: ShowcaseType.devices,
       accentColor: AccentColors.green,
     ),
 
     _OnboardingPage(
-      title: 'Signals',
-      description:
-          'Ephemeral broadcasts across the mesh.\nShare presence, photos, and location - then let them fade.',
-      advisorText:
-          "Signals are what set us apart. Broadcast to everyone in range, watch them ripple through the network, then disappear on your terms.",
+      title: context.l10n.onboardingSignalsTitle,
+      description: context.l10n.onboardingSignalsDescription,
+      advisorText: context.l10n.onboardingSignalsAdvisor,
       mood: MeshBrainMood.excited,
       showcaseType: ShowcaseType.signals,
       accentColor: AccentColors.pink,
     ),
 
     _OnboardingPage(
-      title: 'NodeDex — Collector Album',
-      description:
-          'Every node you encounter becomes a collectible card.\nBuild your field journal across the mesh.',
-      advisorText:
-          "Each node gets a unique sigil, a rarity tier, and a patina that deepens with every encounter. Collect them all — your NodeDex is your story across the mesh.",
+      title: context.l10n.onboardingNodedexTitle,
+      description: context.l10n.onboardingNodedexDescription,
+      advisorText: context.l10n.onboardingNodedexAdvisor,
       mood: MeshBrainMood.excited,
       showcaseType: ShowcaseType.nodedex,
       accentColor: AccentColors.purple,
     ),
 
     _OnboardingPage(
-      title: 'Intelligent Automations',
-      description:
-          'Trigger actions based on mesh events.\nBattery alerts, geofences, keywords, and more.',
-      advisorText:
-          "Set up rules once, and I'll monitor everything. Low battery? I'll alert you. Node goes silent? I'll let you know. SOS received? I'll trigger your webhook.",
+      title: context.l10n.onboardingAutomationsTitle,
+      description: context.l10n.onboardingAutomationsDescription,
+      advisorText: context.l10n.onboardingAutomationsAdvisor,
       mood: MeshBrainMood.focused,
       showcaseType: ShowcaseType.automations,
       accentColor: AccentColors.yellow,
     ),
 
     _OnboardingPage(
-      title: 'Your Command Center',
-      description:
-          'Customizable dashboard with live telemetry.\nTrack nodes, monitor channels, visualize the network.',
-      advisorText:
-          "Widgets, maps, stats - arrange them however you work. Your mesh, your view, your control.",
+      title: context.l10n.onboardingDashboardTitle,
+      description: context.l10n.onboardingDashboardDescription,
+      advisorText: context.l10n.onboardingDashboardAdvisor,
       mood: MeshBrainMood.approving,
       showcaseType: ShowcaseType.widgets,
       accentColor: AccentColors.orange,
     ),
 
     _OnboardingPage(
-      title: 'Privacy First',
-      description:
-          'No accounts required. No cloud by default.\nYour data stays on your device.',
-      advisorText:
-          "Everything is local unless you explicitly enable cloud sync. No tracking, no analytics, no compromise.",
+      title: context.l10n.onboardingPrivacyTitle,
+      description: context.l10n.onboardingPrivacyDescription,
+      advisorText: context.l10n.onboardingPrivacyAdvisor,
       mood: MeshBrainMood.focused,
       accentColor: AppTheme.graphBlue,
     ),
 
     _OnboardingPage(
-      title: 'Ready to Connect',
-      description:
-          'Pair your Meshtastic device to begin.\nBluetooth or USB - your choice.',
-      advisorText:
-          "Once connected, we operate completely offline. The mesh is waiting.",
+      title: context.l10n.onboardingConnectTitle,
+      description: context.l10n.onboardingConnectDescription,
+      advisorText: context.l10n.onboardingConnectAdvisor,
       mood: MeshBrainMood.celebrating,
       isLastPage: true,
       accentColor: AppTheme.primaryPurple,
@@ -152,8 +135,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
       duration: const Duration(milliseconds: 2500),
     )..repeat(reverse: true);
 
-    // Initial mood
-    _brainMood = _pages[0].mood;
+    // Initial mood (hardcoded since context.l10n not available in initState)
+    _brainMood = MeshBrainMood.focused;
   }
 
   @override
@@ -361,7 +344,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                       ),
                       const SizedBox(height: AppTheme.spacing24),
                       Text(
-                        'Setting up your device...',
+                        context.l10n.onboardingSettingUpDevice,
                         style: TextStyle(
                           color: context.textPrimary,
                           fontSize: 17,
@@ -370,7 +353,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                       ),
                       const SizedBox(height: AppTheme.spacing8),
                       Text(
-                        'Checking radio configuration',
+                        context.l10n.onboardingCheckingRadio,
                         style: TextStyle(
                           color: context.textSecondary,
                           fontSize: 14,
@@ -400,7 +383,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                               ? _skip
                               : null,
                           child: Text(
-                            'Skip',
+                            context.l10n.onboardingSkipButton,
                             style: TextStyle(
                               color: context.textSecondary,
                               fontSize: 15,
@@ -664,7 +647,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  isLastPage ? 'Connect Device' : 'Continue',
+                  isLastPage
+                      ? context.l10n.onboardingConnectDeviceButton
+                      : context.l10n.onboardingContinueButton,
                   style: const TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
@@ -711,9 +696,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
               padding: const EdgeInsets.symmetric(horizontal: 8),
               children: [
                 _buildDeviceCard(
-                  name: 'SenseCAP T1000-E',
-                  category: 'Tracker',
-                  description: 'Compact GPS tracker with long battery life',
+                  name: context.l10n.onboardingDeviceSensecap,
+                  category: context.l10n.onboardingDeviceSensecapCategory,
+                  description: context.l10n.onboardingDeviceSensecapDescription,
                   icon: Icons.gps_fixed,
                   color: AccentColors.green,
                   glowIntensity: glowIntensity,
@@ -721,27 +706,27 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                 ),
                 const SizedBox(width: AppTheme.spacing12),
                 _buildDeviceCard(
-                  name: 'Heltec V3',
-                  category: 'All-Purpose',
-                  description: 'Versatile node with built-in display',
+                  name: context.l10n.onboardingDeviceHeltec,
+                  category: context.l10n.onboardingDeviceHeltecCategory,
+                  description: context.l10n.onboardingDeviceHeltecDescription,
                   icon: Icons.memory,
                   color: AccentColors.cyan,
                   glowIntensity: glowIntensity,
                 ),
                 const SizedBox(width: AppTheme.spacing12),
                 _buildDeviceCard(
-                  name: 'RAK WisMesh',
-                  category: 'Professional',
-                  description: 'Industrial-grade reliability',
+                  name: context.l10n.onboardingDeviceRak,
+                  category: context.l10n.onboardingDeviceRakCategory,
+                  description: context.l10n.onboardingDeviceRakDescription,
                   icon: Icons.router,
                   color: AccentColors.orange,
                   glowIntensity: glowIntensity,
                 ),
                 const SizedBox(width: AppTheme.spacing12),
                 _buildDeviceCard(
-                  name: 'LilyGo T-Beam',
-                  category: 'Long Range',
-                  description: 'Maximum range with external antenna',
+                  name: context.l10n.onboardingDeviceLilygo,
+                  category: context.l10n.onboardingDeviceLilygoCategory,
+                  description: context.l10n.onboardingDeviceLilygoDescription,
                   icon: Icons.cell_tower,
                   color: AccentColors.pink,
                   glowIntensity: glowIntensity,
@@ -820,7 +805,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                     borderRadius: BorderRadius.circular(AppTheme.radius4),
                   ),
                   child: Text(
-                    'POPULAR',
+                    context.l10n.onboardingDevicePopularBadge,
                     style: TextStyle(
                       fontSize: 8,
                       fontWeight: FontWeight.bold,
@@ -915,8 +900,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
               padding: const EdgeInsets.symmetric(horizontal: 8),
               children: [
                 _buildNodeDexCard(
-                  nodeName: 'Summit Relay',
-                  rarityLabel: 'LEGENDARY',
+                  nodeName: context.l10n.onboardingNodedexSummitRelay,
+                  rarityLabel: context.l10n.onboardingNodedexLegendary,
                   rarityColor: const Color(0xFFD4AF37),
                   glowColor: const Color(0xFFFFCC00),
                   encounters: 142,
@@ -928,8 +913,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                 ),
                 const SizedBox(width: AppTheme.spacing12),
                 _buildNodeDexCard(
-                  nodeName: 'Base Camp Node',
-                  rarityLabel: 'RARE',
+                  nodeName: context.l10n.onboardingNodedexBaseCamp,
+                  rarityLabel: context.l10n.onboardingNodedexRare,
                   rarityColor: const Color(0xFF3B82F6),
                   glowColor: const Color(0xFF3B82F6),
                   encounters: 34,
@@ -941,8 +926,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                 ),
                 const SizedBox(width: AppTheme.spacing12),
                 _buildNodeDexCard(
-                  nodeName: 'Trail Marker',
-                  rarityLabel: 'EPIC',
+                  nodeName: context.l10n.onboardingNodedexTrailMarker,
+                  rarityLabel: context.l10n.onboardingNodedexEpic,
                   rarityColor: const Color(0xFF8B5CF6),
                   glowColor: const Color(0xFF8B5CF6),
                   encounters: 67,
@@ -954,8 +939,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                 ),
                 const SizedBox(width: AppTheme.spacing12),
                 _buildNodeDexCard(
-                  nodeName: 'Valley Scout',
-                  rarityLabel: 'STANDARD',
+                  nodeName: context.l10n.onboardingNodedexValleyScout,
+                  rarityLabel: context.l10n.onboardingNodedexStandard,
                   rarityColor: const Color(0xFF6B7280),
                   glowColor: const Color(0xFF6B7280),
                   encounters: 3,
@@ -1246,8 +1231,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                         ),
                         child: Text(
                           hopCount == 0
-                              ? 'Direct'
-                              : '$hopCount hop${hopCount > 1 ? 's' : ''}',
+                              ? context.l10n.onboardingSignalDirect
+                              : context.l10n.onboardingSignalHopCount(hopCount),
                           style: TextStyle(
                             fontSize: 9,
                             fontWeight: FontWeight.w500,
@@ -1309,7 +1294,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                     Icon(Icons.image_rounded, color: color, size: 16),
                     const SizedBox(width: AppTheme.spacing6),
                     Text(
-                      'Photo',
+                      context.l10n.onboardingSignalPhoto,
                       style: TextStyle(
                         color: color,
                         fontSize: 11,
@@ -1329,7 +1314,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                   Icon(Icons.location_on, color: AccentColors.green, size: 14),
                   const SizedBox(width: AppTheme.spacing4),
                   Text(
-                    'Location shared',
+                    context.l10n.onboardingSignalLocationShared,
                     style: TextStyle(color: AccentColors.green, fontSize: 11),
                   ),
                 ],
@@ -1355,7 +1340,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                 ),
                 const SizedBox(width: AppTheme.spacing4),
                 Text(
-                  '${ttlMinutes}m remaining',
+                  context.l10n.onboardingSignalTtlRemaining(ttlMinutes),
                   style: TextStyle(
                     fontSize: 11,
                     color: ttlMinutes < 10
@@ -1400,8 +1385,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
               padding: const EdgeInsets.symmetric(horizontal: 8),
               children: [
                 _buildAutomationCard(
-                  name: 'Low Battery Alert',
-                  description: 'Battery drops below 20%',
+                  name: context.l10n.onboardingAutomationLowBattery,
+                  description: context.l10n.onboardingAutomationLowBatteryDesc,
                   icon: Icons.battery_alert,
                   color: AppTheme.errorRed,
                   glowIntensity: glowIntensity,
@@ -1409,8 +1394,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                 ),
                 const SizedBox(width: AppTheme.spacing12),
                 _buildAutomationCard(
-                  name: 'Base Camp Geofence',
-                  description: 'Enters designated area',
+                  name: context.l10n.onboardingAutomationGeofence,
+                  description: context.l10n.onboardingAutomationGeofenceDesc,
                   icon: Icons.location_searching,
                   color: AccentColors.green,
                   glowIntensity: glowIntensity,
@@ -1418,8 +1403,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                 ),
                 const SizedBox(width: AppTheme.spacing12),
                 _buildAutomationCard(
-                  name: 'Node Silent Watch',
-                  description: 'No contact for 30 min',
+                  name: context.l10n.onboardingAutomationSilentWatch,
+                  description: context.l10n.onboardingAutomationSilentWatchDesc,
                   icon: Icons.timer_off,
                   color: AccentColors.orange,
                   glowIntensity: glowIntensity,
@@ -1427,8 +1412,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                 ),
                 const SizedBox(width: AppTheme.spacing12),
                 _buildAutomationCard(
-                  name: 'SOS Keyword',
-                  description: 'Message contains "SOS"',
+                  name: context.l10n.onboardingAutomationSosKeyword,
+                  description: context.l10n.onboardingAutomationSosKeywordDesc,
                   icon: Icons.text_fields,
                   color: AccentColors.cyan,
                   glowIntensity: glowIntensity,
@@ -1575,7 +1560,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                   ),
                   const SizedBox(width: AppTheme.spacing8),
                   Text(
-                    'Dashboard',
+                    context.l10n.onboardingWidgetDashboard,
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
@@ -1605,7 +1590,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                         ),
                         const SizedBox(width: AppTheme.spacing4),
                         Text(
-                          'LIVE',
+                          context.l10n.onboardingWidgetLiveBadge,
                           style: TextStyle(
                             fontSize: 9,
                             fontWeight: FontWeight.bold,
@@ -1627,7 +1612,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                       child: _buildDashboardWidget(
                         icon: Icons.hub,
                         value: '12',
-                        label: 'Nodes Online',
+                        label: context.l10n.onboardingWidgetNodesOnline,
                         color: AccentColors.cyan,
                       ),
                     ),
@@ -1636,7 +1621,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                       child: _buildDashboardWidget(
                         icon: Icons.battery_5_bar,
                         value: '87%',
-                        label: 'Battery',
+                        label: context.l10n.onboardingWidgetBattery,
                         color: AccentColors.green,
                       ),
                     ),
@@ -1645,7 +1630,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                       child: _buildDashboardWidget(
                         icon: Icons.signal_cellular_alt,
                         value: '-68',
-                        label: 'SNR dB',
+                        label: context.l10n.onboardingWidgetSnrDb,
                         color: page.accentColor,
                       ),
                     ),

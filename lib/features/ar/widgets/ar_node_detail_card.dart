@@ -5,6 +5,8 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
+
 import '../ar_engine.dart';
 
 /// Detailed node information card shown when a node is selected
@@ -51,7 +53,7 @@ class ARNodeDetailCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Header
-          _buildHeader(meshNode),
+          _buildHeader(context, meshNode),
 
           const Divider(
             color: Color(0xFF00E5FF),
@@ -67,21 +69,21 @@ class ARNodeDetailCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: _buildStatColumn(
-                    'DISTANCE',
+                    context.l10n.arNodeDetailDistance,
                     _formatDistance(node.worldPosition.distance),
                   ),
                 ),
                 _buildVerticalDivider(),
                 Expanded(
                   child: _buildStatColumn(
-                    'BEARING',
+                    context.l10n.arNodeDetailBearing,
                     '${node.worldPosition.bearing.round()}°',
                   ),
                 ),
                 _buildVerticalDivider(),
                 Expanded(
                   child: _buildStatColumn(
-                    'ELEVATION',
+                    context.l10n.arNodeDetailElevation,
                     '${node.worldPosition.elevation.toStringAsFixed(1)}°',
                   ),
                 ),
@@ -97,7 +99,7 @@ class ARNodeDetailCard extends StatelessWidget {
                 if (meshNode.batteryLevel != null)
                   _buildDetailRow(
                     Icons.battery_std,
-                    'Battery',
+                    context.l10n.arNodeDetailBattery,
                     '${meshNode.batteryLevel}%',
                     meshNode.batteryLevel! < 20
                         ? const Color(0xFFFF1744)
@@ -106,27 +108,31 @@ class ARNodeDetailCard extends StatelessWidget {
                 if (meshNode.snr != null)
                   _buildDetailRow(
                     Icons.signal_cellular_alt,
-                    'SNR',
+                    context.l10n.arNodeDetailSnr,
                     '${meshNode.snr!.toStringAsFixed(1)} dB',
                   ),
                 if (meshNode.rssi != null)
-                  _buildDetailRow(Icons.wifi, 'RSSI', '${meshNode.rssi} dBm'),
+                  _buildDetailRow(
+                    Icons.wifi,
+                    context.l10n.arNodeDetailRssi,
+                    '${meshNode.rssi} dBm',
+                  ),
                 if (meshNode.altitude != null)
                   _buildDetailRow(
                     Icons.terrain,
-                    'Altitude',
+                    context.l10n.arNodeDetailAltitude,
                     '${meshNode.altitude}m',
                   ),
                 if (meshNode.lastHeard != null)
                   _buildDetailRow(
                     Icons.access_time,
-                    'Last Heard',
+                    context.l10n.arNodeDetailLastHeard,
                     _formatTimeAgo(meshNode.lastHeard!),
                   ),
                 if (node.isMoving)
                   _buildDetailRow(
                     Icons.speed,
-                    'Speed',
+                    context.l10n.arNodeDetailSpeed,
                     '${node.velocity.length.toStringAsFixed(1)} m/s',
                     const Color(0xFF00FF88),
                   ),
@@ -143,15 +149,31 @@ class ARNodeDetailCard extends StatelessWidget {
               spacing: 8,
               runSpacing: 8,
               children: [
-                if (node.isNew) _buildBadge('NEW', const Color(0xFF00FF88)),
+                if (node.isNew)
+                  _buildBadge(
+                    context.l10n.arNodeBadgeNew,
+                    const Color(0xFF00FF88),
+                  ),
                 if (node.isMoving)
-                  _buildBadge('MOVING', const Color(0xFF448AFF)),
+                  _buildBadge(
+                    context.l10n.arNodeBadgeMoving,
+                    const Color(0xFF448AFF),
+                  ),
                 if (node.threatLevel == ARThreatLevel.warning)
-                  _buildBadge('WARNING', const Color(0xFFFFAB00)),
+                  _buildBadge(
+                    context.l10n.arNodeBadgeWarning,
+                    const Color(0xFFFFAB00),
+                  ),
                 if (node.threatLevel == ARThreatLevel.critical)
-                  _buildBadge('CRITICAL', const Color(0xFFFF1744)),
+                  _buildBadge(
+                    context.l10n.arNodeBadgeCritical,
+                    const Color(0xFFFF1744),
+                  ),
                 if (node.threatLevel == ARThreatLevel.offline)
-                  _buildBadge('OFFLINE', const Color(0xFF757575)),
+                  _buildBadge(
+                    context.l10n.arNodeBadgeOffline,
+                    const Color(0xFF757575),
+                  ),
               ],
             ),
           ),
@@ -166,7 +188,7 @@ class ARNodeDetailCard extends StatelessWidget {
                 Expanded(
                   child: _buildActionButton(
                     icon: Icons.navigation,
-                    label: 'Navigate',
+                    label: context.l10n.arNodeDetailNavigate,
                     onTap: onNavigate,
                   ),
                 ),
@@ -192,7 +214,7 @@ class ARNodeDetailCard extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(dynamic meshNode) {
+  Widget _buildHeader(BuildContext context, dynamic meshNode) {
     return Padding(
       padding: const EdgeInsets.all(AppTheme.spacing16),
       child: Row(
@@ -233,7 +255,9 @@ class ARNodeDetailCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  meshNode.longName ?? meshNode.shortName ?? 'Unknown Node',
+                  meshNode.longName ??
+                      meshNode.shortName ??
+                      context.l10n.arNodeDetailUnknownNode,
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 16,

@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/app_bottom_sheet.dart';
 import '../../../core/widgets/glass_scaffold.dart';
@@ -47,7 +48,7 @@ class MeshHealthDashboard extends ConsumerWidget {
         topicId: 'mesh_health_overview',
         stepKeys: const {},
         child: GlassScaffold(
-          title: 'Mesh Health',
+          title: context.l10n.meshHealthTitle,
           actions: [
             IconButton(
               icon: Icon(
@@ -56,14 +57,16 @@ class MeshHealthDashboard extends ConsumerWidget {
                     ? const Color(0xFF00E5FF)
                     : context.textSecondary,
               ),
-              tooltip: healthState.isMonitoring ? 'Pause' : 'Resume',
+              tooltip: healthState.isMonitoring
+                  ? context.l10n.meshHealthPauseTooltip
+                  : context.l10n.meshHealthResumeTooltip,
               onPressed: () {
                 ref.read(meshHealthProvider.notifier).toggleMonitoring();
               },
             ),
             IconButton(
               icon: const Icon(Icons.refresh),
-              tooltip: 'Reset Data',
+              tooltip: context.l10n.meshHealthResetDataTooltip,
               onPressed: () {
                 ref.read(meshHealthProvider.notifier).reset();
               },
@@ -76,15 +79,15 @@ class MeshHealthDashboard extends ConsumerWidget {
               sliver: SliverList(
                 delegate: SliverChildListDelegate([
                   const MeshHealthBatteryReminder(),
-                  _buildStatusHeader(healthState),
+                  _buildStatusHeader(context, healthState),
                   const SizedBox(height: AppTheme.spacing16),
-                  _buildMetricsRow(healthState),
+                  _buildMetricsRow(context, healthState),
                   const SizedBox(height: AppTheme.spacing16),
-                  _buildUtilizationChart(healthState),
+                  _buildUtilizationChart(context, healthState),
                   const SizedBox(height: AppTheme.spacing16),
-                  _buildIssuesSection(healthState),
+                  _buildIssuesSection(context, healthState),
                   const SizedBox(height: AppTheme.spacing16),
-                  _buildTopContributors(healthState),
+                  _buildTopContributors(context, healthState),
                 ]),
               ),
             ),
@@ -114,7 +117,7 @@ class MeshHealthDashboard extends ConsumerWidget {
           ),
           const SizedBox(height: AppTheme.spacing12),
           Text(
-            'Monitoring is still active',
+            context.l10n.meshHealthMonitoringActiveTitle,
             style: TextStyle(
               fontSize: 17,
               fontWeight: FontWeight.w700,
@@ -123,8 +126,7 @@ class MeshHealthDashboard extends ConsumerWidget {
           ),
           const SizedBox(height: AppTheme.spacing6),
           Text(
-            'Mesh Health monitoring uses extra battery while '
-            'running in the background.',
+            context.l10n.meshHealthMonitoringBatteryWarning,
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 14,
@@ -145,8 +147,8 @@ class MeshHealthDashboard extends ConsumerWidget {
                   borderRadius: BorderRadius.circular(AppTheme.radius12),
                 ),
               ),
-              child: const Text(
-                'Pause & Leave',
+              child: Text(
+                context.l10n.meshHealthPauseAndLeave,
                 style: TextStyle(fontWeight: FontWeight.w600),
               ),
             ),
@@ -164,8 +166,8 @@ class MeshHealthDashboard extends ConsumerWidget {
                 ),
                 side: BorderSide(color: context.border.withValues(alpha: 0.3)),
               ),
-              child: const Text(
-                'Keep Running',
+              child: Text(
+                context.l10n.meshHealthKeepRunning,
                 style: TextStyle(fontWeight: FontWeight.w600),
               ),
             ),
@@ -174,7 +176,7 @@ class MeshHealthDashboard extends ConsumerWidget {
           TextButton(
             onPressed: () => Navigator.pop(context, 'dismiss'),
             child: Text(
-              "Don't remind me again",
+              context.l10n.meshHealthDontRemindAgain,
               style: TextStyle(fontSize: 12, color: context.textTertiary),
             ),
           ),
@@ -194,7 +196,7 @@ class MeshHealthDashboard extends ConsumerWidget {
     }
   }
 
-  Widget _buildStatusHeader(MeshHealthState state) {
+  Widget _buildStatusHeader(BuildContext context, MeshHealthState state) {
     final status = state.latestSnapshot;
     final isHealthy = status?.isHealthy ?? true;
     final isCritical = status?.hasCriticalIssues ?? false;
@@ -205,19 +207,19 @@ class MeshHealthDashboard extends ConsumerWidget {
 
     if (!state.isMonitoring) {
       statusColor = SemanticColors.disabled;
-      statusText = 'Monitoring Paused';
+      statusText = context.l10n.meshHealthMonitoringPaused;
       statusIcon = Icons.pause_circle_outline;
     } else if (isCritical) {
       statusColor = AppTheme.errorRed;
-      statusText = 'Critical Issues Detected';
+      statusText = context.l10n.meshHealthCriticalIssues;
       statusIcon = Icons.error;
     } else if (!isHealthy) {
       statusColor = const Color(0xFFFFAB00);
-      statusText = 'Issues Detected';
+      statusText = context.l10n.meshHealthIssuesDetected;
       statusIcon = Icons.warning;
     } else {
       statusColor = const Color(0xFF00FF88);
-      statusText = 'Mesh Healthy';
+      statusText = context.l10n.meshHealthHealthy;
       statusIcon = Icons.check_circle;
     }
 
@@ -246,7 +248,10 @@ class MeshHealthDashboard extends ConsumerWidget {
                 ),
                 if (status != null)
                   Text(
-                    '${status.activeNodeCount} active nodes • ${status.totalPackets} packets',
+                    context.l10n.meshHealthActiveNodesPackets(
+                      status.activeNodeCount,
+                      status.totalPackets,
+                    ),
                     style: TextStyle(
                       color: Colors.white.withValues(alpha: 0.7),
                       fontSize: 13,
@@ -263,7 +268,7 @@ class MeshHealthDashboard extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(AppTheme.radius16),
               ),
               child: Text(
-                '${status.issueCount} issues',
+                context.l10n.meshHealthIssueCount(status.issueCount),
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 12,
@@ -276,17 +281,19 @@ class MeshHealthDashboard extends ConsumerWidget {
     );
   }
 
-  Widget _buildMetricsRow(MeshHealthState state) {
+  Widget _buildMetricsRow(BuildContext context, MeshHealthState state) {
     final snapshot = state.latestSnapshot;
 
     return Row(
       children: [
         Expanded(
           child: _MetricCard(
-            title: 'Utilization',
+            title: context.l10n.meshHealthUtilization,
             value:
                 '${(snapshot?.channelUtilizationPercent ?? 0).toStringAsFixed(1)}%',
-            subtitle: snapshot?.isSaturated == true ? 'SATURATED' : 'Normal',
+            subtitle: snapshot?.isSaturated == true
+                ? context.l10n.meshHealthSaturated
+                : context.l10n.meshHealthNormal,
             color: _getUtilizationColor(
               snapshot?.channelUtilizationPercent ?? 0,
             ),
@@ -296,10 +303,13 @@ class MeshHealthDashboard extends ConsumerWidget {
         const SizedBox(width: AppTheme.spacing12),
         Expanded(
           child: _MetricCard(
-            title: 'Reliability',
+            title: context.l10n.meshHealthReliability,
             value:
                 '${((snapshot?.avgReliability ?? 1.0) * 100).toStringAsFixed(1)}%',
-            subtitle: _getReliabilityLabel(snapshot?.avgReliability ?? 1.0),
+            subtitle: _getReliabilityLabel(
+              context,
+              snapshot?.avgReliability ?? 1.0,
+            ),
             color: _getReliabilityColor(snapshot?.avgReliability ?? 1.0),
             icon: Icons.verified,
           ),
@@ -308,7 +318,7 @@ class MeshHealthDashboard extends ConsumerWidget {
     );
   }
 
-  Widget _buildUtilizationChart(MeshHealthState state) {
+  Widget _buildUtilizationChart(BuildContext context, MeshHealthState state) {
     final history = state.utilizationHistory;
 
     return Container(
@@ -324,8 +334,8 @@ class MeshHealthDashboard extends ConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Channel Utilization',
+              Text(
+                context.l10n.meshHealthChannelUtilization,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 16,
@@ -338,8 +348,8 @@ class MeshHealthDashboard extends ConsumerWidget {
                   color: const Color(0xFFFFAB00).withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(AppTheme.radius8),
                 ),
-                child: const Text(
-                  '50% threshold',
+                child: Text(
+                  context.l10n.meshHealthThresholdLabel,
                   style: TextStyle(color: Color(0xFFFFAB00), fontSize: 11),
                 ),
               ),
@@ -351,7 +361,7 @@ class MeshHealthDashboard extends ConsumerWidget {
             child: history.isEmpty
                 ? Center(
                     child: Text(
-                      'No data yet',
+                      context.l10n.meshHealthNoDataYet,
                       style: TextStyle(
                         color: Colors.white.withValues(alpha: 0.5),
                       ),
@@ -364,7 +374,7 @@ class MeshHealthDashboard extends ConsumerWidget {
     );
   }
 
-  Widget _buildIssuesSection(MeshHealthState state) {
+  Widget _buildIssuesSection(BuildContext context, MeshHealthState state) {
     final issues = state.issues;
 
     return Container(
@@ -377,8 +387,8 @@ class MeshHealthDashboard extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Detected Issues',
+          Text(
+            context.l10n.meshHealthDetectedIssues,
             style: TextStyle(
               color: Colors.white,
               fontSize: 16,
@@ -399,7 +409,7 @@ class MeshHealthDashboard extends ConsumerWidget {
                     ),
                     const SizedBox(height: AppTheme.spacing8),
                     Text(
-                      'No issues detected',
+                      context.l10n.meshHealthNoIssuesDetected,
                       style: TextStyle(
                         color: Colors.white.withValues(alpha: 0.5),
                       ),
@@ -415,7 +425,7 @@ class MeshHealthDashboard extends ConsumerWidget {
     );
   }
 
-  Widget _buildTopContributors(MeshHealthState state) {
+  Widget _buildTopContributors(BuildContext context, MeshHealthState state) {
     final contributors = state.nodeStats.take(5).toList();
     final snapshot = state.latestSnapshot;
     final totalAirtime = snapshot?.totalAirtimeMs ?? 1;
@@ -430,8 +440,8 @@ class MeshHealthDashboard extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Top Contributors',
+          Text(
+            context.l10n.meshHealthTopContributors,
             style: TextStyle(
               color: Colors.white,
               fontSize: 16,
@@ -444,7 +454,7 @@ class MeshHealthDashboard extends ConsumerWidget {
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: Center(
                 child: Text(
-                  'No nodes detected',
+                  context.l10n.meshHealthNoNodesDetected,
                   style: TextStyle(color: Colors.white.withValues(alpha: 0.5)),
                 ),
               ),
@@ -471,10 +481,10 @@ class MeshHealthDashboard extends ConsumerWidget {
     return const Color(0xFF00FF88);
   }
 
-  String _getReliabilityLabel(double reliability) {
-    if (reliability < 0.5) return 'Poor';
-    if (reliability < 0.8) return 'Fair';
-    return 'Good';
+  String _getReliabilityLabel(BuildContext context, double reliability) {
+    if (reliability < 0.5) return context.l10n.meshHealthReliabilityPoor;
+    if (reliability < 0.8) return context.l10n.meshHealthReliabilityFair;
+    return context.l10n.meshHealthReliabilityGood;
   }
 }
 
@@ -608,7 +618,7 @@ class _IssueCard extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 4),
                     child: Text(
-                      'Node: ${issue.nodeId}',
+                      context.l10n.meshHealthNodePrefix(issue.nodeId!),
                       style: TextStyle(
                         color: Colors.white.withValues(alpha: 0.5),
                         fontSize: 11,
@@ -716,8 +726,8 @@ class _NodeContributorRow extends StatelessWidget {
                           color: const Color(0xFFFFAB00).withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(AppTheme.radius3),
                         ),
-                        child: const Text(
-                          'SPAM',
+                        child: Text(
+                          context.l10n.meshHealthSpamBadge,
                           style: TextStyle(
                             color: Color(0xFFFFAB00),
                             fontSize: 8,
@@ -737,8 +747,8 @@ class _NodeContributorRow extends StatelessWidget {
                           color: AppTheme.errorRed.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(AppTheme.radius3),
                         ),
-                        child: const Text(
-                          'FLOOD',
+                        child: Text(
+                          context.l10n.meshHealthFloodBadge,
                           style: TextStyle(
                             color: AppTheme.errorRed,
                             fontSize: 8,
@@ -751,7 +761,10 @@ class _NodeContributorRow extends StatelessWidget {
                 ),
                 const SizedBox(height: AppTheme.spacing2),
                 Text(
-                  '${node.packetCount} packets • ${node.totalAirtimeMs}ms airtime',
+                  context.l10n.meshHealthPacketsAirtime(
+                    node.packetCount,
+                    node.totalAirtimeMs,
+                  ),
                   style: TextStyle(
                     color: Colors.white.withValues(alpha: 0.5),
                     fontSize: 11,
@@ -772,7 +785,7 @@ class _NodeContributorRow extends StatelessWidget {
                 ),
               ),
               Text(
-                'of airtime',
+                context.l10n.meshHealthOfAirtime,
                 style: TextStyle(
                   color: Colors.white.withValues(alpha: 0.4),
                   fontSize: 10,

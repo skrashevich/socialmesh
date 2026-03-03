@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/animations.dart';
 import '../../core/widgets/glass_scaffold.dart';
@@ -380,7 +381,7 @@ class _TimelineScreenState extends ConsumerState<TimelineScreen> {
         stepKeys: const {},
         child: GlassScaffold(
           resizeToAvoidBottomInset: false,
-          title: 'Timeline',
+          title: context.l10n.timelineTitle,
           centerTitle: true,
           actions: [IcoHelpAppBarButton(topicId: 'timeline_overview')],
           slivers: [
@@ -397,7 +398,7 @@ class _TimelineScreenState extends ConsumerState<TimelineScreen> {
                 searchQuery: _searchQuery,
                 onSearchChanged: (value) =>
                     setState(() => _searchQuery = value),
-                hintText: 'Search events',
+                hintText: context.l10n.timelineSearchHint,
                 textScaler: MediaQuery.textScalerOf(context),
                 rebuildKey: Object.hashAll([
                   _filter,
@@ -409,14 +410,14 @@ class _TimelineScreenState extends ConsumerState<TimelineScreen> {
                 ]),
                 filterChips: [
                   StatusFilterChip(
-                    label: 'All',
+                    label: context.l10n.timelineFilterAll,
                     count: _countForFilter(TimelineFilter.all, allEvents),
                     isSelected: _filter == TimelineFilter.all,
                     color: TimelineFilter.all.color(context),
                     onTap: () => setState(() => _filter = TimelineFilter.all),
                   ),
                   StatusFilterChip(
-                    label: 'Messages',
+                    label: context.l10n.timelineFilterMessages,
                     count: _countForFilter(TimelineFilter.messages, allEvents),
                     isSelected: _filter == TimelineFilter.messages,
                     color: TimelineFilter.messages.color(context),
@@ -425,7 +426,7 @@ class _TimelineScreenState extends ConsumerState<TimelineScreen> {
                         setState(() => _filter = TimelineFilter.messages),
                   ),
                   StatusFilterChip(
-                    label: 'Nodes',
+                    label: context.l10n.timelineFilterNodes,
                     count: _countForFilter(TimelineFilter.nodes, allEvents),
                     isSelected: _filter == TimelineFilter.nodes,
                     color: TimelineFilter.nodes.color(context),
@@ -433,7 +434,7 @@ class _TimelineScreenState extends ConsumerState<TimelineScreen> {
                     onTap: () => setState(() => _filter = TimelineFilter.nodes),
                   ),
                   StatusFilterChip(
-                    label: 'Signals',
+                    label: context.l10n.timelineFilterSignals,
                     count: _countForFilter(TimelineFilter.signals, allEvents),
                     isSelected: _filter == TimelineFilter.signals,
                     color: TimelineFilter.signals.color(context),
@@ -442,7 +443,7 @@ class _TimelineScreenState extends ConsumerState<TimelineScreen> {
                         setState(() => _filter = TimelineFilter.signals),
                   ),
                   StatusFilterChip(
-                    label: 'Waypoints',
+                    label: context.l10n.timelineFilterWaypoints,
                     count: _countForFilter(TimelineFilter.waypoints, allEvents),
                     isSelected: _filter == TimelineFilter.waypoints,
                     color: TimelineFilter.waypoints.color(context),
@@ -497,10 +498,10 @@ class _TimelineScreenState extends ConsumerState<TimelineScreen> {
           const SizedBox(height: AppTheme.spacing24),
           Text(
             hasActiveSearch
-                ? 'No events match your search'
+                ? context.l10n.timelineNoSearchResults
                 : hasActiveFilter
-                ? 'No events match this filter'
-                : 'No events yet',
+                ? context.l10n.timelineNoFilterResults
+                : context.l10n.timelineNoEvents,
             style: theme.textTheme.titleMedium?.copyWith(
               color: context.textSecondary,
             ),
@@ -508,8 +509,8 @@ class _TimelineScreenState extends ConsumerState<TimelineScreen> {
           const SizedBox(height: AppTheme.spacing8),
           Text(
             hasActiveSearch || hasActiveFilter
-                ? 'Try a different search or filter'
-                : 'Activity will appear here as it happens',
+                ? context.l10n.timelineTryDifferent
+                : context.l10n.timelineActivityWillAppear,
             style: theme.textTheme.bodyMedium?.copyWith(
               color: context.textTertiary,
             ),
@@ -518,7 +519,7 @@ class _TimelineScreenState extends ConsumerState<TimelineScreen> {
             const SizedBox(height: AppTheme.spacing12),
             TextButton(
               onPressed: () => setState(() => _filter = TimelineFilter.all),
-              child: const Text('Show all events'),
+              child: Text(context.l10n.timelineShowAllEvents),
             ),
           ],
         ],
@@ -536,7 +537,7 @@ class _TimelineScreenState extends ConsumerState<TimelineScreen> {
     // Group events by date
     final groupedEvents = <String, List<TimelineEvent>>{};
     for (final event in events) {
-      final dateKey = _getDateKey(event.timestamp);
+      final dateKey = _getDateKey(context, event.timestamp);
       groupedEvents.putIfAbsent(dateKey, () => []).add(event);
     }
 
@@ -670,33 +671,41 @@ class _TimelineScreenState extends ConsumerState<TimelineScreen> {
     );
   }
 
-  String _getDateKey(DateTime timestamp) {
+  String _getDateKey(BuildContext context, DateTime timestamp) {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     final eventDate = DateTime(timestamp.year, timestamp.month, timestamp.day);
 
     if (eventDate == today) {
-      return 'Today';
+      return context.l10n.timelineToday;
     } else if (eventDate == today.subtract(const Duration(days: 1))) {
-      return 'Yesterday';
+      return context.l10n.timelineYesterday;
     } else if (now.difference(timestamp).inDays < 7) {
-      return _weekdayName(timestamp.weekday);
+      return _weekdayName(context, timestamp.weekday);
     } else {
       return '${timestamp.day}/${timestamp.month}/${timestamp.year}';
     }
   }
 
-  String _weekdayName(int weekday) {
-    const names = [
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-      'Sunday',
-    ];
-    return names[weekday - 1];
+  String _weekdayName(BuildContext context, int weekday) {
+    switch (weekday) {
+      case 1:
+        return context.l10n.timelineMonday;
+      case 2:
+        return context.l10n.timelineTuesday;
+      case 3:
+        return context.l10n.timelineWednesday;
+      case 4:
+        return context.l10n.timelineThursday;
+      case 5:
+        return context.l10n.timelineFriday;
+      case 6:
+        return context.l10n.timelineSaturday;
+      case 7:
+        return context.l10n.timelineSunday;
+      default:
+        return '';
+    }
   }
 
   String _formatTime(DateTime timestamp) {

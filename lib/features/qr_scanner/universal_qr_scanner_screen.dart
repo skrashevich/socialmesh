@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/logging.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
@@ -154,7 +155,10 @@ class _UniversalQrScannerScreenState
     } catch (e) {
       AppLogging.qr('📷 Universal QR Scanner ERROR: $e');
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to process QR code: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.qrScannerFailedToProcess(e.toString()),
+        );
         setState(() => _isProcessing = false);
       }
     }
@@ -233,7 +237,7 @@ class _UniversalQrScannerScreenState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Node Already Exists',
+            context.l10n.qrScannerNodeAlreadyExists,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -242,7 +246,7 @@ class _UniversalQrScannerScreenState
           ),
           const SizedBox(height: AppTheme.spacing12),
           Text(
-            'This node is already in your list as "${existing.displayName}".',
+            context.l10n.qrScannerNodeAlreadyInList(existing.displayName),
             style: TextStyle(color: context.textSecondary, fontSize: 14),
           ),
           if (newName != null && newName != existing.longName) ...[
@@ -263,7 +267,7 @@ class _UniversalQrScannerScreenState
                   const SizedBox(width: AppTheme.spacing10),
                   Expanded(
                     child: Text(
-                      'Update name to "$newName" and add to favorites?',
+                      context.l10n.qrScannerUpdateNamePrompt(newName),
                       style: TextStyle(
                         fontSize: 13,
                         color: context.accentColor,
@@ -288,7 +292,7 @@ class _UniversalQrScannerScreenState
                     ),
                   ),
                   child: Text(
-                    'Cancel',
+                    context.l10n.qrScannerCancel,
                     style: TextStyle(color: context.textSecondary),
                   ),
                 ),
@@ -304,7 +308,7 @@ class _UniversalQrScannerScreenState
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
                   ),
-                  child: const Text('Update'),
+                  child: Text(context.l10n.qrScannerUpdate),
                 ),
               ),
             ],
@@ -329,7 +333,7 @@ class _UniversalQrScannerScreenState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Add Node',
+            context.l10n.qrScannerAddNodeTitle,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -338,13 +342,18 @@ class _UniversalQrScannerScreenState
           ),
           const SizedBox(height: AppTheme.spacing12),
           Text(
-            'Add "$displayName" to your tracked nodes?',
+            context.l10n.qrScannerAddNodePrompt(displayName),
             style: TextStyle(color: context.textSecondary, fontSize: 14),
           ),
           const SizedBox(height: AppTheme.spacing16),
-          _buildNodeInfoRow('Node ID', '!${nodeNum.toRadixString(16)}'),
-          if (longName != null) _buildNodeInfoRow('Name', longName),
-          if (shortName != null) _buildNodeInfoRow('Short', shortName),
+          _buildNodeInfoRow(
+            context.l10n.qrScannerNodeInfoId,
+            '!${nodeNum.toRadixString(16)}',
+          ),
+          if (longName != null)
+            _buildNodeInfoRow(context.l10n.qrScannerNodeInfoName, longName),
+          if (shortName != null)
+            _buildNodeInfoRow(context.l10n.qrScannerNodeInfoShort, shortName),
           const SizedBox(height: AppTheme.spacing24),
           Row(
             children: [
@@ -359,7 +368,7 @@ class _UniversalQrScannerScreenState
                     ),
                   ),
                   child: Text(
-                    'Cancel',
+                    context.l10n.qrScannerCancelAdd,
                     style: TextStyle(color: context.textSecondary),
                   ),
                 ),
@@ -375,7 +384,7 @@ class _UniversalQrScannerScreenState
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
                   ),
-                  child: const Text('Add Node'),
+                  child: Text(context.l10n.qrScannerAddNodeConfirm),
                 ),
               ),
             ],
@@ -451,7 +460,7 @@ class _UniversalQrScannerScreenState
       Navigator.pop(context);
       showSuccessSnackBar(
         context,
-        'Node "${node.displayName}" added to favorites',
+        context.l10n.qrScannerNodeAddedToFavorites(node.displayName),
       );
     }
   }
@@ -536,7 +545,7 @@ class _UniversalQrScannerScreenState
         Navigator.pop(context);
         showInfoSnackBar(
           context,
-          'You already have this channel as "${existingChannel.name}"',
+          context.l10n.qrScannerChannelAlreadyExists(existingChannel.name),
         );
       }
       return;
@@ -548,11 +557,11 @@ class _UniversalQrScannerScreenState
     while (usedIndices.contains(newIndex) && newIndex < 8) {
       newIndex++;
     }
-    if (newIndex >= 8) throw Exception('Maximum 8 channels - delete one first');
+    if (newIndex >= 8) throw Exception(context.l10n.qrScannerMaxChannels);
 
     channel = ChannelConfig(
       index: newIndex,
-      name: channelName ?? 'Imported',
+      name: channelName ?? context.l10n.qrScannerImportedChannelName,
       psk: psk,
       uplink: false,
       downlink: false,
@@ -592,7 +601,7 @@ class _UniversalQrScannerScreenState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Import Channel',
+            context.l10n.qrScannerImportChannelTitle,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -600,12 +609,15 @@ class _UniversalQrScannerScreenState
             ),
           ),
           const SizedBox(height: AppTheme.spacing16),
-          _buildChannelInfoRow('Name', channel.name),
+          _buildChannelInfoRow(
+            context.l10n.qrScannerChannelInfoName,
+            channel.name,
+          ),
           const SizedBox(height: AppTheme.spacing8),
           _buildChannelInfoRow('Slot', '${channel.index}'),
           const SizedBox(height: AppTheme.spacing8),
           _buildChannelInfoRow(
-            'Encryption',
+            context.l10n.qrScannerChannelInfoEncryption,
             '${channel.psk.length * 8}-bit AES',
           ),
           const SizedBox(height: AppTheme.spacing16),
@@ -621,7 +633,7 @@ class _UniversalQrScannerScreenState
                 const SizedBox(width: AppTheme.spacing10),
                 Expanded(
                   child: Text(
-                    'The channel will be synced to your connected device.',
+                    context.l10n.qrScannerChannelSyncNotice,
                     style: TextStyle(fontSize: 13, color: context.accentColor),
                   ),
                 ),
@@ -642,7 +654,7 @@ class _UniversalQrScannerScreenState
                     ),
                   ),
                   child: Text(
-                    'Cancel',
+                    context.l10n.qrScannerChannelCancel,
                     style: TextStyle(color: context.textSecondary),
                   ),
                 ),
@@ -659,7 +671,7 @@ class _UniversalQrScannerScreenState
                     ),
                   ),
                   child: Text(
-                    'Edit First',
+                    context.l10n.qrScannerChannelEditFirst,
                     style: TextStyle(color: context.accentColor),
                   ),
                 ),
@@ -675,7 +687,7 @@ class _UniversalQrScannerScreenState
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
                   ),
-                  child: const Text('Import'),
+                  child: Text(context.l10n.qrScannerChannelImport),
                 ),
               ),
             ],
@@ -720,7 +732,7 @@ class _UniversalQrScannerScreenState
     );
 
     if (!isConnected) {
-      showErrorSnackBar(context, 'Connect a device to import this channel');
+      showErrorSnackBar(context, context.l10n.qrScannerConnectDeviceToImport);
       safeSetState(() => _isProcessing = false);
       return;
     }
@@ -738,12 +750,18 @@ class _UniversalQrScannerScreenState
       }
 
       if (mounted) {
-        showSuccessSnackBar(context, 'Channel "${channel.name}" imported');
+        showSuccessSnackBar(
+          context,
+          context.l10n.qrScannerChannelImported(channel.name),
+        );
         navigator.pop();
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Import failed: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.qrScannerImportFailed(e.toString()),
+        );
         safeSetState(() => _isProcessing = false);
       }
     }
@@ -847,7 +865,7 @@ class _UniversalQrScannerScreenState
       appBar: AppBar(
         backgroundColor: context.background,
         title: Text(
-          'Scan QR Code',
+          context.l10n.qrScannerTitle,
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
@@ -909,13 +927,13 @@ class _UniversalQrScannerScreenState
                   ),
                   const SizedBox(height: AppTheme.spacing12),
                   Text(
-                    'Point your camera at a QR code',
+                    context.l10n.qrScannerPrompt,
                     style: TextStyle(color: context.textPrimary, fontSize: 14),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: AppTheme.spacing8),
                   Text(
-                    'Supports nodes, channels, automations, and more',
+                    context.l10n.qrScannerSupportsHint,
                     style: TextStyle(
                       color: context.textSecondary,
                       fontSize: 12,

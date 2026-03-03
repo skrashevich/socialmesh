@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
+import '../../../../core/l10n/l10n_extension.dart';
 import '../../../../core/theme.dart';
 import '../../../../core/widgets/app_bottom_sheet.dart';
 import '../../../../core/widgets/gradient_border_container.dart';
@@ -65,7 +66,7 @@ class _ActionSelectorState extends State<ActionSelector> {
                   Text(
                     hasAction
                         ? _getActionLabel(widget.currentAction!)
-                        : 'Add tap action...',
+                        : context.l10n.widgetBuilderAddTapAction,
                     style: TextStyle(
                       color: hasAction
                           ? context.textPrimary
@@ -103,23 +104,23 @@ class _ActionSelectorState extends State<ActionSelector> {
   String _getActionLabel(ActionSchema action) {
     switch (action.type) {
       case ActionType.sendMessage:
-        return 'Send Message';
+        return context.l10n.widgetBuilderActionSendMessage;
       case ActionType.shareLocation:
-        return 'Share Location';
+        return context.l10n.widgetBuilderActionShareLocation;
       case ActionType.traceroute:
-        return 'Traceroute';
+        return context.l10n.widgetBuilderActionTraceroute;
       case ActionType.requestPositions:
-        return 'Request Positions';
+        return context.l10n.widgetBuilderActionRequestPositions;
       case ActionType.sos:
-        return 'SOS Alert';
+        return context.l10n.widgetBuilderActionSosAlert;
       case ActionType.navigate:
-        return 'Navigate to ${action.navigateTo ?? 'screen'}';
+        return context.l10n.widgetBuilderActionNavigateLabel;
       case ActionType.openUrl:
-        return 'Open URL';
+        return context.l10n.widgetBuilderActionOpenUrl;
       case ActionType.copyToClipboard:
-        return 'Copy to Clipboard';
+        return context.l10n.widgetBuilderActionCopyToClipboard;
       default:
-        return 'No action';
+        return context.l10n.widgetBuilderActionNoAction;
     }
   }
 
@@ -127,24 +128,24 @@ class _ActionSelectorState extends State<ActionSelector> {
     switch (action.type) {
       case ActionType.sendMessage:
         return action.requiresNodeSelection == true
-            ? 'Pick node, then send'
-            : 'Quick message sheet';
+            ? context.l10n.widgetBuilderPickNodeThenSend
+            : context.l10n.widgetBuilderQuickMessageSheet;
       case ActionType.shareLocation:
-        return 'Share your current GPS';
+        return context.l10n.widgetBuilderActionShareLocationDesc;
       case ActionType.traceroute:
         return action.requiresNodeSelection == true
-            ? 'Pick node to trace'
-            : 'Trace route to node';
+            ? context.l10n.widgetBuilderPickNodeToTrace
+            : context.l10n.widgetBuilderTraceRouteToNode;
       case ActionType.requestPositions:
-        return 'Request all node positions';
+        return context.l10n.widgetBuilderActionRequestPositionsDesc;
       case ActionType.sos:
-        return 'Emergency alert';
+        return context.l10n.widgetBuilderActionSosAlertDesc;
       case ActionType.navigate:
-        return 'Open ${action.navigateTo ?? 'another screen'}';
+        return action.navigateTo ?? '';
       case ActionType.openUrl:
-        return action.url ?? 'External link';
+        return action.url ?? '';
       case ActionType.copyToClipboard:
-        return 'Copy bound value';
+        return context.l10n.widgetBuilderActionCopyToClipboard;
       default:
         return '';
     }
@@ -197,7 +198,7 @@ class _ActionSelectorSheetState extends State<_ActionSelectorSheet> {
             Icon(Icons.touch_app, size: 20, color: accentColor),
             SizedBox(width: AppTheme.spacing8),
             Text(
-              'What should happen when tapped?',
+              context.l10n.widgetBuilderWhatShouldHappen,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
@@ -208,57 +209,57 @@ class _ActionSelectorSheetState extends State<_ActionSelectorSheet> {
         ),
         const SizedBox(height: AppTheme.spacing8),
         Text(
-          'Choose an action for this element',
+          context.l10n.widgetBuilderChooseAction,
           style: TextStyle(color: context.textSecondary, fontSize: 13),
         ),
         SizedBox(height: AppTheme.spacing20),
 
         // Action categories
-        _buildSectionLabel('MESSAGING'),
+        _buildSectionLabel(context.l10n.widgetBuilderSectionMessaging),
         const SizedBox(height: AppTheme.spacing8),
         _buildActionTile(
           type: ActionType.sendMessage,
           icon: Icons.send,
-          title: 'Send Message',
-          description: 'Open message composer to send a message',
+          title: context.l10n.widgetBuilderActionSendMessageLabel,
+          description: context.l10n.widgetBuilderActionSendMessageDesc,
           color: AccentColors.blue,
         ),
         const SizedBox(height: AppTheme.spacing8),
         _buildActionTile(
           type: ActionType.shareLocation,
           icon: Icons.location_on,
-          title: 'Share Location',
-          description: 'Share your current GPS position',
+          title: context.l10n.widgetBuilderActionShareLocationLabel,
+          description: context.l10n.widgetBuilderActionShareLocationDesc,
           color: AppTheme.successGreen,
         ),
 
         const SizedBox(height: AppTheme.spacing16),
-        _buildSectionLabel('NETWORK'),
+        _buildSectionLabel(context.l10n.widgetBuilderSectionNetwork),
         const SizedBox(height: AppTheme.spacing8),
         _buildActionTile(
           type: ActionType.traceroute,
           icon: Icons.timeline,
-          title: 'Traceroute',
-          description: 'Trace the route to a node',
+          title: context.l10n.widgetBuilderActionTracerouteLabel,
+          description: context.l10n.widgetBuilderActionTracerouteDesc,
           color: AccentColors.orange,
         ),
         const SizedBox(height: AppTheme.spacing8),
         _buildActionTile(
           type: ActionType.requestPositions,
           icon: Icons.refresh,
-          title: 'Request Positions',
-          description: 'Ask all nodes to report their position',
+          title: context.l10n.widgetBuilderActionRequestPositionsLabel,
+          description: context.l10n.widgetBuilderActionRequestPositionsDesc,
           color: AccentColors.purple,
         ),
 
         const SizedBox(height: AppTheme.spacing16),
-        _buildSectionLabel('EMERGENCY'),
+        _buildSectionLabel(context.l10n.widgetBuilderSectionEmergency),
         const SizedBox(height: AppTheme.spacing8),
         _buildActionTile(
           type: ActionType.sos,
           icon: Icons.warning_amber,
-          title: 'SOS Alert',
-          description: 'Send emergency alert to all nodes',
+          title: context.l10n.widgetBuilderActionSosAlert,
+          description: context.l10n.widgetBuilderActionSosAlertDesc,
           color: AppTheme.errorRed,
         ),
 
@@ -281,7 +282,9 @@ class _ActionSelectorSheetState extends State<_ActionSelectorSheet> {
               padding: const EdgeInsets.symmetric(vertical: 14),
             ),
             child: Text(
-              _selectedType != null ? 'Add Action' : 'Select an action',
+              _selectedType != null
+                  ? context.l10n.widgetBuilderAddAction
+                  : context.l10n.widgetBuilderSelectAnAction,
             ),
           ),
         ),
@@ -381,7 +384,7 @@ class _ActionSelectorSheetState extends State<_ActionSelectorSheet> {
               Icon(Icons.settings, size: 16, color: accentColor),
               const SizedBox(width: AppTheme.spacing8),
               Text(
-                'Options',
+                context.l10n.widgetBuilderOptions,
                 style: TextStyle(
                   color: accentColor,
                   fontWeight: FontWeight.w600,
@@ -402,15 +405,15 @@ class _ActionSelectorSheetState extends State<_ActionSelectorSheet> {
       case ActionType.sendMessage:
         return [
           _buildCheckbox(
-            label: 'Show node picker first',
-            subtitle: 'Let user choose which node to message',
+            label: context.l10n.widgetBuilderShowNodePickerFirst,
+            subtitle: context.l10n.widgetBuilderShowNodePickerFirstDesc,
             value: _requiresNodeSelection,
             onChanged: (v) => setState(() => _requiresNodeSelection = v),
           ),
           const SizedBox(height: AppTheme.spacing8),
           _buildCheckbox(
-            label: 'Show channel picker',
-            subtitle: 'Let user choose which channel',
+            label: context.l10n.widgetBuilderShowChannelPicker,
+            subtitle: context.l10n.widgetBuilderShowChannelPickerDesc,
             value: _requiresChannelSelection,
             onChanged: (v) => setState(() => _requiresChannelSelection = v),
           ),
@@ -418,8 +421,8 @@ class _ActionSelectorSheetState extends State<_ActionSelectorSheet> {
       case ActionType.traceroute:
         return [
           _buildCheckbox(
-            label: 'Show node picker first',
-            subtitle: 'Let user choose which node to trace',
+            label: context.l10n.widgetBuilderShowNodePickerTrace,
+            subtitle: context.l10n.widgetBuilderShowNodePickerTraceDesc,
             value: _requiresNodeSelection,
             onChanged: (v) => setState(() => _requiresNodeSelection = v),
           ),
@@ -427,7 +430,7 @@ class _ActionSelectorSheetState extends State<_ActionSelectorSheet> {
       default:
         return [
           Text(
-            'No additional options',
+            context.l10n.widgetBuilderNoAdditionalOptions,
             style: TextStyle(color: context.textSecondary, fontSize: 12),
           ),
         ];

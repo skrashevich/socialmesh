@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 
 import 'package:flutter/material.dart';
@@ -63,7 +64,8 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
     return GlassScaffold.body(
       resizeToAvoidBottomInset: false,
       leading: const MeshCoreHamburgerMenuButton(),
-      title: 'Contacts${contacts.isEmpty ? '' : ' (${contacts.length})'}',
+      title:
+          '${context.l10n.meshcoreContactsTitle}${contacts.isEmpty ? '' : ' (${contacts.length})'}',
       actions: [
         const MeshCoreDeviceStatusButton(),
         AppBarOverflowMenu<String>(
@@ -91,7 +93,7 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
                   ),
                   const SizedBox(width: AppTheme.spacing12),
                   Text(
-                    'Add Contact',
+                    context.l10n.meshcoreAddContact,
                     style: TextStyle(color: context.textPrimary),
                   ),
                 ],
@@ -108,7 +110,7 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
                   ),
                   const SizedBox(width: AppTheme.spacing12),
                   Text(
-                    'Refresh Contacts',
+                    context.l10n.meshcoreRefreshContacts,
                     style: TextStyle(color: context.textPrimary),
                   ),
                 ],
@@ -125,7 +127,7 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
                   ),
                   const SizedBox(width: AppTheme.spacing12),
                   Text(
-                    'My Contact Code',
+                    context.l10n.meshcoreMyContactCode,
                     style: TextStyle(color: context.textPrimary),
                   ),
                 ],
@@ -143,7 +145,7 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
                   ),
                   const SizedBox(width: AppTheme.spacing12),
                   Text(
-                    'Disconnect',
+                    context.l10n.meshcoreDisconnect,
                     style: TextStyle(color: context.textPrimary),
                   ),
                 ],
@@ -163,13 +165,16 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
   }
 
   Widget _buildLoadingState() {
-    return const Center(
+    return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircularProgressIndicator(),
-          SizedBox(height: AppTheme.spacing16),
-          Text('Loading contacts...', style: TextStyle(color: Colors.white70)),
+          const CircularProgressIndicator(),
+          const SizedBox(height: AppTheme.spacing16),
+          Text(
+            context.l10n.meshcoreLoadingContacts,
+            style: const TextStyle(color: Colors.white70),
+          ),
         ],
       ),
     );
@@ -189,14 +194,14 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
             ),
             const SizedBox(height: AppTheme.spacing16),
             Text(
-              'MeshCore Disconnected',
+              context.l10n.meshcoreDisconnectedTitle,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 color: Colors.white.withValues(alpha: 0.8),
               ),
             ),
             const SizedBox(height: AppTheme.spacing8),
             Text(
-              'Connect to a MeshCore device to view contacts',
+              context.l10n.meshcoreDisconnectedContactsDescription,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: Colors.white.withValues(alpha: 0.6),
@@ -228,7 +233,7 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
             ),
             const SizedBox(height: AppTheme.spacing24),
             Text(
-              'No Contacts',
+              context.l10n.meshcoreNoContacts,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 color: Colors.white.withValues(alpha: 0.9),
                 fontWeight: FontWeight.bold,
@@ -236,8 +241,7 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
             ),
             const SizedBox(height: AppTheme.spacing12),
             Text(
-              'Contacts will appear here when discovered via advertisements.\n\n'
-              'You can also add contacts manually using their contact code.',
+              context.l10n.meshcoreNoContactsDescription,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: Colors.white.withValues(alpha: 0.6),
@@ -251,7 +255,7 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
                 FilledButton.icon(
                   onPressed: _showAddContactOptions,
                   icon: const Icon(Icons.person_add_rounded),
-                  label: const Text('Add Contact'),
+                  label: Text(context.l10n.meshcoreAddContactButton),
                   style: FilledButton.styleFrom(
                     backgroundColor: AccentColors.cyan.withValues(alpha: 0.3),
                     foregroundColor: AccentColors.cyan,
@@ -261,7 +265,7 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
                 OutlinedButton.icon(
                   onPressed: _refreshContacts,
                   icon: const Icon(Icons.refresh_rounded),
-                  label: const Text('Refresh'),
+                  label: Text(context.l10n.meshcoreRefreshButton),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: Colors.white.withValues(alpha: 0.8),
                     side: BorderSide(
@@ -291,7 +295,7 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
                   ),
                   const SizedBox(width: AppTheme.spacing8),
                   Text(
-                    'Connected to $deviceName',
+                    context.l10n.meshcoreConnectedTo(deviceName),
                     style: TextStyle(
                       color: AccentColors.green,
                       fontWeight: FontWeight.w500,
@@ -314,7 +318,7 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
           searchController: _searchController,
           searchQuery: _searchQuery,
           onSearchChanged: (value) => setState(() => _searchQuery = value),
-          hintText: 'Search contacts...',
+          hintText: context.l10n.meshcoreSearchContactsHint,
         ),
         // Contacts list
         Expanded(
@@ -347,7 +351,7 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
                 ),
                 const SizedBox(width: AppTheme.spacing8),
                 Text(
-                  'Refreshing...',
+                  context.l10n.meshcoreRefreshing,
                   style: TextStyle(color: context.textTertiary),
                 ),
               ],
@@ -372,7 +376,7 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
           Padding(
             padding: const EdgeInsets.only(bottom: 16),
             child: Text(
-              'Add Contact',
+              context.l10n.meshcoreAddContact,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -381,8 +385,8 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
           ),
           _buildOptionTile(
             icon: Icons.qr_code_scanner_rounded,
-            title: 'Scan QR Code',
-            subtitle: "Scan a contact's QR code",
+            title: context.l10n.meshcoreScanQrCode,
+            subtitle: context.l10n.meshcoreScanContactQrSubtitle,
             onTap: () {
               HapticFeedback.lightImpact();
               Navigator.pop(context);
@@ -391,8 +395,8 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
           ),
           _buildOptionTile(
             icon: Icons.keyboard_rounded,
-            title: 'Enter Code Manually',
-            subtitle: 'Type a contact code',
+            title: context.l10n.meshcoreEnterCodeManually,
+            subtitle: context.l10n.meshcoreTypeContactCode,
             onTap: () {
               Navigator.pop(context);
               _enterContactCode();
@@ -433,7 +437,7 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
     final selfInfo = selfInfoState.selfInfo;
 
     if (selfInfo == null) {
-      showInfoSnackBar(context, 'Self info not available');
+      showInfoSnackBar(context, context.l10n.meshcoreSelfInfoNotAvailable);
       return;
     }
 
@@ -445,9 +449,9 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
     QrShareSheet.show(
       context: context,
       title: selfInfo.nodeName,
-      subtitle: 'Scan this code to add me as a contact',
+      subtitle: context.l10n.meshcoreScanToAddMeSubtitle,
       qrData: contactCode,
-      infoText: 'Share your contact code so others can message you',
+      infoText: context.l10n.meshcoreShareContactCodeInfo,
     );
   }
 
@@ -490,7 +494,7 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
                     );
                   },
                   icon: const Icon(Icons.chat_rounded),
-                  label: const Text('Message'),
+                  label: Text(context.l10n.meshcoreMessageButton),
                   style: FilledButton.styleFrom(
                     backgroundColor: AccentColors.cyan.withValues(alpha: 0.3),
                     foregroundColor: AccentColors.cyan,
@@ -502,10 +506,13 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
                 onPressed: () {
                   final code = generateContactCode(contact);
                   Clipboard.setData(ClipboardData(text: code));
-                  showSuccessSnackBar(context, 'Contact code copied');
+                  showSuccessSnackBar(
+                    context,
+                    context.l10n.meshcoreContactCodeCopied,
+                  );
                 },
                 icon: const Icon(Icons.share_rounded),
-                label: const Text('Share'),
+                label: Text(context.l10n.meshcoreShare),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: Colors.white.withValues(alpha: 0.8),
                   side: BorderSide(color: Colors.white.withValues(alpha: 0.3)),
@@ -558,9 +565,9 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
           ListTile(
             contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.chat_rounded, color: AccentColors.cyan),
-            title: const Text(
-              'Send Message',
-              style: TextStyle(color: Colors.white),
+            title: Text(
+              context.l10n.meshcoreSendMessage,
+              style: const TextStyle(color: Colors.white),
             ),
             onTap: () {
               Navigator.pop(context);
@@ -575,22 +582,25 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
           ListTile(
             contentPadding: EdgeInsets.zero,
             leading: Icon(Icons.share_rounded, color: context.textSecondary),
-            title: const Text(
-              'Share Contact',
-              style: TextStyle(color: Colors.white),
+            title: Text(
+              context.l10n.meshcoreShareContact,
+              style: const TextStyle(color: Colors.white),
             ),
             onTap: () {
               Navigator.pop(context);
               final code = generateContactCode(contact);
               Clipboard.setData(ClipboardData(text: code));
-              showSuccessSnackBar(context, 'Contact code copied');
+              showSuccessSnackBar(
+                context,
+                context.l10n.meshcoreContactCodeCopied,
+              );
             },
           ),
           ListTile(
             contentPadding: EdgeInsets.zero,
             leading: Icon(Icons.delete_rounded, color: AppTheme.errorRed),
             title: Text(
-              'Remove Contact',
+              context.l10n.meshcoreRemoveContact,
               style: TextStyle(color: AppTheme.errorRed),
             ),
             onTap: () {
@@ -606,9 +616,9 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
   Future<void> _confirmRemoveContact(MeshCoreContact contact) async {
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Remove Contact?',
-      message: 'Are you sure you want to remove ${contact.name}?',
-      confirmLabel: 'Remove',
+      title: context.l10n.meshcoreRemoveContactTitle,
+      message: context.l10n.meshcoreRemoveContactMessage(contact.name),
+      confirmLabel: context.l10n.meshcoreRemove,
       isDestructive: true,
     );
 
@@ -618,7 +628,10 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
     ref
         .read(meshCoreContactsProvider.notifier)
         .removeContact(contact.publicKeyHex);
-    showSuccessSnackBar(context, '${contact.name} removed');
+    showSuccessSnackBar(
+      context,
+      context.l10n.meshcoreContactRemoved(contact.name),
+    );
   }
 
   void _disconnect() async {
@@ -645,7 +658,7 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Enter Contact Code',
+            context.l10n.meshcoreEnterContactCode,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -660,7 +673,7 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
             autofocus: true,
             maxLines: 3,
             decoration: InputDecoration(
-              hintText: 'Paste contact code here...',
+              hintText: context.l10n.meshcorePasteContactCodeHint,
               hintStyle: TextStyle(color: Colors.white.withValues(alpha: 0.4)),
               filled: true,
               fillColor: Colors.white.withValues(alpha: 0.05),
@@ -688,7 +701,7 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
                   ),
-                  child: const Text('Cancel'),
+                  child: Text(context.l10n.meshcoreCancel),
                 ),
               ),
               const SizedBox(width: AppTheme.spacing12),
@@ -702,9 +715,15 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
                       ref
                           .read(meshCoreContactsProvider.notifier)
                           .addContact(contact);
-                      showSuccessSnackBar(context, '${contact.name} added');
+                      showSuccessSnackBar(
+                        context,
+                        context.l10n.meshcoreContactAdded(contact.name),
+                      );
                     } else {
-                      showErrorSnackBar(context, 'Invalid contact code');
+                      showErrorSnackBar(
+                        context,
+                        context.l10n.meshcoreInvalidContactCode,
+                      );
                     }
                   },
                   style: FilledButton.styleFrom(
@@ -714,7 +733,7 @@ class _MeshCoreContactsScreenState extends ConsumerState<MeshCoreContactsScreen>
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
                   ),
-                  child: const Text('Add'),
+                  child: Text(context.l10n.meshcoreAdd),
                 ),
               ),
             ],

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:firebase_auth/firebase_auth.dart';
+import '../../core/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -55,10 +56,7 @@ class _MFAEnrollmentScreenState extends ConsumerState<MFAEnrollmentScreen>
     final isOnline = ref.read(isOnlineProvider);
     if (!isOnline) {
       AppLogging.mfa('_sendCode — blocked, device is offline');
-      showErrorSnackBar(
-        context,
-        'Sending verification codes requires an internet connection.',
-      );
+      showErrorSnackBar(context, context.l10n.authMfaSendCodeRequiresInternet);
       return;
     }
 
@@ -100,7 +98,7 @@ class _MFAEnrollmentScreenState extends ConsumerState<MFAEnrollmentScreen>
           });
           showSuccessSnackBar(
             context,
-            'Verification code sent to $phoneNumber',
+            context.l10n.authMfaCodeSentTo(phoneNumber),
           );
           AppLogging.mfa(
             '_sendCode — state updated: isCodeSent=true, isLoading=false',
@@ -167,7 +165,7 @@ class _MFAEnrollmentScreenState extends ConsumerState<MFAEnrollmentScreen>
             });
             showSuccessSnackBar(
               context,
-              'Verification code sent to $phoneNumber',
+              context.l10n.authMfaCodeSentTo(phoneNumber),
             );
           },
           onError: (errorCode) {
@@ -205,10 +203,7 @@ class _MFAEnrollmentScreenState extends ConsumerState<MFAEnrollmentScreen>
     final isOnline = ref.read(isOnlineProvider);
     if (!isOnline) {
       AppLogging.mfa('_verifyCode — blocked, device is offline');
-      showErrorSnackBar(
-        context,
-        'Verifying codes requires an internet connection.',
-      );
+      showErrorSnackBar(context, context.l10n.authMfaVerifyRequiresInternet);
       return;
     }
 
@@ -222,7 +217,10 @@ class _MFAEnrollmentScreenState extends ConsumerState<MFAEnrollmentScreen>
       AppLogging.mfa(
         '_verifyCode — invalid code length: ${code.length} (expected 6)',
       );
-      showWarningSnackBar(context, 'Please enter the 6-digit code');
+      showWarningSnackBar(
+        context,
+        context.l10n.authMfaEnterSixDigitCodeWarning,
+      );
       return;
     }
 
@@ -255,7 +253,7 @@ class _MFAEnrollmentScreenState extends ConsumerState<MFAEnrollmentScreen>
 
       await haptics.trigger(HapticType.success);
       if (!mounted) return;
-      safeShowSnackBar('Two-factor authentication enabled');
+      safeShowSnackBar(context.l10n.authMfaEnabled);
       AppLogging.mfa('_verifyCode — success, popping with result=true');
 
       navigator.pop(true);
@@ -282,7 +280,7 @@ class _MFAEnrollmentScreenState extends ConsumerState<MFAEnrollmentScreen>
     return GestureDetector(
       onTap: _dismissKeyboard,
       child: GlassScaffold.body(
-        title: 'Enable Two-Factor Auth',
+        title: context.l10n.authMfaEnrollmentTitle,
         body: Padding(
           padding: const EdgeInsets.all(AppTheme.spacing16),
           child: Form(
@@ -293,7 +291,7 @@ class _MFAEnrollmentScreenState extends ConsumerState<MFAEnrollmentScreen>
                 Icon(Icons.security, size: 64, color: context.accentColor),
                 const SizedBox(height: AppTheme.spacing24),
                 Text(
-                  'Add an extra layer of security',
+                  context.l10n.authMfaEnrollmentHeading,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -303,7 +301,7 @@ class _MFAEnrollmentScreenState extends ConsumerState<MFAEnrollmentScreen>
                 ),
                 const SizedBox(height: AppTheme.spacing8),
                 Text(
-                  'You\'ll receive a verification code via SMS when signing in',
+                  context.l10n.authMfaEnrollmentSubheading,
                   style: TextStyle(fontSize: 14, color: context.textSecondary),
                   textAlign: TextAlign.center,
                 ),
@@ -317,8 +315,8 @@ class _MFAEnrollmentScreenState extends ConsumerState<MFAEnrollmentScreen>
                     enabled: !_isLoading,
                     style: TextStyle(color: context.textPrimary),
                     decoration: InputDecoration(
-                      labelText: 'Phone Number',
-                      hintText: '+1 234 567 890',
+                      labelText: context.l10n.authMfaPhoneNumberLabel,
+                      hintText: context.l10n.authMfaPhoneNumberHint,
                       prefixIcon: Icon(Icons.phone, color: context.accentColor),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(AppTheme.radius12),
@@ -338,10 +336,10 @@ class _MFAEnrollmentScreenState extends ConsumerState<MFAEnrollmentScreen>
                     ),
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
-                        return 'Please enter your phone number';
+                        return context.l10n.authMfaPhoneRequired;
                       }
                       if (!value.startsWith('+')) {
-                        return 'Phone number must include country code (+1, +44, etc.)';
+                        return context.l10n.authMfaPhoneCountryCodeRequired;
                       }
                       return null;
                     },
@@ -359,7 +357,11 @@ class _MFAEnrollmentScreenState extends ConsumerState<MFAEnrollmentScreen>
                             ),
                           )
                         : const Icon(Icons.send),
-                    label: Text(_isLoading ? 'Sending...' : 'Send Code'),
+                    label: Text(
+                      _isLoading
+                          ? context.l10n.authMfaSendingButton
+                          : context.l10n.authMfaSendCodeButton,
+                    ),
                     style: FilledButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
@@ -382,8 +384,8 @@ class _MFAEnrollmentScreenState extends ConsumerState<MFAEnrollmentScreen>
                     ),
                     textAlign: TextAlign.center,
                     decoration: InputDecoration(
-                      labelText: 'Verification Code',
-                      hintText: '000000',
+                      labelText: context.l10n.authMfaVerificationCodeLabel,
+                      hintText: context.l10n.authMfaVerificationCodeHint,
                       counterText: '',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(AppTheme.radius12),
@@ -404,7 +406,9 @@ class _MFAEnrollmentScreenState extends ConsumerState<MFAEnrollmentScreen>
                   ),
                   const SizedBox(height: AppTheme.spacing16),
                   Text(
-                    'Enter the 6-digit code sent to ${_phoneController.text}',
+                    context.l10n.authMfaEnterCodeSentToPhone(
+                      _phoneController.text,
+                    ),
                     style: TextStyle(
                       fontSize: 12,
                       color: context.textSecondary,
@@ -425,7 +429,9 @@ class _MFAEnrollmentScreenState extends ConsumerState<MFAEnrollmentScreen>
                           )
                         : const Icon(Icons.verified_user),
                     label: Text(
-                      _isLoading ? 'Verifying...' : 'Verify & Enable',
+                      _isLoading
+                          ? context.l10n.authMfaVerifyingButton
+                          : context.l10n.authMfaVerifyAndEnableButton,
                     ),
                     style: FilledButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
@@ -447,7 +453,7 @@ class _MFAEnrollmentScreenState extends ConsumerState<MFAEnrollmentScreen>
                               _codeController.clear();
                             });
                           },
-                    child: const Text('Change Phone Number'),
+                    child: Text(context.l10n.authMfaChangePhoneNumber),
                   ),
                 ],
               ],

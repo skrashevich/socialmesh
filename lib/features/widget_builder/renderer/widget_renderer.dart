@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // lint-allow: haptic-feedback — onTap is forwarded from parent callback (editor preview)
+import '../../../core/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/widget_schema.dart';
@@ -377,7 +378,7 @@ class _ElementRenderer extends StatelessWidget {
                 borderRadius: BorderRadius.circular(AppTheme.radius4),
               ),
               child: Text(
-                'Map View',
+                context.l10n.widgetBuilderMapView,
                 style: TextStyle(color: context.textTertiary, fontSize: 10),
               ),
             ),

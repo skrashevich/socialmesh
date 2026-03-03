@@ -10,6 +10,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../core/l10n/l10n_extension.dart';
+
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/widgets/app_bottom_sheet.dart';
 import '../../utils/share_utils.dart';
@@ -101,7 +103,7 @@ class _ARRadarScreenState extends ConsumerState<ARRadarScreen>
       final cameras = await availableCameras();
       if (!mounted) return;
       if (cameras.isEmpty) {
-        setState(() => _cameraError = 'No cameras available');
+        setState(() => _cameraError = context.l10n.arNoCamerasAvailable);
         return;
       }
 
@@ -383,7 +385,9 @@ class _ARRadarScreenState extends ConsumerState<ARRadarScreen>
                     HapticFeedback.mediumImpact();
                     showInfoSnackBar(
                       context,
-                      _isLocked ? 'Touch locked' : 'Touch unlocked',
+                      _isLocked
+                          ? context.l10n.arTouchLocked
+                          : context.l10n.arTouchUnlocked,
                     );
                   },
                 ),
@@ -502,9 +506,9 @@ class _ARRadarScreenState extends ConsumerState<ARRadarScreen>
               ),
             ),
             const SizedBox(height: AppTheme.spacing24),
-            const Text(
-              'INITIALIZING AR ENGINE',
-              style: TextStyle(
+            Text(
+              context.l10n.arInitializingEngine,
+              style: const TextStyle(
                 color: Color(0xFF00E5FF),
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
@@ -514,7 +518,7 @@ class _ARRadarScreenState extends ConsumerState<ARRadarScreen>
             ),
             const SizedBox(height: AppTheme.spacing8),
             Text(
-              'Calibrating sensors...',
+              context.l10n.arCalibratingSensors,
               style: TextStyle(
                 color: Colors.white.withValues(alpha: 0.6),
                 fontSize: 12,
@@ -542,9 +546,9 @@ class _ARRadarScreenState extends ConsumerState<ARRadarScreen>
                 size: 64,
               ),
               const SizedBox(height: AppTheme.spacing16),
-              const Text(
-                'AR ENGINE ERROR',
-                style: TextStyle(
+              Text(
+                context.l10n.arEngineError,
+                style: const TextStyle(
                   color: Color(0xFFFF1744),
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -567,7 +571,7 @@ class _ARRadarScreenState extends ConsumerState<ARRadarScreen>
                   backgroundColor: const Color(0xFF00E5FF),
                   foregroundColor: Colors.black,
                 ),
-                child: const Text('RETRY'),
+                child: Text(context.l10n.arRetry),
               ),
             ],
           ),
@@ -661,7 +665,7 @@ class _ARRadarScreenState extends ConsumerState<ARRadarScreen>
   void _navigateToNode(ARWorldNode node) async {
     final meshNode = node.node;
     if (meshNode.latitude == null || meshNode.longitude == null) {
-      showInfoSnackBar(context, 'Node has no GPS position');
+      showInfoSnackBar(context, context.l10n.arNodeNoGpsPosition);
       return;
     }
 
@@ -677,7 +681,7 @@ class _ARRadarScreenState extends ConsumerState<ARRadarScreen>
       await launchUrl(url, mode: LaunchMode.externalApplication);
     } else {
       if (mounted) {
-        showInfoSnackBar(context, 'Could not open maps for $name');
+        showInfoSnackBar(context, context.l10n.arCouldNotOpenMaps(name));
       }
     }
   }

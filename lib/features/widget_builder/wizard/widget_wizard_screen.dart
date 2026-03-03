@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import '../../../core/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
@@ -131,21 +132,23 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
   List<_WizardStep> get _steps {
     final isQuickActions = _selectedTemplate?.id == 'actions';
     return [
-      const _WizardStep(
-        title: 'Choose a Style',
-        subtitle: 'How do you want your widget to look?',
+      _WizardStep(
+        title: context.l10n.widgetBuilderWizardStep1Title,
+        subtitle: context.l10n.widgetBuilderWizardStep1Subtitle,
         icon: Icons.style,
       ),
-      const _WizardStep(
-        title: 'Name Your Widget',
-        subtitle: 'Give it a memorable name',
+      _WizardStep(
+        title: context.l10n.widgetBuilderWizardStep2Title,
+        subtitle: context.l10n.widgetBuilderWizardStep2Subtitle,
         icon: Icons.text_fields,
       ),
       _WizardStep(
-        title: isQuickActions ? 'Choose Actions' : 'Pick Your Data',
+        title: isQuickActions
+            ? context.l10n.widgetBuilderWizardStep3TitleActions
+            : context.l10n.widgetBuilderWizardStep3TitleData,
         subtitle: isQuickActions
-            ? 'Which actions do you want quick access to?'
-            : 'What info do you want to see?',
+            ? context.l10n.widgetBuilderWizardStep3SubtitleActions
+            : context.l10n.widgetBuilderWizardStep3SubtitleData,
         icon: isQuickActions ? Icons.touch_app : Icons.data_usage,
       ),
       const _WizardStep(
@@ -803,7 +806,7 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
                         borderRadius: BorderRadius.circular(AppTheme.radius12),
                       ),
                     ),
-                    child: const Text('Keep Current'),
+                    child: Text(context.l10n.widgetBuilderKeepCurrent),
                   ),
                 ),
                 const SizedBox(width: AppTheme.spacing12),
@@ -817,7 +820,7 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
                         borderRadius: BorderRadius.circular(AppTheme.radius12),
                       ),
                     ),
-                    child: const Text('Switch'),
+                    child: Text(context.l10n.widgetBuilderSwitch),
                   ),
                 ),
               ],
@@ -2573,7 +2576,7 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
                   ),
-                  child: const Text('Merge'),
+                  child: Text(context.l10n.widgetBuilderMerge),
                 ),
               ),
             ],

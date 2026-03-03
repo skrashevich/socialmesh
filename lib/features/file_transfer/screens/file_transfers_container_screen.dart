@@ -7,6 +7,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
+
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/app_bar_overflow_menu.dart';
@@ -75,7 +77,7 @@ class _FileTransfersContainerScreenState
         resizeToAvoidBottomInset: false,
         leading: canPop ? const BackButton() : const HamburgerMenuButton(),
         centerTitle: true,
-        title: 'File Transfers',
+        title: context.l10n.fileTransferContainerTitle,
         actions: [
           IcoHelpAppBarButton(topicId: 'file_transfer_overview'),
           const DeviceStatusButton(),
@@ -90,7 +92,7 @@ class _FileTransfersContainerScreenState
                     color: context.accentColor,
                     size: 20,
                   ),
-                  title: const Text('Send File'),
+                  title: Text(context.l10n.fileTransferContainerSendFile),
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
@@ -102,7 +104,7 @@ class _FileTransfersContainerScreenState
                     color: context.textSecondary,
                     size: 20,
                   ),
-                  title: const Text('Clear Completed'),
+                  title: Text(context.l10n.fileTransferContainerClearCompleted),
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
@@ -114,7 +116,7 @@ class _FileTransfersContainerScreenState
                     color: context.textSecondary,
                     size: 20,
                   ),
-                  title: const Text('Purge Expired'),
+                  title: Text(context.l10n.fileTransferContainerPurgeExpired),
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
@@ -150,7 +152,7 @@ class _FileTransfersContainerScreenState
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Text('Contacts'),
+                      Text(context.l10n.fileTransferTabContacts),
                       const SizedBox(width: AppTheme.spacing6),
                       _TabBadge(count: contactCount),
                     ],
@@ -160,7 +162,7 @@ class _FileTransfersContainerScreenState
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Text('Files'),
+                      Text(context.l10n.fileTransferTabFiles),
                       const SizedBox(width: AppTheme.spacing6),
                       _TabBadge(
                         count: fileCount,
@@ -236,7 +238,7 @@ class _FileTransfersContainerScreenState
 
     // Step 2: validate size against the mesh limit.
     if (bytes.isEmpty) {
-      showWarningSnackBar(context, 'The selected file is empty.');
+      showWarningSnackBar(context, context.l10n.fileTransferFileEmpty);
       return;
     }
     if (bytes.length > SmFileTransferLimits.maxFileSize) {
@@ -252,7 +254,7 @@ class _FileTransfersContainerScreenState
     // Step 3: pick destination node.
     final selection = await NodeSelectorSheet.show(
       context,
-      title: 'Send to Node',
+      title: context.l10n.fileTransferContainerSendToNode,
       allowBroadcast: false,
     );
     final nodeNum = selection?.nodeNum;
@@ -271,12 +273,12 @@ class _FileTransfersContainerScreenState
 
     if (!mounted) return;
     if (transfer != null) {
-      showSuccessSnackBar(context, 'Transfer started: ${transfer.filename}');
-    } else {
-      showErrorSnackBar(
+      showSuccessSnackBar(
         context,
-        'Could not start transfer. Check that a node is connected and try again.',
+        context.l10n.fileTransferContainerStarted(transfer.filename),
       );
+    } else {
+      showErrorSnackBar(context, context.l10n.fileTransferCouldNotStart);
     }
   }
 
@@ -304,11 +306,9 @@ class _FileTransfersContainerScreenState
 
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Clear Completed Transfers?',
-      message:
-          'Remove all completed, failed, and cancelled transfers? '
-          'Active transfers will not be affected.',
-      confirmLabel: 'Clear',
+      title: context.l10n.fileTransferContainerClearTitle,
+      message: context.l10n.fileTransferContainerClearMessage,
+      confirmLabel: context.l10n.fileTransferContainerClearCompleted,
       isDestructive: true,
     );
 
@@ -318,7 +318,10 @@ class _FileTransfersContainerScreenState
     final count = await notifier.clearTerminalTransfers();
     if (!mounted) return;
 
-    showSuccessSnackBar(context, 'Cleared $count transfers');
+    showSuccessSnackBar(
+      context,
+      context.l10n.fileTransferContainerCleared(count),
+    );
   }
 
   Future<void> _purgeExpired() async {
@@ -331,7 +334,7 @@ class _FileTransfersContainerScreenState
     await notifier.purgeExpired();
     if (!mounted) return;
 
-    showSuccessSnackBar(context, 'Expired transfers purged');
+    showSuccessSnackBar(context, context.l10n.fileTransferContainerPurged);
   }
 }
 

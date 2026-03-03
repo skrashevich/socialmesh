@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/app_bar_overflow_menu.dart';
@@ -187,12 +188,12 @@ class _AppLogScreenState extends ConsumerState<AppLogScreen>
         builder: (context, setSheetState) => Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
               child: BottomSheetHeader(
                 icon: Icons.filter_list,
-                title: 'Filter Log Levels',
-                subtitle: 'Select which levels to display',
+                title: context.l10n.debugScreenFilterLogLevels,
+                subtitle: context.l10n.debugScreenFilterSubtitle,
               ),
             ),
             const SizedBox(height: AppTheme.spacing16),
@@ -219,7 +220,7 @@ class _AppLogScreenState extends ConsumerState<AppLogScreen>
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: BottomSheetButtons(
-                confirmLabel: 'Apply',
+                confirmLabel: context.l10n.debugScreenApply,
                 onConfirm: () {
                   ref
                       .read(filteredLogsProvider.notifier)
@@ -244,13 +245,9 @@ class _AppLogScreenState extends ConsumerState<AppLogScreen>
     // Disclosure gate: inform user what the export contains
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Debug Export',
-      message:
-          'This export includes device info, connection state, node list, '
-          'route metadata, and recent app logs.\n\n'
-          'Message text is redacted and GPS coordinates are coarsened. '
-          'Review the file before sharing with anyone.',
-      confirmLabel: 'Export',
+      title: context.l10n.debugScreenDebugExportTitle,
+      message: context.l10n.debugScreenDebugExportMessage,
+      confirmLabel: context.l10n.debugScreenExport,
     );
     if (confirmed != true || !mounted) return;
 
@@ -262,7 +259,7 @@ class _AppLogScreenState extends ConsumerState<AppLogScreen>
     try {
       showInfoSnackBar(
         context,
-        'Generating debug export...',
+        context.l10n.debugScreenGeneratingExport,
         duration: const Duration(seconds: 1),
       );
 
@@ -272,7 +269,10 @@ class _AppLogScreenState extends ConsumerState<AppLogScreen>
       await exportService.exportAndShare(sharePositionOrigin);
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Export failed: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.debugScreenExportFailed(e.toString()),
+        );
       }
     }
   }
@@ -281,15 +281,15 @@ class _AppLogScreenState extends ConsumerState<AppLogScreen>
     final logger = ref.read(appLoggerProvider);
     final content = logger.export();
     Clipboard.setData(ClipboardData(text: content));
-    showSuccessSnackBar(context, 'Log copied to clipboard');
+    showSuccessSnackBar(context, context.l10n.debugScreenLogCopied);
   }
 
   Future<void> _clearLogs() async {
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Clear Logs',
-      message: 'Are you sure you want to clear all logs?',
-      confirmLabel: 'Clear',
+      title: context.l10n.debugScreenClearLogsTitle,
+      message: context.l10n.debugScreenClearLogsMessage,
+      confirmLabel: context.l10n.debugScreenClear,
       isDestructive: true,
     );
     if (confirmed == true && mounted) {
@@ -305,14 +305,16 @@ class _AppLogScreenState extends ConsumerState<AppLogScreen>
 
     return GlassScaffold(
       resizeToAvoidBottomInset: false,
-      title: 'App Log',
+      title: context.l10n.debugScreenAppLogTitle,
       actions: [
         IconButton(
           icon: Icon(
             _autoScroll ? Icons.vertical_align_bottom : Icons.pause,
             color: _autoScroll ? context.accentColor : context.textSecondary,
           ),
-          tooltip: _autoScroll ? 'Auto-scroll on' : 'Auto-scroll off',
+          tooltip: _autoScroll
+              ? context.l10n.debugScreenAutoScrollOn
+              : context.l10n.debugScreenAutoScrollOff,
           onPressed: () {
             setState(() => _autoScroll = !_autoScroll);
           },
@@ -350,7 +352,10 @@ class _AppLogScreenState extends ConsumerState<AppLogScreen>
                     size: 20,
                   ),
                   SizedBox(width: AppTheme.spacing12),
-                  Text('Filter', style: TextStyle(color: context.textPrimary)),
+                  Text(
+                    context.l10n.debugScreenFilter,
+                    style: TextStyle(color: context.textPrimary),
+                  ),
                 ],
               ),
             ),
@@ -360,7 +365,10 @@ class _AppLogScreenState extends ConsumerState<AppLogScreen>
                 children: [
                   Icon(Icons.copy, color: context.textSecondary, size: 20),
                   SizedBox(width: AppTheme.spacing12),
-                  Text('Copy', style: TextStyle(color: context.textPrimary)),
+                  Text(
+                    context.l10n.debugScreenCopy,
+                    style: TextStyle(color: context.textPrimary),
+                  ),
                 ],
               ),
             ),
@@ -371,7 +379,7 @@ class _AppLogScreenState extends ConsumerState<AppLogScreen>
                   Icon(Icons.share, color: context.textSecondary, size: 20),
                   SizedBox(width: AppTheme.spacing12),
                   Text(
-                    'Share Log',
+                    context.l10n.debugScreenShareLog,
                     style: TextStyle(color: context.textPrimary),
                   ),
                 ],
@@ -384,7 +392,7 @@ class _AppLogScreenState extends ConsumerState<AppLogScreen>
                   Icon(Icons.bug_report, color: context.accentColor, size: 20),
                   SizedBox(width: AppTheme.spacing12),
                   Text(
-                    'Export Debug JSON',
+                    context.l10n.debugScreenExportDebugJson,
                     style: TextStyle(color: context.accentColor),
                   ),
                 ],
@@ -400,7 +408,10 @@ class _AppLogScreenState extends ConsumerState<AppLogScreen>
                     size: 20,
                   ),
                   SizedBox(width: AppTheme.spacing12),
-                  Text('Clear', style: TextStyle(color: AppTheme.errorRed)),
+                  Text(
+                    context.l10n.debugScreenClearMenuItem,
+                    style: TextStyle(color: AppTheme.errorRed),
+                  ),
                 ],
               ),
             ),
@@ -415,7 +426,7 @@ class _AppLogScreenState extends ConsumerState<AppLogScreen>
             searchController: _searchController,
             searchQuery: _searchQuery,
             onSearchChanged: (value) => setState(() => _searchQuery = value),
-            hintText: 'Search logs...',
+            hintText: context.l10n.debugScreenSearchLogsHint,
             textScaler: MediaQuery.textScalerOf(context),
           ),
         ),
@@ -427,7 +438,7 @@ class _AppLogScreenState extends ConsumerState<AppLogScreen>
             child: Row(
               children: [
                 Text(
-                  '${logs.length} entries',
+                  context.l10n.debugScreenEntryCount(logs.length),
                   style: Theme.of(
                     context,
                   ).textTheme.bodySmall?.copyWith(color: context.textTertiary),
@@ -444,7 +455,7 @@ class _AppLogScreenState extends ConsumerState<AppLogScreen>
                       borderRadius: BorderRadius.circular(AppTheme.radius6),
                     ),
                     child: Text(
-                      'Filtered',
+                      context.l10n.debugScreenFiltered,
                       style: TextStyle(
                         fontSize: 11,
                         color: context.accentColor,
@@ -474,7 +485,7 @@ class _AppLogScreenState extends ConsumerState<AppLogScreen>
                   ),
                   SizedBox(height: AppTheme.spacing16),
                   Text(
-                    'No log entries',
+                    context.l10n.debugScreenNoLogEntries,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       color: context.textTertiary,
                     ),

@@ -3,6 +3,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import '../../../core/l10n/l10n_extension.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -119,15 +121,16 @@ class _ImageViewer extends StatelessWidget {
               child: Image.memory(
                 bytes,
                 fit: BoxFit.contain,
-                errorBuilder: (context, error, stack) =>
-                    _ErrorPlaceholder(message: 'Could not decode image'),
+                errorBuilder: (context, error, stack) => _ErrorPlaceholder(
+                  message: context.l10n.fileTransferImageDecodeError,
+                ),
               ),
             ),
           ),
 
           const SizedBox(height: AppTheme.spacing12),
           Text(
-            'Pinch to zoom',
+            context.l10n.fileTransferPinchToZoom,
             style: TextStyle(color: context.textTertiary, fontSize: 12),
           ),
         ],
@@ -290,7 +293,7 @@ class _HexViewer extends StatelessWidget {
                 const SizedBox(width: AppTheme.spacing8),
                 Expanded(
                   child: Text(
-                    'Binary file — save to open with an external app',
+                    context.l10n.fileTransferBinaryFileHint,
                     style: TextStyle(
                       color: context.textSecondary,
                       fontSize: 13,
@@ -346,7 +349,9 @@ class _HexViewer extends StatelessWidget {
                   if (bytes.length > previewLength) ...[
                     const SizedBox(height: AppTheme.spacing8),
                     Text(
-                      '... ${bytes.length - previewLength} more bytes',
+                      context.l10n.fileTransferMoreBytes(
+                        bytes.length - previewLength,
+                      ),
                       style: TextStyle(
                         color: context.textTertiary,
                         fontSize: 12,
@@ -433,7 +438,7 @@ class _CopyButton extends StatelessWidget {
         Clipboard.setData(ClipboardData(text: text));
         showInfoSnackBar(
           context,
-          'Copied to clipboard',
+          context.l10n.fileTransferCopiedToClipboard,
           duration: const Duration(seconds: 1),
         );
       },
@@ -449,7 +454,7 @@ class _CopyButton extends StatelessWidget {
             Icon(Icons.copy, size: 12, color: context.accentColor),
             const SizedBox(width: AppTheme.spacing4),
             Text(
-              'Copy',
+              context.l10n.fileTransferCopyAction,
               style: TextStyle(
                 color: context.accentColor,
                 fontSize: 11,
@@ -563,7 +568,12 @@ class _DiskFileLoaderState extends State<_DiskFileLoader> {
       final bytes = await File(widget.path).readAsBytes();
       if (mounted) setState(() => _bytes = bytes);
     } catch (e) {
-      if (mounted) setState(() => _error = 'Could not read file: $e');
+      if (mounted) {
+        setState(
+          () =>
+              _error = context.l10n.fileTransferCouldNotReadFile(e.toString()),
+        );
+      }
     }
   }
 
