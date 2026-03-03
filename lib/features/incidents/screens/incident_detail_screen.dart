@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/auth/permission.dart';
 import '../../../core/auth/permission_provider.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/logging.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
@@ -14,6 +15,7 @@ import '../../../core/widgets/glass_scaffold.dart';
 import '../../../core/widgets/permission_gate.dart';
 import '../../../services/haptic_service.dart';
 import '../../../utils/snackbar.dart';
+import '../../../l10n/app_localizations.dart';
 import '../models/incident.dart';
 import '../providers/incident_providers.dart';
 import '../widgets/transition_timeline.dart';
@@ -48,20 +50,25 @@ class _IncidentDetailScreenState extends ConsumerState<IncidentDetailScreen>
       behavior: HitTestBehavior.opaque,
       child: incidentAsync.when(
         loading: () => GlassScaffold.body(
-          title: 'Incident',
+          title: context.l10n.incidentDetailTitleLoading,
           body: const Center(child: CircularProgressIndicator()),
         ),
         error: (e, _) => GlassScaffold.body(
-          title: 'Incident',
-          body: Center(child: Text('Error: $e', style: context.bodyMutedStyle)),
+          title: context.l10n.incidentDetailTitleLoading,
+          body: Center(
+            child: Text(
+              context.l10n.incidentDetailError('$e'),
+              style: context.bodyMutedStyle,
+            ),
+          ),
         ),
         data: (incident) {
           if (incident == null) {
             return GlassScaffold.body(
-              title: 'Incident',
+              title: context.l10n.incidentDetailTitleLoading,
               body: Center(
                 child: Text(
-                  'Incident not found',
+                  context.l10n.incidentNotFound,
                   style: context.bodyMutedStyle,
                 ),
               ),
@@ -69,7 +76,7 @@ class _IncidentDetailScreenState extends ConsumerState<IncidentDetailScreen>
           }
 
           return GlassScaffold(
-            title: 'Incident Detail',
+            title: context.l10n.incidentDetailTitle,
             slivers: [
               // Header
               SliverToBoxAdapter(child: _IncidentHeader(incident: incident)),
@@ -95,8 +102,9 @@ class _IncidentDetailScreenState extends ConsumerState<IncidentDetailScreen>
                         ),
                         const SizedBox(width: AppTheme.spacing6),
                         Text(
-                          'This incident is ${incident.state.name} — '
-                          'no further actions available.',
+                          context.l10n.incidentTerminalStateMessage(
+                            incident.state.name,
+                          ),
                           style: TextStyle(
                             fontSize: 12,
                             color: context.textTertiary,
@@ -118,7 +126,7 @@ class _IncidentDetailScreenState extends ConsumerState<IncidentDetailScreen>
                     8,
                   ),
                   child: Text(
-                    'Transition History',
+                    context.l10n.incidentTransitionHistoryHeader,
                     style: context.titleSmallStyle?.copyWith(
                       color: context.textPrimary,
                     ),
@@ -136,7 +144,7 @@ class _IncidentDetailScreenState extends ConsumerState<IncidentDetailScreen>
                   error: (e, _) => Padding(
                     padding: const EdgeInsets.all(AppTheme.spacing24),
                     child: Text(
-                      'Failed to load transitions: $e',
+                      context.l10n.incidentTransitionsLoadError('$e'),
                       style: context.bodyMutedStyle,
                     ),
                   ),
@@ -200,15 +208,15 @@ class _IncidentHeader extends StatelessWidget {
             runSpacing: 6,
             children: [
               _Badge(
-                label: incident.state.name,
+                label: incident.state.displayLabel(context.l10n),
                 color: _stateColor(incident.state),
               ),
               _Badge(
-                label: incident.priority.name,
+                label: incident.priority.displayLabel(context.l10n),
                 color: _priorityColor(incident.priority),
               ),
               _Badge(
-                label: incident.classification.name,
+                label: incident.classification.displayLabel(context.l10n),
                 color: Theme.of(context).colorScheme.secondary,
               ),
             ],
@@ -246,7 +254,7 @@ class _IncidentHeader extends StatelessWidget {
                 ),
                 const SizedBox(width: AppTheme.spacing4),
                 Text(
-                  'Assigned: ${incident.assigneeId}',
+                  context.l10n.incidentAssignedLabel(incident.assigneeId!),
                   style: context.captionMutedStyle,
                 ),
               ],
@@ -296,7 +304,8 @@ class _ActionButtons extends ConsumerWidget {
     final isLoading = actions is AsyncLoading;
 
     // Valid targets for current state, mapped to permission + label.
-    final targets = _availableActions(incident.state);
+    final l10n = context.l10n;
+    final targets = _availableActions(incident.state, l10n);
 
     if (targets.isEmpty) return const SizedBox.shrink();
 
@@ -309,7 +318,9 @@ class _ActionButtons extends ConsumerWidget {
           return PermissionGate(
             permission: action.permission,
             mode: PermissionGateMode.disabled,
-            deniedTooltip: 'Requires ${action.roleHint}',
+            deniedTooltip: context.l10n.incidentActionDeniedTooltip(
+              action.roleHint,
+            ),
             child: BouncyTap(
               onTap: isLoading ? null : () => _onAction(context, ref, action),
               child: Container(
@@ -387,12 +398,19 @@ class _ActionButtons extends ConsumerWidget {
 
     if (context.mounted) {
       if (success) {
-        showSuccessSnackBar(context, 'Incident ${action.label.toLowerCase()}d');
+        showSuccessSnackBar(
+          context,
+          context.l10n.incidentActionSuccessSnackbar(
+            action.label.toLowerCase(),
+          ),
+        );
       } else {
         final error = ref.read(incidentActionsProvider);
         showErrorSnackBar(
           context,
-          error is AsyncError ? '${error.error}' : 'Action failed',
+          error is AsyncError
+              ? '${error.error}'
+              : context.l10n.incidentActionFailedSnackbar,
         );
       }
     }
@@ -400,6 +418,7 @@ class _ActionButtons extends ConsumerWidget {
 
   Future<String?> _showAssigneeDialog(BuildContext context) async {
     final controller = TextEditingController();
+    final l10n = context.l10n;
     return AppBottomSheet.show<String>(
       context: context,
       child: Column(
@@ -407,7 +426,7 @@ class _ActionButtons extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Assign Incident',
+            l10n.incidentAssignSheetTitle,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -418,9 +437,9 @@ class _ActionButtons extends ConsumerWidget {
           TextField(
             controller: controller,
             maxLength: 200,
-            decoration: const InputDecoration(
-              labelText: 'Assignee User ID',
-              hintText: 'Enter user ID',
+            decoration: InputDecoration(
+              labelText: l10n.incidentAssigneeLabel,
+              hintText: l10n.incidentAssigneeHint,
               counterText: '',
             ),
           ),
@@ -437,7 +456,7 @@ class _ActionButtons extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
                   ),
-                  child: const Text('Cancel'),
+                  child: Text(l10n.incidentAssignCancelButton),
                 ),
               ),
               const SizedBox(width: AppTheme.spacing12),
@@ -454,7 +473,7 @@ class _ActionButtons extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
                   ),
-                  child: const Text('Assign'),
+                  child: Text(l10n.incidentAssignConfirmButton),
                 ),
               ),
             ],
@@ -466,6 +485,7 @@ class _ActionButtons extends ConsumerWidget {
 
   Future<String?> _showNoteDialog(BuildContext context, String action) async {
     final controller = TextEditingController();
+    final l10n = context.l10n;
     return AppBottomSheet.show<String>(
       context: context,
       child: Column(
@@ -473,7 +493,7 @@ class _ActionButtons extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '$action Note (optional)',
+            l10n.incidentNoteSheetTitle(action),
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -485,9 +505,9 @@ class _ActionButtons extends ConsumerWidget {
             controller: controller,
             maxLength: 500,
             maxLines: 3,
-            decoration: const InputDecoration(
-              labelText: 'Note',
-              hintText: 'Optional note for this transition',
+            decoration: InputDecoration(
+              labelText: l10n.incidentNoteLabel,
+              hintText: l10n.incidentNoteHint,
               counterText: '',
             ),
           ),
@@ -504,7 +524,7 @@ class _ActionButtons extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
                   ),
-                  child: const Text('Skip'),
+                  child: Text(l10n.incidentNoteSkipButton),
                 ),
               ),
               const SizedBox(width: AppTheme.spacing12),
@@ -521,7 +541,7 @@ class _ActionButtons extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
                   ),
-                  child: const Text('Continue'),
+                  child: Text(l10n.incidentNoteContinueButton),
                 ),
               ),
             ],
@@ -531,104 +551,107 @@ class _ActionButtons extends ConsumerWidget {
     );
   }
 
-  static List<_ActionDef> _availableActions(IncidentState state) {
+  static List<_ActionDef> _availableActions(
+    IncidentState state,
+    AppLocalizations l10n,
+  ) {
     return switch (state) {
       IncidentState.draft => [
         _ActionDef(
-          label: 'Submit',
+          label: l10n.incidentActionSubmit,
           target: IncidentState.open,
           permission: Permission.submitIncident,
           icon: Icons.send_outlined,
           color: AccentColors.blue,
-          roleHint: 'Operator or above',
+          roleHint: l10n.incidentRoleHintOperatorOrAbove,
         ),
         _ActionDef(
-          label: 'Cancel',
+          label: l10n.incidentActionCancel,
           target: IncidentState.cancelled,
           permission: Permission.cancelIncident,
           icon: Icons.cancel_outlined,
           color: AccentColors.slate,
-          roleHint: 'Operator or above',
+          roleHint: l10n.incidentRoleHintOperatorOrAbove,
         ),
       ],
       IncidentState.open => [
         _ActionDef(
-          label: 'Assign',
+          label: l10n.incidentActionAssign,
           target: IncidentState.assigned,
           permission: Permission.assignIncident,
           icon: Icons.person_add_outlined,
           color: AccentColors.orange,
-          roleHint: 'Supervisor or Admin',
+          roleHint: l10n.incidentRoleHintSupervisorOrAdmin,
         ),
         _ActionDef(
-          label: 'Escalate',
+          label: l10n.incidentActionEscalate,
           target: IncidentState.escalated,
           permission: Permission.escalateIncident,
           icon: Icons.priority_high,
           color: AppTheme.errorRed,
-          roleHint: 'Supervisor or Admin',
+          roleHint: l10n.incidentRoleHintSupervisorOrAdmin,
         ),
         _ActionDef(
-          label: 'Resolve',
+          label: l10n.incidentActionResolve,
           target: IncidentState.resolved,
           permission: Permission.resolveIncident,
           icon: Icons.check_circle_outline,
           color: AppTheme.successGreen,
-          roleHint: 'Assigned Operator',
+          roleHint: l10n.incidentRoleHintAssignedOperator,
         ),
         _ActionDef(
-          label: 'Cancel',
+          label: l10n.incidentActionCancel,
           target: IncidentState.cancelled,
           permission: Permission.cancelIncident,
           icon: Icons.cancel_outlined,
           color: AccentColors.slate,
-          roleHint: 'Operator or above',
+          roleHint: l10n.incidentRoleHintOperatorOrAbove,
         ),
       ],
       IncidentState.escalated => [
         _ActionDef(
-          label: 'Assign',
+          label: l10n.incidentActionAssign,
           target: IncidentState.assigned,
           permission: Permission.assignIncident,
           icon: Icons.person_add_outlined,
           color: AccentColors.orange,
-          roleHint: 'Supervisor or Admin',
+          roleHint: l10n.incidentRoleHintSupervisorOrAdmin,
         ),
         _ActionDef(
-          label: 'Cancel',
+          label: l10n.incidentActionCancel,
           target: IncidentState.cancelled,
           permission: Permission.cancelIncident,
           icon: Icons.cancel_outlined,
           color: AccentColors.slate,
-          roleHint: 'Operator or above',
+          roleHint: l10n.incidentRoleHintOperatorOrAbove,
         ),
       ],
       IncidentState.assigned => [
         _ActionDef(
-          label: 'Resolve',
+          label: l10n.incidentActionResolve,
           target: IncidentState.resolved,
           permission: Permission.resolveIncident,
           icon: Icons.check_circle_outline,
           color: AppTheme.successGreen,
-          roleHint: 'Assigned Operator',
+          roleHint: l10n.incidentRoleHintAssignedOperator,
         ),
         _ActionDef(
-          label: 'Cancel',
+          label: l10n.incidentActionCancel,
           target: IncidentState.cancelled,
           permission: Permission.cancelIncident,
           icon: Icons.cancel_outlined,
           color: AccentColors.slate,
-          roleHint: 'Operator or above',
+          roleHint: l10n.incidentRoleHintOperatorOrAbove,
         ),
       ],
       IncidentState.resolved => [
         _ActionDef(
-          label: 'Close',
+          label: l10n.incidentActionClose,
           target: IncidentState.closed,
           permission: Permission.closeIncident,
           icon: Icons.done_all,
           color: AccentColors.slate,
-          roleHint: 'Supervisor or Admin',
+          roleHint: l10n.incidentRoleHintSupervisorOrAdmin,
         ),
       ],
       IncidentState.closed || IncidentState.cancelled => [],

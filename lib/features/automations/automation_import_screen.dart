@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/logging.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/glass_scaffold.dart';
@@ -92,7 +93,7 @@ class _AutomationImportScreenState extends ConsumerState<AutomationImportScreen>
 
         if (!doc.exists) {
           safeSetState(() {
-            _error = 'Automation not found or has been deleted';
+            _error = 'notFound';
             _isLoading = false;
           });
           return;
@@ -127,14 +128,14 @@ class _AutomationImportScreenState extends ConsumerState<AutomationImportScreen>
         );
       } else {
         safeSetState(() {
-          _error = 'No automation data provided';
+          _error = 'noData';
           _isLoading = false;
         });
       }
     } catch (e) {
       AppLogging.debug('Failed to import automation: $e');
       safeSetState(() {
-        _error = 'Failed to import automation: $e';
+        _error = e.toString();
         _isLoading = false;
       });
     }
@@ -167,8 +168,8 @@ class _AutomationImportScreenState extends ConsumerState<AutomationImportScreen>
         final navigator = Navigator.of(context);
         showActionSnackBar(
           context,
-          'Automation imported successfully',
-          actionLabel: 'View',
+          context.l10n.automationImportSuccess,
+          actionLabel: context.l10n.automationImportView,
           onAction: () {
             navigator.push(
               MaterialPageRoute(builder: (_) => const AutomationsScreen()),
@@ -180,7 +181,10 @@ class _AutomationImportScreenState extends ConsumerState<AutomationImportScreen>
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to import: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.automationImportError(e.toString()),
+        );
       }
     }
   }
@@ -216,10 +220,21 @@ class _AutomationImportScreenState extends ConsumerState<AutomationImportScreen>
     }
   }
 
+  String _localizedError(BuildContext context) {
+    switch (_error) {
+      case 'notFound':
+        return context.l10n.automationImportNotFound;
+      case 'noData':
+        return context.l10n.automationImportNoData;
+      default:
+        return context.l10n.automationImportFailed(_error ?? '');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GlassScaffold(
-      title: 'Import Automation',
+      title: context.l10n.automationImportTitle,
       slivers: [
         SliverFillRemaining(
           hasScrollBody: false,
@@ -245,19 +260,19 @@ class _AutomationImportScreenState extends ConsumerState<AutomationImportScreen>
             const Icon(Icons.error_outline, size: 64, color: AppTheme.errorRed),
             const SizedBox(height: AppTheme.spacing16),
             Text(
-              'Import Failed',
+              context.l10n.automationImportFailedTitle,
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: AppTheme.spacing8),
             Text(
-              _error!,
+              _localizedError(context),
               style: Theme.of(context).textTheme.bodyMedium,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: AppTheme.spacing24),
             ElevatedButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Go Back'),
+              child: Text(context.l10n.automationImportGoBack),
             ),
           ],
         ),
@@ -311,7 +326,7 @@ class _AutomationImportScreenState extends ConsumerState<AutomationImportScreen>
                   const Divider(),
                   const SizedBox(height: AppTheme.spacing8),
                   Text(
-                    'Trigger',
+                    context.l10n.automationImportTrigger,
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
                       color: context.accentColor,
                     ),
@@ -320,7 +335,9 @@ class _AutomationImportScreenState extends ConsumerState<AutomationImportScreen>
                   Text(automation.trigger.type.displayName),
                   const SizedBox(height: AppTheme.spacing16),
                   Text(
-                    'Actions (${automation.actions.length})',
+                    context.l10n.automationImportActionsCount(
+                      automation.actions.length,
+                    ),
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
                       color: context.accentColor,
                     ),
@@ -351,13 +368,19 @@ class _AutomationImportScreenState extends ConsumerState<AutomationImportScreen>
                       automation.conditions!.isNotEmpty) ...[
                     const SizedBox(height: AppTheme.spacing16),
                     Text(
-                      'Conditions (${automation.conditions!.length})',
+                      context.l10n.automationImportConditionsCount(
+                        automation.conditions!.length,
+                      ),
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         color: context.accentColor,
                       ),
                     ),
                     const SizedBox(height: AppTheme.spacing4),
-                    Text('${automation.conditions!.length} conditions'),
+                    Text(
+                      context.l10n.automationImportConditionsText(
+                        automation.conditions!.length,
+                      ),
+                    ),
                   ],
                 ],
               ),
@@ -367,8 +390,7 @@ class _AutomationImportScreenState extends ConsumerState<AutomationImportScreen>
 
           // Warning
           StatusBanner.warning(
-            title:
-                'This automation will be imported as disabled. Review and enable it when ready.',
+            title: context.l10n.automationImportWarning,
             margin: EdgeInsets.zero,
           ),
 
@@ -381,7 +403,7 @@ class _AutomationImportScreenState extends ConsumerState<AutomationImportScreen>
                 child: OutlinedButton.icon(
                   onPressed: _editBeforeImport,
                   icon: const Icon(Icons.edit),
-                  label: const Text('Edit First'),
+                  label: Text(context.l10n.automationImportEditFirst),
                 ),
               ),
               const SizedBox(width: AppTheme.spacing12),
@@ -389,7 +411,7 @@ class _AutomationImportScreenState extends ConsumerState<AutomationImportScreen>
                 child: FilledButton.icon(
                   onPressed: _importAutomation,
                   icon: const Icon(Icons.download),
-                  label: const Text('Import'),
+                  label: Text(context.l10n.automationImportButton),
                 ),
               ),
             ],

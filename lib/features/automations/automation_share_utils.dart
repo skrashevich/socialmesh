@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/constants.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/logging.dart';
 import '../../core/widgets/qr_share_sheet.dart';
 import '../../providers/auth_providers.dart';
@@ -22,8 +23,8 @@ Future<void> showAutomationShareSheet(
   if (user == null) {
     showActionSnackBar(
       context,
-      'Sign in to share automations',
-      actionLabel: 'Sign In',
+      context.l10n.automationShareSignIn,
+      actionLabel: context.l10n.automationShareSignInAction,
       onAction: () => Navigator.pushNamed(context, '/account'),
       type: SnackBarType.info,
     );
@@ -34,11 +35,11 @@ Future<void> showAutomationShareSheet(
 
   await QrShareSheet.showWithLoader(
     context: context,
-    title: 'Share Automation',
+    title: context.l10n.automationShareTitle,
     subtitle: automation.name,
-    infoText: 'Scan this QR code in Socialmesh to import this automation',
-    shareSubject: 'Socialmesh Automation: ${automation.name}',
-    shareMessage: 'Check out this automation on Socialmesh!',
+    infoText: context.l10n.automationShareScanInfo,
+    shareSubject: context.l10n.automationShareSubject(automation.name),
+    shareMessage: context.l10n.automationShareMessage,
     loader: () => _uploadAndGetShareData(automation, userId),
   );
 }

@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'dart:convert';
 
+import '../../../l10n/app_localizations.dart';
+
 /// A normalized CoT (Cursor on Target) event received from the TAK Gateway.
 ///
 /// Mirrors the JSON shape produced by backend/tak-gateway:
@@ -167,6 +169,39 @@ class TakEvent {
     return '$meters m ($feet ft)';
   }
 
+  /// Localized speed formatted as km/h, or stationary label.
+  String localizedFormattedSpeed(AppLocalizations l10n) {
+    if (speed == null || speed == 0.0) return l10n.takEventSpeedStationary;
+    final kmh = speed! * 3.6;
+    final knots = speed! * 1.94384;
+    return l10n.takEventSpeedFormat(
+      kmh.toStringAsFixed(1),
+      knots.toStringAsFixed(1),
+    );
+  }
+
+  /// Localized course formatted as degrees with compass direction.
+  String? localizedFormattedCourse(AppLocalizations l10n) {
+    if (course == null) return null;
+    final deg = course!.round();
+    return l10n.takEventCourseFormat(
+      deg.toString().padLeft(3, '0'),
+      _localizedCompassDirection(course!, l10n),
+    );
+  }
+
+  /// Localized altitude formatted as meters and feet.
+  String? localizedFormattedAltitude(AppLocalizations l10n) {
+    if (hae == null) return null;
+    final meters = hae!.round();
+    final feet = (hae! * 3.28084).round();
+    return l10n.takEventAltitudeFormat(meters.toDouble(), '$feet');
+  }
+
+  /// Localized human-readable CoT type description.
+  String localizedTypeDescription(AppLocalizations l10n) =>
+      _localizedDescribeType(type, l10n);
+
   /// Deep equality check covering all mutable fields.
   ///
   /// Unlike [operator ==] (which only compares identity keys uid+type+timeUtcMs
@@ -228,4 +263,29 @@ String _compassDirection(double degrees) {
   if (d < 247.5) return 'SW';
   if (d < 292.5) return 'W';
   return 'NW';
+}
+
+/// Localized version of [_describeType].
+String _localizedDescribeType(String type, AppLocalizations l10n) {
+  if (type.startsWith('a-f')) return l10n.takCotTypeFriendly;
+  if (type.startsWith('a-h')) return l10n.takCotTypeHostile;
+  if (type.startsWith('a-u')) return l10n.takCotTypeUnknown;
+  if (type.startsWith('a-n')) return l10n.takCotTypeNeutral;
+  if (type.startsWith('a-')) return l10n.takCotTypeAtom;
+  if (type.startsWith('b-')) return l10n.takCotTypeBits;
+  if (type.startsWith('t-')) return l10n.takCotTypeTasking;
+  return type;
+}
+
+/// Localized version of [_compassDirection].
+String _localizedCompassDirection(double degrees, AppLocalizations l10n) {
+  final d = degrees % 360;
+  if (d >= 337.5 || d < 22.5) return l10n.takCompassN;
+  if (d < 67.5) return l10n.takCompassNE;
+  if (d < 112.5) return l10n.takCompassE;
+  if (d < 157.5) return l10n.takCompassSE;
+  if (d < 202.5) return l10n.takCompassS;
+  if (d < 247.5) return l10n.takCompassSW;
+  if (d < 292.5) return l10n.takCompassW;
+  return l10n.takCompassNW;
 }

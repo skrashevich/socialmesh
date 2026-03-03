@@ -4,6 +4,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/logging.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/glass_scaffold.dart';
@@ -36,7 +37,7 @@ class TakNavigateScreen extends ConsumerWidget {
     );
 
     return GlassScaffold.body(
-      title: 'Navigate to $callsign',
+      title: context.l10n.takNavigateTitle(callsign),
       body: Padding(
         padding: const EdgeInsets.all(AppTheme.spacing24),
         child: Column(
@@ -47,6 +48,12 @@ class TakNavigateScreen extends ConsumerWidget {
               _BearingCompass(
                 bearingDegrees: nav.bearingDegrees!,
                 affiliationColor: affiliationColor,
+                cardinalLabels: [
+                  context.l10n.takCompassN,
+                  context.l10n.takCompassE,
+                  context.l10n.takCompassS,
+                  context.l10n.takCompassW,
+                ],
               )
             else
               _NoPositionCard(),
@@ -78,7 +85,7 @@ class TakNavigateScreen extends ConsumerWidget {
               if (nav.formattedEta != null) ...[
                 const SizedBox(height: AppTheme.spacing8),
                 Text(
-                  'ETA: ${nav.formattedEta}',
+                  context.l10n.takNavigateEta(nav.formattedEta!),
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -92,7 +99,7 @@ class TakNavigateScreen extends ConsumerWidget {
             _TargetInfoCard(
               nav: nav,
               affiliationColor: affiliationColor,
-              affiliationLabel: affiliation.label,
+              affiliationLabel: affiliation.displayLabel(context.l10n),
             ),
           ],
         ),
@@ -109,10 +116,12 @@ class _BearingCompass extends StatelessWidget {
   const _BearingCompass({
     required this.bearingDegrees,
     required this.affiliationColor,
+    required this.cardinalLabels,
   });
 
   final double bearingDegrees;
   final Color affiliationColor;
+  final List<String> cardinalLabels;
 
   @override
   Widget build(BuildContext context) {
@@ -125,6 +134,7 @@ class _BearingCompass extends StatelessWidget {
           arrowColor: affiliationColor,
           ringColor: context.textTertiary,
           labelColor: context.textSecondary,
+          cardinals: cardinalLabels,
         ),
       ),
     );
@@ -137,14 +147,14 @@ class _CompassPainter extends CustomPainter {
     required this.arrowColor,
     required this.ringColor,
     required this.labelColor,
+    required this.cardinals,
   });
 
   final double bearingDegrees;
   final Color arrowColor;
   final Color ringColor;
   final Color labelColor;
-
-  static const _cardinals = ['N', 'E', 'S', 'W'];
+  final List<String> cardinals;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -185,7 +195,7 @@ class _CompassPainter extends CustomPainter {
         center.dy + (radius - 26) * math.sin(rad),
       );
       textPainter.text = TextSpan(
-        text: _cardinals[i],
+        text: cardinals[i],
         style: TextStyle(
           color: labelColor,
           fontSize: 14,
@@ -277,7 +287,7 @@ class _NoPositionCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Text(
-              'Position unavailable\nConnect to a node with GPS',
+              context.l10n.takNavigateNoPosition,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 12,
@@ -354,7 +364,7 @@ class _TargetInfoCard extends StatelessWidget {
           ),
           const SizedBox(height: AppTheme.spacing12),
           _InfoRow(
-            label: 'Position',
+            label: context.l10n.takNavigatePosition,
             value:
                 '${target.lat.toStringAsFixed(6)}, '
                 '${target.lon.toStringAsFixed(6)}',
@@ -362,8 +372,8 @@ class _TargetInfoCard extends StatelessWidget {
           ),
           const SizedBox(height: AppTheme.spacing4),
           _InfoRow(
-            label: 'Last update',
-            value: _formatAge(target.receivedUtcMs),
+            label: context.l10n.takNavigateLastUpdate,
+            value: _localizedFormatAge(target.receivedUtcMs, context),
             context: context,
           ),
         ],
@@ -371,14 +381,21 @@ class _TargetInfoCard extends StatelessWidget {
     );
   }
 
-  static String _formatAge(int timestampMs) {
+  static String _localizedFormatAge(int timestampMs, BuildContext context) {
+    final l10n = context.l10n;
     final age = DateTime.now().difference(
       DateTime.fromMillisecondsSinceEpoch(timestampMs),
     );
-    if (age.inSeconds < 60) return '${age.inSeconds}s ago';
-    if (age.inMinutes < 60) return '${age.inMinutes}m ago';
-    if (age.inHours < 24) return '${age.inHours}h ago';
-    return '${age.inDays}d ago';
+    if (age.inSeconds < 60) {
+      return l10n.takNavigateRelativeTimeSeconds(age.inSeconds);
+    }
+    if (age.inMinutes < 60) {
+      return l10n.takNavigateRelativeTimeMinutes(age.inMinutes);
+    }
+    if (age.inHours < 24) {
+      return l10n.takNavigateRelativeTimeHours(age.inHours);
+    }
+    return l10n.takNavigateRelativeTimeDays(age.inDays);
   }
 }
 

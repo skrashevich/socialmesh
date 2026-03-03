@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/widgets/animations.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../../../services/haptic_service.dart';
@@ -47,12 +48,12 @@ class _TakSettingsScreenState extends ConsumerState<TakSettingsScreen> {
 
     return settingsAsync.when(
       loading: () => GlassScaffold.body(
-        title: 'TAK Settings',
+        title: context.l10n.takSettingsTitle,
         body: const Center(child: CircularProgressIndicator()),
       ),
       error: (error, _) => GlassScaffold.body(
-        title: 'TAK Settings',
-        body: Center(child: Text('Error: $error')),
+        title: context.l10n.takSettingsTitle,
+        body: Center(child: Text(context.l10n.takSettingsError('$error'))),
       ),
       data: (settings) {
         if (!_controllersInitialized) {
@@ -67,29 +68,31 @@ class _TakSettingsScreenState extends ConsumerState<TakSettingsScreen> {
           onTap: _dismissKeyboard,
           behavior: HitTestBehavior.opaque,
           child: GlassScaffold(
-            title: 'TAK Settings',
+            title: context.l10n.takSettingsTitle,
             slivers: [
               // ---------------------------------------------------------------
               // CONNECTION
               // ---------------------------------------------------------------
-              const SliverToBoxAdapter(
-                child: _SectionHeader(title: 'CONNECTION'),
+              SliverToBoxAdapter(
+                child: _SectionHeader(
+                  title: context.l10n.takSettingsSectionConnection,
+                ),
               ),
               SliverToBoxAdapter(
                 child: _SettingsTile(
                   icon: Icons.link,
-                  title: 'Gateway URL',
+                  title: context.l10n.takSettingsGatewayUrlTitle,
                   subtitle: settings.gatewayUrl.isNotEmpty
                       ? settings.gatewayUrl
-                      : 'Default (tak.socialmesh.app)',
+                      : context.l10n.takSettingsGatewayUrlDefault,
                   onTap: () => _showGatewayUrlEditor(context, settings),
                 ),
               ),
               SliverToBoxAdapter(
                 child: _SettingsTile(
                   icon: Icons.flash_on,
-                  title: 'Auto-connect on open',
-                  subtitle: 'Automatically connect when TAK screens open',
+                  title: context.l10n.takSettingsAutoConnectTitle,
+                  subtitle: context.l10n.takSettingsAutoConnectSubtitle,
                   trailing: ThemedSwitch(
                     value: settings.autoConnect,
                     onChanged: (value) {
@@ -105,15 +108,16 @@ class _TakSettingsScreenState extends ConsumerState<TakSettingsScreen> {
               // ---------------------------------------------------------------
               // POSITION PUBLISHING
               // ---------------------------------------------------------------
-              const SliverToBoxAdapter(
-                child: _SectionHeader(title: 'POSITION PUBLISHING'),
+              SliverToBoxAdapter(
+                child: _SectionHeader(
+                  title: context.l10n.takSettingsSectionPublishing,
+                ),
               ),
               SliverToBoxAdapter(
                 child: _SettingsTile(
                   icon: Icons.my_location,
-                  title: 'Publish my position',
-                  subtitle:
-                      'Share your node position with ATAK/WinTAK operators',
+                  title: context.l10n.takSettingsPublishTitle,
+                  subtitle: context.l10n.takSettingsPublishSubtitle,
                   trailing: ThemedSwitch(
                     value: settings.publishEnabled,
                     onChanged: (value) {
@@ -128,8 +132,8 @@ class _TakSettingsScreenState extends ConsumerState<TakSettingsScreen> {
               SliverToBoxAdapter(
                 child: _SettingsTile(
                   icon: Icons.timer_outlined,
-                  title: 'Publish interval',
-                  subtitle: 'How often to send your position',
+                  title: context.l10n.takSettingsIntervalTitle,
+                  subtitle: context.l10n.takSettingsIntervalSubtitle,
                   trailing: _IntervalSelector(
                     value: settings.publishInterval,
                     onChanged: (value) {
@@ -144,10 +148,10 @@ class _TakSettingsScreenState extends ConsumerState<TakSettingsScreen> {
               SliverToBoxAdapter(
                 child: _SettingsTile(
                   icon: Icons.badge_outlined,
-                  title: 'Callsign override',
+                  title: context.l10n.takSettingsCallsignTitle,
                   subtitle: settings.callsign.isNotEmpty
                       ? settings.callsign
-                      : 'Using node name',
+                      : context.l10n.takSettingsCallsignDefault,
                   onTap: () => _showCallsignEditor(context, settings),
                 ),
               ),
@@ -155,12 +159,16 @@ class _TakSettingsScreenState extends ConsumerState<TakSettingsScreen> {
               // ---------------------------------------------------------------
               // MAP
               // ---------------------------------------------------------------
-              const SliverToBoxAdapter(child: _SectionHeader(title: 'MAP')),
+              SliverToBoxAdapter(
+                child: _SectionHeader(
+                  title: context.l10n.takSettingsSectionMap,
+                ),
+              ),
               SliverToBoxAdapter(
                 child: _SettingsTile(
                   icon: Icons.layers_outlined,
-                  title: 'Show TAK layer on map',
-                  subtitle: 'Display TAK entity markers on the dedicated map',
+                  title: context.l10n.takSettingsMapLayerTitle,
+                  subtitle: context.l10n.takSettingsMapLayerSubtitle,
                   trailing: ThemedSwitch(
                     value: settings.mapLayerVisible,
                     onChanged: (value) {
@@ -176,14 +184,16 @@ class _TakSettingsScreenState extends ConsumerState<TakSettingsScreen> {
               // ---------------------------------------------------------------
               // PROXIMITY ALERTS
               // ---------------------------------------------------------------
-              const SliverToBoxAdapter(
-                child: _SectionHeader(title: 'PROXIMITY ALERTS'),
+              SliverToBoxAdapter(
+                child: _SectionHeader(
+                  title: context.l10n.takSettingsSectionProximity,
+                ),
               ),
               SliverToBoxAdapter(
                 child: _SettingsTile(
                   icon: Icons.radar,
-                  title: 'Enable proximity alerts',
-                  subtitle: 'Notify when hostile/unknown entities enter radius',
+                  title: context.l10n.takSettingsProximityTitle,
+                  subtitle: context.l10n.takSettingsProximitySubtitle,
                   trailing: ThemedSwitch(
                     value: settings.proximityAlertEnabled,
                     onChanged: (value) {
@@ -199,8 +209,10 @@ class _TakSettingsScreenState extends ConsumerState<TakSettingsScreen> {
                 SliverToBoxAdapter(
                   child: _SettingsTile(
                     icon: Icons.adjust,
-                    title: 'Alert radius',
-                    subtitle: '${settings.proximityRadiusKm.round()} km',
+                    title: context.l10n.takSettingsRadiusTitle,
+                    subtitle: context.l10n.takSettingsRadiusSubtitle(
+                      settings.proximityRadiusKm.roundToDouble(),
+                    ),
                     trailing: SizedBox(
                       width: 160,
                       child: Slider(
@@ -208,7 +220,9 @@ class _TakSettingsScreenState extends ConsumerState<TakSettingsScreen> {
                         min: 1,
                         max: 50,
                         divisions: 49,
-                        label: '${settings.proximityRadiusKm.round()} km',
+                        label: context.l10n.takSettingsRadiusSubtitle(
+                          settings.proximityRadiusKm.roundToDouble(),
+                        ),
                         onChanged: (value) {
                           ref
                               .read(takSettingsProvider.notifier)
@@ -264,12 +278,12 @@ class _TakSettingsScreenState extends ConsumerState<TakSettingsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Gateway URL',
+              context.l10n.takSettingsGatewayEditorTitle,
               style: Theme.of(sheetContext).textTheme.titleMedium,
             ),
             const SizedBox(height: AppTheme.spacing4),
             Text(
-              'Leave empty to use the default gateway',
+              context.l10n.takSettingsGatewayEditorHint,
               style: Theme.of(
                 sheetContext,
               ).textTheme.bodySmall?.copyWith(color: context.textTertiary),
@@ -281,7 +295,7 @@ class _TakSettingsScreenState extends ConsumerState<TakSettingsScreen> {
               autofocus: true,
               keyboardType: TextInputType.url,
               decoration: InputDecoration(
-                hintText: 'https://tak.socialmesh.app',
+                hintText: context.l10n.takSettingsGatewayEditorPlaceholder,
                 hintStyle: TextStyle(color: context.textTertiary),
                 filled: true,
                 fillColor: context.card,
@@ -308,7 +322,7 @@ class _TakSettingsScreenState extends ConsumerState<TakSettingsScreen> {
                       .setGatewayUrl(_gatewayUrlController.text.trim());
                   Navigator.of(sheetContext).pop();
                 },
-                child: const Text('Save'),
+                child: Text(context.l10n.takSettingsSave),
               ),
             ),
           ],
@@ -338,12 +352,12 @@ class _TakSettingsScreenState extends ConsumerState<TakSettingsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Callsign Override',
+              context.l10n.takSettingsCallsignEditorTitle,
               style: Theme.of(sheetContext).textTheme.titleMedium,
             ),
             const SizedBox(height: AppTheme.spacing4),
             Text(
-              'Leave empty to use your node name',
+              context.l10n.takSettingsCallsignEditorHint,
               style: Theme.of(
                 sheetContext,
               ).textTheme.bodySmall?.copyWith(color: context.textTertiary),
@@ -355,7 +369,7 @@ class _TakSettingsScreenState extends ConsumerState<TakSettingsScreen> {
               autofocus: true,
               textCapitalization: TextCapitalization.characters,
               decoration: InputDecoration(
-                hintText: 'e.g., ALPHA-1',
+                hintText: context.l10n.takSettingsCallsignEditorPlaceholder,
                 hintStyle: TextStyle(color: context.textTertiary),
                 filled: true,
                 fillColor: context.card,
@@ -382,7 +396,7 @@ class _TakSettingsScreenState extends ConsumerState<TakSettingsScreen> {
                       .setCallsign(_callsignController.text.trim());
                   Navigator.of(sheetContext).pop();
                 },
-                child: const Text('Save'),
+                child: Text(context.l10n.takSettingsSave),
               ),
             ),
           ],
@@ -547,10 +561,17 @@ class _ProximityAffiliationCheckboxes extends StatelessWidget {
   final ValueChanged<Set<String>> onChanged;
 
   static const _options = [
-    (key: 'hostile', label: 'Hostile', color: CotAffiliationColors.hostile),
-    (key: 'unknown', label: 'Unknown', color: CotAffiliationColors.unknown),
-    (key: 'suspect', label: 'Suspect', color: CotAffiliationColors.suspect),
+    (key: 'hostile', color: CotAffiliationColors.hostile),
+    (key: 'unknown', color: CotAffiliationColors.unknown),
+    (key: 'suspect', color: CotAffiliationColors.suspect),
   ];
+
+  static String _label(BuildContext context, String key) => switch (key) {
+    'hostile' => context.l10n.takSettingsAlertHostile,
+    'unknown' => context.l10n.takSettingsAlertUnknown,
+    'suspect' => context.l10n.takSettingsAlertSuspect,
+    _ => key,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -565,7 +586,7 @@ class _ProximityAffiliationCheckboxes extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Alert on:',
+            context.l10n.takSettingsAlertOn,
             style: Theme.of(
               context,
             ).textTheme.bodySmall?.copyWith(color: context.textTertiary),
@@ -588,7 +609,7 @@ class _ProximityAffiliationCheckboxes extends StatelessWidget {
                   },
                 ),
                 Text(
-                  option.label,
+                  _label(context, option.key),
                   style: TextStyle(fontSize: 14, color: context.textPrimary),
                 ),
               ],

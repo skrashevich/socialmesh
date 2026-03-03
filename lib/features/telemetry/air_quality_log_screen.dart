@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/glass_scaffold.dart';
 import '../../models/telemetry_log.dart';
@@ -22,10 +23,10 @@ class AirQualityLogScreen extends ConsumerWidget {
         : ref.watch(airQualityMetricsLogsProvider);
     final nodes = ref.watch(nodesProvider);
     final node = nodeNum != null ? nodes[nodeNum] : null;
-    final nodeName = node?.displayName ?? 'All Nodes';
+    final nodeName = node?.displayName ?? context.l10n.telemetryAllNodes;
 
     return GlassScaffold(
-      title: 'Air Quality Log',
+      title: context.l10n.telemetryAirQualityTitle,
       slivers: [
         SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -46,7 +47,7 @@ class AirQualityLogScreen extends ConsumerWidget {
               return SliverFillRemaining(
                 child: _buildEmptyState(
                   context,
-                  'No air quality data recorded yet',
+                  context.l10n.telemetryAirQualityNoData,
                 ),
               );
             }
@@ -63,8 +64,11 @@ class AirQualityLogScreen extends ConsumerWidget {
           },
           loading: () =>
               const SliverFillRemaining(child: ScreenLoadingIndicator()),
-          error: (e, _) =>
-              SliverFillRemaining(child: Center(child: Text('Error: $e'))),
+          error: (e, _) => SliverFillRemaining(
+            child: Center(
+              child: Text(context.l10n.telemetryError(e.toString())),
+            ),
+          ),
         ),
       ],
     );
@@ -125,7 +129,7 @@ class _AirQualityCard extends StatelessWidget {
 
           // PM values
           Text(
-            'Particulate Matter (Standard)',
+            context.l10n.telemetryAirQualityPmStandard,
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w500,
@@ -159,7 +163,7 @@ class _AirQualityCard extends StatelessWidget {
               log.pm25Environmental != null) ...[
             const SizedBox(height: AppTheme.spacing12),
             Text(
-              'Particulate Matter (Environmental)',
+              context.l10n.telemetryAirQualityPmEnvironmental,
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
@@ -200,7 +204,7 @@ class _AirQualityCard extends StatelessWidget {
             const Divider(color: Colors.white12, height: 1),
             const SizedBox(height: AppTheme.spacing12),
             Text(
-              'Particle Counts (per 0.1L)',
+              context.l10n.telemetryAirQualityParticleCounts,
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
@@ -254,12 +258,12 @@ class _AqiIndicator extends StatelessWidget {
     return const Color(0xFF8B008B); // Purple for hazardous
   }
 
-  String _getAqiLabel() {
-    if (pm25 <= 12) return 'Good';
-    if (pm25 <= 35) return 'Moderate';
-    if (pm25 <= 55) return 'Unhealthy (S)';
-    if (pm25 <= 150) return 'Unhealthy';
-    return 'Hazardous';
+  String _getAqiLabel(BuildContext context) {
+    if (pm25 <= 12) return context.l10n.telemetryAqiGood;
+    if (pm25 <= 35) return context.l10n.telemetryAqiModerate;
+    if (pm25 <= 55) return context.l10n.telemetryAqiUnhealthySensitive;
+    if (pm25 <= 150) return context.l10n.telemetryAqiUnhealthy;
+    return context.l10n.telemetryAqiHazardous;
   }
 
   @override
@@ -272,7 +276,7 @@ class _AqiIndicator extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppTheme.radius12),
       ),
       child: Text(
-        _getAqiLabel(),
+        _getAqiLabel(context),
         style: TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.w600,
@@ -326,7 +330,7 @@ class _PmTile extends StatelessWidget {
             ),
           ),
           Text(
-            'µg/m³',
+            context.l10n.telemetryAirQualityUnitMicrogram,
             style: TextStyle(
               fontSize: 10,
               color: Colors.white.withValues(alpha: 0.3),
@@ -375,11 +379,11 @@ class _Co2Indicator extends StatelessWidget {
     return AppTheme.errorRed;
   }
 
-  String _getCo2Label() {
-    if (ppm < 800) return 'Excellent';
-    if (ppm < 1000) return 'Good';
-    if (ppm < 2000) return 'Fair';
-    return 'Poor';
+  String _getCo2Label(BuildContext context) {
+    if (ppm < 800) return context.l10n.telemetryCo2Excellent;
+    if (ppm < 1000) return context.l10n.telemetryCo2Good;
+    if (ppm < 2000) return context.l10n.telemetryCo2Fair;
+    return context.l10n.telemetryCo2Poor;
   }
 
   @override
@@ -401,7 +405,7 @@ class _Co2Indicator extends StatelessWidget {
               ),
             ),
             Text(
-              'CO₂ - ${_getCo2Label()}',
+              context.l10n.telemetryCo2Label(_getCo2Label(context)),
               style: TextStyle(
                 fontSize: 12,
                 color: Colors.white.withValues(alpha: 0.5),

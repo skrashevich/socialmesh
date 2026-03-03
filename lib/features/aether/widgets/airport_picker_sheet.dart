@@ -8,6 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../data/airports.dart';
@@ -114,7 +115,7 @@ class _AirportPickerSheetState extends State<AirportPickerSheet> {
                   textInputAction: TextInputAction.search,
                   style: TextStyle(color: context.textPrimary),
                   decoration: InputDecoration(
-                    hintText: 'Search by code, city, or name',
+                    hintText: context.l10n.aetherPickerSearchHint,
                     hintStyle: TextStyle(color: context.textTertiary),
                     prefixIcon: Icon(Icons.search, color: context.textTertiary),
                     suffixIcon: _hasQuery
@@ -144,8 +145,8 @@ class _AirportPickerSheetState extends State<AirportPickerSheet> {
               padding: const EdgeInsets.fromLTRB(AppTheme.spacing20, 4, 20, 8),
               child: Text(
                 _hasQuery
-                    ? '${_filtered.length} result${_filtered.length == 1 ? '' : 's'}'
-                    : '${kAirports.length} airports',
+                    ? context.l10n.aetherPickerResultCount(_filtered.length)
+                    : context.l10n.aetherPickerAirportCount(kAirports.length),
                 style: TextStyle(fontSize: 12, color: context.textTertiary),
               ),
             ),
@@ -192,7 +193,7 @@ class _AirportPickerSheetState extends State<AirportPickerSheet> {
             Icon(Icons.flight_outlined, size: 48, color: context.textTertiary),
             const SizedBox(height: AppTheme.spacing12),
             Text(
-              'No airports found',
+              context.l10n.aetherPickerNoResults,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
@@ -201,7 +202,7 @@ class _AirportPickerSheetState extends State<AirportPickerSheet> {
             ),
             const SizedBox(height: AppTheme.spacing4),
             Text(
-              'You can still type the code manually',
+              context.l10n.aetherPickerManualEntry,
               style: TextStyle(fontSize: 13, color: context.textTertiary),
             ),
           ],

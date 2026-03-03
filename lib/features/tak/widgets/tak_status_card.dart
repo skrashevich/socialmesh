@@ -2,6 +2,7 @@
 // lint-allow: haptic-feedback — onTap delegates to parent callback
 import 'package:flutter/material.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../services/tak_gateway_client.dart';
 import 'package:socialmesh/core/theme.dart';
 
@@ -30,7 +31,7 @@ class TakStatusCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final stateColor = _stateColor;
-    final stateLabel = _stateLabel;
+    final stateLabel = _localizedStateLabel(context);
 
     return Container(
       margin: const EdgeInsets.fromLTRB(AppTheme.spacing16, 8, 16, 0),
@@ -63,7 +64,7 @@ class TakStatusCard extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                'TAK Gateway',
+                context.l10n.takStatusCardLabel,
                 style: theme.textTheme.labelSmall?.copyWith(
                   color: AccentColors.orange,
                   letterSpacing: 1.0,
@@ -91,10 +92,22 @@ class TakStatusCard extends StatelessWidget {
             spacing: 16,
             runSpacing: 8,
             children: [
-              _counter(theme, 'Events', '$totalReceived'),
-              _counter(theme, 'Entities', '$activeEntities'),
+              _counter(
+                theme,
+                context.l10n.takStatusCardCounterEvents,
+                '$totalReceived',
+              ),
+              _counter(
+                theme,
+                context.l10n.takStatusCardCounterEntities,
+                '$activeEntities',
+              ),
               if (connectedSince != null)
-                _counter(theme, 'Uptime', _formatUptime(connectedSince!)),
+                _counter(
+                  theme,
+                  context.l10n.takStatusCardCounterUptime,
+                  _localizedFormatUptime(connectedSince!, context),
+                ),
             ],
           ),
           if (lastError != null &&
@@ -147,23 +160,31 @@ class TakStatusCard extends StatelessWidget {
     }
   }
 
-  String get _stateLabel {
+  String _localizedStateLabel(BuildContext context) {
     switch (connectionState) {
       case TakConnectionState.connected:
-        return 'Connected';
+        return context.l10n.takStatusCardConnected;
       case TakConnectionState.connecting:
-        return 'Connecting...';
+        return context.l10n.takStatusCardConnecting;
       case TakConnectionState.reconnecting:
-        return 'Reconnecting...';
+        return context.l10n.takStatusCardReconnecting;
       case TakConnectionState.disconnected:
-        return 'Disconnected';
+        return context.l10n.takStatusCardDisconnected;
     }
   }
 
-  static String _formatUptime(DateTime since) {
+  static String _localizedFormatUptime(DateTime since, BuildContext context) {
+    final l10n = context.l10n;
     final diff = DateTime.now().difference(since);
-    if (diff.inHours > 0) return '${diff.inHours}h ${diff.inMinutes % 60}m';
-    if (diff.inMinutes > 0) return '${diff.inMinutes}m';
-    return '${diff.inSeconds}s';
+    if (diff.inHours > 0) {
+      return l10n.takStatusCardUptimeHoursMinutes(
+        diff.inHours,
+        diff.inMinutes % 60,
+      );
+    }
+    if (diff.inMinutes > 0) {
+      return l10n.takStatusCardUptimeMinutes(diff.inMinutes);
+    }
+    return l10n.takStatusCardUptimeSeconds(diff.inSeconds);
   }
 }

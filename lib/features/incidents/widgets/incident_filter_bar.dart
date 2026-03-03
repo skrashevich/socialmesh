@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../services/haptic_service.dart';
 import '../models/incident.dart';
@@ -21,6 +22,7 @@ class IncidentFilterBar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final filter = ref.watch(incidentFilterProvider);
     final notifier = ref.read(incidentFilterProvider.notifier);
+    final l10n = context.l10n;
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -33,7 +35,7 @@ class IncidentFilterBar extends ConsumerWidget {
             return Padding(
               padding: const EdgeInsets.only(right: 8),
               child: FilterChip(
-                label: Text(_stateLabel(state)),
+                label: Text(state.displayLabel(l10n)),
                 selected: isSelected,
                 onSelected: (selected) {
                   ref.haptics.toggle();
@@ -71,7 +73,7 @@ class IncidentFilterBar extends ConsumerWidget {
             return Padding(
               padding: const EdgeInsets.only(right: 8),
               child: FilterChip(
-                label: Text(_priorityLabel(priority)),
+                label: Text(priority.displayLabel(l10n)),
                 selected: isSelected,
                 onSelected: (selected) {
                   ref.haptics.toggle();
@@ -105,7 +107,7 @@ class IncidentFilterBar extends ConsumerWidget {
 
           // -- Assigned to me toggle --
           FilterChip(
-            label: const Text('Assigned to me'),
+            label: Text(l10n.incidentFilterAssignedToMe),
             selected: filter.assignedToMe,
             onSelected: (_) {
               ref.haptics.toggle();
@@ -126,18 +128,6 @@ class IncidentFilterBar extends ConsumerWidget {
     );
   }
 
-  static String _stateLabel(IncidentState state) {
-    return switch (state) {
-      IncidentState.draft => 'Draft',
-      IncidentState.open => 'Open',
-      IncidentState.assigned => 'Assigned',
-      IncidentState.escalated => 'Escalated',
-      IncidentState.resolved => 'Resolved',
-      IncidentState.closed => 'Closed',
-      IncidentState.cancelled => 'Cancelled',
-    };
-  }
-
   static Color _stateColor(IncidentState state) {
     return switch (state) {
       IncidentState.draft => SemanticColors.disabled,
@@ -147,15 +137,6 @@ class IncidentFilterBar extends ConsumerWidget {
       IncidentState.resolved => AppTheme.successGreen,
       IncidentState.closed => AccentColors.slate,
       IncidentState.cancelled => AccentColors.slate,
-    };
-  }
-
-  static String _priorityLabel(IncidentPriority priority) {
-    return switch (priority) {
-      IncidentPriority.routine => 'Routine',
-      IncidentPriority.priority => 'Priority',
-      IncidentPriority.immediate => 'Immediate',
-      IncidentPriority.flash => 'Flash',
     };
   }
 

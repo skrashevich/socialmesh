@@ -760,11 +760,11 @@ abstract class AppLocalizations {
   /// **'Delete Seller Permanently'**
   String get adminSellersDeletePermanently;
 
-  /// No description provided for @adminSellersDeleteProductWarning.
+  /// Warning when deleting a seller with products
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 product will be deactivated.} other{{count} products will be deactivated.}}'**
-  String adminSellersDeleteProductWarning(int count);
+  /// **'This seller has {productCount} products. Deleting the seller will also delete all their products.'**
+  String adminSellersDeleteProductWarning(int productCount);
 
   /// No description provided for @adminSellersDeleteTitle.
   ///
@@ -1024,6 +1024,1234 @@ abstract class AppLocalizations {
   /// **'Website URL *'**
   String get adminSellersWebsiteLabel;
 
+  /// Label for the altitude row in the live position card
+  ///
+  /// In en, this message translates to:
+  /// **'Altitude'**
+  String get aetherDetailAltitude;
+
+  /// Label for the arrival time detail row
+  ///
+  /// In en, this message translates to:
+  /// **'Arrival'**
+  String get aetherDetailArrival;
+
+  /// Encouragement text when no reports exist for an active flight
+  ///
+  /// In en, this message translates to:
+  /// **'Be the first to report this flight!'**
+  String get aetherDetailBeFirstReport;
+
+  /// Label for the estimated coverage radius row
+  ///
+  /// In en, this message translates to:
+  /// **'Coverage Radius'**
+  String get aetherDetailCoverageRadius;
+
+  /// Label for the departure time detail row
+  ///
+  /// In en, this message translates to:
+  /// **'Departure'**
+  String get aetherDetailDeparture;
+
+  /// Distance from the reporting node to the flight (e.g. '120 km away')
+  ///
+  /// In en, this message translates to:
+  /// **'{distance} km away'**
+  String aetherDetailDistanceAway(int distance);
+
+  /// Section title for the flight details card
+  ///
+  /// In en, this message translates to:
+  /// **'Flight Details'**
+  String get aetherDetailFlightDetails;
+
+  /// Label for the ground speed row in the live position card
+  ///
+  /// In en, this message translates to:
+  /// **'Ground Speed'**
+  String get aetherDetailGroundSpeed;
+
+  /// Label for the heading row in the live position card
+  ///
+  /// In en, this message translates to:
+  /// **'Heading'**
+  String get aetherDetailHeading;
+
+  /// Title of the live flight position card
+  ///
+  /// In en, this message translates to:
+  /// **'Live Position'**
+  String get aetherDetailLivePosition;
+
+  /// Empty state text when no reception reports exist
+  ///
+  /// In en, this message translates to:
+  /// **'No receptions reported yet'**
+  String get aetherDetailNoReports;
+
+  /// Label for the Meshtastic node detail row
+  ///
+  /// In en, this message translates to:
+  /// **'Node'**
+  String get aetherDetailNode;
+
+  /// Label for the notes detail row
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get aetherDetailNotes;
+
+  /// Label for the flight operator detail row
+  ///
+  /// In en, this message translates to:
+  /// **'Operator'**
+  String get aetherDetailOperator;
+
+  /// Shown when live position data is not available for the flight
+  ///
+  /// In en, this message translates to:
+  /// **'Position data unavailable'**
+  String get aetherDetailPositionUnavailable;
+
+  /// Label for the reception count detail row
+  ///
+  /// In en, this message translates to:
+  /// **'Receptions'**
+  String get aetherDetailReceptions;
+
+  /// Value text for the reception count (e.g. '5 reported')
+  ///
+  /// In en, this message translates to:
+  /// **'{count} reported'**
+  String aetherDetailReceptionsValue(int count);
+
+  /// Tooltip for the refresh position button
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh position'**
+  String get aetherDetailRefreshTooltip;
+
+  /// Primary CTA button label to report receiving a flight signal
+  ///
+  /// In en, this message translates to:
+  /// **'I Received This Flight!'**
+  String get aetherDetailReportButton;
+
+  /// Error message when reports fail to load
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading reports'**
+  String get aetherDetailReportsError;
+
+  /// Section title for the reception reports list
+  ///
+  /// In en, this message translates to:
+  /// **'Reception Reports'**
+  String get aetherDetailReportsTitle;
+
+  /// Success snackbar when flight link is copied to clipboard
+  ///
+  /// In en, this message translates to:
+  /// **'Flight link copied to clipboard'**
+  String get aetherDetailShareCopied;
+
+  /// Error snackbar when sharing a flight fails
+  ///
+  /// In en, this message translates to:
+  /// **'Could not share flight: {error}'**
+  String aetherDetailShareError(String error);
+
+  /// Tooltip for the share flight button
+  ///
+  /// In en, this message translates to:
+  /// **'Share flight'**
+  String get aetherDetailShareTooltip;
+
+  /// Fallback text when a reporter node name is unknown
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown node'**
+  String get aetherDetailUnknownNode;
+
+  /// Label showing when position was last updated (e.g. 'Updated 30s ago')
+  ///
+  /// In en, this message translates to:
+  /// **'Updated {time}'**
+  String aetherDetailUpdated(String time);
+
+  /// Exception message for duplicate reception report attempts
+  ///
+  /// In en, this message translates to:
+  /// **'You have already reported this flight'**
+  String get aetherDuplicateReport;
+
+  /// Action button label in the animated empty state
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule Flight'**
+  String get aetherEmptyActionSchedule;
+
+  /// Empty state subtitle for the Active filter
+  ///
+  /// In en, this message translates to:
+  /// **'No Meshtastic nodes currently in the air.\nBe the first to schedule one!'**
+  String get aetherEmptyActiveSubtitle;
+
+  /// Empty state title when no active flights exist
+  ///
+  /// In en, this message translates to:
+  /// **'No Active Flights'**
+  String get aetherEmptyActiveTitle;
+
+  /// Empty state subtitle for the All filter with no flights
+  ///
+  /// In en, this message translates to:
+  /// **'No flights scheduled yet.\nBe the first to share your journey!'**
+  String get aetherEmptyAllSubtitle;
+
+  /// Empty state title when search finds no flights
+  ///
+  /// In en, this message translates to:
+  /// **'No Flights Found'**
+  String get aetherEmptyAllTitle;
+
+  /// Empty state subtitle when user has no flights
+  ///
+  /// In en, this message translates to:
+  /// **'You haven\'t scheduled any flights yet.\nTap the button above to add one!'**
+  String get aetherEmptyMyFlightsSubtitle;
+
+  /// Empty state title when user has no flights scheduled
+  ///
+  /// In en, this message translates to:
+  /// **'No Flights Scheduled'**
+  String get aetherEmptyMyFlightsTitle;
+
+  /// Empty state subtitle when search has no results (query is dynamic)
+  ///
+  /// In en, this message translates to:
+  /// **'No results match \"{query}\".\nTry a different search term.'**
+  String aetherEmptySearchSubtitle(String query);
+
+  /// Animated empty state tagline when no flights exist (variant 1)
+  ///
+  /// In en, this message translates to:
+  /// **'No flights scheduled yet.\nBe the first to share your airborne journey!'**
+  String get aetherEmptyTagline1;
+
+  /// Animated empty state tagline (variant 2)
+  ///
+  /// In en, this message translates to:
+  /// **'Track Meshtastic nodes at altitude.\nSee how far your signal reaches from the sky.'**
+  String get aetherEmptyTagline2;
+
+  /// Animated empty state tagline (variant 3)
+  ///
+  /// In en, this message translates to:
+  /// **'Compete on the leaderboard.\nLongest range contacts earn top spots.'**
+  String get aetherEmptyTagline3;
+
+  /// Animated empty state tagline (variant 4)
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule your next flight.\nShare your departure and arrival airports.'**
+  String get aetherEmptyTagline4;
+
+  /// Animated empty state title keyword
+  ///
+  /// In en, this message translates to:
+  /// **'flights'**
+  String get aetherEmptyTitleKeyword;
+
+  /// Animated empty state title prefix before the keyword
+  ///
+  /// In en, this message translates to:
+  /// **'No '**
+  String get aetherEmptyTitlePrefix;
+
+  /// Animated empty state title suffix after the keyword
+  ///
+  /// In en, this message translates to:
+  /// **' in the air'**
+  String get aetherEmptyTitleSuffix;
+
+  /// Empty state subtitle for the Upcoming filter
+  ///
+  /// In en, this message translates to:
+  /// **'No flights scheduled yet.\nPlan your next airborne test!'**
+  String get aetherEmptyUpcomingSubtitle;
+
+  /// Empty state title when no upcoming flights exist
+  ///
+  /// In en, this message translates to:
+  /// **'No Upcoming Flights'**
+  String get aetherEmptyUpcomingTitle;
+
+  /// Filter chip label for currently active/in-flight flights
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get aetherFilterActive;
+
+  /// Filter chip label showing all flights
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get aetherFilterAll;
+
+  /// Filter chip label for the current user's flights
+  ///
+  /// In en, this message translates to:
+  /// **'My Flights'**
+  String get aetherFilterMyFlights;
+
+  /// Filter chip label for upcoming flights
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get aetherFilterUpcoming;
+
+  /// Reception count label on a flight card (singular/plural)
+  ///
+  /// In en, this message translates to:
+  /// **'{count} reception{count, plural, =1{} other{s}}'**
+  String aetherFlightReceptionCount(int count, String s);
+
+  /// Form validation error when flight number is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Enter flight number'**
+  String get aetherFormEnterFlightNumber;
+
+  /// Form validation error for invalid flight number format
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid format (e.g., UA123, EXS49MY)'**
+  String get aetherFormInvalidFlightFormat;
+
+  /// Form validation error when a required airport code is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get aetherFormRequired;
+
+  /// Form validation error when airport code is not found
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown airport'**
+  String get aetherFormUnknownAirport;
+
+  /// Form validation error for invalid airport code format
+  ///
+  /// In en, this message translates to:
+  /// **'Use 3-4 letter code'**
+  String get aetherFormUseLetterCode;
+
+  /// Info row explaining ground station monitoring
+  ///
+  /// In en, this message translates to:
+  /// **'Ground stations watch for your signal'**
+  String get aetherInfoGroundStations;
+
+  /// Tip in info sheet about LoRa range at cruising altitude
+  ///
+  /// In en, this message translates to:
+  /// **'At 35,000ft, LoRa can reach 400+ km!'**
+  String get aetherInfoLoraRange;
+
+  /// Info row explaining reception reporting and records
+  ///
+  /// In en, this message translates to:
+  /// **'Report receptions & set range records!'**
+  String get aetherInfoReceptions;
+
+  /// Info row explaining flight scheduling feature
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule your flight with your node'**
+  String get aetherInfoSchedule;
+
+  /// Tagline in the Aether info bottom sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Track Meshtastic nodes at altitude!'**
+  String get aetherInfoTagline;
+
+  /// Title in the Aether info bottom sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Aether'**
+  String get aetherInfoTitle;
+
+  /// Title when the leaderboard has no entries
+  ///
+  /// In en, this message translates to:
+  /// **'Leaderboard Empty'**
+  String get aetherLeaderboardEmpty;
+
+  /// Subtitle encouraging users to submit the first report
+  ///
+  /// In en, this message translates to:
+  /// **'Be the first to report a reception from a sky node and claim the top spot!'**
+  String get aetherLeaderboardEmptySubtitle;
+
+  /// Error title when the leaderboard fails to load
+  ///
+  /// In en, this message translates to:
+  /// **'Error Loading Leaderboard'**
+  String get aetherLeaderboardError;
+
+  /// Error subtitle with refresh suggestion for leaderboard
+  ///
+  /// In en, this message translates to:
+  /// **'Pull to refresh and try again.'**
+  String get aetherLeaderboardErrorSubtitle;
+
+  /// Subtitle describing the leaderboard scope
+  ///
+  /// In en, this message translates to:
+  /// **'Global rankings by reception distance'**
+  String get aetherLeaderboardSubtitle;
+
+  /// Title of the leaderboard bottom sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Distance Leaderboard'**
+  String get aetherLeaderboardTitle;
+
+  /// Tooltip for the leaderboard button in the app bar
+  ///
+  /// In en, this message translates to:
+  /// **'Leaderboard'**
+  String get aetherLeaderboardTooltip;
+
+  /// Badge label on the flight match card indicating in-flight status
+  ///
+  /// In en, this message translates to:
+  /// **'IN FLIGHT'**
+  String get aetherMatchInFlight;
+
+  /// Call-to-action text on the flight match card
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to report your reception'**
+  String get aetherMatchReportCta;
+
+  /// Overflow menu item to show the Aether info sheet
+  ///
+  /// In en, this message translates to:
+  /// **'About Aether'**
+  String get aetherMenuAbout;
+
+  /// Overflow menu item to launch the help tour
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get aetherMenuHelp;
+
+  /// Overflow menu item to open the settings screen
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get aetherMenuSettings;
+
+  /// Warning snackbar when user tries to schedule but node already has a flight
+  ///
+  /// In en, this message translates to:
+  /// **'{nodeName} already has a flight ({flightNumber} — {status})'**
+  String aetherNodeAlreadyHasFlight(
+    String nodeName,
+    String flightNumber,
+    String status,
+  );
+
+  /// Validation result message when flight is active in OpenSky
+  ///
+  /// In en, this message translates to:
+  /// **'Flight is currently active'**
+  String get aetherOpenSkyFlightActive;
+
+  /// Validation result when flight was not found in departure records
+  ///
+  /// In en, this message translates to:
+  /// **'Flight not found in historical departures'**
+  String get aetherOpenSkyFlightNotFound;
+
+  /// Fallback message when callsign validation returns not_found from API
+  ///
+  /// In en, this message translates to:
+  /// **'Flight not currently in the air'**
+  String get aetherOpenSkyFlightNotInAir;
+
+  /// Validation result for future flights that can't be verified yet
+  ///
+  /// In en, this message translates to:
+  /// **'Flight is scheduled for the future. Will validate when active.'**
+  String get aetherOpenSkyFlightPending;
+
+  /// Validation result message when flight is found in historical data
+  ///
+  /// In en, this message translates to:
+  /// **'Flight verified in historical data'**
+  String get aetherOpenSkyFlightVerified;
+
+  /// Badge label shown when a flight node is detected in the mesh
+  ///
+  /// In en, this message translates to:
+  /// **'DETECTED'**
+  String get aetherOverlayDetected;
+
+  /// Button label to report reception from the overlay card
+  ///
+  /// In en, this message translates to:
+  /// **'Report'**
+  String get aetherOverlayReport;
+
+  /// Total airport count shown before searching
+  ///
+  /// In en, this message translates to:
+  /// **'{count} airports'**
+  String aetherPickerAirportCount(int count);
+
+  /// Title passed to the airport picker for arrival selection
+  ///
+  /// In en, this message translates to:
+  /// **'Arrival Airport'**
+  String get aetherPickerArrivalTitle;
+
+  /// Title passed to the airport picker for departure selection
+  ///
+  /// In en, this message translates to:
+  /// **'Departure Airport'**
+  String get aetherPickerDepartureTitle;
+
+  /// Empty state subtitle suggesting manual code entry
+  ///
+  /// In en, this message translates to:
+  /// **'You can still type the code manually'**
+  String get aetherPickerManualEntry;
+
+  /// Empty state title when search finds no airports
+  ///
+  /// In en, this message translates to:
+  /// **'No airports found'**
+  String get aetherPickerNoResults;
+
+  /// Search result count (singular/plural)
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 result} other{{count} results}}'**
+  String aetherPickerResultCount(int count);
+
+  /// Search field hint text in the airport picker
+  ///
+  /// In en, this message translates to:
+  /// **'Search by code, city, or name'**
+  String get aetherPickerSearchHint;
+
+  /// Default title for the airport picker screen
+  ///
+  /// In en, this message translates to:
+  /// **'Select Airport'**
+  String get aetherPickerTitle;
+
+  /// Button label to expand the optional notes field
+  ///
+  /// In en, this message translates to:
+  /// **'Add Notes'**
+  String get aetherReportAddNotes;
+
+  /// Error when user tries to report the same flight twice
+  ///
+  /// In en, this message translates to:
+  /// **'You have already reported this flight'**
+  String get aetherReportDuplicate;
+
+  /// Label prefix for estimated distance in report sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated distance '**
+  String get aetherReportEstimatedDistance;
+
+  /// Error when flight ended while report sheet was open
+  ///
+  /// In en, this message translates to:
+  /// **'This flight has ended'**
+  String get aetherReportFlightEnded;
+
+  /// Status text when the reporter's location is available
+  ///
+  /// In en, this message translates to:
+  /// **'Location auto-detected'**
+  String get aetherReportLocationDetected;
+
+  /// Status text when the reporter's location is not available
+  ///
+  /// In en, this message translates to:
+  /// **'Location unavailable'**
+  String get aetherReportLocationUnavailable;
+
+  /// Error when trying to submit without the flight node in mesh
+  ///
+  /// In en, this message translates to:
+  /// **'Flight node not detected in your mesh network'**
+  String get aetherReportNodeNotDetected;
+
+  /// Warning when the flight node is not detected in the local mesh
+  ///
+  /// In en, this message translates to:
+  /// **'This flight\'s node is not in your mesh network. You can only report a reception when the node is visible to your device.'**
+  String get aetherReportNotOnMesh;
+
+  /// Hint text for the optional notes field in report sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Equipment, antenna, location details...'**
+  String get aetherReportNotesHint;
+
+  /// Label for the notes section in the report sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get aetherReportNotesLabel;
+
+  /// Button to collapse and clear the notes field
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get aetherReportRemoveNotes;
+
+  /// Label prefix for RSSI signal value in report sheet
+  ///
+  /// In en, this message translates to:
+  /// **'RSSI '**
+  String get aetherReportRssiLabel;
+
+  /// Label prefix for SNR signal value in report sheet
+  ///
+  /// In en, this message translates to:
+  /// **'SNR '**
+  String get aetherReportSnrLabel;
+
+  /// Submit button label for the reception report
+  ///
+  /// In en, this message translates to:
+  /// **'Submit Report'**
+  String get aetherReportSubmit;
+
+  /// Subtitle confirming which flight is being reported
+  ///
+  /// In en, this message translates to:
+  /// **'I received flight {flightNumber} on my node!'**
+  String aetherReportSubtitle(String flightNumber);
+
+  /// Success snackbar after submitting a reception report
+  ///
+  /// In en, this message translates to:
+  /// **'Reception reported!'**
+  String get aetherReportSuccess;
+
+  /// Title of the report reception bottom sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Report Reception'**
+  String get aetherReportTitle;
+
+  /// Tooltip when flight has already been validated
+  ///
+  /// In en, this message translates to:
+  /// **'Already validated'**
+  String get aetherScheduleAlreadyValidatedTooltip;
+
+  /// Warning when arrival time is before departure time
+  ///
+  /// In en, this message translates to:
+  /// **'Arrival must be after departure'**
+  String get aetherScheduleArrivalBeforeDeparture;
+
+  /// Title for the arrival date picker sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Arrival Date'**
+  String get aetherScheduleArrivalDateTitle;
+
+  /// Title for the arrival time picker sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Arrival Time'**
+  String get aetherScheduleArrivalTimeTitle;
+
+  /// Tooltip for the browse airports list button
+  ///
+  /// In en, this message translates to:
+  /// **'Browse airports'**
+  String get aetherScheduleBrowseTooltip;
+
+  /// Label for the primary save/schedule button
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule Flight'**
+  String get aetherScheduleButton;
+
+  /// Warning when trying to save without a connected device
+  ///
+  /// In en, this message translates to:
+  /// **'Connect your Meshtastic device first'**
+  String get aetherScheduleConnectDevice;
+
+  /// Subtitle in node bar when no device is connected
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to schedule a flight'**
+  String get aetherScheduleConnectToSchedule;
+
+  /// Label for the date picker button
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get aetherScheduleDateLabel;
+
+  /// Title for the departure date picker sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Departure Date'**
+  String get aetherScheduleDepartureDateTitle;
+
+  /// Warning when selected departure time is in the past
+  ///
+  /// In en, this message translates to:
+  /// **'Departure time is in the past'**
+  String get aetherScheduleDepartureInPast;
+
+  /// Title for the departure time picker sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Departure Time'**
+  String get aetherScheduleDepartureTimeTitle;
+
+  /// Warning when departure is more than 365 days in the future
+  ///
+  /// In en, this message translates to:
+  /// **'Departure cannot be more than a year from now'**
+  String get aetherScheduleDepartureTooFar;
+
+  /// Warning when flight duration exceeds 24 hours
+  ///
+  /// In en, this message translates to:
+  /// **'Flight duration exceeds 24 hours ({hours}h {minutes}m)'**
+  String aetherScheduleDurationTooLong(int hours, int minutes);
+
+  /// Warning when flight duration is less than 5 minutes
+  ///
+  /// In en, this message translates to:
+  /// **'Flight duration must be at least 5 minutes'**
+  String get aetherScheduleDurationTooShort;
+
+  /// Generic error snackbar during flight creation
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {error}'**
+  String aetherScheduleError(String error);
+
+  /// Hint text for the flight number field
+  ///
+  /// In en, this message translates to:
+  /// **'UA123'**
+  String get aetherScheduleFlightNumberHint;
+
+  /// Label for the flight number input field
+  ///
+  /// In en, this message translates to:
+  /// **'Flight Number'**
+  String get aetherScheduleFlightNumberLabel;
+
+  /// Info snackbar when selected flight is on the ground
+  ///
+  /// In en, this message translates to:
+  /// **'Flight is currently on the ground'**
+  String get aetherScheduleFlightOnGround;
+
+  /// Success snackbar when a flight is selected from search with altitude
+  ///
+  /// In en, this message translates to:
+  /// **'Flight selected! {altitude} ft'**
+  String aetherScheduleFlightSelectedAlt(int altitude);
+
+  /// Tooltip for the schedule flight button in the app bar
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule Flight'**
+  String get aetherScheduleFlightTooltip;
+
+  /// Hint text for the departure airport field
+  ///
+  /// In en, this message translates to:
+  /// **'LAX'**
+  String get aetherScheduleFromHint;
+
+  /// Label for the departure airport field
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get aetherScheduleFromLabel;
+
+  /// Status pill label when flight is airborne
+  ///
+  /// In en, this message translates to:
+  /// **'In Flight'**
+  String get aetherScheduleInFlight;
+
+  /// Message explaining which fields could not be auto-filled
+  ///
+  /// In en, this message translates to:
+  /// **'Could not auto-fill {fields} from OpenSky Network. Please enter these details manually below.'**
+  String aetherScheduleIncompleteMessage(String fields);
+
+  /// Title of the incomplete data notice card
+  ///
+  /// In en, this message translates to:
+  /// **'Incomplete Flight Data'**
+  String get aetherScheduleIncompleteTitle;
+
+  /// Intro banner explaining what scheduling a flight does
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule your flight and share it on aether.socialmesh.app so the community can try to receive your signal!'**
+  String get aetherScheduleIntroBanner;
+
+  /// Title of the live flight data sticky header
+  ///
+  /// In en, this message translates to:
+  /// **'Live Flight Data'**
+  String get aetherScheduleLiveFlightData;
+
+  /// Warning when flights are still loading during save
+  ///
+  /// In en, this message translates to:
+  /// **'Loading flights, please try again'**
+  String get aetherScheduleLoadingFlights;
+
+  /// Text shown in node bar when no Meshtastic device is connected
+  ///
+  /// In en, this message translates to:
+  /// **'No Device Connected'**
+  String get aetherScheduleNoDeviceConnected;
+
+  /// Warning when the node already has a non-past flight
+  ///
+  /// In en, this message translates to:
+  /// **'{nodeName} already has an active flight ({flightNumber})'**
+  String aetherScheduleNodeHasActiveFlight(
+    String nodeName,
+    String flightNumber,
+  );
+
+  /// Hint text for the notes field
+  ///
+  /// In en, this message translates to:
+  /// **'Window seat, left side. Running at 20dBm.'**
+  String get aetherScheduleNotesHint;
+
+  /// Label for the notes text field
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get aetherScheduleNotesLabel;
+
+  /// Status pill label when flight is on the ground
+  ///
+  /// In en, this message translates to:
+  /// **'On Ground'**
+  String get aetherScheduleOnGround;
+
+  /// InfoChip label when flight is on the ground in sticky header
+  ///
+  /// In en, this message translates to:
+  /// **'On ground'**
+  String get aetherScheduleOnGroundChip;
+
+  /// Tooltip for the legal/responsibility icon button
+  ///
+  /// In en, this message translates to:
+  /// **'Your Responsibility'**
+  String get aetherScheduleResponsibilityTooltip;
+
+  /// Route info error when distance exceeds aircraft range
+  ///
+  /// In en, this message translates to:
+  /// **'{distance} — exceeds maximum aircraft range'**
+  String aetherScheduleRouteExceedsRange(int distance);
+
+  /// Success snackbar when route data is found after search
+  ///
+  /// In en, this message translates to:
+  /// **'Route found: {route}'**
+  String aetherScheduleRouteFound(String route);
+
+  /// Route info error when departure equals arrival
+  ///
+  /// In en, this message translates to:
+  /// **'Same airport'**
+  String get aetherScheduleRouteSameAirport;
+
+  /// Route info error when airports are too close
+  ///
+  /// In en, this message translates to:
+  /// **'{departure} and {arrival} are {distance} km apart — too close for a commercial flight'**
+  String aetherScheduleRouteTooClose(
+    String departure,
+    String arrival,
+    int distance,
+  );
+
+  /// Warning snackbar when departure equals arrival airport
+  ///
+  /// In en, this message translates to:
+  /// **'Departure and arrival cannot be the same airport'**
+  String get aetherScheduleSameAirport;
+
+  /// Label for the search flights pill button
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get aetherScheduleSearchButton;
+
+  /// Tooltip for the search flights pill button
+  ///
+  /// In en, this message translates to:
+  /// **'Search flights'**
+  String get aetherScheduleSearchTooltip;
+
+  /// Section header for optional arrival time fields
+  ///
+  /// In en, this message translates to:
+  /// **'Arrival Time (Optional)'**
+  String get aetherScheduleSectionArrival;
+
+  /// Section header for departure time fields
+  ///
+  /// In en, this message translates to:
+  /// **'Departure Time'**
+  String get aetherScheduleSectionDeparture;
+
+  /// Section header for flight information fields
+  ///
+  /// In en, this message translates to:
+  /// **'Flight Information'**
+  String get aetherScheduleSectionFlight;
+
+  /// Section header for optional notes field
+  ///
+  /// In en, this message translates to:
+  /// **'Additional Notes (Optional)'**
+  String get aetherScheduleSectionNotes;
+
+  /// Placeholder text for unselected date/time buttons
+  ///
+  /// In en, this message translates to:
+  /// **'Select'**
+  String get aetherScheduleSelect;
+
+  /// Warning when departure date/time is missing during save
+  ///
+  /// In en, this message translates to:
+  /// **'Please select departure date and time'**
+  String get aetherScheduleSelectDepartureTime;
+
+  /// Sign-in required snackbar for scheduling a flight
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to schedule a flight'**
+  String get aetherScheduleSignInRequired;
+
+  /// Success snackbar when flight is saved and active
+  ///
+  /// In en, this message translates to:
+  /// **'Flight in flight!'**
+  String get aetherScheduleSuccessInFlight;
+
+  /// Success snackbar when flight is saved as scheduled
+  ///
+  /// In en, this message translates to:
+  /// **'Flight scheduled!'**
+  String get aetherScheduleSuccessScheduled;
+
+  /// Tooltip for the swap airports button
+  ///
+  /// In en, this message translates to:
+  /// **'Swap airports'**
+  String get aetherScheduleSwapTooltip;
+
+  /// Label for the time picker button
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get aetherScheduleTimeLabel;
+
+  /// Tip about window seat for better signal
+  ///
+  /// In en, this message translates to:
+  /// **'Get a window seat if possible'**
+  String get aetherScheduleTip1;
+
+  /// Tip about node placement near window
+  ///
+  /// In en, this message translates to:
+  /// **'Keep node near the window during flight'**
+  String get aetherScheduleTip2;
+
+  /// Tip about transmit power and range
+  ///
+  /// In en, this message translates to:
+  /// **'Higher TX power = longer range'**
+  String get aetherScheduleTip3;
+
+  /// Tip about sharing frequency information
+  ///
+  /// In en, this message translates to:
+  /// **'Let others know your frequency/region'**
+  String get aetherScheduleTip4;
+
+  /// Title of the tips card on the schedule screen
+  ///
+  /// In en, this message translates to:
+  /// **'Tips for best reception'**
+  String get aetherScheduleTipsTitle;
+
+  /// Title of the schedule flight screen
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule Flight'**
+  String get aetherScheduleTitle;
+
+  /// Hint text for the arrival airport field
+  ///
+  /// In en, this message translates to:
+  /// **'JFK'**
+  String get aetherScheduleToHint;
+
+  /// Label for the arrival airport field
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get aetherScheduleToLabel;
+
+  /// Warning snackbar when airports are too close together
+  ///
+  /// In en, this message translates to:
+  /// **'{departure} and {arrival} are only {distance} km apart — no commercial routes exist'**
+  String aetherScheduleTooClose(String departure, String arrival, int distance);
+
+  /// Warning snackbar when airports are too far apart
+  ///
+  /// In en, this message translates to:
+  /// **'{departure} to {arrival} is {distance} — exceeds maximum aircraft range'**
+  String aetherScheduleTooFar(String departure, String arrival, int distance);
+
+  /// Tooltip for the validate flight inline button
+  ///
+  /// In en, this message translates to:
+  /// **'Validate flight'**
+  String get aetherScheduleValidateFlightTooltip;
+
+  /// Title of the main Aether screen in the app bar
+  ///
+  /// In en, this message translates to:
+  /// **'Aether'**
+  String get aetherScreenTitle;
+
+  /// Empty state subtitle with search suggestions
+  ///
+  /// In en, this message translates to:
+  /// **'Try a different flight number or check\nif the flight is currently airborne'**
+  String get aetherSearchEmptySubtitle;
+
+  /// Empty state title when search returns no results
+  ///
+  /// In en, this message translates to:
+  /// **'No active flights found'**
+  String get aetherSearchEmptyTitle;
+
+  /// Error message when flight search API call fails
+  ///
+  /// In en, this message translates to:
+  /// **'Search failed. Please try again.'**
+  String get aetherSearchError;
+
+  /// Placeholder text for the flight number search field in the search sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Flight number (e.g. UA123)'**
+  String get aetherSearchFlightNumberHint;
+
+  /// Placeholder text for the flight search field
+  ///
+  /// In en, this message translates to:
+  /// **'Search flights, airports, nodes...'**
+  String get aetherSearchHint;
+
+  /// Idle state instructions for flight search
+  ///
+  /// In en, this message translates to:
+  /// **'Type a callsign and press Search\nto find flights currently in the air'**
+  String get aetherSearchIdleSubtitle;
+
+  /// Idle state title before searching
+  ///
+  /// In en, this message translates to:
+  /// **'Search for active flights'**
+  String get aetherSearchIdleTitle;
+
+  /// InfoChip label when search result flight is on the ground
+  ///
+  /// In en, this message translates to:
+  /// **'On ground'**
+  String get aetherSearchOnGround;
+
+  /// Retry button label after search error
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get aetherSearchRetry;
+
+  /// Route display when only departure airport is known
+  ///
+  /// In en, this message translates to:
+  /// **'From {airport} · En route'**
+  String aetherSearchRouteFrom(String airport);
+
+  /// Route display when only arrival airport is known
+  ///
+  /// In en, this message translates to:
+  /// **'To {airport}'**
+  String aetherSearchRouteTo(String airport);
+
+  /// Title of the flight search screen
+  ///
+  /// In en, this message translates to:
+  /// **'Search Flights'**
+  String get aetherSearchTitle;
+
+  /// Tooltip for the search icon button in flight search
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get aetherSearchTooltip;
+
+  /// Text used when sharing a flight via the system share sheet
+  ///
+  /// In en, this message translates to:
+  /// **'{flightNumber} {departure} → {arrival}\nTrack this Meshtastic flight on Aether:\n{url}'**
+  String aetherShareText(
+    Object flightNumber,
+    Object departure,
+    Object arrival,
+    Object url,
+  );
+
+  /// Title shown when My Flights filter requires sign-in
+  ///
+  /// In en, this message translates to:
+  /// **'Sign In Required'**
+  String get aetherSignInRequired;
+
+  /// Subtitle explaining sign-in is needed for My Flights
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to view and manage your scheduled flights.'**
+  String get aetherSignInRequiredSubtitle;
+
+  /// Label for the active flights stat in the stats card
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get aetherStatsActive;
+
+  /// Label for the longest distance record stat
+  ///
+  /// In en, this message translates to:
+  /// **'Record'**
+  String get aetherStatsRecord;
+
+  /// Label for the total reception reports stat
+  ///
+  /// In en, this message translates to:
+  /// **'Reports'**
+  String get aetherStatsReports;
+
+  /// Label for the total scheduled flights stat
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled'**
+  String get aetherStatsScheduled;
+
+  /// Flight status text when the flight has ended
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get aetherStatusCompleted;
+
+  /// Flight status text when the flight is currently airborne
+  ///
+  /// In en, this message translates to:
+  /// **'In Flight'**
+  String get aetherStatusInFlight;
+
+  /// Flight status text when the flight is more than 24 hours away
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled'**
+  String get aetherStatusScheduled;
+
+  /// Flight status text when the flight is within 24 hours of departure
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get aetherStatusUpcoming;
+
+  /// Success snackbar when validation confirms flight is active
+  ///
+  /// In en, this message translates to:
+  /// **'Flight is currently active!'**
+  String get aetherValidationActive;
+
+  /// Success snackbar variant with altitude when flight is active
+  ///
+  /// In en, this message translates to:
+  /// **'Flight is currently active! {altitude} ft'**
+  String aetherValidationActiveAlt(int altitude);
+
+  /// Error snackbar when user tries to validate without a flight number
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a flight number first'**
+  String get aetherValidationEnterFlightFirst;
+
+  /// Error snackbar when flight validation API call fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to validate flight'**
+  String get aetherValidationFailed;
+
+  /// Error snackbar for invalid flight number format during validation
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid flight number format'**
+  String get aetherValidationInvalidFormat;
+
+  /// Error snackbar when API rate limit is exceeded
+  ///
+  /// In en, this message translates to:
+  /// **'Rate limited. Try again in a few minutes.'**
+  String get aetherValidationRateLimited;
+
+  /// Success snackbar when flight is found in historical records
+  ///
+  /// In en, this message translates to:
+  /// **'Flight verified in OpenSky records'**
+  String get aetherValidationVerified;
+
   /// No description provided for @ambientLightingBlue.
   ///
   /// In en, this message translates to:
@@ -1125,6 +2353,1980 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Socialmesh'**
   String get appTitle;
+
+  /// Label for the notification body field
+  ///
+  /// In en, this message translates to:
+  /// **'Body'**
+  String get automationActionBodyLabel;
+
+  /// Title for the action type picker bottom sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Change Action Type'**
+  String get automationActionChangeType;
+
+  /// Channel name fallback; {index} is the channel index number
+  ///
+  /// In en, this message translates to:
+  /// **'Channel {index}'**
+  String automationActionChannelIndex(int index);
+
+  /// Subtitle for channel message target display
+  ///
+  /// In en, this message translates to:
+  /// **'Channel message'**
+  String get automationActionChannelMessage;
+
+  /// Channel count label in the picker; {count} is the number
+  ///
+  /// In en, this message translates to:
+  /// **'{count} channels'**
+  String automationActionChannelsCount(int count);
+
+  /// Label for optional notification sound selector
+  ///
+  /// In en, this message translates to:
+  /// **'Custom sound (optional)'**
+  String get automationActionCustomSound;
+
+  /// Subtitle for channel index 0 in the channel picker
+  ///
+  /// In en, this message translates to:
+  /// **'Default channel'**
+  String get automationActionDefaultChannel;
+
+  /// Subtitle for direct message target display
+  ///
+  /// In en, this message translates to:
+  /// **'Direct message'**
+  String get automationActionDirectMessage;
+
+  /// Close button in the channel selector
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get automationActionDone;
+
+  /// Display name for the glyphPattern action type
+  ///
+  /// In en, this message translates to:
+  /// **'Glyph pattern (Nothing Phone)'**
+  String get automationActionGlyphPattern;
+
+  /// Dismiss button on the shortcut help sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Got it'**
+  String get automationActionGotIt;
+
+  /// Label for the IFTTT webhook event name input
+  ///
+  /// In en, this message translates to:
+  /// **'IFTTT Event Name'**
+  String get automationActionIftttEventName;
+
+  /// Help text below the IFTTT event name field
+  ///
+  /// In en, this message translates to:
+  /// **'Uses your IFTTT Webhook key from Settings'**
+  String get automationActionIftttHelp;
+
+  /// Hint text for the IFTTT event name input
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., meshtastic_alert'**
+  String get automationActionIftttHint;
+
+  /// Display name for the logEvent action type
+  ///
+  /// In en, this message translates to:
+  /// **'Log to history'**
+  String get automationActionLogEvent;
+
+  /// Label for the message text input field
+  ///
+  /// In en, this message translates to:
+  /// **'Message'**
+  String get automationActionMessageLabel;
+
+  /// Warning when no channels are available for selection
+  ///
+  /// In en, this message translates to:
+  /// **'No channels available'**
+  String get automationActionNoChannels;
+
+  /// Empty state when no sounds match the search
+  ///
+  /// In en, this message translates to:
+  /// **'No sounds found'**
+  String get automationActionNoSoundsFound;
+
+  /// Display name for the playSound action type
+  ///
+  /// In en, this message translates to:
+  /// **'Play alert sound'**
+  String get automationActionPlaySound;
+
+  /// Subtitle when custom notification sound is selected
+  ///
+  /// In en, this message translates to:
+  /// **'Plays after notification'**
+  String get automationActionPlaysAfter;
+
+  /// Button label to preview a selected sound
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get automationActionPreview;
+
+  /// Display name for channel index 0
+  ///
+  /// In en, this message translates to:
+  /// **'Primary'**
+  String get automationActionPrimary;
+
+  /// Display name for the pushNotification action type
+  ///
+  /// In en, this message translates to:
+  /// **'Push notification'**
+  String get automationActionPushNotification;
+
+  /// Subtitle when a sound is selected
+  ///
+  /// In en, this message translates to:
+  /// **'RTTTL ringtone'**
+  String get automationActionRtttlRingtone;
+
+  /// Category label above search results in sound picker
+  ///
+  /// In en, this message translates to:
+  /// **'SEARCH RESULTS'**
+  String get automationActionSearchResults;
+
+  /// Hint text for the sound search input
+  ///
+  /// In en, this message translates to:
+  /// **'Search sounds...'**
+  String get automationActionSearchSounds;
+
+  /// Placeholder when no channel is selected for sendToChannel
+  ///
+  /// In en, this message translates to:
+  /// **'Select channel'**
+  String get automationActionSelectChannel;
+
+  /// Title for the channel selector bottom sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Select Channel'**
+  String get automationActionSelectChannelTitle;
+
+  /// Placeholder when no node is selected for sendMessage
+  ///
+  /// In en, this message translates to:
+  /// **'Select node'**
+  String get automationActionSelectNodePlaceholder;
+
+  /// Placeholder text when no sound is selected
+  ///
+  /// In en, this message translates to:
+  /// **'Select a sound'**
+  String get automationActionSelectSound;
+
+  /// Display name for the sendMessage action type
+  ///
+  /// In en, this message translates to:
+  /// **'Send message to node'**
+  String get automationActionSendMessage;
+
+  /// Display name for the sendToChannel action type
+  ///
+  /// In en, this message translates to:
+  /// **'Send to channel'**
+  String get automationActionSendToChannel;
+
+  /// Info banner explaining shortcut data passing
+  ///
+  /// In en, this message translates to:
+  /// **'Event data (node name, battery, location, etc.) will be passed as JSON input to your shortcut.'**
+  String get automationActionShortcutDataInfo;
+
+  /// Title for the shortcut help bottom sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Using Shortcuts'**
+  String get automationActionShortcutHelpTitle;
+
+  /// Warning about iOS limitation in shortcut help
+  ///
+  /// In en, this message translates to:
+  /// **'Note: Shortcuts app will briefly open when triggered. This is an iOS limitation.'**
+  String get automationActionShortcutIosNote;
+
+  /// Description for 'battery' key in shortcut help
+  ///
+  /// In en, this message translates to:
+  /// **'Battery % (if available)'**
+  String get automationActionShortcutKeyBattery;
+
+  /// Description for 'latitude' key in shortcut help
+  ///
+  /// In en, this message translates to:
+  /// **'GPS latitude (if available)'**
+  String get automationActionShortcutKeyLatitude;
+
+  /// Description for 'longitude' key in shortcut help
+  ///
+  /// In en, this message translates to:
+  /// **'GPS longitude (if available)'**
+  String get automationActionShortcutKeyLongitude;
+
+  /// Description for 'message' key in shortcut help
+  ///
+  /// In en, this message translates to:
+  /// **'Message text (if applicable)'**
+  String get automationActionShortcutKeyMessage;
+
+  /// Description for 'node_name' key in shortcut help
+  ///
+  /// In en, this message translates to:
+  /// **'Name of the node'**
+  String get automationActionShortcutKeyNodeName;
+
+  /// Description for 'node_num' key in shortcut help
+  ///
+  /// In en, this message translates to:
+  /// **'Node number'**
+  String get automationActionShortcutKeyNodeNum;
+
+  /// Description for 'timestamp' key in shortcut help
+  ///
+  /// In en, this message translates to:
+  /// **'Event timestamp'**
+  String get automationActionShortcutKeyTimestamp;
+
+  /// Description for 'trigger' key in shortcut help
+  ///
+  /// In en, this message translates to:
+  /// **'Trigger type (nodeOffline, etc.)'**
+  String get automationActionShortcutKeyTrigger;
+
+  /// Section header for key list in shortcut help
+  ///
+  /// In en, this message translates to:
+  /// **'Available keys in the dictionary:'**
+  String get automationActionShortcutKeysTitle;
+
+  /// Hint text for the shortcut name input
+  ///
+  /// In en, this message translates to:
+  /// **'Enter exact shortcut name'**
+  String get automationActionShortcutNameHint;
+
+  /// Label for the iOS Shortcut name input
+  ///
+  /// In en, this message translates to:
+  /// **'Shortcut Name'**
+  String get automationActionShortcutNameLabel;
+
+  /// Section header in the shortcut help sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Setting up your shortcut:'**
+  String get automationActionShortcutSetup;
+
+  /// Step 1 instructions in the shortcut help sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Add \"Get Dictionary from\" action\nSelect \"Shortcut Input\"'**
+  String get automationActionShortcutStep1;
+
+  /// Step 2 instructions in the shortcut help sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Add \"Get Value for\" action\nSet key (e.g., node_name) and select \"Dictionary\"'**
+  String get automationActionShortcutStep2;
+
+  /// Step 3 instructions in the shortcut help sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Use the extracted value in your actions\n(e.g., Send Message, Show Notification)'**
+  String get automationActionShortcutStep3;
+
+  /// Section header for sound configuration
+  ///
+  /// In en, this message translates to:
+  /// **'SOUND'**
+  String get automationActionSoundSection;
+
+  /// Sound count label in the picker; {count} is the number
+  ///
+  /// In en, this message translates to:
+  /// **'{count} sounds'**
+  String automationActionSoundsCount(int count);
+
+  /// Category label above suggested sounds
+  ///
+  /// In en, this message translates to:
+  /// **'SUGGESTIONS'**
+  String get automationActionSuggestions;
+
+  /// Subtitle when no custom notification sound is set
+  ///
+  /// In en, this message translates to:
+  /// **'System default'**
+  String get automationActionSystemDefault;
+
+  /// Subtitle when no sound is selected
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to choose'**
+  String get automationActionTapToChoose;
+
+  /// Label for the notification title field
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get automationActionTitleLabel;
+
+  /// Target section header in sendMessage/sendToChannel action
+  ///
+  /// In en, this message translates to:
+  /// **'TO'**
+  String get automationActionTo;
+
+  /// Display name for the triggerShortcut action type
+  ///
+  /// In en, this message translates to:
+  /// **'Run iOS Shortcut'**
+  String get automationActionTriggerShortcut;
+
+  /// Display name for the triggerWebhook action type
+  ///
+  /// In en, this message translates to:
+  /// **'Trigger webhook (IFTTT)'**
+  String get automationActionTriggerWebhook;
+
+  /// Display name for the updateWidget action type
+  ///
+  /// In en, this message translates to:
+  /// **'Update home widget'**
+  String get automationActionUpdateWidget;
+
+  /// Hint text for variable-enabled text fields
+  ///
+  /// In en, this message translates to:
+  /// **'Tap variables below to insert'**
+  String get automationActionVariableHint;
+
+  /// Display name for the vibrate action type
+  ///
+  /// In en, this message translates to:
+  /// **'Vibrate device'**
+  String get automationActionVibrate;
+
+  /// Action count chip label on the card; {count} is the number, {s} is plural suffix
+  ///
+  /// In en, this message translates to:
+  /// **'{count} action{s}'**
+  String automationCardActionCount(int count, String s);
+
+  /// Relative timestamp for days ago; {count} is the number
+  ///
+  /// In en, this message translates to:
+  /// **'{count}d ago'**
+  String automationCardDaysAgo(int count);
+
+  /// Relative timestamp for hours ago; {count} is the number
+  ///
+  /// In en, this message translates to:
+  /// **'{count}h ago'**
+  String automationCardHoursAgo(int count);
+
+  /// Relative timestamp for last triggered less than 1 minute ago
+  ///
+  /// In en, this message translates to:
+  /// **'Just now'**
+  String get automationCardJustNow;
+
+  /// Relative timestamp for minutes ago; {count} is the number
+  ///
+  /// In en, this message translates to:
+  /// **'{count}m ago'**
+  String automationCardMinutesAgo(int count);
+
+  /// Run count label on the card; {count} is the trigger count
+  ///
+  /// In en, this message translates to:
+  /// **'{count} runs'**
+  String automationCardRunsCount(int count);
+
+  /// Relative timestamp for weeks ago; {count} is the number
+  ///
+  /// In en, this message translates to:
+  /// **'{count}w ago'**
+  String automationCardWeeksAgo(int count);
+
+  /// Trigger category name for battery-related triggers
+  ///
+  /// In en, this message translates to:
+  /// **'Battery'**
+  String get automationCategoryBattery;
+
+  /// Trigger category name for position/geofence triggers
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get automationCategoryLocation;
+
+  /// Trigger category name for manual triggers
+  ///
+  /// In en, this message translates to:
+  /// **'Manual'**
+  String get automationCategoryManual;
+
+  /// Trigger category name for message-related triggers
+  ///
+  /// In en, this message translates to:
+  /// **'Messages'**
+  String get automationCategoryMessages;
+
+  /// Trigger category name for node online/offline/silent triggers
+  ///
+  /// In en, this message translates to:
+  /// **'Node Status'**
+  String get automationCategoryNodeStatus;
+
+  /// Trigger category name for detection sensor triggers
+  ///
+  /// In en, this message translates to:
+  /// **'Sensors'**
+  String get automationCategorySensors;
+
+  /// Trigger category name for signal strength triggers
+  ///
+  /// In en, this message translates to:
+  /// **'Signal'**
+  String get automationCategorySignal;
+
+  /// Trigger category name for scheduled triggers
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get automationCategoryTime;
+
+  /// Display name for the batteryAbove condition type
+  ///
+  /// In en, this message translates to:
+  /// **'Battery above threshold'**
+  String get automationConditionBatteryAbove;
+
+  /// Display name for the batteryBelow condition type
+  ///
+  /// In en, this message translates to:
+  /// **'Battery below threshold'**
+  String get automationConditionBatteryBelow;
+
+  /// Display name for the dayOfWeek condition type
+  ///
+  /// In en, this message translates to:
+  /// **'On specific days'**
+  String get automationConditionDayOfWeek;
+
+  /// Display name for the nodeOffline condition type
+  ///
+  /// In en, this message translates to:
+  /// **'Node is inactive'**
+  String get automationConditionNodeOffline;
+
+  /// Display name for the nodeOnline condition type
+  ///
+  /// In en, this message translates to:
+  /// **'Node is active'**
+  String get automationConditionNodeOnline;
+
+  /// Display name for the outsideGeofence condition type
+  ///
+  /// In en, this message translates to:
+  /// **'Outside geofence'**
+  String get automationConditionOutsideGeofence;
+
+  /// Display name for the timeRange condition type
+  ///
+  /// In en, this message translates to:
+  /// **'During time range'**
+  String get automationConditionTimeRange;
+
+  /// Display name for the withinGeofence condition type
+  ///
+  /// In en, this message translates to:
+  /// **'Within geofence'**
+  String get automationConditionWithinGeofence;
+
+  /// Skip reason when battery level is above threshold
+  ///
+  /// In en, this message translates to:
+  /// **'Battery threshold not met'**
+  String get automationDebugBatteryNotMet;
+
+  /// Skip reason when channel doesn't match filter
+  ///
+  /// In en, this message translates to:
+  /// **'Channel filter mismatch'**
+  String get automationDebugChannelMismatch;
+
+  /// Skip reason when an additional condition was not met
+  ///
+  /// In en, this message translates to:
+  /// **'Condition failed'**
+  String get automationDebugConditionFailed;
+
+  /// Skip reason display name when automation is disabled
+  ///
+  /// In en, this message translates to:
+  /// **'Disabled'**
+  String get automationDebugDisabled;
+
+  /// Skip reason when keyword isn't found in message
+  ///
+  /// In en, this message translates to:
+  /// **'Keyword not matched'**
+  String get automationDebugKeywordNotMatched;
+
+  /// Skip reason when node doesn't match the filter
+  ///
+  /// In en, this message translates to:
+  /// **'Node filter mismatch'**
+  String get automationDebugNodeFilterMismatch;
+
+  /// Skip reason when signal is above threshold
+  ///
+  /// In en, this message translates to:
+  /// **'Signal threshold not met'**
+  String get automationDebugSignalNotMet;
+
+  /// Skip reason when automation was throttled
+  ///
+  /// In en, this message translates to:
+  /// **'Throttled'**
+  String get automationDebugThrottled;
+
+  /// Skip reason when event type doesn't match trigger
+  ///
+  /// In en, this message translates to:
+  /// **'Trigger type mismatch'**
+  String get automationDebugTriggerMismatch;
+
+  /// Default message template for manual trigger actions
+  ///
+  /// In en, this message translates to:
+  /// **'Automation triggered manually'**
+  String get automationDefaultMsgManual;
+
+  /// Button label and sheet title for adding a new action
+  ///
+  /// In en, this message translates to:
+  /// **'Add Action'**
+  String get automationEditorAddAction;
+
+  /// Save button label when creating a new automation
+  ///
+  /// In en, this message translates to:
+  /// **'Create Automation'**
+  String get automationEditorCreateAutomation;
+
+  /// Success snackbar after creating an automation
+  ///
+  /// In en, this message translates to:
+  /// **'Automation created'**
+  String get automationEditorCreated;
+
+  /// Error snackbar when deleting an automation fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to delete automation'**
+  String get automationEditorDeleteError;
+
+  /// Tooltip for the delete button in the editor app bar
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get automationEditorDeleteTooltip;
+
+  /// Auto-generated description for batteryLow trigger; {threshold} is the percentage
+  ///
+  /// In en, this message translates to:
+  /// **'Triggered when battery drops below {threshold}%'**
+  String automationEditorDescBatteryLow(String threshold);
+
+  /// Auto-generated description for nodeSilent trigger; {minutes} is the duration
+  ///
+  /// In en, this message translates to:
+  /// **'Alert if no activity from node for {minutes} minutes'**
+  String automationEditorDescSilent(int minutes);
+
+  /// Hint text for the automation description input field
+  ///
+  /// In en, this message translates to:
+  /// **'What does this automation do?'**
+  String get automationEditorDescriptionHint;
+
+  /// Section title for the automation description field
+  ///
+  /// In en, this message translates to:
+  /// **'Description (optional)'**
+  String get automationEditorDescriptionLabel;
+
+  /// Error shown when invalid template variables are found; {vars} is the list
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid variables: {vars}'**
+  String automationEditorInvalidVars(String vars);
+
+  /// Hint text for the automation name input field
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., Low Battery Alert'**
+  String get automationEditorNameHint;
+
+  /// Section title for the automation name field
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get automationEditorNameLabel;
+
+  /// Empty state headline when no actions are configured
+  ///
+  /// In en, this message translates to:
+  /// **'No actions configured'**
+  String get automationEditorNoActions;
+
+  /// Empty state hint when no actions are configured
+  ///
+  /// In en, this message translates to:
+  /// **'Tap \"+ Add Action\" to add one'**
+  String get automationEditorNoActionsHint;
+
+  /// Save button label when editing an existing automation
+  ///
+  /// In en, this message translates to:
+  /// **'Save Changes'**
+  String get automationEditorSaveChanges;
+
+  /// Error snackbar when saving an automation fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save automation'**
+  String get automationEditorSaveError;
+
+  /// Loading indicator text while saving
+  ///
+  /// In en, this message translates to:
+  /// **'Saving...'**
+  String get automationEditorSaving;
+
+  /// Step indicator label; {number} is the step number
+  ///
+  /// In en, this message translates to:
+  /// **'Step {number}'**
+  String automationEditorStepNumber(int number);
+
+  /// Section title for the action configuration
+  ///
+  /// In en, this message translates to:
+  /// **'THEN'**
+  String get automationEditorThen;
+
+  /// Flow connector label between subsequent actions
+  ///
+  /// In en, this message translates to:
+  /// **'then...'**
+  String get automationEditorThen2;
+
+  /// Flow connector label between 'WHEN' and first action
+  ///
+  /// In en, this message translates to:
+  /// **'then do...'**
+  String get automationEditorThenDo;
+
+  /// Screen title when editing an existing automation
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Automation'**
+  String get automationEditorTitleEdit;
+
+  /// Screen title when creating a new automation
+  ///
+  /// In en, this message translates to:
+  /// **'New Automation'**
+  String get automationEditorTitleNew;
+
+  /// Success snackbar after updating an automation
+  ///
+  /// In en, this message translates to:
+  /// **'Automation updated'**
+  String get automationEditorUpdated;
+
+  /// Warning shown when trying to save with no actions
+  ///
+  /// In en, this message translates to:
+  /// **'Please add at least one action'**
+  String get automationEditorValidateActions;
+
+  /// Warning shown when trying to save without a name
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a name for this automation'**
+  String get automationEditorValidateName;
+
+  /// Section title for the trigger configuration
+  ///
+  /// In en, this message translates to:
+  /// **'WHEN'**
+  String get automationEditorWhen;
+
+  /// Fallback body in push notification action within the engine
+  ///
+  /// In en, this message translates to:
+  /// **'Automation triggered.'**
+  String get automationEngineAutomationTriggered;
+
+  /// Title of the node palette overlay
+  ///
+  /// In en, this message translates to:
+  /// **'Add Node'**
+  String get automationFlowAddNode;
+
+  /// Title of the compilation issues bottom sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Compilation Issues'**
+  String get automationFlowCompilationIssues;
+
+  /// Create button label when creating a new flow
+  ///
+  /// In en, this message translates to:
+  /// **'Create'**
+  String get automationFlowCreate;
+
+  /// Success snackbar when a flow is created (may include count suffix)
+  ///
+  /// In en, this message translates to:
+  /// **'Automation created'**
+  String get automationFlowCreated;
+
+  /// Confirm button label for discarding changes
+  ///
+  /// In en, this message translates to:
+  /// **'Discard'**
+  String get automationFlowDiscard;
+
+  /// Body text of the discard changes confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'You have unsaved changes in the flow editor. Discard them and go back?'**
+  String get automationFlowDiscardMessage;
+
+  /// Title of the discard changes confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Discard Changes?'**
+  String get automationFlowDiscardTitle;
+
+  /// Title when editing an existing visual flow
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Flow'**
+  String get automationFlowEditTitle;
+
+  /// Section header for errors in compilation issues sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Errors'**
+  String get automationFlowErrors;
+
+  /// Cancel button label to stay in the editor
+  ///
+  /// In en, this message translates to:
+  /// **'Keep Editing'**
+  String get automationFlowKeepEditing;
+
+  /// Hint text for the flow name input field
+  ///
+  /// In en, this message translates to:
+  /// **'Flow name...'**
+  String get automationFlowNameHint;
+
+  /// Title when creating a new visual flow
+  ///
+  /// In en, this message translates to:
+  /// **'New Flow'**
+  String get automationFlowNewTitle;
+
+  /// Warning when the visual graph cannot compile any automations
+  ///
+  /// In en, this message translates to:
+  /// **'No automations could be compiled from this graph'**
+  String get automationFlowNoCompilation;
+
+  /// Node count label in flow editor; {count} is the number of nodes
+  ///
+  /// In en, this message translates to:
+  /// **'{count} nodes'**
+  String automationFlowNodesCount(int count);
+
+  /// Save button label when editing an existing flow
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get automationFlowSave;
+
+  /// Error snackbar when saving a flow fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save automation'**
+  String get automationFlowSaveError;
+
+  /// Toolbar button label for adding a node
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get automationFlowToolbarAdd;
+
+  /// Toolbar button label for deleting selected nodes; {count} is the selection count
+  ///
+  /// In en, this message translates to:
+  /// **'Delete ({count})'**
+  String automationFlowToolbarDelete(int count);
+
+  /// Toolbar button label for zoom-to-fit
+  ///
+  /// In en, this message translates to:
+  /// **'Fit'**
+  String get automationFlowToolbarFit;
+
+  /// Toolbar button label for redo operation
+  ///
+  /// In en, this message translates to:
+  /// **'Redo'**
+  String get automationFlowToolbarRedo;
+
+  /// Toolbar button label for undo operation
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get automationFlowToolbarUndo;
+
+  /// Success snackbar when a flow is updated (may include count suffix)
+  ///
+  /// In en, this message translates to:
+  /// **'Automation updated'**
+  String get automationFlowUpdated;
+
+  /// Warning when trying to save a flow without a name
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a name for this automation'**
+  String get automationFlowValidateName;
+
+  /// Tooltip for the validation badge icon button
+  ///
+  /// In en, this message translates to:
+  /// **'Validation issues'**
+  String get automationFlowValidationTooltip;
+
+  /// Section header for warnings in compilation issues sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Warnings'**
+  String get automationFlowWarnings;
+
+  /// Section label showing actions count in import preview; {count} is the number
+  ///
+  /// In en, this message translates to:
+  /// **'Actions ({count})'**
+  String automationImportActionsCount(int count);
+
+  /// Button label to import the automation
+  ///
+  /// In en, this message translates to:
+  /// **'Import'**
+  String get automationImportButton;
+
+  /// Section label in import preview; {count} is the number of conditions
+  ///
+  /// In en, this message translates to:
+  /// **'Conditions ({count})'**
+  String automationImportConditionsCount(int count);
+
+  /// Summary text showing condition count; {count} is the number
+  ///
+  /// In en, this message translates to:
+  /// **'{count} conditions'**
+  String automationImportConditionsText(int count);
+
+  /// Button label to edit automation before importing
+  ///
+  /// In en, this message translates to:
+  /// **'Edit First'**
+  String get automationImportEditFirst;
+
+  /// Error snackbar when importing fails; {error} is the error message
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to import: {error}'**
+  String automationImportError(String error);
+
+  /// Error during automation import; {error} is the error message
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to import automation: {error}'**
+  String automationImportFailed(String error);
+
+  /// Title on error state screen during import
+  ///
+  /// In en, this message translates to:
+  /// **'Import Failed'**
+  String get automationImportFailedTitle;
+
+  /// Button label on the import error screen
+  ///
+  /// In en, this message translates to:
+  /// **'Go Back'**
+  String get automationImportGoBack;
+
+  /// Error when import is attempted without any data
+  ///
+  /// In en, this message translates to:
+  /// **'No automation data provided'**
+  String get automationImportNoData;
+
+  /// Error when a shared automation no longer exists
+  ///
+  /// In en, this message translates to:
+  /// **'Automation not found or has been deleted'**
+  String get automationImportNotFound;
+
+  /// Success snackbar after importing an automation
+  ///
+  /// In en, this message translates to:
+  /// **'Automation imported successfully'**
+  String get automationImportSuccess;
+
+  /// Screen title for the automation import screen
+  ///
+  /// In en, this message translates to:
+  /// **'Import Automation'**
+  String get automationImportTitle;
+
+  /// Section label showing the trigger type in the import preview
+  ///
+  /// In en, this message translates to:
+  /// **'Trigger'**
+  String get automationImportTrigger;
+
+  /// Action label on success snackbar to view imported automation
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get automationImportView;
+
+  /// Warning banner text on the import preview screen
+  ///
+  /// In en, this message translates to:
+  /// **'This automation will be imported as disabled. Review and enable it when ready.'**
+  String get automationImportWarning;
+
+  /// Fallback notification body when template rendering fails
+  ///
+  /// In en, this message translates to:
+  /// **'An automation was triggered.'**
+  String get automationNotificationFallbackBody;
+
+  /// Fallback notification title when template rendering fails
+  ///
+  /// In en, this message translates to:
+  /// **'Alert'**
+  String get automationNotificationFallbackTitle;
+
+  /// Menu item linking to acceptable use terms
+  ///
+  /// In en, this message translates to:
+  /// **'Acceptable Use'**
+  String get automationScreenAcceptableUse;
+
+  /// Title of the bottom sheet for adding an automation when list is non-empty
+  ///
+  /// In en, this message translates to:
+  /// **'Add Automation'**
+  String get automationScreenAddAutomation;
+
+  /// Button to clear execution log history
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get automationScreenClear;
+
+  /// CTA card title for creating a custom automation
+  ///
+  /// In en, this message translates to:
+  /// **'Create from Scratch'**
+  String get automationScreenCreateFromScratch;
+
+  /// CTA card subtitle for creating a custom automation
+  ///
+  /// In en, this message translates to:
+  /// **'Build a custom automation with full control over triggers and actions'**
+  String get automationScreenCreateFromScratchSubtitle;
+
+  /// Success snackbar after adding a template-based automation
+  ///
+  /// In en, this message translates to:
+  /// **'Automation created from template'**
+  String get automationScreenCreatedFromTemplate;
+
+  /// Relative timestamp for events days ago; {count} is the number of days
+  ///
+  /// In en, this message translates to:
+  /// **'{count}d ago'**
+  String automationScreenDaysAgo(int count);
+
+  /// Confirm button label for delete action
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get automationScreenDelete;
+
+  /// Confirmation message for deleting an automation; {name} is the automation name
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete \"{name}\"?'**
+  String automationScreenDeleteMessage(String name);
+
+  /// Title of delete confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Automation'**
+  String get automationScreenDeleteTitle;
+
+  /// Hero body text explaining what automations do
+  ///
+  /// In en, this message translates to:
+  /// **'Create automations to trigger actions automatically when events occur on your mesh network.'**
+  String get automationScreenEmptyDescription;
+
+  /// Hero headline on empty automations screen
+  ///
+  /// In en, this message translates to:
+  /// **'Automate Your Mesh'**
+  String get automationScreenEmptyTitle;
+
+  /// Menu item and sheet title for viewing automation execution history
+  ///
+  /// In en, this message translates to:
+  /// **'Execution Log'**
+  String get automationScreenExecutionLog;
+
+  /// Menu item to start help tour
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get automationScreenHelp;
+
+  /// Relative timestamp for events hours ago; {count} is the number of hours
+  ///
+  /// In en, this message translates to:
+  /// **'{count}h ago'**
+  String automationScreenHoursAgo(int count);
+
+  /// Relative timestamp for events less than 1 minute ago
+  ///
+  /// In en, this message translates to:
+  /// **'Just now'**
+  String get automationScreenJustNow;
+
+  /// Error message when automations fail to load
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load automations'**
+  String get automationScreenLoadError;
+
+  /// Relative timestamp for events minutes ago; {count} is the number of minutes
+  ///
+  /// In en, this message translates to:
+  /// **'{count}m ago'**
+  String automationScreenMinutesAgo(int count);
+
+  /// Tooltip for the add/new automation button in the app bar
+  ///
+  /// In en, this message translates to:
+  /// **'New Automation'**
+  String get automationScreenNewTooltip;
+
+  /// Empty state text in the execution log sheet
+  ///
+  /// In en, this message translates to:
+  /// **'No executions yet'**
+  String get automationScreenNoExecutions;
+
+  /// Section subtitle for template cards
+  ///
+  /// In en, this message translates to:
+  /// **'One-tap setup for common use cases'**
+  String get automationScreenQuickStartSubtitle;
+
+  /// Section header for template cards
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Start Templates'**
+  String get automationScreenQuickStartTemplates;
+
+  /// Button label to retry loading automations after error
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get automationScreenRetry;
+
+  /// Menu item to scan a QR code for importing an automation
+  ///
+  /// In en, this message translates to:
+  /// **'Scan QR Code'**
+  String get automationScreenScanQrCode;
+
+  /// Section header for trigger category exploration
+  ///
+  /// In en, this message translates to:
+  /// **'Start with a Trigger'**
+  String get automationScreenStartWithTrigger;
+
+  /// Section subtitle for trigger category exploration
+  ///
+  /// In en, this message translates to:
+  /// **'Choose what event starts your automation'**
+  String get automationScreenStartWithTriggerSubtitle;
+
+  /// Label for active (enabled) automations stat
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get automationScreenStatActive;
+
+  /// Label for total execution count stat
+  ///
+  /// In en, this message translates to:
+  /// **'Executions'**
+  String get automationScreenStatExecutions;
+
+  /// Label for total automations stat
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get automationScreenStatTotal;
+
+  /// Title of the main automations list screen
+  ///
+  /// In en, this message translates to:
+  /// **'Automations'**
+  String get automationScreenTitle;
+
+  /// Loading snackbar while running an automation
+  ///
+  /// In en, this message translates to:
+  /// **'Running \"{name}\"...'**
+  String automationScreenRunning(String name);
+
+  /// Success snackbar after running an automation
+  ///
+  /// In en, this message translates to:
+  /// **'Ran \"{name}\" successfully'**
+  String automationScreenRunSuccess(String name);
+
+  /// Error snackbar when automation execution fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to run: {error}'**
+  String automationScreenRunFailed(String error);
+
+  /// Loading snackbar while deleting an automation
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting \"{name}\"...'**
+  String automationScreenDeleting(String name);
+
+  /// Success snackbar after deleting an automation
+  ///
+  /// In en, this message translates to:
+  /// **'Deleted \"{name}\"'**
+  String automationScreenDeleted(String name);
+
+  /// Share body text when sharing an automation
+  ///
+  /// In en, this message translates to:
+  /// **'Check out this automation on Socialmesh!'**
+  String get automationShareMessage;
+
+  /// Info text below the QR code in the share sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Scan this QR code in Socialmesh to import this automation'**
+  String get automationShareScanInfo;
+
+  /// Snackbar message prompting sign-in for sharing
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to share automations'**
+  String get automationShareSignIn;
+
+  /// Action button label in sign-in snackbar
+  ///
+  /// In en, this message translates to:
+  /// **'Sign In'**
+  String get automationShareSignInAction;
+
+  /// Share subject when sharing an automation; {name} is the automation name
+  ///
+  /// In en, this message translates to:
+  /// **'Socialmesh Automation: {name}'**
+  String automationShareSubject(String name);
+
+  /// Title of the QR share bottom sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Share Automation'**
+  String get automationShareTitle;
+
+  /// Template description for dead man's switch
+  ///
+  /// In en, this message translates to:
+  /// **'Alert if no activity from node for 30 minutes'**
+  String get automationTemplateDeadManDesc;
+
+  /// Template name for dead man's switch automation
+  ///
+  /// In en, this message translates to:
+  /// **'Dead Man\'s Switch'**
+  String get automationTemplateDeadManName;
+
+  /// Short template description for dead man's switch in templates list
+  ///
+  /// In en, this message translates to:
+  /// **'Alert if node silent too long'**
+  String get automationTemplateDeadManSwitchDesc;
+
+  /// Default name for a new automation (fallback template)
+  ///
+  /// In en, this message translates to:
+  /// **'New Automation'**
+  String get automationTemplateDefaultName;
+
+  /// Template description for geofence exit alert (templates list)
+  ///
+  /// In en, this message translates to:
+  /// **'Alert when a node leaves a designated area'**
+  String get automationTemplateGeofenceExitDesc;
+
+  /// Alternate short description for geofence exit in templates list
+  ///
+  /// In en, this message translates to:
+  /// **'Alert when leaving a designated area'**
+  String get automationTemplateGeofenceExitFullDesc;
+
+  /// Template name for geofence exit alert automation
+  ///
+  /// In en, this message translates to:
+  /// **'Geofence Exit Alert'**
+  String get automationTemplateGeofenceExitName;
+
+  /// Template description for low battery alert
+  ///
+  /// In en, this message translates to:
+  /// **'Notify when a node battery drops below 20%'**
+  String get automationTemplateLowBatteryDesc;
+
+  /// Template name for the low battery alert automation
+  ///
+  /// In en, this message translates to:
+  /// **'Low Battery Alert'**
+  String get automationTemplateLowBatteryName;
+
+  /// Short template description for low battery alert in templates list
+  ///
+  /// In en, this message translates to:
+  /// **'Notify when battery drops below 20%'**
+  String get automationTemplateLowBatteryShortDesc;
+
+  /// Template description for node offline alert
+  ///
+  /// In en, this message translates to:
+  /// **'Notify when a node goes offline'**
+  String get automationTemplateNodeOfflineDesc;
+
+  /// Template name for node offline alert automation
+  ///
+  /// In en, this message translates to:
+  /// **'Node Offline Alert'**
+  String get automationTemplateNodeOfflineName;
+
+  /// Notification title for dead man's switch template
+  ///
+  /// In en, this message translates to:
+  /// **'Node Silent'**
+  String get automationTemplateNotifDeadManTitle;
+
+  /// Notification title for geofence exit template
+  ///
+  /// In en, this message translates to:
+  /// **'Left Area'**
+  String get automationTemplateNotifGeofenceTitle;
+
+  /// Notification title for the node offline template
+  ///
+  /// In en, this message translates to:
+  /// **'Node Offline'**
+  String get automationTemplateNotifNodeOfflineTitle;
+
+  /// Notification title for SOS auto-response template
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency Alert'**
+  String get automationTemplateNotifSosTitle;
+
+  /// Template description for SOS auto-response
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-reply when receiving SOS message'**
+  String get automationTemplateSosDesc;
+
+  /// Template name for SOS auto-response automation
+  ///
+  /// In en, this message translates to:
+  /// **'SOS Auto-Response'**
+  String get automationTemplateSosName;
+
+  /// Short template description for SOS response in templates list
+  ///
+  /// In en, this message translates to:
+  /// **'Alert on emergency messages'**
+  String get automationTemplateSosResponseDesc;
+
+  /// Placeholder for the channel dropdown when no channel is selected
+  ///
+  /// In en, this message translates to:
+  /// **'Any channel'**
+  String get automationTriggerAnyChannel;
+
+  /// Placeholder text when no specific node is selected
+  ///
+  /// In en, this message translates to:
+  /// **'Any node'**
+  String get automationTriggerAnyNode;
+
+  /// Display name for the batteryFull trigger type
+  ///
+  /// In en, this message translates to:
+  /// **'Battery fully charged'**
+  String get automationTriggerBatteryFull;
+
+  /// Display name for the batteryLow trigger type
+  ///
+  /// In en, this message translates to:
+  /// **'Battery drops below threshold'**
+  String get automationTriggerBatteryLow;
+
+  /// Label for the battery threshold slider
+  ///
+  /// In en, this message translates to:
+  /// **'Battery threshold'**
+  String get automationTriggerBatteryThreshold;
+
+  /// Display name for the channelActivity trigger type
+  ///
+  /// In en, this message translates to:
+  /// **'Activity on channel'**
+  String get automationTriggerChannelActivity;
+
+  /// Help text for channel activity filter
+  ///
+  /// In en, this message translates to:
+  /// **'Leave empty to trigger for any channel activity'**
+  String get automationTriggerChannelHelp;
+
+  /// Channel label in dropdown; {index} is the channel index number
+  ///
+  /// In en, this message translates to:
+  /// **'Channel {index}'**
+  String automationTriggerChannelIndex(int index);
+
+  /// Label for the channel filter in channelActivity trigger
+  ///
+  /// In en, this message translates to:
+  /// **'Channel (optional)'**
+  String get automationTriggerChannelLabel;
+
+  /// Segment label for daily schedule type
+  ///
+  /// In en, this message translates to:
+  /// **'Daily'**
+  String get automationTriggerDaily;
+
+  /// Abbreviated day-of-week chip for Friday
+  ///
+  /// In en, this message translates to:
+  /// **'Fri'**
+  String get automationTriggerDayFri;
+
+  /// Abbreviated day-of-week chip for Monday
+  ///
+  /// In en, this message translates to:
+  /// **'Mon'**
+  String get automationTriggerDayMon;
+
+  /// Abbreviated day-of-week chip for Saturday
+  ///
+  /// In en, this message translates to:
+  /// **'Sat'**
+  String get automationTriggerDaySat;
+
+  /// Abbreviated day-of-week chip for Sunday
+  ///
+  /// In en, this message translates to:
+  /// **'Sun'**
+  String get automationTriggerDaySun;
+
+  /// Abbreviated day-of-week chip for Thursday
+  ///
+  /// In en, this message translates to:
+  /// **'Thu'**
+  String get automationTriggerDayThu;
+
+  /// Abbreviated day-of-week chip for Tuesday
+  ///
+  /// In en, this message translates to:
+  /// **'Tue'**
+  String get automationTriggerDayTue;
+
+  /// Abbreviated day-of-week chip for Wednesday
+  ///
+  /// In en, this message translates to:
+  /// **'Wed'**
+  String get automationTriggerDayWed;
+
+  /// Label for the day-of-week selector in weekly schedule
+  ///
+  /// In en, this message translates to:
+  /// **'Days'**
+  String get automationTriggerDays;
+
+  /// Default description for the batteryFull trigger
+  ///
+  /// In en, this message translates to:
+  /// **'Triggered when battery is fully charged'**
+  String get automationTriggerDescBatteryFull;
+
+  /// Default description for the batteryLow trigger
+  ///
+  /// In en, this message translates to:
+  /// **'Triggered when battery drops below threshold'**
+  String get automationTriggerDescBatteryLow;
+
+  /// Default description for the channelActivity trigger
+  ///
+  /// In en, this message translates to:
+  /// **'Triggered when activity on channel'**
+  String get automationTriggerDescChannelActivity;
+
+  /// Default description for the detectionSensor trigger
+  ///
+  /// In en, this message translates to:
+  /// **'Triggered when detection sensor activates'**
+  String get automationTriggerDescDetectionSensor;
+
+  /// Default description for the geofenceEnter trigger
+  ///
+  /// In en, this message translates to:
+  /// **'Triggered when node enters geofence area'**
+  String get automationTriggerDescGeofenceEnter;
+
+  /// Default description for the geofenceExit trigger
+  ///
+  /// In en, this message translates to:
+  /// **'Triggered when node exits geofence area'**
+  String get automationTriggerDescGeofenceExit;
+
+  /// Default description for the manual trigger
+  ///
+  /// In en, this message translates to:
+  /// **'Triggered manually via Shortcuts or UI'**
+  String get automationTriggerDescManual;
+
+  /// Default description for the messageContains trigger
+  ///
+  /// In en, this message translates to:
+  /// **'Triggered when message contains keyword'**
+  String get automationTriggerDescMessageContains;
+
+  /// Default description for the messageReceived trigger
+  ///
+  /// In en, this message translates to:
+  /// **'Triggered when any message is received'**
+  String get automationTriggerDescMessageReceived;
+
+  /// Default description for the nodeOffline trigger
+  ///
+  /// In en, this message translates to:
+  /// **'Triggered when a node is not heard for a while'**
+  String get automationTriggerDescNodeOffline;
+
+  /// Default description for the nodeOnline trigger
+  ///
+  /// In en, this message translates to:
+  /// **'Triggered when a node is heard recently'**
+  String get automationTriggerDescNodeOnline;
+
+  /// Default description for the nodeSilent trigger
+  ///
+  /// In en, this message translates to:
+  /// **'Triggered when node is silent for duration'**
+  String get automationTriggerDescNodeSilent;
+
+  /// Default description for the positionChanged trigger
+  ///
+  /// In en, this message translates to:
+  /// **'Triggered when node position changes'**
+  String get automationTriggerDescPositionChanged;
+
+  /// Default description for the scheduled trigger
+  ///
+  /// In en, this message translates to:
+  /// **'Triggered at scheduled time'**
+  String get automationTriggerDescScheduled;
+
+  /// Default description for the signalWeak trigger
+  ///
+  /// In en, this message translates to:
+  /// **'Triggered when signal strength drops'**
+  String get automationTriggerDescSignalWeak;
+
+  /// Display name for the detectionSensor trigger type
+  ///
+  /// In en, this message translates to:
+  /// **'Detection sensor triggered'**
+  String get automationTriggerDetectionSensor;
+
+  /// Interval description for whole hours; {hours} is count, {s} is plural suffix
+  ///
+  /// In en, this message translates to:
+  /// **'Every {hours} hour{s}'**
+  String automationTriggerEveryHours(int hours, String s);
+
+  /// Interval description with hours and minutes; {hours}, {s}, {minutes}
+  ///
+  /// In en, this message translates to:
+  /// **'Every {hours} hour{s} {minutes} minutes'**
+  String automationTriggerEveryHoursMinutes(int hours, String s, int minutes);
+
+  /// Interval description when less than 60 minutes; {count} is the number
+  ///
+  /// In en, this message translates to:
+  /// **'Every {count} minutes'**
+  String automationTriggerEveryMinutes(int count);
+
+  /// Label for the geofence center coordinate inputs
+  ///
+  /// In en, this message translates to:
+  /// **'Geofence Center'**
+  String get automationTriggerGeofenceCenter;
+
+  /// Display name for the geofenceEnter trigger type
+  ///
+  /// In en, this message translates to:
+  /// **'Enters geofence area'**
+  String get automationTriggerGeofenceEnter;
+
+  /// Display name for the geofenceExit trigger type
+  ///
+  /// In en, this message translates to:
+  /// **'Exits geofence area'**
+  String get automationTriggerGeofenceExit;
+
+  /// Segment label for interval schedule type
+  ///
+  /// In en, this message translates to:
+  /// **'Interval'**
+  String get automationTriggerInterval;
+
+  /// Hint text for the keyword input field
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., SOS, help, emergency'**
+  String get automationTriggerKeywordHint;
+
+  /// Label for the keyword input field
+  ///
+  /// In en, this message translates to:
+  /// **'Keyword to match'**
+  String get automationTriggerKeywordLabel;
+
+  /// Label for the latitude input field
+  ///
+  /// In en, this message translates to:
+  /// **'Latitude'**
+  String get automationTriggerLatitude;
+
+  /// Label for the longitude input field
+  ///
+  /// In en, this message translates to:
+  /// **'Longitude'**
+  String get automationTriggerLongitude;
+
+  /// Display name for the manual trigger type
+  ///
+  /// In en, this message translates to:
+  /// **'Manual trigger'**
+  String get automationTriggerManual;
+
+  /// Description text explaining manual trigger sources
+  ///
+  /// In en, this message translates to:
+  /// **'This automation can be triggered manually from:\n• The Automations screen (tap the play button)\n• Siri Shortcuts\n• Widgets'**
+  String get automationTriggerManualDescription;
+
+  /// Title for the manual trigger info card
+  ///
+  /// In en, this message translates to:
+  /// **'Manual Trigger'**
+  String get automationTriggerManualTitle;
+
+  /// Display name for the messageContains trigger type
+  ///
+  /// In en, this message translates to:
+  /// **'Message contains keyword'**
+  String get automationTriggerMessageContains;
+
+  /// Display name for the messageReceived trigger type
+  ///
+  /// In en, this message translates to:
+  /// **'Message received'**
+  String get automationTriggerMessageReceived;
+
+  /// Help text for the node filter
+  ///
+  /// In en, this message translates to:
+  /// **'Leave empty to trigger for any node'**
+  String get automationTriggerNodeFilterHelp;
+
+  /// Label for the optional node filter
+  ///
+  /// In en, this message translates to:
+  /// **'Filter by node (optional)'**
+  String get automationTriggerNodeFilterLabel;
+
+  /// Display name for the nodeOffline trigger type
+  ///
+  /// In en, this message translates to:
+  /// **'Node becomes inactive'**
+  String get automationTriggerNodeOffline;
+
+  /// Display name for the nodeOnline trigger type
+  ///
+  /// In en, this message translates to:
+  /// **'Node becomes active'**
+  String get automationTriggerNodeOnline;
+
+  /// Display name for the nodeSilent trigger type
+  ///
+  /// In en, this message translates to:
+  /// **'Node silent for duration'**
+  String get automationTriggerNodeSilent;
+
+  /// Button to open map picker for geofence location
+  ///
+  /// In en, this message translates to:
+  /// **'Pick on Map'**
+  String get automationTriggerPickOnMap;
+
+  /// Display name for the positionChanged trigger type
+  ///
+  /// In en, this message translates to:
+  /// **'Position updated'**
+  String get automationTriggerPositionChanged;
+
+  /// Label for the geofence radius slider
+  ///
+  /// In en, this message translates to:
+  /// **'Radius'**
+  String get automationTriggerRadius;
+
+  /// Label for the interval frequency slider
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat every'**
+  String get automationTriggerRepeatEvery;
+
+  /// Label for the schedule type selector
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule Type'**
+  String get automationTriggerScheduleType;
+
+  /// Display name for the scheduled trigger type
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled time'**
+  String get automationTriggerScheduled;
+
+  /// Title for the node selector bottom sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Select Node'**
+  String get automationTriggerSelectNode;
+
+  /// Title for the trigger type picker bottom sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Select Trigger'**
+  String get automationTriggerSelectTrigger;
+
+  /// Segment label for any sensor state
+  ///
+  /// In en, this message translates to:
+  /// **'Any'**
+  String get automationTriggerSensorAny;
+
+  /// Segment label for clear sensor state
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get automationTriggerSensorClear;
+
+  /// Segment label for detected sensor state
+  ///
+  /// In en, this message translates to:
+  /// **'Detected'**
+  String get automationTriggerSensorDetected;
+
+  /// Help text for the sensor name filter
+  ///
+  /// In en, this message translates to:
+  /// **'Leave empty to trigger for any sensor'**
+  String get automationTriggerSensorNameHelp;
+
+  /// Hint text for the sensor name filter input
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., Motion, Door, Window'**
+  String get automationTriggerSensorNameHint;
+
+  /// Label for the sensor name filter field
+  ///
+  /// In en, this message translates to:
+  /// **'Sensor name filter (optional)'**
+  String get automationTriggerSensorNameLabel;
+
+  /// Label for the sensor state filter segmented control
+  ///
+  /// In en, this message translates to:
+  /// **'Trigger when sensor is'**
+  String get automationTriggerSensorState;
+
+  /// Label for the signal SNR threshold slider
+  ///
+  /// In en, this message translates to:
+  /// **'Signal threshold (SNR)'**
+  String get automationTriggerSignalThreshold;
+
+  /// Display name for the signalWeak trigger type
+  ///
+  /// In en, this message translates to:
+  /// **'Signal strength drops'**
+  String get automationTriggerSignalWeak;
+
+  /// Label for the node silent duration slider
+  ///
+  /// In en, this message translates to:
+  /// **'Silent duration'**
+  String get automationTriggerSilentDuration;
+
+  /// Label for the time picker in schedule config
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get automationTriggerTime;
+
+  /// Segment label for weekly schedule type
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly'**
+  String get automationTriggerWeekly;
+
+  /// Validation error when geofence location is missing
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a geofence location'**
+  String get automationValidateGeofence;
+
+  /// Validation error when no keyword is set for messageContains trigger
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a keyword to match'**
+  String get automationValidateKeyword;
+
+  /// Validation error for sendMessage/sendToChannel with empty message
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a message to send'**
+  String get automationValidateMessage;
+
+  /// Validation error when schedule time is missing
+  ///
+  /// In en, this message translates to:
+  /// **'Please set a schedule time'**
+  String get automationValidateSchedule;
+
+  /// Validation error for shortcut action with no name
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a Shortcut name'**
+  String get automationValidateShortcutName;
+
+  /// Validation error for sendMessage action with no target node
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a target node'**
+  String get automationValidateTargetNode;
+
+  /// Validation error for webhook action with no event name
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a webhook event name'**
+  String get automationValidateWebhookEvent;
+
+  /// Label on button to open full variable picker
+  ///
+  /// In en, this message translates to:
+  /// **'All variables'**
+  String get automationVariableAllVariables;
+
+  /// Helper text explaining how to delete inserted variables
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a variable to select it, then backspace to remove'**
+  String get automationVariableDeleteHint;
+
+  /// Description for the {{battery}} variable
+  ///
+  /// In en, this message translates to:
+  /// **'Current battery percentage'**
+  String get automationVariableDescBattery;
+
+  /// Description for the {{channel.name}} variable
+  ///
+  /// In en, this message translates to:
+  /// **'Channel name'**
+  String get automationVariableDescChannelName;
+
+  /// Description for the {{keyword}} variable
+  ///
+  /// In en, this message translates to:
+  /// **'Matched keyword'**
+  String get automationVariableDescKeyword;
+
+  /// Description for the {{location}} variable
+  ///
+  /// In en, this message translates to:
+  /// **'GPS coordinates (lat, lon)'**
+  String get automationVariableDescLocation;
+
+  /// Description for the {{message}} variable
+  ///
+  /// In en, this message translates to:
+  /// **'Message content'**
+  String get automationVariableDescMessage;
+
+  /// Description for the {{node.name}} variable
+  ///
+  /// In en, this message translates to:
+  /// **'Name of the triggering node'**
+  String get automationVariableDescNodeName;
+
+  /// Description for the {{node.num}} variable
+  ///
+  /// In en, this message translates to:
+  /// **'Node number in hex (e.g. a1b2)'**
+  String get automationVariableDescNodeNum;
+
+  /// Description for the {{sensor.name}} variable
+  ///
+  /// In en, this message translates to:
+  /// **'Detection sensor name'**
+  String get automationVariableDescSensorName;
+
+  /// Description for the {{sensor.state}} variable
+  ///
+  /// In en, this message translates to:
+  /// **'Sensor state (detected / clear)'**
+  String get automationVariableDescSensorState;
+
+  /// Description for the {{signal.threshold}} variable
+  ///
+  /// In en, this message translates to:
+  /// **'Signal threshold in dB (SNR)'**
+  String get automationVariableDescSignalThreshold;
+
+  /// Description for the {{silent.duration}} variable
+  ///
+  /// In en, this message translates to:
+  /// **'Silent duration setting'**
+  String get automationVariableDescSilentDuration;
+
+  /// Description for the {{threshold}} variable
+  ///
+  /// In en, this message translates to:
+  /// **'Configured trigger threshold'**
+  String get automationVariableDescThreshold;
+
+  /// Description for the {{time}} variable
+  ///
+  /// In en, this message translates to:
+  /// **'Current timestamp (ISO 8601)'**
+  String get automationVariableDescTime;
+
+  /// Description for the {{zone.radius}} variable
+  ///
+  /// In en, this message translates to:
+  /// **'Geofence radius in meters'**
+  String get automationVariableDescZoneRadius;
+
+  /// Empty state when no variables match the search
+  ///
+  /// In en, this message translates to:
+  /// **'No matching variables'**
+  String get automationVariableNoMatch;
+
+  /// Title of the variable picker bottom sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Insert Variable'**
+  String get automationVariablePickerTitle;
+
+  /// Hint text for the variable search input
+  ///
+  /// In en, this message translates to:
+  /// **'Search variables...'**
+  String get automationVariableSearchHint;
+
+  /// Section header for trigger-specific variables in the picker
+  ///
+  /// In en, this message translates to:
+  /// **'Trigger context'**
+  String get automationVariableSectionTrigger;
+
+  /// Section header for universal variables in the picker
+  ///
+  /// In en, this message translates to:
+  /// **'Universal'**
+  String get automationVariableSectionUniversal;
 
   /// No description provided for @categoryProductsApplyFilters.
   ///
@@ -3658,10 +6860,10 @@ abstract class AppLocalizations {
   /// **'DISCOVERED'**
   String get discoveryDiscoveredBadge;
 
-  /// Subtitle showing the number of discovered nodes.
+  /// Count of discovered nodes
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 node found} other{{count} nodes found}}'**
+  /// **'{count} nodes found'**
   String discoveryNodesFound(int count);
 
   /// Title shown in the discovery overlay while scanning for mesh nodes.
@@ -4959,6 +8161,528 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Try selecting a different category from the filter chips above.'**
   String get helpCenterTryDifferentCategory;
+
+  /// Action button label to assign an incident
+  ///
+  /// In en, this message translates to:
+  /// **'Assign'**
+  String get incidentActionAssign;
+
+  /// Action button label to cancel an incident
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get incidentActionCancel;
+
+  /// Action button label to close a resolved incident
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get incidentActionClose;
+
+  /// Tooltip shown when a user lacks permission for an action. Placeholder: roleHint
+  ///
+  /// In en, this message translates to:
+  /// **'Requires {roleHint}'**
+  String incidentActionDeniedTooltip(String roleHint);
+
+  /// Action button label to escalate an incident
+  ///
+  /// In en, this message translates to:
+  /// **'Escalate'**
+  String get incidentActionEscalate;
+
+  /// Generic error snackbar when an incident action fails
+  ///
+  /// In en, this message translates to:
+  /// **'Action failed'**
+  String get incidentActionFailedSnackbar;
+
+  /// Action button label to resolve an incident
+  ///
+  /// In en, this message translates to:
+  /// **'Resolve'**
+  String get incidentActionResolve;
+
+  /// Action button label to submit a draft incident
+  ///
+  /// In en, this message translates to:
+  /// **'Submit'**
+  String get incidentActionSubmit;
+
+  /// Success snackbar after applying a transition (e.g., 'Incident submitted'). Placeholder: action (lowercased label)
+  ///
+  /// In en, this message translates to:
+  /// **'Incident {action}d'**
+  String incidentActionSuccessSnackbar(String action);
+
+  /// Cancel button label in the assign incident bottom sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get incidentAssignCancelButton;
+
+  /// Confirm button label in the assign incident bottom sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Assign'**
+  String get incidentAssignConfirmButton;
+
+  /// Title of the bottom sheet for assigning an incident
+  ///
+  /// In en, this message translates to:
+  /// **'Assign Incident'**
+  String get incidentAssignSheetTitle;
+
+  /// Label showing the assignee ID on the incident detail header. Placeholder: assigneeId
+  ///
+  /// In en, this message translates to:
+  /// **'Assigned: {assigneeId}'**
+  String incidentAssignedLabel(String assigneeId);
+
+  /// Hint text on the assignee text field in the assign bottom sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Enter user ID'**
+  String get incidentAssigneeHint;
+
+  /// Label on the assignee text field in the assign bottom sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Assignee User ID'**
+  String get incidentAssigneeLabel;
+
+  /// Display label for the 'comms' classification (used in choice chips)
+  ///
+  /// In en, this message translates to:
+  /// **'Comms'**
+  String get incidentClassificationComms;
+
+  /// Display label for the 'environmental' classification (used in choice chips)
+  ///
+  /// In en, this message translates to:
+  /// **'Environmental'**
+  String get incidentClassificationEnvironmental;
+
+  /// Display label for the 'logistics' classification (used in choice chips)
+  ///
+  /// In en, this message translates to:
+  /// **'Logistics'**
+  String get incidentClassificationLogistics;
+
+  /// Display label for the 'medical' classification (used in choice chips)
+  ///
+  /// In en, this message translates to:
+  /// **'Medical'**
+  String get incidentClassificationMedical;
+
+  /// Display label for the 'operational' classification (used in choice chips)
+  ///
+  /// In en, this message translates to:
+  /// **'Operational'**
+  String get incidentClassificationOperational;
+
+  /// Display label for the 'safety' classification (used in choice chips)
+  ///
+  /// In en, this message translates to:
+  /// **'Safety'**
+  String get incidentClassificationSafety;
+
+  /// Display label for the 'security' classification (used in choice chips)
+  ///
+  /// In en, this message translates to:
+  /// **'Security'**
+  String get incidentClassificationSecurity;
+
+  /// Label on the 'Create Incident' button in the empty state
+  ///
+  /// In en, this message translates to:
+  /// **'Create Incident'**
+  String get incidentCreateButtonLabel;
+
+  /// Button label to capture the device's current location
+  ///
+  /// In en, this message translates to:
+  /// **'Capture Location'**
+  String get incidentCreateCaptureLocation;
+
+  /// Section heading for the classification picker on the create incident form
+  ///
+  /// In en, this message translates to:
+  /// **'Classification'**
+  String get incidentCreateClassificationSection;
+
+  /// Hint text for the incident description input field
+  ///
+  /// In en, this message translates to:
+  /// **'Detailed description of the incident'**
+  String get incidentCreateDescriptionHint;
+
+  /// Section heading for the description field on the create incident form
+  ///
+  /// In en, this message translates to:
+  /// **'Description (optional)'**
+  String get incidentCreateDescriptionSection;
+
+  /// Error snackbar for unexpected exceptions during incident creation. Placeholder: error
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {error}'**
+  String incidentCreateError(String error);
+
+  /// Generic error snackbar when incident creation fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to create'**
+  String get incidentCreateFailed;
+
+  /// Progress text shown while the device location is being captured
+  ///
+  /// In en, this message translates to:
+  /// **'Getting location...'**
+  String get incidentCreateGettingLocation;
+
+  /// Error snackbar when location capture returns null
+  ///
+  /// In en, this message translates to:
+  /// **'Could not get location'**
+  String get incidentCreateLocationError;
+
+  /// Error snackbar when location capture throws an exception. Placeholder: error
+  ///
+  /// In en, this message translates to:
+  /// **'Location error: {error}'**
+  String incidentCreateLocationException(String error);
+
+  /// Section heading for the optional location capture on the create incident form
+  ///
+  /// In en, this message translates to:
+  /// **'Location (optional)'**
+  String get incidentCreateLocationSection;
+
+  /// Section heading for the priority picker on the create incident form
+  ///
+  /// In en, this message translates to:
+  /// **'Priority'**
+  String get incidentCreatePrioritySection;
+
+  /// Button label to remove a captured location on the create incident form
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get incidentCreateRemoveLocation;
+
+  /// Title of the create incident screen
+  ///
+  /// In en, this message translates to:
+  /// **'Create Incident'**
+  String get incidentCreateScreenTitle;
+
+  /// Label on the fixed bottom submit button
+  ///
+  /// In en, this message translates to:
+  /// **'Create Incident'**
+  String get incidentCreateSubmitButton;
+
+  /// Loading text on the submit button while the incident is being created
+  ///
+  /// In en, this message translates to:
+  /// **'Creating...'**
+  String get incidentCreateSubmitting;
+
+  /// Hint text for the incident title input field
+  ///
+  /// In en, this message translates to:
+  /// **'Brief incident title'**
+  String get incidentCreateTitleHint;
+
+  /// Validation error when the title field is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Title is required'**
+  String get incidentCreateTitleRequired;
+
+  /// Section heading for the title field on the create incident form
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get incidentCreateTitleSection;
+
+  /// Tooltip on the create incident button in the app bar
+  ///
+  /// In en, this message translates to:
+  /// **'Create incident'**
+  String get incidentCreateTooltip;
+
+  /// Success snackbar after successfully creating an incident
+  ///
+  /// In en, this message translates to:
+  /// **'Incident created'**
+  String get incidentCreatedSuccess;
+
+  /// Error message on the incident detail screen. Placeholder: error
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {error}'**
+  String incidentDetailError(String error);
+
+  /// Title of the incident detail screen when data is loaded
+  ///
+  /// In en, this message translates to:
+  /// **'Incident Detail'**
+  String get incidentDetailTitle;
+
+  /// Title shown on the detail screen while loading or on error/not found
+  ///
+  /// In en, this message translates to:
+  /// **'Incident'**
+  String get incidentDetailTitleLoading;
+
+  /// Description text in the empty state when no incidents exist
+  ///
+  /// In en, this message translates to:
+  /// **'Incidents track operational events from creation through resolution. Create one to get started.'**
+  String get incidentEmptyStateDescription;
+
+  /// Headline of the empty state when no incidents exist
+  ///
+  /// In en, this message translates to:
+  /// **'No incidents'**
+  String get incidentEmptyStateTitle;
+
+  /// Filter chip label for toggling 'assigned to me' filter
+  ///
+  /// In en, this message translates to:
+  /// **'Assigned to me'**
+  String get incidentFilterAssignedToMe;
+
+  /// Filter chip label for the 'assigned' incident state
+  ///
+  /// In en, this message translates to:
+  /// **'Assigned'**
+  String get incidentFilterStateAssigned;
+
+  /// Filter chip label for the 'cancelled' incident state
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get incidentFilterStateCancelled;
+
+  /// Filter chip label for the 'closed' incident state
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get incidentFilterStateClosed;
+
+  /// Filter chip label for the 'draft' incident state
+  ///
+  /// In en, this message translates to:
+  /// **'Draft'**
+  String get incidentFilterStateDraft;
+
+  /// Filter chip label for the 'escalated' incident state
+  ///
+  /// In en, this message translates to:
+  /// **'Escalated'**
+  String get incidentFilterStateEscalated;
+
+  /// Filter chip label for the 'open' incident state
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get incidentFilterStateOpen;
+
+  /// Filter chip label for the 'resolved' incident state
+  ///
+  /// In en, this message translates to:
+  /// **'Resolved'**
+  String get incidentFilterStateResolved;
+
+  /// Error message shown when incident list fails to load. Placeholder: error
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load incidents:\n{error}'**
+  String incidentListLoadError(String error);
+
+  /// Title of the incident list screen
+  ///
+  /// In en, this message translates to:
+  /// **'Incidents'**
+  String get incidentListTitle;
+
+  /// Message shown when an incident ID does not match any record
+  ///
+  /// In en, this message translates to:
+  /// **'Incident not found'**
+  String get incidentNotFound;
+
+  /// Continue button label in the note bottom sheet (saves the note and proceeds)
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get incidentNoteContinueButton;
+
+  /// Hint text on the note text field in the transition note bottom sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Optional note for this transition'**
+  String get incidentNoteHint;
+
+  /// Label on the note text field in the transition note bottom sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get incidentNoteLabel;
+
+  /// Title of the note bottom sheet for a transition. Placeholder: action (e.g., 'Submit', 'Escalate')
+  ///
+  /// In en, this message translates to:
+  /// **'{action} Note (optional)'**
+  String incidentNoteSheetTitle(String action);
+
+  /// Skip button label in the note bottom sheet (dismisses without a note)
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get incidentNoteSkipButton;
+
+  /// Display label for the 'flash' priority level (used in choice chips and filter chips)
+  ///
+  /// In en, this message translates to:
+  /// **'Flash'**
+  String get incidentPriorityFlash;
+
+  /// Display label for the 'immediate' priority level (used in choice chips and filter chips)
+  ///
+  /// In en, this message translates to:
+  /// **'Immediate'**
+  String get incidentPriorityImmediate;
+
+  /// Display label for the 'priority' priority level (used in choice chips and filter chips)
+  ///
+  /// In en, this message translates to:
+  /// **'Priority'**
+  String get incidentPriorityPriority;
+
+  /// Display label for the 'routine' priority level (used in choice chips and filter chips)
+  ///
+  /// In en, this message translates to:
+  /// **'Routine'**
+  String get incidentPriorityRoutine;
+
+  /// Error message shown when user attempts an action without being authenticated
+  ///
+  /// In en, this message translates to:
+  /// **'Not authenticated'**
+  String get incidentProviderNotAuthenticated;
+
+  /// Role hint shown in tooltip when only the assigned operator can act (resolve)
+  ///
+  /// In en, this message translates to:
+  /// **'Assigned Operator'**
+  String get incidentRoleHintAssignedOperator;
+
+  /// Role hint shown in tooltip when user lacks permission (submit, cancel)
+  ///
+  /// In en, this message translates to:
+  /// **'Operator or above'**
+  String get incidentRoleHintOperatorOrAbove;
+
+  /// Role hint shown in tooltip when user lacks supervisor/admin permission (assign, escalate, close)
+  ///
+  /// In en, this message translates to:
+  /// **'Supervisor or Admin'**
+  String get incidentRoleHintSupervisorOrAdmin;
+
+  /// Validation error when assigning without providing an assignee ID
+  ///
+  /// In en, this message translates to:
+  /// **'assigneeId is required when transitioning to assigned'**
+  String get incidentStateMachineAssigneeRequired;
+
+  /// Error message when attempting to transition to draft state (invalid)
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot transition to draft'**
+  String get incidentStateMachineCannotTransitionToDraft;
+
+  /// Permission error when user lacks createIncident permission. Placeholder: roleName
+  ///
+  /// In en, this message translates to:
+  /// **'createIncident denied for role {roleName}'**
+  String incidentStateMachineCreateDenied(String roleName);
+
+  /// Error when an invalid state transition is attempted. Placeholders: fromState, toState
+  ///
+  /// In en, this message translates to:
+  /// **'{fromState} -> {toState} is not a valid transition'**
+  String incidentStateMachineInvalidTransition(
+    String fromState,
+    String toState,
+  );
+
+  /// Permission error when the actor's role lacks the required permission. Placeholders: permissionName, roleName
+  ///
+  /// In en, this message translates to:
+  /// **'{permissionName} denied for role {roleName}'**
+  String incidentStateMachinePermissionDenied(
+    String permissionName,
+    String roleName,
+  );
+
+  /// Error when trying to transition an incident in a terminal state. Placeholder: stateName
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot transition from {stateName}: terminal state: {stateName}'**
+  String incidentStateMachineTerminalState(String stateName);
+
+  /// Message shown when incident is in a terminal state (closed/cancelled). Placeholder: state
+  ///
+  /// In en, this message translates to:
+  /// **'This incident is {state} — no further actions available.'**
+  String incidentTerminalStateMessage(String state);
+
+  /// Empty state text when there are no transitions to display
+  ///
+  /// In en, this message translates to:
+  /// **'No transition history'**
+  String get incidentTimelineEmpty;
+
+  /// Label shown on terminal state entries in the transition timeline
+  ///
+  /// In en, this message translates to:
+  /// **'Final state — no further transitions'**
+  String get incidentTimelineFinalState;
+
+  /// Badge label on timeline entries that were superseded by conflict resolution
+  ///
+  /// In en, this message translates to:
+  /// **'superseded'**
+  String get incidentTimelineSuperseded;
+
+  /// Fallback text when actor role is null in the timeline
+  ///
+  /// In en, this message translates to:
+  /// **'unknown'**
+  String get incidentTimelineUnknownRole;
+
+  /// Section header for the transition timeline on the detail screen
+  ///
+  /// In en, this message translates to:
+  /// **'Transition History'**
+  String get incidentTransitionHistoryHeader;
+
+  /// Note recorded on the initial transition when an incident is created; may appear in timeline
+  ///
+  /// In en, this message translates to:
+  /// **'Incident created'**
+  String get incidentTransitionNoteCreated;
+
+  /// Error message when transition history fails to load. Placeholder: error
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load transitions: {error}'**
+  String incidentTransitionsLoadError(String error);
 
   /// No description provided for @lilygoModelPriceUnavailable.
   ///
@@ -9045,10 +12769,10 @@ abstract class AppLocalizations {
   /// **'Encounter Activity'**
   String get nodedexEncounterActivityTitle;
 
-  /// No description provided for @nodedexEncounterCountLabel.
+  /// Label showing number of encounters with a node
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 encounter} other{{count} encounters}}'**
+  /// **'{count} encounters'**
   String nodedexEncounterCountLabel(int count);
 
   /// No description provided for @nodedexEncounterLogLabel.
@@ -10635,10 +14359,10 @@ abstract class AppLocalizations {
   /// **'RECENT'**
   String get nodedexRecentLabel;
 
-  /// No description provided for @nodedexRegionEncounterCount.
+  /// Count of encounters in a region
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 encounter} other{{count} encounters}}'**
+  /// **'{count} encounters'**
   String nodedexRegionEncounterCount(int count);
 
   /// No description provided for @nodedexRegionsCompactLabel.
@@ -11599,10 +15323,10 @@ abstract class AppLocalizations {
   /// **'Help'**
   String get nodesScreenHelpMenu;
 
-  /// Hop count label for multi-hop nodes.
+  /// Number of mesh hops to reach a node
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 hop} other{{count} hops}}'**
+  /// **'{count} hops'**
   String nodesScreenHopCount(int count);
 
   /// Hop count label for directly connected nodes.
@@ -14407,10 +18131,10 @@ abstract class AppLocalizations {
   /// **'{name} not found'**
   String scannerDeviceNotFoundTitle(String name);
 
-  /// Banner subtitle showing how many devices were found during an active scan.
+  /// Count of BLE devices found during scan
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{{count} device found so far} other{{count} devices found so far}}'**
+  /// **'{count} devices found'**
   String scannerDevicesFoundCount(int count);
 
   /// Title of the scanner screen in normal mode.
@@ -14611,10 +18335,10 @@ abstract class AppLocalizations {
   /// **'Recent Searches'**
   String get searchProductsRecentSearches;
 
-  /// No description provided for @searchProductsResultCount.
+  /// Search results count with query text
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 result for \"{query}\"} other{{count} results for \"{query}\"}}'**
+  /// **'{count} results for \"{query}\"'**
   String searchProductsResultCount(int count, String query);
 
   /// No description provided for @searchProductsRetry.
@@ -17221,10 +20945,10 @@ abstract class AppLocalizations {
   /// **'Acquiring device location...'**
   String get signalAcquiringDeviceLocation;
 
-  /// No description provided for @signalActiveCount.
+  /// Count of active signals
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 signal} other{{count} signals}} active'**
+  /// **'{count} active'**
   String signalActiveCount(int count);
 
   /// No description provided for @signalActiveDays.
@@ -17353,10 +21077,10 @@ abstract class AppLocalizations {
   /// **'Cloud features unavailable.'**
   String get signalCloudFeaturesUnavailable;
 
-  /// No description provided for @signalCommentCount.
+  /// Count of comments on a signal
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 comment} other{{count} comments}}'**
+  /// **'{count} comments'**
   String signalCommentCount(int count);
 
   /// No description provided for @signalCommentReported.
@@ -17689,10 +21413,10 @@ abstract class AppLocalizations {
   /// **'{count} hop'**
   String signalHopSingular(int count);
 
-  /// No description provided for @signalHopsBadge.
+  /// Badge showing number of mesh hops for a signal
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 hop} other{{count} hops}}'**
+  /// **'{count} hops'**
   String signalHopsBadge(int count);
 
   /// No description provided for @signalHopsPlural.
@@ -17929,10 +21653,10 @@ abstract class AppLocalizations {
   /// **'Mesh'**
   String get signalOriginMesh;
 
-  /// No description provided for @signalPeopleActiveCount.
+  /// Count of active people nearby
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 person} other{{count} people}} active'**
+  /// **'{count} people active'**
   String signalPeopleActiveCount(int count);
 
   /// No description provided for @signalProcessingImage.
@@ -18217,10 +21941,10 @@ abstract class AppLocalizations {
   /// **'Sign in to vote on responses'**
   String get signalSignInToVote;
 
-  /// No description provided for @signalSignalsNearbyCount.
+  /// Count of nearby mesh signals
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 signal} other{{count} signals}} nearby'**
+  /// **'{count} signals nearby'**
   String signalSignalsNearbyCount(int count);
 
   /// No description provided for @signalSomeone.
@@ -21235,11 +24959,1492 @@ abstract class AppLocalizations {
   /// **'Your story'**
   String get socialYourStory;
 
+  /// MIL-STD-2525 affiliation label for assumed-friendly forces (lighter blue)
+  ///
+  /// In en, this message translates to:
+  /// **'Assumed Friend'**
+  String get takAffiliationAssumedFriend;
+
+  /// MIL-STD-2525 affiliation label for friendly forces (blue team)
+  ///
+  /// In en, this message translates to:
+  /// **'Friendly'**
+  String get takAffiliationFriendly;
+
+  /// MIL-STD-2525 affiliation label for hostile/enemy forces (red team)
+  ///
+  /// In en, this message translates to:
+  /// **'Hostile'**
+  String get takAffiliationHostile;
+
+  /// MIL-STD-2525 affiliation label for neutral forces (green)
+  ///
+  /// In en, this message translates to:
+  /// **'Neutral'**
+  String get takAffiliationNeutral;
+
+  /// MIL-STD-2525 affiliation label for pending/unrecognized entities
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get takAffiliationPending;
+
+  /// MIL-STD-2525 affiliation label for suspect entities (lighter red)
+  ///
+  /// In en, this message translates to:
+  /// **'Suspect'**
+  String get takAffiliationSuspect;
+
+  /// MIL-STD-2525 affiliation label for unknown/unidentified entities (yellow)
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get takAffiliationUnknown;
+
+  /// Compass cardinal direction abbreviation: East
+  ///
+  /// In en, this message translates to:
+  /// **'E'**
+  String get takCompassE;
+
+  /// Compass cardinal direction abbreviation: North
+  ///
+  /// In en, this message translates to:
+  /// **'N'**
+  String get takCompassN;
+
+  /// Compass intercardinal direction abbreviation: Northeast
+  ///
+  /// In en, this message translates to:
+  /// **'NE'**
+  String get takCompassNE;
+
+  /// Compass intercardinal direction abbreviation: Northwest
+  ///
+  /// In en, this message translates to:
+  /// **'NW'**
+  String get takCompassNW;
+
+  /// Compass cardinal direction abbreviation: South
+  ///
+  /// In en, this message translates to:
+  /// **'S'**
+  String get takCompassS;
+
+  /// Compass intercardinal direction abbreviation: Southeast
+  ///
+  /// In en, this message translates to:
+  /// **'SE'**
+  String get takCompassSE;
+
+  /// Compass intercardinal direction abbreviation: Southwest
+  ///
+  /// In en, this message translates to:
+  /// **'SW'**
+  String get takCompassSW;
+
+  /// Compass cardinal direction abbreviation: West
+  ///
+  /// In en, this message translates to:
+  /// **'W'**
+  String get takCompassW;
+
+  /// Human-readable CoT type description for generic atom type (a- prefix). CoT 'atom' is a positional report entity.
+  ///
+  /// In en, this message translates to:
+  /// **'Atom'**
+  String get takCotTypeAtom;
+
+  /// Human-readable CoT type description for 'bits' type (b- prefix). CoT 'bits' represents data/sensor reports.
+  ///
+  /// In en, this message translates to:
+  /// **'Bits'**
+  String get takCotTypeBits;
+
+  /// Human-readable CoT type description for friendly atom type (a-f prefix)
+  ///
+  /// In en, this message translates to:
+  /// **'Friendly'**
+  String get takCotTypeFriendly;
+
+  /// Human-readable CoT type description for hostile atom type (a-h prefix)
+  ///
+  /// In en, this message translates to:
+  /// **'Hostile'**
+  String get takCotTypeHostile;
+
+  /// Human-readable CoT type description for neutral atom type (a-n prefix)
+  ///
+  /// In en, this message translates to:
+  /// **'Neutral'**
+  String get takCotTypeNeutral;
+
+  /// Human-readable CoT type description for tasking type (t- prefix). CoT 'tasking' represents mission tasks.
+  ///
+  /// In en, this message translates to:
+  /// **'Tasking'**
+  String get takCotTypeTasking;
+
+  /// Human-readable CoT type description for unknown atom type (a-u prefix)
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get takCotTypeUnknown;
+
+  /// Status row value when the TAK gateway connection is active
+  ///
+  /// In en, this message translates to:
+  /// **'Connected'**
+  String get takDashboardConnected;
+
+  /// Status row label for the gateway connection state
+  ///
+  /// In en, this message translates to:
+  /// **'Connection'**
+  String get takDashboardConnection;
+
+  /// Status row value when the TAK gateway connection is inactive
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnected'**
+  String get takDashboardDisconnected;
+
+  /// Section header for the force count grid. Military term for the arrangement/strength of forces.
+  ///
+  /// In en, this message translates to:
+  /// **'Force Disposition'**
+  String get takDashboardForceDisposition;
+
+  /// Force count cell label for friendly entities
+  ///
+  /// In en, this message translates to:
+  /// **'Friendly'**
+  String get takDashboardFriendly;
+
+  /// Force count cell label for hostile entities
+  ///
+  /// In en, this message translates to:
+  /// **'Hostile'**
+  String get takDashboardHostile;
+
+  /// Status row label for the timestamp of the most recent CoT event received
+  ///
+  /// In en, this message translates to:
+  /// **'Last event'**
+  String get takDashboardLastEvent;
+
+  /// Status row value when no events have been received yet
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get takDashboardLastEventNone;
+
+  /// Threat proximity label showing closest hostile entity. {callsign} is the entity's callsign or UID.
+  ///
+  /// In en, this message translates to:
+  /// **'Nearest hostile: {callsign}'**
+  String takDashboardNearestHostile(String callsign);
+
+  /// Threat proximity label showing closest unknown entity. {callsign} is the entity's callsign or UID.
+  ///
+  /// In en, this message translates to:
+  /// **'Nearest unknown: {callsign}'**
+  String takDashboardNearestUnknown(String callsign);
+
+  /// Force count cell label for neutral entities
+  ///
+  /// In en, this message translates to:
+  /// **'Neutral'**
+  String get takDashboardNeutral;
+
+  /// Threat proximity label when no hostile entities are present
+  ///
+  /// In en, this message translates to:
+  /// **'No hostile contacts'**
+  String get takDashboardNoHostileContacts;
+
+  /// Threat proximity label when no unknown entities are present
+  ///
+  /// In en, this message translates to:
+  /// **'No unknown contacts'**
+  String get takDashboardNoUnknownContacts;
+
+  /// Status row label for the outbound position publishing state
+  ///
+  /// In en, this message translates to:
+  /// **'Position publishing'**
+  String get takDashboardPositionPublishing;
+
+  /// Status row value when position publishing is enabled. {intervalSeconds} is the publish interval in seconds.
+  ///
+  /// In en, this message translates to:
+  /// **'Active ({intervalSeconds}s)'**
+  String takDashboardPublishingActive(String intervalSeconds);
+
+  /// Status row value when position publishing is turned off
+  ///
+  /// In en, this message translates to:
+  /// **'Disabled'**
+  String get takDashboardPublishingDisabled;
+
+  /// Relative time format for days. {count} is the number of days.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}d ago'**
+  String takDashboardRelativeTimeDays(int count);
+
+  /// Relative time format for hours. {count} is the number of hours.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}h ago'**
+  String takDashboardRelativeTimeHours(int count);
+
+  /// Relative time format for minutes. {count} is the number of minutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}m ago'**
+  String takDashboardRelativeTimeMinutes(int count);
+
+  /// Relative time format for seconds. {count} is the number of seconds.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}s ago'**
+  String takDashboardRelativeTimeSeconds(int count);
+
+  /// Status row label for entities past their CoT stale-out time
+  ///
+  /// In en, this message translates to:
+  /// **'Stale entities'**
+  String get takDashboardStaleEntities;
+
+  /// Section header for the status summary card on the dashboard
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get takDashboardStatusHeader;
+
+  /// Section header for nearest hostile/unknown entity distances
+  ///
+  /// In en, this message translates to:
+  /// **'Threat Proximity'**
+  String get takDashboardThreatProximity;
+
+  /// Title for the Situational Awareness Dashboard screen. SA = Situational Awareness.
+  ///
+  /// In en, this message translates to:
+  /// **'SA Dashboard'**
+  String get takDashboardTitle;
+
+  /// Status row label for the total count of all entities across affiliations
+  ///
+  /// In en, this message translates to:
+  /// **'Total entities'**
+  String get takDashboardTotalEntities;
+
+  /// Status row label for the count of pinned/tracked entities
+  ///
+  /// In en, this message translates to:
+  /// **'Tracked'**
+  String get takDashboardTracked;
+
+  /// Force count cell label for unknown entities
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get takDashboardUnknown;
+
+  /// Distance format in kilometers for distances >= 1 km. {km} is a decimal value.
+  ///
+  /// In en, this message translates to:
+  /// **'{km} km'**
+  String takDistanceKilometers(double km);
+
+  /// Distance format in meters for distances under 1 km. {meters} is an integer.
+  ///
+  /// In en, this message translates to:
+  /// **'{meters} m'**
+  String takDistanceMeters(double meters);
+
+  /// Altitude display showing meters and feet. {meters} and {feet} are integer values.
+  ///
+  /// In en, this message translates to:
+  /// **'{meters} m ({feet} ft)'**
+  String takEventAltitudeFormat(double meters, String feet);
+
+  /// Course/heading display showing degrees and compass direction. {degrees} is 3-digit bearing, {compassDirection} is N/NE/E/etc.
+  ///
+  /// In en, this message translates to:
+  /// **'{degrees}° ({compassDirection})'**
+  String takEventCourseFormat(String degrees, String compassDirection);
+
+  /// Help dialog title for the affiliation section
+  ///
+  /// In en, this message translates to:
+  /// **'Affiliation'**
+  String get takEventDetailHelpAffiliation;
+
+  /// Help dialog title for the CoT type string section. CoT = Cursor on Target military protocol.
+  ///
+  /// In en, this message translates to:
+  /// **'CoT Type String'**
+  String get takEventDetailHelpCotType;
+
+  /// Help dialog title for the identity section
+  ///
+  /// In en, this message translates to:
+  /// **'Identity'**
+  String get takEventDetailHelpIdentity;
+
+  /// Help dialog title for the motion data section
+  ///
+  /// In en, this message translates to:
+  /// **'Motion Data'**
+  String get takEventDetailHelpMotion;
+
+  /// Help dialog title for the position section
+  ///
+  /// In en, this message translates to:
+  /// **'Position'**
+  String get takEventDetailHelpPosition;
+
+  /// Help dialog title for the raw payload section
+  ///
+  /// In en, this message translates to:
+  /// **'Raw Payload'**
+  String get takEventDetailHelpRawPayload;
+
+  /// Help dialog title for the timestamps section
+  ///
+  /// In en, this message translates to:
+  /// **'Timestamps'**
+  String get takEventDetailHelpTimestamps;
+
+  /// Help dialog title for the tracking section
+  ///
+  /// In en, this message translates to:
+  /// **'Tracking'**
+  String get takEventDetailHelpTracking;
+
+  /// Snackbar message shown after copying event JSON to clipboard
+  ///
+  /// In en, this message translates to:
+  /// **'Event JSON copied'**
+  String get takEventDetailJsonCopied;
+
+  /// Row label for the entity's height above ellipsoid
+  ///
+  /// In en, this message translates to:
+  /// **'Altitude'**
+  String get takEventDetailLabelAltitude;
+
+  /// Row label for the entity's callsign from the CoT contact element
+  ///
+  /// In en, this message translates to:
+  /// **'Callsign'**
+  String get takEventDetailLabelCallsign;
+
+  /// Row label for the entity's heading/course in degrees from true north
+  ///
+  /// In en, this message translates to:
+  /// **'Course'**
+  String get takEventDetailLabelCourse;
+
+  /// Row label for the human-readable CoT type description
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get takEventDetailLabelDescription;
+
+  /// Row label for the CoT event's generation timestamp
+  ///
+  /// In en, this message translates to:
+  /// **'Event Time'**
+  String get takEventDetailLabelEventTime;
+
+  /// Row label for the WGS-84 latitude value
+  ///
+  /// In en, this message translates to:
+  /// **'Latitude'**
+  String get takEventDetailLabelLatitude;
+
+  /// Row label for the WGS-84 longitude value
+  ///
+  /// In en, this message translates to:
+  /// **'Longitude'**
+  String get takEventDetailLabelLongitude;
+
+  /// Row label for the timestamp when the gateway received the event
+  ///
+  /// In en, this message translates to:
+  /// **'Received'**
+  String get takEventDetailLabelReceived;
+
+  /// Row label for the entity's speed
+  ///
+  /// In en, this message translates to:
+  /// **'Speed'**
+  String get takEventDetailLabelSpeed;
+
+  /// Row label for the CoT event's stale-out time (when the entity expires)
+  ///
+  /// In en, this message translates to:
+  /// **'Stale Time'**
+  String get takEventDetailLabelStaleTime;
+
+  /// Row label for the entity's stale/active status
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get takEventDetailLabelStatus;
+
+  /// Row label for the CoT type atom string (e.g. a-f-G-U-C)
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get takEventDetailLabelType;
+
+  /// Row label for the CoT event's unique identifier
+  ///
+  /// In en, this message translates to:
+  /// **'UID'**
+  String get takEventDetailLabelUid;
+
+  /// Overflow menu item to open the navigation/bearing screen for this entity
+  ///
+  /// In en, this message translates to:
+  /// **'Navigate to'**
+  String get takEventDetailNavigateTo;
+
+  /// Shown in position history when only one position has been recorded (no movement)
+  ///
+  /// In en, this message translates to:
+  /// **'No movement recorded'**
+  String get takEventDetailNoMovement;
+
+  /// Count label next to position history header. {count} is number of recorded positions.
+  ///
+  /// In en, this message translates to:
+  /// **'({count} positions)'**
+  String takEventDetailPositionCount(int count);
+
+  /// Section header for entity identification fields (UID, type, callsign)
+  ///
+  /// In en, this message translates to:
+  /// **'Identity'**
+  String get takEventDetailSectionIdentity;
+
+  /// Section header for motion/kinematic data (speed, course, altitude)
+  ///
+  /// In en, this message translates to:
+  /// **'Motion'**
+  String get takEventDetailSectionMotion;
+
+  /// Section header for geographic position fields (lat/lon)
+  ///
+  /// In en, this message translates to:
+  /// **'Position'**
+  String get takEventDetailSectionPosition;
+
+  /// Section header for the entity's movement history timeline
+  ///
+  /// In en, this message translates to:
+  /// **'POSITION HISTORY'**
+  String get takEventDetailSectionPositionHistory;
+
+  /// Section header for the raw CoT XML/JSON payload (debug)
+  ///
+  /// In en, this message translates to:
+  /// **'Raw Payload'**
+  String get takEventDetailSectionRawPayload;
+
+  /// Section header for the event's time fields
+  ///
+  /// In en, this message translates to:
+  /// **'Timestamps'**
+  String get takEventDetailSectionTimestamps;
+
+  /// Button to expand the collapsed position history list. {count} is total positions.
+  ///
+  /// In en, this message translates to:
+  /// **'Show all {count} positions'**
+  String takEventDetailShowAllPositions(int count);
+
+  /// Button to collapse the expanded position history list
+  ///
+  /// In en, this message translates to:
+  /// **'Show less'**
+  String get takEventDetailShowLess;
+
+  /// Status value when the CoT event is still within its stale-out window
+  ///
+  /// In en, this message translates to:
+  /// **'ACTIVE'**
+  String get takEventDetailStatusActive;
+
+  /// Status value when the CoT event has passed its stale-out time (expired)
+  ///
+  /// In en, this message translates to:
+  /// **'STALE'**
+  String get takEventDetailStatusStale;
+
+  /// Tooltip for the button that copies the raw CoT event JSON to the clipboard
+  ///
+  /// In en, this message translates to:
+  /// **'Copy JSON'**
+  String get takEventDetailTooltipCopyJson;
+
+  /// Tooltip for the button that centers the map on this entity's position
+  ///
+  /// In en, this message translates to:
+  /// **'Show on Map'**
+  String get takEventDetailTooltipShowOnMap;
+
+  /// Tooltip for the pin button when the entity is not tracked
+  ///
+  /// In en, this message translates to:
+  /// **'Track'**
+  String get takEventDetailTooltipTrack;
+
+  /// Tooltip for the pin button when the entity is currently tracked/pinned
+  ///
+  /// In en, this message translates to:
+  /// **'Untrack'**
+  String get takEventDetailTooltipUntrack;
+
+  /// Speed display format showing kilometers per hour and knots. {kmh} and {knots} are numeric values.
+  ///
+  /// In en, this message translates to:
+  /// **'{kmh} km/h ({knots} kn)'**
+  String takEventSpeedFormat(String kmh, String knots);
+
+  /// Displayed when a TAK entity has zero or null speed
+  ///
+  /// In en, this message translates to:
+  /// **'Stationary'**
+  String get takEventSpeedStationary;
+
+  /// Metadata chip label for entities still within their CoT stale-out window
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get takEventTileActive;
+
+  /// Relative time chip for hours since entity was received. {count} is hours.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}h ago'**
+  String takEventTileRelativeTimeHours(int count);
+
+  /// Relative time chip for minutes since entity was received. {count} is minutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}m ago'**
+  String takEventTileRelativeTimeMinutes(int count);
+
+  /// Relative time chip for seconds since entity was received. {count} is seconds.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}s ago'**
+  String takEventTileRelativeTimeSeconds(int count);
+
+  /// Metadata chip label for entities that have passed their CoT stale-out time
+  ///
+  /// In en, this message translates to:
+  /// **'Stale'**
+  String get takEventTileStale;
+
+  /// Button label to clear all active filters
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get takFilterBarClear;
+
+  /// Hint text for the search field in the filter bar
+  ///
+  /// In en, this message translates to:
+  /// **'Search callsign or UID...'**
+  String get takFilterBarSearchHint;
+
+  /// Stale mode chip label in filter bar showing active-only entities
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get takFilterBarStaleModeActive;
+
+  /// Stale mode chip label in filter bar showing all entities
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get takFilterBarStaleModeAll;
+
+  /// Stale mode chip label in filter bar showing stale-only entities
+  ///
+  /// In en, this message translates to:
+  /// **'Stale'**
+  String get takFilterBarStaleModeStale;
+
+  /// Estimated time of arrival prefix. {eta} is the formatted time (e.g. '5 min' or '1h 30m').
+  ///
+  /// In en, this message translates to:
+  /// **'ETA: {eta}'**
+  String takNavigateEta(String eta);
+
+  /// Info row label for how long ago the target entity's position was last received
+  ///
+  /// In en, this message translates to:
+  /// **'Last update'**
+  String get takNavigateLastUpdate;
+
+  /// Message shown when the user's position cannot be determined for navigation
+  ///
+  /// In en, this message translates to:
+  /// **'Position unavailable\nConnect to a node with GPS'**
+  String get takNavigateNoPosition;
+
+  /// Info row label for the target entity's geographic coordinates
+  ///
+  /// In en, this message translates to:
+  /// **'Position'**
+  String get takNavigatePosition;
+
+  /// Relative time format in days for target info card. {count} is the number of days.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}d ago'**
+  String takNavigateRelativeTimeDays(int count);
+
+  /// Relative time format in hours for target info card. {count} is the number of hours.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}h ago'**
+  String takNavigateRelativeTimeHours(int count);
+
+  /// Relative time format in minutes for target info card. {count} is the number of minutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}m ago'**
+  String takNavigateRelativeTimeMinutes(int count);
+
+  /// Relative time format in seconds for target info card. {count} is the number of seconds.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}s ago'**
+  String takNavigateRelativeTimeSeconds(int count);
+
+  /// Screen title for the bloodhound navigation screen. {callsign} is the target entity's callsign.
+  ///
+  /// In en, this message translates to:
+  /// **'Navigate to {callsign}'**
+  String takNavigateTitle(String callsign);
+
+  /// ETA value in hours and minutes. {hours} and {minutes} are integers.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h {minutes}m'**
+  String takNavigationEtaHoursMinutes(int hours, int minutes);
+
+  /// ETA value when arrival time is less than one minute
+  ///
+  /// In en, this message translates to:
+  /// **'< 1 min'**
+  String get takNavigationEtaLessThanOneMin;
+
+  /// ETA value in minutes. {count} is the number of minutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} min'**
+  String takNavigationEtaMinutes(int count);
+
+  /// Navigation status text when target is moving but course is unknown. {speed} is km/h.
+  ///
+  /// In en, this message translates to:
+  /// **'Target moving at {speed} km/h'**
+  String takNavigationTargetMoving(int speed);
+
+  /// Navigation status text when target is moving. {direction} is formatted course (e.g. '045° NE'), {speed} is km/h.
+  ///
+  /// In en, this message translates to:
+  /// **'Target moving {direction} at {speed} km/h'**
+  String takNavigationTargetMovingWithDirection(String direction, int speed);
+
+  /// Navigation status text when the target entity is not moving
+  ///
+  /// In en, this message translates to:
+  /// **'Target stationary'**
+  String get takNavigationTargetStationary;
+
+  /// Proximity alert notification body for a moving entity. {affiliation} is Hostile/Unknown/etc, {distance} is formatted, {heading} is course, {speed} is km/h.
+  ///
+  /// In en, this message translates to:
+  /// **'{affiliation} entity at {distance} -- heading {heading} at {speed} km/h'**
+  String takProximityAlertMovingBody(
+    String affiliation,
+    int distance,
+    String heading,
+    int speed,
+  );
+
+  /// Proximity alert notification body for a stationary entity. {affiliation} is Hostile/Unknown/etc, {distance} is formatted.
+  ///
+  /// In en, this message translates to:
+  /// **'{affiliation} entity at {distance} -- stationary'**
+  String takProximityAlertStationaryBody(String affiliation, int distance);
+
+  /// Empty state action button label to initiate gateway connection
+  ///
+  /// In en, this message translates to:
+  /// **'Connect'**
+  String get takScreenButtonConnect;
+
+  /// Empty state action button label when user is not signed in
+  ///
+  /// In en, this message translates to:
+  /// **'Sign In to Connect'**
+  String get takScreenButtonSignIn;
+
+  /// Empty state message when signed in but not connected to the gateway
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to the TAK Gateway to start streaming CoT entities.'**
+  String get takScreenEmptyDisconnected;
+
+  /// Empty state message when connected but no entities received yet
+  ///
+  /// In en, this message translates to:
+  /// **'Listening for CoT events from the TAK Gateway...'**
+  String get takScreenEmptyListening;
+
+  /// Empty state message when user is not signed in. CoT = Cursor on Target protocol.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in and connect to start receiving live CoT entities.'**
+  String get takScreenEmptySignIn;
+
+  /// Empty state headline when no CoT entities are visible
+  ///
+  /// In en, this message translates to:
+  /// **'No TAK Entities'**
+  String get takScreenEmptyTitle;
+
+  /// Filter chip label showing all entities (no affiliation filter active)
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get takScreenFilterAll;
+
+  /// Default help bottom sheet title when no specific key matches
+  ///
+  /// In en, this message translates to:
+  /// **'Info'**
+  String get takScreenHelpTitleDefault;
+
+  /// Help bottom sheet title for the filters section
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get takScreenHelpTitleFilters;
+
+  /// Help bottom sheet title for the settings section
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get takScreenHelpTitleSettings;
+
+  /// Help bottom sheet title for the connection status section
+  ///
+  /// In en, this message translates to:
+  /// **'Connection Status'**
+  String get takScreenHelpTitleStatus;
+
+  /// Overflow menu item to open the Situational Awareness Dashboard
+  ///
+  /// In en, this message translates to:
+  /// **'SA Dashboard'**
+  String get takScreenOverflowDashboard;
+
+  /// Overflow menu item to open TAK settings
+  ///
+  /// In en, this message translates to:
+  /// **'TAK Settings'**
+  String get takScreenOverflowSettings;
+
+  /// Hint text for the search field to filter entities by callsign or UID
+  ///
+  /// In en, this message translates to:
+  /// **'Search callsign or UID'**
+  String get takScreenSearchHint;
+
+  /// Stale mode filter chip label when showing only non-stale entities
+  ///
+  /// In en, this message translates to:
+  /// **'Active Only'**
+  String get takScreenStaleModeActiveOnly;
+
+  /// Stale mode filter chip label when showing all entities (active and stale)
+  ///
+  /// In en, this message translates to:
+  /// **'Status: All'**
+  String get takScreenStaleModeAll;
+
+  /// Stale mode filter chip label when showing only stale (expired) entities
+  ///
+  /// In en, this message translates to:
+  /// **'Stale Only'**
+  String get takScreenStaleModeStaleOnly;
+
+  /// Main TAK screen title. TAK = Team Awareness Kit, a military SA platform.
+  ///
+  /// In en, this message translates to:
+  /// **'TAK Gateway'**
+  String get takScreenTitle;
+
+  /// Tooltip on the connection button when currently disconnected
+  ///
+  /// In en, this message translates to:
+  /// **'Connect'**
+  String get takScreenTooltipConnect;
+
+  /// Tooltip on the connection button when currently connected
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect'**
+  String get takScreenTooltipDisconnect;
+
+  /// Tooltip on the connect button when user is not signed in
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to connect'**
+  String get takScreenTooltipSignInToConnect;
+
+  /// Checkbox label for hostile affiliation in proximity alert settings
+  ///
+  /// In en, this message translates to:
+  /// **'Hostile'**
+  String get takSettingsAlertHostile;
+
+  /// Label above the proximity alert affiliation checkboxes
+  ///
+  /// In en, this message translates to:
+  /// **'Alert on:'**
+  String get takSettingsAlertOn;
+
+  /// Checkbox label for suspect affiliation in proximity alert settings
+  ///
+  /// In en, this message translates to:
+  /// **'Suspect'**
+  String get takSettingsAlertSuspect;
+
+  /// Checkbox label for unknown affiliation in proximity alert settings
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get takSettingsAlertUnknown;
+
+  /// Settings tile subtitle explaining the auto-connect behavior
+  ///
+  /// In en, this message translates to:
+  /// **'Automatically connect when TAK screens open'**
+  String get takSettingsAutoConnectSubtitle;
+
+  /// Settings tile title for the auto-connect toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-connect on open'**
+  String get takSettingsAutoConnectTitle;
+
+  /// Settings tile subtitle when no custom callsign is set
+  ///
+  /// In en, this message translates to:
+  /// **'Using node name'**
+  String get takSettingsCallsignDefault;
+
+  /// Hint text in the callsign editor explaining default behavior
+  ///
+  /// In en, this message translates to:
+  /// **'Leave empty to use your node name'**
+  String get takSettingsCallsignEditorHint;
+
+  /// Placeholder text in the callsign input field showing example military callsign format
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., ALPHA-1'**
+  String get takSettingsCallsignEditorPlaceholder;
+
+  /// Title for the callsign override editor bottom sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Callsign Override'**
+  String get takSettingsCallsignEditorTitle;
+
+  /// Settings tile title for the callsign override field
+  ///
+  /// In en, this message translates to:
+  /// **'Callsign override'**
+  String get takSettingsCallsignTitle;
+
+  /// Error message displayed when settings fail to load. {error} is the error details.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {error}'**
+  String takSettingsError(String error);
+
+  /// Hint text in the gateway URL editor explaining default behavior
+  ///
+  /// In en, this message translates to:
+  /// **'Leave empty to use the default gateway'**
+  String get takSettingsGatewayEditorHint;
+
+  /// Placeholder text in the gateway URL input field
+  ///
+  /// In en, this message translates to:
+  /// **'https://tak.socialmesh.app'**
+  String get takSettingsGatewayEditorPlaceholder;
+
+  /// Title for the gateway URL editor bottom sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Gateway URL'**
+  String get takSettingsGatewayEditorTitle;
+
+  /// Settings tile subtitle when no custom gateway URL is set
+  ///
+  /// In en, this message translates to:
+  /// **'Default (tak.socialmesh.app)'**
+  String get takSettingsGatewayUrlDefault;
+
+  /// Settings tile title for the TAK gateway server URL
+  ///
+  /// In en, this message translates to:
+  /// **'Gateway URL'**
+  String get takSettingsGatewayUrlTitle;
+
+  /// Interval selector display for values >= 60 seconds. {minutes} is an integer.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes}m'**
+  String takSettingsIntervalMinutes(int minutes);
+
+  /// Interval selector display for values under 60 seconds. {seconds} is an integer.
+  ///
+  /// In en, this message translates to:
+  /// **'{seconds}s'**
+  String takSettingsIntervalSeconds(int seconds);
+
+  /// Settings tile subtitle explaining the publish interval
+  ///
+  /// In en, this message translates to:
+  /// **'How often to send your position'**
+  String get takSettingsIntervalSubtitle;
+
+  /// Settings tile title for configuring position publish frequency
+  ///
+  /// In en, this message translates to:
+  /// **'Publish interval'**
+  String get takSettingsIntervalTitle;
+
+  /// Settings tile subtitle explaining the map layer
+  ///
+  /// In en, this message translates to:
+  /// **'Display TAK entity markers on the dedicated map'**
+  String get takSettingsMapLayerSubtitle;
+
+  /// Settings tile title for the TAK entity map layer visibility toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Show TAK layer on map'**
+  String get takSettingsMapLayerTitle;
+
+  /// Settings tile subtitle. Hostile/unknown are MIL-STD-2525 affiliation categories.
+  ///
+  /// In en, this message translates to:
+  /// **'Notify when hostile/unknown entities enter radius'**
+  String get takSettingsProximitySubtitle;
+
+  /// Settings tile title for the proximity alert toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Enable proximity alerts'**
+  String get takSettingsProximityTitle;
+
+  /// Settings tile subtitle. ATAK = Android TAK, WinTAK = Windows TAK desktop client.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your node position with ATAK/WinTAK operators'**
+  String get takSettingsPublishSubtitle;
+
+  /// Settings tile title for the position publishing toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Publish my position'**
+  String get takSettingsPublishTitle;
+
+  /// Settings tile subtitle showing the current alert radius. {km} is the distance in kilometers.
+  ///
+  /// In en, this message translates to:
+  /// **'{km} km'**
+  String takSettingsRadiusSubtitle(double km);
+
+  /// Settings tile title for the proximity alert radius slider
+  ///
+  /// In en, this message translates to:
+  /// **'Alert radius'**
+  String get takSettingsRadiusTitle;
+
+  /// Button label to save settings in the editor bottom sheets
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get takSettingsSave;
+
+  /// Section header for connection-related settings
+  ///
+  /// In en, this message translates to:
+  /// **'CONNECTION'**
+  String get takSettingsSectionConnection;
+
+  /// Section header for map display settings
+  ///
+  /// In en, this message translates to:
+  /// **'MAP'**
+  String get takSettingsSectionMap;
+
+  /// Section header for proximity alert settings
+  ///
+  /// In en, this message translates to:
+  /// **'PROXIMITY ALERTS'**
+  String get takSettingsSectionProximity;
+
+  /// Section header for outbound position publishing settings
+  ///
+  /// In en, this message translates to:
+  /// **'POSITION PUBLISHING'**
+  String get takSettingsSectionPublishing;
+
+  /// Title for the TAK settings screen
+  ///
+  /// In en, this message translates to:
+  /// **'TAK Settings'**
+  String get takSettingsTitle;
+
+  /// Connection state label when WebSocket is active
+  ///
+  /// In en, this message translates to:
+  /// **'Connected'**
+  String get takStatusCardConnected;
+
+  /// Connection state label during initial WebSocket connection
+  ///
+  /// In en, this message translates to:
+  /// **'Connecting...'**
+  String get takStatusCardConnecting;
+
+  /// Counter label for currently active (non-stale) entities
+  ///
+  /// In en, this message translates to:
+  /// **'Entities'**
+  String get takStatusCardCounterEntities;
+
+  /// Counter label for total CoT events received since connection
+  ///
+  /// In en, this message translates to:
+  /// **'Events'**
+  String get takStatusCardCounterEvents;
+
+  /// Counter label for how long the gateway connection has been active
+  ///
+  /// In en, this message translates to:
+  /// **'Uptime'**
+  String get takStatusCardCounterUptime;
+
+  /// Connection state label when WebSocket is not active
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnected'**
+  String get takStatusCardDisconnected;
+
+  /// Label text identifying the status card as the TAK Gateway connection
+  ///
+  /// In en, this message translates to:
+  /// **'TAK Gateway'**
+  String get takStatusCardLabel;
+
+  /// Connection state label during automatic reconnection after a disconnect
+  ///
+  /// In en, this message translates to:
+  /// **'Reconnecting...'**
+  String get takStatusCardReconnecting;
+
+  /// Uptime format for hours and minutes. {hours} and {minutes} are integers.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h {minutes}m'**
+  String takStatusCardUptimeHoursMinutes(int hours, int minutes);
+
+  /// Uptime format for minutes only. {minutes} is an integer.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes}m'**
+  String takStatusCardUptimeMinutes(int minutes);
+
+  /// Uptime format for seconds only. {seconds} is an integer.
+  ///
+  /// In en, this message translates to:
+  /// **'{seconds}s'**
+  String takStatusCardUptimeSeconds(int seconds);
+
   /// Header label in the tapback reaction picker.
   ///
   /// In en, this message translates to:
   /// **'React'**
   String get tapbackReact;
+
+  /// Permission error when user lacks completeTask permission. Placeholder: roleName
+  ///
+  /// In en, this message translates to:
+  /// **'completeTask denied for role {roleName}'**
+  String taskErrorCompleteTaskDenied(String roleName);
+
+  /// Validation error when completing a task without a sufficient completion note
+  ///
+  /// In en, this message translates to:
+  /// **'Completion requires a note with at least 10 characters'**
+  String get taskErrorCompletionNoteRequired;
+
+  /// Permission error shown when user lacks createTask permission. Placeholder: roleName
+  ///
+  /// In en, this message translates to:
+  /// **'createTask denied for role {roleName}'**
+  String taskErrorCreateDenied(String roleName);
+
+  /// Validation error when failing a task without a sufficient failure reason
+  ///
+  /// In en, this message translates to:
+  /// **'Failure requires a reason with at least 10 characters'**
+  String get taskErrorFailureReasonRequired;
+
+  /// Error shown when an invalid state transition is attempted. Placeholders: fromState, toState
+  ///
+  /// In en, this message translates to:
+  /// **'{fromState} -> {toState} is not a valid transition'**
+  String taskErrorInvalidTransition(String fromState, String toState);
+
+  /// Permission error when a non-assignee tries to acknowledge a task
+  ///
+  /// In en, this message translates to:
+  /// **'Only the assignee can acknowledge a task'**
+  String get taskErrorOnlyAssigneeCanAcknowledge;
+
+  /// Permission error when a non-assignee tries to report task failure
+  ///
+  /// In en, this message translates to:
+  /// **'Only the assignee can report task failure'**
+  String get taskErrorOnlyAssigneeCanReportFailure;
+
+  /// Permission error when a non-assignee tries to start work on a task
+  ///
+  /// In en, this message translates to:
+  /// **'Only the assignee can start work on a task'**
+  String get taskErrorOnlyAssigneeCanStartWork;
+
+  /// Validation error when reassigning a task without specifying a new assignee
+  ///
+  /// In en, this message translates to:
+  /// **'Reassignment requires a newAssigneeId'**
+  String get taskErrorReassignmentRequiresAssignee;
+
+  /// Permission error when a non-supervisor tries to assign, cancel, or reassign. Placeholders: action, roleName
+  ///
+  /// In en, this message translates to:
+  /// **'{action} requires supervisor or admin role, current role: {roleName}'**
+  String taskErrorRequiresSupervisorOrAdmin(String action, String roleName);
+
+  /// Error shown when attempting to transition a task in a terminal state. Placeholder: stateName
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot transition from {stateName}: terminal state: {stateName}'**
+  String taskErrorTerminalState(String stateName);
+
+  /// Task priority label for 'immediate' — displayed via enum .name in badges/UI
+  ///
+  /// In en, this message translates to:
+  /// **'immediate'**
+  String get taskPriorityImmediate;
+
+  /// Task priority label for 'priority' — displayed via enum .name in badges/UI
+  ///
+  /// In en, this message translates to:
+  /// **'priority'**
+  String get taskPriorityPriority;
+
+  /// Task priority label for 'routine' — displayed via enum .name in badges/UI
+  ///
+  /// In en, this message translates to:
+  /// **'routine'**
+  String get taskPriorityRoutine;
+
+  /// Task state label for 'acknowledged' — displayed via enum .name in badges/UI
+  ///
+  /// In en, this message translates to:
+  /// **'acknowledged'**
+  String get taskStateAcknowledged;
+
+  /// Task state label for 'assigned' — displayed via enum .name in badges/UI
+  ///
+  /// In en, this message translates to:
+  /// **'assigned'**
+  String get taskStateAssigned;
+
+  /// Task state label for 'cancelled' — displayed via enum .name in badges/UI
+  ///
+  /// In en, this message translates to:
+  /// **'cancelled'**
+  String get taskStateCancelled;
+
+  /// Task state label for 'completed' — displayed via enum .name in badges/UI
+  ///
+  /// In en, this message translates to:
+  /// **'completed'**
+  String get taskStateCompleted;
+
+  /// Task state label for 'created' — displayed via enum .name in badges/UI
+  ///
+  /// In en, this message translates to:
+  /// **'created'**
+  String get taskStateCreated;
+
+  /// Task state label for 'failed' — displayed via enum .name in badges/UI
+  ///
+  /// In en, this message translates to:
+  /// **'failed'**
+  String get taskStateFailed;
+
+  /// Task state label for 'in progress' — displayed via enum .name in badges/UI (camelCase, needs human-readable form)
+  ///
+  /// In en, this message translates to:
+  /// **'inProgress'**
+  String get taskStateInProgress;
+
+  /// Task state label for 'reassigned' — displayed via enum .name in badges/UI
+  ///
+  /// In en, this message translates to:
+  /// **'reassigned'**
+  String get taskStateReassigned;
+
+  /// Transition note recorded when a task is assigned; may appear in timeline UI. Placeholder: assigneeId
+  ///
+  /// In en, this message translates to:
+  /// **'Assigned to {assigneeId}'**
+  String taskTransitionNoteAssignedTo(String assigneeId);
+
+  /// Transition note recorded when a task is first created; may appear in timeline UI
+  ///
+  /// In en, this message translates to:
+  /// **'Task created'**
+  String get taskTransitionNoteCreated;
+
+  /// Transition note on the new task created by reassignment; may appear in timeline. Placeholder: originalTaskId
+  ///
+  /// In en, this message translates to:
+  /// **'Task created via reassignment from {originalTaskId}'**
+  String taskTransitionNoteCreatedViaReassignment(String originalTaskId);
+
+  /// Transition note when original task is reassigned; may appear in timeline. Placeholder: newTaskId
+  ///
+  /// In en, this message translates to:
+  /// **'Reassigned to new task {newTaskId}'**
+  String taskTransitionNoteReassignedToNewTask(String newTaskId);
+
+  /// Empty state message when no air quality data exists
+  ///
+  /// In en, this message translates to:
+  /// **'No air quality data recorded yet'**
+  String get telemetryAirQualityEmpty;
+
+  /// Screen title for the air quality metrics history screen
+  ///
+  /// In en, this message translates to:
+  /// **'Air Quality Log'**
+  String get telemetryAirQualityLogTitle;
+
+  /// Particle size chip label for particles larger than 0.3 micrometres
+  ///
+  /// In en, this message translates to:
+  /// **'>0.3µm'**
+  String get telemetryAirQualityParticle03um;
+
+  /// Particle size chip label for particles larger than 0.5 micrometres
+  ///
+  /// In en, this message translates to:
+  /// **'>0.5µm'**
+  String get telemetryAirQualityParticle05um;
+
+  /// Particle size chip label for particles larger than 10 micrometres
+  ///
+  /// In en, this message translates to:
+  /// **'>10µm'**
+  String get telemetryAirQualityParticle100um;
+
+  /// Particle size chip label for particles larger than 1.0 micrometres
+  ///
+  /// In en, this message translates to:
+  /// **'>1.0µm'**
+  String get telemetryAirQualityParticle10um;
+
+  /// Particle size chip label for particles larger than 2.5 micrometres
+  ///
+  /// In en, this message translates to:
+  /// **'>2.5µm'**
+  String get telemetryAirQualityParticle25um;
+
+  /// Particle size chip label for particles larger than 5.0 micrometres
+  ///
+  /// In en, this message translates to:
+  /// **'>5.0µm'**
+  String get telemetryAirQualityParticle50um;
+
+  /// Section header for particle count readings.
+  ///
+  /// In en, this message translates to:
+  /// **'Particle Counts (per 0.1L)'**
+  String get telemetryAirQualityParticleCounts;
+
+  /// Section header label for environmental particulate matter readings
+  ///
+  /// In en, this message translates to:
+  /// **'Particulate Matter (Environmental)'**
+  String get telemetryAirQualityParticulateEnvironmental;
+
+  /// Section header label for standard particulate matter readings
+  ///
+  /// In en, this message translates to:
+  /// **'Particulate Matter (Standard)'**
+  String get telemetryAirQualityParticulateStandard;
+
+  /// Label for PM10 particulate matter measurement tile
+  ///
+  /// In en, this message translates to:
+  /// **'PM10'**
+  String get telemetryAirQualityPm100Label;
+
+  /// Label for PM1.0 particulate matter measurement tile
+  ///
+  /// In en, this message translates to:
+  /// **'PM1.0'**
+  String get telemetryAirQualityPm10Label;
+
+  /// Label for PM2.5 particulate matter measurement tile
+  ///
+  /// In en, this message translates to:
+  /// **'PM2.5'**
+  String get telemetryAirQualityPm25Label;
+
+  /// Unit label for micrograms per cubic metre.
+  ///
+  /// In en, this message translates to:
+  /// **'µg/m³'**
+  String get telemetryAirQualityUnitMicrogram;
+
+  /// Fallback label when no specific node is selected.
+  ///
+  /// In en, this message translates to:
+  /// **'All Nodes'**
+  String get telemetryAllNodes;
+
+  /// AQI rating label for good air quality (PM2.5 ≤ 12).
+  ///
+  /// In en, this message translates to:
+  /// **'Good'**
+  String get telemetryAqiGood;
+
+  /// AQI rating label for hazardous air quality.
+  ///
+  /// In en, this message translates to:
+  /// **'Hazardous'**
+  String get telemetryAqiHazardous;
+
+  /// AQI rating label for moderate air quality.
+  ///
+  /// In en, this message translates to:
+  /// **'Moderate'**
+  String get telemetryAqiModerate;
+
+  /// AQI rating label for unhealthy air quality.
+  ///
+  /// In en, this message translates to:
+  /// **'Unhealthy'**
+  String get telemetryAqiUnhealthy;
+
+  /// AQI rating label for unhealthy-for-sensitive-groups air quality.
+  ///
+  /// In en, this message translates to:
+  /// **'Unhealthy (S)'**
+  String get telemetryAqiUnhealthySensitive;
+
+  /// Battery status text shown when the battery level exceeds 100% (device is charging)
+  ///
+  /// In en, this message translates to:
+  /// **'Charging'**
+  String get telemetryBatteryCharging;
+
+  /// Button label to clear all active filters.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear all filters'**
+  String get telemetryClearAllFilters;
+
+  /// Destructive confirm button label in the clear data dialog (used in position and traceroute)
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get telemetryClearConfirmLabel;
+
+  /// Menu item label for clearing telemetry data.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Data'**
+  String get telemetryClearData;
+
+  /// Tooltip for the clear-date-filter icon button.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear date filter'**
+  String get telemetryClearDateFilterTooltip;
+
+  /// CO₂ quality rating for excellent levels (< 800 ppm).
+  ///
+  /// In en, this message translates to:
+  /// **'Excellent'**
+  String get telemetryCo2Excellent;
+
+  /// CO₂ quality rating for fair levels (< 2000 ppm).
+  ///
+  /// In en, this message translates to:
+  /// **'Fair'**
+  String get telemetryCo2Fair;
+
+  /// CO₂ quality rating for good levels (< 1000 ppm).
+  ///
+  /// In en, this message translates to:
+  /// **'Good'**
+  String get telemetryCo2Good;
+
+  /// CO₂ quality label combining the CO₂ prefix with the quality rating (e.g. CO₂ - Good)
+  ///
+  /// In en, this message translates to:
+  /// **'CO₂ - {quality}'**
+  String telemetryCo2LabelPrefix(String quality);
+
+  /// CO₂ quality rating for poor levels (≥ 2000 ppm).
+  ///
+  /// In en, this message translates to:
+  /// **'Poor'**
+  String get telemetryCo2Poor;
+
+  /// CO₂ level display with parts-per-million value and unit
+  ///
+  /// In en, this message translates to:
+  /// **'{ppm} ppm'**
+  String telemetryCo2Ppm(String ppm);
 
   /// No description provided for @telemetryConfigAirQualityDesc.
   ///
@@ -21361,6 +26566,714 @@ abstract class AppLocalizations {
   /// **'Update Interval'**
   String get telemetryConfigUpdateInterval;
 
+  /// Tooltip for the date-range picker icon button.
+  ///
+  /// In en, this message translates to:
+  /// **'Date range'**
+  String get telemetryDateRangeTooltip;
+
+  /// Badge label when the detection sensor reports no detection (all clear)
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get telemetryDetectionClear;
+
+  /// Badge label when a detection sensor has triggered.
+  ///
+  /// In en, this message translates to:
+  /// **'DETECTED'**
+  String get telemetryDetectionDetected;
+
+  /// Default name shown for a detection sensor when no name is provided
+  ///
+  /// In en, this message translates to:
+  /// **'Detection Sensor'**
+  String get telemetryDetectionSensorDefault;
+
+  /// Empty state message when no detection sensor events exist
+  ///
+  /// In en, this message translates to:
+  /// **'No sensor events recorded yet'**
+  String get telemetryDetectionSensorEmpty;
+
+  /// Screen title for the detection sensor history screen
+  ///
+  /// In en, this message translates to:
+  /// **'Detection Sensor Log'**
+  String get telemetryDetectionSensorLogTitle;
+
+  /// Empty state subtitle explaining what detection sensors do
+  ///
+  /// In en, this message translates to:
+  /// **'Detection sensors report motion and presence'**
+  String get telemetryDetectionSensorSubtitle;
+
+  /// Metric chip label showing air utilization TX percentage with Air prefix
+  ///
+  /// In en, this message translates to:
+  /// **'Air {percent}%'**
+  String telemetryDeviceMetricsAirUtil(int percent);
+
+  /// Metric chip label showing channel utilization percentage with Ch prefix
+  ///
+  /// In en, this message translates to:
+  /// **'Ch {percent}%'**
+  String telemetryDeviceMetricsChannelUtil(int percent);
+
+  /// Screen title for device metrics log.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Metrics'**
+  String get telemetryDeviceMetricsTitle;
+
+  /// Metric chip label showing voltage value with V unit suffix
+  ///
+  /// In en, this message translates to:
+  /// **'{voltage}V'**
+  String telemetryDeviceMetricsVoltageValue(double voltage);
+
+  /// Title for the end-date picker sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'End Date'**
+  String get telemetryEndDate;
+
+  /// Metric chip label showing gas resistance in ohms
+  ///
+  /// In en, this message translates to:
+  /// **'{value} Ω'**
+  String telemetryEnvGasResistanceValue(int value);
+
+  /// Metric chip label showing relative humidity percentage
+  ///
+  /// In en, this message translates to:
+  /// **'{value}%'**
+  String telemetryEnvHumidityValue(int value);
+
+  /// Metric chip label showing the indoor air quality index value
+  ///
+  /// In en, this message translates to:
+  /// **'IAQ {value}'**
+  String telemetryEnvIaqValue(int value);
+
+  /// Metric chip label showing light level in lux
+  ///
+  /// In en, this message translates to:
+  /// **'{value} lux'**
+  String telemetryEnvLuxValue(int value);
+
+  /// Metric chip label showing barometric pressure in hectopascals
+  ///
+  /// In en, this message translates to:
+  /// **'{value} hPa'**
+  String telemetryEnvPressureValue(int value);
+
+  /// Metric chip label showing temperature value in degrees Celsius
+  ///
+  /// In en, this message translates to:
+  /// **'{value}°C'**
+  String telemetryEnvTemperatureValue(int value);
+
+  /// Metric chip label showing wind speed in metres per second
+  ///
+  /// In en, this message translates to:
+  /// **'{value} m/s'**
+  String telemetryEnvWindSpeedValue(int value);
+
+  /// Screen title for the environment metrics history screen
+  ///
+  /// In en, this message translates to:
+  /// **'Environment Metrics'**
+  String get telemetryEnvironmentMetricsTitle;
+
+  /// Generic error message prefix shown in error states (used across all telemetry screens)
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {error}'**
+  String telemetryErrorPrefix(String error);
+
+  /// Menu item label for exporting data as CSV.
+  ///
+  /// In en, this message translates to:
+  /// **'Export CSV'**
+  String get telemetryExportCsv;
+
+  /// Snackbar message when CSV export fails.
+  ///
+  /// In en, this message translates to:
+  /// **'Export failed: {error}'**
+  String telemetryExportFailed(String error);
+
+  /// Menu item label shown while an export is in progress.
+  ///
+  /// In en, this message translates to:
+  /// **'Exporting...'**
+  String get telemetryExporting;
+
+  /// Error snackbar message when clearing data fails (used in position and traceroute)
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to clear data: {error}'**
+  String telemetryFailedToClearData(String error);
+
+  /// Filter chip label to filter by air utilization transmit metrics
+  ///
+  /// In en, this message translates to:
+  /// **'Air Util'**
+  String get telemetryFilterAirUtil;
+
+  /// Filter chip label showing all entries.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get telemetryFilterAll;
+
+  /// Filter chip label to filter by battery metrics
+  ///
+  /// In en, this message translates to:
+  /// **'Battery'**
+  String get telemetryFilterBattery;
+
+  /// Filter chip label to filter by channel utilization metrics
+  ///
+  /// In en, this message translates to:
+  /// **'Channel'**
+  String get telemetryFilterChannel;
+
+  /// Filter chip label for gas resistance metrics
+  ///
+  /// In en, this message translates to:
+  /// **'Gas'**
+  String get telemetryFilterGas;
+
+  /// Filter chip label for humidity metrics
+  ///
+  /// In en, this message translates to:
+  /// **'Humidity'**
+  String get telemetryFilterHumidity;
+
+  /// Filter chip label for indoor air quality index metrics
+  ///
+  /// In en, this message translates to:
+  /// **'IAQ'**
+  String get telemetryFilterIaq;
+
+  /// Filter chip label for light/lux sensor metrics
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get telemetryFilterLight;
+
+  /// Filter chip label for barometric pressure metrics
+  ///
+  /// In en, this message translates to:
+  /// **'Pressure'**
+  String get telemetryFilterPressure;
+
+  /// Filter chip label for temperature metrics
+  ///
+  /// In en, this message translates to:
+  /// **'Temp'**
+  String get telemetryFilterTemp;
+
+  /// Filter chip label to filter by device uptime metrics
+  ///
+  /// In en, this message translates to:
+  /// **'Uptime'**
+  String get telemetryFilterUptime;
+
+  /// Filter chip label to filter by voltage metrics
+  ///
+  /// In en, this message translates to:
+  /// **'Voltage'**
+  String get telemetryFilterVoltage;
+
+  /// Filter chip label for wind speed metrics
+  ///
+  /// In en, this message translates to:
+  /// **'Wind'**
+  String get telemetryFilterWind;
+
+  /// Menu item label for opening help.
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get telemetryHelp;
+
+  /// Chart legend label for the air utilization TX data series
+  ///
+  /// In en, this message translates to:
+  /// **'Air Util'**
+  String get telemetryLegendAirUtil;
+
+  /// Chart legend label for the battery level data series
+  ///
+  /// In en, this message translates to:
+  /// **'Battery'**
+  String get telemetryLegendBattery;
+
+  /// Chart legend label for the channel utilization data series
+  ///
+  /// In en, this message translates to:
+  /// **'Ch Util'**
+  String get telemetryLegendChUtil;
+
+  /// Chart legend label for the humidity data series
+  ///
+  /// In en, this message translates to:
+  /// **'Humidity'**
+  String get telemetryLegendHumidity;
+
+  /// Chart legend label for the temperature data series
+  ///
+  /// In en, this message translates to:
+  /// **'Temperature'**
+  String get telemetryLegendTemperature;
+
+  /// Chart legend label for the voltage data series
+  ///
+  /// In en, this message translates to:
+  /// **'Voltage'**
+  String get telemetryLegendVoltage;
+
+  /// Menu section header for map tile style options
+  ///
+  /// In en, this message translates to:
+  /// **'Map Style'**
+  String get telemetryMapStyle;
+
+  /// Empty-state subtitle when no telemetry has been received yet.
+  ///
+  /// In en, this message translates to:
+  /// **'Metrics will appear when your device reports telemetry'**
+  String get telemetryMetricsWillAppear;
+
+  /// Empty state headline when no device metrics have been recorded
+  ///
+  /// In en, this message translates to:
+  /// **'No device metrics yet'**
+  String get telemetryNoDeviceMetricsYet;
+
+  /// Empty state headline when no environment metrics have been recorded
+  ///
+  /// In en, this message translates to:
+  /// **'No environment metrics yet'**
+  String get telemetryNoEnvironmentMetricsYet;
+
+  /// Empty-state headline when filters exclude all metrics.
+  ///
+  /// In en, this message translates to:
+  /// **'No metrics match filters'**
+  String get telemetryNoMetricsMatchFilters;
+
+  /// Label for BLE device count in PAX counter.
+  ///
+  /// In en, this message translates to:
+  /// **'Bluetooth'**
+  String get telemetryPaxBluetooth;
+
+  /// Empty state message when no PAX counter data exists
+  ///
+  /// In en, this message translates to:
+  /// **'No PAX data recorded yet'**
+  String get telemetryPaxCounterEmpty;
+
+  /// Screen title for the PAX counter history screen
+  ///
+  /// In en, this message translates to:
+  /// **'PAX Counter Log'**
+  String get telemetryPaxCounterLogTitle;
+
+  /// Empty state subtitle explaining what PAX counter does
+  ///
+  /// In en, this message translates to:
+  /// **'PAX counter detects nearby devices'**
+  String get telemetryPaxCounterSubtitle;
+
+  /// Uptime label in PAX counter card.
+  ///
+  /// In en, this message translates to:
+  /// **'Uptime: {uptime}'**
+  String telemetryPaxUptime(String uptime);
+
+  /// PAX uptime formatted as days and hours (>= 1d)
+  ///
+  /// In en, this message translates to:
+  /// **'{days}d {hours}h'**
+  String telemetryPaxUptimeDaysHours(int days, int hours);
+
+  /// PAX uptime formatted as hours and minutes (< 1d)
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h {minutes}m'**
+  String telemetryPaxUptimeHoursMinutes(int hours, int minutes);
+
+  /// PAX uptime formatted as minutes (< 1h)
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes}m'**
+  String telemetryPaxUptimeMinutes(int minutes);
+
+  /// PAX uptime formatted as seconds (< 60s)
+  ///
+  /// In en, this message translates to:
+  /// **'{seconds}s'**
+  String telemetryPaxUptimeSeconds(int seconds);
+
+  /// Label for WiFi device count in PAX counter.
+  ///
+  /// In en, this message translates to:
+  /// **'WiFi'**
+  String get telemetryPaxWifi;
+
+  /// Altitude badge showing elevation in metres
+  ///
+  /// In en, this message translates to:
+  /// **'{meters}m'**
+  String telemetryPositionAltitude(double meters);
+
+  /// Bottom sheet confirmation message for clearing position data.
+  ///
+  /// In en, this message translates to:
+  /// **'This will permanently delete all position history for all nodes. This cannot be undone.'**
+  String get telemetryPositionClearMessage;
+
+  /// Bottom sheet title for clearing position data.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Position Data'**
+  String get telemetryPositionClearTitle;
+
+  /// Position count label per node in drawer (singular/plural).
+  ///
+  /// In en, this message translates to:
+  /// **'{count} position{count, plural, =1{} other{s}}'**
+  String telemetryPositionCount(int count);
+
+  /// Success snackbar message after clearing position data
+  ///
+  /// In en, this message translates to:
+  /// **'Position data cleared'**
+  String get telemetryPositionDataCleared;
+
+  /// Popup menu label for date range selection.
+  ///
+  /// In en, this message translates to:
+  /// **'Date range'**
+  String get telemetryPositionDateRange;
+
+  /// Share sheet subject for position CSV export.
+  ///
+  /// In en, this message translates to:
+  /// **'Socialmesh Position Export'**
+  String get telemetryPositionExportSubject;
+
+  /// Snackbar message after successful position export.
+  ///
+  /// In en, this message translates to:
+  /// **'Exported {count} positions'**
+  String telemetryPositionExportedCount(int count);
+
+  /// Filter chip label for positions with good satellite fix.
+  ///
+  /// In en, this message translates to:
+  /// **'Good Fix'**
+  String get telemetryPositionFilterGoodFix;
+
+  /// Filter chip label for current user's node positions.
+  ///
+  /// In en, this message translates to:
+  /// **'My Node'**
+  String get telemetryPositionFilterMyNode;
+
+  /// Filter chip label for this week's positions.
+  ///
+  /// In en, this message translates to:
+  /// **'This Week'**
+  String get telemetryPositionFilterThisWeek;
+
+  /// Filter chip label for today's positions.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get telemetryPositionFilterToday;
+
+  /// Tooltip for the button to switch to list view (shown when in map mode)
+  ///
+  /// In en, this message translates to:
+  /// **'List view'**
+  String get telemetryPositionListViewTooltip;
+
+  /// Tooltip for the button to switch to map view (shown when in list mode)
+  ///
+  /// In en, this message translates to:
+  /// **'Map view'**
+  String get telemetryPositionMapViewTooltip;
+
+  /// Snackbar message when attempting to export but no position data exists
+  ///
+  /// In en, this message translates to:
+  /// **'No position data to export'**
+  String get telemetryPositionNoDataExport;
+
+  /// Empty-state headline when no positions exist.
+  ///
+  /// In en, this message translates to:
+  /// **'No position history'**
+  String get telemetryPositionNoHistory;
+
+  /// Empty state message when active filters exclude all positions
+  ///
+  /// In en, this message translates to:
+  /// **'No positions match filters'**
+  String get telemetryPositionNoMatchFilters;
+
+  /// Map view empty state when no positions are available for the map
+  ///
+  /// In en, this message translates to:
+  /// **'No positions to display'**
+  String get telemetryPositionNoPositionsToDisplay;
+
+  /// Label in the node count pill showing total number of nodes on the map
+  ///
+  /// In en, this message translates to:
+  /// **'{count} nodes'**
+  String telemetryPositionNodeCount(int count);
+
+  /// Title of the node list drawer panel in the map view
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes'**
+  String get telemetryPositionNodeDrawerTitle;
+
+  /// Badge showing number of GPS satellites in view
+  ///
+  /// In en, this message translates to:
+  /// **'{count} sats'**
+  String telemetryPositionSats(int count);
+
+  /// Label for the 'show all nodes' option in the node list drawer
+  ///
+  /// In en, this message translates to:
+  /// **'All Nodes'**
+  String get telemetryPositionShowAllNodes;
+
+  /// Subtitle for the 'all nodes' option in the node list drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Show positions from all nodes'**
+  String get telemetryPositionShowAllSubtitle;
+
+  /// Badge showing ground speed in kilometres per hour
+  ///
+  /// In en, this message translates to:
+  /// **'{speed} km/h'**
+  String telemetryPositionSpeed(int speed);
+
+  /// Stat label for total distance on map.
+  ///
+  /// In en, this message translates to:
+  /// **'Distance'**
+  String get telemetryPositionStatDistance;
+
+  /// Stat label for unique node count on map.
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes'**
+  String get telemetryPositionStatNodes;
+
+  /// Stat label for total position points on map.
+  ///
+  /// In en, this message translates to:
+  /// **'Points'**
+  String get telemetryPositionStatPoints;
+
+  /// Screen title for position history log.
+  ///
+  /// In en, this message translates to:
+  /// **'Position'**
+  String get telemetryPositionTitle;
+
+  /// Chart legend label showing total readings count.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} readings'**
+  String telemetryReadingsCount(int count);
+
+  /// Hint text for search field filtering by node.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by node'**
+  String get telemetrySearchByNode;
+
+  /// Hint text for search field filtering by node name.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by node name'**
+  String get telemetrySearchByNodeName;
+
+  /// Menu item label for opening settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get telemetrySettings;
+
+  /// Title for the start-date picker sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Date'**
+  String get telemetryStartDate;
+
+  /// Bottom sheet confirmation message for clearing traceroute data.
+  ///
+  /// In en, this message translates to:
+  /// **'This will permanently delete all traceroute history for {scope}. This cannot be undone.'**
+  String telemetryTracerouteClearMessage(String scope);
+
+  /// Bottom sheet title for clearing traceroute data.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Traceroute Data'**
+  String get telemetryTracerouteClearTitle;
+
+  /// Success snackbar message after clearing traceroute data
+  ///
+  /// In en, this message translates to:
+  /// **'Traceroute data cleared'**
+  String get telemetryTracerouteDataCleared;
+
+  /// Caption label above the destination node name in a traceroute card
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get telemetryTracerouteDestinationLabel;
+
+  /// Hint shown when a traceroute has zero hops (direct link).
+  ///
+  /// In en, this message translates to:
+  /// **'Direct connection — no intermediate hops'**
+  String get telemetryTracerouteDirectConnection;
+
+  /// Empty state message when no traceroutes have been recorded
+  ///
+  /// In en, this message translates to:
+  /// **'No traceroutes recorded yet'**
+  String get telemetryTracerouteEmpty;
+
+  /// Empty state subtitle explaining how to get traceroute data
+  ///
+  /// In en, this message translates to:
+  /// **'Send a traceroute from a node to see network paths'**
+  String get telemetryTracerouteEmptySubtitle;
+
+  /// Share sheet subject for traceroute CSV export.
+  ///
+  /// In en, this message translates to:
+  /// **'Socialmesh Traceroute Export ({scope})'**
+  String telemetryTracerouteExportSubject(String scope);
+
+  /// Snackbar message after successful traceroute export.
+  ///
+  /// In en, this message translates to:
+  /// **'Exported {count} traceroutes'**
+  String telemetryTracerouteExportedCount(int count);
+
+  /// Filter chip label for traceroutes without a response.
+  ///
+  /// In en, this message translates to:
+  /// **'No Response'**
+  String get telemetryTracerouteFilterNoResponse;
+
+  /// Filter chip label for traceroutes with a response.
+  ///
+  /// In en, this message translates to:
+  /// **'Response'**
+  String get telemetryTracerouteFilterResponse;
+
+  /// Section title for the forward hop path in a traceroute card.
+  ///
+  /// In en, this message translates to:
+  /// **'Forward Path'**
+  String get telemetryTracerouteForwardPath;
+
+  /// Screen title for the traceroute history screen
+  ///
+  /// In en, this message translates to:
+  /// **'Traceroute History'**
+  String get telemetryTracerouteHistoryTitle;
+
+  /// SNR value displayed next to individual hop entries in the route path
+  ///
+  /// In en, this message translates to:
+  /// **'{value} dB'**
+  String telemetryTracerouteHopSnr(int value);
+
+  /// Label for the return hop count chip in a traceroute card (← is a left arrow)
+  ///
+  /// In en, this message translates to:
+  /// **'Hops ←'**
+  String get telemetryTracerouteHopsBack;
+
+  /// Label for the forward hop count chip in a traceroute card (→ is a right arrow)
+  ///
+  /// In en, this message translates to:
+  /// **'Hops →'**
+  String get telemetryTracerouteHopsForward;
+
+  /// Tooltip for the traceroute overflow menu.
+  ///
+  /// In en, this message translates to:
+  /// **'More actions'**
+  String get telemetryTracerouteMoreActions;
+
+  /// Snackbar message when attempting to export but no traceroute data exists
+  ///
+  /// In en, this message translates to:
+  /// **'No traceroute data to export'**
+  String get telemetryTracerouteNoDataExport;
+
+  /// Empty-state headline when filters exclude all traceroutes.
+  ///
+  /// In en, this message translates to:
+  /// **'No traceroutes match filters'**
+  String get telemetryTracerouteNoMatch;
+
+  /// Section title for the return hop path in a traceroute card.
+  ///
+  /// In en, this message translates to:
+  /// **'Return Path'**
+  String get telemetryTracerouteReturnPath;
+
+  /// Signal-to-noise ratio display with decibel unit in a traceroute card
+  ///
+  /// In en, this message translates to:
+  /// **'SNR: {value} dB'**
+  String telemetryTracerouteSnr(int value);
+
+  /// Empty-state subtitle suggesting the user change filters.
+  ///
+  /// In en, this message translates to:
+  /// **'Try adjusting your search or filters'**
+  String get telemetryTryAdjustingFilters;
+
+  /// Formatted uptime string for durations of 1+ days (e.g. '3d 12h')
+  ///
+  /// In en, this message translates to:
+  /// **'{days}d {hours}h'**
+  String telemetryUptimeDaysHours(int days, int hours);
+
+  /// Formatted uptime string for durations of 1+ hours (e.g. '5h 30m')
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h {minutes}m'**
+  String telemetryUptimeHoursMinutes(int hours, int minutes);
+
+  /// Formatted uptime string for durations under 1 hour (e.g. '45m')
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes}m'**
+  String telemetryUptimeMinutes(int minutes);
+
   /// No description provided for @worldMeshAddToFavorites.
   ///
   /// In en, this message translates to:
@@ -21427,10 +27340,10 @@ abstract class AppLocalizations {
   /// **'Favorites'**
   String get worldMeshFavoritesTooltip;
 
-  /// No description provided for @worldMeshFilterActiveCount.
+  /// Count of active filters on world mesh view
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 filter} other{{count} filters}}'**
+  /// **'{count} active'**
   String worldMeshFilterActiveCount(int count);
 
   /// No description provided for @worldMeshFilterAny.
@@ -21900,10 +27813,10 @@ abstract class AppLocalizations {
   /// **'Find a node'**
   String get worldMeshSearchHint;
 
-  /// No description provided for @worldMeshSearchResultCount.
+  /// Count of search results in world mesh
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 node found} other{{count} nodes found}}'**
+  /// **'{count} results'**
   String worldMeshSearchResultCount(int count);
 
   /// No description provided for @worldMeshSectionDevice.
@@ -22001,6 +27914,354 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Uptime: {uptime}'**
   String worldMeshUptimeLabel(String uptime);
+
+  /// Generic error message shown in telemetry screens.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {error}'**
+  String telemetryError(String error);
+
+  /// Snackbar message when clearing data fails.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to clear data: {error}'**
+  String telemetryFailedToClear(String error);
+
+  /// Screen title for the air quality log.
+  ///
+  /// In en, this message translates to:
+  /// **'Air Quality Log'**
+  String get telemetryAirQualityTitle;
+
+  /// Empty-state message when no air quality data exists.
+  ///
+  /// In en, this message translates to:
+  /// **'No air quality data recorded yet'**
+  String get telemetryAirQualityNoData;
+
+  /// Section header for standard particulate matter readings.
+  ///
+  /// In en, this message translates to:
+  /// **'Particulate Matter (Standard)'**
+  String get telemetryAirQualityPmStandard;
+
+  /// Section header for environmental particulate matter readings.
+  ///
+  /// In en, this message translates to:
+  /// **'Particulate Matter (Environmental)'**
+  String get telemetryAirQualityPmEnvironmental;
+
+  /// CO₂ indicator label combining unit and quality rating.
+  ///
+  /// In en, this message translates to:
+  /// **'CO₂ - {rating}'**
+  String telemetryCo2Label(String rating);
+
+  /// Screen title for the detection sensor log.
+  ///
+  /// In en, this message translates to:
+  /// **'Detection Sensor Log'**
+  String get telemetryDetectionTitle;
+
+  /// Empty-state message when no detection sensor data exists.
+  ///
+  /// In en, this message translates to:
+  /// **'No sensor events recorded yet'**
+  String get telemetryDetectionNoData;
+
+  /// Empty-state subtitle for detection sensor screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Detection sensors report motion and presence'**
+  String get telemetryDetectionDescription;
+
+  /// Default name for unnamed detection sensors.
+  ///
+  /// In en, this message translates to:
+  /// **'Detection Sensor'**
+  String get telemetryDetectionSensor;
+
+  /// Badge label when a detection sensor is in clear state.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get telemetryDetectionClearBadge;
+
+  /// Screen title for the PAX counter log.
+  ///
+  /// In en, this message translates to:
+  /// **'PAX Counter Log'**
+  String get telemetryPaxTitle;
+
+  /// Empty-state message when no PAX counter data exists.
+  ///
+  /// In en, this message translates to:
+  /// **'No PAX data recorded yet'**
+  String get telemetryPaxNoData;
+
+  /// Empty-state subtitle for PAX counter screen.
+  ///
+  /// In en, this message translates to:
+  /// **'PAX counter detects nearby devices'**
+  String get telemetryPaxDescription;
+
+  /// Empty-state headline when no device metrics exist.
+  ///
+  /// In en, this message translates to:
+  /// **'No device metrics yet'**
+  String get telemetryDeviceNoMetrics;
+
+  /// Filter chip label for battery metrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery'**
+  String get telemetryDeviceFilterBattery;
+
+  /// Filter chip label for voltage metrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Voltage'**
+  String get telemetryDeviceFilterVoltage;
+
+  /// Filter chip label for channel utilization metrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel'**
+  String get telemetryDeviceFilterChannel;
+
+  /// Filter chip label for air utilization metrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Air Util'**
+  String get telemetryDeviceFilterAirUtil;
+
+  /// Filter chip label for uptime metrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Uptime'**
+  String get telemetryDeviceFilterUptime;
+
+  /// Chart legend label for battery series.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery'**
+  String get telemetryDeviceLegendBattery;
+
+  /// Chart legend label for voltage series.
+  ///
+  /// In en, this message translates to:
+  /// **'Voltage'**
+  String get telemetryDeviceLegendVoltage;
+
+  /// Chart legend label for channel utilization series.
+  ///
+  /// In en, this message translates to:
+  /// **'Ch Util'**
+  String get telemetryDeviceLegendChUtil;
+
+  /// Chart legend label for air utilization series.
+  ///
+  /// In en, this message translates to:
+  /// **'Air Util'**
+  String get telemetryDeviceLegendAirUtil;
+
+  /// Battery status label when device is charging.
+  ///
+  /// In en, this message translates to:
+  /// **'Charging'**
+  String get telemetryDeviceCharging;
+
+  /// Screen title for environment metrics log.
+  ///
+  /// In en, this message translates to:
+  /// **'Environment Metrics'**
+  String get telemetryEnvironmentTitle;
+
+  /// Empty-state headline when no environment metrics exist.
+  ///
+  /// In en, this message translates to:
+  /// **'No environment metrics yet'**
+  String get telemetryEnvironmentNoMetrics;
+
+  /// Filter chip label for temperature metrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Temp'**
+  String get telemetryEnvironmentFilterTemp;
+
+  /// Filter chip label for humidity metrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Humidity'**
+  String get telemetryEnvironmentFilterHumidity;
+
+  /// Filter chip label for barometric pressure metrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Pressure'**
+  String get telemetryEnvironmentFilterPressure;
+
+  /// Filter chip label for gas resistance metrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Gas'**
+  String get telemetryEnvironmentFilterGas;
+
+  /// Filter chip label for indoor air quality metrics.
+  ///
+  /// In en, this message translates to:
+  /// **'IAQ'**
+  String get telemetryEnvironmentFilterIaq;
+
+  /// Filter chip label for light/lux metrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get telemetryEnvironmentFilterLight;
+
+  /// Filter chip label for wind speed metrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Wind'**
+  String get telemetryEnvironmentFilterWind;
+
+  /// Chart legend label for temperature series.
+  ///
+  /// In en, this message translates to:
+  /// **'Temperature'**
+  String get telemetryEnvironmentLegendTemperature;
+
+  /// Chart legend label for humidity series.
+  ///
+  /// In en, this message translates to:
+  /// **'Humidity'**
+  String get telemetryEnvironmentLegendHumidity;
+
+  /// Tooltip for switching to list view.
+  ///
+  /// In en, this message translates to:
+  /// **'List view'**
+  String get telemetryPositionListView;
+
+  /// Tooltip for switching to map view.
+  ///
+  /// In en, this message translates to:
+  /// **'Map view'**
+  String get telemetryPositionMapView;
+
+  /// Popup menu section header for map style options.
+  ///
+  /// In en, this message translates to:
+  /// **'Map Style'**
+  String get telemetryPositionMapStyle;
+
+  /// Empty-state headline when filters exclude all positions.
+  ///
+  /// In en, this message translates to:
+  /// **'No positions match filters'**
+  String get telemetryPositionNoMatch;
+
+  /// Snackbar message when there is no data to export.
+  ///
+  /// In en, this message translates to:
+  /// **'No position data to export'**
+  String get telemetryPositionNoExportData;
+
+  /// Confirm button label for the clear-position-data sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get telemetryPositionClearLabel;
+
+  /// Snackbar message after position data is cleared.
+  ///
+  /// In en, this message translates to:
+  /// **'Position data cleared'**
+  String get telemetryPositionCleared;
+
+  /// Map empty-state message when no positions are visible.
+  ///
+  /// In en, this message translates to:
+  /// **'No positions to display'**
+  String get telemetryPositionNoDisplay;
+
+  /// Drawer header title in the position map node list.
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes'**
+  String get telemetryPositionDrawerTitle;
+
+  /// Drawer option to show positions from all nodes.
+  ///
+  /// In en, this message translates to:
+  /// **'All Nodes'**
+  String get telemetryPositionAllNodesOption;
+
+  /// Drawer subtitle for the all-nodes option.
+  ///
+  /// In en, this message translates to:
+  /// **'Show positions from all nodes'**
+  String get telemetryPositionAllNodesDescription;
+
+  /// Node count pill label on the position map.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} nodes'**
+  String telemetryPositionNodesCount(int count);
+
+  /// Screen title for traceroute log.
+  ///
+  /// In en, this message translates to:
+  /// **'Traceroute History'**
+  String get telemetryTracerouteTitle;
+
+  /// Empty-state headline when no traceroutes exist.
+  ///
+  /// In en, this message translates to:
+  /// **'No traceroutes recorded yet'**
+  String get telemetryTracerouteNoData;
+
+  /// Empty-state subtitle for the traceroute screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Send a traceroute from a node to see network paths'**
+  String get telemetryTracerouteEmptyHint;
+
+  /// Snackbar message when there is no traceroute data to export.
+  ///
+  /// In en, this message translates to:
+  /// **'No traceroute data to export'**
+  String get telemetryTracerouteNoExportData;
+
+  /// Confirm button label for the clear-traceroute-data sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get telemetryTracerouteClearLabel;
+
+  /// Snackbar message after traceroute data is cleared.
+  ///
+  /// In en, this message translates to:
+  /// **'Traceroute data cleared'**
+  String get telemetryTracerouteCleared;
+
+  /// Label for the destination node in a traceroute card.
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get telemetryTracerouteTo;
+
+  /// Badge label when a traceroute received a response.
+  ///
+  /// In en, this message translates to:
+  /// **'Response'**
+  String get telemetryTracerouteResponseBadge;
+
+  /// Badge label when a traceroute received no response.
+  ///
+  /// In en, this message translates to:
+  /// **'No Response'**
+  String get telemetryTracerouteNoResponseBadge;
 }
 
 class _AppLocalizationsDelegate

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/glass_scaffold.dart';
 import '../../models/telemetry_log.dart';
@@ -22,10 +23,10 @@ class PaxCounterLogScreen extends ConsumerWidget {
         : ref.watch(paxCounterLogsProvider);
     final nodes = ref.watch(nodesProvider);
     final node = nodeNum != null ? nodes[nodeNum] : null;
-    final nodeName = node?.displayName ?? 'All Nodes';
+    final nodeName = node?.displayName ?? context.l10n.telemetryAllNodes;
 
     return GlassScaffold(
-      title: 'PAX Counter Log',
+      title: context.l10n.telemetryPaxTitle,
       slivers: [
         SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -44,7 +45,10 @@ class PaxCounterLogScreen extends ConsumerWidget {
           data: (logs) {
             if (logs.isEmpty) {
               return SliverFillRemaining(
-                child: _buildEmptyState(context, 'No PAX data recorded yet'),
+                child: _buildEmptyState(
+                  context,
+                  context.l10n.telemetryPaxNoData,
+                ),
               );
             }
             final sortedLogs = logs.reversed.toList();
@@ -60,8 +64,11 @@ class PaxCounterLogScreen extends ConsumerWidget {
           },
           loading: () =>
               const SliverFillRemaining(child: ScreenLoadingIndicator()),
-          error: (e, _) =>
-              SliverFillRemaining(child: Center(child: Text('Error: $e'))),
+          error: (e, _) => SliverFillRemaining(
+            child: Center(
+              child: Text(context.l10n.telemetryError(e.toString())),
+            ),
+          ),
         ),
       ],
     );
@@ -82,7 +89,7 @@ class PaxCounterLogScreen extends ConsumerWidget {
           ),
           const SizedBox(height: AppTheme.spacing8),
           Text(
-            'PAX counter detects nearby devices',
+            context.l10n.telemetryPaxDescription,
             style: context.bodySecondaryStyle?.copyWith(
               color: context.textTertiary,
             ),
@@ -161,7 +168,7 @@ class _PaxCounterCard extends StatelessWidget {
               Expanded(
                 child: _DeviceCountTile(
                   icon: Icons.bluetooth,
-                  label: 'Bluetooth',
+                  label: context.l10n.telemetryPaxBluetooth,
                   count: log.ble,
                   color: AccentColors.blue,
                 ),
@@ -170,7 +177,7 @@ class _PaxCounterCard extends StatelessWidget {
               Expanded(
                 child: _DeviceCountTile(
                   icon: Icons.wifi,
-                  label: 'WiFi',
+                  label: context.l10n.telemetryPaxWifi,
                   count: log.wifi,
                   color: AccentColors.purple,
                 ),
@@ -190,7 +197,7 @@ class _PaxCounterCard extends StatelessWidget {
                 ),
                 const SizedBox(width: AppTheme.spacing6),
                 Text(
-                  'Uptime: ${_formatUptime(log.uptime)}',
+                  context.l10n.telemetryPaxUptime(_formatUptime(log.uptime)),
                   style: TextStyle(
                     fontSize: 12,
                     color: Colors.white.withValues(alpha: 0.5),

@@ -6,6 +6,7 @@ import '../../core/legal/legal_constants.dart';
 import '../../core/widgets/glass_scaffold.dart';
 import '../../core/widgets/ico_help_system.dart';
 import '../../core/widgets/legal_document_sheet.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/app_bottom_sheet.dart';
 import '../../core/widgets/app_bar_overflow_menu.dart';
@@ -38,11 +39,11 @@ class AutomationsScreen extends ConsumerWidget {
       topicId: 'automations_overview',
       stepKeys: const {},
       child: GlassScaffold(
-        title: 'Automations',
+        title: context.l10n.automationScreenTitle,
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
-            tooltip: 'New Automation',
+            tooltip: context.l10n.automationScreenNewTooltip,
             onPressed: () => _showAddAutomation(context, ref),
           ),
           AppBarOverflowMenu<String>(
@@ -64,35 +65,35 @@ class AutomationsScreen extends ConsumerWidget {
               }
             },
             itemBuilder: (context) => [
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'history',
                 child: ListTile(
-                  leading: Icon(Icons.history),
-                  title: Text('Execution Log'),
+                  leading: const Icon(Icons.history),
+                  title: Text(context.l10n.automationScreenExecutionLog),
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'scan',
                 child: ListTile(
-                  leading: Icon(Icons.qr_code_scanner),
-                  title: Text('Scan QR Code'),
+                  leading: const Icon(Icons.qr_code_scanner),
+                  title: Text(context.l10n.automationScreenScanQrCode),
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'acceptable_use',
                 child: ListTile(
-                  leading: Icon(Icons.gavel_rounded),
-                  title: Text('Acceptable Use'),
+                  leading: const Icon(Icons.gavel_rounded),
+                  title: Text(context.l10n.automationScreenAcceptableUse),
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'help',
                 child: ListTile(
-                  leading: Icon(Icons.help_outline),
-                  title: Text('Help'),
+                  leading: const Icon(Icons.help_outline),
+                  title: Text(context.l10n.automationScreenHelp),
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
@@ -131,14 +132,14 @@ class AutomationsScreen extends ConsumerWidget {
                     ),
                     const SizedBox(height: AppTheme.spacing16),
                     Text(
-                      'Failed to load automations',
+                      context.l10n.automationScreenLoadError,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     const SizedBox(height: AppTheme.spacing8),
                     TextButton(
                       onPressed: () =>
                           ref.read(automationsProvider.notifier).refresh(),
-                      child: const Text('Retry'),
+                      child: Text(context.l10n.automationScreenRetry),
                     ),
                   ],
                 ),
@@ -228,14 +229,14 @@ class AutomationsScreen extends ConsumerWidget {
           ),
           const SizedBox(height: AppTheme.spacing16),
           Text(
-            'Automate Your Mesh',
+            context.l10n.automationScreenEmptyTitle,
             style: Theme.of(
               context,
             ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: AppTheme.spacing8),
           Text(
-            'Create automations to trigger actions automatically when events occur on your mesh network.',
+            context.l10n.automationScreenEmptyDescription,
             textAlign: TextAlign.center,
             style: Theme.of(
               context,
@@ -290,13 +291,16 @@ class AutomationsScreen extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Create from Scratch',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  Text(
+                    context.l10n.automationScreenCreateFromScratch,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
                   ),
                   const SizedBox(height: AppTheme.spacing4),
                   Text(
-                    'Build a custom automation with full control over triggers and actions',
+                    context.l10n.automationScreenCreateFromScratchSubtitle,
                     style: TextStyle(
                       color: context.textSecondary,
                       fontSize: 13,
@@ -330,7 +334,7 @@ class AutomationsScreen extends ConsumerWidget {
               Icon(Icons.flash_on, size: 18, color: AppTheme.warningYellow),
               const SizedBox(width: AppTheme.spacing6),
               Text(
-                'Quick Start Templates',
+                context.l10n.automationScreenQuickStartTemplates,
                 style: Theme.of(
                   context,
                 ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
@@ -342,7 +346,7 @@ class AutomationsScreen extends ConsumerWidget {
         Padding(
           padding: const EdgeInsets.only(left: 4),
           child: Text(
-            'One-tap setup for common use cases',
+            context.l10n.automationScreenQuickStartSubtitle,
             style: Theme.of(
               context,
             ).textTheme.bodySmall?.copyWith(color: context.textTertiary),
@@ -450,7 +454,7 @@ class AutomationsScreen extends ConsumerWidget {
               Icon(Icons.explore, size: 18, color: context.accentColor),
               const SizedBox(width: AppTheme.spacing6),
               Text(
-                'Start with a Trigger',
+                context.l10n.automationScreenStartWithTrigger,
                 style: Theme.of(
                   context,
                 ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
@@ -462,7 +466,7 @@ class AutomationsScreen extends ConsumerWidget {
         Padding(
           padding: const EdgeInsets.only(left: 4),
           child: Text(
-            'Choose what event starts your automation',
+            context.l10n.automationScreenStartWithTriggerSubtitle,
             style: Theme.of(
               context,
             ).textTheme.bodySmall?.copyWith(color: context.textTertiary),
@@ -527,7 +531,7 @@ class AutomationsScreen extends ConsumerWidget {
                             Icon(type.icon, size: 16),
                             const SizedBox(width: AppTheme.spacing6),
                             Text(
-                              type.displayName,
+                              type.localizedName(context.l10n),
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
                           ],
@@ -632,14 +636,14 @@ class AutomationsScreen extends ConsumerWidget {
             children: [
               _buildStatItem(
                 context,
-                label: 'Total',
+                label: context.l10n.automationScreenStatTotal,
                 value: stats.total.toString(),
                 icon: Icons.bolt,
               ),
               Container(width: 1, height: 40, color: context.border),
               _buildStatItem(
                 context,
-                label: 'Active',
+                label: context.l10n.automationScreenStatActive,
                 value: stats.enabled.toString(),
                 icon: Icons.play_circle,
                 color: AppTheme.successGreen,
@@ -647,7 +651,7 @@ class AutomationsScreen extends ConsumerWidget {
               Container(width: 1, height: 40, color: context.border),
               _buildStatItem(
                 context,
-                label: 'Executions',
+                label: context.l10n.automationScreenStatExecutions,
                 value: stats.totalTriggers.toString(),
                 icon: Icons.trending_up,
               ),
@@ -842,7 +846,10 @@ class AutomationsScreen extends ConsumerWidget {
 
     await ref.read(automationsProvider.notifier).addFromTemplate(templateId);
     if (context.mounted) {
-      showSuccessSnackBar(context, 'Automation created from template');
+      showSuccessSnackBar(
+        context,
+        context.l10n.automationScreenCreatedFromTemplate,
+      );
     }
   }
 
@@ -861,17 +868,26 @@ class AutomationsScreen extends ConsumerWidget {
   ) async {
     final engine = ref.read(automationEngineProvider);
     final event = AutomationEvent(type: TriggerType.manual);
-    showLoadingSnackBar(context, 'Running "${automation.name}"...');
+    showLoadingSnackBar(
+      context,
+      context.l10n.automationScreenRunning(automation.name),
+    );
     try {
       await engine.executeAutomationManually(automation, event);
       if (context.mounted) {
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
-        showSuccessSnackBar(context, 'Ran "${automation.name}" successfully');
+        showSuccessSnackBar(
+          context,
+          context.l10n.automationScreenRunSuccess(automation.name),
+        );
       }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
-        showErrorSnackBar(context, 'Failed to run: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.automationScreenRunFailed(e.toString()),
+        );
       }
     }
   }
@@ -883,19 +899,23 @@ class AutomationsScreen extends ConsumerWidget {
   ) async {
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Delete Automation',
-      message: 'Are you sure you want to delete "${automation.name}"?',
-      confirmLabel: 'Delete',
+      title: context.l10n.automationScreenDeleteTitle,
+      message: context.l10n.automationScreenDeleteMessage(automation.name),
+      confirmLabel: context.l10n.automationScreenDelete,
       isDestructive: true,
     );
     if (confirmed == true && context.mounted) {
+      final l10n = context.l10n;
       final messenger = ScaffoldMessenger.of(context);
-      showLoadingSnackBar(context, 'Deleting "${automation.name}"...');
+      showLoadingSnackBar(
+        context,
+        l10n.automationScreenDeleting(automation.name),
+      );
       await ref
           .read(automationsProvider.notifier)
           .deleteAutomation(automation.id);
       messenger.hideCurrentSnackBar();
-      showGlobalSuccessSnackBar('Deleted "${automation.name}"');
+      showGlobalSuccessSnackBar(l10n.automationScreenDeleted(automation.name));
     }
   }
 
@@ -933,7 +953,7 @@ class AutomationsScreen extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Execution Log',
+                      context.l10n.automationScreenExecutionLog,
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -944,7 +964,7 @@ class AutomationsScreen extends ConsumerWidget {
                           ref.read(automationRepositoryProvider).clearLog();
                           Navigator.pop(context);
                         },
-                        child: const Text('Clear'),
+                        child: Text(context.l10n.automationScreenClear),
                       ),
                   ],
                 ),
@@ -952,10 +972,12 @@ class AutomationsScreen extends ConsumerWidget {
               const Divider(),
               Expanded(
                 child: log.isEmpty
-                    ? const Center(
+                    ? Center(
                         child: Text(
-                          'No executions yet',
-                          style: TextStyle(color: SemanticColors.disabled),
+                          context.l10n.automationScreenNoExecutions,
+                          style: const TextStyle(
+                            color: SemanticColors.disabled,
+                          ),
                         ),
                       )
                     : ListView.builder(
@@ -977,7 +999,7 @@ class AutomationsScreen extends ConsumerWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                             trailing: Text(
-                              _formatTime(entry.timestamp),
+                              _formatTime(context, entry.timestamp),
                               style: const TextStyle(
                                 color: SemanticColors.disabled,
                                 fontSize: 12,
@@ -994,14 +1016,18 @@ class AutomationsScreen extends ConsumerWidget {
     );
   }
 
-  String _formatTime(DateTime time) {
+  String _formatTime(BuildContext context, DateTime time) {
     final now = DateTime.now();
     final diff = now.difference(time);
 
-    if (diff.inMinutes < 1) return 'Just now';
-    if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
-    if (diff.inHours < 24) return '${diff.inHours}h ago';
-    return '${diff.inDays}d ago';
+    if (diff.inMinutes < 1) return context.l10n.automationScreenJustNow;
+    if (diff.inMinutes < 60) {
+      return context.l10n.automationScreenMinutesAgo(diff.inMinutes);
+    }
+    if (diff.inHours < 24) {
+      return context.l10n.automationScreenHoursAgo(diff.inHours);
+    }
+    return context.l10n.automationScreenDaysAgo(diff.inDays);
   }
 }
 
@@ -1067,7 +1093,7 @@ class _AddAutomationSheet extends ConsumerWidget {
             child: Row(
               children: [
                 Text(
-                  'Add Automation',
+                  context.l10n.automationScreenAddAutomation,
                   style: Theme.of(
                     context,
                   ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
@@ -1149,16 +1175,16 @@ class _AddAutomationSheet extends ConsumerWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Create from Scratch',
-                        style: TextStyle(
+                      Text(
+                        context.l10n.automationScreenCreateFromScratch,
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
                       ),
                       const SizedBox(height: AppTheme.spacing4),
                       Text(
-                        'Build a custom automation with full control over triggers and actions',
+                        context.l10n.automationScreenCreateFromScratchSubtitle,
                         style: TextStyle(
                           color: context.textSecondary,
                           fontSize: 13,
@@ -1190,7 +1216,7 @@ class _AddAutomationSheet extends ConsumerWidget {
               Icon(Icons.flash_on, size: 18, color: AppTheme.warningYellow),
               const SizedBox(width: AppTheme.spacing6),
               Text(
-                'Quick Start Templates',
+                context.l10n.automationScreenQuickStartTemplates,
                 style: Theme.of(
                   context,
                 ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
@@ -1202,7 +1228,7 @@ class _AddAutomationSheet extends ConsumerWidget {
         Padding(
           padding: const EdgeInsets.only(left: 4),
           child: Text(
-            'One-tap setup for common use cases',
+            context.l10n.automationScreenQuickStartSubtitle,
             style: Theme.of(
               context,
             ).textTheme.bodySmall?.copyWith(color: context.textTertiary),

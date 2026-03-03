@@ -9,6 +9,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 import 'package:socialmesh/core/logging.dart';
 
 import '../../../core/constants.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/app_bottom_sheet.dart';
@@ -100,7 +101,7 @@ class _AetherFlightDetailScreenState
             onPressed: () => ref.invalidate(
               aetherFlightPositionProvider(widget.flight.flightNumber),
             ),
-            tooltip: 'Refresh position',
+            tooltip: context.l10n.aetherDetailRefreshTooltip,
           ),
         _isSharing
             ? Padding(
@@ -117,7 +118,7 @@ class _AetherFlightDetailScreenState
             : IconButton(
                 icon: Icon(Icons.share, color: context.accentColor),
                 onPressed: () => _shareFlight(context),
-                tooltip: 'Share flight',
+                tooltip: context.l10n.aetherDetailShareTooltip,
               ),
       ],
       slivers: [
@@ -167,8 +168,8 @@ class _AetherFlightDetailScreenState
                       Icons.signal_cellular_alt,
                       color: Colors.white,
                     ),
-                    label: const Text(
-                      'I Received This Flight!',
+                    label: Text(
+                      context.l10n.aetherDetailReportButton,
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w600,
@@ -294,7 +295,7 @@ class _AetherFlightDetailScreenState
               _AnimatedRadar(color: context.accentColor),
               SizedBox(width: AppTheme.spacing12),
               Text(
-                'Live Position',
+                context.l10n.aetherDetailLivePosition,
                 style: TextStyle(
                   color: context.accentColor,
                   fontWeight: FontWeight.bold,
@@ -304,7 +305,9 @@ class _AetherFlightDetailScreenState
               const Spacer(),
               if (positionAsync.value?.lastFetch != null)
                 Text(
-                  'Updated ${_getRelativeTime(positionAsync.value!.lastFetch!)}',
+                  context.l10n.aetherDetailUpdated(
+                    _getRelativeTime(positionAsync.value!.lastFetch!),
+                  ),
                   style: TextStyle(color: context.textTertiary, fontSize: 12),
                 ),
             ],
@@ -353,7 +356,8 @@ class _AetherFlightDetailScreenState
                         ),
                         const SizedBox(height: AppTheme.spacing8),
                         Text(
-                          positionState.error ?? 'Position data unavailable',
+                          positionState.error ??
+                              context.l10n.aetherDetailPositionUnavailable,
                           style: TextStyle(color: context.textTertiary),
                         ),
                       ],
@@ -366,28 +370,28 @@ class _AetherFlightDetailScreenState
                     _buildPositionRow(
                       context,
                       Icons.height,
-                      'Altitude',
+                      context.l10n.aetherDetailAltitude,
                       '${positionState.position!.altitudeFeet.round().toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} ft',
                     ),
                     const SizedBox(height: AppTheme.spacing8),
                     _buildPositionRow(
                       context,
                       Icons.speed,
-                      'Ground Speed',
+                      context.l10n.aetherDetailGroundSpeed,
                       '${positionState.position!.velocityKnots.round()} kts',
                     ),
                     const SizedBox(height: AppTheme.spacing8),
                     _buildPositionRow(
                       context,
                       Icons.explore,
-                      'Heading',
+                      context.l10n.aetherDetailHeading,
                       '${positionState.position!.heading.round()}°',
                     ),
                     const SizedBox(height: AppTheme.spacing8),
                     _buildPositionRow(
                       context,
                       Icons.radar,
-                      'Coverage Radius',
+                      context.l10n.aetherDetailCoverageRadius,
                       '~${positionState.position!.coverageRadiusKm.round()} km',
                     ),
                     const SizedBox(height: AppTheme.spacing12),
@@ -466,7 +470,7 @@ class _AetherFlightDetailScreenState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Flight Details',
+            context.l10n.aetherDetailFlightDetails,
             style: TextStyle(
               color: context.textPrimary,
               fontWeight: FontWeight.bold,
@@ -476,36 +480,44 @@ class _AetherFlightDetailScreenState
           const SizedBox(height: AppTheme.spacing16),
           _buildDetailRow(
             Icons.schedule,
-            'Departure',
+            context.l10n.aetherDetailDeparture,
             '${_dateFormat.format(widget.flight.scheduledDeparture.toLocal())}\n${_timeFormat.format(widget.flight.scheduledDeparture.toLocal())}',
           ),
           if (widget.flight.scheduledArrival != null) ...[
             const SizedBox(height: AppTheme.spacing12),
             _buildDetailRow(
               Icons.flight_land,
-              'Arrival',
+              context.l10n.aetherDetailArrival,
               '${_dateFormat.format(widget.flight.scheduledArrival!.toLocal())}\n${_timeFormat.format(widget.flight.scheduledArrival!.toLocal())}',
             ),
           ],
           const SizedBox(height: AppTheme.spacing12),
           _buildDetailRow(
             Icons.memory,
-            'Node',
+            context.l10n.aetherDetailNode,
             widget.flight.nodeName ?? widget.flight.nodeId,
           ),
           if (widget.flight.userName != null) ...[
             const SizedBox(height: AppTheme.spacing12),
-            _buildDetailRow(Icons.person, 'Operator', widget.flight.userName!),
+            _buildDetailRow(
+              Icons.person,
+              context.l10n.aetherDetailOperator,
+              widget.flight.userName!,
+            ),
           ],
           if (widget.flight.notes != null) ...[
             const SizedBox(height: AppTheme.spacing12),
-            _buildDetailRow(Icons.notes, 'Notes', widget.flight.notes!),
+            _buildDetailRow(
+              Icons.notes,
+              context.l10n.aetherDetailNotes,
+              widget.flight.notes!,
+            ),
           ],
           const SizedBox(height: AppTheme.spacing12),
           _buildDetailRow(
             Icons.signal_cellular_alt,
-            'Receptions',
-            '${liveFlight.receptionCount} reported',
+            context.l10n.aetherDetailReceptions,
+            context.l10n.aetherDetailReceptionsValue(liveFlight.receptionCount),
           ),
         ],
       ),
@@ -556,7 +568,7 @@ class _AetherFlightDetailScreenState
               ),
               SizedBox(width: AppTheme.spacing8),
               Text(
-                'Reception Reports',
+                context.l10n.aetherDetailReportsTitle,
                 style: TextStyle(
                   color: context.textPrimary,
                   fontWeight: FontWeight.bold,
@@ -589,7 +601,7 @@ class _AetherFlightDetailScreenState
               ),
               error: (e, _) => Text(
                 key: const ValueKey('reports_error'),
-                'Error loading reports',
+                context.l10n.aetherDetailReportsError,
                 style: TextStyle(color: AppTheme.errorRed),
               ),
               data: (reportList) {
@@ -674,7 +686,7 @@ class _AetherFlightDetailScreenState
                 Text(
                   report.reporterNodeName ??
                       report.reporterNodeId ??
-                      'Unknown node',
+                      context.l10n.aetherDetailUnknownNode,
                   style: TextStyle(
                     color: context.textPrimary,
                     fontWeight: FontWeight.w500,
@@ -682,7 +694,9 @@ class _AetherFlightDetailScreenState
                 ),
                 if (report.estimatedDistance != null)
                   Text(
-                    '${report.estimatedDistance!.round()} km away',
+                    context.l10n.aetherDetailDistanceAway(
+                      report.estimatedDistance!.round(),
+                    ),
                     style: TextStyle(
                       color: context.accentColor,
                       fontSize: 13,
@@ -775,7 +789,10 @@ class _AetherFlightDetailScreenState
       AppLogging.aether('Error type: ${e.runtimeType}');
       safeSetState(() => _isSharing = false);
       if (mounted) {
-        showErrorSnackBar(context, 'Could not share flight: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.aetherDetailShareError(e.toString()),
+        );
       }
     }
   }
@@ -783,10 +800,12 @@ class _AetherFlightDetailScreenState
   Future<void> _showShareOptions(String url) async {
     AppLogging.aether('Showing share options for URL: $url');
     final flight = widget.flight;
-    final text =
-        '${flight.flightNumber} '
-        '${flight.departure} -> ${flight.arrival}\n'
-        'Track this Meshtastic flight on Aether:\n$url';
+    final text = context.l10n.aetherShareText(
+      flight.flightNumber,
+      flight.departure,
+      flight.arrival,
+      url,
+    );
 
     try {
       await SharePlus.instance.share(ShareParams(text: text));
@@ -794,7 +813,7 @@ class _AetherFlightDetailScreenState
       // Fallback: copy to clipboard
       await Clipboard.setData(ClipboardData(text: url));
       if (mounted) {
-        showSuccessSnackBar(context, 'Flight link copied to clipboard');
+        showSuccessSnackBar(context, context.l10n.aetherDetailShareCopied);
       }
     }
   }
@@ -902,13 +921,13 @@ class _SkeletonPositionContent extends StatelessWidget {
   Widget build(BuildContext _) {
     return Column(
       children: [
-        _buildSkeletonRow(Icons.height, 'Altitude'),
+        _buildSkeletonRow(Icons.height, context.l10n.aetherDetailAltitude),
         const SizedBox(height: AppTheme.spacing8),
-        _buildSkeletonRow(Icons.speed, 'Ground Speed'),
+        _buildSkeletonRow(Icons.speed, context.l10n.aetherDetailGroundSpeed),
         const SizedBox(height: AppTheme.spacing8),
-        _buildSkeletonRow(Icons.explore, 'Heading'),
+        _buildSkeletonRow(Icons.explore, context.l10n.aetherDetailHeading),
         const SizedBox(height: AppTheme.spacing8),
-        _buildSkeletonRow(Icons.radar, 'Coverage Radius'),
+        _buildSkeletonRow(Icons.radar, context.l10n.aetherDetailCoverageRadius),
         const SizedBox(height: AppTheme.spacing12),
         Container(
           padding: const EdgeInsets.all(AppTheme.spacing12),
@@ -1101,10 +1120,7 @@ class _ReportBottomSheetState extends ConsumerState<_ReportBottomSheet>
     // Check if flight is still active (may have ended while sheet was open)
     if (!_flightNodeDetected) {
       if (mounted) {
-        showErrorSnackBar(
-          context,
-          'Flight node not detected in your mesh network',
-        );
+        showErrorSnackBar(context, context.l10n.aetherReportNodeNotDetected);
       }
       return;
     }
@@ -1120,7 +1136,7 @@ class _ReportBottomSheetState extends ConsumerState<_ReportBottomSheet>
         widget.flight;
     if ((!liveFlight.isActive && !liveFlight.isInFlight) || liveFlight.isPast) {
       if (mounted) {
-        showErrorSnackBar(context, 'This flight has ended');
+        showErrorSnackBar(context, context.l10n.aetherReportFlightEnded);
         safeNavigatorPop();
       }
       return;
@@ -1147,6 +1163,8 @@ class _ReportBottomSheetState extends ConsumerState<_ReportBottomSheet>
     AppLogging.aether('  receivedAt: $_receivedAt');
 
     safeSetState(() => _isSaving = true);
+
+    final l10n = context.l10n;
 
     try {
       final service = ref.read(aetherServiceProvider);
@@ -1175,13 +1193,13 @@ class _ReportBottomSheetState extends ConsumerState<_ReportBottomSheet>
         HapticFeedback.mediumImpact();
       }
       safeNavigatorPop();
-      safeShowSnackBar('Reception reported!');
+      safeShowSnackBar(l10n.aetherReportSuccess);
     } catch (e, st) {
       AppLogging.aether('Submit report: FAILED - $e');
       AppLogging.aether('Stack trace: $st');
       if (mounted) {
         if (e is AetherDuplicateReportException) {
-          showErrorSnackBar(context, 'You have already reported this flight');
+          showErrorSnackBar(context, l10n.aetherDuplicateReport);
           safeNavigatorPop();
           return;
         }
@@ -1212,7 +1230,7 @@ class _ReportBottomSheetState extends ConsumerState<_ReportBottomSheet>
                 const SizedBox(width: AppTheme.spacing12),
                 Expanded(
                   child: Text(
-                    'Report Reception',
+                    context.l10n.aetherReportTitle,
                     style: TextStyle(
                       color: context.textPrimary,
                       fontSize: 20,
@@ -1224,7 +1242,7 @@ class _ReportBottomSheetState extends ConsumerState<_ReportBottomSheet>
             ),
             const SizedBox(height: AppTheme.spacing8),
             Text(
-              'I received flight ${widget.flight.flightNumber} on my node!',
+              context.l10n.aetherReportSubtitle(widget.flight.flightNumber),
               style: TextStyle(color: context.textSecondary),
             ),
             const SizedBox(height: AppTheme.spacing24),
@@ -1250,9 +1268,7 @@ class _ReportBottomSheetState extends ConsumerState<_ReportBottomSheet>
                     const SizedBox(width: AppTheme.spacing12),
                     Expanded(
                       child: Text(
-                        'This flight\'s node is not in your mesh network. '
-                        'You can only report a reception when the node is '
-                        'visible to your device.',
+                        context.l10n.aetherReportNotOnMesh,
                         style: TextStyle(
                           color: context.textSecondary,
                           fontSize: 13,
@@ -1280,7 +1296,7 @@ class _ReportBottomSheetState extends ConsumerState<_ReportBottomSheet>
                     const SizedBox(width: AppTheme.spacing12),
                     if (_detectedRssi != null) ...[
                       Text(
-                        'RSSI ',
+                        context.l10n.aetherReportRssiLabel,
                         style: TextStyle(
                           color: context.textSecondary,
                           fontSize: 13,
@@ -1299,7 +1315,7 @@ class _ReportBottomSheetState extends ConsumerState<_ReportBottomSheet>
                       const SizedBox(width: AppTheme.spacing16),
                     if (_detectedSnr != null) ...[
                       Text(
-                        'SNR ',
+                        context.l10n.aetherReportSnrLabel,
                         style: TextStyle(
                           color: context.textSecondary,
                           fontSize: 13,
@@ -1337,7 +1353,7 @@ class _ReportBottomSheetState extends ConsumerState<_ReportBottomSheet>
                     ),
                     const SizedBox(width: AppTheme.spacing12),
                     Text(
-                      'Estimated distance ',
+                      context.l10n.aetherReportEstimatedDistance,
                       style: TextStyle(
                         color: context.textSecondary,
                         fontSize: 13,
@@ -1377,8 +1393,8 @@ class _ReportBottomSheetState extends ConsumerState<_ReportBottomSheet>
                   const SizedBox(width: AppTheme.spacing12),
                   Text(
                     hasLocation
-                        ? 'Location auto-detected'
-                        : 'Location unavailable',
+                        ? context.l10n.aetherReportLocationDetected
+                        : context.l10n.aetherReportLocationUnavailable,
                     style: TextStyle(
                       color: hasLocation
                           ? context.textPrimary
@@ -1406,7 +1422,7 @@ class _ReportBottomSheetState extends ConsumerState<_ReportBottomSheet>
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
                     child: Text(
-                      'Add Notes',
+                      context.l10n.aetherReportAddNotes,
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
@@ -1429,7 +1445,7 @@ class _ReportBottomSheetState extends ConsumerState<_ReportBottomSheet>
                       ),
                       const SizedBox(width: AppTheme.spacing6),
                       Text(
-                        'Notes',
+                        context.l10n.aetherReportNotesLabel,
                         style: TextStyle(
                           color: context.textSecondary,
                           fontWeight: FontWeight.w600,
@@ -1455,7 +1471,7 @@ class _ReportBottomSheetState extends ConsumerState<_ReportBottomSheet>
                             ),
                           ),
                           child: Text(
-                            'Remove',
+                            context.l10n.aetherReportRemoveNotes,
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
@@ -1478,7 +1494,7 @@ class _ReportBottomSheetState extends ConsumerState<_ReportBottomSheet>
                     },
                     style: TextStyle(fontSize: 14, color: context.textPrimary),
                     decoration: InputDecoration(
-                      hintText: 'Equipment, antenna, location details...',
+                      hintText: context.l10n.aetherReportNotesHint,
                       hintStyle: TextStyle(
                         fontSize: 14,
                         color: context.textTertiary,
@@ -1537,8 +1553,8 @@ class _ReportBottomSheetState extends ConsumerState<_ReportBottomSheet>
                         color: Colors.white,
                       ),
                     )
-                  : const Text(
-                      'Submit Report',
+                  : Text(
+                      context.l10n.aetherReportSubmit,
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w600,

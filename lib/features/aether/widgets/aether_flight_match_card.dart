@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/gradient_border_container.dart';
 import '../data/airports.dart';
@@ -96,8 +97,8 @@ class AetherFlightMatchCard extends StatelessWidget {
                                 color: Colors.white,
                               ),
                               const SizedBox(width: AppTheme.spacing4),
-                              const Text(
-                                'IN FLIGHT',
+                              Text(
+                                context.l10n.aetherMatchInFlight,
                                 style: TextStyle(
                                   fontSize: 10,
                                   fontWeight: FontWeight.w700,
@@ -234,7 +235,7 @@ class AetherFlightMatchCard extends StatelessWidget {
                         ),
                         const SizedBox(width: AppTheme.spacing4),
                         Text(
-                          'Tap to report your reception',
+                          context.l10n.aetherMatchReportCta,
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w600,

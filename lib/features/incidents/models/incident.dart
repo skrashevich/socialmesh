@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+import 'package:socialmesh/l10n/app_localizations.dart';
+
 /// Incident lifecycle states.
 ///
 /// 7 states forming the incident state machine.
@@ -17,12 +19,40 @@ enum IncidentState {
 
   /// Whether this state is terminal (no further transitions allowed).
   bool get isTerminal => this == closed || this == cancelled;
+
+  /// Localised display label for this state.
+  String displayLabel(AppLocalizations l10n) {
+    return switch (this) {
+      IncidentState.draft => l10n.incidentFilterStateDraft,
+      IncidentState.open => l10n.incidentFilterStateOpen,
+      IncidentState.assigned => l10n.incidentFilterStateAssigned,
+      IncidentState.escalated => l10n.incidentFilterStateEscalated,
+      IncidentState.resolved => l10n.incidentFilterStateResolved,
+      IncidentState.closed => l10n.incidentFilterStateClosed,
+      IncidentState.cancelled => l10n.incidentFilterStateCancelled,
+    };
+  }
 }
 
 /// Incident priority levels.
 ///
 /// Ordered by urgency: routine (lowest) to flash (highest).
-enum IncidentPriority { routine, priority, immediate, flash }
+enum IncidentPriority {
+  routine,
+  priority,
+  immediate,
+  flash;
+
+  /// Localised display label for this priority.
+  String displayLabel(AppLocalizations l10n) {
+    return switch (this) {
+      IncidentPriority.routine => l10n.incidentPriorityRoutine,
+      IncidentPriority.priority => l10n.incidentPriorityPriority,
+      IncidentPriority.immediate => l10n.incidentPriorityImmediate,
+      IncidentPriority.flash => l10n.incidentPriorityFlash,
+    };
+  }
+}
 
 /// Incident classification types.
 enum IncidentClassification {
@@ -32,7 +62,22 @@ enum IncidentClassification {
   operational,
   logistics,
   medical,
-  comms,
+  comms;
+
+  /// Localised display label for this classification.
+  String displayLabel(AppLocalizations l10n) {
+    return switch (this) {
+      IncidentClassification.safety => l10n.incidentClassificationSafety,
+      IncidentClassification.security => l10n.incidentClassificationSecurity,
+      IncidentClassification.environmental =>
+        l10n.incidentClassificationEnvironmental,
+      IncidentClassification.operational =>
+        l10n.incidentClassificationOperational,
+      IncidentClassification.logistics => l10n.incidentClassificationLogistics,
+      IncidentClassification.medical => l10n.incidentClassificationMedical,
+      IncidentClassification.comms => l10n.incidentClassificationComms,
+    };
+  }
 }
 
 /// An operational incident tracked by the incident lifecycle engine.

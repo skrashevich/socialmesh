@@ -22,8 +22,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
+import '../../../l10n/app_localizations.dart';
+
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/logging.dart';
 import '../../../core/widgets/animated_empty_state.dart';
 import '../../../core/widgets/animated_gold_button.dart';
@@ -58,16 +61,16 @@ import '../../settings/settings_screen.dart';
 enum AetherFilter { all, active, upcoming, myFlights }
 
 extension AetherFilterLabel on AetherFilter {
-  String get label {
+  String label(AppLocalizations l10n) {
     switch (this) {
       case AetherFilter.all:
-        return 'All';
+        return l10n.aetherFilterAll;
       case AetherFilter.active:
-        return 'Active';
+        return l10n.aetherFilterActive;
       case AetherFilter.upcoming:
-        return 'Upcoming';
+        return l10n.aetherFilterUpcoming;
       case AetherFilter.myFlights:
-        return 'My Flights';
+        return l10n.aetherFilterMyFlights;
     }
   }
 
@@ -192,8 +195,11 @@ class _AetherScreenState extends ConsumerState<AetherScreen>
           HapticFeedback.heavyImpact();
           showWarningSnackBar(
             context,
-            '${myNode.displayName} already has a flight '
-            '(${existing.flightNumber} — ${existing.statusText})',
+            context.l10n.aetherNodeAlreadyHasFlight(
+              myNode.displayName,
+              existing.flightNumber,
+              existing.statusText(context.l10n),
+            ),
           );
           return;
         }
@@ -225,7 +231,7 @@ class _AetherScreenState extends ConsumerState<AetherScreen>
               Icon(Icons.radar, color: accentColor),
               const SizedBox(width: AppTheme.spacing8),
               Text(
-                'Aether',
+                context.l10n.aetherInfoTitle,
                 style: TextStyle(
                   color: context.textPrimary,
                   fontSize: 20,
@@ -236,27 +242,27 @@ class _AetherScreenState extends ConsumerState<AetherScreen>
           ),
           const SizedBox(height: AppTheme.spacing16),
           Text(
-            'Track Meshtastic nodes at altitude!',
+            context.l10n.aetherInfoTagline,
             style: TextStyle(color: textSecondary, fontWeight: FontWeight.w500),
           ),
           const SizedBox(height: AppTheme.spacing16),
           _InfoRow(
             icon: Icons.flight_takeoff,
-            text: 'Schedule your flight with your node',
+            text: context.l10n.aetherInfoSchedule,
             iconColor: textTertiary,
             textColor: textSecondary,
           ),
           const SizedBox(height: AppTheme.spacing8),
           _InfoRow(
             icon: Icons.radar,
-            text: 'Ground stations watch for your signal',
+            text: context.l10n.aetherInfoGroundStations,
             iconColor: textTertiary,
             textColor: textSecondary,
           ),
           const SizedBox(height: AppTheme.spacing8),
           _InfoRow(
             icon: Icons.celebration,
-            text: 'Report receptions & set range records!',
+            text: context.l10n.aetherInfoReceptions,
             iconColor: textTertiary,
             textColor: textSecondary,
           ),
@@ -274,7 +280,7 @@ class _AetherScreenState extends ConsumerState<AetherScreen>
                 const SizedBox(width: AppTheme.spacing8),
                 Expanded(
                   child: Text(
-                    'At 35,000ft, LoRa can reach 400+ km!',
+                    context.l10n.aetherInfoLoraRange,
                     style: TextStyle(
                       color: accentColor,
                       fontSize: 13,
@@ -299,7 +305,7 @@ class _AetherScreenState extends ConsumerState<AetherScreen>
     );
 
     return Tooltip(
-      message: 'Schedule Flight',
+      message: context.l10n.aetherScheduleFlightTooltip,
       child: BouncyTap(
         onTap: _scheduleFlight,
         child: AnimatedGradientBackground(
@@ -328,7 +334,7 @@ class _AetherScreenState extends ConsumerState<AetherScreen>
   Widget _buildLeaderboardButton(BuildContext context) {
     return AnimatedGoldIconButton(
       icon: Icons.emoji_events,
-      tooltip: 'Leaderboard',
+      tooltip: context.l10n.aetherLeaderboardTooltip,
       onPressed: _showLeaderboard,
     );
   }
@@ -372,7 +378,7 @@ class _AetherScreenState extends ConsumerState<AetherScreen>
           resizeToAvoidBottomInset: false,
           leading: const BackButton(),
           centerTitle: true,
-          title: 'Aether',
+          title: context.l10n.aetherScreenTitle,
           actions: [
             _buildScheduleFlightButton(context),
             const SizedBox(width: AppTheme.spacing4),
@@ -407,7 +413,7 @@ class _AetherScreenState extends ConsumerState<AetherScreen>
                       ),
                       const SizedBox(width: AppTheme.spacing12),
                       Text(
-                        'About Aether',
+                        context.l10n.aetherMenuAbout,
                         style: TextStyle(color: context.textPrimary),
                       ),
                     ],
@@ -424,7 +430,7 @@ class _AetherScreenState extends ConsumerState<AetherScreen>
                       ),
                       const SizedBox(width: AppTheme.spacing12),
                       Text(
-                        'Help',
+                        context.l10n.aetherMenuHelp,
                         style: TextStyle(color: context.textPrimary),
                       ),
                     ],
@@ -441,7 +447,7 @@ class _AetherScreenState extends ConsumerState<AetherScreen>
                       ),
                       const SizedBox(width: AppTheme.spacing12),
                       Text(
-                        'Settings',
+                        context.l10n.aetherMenuSettings,
                         style: TextStyle(color: context.textPrimary),
                       ),
                     ],
@@ -562,7 +568,7 @@ class _FlightsTabContent extends StatelessWidget {
             textScaler: MediaQuery.textScalerOf(context),
             searchController: searchController,
             searchQuery: searchQuery,
-            hintText: 'Search flights, airports, nodes...',
+            hintText: context.l10n.aetherSearchHint,
             onSearchChanged: onSearchChanged,
             rebuildKey: Object.hashAll([
               currentFilter,
@@ -571,20 +577,20 @@ class _FlightsTabContent extends StatelessWidget {
             ]),
             filterChips: [
               StatusFilterChip(
-                label: 'All',
+                label: context.l10n.aetherFilterAll,
                 count: allFlights.length,
                 isSelected: currentFilter == AetherFilter.all,
                 onTap: () => onFilterChanged(AetherFilter.all),
               ),
               StatusFilterChip(
-                label: 'Active',
+                label: context.l10n.aetherFilterActive,
                 count: stats.activeFlights,
                 isSelected: currentFilter == AetherFilter.active,
                 color: AppTheme.successGreen,
                 onTap: () => onFilterChanged(AetherFilter.active),
               ),
               StatusFilterChip(
-                label: 'Upcoming',
+                label: context.l10n.aetherFilterUpcoming,
                 count: upcomingCount,
                 isSelected: currentFilter == AetherFilter.upcoming,
                 color: AccentColors.cyan,
@@ -592,7 +598,7 @@ class _FlightsTabContent extends StatelessWidget {
                 onTap: () => onFilterChanged(AetherFilter.upcoming),
               ),
               StatusFilterChip(
-                label: 'My Flights',
+                label: context.l10n.aetherFilterMyFlights,
                 count: myFlightsCount,
                 isSelected: currentFilter == AetherFilter.myFlights,
                 color: AccentColors.purple,
@@ -672,8 +678,8 @@ class _FlightsTabContent extends StatelessWidget {
           return SliverFillRemaining(
             child: _EmptyState(
               icon: Icons.person_outline,
-              title: 'Sign In Required',
-              subtitle: 'Sign in to view and manage your scheduled flights.',
+              title: context.l10n.aetherSignInRequired,
+              subtitle: context.l10n.aetherSignInRequiredSubtitle,
             ),
           );
         }
@@ -715,16 +721,16 @@ class _FlightsTabContent extends StatelessWidget {
                 Icons.public,
                 Icons.leaderboard_outlined,
               ],
-              taglines: const [
-                'No flights scheduled yet.\nBe the first to share your airborne journey!',
-                'Track Meshtastic nodes at altitude.\nSee how far your signal reaches from the sky.',
-                'Compete on the leaderboard.\nLongest range contacts earn top spots.',
-                'Schedule your next flight.\nShare your departure and arrival airports.',
+              taglines: [
+                context.l10n.aetherEmptyTagline1,
+                context.l10n.aetherEmptyTagline2,
+                context.l10n.aetherEmptyTagline3,
+                context.l10n.aetherEmptyTagline4,
               ],
-              titlePrefix: 'No ',
-              titleKeyword: 'flights',
-              titleSuffix: ' in the air',
-              actionLabel: 'Schedule Flight',
+              titlePrefix: context.l10n.aetherEmptyTitlePrefix,
+              titleKeyword: context.l10n.aetherEmptyTitleKeyword,
+              titleSuffix: context.l10n.aetherEmptyTitleSuffix,
+              actionLabel: context.l10n.aetherEmptyActionSchedule,
               actionIcon: Icons.flight_takeoff,
               onAction: onScheduleFlight,
               actionEnabled: true,
@@ -737,10 +743,10 @@ class _FlightsTabContent extends StatelessWidget {
       return SliverFillRemaining(
         child: _EmptyState(
           icon: currentFilter.icon,
-          title: _getEmptyTitle(),
-          subtitle: _getEmptySubtitle(),
+          title: _getEmptyTitle(context),
+          subtitle: _getEmptySubtitle(context),
           showAction: currentFilter == AetherFilter.myFlights,
-          actionLabel: 'Schedule Flight',
+          actionLabel: context.l10n.aetherEmptyActionSchedule,
           onAction: onScheduleFlight,
         ),
       );
@@ -761,32 +767,32 @@ class _FlightsTabContent extends StatelessWidget {
     );
   }
 
-  String _getEmptyTitle() {
+  String _getEmptyTitle(BuildContext context) {
     switch (currentFilter) {
       case AetherFilter.all:
-        return 'No Flights Found';
+        return context.l10n.aetherEmptyAllTitle;
       case AetherFilter.active:
-        return 'No Active Flights';
+        return context.l10n.aetherEmptyActiveTitle;
       case AetherFilter.upcoming:
-        return 'No Upcoming Flights';
+        return context.l10n.aetherEmptyUpcomingTitle;
       case AetherFilter.myFlights:
-        return 'No Flights Scheduled';
+        return context.l10n.aetherEmptyMyFlightsTitle;
     }
   }
 
-  String _getEmptySubtitle() {
+  String _getEmptySubtitle(BuildContext context) {
     if (searchQuery.isNotEmpty) {
-      return 'No results match "$searchQuery".\nTry a different search term.';
+      return context.l10n.aetherEmptySearchSubtitle(searchQuery);
     }
     switch (currentFilter) {
       case AetherFilter.all:
-        return 'No flights scheduled yet.\nBe the first to share your journey!';
+        return context.l10n.aetherEmptyAllSubtitle;
       case AetherFilter.active:
-        return 'No Meshtastic nodes currently in the air.\nBe the first to schedule one!';
+        return context.l10n.aetherEmptyActiveSubtitle;
       case AetherFilter.upcoming:
-        return 'No flights scheduled yet.\nPlan your next airborne test!';
+        return context.l10n.aetherEmptyUpcomingSubtitle;
       case AetherFilter.myFlights:
-        return "You haven't scheduled any flights yet.\nTap the button above to add one!";
+        return context.l10n.aetherEmptyMyFlightsSubtitle;
     }
   }
 }
@@ -833,7 +839,7 @@ class _LeaderboardModalContent extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Distance Leaderboard',
+                      context.l10n.aetherLeaderboardTitle,
                       style: TextStyle(
                         color: context.textPrimary,
                         fontSize: 18,
@@ -841,7 +847,7 @@ class _LeaderboardModalContent extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Global rankings by reception distance',
+                      context.l10n.aetherLeaderboardSubtitle,
                       style: TextStyle(
                         color: context.textSecondary,
                         fontSize: 13,
@@ -882,16 +888,15 @@ class _LeaderboardModalContent extends StatelessWidget {
       ),
       error: (e, _) => _EmptyState(
         icon: Icons.error_outline,
-        title: 'Error Loading Leaderboard',
-        subtitle: 'Pull to refresh and try again.',
+        title: context.l10n.aetherLeaderboardError,
+        subtitle: context.l10n.aetherLeaderboardErrorSubtitle,
       ),
       data: (leaderboard) {
         if (leaderboard.isEmpty) {
           return _EmptyState(
             icon: Icons.emoji_events_outlined,
-            title: 'Leaderboard Empty',
-            subtitle:
-                'Be the first to report a reception from a sky node and claim the top spot!',
+            title: context.l10n.aetherLeaderboardEmpty,
+            subtitle: context.l10n.aetherLeaderboardEmptySubtitle,
           );
         }
 
@@ -936,7 +941,7 @@ class _StatsCard extends StatelessWidget {
               child: _StatItem(
                 icon: Icons.flight_takeoff,
                 value: stats.activeFlights.toString(),
-                label: 'Active',
+                label: context.l10n.aetherStatsActive,
                 color: context.accentColor,
               ),
             ),
@@ -945,7 +950,7 @@ class _StatsCard extends StatelessWidget {
               child: _StatItem(
                 icon: Icons.schedule,
                 value: stats.totalScheduled.toString(),
-                label: 'Scheduled',
+                label: context.l10n.aetherStatsScheduled,
                 color: AppTheme.warningYellow,
               ),
             ),
@@ -954,7 +959,7 @@ class _StatsCard extends StatelessWidget {
               child: _StatItem(
                 icon: Icons.signal_cellular_alt,
                 value: stats.totalReports.toString(),
-                label: 'Reports',
+                label: context.l10n.aetherStatsReports,
                 color: AppTheme.successGreen,
               ),
             ),
@@ -963,7 +968,7 @@ class _StatsCard extends StatelessWidget {
               child: _StatItem(
                 icon: Icons.straighten,
                 value: _formatDistance(stats.longestDistance),
-                label: 'Record',
+                label: context.l10n.aetherStatsRecord,
                 color: AccentColors.purple,
               ),
             ),
@@ -1216,7 +1221,7 @@ class _StatusBadge extends StatelessWidget {
             const SizedBox(width: AppTheme.spacing6),
           ],
           Text(
-            flight.statusText,
+            flight.statusText(context.l10n),
             style: TextStyle(
               color: color,
               fontSize: 12,

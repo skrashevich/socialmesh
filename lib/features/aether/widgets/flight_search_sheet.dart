@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/logging.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/glass_scaffold.dart';
@@ -151,7 +152,7 @@ class _FlightSearchSheetState extends State<FlightSearchSheet> {
       setState(() {
         _state = _SearchState.error;
         _results = [];
-        _errorMessage = 'Search failed. Please try again.';
+        _errorMessage = context.l10n.aetherSearchError;
       });
     }
   }
@@ -219,7 +220,7 @@ class _FlightSearchSheetState extends State<FlightSearchSheet> {
       onTap: () => FocusScope.of(context).unfocus(),
       behavior: HitTestBehavior.opaque,
       child: GlassScaffold(
-        title: 'Search Flights',
+        title: context.l10n.aetherSearchTitle,
         slivers: [
           // Search bar
           SliverToBoxAdapter(
@@ -240,7 +241,7 @@ class _FlightSearchSheetState extends State<FlightSearchSheet> {
                   maxLength: 11,
                   style: TextStyle(color: context.textPrimary),
                   decoration: InputDecoration(
-                    hintText: 'Flight number (e.g. UA123)',
+                    hintText: context.l10n.aetherSearchFlightNumberHint,
                     hintStyle: TextStyle(color: context.textTertiary),
                     prefixIcon: Icon(
                       Icons.flight_takeoff,
@@ -304,9 +305,8 @@ class _FlightSearchSheetState extends State<FlightSearchSheet> {
           hasScrollBody: false,
           child: _CenteredMessage(
             icon: Icons.flight,
-            title: 'Search for active flights',
-            subtitle:
-                'Type a callsign and press Search\nto find flights currently in the air',
+            title: context.l10n.aetherSearchIdleTitle,
+            subtitle: context.l10n.aetherSearchIdleSubtitle,
           ),
         ),
       ],
@@ -323,9 +323,8 @@ class _FlightSearchSheetState extends State<FlightSearchSheet> {
           hasScrollBody: false,
           child: _CenteredMessage(
             icon: Icons.search_off,
-            title: 'No active flights found',
-            subtitle:
-                'Try a different flight number or check\nif the flight is currently airborne',
+            title: context.l10n.aetherSearchEmptyTitle,
+            subtitle: context.l10n.aetherSearchEmptySubtitle,
           ),
         ),
       ],
@@ -357,7 +356,7 @@ class _FlightSearchSheetState extends State<FlightSearchSheet> {
                   TextButton(
                     onPressed: () =>
                         _executeSearch(_controller.text.trim().toUpperCase()),
-                    child: const Text('Retry'),
+                    child: Text(context.l10n.aetherSearchRetry),
                   ),
                 ],
               ),
@@ -531,7 +530,7 @@ class _FlightTile extends StatelessWidget {
                             const SizedBox(width: AppTheme.spacing4),
                             Flexible(
                               child: Text(
-                                _routeString,
+                                _routeString(context),
                                 style: TextStyle(
                                   color: context.textPrimary,
                                   fontSize: 13,
@@ -588,7 +587,12 @@ class _FlightTile extends StatelessWidget {
 
     // Speed or on-ground
     if (flight.onGround) {
-      chips.add(InfoChip(icon: Icons.flight_land, label: 'On ground'));
+      chips.add(
+        InfoChip(
+          icon: Icons.flight_land,
+          label: context.l10n.aetherSearchOnGround,
+        ),
+      );
     } else if (flight.velocityKnots != null) {
       chips.add(
         InfoChip(
@@ -612,12 +616,12 @@ class _FlightTile extends StatelessWidget {
     return chips;
   }
 
-  String get _routeString {
+  String _routeString(BuildContext context) {
     final dep = route?.estDepartureAirport;
     final arr = route?.estArrivalAirport;
     if (dep != null && arr != null) return '$dep \u2192 $arr';
-    if (dep != null) return 'From $dep \u00b7 En route';
-    if (arr != null) return 'To $arr';
+    if (dep != null) return context.l10n.aetherSearchRouteFrom(dep);
+    if (arr != null) return context.l10n.aetherSearchRouteTo(arr);
     return '';
   }
 }

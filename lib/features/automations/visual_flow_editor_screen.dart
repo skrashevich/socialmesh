@@ -18,6 +18,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/app_bottom_sheet.dart';
@@ -191,7 +192,7 @@ class _VisualFlowEditorScreenState extends ConsumerState<VisualFlowEditorScreen>
   Future<void> _compileAndSave() async {
     final name = _nameController.text.trim();
     if (name.isEmpty) {
-      showWarningSnackBar(context, 'Please enter a name for this automation');
+      showWarningSnackBar(context, context.l10n.automationFlowValidateName);
       return;
     }
 
@@ -233,10 +234,7 @@ class _VisualFlowEditorScreenState extends ConsumerState<VisualFlowEditorScreen>
     if (result.automations.isEmpty) {
       safeSetState(() => _isSaving = false);
       if (mounted) {
-        showWarningSnackBar(
-          context,
-          'No automations could be compiled from this graph',
-        );
+        showWarningSnackBar(context, context.l10n.automationFlowNoCompilation);
       }
       return;
     }
@@ -276,17 +274,15 @@ class _VisualFlowEditorScreenState extends ConsumerState<VisualFlowEditorScreen>
 
       flowNotifier.markClean();
 
-      final count = result.automations.length;
-      final suffix = count > 1 ? ' ($count automations)' : '';
       final message = _isEditing
-          ? 'Automation updated$suffix'
-          : 'Automation created$suffix';
+          ? context.l10n.automationFlowUpdated
+          : context.l10n.automationFlowCreated;
       showSuccessSnackBar(context, message);
       navigator.pop();
     } catch (e) {
       safeSetState(() => _isSaving = false);
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to save automation');
+        showErrorSnackBar(context, context.l10n.automationFlowSaveError);
       }
     }
   }
@@ -328,7 +324,7 @@ class _VisualFlowEditorScreenState extends ConsumerState<VisualFlowEditorScreen>
                   ),
                   const SizedBox(width: AppTheme.spacing8),
                   Text(
-                    'Compilation Issues',
+                    context.l10n.automationFlowCompilationIssues,
                     style: Theme.of(sheetContext).textTheme.titleLarge
                         ?.copyWith(fontWeight: FontWeight.bold),
                   ),
@@ -337,7 +333,7 @@ class _VisualFlowEditorScreenState extends ConsumerState<VisualFlowEditorScreen>
               const SizedBox(height: AppTheme.spacing16),
               if (errors.isNotEmpty) ...[
                 Text(
-                  'Errors',
+                  context.l10n.automationFlowErrors,
                   style: Theme.of(sheetContext).textTheme.titleSmall?.copyWith(
                     color: AppTheme.errorRed,
                     fontWeight: FontWeight.w600,
@@ -370,7 +366,7 @@ class _VisualFlowEditorScreenState extends ConsumerState<VisualFlowEditorScreen>
               if (warnings.isNotEmpty) ...[
                 const SizedBox(height: AppTheme.spacing12),
                 Text(
-                  'Warnings',
+                  context.l10n.automationFlowWarnings,
                   style: Theme.of(sheetContext).textTheme.titleSmall?.copyWith(
                     color: AppTheme.warningYellow,
                     fontWeight: FontWeight.w600,
@@ -418,12 +414,10 @@ class _VisualFlowEditorScreenState extends ConsumerState<VisualFlowEditorScreen>
 
     final shouldDiscard = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Discard Changes?',
-      message:
-          'You have unsaved changes in the flow editor. '
-          'Discard them and go back?',
-      confirmLabel: 'Discard',
-      cancelLabel: 'Keep Editing',
+      title: context.l10n.automationFlowDiscardTitle,
+      message: context.l10n.automationFlowDiscardMessage,
+      confirmLabel: context.l10n.automationFlowDiscard,
+      cancelLabel: context.l10n.automationFlowKeepEditing,
       isDestructive: true,
     );
 
@@ -558,7 +552,9 @@ class _VisualFlowEditorScreenState extends ConsumerState<VisualFlowEditorScreen>
           }
         },
         child: GlassScaffold.body(
-          title: _isEditing ? 'Edit Flow' : 'New Flow',
+          title: _isEditing
+              ? context.l10n.automationFlowEditTitle
+              : context.l10n.automationFlowNewTitle,
           actions: [
             // Validation badge.
             if (_errorCount > 0)
@@ -573,7 +569,7 @@ class _VisualFlowEditorScreenState extends ConsumerState<VisualFlowEditorScreen>
                     backgroundColor: AppTheme.errorRed,
                     child: const Icon(Icons.warning_amber_rounded),
                   ),
-                  tooltip: 'Validation issues',
+                  tooltip: context.l10n.automationFlowValidationTooltip,
                   onPressed: () {
                     final result = ref
                         .read(visualFlowProvider)
@@ -688,7 +684,7 @@ class _VisualFlowEditorScreenState extends ConsumerState<VisualFlowEditorScreen>
                 context,
               ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
               decoration: InputDecoration(
-                hintText: 'Flow name...',
+                hintText: context.l10n.automationFlowNameHint,
                 hintStyle: TextStyle(color: context.textTertiary),
                 border: InputBorder.none,
                 isDense: true,
@@ -708,7 +704,9 @@ class _VisualFlowEditorScreenState extends ConsumerState<VisualFlowEditorScreen>
               borderRadius: BorderRadius.circular(AppTheme.radius8),
             ),
             child: Text(
-              '${ref.read(visualFlowProvider.notifier).nodeCount} nodes',
+              context.l10n.automationFlowNodesCount(
+                ref.read(visualFlowProvider.notifier).nodeCount,
+              ),
               style: TextStyle(
                 color: AppTheme.primaryPurple,
                 fontSize: 11,
@@ -754,7 +752,7 @@ class _VisualFlowEditorScreenState extends ConsumerState<VisualFlowEditorScreen>
           // Add node button.
           _ToolbarButton(
             icon: Icons.add_circle_outline,
-            label: 'Add',
+            label: context.l10n.automationFlowToolbarAdd,
             color: AppTheme.primaryPurple,
             isActive: _showNodePalette,
             onTap: _toggleNodePalette,
@@ -764,7 +762,7 @@ class _VisualFlowEditorScreenState extends ConsumerState<VisualFlowEditorScreen>
           // Undo.
           _ToolbarButton(
             icon: Icons.undo,
-            label: 'Undo',
+            label: context.l10n.automationFlowToolbarUndo,
             color: context.textSecondary,
             onTap: (_historyManager?.canUndo ?? false) ? _undo : null,
           ),
@@ -773,7 +771,7 @@ class _VisualFlowEditorScreenState extends ConsumerState<VisualFlowEditorScreen>
           // Redo.
           _ToolbarButton(
             icon: Icons.redo,
-            label: 'Redo',
+            label: context.l10n.automationFlowToolbarRedo,
             color: context.textSecondary,
             onTap: (_historyManager?.canRedo ?? false) ? _redo : null,
           ),
@@ -784,7 +782,7 @@ class _VisualFlowEditorScreenState extends ConsumerState<VisualFlowEditorScreen>
           if (selectedCount > 0)
             _ToolbarButton(
               icon: Icons.delete_outline,
-              label: 'Delete ($selectedCount)',
+              label: context.l10n.automationFlowToolbarDelete(selectedCount),
               color: AppTheme.errorRed,
               onTap: _deleteSelected,
             ),
@@ -794,7 +792,7 @@ class _VisualFlowEditorScreenState extends ConsumerState<VisualFlowEditorScreen>
           // Zoom to fit.
           _ToolbarButton(
             icon: Icons.fit_screen_outlined,
-            label: 'Fit',
+            label: context.l10n.automationFlowToolbarFit,
             color: context.textSecondary,
             onTap: _zoomToFit,
           ),
@@ -893,7 +891,7 @@ class _VisualFlowEditorScreenState extends ConsumerState<VisualFlowEditorScreen>
                 ),
                 const SizedBox(width: AppTheme.spacing8),
                 Text(
-                  'Add Node',
+                  context.l10n.automationFlowAddNode,
                   style: Theme.of(
                     context,
                   ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
@@ -1038,7 +1036,9 @@ class _VisualFlowEditorScreenState extends ConsumerState<VisualFlowEditorScreen>
             Icon(Icons.save_outlined, size: 16, color: Colors.white),
             const SizedBox(width: AppTheme.spacing6),
             Text(
-              _isEditing ? 'Save' : 'Create',
+              _isEditing
+                  ? context.l10n.automationFlowSave
+                  : context.l10n.automationFlowCreate,
               style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w600,

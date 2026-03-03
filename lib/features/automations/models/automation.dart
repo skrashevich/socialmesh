@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../l10n/app_localizations.dart';
+
 /// Core automation model
 class Automation {
   final String id;
@@ -112,6 +114,7 @@ enum TriggerType {
 }
 
 extension TriggerTypeExtension on TriggerType {
+  /// Non-localized display name for internal use (e.g. default text matching).
   String get displayName {
     switch (this) {
       case TriggerType.nodeOnline:
@@ -144,6 +147,42 @@ extension TriggerTypeExtension on TriggerType {
         return 'Detection sensor triggered';
       case TriggerType.manual:
         return 'Manual trigger';
+    }
+  }
+
+  /// Localized display name for UI.
+  String localizedName(AppLocalizations l10n) {
+    switch (this) {
+      case TriggerType.nodeOnline:
+        return l10n.automationTriggerNodeOnline;
+      case TriggerType.nodeOffline:
+        return l10n.automationTriggerNodeOffline;
+      case TriggerType.batteryLow:
+        return l10n.automationTriggerBatteryLow;
+      case TriggerType.batteryFull:
+        return l10n.automationTriggerBatteryFull;
+      case TriggerType.messageReceived:
+        return l10n.automationTriggerMessageReceived;
+      case TriggerType.messageContains:
+        return l10n.automationTriggerMessageContains;
+      case TriggerType.positionChanged:
+        return l10n.automationTriggerPositionChanged;
+      case TriggerType.geofenceEnter:
+        return l10n.automationTriggerGeofenceEnter;
+      case TriggerType.geofenceExit:
+        return l10n.automationTriggerGeofenceExit;
+      case TriggerType.nodeSilent:
+        return l10n.automationTriggerNodeSilent;
+      case TriggerType.scheduled:
+        return l10n.automationTriggerScheduled;
+      case TriggerType.signalWeak:
+        return l10n.automationTriggerSignalWeak;
+      case TriggerType.channelActivity:
+        return l10n.automationTriggerChannelActivity;
+      case TriggerType.detectionSensor:
+        return l10n.automationTriggerDetectionSensor;
+      case TriggerType.manual:
+        return l10n.automationTriggerManual;
     }
   }
 
@@ -210,6 +249,35 @@ extension TriggerTypeExtension on TriggerType {
     }
   }
 
+  /// Localized category name for UI.
+  String localizedCategory(AppLocalizations l10n) {
+    switch (this) {
+      case TriggerType.nodeOnline:
+      case TriggerType.nodeOffline:
+      case TriggerType.nodeSilent:
+        return l10n.automationCategoryNodeStatus;
+      case TriggerType.batteryLow:
+      case TriggerType.batteryFull:
+        return l10n.automationCategoryBattery;
+      case TriggerType.messageReceived:
+      case TriggerType.messageContains:
+      case TriggerType.channelActivity:
+        return l10n.automationCategoryMessages;
+      case TriggerType.detectionSensor:
+        return l10n.automationCategorySensors;
+      case TriggerType.positionChanged:
+      case TriggerType.geofenceEnter:
+      case TriggerType.geofenceExit:
+        return l10n.automationCategoryLocation;
+      case TriggerType.scheduled:
+        return l10n.automationCategoryTime;
+      case TriggerType.signalWeak:
+        return l10n.automationCategorySignal;
+      case TriggerType.manual:
+        return l10n.automationCategoryManual;
+    }
+  }
+
   /// Default description for automation
   String get defaultDescription {
     switch (this) {
@@ -243,6 +311,42 @@ extension TriggerTypeExtension on TriggerType {
         return 'Triggered when detection sensor activates';
       case TriggerType.manual:
         return 'Triggered manually via Shortcuts or UI';
+    }
+  }
+
+  /// Localized default description for UI.
+  String localizedDescription(AppLocalizations l10n) {
+    switch (this) {
+      case TriggerType.nodeOnline:
+        return l10n.automationTriggerDescNodeOnline;
+      case TriggerType.nodeOffline:
+        return l10n.automationTriggerDescNodeOffline;
+      case TriggerType.batteryLow:
+        return l10n.automationTriggerDescBatteryLow;
+      case TriggerType.batteryFull:
+        return l10n.automationTriggerDescBatteryFull;
+      case TriggerType.messageReceived:
+        return l10n.automationTriggerDescMessageReceived;
+      case TriggerType.messageContains:
+        return l10n.automationTriggerDescMessageContains;
+      case TriggerType.positionChanged:
+        return l10n.automationTriggerDescPositionChanged;
+      case TriggerType.geofenceEnter:
+        return l10n.automationTriggerDescGeofenceEnter;
+      case TriggerType.geofenceExit:
+        return l10n.automationTriggerDescGeofenceExit;
+      case TriggerType.nodeSilent:
+        return l10n.automationTriggerDescNodeSilent;
+      case TriggerType.scheduled:
+        return l10n.automationTriggerDescScheduled;
+      case TriggerType.signalWeak:
+        return l10n.automationTriggerDescSignalWeak;
+      case TriggerType.channelActivity:
+        return l10n.automationTriggerDescChannelActivity;
+      case TriggerType.detectionSensor:
+        return l10n.automationTriggerDescDetectionSensor;
+      case TriggerType.manual:
+        return l10n.automationTriggerDescManual;
     }
   }
 
@@ -369,6 +473,32 @@ class AutomationTrigger {
     return null;
   }
 
+  /// Localized validation — returns localized error message if invalid.
+  String? localizedValidate(AppLocalizations l10n) {
+    switch (type) {
+      case TriggerType.messageContains:
+        final kw = keyword;
+        if (kw == null || kw.trim().isEmpty) {
+          return l10n.automationValidateKeyword;
+        }
+        break;
+      case TriggerType.geofenceEnter:
+      case TriggerType.geofenceExit:
+        if (geofenceLat == null || geofenceLon == null) {
+          return l10n.automationValidateGeofence;
+        }
+        break;
+      case TriggerType.scheduled:
+        if (schedule == null || schedule!.trim().isEmpty) {
+          return l10n.automationValidateSchedule;
+        }
+        break;
+      default:
+        break;
+    }
+    return null;
+  }
+
   Map<String, dynamic> toJson() => {'type': type.name, 'config': config};
 
   factory AutomationTrigger.fromJson(Map<String, dynamic> json) {
@@ -429,6 +559,32 @@ extension ActionTypeExtension on ActionType {
         return 'Run iOS Shortcut';
       case ActionType.glyphPattern:
         return 'Glyph pattern (Nothing Phone)';
+    }
+  }
+
+  /// Localized display name for UI.
+  String localizedName(AppLocalizations l10n) {
+    switch (this) {
+      case ActionType.sendMessage:
+        return l10n.automationActionSendMessage;
+      case ActionType.playSound:
+        return l10n.automationActionPlaySound;
+      case ActionType.vibrate:
+        return l10n.automationActionVibrate;
+      case ActionType.pushNotification:
+        return l10n.automationActionPushNotification;
+      case ActionType.triggerWebhook:
+        return l10n.automationActionTriggerWebhook;
+      case ActionType.logEvent:
+        return l10n.automationActionLogEvent;
+      case ActionType.updateWidget:
+        return l10n.automationActionUpdateWidget;
+      case ActionType.sendToChannel:
+        return l10n.automationActionSendToChannel;
+      case ActionType.triggerShortcut:
+        return l10n.automationActionTriggerShortcut;
+      case ActionType.glyphPattern:
+        return l10n.automationActionGlyphPattern;
     }
   }
 
@@ -545,6 +701,42 @@ class AutomationAction {
     return null;
   }
 
+  /// Localized validation — returns localized error message if invalid.
+  String? localizedValidate(AppLocalizations l10n) {
+    switch (type) {
+      case ActionType.sendMessage:
+        final msg = messageText;
+        if (msg == null || msg.trim().isEmpty) {
+          return l10n.automationValidateMessage;
+        }
+        if (targetNodeNum == null) {
+          return l10n.automationValidateTargetNode;
+        }
+        break;
+      case ActionType.sendToChannel:
+        final msg = messageText;
+        if (msg == null || msg.trim().isEmpty) {
+          return l10n.automationValidateMessage;
+        }
+        break;
+      case ActionType.triggerWebhook:
+        final eventName = webhookEventName;
+        if (eventName == null || eventName.trim().isEmpty) {
+          return l10n.automationValidateWebhookEvent;
+        }
+        break;
+      case ActionType.triggerShortcut:
+        final name = shortcutName;
+        if (name == null || name.trim().isEmpty) {
+          return l10n.automationValidateShortcutName;
+        }
+        break;
+      default:
+        break;
+    }
+    return null;
+  }
+
   Map<String, dynamic> toJson() => {'type': type.name, 'config': config};
 
   factory AutomationAction.fromJson(Map<String, dynamic> json) {
@@ -596,6 +788,28 @@ extension ConditionTypeExtension on ConditionType {
         return 'Within geofence';
       case ConditionType.outsideGeofence:
         return 'Outside geofence';
+    }
+  }
+
+  /// Localized display name for UI.
+  String localizedName(AppLocalizations l10n) {
+    switch (this) {
+      case ConditionType.timeRange:
+        return l10n.automationConditionTimeRange;
+      case ConditionType.dayOfWeek:
+        return l10n.automationConditionDayOfWeek;
+      case ConditionType.batteryAbove:
+        return l10n.automationConditionBatteryAbove;
+      case ConditionType.batteryBelow:
+        return l10n.automationConditionBatteryBelow;
+      case ConditionType.nodeOnline:
+        return l10n.automationConditionNodeOnline;
+      case ConditionType.nodeOffline:
+        return l10n.automationConditionNodeOffline;
+      case ConditionType.withinGeofence:
+        return l10n.automationConditionWithinGeofence;
+      case ConditionType.outsideGeofence:
+        return l10n.automationConditionOutsideGeofence;
     }
   }
 

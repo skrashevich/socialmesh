@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:fl_chart/fl_chart.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/edge_fade.dart';
@@ -173,12 +174,13 @@ class _EnvironmentMetricsLogScreenState
   // ---------------------------------------------------------------------------
 
   Future<void> _selectDateRange() async {
+    final l10n = context.l10n;
     final start = await DatePickerSheet.show(
       context,
       initialDate: _startDate ?? DateTime.now(),
       firstDate: DateTime(2020),
       lastDate: DateTime.now(),
-      title: 'Start Date',
+      title: l10n.telemetryStartDate,
     );
     if (!mounted || start == null) return;
 
@@ -187,7 +189,7 @@ class _EnvironmentMetricsLogScreenState
       initialDate: _endDate ?? start,
       firstDate: start,
       lastDate: DateTime.now(),
-      title: 'End Date',
+      title: l10n.telemetryEndDate,
     );
     if (!mounted || end == null) return;
 
@@ -210,12 +212,12 @@ class _EnvironmentMetricsLogScreenState
       onTap: _dismissKeyboard,
       child: GlassScaffold(
         resizeToAvoidBottomInset: false,
-        title: 'Environment Metrics',
+        title: context.l10n.telemetryEnvironmentTitle,
         actions: [
           if (_hasDateFilter)
             IconButton(
               icon: const Icon(Icons.filter_alt_off),
-              tooltip: 'Clear date filter',
+              tooltip: context.l10n.telemetryClearDateFilterTooltip,
               onPressed: _clearDateFilter,
             ),
           IconButton(
@@ -223,7 +225,7 @@ class _EnvironmentMetricsLogScreenState
               isLabelVisible: _hasDateFilter,
               child: const Icon(Icons.date_range),
             ),
-            tooltip: 'Date range',
+            tooltip: context.l10n.telemetryDateRangeTooltip,
             onPressed: _selectDateRange,
           ),
         ],
@@ -235,7 +237,7 @@ class _EnvironmentMetricsLogScreenState
             SliverFillRemaining(
               child: Center(
                 child: Text(
-                  'Error: $e',
+                  context.l10n.telemetryError(e.toString()),
                   style: TextStyle(color: context.textSecondary),
                 ),
               ),
@@ -269,13 +271,29 @@ class _EnvironmentMetricsLogScreenState
                   searchQuery: _searchQuery,
                   onSearchChanged: (value) =>
                       safeSetState(() => _searchQuery = value),
-                  hintText: 'Search by node',
+                  hintText: context.l10n.telemetrySearchByNode,
                   textScaler: MediaQuery.textScalerOf(context),
                   rebuildKey: Object.hashAll([_activeFilter, ...counts.values]),
                   filterChips: [
                     for (final filter in _MetricFilter.values)
                       StatusFilterChip(
-                        label: filter.label,
+                        label: switch (filter) {
+                          _MetricFilter.all => context.l10n.telemetryFilterAll,
+                          _MetricFilter.temperature =>
+                            context.l10n.telemetryEnvironmentFilterTemp,
+                          _MetricFilter.humidity =>
+                            context.l10n.telemetryEnvironmentFilterHumidity,
+                          _MetricFilter.pressure =>
+                            context.l10n.telemetryEnvironmentFilterPressure,
+                          _MetricFilter.gas =>
+                            context.l10n.telemetryEnvironmentFilterGas,
+                          _MetricFilter.iaq =>
+                            context.l10n.telemetryEnvironmentFilterIaq,
+                          _MetricFilter.light =>
+                            context.l10n.telemetryEnvironmentFilterLight,
+                          _MetricFilter.wind =>
+                            context.l10n.telemetryEnvironmentFilterWind,
+                        },
                         count: counts[filter],
                         isSelected: _activeFilter == filter,
                         icon: filter.icon,
@@ -299,12 +317,15 @@ class _EnvironmentMetricsLogScreenState
                       if (filtered.any((l) => l.temperature != null))
                         _LegendItem(
                           color: AppTheme.errorRed,
-                          label: 'Temperature',
+                          label: context
+                              .l10n
+                              .telemetryEnvironmentLegendTemperature,
                         ),
                       if (filtered.any((l) => l.humidity != null))
                         _LegendItem(
                           color: AccentColors.cyan,
-                          label: 'Humidity',
+                          label:
+                              context.l10n.telemetryEnvironmentLegendHumidity,
                         ),
                     ],
                     readingsCount: filtered.length,
@@ -348,8 +369,8 @@ class _EnvironmentMetricsLogScreenState
                             _hasDateFilter ||
                                     _activeFilter != _MetricFilter.all ||
                                     _searchQuery.isNotEmpty
-                                ? 'No metrics match filters'
-                                : 'No environment metrics yet',
+                                ? context.l10n.telemetryNoMetricsMatchFilters
+                                : context.l10n.telemetryEnvironmentNoMetrics,
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
@@ -361,8 +382,8 @@ class _EnvironmentMetricsLogScreenState
                             _hasDateFilter ||
                                     _activeFilter != _MetricFilter.all ||
                                     _searchQuery.isNotEmpty
-                                ? 'Try adjusting your search or filters'
-                                : 'Metrics will appear when your device reports telemetry',
+                                ? context.l10n.telemetryTryAdjustingFilters
+                                : context.l10n.telemetryMetricsWillAppear,
                             style: TextStyle(
                               fontSize: 14,
                               color: context.textTertiary,
@@ -384,7 +405,9 @@ class _EnvironmentMetricsLogScreenState
                                 });
                               },
                               icon: const Icon(Icons.filter_alt_off, size: 18),
-                              label: const Text('Clear all filters'),
+                              label: Text(
+                                context.l10n.telemetryClearAllFilters,
+                              ),
                             ),
                           ],
                         ],
@@ -849,7 +872,7 @@ class _ChartLegendHeaderDelegate extends SliverPersistentHeaderDelegate {
                   child: Wrap(spacing: 16, runSpacing: 4, children: items),
                 ),
                 Text(
-                  '$readingsCount readings',
+                  context.l10n.telemetryReadingsCount(readingsCount),
                   style: TextStyle(fontSize: 11, color: context.textTertiary),
                 ),
               ],

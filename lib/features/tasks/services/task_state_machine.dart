@@ -7,6 +7,7 @@ import '../../../core/auth/permission_context.dart';
 import '../../../core/auth/permission_service.dart';
 import '../../../core/auth/role.dart';
 import '../../../core/logging.dart';
+import '../../../l10n/app_localizations.dart';
 import '../models/task.dart';
 import '../models/task_transition.dart';
 import 'task_database.dart';
@@ -112,6 +113,7 @@ class TaskStateMachine {
     double? locationLat,
     double? locationLon,
     DateTime? dueAt,
+    AppLocalizations? l10n,
   }) async {
     // --- RBAC check ---
     if (!_permissions.can(Permission.createTask)) {
@@ -120,7 +122,8 @@ class TaskStateMachine {
         'create task rejected (permission denied, role=$roleName)',
       );
       throw InsufficientPermissionException(
-        'createTask denied for role $roleName',
+        l10n?.taskErrorCreateDenied(roleName) ??
+            'createTask denied for role $roleName',
       );
     }
 
@@ -213,6 +216,7 @@ class TaskStateMachine {
     String? completionNote,
     String? failureReason,
     String? note,
+    AppLocalizations? l10n,
   }) async {
     final current = task.state;
 
@@ -224,7 +228,8 @@ class TaskStateMachine {
         '${current.name} -> ${target.name} ($reason)',
       );
       throw InvalidTransitionException(
-        'Cannot transition from ${current.name}: $reason',
+        l10n?.taskErrorTerminalState(current.name) ??
+            'Cannot transition from ${current.name}: $reason',
       );
     }
 
@@ -236,7 +241,9 @@ class TaskStateMachine {
         'transition rejected ${task.id}: '
         '${current.name} -> ${target.name} ($reason)',
       );
-      throw InvalidTransitionException(reason);
+      throw InvalidTransitionException(
+        l10n?.taskErrorInvalidTransition(current.name, target.name) ?? reason,
+      );
     }
 
     // --- Role and assignee validation ---
@@ -245,13 +252,15 @@ class TaskStateMachine {
       target: target,
       actorId: actorId,
       actorRole: actorRole,
+      l10n: l10n,
     );
 
     // --- Completion note validation ---
     if (target == TaskState.completed) {
       if (completionNote == null || completionNote.length < 10) {
         throw InvalidTransitionException(
-          'Completion requires a note with at least 10 characters',
+          l10n?.taskErrorCompletionNoteRequired ??
+              'Completion requires a note with at least 10 characters',
         );
       }
     }
@@ -260,7 +269,8 @@ class TaskStateMachine {
     if (target == TaskState.failed) {
       if (failureReason == null || failureReason.length < 10) {
         throw InvalidTransitionException(
-          'Failure requires a reason with at least 10 characters',
+          l10n?.taskErrorFailureReasonRequired ??
+              'Failure requires a reason with at least 10 characters',
         );
       }
     }
@@ -269,7 +279,8 @@ class TaskStateMachine {
     if (target == TaskState.reassigned) {
       if (newAssigneeId == null) {
         throw InvalidTransitionException(
-          'Reassignment requires a newAssigneeId',
+          l10n?.taskErrorReassignmentRequiresAssignee ??
+              'Reassignment requires a newAssigneeId',
         );
       }
       return _handleReassignment(
@@ -427,6 +438,7 @@ class TaskStateMachine {
     required TaskState target,
     required String actorId,
     required Role actorRole,
+    AppLocalizations? l10n,
   }) {
     switch (target) {
       // Assignment and cancellation require Admin or Supervisor.
@@ -434,8 +446,12 @@ class TaskStateMachine {
       case TaskState.cancelled:
         if (!actorRole.hasAuthority(Role.supervisor)) {
           throw InsufficientPermissionException(
-            '${target.name} requires supervisor or admin role, '
-            'current role: ${actorRole.name}',
+            l10n?.taskErrorRequiresSupervisorOrAdmin(
+                  target.name,
+                  actorRole.name,
+                ) ??
+                '${target.name} requires supervisor or admin role, '
+                    'current role: ${actorRole.name}',
           );
         }
 
@@ -443,7 +459,8 @@ class TaskStateMachine {
       case TaskState.acknowledged:
         if (actorId != task.assigneeId) {
           throw InsufficientPermissionException(
-            'Only the assignee can acknowledge a task',
+            l10n?.taskErrorOnlyAssigneeCanAcknowledge ??
+                'Only the assignee can acknowledge a task',
           );
         }
 
@@ -451,7 +468,8 @@ class TaskStateMachine {
       case TaskState.inProgress:
         if (actorId != task.assigneeId) {
           throw InsufficientPermissionException(
-            'Only the assignee can start work on a task',
+            l10n?.taskErrorOnlyAssigneeCanStartWork ??
+                'Only the assignee can start work on a task',
           );
         }
 
@@ -463,7 +481,8 @@ class TaskStateMachine {
         );
         if (!_permissions.canWith(Permission.completeTask, context)) {
           throw InsufficientPermissionException(
-            'completeTask denied for role ${actorRole.name}',
+            l10n?.taskErrorCompleteTaskDenied(actorRole.name) ??
+                'completeTask denied for role ${actorRole.name}',
           );
         }
 
@@ -471,7 +490,8 @@ class TaskStateMachine {
       case TaskState.failed:
         if (actorId != task.assigneeId) {
           throw InsufficientPermissionException(
-            'Only the assignee can report task failure',
+            l10n?.taskErrorOnlyAssigneeCanReportFailure ??
+                'Only the assignee can report task failure',
           );
         }
 
@@ -479,8 +499,12 @@ class TaskStateMachine {
       case TaskState.reassigned:
         if (!actorRole.hasAuthority(Role.supervisor)) {
           throw InsufficientPermissionException(
-            'Reassignment requires supervisor or admin role, '
-            'current role: ${actorRole.name}',
+            l10n?.taskErrorRequiresSupervisorOrAdmin(
+                  target.name,
+                  actorRole.name,
+                ) ??
+                'Reassignment requires supervisor or admin role, '
+                    'current role: ${actorRole.name}',
           );
         }
 

@@ -2,6 +2,7 @@
 import 'dart:math' as math;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../../l10n/app_localizations.dart';
 
 /// A Meshtastic node scheduled to be on a flight
 class AetherFlight {
@@ -181,11 +182,11 @@ class AetherFlight {
   /// Time-based checks (`isPast`, `isInFlight`, `isUpcoming`) take priority
   /// over the stored `isActive` flag because the flag may lag behind real
   /// time (e.g. the Aether API only expires flights every 5 minutes).
-  String get statusText {
-    if (isPast) return 'Completed';
-    if (isInFlight || isActive) return 'In Flight';
-    if (isUpcoming) return 'Upcoming';
-    return 'Scheduled';
+  String statusText(AppLocalizations l10n) {
+    if (isPast) return l10n.aetherStatusCompleted;
+    if (isInFlight || isActive) return l10n.aetherStatusInFlight;
+    if (isUpcoming) return l10n.aetherStatusUpcoming;
+    return l10n.aetherStatusScheduled;
   }
 }
 

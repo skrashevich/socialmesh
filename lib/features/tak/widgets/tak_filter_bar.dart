@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../providers/tak_filter_provider.dart';
 import '../utils/cot_affiliation.dart';
 import 'package:socialmesh/core/theme.dart';
@@ -80,7 +81,7 @@ class _TakFilterBarState extends ConsumerState<TakFilterBar> {
                           alpha: 0.6,
                         ),
                       ),
-                      label: const Text('Clear'),
+                      label: Text(context.l10n.takFilterBarClear),
                       labelStyle: theme.textTheme.labelSmall,
                       onPressed: () =>
                           ref.read(takFilterProvider.notifier).clearAll(),
@@ -98,7 +99,7 @@ class _TakFilterBarState extends ConsumerState<TakFilterBar> {
                 controller: _searchController,
                 maxLength: 64,
                 decoration: InputDecoration(
-                  hintText: 'Search callsign or UID...',
+                  hintText: context.l10n.takFilterBarSearchHint,
                   hintStyle: theme.textTheme.bodySmall?.copyWith(
                     color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
                   ),
@@ -178,7 +179,7 @@ class _TakFilterBarState extends ConsumerState<TakFilterBar> {
       padding: const EdgeInsets.only(right: 6),
       child: FilterChip(
         selected: isActive,
-        label: Text(affiliation.label),
+        label: Text(affiliation.displayLabel(context.l10n)),
         labelStyle: TextStyle(
           fontSize: 12,
           color: isActive ? Colors.white : color,
@@ -202,9 +203,9 @@ class _TakFilterBarState extends ConsumerState<TakFilterBar> {
   Widget _buildStaleModeChip(BuildContext context, TakStaleMode mode) {
     final theme = Theme.of(context);
     final label = switch (mode) {
-      TakStaleMode.all => 'All',
-      TakStaleMode.activeOnly => 'Active',
-      TakStaleMode.staleOnly => 'Stale',
+      TakStaleMode.all => context.l10n.takFilterBarStaleModeAll,
+      TakStaleMode.activeOnly => context.l10n.takFilterBarStaleModeActive,
+      TakStaleMode.staleOnly => context.l10n.takFilterBarStaleModeStale,
     };
     final icon = switch (mode) {
       TakStaleMode.all => Icons.filter_list,

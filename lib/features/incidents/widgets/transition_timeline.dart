@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../models/incident.dart';
 import '../models/incident_transition.dart';
@@ -25,7 +26,10 @@ class TransitionTimeline extends StatelessWidget {
       return Padding(
         padding: const EdgeInsets.all(AppTheme.spacing24),
         child: Center(
-          child: Text('No transition history', style: context.bodyMutedStyle),
+          child: Text(
+            context.l10n.incidentTimelineEmpty,
+            style: context.bodyMutedStyle,
+          ),
         ),
       );
     }
@@ -139,7 +143,7 @@ class _TimelineEntry extends StatelessWidget {
                               ),
                             ),
                             child: Text(
-                              'superseded',
+                              context.l10n.incidentTimelineSuperseded,
                               style: TextStyle(
                                 fontSize: 10,
                                 color: context.textTertiary,
@@ -155,7 +159,7 @@ class _TimelineEntry extends StatelessWidget {
 
                     // Actor + timestamp
                     Text(
-                      '${transition.actorRole ?? 'unknown'} '
+                      '${transition.actorRole ?? context.l10n.incidentTimelineUnknownRole} '
                       '(${transition.actorId.length > 8 ? '${transition.actorId.substring(0, 8)}…' : transition.actorId})'
                       '  •  '
                       '${_formatTimestamp(transition.timestamp)}',
@@ -187,7 +191,7 @@ class _TimelineEntry extends StatelessWidget {
                           ),
                           const SizedBox(width: AppTheme.spacing4),
                           Text(
-                            'Final state — no further transitions',
+                            context.l10n.incidentTimelineFinalState,
                             style: TextStyle(
                               fontSize: 11,
                               color: context.textTertiary,
@@ -244,7 +248,7 @@ class _StateBadge extends StatelessWidget {
         border: Border.all(color: effectiveColor.withValues(alpha: 0.3)),
       ),
       child: Text(
-        state.name,
+        state.displayLabel(context.l10n),
         style: TextStyle(
           fontSize: 11,
           fontWeight: FontWeight.w600,

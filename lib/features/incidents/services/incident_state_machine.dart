@@ -6,6 +6,7 @@ import '../../../core/auth/permission.dart';
 import '../../../core/auth/permission_context.dart';
 import '../../../core/auth/permission_service.dart';
 import '../../../core/logging.dart';
+import '../../../l10n/app_localizations.dart';
 import '../models/incident.dart';
 import '../models/incident_transition.dart';
 import '../services/incident_database.dart';
@@ -108,6 +109,7 @@ class IncidentStateMachine {
     required String actorId,
     double? locationLat,
     double? locationLon,
+    AppLocalizations? l10n,
   }) async {
     // --- RBAC check ---
     if (!_permissions.can(Permission.createIncident)) {
@@ -116,7 +118,8 @@ class IncidentStateMachine {
         'create incident rejected (permission denied, role=$roleName)',
       );
       throw InsufficientPermissionException(
-        'createIncident denied for role $roleName',
+        l10n?.incidentStateMachineCreateDenied(roleName) ??
+            'createIncident denied for role $roleName',
       );
     }
 
@@ -200,6 +203,7 @@ class IncidentStateMachine {
     required String actorId,
     String? assigneeId,
     String? note,
+    AppLocalizations? l10n,
   }) async {
     final current = incident.state;
 
@@ -211,7 +215,8 @@ class IncidentStateMachine {
         '${current.name} -> ${target.name} ($reason)',
       );
       throw InvalidTransitionException(
-        'Cannot transition from ${current.name}: $reason',
+        l10n?.incidentStateMachineTerminalState(current.name) ??
+            'Cannot transition from ${current.name}: $reason',
       );
     }
 
@@ -223,13 +228,20 @@ class IncidentStateMachine {
         'transition rejected ${incident.id}: '
         '${current.name} -> ${target.name} ($reason)',
       );
-      throw InvalidTransitionException(reason);
+      throw InvalidTransitionException(
+        l10n?.incidentStateMachineInvalidTransition(
+              current.name,
+              target.name,
+            ) ??
+            reason,
+      );
     }
 
     // --- assigneeId required for assigned target ---
     if (target == IncidentState.assigned && assigneeId == null) {
       throw InvalidTransitionException(
-        'assigneeId is required when transitioning to assigned',
+        l10n?.incidentStateMachineAssigneeRequired ??
+            'assigneeId is required when transitioning to assigned',
       );
     }
 
@@ -248,7 +260,8 @@ class IncidentStateMachine {
         '(permission denied: ${permission.name}, role=$roleName)',
       );
       throw InsufficientPermissionException(
-        '${permission.name} denied for role $roleName',
+        l10n?.incidentStateMachinePermissionDenied(permission.name, roleName) ??
+            '${permission.name} denied for role $roleName',
       );
     }
 

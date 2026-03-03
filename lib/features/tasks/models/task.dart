@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+import 'package:socialmesh/l10n/app_localizations.dart';
+
 /// Task lifecycle states.
 ///
 /// 8 states forming the task state machine.
@@ -32,13 +34,40 @@ enum TaskState {
     'in_progress' => TaskState.inProgress,
     _ => TaskState.values.byName(value),
   };
+
+  /// Localised display label for this state.
+  String displayLabel(AppLocalizations l10n) {
+    return switch (this) {
+      TaskState.created => l10n.taskStateCreated,
+      TaskState.assigned => l10n.taskStateAssigned,
+      TaskState.acknowledged => l10n.taskStateAcknowledged,
+      TaskState.inProgress => l10n.taskStateInProgress,
+      TaskState.completed => l10n.taskStateCompleted,
+      TaskState.failed => l10n.taskStateFailed,
+      TaskState.cancelled => l10n.taskStateCancelled,
+      TaskState.reassigned => l10n.taskStateReassigned,
+    };
+  }
 }
 
 /// Task priority levels.
 ///
 /// 3 levels: routine (lowest) to immediate (highest).
 /// Flash is reserved for incidents only.
-enum TaskPriority { routine, priority, immediate }
+enum TaskPriority {
+  routine,
+  priority,
+  immediate;
+
+  /// Localised display label for this priority.
+  String displayLabel(AppLocalizations l10n) {
+    return switch (this) {
+      TaskPriority.routine => l10n.taskPriorityRoutine,
+      TaskPriority.priority => l10n.taskPriorityPriority,
+      TaskPriority.immediate => l10n.taskPriorityImmediate,
+    };
+  }
+}
 
 /// An operational task tracked by the task system.
 ///

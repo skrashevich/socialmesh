@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/app_bottom_sheet.dart';
 import '../models/automation.dart';
@@ -57,21 +58,21 @@ const _variableDisplayNames = {
 };
 
 /// Variable descriptions for tooltips
-const _variableDescriptions = {
-  '{{node.name}}': 'Name of the triggering node',
-  '{{node.num}}': 'Node number in hex (e.g. a1b2)',
-  '{{battery}}': 'Current battery percentage',
-  '{{location}}': 'GPS coordinates (lat, lon)',
-  '{{message}}': 'Message content',
-  '{{time}}': 'Current timestamp (ISO 8601)',
-  '{{threshold}}': 'Configured trigger threshold',
-  '{{keyword}}': 'Matched keyword',
-  '{{zone.radius}}': 'Geofence radius in meters',
-  '{{silent.duration}}': 'Silent duration setting',
-  '{{signal.threshold}}': 'Signal threshold in dB (SNR)',
-  '{{channel.name}}': 'Channel name',
-  '{{sensor.name}}': 'Detection sensor name',
-  '{{sensor.state}}': 'Sensor state (detected / clear)',
+Map<String, String> _variableDescriptions(BuildContext context) => {
+  '{{node.name}}': context.l10n.automationVariableDescNodeName,
+  '{{node.num}}': context.l10n.automationVariableDescNodeNum,
+  '{{battery}}': context.l10n.automationVariableDescBattery,
+  '{{location}}': context.l10n.automationVariableDescLocation,
+  '{{message}}': context.l10n.automationVariableDescMessage,
+  '{{time}}': context.l10n.automationVariableDescTime,
+  '{{threshold}}': context.l10n.automationVariableDescThreshold,
+  '{{keyword}}': context.l10n.automationVariableDescKeyword,
+  '{{zone.radius}}': context.l10n.automationVariableDescZoneRadius,
+  '{{silent.duration}}': context.l10n.automationVariableDescSilentDuration,
+  '{{signal.threshold}}': context.l10n.automationVariableDescSignalThreshold,
+  '{{channel.name}}': context.l10n.automationVariableDescChannelName,
+  '{{sensor.name}}': context.l10n.automationVariableDescSensorName,
+  '{{sensor.state}}': context.l10n.automationVariableDescSensorState,
 };
 
 /// Variable category icons for the picker sheet
@@ -639,7 +640,7 @@ class VariableChipPicker extends StatelessWidget {
                       ),
                       const SizedBox(width: AppTheme.spacing4),
                       Text(
-                        'All variables',
+                        context.l10n.automationVariableAllVariables,
                         style: TextStyle(
                           fontFamily: AppTheme.fontFamily,
                           fontSize: 12,
@@ -664,7 +665,7 @@ class VariableChipPicker extends StatelessWidget {
               const SizedBox(width: AppTheme.spacing4),
               Expanded(
                 child: Text(
-                  'Tap a variable to select it, then backspace to remove',
+                  context.l10n.automationVariableDeleteHint,
                   style: TextStyle(color: SemanticColors.muted, fontSize: 10),
                 ),
               ),
@@ -689,7 +690,7 @@ class VariableChipPicker extends StatelessWidget {
 
     AppBottomSheet.showScrollable(
       context: context,
-      title: 'Insert Variable',
+      title: context.l10n.automationVariablePickerTitle,
       initialChildSize: 0.55,
       minChildSize: 0.35,
       maxChildSize: 0.85,
@@ -776,20 +777,21 @@ class _VariablePickerSheetContentState
     extends State<_VariablePickerSheetContent> {
   String _search = '';
 
-  List<String> _filter(List<String> vars) {
+  List<String> _filter(BuildContext context, List<String> vars) {
     if (_search.isEmpty) return vars;
     final query = _search.toLowerCase();
+    final descriptions = _variableDescriptions(context);
     return vars.where((v) {
       final display = (_variableDisplayNames[v] ?? v).toLowerCase();
-      final desc = (_variableDescriptions[v] ?? '').toLowerCase();
+      final desc = (descriptions[v] ?? '').toLowerCase();
       return display.contains(query) || desc.contains(query);
     }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
-    final filteredUniversal = _filter(widget.universalVars);
-    final filteredTrigger = _filter(widget.triggerVars);
+    final filteredUniversal = _filter(context, widget.universalVars);
+    final filteredTrigger = _filter(context, widget.triggerVars);
     final hasResults =
         filteredUniversal.isNotEmpty || filteredTrigger.isNotEmpty;
 
@@ -803,7 +805,7 @@ class _VariablePickerSheetContentState
             onChanged: (v) => setState(() => _search = v),
             autofocus: false,
             decoration: InputDecoration(
-              hintText: 'Search variables...',
+              hintText: context.l10n.automationVariableSearchHint,
               prefixIcon: const Icon(Icons.search, size: 20),
               isDense: true,
               contentPadding: const EdgeInsets.symmetric(
@@ -834,14 +836,20 @@ class _VariablePickerSheetContentState
                   ),
                   children: [
                     if (filteredUniversal.isNotEmpty) ...[
-                      _buildSectionHeader(context, 'Universal'),
+                      _buildSectionHeader(
+                        context,
+                        context.l10n.automationVariableSectionUniversal,
+                      ),
                       ...filteredUniversal.map(
                         (v) => _buildVariableTile(context, v, false),
                       ),
                     ],
                     if (filteredTrigger.isNotEmpty) ...[
                       const SizedBox(height: AppTheme.spacing12),
-                      _buildSectionHeader(context, 'Trigger context'),
+                      _buildSectionHeader(
+                        context,
+                        context.l10n.automationVariableSectionTrigger,
+                      ),
                       ...filteredTrigger.map(
                         (v) => _buildVariableTile(context, v, true),
                       ),
@@ -860,7 +868,7 @@ class _VariablePickerSheetContentState
                       ),
                       const SizedBox(height: AppTheme.spacing8),
                       Text(
-                        'No matching variables',
+                        context.l10n.automationVariableNoMatch,
                         style: TextStyle(
                           color: SemanticColors.muted,
                           fontSize: 14,
@@ -898,7 +906,7 @@ class _VariablePickerSheetContentState
     bool isTriggerSpecific,
   ) {
     final displayName = _variableDisplayNames[variable] ?? variable;
-    final description = _variableDescriptions[variable] ?? '';
+    final description = _variableDescriptions(context)[variable] ?? '';
     final icon = _variableIcons[variable] ?? Icons.code;
     final accentColor = isTriggerSpecific
         ? AppTheme.warningYellow

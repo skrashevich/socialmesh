@@ -352,14 +352,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminSellersDeletePermanently => 'Delete Seller Permanently';
 
   @override
-  String adminSellersDeleteProductWarning(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count products will be deactivated.',
-      one: '1 product will be deactivated.',
-    );
-    return '$_temp0';
+  String adminSellersDeleteProductWarning(int productCount) {
+    return 'This seller has $productCount products. Deleting the seller will also delete all their products.';
   }
 
   @override
@@ -496,6 +490,723 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminSellersWebsiteLabel => 'Website URL *';
 
   @override
+  String get aetherDetailAltitude => 'Altitude';
+
+  @override
+  String get aetherDetailArrival => 'Arrival';
+
+  @override
+  String get aetherDetailBeFirstReport => 'Be the first to report this flight!';
+
+  @override
+  String get aetherDetailCoverageRadius => 'Coverage Radius';
+
+  @override
+  String get aetherDetailDeparture => 'Departure';
+
+  @override
+  String aetherDetailDistanceAway(int distance) {
+    return '$distance km away';
+  }
+
+  @override
+  String get aetherDetailFlightDetails => 'Flight Details';
+
+  @override
+  String get aetherDetailGroundSpeed => 'Ground Speed';
+
+  @override
+  String get aetherDetailHeading => 'Heading';
+
+  @override
+  String get aetherDetailLivePosition => 'Live Position';
+
+  @override
+  String get aetherDetailNoReports => 'No receptions reported yet';
+
+  @override
+  String get aetherDetailNode => 'Node';
+
+  @override
+  String get aetherDetailNotes => 'Notes';
+
+  @override
+  String get aetherDetailOperator => 'Operator';
+
+  @override
+  String get aetherDetailPositionUnavailable => 'Position data unavailable';
+
+  @override
+  String get aetherDetailReceptions => 'Receptions';
+
+  @override
+  String aetherDetailReceptionsValue(int count) {
+    return '$count reported';
+  }
+
+  @override
+  String get aetherDetailRefreshTooltip => 'Refresh position';
+
+  @override
+  String get aetherDetailReportButton => 'I Received This Flight!';
+
+  @override
+  String get aetherDetailReportsError => 'Error loading reports';
+
+  @override
+  String get aetherDetailReportsTitle => 'Reception Reports';
+
+  @override
+  String get aetherDetailShareCopied => 'Flight link copied to clipboard';
+
+  @override
+  String aetherDetailShareError(String error) {
+    return 'Could not share flight: $error';
+  }
+
+  @override
+  String get aetherDetailShareTooltip => 'Share flight';
+
+  @override
+  String get aetherDetailUnknownNode => 'Unknown node';
+
+  @override
+  String aetherDetailUpdated(String time) {
+    return 'Updated $time';
+  }
+
+  @override
+  String get aetherDuplicateReport => 'You have already reported this flight';
+
+  @override
+  String get aetherEmptyActionSchedule => 'Schedule Flight';
+
+  @override
+  String get aetherEmptyActiveSubtitle =>
+      'No Meshtastic nodes currently in the air.\nBe the first to schedule one!';
+
+  @override
+  String get aetherEmptyActiveTitle => 'No Active Flights';
+
+  @override
+  String get aetherEmptyAllSubtitle =>
+      'No flights scheduled yet.\nBe the first to share your journey!';
+
+  @override
+  String get aetherEmptyAllTitle => 'No Flights Found';
+
+  @override
+  String get aetherEmptyMyFlightsSubtitle =>
+      'You haven\'t scheduled any flights yet.\nTap the button above to add one!';
+
+  @override
+  String get aetherEmptyMyFlightsTitle => 'No Flights Scheduled';
+
+  @override
+  String aetherEmptySearchSubtitle(String query) {
+    return 'No results match \"$query\".\nTry a different search term.';
+  }
+
+  @override
+  String get aetherEmptyTagline1 =>
+      'No flights scheduled yet.\nBe the first to share your airborne journey!';
+
+  @override
+  String get aetherEmptyTagline2 =>
+      'Track Meshtastic nodes at altitude.\nSee how far your signal reaches from the sky.';
+
+  @override
+  String get aetherEmptyTagline3 =>
+      'Compete on the leaderboard.\nLongest range contacts earn top spots.';
+
+  @override
+  String get aetherEmptyTagline4 =>
+      'Schedule your next flight.\nShare your departure and arrival airports.';
+
+  @override
+  String get aetherEmptyTitleKeyword => 'flights';
+
+  @override
+  String get aetherEmptyTitlePrefix => 'No ';
+
+  @override
+  String get aetherEmptyTitleSuffix => ' in the air';
+
+  @override
+  String get aetherEmptyUpcomingSubtitle =>
+      'No flights scheduled yet.\nPlan your next airborne test!';
+
+  @override
+  String get aetherEmptyUpcomingTitle => 'No Upcoming Flights';
+
+  @override
+  String get aetherFilterActive => 'Active';
+
+  @override
+  String get aetherFilterAll => 'All';
+
+  @override
+  String get aetherFilterMyFlights => 'My Flights';
+
+  @override
+  String get aetherFilterUpcoming => 'Upcoming';
+
+  @override
+  String aetherFlightReceptionCount(int count, String s) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 's',
+      one: '',
+    );
+    return '$count reception$_temp0';
+  }
+
+  @override
+  String get aetherFormEnterFlightNumber => 'Enter flight number';
+
+  @override
+  String get aetherFormInvalidFlightFormat =>
+      'Invalid format (e.g., UA123, EXS49MY)';
+
+  @override
+  String get aetherFormRequired => 'Required';
+
+  @override
+  String get aetherFormUnknownAirport => 'Unknown airport';
+
+  @override
+  String get aetherFormUseLetterCode => 'Use 3-4 letter code';
+
+  @override
+  String get aetherInfoGroundStations =>
+      'Ground stations watch for your signal';
+
+  @override
+  String get aetherInfoLoraRange => 'At 35,000ft, LoRa can reach 400+ km!';
+
+  @override
+  String get aetherInfoReceptions => 'Report receptions & set range records!';
+
+  @override
+  String get aetherInfoSchedule => 'Schedule your flight with your node';
+
+  @override
+  String get aetherInfoTagline => 'Track Meshtastic nodes at altitude!';
+
+  @override
+  String get aetherInfoTitle => 'Aether';
+
+  @override
+  String get aetherLeaderboardEmpty => 'Leaderboard Empty';
+
+  @override
+  String get aetherLeaderboardEmptySubtitle =>
+      'Be the first to report a reception from a sky node and claim the top spot!';
+
+  @override
+  String get aetherLeaderboardError => 'Error Loading Leaderboard';
+
+  @override
+  String get aetherLeaderboardErrorSubtitle => 'Pull to refresh and try again.';
+
+  @override
+  String get aetherLeaderboardSubtitle =>
+      'Global rankings by reception distance';
+
+  @override
+  String get aetherLeaderboardTitle => 'Distance Leaderboard';
+
+  @override
+  String get aetherLeaderboardTooltip => 'Leaderboard';
+
+  @override
+  String get aetherMatchInFlight => 'IN FLIGHT';
+
+  @override
+  String get aetherMatchReportCta => 'Tap to report your reception';
+
+  @override
+  String get aetherMenuAbout => 'About Aether';
+
+  @override
+  String get aetherMenuHelp => 'Help';
+
+  @override
+  String get aetherMenuSettings => 'Settings';
+
+  @override
+  String aetherNodeAlreadyHasFlight(
+    String nodeName,
+    String flightNumber,
+    String status,
+  ) {
+    return '$nodeName already has a flight ($flightNumber — $status)';
+  }
+
+  @override
+  String get aetherOpenSkyFlightActive => 'Flight is currently active';
+
+  @override
+  String get aetherOpenSkyFlightNotFound =>
+      'Flight not found in historical departures';
+
+  @override
+  String get aetherOpenSkyFlightNotInAir => 'Flight not currently in the air';
+
+  @override
+  String get aetherOpenSkyFlightPending =>
+      'Flight is scheduled for the future. Will validate when active.';
+
+  @override
+  String get aetherOpenSkyFlightVerified =>
+      'Flight verified in historical data';
+
+  @override
+  String get aetherOverlayDetected => 'DETECTED';
+
+  @override
+  String get aetherOverlayReport => 'Report';
+
+  @override
+  String aetherPickerAirportCount(int count) {
+    return '$count airports';
+  }
+
+  @override
+  String get aetherPickerArrivalTitle => 'Arrival Airport';
+
+  @override
+  String get aetherPickerDepartureTitle => 'Departure Airport';
+
+  @override
+  String get aetherPickerManualEntry => 'You can still type the code manually';
+
+  @override
+  String get aetherPickerNoResults => 'No airports found';
+
+  @override
+  String aetherPickerResultCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count results',
+      one: '1 result',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aetherPickerSearchHint => 'Search by code, city, or name';
+
+  @override
+  String get aetherPickerTitle => 'Select Airport';
+
+  @override
+  String get aetherReportAddNotes => 'Add Notes';
+
+  @override
+  String get aetherReportDuplicate => 'You have already reported this flight';
+
+  @override
+  String get aetherReportEstimatedDistance => 'Estimated distance ';
+
+  @override
+  String get aetherReportFlightEnded => 'This flight has ended';
+
+  @override
+  String get aetherReportLocationDetected => 'Location auto-detected';
+
+  @override
+  String get aetherReportLocationUnavailable => 'Location unavailable';
+
+  @override
+  String get aetherReportNodeNotDetected =>
+      'Flight node not detected in your mesh network';
+
+  @override
+  String get aetherReportNotOnMesh =>
+      'This flight\'s node is not in your mesh network. You can only report a reception when the node is visible to your device.';
+
+  @override
+  String get aetherReportNotesHint => 'Equipment, antenna, location details...';
+
+  @override
+  String get aetherReportNotesLabel => 'Notes';
+
+  @override
+  String get aetherReportRemoveNotes => 'Remove';
+
+  @override
+  String get aetherReportRssiLabel => 'RSSI ';
+
+  @override
+  String get aetherReportSnrLabel => 'SNR ';
+
+  @override
+  String get aetherReportSubmit => 'Submit Report';
+
+  @override
+  String aetherReportSubtitle(String flightNumber) {
+    return 'I received flight $flightNumber on my node!';
+  }
+
+  @override
+  String get aetherReportSuccess => 'Reception reported!';
+
+  @override
+  String get aetherReportTitle => 'Report Reception';
+
+  @override
+  String get aetherScheduleAlreadyValidatedTooltip => 'Already validated';
+
+  @override
+  String get aetherScheduleArrivalBeforeDeparture =>
+      'Arrival must be after departure';
+
+  @override
+  String get aetherScheduleArrivalDateTitle => 'Arrival Date';
+
+  @override
+  String get aetherScheduleArrivalTimeTitle => 'Arrival Time';
+
+  @override
+  String get aetherScheduleBrowseTooltip => 'Browse airports';
+
+  @override
+  String get aetherScheduleButton => 'Schedule Flight';
+
+  @override
+  String get aetherScheduleConnectDevice =>
+      'Connect your Meshtastic device first';
+
+  @override
+  String get aetherScheduleConnectToSchedule => 'Connect to schedule a flight';
+
+  @override
+  String get aetherScheduleDateLabel => 'Date';
+
+  @override
+  String get aetherScheduleDepartureDateTitle => 'Departure Date';
+
+  @override
+  String get aetherScheduleDepartureInPast => 'Departure time is in the past';
+
+  @override
+  String get aetherScheduleDepartureTimeTitle => 'Departure Time';
+
+  @override
+  String get aetherScheduleDepartureTooFar =>
+      'Departure cannot be more than a year from now';
+
+  @override
+  String aetherScheduleDurationTooLong(int hours, int minutes) {
+    return 'Flight duration exceeds 24 hours (${hours}h ${minutes}m)';
+  }
+
+  @override
+  String get aetherScheduleDurationTooShort =>
+      'Flight duration must be at least 5 minutes';
+
+  @override
+  String aetherScheduleError(String error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String get aetherScheduleFlightNumberHint => 'UA123';
+
+  @override
+  String get aetherScheduleFlightNumberLabel => 'Flight Number';
+
+  @override
+  String get aetherScheduleFlightOnGround =>
+      'Flight is currently on the ground';
+
+  @override
+  String aetherScheduleFlightSelectedAlt(int altitude) {
+    return 'Flight selected! $altitude ft';
+  }
+
+  @override
+  String get aetherScheduleFlightTooltip => 'Schedule Flight';
+
+  @override
+  String get aetherScheduleFromHint => 'LAX';
+
+  @override
+  String get aetherScheduleFromLabel => 'From';
+
+  @override
+  String get aetherScheduleInFlight => 'In Flight';
+
+  @override
+  String aetherScheduleIncompleteMessage(String fields) {
+    return 'Could not auto-fill $fields from OpenSky Network. Please enter these details manually below.';
+  }
+
+  @override
+  String get aetherScheduleIncompleteTitle => 'Incomplete Flight Data';
+
+  @override
+  String get aetherScheduleIntroBanner =>
+      'Schedule your flight and share it on aether.socialmesh.app so the community can try to receive your signal!';
+
+  @override
+  String get aetherScheduleLiveFlightData => 'Live Flight Data';
+
+  @override
+  String get aetherScheduleLoadingFlights =>
+      'Loading flights, please try again';
+
+  @override
+  String get aetherScheduleNoDeviceConnected => 'No Device Connected';
+
+  @override
+  String aetherScheduleNodeHasActiveFlight(
+    String nodeName,
+    String flightNumber,
+  ) {
+    return '$nodeName already has an active flight ($flightNumber)';
+  }
+
+  @override
+  String get aetherScheduleNotesHint =>
+      'Window seat, left side. Running at 20dBm.';
+
+  @override
+  String get aetherScheduleNotesLabel => 'Notes';
+
+  @override
+  String get aetherScheduleOnGround => 'On Ground';
+
+  @override
+  String get aetherScheduleOnGroundChip => 'On ground';
+
+  @override
+  String get aetherScheduleResponsibilityTooltip => 'Your Responsibility';
+
+  @override
+  String aetherScheduleRouteExceedsRange(int distance) {
+    return '$distance — exceeds maximum aircraft range';
+  }
+
+  @override
+  String aetherScheduleRouteFound(String route) {
+    return 'Route found: $route';
+  }
+
+  @override
+  String get aetherScheduleRouteSameAirport => 'Same airport';
+
+  @override
+  String aetherScheduleRouteTooClose(
+    String departure,
+    String arrival,
+    int distance,
+  ) {
+    return '$departure and $arrival are $distance km apart — too close for a commercial flight';
+  }
+
+  @override
+  String get aetherScheduleSameAirport =>
+      'Departure and arrival cannot be the same airport';
+
+  @override
+  String get aetherScheduleSearchButton => 'Search';
+
+  @override
+  String get aetherScheduleSearchTooltip => 'Search flights';
+
+  @override
+  String get aetherScheduleSectionArrival => 'Arrival Time (Optional)';
+
+  @override
+  String get aetherScheduleSectionDeparture => 'Departure Time';
+
+  @override
+  String get aetherScheduleSectionFlight => 'Flight Information';
+
+  @override
+  String get aetherScheduleSectionNotes => 'Additional Notes (Optional)';
+
+  @override
+  String get aetherScheduleSelect => 'Select';
+
+  @override
+  String get aetherScheduleSelectDepartureTime =>
+      'Please select departure date and time';
+
+  @override
+  String get aetherScheduleSignInRequired => 'Sign in to schedule a flight';
+
+  @override
+  String get aetherScheduleSuccessInFlight => 'Flight in flight!';
+
+  @override
+  String get aetherScheduleSuccessScheduled => 'Flight scheduled!';
+
+  @override
+  String get aetherScheduleSwapTooltip => 'Swap airports';
+
+  @override
+  String get aetherScheduleTimeLabel => 'Time';
+
+  @override
+  String get aetherScheduleTip1 => 'Get a window seat if possible';
+
+  @override
+  String get aetherScheduleTip2 => 'Keep node near the window during flight';
+
+  @override
+  String get aetherScheduleTip3 => 'Higher TX power = longer range';
+
+  @override
+  String get aetherScheduleTip4 => 'Let others know your frequency/region';
+
+  @override
+  String get aetherScheduleTipsTitle => 'Tips for best reception';
+
+  @override
+  String get aetherScheduleTitle => 'Schedule Flight';
+
+  @override
+  String get aetherScheduleToHint => 'JFK';
+
+  @override
+  String get aetherScheduleToLabel => 'To';
+
+  @override
+  String aetherScheduleTooClose(
+    String departure,
+    String arrival,
+    int distance,
+  ) {
+    return '$departure and $arrival are only $distance km apart — no commercial routes exist';
+  }
+
+  @override
+  String aetherScheduleTooFar(String departure, String arrival, int distance) {
+    return '$departure to $arrival is $distance — exceeds maximum aircraft range';
+  }
+
+  @override
+  String get aetherScheduleValidateFlightTooltip => 'Validate flight';
+
+  @override
+  String get aetherScreenTitle => 'Aether';
+
+  @override
+  String get aetherSearchEmptySubtitle =>
+      'Try a different flight number or check\nif the flight is currently airborne';
+
+  @override
+  String get aetherSearchEmptyTitle => 'No active flights found';
+
+  @override
+  String get aetherSearchError => 'Search failed. Please try again.';
+
+  @override
+  String get aetherSearchFlightNumberHint => 'Flight number (e.g. UA123)';
+
+  @override
+  String get aetherSearchHint => 'Search flights, airports, nodes...';
+
+  @override
+  String get aetherSearchIdleSubtitle =>
+      'Type a callsign and press Search\nto find flights currently in the air';
+
+  @override
+  String get aetherSearchIdleTitle => 'Search for active flights';
+
+  @override
+  String get aetherSearchOnGround => 'On ground';
+
+  @override
+  String get aetherSearchRetry => 'Retry';
+
+  @override
+  String aetherSearchRouteFrom(String airport) {
+    return 'From $airport · En route';
+  }
+
+  @override
+  String aetherSearchRouteTo(String airport) {
+    return 'To $airport';
+  }
+
+  @override
+  String get aetherSearchTitle => 'Search Flights';
+
+  @override
+  String get aetherSearchTooltip => 'Search';
+
+  @override
+  String aetherShareText(
+    Object flightNumber,
+    Object departure,
+    Object arrival,
+    Object url,
+  ) {
+    return '$flightNumber $departure → $arrival\nTrack this Meshtastic flight on Aether:\n$url';
+  }
+
+  @override
+  String get aetherSignInRequired => 'Sign In Required';
+
+  @override
+  String get aetherSignInRequiredSubtitle =>
+      'Sign in to view and manage your scheduled flights.';
+
+  @override
+  String get aetherStatsActive => 'Active';
+
+  @override
+  String get aetherStatsRecord => 'Record';
+
+  @override
+  String get aetherStatsReports => 'Reports';
+
+  @override
+  String get aetherStatsScheduled => 'Scheduled';
+
+  @override
+  String get aetherStatusCompleted => 'Completed';
+
+  @override
+  String get aetherStatusInFlight => 'In Flight';
+
+  @override
+  String get aetherStatusScheduled => 'Scheduled';
+
+  @override
+  String get aetherStatusUpcoming => 'Upcoming';
+
+  @override
+  String get aetherValidationActive => 'Flight is currently active!';
+
+  @override
+  String aetherValidationActiveAlt(int altitude) {
+    return 'Flight is currently active! $altitude ft';
+  }
+
+  @override
+  String get aetherValidationEnterFlightFirst => 'Enter a flight number first';
+
+  @override
+  String get aetherValidationFailed => 'Failed to validate flight';
+
+  @override
+  String get aetherValidationInvalidFormat => 'Invalid flight number format';
+
+  @override
+  String get aetherValidationRateLimited =>
+      'Rate limited. Try again in a few minutes.';
+
+  @override
+  String get aetherValidationVerified => 'Flight verified in OpenSky records';
+
+  @override
   String get ambientLightingBlue => 'Blue';
 
   @override
@@ -551,6 +1262,1118 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get appTitle => 'Socialmesh';
+
+  @override
+  String get automationActionBodyLabel => 'Body';
+
+  @override
+  String get automationActionChangeType => 'Change Action Type';
+
+  @override
+  String automationActionChannelIndex(int index) {
+    return 'Channel $index';
+  }
+
+  @override
+  String get automationActionChannelMessage => 'Channel message';
+
+  @override
+  String automationActionChannelsCount(int count) {
+    return '$count channels';
+  }
+
+  @override
+  String get automationActionCustomSound => 'Custom sound (optional)';
+
+  @override
+  String get automationActionDefaultChannel => 'Default channel';
+
+  @override
+  String get automationActionDirectMessage => 'Direct message';
+
+  @override
+  String get automationActionDone => 'Done';
+
+  @override
+  String get automationActionGlyphPattern => 'Glyph pattern (Nothing Phone)';
+
+  @override
+  String get automationActionGotIt => 'Got it';
+
+  @override
+  String get automationActionIftttEventName => 'IFTTT Event Name';
+
+  @override
+  String get automationActionIftttHelp =>
+      'Uses your IFTTT Webhook key from Settings';
+
+  @override
+  String get automationActionIftttHint => 'e.g., meshtastic_alert';
+
+  @override
+  String get automationActionLogEvent => 'Log to history';
+
+  @override
+  String get automationActionMessageLabel => 'Message';
+
+  @override
+  String get automationActionNoChannels => 'No channels available';
+
+  @override
+  String get automationActionNoSoundsFound => 'No sounds found';
+
+  @override
+  String get automationActionPlaySound => 'Play alert sound';
+
+  @override
+  String get automationActionPlaysAfter => 'Plays after notification';
+
+  @override
+  String get automationActionPreview => 'Preview';
+
+  @override
+  String get automationActionPrimary => 'Primary';
+
+  @override
+  String get automationActionPushNotification => 'Push notification';
+
+  @override
+  String get automationActionRtttlRingtone => 'RTTTL ringtone';
+
+  @override
+  String get automationActionSearchResults => 'SEARCH RESULTS';
+
+  @override
+  String get automationActionSearchSounds => 'Search sounds...';
+
+  @override
+  String get automationActionSelectChannel => 'Select channel';
+
+  @override
+  String get automationActionSelectChannelTitle => 'Select Channel';
+
+  @override
+  String get automationActionSelectNodePlaceholder => 'Select node';
+
+  @override
+  String get automationActionSelectSound => 'Select a sound';
+
+  @override
+  String get automationActionSendMessage => 'Send message to node';
+
+  @override
+  String get automationActionSendToChannel => 'Send to channel';
+
+  @override
+  String get automationActionShortcutDataInfo =>
+      'Event data (node name, battery, location, etc.) will be passed as JSON input to your shortcut.';
+
+  @override
+  String get automationActionShortcutHelpTitle => 'Using Shortcuts';
+
+  @override
+  String get automationActionShortcutIosNote =>
+      'Note: Shortcuts app will briefly open when triggered. This is an iOS limitation.';
+
+  @override
+  String get automationActionShortcutKeyBattery => 'Battery % (if available)';
+
+  @override
+  String get automationActionShortcutKeyLatitude =>
+      'GPS latitude (if available)';
+
+  @override
+  String get automationActionShortcutKeyLongitude =>
+      'GPS longitude (if available)';
+
+  @override
+  String get automationActionShortcutKeyMessage =>
+      'Message text (if applicable)';
+
+  @override
+  String get automationActionShortcutKeyNodeName => 'Name of the node';
+
+  @override
+  String get automationActionShortcutKeyNodeNum => 'Node number';
+
+  @override
+  String get automationActionShortcutKeyTimestamp => 'Event timestamp';
+
+  @override
+  String get automationActionShortcutKeyTrigger =>
+      'Trigger type (nodeOffline, etc.)';
+
+  @override
+  String get automationActionShortcutKeysTitle =>
+      'Available keys in the dictionary:';
+
+  @override
+  String get automationActionShortcutNameHint => 'Enter exact shortcut name';
+
+  @override
+  String get automationActionShortcutNameLabel => 'Shortcut Name';
+
+  @override
+  String get automationActionShortcutSetup => 'Setting up your shortcut:';
+
+  @override
+  String get automationActionShortcutStep1 =>
+      'Add \"Get Dictionary from\" action\nSelect \"Shortcut Input\"';
+
+  @override
+  String get automationActionShortcutStep2 =>
+      'Add \"Get Value for\" action\nSet key (e.g., node_name) and select \"Dictionary\"';
+
+  @override
+  String get automationActionShortcutStep3 =>
+      'Use the extracted value in your actions\n(e.g., Send Message, Show Notification)';
+
+  @override
+  String get automationActionSoundSection => 'SOUND';
+
+  @override
+  String automationActionSoundsCount(int count) {
+    return '$count sounds';
+  }
+
+  @override
+  String get automationActionSuggestions => 'SUGGESTIONS';
+
+  @override
+  String get automationActionSystemDefault => 'System default';
+
+  @override
+  String get automationActionTapToChoose => 'Tap to choose';
+
+  @override
+  String get automationActionTitleLabel => 'Title';
+
+  @override
+  String get automationActionTo => 'TO';
+
+  @override
+  String get automationActionTriggerShortcut => 'Run iOS Shortcut';
+
+  @override
+  String get automationActionTriggerWebhook => 'Trigger webhook (IFTTT)';
+
+  @override
+  String get automationActionUpdateWidget => 'Update home widget';
+
+  @override
+  String get automationActionVariableHint => 'Tap variables below to insert';
+
+  @override
+  String get automationActionVibrate => 'Vibrate device';
+
+  @override
+  String automationCardActionCount(int count, String s) {
+    return '$count action$s';
+  }
+
+  @override
+  String automationCardDaysAgo(int count) {
+    return '${count}d ago';
+  }
+
+  @override
+  String automationCardHoursAgo(int count) {
+    return '${count}h ago';
+  }
+
+  @override
+  String get automationCardJustNow => 'Just now';
+
+  @override
+  String automationCardMinutesAgo(int count) {
+    return '${count}m ago';
+  }
+
+  @override
+  String automationCardRunsCount(int count) {
+    return '$count runs';
+  }
+
+  @override
+  String automationCardWeeksAgo(int count) {
+    return '${count}w ago';
+  }
+
+  @override
+  String get automationCategoryBattery => 'Battery';
+
+  @override
+  String get automationCategoryLocation => 'Location';
+
+  @override
+  String get automationCategoryManual => 'Manual';
+
+  @override
+  String get automationCategoryMessages => 'Messages';
+
+  @override
+  String get automationCategoryNodeStatus => 'Node Status';
+
+  @override
+  String get automationCategorySensors => 'Sensors';
+
+  @override
+  String get automationCategorySignal => 'Signal';
+
+  @override
+  String get automationCategoryTime => 'Time';
+
+  @override
+  String get automationConditionBatteryAbove => 'Battery above threshold';
+
+  @override
+  String get automationConditionBatteryBelow => 'Battery below threshold';
+
+  @override
+  String get automationConditionDayOfWeek => 'On specific days';
+
+  @override
+  String get automationConditionNodeOffline => 'Node is inactive';
+
+  @override
+  String get automationConditionNodeOnline => 'Node is active';
+
+  @override
+  String get automationConditionOutsideGeofence => 'Outside geofence';
+
+  @override
+  String get automationConditionTimeRange => 'During time range';
+
+  @override
+  String get automationConditionWithinGeofence => 'Within geofence';
+
+  @override
+  String get automationDebugBatteryNotMet => 'Battery threshold not met';
+
+  @override
+  String get automationDebugChannelMismatch => 'Channel filter mismatch';
+
+  @override
+  String get automationDebugConditionFailed => 'Condition failed';
+
+  @override
+  String get automationDebugDisabled => 'Disabled';
+
+  @override
+  String get automationDebugKeywordNotMatched => 'Keyword not matched';
+
+  @override
+  String get automationDebugNodeFilterMismatch => 'Node filter mismatch';
+
+  @override
+  String get automationDebugSignalNotMet => 'Signal threshold not met';
+
+  @override
+  String get automationDebugThrottled => 'Throttled';
+
+  @override
+  String get automationDebugTriggerMismatch => 'Trigger type mismatch';
+
+  @override
+  String get automationDefaultMsgManual => 'Automation triggered manually';
+
+  @override
+  String get automationEditorAddAction => 'Add Action';
+
+  @override
+  String get automationEditorCreateAutomation => 'Create Automation';
+
+  @override
+  String get automationEditorCreated => 'Automation created';
+
+  @override
+  String get automationEditorDeleteError => 'Failed to delete automation';
+
+  @override
+  String get automationEditorDeleteTooltip => 'Delete';
+
+  @override
+  String automationEditorDescBatteryLow(String threshold) {
+    return 'Triggered when battery drops below $threshold%';
+  }
+
+  @override
+  String automationEditorDescSilent(int minutes) {
+    return 'Alert if no activity from node for $minutes minutes';
+  }
+
+  @override
+  String get automationEditorDescriptionHint => 'What does this automation do?';
+
+  @override
+  String get automationEditorDescriptionLabel => 'Description (optional)';
+
+  @override
+  String automationEditorInvalidVars(String vars) {
+    return 'Invalid variables: $vars';
+  }
+
+  @override
+  String get automationEditorNameHint => 'e.g., Low Battery Alert';
+
+  @override
+  String get automationEditorNameLabel => 'Name';
+
+  @override
+  String get automationEditorNoActions => 'No actions configured';
+
+  @override
+  String get automationEditorNoActionsHint => 'Tap \"+ Add Action\" to add one';
+
+  @override
+  String get automationEditorSaveChanges => 'Save Changes';
+
+  @override
+  String get automationEditorSaveError => 'Failed to save automation';
+
+  @override
+  String get automationEditorSaving => 'Saving...';
+
+  @override
+  String automationEditorStepNumber(int number) {
+    return 'Step $number';
+  }
+
+  @override
+  String get automationEditorThen => 'THEN';
+
+  @override
+  String get automationEditorThen2 => 'then...';
+
+  @override
+  String get automationEditorThenDo => 'then do...';
+
+  @override
+  String get automationEditorTitleEdit => 'Edit Automation';
+
+  @override
+  String get automationEditorTitleNew => 'New Automation';
+
+  @override
+  String get automationEditorUpdated => 'Automation updated';
+
+  @override
+  String get automationEditorValidateActions =>
+      'Please add at least one action';
+
+  @override
+  String get automationEditorValidateName =>
+      'Please enter a name for this automation';
+
+  @override
+  String get automationEditorWhen => 'WHEN';
+
+  @override
+  String get automationEngineAutomationTriggered => 'Automation triggered.';
+
+  @override
+  String get automationFlowAddNode => 'Add Node';
+
+  @override
+  String get automationFlowCompilationIssues => 'Compilation Issues';
+
+  @override
+  String get automationFlowCreate => 'Create';
+
+  @override
+  String get automationFlowCreated => 'Automation created';
+
+  @override
+  String get automationFlowDiscard => 'Discard';
+
+  @override
+  String get automationFlowDiscardMessage =>
+      'You have unsaved changes in the flow editor. Discard them and go back?';
+
+  @override
+  String get automationFlowDiscardTitle => 'Discard Changes?';
+
+  @override
+  String get automationFlowEditTitle => 'Edit Flow';
+
+  @override
+  String get automationFlowErrors => 'Errors';
+
+  @override
+  String get automationFlowKeepEditing => 'Keep Editing';
+
+  @override
+  String get automationFlowNameHint => 'Flow name...';
+
+  @override
+  String get automationFlowNewTitle => 'New Flow';
+
+  @override
+  String get automationFlowNoCompilation =>
+      'No automations could be compiled from this graph';
+
+  @override
+  String automationFlowNodesCount(int count) {
+    return '$count nodes';
+  }
+
+  @override
+  String get automationFlowSave => 'Save';
+
+  @override
+  String get automationFlowSaveError => 'Failed to save automation';
+
+  @override
+  String get automationFlowToolbarAdd => 'Add';
+
+  @override
+  String automationFlowToolbarDelete(int count) {
+    return 'Delete ($count)';
+  }
+
+  @override
+  String get automationFlowToolbarFit => 'Fit';
+
+  @override
+  String get automationFlowToolbarRedo => 'Redo';
+
+  @override
+  String get automationFlowToolbarUndo => 'Undo';
+
+  @override
+  String get automationFlowUpdated => 'Automation updated';
+
+  @override
+  String get automationFlowValidateName =>
+      'Please enter a name for this automation';
+
+  @override
+  String get automationFlowValidationTooltip => 'Validation issues';
+
+  @override
+  String get automationFlowWarnings => 'Warnings';
+
+  @override
+  String automationImportActionsCount(int count) {
+    return 'Actions ($count)';
+  }
+
+  @override
+  String get automationImportButton => 'Import';
+
+  @override
+  String automationImportConditionsCount(int count) {
+    return 'Conditions ($count)';
+  }
+
+  @override
+  String automationImportConditionsText(int count) {
+    return '$count conditions';
+  }
+
+  @override
+  String get automationImportEditFirst => 'Edit First';
+
+  @override
+  String automationImportError(String error) {
+    return 'Failed to import: $error';
+  }
+
+  @override
+  String automationImportFailed(String error) {
+    return 'Failed to import automation: $error';
+  }
+
+  @override
+  String get automationImportFailedTitle => 'Import Failed';
+
+  @override
+  String get automationImportGoBack => 'Go Back';
+
+  @override
+  String get automationImportNoData => 'No automation data provided';
+
+  @override
+  String get automationImportNotFound =>
+      'Automation not found or has been deleted';
+
+  @override
+  String get automationImportSuccess => 'Automation imported successfully';
+
+  @override
+  String get automationImportTitle => 'Import Automation';
+
+  @override
+  String get automationImportTrigger => 'Trigger';
+
+  @override
+  String get automationImportView => 'View';
+
+  @override
+  String get automationImportWarning =>
+      'This automation will be imported as disabled. Review and enable it when ready.';
+
+  @override
+  String get automationNotificationFallbackBody =>
+      'An automation was triggered.';
+
+  @override
+  String get automationNotificationFallbackTitle => 'Alert';
+
+  @override
+  String get automationScreenAcceptableUse => 'Acceptable Use';
+
+  @override
+  String get automationScreenAddAutomation => 'Add Automation';
+
+  @override
+  String get automationScreenClear => 'Clear';
+
+  @override
+  String get automationScreenCreateFromScratch => 'Create from Scratch';
+
+  @override
+  String get automationScreenCreateFromScratchSubtitle =>
+      'Build a custom automation with full control over triggers and actions';
+
+  @override
+  String get automationScreenCreatedFromTemplate =>
+      'Automation created from template';
+
+  @override
+  String automationScreenDaysAgo(int count) {
+    return '${count}d ago';
+  }
+
+  @override
+  String get automationScreenDelete => 'Delete';
+
+  @override
+  String automationScreenDeleteMessage(String name) {
+    return 'Are you sure you want to delete \"$name\"?';
+  }
+
+  @override
+  String get automationScreenDeleteTitle => 'Delete Automation';
+
+  @override
+  String get automationScreenEmptyDescription =>
+      'Create automations to trigger actions automatically when events occur on your mesh network.';
+
+  @override
+  String get automationScreenEmptyTitle => 'Automate Your Mesh';
+
+  @override
+  String get automationScreenExecutionLog => 'Execution Log';
+
+  @override
+  String get automationScreenHelp => 'Help';
+
+  @override
+  String automationScreenHoursAgo(int count) {
+    return '${count}h ago';
+  }
+
+  @override
+  String get automationScreenJustNow => 'Just now';
+
+  @override
+  String get automationScreenLoadError => 'Failed to load automations';
+
+  @override
+  String automationScreenMinutesAgo(int count) {
+    return '${count}m ago';
+  }
+
+  @override
+  String get automationScreenNewTooltip => 'New Automation';
+
+  @override
+  String get automationScreenNoExecutions => 'No executions yet';
+
+  @override
+  String get automationScreenQuickStartSubtitle =>
+      'One-tap setup for common use cases';
+
+  @override
+  String get automationScreenQuickStartTemplates => 'Quick Start Templates';
+
+  @override
+  String get automationScreenRetry => 'Retry';
+
+  @override
+  String get automationScreenScanQrCode => 'Scan QR Code';
+
+  @override
+  String get automationScreenStartWithTrigger => 'Start with a Trigger';
+
+  @override
+  String get automationScreenStartWithTriggerSubtitle =>
+      'Choose what event starts your automation';
+
+  @override
+  String get automationScreenStatActive => 'Active';
+
+  @override
+  String get automationScreenStatExecutions => 'Executions';
+
+  @override
+  String get automationScreenStatTotal => 'Total';
+
+  @override
+  String get automationScreenTitle => 'Automations';
+
+  @override
+  String automationScreenRunning(String name) {
+    return 'Running \"$name\"...';
+  }
+
+  @override
+  String automationScreenRunSuccess(String name) {
+    return 'Ran \"$name\" successfully';
+  }
+
+  @override
+  String automationScreenRunFailed(String error) {
+    return 'Failed to run: $error';
+  }
+
+  @override
+  String automationScreenDeleting(String name) {
+    return 'Deleting \"$name\"...';
+  }
+
+  @override
+  String automationScreenDeleted(String name) {
+    return 'Deleted \"$name\"';
+  }
+
+  @override
+  String get automationShareMessage =>
+      'Check out this automation on Socialmesh!';
+
+  @override
+  String get automationShareScanInfo =>
+      'Scan this QR code in Socialmesh to import this automation';
+
+  @override
+  String get automationShareSignIn => 'Sign in to share automations';
+
+  @override
+  String get automationShareSignInAction => 'Sign In';
+
+  @override
+  String automationShareSubject(String name) {
+    return 'Socialmesh Automation: $name';
+  }
+
+  @override
+  String get automationShareTitle => 'Share Automation';
+
+  @override
+  String get automationTemplateDeadManDesc =>
+      'Alert if no activity from node for 30 minutes';
+
+  @override
+  String get automationTemplateDeadManName => 'Dead Man\'s Switch';
+
+  @override
+  String get automationTemplateDeadManSwitchDesc =>
+      'Alert if node silent too long';
+
+  @override
+  String get automationTemplateDefaultName => 'New Automation';
+
+  @override
+  String get automationTemplateGeofenceExitDesc =>
+      'Alert when a node leaves a designated area';
+
+  @override
+  String get automationTemplateGeofenceExitFullDesc =>
+      'Alert when leaving a designated area';
+
+  @override
+  String get automationTemplateGeofenceExitName => 'Geofence Exit Alert';
+
+  @override
+  String get automationTemplateLowBatteryDesc =>
+      'Notify when a node battery drops below 20%';
+
+  @override
+  String get automationTemplateLowBatteryName => 'Low Battery Alert';
+
+  @override
+  String get automationTemplateLowBatteryShortDesc =>
+      'Notify when battery drops below 20%';
+
+  @override
+  String get automationTemplateNodeOfflineDesc =>
+      'Notify when a node goes offline';
+
+  @override
+  String get automationTemplateNodeOfflineName => 'Node Offline Alert';
+
+  @override
+  String get automationTemplateNotifDeadManTitle => 'Node Silent';
+
+  @override
+  String get automationTemplateNotifGeofenceTitle => 'Left Area';
+
+  @override
+  String get automationTemplateNotifNodeOfflineTitle => 'Node Offline';
+
+  @override
+  String get automationTemplateNotifSosTitle => 'Emergency Alert';
+
+  @override
+  String get automationTemplateSosDesc =>
+      'Auto-reply when receiving SOS message';
+
+  @override
+  String get automationTemplateSosName => 'SOS Auto-Response';
+
+  @override
+  String get automationTemplateSosResponseDesc => 'Alert on emergency messages';
+
+  @override
+  String get automationTriggerAnyChannel => 'Any channel';
+
+  @override
+  String get automationTriggerAnyNode => 'Any node';
+
+  @override
+  String get automationTriggerBatteryFull => 'Battery fully charged';
+
+  @override
+  String get automationTriggerBatteryLow => 'Battery drops below threshold';
+
+  @override
+  String get automationTriggerBatteryThreshold => 'Battery threshold';
+
+  @override
+  String get automationTriggerChannelActivity => 'Activity on channel';
+
+  @override
+  String get automationTriggerChannelHelp =>
+      'Leave empty to trigger for any channel activity';
+
+  @override
+  String automationTriggerChannelIndex(int index) {
+    return 'Channel $index';
+  }
+
+  @override
+  String get automationTriggerChannelLabel => 'Channel (optional)';
+
+  @override
+  String get automationTriggerDaily => 'Daily';
+
+  @override
+  String get automationTriggerDayFri => 'Fri';
+
+  @override
+  String get automationTriggerDayMon => 'Mon';
+
+  @override
+  String get automationTriggerDaySat => 'Sat';
+
+  @override
+  String get automationTriggerDaySun => 'Sun';
+
+  @override
+  String get automationTriggerDayThu => 'Thu';
+
+  @override
+  String get automationTriggerDayTue => 'Tue';
+
+  @override
+  String get automationTriggerDayWed => 'Wed';
+
+  @override
+  String get automationTriggerDays => 'Days';
+
+  @override
+  String get automationTriggerDescBatteryFull =>
+      'Triggered when battery is fully charged';
+
+  @override
+  String get automationTriggerDescBatteryLow =>
+      'Triggered when battery drops below threshold';
+
+  @override
+  String get automationTriggerDescChannelActivity =>
+      'Triggered when activity on channel';
+
+  @override
+  String get automationTriggerDescDetectionSensor =>
+      'Triggered when detection sensor activates';
+
+  @override
+  String get automationTriggerDescGeofenceEnter =>
+      'Triggered when node enters geofence area';
+
+  @override
+  String get automationTriggerDescGeofenceExit =>
+      'Triggered when node exits geofence area';
+
+  @override
+  String get automationTriggerDescManual =>
+      'Triggered manually via Shortcuts or UI';
+
+  @override
+  String get automationTriggerDescMessageContains =>
+      'Triggered when message contains keyword';
+
+  @override
+  String get automationTriggerDescMessageReceived =>
+      'Triggered when any message is received';
+
+  @override
+  String get automationTriggerDescNodeOffline =>
+      'Triggered when a node is not heard for a while';
+
+  @override
+  String get automationTriggerDescNodeOnline =>
+      'Triggered when a node is heard recently';
+
+  @override
+  String get automationTriggerDescNodeSilent =>
+      'Triggered when node is silent for duration';
+
+  @override
+  String get automationTriggerDescPositionChanged =>
+      'Triggered when node position changes';
+
+  @override
+  String get automationTriggerDescScheduled => 'Triggered at scheduled time';
+
+  @override
+  String get automationTriggerDescSignalWeak =>
+      'Triggered when signal strength drops';
+
+  @override
+  String get automationTriggerDetectionSensor => 'Detection sensor triggered';
+
+  @override
+  String automationTriggerEveryHours(int hours, String s) {
+    return 'Every $hours hour$s';
+  }
+
+  @override
+  String automationTriggerEveryHoursMinutes(int hours, String s, int minutes) {
+    return 'Every $hours hour$s $minutes minutes';
+  }
+
+  @override
+  String automationTriggerEveryMinutes(int count) {
+    return 'Every $count minutes';
+  }
+
+  @override
+  String get automationTriggerGeofenceCenter => 'Geofence Center';
+
+  @override
+  String get automationTriggerGeofenceEnter => 'Enters geofence area';
+
+  @override
+  String get automationTriggerGeofenceExit => 'Exits geofence area';
+
+  @override
+  String get automationTriggerInterval => 'Interval';
+
+  @override
+  String get automationTriggerKeywordHint => 'e.g., SOS, help, emergency';
+
+  @override
+  String get automationTriggerKeywordLabel => 'Keyword to match';
+
+  @override
+  String get automationTriggerLatitude => 'Latitude';
+
+  @override
+  String get automationTriggerLongitude => 'Longitude';
+
+  @override
+  String get automationTriggerManual => 'Manual trigger';
+
+  @override
+  String get automationTriggerManualDescription =>
+      'This automation can be triggered manually from:\n• The Automations screen (tap the play button)\n• Siri Shortcuts\n• Widgets';
+
+  @override
+  String get automationTriggerManualTitle => 'Manual Trigger';
+
+  @override
+  String get automationTriggerMessageContains => 'Message contains keyword';
+
+  @override
+  String get automationTriggerMessageReceived => 'Message received';
+
+  @override
+  String get automationTriggerNodeFilterHelp =>
+      'Leave empty to trigger for any node';
+
+  @override
+  String get automationTriggerNodeFilterLabel => 'Filter by node (optional)';
+
+  @override
+  String get automationTriggerNodeOffline => 'Node becomes inactive';
+
+  @override
+  String get automationTriggerNodeOnline => 'Node becomes active';
+
+  @override
+  String get automationTriggerNodeSilent => 'Node silent for duration';
+
+  @override
+  String get automationTriggerPickOnMap => 'Pick on Map';
+
+  @override
+  String get automationTriggerPositionChanged => 'Position updated';
+
+  @override
+  String get automationTriggerRadius => 'Radius';
+
+  @override
+  String get automationTriggerRepeatEvery => 'Repeat every';
+
+  @override
+  String get automationTriggerScheduleType => 'Schedule Type';
+
+  @override
+  String get automationTriggerScheduled => 'Scheduled time';
+
+  @override
+  String get automationTriggerSelectNode => 'Select Node';
+
+  @override
+  String get automationTriggerSelectTrigger => 'Select Trigger';
+
+  @override
+  String get automationTriggerSensorAny => 'Any';
+
+  @override
+  String get automationTriggerSensorClear => 'Clear';
+
+  @override
+  String get automationTriggerSensorDetected => 'Detected';
+
+  @override
+  String get automationTriggerSensorNameHelp =>
+      'Leave empty to trigger for any sensor';
+
+  @override
+  String get automationTriggerSensorNameHint => 'e.g., Motion, Door, Window';
+
+  @override
+  String get automationTriggerSensorNameLabel =>
+      'Sensor name filter (optional)';
+
+  @override
+  String get automationTriggerSensorState => 'Trigger when sensor is';
+
+  @override
+  String get automationTriggerSignalThreshold => 'Signal threshold (SNR)';
+
+  @override
+  String get automationTriggerSignalWeak => 'Signal strength drops';
+
+  @override
+  String get automationTriggerSilentDuration => 'Silent duration';
+
+  @override
+  String get automationTriggerTime => 'Time';
+
+  @override
+  String get automationTriggerWeekly => 'Weekly';
+
+  @override
+  String get automationValidateGeofence => 'Please select a geofence location';
+
+  @override
+  String get automationValidateKeyword => 'Please enter a keyword to match';
+
+  @override
+  String get automationValidateMessage => 'Please enter a message to send';
+
+  @override
+  String get automationValidateSchedule => 'Please set a schedule time';
+
+  @override
+  String get automationValidateShortcutName => 'Please enter a Shortcut name';
+
+  @override
+  String get automationValidateTargetNode => 'Please select a target node';
+
+  @override
+  String get automationValidateWebhookEvent =>
+      'Please enter a webhook event name';
+
+  @override
+  String get automationVariableAllVariables => 'All variables';
+
+  @override
+  String get automationVariableDeleteHint =>
+      'Tap a variable to select it, then backspace to remove';
+
+  @override
+  String get automationVariableDescBattery => 'Current battery percentage';
+
+  @override
+  String get automationVariableDescChannelName => 'Channel name';
+
+  @override
+  String get automationVariableDescKeyword => 'Matched keyword';
+
+  @override
+  String get automationVariableDescLocation => 'GPS coordinates (lat, lon)';
+
+  @override
+  String get automationVariableDescMessage => 'Message content';
+
+  @override
+  String get automationVariableDescNodeName => 'Name of the triggering node';
+
+  @override
+  String get automationVariableDescNodeNum => 'Node number in hex (e.g. a1b2)';
+
+  @override
+  String get automationVariableDescSensorName => 'Detection sensor name';
+
+  @override
+  String get automationVariableDescSensorState =>
+      'Sensor state (detected / clear)';
+
+  @override
+  String get automationVariableDescSignalThreshold =>
+      'Signal threshold in dB (SNR)';
+
+  @override
+  String get automationVariableDescSilentDuration => 'Silent duration setting';
+
+  @override
+  String get automationVariableDescThreshold => 'Configured trigger threshold';
+
+  @override
+  String get automationVariableDescTime => 'Current timestamp (ISO 8601)';
+
+  @override
+  String get automationVariableDescZoneRadius => 'Geofence radius in meters';
+
+  @override
+  String get automationVariableNoMatch => 'No matching variables';
+
+  @override
+  String get automationVariablePickerTitle => 'Insert Variable';
+
+  @override
+  String get automationVariableSearchHint => 'Search variables...';
+
+  @override
+  String get automationVariableSectionTrigger => 'Trigger context';
+
+  @override
+  String get automationVariableSectionUniversal => 'Universal';
 
   @override
   String get categoryProductsApplyFilters => 'Apply Filters';
@@ -1964,13 +3787,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String discoveryNodesFound(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count nodes found',
-      one: '1 node found',
-    );
-    return '$_temp0';
+    return '$count nodes found';
   }
 
   @override
@@ -2688,6 +4505,303 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get helpCenterTryDifferentCategory =>
       'Try selecting a different category from the filter chips above.';
+
+  @override
+  String get incidentActionAssign => 'Assign';
+
+  @override
+  String get incidentActionCancel => 'Cancel';
+
+  @override
+  String get incidentActionClose => 'Close';
+
+  @override
+  String incidentActionDeniedTooltip(String roleHint) {
+    return 'Requires $roleHint';
+  }
+
+  @override
+  String get incidentActionEscalate => 'Escalate';
+
+  @override
+  String get incidentActionFailedSnackbar => 'Action failed';
+
+  @override
+  String get incidentActionResolve => 'Resolve';
+
+  @override
+  String get incidentActionSubmit => 'Submit';
+
+  @override
+  String incidentActionSuccessSnackbar(String action) {
+    return 'Incident ${action}d';
+  }
+
+  @override
+  String get incidentAssignCancelButton => 'Cancel';
+
+  @override
+  String get incidentAssignConfirmButton => 'Assign';
+
+  @override
+  String get incidentAssignSheetTitle => 'Assign Incident';
+
+  @override
+  String incidentAssignedLabel(String assigneeId) {
+    return 'Assigned: $assigneeId';
+  }
+
+  @override
+  String get incidentAssigneeHint => 'Enter user ID';
+
+  @override
+  String get incidentAssigneeLabel => 'Assignee User ID';
+
+  @override
+  String get incidentClassificationComms => 'Comms';
+
+  @override
+  String get incidentClassificationEnvironmental => 'Environmental';
+
+  @override
+  String get incidentClassificationLogistics => 'Logistics';
+
+  @override
+  String get incidentClassificationMedical => 'Medical';
+
+  @override
+  String get incidentClassificationOperational => 'Operational';
+
+  @override
+  String get incidentClassificationSafety => 'Safety';
+
+  @override
+  String get incidentClassificationSecurity => 'Security';
+
+  @override
+  String get incidentCreateButtonLabel => 'Create Incident';
+
+  @override
+  String get incidentCreateCaptureLocation => 'Capture Location';
+
+  @override
+  String get incidentCreateClassificationSection => 'Classification';
+
+  @override
+  String get incidentCreateDescriptionHint =>
+      'Detailed description of the incident';
+
+  @override
+  String get incidentCreateDescriptionSection => 'Description (optional)';
+
+  @override
+  String incidentCreateError(String error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String get incidentCreateFailed => 'Failed to create';
+
+  @override
+  String get incidentCreateGettingLocation => 'Getting location...';
+
+  @override
+  String get incidentCreateLocationError => 'Could not get location';
+
+  @override
+  String incidentCreateLocationException(String error) {
+    return 'Location error: $error';
+  }
+
+  @override
+  String get incidentCreateLocationSection => 'Location (optional)';
+
+  @override
+  String get incidentCreatePrioritySection => 'Priority';
+
+  @override
+  String get incidentCreateRemoveLocation => 'Remove';
+
+  @override
+  String get incidentCreateScreenTitle => 'Create Incident';
+
+  @override
+  String get incidentCreateSubmitButton => 'Create Incident';
+
+  @override
+  String get incidentCreateSubmitting => 'Creating...';
+
+  @override
+  String get incidentCreateTitleHint => 'Brief incident title';
+
+  @override
+  String get incidentCreateTitleRequired => 'Title is required';
+
+  @override
+  String get incidentCreateTitleSection => 'Title';
+
+  @override
+  String get incidentCreateTooltip => 'Create incident';
+
+  @override
+  String get incidentCreatedSuccess => 'Incident created';
+
+  @override
+  String incidentDetailError(String error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String get incidentDetailTitle => 'Incident Detail';
+
+  @override
+  String get incidentDetailTitleLoading => 'Incident';
+
+  @override
+  String get incidentEmptyStateDescription =>
+      'Incidents track operational events from creation through resolution. Create one to get started.';
+
+  @override
+  String get incidentEmptyStateTitle => 'No incidents';
+
+  @override
+  String get incidentFilterAssignedToMe => 'Assigned to me';
+
+  @override
+  String get incidentFilterStateAssigned => 'Assigned';
+
+  @override
+  String get incidentFilterStateCancelled => 'Cancelled';
+
+  @override
+  String get incidentFilterStateClosed => 'Closed';
+
+  @override
+  String get incidentFilterStateDraft => 'Draft';
+
+  @override
+  String get incidentFilterStateEscalated => 'Escalated';
+
+  @override
+  String get incidentFilterStateOpen => 'Open';
+
+  @override
+  String get incidentFilterStateResolved => 'Resolved';
+
+  @override
+  String incidentListLoadError(String error) {
+    return 'Failed to load incidents:\n$error';
+  }
+
+  @override
+  String get incidentListTitle => 'Incidents';
+
+  @override
+  String get incidentNotFound => 'Incident not found';
+
+  @override
+  String get incidentNoteContinueButton => 'Continue';
+
+  @override
+  String get incidentNoteHint => 'Optional note for this transition';
+
+  @override
+  String get incidentNoteLabel => 'Note';
+
+  @override
+  String incidentNoteSheetTitle(String action) {
+    return '$action Note (optional)';
+  }
+
+  @override
+  String get incidentNoteSkipButton => 'Skip';
+
+  @override
+  String get incidentPriorityFlash => 'Flash';
+
+  @override
+  String get incidentPriorityImmediate => 'Immediate';
+
+  @override
+  String get incidentPriorityPriority => 'Priority';
+
+  @override
+  String get incidentPriorityRoutine => 'Routine';
+
+  @override
+  String get incidentProviderNotAuthenticated => 'Not authenticated';
+
+  @override
+  String get incidentRoleHintAssignedOperator => 'Assigned Operator';
+
+  @override
+  String get incidentRoleHintOperatorOrAbove => 'Operator or above';
+
+  @override
+  String get incidentRoleHintSupervisorOrAdmin => 'Supervisor or Admin';
+
+  @override
+  String get incidentStateMachineAssigneeRequired =>
+      'assigneeId is required when transitioning to assigned';
+
+  @override
+  String get incidentStateMachineCannotTransitionToDraft =>
+      'Cannot transition to draft';
+
+  @override
+  String incidentStateMachineCreateDenied(String roleName) {
+    return 'createIncident denied for role $roleName';
+  }
+
+  @override
+  String incidentStateMachineInvalidTransition(
+    String fromState,
+    String toState,
+  ) {
+    return '$fromState -> $toState is not a valid transition';
+  }
+
+  @override
+  String incidentStateMachinePermissionDenied(
+    String permissionName,
+    String roleName,
+  ) {
+    return '$permissionName denied for role $roleName';
+  }
+
+  @override
+  String incidentStateMachineTerminalState(String stateName) {
+    return 'Cannot transition from $stateName: terminal state: $stateName';
+  }
+
+  @override
+  String incidentTerminalStateMessage(String state) {
+    return 'This incident is $state — no further actions available.';
+  }
+
+  @override
+  String get incidentTimelineEmpty => 'No transition history';
+
+  @override
+  String get incidentTimelineFinalState =>
+      'Final state — no further transitions';
+
+  @override
+  String get incidentTimelineSuperseded => 'superseded';
+
+  @override
+  String get incidentTimelineUnknownRole => 'unknown';
+
+  @override
+  String get incidentTransitionHistoryHeader => 'Transition History';
+
+  @override
+  String get incidentTransitionNoteCreated => 'Incident created';
+
+  @override
+  String incidentTransitionsLoadError(String error) {
+    return 'Failed to load transitions: $error';
+  }
 
   @override
   String get lilygoModelPriceUnavailable => 'Price unavailable';
@@ -5016,13 +7130,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String nodedexEncounterCountLabel(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count encounters',
-      one: '1 encounter',
-    );
-    return '$_temp0';
+    return '$count encounters';
   }
 
   @override
@@ -6041,13 +8149,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String nodedexRegionEncounterCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count encounters',
-      one: '1 encounter',
-    );
-    return '$_temp0';
+    return '$count encounters';
   }
 
   @override
@@ -6616,13 +8718,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String nodesScreenHopCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count hops',
-      one: '1 hop',
-    );
-    return '$_temp0';
+    return '$count hops';
   }
 
   @override
@@ -8204,13 +10300,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String scannerDevicesFoundCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count devices found so far',
-      one: '$count device found so far',
-    );
-    return '$_temp0';
+    return '$count devices found';
   }
 
   @override
@@ -8332,13 +10422,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String searchProductsResultCount(int count, String query) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count results for \"$query\"',
-      one: '1 result for \"$query\"',
-    );
-    return '$_temp0';
+    return '$count results for \"$query\"';
   }
 
   @override
@@ -9792,13 +11876,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String signalActiveCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count signals',
-      one: '1 signal',
-    );
-    return '$_temp0 active';
+    return '$count active';
   }
 
   @override
@@ -9875,13 +11953,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String signalCommentCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count comments',
-      one: '1 comment',
-    );
-    return '$_temp0';
+    return '$count comments';
   }
 
   @override
@@ -10071,13 +12143,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String signalHopsBadge(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count hops',
-      one: '1 hop',
-    );
-    return '$_temp0';
+    return '$count hops';
   }
 
   @override
@@ -10224,13 +12290,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String signalPeopleActiveCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count people',
-      one: '1 person',
-    );
-    return '$_temp0 active';
+    return '$count people active';
   }
 
   @override
@@ -10388,13 +12448,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String signalSignalsNearbyCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count signals',
-      one: '1 signal',
-    );
-    return '$_temp0 nearby';
+    return '$count signals nearby';
   }
 
   @override
@@ -12088,7 +14142,861 @@ class AppLocalizationsEn extends AppLocalizations {
   String get socialYourStory => 'Your story';
 
   @override
+  String get takAffiliationAssumedFriend => 'Assumed Friend';
+
+  @override
+  String get takAffiliationFriendly => 'Friendly';
+
+  @override
+  String get takAffiliationHostile => 'Hostile';
+
+  @override
+  String get takAffiliationNeutral => 'Neutral';
+
+  @override
+  String get takAffiliationPending => 'Pending';
+
+  @override
+  String get takAffiliationSuspect => 'Suspect';
+
+  @override
+  String get takAffiliationUnknown => 'Unknown';
+
+  @override
+  String get takCompassE => 'E';
+
+  @override
+  String get takCompassN => 'N';
+
+  @override
+  String get takCompassNE => 'NE';
+
+  @override
+  String get takCompassNW => 'NW';
+
+  @override
+  String get takCompassS => 'S';
+
+  @override
+  String get takCompassSE => 'SE';
+
+  @override
+  String get takCompassSW => 'SW';
+
+  @override
+  String get takCompassW => 'W';
+
+  @override
+  String get takCotTypeAtom => 'Atom';
+
+  @override
+  String get takCotTypeBits => 'Bits';
+
+  @override
+  String get takCotTypeFriendly => 'Friendly';
+
+  @override
+  String get takCotTypeHostile => 'Hostile';
+
+  @override
+  String get takCotTypeNeutral => 'Neutral';
+
+  @override
+  String get takCotTypeTasking => 'Tasking';
+
+  @override
+  String get takCotTypeUnknown => 'Unknown';
+
+  @override
+  String get takDashboardConnected => 'Connected';
+
+  @override
+  String get takDashboardConnection => 'Connection';
+
+  @override
+  String get takDashboardDisconnected => 'Disconnected';
+
+  @override
+  String get takDashboardForceDisposition => 'Force Disposition';
+
+  @override
+  String get takDashboardFriendly => 'Friendly';
+
+  @override
+  String get takDashboardHostile => 'Hostile';
+
+  @override
+  String get takDashboardLastEvent => 'Last event';
+
+  @override
+  String get takDashboardLastEventNone => 'None';
+
+  @override
+  String takDashboardNearestHostile(String callsign) {
+    return 'Nearest hostile: $callsign';
+  }
+
+  @override
+  String takDashboardNearestUnknown(String callsign) {
+    return 'Nearest unknown: $callsign';
+  }
+
+  @override
+  String get takDashboardNeutral => 'Neutral';
+
+  @override
+  String get takDashboardNoHostileContacts => 'No hostile contacts';
+
+  @override
+  String get takDashboardNoUnknownContacts => 'No unknown contacts';
+
+  @override
+  String get takDashboardPositionPublishing => 'Position publishing';
+
+  @override
+  String takDashboardPublishingActive(String intervalSeconds) {
+    return 'Active (${intervalSeconds}s)';
+  }
+
+  @override
+  String get takDashboardPublishingDisabled => 'Disabled';
+
+  @override
+  String takDashboardRelativeTimeDays(int count) {
+    return '${count}d ago';
+  }
+
+  @override
+  String takDashboardRelativeTimeHours(int count) {
+    return '${count}h ago';
+  }
+
+  @override
+  String takDashboardRelativeTimeMinutes(int count) {
+    return '${count}m ago';
+  }
+
+  @override
+  String takDashboardRelativeTimeSeconds(int count) {
+    return '${count}s ago';
+  }
+
+  @override
+  String get takDashboardStaleEntities => 'Stale entities';
+
+  @override
+  String get takDashboardStatusHeader => 'Status';
+
+  @override
+  String get takDashboardThreatProximity => 'Threat Proximity';
+
+  @override
+  String get takDashboardTitle => 'SA Dashboard';
+
+  @override
+  String get takDashboardTotalEntities => 'Total entities';
+
+  @override
+  String get takDashboardTracked => 'Tracked';
+
+  @override
+  String get takDashboardUnknown => 'Unknown';
+
+  @override
+  String takDistanceKilometers(double km) {
+    return '$km km';
+  }
+
+  @override
+  String takDistanceMeters(double meters) {
+    return '$meters m';
+  }
+
+  @override
+  String takEventAltitudeFormat(double meters, String feet) {
+    return '$meters m ($feet ft)';
+  }
+
+  @override
+  String takEventCourseFormat(String degrees, String compassDirection) {
+    return '$degrees° ($compassDirection)';
+  }
+
+  @override
+  String get takEventDetailHelpAffiliation => 'Affiliation';
+
+  @override
+  String get takEventDetailHelpCotType => 'CoT Type String';
+
+  @override
+  String get takEventDetailHelpIdentity => 'Identity';
+
+  @override
+  String get takEventDetailHelpMotion => 'Motion Data';
+
+  @override
+  String get takEventDetailHelpPosition => 'Position';
+
+  @override
+  String get takEventDetailHelpRawPayload => 'Raw Payload';
+
+  @override
+  String get takEventDetailHelpTimestamps => 'Timestamps';
+
+  @override
+  String get takEventDetailHelpTracking => 'Tracking';
+
+  @override
+  String get takEventDetailJsonCopied => 'Event JSON copied';
+
+  @override
+  String get takEventDetailLabelAltitude => 'Altitude';
+
+  @override
+  String get takEventDetailLabelCallsign => 'Callsign';
+
+  @override
+  String get takEventDetailLabelCourse => 'Course';
+
+  @override
+  String get takEventDetailLabelDescription => 'Description';
+
+  @override
+  String get takEventDetailLabelEventTime => 'Event Time';
+
+  @override
+  String get takEventDetailLabelLatitude => 'Latitude';
+
+  @override
+  String get takEventDetailLabelLongitude => 'Longitude';
+
+  @override
+  String get takEventDetailLabelReceived => 'Received';
+
+  @override
+  String get takEventDetailLabelSpeed => 'Speed';
+
+  @override
+  String get takEventDetailLabelStaleTime => 'Stale Time';
+
+  @override
+  String get takEventDetailLabelStatus => 'Status';
+
+  @override
+  String get takEventDetailLabelType => 'Type';
+
+  @override
+  String get takEventDetailLabelUid => 'UID';
+
+  @override
+  String get takEventDetailNavigateTo => 'Navigate to';
+
+  @override
+  String get takEventDetailNoMovement => 'No movement recorded';
+
+  @override
+  String takEventDetailPositionCount(int count) {
+    return '($count positions)';
+  }
+
+  @override
+  String get takEventDetailSectionIdentity => 'Identity';
+
+  @override
+  String get takEventDetailSectionMotion => 'Motion';
+
+  @override
+  String get takEventDetailSectionPosition => 'Position';
+
+  @override
+  String get takEventDetailSectionPositionHistory => 'POSITION HISTORY';
+
+  @override
+  String get takEventDetailSectionRawPayload => 'Raw Payload';
+
+  @override
+  String get takEventDetailSectionTimestamps => 'Timestamps';
+
+  @override
+  String takEventDetailShowAllPositions(int count) {
+    return 'Show all $count positions';
+  }
+
+  @override
+  String get takEventDetailShowLess => 'Show less';
+
+  @override
+  String get takEventDetailStatusActive => 'ACTIVE';
+
+  @override
+  String get takEventDetailStatusStale => 'STALE';
+
+  @override
+  String get takEventDetailTooltipCopyJson => 'Copy JSON';
+
+  @override
+  String get takEventDetailTooltipShowOnMap => 'Show on Map';
+
+  @override
+  String get takEventDetailTooltipTrack => 'Track';
+
+  @override
+  String get takEventDetailTooltipUntrack => 'Untrack';
+
+  @override
+  String takEventSpeedFormat(String kmh, String knots) {
+    return '$kmh km/h ($knots kn)';
+  }
+
+  @override
+  String get takEventSpeedStationary => 'Stationary';
+
+  @override
+  String get takEventTileActive => 'Active';
+
+  @override
+  String takEventTileRelativeTimeHours(int count) {
+    return '${count}h ago';
+  }
+
+  @override
+  String takEventTileRelativeTimeMinutes(int count) {
+    return '${count}m ago';
+  }
+
+  @override
+  String takEventTileRelativeTimeSeconds(int count) {
+    return '${count}s ago';
+  }
+
+  @override
+  String get takEventTileStale => 'Stale';
+
+  @override
+  String get takFilterBarClear => 'Clear';
+
+  @override
+  String get takFilterBarSearchHint => 'Search callsign or UID...';
+
+  @override
+  String get takFilterBarStaleModeActive => 'Active';
+
+  @override
+  String get takFilterBarStaleModeAll => 'All';
+
+  @override
+  String get takFilterBarStaleModeStale => 'Stale';
+
+  @override
+  String takNavigateEta(String eta) {
+    return 'ETA: $eta';
+  }
+
+  @override
+  String get takNavigateLastUpdate => 'Last update';
+
+  @override
+  String get takNavigateNoPosition =>
+      'Position unavailable\nConnect to a node with GPS';
+
+  @override
+  String get takNavigatePosition => 'Position';
+
+  @override
+  String takNavigateRelativeTimeDays(int count) {
+    return '${count}d ago';
+  }
+
+  @override
+  String takNavigateRelativeTimeHours(int count) {
+    return '${count}h ago';
+  }
+
+  @override
+  String takNavigateRelativeTimeMinutes(int count) {
+    return '${count}m ago';
+  }
+
+  @override
+  String takNavigateRelativeTimeSeconds(int count) {
+    return '${count}s ago';
+  }
+
+  @override
+  String takNavigateTitle(String callsign) {
+    return 'Navigate to $callsign';
+  }
+
+  @override
+  String takNavigationEtaHoursMinutes(int hours, int minutes) {
+    return '${hours}h ${minutes}m';
+  }
+
+  @override
+  String get takNavigationEtaLessThanOneMin => '< 1 min';
+
+  @override
+  String takNavigationEtaMinutes(int count) {
+    return '$count min';
+  }
+
+  @override
+  String takNavigationTargetMoving(int speed) {
+    return 'Target moving at $speed km/h';
+  }
+
+  @override
+  String takNavigationTargetMovingWithDirection(String direction, int speed) {
+    return 'Target moving $direction at $speed km/h';
+  }
+
+  @override
+  String get takNavigationTargetStationary => 'Target stationary';
+
+  @override
+  String takProximityAlertMovingBody(
+    String affiliation,
+    int distance,
+    String heading,
+    int speed,
+  ) {
+    return '$affiliation entity at $distance -- heading $heading at $speed km/h';
+  }
+
+  @override
+  String takProximityAlertStationaryBody(String affiliation, int distance) {
+    return '$affiliation entity at $distance -- stationary';
+  }
+
+  @override
+  String get takScreenButtonConnect => 'Connect';
+
+  @override
+  String get takScreenButtonSignIn => 'Sign In to Connect';
+
+  @override
+  String get takScreenEmptyDisconnected =>
+      'Connect to the TAK Gateway to start streaming CoT entities.';
+
+  @override
+  String get takScreenEmptyListening =>
+      'Listening for CoT events from the TAK Gateway...';
+
+  @override
+  String get takScreenEmptySignIn =>
+      'Sign in and connect to start receiving live CoT entities.';
+
+  @override
+  String get takScreenEmptyTitle => 'No TAK Entities';
+
+  @override
+  String get takScreenFilterAll => 'All';
+
+  @override
+  String get takScreenHelpTitleDefault => 'Info';
+
+  @override
+  String get takScreenHelpTitleFilters => 'Filters';
+
+  @override
+  String get takScreenHelpTitleSettings => 'Settings';
+
+  @override
+  String get takScreenHelpTitleStatus => 'Connection Status';
+
+  @override
+  String get takScreenOverflowDashboard => 'SA Dashboard';
+
+  @override
+  String get takScreenOverflowSettings => 'TAK Settings';
+
+  @override
+  String get takScreenSearchHint => 'Search callsign or UID';
+
+  @override
+  String get takScreenStaleModeActiveOnly => 'Active Only';
+
+  @override
+  String get takScreenStaleModeAll => 'Status: All';
+
+  @override
+  String get takScreenStaleModeStaleOnly => 'Stale Only';
+
+  @override
+  String get takScreenTitle => 'TAK Gateway';
+
+  @override
+  String get takScreenTooltipConnect => 'Connect';
+
+  @override
+  String get takScreenTooltipDisconnect => 'Disconnect';
+
+  @override
+  String get takScreenTooltipSignInToConnect => 'Sign in to connect';
+
+  @override
+  String get takSettingsAlertHostile => 'Hostile';
+
+  @override
+  String get takSettingsAlertOn => 'Alert on:';
+
+  @override
+  String get takSettingsAlertSuspect => 'Suspect';
+
+  @override
+  String get takSettingsAlertUnknown => 'Unknown';
+
+  @override
+  String get takSettingsAutoConnectSubtitle =>
+      'Automatically connect when TAK screens open';
+
+  @override
+  String get takSettingsAutoConnectTitle => 'Auto-connect on open';
+
+  @override
+  String get takSettingsCallsignDefault => 'Using node name';
+
+  @override
+  String get takSettingsCallsignEditorHint =>
+      'Leave empty to use your node name';
+
+  @override
+  String get takSettingsCallsignEditorPlaceholder => 'e.g., ALPHA-1';
+
+  @override
+  String get takSettingsCallsignEditorTitle => 'Callsign Override';
+
+  @override
+  String get takSettingsCallsignTitle => 'Callsign override';
+
+  @override
+  String takSettingsError(String error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String get takSettingsGatewayEditorHint =>
+      'Leave empty to use the default gateway';
+
+  @override
+  String get takSettingsGatewayEditorPlaceholder =>
+      'https://tak.socialmesh.app';
+
+  @override
+  String get takSettingsGatewayEditorTitle => 'Gateway URL';
+
+  @override
+  String get takSettingsGatewayUrlDefault => 'Default (tak.socialmesh.app)';
+
+  @override
+  String get takSettingsGatewayUrlTitle => 'Gateway URL';
+
+  @override
+  String takSettingsIntervalMinutes(int minutes) {
+    return '${minutes}m';
+  }
+
+  @override
+  String takSettingsIntervalSeconds(int seconds) {
+    return '${seconds}s';
+  }
+
+  @override
+  String get takSettingsIntervalSubtitle => 'How often to send your position';
+
+  @override
+  String get takSettingsIntervalTitle => 'Publish interval';
+
+  @override
+  String get takSettingsMapLayerSubtitle =>
+      'Display TAK entity markers on the dedicated map';
+
+  @override
+  String get takSettingsMapLayerTitle => 'Show TAK layer on map';
+
+  @override
+  String get takSettingsProximitySubtitle =>
+      'Notify when hostile/unknown entities enter radius';
+
+  @override
+  String get takSettingsProximityTitle => 'Enable proximity alerts';
+
+  @override
+  String get takSettingsPublishSubtitle =>
+      'Share your node position with ATAK/WinTAK operators';
+
+  @override
+  String get takSettingsPublishTitle => 'Publish my position';
+
+  @override
+  String takSettingsRadiusSubtitle(double km) {
+    return '$km km';
+  }
+
+  @override
+  String get takSettingsRadiusTitle => 'Alert radius';
+
+  @override
+  String get takSettingsSave => 'Save';
+
+  @override
+  String get takSettingsSectionConnection => 'CONNECTION';
+
+  @override
+  String get takSettingsSectionMap => 'MAP';
+
+  @override
+  String get takSettingsSectionProximity => 'PROXIMITY ALERTS';
+
+  @override
+  String get takSettingsSectionPublishing => 'POSITION PUBLISHING';
+
+  @override
+  String get takSettingsTitle => 'TAK Settings';
+
+  @override
+  String get takStatusCardConnected => 'Connected';
+
+  @override
+  String get takStatusCardConnecting => 'Connecting...';
+
+  @override
+  String get takStatusCardCounterEntities => 'Entities';
+
+  @override
+  String get takStatusCardCounterEvents => 'Events';
+
+  @override
+  String get takStatusCardCounterUptime => 'Uptime';
+
+  @override
+  String get takStatusCardDisconnected => 'Disconnected';
+
+  @override
+  String get takStatusCardLabel => 'TAK Gateway';
+
+  @override
+  String get takStatusCardReconnecting => 'Reconnecting...';
+
+  @override
+  String takStatusCardUptimeHoursMinutes(int hours, int minutes) {
+    return '${hours}h ${minutes}m';
+  }
+
+  @override
+  String takStatusCardUptimeMinutes(int minutes) {
+    return '${minutes}m';
+  }
+
+  @override
+  String takStatusCardUptimeSeconds(int seconds) {
+    return '${seconds}s';
+  }
+
+  @override
   String get tapbackReact => 'React';
+
+  @override
+  String taskErrorCompleteTaskDenied(String roleName) {
+    return 'completeTask denied for role $roleName';
+  }
+
+  @override
+  String get taskErrorCompletionNoteRequired =>
+      'Completion requires a note with at least 10 characters';
+
+  @override
+  String taskErrorCreateDenied(String roleName) {
+    return 'createTask denied for role $roleName';
+  }
+
+  @override
+  String get taskErrorFailureReasonRequired =>
+      'Failure requires a reason with at least 10 characters';
+
+  @override
+  String taskErrorInvalidTransition(String fromState, String toState) {
+    return '$fromState -> $toState is not a valid transition';
+  }
+
+  @override
+  String get taskErrorOnlyAssigneeCanAcknowledge =>
+      'Only the assignee can acknowledge a task';
+
+  @override
+  String get taskErrorOnlyAssigneeCanReportFailure =>
+      'Only the assignee can report task failure';
+
+  @override
+  String get taskErrorOnlyAssigneeCanStartWork =>
+      'Only the assignee can start work on a task';
+
+  @override
+  String get taskErrorReassignmentRequiresAssignee =>
+      'Reassignment requires a newAssigneeId';
+
+  @override
+  String taskErrorRequiresSupervisorOrAdmin(String action, String roleName) {
+    return '$action requires supervisor or admin role, current role: $roleName';
+  }
+
+  @override
+  String taskErrorTerminalState(String stateName) {
+    return 'Cannot transition from $stateName: terminal state: $stateName';
+  }
+
+  @override
+  String get taskPriorityImmediate => 'immediate';
+
+  @override
+  String get taskPriorityPriority => 'priority';
+
+  @override
+  String get taskPriorityRoutine => 'routine';
+
+  @override
+  String get taskStateAcknowledged => 'acknowledged';
+
+  @override
+  String get taskStateAssigned => 'assigned';
+
+  @override
+  String get taskStateCancelled => 'cancelled';
+
+  @override
+  String get taskStateCompleted => 'completed';
+
+  @override
+  String get taskStateCreated => 'created';
+
+  @override
+  String get taskStateFailed => 'failed';
+
+  @override
+  String get taskStateInProgress => 'inProgress';
+
+  @override
+  String get taskStateReassigned => 'reassigned';
+
+  @override
+  String taskTransitionNoteAssignedTo(String assigneeId) {
+    return 'Assigned to $assigneeId';
+  }
+
+  @override
+  String get taskTransitionNoteCreated => 'Task created';
+
+  @override
+  String taskTransitionNoteCreatedViaReassignment(String originalTaskId) {
+    return 'Task created via reassignment from $originalTaskId';
+  }
+
+  @override
+  String taskTransitionNoteReassignedToNewTask(String newTaskId) {
+    return 'Reassigned to new task $newTaskId';
+  }
+
+  @override
+  String get telemetryAirQualityEmpty => 'No air quality data recorded yet';
+
+  @override
+  String get telemetryAirQualityLogTitle => 'Air Quality Log';
+
+  @override
+  String get telemetryAirQualityParticle03um => '>0.3µm';
+
+  @override
+  String get telemetryAirQualityParticle05um => '>0.5µm';
+
+  @override
+  String get telemetryAirQualityParticle100um => '>10µm';
+
+  @override
+  String get telemetryAirQualityParticle10um => '>1.0µm';
+
+  @override
+  String get telemetryAirQualityParticle25um => '>2.5µm';
+
+  @override
+  String get telemetryAirQualityParticle50um => '>5.0µm';
+
+  @override
+  String get telemetryAirQualityParticleCounts => 'Particle Counts (per 0.1L)';
+
+  @override
+  String get telemetryAirQualityParticulateEnvironmental =>
+      'Particulate Matter (Environmental)';
+
+  @override
+  String get telemetryAirQualityParticulateStandard =>
+      'Particulate Matter (Standard)';
+
+  @override
+  String get telemetryAirQualityPm100Label => 'PM10';
+
+  @override
+  String get telemetryAirQualityPm10Label => 'PM1.0';
+
+  @override
+  String get telemetryAirQualityPm25Label => 'PM2.5';
+
+  @override
+  String get telemetryAirQualityUnitMicrogram => 'µg/m³';
+
+  @override
+  String get telemetryAllNodes => 'All Nodes';
+
+  @override
+  String get telemetryAqiGood => 'Good';
+
+  @override
+  String get telemetryAqiHazardous => 'Hazardous';
+
+  @override
+  String get telemetryAqiModerate => 'Moderate';
+
+  @override
+  String get telemetryAqiUnhealthy => 'Unhealthy';
+
+  @override
+  String get telemetryAqiUnhealthySensitive => 'Unhealthy (S)';
+
+  @override
+  String get telemetryBatteryCharging => 'Charging';
+
+  @override
+  String get telemetryClearAllFilters => 'Clear all filters';
+
+  @override
+  String get telemetryClearConfirmLabel => 'Clear';
+
+  @override
+  String get telemetryClearData => 'Clear Data';
+
+  @override
+  String get telemetryClearDateFilterTooltip => 'Clear date filter';
+
+  @override
+  String get telemetryCo2Excellent => 'Excellent';
+
+  @override
+  String get telemetryCo2Fair => 'Fair';
+
+  @override
+  String get telemetryCo2Good => 'Good';
+
+  @override
+  String telemetryCo2LabelPrefix(String quality) {
+    return 'CO₂ - $quality';
+  }
+
+  @override
+  String get telemetryCo2Poor => 'Poor';
+
+  @override
+  String telemetryCo2Ppm(String ppm) {
+    return '$ppm ppm';
+  }
 
   @override
   String get telemetryConfigAirQualityDesc =>
@@ -12160,6 +15068,440 @@ class AppLocalizationsEn extends AppLocalizations {
   String get telemetryConfigUpdateInterval => 'Update Interval';
 
   @override
+  String get telemetryDateRangeTooltip => 'Date range';
+
+  @override
+  String get telemetryDetectionClear => 'Clear';
+
+  @override
+  String get telemetryDetectionDetected => 'DETECTED';
+
+  @override
+  String get telemetryDetectionSensorDefault => 'Detection Sensor';
+
+  @override
+  String get telemetryDetectionSensorEmpty => 'No sensor events recorded yet';
+
+  @override
+  String get telemetryDetectionSensorLogTitle => 'Detection Sensor Log';
+
+  @override
+  String get telemetryDetectionSensorSubtitle =>
+      'Detection sensors report motion and presence';
+
+  @override
+  String telemetryDeviceMetricsAirUtil(int percent) {
+    return 'Air $percent%';
+  }
+
+  @override
+  String telemetryDeviceMetricsChannelUtil(int percent) {
+    return 'Ch $percent%';
+  }
+
+  @override
+  String get telemetryDeviceMetricsTitle => 'Device Metrics';
+
+  @override
+  String telemetryDeviceMetricsVoltageValue(double voltage) {
+    return '${voltage}V';
+  }
+
+  @override
+  String get telemetryEndDate => 'End Date';
+
+  @override
+  String telemetryEnvGasResistanceValue(int value) {
+    return '$value Ω';
+  }
+
+  @override
+  String telemetryEnvHumidityValue(int value) {
+    return '$value%';
+  }
+
+  @override
+  String telemetryEnvIaqValue(int value) {
+    return 'IAQ $value';
+  }
+
+  @override
+  String telemetryEnvLuxValue(int value) {
+    return '$value lux';
+  }
+
+  @override
+  String telemetryEnvPressureValue(int value) {
+    return '$value hPa';
+  }
+
+  @override
+  String telemetryEnvTemperatureValue(int value) {
+    return '$value°C';
+  }
+
+  @override
+  String telemetryEnvWindSpeedValue(int value) {
+    return '$value m/s';
+  }
+
+  @override
+  String get telemetryEnvironmentMetricsTitle => 'Environment Metrics';
+
+  @override
+  String telemetryErrorPrefix(String error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String get telemetryExportCsv => 'Export CSV';
+
+  @override
+  String telemetryExportFailed(String error) {
+    return 'Export failed: $error';
+  }
+
+  @override
+  String get telemetryExporting => 'Exporting...';
+
+  @override
+  String telemetryFailedToClearData(String error) {
+    return 'Failed to clear data: $error';
+  }
+
+  @override
+  String get telemetryFilterAirUtil => 'Air Util';
+
+  @override
+  String get telemetryFilterAll => 'All';
+
+  @override
+  String get telemetryFilterBattery => 'Battery';
+
+  @override
+  String get telemetryFilterChannel => 'Channel';
+
+  @override
+  String get telemetryFilterGas => 'Gas';
+
+  @override
+  String get telemetryFilterHumidity => 'Humidity';
+
+  @override
+  String get telemetryFilterIaq => 'IAQ';
+
+  @override
+  String get telemetryFilterLight => 'Light';
+
+  @override
+  String get telemetryFilterPressure => 'Pressure';
+
+  @override
+  String get telemetryFilterTemp => 'Temp';
+
+  @override
+  String get telemetryFilterUptime => 'Uptime';
+
+  @override
+  String get telemetryFilterVoltage => 'Voltage';
+
+  @override
+  String get telemetryFilterWind => 'Wind';
+
+  @override
+  String get telemetryHelp => 'Help';
+
+  @override
+  String get telemetryLegendAirUtil => 'Air Util';
+
+  @override
+  String get telemetryLegendBattery => 'Battery';
+
+  @override
+  String get telemetryLegendChUtil => 'Ch Util';
+
+  @override
+  String get telemetryLegendHumidity => 'Humidity';
+
+  @override
+  String get telemetryLegendTemperature => 'Temperature';
+
+  @override
+  String get telemetryLegendVoltage => 'Voltage';
+
+  @override
+  String get telemetryMapStyle => 'Map Style';
+
+  @override
+  String get telemetryMetricsWillAppear =>
+      'Metrics will appear when your device reports telemetry';
+
+  @override
+  String get telemetryNoDeviceMetricsYet => 'No device metrics yet';
+
+  @override
+  String get telemetryNoEnvironmentMetricsYet => 'No environment metrics yet';
+
+  @override
+  String get telemetryNoMetricsMatchFilters => 'No metrics match filters';
+
+  @override
+  String get telemetryPaxBluetooth => 'Bluetooth';
+
+  @override
+  String get telemetryPaxCounterEmpty => 'No PAX data recorded yet';
+
+  @override
+  String get telemetryPaxCounterLogTitle => 'PAX Counter Log';
+
+  @override
+  String get telemetryPaxCounterSubtitle =>
+      'PAX counter detects nearby devices';
+
+  @override
+  String telemetryPaxUptime(String uptime) {
+    return 'Uptime: $uptime';
+  }
+
+  @override
+  String telemetryPaxUptimeDaysHours(int days, int hours) {
+    return '${days}d ${hours}h';
+  }
+
+  @override
+  String telemetryPaxUptimeHoursMinutes(int hours, int minutes) {
+    return '${hours}h ${minutes}m';
+  }
+
+  @override
+  String telemetryPaxUptimeMinutes(int minutes) {
+    return '${minutes}m';
+  }
+
+  @override
+  String telemetryPaxUptimeSeconds(int seconds) {
+    return '${seconds}s';
+  }
+
+  @override
+  String get telemetryPaxWifi => 'WiFi';
+
+  @override
+  String telemetryPositionAltitude(double meters) {
+    return '${meters}m';
+  }
+
+  @override
+  String get telemetryPositionClearMessage =>
+      'This will permanently delete all position history for all nodes. This cannot be undone.';
+
+  @override
+  String get telemetryPositionClearTitle => 'Clear Position Data';
+
+  @override
+  String telemetryPositionCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 's',
+      one: '',
+    );
+    return '$count position$_temp0';
+  }
+
+  @override
+  String get telemetryPositionDataCleared => 'Position data cleared';
+
+  @override
+  String get telemetryPositionDateRange => 'Date range';
+
+  @override
+  String get telemetryPositionExportSubject => 'Socialmesh Position Export';
+
+  @override
+  String telemetryPositionExportedCount(int count) {
+    return 'Exported $count positions';
+  }
+
+  @override
+  String get telemetryPositionFilterGoodFix => 'Good Fix';
+
+  @override
+  String get telemetryPositionFilterMyNode => 'My Node';
+
+  @override
+  String get telemetryPositionFilterThisWeek => 'This Week';
+
+  @override
+  String get telemetryPositionFilterToday => 'Today';
+
+  @override
+  String get telemetryPositionListViewTooltip => 'List view';
+
+  @override
+  String get telemetryPositionMapViewTooltip => 'Map view';
+
+  @override
+  String get telemetryPositionNoDataExport => 'No position data to export';
+
+  @override
+  String get telemetryPositionNoHistory => 'No position history';
+
+  @override
+  String get telemetryPositionNoMatchFilters => 'No positions match filters';
+
+  @override
+  String get telemetryPositionNoPositionsToDisplay => 'No positions to display';
+
+  @override
+  String telemetryPositionNodeCount(int count) {
+    return '$count nodes';
+  }
+
+  @override
+  String get telemetryPositionNodeDrawerTitle => 'Nodes';
+
+  @override
+  String telemetryPositionSats(int count) {
+    return '$count sats';
+  }
+
+  @override
+  String get telemetryPositionShowAllNodes => 'All Nodes';
+
+  @override
+  String get telemetryPositionShowAllSubtitle =>
+      'Show positions from all nodes';
+
+  @override
+  String telemetryPositionSpeed(int speed) {
+    return '$speed km/h';
+  }
+
+  @override
+  String get telemetryPositionStatDistance => 'Distance';
+
+  @override
+  String get telemetryPositionStatNodes => 'Nodes';
+
+  @override
+  String get telemetryPositionStatPoints => 'Points';
+
+  @override
+  String get telemetryPositionTitle => 'Position';
+
+  @override
+  String telemetryReadingsCount(int count) {
+    return '$count readings';
+  }
+
+  @override
+  String get telemetrySearchByNode => 'Search by node';
+
+  @override
+  String get telemetrySearchByNodeName => 'Search by node name';
+
+  @override
+  String get telemetrySettings => 'Settings';
+
+  @override
+  String get telemetryStartDate => 'Start Date';
+
+  @override
+  String telemetryTracerouteClearMessage(String scope) {
+    return 'This will permanently delete all traceroute history for $scope. This cannot be undone.';
+  }
+
+  @override
+  String get telemetryTracerouteClearTitle => 'Clear Traceroute Data';
+
+  @override
+  String get telemetryTracerouteDataCleared => 'Traceroute data cleared';
+
+  @override
+  String get telemetryTracerouteDestinationLabel => 'To';
+
+  @override
+  String get telemetryTracerouteDirectConnection =>
+      'Direct connection — no intermediate hops';
+
+  @override
+  String get telemetryTracerouteEmpty => 'No traceroutes recorded yet';
+
+  @override
+  String get telemetryTracerouteEmptySubtitle =>
+      'Send a traceroute from a node to see network paths';
+
+  @override
+  String telemetryTracerouteExportSubject(String scope) {
+    return 'Socialmesh Traceroute Export ($scope)';
+  }
+
+  @override
+  String telemetryTracerouteExportedCount(int count) {
+    return 'Exported $count traceroutes';
+  }
+
+  @override
+  String get telemetryTracerouteFilterNoResponse => 'No Response';
+
+  @override
+  String get telemetryTracerouteFilterResponse => 'Response';
+
+  @override
+  String get telemetryTracerouteForwardPath => 'Forward Path';
+
+  @override
+  String get telemetryTracerouteHistoryTitle => 'Traceroute History';
+
+  @override
+  String telemetryTracerouteHopSnr(int value) {
+    return '$value dB';
+  }
+
+  @override
+  String get telemetryTracerouteHopsBack => 'Hops ←';
+
+  @override
+  String get telemetryTracerouteHopsForward => 'Hops →';
+
+  @override
+  String get telemetryTracerouteMoreActions => 'More actions';
+
+  @override
+  String get telemetryTracerouteNoDataExport => 'No traceroute data to export';
+
+  @override
+  String get telemetryTracerouteNoMatch => 'No traceroutes match filters';
+
+  @override
+  String get telemetryTracerouteReturnPath => 'Return Path';
+
+  @override
+  String telemetryTracerouteSnr(int value) {
+    return 'SNR: $value dB';
+  }
+
+  @override
+  String get telemetryTryAdjustingFilters =>
+      'Try adjusting your search or filters';
+
+  @override
+  String telemetryUptimeDaysHours(int days, int hours) {
+    return '${days}d ${hours}h';
+  }
+
+  @override
+  String telemetryUptimeHoursMinutes(int hours, int minutes) {
+    return '${hours}h ${minutes}m';
+  }
+
+  @override
+  String telemetryUptimeMinutes(int minutes) {
+    return '${minutes}m';
+  }
+
+  @override
   String get worldMeshAddToFavorites => 'Add to favorites';
 
   @override
@@ -12194,13 +15536,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String worldMeshFilterActiveCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count filters',
-      one: '1 filter',
-    );
-    return '$_temp0';
+    return '$count active';
   }
 
   @override
@@ -12459,13 +15795,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String worldMeshSearchResultCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count nodes found',
-      one: '1 node found',
-    );
-    return '$_temp0';
+    return '$count results';
   }
 
   @override
@@ -12525,4 +15855,190 @@ class AppLocalizationsEn extends AppLocalizations {
   String worldMeshUptimeLabel(String uptime) {
     return 'Uptime: $uptime';
   }
+
+  @override
+  String telemetryError(String error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String telemetryFailedToClear(String error) {
+    return 'Failed to clear data: $error';
+  }
+
+  @override
+  String get telemetryAirQualityTitle => 'Air Quality Log';
+
+  @override
+  String get telemetryAirQualityNoData => 'No air quality data recorded yet';
+
+  @override
+  String get telemetryAirQualityPmStandard => 'Particulate Matter (Standard)';
+
+  @override
+  String get telemetryAirQualityPmEnvironmental =>
+      'Particulate Matter (Environmental)';
+
+  @override
+  String telemetryCo2Label(String rating) {
+    return 'CO₂ - $rating';
+  }
+
+  @override
+  String get telemetryDetectionTitle => 'Detection Sensor Log';
+
+  @override
+  String get telemetryDetectionNoData => 'No sensor events recorded yet';
+
+  @override
+  String get telemetryDetectionDescription =>
+      'Detection sensors report motion and presence';
+
+  @override
+  String get telemetryDetectionSensor => 'Detection Sensor';
+
+  @override
+  String get telemetryDetectionClearBadge => 'Clear';
+
+  @override
+  String get telemetryPaxTitle => 'PAX Counter Log';
+
+  @override
+  String get telemetryPaxNoData => 'No PAX data recorded yet';
+
+  @override
+  String get telemetryPaxDescription => 'PAX counter detects nearby devices';
+
+  @override
+  String get telemetryDeviceNoMetrics => 'No device metrics yet';
+
+  @override
+  String get telemetryDeviceFilterBattery => 'Battery';
+
+  @override
+  String get telemetryDeviceFilterVoltage => 'Voltage';
+
+  @override
+  String get telemetryDeviceFilterChannel => 'Channel';
+
+  @override
+  String get telemetryDeviceFilterAirUtil => 'Air Util';
+
+  @override
+  String get telemetryDeviceFilterUptime => 'Uptime';
+
+  @override
+  String get telemetryDeviceLegendBattery => 'Battery';
+
+  @override
+  String get telemetryDeviceLegendVoltage => 'Voltage';
+
+  @override
+  String get telemetryDeviceLegendChUtil => 'Ch Util';
+
+  @override
+  String get telemetryDeviceLegendAirUtil => 'Air Util';
+
+  @override
+  String get telemetryDeviceCharging => 'Charging';
+
+  @override
+  String get telemetryEnvironmentTitle => 'Environment Metrics';
+
+  @override
+  String get telemetryEnvironmentNoMetrics => 'No environment metrics yet';
+
+  @override
+  String get telemetryEnvironmentFilterTemp => 'Temp';
+
+  @override
+  String get telemetryEnvironmentFilterHumidity => 'Humidity';
+
+  @override
+  String get telemetryEnvironmentFilterPressure => 'Pressure';
+
+  @override
+  String get telemetryEnvironmentFilterGas => 'Gas';
+
+  @override
+  String get telemetryEnvironmentFilterIaq => 'IAQ';
+
+  @override
+  String get telemetryEnvironmentFilterLight => 'Light';
+
+  @override
+  String get telemetryEnvironmentFilterWind => 'Wind';
+
+  @override
+  String get telemetryEnvironmentLegendTemperature => 'Temperature';
+
+  @override
+  String get telemetryEnvironmentLegendHumidity => 'Humidity';
+
+  @override
+  String get telemetryPositionListView => 'List view';
+
+  @override
+  String get telemetryPositionMapView => 'Map view';
+
+  @override
+  String get telemetryPositionMapStyle => 'Map Style';
+
+  @override
+  String get telemetryPositionNoMatch => 'No positions match filters';
+
+  @override
+  String get telemetryPositionNoExportData => 'No position data to export';
+
+  @override
+  String get telemetryPositionClearLabel => 'Clear';
+
+  @override
+  String get telemetryPositionCleared => 'Position data cleared';
+
+  @override
+  String get telemetryPositionNoDisplay => 'No positions to display';
+
+  @override
+  String get telemetryPositionDrawerTitle => 'Nodes';
+
+  @override
+  String get telemetryPositionAllNodesOption => 'All Nodes';
+
+  @override
+  String get telemetryPositionAllNodesDescription =>
+      'Show positions from all nodes';
+
+  @override
+  String telemetryPositionNodesCount(int count) {
+    return '$count nodes';
+  }
+
+  @override
+  String get telemetryTracerouteTitle => 'Traceroute History';
+
+  @override
+  String get telemetryTracerouteNoData => 'No traceroutes recorded yet';
+
+  @override
+  String get telemetryTracerouteEmptyHint =>
+      'Send a traceroute from a node to see network paths';
+
+  @override
+  String get telemetryTracerouteNoExportData => 'No traceroute data to export';
+
+  @override
+  String get telemetryTracerouteClearLabel => 'Clear';
+
+  @override
+  String get telemetryTracerouteCleared => 'Traceroute data cleared';
+
+  @override
+  String get telemetryTracerouteTo => 'To';
+
+  @override
+  String get telemetryTracerouteResponseBadge => 'Response';
+
+  @override
+  String get telemetryTracerouteNoResponseBadge => 'No Response';
 }

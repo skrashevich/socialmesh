@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
 import '../../../providers/glyph_provider.dart';
@@ -255,11 +256,13 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
         );
         targetDisplay = channel.name.isEmpty
             ? (selectedChannelIndex == 0
-                  ? 'Primary'
-                  : 'Channel $selectedChannelIndex')
+                  ? context.l10n.automationActionPrimary
+                  : context.l10n.automationActionChannelIndex(
+                      selectedChannelIndex,
+                    ))
             : channel.name;
       } else {
-        targetDisplay = 'Select channel';
+        targetDisplay = context.l10n.automationActionSelectChannel;
       }
     } else {
       final selectedNodeNum = widget.action.targetNodeNum;
@@ -270,7 +273,7 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
         );
         targetDisplay = node.displayName;
       } else {
-        targetDisplay = 'Select node';
+        targetDisplay = context.l10n.automationActionSelectNodePlaceholder;
       }
     }
 
@@ -281,7 +284,7 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
         children: [
           // Target selector (node or channel)
           Text(
-            'TO',
+            context.l10n.automationActionTo,
             style: TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w600,
@@ -338,7 +341,9 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
                           ),
                         ),
                         Text(
-                          toChannel ? 'Channel message' : 'Direct message',
+                          toChannel
+                              ? context.l10n.automationActionChannelMessage
+                              : context.l10n.automationActionDirectMessage,
                           style: TextStyle(
                             color: context.textTertiary,
                             fontSize: 11,
@@ -370,8 +375,8 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
               );
             },
             onFocusChange: _updateActiveField,
-            labelText: 'Message',
-            hintText: 'Tap variables below to insert',
+            labelText: context.l10n.automationActionMessageLabel,
+            hintText: context.l10n.automationActionVariableHint,
             maxLines: 2,
             triggerType: widget.triggerType,
           ),
@@ -393,7 +398,7 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
   ) async {
     final selection = await NodeSelectorSheet.show(
       context,
-      title: 'Select Node',
+      title: context.l10n.automationTriggerSelectNode,
       allowBroadcast: false,
       initialSelection: widget.action.targetNodeNum,
     );
@@ -409,7 +414,7 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
 
   void _showChannelPicker(BuildContext context, List<ChannelConfig> channels) {
     if (channels.isEmpty) {
-      showWarningSnackBar(context, 'No channels available');
+      showWarningSnackBar(context, context.l10n.automationActionNoChannels);
       return;
     }
 
@@ -429,7 +434,7 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
               child: Row(
                 children: [
                   Text(
-                    'Select Channel',
+                    context.l10n.automationActionSelectChannelTitle,
                     style: TextStyle(
                       color: context.textPrimary,
                       fontSize: 18,
@@ -440,7 +445,7 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
                   TextButton(
                     onPressed: () => Navigator.pop(context),
                     child: Text(
-                      'Done',
+                      context.l10n.automationActionDone,
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.primary,
                         fontWeight: FontWeight.w600,
@@ -456,7 +461,7 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
               child: Row(
                 children: [
                   Text(
-                    '${channels.length} channels',
+                    context.l10n.automationActionChannelsCount(channels.length),
                     style: Theme.of(context).textTheme.labelSmall?.copyWith(
                       color: context.textTertiary,
                     ),
@@ -475,8 +480,10 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
                       widget.action.targetChannelIndex == channel.index;
                   final channelName = channel.name.isEmpty
                       ? (channel.index == 0
-                            ? 'Primary'
-                            : 'Channel ${channel.index}')
+                            ? context.l10n.automationActionPrimary
+                            : context.l10n.automationActionChannelIndex(
+                                channel.index,
+                              ))
                       : channel.name;
                   return _buildTargetTile(
                     context: context,
@@ -484,8 +491,10 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
                     iconColor: Theme.of(context).colorScheme.primary,
                     title: channelName,
                     subtitle: channel.index == 0
-                        ? 'Default channel'
-                        : 'Channel ${channel.index}',
+                        ? context.l10n.automationActionDefaultChannel
+                        : context.l10n.automationActionChannelIndex(
+                            channel.index,
+                          ),
                     isSelected: isSelected,
                     onTap: () {
                       widget.onChanged(
@@ -608,7 +617,7 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'SOUND',
+            context.l10n.automationActionSoundSection,
             style: TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w600,
@@ -647,7 +656,9 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          hasSound ? selectedSound : 'Select a sound',
+                          hasSound
+                              ? selectedSound
+                              : context.l10n.automationActionSelectSound,
                           style: TextStyle(
                             color: hasSound
                                 ? context.textPrimary
@@ -657,7 +668,9 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
                           ),
                         ),
                         Text(
-                          hasSound ? 'RTTTL ringtone' : 'Tap to choose',
+                          hasSound
+                              ? context.l10n.automationActionRtttlRingtone
+                              : context.l10n.automationActionTapToChoose,
                           style: TextStyle(
                             color: context.textTertiary,
                             fontSize: 11,
@@ -679,7 +692,7 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
                   child: OutlinedButton.icon(
                     onPressed: () => _previewSound(context),
                     icon: const Icon(Icons.play_arrow, size: 18),
-                    label: const Text('Preview'),
+                    label: Text(context.l10n.automationActionPreview),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: AccentColors.orange,
                       side: BorderSide(
@@ -765,8 +778,8 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
               );
             },
             onFocusChange: _updateActiveField,
-            labelText: 'Title',
-            hintText: 'Tap variables below to insert',
+            labelText: context.l10n.automationActionTitleLabel,
+            hintText: context.l10n.automationActionVariableHint,
             triggerType: widget.triggerType,
           ),
           const SizedBox(height: AppTheme.spacing8),
@@ -782,8 +795,8 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
               );
             },
             onFocusChange: _updateActiveField,
-            labelText: 'Body',
-            hintText: 'Tap variables below to insert',
+            labelText: context.l10n.automationActionBodyLabel,
+            hintText: context.l10n.automationActionVariableHint,
             maxLines: 2,
             triggerType: widget.triggerType,
           ),
@@ -832,7 +845,7 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
                         Text(
                           hasCustomSound
                               ? widget.action.notificationSoundName!
-                              : 'Custom sound (optional)',
+                              : context.l10n.automationActionCustomSound,
                           style: TextStyle(
                             color: hasCustomSound
                                 ? context.textPrimary
@@ -842,8 +855,8 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
                         ),
                         Text(
                           hasCustomSound
-                              ? 'Plays after notification'
-                              : 'System default',
+                              ? context.l10n.automationActionPlaysAfter
+                              : context.l10n.automationActionSystemDefault,
                           style: TextStyle(
                             color: context.textTertiary,
                             fontSize: 11,
@@ -925,8 +938,8 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
               );
             },
             decoration: InputDecoration(
-              labelText: 'IFTTT Event Name',
-              hintText: 'e.g., meshtastic_alert',
+              labelText: context.l10n.automationActionIftttEventName,
+              hintText: context.l10n.automationActionIftttHint,
               isDense: true,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AppTheme.radius8),
@@ -951,7 +964,7 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
                 const SizedBox(width: AppTheme.spacing8),
                 Expanded(
                   child: Text(
-                    'Uses your IFTTT Webhook key from Settings',
+                    context.l10n.automationActionIftttHelp,
                     style: TextStyle(color: SemanticColors.muted, fontSize: 12),
                   ),
                 ),
@@ -980,8 +993,8 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
               );
             },
             decoration: InputDecoration(
-              labelText: 'Shortcut Name',
-              hintText: 'Enter exact shortcut name',
+              labelText: context.l10n.automationActionShortcutNameLabel,
+              hintText: context.l10n.automationActionShortcutNameHint,
               isDense: true,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AppTheme.radius8),
@@ -995,8 +1008,7 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
           ),
           const SizedBox(height: AppTheme.spacing8),
           StatusBanner.info(
-            title:
-                'Event data (node name, battery, location, etc.) will be passed as JSON input to your shortcut.',
+            title: context.l10n.automationActionShortcutDataInfo,
             margin: EdgeInsets.zero,
           ),
         ],
@@ -1017,7 +1029,7 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
                 Icon(Icons.lightbulb_outline, color: AppTheme.warningYellow),
                 SizedBox(width: AppTheme.spacing8),
                 Text(
-                  'Using Shortcuts',
+                  context.l10n.automationActionShortcutHelpTitle,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
@@ -1027,41 +1039,55 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
               ],
             ),
             const SizedBox(height: AppTheme.spacing16),
-            const Text(
-              'Setting up your shortcut:',
-              style: TextStyle(fontWeight: FontWeight.bold),
+            Text(
+              context.l10n.automationActionShortcutSetup,
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: AppTheme.spacing12),
-            _buildHelpStep(
-              '1',
-              'Add "Get Dictionary from" action\nSelect "Shortcut Input"',
-            ),
-            _buildHelpStep(
-              '2',
-              'Add "Get Value for" action\nSet key (e.g., node_name) and select "Dictionary"',
-            ),
-            _buildHelpStep(
-              '3',
-              'Use the extracted value in your actions\n(e.g., Send Message, Show Notification)',
-            ),
+            _buildHelpStep('1', context.l10n.automationActionShortcutStep1),
+            _buildHelpStep('2', context.l10n.automationActionShortcutStep2),
+            _buildHelpStep('3', context.l10n.automationActionShortcutStep3),
             const SizedBox(height: AppTheme.spacing16),
-            const Text(
-              'Available keys in the dictionary:',
-              style: TextStyle(fontWeight: FontWeight.bold),
+            Text(
+              context.l10n.automationActionShortcutKeysTitle,
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: AppTheme.spacing8),
-            _buildKeyItem('node_name', 'Name of the node'),
-            _buildKeyItem('node_num', 'Node number'),
-            _buildKeyItem('trigger', 'Trigger type (nodeOffline, etc.)'),
-            _buildKeyItem('battery', 'Battery % (if available)'),
-            _buildKeyItem('latitude', 'GPS latitude (if available)'),
-            _buildKeyItem('longitude', 'GPS longitude (if available)'),
-            _buildKeyItem('message', 'Message text (if applicable)'),
-            _buildKeyItem('timestamp', 'Event timestamp'),
+            _buildKeyItem(
+              'node_name',
+              context.l10n.automationActionShortcutKeyNodeName,
+            ),
+            _buildKeyItem(
+              'node_num',
+              context.l10n.automationActionShortcutKeyNodeNum,
+            ),
+            _buildKeyItem(
+              'trigger',
+              context.l10n.automationActionShortcutKeyTrigger,
+            ),
+            _buildKeyItem(
+              'battery',
+              context.l10n.automationActionShortcutKeyBattery,
+            ),
+            _buildKeyItem(
+              'latitude',
+              context.l10n.automationActionShortcutKeyLatitude,
+            ),
+            _buildKeyItem(
+              'longitude',
+              context.l10n.automationActionShortcutKeyLongitude,
+            ),
+            _buildKeyItem(
+              'message',
+              context.l10n.automationActionShortcutKeyMessage,
+            ),
+            _buildKeyItem(
+              'timestamp',
+              context.l10n.automationActionShortcutKeyTimestamp,
+            ),
             const SizedBox(height: AppTheme.spacing16),
             StatusBanner.warning(
-              title:
-                  'Note: Shortcuts app will briefly open when triggered. This is an iOS limitation.',
+              title: context.l10n.automationActionShortcutIosNote,
               margin: EdgeInsets.zero,
             ),
             const SizedBox(height: AppTheme.spacing24),
@@ -1069,7 +1095,7 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
               width: double.infinity,
               child: FilledButton(
                 onPressed: () => Navigator.pop(context),
-                child: const Text('Got it'),
+                child: Text(context.l10n.automationActionGotIt),
               ),
             ),
           ],
@@ -1170,7 +1196,7 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
               ),
             ),
             Text(
-              'Change Action Type',
+              context.l10n.automationActionChangeType,
               style: Theme.of(
                 context,
               ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
@@ -1383,7 +1409,7 @@ class _SoundPickerSheetState extends State<_SoundPickerSheet>
                 ),
                 const SizedBox(width: AppTheme.spacing12),
                 Text(
-                  'Select Sound',
+                  context.l10n.automationActionSelectSound,
                   style: Theme.of(
                     context,
                   ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
@@ -1399,7 +1425,7 @@ class _SoundPickerSheetState extends State<_SoundPickerSheet>
               controller: _searchController,
               onChanged: _search,
               decoration: InputDecoration(
-                hintText: 'Search sounds...',
+                hintText: context.l10n.automationActionSearchSounds,
                 prefixIcon: const Icon(Icons.search),
                 isDense: true,
                 filled: true,
@@ -1419,8 +1445,8 @@ class _SoundPickerSheetState extends State<_SoundPickerSheet>
               children: [
                 Text(
                   _searchController.text.isEmpty
-                      ? 'SUGGESTIONS'
-                      : 'SEARCH RESULTS',
+                      ? context.l10n.automationActionSuggestions
+                      : context.l10n.automationActionSearchResults,
                   style: TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w600,
@@ -1430,7 +1456,7 @@ class _SoundPickerSheetState extends State<_SoundPickerSheet>
                 ),
                 SizedBox(width: AppTheme.spacing8),
                 Text(
-                  '${displayItems.length} sounds',
+                  context.l10n.automationActionSoundsCount(displayItems.length),
                   style: Theme.of(
                     context,
                   ).textTheme.labelSmall?.copyWith(color: context.textTertiary),
@@ -1454,7 +1480,7 @@ class _SoundPickerSheetState extends State<_SoundPickerSheet>
                         ),
                         const SizedBox(height: AppTheme.spacing12),
                         Text(
-                          'No sounds found',
+                          context.l10n.automationActionNoSoundsFound,
                           style: TextStyle(color: SemanticColors.muted),
                         ),
                       ],

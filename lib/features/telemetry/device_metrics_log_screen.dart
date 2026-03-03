@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:fl_chart/fl_chart.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/datetime_picker_sheet.dart';
@@ -165,12 +166,13 @@ class _DeviceMetricsLogScreenState extends ConsumerState<DeviceMetricsLogScreen>
 
   // Uses DatePickerSheet, not banned Material dialogs.
   Future<void> _selectDateRange() async {
+    final l10n = context.l10n;
     final start = await DatePickerSheet.show(
       context,
       initialDate: _startDate ?? DateTime.now(),
       firstDate: DateTime(2020),
       lastDate: DateTime.now(),
-      title: 'Start Date',
+      title: l10n.telemetryStartDate,
     );
     if (!mounted || start == null) return;
 
@@ -179,7 +181,7 @@ class _DeviceMetricsLogScreenState extends ConsumerState<DeviceMetricsLogScreen>
       initialDate: _endDate ?? start,
       firstDate: start,
       lastDate: DateTime.now(),
-      title: 'End Date',
+      title: l10n.telemetryEndDate,
     );
     if (!mounted || end == null) return;
 
@@ -202,12 +204,12 @@ class _DeviceMetricsLogScreenState extends ConsumerState<DeviceMetricsLogScreen>
       onTap: _dismissKeyboard,
       child: GlassScaffold(
         resizeToAvoidBottomInset: false,
-        title: 'Device Metrics',
+        title: context.l10n.telemetryDeviceMetricsTitle,
         actions: [
           if (_hasDateFilter)
             IconButton(
               icon: const Icon(Icons.filter_alt_off),
-              tooltip: 'Clear date filter',
+              tooltip: context.l10n.telemetryClearDateFilterTooltip,
               onPressed: _clearDateFilter,
             ),
           IconButton(
@@ -215,7 +217,7 @@ class _DeviceMetricsLogScreenState extends ConsumerState<DeviceMetricsLogScreen>
               isLabelVisible: _hasDateFilter,
               child: const Icon(Icons.date_range),
             ),
-            tooltip: 'Date range',
+            tooltip: context.l10n.telemetryDateRangeTooltip,
             onPressed: _selectDateRange,
           ),
         ],
@@ -227,7 +229,7 @@ class _DeviceMetricsLogScreenState extends ConsumerState<DeviceMetricsLogScreen>
             SliverFillRemaining(
               child: Center(
                 child: Text(
-                  'Error: $e',
+                  context.l10n.telemetryError(e.toString()),
                   style: TextStyle(color: context.textSecondary),
                 ),
               ),
@@ -261,13 +263,25 @@ class _DeviceMetricsLogScreenState extends ConsumerState<DeviceMetricsLogScreen>
                   searchQuery: _searchQuery,
                   onSearchChanged: (value) =>
                       safeSetState(() => _searchQuery = value),
-                  hintText: 'Search by node',
+                  hintText: context.l10n.telemetrySearchByNode,
                   textScaler: MediaQuery.textScalerOf(context),
                   rebuildKey: Object.hashAll([_activeFilter, ...counts.values]),
                   filterChips: [
                     for (final filter in _MetricFilter.values)
                       StatusFilterChip(
-                        label: filter.label,
+                        label: switch (filter) {
+                          _MetricFilter.all => context.l10n.telemetryFilterAll,
+                          _MetricFilter.battery =>
+                            context.l10n.telemetryDeviceFilterBattery,
+                          _MetricFilter.voltage =>
+                            context.l10n.telemetryDeviceFilterVoltage,
+                          _MetricFilter.channel =>
+                            context.l10n.telemetryDeviceFilterChannel,
+                          _MetricFilter.airUtil =>
+                            context.l10n.telemetryDeviceFilterAirUtil,
+                          _MetricFilter.uptime =>
+                            context.l10n.telemetryDeviceFilterUptime,
+                        },
                         count: counts[filter],
                         isSelected: _activeFilter == filter,
                         icon: filter.icon,
@@ -287,21 +301,24 @@ class _DeviceMetricsLogScreenState extends ConsumerState<DeviceMetricsLogScreen>
                 () {
                   final legendItems = <Widget>[
                     if (filtered.any((l) => l.batteryLevel != null))
-                      _LegendItem(color: AccentColors.green, label: 'Battery'),
+                      _LegendItem(
+                        color: AccentColors.green,
+                        label: context.l10n.telemetryDeviceLegendBattery,
+                      ),
                     if (filtered.any((l) => l.voltage != null))
                       _LegendItem(
                         color: AppTheme.warningYellow,
-                        label: 'Voltage',
+                        label: context.l10n.telemetryDeviceLegendVoltage,
                       ),
                     if (filtered.any((l) => l.channelUtilization != null))
                       _LegendItem(
                         color: AppTheme.primaryBlue,
-                        label: 'Ch Util',
+                        label: context.l10n.telemetryDeviceLegendChUtil,
                       ),
                     if (filtered.any((l) => l.airUtilTx != null))
                       _LegendItem(
                         color: AppTheme.primaryMagenta,
-                        label: 'Air Util',
+                        label: context.l10n.telemetryDeviceLegendAirUtil,
                       ),
                   ];
                   if (legendItems.isEmpty) {
@@ -351,8 +368,8 @@ class _DeviceMetricsLogScreenState extends ConsumerState<DeviceMetricsLogScreen>
                             _hasDateFilter ||
                                     _activeFilter != _MetricFilter.all ||
                                     _searchQuery.isNotEmpty
-                                ? 'No metrics match filters'
-                                : 'No device metrics yet',
+                                ? context.l10n.telemetryNoMetricsMatchFilters
+                                : context.l10n.telemetryDeviceNoMetrics,
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
@@ -364,8 +381,8 @@ class _DeviceMetricsLogScreenState extends ConsumerState<DeviceMetricsLogScreen>
                             _hasDateFilter ||
                                     _activeFilter != _MetricFilter.all ||
                                     _searchQuery.isNotEmpty
-                                ? 'Try adjusting your search or filters'
-                                : 'Metrics will appear when your device reports telemetry',
+                                ? context.l10n.telemetryTryAdjustingFilters
+                                : context.l10n.telemetryMetricsWillAppear,
                             style: TextStyle(
                               fontSize: 14,
                               color: context.textTertiary,
@@ -387,7 +404,9 @@ class _DeviceMetricsLogScreenState extends ConsumerState<DeviceMetricsLogScreen>
                                 });
                               },
                               icon: const Icon(Icons.filter_alt_off, size: 18),
-                              label: const Text('Clear all filters'),
+                              label: Text(
+                                context.l10n.telemetryClearAllFilters,
+                              ),
                             ),
                           ],
                         ],
@@ -717,7 +736,7 @@ class _ChartLegendHeaderDelegate extends SliverPersistentHeaderDelegate {
                   ),
                 ),
                 Text(
-                  '$readingsCount readings',
+                  context.l10n.telemetryReadingsCount(readingsCount),
                   style: TextStyle(fontSize: 11, color: context.textTertiary),
                 ),
               ],
@@ -835,7 +854,7 @@ class _DeviceMetricsCard extends StatelessWidget {
                   const SizedBox(width: AppTheme.spacing8),
                   Text(
                     log.batteryLevel! > 100
-                        ? 'Charging'
+                        ? context.l10n.telemetryDeviceCharging
                         : '${log.batteryLevel}%',
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
                       color: _getBatteryColor(log.batteryLevel!),

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/auth/permission.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../../../core/widgets/permission_gate.dart';
@@ -32,13 +33,13 @@ class IncidentListScreen extends ConsumerWidget {
       onTap: () => FocusScope.of(context).unfocus(),
       behavior: HitTestBehavior.opaque,
       child: GlassScaffold(
-        title: 'Incidents',
+        title: context.l10n.incidentListTitle,
         actions: [
           PermissionGate(
             permission: Permission.createIncident,
             child: IconButton(
               icon: const Icon(Icons.add),
-              tooltip: 'Create incident',
+              tooltip: context.l10n.incidentCreateTooltip,
               onPressed: () {
                 ref.haptics.buttonTap();
                 Navigator.of(context).push(
@@ -64,7 +65,7 @@ class IncidentListScreen extends ConsumerWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(AppTheme.spacing24),
                   child: Text(
-                    'Failed to load incidents:\n$e',
+                    context.l10n.incidentListLoadError('$e'),
                     textAlign: TextAlign.center,
                     style: context.bodyMutedStyle,
                   ),
@@ -110,13 +111,12 @@ class _EmptyState extends ConsumerWidget {
             ),
             const SizedBox(height: AppTheme.spacing16),
             Text(
-              'No incidents',
+              context.l10n.incidentEmptyStateTitle,
               style: context.titleStyle?.copyWith(color: context.textPrimary),
             ),
             const SizedBox(height: AppTheme.spacing8),
             Text(
-              'Incidents track operational events from creation '
-              'through resolution. Create one to get started.',
+              context.l10n.incidentEmptyStateDescription,
               textAlign: TextAlign.center,
               style: context.bodyMutedStyle,
             ),
@@ -125,7 +125,7 @@ class _EmptyState extends ConsumerWidget {
               permission: Permission.createIncident,
               child: FilledButton.icon(
                 icon: const Icon(Icons.add),
-                label: const Text('Create Incident'),
+                label: Text(context.l10n.incidentCreateButtonLabel),
                 onPressed: () {
                   ref.haptics.buttonTap();
                   Navigator.of(context).push(
@@ -190,11 +190,11 @@ class _IncidentTile extends ConsumerWidget {
                   runSpacing: 6,
                   children: [
                     _Badge(
-                      label: incident.state.name,
+                      label: incident.state.displayLabel(context.l10n),
                       color: _stateColor(incident.state),
                     ),
                     _Badge(
-                      label: incident.priority.name,
+                      label: incident.priority.displayLabel(context.l10n),
                       color: _priorityColor(incident.priority),
                     ),
                     Text(

@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../l10n/app_localizations.dart';
+
 /// MIL-STD-2525 affiliation derived from the second atom of a CoT type string.
 ///
 /// Example: `a-f-G-U-C` → second atom is `f` → [friendly].
@@ -79,6 +81,26 @@ extension CotAffiliationX on CotAffiliation {
         return 'Suspect';
       case CotAffiliation.pending:
         return 'Pending';
+    }
+  }
+
+  /// Localized human-readable label.
+  String displayLabel(AppLocalizations l10n) {
+    switch (this) {
+      case CotAffiliation.friendly:
+        return l10n.takAffiliationFriendly;
+      case CotAffiliation.hostile:
+        return l10n.takAffiliationHostile;
+      case CotAffiliation.neutral:
+        return l10n.takAffiliationNeutral;
+      case CotAffiliation.unknown:
+        return l10n.takAffiliationUnknown;
+      case CotAffiliation.assumedFriend:
+        return l10n.takAffiliationAssumedFriend;
+      case CotAffiliation.suspect:
+        return l10n.takAffiliationSuspect;
+      case CotAffiliation.pending:
+        return l10n.takAffiliationPending;
     }
   }
 }

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/auth/permission.dart';
 import '../../../core/auth/permission_service.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/logging.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
@@ -65,7 +66,7 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen>
       onTap: () => FocusScope.of(context).unfocus(),
       behavior: HitTestBehavior.opaque,
       child: GlassScaffold(
-        title: 'Create Incident',
+        title: context.l10n.incidentCreateScreenTitle,
         resizeToAvoidBottomInset: true,
         bottomNavigationBar: _buildSubmitButton(),
         slivers: [
@@ -78,7 +79,10 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // -- Title --
-                    _buildSectionTitle(context, 'Title'),
+                    _buildSectionTitle(
+                      context,
+                      context.l10n.incidentCreateTitleSection,
+                    ),
                     const SizedBox(height: AppTheme.spacing8),
                     TextFormField(
                       controller: _titleController,
@@ -86,11 +90,11 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen>
                       textCapitalization: TextCapitalization.sentences,
                       decoration: _inputDecoration(
                         context,
-                        hintText: 'Brief incident title',
+                        hintText: context.l10n.incidentCreateTitleHint,
                       ),
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
-                          return 'Title is required';
+                          return context.l10n.incidentCreateTitleRequired;
                         }
                         return null;
                       },
@@ -99,7 +103,10 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen>
                     const SizedBox(height: AppTheme.spacing16),
 
                     // -- Description --
-                    _buildSectionTitle(context, 'Description (optional)'),
+                    _buildSectionTitle(
+                      context,
+                      context.l10n.incidentCreateDescriptionSection,
+                    ),
                     const SizedBox(height: AppTheme.spacing8),
                     TextFormField(
                       controller: _descriptionController,
@@ -108,28 +115,37 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen>
                       textCapitalization: TextCapitalization.sentences,
                       decoration: _inputDecoration(
                         context,
-                        hintText: 'Detailed description of the incident',
+                        hintText: context.l10n.incidentCreateDescriptionHint,
                       ),
                     ),
 
                     const SizedBox(height: AppTheme.spacing16),
 
                     // -- Priority --
-                    _buildSectionTitle(context, 'Priority'),
+                    _buildSectionTitle(
+                      context,
+                      context.l10n.incidentCreatePrioritySection,
+                    ),
                     const SizedBox(height: AppTheme.spacing8),
                     _buildPrioritySelector(context),
 
                     const SizedBox(height: AppTheme.spacing16),
 
                     // -- Classification --
-                    _buildSectionTitle(context, 'Classification'),
+                    _buildSectionTitle(
+                      context,
+                      context.l10n.incidentCreateClassificationSection,
+                    ),
                     const SizedBox(height: AppTheme.spacing8),
                     _buildClassificationSelector(context),
 
                     const SizedBox(height: AppTheme.spacing16),
 
                     // -- Location --
-                    _buildSectionTitle(context, 'Location (optional)'),
+                    _buildSectionTitle(
+                      context,
+                      context.l10n.incidentCreateLocationSection,
+                    ),
                     const SizedBox(height: AppTheme.spacing8),
                     _buildLocationCapture(context),
 
@@ -188,6 +204,7 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen>
   }
 
   Widget _buildPrioritySelector(BuildContext context) {
+    final l10n = context.l10n;
     return Wrap(
       spacing: 8,
       runSpacing: 8,
@@ -195,7 +212,7 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen>
         final isSelected = _priority == p;
         final color = _priorityColor(p);
         return ChoiceChip(
-          label: Text(_priorityLabel(p)),
+          label: Text(p.displayLabel(l10n)),
           selected: isSelected,
           onSelected: (_) {
             ref.haptics.toggle();
@@ -215,13 +232,14 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen>
   }
 
   Widget _buildClassificationSelector(BuildContext context) {
+    final l10n = context.l10n;
     return Wrap(
       spacing: 8,
       runSpacing: 8,
       children: IncidentClassification.values.map((c) {
         final isSelected = _classification == c;
         return ChoiceChip(
-          label: Text(_classificationLabel(c)),
+          label: Text(c.displayLabel(l10n)),
           selected: isSelected,
           onSelected: (_) {
             ref.haptics.toggle();
@@ -262,7 +280,7 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen>
                 _locationLon = null;
               });
             },
-            child: const Text('Remove'),
+            child: Text(context.l10n.incidentCreateRemoveLocation),
           ),
         ],
       );
@@ -277,7 +295,9 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen>
             )
           : const Icon(Icons.my_location, size: 16),
       label: Text(
-        _isCapturingLocation ? 'Getting location...' : 'Capture Location',
+        _isCapturingLocation
+            ? context.l10n.incidentCreateGettingLocation
+            : context.l10n.incidentCreateCaptureLocation,
       ),
       onPressed: _isCapturingLocation ? null : _captureLocation,
     );
@@ -297,12 +317,15 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen>
         });
       } else {
         if (mounted) {
-          showErrorSnackBar(context, 'Could not get location');
+          showErrorSnackBar(context, context.l10n.incidentCreateLocationError);
         }
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Location error: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.incidentCreateLocationException('$e'),
+        );
       }
     } finally {
       safeSetState(() => _isCapturingLocation = false);
@@ -335,10 +358,10 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen>
               borderRadius: BorderRadius.circular(AppTheme.radius12),
             ),
             child: _isSubmitting
-                ? const Row(
+                ? Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         width: 18,
                         height: 18,
                         child: CircularProgressIndicator(
@@ -346,10 +369,10 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen>
                           color: Colors.white,
                         ),
                       ),
-                      SizedBox(width: AppTheme.spacing10),
+                      const SizedBox(width: AppTheme.spacing10),
                       Text(
-                        'Creating...',
-                        style: TextStyle(
+                        context.l10n.incidentCreateSubmitting,
+                        style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w600,
                           fontSize: 16,
@@ -357,10 +380,10 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen>
                       ),
                     ],
                   )
-                : const Text(
-                    'Create Incident',
+                : Text(
+                    context.l10n.incidentCreateSubmitButton,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
                       fontSize: 16,
@@ -379,6 +402,7 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen>
     safeSetState(() => _isSubmitting = true);
 
     final title = _titleController.text.trim();
+    final l10n = context.l10n;
 
     AppLogging.incidentUI(
       'create incident submitted '
@@ -401,7 +425,7 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen>
 
       if (incident != null && mounted) {
         ref.haptics.success();
-        showSuccessSnackBar(context, 'Incident created');
+        showSuccessSnackBar(context, l10n.incidentCreatedSuccess);
         // Replace this screen with detail to avoid double-back to list.
         Navigator.of(context).pushReplacement(
           MaterialPageRoute<void>(
@@ -412,7 +436,7 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen>
         final error = ref.read(incidentActionsProvider);
         final message = error is AsyncError
             ? '${error.error}'
-            : 'Failed to create';
+            : l10n.incidentCreateFailed;
         if (error.error is InvalidTransitionException ||
             error.error is InsufficientPermissionException) {
           showErrorSnackBar(context, message);
@@ -422,20 +446,11 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen>
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Error: $e');
+        showErrorSnackBar(context, l10n.incidentCreateError('$e'));
       }
     } finally {
       safeSetState(() => _isSubmitting = false);
     }
-  }
-
-  static String _priorityLabel(IncidentPriority priority) {
-    return switch (priority) {
-      IncidentPriority.routine => 'Routine',
-      IncidentPriority.priority => 'Priority',
-      IncidentPriority.immediate => 'Immediate',
-      IncidentPriority.flash => 'Flash',
-    };
   }
 
   static Color _priorityColor(IncidentPriority priority) {
@@ -444,18 +459,6 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen>
       IncidentPriority.priority => AppTheme.warningYellow,
       IncidentPriority.immediate => AccentColors.coral,
       IncidentPriority.flash => AppTheme.errorRed,
-    };
-  }
-
-  static String _classificationLabel(IncidentClassification c) {
-    return switch (c) {
-      IncidentClassification.safety => 'Safety',
-      IncidentClassification.security => 'Security',
-      IncidentClassification.environmental => 'Environmental',
-      IncidentClassification.operational => 'Operational',
-      IncidentClassification.logistics => 'Logistics',
-      IncidentClassification.medical => 'Medical',
-      IncidentClassification.comms => 'Comms',
     };
   }
 }

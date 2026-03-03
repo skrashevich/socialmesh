@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/legal/legal_constants.dart';
 import '../../../core/logging.dart';
 import '../models/aether_flight.dart';
@@ -179,7 +180,7 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
       initialDate: _departureDate ?? now,
       firstDate: now,
       lastDate: now.add(const Duration(days: 365)),
-      title: 'Departure Date',
+      title: context.l10n.aetherScheduleDepartureDateTitle,
     );
 
     if (date != null && mounted) {
@@ -195,7 +196,7 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
     final time = await TimePickerSheet.show(
       context,
       initialTime: _departureTime ?? TimeOfDay.now(),
-      title: 'Departure Time',
+      title: context.l10n.aetherScheduleDepartureTimeTitle,
     );
 
     if (time != null && mounted) {
@@ -211,7 +212,7 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
       initialDate: _arrivalDate ?? _departureDate ?? now,
       firstDate: now,
       lastDate: now.add(const Duration(days: 365)),
-      title: 'Arrival Date',
+      title: context.l10n.aetherScheduleArrivalDateTitle,
     );
 
     if (date != null && mounted) {
@@ -227,7 +228,7 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
     final time = await TimePickerSheet.show(
       context,
       initialTime: _arrivalTime ?? TimeOfDay.now(),
-      title: 'Arrival Time',
+      title: context.l10n.aetherScheduleArrivalTimeTitle,
     );
 
     if (time != null && mounted) {
@@ -241,12 +242,12 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
 
   String? _validateFlightNumber(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Enter flight number';
+      return context.l10n.aetherFormEnterFlightNumber;
     }
 
     final cleaned = value.toUpperCase().trim();
     if (!_flightNumberPattern.hasMatch(cleaned)) {
-      return 'Invalid format (e.g., UA123, EXS49MY)';
+      return context.l10n.aetherFormInvalidFlightFormat;
     }
 
     return null;
@@ -254,16 +255,16 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
 
   String? _validateAirportCode(String? value, String fieldName) {
     if (value == null || value.isEmpty) {
-      return 'Required';
+      return context.l10n.aetherFormRequired;
     }
 
     final cleaned = value.toUpperCase().trim();
     if (!_airportCodePattern.hasMatch(cleaned)) {
-      return 'Use 3-4 letter code';
+      return context.l10n.aetherFormUseLetterCode;
     }
 
     if (lookupAirport(cleaned) == null) {
-      return 'Unknown airport';
+      return context.l10n.aetherFormUnknownAirport;
     }
 
     return null;
@@ -307,12 +308,12 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
     );
 
     if (flightNumber.isEmpty) {
-      showErrorSnackBar(context, 'Enter a flight number first');
+      showErrorSnackBar(context, context.l10n.aetherValidationEnterFlightFirst);
       return;
     }
 
     if (!_flightNumberPattern.hasMatch(flightNumber)) {
-      showErrorSnackBar(context, 'Invalid flight number format');
+      showErrorSnackBar(context, context.l10n.aetherValidationInvalidFormat);
       return;
     }
 
@@ -370,7 +371,7 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
           );
           _isValidating = false;
         });
-        showErrorSnackBar(context, 'Failed to validate flight');
+        showErrorSnackBar(context, context.l10n.aetherValidationFailed);
       }
     }
   }
@@ -429,23 +430,24 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
 
     switch (result.status) {
       case FlightValidationStatus.active:
-        final altFmt = result.position?.altitudeFeet != null
-            ? NumberFormat(
-                '#,##0',
-              ).format(result.position!.altitudeFeet!.round())
-            : '';
-        showSuccessSnackBar(
-          context,
-          'Flight is currently active!${altFmt.isNotEmpty ? ' $altFmt ft' : ''}',
-        );
+        if (result.position?.altitudeFeet != null) {
+          showSuccessSnackBar(
+            context,
+            context.l10n.aetherValidationActiveAlt(
+              result.position!.altitudeFeet!.round(),
+            ),
+          );
+        } else {
+          showSuccessSnackBar(context, context.l10n.aetherValidationActive);
+        }
       case FlightValidationStatus.verified:
-        showSuccessSnackBar(context, 'Flight verified in OpenSky records');
+        showSuccessSnackBar(context, context.l10n.aetherValidationVerified);
       case FlightValidationStatus.pending:
         showInfoSnackBar(context, result.message);
       case FlightValidationStatus.notFound:
         showWarningSnackBar(context, result.message);
       case FlightValidationStatus.rateLimited:
-        showErrorSnackBar(context, 'Rate limited. Try again in a few minutes.');
+        showErrorSnackBar(context, context.l10n.aetherValidationRateLimited);
       case FlightValidationStatus.error:
         showErrorSnackBar(context, result.message);
     }
@@ -491,26 +493,29 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
     final arrAirport = _resolvedArrival;
     if (depAirport != null && arrAirport != null) {
       if (depAirport.iata == arrAirport.iata) {
-        showWarningSnackBar(
-          context,
-          'Departure and arrival cannot be the same airport',
-        );
+        showWarningSnackBar(context, context.l10n.aetherScheduleSameAirport);
         return;
       }
       final distKm = depAirport.distanceToKm(arrAirport);
       if (distKm < kMinRoutDistanceKm) {
         showWarningSnackBar(
           context,
-          '${depAirport.iata} and ${arrAirport.iata} are only '
-          '${distKm.round()} km apart — no commercial routes exist',
+          context.l10n.aetherScheduleTooClose(
+            depAirport.iata,
+            arrAirport.iata,
+            distKm.round(),
+          ),
         );
         return;
       }
       if (distKm > kMaxRouteDistanceKm) {
         showWarningSnackBar(
           context,
-          '${depAirport.iata} to ${arrAirport.iata} is '
-          '${_formatDistance(distKm)} — exceeds maximum aircraft range',
+          context.l10n.aetherScheduleTooFar(
+            depAirport.iata,
+            arrAirport.iata,
+            distKm.round(),
+          ),
         );
         return;
       }
@@ -520,7 +525,7 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
 
     final myNode = _getMyNode();
     if (myNode == null) {
-      showWarningSnackBar(context, 'Connect your Meshtastic device first');
+      showWarningSnackBar(context, context.l10n.aetherScheduleConnectDevice);
       return;
     }
 
@@ -532,7 +537,7 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
     final recentState = ref.read(aetherFlightsProvider);
     final activeState = ref.read(aetherActiveFlightsProvider);
     if (recentState is AsyncLoading && activeState is AsyncLoading) {
-      showWarningSnackBar(context, 'Loading flights, please try again');
+      showWarningSnackBar(context, context.l10n.aetherScheduleLoadingFlights);
       return;
     }
     final recentFlights = recentState.asData?.value ?? [];
@@ -556,15 +561,20 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
       final existing = conflicting.first;
       showWarningSnackBar(
         context,
-        '${myNode.displayName} already has an active flight '
-        '(${existing.flightNumber})',
+        context.l10n.aetherScheduleNodeHasActiveFlight(
+          myNode.displayName,
+          existing.flightNumber,
+        ),
       );
       return;
     }
 
     final departureDateTime = _buildDepartureDateTime();
     if (departureDateTime == null) {
-      showWarningSnackBar(context, 'Please select departure date and time');
+      showWarningSnackBar(
+        context,
+        context.l10n.aetherScheduleSelectDepartureTime,
+      );
       return;
     }
 
@@ -574,16 +584,13 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
     // Departure must not be in the past (allow 5 min grace for form filling)
     const departureGrace = Duration(minutes: 5);
     if (departureDateTime.isBefore(now.subtract(departureGrace))) {
-      showWarningSnackBar(context, 'Departure time is in the past');
+      showWarningSnackBar(context, context.l10n.aetherScheduleDepartureInPast);
       return;
     }
 
     // Departure must not be more than 365 days in the future
     if (departureDateTime.isAfter(now.add(const Duration(days: 365)))) {
-      showWarningSnackBar(
-        context,
-        'Departure cannot be more than a year from now',
-      );
+      showWarningSnackBar(context, context.l10n.aetherScheduleDepartureTooFar);
       return;
     }
 
@@ -592,7 +599,10 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
     if (arrivalDateTime != null) {
       // Arrival must be after departure
       if (!arrivalDateTime.isAfter(departureDateTime)) {
-        showWarningSnackBar(context, 'Arrival must be after departure');
+        showWarningSnackBar(
+          context,
+          context.l10n.aetherScheduleArrivalBeforeDeparture,
+        );
         return;
       }
 
@@ -601,8 +611,10 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
       if (flightDuration > const Duration(hours: 24)) {
         showWarningSnackBar(
           context,
-          'Flight duration exceeds 24 hours '
-          '(${flightDuration.inHours}h ${flightDuration.inMinutes % 60}m)',
+          context.l10n.aetherScheduleDurationTooLong(
+            flightDuration.inHours,
+            flightDuration.inMinutes % 60,
+          ),
         );
         return;
       }
@@ -611,7 +623,7 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
       if (flightDuration < const Duration(minutes: 5)) {
         showWarningSnackBar(
           context,
-          'Flight duration must be at least 5 minutes',
+          context.l10n.aetherScheduleDurationTooShort,
         );
         return;
       }
@@ -619,7 +631,10 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
 
     final user = ref.read(currentUserProvider);
     if (user == null) {
-      showSignInRequiredSnackBar(context, 'Sign in to schedule a flight');
+      showSignInRequiredSnackBar(
+        context,
+        context.l10n.aetherScheduleSignInRequired,
+      );
       return;
     }
 
@@ -668,12 +683,16 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
       // Share to Aether API in background (non-blocking)
       _shareFlightInBackground(activeFlight);
 
-      final status = activeFlight.isActive ? 'in flight!' : 'scheduled!';
       Navigator.of(context).pop(true);
-      showSuccessSnackBar(context, 'Flight $status');
+      showSuccessSnackBar(
+        context,
+        activeFlight.isActive
+            ? context.l10n.aetherScheduleSuccessInFlight
+            : context.l10n.aetherScheduleSuccessScheduled,
+      );
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Error: $e');
+        showErrorSnackBar(context, context.l10n.aetherScheduleError('$e'));
       }
     } finally {
       safeSetState(() => _isSaving = false);
@@ -717,7 +736,7 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
     return GlassScaffold.body(
       bottomNavigationBar: _buildBottomBar(myNode, gradientColors),
       titleWidget: Text(
-        'Schedule Flight',
+        context.l10n.aetherScheduleTitle,
         style: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.w600,
@@ -731,7 +750,7 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
             color: context.textSecondary,
             size: 20,
           ),
-          tooltip: 'Your Responsibility',
+          tooltip: context.l10n.aetherScheduleResponsibilityTooltip,
           onPressed: () => LegalDocumentSheet.showTermsSection(
             context,
             LegalConstants.anchorAcceptableUse,
@@ -756,8 +775,7 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
                   children: [
                     // Info card
                     StatusBanner.accent(
-                      title:
-                          'Schedule your flight and share it on aether.socialmesh.app so the community can try to receive your signal!',
+                      title: context.l10n.aetherScheduleIntroBanner,
                       icon: Icons.flight,
                       margin: EdgeInsets.zero,
                     ),
@@ -776,7 +794,9 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
                     const SizedBox(height: AppTheme.spacing8),
 
                     // Flight Info Section
-                    _buildSectionHeader('Flight Information'),
+                    _buildSectionHeader(
+                      context.l10n.aetherScheduleSectionFlight,
+                    ),
                     const SizedBox(height: AppTheme.spacing12),
 
                     // Flight Number with Validation
@@ -791,10 +811,11 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
                           child: _buildAirportAutocomplete(
                             controller: _departureController,
                             focusNode: _departureFocusNode,
-                            label: 'From',
-                            hint: 'LAX',
+                            label: context.l10n.aetherScheduleFromLabel,
+                            hint: context.l10n.aetherScheduleFromHint,
                             icon: Icons.flight_takeoff,
-                            pickerTitle: 'Departure Airport',
+                            pickerTitle:
+                                context.l10n.aetherPickerDepartureTitle,
                             resolvedAirport: _resolvedDeparture,
                           ),
                         ),
@@ -811,7 +832,7 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
                               color: context.accentColor,
                               size: 22,
                             ),
-                            tooltip: 'Swap airports',
+                            tooltip: context.l10n.aetherScheduleSwapTooltip,
                             visualDensity: VisualDensity.compact,
                           ),
                         ),
@@ -819,10 +840,10 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
                           child: _buildAirportAutocomplete(
                             controller: _arrivalController,
                             focusNode: _arrivalFocusNode,
-                            label: 'To',
-                            hint: 'JFK',
+                            label: context.l10n.aetherScheduleToLabel,
+                            hint: context.l10n.aetherScheduleToHint,
                             icon: Icons.flight_land,
-                            pickerTitle: 'Arrival Airport',
+                            pickerTitle: context.l10n.aetherPickerArrivalTitle,
                             resolvedAirport: _resolvedArrival,
                           ),
                         ),
@@ -834,17 +855,19 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
                     const SizedBox(height: AppTheme.spacing24),
 
                     // Departure Time Section
-                    _buildSectionHeader('Departure Time'),
+                    _buildSectionHeader(
+                      context.l10n.aetherScheduleSectionDeparture,
+                    ),
                     const SizedBox(height: AppTheme.spacing12),
 
                     Row(
                       children: [
                         Expanded(
                           child: _buildDateButton(
-                            label: 'Date',
+                            label: context.l10n.aetherScheduleDateLabel,
                             value: _departureDate != null
                                 ? dateFormat.format(_departureDate!)
-                                : 'Select',
+                                : context.l10n.aetherScheduleSelect,
                             icon: Icons.calendar_today,
                             onTap: _selectDepartureDate,
                             onClear: _departureDate != null
@@ -855,7 +878,7 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
                         const SizedBox(width: AppTheme.spacing16),
                         Expanded(
                           child: _buildDateButton(
-                            label: 'Time',
+                            label: context.l10n.aetherScheduleTimeLabel,
                             value: _departureTime != null
                                 ? timeFormat.format(
                                     DateTime(
@@ -866,7 +889,7 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
                                       _departureTime!.minute,
                                     ),
                                   )
-                                : 'Select',
+                                : context.l10n.aetherScheduleSelect,
                             icon: Icons.access_time,
                             onTap: _selectDepartureTime,
                             onClear: _departureTime != null
@@ -879,17 +902,19 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
                     const SizedBox(height: AppTheme.spacing24),
 
                     // Arrival Time Section (optional)
-                    _buildSectionHeader('Arrival Time (Optional)'),
+                    _buildSectionHeader(
+                      context.l10n.aetherScheduleSectionArrival,
+                    ),
                     const SizedBox(height: AppTheme.spacing12),
 
                     Row(
                       children: [
                         Expanded(
                           child: _buildDateButton(
-                            label: 'Date',
+                            label: context.l10n.aetherScheduleDateLabel,
                             value: _arrivalDate != null
                                 ? dateFormat.format(_arrivalDate!)
-                                : 'Select',
+                                : context.l10n.aetherScheduleSelect,
                             icon: Icons.calendar_today,
                             onTap: _selectArrivalDate,
                             onClear: _arrivalDate != null
@@ -900,7 +925,7 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
                         const SizedBox(width: AppTheme.spacing16),
                         Expanded(
                           child: _buildDateButton(
-                            label: 'Time',
+                            label: context.l10n.aetherScheduleTimeLabel,
                             value: _arrivalTime != null
                                 ? timeFormat.format(
                                     DateTime(
@@ -911,7 +936,7 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
                                       _arrivalTime!.minute,
                                     ),
                                   )
-                                : 'Select',
+                                : context.l10n.aetherScheduleSelect,
                             icon: Icons.access_time,
                             onTap: _selectArrivalTime,
                             onClear: _arrivalTime != null
@@ -924,13 +949,15 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
                     const SizedBox(height: AppTheme.spacing24),
 
                     // Notes Section
-                    _buildSectionHeader('Additional Notes (Optional)'),
+                    _buildSectionHeader(
+                      context.l10n.aetherScheduleSectionNotes,
+                    ),
                     const SizedBox(height: AppTheme.spacing12),
 
                     _buildTextField(
                       controller: _notesController,
-                      label: 'Notes',
-                      hint: 'Window seat, left side. Running at 20dBm.',
+                      label: context.l10n.aetherScheduleNotesLabel,
+                      hint: context.l10n.aetherScheduleNotesHint,
                       icon: Icons.notes,
                       maxLines: 3,
                       maxLength: _maxNotesLength,
@@ -1019,7 +1046,7 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
                         ),
                         const SizedBox(width: AppTheme.spacing10),
                         Text(
-                          'Schedule Flight',
+                          context.l10n.aetherScheduleButton,
                           style: TextStyle(
                             color: myNode != null
                                 ? Colors.white
@@ -1074,7 +1101,9 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  isConnected ? myNode.displayName : 'No Device Connected',
+                  isConnected
+                      ? myNode.displayName
+                      : context.l10n.aetherScheduleNoDeviceConnected,
                   style: TextStyle(
                     color: isConnected
                         ? context.textPrimary
@@ -1087,7 +1116,7 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
                   isConnected
                       ? (myNode.userId ??
                             '!${myNode.nodeNum.toRadixString(16)}')
-                      : 'Connect to schedule a flight',
+                      : context.l10n.aetherScheduleConnectToSchedule,
                   style: TextStyle(color: context.textTertiary, fontSize: 12),
                 ),
               ],
@@ -1182,7 +1211,7 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
                             color: this.context.textTertiary,
                             size: 20,
                           ),
-                          tooltip: 'Browse airports',
+                          tooltip: context.l10n.aetherScheduleBrowseTooltip,
                         ),
                         filled: true,
                         fillColor: this.context.card,
@@ -1284,7 +1313,7 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
       return _buildRouteChip(
         icon: Icons.error_outline,
         color: AppTheme.errorRed,
-        text: 'Same airport',
+        text: context.l10n.aetherScheduleRouteSameAirport,
       );
     }
 
@@ -1294,9 +1323,11 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
       return _buildRouteChip(
         icon: Icons.error_outline,
         color: AppTheme.errorRed,
-        text:
-            '${dep.iata} and ${arr.iata} are ${distKm.round()} km apart — '
-            'too close for a commercial flight',
+        text: context.l10n.aetherScheduleRouteTooClose(
+          dep.iata,
+          arr.iata,
+          distKm.round(),
+        ),
       );
     }
 
@@ -1304,7 +1335,7 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
       return _buildRouteChip(
         icon: Icons.error_outline,
         color: AppTheme.errorRed,
-        text: '${_formatDistance(distKm)} — exceeds maximum aircraft range',
+        text: context.l10n.aetherScheduleRouteExceedsRange(distKm.round()),
       );
     }
 
@@ -1442,7 +1473,7 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
                   Text(
                     value,
                     style: TextStyle(
-                      color: value == 'Select'
+                      color: value == context.l10n.aetherScheduleSelect
                           ? context.textTertiary
                           : context.textPrimary,
                       fontSize: 14,
@@ -1499,13 +1530,15 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
 
       // Show feedback with the selected flight's altitude
       if (result.altitudeFeet != null && !result.onGround) {
-        final altFmt = NumberFormat(
-          '#,##0',
-        ).format(result.altitudeFeet!.round());
-        showSuccessSnackBar(context, 'Flight selected! $altFmt ft');
+        showSuccessSnackBar(
+          context,
+          context.l10n.aetherScheduleFlightSelectedAlt(
+            result.altitudeFeet!.round(),
+          ),
+        );
         HapticFeedback.mediumImpact();
       } else if (result.onGround) {
-        showInfoSnackBar(context, 'Flight is currently on the ground');
+        showInfoSnackBar(context, context.l10n.aetherScheduleFlightOnGround);
         HapticFeedback.lightImpact();
       }
 
@@ -1648,7 +1681,10 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
           parts.add(routeInfo.estArrivalAirport!);
         }
         if (parts.isNotEmpty) {
-          showSuccessSnackBar(context, 'Route found: ${parts.join(" → ")}');
+          showSuccessSnackBar(
+            context,
+            context.l10n.aetherScheduleRouteFound(parts.join(' → ')),
+          );
         }
       }
     } catch (e) {
@@ -1710,8 +1746,8 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
             setState(() {});
           },
           decoration: InputDecoration(
-            labelText: 'Flight Number',
-            hintText: 'UA123',
+            labelText: context.l10n.aetherScheduleFlightNumberLabel,
+            hintText: context.l10n.aetherScheduleFlightNumberHint,
             labelStyle: TextStyle(color: context.textSecondary),
             hintStyle: TextStyle(
               color: context.textTertiary,
@@ -1737,8 +1773,8 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
                         ? null
                         : _validateFlight,
                     tooltip: _validationResult?.isValid ?? false
-                        ? 'Already validated'
-                        : 'Validate flight',
+                        ? context.l10n.aetherScheduleAlreadyValidatedTooltip
+                        : context.l10n.aetherScheduleValidateFlightTooltip,
                   ),
                 // Search button — gradient pill, always visible
                 _buildSearchPill(),
@@ -1813,7 +1849,7 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
     );
 
     return Tooltip(
-      message: 'Search flights',
+      message: context.l10n.aetherScheduleSearchTooltip,
       child: GestureDetector(
         onTap: _searchFlights,
         child: AnimatedGradientBackground(
@@ -1823,14 +1859,14 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
           borderRadius: BorderRadius.circular(AppTheme.radius16),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-            child: const Row(
+            child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.search, size: 16, color: Colors.white),
-                SizedBox(width: AppTheme.spacing4),
+                const Icon(Icons.search, size: 16, color: Colors.white),
+                const SizedBox(width: AppTheme.spacing4),
                 Text(
-                  'Search',
-                  style: TextStyle(
+                  context.l10n.aetherScheduleSearchButton,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
@@ -1927,7 +1963,7 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
               ),
               const SizedBox(width: AppTheme.spacing8),
               Text(
-                'Tips for best reception',
+                context.l10n.aetherScheduleTipsTitle,
                 style: TextStyle(
                   color: context.textPrimary,
                   fontWeight: FontWeight.w600,
@@ -1936,10 +1972,10 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
             ],
           ),
           const SizedBox(height: AppTheme.spacing12),
-          _buildTip('Get a window seat if possible'),
-          _buildTip('Keep node near the window during flight'),
-          _buildTip('Higher TX power = longer range'),
-          _buildTip('Let others know your frequency/region'),
+          _buildTip(context.l10n.aetherScheduleTip1),
+          _buildTip(context.l10n.aetherScheduleTip2),
+          _buildTip(context.l10n.aetherScheduleTip3),
+          _buildTip(context.l10n.aetherScheduleTip4),
         ],
       ),
     );
@@ -1989,7 +2025,7 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Incomplete Flight Data',
+                  context.l10n.aetherScheduleIncompleteTitle,
                   style: TextStyle(
                     color: context.textPrimary,
                     fontWeight: FontWeight.w600,
@@ -1998,7 +2034,7 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
                 ),
                 const SizedBox(height: AppTheme.spacing6),
                 Text(
-                  'Could not auto-fill $missingText from OpenSky Network. Please enter these details manually below.',
+                  context.l10n.aetherScheduleIncompleteMessage(missingText),
                   style: TextStyle(color: context.textSecondary, fontSize: 13),
                 ),
               ],
@@ -2344,7 +2380,10 @@ class _LiveFlightStickyHeaderState extends State<_LiveFlightStickyHeader>
                                 '${numFmt.format(pos.velocityKnots!.round())} kts',
                           ),
                         if (pos.onGround)
-                          InfoChip(icon: Icons.flight_land, label: 'On ground'),
+                          InfoChip(
+                            icon: Icons.flight_land,
+                            label: context.l10n.aetherSearchOnGround,
+                          ),
                         if (pos.hasPosition)
                           InfoChip(
                             icon: Icons.location_on,

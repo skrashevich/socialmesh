@@ -10,6 +10,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/map_config.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
@@ -38,14 +39,6 @@ import '../../utils/snackbar.dart';
 enum _PositionFilter { all, today, thisWeek, goodFix, myNode }
 
 extension _PositionFilterLabel on _PositionFilter {
-  String get label => switch (this) {
-    _PositionFilter.all => 'All',
-    _PositionFilter.today => 'Today',
-    _PositionFilter.thisWeek => 'This Week',
-    _PositionFilter.goodFix => 'Good Fix',
-    _PositionFilter.myNode => 'My Node',
-  };
-
   IconData? get icon => switch (this) {
     _PositionFilter.all => null,
     _PositionFilter.today => Icons.today,
@@ -188,12 +181,13 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
   // -----------------------------------------------------------------------
 
   Future<void> _selectDateRange() async {
+    final l10n = context.l10n;
     final start = await DatePickerSheet.show(
       context,
       initialDate: _customStartDate ?? DateTime.now(),
       firstDate: DateTime(2020),
       lastDate: DateTime.now(),
-      title: 'Start Date',
+      title: l10n.telemetryStartDate,
     );
     if (!mounted || start == null) return;
 
@@ -202,7 +196,7 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
       initialDate: _customEndDate ?? start,
       firstDate: start,
       lastDate: DateTime.now(),
-      title: 'End Date',
+      title: l10n.telemetryEndDate,
     );
     if (!mounted || end == null) return;
 
@@ -244,7 +238,7 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
 
     return [
       StatusFilterChip(
-        label: _PositionFilter.all.label,
+        label: context.l10n.telemetryFilterAll,
         count: allLogs.length,
         isSelected: _activeFilter == _PositionFilter.all,
         onTap: () {
@@ -253,7 +247,7 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
         },
       ),
       StatusFilterChip(
-        label: _PositionFilter.today.label,
+        label: context.l10n.telemetryPositionFilterToday,
         count: todayCount,
         isSelected: _activeFilter == _PositionFilter.today,
         icon: _PositionFilter.today.icon,
@@ -264,7 +258,7 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
         },
       ),
       StatusFilterChip(
-        label: _PositionFilter.thisWeek.label,
+        label: context.l10n.telemetryPositionFilterThisWeek,
         count: weekCount,
         isSelected: _activeFilter == _PositionFilter.thisWeek,
         icon: _PositionFilter.thisWeek.icon,
@@ -275,7 +269,7 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
         },
       ),
       StatusFilterChip(
-        label: _PositionFilter.goodFix.label,
+        label: context.l10n.telemetryPositionFilterGoodFix,
         count: goodFixCount,
         isSelected: _activeFilter == _PositionFilter.goodFix,
         icon: _PositionFilter.goodFix.icon,
@@ -287,7 +281,7 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
       ),
       if (myNodeNum != null)
         StatusFilterChip(
-          label: _PositionFilter.myNode.label,
+          label: context.l10n.telemetryPositionFilterMyNode,
           count: myNodeCount,
           isSelected: _activeFilter == _PositionFilter.myNode,
           icon: _PositionFilter.myNode.icon,
@@ -309,6 +303,7 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
   // -----------------------------------------------------------------------
 
   Future<void> _exportCsv() async {
+    final l10n = context.l10n;
     safeSetState(() => _isExporting = true);
 
     try {
@@ -316,7 +311,7 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
       if (!mounted) return;
 
       if (logs.isEmpty) {
-        showInfoSnackBar(context, 'No position data to export');
+        showInfoSnackBar(context, l10n.telemetryPositionNoExportData);
         return;
       }
 
@@ -360,14 +355,17 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
 
       await shareFiles(
         [XFile(file.path)],
-        subject: 'Socialmesh Position Export',
+        subject: l10n.telemetryPositionExportSubject,
         context: context,
       );
 
       if (!mounted) return;
-      showSuccessSnackBar(context, 'Exported ${logs.length} positions');
+      showSuccessSnackBar(
+        context,
+        l10n.telemetryPositionExportedCount(logs.length),
+      );
     } catch (e) {
-      showErrorSnackBar(context, 'Export failed: $e');
+      showErrorSnackBar(context, l10n.telemetryExportFailed(e.toString()));
     } finally {
       if (mounted) {
         safeSetState(() => _isExporting = false);
@@ -380,12 +378,12 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
   // -----------------------------------------------------------------------
 
   Future<void> _confirmClearData() async {
+    final l10n = context.l10n;
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Clear Position Data',
-      message:
-          'This will permanently delete all position history for all nodes. This cannot be undone.',
-      confirmLabel: 'Clear',
+      title: l10n.telemetryPositionClearTitle,
+      message: l10n.telemetryPositionClearMessage,
+      confirmLabel: l10n.telemetryPositionClearLabel,
       isDestructive: true,
     );
 
@@ -398,9 +396,12 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
       ref.invalidate(positionLogsProvider);
 
       if (!mounted) return;
-      safeShowSnackBar('Position data cleared', type: SnackBarType.success);
+      safeShowSnackBar(
+        l10n.telemetryPositionCleared,
+        type: SnackBarType.success,
+      );
     } catch (e) {
-      showErrorSnackBar(context, 'Failed to clear data: $e');
+      showErrorSnackBar(context, l10n.telemetryFailedToClear(e.toString()));
     }
   }
 
@@ -420,12 +421,14 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
         stepKeys: const {},
         child: GlassScaffold(
           resizeToAvoidBottomInset: false,
-          title: 'Position',
+          title: context.l10n.telemetryPositionTitle,
           actions: [
             // Map / list toggle
             IconButton(
               icon: Icon(_showMap ? Icons.list : Icons.map),
-              tooltip: _showMap ? 'List view' : 'Map view',
+              tooltip: _showMap
+                  ? context.l10n.telemetryPositionListView
+                  : context.l10n.telemetryPositionMapView,
               onPressed: () {
                 HapticFeedback.selectionClick();
                 safeSetState(() => _showMap = !_showMap);
@@ -479,7 +482,7 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
                         ),
                       ),
                       const SizedBox(width: AppTheme.spacing12),
-                      const Text('Date range'),
+                      Text(context.l10n.telemetryPositionDateRange),
                     ],
                   ),
                 ),
@@ -490,7 +493,7 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
                     enabled: false,
                     height: 32,
                     child: Text(
-                      'Map Style',
+                      context.l10n.telemetryPositionMapStyle,
                       style: TextStyle(
                         fontSize: 12,
                         color: context.textTertiary,
@@ -531,7 +534,11 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
                         color: context.textSecondary,
                       ),
                       const SizedBox(width: AppTheme.spacing12),
-                      Text(_isExporting ? 'Exporting...' : 'Export CSV'),
+                      Text(
+                        _isExporting
+                            ? context.l10n.telemetryExporting
+                            : context.l10n.telemetryExportCsv,
+                      ),
                     ],
                   ),
                 ),
@@ -547,7 +554,7 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
                       ),
                       const SizedBox(width: AppTheme.spacing12),
                       Text(
-                        'Clear Data',
+                        context.l10n.telemetryClearData,
                         style: TextStyle(color: AppTheme.errorRed),
                       ),
                     ],
@@ -555,20 +562,20 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
                 ),
                 const PopupMenuDivider(),
                 // Help
-                const PopupMenuItem<String>(
+                PopupMenuItem<String>(
                   value: 'help',
                   child: ListTile(
-                    leading: Icon(Icons.help_outline),
-                    title: Text('Help'),
+                    leading: const Icon(Icons.help_outline),
+                    title: Text(context.l10n.telemetryHelp),
                     contentPadding: EdgeInsets.zero,
                   ),
                 ),
                 // Settings
-                const PopupMenuItem<String>(
+                PopupMenuItem<String>(
                   value: 'settings',
                   child: ListTile(
-                    leading: Icon(Icons.settings_outlined),
-                    title: Text('Settings'),
+                    leading: const Icon(Icons.settings_outlined),
+                    title: Text(context.l10n.telemetrySettings),
                     contentPadding: EdgeInsets.zero,
                   ),
                 ),
@@ -579,8 +586,11 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
             logsAsync.when(
               loading: () =>
                   const SliverFillRemaining(child: ScreenLoadingIndicator()),
-              error: (e, s) =>
-                  SliverFillRemaining(child: Center(child: Text('Error: $e'))),
+              error: (e, s) => SliverFillRemaining(
+                child: Center(
+                  child: Text(context.l10n.telemetryError(e.toString())),
+                ),
+              ),
               data: (logs) {
                 final filtered = _filterLogs(logs)
                   ..sort((a, b) => b.timestamp.compareTo(a.timestamp));
@@ -596,7 +606,7 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
                         searchQuery: _searchQuery,
                         onSearchChanged: (value) =>
                             safeSetState(() => _searchQuery = value),
-                        hintText: 'Search by node name',
+                        hintText: context.l10n.telemetrySearchByNodeName,
                         textScaler: MediaQuery.textScalerOf(context),
                         rebuildKey: Object.hashAll([
                           _activeFilter,
@@ -641,8 +651,8 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
                               const SizedBox(height: AppTheme.spacing16),
                               Text(
                                 _hasActiveFilters
-                                    ? 'No positions match filters'
-                                    : 'No position history',
+                                    ? context.l10n.telemetryPositionNoMatch
+                                    : context.l10n.telemetryPositionNoHistory,
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: context.textSecondary,
@@ -656,7 +666,9 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
                                     Icons.filter_alt_off,
                                     size: 18,
                                   ),
-                                  label: const Text('Clear all filters'),
+                                  label: Text(
+                                    context.l10n.telemetryClearAllFilters,
+                                  ),
                                 ),
                               ],
                             ],
@@ -915,7 +927,7 @@ class _PositionMapViewState extends State<_PositionMapView> {
             Icon(Icons.map_outlined, size: 48, color: context.textTertiary),
             const SizedBox(height: AppTheme.spacing12),
             Text(
-              'No positions to display',
+              context.l10n.telemetryPositionNoDisplay,
               style: TextStyle(color: context.textSecondary),
             ),
           ],
@@ -1123,7 +1135,9 @@ class _PositionMapViewState extends State<_PositionMapView> {
                       _selectedNodeNum != null
                           ? (widget.nodes[_selectedNodeNum]?.displayName ??
                                 '!${_selectedNodeNum!.toRadixString(16).toUpperCase()}')
-                          : '${_nodeNums.length} nodes',
+                          : context.l10n.telemetryPositionNodesCount(
+                              _nodeNums.length,
+                            ),
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.w500,
@@ -1207,17 +1221,17 @@ class _PositionMapViewState extends State<_PositionMapView> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         _StatItem(
-                          label: 'Points',
+                          label: context.l10n.telemetryPositionStatPoints,
                           value: '${logs.length}',
                           icon: Icons.location_on,
                         ),
                         _StatItem(
-                          label: 'Nodes',
+                          label: context.l10n.telemetryPositionStatNodes,
                           value: '$uniqueNodes',
                           icon: Icons.device_hub,
                         ),
                         _StatItem(
-                          label: 'Distance',
+                          label: context.l10n.telemetryPositionStatDistance,
                           value: _formatDistance(_calculateTotalDistance(logs)),
                           icon: Icons.straighten,
                         ),
@@ -1325,7 +1339,7 @@ class _PositionNodeListPanel extends StatelessWidget {
     final bottomPadding = MediaQuery.of(context).padding.bottom;
 
     return MapNodeDrawer(
-      title: 'Nodes',
+      title: context.l10n.telemetryPositionDrawerTitle,
       headerIcon: Icons.hub,
       itemCount: nodeNums.length,
       onClose: onClose,
@@ -1374,7 +1388,7 @@ class _PositionNodeListPanel extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'All Nodes',
+                              context.l10n.telemetryPositionAllNodesOption,
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
@@ -1385,7 +1399,7 @@ class _PositionNodeListPanel extends StatelessWidget {
                             ),
                             const SizedBox(height: AppTheme.spacing2),
                             Text(
-                              'Show positions from all nodes',
+                              context.l10n.telemetryPositionAllNodesDescription,
                               style: TextStyle(
                                 fontSize: 11,
                                 color: context.textTertiary,
@@ -1498,7 +1512,9 @@ class _PositionNodeListPanel extends StatelessWidget {
                                             height: AppTheme.spacing2,
                                           ),
                                           Text(
-                                            '$count position${count == 1 ? '' : 's'}',
+                                            context.l10n.telemetryPositionCount(
+                                              count,
+                                            ),
                                             style: TextStyle(
                                               fontSize: 11,
                                               color: context.textTertiary,

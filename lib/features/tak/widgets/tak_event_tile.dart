@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../models/tak_event.dart';
 import '../utils/cot_affiliation.dart';
 import 'package:socialmesh/core/theme.dart';
@@ -21,7 +22,7 @@ class TakEventTile extends StatelessWidget {
     final isStale = event.isStale;
     final affiliation = parseAffiliation(event.type);
     final affiliationColor = affiliation.color;
-    final age = _formatAge(event.receivedUtcMs);
+    final age = _formatAge(event.receivedUtcMs, context);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
@@ -99,14 +100,16 @@ class TakEventTile extends StatelessWidget {
                         children: [
                           _affiliationChip(
                             context,
-                            affiliation.label,
+                            affiliation.displayLabel(context.l10n),
                             affiliationColor,
                           ),
                           _chip(context, Icons.access_time, age),
                           _chip(
                             context,
                             isStale ? Icons.timer_off : Icons.timer,
-                            isStale ? 'Stale' : 'Active',
+                            isStale
+                                ? context.l10n.takEventTileStale
+                                : context.l10n.takEventTileActive,
                           ),
                           if (event.callsign != null)
                             _chip(context, Icons.badge, event.callsign!),
@@ -183,10 +186,15 @@ class TakEventTile extends StatelessWidget {
     );
   }
 
-  static String _formatAge(int receivedUtcMs) {
+  static String _formatAge(int receivedUtcMs, BuildContext context) {
+    final l10n = context.l10n;
     final age = DateTime.now().millisecondsSinceEpoch - receivedUtcMs;
-    if (age < 60000) return '${(age / 1000).round()}s ago';
-    if (age < 3600000) return '${(age / 60000).round()}m ago';
-    return '${(age / 3600000).round()}h ago';
+    if (age < 60000) {
+      return l10n.takEventTileRelativeTimeSeconds((age / 1000).round());
+    }
+    if (age < 3600000) {
+      return l10n.takEventTileRelativeTimeMinutes((age / 60000).round());
+    }
+    return l10n.takEventTileRelativeTimeHours((age / 3600000).round());
   }
 }

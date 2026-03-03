@@ -8,6 +8,7 @@ import '../../settings/account_subscriptions_screen.dart';
 
 import '../../../core/constants.dart';
 import '../../../core/help/help_content.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/logging.dart';
 import '../../../core/theme.dart';
 import '../../../providers/auth_providers.dart';
@@ -133,7 +134,7 @@ class _TakScreenState extends ConsumerState<TakScreen> with LifecycleSafeMixin {
                 ),
                 const SizedBox(width: AppTheme.spacing8),
                 Text(
-                  _helpTitleForKey(key),
+                  _localizedHelpTitleForKey(key),
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
               ],
@@ -154,16 +155,17 @@ class _TakScreenState extends ConsumerState<TakScreen> with LifecycleSafeMixin {
     );
   }
 
-  static String _helpTitleForKey(String key) {
+  String _localizedHelpTitleForKey(String key) {
+    final l10n = context.l10n;
     switch (key) {
       case 'status':
-        return 'Connection Status';
+        return l10n.takScreenHelpTitleStatus;
       case 'filters':
-        return 'Filters';
+        return l10n.takScreenHelpTitleFilters;
       case 'settings':
-        return 'Settings';
+        return l10n.takScreenHelpTitleSettings;
       default:
-        return 'Info';
+        return l10n.takScreenHelpTitleDefault;
     }
   }
 
@@ -194,9 +196,9 @@ class _TakScreenState extends ConsumerState<TakScreen> with LifecycleSafeMixin {
 
     // Stale mode label and icon for the cycle chip
     final staleModeLabel = switch (filter.staleMode) {
-      TakStaleMode.all => 'Status: All',
-      TakStaleMode.activeOnly => 'Active Only',
-      TakStaleMode.staleOnly => 'Stale Only',
+      TakStaleMode.all => context.l10n.takScreenStaleModeAll,
+      TakStaleMode.activeOnly => context.l10n.takScreenStaleModeActiveOnly,
+      TakStaleMode.staleOnly => context.l10n.takScreenStaleModeStaleOnly,
     };
     final staleModeIcon = switch (filter.staleMode) {
       TakStaleMode.all => Icons.filter_list,
@@ -214,7 +216,7 @@ class _TakScreenState extends ConsumerState<TakScreen> with LifecycleSafeMixin {
       stepKeys: const {},
       child: GlassScaffold.body(
         resizeToAvoidBottomInset: false,
-        title: 'TAK Gateway',
+        title: context.l10n.takScreenTitle,
         actions: [
           IconButton(
             icon: Icon(
@@ -229,10 +231,10 @@ class _TakScreenState extends ConsumerState<TakScreen> with LifecycleSafeMixin {
             ),
             onPressed: isSignedIn ? _toggleConnection : null,
             tooltip: !isSignedIn
-                ? 'Sign in to connect'
+                ? context.l10n.takScreenTooltipSignInToConnect
                 : connectionState == TakConnectionState.connected
-                ? 'Disconnect'
-                : 'Connect',
+                ? context.l10n.takScreenTooltipDisconnect
+                : context.l10n.takScreenTooltipConnect,
           ),
           IcoHelpAppBarButton(topicId: 'tak_gateway_overview'),
           AppBarOverflowMenu<String>(
@@ -254,23 +256,23 @@ class _TakScreenState extends ConsumerState<TakScreen> with LifecycleSafeMixin {
               }
             },
             itemBuilder: (context) => [
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'dashboard',
                 child: Row(
                   children: [
-                    Icon(Icons.dashboard_outlined, size: 18),
-                    SizedBox(width: AppTheme.spacing8),
-                    Text('SA Dashboard'),
+                    const Icon(Icons.dashboard_outlined, size: 18),
+                    const SizedBox(width: AppTheme.spacing8),
+                    Text(context.l10n.takScreenOverflowDashboard),
                   ],
                 ),
               ),
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'settings',
                 child: Row(
                   children: [
-                    Icon(Icons.settings, size: 18),
-                    SizedBox(width: AppTheme.spacing8),
-                    Text('TAK Settings'),
+                    const Icon(Icons.settings, size: 18),
+                    const SizedBox(width: AppTheme.spacing8),
+                    Text(context.l10n.takScreenOverflowSettings),
                   ],
                 ),
               ),
@@ -298,10 +300,10 @@ class _TakScreenState extends ConsumerState<TakScreen> with LifecycleSafeMixin {
                 onSearchChanged: (value) {
                   ref.read(takFilterProvider.notifier).setSearchQuery(value);
                 },
-                hintText: 'Search callsign or UID',
+                hintText: context.l10n.takScreenSearchHint,
                 filterChips: [
                   StatusFilterChip(
-                    label: 'All',
+                    label: context.l10n.takScreenFilterAll,
                     count: allEvents.length,
                     isSelected: !filter.isActive,
                     onTap: () {
@@ -311,7 +313,7 @@ class _TakScreenState extends ConsumerState<TakScreen> with LifecycleSafeMixin {
                   ),
                   for (final aff in _primaryAffiliations)
                     StatusFilterChip(
-                      label: aff.label,
+                      label: aff.displayLabel(context.l10n),
                       count: _countByAffiliation(allEvents, aff),
                       isSelected: filter.affiliations.contains(aff),
                       color: aff.color,
@@ -354,7 +356,7 @@ class _TakScreenState extends ConsumerState<TakScreen> with LifecycleSafeMixin {
                               ),
                               const SizedBox(height: AppTheme.spacing24),
                               Text(
-                                'No TAK Entities',
+                                context.l10n.takScreenEmptyTitle,
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
@@ -364,14 +366,11 @@ class _TakScreenState extends ConsumerState<TakScreen> with LifecycleSafeMixin {
                               const SizedBox(height: AppTheme.spacing8),
                               Text(
                                 !isSignedIn
-                                    ? 'Sign in and connect to start '
-                                          'receiving live CoT entities.'
+                                    ? context.l10n.takScreenEmptySignIn
                                     : connectionState ==
                                           TakConnectionState.connected
-                                    ? 'Listening for CoT events from '
-                                          'the TAK Gateway...'
-                                    : 'Connect to the TAK Gateway to '
-                                          'start streaming CoT entities.',
+                                    ? context.l10n.takScreenEmptyListening
+                                    : context.l10n.takScreenEmptyDisconnected,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 14,
@@ -395,7 +394,9 @@ class _TakScreenState extends ConsumerState<TakScreen> with LifecycleSafeMixin {
                                     Icons.person_outline,
                                     size: 18,
                                   ),
-                                  label: const Text('Sign In to Connect'),
+                                  label: Text(
+                                    context.l10n.takScreenButtonSignIn,
+                                  ),
                                 )
                               else if (connectionState !=
                                   TakConnectionState.connected)
@@ -405,7 +406,9 @@ class _TakScreenState extends ConsumerState<TakScreen> with LifecycleSafeMixin {
                                     _toggleConnection();
                                   },
                                   icon: const Icon(Icons.link, size: 18),
-                                  label: const Text('Connect'),
+                                  label: Text(
+                                    context.l10n.takScreenButtonConnect,
+                                  ),
                                 ),
                             ],
                           ),

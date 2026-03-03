@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/glass_scaffold.dart';
 import '../../models/telemetry_log.dart';
@@ -22,10 +23,10 @@ class DetectionSensorLogScreen extends ConsumerWidget {
         : ref.watch(detectionSensorLogsProvider);
     final nodes = ref.watch(nodesProvider);
     final node = nodeNum != null ? nodes[nodeNum] : null;
-    final nodeName = node?.displayName ?? 'All Nodes';
+    final nodeName = node?.displayName ?? context.l10n.telemetryAllNodes;
 
     return GlassScaffold(
-      title: 'Detection Sensor Log',
+      title: context.l10n.telemetryDetectionTitle,
       slivers: [
         SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -46,7 +47,7 @@ class DetectionSensorLogScreen extends ConsumerWidget {
               return SliverFillRemaining(
                 child: _buildEmptyState(
                   context,
-                  'No sensor events recorded yet',
+                  context.l10n.telemetryDetectionNoData,
                 ),
               );
             }
@@ -64,8 +65,11 @@ class DetectionSensorLogScreen extends ConsumerWidget {
           },
           loading: () =>
               const SliverFillRemaining(child: ScreenLoadingIndicator()),
-          error: (e, _) =>
-              SliverFillRemaining(child: Center(child: Text('Error: $e'))),
+          error: (e, _) => SliverFillRemaining(
+            child: Center(
+              child: Text(context.l10n.telemetryError(e.toString())),
+            ),
+          ),
         ),
       ],
     );
@@ -86,7 +90,7 @@ class DetectionSensorLogScreen extends ConsumerWidget {
           ),
           const SizedBox(height: AppTheme.spacing8),
           Text(
-            'Detection sensors report motion and presence',
+            context.l10n.telemetryDetectionDescription,
             style: context.bodySecondaryStyle?.copyWith(
               color: context.textTertiary,
             ),
@@ -148,7 +152,9 @@ class _DetectionSensorCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      log.name.isNotEmpty ? log.name : 'Detection Sensor',
+                      log.name.isNotEmpty
+                          ? log.name
+                          : context.l10n.telemetryDetectionSensor,
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
@@ -190,7 +196,9 @@ class _DetectionBadge extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppTheme.radius8),
       ),
       child: Text(
-        detected ? 'DETECTED' : 'Clear',
+        detected
+            ? context.l10n.telemetryDetectionDetected
+            : context.l10n.telemetryDetectionClearBadge,
         style: TextStyle(
           fontSize: 11,
           fontWeight: FontWeight.w600,

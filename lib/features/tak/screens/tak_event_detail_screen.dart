@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/help/help_content.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/logging.dart';
 import '../../../core/widgets/app_bar_overflow_menu.dart';
 import '../../../core/widgets/app_bottom_sheet.dart';
@@ -67,7 +68,7 @@ class TakEventDetailScreen extends ConsumerWidget {
               Navigator.of(context).popUntil((route) => route.isFirst);
               ref.haptics.itemSelect();
             },
-            tooltip: 'Show on Map',
+            tooltip: context.l10n.takEventDetailTooltipShowOnMap,
           ),
           IconButton(
             icon: Icon(
@@ -78,7 +79,9 @@ class TakEventDetailScreen extends ConsumerWidget {
               await ref.read(takTrackingProvider.notifier).toggle(event.uid);
               ref.haptics.toggle();
             },
-            tooltip: isTracked ? 'Untrack' : 'Track',
+            tooltip: isTracked
+                ? context.l10n.takEventDetailTooltipUntrack
+                : context.l10n.takEventDetailTooltipTrack,
           ),
           IconButton(
             icon: const Icon(Icons.copy),
@@ -87,9 +90,9 @@ class TakEventDetailScreen extends ConsumerWidget {
                 'Copied event JSON to clipboard: uid=${event.uid}',
               );
               Clipboard.setData(ClipboardData(text: event.toJsonString()));
-              showInfoSnackBar(context, 'Event JSON copied');
+              showInfoSnackBar(context, context.l10n.takEventDetailJsonCopied);
             },
-            tooltip: 'Copy JSON',
+            tooltip: context.l10n.takEventDetailTooltipCopyJson,
           ),
           AppBarOverflowMenu<String>(
             onSelected: (value) {
@@ -107,13 +110,13 @@ class TakEventDetailScreen extends ConsumerWidget {
               }
             },
             itemBuilder: (context) => [
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'navigate',
                 child: Row(
                   children: [
-                    Icon(Icons.navigation_outlined, size: 18),
-                    SizedBox(width: AppTheme.spacing8),
-                    Text('Navigate to'),
+                    const Icon(Icons.navigation_outlined, size: 18),
+                    const SizedBox(width: AppTheme.spacing8),
+                    Text(context.l10n.takEventDetailNavigateTo),
                   ],
                 ),
               ),
@@ -134,87 +137,133 @@ class TakEventDetailScreen extends ConsumerWidget {
                   event: event,
                   theme: theme,
                   affiliationColor: affiliationColor,
-                  affiliationLabel: affiliation.label,
+                  affiliationLabel: affiliation.displayLabel(context.l10n),
                 ),
                 const SizedBox(height: AppTheme.spacing16),
-                _buildSection(theme, affiliationColor, 'Identity', [
-                  _row('UID', event.uid, dimStyle, valueStyle),
-                  _row('Type', event.type, dimStyle, valueStyle),
-                  _row(
-                    'Description',
-                    event.typeDescription,
-                    dimStyle,
-                    valueStyle,
-                  ),
-                  if (event.callsign != null)
-                    _row('Callsign', event.callsign!, dimStyle, valueStyle),
-                ], helpKey: 'identity'),
+                _buildSection(
+                  theme,
+                  affiliationColor,
+                  context.l10n.takEventDetailSectionIdentity,
+                  [
+                    _row(
+                      context.l10n.takEventDetailLabelUid,
+                      event.uid,
+                      dimStyle,
+                      valueStyle,
+                    ),
+                    _row(
+                      context.l10n.takEventDetailLabelType,
+                      event.type,
+                      dimStyle,
+                      valueStyle,
+                    ),
+                    _row(
+                      context.l10n.takEventDetailLabelDescription,
+                      event.localizedTypeDescription(context.l10n),
+                      dimStyle,
+                      valueStyle,
+                    ),
+                    if (event.callsign != null)
+                      _row(
+                        context.l10n.takEventDetailLabelCallsign,
+                        event.callsign!,
+                        dimStyle,
+                        valueStyle,
+                      ),
+                  ],
+                  helpKey: 'identity',
+                ),
                 const SizedBox(height: AppTheme.spacing8),
-                _buildSection(theme, affiliationColor, 'Position', [
-                  _row(
-                    'Latitude',
-                    event.lat.toStringAsFixed(6),
-                    dimStyle,
-                    valueStyle,
-                  ),
-                  _row(
-                    'Longitude',
-                    event.lon.toStringAsFixed(6),
-                    dimStyle,
-                    valueStyle,
-                  ),
-                ], helpKey: 'position'),
+                _buildSection(
+                  theme,
+                  affiliationColor,
+                  context.l10n.takEventDetailSectionPosition,
+                  [
+                    _row(
+                      context.l10n.takEventDetailLabelLatitude,
+                      event.lat.toStringAsFixed(6),
+                      dimStyle,
+                      valueStyle,
+                    ),
+                    _row(
+                      context.l10n.takEventDetailLabelLongitude,
+                      event.lon.toStringAsFixed(6),
+                      dimStyle,
+                      valueStyle,
+                    ),
+                  ],
+                  helpKey: 'position',
+                ),
                 if (event.hasMotionData) ...[
                   const SizedBox(height: AppTheme.spacing8),
-                  _buildSection(theme, affiliationColor, 'Motion', [
-                    _row('Speed', event.formattedSpeed, dimStyle, valueStyle),
-                    if (event.formattedCourse != null)
+                  _buildSection(
+                    theme,
+                    affiliationColor,
+                    context.l10n.takEventDetailSectionMotion,
+                    [
                       _row(
-                        'Course',
-                        event.formattedCourse!,
+                        context.l10n.takEventDetailLabelSpeed,
+                        event.localizedFormattedSpeed(context.l10n),
                         dimStyle,
                         valueStyle,
                       ),
-                    if (event.formattedAltitude != null)
-                      _row(
-                        'Altitude',
-                        event.formattedAltitude!,
-                        dimStyle,
-                        valueStyle,
-                      ),
-                  ], helpKey: 'motion'),
+                      if (event.formattedCourse != null)
+                        _row(
+                          context.l10n.takEventDetailLabelCourse,
+                          event.localizedFormattedCourse(context.l10n)!,
+                          dimStyle,
+                          valueStyle,
+                        ),
+                      if (event.formattedAltitude != null)
+                        _row(
+                          context.l10n.takEventDetailLabelAltitude,
+                          event.localizedFormattedAltitude(context.l10n)!,
+                          dimStyle,
+                          valueStyle,
+                        ),
+                    ],
+                    helpKey: 'motion',
+                  ),
                 ],
                 const SizedBox(height: AppTheme.spacing8),
-                _buildSection(theme, affiliationColor, 'Timestamps', [
-                  _row(
-                    'Event Time',
-                    _formatTimestamp(event.timeUtcMs),
-                    dimStyle,
-                    valueStyle,
-                  ),
-                  _row(
-                    'Stale Time',
-                    _formatTimestamp(event.staleUtcMs),
-                    dimStyle,
-                    valueStyle,
-                  ),
-                  _row(
-                    'Received',
-                    _formatTimestamp(event.receivedUtcMs),
-                    dimStyle,
-                    valueStyle,
-                  ),
-                  _row(
-                    'Status',
-                    event.isStale ? 'STALE' : 'ACTIVE',
-                    dimStyle,
-                    valueStyle?.copyWith(
-                      color: event.isStale
-                          ? AppTheme.errorRed
-                          : AppTheme.successGreen,
+                _buildSection(
+                  theme,
+                  affiliationColor,
+                  context.l10n.takEventDetailSectionTimestamps,
+                  [
+                    _row(
+                      context.l10n.takEventDetailLabelEventTime,
+                      _formatTimestamp(event.timeUtcMs),
+                      dimStyle,
+                      valueStyle,
                     ),
-                  ),
-                ], helpKey: 'timestamps'),
+                    _row(
+                      context.l10n.takEventDetailLabelStaleTime,
+                      _formatTimestamp(event.staleUtcMs),
+                      dimStyle,
+                      valueStyle,
+                    ),
+                    _row(
+                      context.l10n.takEventDetailLabelReceived,
+                      _formatTimestamp(event.receivedUtcMs),
+                      dimStyle,
+                      valueStyle,
+                    ),
+                    _row(
+                      context.l10n.takEventDetailLabelStatus,
+                      event.isStale
+                          ? context.l10n.takEventDetailStatusStale
+                          : context.l10n.takEventDetailStatusActive,
+                      dimStyle,
+                      valueStyle?.copyWith(
+                        color: event.isStale
+                            ? AppTheme.errorRed
+                            : AppTheme.successGreen,
+                      ),
+                    ),
+                  ],
+                  helpKey: 'timestamps',
+                ),
                 const SizedBox(height: AppTheme.spacing8),
                 _PositionHistorySection(
                   event: event,
@@ -225,18 +274,24 @@ class TakEventDetailScreen extends ConsumerWidget {
                 ),
                 if (event.rawPayloadJson != null) ...[
                   const SizedBox(height: AppTheme.spacing8),
-                  _buildSection(theme, affiliationColor, 'Raw Payload', [
-                    Padding(
-                      padding: const EdgeInsets.all(AppTheme.spacing8),
-                      child: SelectableText(
-                        event.rawPayloadJson!,
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          fontFamily: 'monospace',
-                          fontSize: 11,
+                  _buildSection(
+                    theme,
+                    affiliationColor,
+                    context.l10n.takEventDetailSectionRawPayload,
+                    [
+                      Padding(
+                        padding: const EdgeInsets.all(AppTheme.spacing8),
+                        child: SelectableText(
+                          event.rawPayloadJson!,
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            fontFamily: 'monospace',
+                            fontSize: 11,
+                          ),
                         ),
                       ),
-                    ),
-                  ], helpKey: 'raw_payload'),
+                    ],
+                    helpKey: 'raw_payload',
+                  ),
                 ],
               ],
             ),
@@ -410,7 +465,9 @@ class _HeaderCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppTheme.radius8),
             ),
             child: Text(
-              isStale ? 'STALE' : 'ACTIVE',
+              isStale
+                  ? context.l10n.takEventDetailStatusStale
+                  : context.l10n.takEventDetailStatusActive,
               style: theme.textTheme.labelSmall?.copyWith(
                 color: isStale ? AppTheme.errorRed : AppTheme.successGreen,
                 fontWeight: FontWeight.bold,
@@ -492,7 +549,7 @@ class _PositionHistorySectionState
                 child: Row(
                   children: [
                     Text(
-                      'POSITION HISTORY',
+                      context.l10n.takEventDetailSectionPositionHistory,
                       style: widget.theme.textTheme.labelSmall?.copyWith(
                         color: widget.affiliationColor,
                         letterSpacing: 1.2,
@@ -500,7 +557,7 @@ class _PositionHistorySectionState
                     ),
                     const SizedBox(width: AppTheme.spacing8),
                     Text(
-                      '(${history.length} positions)',
+                      context.l10n.takEventDetailPositionCount(history.length),
                       style: widget.theme.textTheme.labelSmall?.copyWith(
                         color: widget.theme.colorScheme.onSurface.withValues(
                           alpha: 0.4,
@@ -516,7 +573,10 @@ class _PositionHistorySectionState
                     horizontal: 16,
                     vertical: 8,
                   ),
-                  child: Text('No movement recorded', style: widget.dimStyle),
+                  child: Text(
+                    context.l10n.takEventDetailNoMovement,
+                    style: widget.dimStyle,
+                  ),
                 )
               else
                 ...entries.asMap().entries.map((mapEntry) {
@@ -528,13 +588,14 @@ class _PositionHistorySectionState
                   String? distance;
                   if (nextIdx < history.length) {
                     final prev = history[nextIdx];
-                    distance = _formatDistance(
+                    distance = _localizedFormatDistance(
                       _haversineMeters(
                         point.lat,
                         point.lon,
                         prev.lat,
                         prev.lon,
                       ),
+                      context,
                     );
                   }
                   return _buildHistoryEntry(point, distance);
@@ -543,7 +604,7 @@ class _PositionHistorySectionState
                 TextButton(
                   onPressed: () => setState(() => _expanded = true),
                   child: Text(
-                    'Show all ${history.length} positions',
+                    context.l10n.takEventDetailShowAllPositions(history.length),
                     style: TextStyle(
                       color: widget.affiliationColor,
                       fontSize: 12,
@@ -554,7 +615,7 @@ class _PositionHistorySectionState
                 TextButton(
                   onPressed: () => setState(() => _expanded = false),
                   child: Text(
-                    'Show less',
+                    context.l10n.takEventDetailShowLess,
                     style: TextStyle(
                       color: widget.affiliationColor,
                       fontSize: 12,
@@ -601,11 +662,12 @@ class _PositionHistorySectionState
     return '${(diff / 86400000).round()}d ago';
   }
 
-  static String _formatDistance(double meters) {
+  static String _localizedFormatDistance(double meters, BuildContext context) {
+    final l10n = context.l10n;
     if (meters >= 1000) {
-      return '${(meters / 1000).toStringAsFixed(1)} km';
+      return l10n.takDistanceKilometers((meters / 1000));
     }
-    return '${meters.round()} m';
+    return l10n.takDistanceMeters(meters.roundToDouble());
   }
 
   /// Haversine formula for great-circle distance in meters.
@@ -681,7 +743,7 @@ class _TakSectionInfoButton extends StatelessWidget {
                 ),
                 const SizedBox(width: AppTheme.spacing8),
                 Text(
-                  _titleForKey(helpKey),
+                  _localizedTitleForKey(helpKey, context),
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
               ],
@@ -702,32 +764,33 @@ class _TakSectionInfoButton extends StatelessWidget {
     );
   }
 
-  static String _titleForKey(String key) {
+  static String _localizedTitleForKey(String key, BuildContext context) {
+    final l10n = context.l10n;
     switch (key) {
       case 'status':
-        return 'Connection Status';
+        return l10n.takEventDetailHelpAffiliation;
       case 'affiliation':
-        return 'Affiliation';
+        return l10n.takEventDetailHelpAffiliation;
       case 'cot_type':
-        return 'CoT Type String';
+        return l10n.takEventDetailHelpCotType;
       case 'identity':
-        return 'Identity';
+        return l10n.takEventDetailHelpIdentity;
       case 'position':
-        return 'Position';
+        return l10n.takEventDetailHelpPosition;
       case 'motion':
-        return 'Motion Data';
+        return l10n.takEventDetailHelpMotion;
       case 'timestamps':
-        return 'Timestamps';
+        return l10n.takEventDetailHelpTimestamps;
       case 'tracking':
-        return 'Tracking';
+        return l10n.takEventDetailHelpTracking;
       case 'raw_payload':
-        return 'Raw Payload';
+        return l10n.takEventDetailHelpRawPayload;
       case 'filters':
-        return 'Filters';
+        return l10n.takScreenHelpTitleFilters;
       case 'settings':
-        return 'Settings';
+        return l10n.takScreenHelpTitleSettings;
       default:
-        return 'Info';
+        return l10n.takScreenHelpTitleDefault;
     }
   }
 }

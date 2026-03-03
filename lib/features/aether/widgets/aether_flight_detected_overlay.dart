@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../data/airports.dart';
 import '../providers/aether_flight_matcher_provider.dart';
@@ -135,8 +136,8 @@ class _OverlayCard extends StatelessWidget {
                                 AppTheme.radius4,
                               ),
                             ),
-                            child: const Text(
-                              'DETECTED',
+                            child: Text(
+                              context.l10n.aetherOverlayDetected,
                               style: TextStyle(
                                 fontSize: 9,
                                 fontWeight: FontWeight.w700,
@@ -204,8 +205,8 @@ class _OverlayCard extends StatelessWidget {
                     color: _flightColor.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(AppTheme.radius8),
                   ),
-                  child: const Text(
-                    'Report',
+                  child: Text(
+                    context.l10n.aetherOverlayReport,
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,

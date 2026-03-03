@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/app_bottom_sheet.dart';
@@ -115,7 +116,7 @@ class _TraceRouteLogScreenState extends ConsumerState<TraceRouteLogScreen>
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'Traceroute History',
+                      context.l10n.telemetryTracerouteTitle,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -136,12 +137,12 @@ class _TraceRouteLogScreenState extends ConsumerState<TraceRouteLogScreen>
                 )
               : null,
           title: widget.nodeNum == null || nodeName == null
-              ? 'Traceroute History'
+              ? context.l10n.telemetryTracerouteTitle
               : null,
           actions: [
             PopupMenuButton<String>(
               icon: const Icon(Icons.more_vert),
-              tooltip: 'More actions',
+              tooltip: context.l10n.telemetryTracerouteMoreActions,
               onSelected: (value) {
                 switch (value) {
                   case 'export':
@@ -166,7 +167,11 @@ class _TraceRouteLogScreenState extends ConsumerState<TraceRouteLogScreen>
                         color: context.textSecondary,
                       ),
                       const SizedBox(width: AppTheme.spacing12),
-                      Text(_isExporting ? 'Exporting...' : 'Export CSV'),
+                      Text(
+                        _isExporting
+                            ? context.l10n.telemetryExporting
+                            : context.l10n.telemetryExportCsv,
+                      ),
                     ],
                   ),
                 ),
@@ -181,17 +186,17 @@ class _TraceRouteLogScreenState extends ConsumerState<TraceRouteLogScreen>
                       ),
                       const SizedBox(width: AppTheme.spacing12),
                       Text(
-                        'Clear Data',
+                        context.l10n.telemetryClearData,
                         style: TextStyle(color: AppTheme.errorRed),
                       ),
                     ],
                   ),
                 ),
-                const PopupMenuItem(
+                PopupMenuItem(
                   value: 'help',
                   child: ListTile(
-                    leading: Icon(Icons.help_outline),
-                    title: Text('Help'),
+                    leading: const Icon(Icons.help_outline),
+                    title: Text(context.l10n.telemetryHelp),
                     contentPadding: EdgeInsets.zero,
                   ),
                 ),
@@ -211,7 +216,7 @@ class _TraceRouteLogScreenState extends ConsumerState<TraceRouteLogScreen>
                 searchQuery: _searchQuery,
                 onSearchChanged: (value) =>
                     safeSetState(() => _searchQuery = value),
-                hintText: 'Search by node name',
+                hintText: context.l10n.telemetrySearchByNodeName,
                 textScaler: MediaQuery.textScalerOf(context),
                 rebuildKey: Object.hashAll([
                   _activeFilter,
@@ -221,7 +226,7 @@ class _TraceRouteLogScreenState extends ConsumerState<TraceRouteLogScreen>
                 ]),
                 filterChips: [
                   StatusFilterChip(
-                    label: 'All',
+                    label: context.l10n.telemetryFilterAll,
                     count: _countForFilter(logsAsync, _TracerouteFilter.all),
                     isSelected: _activeFilter == _TracerouteFilter.all,
                     onTap: () => safeSetState(
@@ -229,7 +234,7 @@ class _TraceRouteLogScreenState extends ConsumerState<TraceRouteLogScreen>
                     ),
                   ),
                   StatusFilterChip(
-                    label: 'Response',
+                    label: context.l10n.telemetryTracerouteFilterResponse,
                     count: _countForFilter(
                       logsAsync,
                       _TracerouteFilter.responded,
@@ -242,7 +247,7 @@ class _TraceRouteLogScreenState extends ConsumerState<TraceRouteLogScreen>
                     ),
                   ),
                   StatusFilterChip(
-                    label: 'No Response',
+                    label: context.l10n.telemetryTracerouteFilterNoResponse,
                     count: _countForFilter(
                       logsAsync,
                       _TracerouteFilter.noResponse,
@@ -269,8 +274,8 @@ class _TraceRouteLogScreenState extends ConsumerState<TraceRouteLogScreen>
                       child: _buildEmptyState(
                         context,
                         logs.isEmpty
-                            ? 'No traceroutes recorded yet'
-                            : 'No traceroutes match filters',
+                            ? context.l10n.telemetryTracerouteNoData
+                            : context.l10n.telemetryTracerouteNoMatch,
                         showClearFilters: logs.isNotEmpty,
                       ),
                     ),
@@ -292,8 +297,11 @@ class _TraceRouteLogScreenState extends ConsumerState<TraceRouteLogScreen>
               },
               loading: () =>
                   const SliverFillRemaining(child: ScreenLoadingIndicator()),
-              error: (e, _) =>
-                  SliverFillRemaining(child: Center(child: Text('Error: $e'))),
+              error: (e, _) => SliverFillRemaining(
+                child: Center(
+                  child: Text(context.l10n.telemetryError(e.toString())),
+                ),
+              ),
             ),
           ],
         ),
@@ -352,7 +360,7 @@ class _TraceRouteLogScreenState extends ConsumerState<TraceRouteLogScreen>
           ),
           const SizedBox(height: AppTheme.spacing8),
           Text(
-            'Send a traceroute from a node to see network paths',
+            context.l10n.telemetryTracerouteEmptyHint,
             style: context.bodySecondaryStyle?.copyWith(
               color: context.textTertiary,
             ),
@@ -369,7 +377,7 @@ class _TraceRouteLogScreenState extends ConsumerState<TraceRouteLogScreen>
                 });
               },
               icon: const Icon(Icons.filter_alt_off, size: 16),
-              label: const Text('Clear all filters'),
+              label: Text(context.l10n.telemetryClearAllFilters),
             ),
           ],
         ],
@@ -378,6 +386,7 @@ class _TraceRouteLogScreenState extends ConsumerState<TraceRouteLogScreen>
   }
 
   Future<void> _exportCsv() async {
+    final l10n = context.l10n;
     safeSetState(() => _isExporting = true);
 
     try {
@@ -393,7 +402,7 @@ class _TraceRouteLogScreenState extends ConsumerState<TraceRouteLogScreen>
       if (!mounted) return;
 
       if (logs.isEmpty) {
-        showInfoSnackBar(context, 'No traceroute data to export');
+        showInfoSnackBar(context, l10n.telemetryTracerouteNoExportData);
         return;
       }
 
@@ -465,14 +474,17 @@ class _TraceRouteLogScreenState extends ConsumerState<TraceRouteLogScreen>
 
       await shareFiles(
         [XFile(file.path)],
-        subject: 'Socialmesh Traceroute Export ($scope)',
+        subject: l10n.telemetryTracerouteExportSubject(scope),
         context: context,
       );
 
       if (!mounted) return;
-      showSuccessSnackBar(context, 'Exported ${logs.length} traceroutes');
+      showSuccessSnackBar(
+        context,
+        l10n.telemetryTracerouteExportedCount(logs.length),
+      );
     } catch (e) {
-      showErrorSnackBar(context, 'Export failed: $e');
+      showErrorSnackBar(context, l10n.telemetryExportFailed(e.toString()));
     } finally {
       if (mounted) {
         safeSetState(() => _isExporting = false);
@@ -481,14 +493,14 @@ class _TraceRouteLogScreenState extends ConsumerState<TraceRouteLogScreen>
   }
 
   Future<void> _confirmClearData() async {
+    final l10n = context.l10n;
     final scope = widget.nodeNum != null ? 'this node' : 'all nodes';
 
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Clear Traceroute Data',
-      message:
-          'This will permanently delete all traceroute history for $scope. This cannot be undone.',
-      confirmLabel: 'Clear',
+      title: l10n.telemetryTracerouteClearTitle,
+      message: l10n.telemetryTracerouteClearMessage(scope),
+      confirmLabel: l10n.telemetryTracerouteClearLabel,
       isDestructive: true,
     );
 
@@ -505,9 +517,12 @@ class _TraceRouteLogScreenState extends ConsumerState<TraceRouteLogScreen>
       }
 
       if (!mounted) return;
-      safeShowSnackBar('Traceroute data cleared', type: SnackBarType.success);
+      safeShowSnackBar(
+        l10n.telemetryTracerouteCleared,
+        type: SnackBarType.success,
+      );
     } catch (e) {
-      showErrorSnackBar(context, 'Failed to clear data: $e');
+      showErrorSnackBar(context, l10n.telemetryFailedToClear(e.toString()));
     }
   }
 }
@@ -572,7 +587,7 @@ class _TraceRouteCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'To',
+                      context.l10n.telemetryTracerouteTo,
                       style: context.captionStyle?.copyWith(
                         color: SemanticColors.disabled,
                       ),
@@ -640,7 +655,7 @@ class _TraceRouteCard extends StatelessWidget {
             const Divider(color: Colors.white12, height: 1),
             const SizedBox(height: AppTheme.spacing12),
             _RoutePathSection(
-              title: 'Forward Path',
+              title: context.l10n.telemetryTracerouteForwardPath,
               icon: Icons.arrow_forward,
               color: AccentColors.teal,
               hops: forwardHops,
@@ -654,7 +669,7 @@ class _TraceRouteCard extends StatelessWidget {
             const Divider(color: Colors.white12, height: 1),
             const SizedBox(height: AppTheme.spacing12),
             _RoutePathSection(
-              title: 'Return Path',
+              title: context.l10n.telemetryTracerouteReturnPath,
               icon: Icons.arrow_back,
               color: AccentColors.purple,
               hops: returnHops,
@@ -675,7 +690,7 @@ class _TraceRouteCard extends StatelessWidget {
                 const SizedBox(width: AppTheme.spacing6),
                 Expanded(
                   child: Text(
-                    'Direct connection — no intermediate hops',
+                    context.l10n.telemetryTracerouteDirectConnection,
                     style: TextStyle(
                       fontSize: 12,
                       fontStyle: FontStyle.italic,
@@ -783,7 +798,9 @@ class _ResponseBadge extends StatelessWidget {
           ),
           const SizedBox(width: AppTheme.spacing4),
           Text(
-            gotResponse ? 'Response' : 'No Response',
+            gotResponse
+                ? context.l10n.telemetryTracerouteResponseBadge
+                : context.l10n.telemetryTracerouteNoResponseBadge,
             style: TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w500,

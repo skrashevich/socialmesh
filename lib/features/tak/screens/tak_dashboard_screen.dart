@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/constants.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/logging.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/glass_scaffold.dart';
@@ -54,7 +55,7 @@ class TakDashboardScreen extends ConsumerWidget {
     );
 
     return GlassScaffold(
-      title: 'SA Dashboard',
+      title: context.l10n.takDashboardTitle,
       slivers: [
         SliverPadding(
           padding: const EdgeInsets.all(UiConstants.defaultPadding),
@@ -88,7 +89,7 @@ class _ForceCountGrid extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Force Disposition',
+          context.l10n.takDashboardForceDisposition,
           style: TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w600,
@@ -101,7 +102,7 @@ class _ForceCountGrid extends ConsumerWidget {
           children: [
             Expanded(
               child: _ForceCountCell(
-                label: 'Friendly',
+                label: context.l10n.takDashboardFriendly,
                 count: dashboard.friendlyCount,
                 color: CotAffiliationColors.friendly,
                 affiliation: CotAffiliation.friendly,
@@ -110,7 +111,7 @@ class _ForceCountGrid extends ConsumerWidget {
             const SizedBox(width: AppTheme.spacing8),
             Expanded(
               child: _ForceCountCell(
-                label: 'Hostile',
+                label: context.l10n.takDashboardHostile,
                 count: dashboard.hostileCount,
                 color: CotAffiliationColors.hostile,
                 affiliation: CotAffiliation.hostile,
@@ -119,7 +120,7 @@ class _ForceCountGrid extends ConsumerWidget {
             const SizedBox(width: AppTheme.spacing8),
             Expanded(
               child: _ForceCountCell(
-                label: 'Neutral',
+                label: context.l10n.takDashboardNeutral,
                 count: dashboard.neutralCount,
                 color: CotAffiliationColors.neutral,
                 affiliation: CotAffiliation.neutral,
@@ -128,7 +129,7 @@ class _ForceCountGrid extends ConsumerWidget {
             const SizedBox(width: AppTheme.spacing8),
             Expanded(
               child: _ForceCountCell(
-                label: 'Unknown',
+                label: context.l10n.takDashboardUnknown,
                 count: dashboard.unknownCount,
                 color: CotAffiliationColors.unknown,
                 affiliation: CotAffiliation.unknown,
@@ -218,7 +219,7 @@ class _ThreatProximityCard extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Threat Proximity',
+            context.l10n.takDashboardThreatProximity,
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w600,
@@ -231,9 +232,11 @@ class _ThreatProximityCard extends ConsumerWidget {
             icon: Icons.warning_amber_rounded,
             iconColor: CotAffiliationColors.hostile,
             label: dashboard.nearestHostile != null
-                ? 'Nearest hostile: '
-                      '${dashboard.nearestHostile!.callsign ?? dashboard.nearestHostile!.uid}'
-                : 'No hostile contacts',
+                ? context.l10n.takDashboardNearestHostile(
+                    dashboard.nearestHostile!.callsign ??
+                        dashboard.nearestHostile!.uid,
+                  )
+                : context.l10n.takDashboardNoHostileContacts,
             distance: dashboard.nearestHostileDistanceKm,
             event: dashboard.nearestHostile,
           ),
@@ -242,9 +245,11 @@ class _ThreatProximityCard extends ConsumerWidget {
             icon: Icons.help_outline,
             iconColor: CotAffiliationColors.unknown,
             label: dashboard.nearestUnknown != null
-                ? 'Nearest unknown: '
-                      '${dashboard.nearestUnknown!.callsign ?? dashboard.nearestUnknown!.uid}'
-                : 'No unknown contacts',
+                ? context.l10n.takDashboardNearestUnknown(
+                    dashboard.nearestUnknown!.callsign ??
+                        dashboard.nearestUnknown!.uid,
+                  )
+                : context.l10n.takDashboardNoUnknownContacts,
             distance: dashboard.nearestUnknownDistanceKm,
             event: dashboard.nearestUnknown,
           ),
@@ -320,12 +325,19 @@ class _StatusSummaryCard extends StatelessWidget {
 
   final TakDashboardState dashboard;
 
-  String _relativeTime(DateTime time) {
+  String _localizedRelativeTime(DateTime time, BuildContext context) {
+    final l10n = context.l10n;
     final diff = DateTime.now().difference(time);
-    if (diff.inSeconds < 60) return '${diff.inSeconds}s ago';
-    if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
-    if (diff.inHours < 24) return '${diff.inHours}h ago';
-    return '${diff.inDays}d ago';
+    if (diff.inSeconds < 60) {
+      return l10n.takDashboardRelativeTimeSeconds(diff.inSeconds);
+    }
+    if (diff.inMinutes < 60) {
+      return l10n.takDashboardRelativeTimeMinutes(diff.inMinutes);
+    }
+    if (diff.inHours < 24) {
+      return l10n.takDashboardRelativeTimeHours(diff.inHours);
+    }
+    return l10n.takDashboardRelativeTimeDays(diff.inDays);
   }
 
   @override
@@ -341,7 +353,7 @@ class _StatusSummaryCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Status',
+            context.l10n.takDashboardStatusHeader,
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w600,
@@ -356,25 +368,27 @@ class _StatusSummaryCard extends StatelessWidget {
             iconColor: dashboard.isConnected
                 ? AppTheme.successGreen
                 : SemanticColors.disabled,
-            label: 'Connection',
-            value: dashboard.isConnected ? 'Connected' : 'Disconnected',
+            label: context.l10n.takDashboardConnection,
+            value: dashboard.isConnected
+                ? context.l10n.takDashboardConnected
+                : context.l10n.takDashboardDisconnected,
           ),
           const SizedBox(height: AppTheme.spacing8),
           // Last event
           _StatusRow(
             icon: Icons.schedule,
             iconColor: context.textTertiary,
-            label: 'Last event',
+            label: context.l10n.takDashboardLastEvent,
             value: dashboard.lastEventTime != null
-                ? _relativeTime(dashboard.lastEventTime!)
-                : 'None',
+                ? _localizedRelativeTime(dashboard.lastEventTime!, context)
+                : context.l10n.takDashboardLastEventNone,
           ),
           const SizedBox(height: AppTheme.spacing8),
           // Total entities
           _StatusRow(
             icon: Icons.people_outline,
             iconColor: context.textTertiary,
-            label: 'Total entities',
+            label: context.l10n.takDashboardTotalEntities,
             value: '${dashboard.totalCount}',
           ),
           const SizedBox(height: AppTheme.spacing8),
@@ -382,7 +396,7 @@ class _StatusSummaryCard extends StatelessWidget {
           _StatusRow(
             icon: Icons.visibility,
             iconColor: context.textTertiary,
-            label: 'Tracked',
+            label: context.l10n.takDashboardTracked,
             value: '${dashboard.trackedCount}',
             subtitle: dashboard.trackedCallsigns.isNotEmpty
                 ? dashboard.trackedCallsigns.join(', ')
@@ -397,7 +411,7 @@ class _StatusSummaryCard extends StatelessWidget {
             iconColor: dashboard.staleCount > 0
                 ? AccentColors.orange
                 : AppTheme.successGreen,
-            label: 'Stale entities',
+            label: context.l10n.takDashboardStaleEntities,
             value: '${dashboard.staleCount}',
           ),
           const SizedBox(height: AppTheme.spacing8),
@@ -407,10 +421,12 @@ class _StatusSummaryCard extends StatelessWidget {
             iconColor: dashboard.isPublishing
                 ? AppTheme.successGreen
                 : context.textTertiary,
-            label: 'Position publishing',
+            label: context.l10n.takDashboardPositionPublishing,
             value: dashboard.isPublishing
-                ? 'Active (${dashboard.publishIntervalSeconds}s)'
-                : 'Disabled',
+                ? context.l10n.takDashboardPublishingActive(
+                    dashboard.publishIntervalSeconds.toString(),
+                  )
+                : context.l10n.takDashboardPublishingDisabled,
           ),
         ],
       ),

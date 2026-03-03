@@ -2,6 +2,7 @@
 // lint-allow: haptic-feedback — onTap delegates to parent callback
 import 'package:flutter/material.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/animations.dart';
 import '../../../core/widgets/node_selector_sheet.dart';
@@ -134,7 +135,7 @@ class _TriggerSelectorState extends State<TriggerSelector> {
           children: [
             _buildSliderConfig(
               context,
-              label: 'Battery threshold',
+              label: context.l10n.automationTriggerBatteryThreshold,
               value: widget.trigger.batteryThreshold.toDouble(),
               min: 5,
               max: 50,
@@ -176,7 +177,7 @@ class _TriggerSelectorState extends State<TriggerSelector> {
           children: [
             _buildSliderConfig(
               context,
-              label: 'Silent duration',
+              label: context.l10n.automationTriggerSilentDuration,
               value: widget.trigger.silentMinutes.toDouble(),
               min: 5,
               max: 120,
@@ -203,7 +204,7 @@ class _TriggerSelectorState extends State<TriggerSelector> {
           children: [
             _buildSliderConfig(
               context,
-              label: 'Signal threshold (SNR)',
+              label: context.l10n.automationTriggerSignalThreshold,
               value: widget.trigger.signalThreshold.toDouble(),
               min: -20,
               max: 0,
@@ -313,9 +314,9 @@ class _TriggerSelectorState extends State<TriggerSelector> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Keyword to match',
-            style: TextStyle(color: SemanticColors.disabled),
+          Text(
+            context.l10n.automationTriggerKeywordLabel,
+            style: const TextStyle(color: SemanticColors.disabled),
           ),
           const SizedBox(height: AppTheme.spacing8),
           TextField(
@@ -329,7 +330,7 @@ class _TriggerSelectorState extends State<TriggerSelector> {
               );
             },
             decoration: InputDecoration(
-              hintText: 'e.g., SOS, help, emergency',
+              hintText: context.l10n.automationTriggerKeywordHint,
               isDense: true,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AppTheme.radius8),
@@ -361,13 +362,13 @@ class _TriggerSelectorState extends State<TriggerSelector> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Sensor name filter (optional)',
-            style: TextStyle(color: SemanticColors.disabled),
+          Text(
+            context.l10n.automationTriggerSensorNameLabel,
+            style: const TextStyle(color: SemanticColors.disabled),
           ),
           const SizedBox(height: AppTheme.spacing4),
           Text(
-            'Leave empty to trigger for any sensor',
+            context.l10n.automationTriggerSensorNameHelp,
             style: TextStyle(color: SemanticColors.muted, fontSize: 12),
           ),
           const SizedBox(height: AppTheme.spacing8),
@@ -386,7 +387,7 @@ class _TriggerSelectorState extends State<TriggerSelector> {
               widget.onChanged(widget.trigger.copyWith(config: newConfig));
             },
             decoration: InputDecoration(
-              hintText: 'e.g., Motion, Door, Window',
+              hintText: context.l10n.automationTriggerSensorNameHint,
               isDense: true,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AppTheme.radius8),
@@ -400,22 +401,28 @@ class _TriggerSelectorState extends State<TriggerSelector> {
             ),
           ),
           const SizedBox(height: AppTheme.spacing16),
-          const Text(
-            'Trigger when sensor is',
-            style: TextStyle(color: SemanticColors.disabled),
+          Text(
+            context.l10n.automationTriggerSensorState,
+            style: const TextStyle(color: SemanticColors.disabled),
           ),
           const SizedBox(height: AppTheme.spacing8),
           SegmentedButton<bool?>(
             segments: [
-              const ButtonSegment(value: null, label: Text('Any')),
+              ButtonSegment(
+                value: null,
+                label: Text(context.l10n.automationTriggerSensorAny),
+              ),
               ButtonSegment(
                 value: true,
                 label: FittedBox(
                   fit: BoxFit.scaleDown,
-                  child: const Text('Detected'),
+                  child: Text(context.l10n.automationTriggerSensorDetected),
                 ),
               ),
-              const ButtonSegment(value: false, label: Text('Clear')),
+              ButtonSegment(
+                value: false,
+                label: Text(context.l10n.automationTriggerSensorClear),
+              ),
             ],
             selected: {detectedStateFilter},
             onSelectionChanged: (selected) {
@@ -455,12 +462,12 @@ class _TriggerSelectorState extends State<TriggerSelector> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Filter by node (optional)',
+            context.l10n.automationTriggerNodeFilterLabel,
             style: TextStyle(color: SemanticColors.disabled),
           ),
           const SizedBox(height: AppTheme.spacing4),
           Text(
-            'Leave empty to trigger for any node',
+            context.l10n.automationTriggerNodeFilterHelp,
             style: TextStyle(color: SemanticColors.muted, fontSize: 12),
           ),
           const SizedBox(height: AppTheme.spacing12),
@@ -500,7 +507,7 @@ class _TriggerSelectorState extends State<TriggerSelector> {
                         Text(
                           selectedNode?.longName ??
                               selectedNode?.shortName ??
-                              'Any node',
+                              context.l10n.automationTriggerAnyNode,
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
                             color: selectedNode != null
@@ -557,7 +564,7 @@ class _TriggerSelectorState extends State<TriggerSelector> {
   Future<void> _showNodePicker(BuildContext context) async {
     final selection = await NodeSelectorSheet.show(
       context,
-      title: 'Select Node',
+      title: context.l10n.automationTriggerSelectNode,
       allowBroadcast: false,
       initialSelection: widget.trigger.nodeNum,
     );
@@ -587,7 +594,7 @@ class _TriggerSelectorState extends State<TriggerSelector> {
               Icon(Icons.location_on, size: 18, color: SemanticColors.disabled),
               SizedBox(width: AppTheme.spacing8),
               Text(
-                'Geofence Center',
+                context.l10n.automationTriggerGeofenceCenter,
                 style: TextStyle(color: SemanticColors.disabled),
               ),
             ],
@@ -604,7 +611,7 @@ class _TriggerSelectorState extends State<TriggerSelector> {
                     signed: true,
                   ),
                   decoration: InputDecoration(
-                    labelText: 'Latitude',
+                    labelText: context.l10n.automationTriggerLatitude,
                     isDense: true,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(AppTheme.radius8),
@@ -636,7 +643,7 @@ class _TriggerSelectorState extends State<TriggerSelector> {
                     signed: true,
                   ),
                   decoration: InputDecoration(
-                    labelText: 'Longitude',
+                    labelText: context.l10n.automationTriggerLongitude,
                     isDense: true,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(AppTheme.radius8),
@@ -664,9 +671,9 @@ class _TriggerSelectorState extends State<TriggerSelector> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Radius',
-                style: TextStyle(color: SemanticColors.disabled),
+              Text(
+                context.l10n.automationTriggerRadius,
+                style: const TextStyle(color: SemanticColors.disabled),
               ),
               Text(
                 '${widget.trigger.geofenceRadius.round()}m',
@@ -720,7 +727,7 @@ class _TriggerSelectorState extends State<TriggerSelector> {
                 }
               },
               icon: const Icon(Icons.map, size: 18),
-              label: const Text('Pick on Map'),
+              label: Text(context.l10n.automationTriggerPickOnMap),
             ),
           ),
         ],
@@ -749,20 +756,26 @@ class _TriggerSelectorState extends State<TriggerSelector> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Schedule Type',
-            style: TextStyle(color: SemanticColors.disabled),
+          Text(
+            context.l10n.automationTriggerScheduleType,
+            style: const TextStyle(color: SemanticColors.disabled),
           ),
           const SizedBox(height: AppTheme.spacing8),
           SegmentedButton<String>(
             segments: [
-              const ButtonSegment(value: 'daily', label: Text('Daily')),
-              const ButtonSegment(value: 'weekly', label: Text('Weekly')),
+              ButtonSegment(
+                value: 'daily',
+                label: Text(context.l10n.automationTriggerDaily),
+              ),
+              ButtonSegment(
+                value: 'weekly',
+                label: Text(context.l10n.automationTriggerWeekly),
+              ),
               ButtonSegment(
                 value: 'interval',
                 label: FittedBox(
                   fit: BoxFit.scaleDown,
-                  child: const Text('Interval'),
+                  child: Text(context.l10n.automationTriggerInterval),
                 ),
               ),
             ],
@@ -787,9 +800,9 @@ class _TriggerSelectorState extends State<TriggerSelector> {
 
           // Time picker for daily/weekly
           if (scheduleType == 'daily' || scheduleType == 'weekly') ...[
-            const Text(
-              'Time',
-              style: TextStyle(color: SemanticColors.disabled),
+            Text(
+              context.l10n.automationTriggerTime,
+              style: const TextStyle(color: SemanticColors.disabled),
             ),
             const SizedBox(height: AppTheme.spacing8),
             BouncyTap(
@@ -844,22 +857,22 @@ class _TriggerSelectorState extends State<TriggerSelector> {
           // Days of week picker for weekly
           if (scheduleType == 'weekly') ...[
             const SizedBox(height: AppTheme.spacing16),
-            const Text(
-              'Days',
-              style: TextStyle(color: SemanticColors.disabled),
+            Text(
+              context.l10n.automationTriggerDays,
+              style: const TextStyle(color: SemanticColors.disabled),
             ),
             const SizedBox(height: AppTheme.spacing8),
             Wrap(
               spacing: 8,
               children: [
                 for (final day in [
-                  (1, 'Mon'),
-                  (2, 'Tue'),
-                  (3, 'Wed'),
-                  (4, 'Thu'),
-                  (5, 'Fri'),
-                  (6, 'Sat'),
-                  (0, 'Sun'),
+                  (1, context.l10n.automationTriggerDayMon),
+                  (2, context.l10n.automationTriggerDayTue),
+                  (3, context.l10n.automationTriggerDayWed),
+                  (4, context.l10n.automationTriggerDayThu),
+                  (5, context.l10n.automationTriggerDayFri),
+                  (6, context.l10n.automationTriggerDaySat),
+                  (0, context.l10n.automationTriggerDaySun),
                 ])
                   FilterChip(
                     label: Text(day.$2),
@@ -898,7 +911,7 @@ class _TriggerSelectorState extends State<TriggerSelector> {
             const SizedBox(height: AppTheme.spacing16),
             _buildSliderConfig(
               context,
-              label: 'Repeat every',
+              label: context.l10n.automationTriggerRepeatEvery,
               value: intervalMinutes.toDouble(),
               min: 15, // WorkManager minimum
               max: 1440, // 24 hours
@@ -921,7 +934,7 @@ class _TriggerSelectorState extends State<TriggerSelector> {
             ),
             const SizedBox(height: AppTheme.spacing8),
             Text(
-              _formatInterval(intervalMinutes),
+              _formatInterval(context, intervalMinutes),
               style: TextStyle(color: SemanticColors.muted, fontSize: 12),
             ),
           ],
@@ -950,14 +963,23 @@ class _TriggerSelectorState extends State<TriggerSelector> {
     }
   }
 
-  String _formatInterval(int minutes) {
-    if (minutes < 60) return 'Every $minutes minutes';
+  String _formatInterval(BuildContext context, int minutes) {
+    if (minutes < 60) {
+      return context.l10n.automationTriggerEveryMinutes(minutes);
+    }
     final hours = minutes ~/ 60;
     final mins = minutes % 60;
     if (mins == 0) {
-      return 'Every $hours hour${hours > 1 ? 's' : ''}';
+      return context.l10n.automationTriggerEveryHours(
+        hours,
+        hours > 1 ? 's' : '',
+      );
     }
-    return 'Every $hours hour${hours > 1 ? 's' : ''} $mins minutes';
+    return context.l10n.automationTriggerEveryHoursMinutes(
+      hours,
+      hours > 1 ? 's' : '',
+      mins,
+    );
   }
 
   Widget _buildChannelActivityConfig(BuildContext context) {
@@ -973,20 +995,20 @@ class _TriggerSelectorState extends State<TriggerSelector> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Channel (optional)',
-            style: TextStyle(color: SemanticColors.disabled),
+          Text(
+            context.l10n.automationTriggerChannelLabel,
+            style: const TextStyle(color: SemanticColors.disabled),
           ),
           const SizedBox(height: AppTheme.spacing4),
           Text(
-            'Leave empty to trigger for any channel activity',
+            context.l10n.automationTriggerChannelHelp,
             style: TextStyle(color: SemanticColors.muted, fontSize: 12),
           ),
           const SizedBox(height: AppTheme.spacing8),
           DropdownButtonFormField<int?>(
             value: channelIndex,
             decoration: InputDecoration(
-              hintText: 'Any channel',
+              hintText: context.l10n.automationTriggerAnyChannel,
               isDense: true,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AppTheme.radius8),
@@ -994,12 +1016,15 @@ class _TriggerSelectorState extends State<TriggerSelector> {
               ),
             ),
             items: [
-              const DropdownMenuItem<int?>(
+              DropdownMenuItem<int?>(
                 value: null,
-                child: Text('Any channel'),
+                child: Text(context.l10n.automationTriggerAnyChannel),
               ),
               for (var i = 0; i < 8; i++)
-                DropdownMenuItem<int>(value: i, child: Text('Channel $i')),
+                DropdownMenuItem<int>(
+                  value: i,
+                  child: Text(context.l10n.automationTriggerChannelIndex(i)),
+                ),
             ],
             onChanged: (value) {
               final newConfig = Map<String, dynamic>.from(
@@ -1033,18 +1058,15 @@ class _TriggerSelectorState extends State<TriggerSelector> {
             children: [
               Icon(Icons.info_outline, color: AccentColors.blue, size: 20),
               const SizedBox(width: AppTheme.spacing8),
-              const Text(
-                'Manual Trigger',
-                style: TextStyle(fontWeight: FontWeight.w600),
+              Text(
+                context.l10n.automationTriggerManualTitle,
+                style: const TextStyle(fontWeight: FontWeight.w600),
               ),
             ],
           ),
           const SizedBox(height: AppTheme.spacing8),
           Text(
-            'This automation can be triggered manually from:\n'
-            '• The Automations screen (tap the play button)\n'
-            '• Siri Shortcuts\n'
-            '• Widgets',
+            context.l10n.automationTriggerManualDescription,
             style: TextStyle(
               color: SemanticColors.disabled,
               fontSize: 13,
@@ -1085,7 +1107,7 @@ class _TriggerSelectorState extends State<TriggerSelector> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
-                  'Select Trigger',
+                  context.l10n.automationTriggerSelectTrigger,
                   style: Theme.of(
                     context,
                   ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),

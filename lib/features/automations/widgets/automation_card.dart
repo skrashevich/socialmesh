@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/animations.dart';
 import '../models/automation.dart';
@@ -136,8 +137,10 @@ class AutomationCard extends StatelessWidget {
                   child: _buildInfoChip(
                     context,
                     icon: Icons.play_arrow,
-                    label:
-                        '${automation.actions.length} action${automation.actions.length == 1 ? '' : 's'}',
+                    label: context.l10n.automationCardActionCount(
+                      automation.actions.length,
+                      automation.actions.length == 1 ? '' : 's',
+                    ),
                     color: AppTheme.successGreen,
                   ),
                 ),
@@ -156,7 +159,9 @@ class AutomationCard extends StatelessWidget {
                   ),
                   const SizedBox(width: AppTheme.spacing4),
                   Text(
-                    '${automation.triggerCount} runs',
+                    context.l10n.automationCardRunsCount(
+                      automation.triggerCount,
+                    ),
                     style: TextStyle(color: SemanticColors.muted, fontSize: 12),
                   ),
                 ],
@@ -170,7 +175,7 @@ class AutomationCard extends StatelessWidget {
                   ),
                   const SizedBox(width: AppTheme.spacing4),
                   Text(
-                    _formatLastTriggered(automation.lastTriggered!),
+                    _formatLastTriggered(context, automation.lastTriggered!),
                     style: TextStyle(color: SemanticColors.muted, fontSize: 12),
                   ),
                 ],
@@ -261,14 +266,20 @@ class AutomationCard extends StatelessWidget {
     );
   }
 
-  String _formatLastTriggered(DateTime time) {
+  String _formatLastTriggered(BuildContext context, DateTime time) {
     final now = DateTime.now();
     final diff = now.difference(time);
 
-    if (diff.inMinutes < 1) return 'Just now';
-    if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
-    if (diff.inHours < 24) return '${diff.inHours}h ago';
-    if (diff.inDays < 7) return '${diff.inDays}d ago';
-    return '${diff.inDays ~/ 7}w ago';
+    if (diff.inMinutes < 1) return context.l10n.automationCardJustNow;
+    if (diff.inMinutes < 60) {
+      return context.l10n.automationCardMinutesAgo(diff.inMinutes);
+    }
+    if (diff.inHours < 24) {
+      return context.l10n.automationCardHoursAgo(diff.inHours);
+    }
+    if (diff.inDays < 7) {
+      return context.l10n.automationCardDaysAgo(diff.inDays);
+    }
+    return context.l10n.automationCardWeeksAgo(diff.inDays ~/ 7);
   }
 }

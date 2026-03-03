@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // lint-allow: haptic-feedback — GestureDetector is for keyboard dismissal, not user interaction
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -221,9 +222,11 @@ class _AutomationEditorScreenState extends ConsumerState<AutomationEditorScreen>
   String _getDescriptionForTrigger(AutomationTrigger trigger) {
     switch (trigger.type) {
       case TriggerType.nodeSilent:
-        return 'Alert if no activity from node for ${trigger.silentMinutes} minutes';
+        return context.l10n.automationEditorDescSilent(trigger.silentMinutes);
       case TriggerType.batteryLow:
-        return 'Triggered when battery drops below ${trigger.batteryThreshold}%';
+        return context.l10n.automationEditorDescBatteryLow(
+          '${trigger.batteryThreshold}',
+        );
       default:
         return trigger.type.defaultDescription;
     }
@@ -232,12 +235,14 @@ class _AutomationEditorScreenState extends ConsumerState<AutomationEditorScreen>
   @override
   Widget build(BuildContext context) {
     return GlassScaffold(
-      title: _isEditing ? 'Edit Automation' : 'New Automation',
+      title: _isEditing
+          ? context.l10n.automationEditorTitleEdit
+          : context.l10n.automationEditorTitleNew,
       actions: [
         if (_isEditing) ...[
           IconButton(
             icon: const Icon(Icons.delete_outline),
-            tooltip: 'Delete',
+            tooltip: context.l10n.automationEditorDeleteTooltip,
             onPressed: _deleteAutomation,
           ),
           ThemedSwitch(
@@ -258,14 +263,17 @@ class _AutomationEditorScreenState extends ConsumerState<AutomationEditorScreen>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Name field
-                  _buildSectionTitle(context, 'Name'),
+                  _buildSectionTitle(
+                    context,
+                    context.l10n.automationEditorNameLabel,
+                  ),
                   SizedBox(height: AppTheme.spacing8),
                   TextField(
                     maxLength: 100,
                     controller: _nameController,
                     textCapitalization: TextCapitalization.sentences,
                     decoration: InputDecoration(
-                      hintText: 'e.g., Low Battery Alert',
+                      hintText: context.l10n.automationEditorNameHint,
                       filled: true,
                       fillColor: context.card,
                       border: OutlineInputBorder(
@@ -289,14 +297,17 @@ class _AutomationEditorScreenState extends ConsumerState<AutomationEditorScreen>
                   SizedBox(height: AppTheme.spacing16),
 
                   // Description field
-                  _buildSectionTitle(context, 'Description (optional)'),
+                  _buildSectionTitle(
+                    context,
+                    context.l10n.automationEditorDescriptionLabel,
+                  ),
                   const SizedBox(height: AppTheme.spacing8),
                   TextField(
                     maxLength: 500,
                     controller: _descriptionController,
                     textCapitalization: TextCapitalization.sentences,
                     decoration: InputDecoration(
-                      hintText: 'What does this automation do?',
+                      hintText: context.l10n.automationEditorDescriptionHint,
                       filled: true,
                       fillColor: context.card,
                       border: OutlineInputBorder(
@@ -323,7 +334,7 @@ class _AutomationEditorScreenState extends ConsumerState<AutomationEditorScreen>
                   // WHEN (Trigger)
                   _buildSectionTitle(
                     context,
-                    'WHEN',
+                    context.l10n.automationEditorWhen,
                     icon: Icons.bolt,
                     color: AppTheme.warningYellow,
                   ),
@@ -343,7 +354,7 @@ class _AutomationEditorScreenState extends ConsumerState<AutomationEditorScreen>
                     children: [
                       _buildSectionTitle(
                         context,
-                        'THEN',
+                        context.l10n.automationEditorThen,
                         icon: Icons.play_arrow,
                         color: AppTheme.successGreen,
                       ),
@@ -372,7 +383,7 @@ class _AutomationEditorScreenState extends ConsumerState<AutomationEditorScreen>
                               ),
                               const SizedBox(width: AppTheme.spacing4),
                               Text(
-                                'Add Action',
+                                context.l10n.automationEditorAddAction,
                                 style: TextStyle(
                                   color: Theme.of(context).colorScheme.primary,
                                   fontWeight: FontWeight.w500,
@@ -413,7 +424,7 @@ class _AutomationEditorScreenState extends ConsumerState<AutomationEditorScreen>
                             ),
                             const SizedBox(height: AppTheme.spacing8),
                             Text(
-                              'No actions configured',
+                              context.l10n.automationEditorNoActions,
                               style: TextStyle(
                                 color: SemanticColors.disabled,
                                 fontSize: 14,
@@ -421,7 +432,7 @@ class _AutomationEditorScreenState extends ConsumerState<AutomationEditorScreen>
                             ),
                             const SizedBox(height: AppTheme.spacing4),
                             Text(
-                              'Tap "+ Add Action" to add one',
+                              context.l10n.automationEditorNoActionsHint,
                               style: TextStyle(
                                 color: SemanticColors.disabled,
                                 fontSize: 12,
@@ -505,10 +516,10 @@ class _AutomationEditorScreenState extends ConsumerState<AutomationEditorScreen>
               borderRadius: BorderRadius.circular(AppTheme.radius12),
             ),
             child: _isSaving
-                ? const Row(
+                ? Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         width: 18,
                         height: 18,
                         child: CircularProgressIndicator(
@@ -516,10 +527,10 @@ class _AutomationEditorScreenState extends ConsumerState<AutomationEditorScreen>
                           color: Colors.white,
                         ),
                       ),
-                      SizedBox(width: AppTheme.spacing10),
+                      const SizedBox(width: AppTheme.spacing10),
                       Text(
-                        'Saving...',
-                        style: TextStyle(
+                        context.l10n.automationEditorSaving,
+                        style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w600,
                           fontSize: 16,
@@ -528,7 +539,9 @@ class _AutomationEditorScreenState extends ConsumerState<AutomationEditorScreen>
                     ],
                   )
                 : Text(
-                    _isEditing ? 'Save Changes' : 'Create Automation',
+                    _isEditing
+                        ? context.l10n.automationEditorSaveChanges
+                        : context.l10n.automationEditorCreateAutomation,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       color: Colors.white,
@@ -619,7 +632,9 @@ class _AutomationEditorScreenState extends ConsumerState<AutomationEditorScreen>
           ),
           const SizedBox(width: AppTheme.spacing12),
           Text(
-            isFirst ? 'then do...' : 'then...',
+            isFirst
+                ? context.l10n.automationEditorThenDo
+                : context.l10n.automationEditorThen2,
             style: TextStyle(
               color: SemanticColors.muted,
               fontSize: 12,
@@ -635,7 +650,7 @@ class _AutomationEditorScreenState extends ConsumerState<AutomationEditorScreen>
                 borderRadius: BorderRadius.circular(AppTheme.radius10),
               ),
               child: Text(
-                'Step $stepNumber',
+                context.l10n.automationEditorStepNumber(stepNumber),
                 style: TextStyle(
                   color: AppTheme.successGreen,
                   fontSize: 11,
@@ -674,11 +689,12 @@ class _AutomationEditorScreenState extends ConsumerState<AutomationEditorScreen>
 
     ref.read(hapticServiceProvider).trigger(HapticType.warning);
 
+    final l10n = context.l10n;
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Delete Automation',
-      message: 'Are you sure you want to delete "${automation.name}"?',
-      confirmLabel: 'Delete',
+      title: l10n.automationScreenDeleteTitle,
+      message: l10n.automationScreenDeleteMessage(automation.name),
+      confirmLabel: l10n.automationScreenDelete,
       isDestructive: true,
     );
 
@@ -688,18 +704,21 @@ class _AutomationEditorScreenState extends ConsumerState<AutomationEditorScreen>
     final navigator = Navigator.of(context);
     final messenger = ScaffoldMessenger.of(context);
 
-    showLoadingSnackBar(context, 'Deleting "${automation.name}"...');
+    showLoadingSnackBar(
+      context,
+      l10n.automationScreenDeleting(automation.name),
+    );
 
     try {
       await automationsNotifier.deleteAutomation(automation.id);
       messenger.hideCurrentSnackBar();
       if (!mounted) return;
       navigator.pop();
-      showGlobalSuccessSnackBar('Deleted "${automation.name}"');
+      showGlobalSuccessSnackBar(l10n.automationScreenDeleted(automation.name));
     } catch (e) {
       messenger.hideCurrentSnackBar();
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to delete automation');
+        showErrorSnackBar(context, l10n.automationEditorDeleteError);
       }
     }
   }
@@ -707,7 +726,7 @@ class _AutomationEditorScreenState extends ConsumerState<AutomationEditorScreen>
   Future<void> _save() async {
     final name = _nameController.text.trim();
     if (name.isEmpty) {
-      showWarningSnackBar(context, 'Please enter a name for this automation');
+      showWarningSnackBar(context, context.l10n.automationEditorValidateName);
       return;
     }
 
@@ -720,7 +739,10 @@ class _AutomationEditorScreenState extends ConsumerState<AutomationEditorScreen>
 
     // Validate actions
     if (_actions.isEmpty) {
-      showWarningSnackBar(context, 'Please add at least one action');
+      showWarningSnackBar(
+        context,
+        context.l10n.automationEditorValidateActions,
+      );
       return;
     }
 
@@ -746,7 +768,7 @@ class _AutomationEditorScreenState extends ConsumerState<AutomationEditorScreen>
         if (invalidVars.isNotEmpty) {
           showErrorSnackBar(
             context,
-            'Invalid variables: ${invalidVars.join(", ")}',
+            context.l10n.automationEditorInvalidVars(invalidVars.join(', ')),
           );
           return;
         }
@@ -804,12 +826,14 @@ class _AutomationEditorScreenState extends ConsumerState<AutomationEditorScreen>
       navigator.pop();
       showSuccessSnackBar(
         context,
-        _isEditing ? 'Automation updated' : 'Automation created',
+        _isEditing
+            ? context.l10n.automationEditorUpdated
+            : context.l10n.automationEditorCreated,
       );
     } catch (e) {
       safeSetState(() => _isSaving = false);
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to save automation');
+        showErrorSnackBar(context, context.l10n.automationEditorSaveError);
       }
     }
   }
@@ -841,7 +865,7 @@ class _ActionTypeSelector extends StatelessWidget {
             ),
           ),
           Text(
-            'Add Action',
+            context.l10n.automationEditorAddAction,
             style: Theme.of(
               context,
             ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
