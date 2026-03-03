@@ -45,6 +45,7 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
     with TickerProviderStateMixin, LifecycleSafeMixin<WorldMeshScreen> {
   final MapController _mapController = MapController();
   double _currentZoom = 3.0;
+  double _mapRotation = 0.0;
   MapTileStyle _mapStyle = MapTileStyle.dark;
   String _searchQuery = '';
   bool _showSearch = false;
@@ -80,7 +81,7 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
     super.dispose();
   }
 
-  void _animatedMove(LatLng destLocation, double destZoom) {
+  void _animatedMove(LatLng destLocation, double destZoom, {double? rotation}) {
     _animationController?.dispose();
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 500),
@@ -89,6 +90,8 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
 
     final startZoom = _mapController.camera.zoom;
     final startCenter = _mapController.camera.center;
+    final startRotation = _mapController.camera.rotation;
+    final destRotation = rotation ?? startRotation;
 
     final latTween = Tween<double>(
       begin: startCenter.latitude,
@@ -99,6 +102,10 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
       end: destLocation.longitude,
     );
     final zoomTween = Tween<double>(begin: startZoom, end: destZoom);
+    final rotationTween = Tween<double>(
+      begin: startRotation,
+      end: destRotation,
+    );
 
     final animation = CurvedAnimation(
       parent: _animationController!,
@@ -106,10 +113,15 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
     );
 
     _animationController!.addListener(() {
-      _mapController.move(
+      _mapController.moveAndRotate(
         LatLng(latTween.evaluate(animation), lngTween.evaluate(animation)),
         zoomTween.evaluate(animation),
+        rotationTween.evaluate(animation),
       );
+      final currentRotation = rotationTween.evaluate(animation);
+      if (currentRotation != _mapRotation) {
+        setState(() => _mapRotation = currentRotation);
+      }
     });
 
     _animationController!.forward();
@@ -661,10 +673,14 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
               maxZoom: 18.0,
               backgroundColor: context.background,
               interactionOptions: const InteractionOptions(
-                flags: InteractiveFlag.all & ~InteractiveFlag.rotate,
+                flags: InteractiveFlag.all,
+                pinchZoomThreshold: 0.5,
               ),
               onPositionChanged: (position, hasGesture) {
                 _currentZoom = position.zoom;
+                if (hasGesture && position.rotation != _mapRotation) {
+                  setState(() => _mapRotation = position.rotation);
+                }
               },
               onTap: (tapPosition, point) {
                 // Close search results first
@@ -901,9 +917,15 @@ class _WorldMeshScreenState extends ConsumerState<WorldMeshScreen>
         _MapControlsWithZoomState(
           mapController: _mapController,
           initialZoom: _currentZoom,
+          mapRotation: _mapRotation,
           minZoom: 2.0,
           maxZoom: 18.0,
           animatedMove: _animatedMove,
+          onResetNorth: () => _animatedMove(
+            _mapController.camera.center,
+            _currentZoom,
+            rotation: 0,
+          ),
           onFitAll: () {
             // Fit to show all visible nodes
             if (displayNodes.isNotEmpty) {
@@ -1271,17 +1293,21 @@ class _MapControlsWithZoomState extends StatefulWidget {
   const _MapControlsWithZoomState({
     required this.mapController,
     required this.initialZoom,
+    required this.mapRotation,
     required this.minZoom,
     required this.maxZoom,
     required this.animatedMove,
+    required this.onResetNorth,
     required this.onFitAll,
   });
 
   final MapController mapController;
   final double initialZoom;
+  final double mapRotation;
   final double minZoom;
   final double maxZoom;
   final void Function(LatLng destLocation, double destZoom) animatedMove;
+  final VoidCallback onResetNorth;
   final VoidCallback onFitAll;
 
   @override
@@ -1333,11 +1359,12 @@ class _MapControlsWithZoomStateState extends State<_MapControlsWithZoomState> {
       onFitAll: widget.onFitAll,
       onResetNorth: () {
         HapticFeedback.selectionClick();
+        widget.onResetNorth();
       },
       showFitAll: true,
       showNavigation: false,
       showCompass: true,
-      mapRotation: 0, // World mesh doesn't rotate
+      mapRotation: widget.mapRotation,
     );
   }
 }
