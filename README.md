@@ -20,10 +20,11 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Flutter-3.10+-02569B?logo=flutter" alt="Flutter">
-  <img src="https://img.shields.io/badge/Meshtastic-Compatible-67EA94" alt="Meshtastic">
-  <img src="https://img.shields.io/badge/License-GPL--3.0-blue" alt="License">
-  <img src="https://img.shields.io/badge/PRs-Welcome-brightgreen" alt="PRs Welcome">
+  <a href="https://flutter.dev"><img src="https://img.shields.io/badge/Flutter-3.10+-02569B?logo=flutter" alt="Flutter"></a>
+  <a href="https://meshtastic.org"><img src="https://img.shields.io/badge/Meshtastic-Compatible-67EA94" alt="Meshtastic"></a>
+  <a href="https://github.com/gotnull/socialmesh/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-GPL--3.0-blue" alt="License"></a>
+  <a href="https://github.com/gotnull/socialmesh/pulls"><img src="https://img.shields.io/badge/PRs-Welcome-brightgreen" alt="PRs Welcome"></a>
+  <a href="https://github.com/gotnull/socialmesh/stargazers"><img src="https://img.shields.io/github/stars/gotnull/socialmesh?style=flat&logo=github&color=yellow" alt="GitHub Stars"></a>
 </p>
 
 <p align="center">

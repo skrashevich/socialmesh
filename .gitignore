@@ -29,6 +29,7 @@ CLAUDE.md
 # Backend services (proprietary, not part of public repo)
 /backend/
 /tools/
+/tool/l10n_audit.py
 
 # Firebase Hosting content (landing page, legal docs, admin tools)
 /web/
