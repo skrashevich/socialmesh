@@ -94,7 +94,11 @@ import '../../core/constants.dart';
 import '../tak/screens/tak_settings_screen.dart';
 
 class SettingsScreen extends ConsumerStatefulWidget {
-  const SettingsScreen({super.key});
+  /// Optional search query to pre-fill on open, allowing callers to
+  /// deep-link directly to a specific setting (e.g. "phone location").
+  final String? initialSearchQuery;
+
+  const SettingsScreen({super.key, this.initialSearchQuery});
 
   @override
   ConsumerState<SettingsScreen> createState() => _SettingsScreenState();
@@ -106,6 +110,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
   String _searchQuery = '';
+
+  @override
+  void initState() {
+    super.initState();
+    final initial = widget.initialSearchQuery;
+    if (initial != null && initial.isNotEmpty) {
+      _searchQuery = initial;
+      _searchController.text = initial;
+    }
+  }
 
   @override
   void dispose() {

@@ -11,6 +11,7 @@ import '../../../providers/app_providers.dart';
 import '../../../providers/countdown_providers.dart';
 import '../../../services/location/phone_position_governor.dart';
 import '../../../utils/snackbar.dart';
+import '../../settings/settings_screen.dart';
 
 /// Handles action execution for custom widgets
 class WidgetActionHandler {
@@ -106,7 +107,13 @@ class WidgetActionHandler {
               context,
               'Enable "Provide phone location" in Settings to share your position',
               actionLabel: 'View',
-              onAction: () => Navigator.of(context).pushNamed('/settings'),
+              onAction: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => const SettingsScreen(
+                    initialSearchQuery: 'phone location',
+                  ),
+                ),
+              ),
               type: SnackBarType.warning,
             );
           case PublishDecision.blockedInterval:

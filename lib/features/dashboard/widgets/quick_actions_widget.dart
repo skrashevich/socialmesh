@@ -11,6 +11,7 @@ import '../../../providers/app_providers.dart';
 import '../../../providers/countdown_providers.dart';
 import '../../../core/transport.dart';
 import '../../../services/location/phone_position_governor.dart';
+import '../../settings/settings_screen.dart';
 
 /// Quick Actions Widget - Common mesh actions at a glance
 class QuickActionsContent extends ConsumerStatefulWidget {
@@ -136,7 +137,12 @@ class _QuickActionsContentState extends ConsumerState<QuickActionsContent>
             context,
             'Enable "Provide phone location" in Settings to share your position',
             actionLabel: 'View',
-            onAction: () => navigator.pushNamed('/settings'),
+            onAction: () => navigator.push(
+              MaterialPageRoute(
+                builder: (_) =>
+                    const SettingsScreen(initialSearchQuery: 'phone location'),
+              ),
+            ),
             type: SnackBarType.warning,
           );
         case PublishDecision.blockedInterval:

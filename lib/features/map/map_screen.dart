@@ -33,6 +33,7 @@ import '../../services/share_link_service.dart';
 import '../../utils/presence_utils.dart';
 import '../messaging/messaging_screen.dart';
 import '../navigation/main_shell.dart';
+import '../settings/settings_screen.dart';
 import '../../core/widgets/loading_indicator.dart';
 import '../../core/constants.dart';
 import '../../core/logging.dart';
@@ -1894,8 +1895,13 @@ class _MapScreenState extends ConsumerState<MapScreen>
                         context,
                         'No position available. Enable GPS on your device or turn on "Provide phone location" in Settings.',
                         actionLabel: 'View',
-                        onAction: () =>
-                            Navigator.of(context).pushNamed('/settings'),
+                        onAction: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => const SettingsScreen(
+                              initialSearchQuery: 'phone location',
+                            ),
+                          ),
+                        ),
                         type: SnackBarType.warning,
                       );
                     },
