@@ -72,9 +72,12 @@ class SkeletonNodeCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // Avatar skeleton
-          const Bone.circle(size: 56),
-          const SizedBox(width: AppTheme.spacing16),
+          // Avatar skeleton — fixed 74px leading column matching _NodeCard
+          const SizedBox(
+            width: 74,
+            child: Center(child: Bone.circle(size: 56)),
+          ),
+          const SizedBox(width: AppTheme.spacing12),
           // Content skeleton
           Expanded(
             child: Column(

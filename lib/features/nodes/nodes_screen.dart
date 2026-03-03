@@ -1319,21 +1319,31 @@ class _NodeCard extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        NodeAvatar(
-          text: node.avatarName,
-          color: isMyNode ? context.accentColor : _getAvatarColor(),
-          size: 56,
-          showOnlineIndicator: presenceConfidence.isActive,
-          onlineStatus: presenceConfidence.isActive
-              ? OnlineStatus.online
-              : null,
-          batteryLevel: node.batteryLevel,
-          showBatteryBadge: true,
-          border: isMyNode
-              ? Border.all(color: Colors.white.withValues(alpha: 0.3), width: 2)
-              : null,
+        // Fixed-width leading column so the avatar + battery ring never
+        // shifts the content column. 74 px = 56 avatar + 2×(3 ring + 3 pad + 3 pad).
+        SizedBox(
+          width: 74,
+          child: Center(
+            child: NodeAvatar(
+              text: node.avatarName,
+              color: isMyNode ? context.accentColor : _getAvatarColor(),
+              size: 56,
+              showOnlineIndicator: presenceConfidence.isActive,
+              onlineStatus: presenceConfidence.isActive
+                  ? OnlineStatus.online
+                  : null,
+              batteryLevel: node.batteryLevel,
+              showBatteryBadge: true,
+              border: isMyNode
+                  ? Border.all(
+                      color: Colors.white.withValues(alpha: 0.3),
+                      width: 2,
+                    )
+                  : null,
+            ),
+          ),
         ),
-        SizedBox(width: AppTheme.spacing16),
+        SizedBox(width: AppTheme.spacing12),
         // Info
         Expanded(
           child: Column(
@@ -1674,31 +1684,33 @@ class _NodeCard extends StatelessWidget {
             ],
           ),
         ),
-        // Status icons & chevron
-        Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (node.isIgnored)
-                  Padding(
-                    padding: EdgeInsets.only(right: 4),
-                    child: Icon(
-                      Icons.volume_off,
-                      color: AppTheme.errorRed,
-                      size: 20,
-                    ),
+        // Status icons & chevron — fixed width so trailing column never
+        // shifts the content area.
+        SizedBox(
+          width: 28,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              if (node.isIgnored)
+                Padding(
+                  padding: EdgeInsets.only(bottom: 4),
+                  child: Icon(
+                    Icons.volume_off,
+                    color: AppTheme.errorRed,
+                    size: 20,
                   ),
-                if (node.isFavorite)
-                  const Icon(Icons.star, color: AccentColors.yellow, size: 24)
-                else if (!node.isIgnored)
-                  const SizedBox(width: AppTheme.spacing24),
-              ],
-            ),
-            const SizedBox(height: AppTheme.spacing8),
-            Icon(Icons.chevron_right, color: context.textTertiary, size: 24),
-          ],
+                ),
+              if (node.isFavorite)
+                const Icon(Icons.star, color: AccentColors.yellow, size: 24)
+              else
+                const SizedBox(
+                  width: AppTheme.spacing24,
+                  height: AppTheme.spacing24,
+                ),
+              const SizedBox(height: AppTheme.spacing8),
+              Icon(Icons.chevron_right, color: context.textTertiary, size: 24),
+            ],
+          ),
         ),
       ],
     );
