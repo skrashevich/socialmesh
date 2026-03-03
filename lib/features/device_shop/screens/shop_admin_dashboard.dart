@@ -70,7 +70,11 @@ class ShopAdminDashboard extends ConsumerWidget {
       error: (error, _) => GlassScaffold(
         title: context.l10n.shopAdminDashboardError,
         slivers: [
-          SliverFillRemaining(child: Center(child: Text('Error: \$error'))),
+          SliverFillRemaining(
+            child: Center(
+              child: Text(context.l10n.commonErrorWithDetails('$error')),
+            ),
+          ),
         ],
       ),
     );
@@ -127,7 +131,9 @@ class _AdminDashboardContent extends ConsumerWidget {
                       child: CircularProgressIndicator(),
                     ),
                   ),
-                  error: (e, _) => Center(child: Text('Error: $e')),
+                  error: (e, _) => Center(
+                    child: Text(context.l10n.commonErrorWithDetails('$e')),
+                  ),
                 ),
 
                 const SizedBox(height: AppTheme.spacing32),

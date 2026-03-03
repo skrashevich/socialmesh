@@ -2308,6 +2308,12 @@ abstract class AppLocalizations {
   /// **'Done'**
   String get commonDone;
 
+  /// Generic error message with details.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {error}'**
+  String commonErrorWithDetails(String error);
+
   /// Label for a Go Back button.
   ///
   /// In en, this message translates to:

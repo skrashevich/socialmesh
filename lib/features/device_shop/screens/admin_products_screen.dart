@@ -158,8 +158,11 @@ class _AdminProductsScreenState extends ConsumerState<AdminProductsScreen>
             loading: () => SliverFillRemaining(
               child: Center(child: CircularProgressIndicator()),
             ),
-            error: (e, _) =>
-                SliverFillRemaining(child: Center(child: Text('Error: $e'))),
+            error: (e, _) => SliverFillRemaining(
+              child: Center(
+                child: Text(context.l10n.commonErrorWithDetails('$e')),
+              ),
+            ),
           ),
         ],
       ),

@@ -720,7 +720,7 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection>
               title: _friendlySyncError(syncError),
               trailing: TextButton(
                 onPressed: () => _retrySyncNow(context),
-                child: const Text('Retry'),
+                child: Text(context.l10n.commonRetry),
               ),
               margin: EdgeInsets.zero,
             ),
@@ -894,7 +894,7 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection>
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
                   ),
-                  child: const Text('Cancel'),
+                  child: Text(context.l10n.commonCancel),
                 ),
               ),
               const SizedBox(width: AppTheme.spacing12),
@@ -2506,11 +2506,11 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet>
                     children: [
                       TextButton(
                         onPressed: () => Navigator.pop(context),
-                        child: Text('Cancel'),
+                        child: Text(context.l10n.commonCancel),
                       ),
                       Expanded(
                         child: Text(
-                          'Edit Profile',
+                          context.l10n.profileEditSheetTitle,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
@@ -2532,7 +2532,7 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet>
                                   color: Colors.white,
                                 ),
                               )
-                            : const Text('Save'),
+                            : Text(context.l10n.commonSave),
                       ),
                     ],
                   ),

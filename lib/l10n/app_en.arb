@@ -546,6 +546,15 @@
   "@commonDone": {
     "description": "Label for a Done button."
   },
+  "commonErrorWithDetails": "Error: {error}",
+  "@commonErrorWithDetails": {
+    "description": "Generic error message with details.",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "commonGoBack": "Go Back",
   "@commonGoBack": {
     "description": "Label for a Go Back button."

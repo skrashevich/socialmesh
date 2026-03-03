@@ -133,8 +133,11 @@ class _FeaturedProductsScreenState extends ConsumerState<FeaturedProductsScreen>
           loading: () => const SliverFillRemaining(
             child: Center(child: CircularProgressIndicator()),
           ),
-          error: (e, _) =>
-              SliverFillRemaining(child: Center(child: Text('Error: $e'))),
+          error: (e, _) => SliverFillRemaining(
+            child: Center(
+              child: Text(context.l10n.commonErrorWithDetails('$e')),
+            ),
+          ),
         ),
         if (_hasChanges)
           SliverToBoxAdapter(

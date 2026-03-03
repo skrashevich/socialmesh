@@ -980,7 +980,7 @@ class _ReportsList extends ConsumerWidget {
                       (context as Element).markNeedsBuild();
                     },
                     icon: const Icon(Icons.refresh),
-                    label: const Text('Retry'),
+                    label: Text(context.l10n.socialRetry),
                   ),
                 ],
               ),
@@ -1536,12 +1536,12 @@ class _ReportCard extends StatelessWidget {
                 TextButton.icon(
                   onPressed: onViewContent,
                   icon: const Icon(Icons.visibility_outlined, size: 18),
-                  label: const Text('View'),
+                  label: Text(context.l10n.socialView),
                 ),
                 const Spacer(),
                 OutlinedButton(
                   onPressed: onDismiss,
-                  child: const Text('Dismiss'),
+                  child: Text(context.l10n.socialDismiss),
                 ),
                 const SizedBox(width: AppTheme.spacing8),
                 FilledButton(
@@ -1549,7 +1549,7 @@ class _ReportCard extends StatelessWidget {
                   style: FilledButton.styleFrom(
                     backgroundColor: theme.colorScheme.error,
                   ),
-                  child: const Text('Delete'),
+                  child: Text(context.l10n.socialDelete),
                 ),
               ],
             ),
@@ -1562,7 +1562,7 @@ class _ReportCard extends StatelessWidget {
               child: OutlinedButton.icon(
                 onPressed: onBanUser,
                 icon: const Icon(Icons.block, size: 18),
-                label: const Text('Ban User & Delete'),
+                label: Text(context.l10n.socialBanUserAndDelete),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppTheme.errorRed,
                   side: BorderSide(color: AppTheme.errorRed),
@@ -1773,7 +1773,7 @@ class _BanUserSheetState extends State<_BanUserSheet> {
               Expanded(
                 child: OutlinedButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('Cancel'),
+                  child: Text(context.l10n.socialCancel),
                 ),
               ),
               const SizedBox(width: AppTheme.spacing12),
@@ -1788,7 +1788,7 @@ class _BanUserSheetState extends State<_BanUserSheet> {
                   style: FilledButton.styleFrom(
                     backgroundColor: AppTheme.errorRed,
                   ),
-                  child: const Text('Ban User'),
+                  child: Text(context.l10n.socialBanUserButton),
                 ),
               ),
             ],

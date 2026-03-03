@@ -147,7 +147,11 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen>
                                 padding: const EdgeInsets.all(
                                   AppTheme.spacing32,
                                 ),
-                                child: Center(child: Text('Error: $e')),
+                                child: Center(
+                                  child: Text(
+                                    context.l10n.commonErrorWithDetails('$e'),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
@@ -169,7 +173,9 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen>
                 );
               },
               loading: () => const Center(child: CircularProgressIndicator()),
-              error: (e, _) => Center(child: Text('Error: $e')),
+              error: (e, _) => Center(
+                child: Text(context.l10n.commonErrorWithDetails('$e')),
+              ),
             ),
           ),
         ],
@@ -1529,7 +1535,7 @@ Future<String?> _showReportReasonSheet(BuildContext context) {
                         borderRadius: BorderRadius.circular(AppTheme.radius12),
                       ),
                     ),
-                    child: const Text('Cancel'),
+                    child: Text(context.l10n.socialCancel),
                   ),
                 ),
                 const SizedBox(width: AppTheme.spacing12),
@@ -1545,7 +1551,7 @@ Future<String?> _showReportReasonSheet(BuildContext context) {
                         borderRadius: BorderRadius.circular(AppTheme.radius12),
                       ),
                     ),
-                    child: const Text('Report'),
+                    child: Text(context.l10n.socialReport),
                   ),
                 ),
               ],

@@ -1213,6 +1213,11 @@ class AppLocalizationsRu extends AppLocalizations {
   String get commonDone => 'Готово';
 
   @override
+  String commonErrorWithDetails(String error) {
+    return 'Error: $error';
+  }
+
+  @override
   String get commonGoBack => 'Назад';
 
   @override

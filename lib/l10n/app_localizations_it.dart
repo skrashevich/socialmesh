@@ -1213,6 +1213,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get commonDone => 'Fatto';
 
   @override
+  String commonErrorWithDetails(String error) {
+    return 'Error: $error';
+  }
+
+  @override
   String get commonGoBack => 'Indietro';
 
   @override
