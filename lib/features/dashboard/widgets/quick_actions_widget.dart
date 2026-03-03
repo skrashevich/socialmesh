@@ -116,7 +116,9 @@ class _QuickActionsContentState extends ConsumerState<QuickActionsContent>
     );
   }
 
-  void _shareLocation(BuildContext context) async {
+  void _shareLocation(BuildContext widgetContext) async {
+    // Capture navigator before async gap so we can safely use it after await.
+    final navigator = Navigator.of(widgetContext);
     try {
       final locationService = ref.read(locationServiceProvider);
       final decision = await locationService.sendPositionOnce();
@@ -130,9 +132,12 @@ class _QuickActionsContentState extends ConsumerState<QuickActionsContent>
               .read(countdownProvider.notifier)
               .startPositionBroadcastCountdown();
         case PublishDecision.blockedDisabled:
-          safeShowSnackBar(
+          showActionSnackBar(
+            context,
             'Enable "Provide phone location" in Settings to share your position',
-            type: SnackBarType.error,
+            actionLabel: 'View',
+            onAction: () => navigator.pushNamed('/settings'),
+            type: SnackBarType.warning,
           );
         case PublishDecision.blockedInterval:
           safeShowSnackBar(

@@ -179,7 +179,13 @@ class _GeofencePickerScreenState extends ConsumerState<GeofencePickerScreen>
         if (!mounted) return;
         if (requested == LocationPermission.denied ||
             requested == LocationPermission.deniedForever) {
-          showErrorSnackBar(context, 'Location permission denied');
+          showActionSnackBar(
+            context,
+            'Location permission denied. Grant location access to set geofence center.',
+            actionLabel: 'Open Settings',
+            onAction: () => Geolocator.openAppSettings(),
+            type: SnackBarType.warning,
+          );
           safeSetState(() => _isLoadingLocation = false);
           return;
         }

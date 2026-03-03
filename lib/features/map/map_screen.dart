@@ -1889,6 +1889,16 @@ class _MapScreenState extends ConsumerState<MapScreen>
                     hasMyLocation: nodesWithPosition.any(
                       (n) => n.node.nodeNum == myNodeNum,
                     ),
+                    onLocationUnavailable: () {
+                      showActionSnackBar(
+                        context,
+                        'No position available. Enable GPS on your device or turn on "Provide phone location" in Settings.',
+                        actionLabel: 'View',
+                        onAction: () =>
+                            Navigator.of(context).pushNamed('/settings'),
+                        type: SnackBarType.warning,
+                      );
+                    },
                     showFitAll: true,
                     showNavigation: true,
                     showCompass: true,

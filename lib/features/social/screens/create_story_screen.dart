@@ -325,9 +325,12 @@ class _CreateStoryScreenState extends ConsumerState<CreateStoryScreen>
         if (requested == LocationPermission.denied ||
             requested == LocationPermission.deniedForever) {
           if (mounted) {
-            showErrorSnackBar(
+            showActionSnackBar(
               context,
               context.l10n.socialCreateStoryLocationRequired,
+              actionLabel: 'Open Settings',
+              onAction: () => Geolocator.openAppSettings(),
+              type: SnackBarType.warning,
             );
           }
           return;

@@ -102,9 +102,12 @@ class WidgetActionHandler {
           case PublishDecision.allowed:
             showSuccessSnackBar(context, 'Location shared with mesh');
           case PublishDecision.blockedDisabled:
-            showErrorSnackBar(
+            showActionSnackBar(
               context,
               'Enable "Provide phone location" in Settings to share your position',
+              actionLabel: 'View',
+              onAction: () => Navigator.of(context).pushNamed('/settings'),
+              type: SnackBarType.warning,
             );
           case PublishDecision.blockedInterval:
             showWarningSnackBar(

@@ -115,16 +115,23 @@ class _ZoomButton extends StatelessWidget {
   final bool isBottom;
   final String? tooltip;
 
+  /// When `true`, the icon is rendered with the disabled colour even though
+  /// [onPressed] is non-null. This lets the button remain tappable (e.g. to
+  /// show a "location unavailable" prompt) while still looking inactive.
+  final bool dimmed;
+
   const _ZoomButton({
     required this.icon,
     required this.onPressed,
     this.isTop = false,
     this.isBottom = false,
     this.tooltip,
+    this.dimmed = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    final isEnabled = onPressed != null;
     final button = Material(
       color: Colors.transparent,
       child: InkWell(
@@ -140,7 +147,7 @@ class _ZoomButton extends StatelessWidget {
           child: Icon(
             icon,
             size: 20,
-            color: onPressed != null
+            color: isEnabled && !dimmed
                 ? context.textSecondary
                 : context.textTertiary.withValues(alpha: 0.5),
           ),
@@ -161,11 +168,17 @@ class MapNavigationControls extends StatelessWidget {
   final VoidCallback? onResetNorth;
   final bool hasLocation;
 
+  /// Called when the user taps the "Center on me" button but [hasLocation]
+  /// is `false`. Use this to show a snackbar prompting the user to enable
+  /// GPS or phone-location sharing.
+  final VoidCallback? onLocationUnavailable;
+
   const MapNavigationControls({
     super.key,
     required this.onCenterOnMe,
     this.onResetNorth,
     this.hasLocation = true,
+    this.onLocationUnavailable,
   });
 
   @override
@@ -186,18 +199,21 @@ class MapNavigationControls extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Center on my location
+          // Center on my location — always tappable so we can show feedback
           _ZoomButton(
             icon: Icons.my_location,
-            onPressed: hasLocation
-                ? () {
-                    HapticFeedback.selectionClick();
-                    onCenterOnMe();
-                  }
-                : null,
+            onPressed: () {
+              HapticFeedback.selectionClick();
+              if (hasLocation) {
+                onCenterOnMe();
+              } else {
+                onLocationUnavailable?.call();
+              }
+            },
             isTop: onResetNorth == null,
             isBottom: onResetNorth == null,
             tooltip: 'Center on me',
+            dimmed: !hasLocation,
           ),
           if (onResetNorth != null) ...[
             _Divider(),
@@ -317,6 +333,11 @@ class MapControlsOverlay extends StatelessWidget {
   final VoidCallback? onCenterOnMe;
   final VoidCallback onResetNorth;
   final bool hasMyLocation;
+
+  /// Called when the user taps the "Center on me" button but [hasMyLocation]
+  /// is `false`. Forward this to show a snackbar guiding the user to enable
+  /// GPS or phone-location sharing.
+  final VoidCallback? onLocationUnavailable;
   final bool showFitAll;
   final bool showNavigation;
   final bool showCompass;
@@ -335,6 +356,7 @@ class MapControlsOverlay extends StatelessWidget {
     this.onCenterOnMe,
     required this.onResetNorth,
     this.hasMyLocation = true,
+    this.onLocationUnavailable,
     this.showFitAll = true,
     this.showNavigation = true,
     this.showCompass = true,
@@ -373,6 +395,7 @@ class MapControlsOverlay extends StatelessWidget {
               onCenterOnMe: onCenterOnMe!,
               onResetNorth: showCompass ? null : onResetNorth,
               hasLocation: hasMyLocation,
+              onLocationUnavailable: onLocationUnavailable,
             ),
           ],
         ],

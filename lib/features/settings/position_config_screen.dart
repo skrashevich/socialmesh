@@ -136,7 +136,13 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
       final serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
         if (mounted) {
-          showErrorSnackBar(context, 'Location services are disabled');
+          showActionSnackBar(
+            context,
+            'Location services are disabled. Enable GPS in your device settings.',
+            actionLabel: 'Open Settings',
+            onAction: () => Geolocator.openLocationSettings(),
+            type: SnackBarType.warning,
+          );
         }
         return;
       }
@@ -147,7 +153,13 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
           if (mounted) {
-            showErrorSnackBar(context, 'Location permission denied');
+            showActionSnackBar(
+              context,
+              'Location permission denied. Grant location access to use this feature.',
+              actionLabel: 'Open Settings',
+              onAction: () => Geolocator.openAppSettings(),
+              type: SnackBarType.warning,
+            );
           }
           return;
         }
@@ -155,9 +167,12 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
 
       if (permission == LocationPermission.deniedForever) {
         if (mounted) {
-          showErrorSnackBar(
+          showActionSnackBar(
             context,
-            'Location permission permanently denied. Enable in settings.',
+            'Location permission permanently denied. Enable in your device settings.',
+            actionLabel: 'Open Settings',
+            onAction: () => Geolocator.openAppSettings(),
+            type: SnackBarType.warning,
           );
         }
         return;

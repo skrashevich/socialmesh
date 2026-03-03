@@ -967,9 +967,12 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
         if (requested == LocationPermission.denied ||
             requested == LocationPermission.deniedForever) {
           if (!mounted) return;
-          showWarningSnackBar(
+          showActionSnackBar(
             context,
             context.l10n.socialCreatePostLocationDenied,
+            actionLabel: 'Open Settings',
+            onAction: () => Geolocator.openAppSettings(),
+            type: SnackBarType.warning,
           );
           return;
         }
