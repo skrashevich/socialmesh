@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/app_bottom_sheet.dart';
@@ -62,7 +63,7 @@ class _MyPresenceSettingsState extends ConsumerState<MyPresenceSettings>
     if (!mounted) return;
     safeSetState(() => _intent = intent);
     if (changed) {
-      showSuccessSnackBar(context, 'Presence intent updated');
+      showSuccessSnackBar(context, context.l10n.presenceIntentUpdated);
     }
   }
 
@@ -72,7 +73,7 @@ class _MyPresenceSettingsState extends ConsumerState<MyPresenceSettings>
     if (!mounted) return;
     safeSetState(() => _shortStatus = status);
     if (changed) {
-      showSuccessSnackBar(context, 'Status updated');
+      showSuccessSnackBar(context, context.l10n.presenceStatusUpdated);
     }
   }
 
@@ -83,7 +84,7 @@ class _MyPresenceSettingsState extends ConsumerState<MyPresenceSettings>
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const BottomSheetHeader(title: 'Select Intent'),
+          BottomSheetHeader(title: context.l10n.presenceSelectIntent),
           const SizedBox(height: AppTheme.spacing8),
           ...PresenceIntent.values.map((intent) {
             final isSelected = intent == _intent;
@@ -121,7 +122,7 @@ class _MyPresenceSettingsState extends ConsumerState<MyPresenceSettings>
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const BottomSheetHeader(title: 'Set Status'),
+          BottomSheetHeader(title: context.l10n.presenceSetStatus),
           const SizedBox(height: AppTheme.spacing16),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -130,7 +131,7 @@ class _MyPresenceSettingsState extends ConsumerState<MyPresenceSettings>
               maxLength: ExtendedPresenceInfo.maxStatusLength,
               maxLines: 1,
               decoration: InputDecoration(
-                hintText: 'What are you up to?',
+                hintText: context.l10n.presenceStatusHint,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(AppTheme.radius12),
                 ),
@@ -161,7 +162,7 @@ class _MyPresenceSettingsState extends ConsumerState<MyPresenceSettings>
                         Navigator.of(context).pop();
                         _setStatus(null);
                       },
-                      child: const Text('Clear'),
+                      child: Text(context.l10n.presenceClear),
                     ),
                   ),
                 if (_shortStatus != null && _shortStatus!.isNotEmpty)
@@ -173,7 +174,7 @@ class _MyPresenceSettingsState extends ConsumerState<MyPresenceSettings>
                       final text = _statusController.text.trim();
                       _setStatus(text.isEmpty ? null : text);
                     },
-                    child: const Text('Save'),
+                    child: Text(context.l10n.presenceSave),
                   ),
                 ),
               ],
@@ -202,7 +203,7 @@ class _MyPresenceSettingsState extends ConsumerState<MyPresenceSettings>
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Text(
-            'My Presence',
+            context.l10n.presenceMyPresence,
             style: theme.textTheme.titleSmall?.copyWith(
               color: context.textSecondary,
               fontWeight: FontWeight.w600,
@@ -219,7 +220,7 @@ class _MyPresenceSettingsState extends ConsumerState<MyPresenceSettings>
                   PresenceIntentIcons.iconFor(_intent),
                   color: context.accentColor,
                 ),
-                title: const Text('Intent'),
+                title: Text(context.l10n.presenceIntentLabel),
                 subtitle: Text(
                   _intent.label,
                   style: TextStyle(color: context.textSecondary),
@@ -236,9 +237,9 @@ class _MyPresenceSettingsState extends ConsumerState<MyPresenceSettings>
                       ? context.accentColor
                       : context.textTertiary,
                 ),
-                title: const Text('Status'),
+                title: Text(context.l10n.presenceStatusLabel),
                 subtitle: Text(
-                  _shortStatus ?? 'Not set',
+                  _shortStatus ?? context.l10n.presenceStatusNotSet,
                   style: TextStyle(
                     color: _shortStatus != null
                         ? context.textSecondary
@@ -259,7 +260,7 @@ class _MyPresenceSettingsState extends ConsumerState<MyPresenceSettings>
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Text(
-            'Your intent and status are broadcast with your signals.',
+            context.l10n.presenceBroadcastInfo,
             style: theme.textTheme.bodySmall?.copyWith(
               color: context.textTertiary,
             ),

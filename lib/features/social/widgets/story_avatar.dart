@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/user_avatar.dart';
 import '../../../core/widgets/animations.dart';
@@ -243,8 +244,9 @@ class _StoryAvatarState extends State<StoryAvatar>
                 constraints: BoxConstraints(maxWidth: totalSize),
                 child: AutoScrollText(
                   widget.isAddButton
-                      ? 'Your story'
-                      : (widget.displayName ?? 'User'),
+                      ? context.l10n.socialYourStory
+                      : (widget.displayName ??
+                            context.l10n.socialStoryUserFallback),
                   style: TextStyle(
                     color: context.textPrimary,
                     fontSize: 11,
@@ -293,7 +295,7 @@ class SmallStoryAvatar extends StatelessWidget {
           const SizedBox(width: AppTheme.spacing12),
           Expanded(
             child: Text(
-              displayName ?? 'User',
+              displayName ?? context.l10n.socialStoryUserFallback,
               style: TextStyle(
                 color: context.textPrimary,
                 fontSize: 14,

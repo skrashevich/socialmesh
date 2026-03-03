@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/logging.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/widgets/app_bottom_sheet.dart';
@@ -186,7 +187,7 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
     final isDeviceConnected = connectivity.isBleConnected;
     if (!isDeviceConnected) {
       AppLogging.social('🚫 Go Active blocked: device not connected');
-      showErrorSnackBar(context, 'Connect to a device to go active');
+      showErrorSnackBar(context, context.l10n.signalConnectToGoActive);
       return;
     }
 
@@ -366,7 +367,8 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
         stepKeys: const {},
         child: GlassScaffold(
           resizeToAvoidBottomInset: false,
-          title: 'Signals${allCount > 0 ? ' ($allCount)' : ''}',
+          title:
+              '${context.l10n.signalsFeedTitle}${allCount > 0 ? ' ($allCount)' : ''}',
 
           leading: const HamburgerMenuButton(),
           actions: [
@@ -387,20 +389,20 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
                 }
               },
               itemBuilder: (context) => [
-                const PopupMenuItem(
+                PopupMenuItem(
                   value: 'help',
                   child: ListTile(
-                    leading: Icon(Icons.help_outline),
-                    title: Text('Help'),
+                    leading: const Icon(Icons.help_outline),
+                    title: Text(context.l10n.signalHelp),
                     contentPadding: EdgeInsets.zero,
                     visualDensity: VisualDensity.compact,
                   ),
                 ),
-                const PopupMenuItem(
+                PopupMenuItem(
                   value: 'settings',
                   child: ListTile(
-                    leading: Icon(Icons.settings_outlined),
-                    title: Text('Settings'),
+                    leading: const Icon(Icons.settings_outlined),
+                    title: Text(context.l10n.signalSettings),
                     contentPadding: EdgeInsets.zero,
                     visualDensity: VisualDensity.compact,
                   ),
@@ -441,7 +443,7 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
                         const SizedBox(width: AppTheme.spacing8),
                         Expanded(
                           child: Text(
-                            'iOS Airplane Mode can pause BLE mesh traffic even when connected. If signals stop, turn off Airplane Mode or toggle Bluetooth.',
+                            context.l10n.signalIosAirplaneModeWarning,
                             style: TextStyle(
                               color: context.textTertiary,
                               fontSize: 12,
@@ -462,7 +464,7 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
                 searchQuery: _searchQuery,
                 onSearchChanged: (value) =>
                     setState(() => _searchQuery = value),
-                hintText: 'Search signals',
+                hintText: context.l10n.signalSearchHint,
                 textScaler: MediaQuery.textScalerOf(context),
                 rebuildKey: Object.hashAll([
                   _activeFilter,
@@ -480,14 +482,14 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
                 ]),
                 filterChips: [
                   StatusFilterChip(
-                    label: 'All',
+                    label: context.l10n.signalFilterAll,
                     count: allCount,
                     isSelected: _activeFilter == SignalFilter.all,
                     onTap: () =>
                         setState(() => _activeFilter = SignalFilter.all),
                   ),
                   StatusFilterChip(
-                    label: 'Saved',
+                    label: context.l10n.signalFilterSaved,
                     count: savedCount,
                     isSelected: _activeFilter == SignalFilter.saved,
                     color: AccentColors.yellow,
@@ -496,7 +498,7 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
                         setState(() => _activeFilter = SignalFilter.saved),
                   ),
                   StatusFilterChip(
-                    label: 'Nearby',
+                    label: context.l10n.signalFilterNearby,
                     count: nearbyCount,
                     isSelected: _activeFilter == SignalFilter.nearby,
                     color: context.accentColor,
@@ -505,7 +507,7 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
                         setState(() => _activeFilter = SignalFilter.nearby),
                   ),
                   StatusFilterChip(
-                    label: 'Mesh',
+                    label: context.l10n.signalFilterMesh,
                     count: meshCount,
                     isSelected: _activeFilter == SignalFilter.meshOnly,
                     color: AccentColors.cyan,
@@ -514,7 +516,7 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
                         setState(() => _activeFilter = SignalFilter.meshOnly),
                   ),
                   StatusFilterChip(
-                    label: 'Media',
+                    label: context.l10n.signalFilterMedia,
                     count: mediaCount,
                     isSelected: _activeFilter == SignalFilter.withMedia,
                     color: AccentColors.purple,
@@ -523,7 +525,7 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
                         setState(() => _activeFilter = SignalFilter.withMedia),
                   ),
                   StatusFilterChip(
-                    label: 'Location',
+                    label: context.l10n.signalFilterLocation,
                     count: withLocationCount,
                     isSelected: _activeFilter == SignalFilter.withLocation,
                     color: context.accentColor,
@@ -533,7 +535,7 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
                     ),
                   ),
                   StatusFilterChip(
-                    label: 'Replies',
+                    label: context.l10n.signalFilterReplies,
                     count: withCommentsCount,
                     isSelected: _activeFilter == SignalFilter.withComments,
                     color: AccentColors.blue,
@@ -543,7 +545,7 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
                     ),
                   ),
                   StatusFilterChip(
-                    label: 'Expiring',
+                    label: context.l10n.signalFilterExpiring,
                     count: expiringSoonCount,
                     isSelected: _activeFilter == SignalFilter.expiringSoon,
                     color: AppTheme.warningYellow,
@@ -554,7 +556,7 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
                   ),
                   if (hiddenCount > 0)
                     StatusFilterChip(
-                      label: 'Hidden',
+                      label: context.l10n.signalFilterHidden,
                       count: hiddenCount,
                       isSelected: _activeFilter == SignalFilter.hidden,
                       color: context.textTertiary,
@@ -637,7 +639,9 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
       if (!authorMap.containsKey(signal.authorId)) {
         authorMap[signal.authorId] = _AuthorInfo(
           authorId: signal.authorId,
-          displayName: signal.authorSnapshot?.displayName ?? 'Anonymous',
+          displayName:
+              signal.authorSnapshot?.displayName ??
+              context.l10n.signalAnonymousFeed,
           avatarUrl: signal.authorSnapshot?.avatarUrl,
           meshNodeId: signal.meshNodeId,
           signalCount: 1,
@@ -690,9 +694,9 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
     }
     String? blockedReason;
     if (!isConnected) {
-      blockedReason = 'Device not connected';
+      blockedReason = context.l10n.signalDeviceNotConnected;
     } else if (!isSignedIn) {
-      blockedReason = 'Sign in for images and comments';
+      blockedReason = context.l10n.signalSignInForImagesAndComments;
     }
 
     final gradientColors = AccentColors.gradientFor(context.accentColor);
@@ -701,7 +705,7 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
     );
 
     return Tooltip(
-      message: blockedReason ?? 'Broadcast your signal',
+      message: blockedReason ?? context.l10n.signalBroadcastYourSignal,
       child: BouncyTap(
         onTap: _openCreateSignal,
         child: AnimatedGradientBackground(
@@ -741,9 +745,9 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
 
     String? blockedReason;
     if (!isConnected) {
-      blockedReason = 'Device not connected';
+      blockedReason = context.l10n.signalDeviceNotConnected;
     } else if (!isSignedIn) {
-      blockedReason = 'Sign in for images and comments';
+      blockedReason = context.l10n.signalSignInForImagesAndComments;
     }
 
     // Show different empty state if filtering
@@ -767,7 +771,7 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
             ),
             const SizedBox(height: AppTheme.spacing24),
             Text(
-              'No signals match this filter',
+              context.l10n.signalNoFilterMatch,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
@@ -781,7 +785,7 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
                 _searchQuery = '';
                 _searchController.clear();
               }),
-              child: const Text('Show all signals'),
+              child: Text(context.l10n.signalShowAll),
             ),
           ],
         ),
@@ -821,8 +825,7 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
                 type: StatusBannerType.custom,
                 color: context.textSecondary,
                 icon: Icons.schedule,
-                title:
-                    'Signals fade automatically. Only what\'s still active can be seen.',
+                title: context.l10n.signalsFadeAutomatically,
                 backgroundOpacity: 0.0,
                 borderOpacity: 0.5,
               ),
@@ -868,7 +871,7 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
                           signalId: signal.id,
                           isBookmarked: isBookmarked,
                           leftActionIcon: Icons.visibility_off_rounded,
-                          leftActionLabel: 'Hide',
+                          leftActionLabel: context.l10n.signalHide,
                           hintKey: 'signal_swipe_hint_seen',
                           expiresAt: signal.expiresAt,
                           snapOnExpiry: true,
@@ -879,18 +882,19 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
                             showSuccessSnackBar(
                               context,
                               isBookmarked
-                                  ? 'Removed from saved'
-                                  : 'Signal saved',
+                                  ? context.l10n.signalRemovedFromSaved
+                                  : context.l10n.signalSaved,
                             );
                           },
                           onSwipeLeft: () async {
+                            final hiddenMsg = context.l10n.signalHidden;
                             await ref
                                 .read(hiddenSignalsProvider.notifier)
                                 .hideSignal(signal.id);
 
                             if (!mounted) return;
 
-                            showGlobalSuccessSnackBar('Signal hidden');
+                            showGlobalSuccessSnackBar(hiddenMsg);
                           },
                           onExpired: () async {
                             // Auto-hide when TTL expires
@@ -904,7 +908,10 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
                               ref
                                   .read(signalBookmarksProvider.notifier)
                                   .addBookmark(signal.id);
-                              showSuccessSnackBar(context, 'Signal saved');
+                              showSuccessSnackBar(
+                                context,
+                                context.l10n.signalSaved,
+                              );
                             },
                             child: SignalCard(
                               key: ValueKey('card_${signal.id}'),
@@ -925,7 +932,7 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
                       : SwipeableSignalItem(
                           isBookmarked: isBookmarked,
                           leftActionIcon: Icons.visibility_rounded,
-                          leftActionLabel: 'Restore',
+                          leftActionLabel: context.l10n.signalRestore,
                           hintKey: 'signal_swipe_restore_hint_seen',
                           onSwipeRight: () {
                             ref
@@ -934,8 +941,8 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
                             showSuccessSnackBar(
                               context,
                               isBookmarked
-                                  ? 'Removed from saved'
-                                  : 'Signal saved',
+                                  ? context.l10n.signalRemovedFromSaved
+                                  : context.l10n.signalSaved,
                             );
                           },
                           onSwipeLeft: () async {
@@ -948,13 +955,15 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
                               'Unhiding signal, was last hidden: $isLastHidden (count: ${currentHidden.length})',
                             );
 
+                            final restoredMsg = context.l10n.signalRestored;
+
                             await ref
                                 .read(hiddenSignalsProvider.notifier)
                                 .unhideSignal(signal.id);
 
                             if (!mounted) return;
 
-                            showGlobalSuccessSnackBar('Signal restored');
+                            showGlobalSuccessSnackBar(restoredMsg);
 
                             if (isLastHidden) {
                               AppLogging.social('Switching filter back to All');
@@ -970,7 +979,10 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
                               ref
                                   .read(signalBookmarksProvider.notifier)
                                   .addBookmark(signal.id);
-                              showSuccessSnackBar(context, 'Signal saved');
+                              showSuccessSnackBar(
+                                context,
+                                context.l10n.signalSaved,
+                              );
                             },
                             child: SignalCard(
                               key: ValueKey('card_${signal.id}'),
@@ -1155,11 +1167,13 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
     // Capture provider before any await
     final feedNotifier = ref.read(signalFeedProvider.notifier);
 
+    final l10n = context.l10n;
+
     final confirm = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Delete Signal?',
-      message: 'This signal will fade immediately.',
-      confirmLabel: 'Delete',
+      title: l10n.signalDeleteTitle,
+      message: l10n.signalDeleteMessage,
+      confirmLabel: l10n.signalDelete,
       isDestructive: true,
     );
 
@@ -1171,14 +1185,15 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
   }
 
   Future<void> _reportSignal(Post signal) async {
-    // Capture provider before any await
+    // Capture provider and l10n before any await
     if (!mounted) return;
     final socialService = ref.read(socialServiceProvider);
+    final l10n = context.l10n;
 
     final reason = await AppBottomSheet.showActions<String>(
       context: context,
       header: Text(
-        'Why are you reporting this signal?',
+        l10n.signalWhyReportSignal,
         style: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.w600,
@@ -1188,32 +1203,32 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
       actions: [
         BottomSheetAction(
           icon: Icons.warning_outlined,
-          label: 'Spam or misleading',
+          label: l10n.signalReportSpam,
           value: 'spam',
         ),
         BottomSheetAction(
           icon: Icons.person_off_outlined,
-          label: 'Harassment or bullying',
+          label: l10n.signalReportHarassment,
           value: 'harassment',
         ),
         BottomSheetAction(
           icon: Icons.dangerous_outlined,
-          label: 'Violence or dangerous content',
+          label: l10n.signalReportViolence,
           value: 'violence',
         ),
         BottomSheetAction(
           icon: Icons.no_adult_content,
-          label: 'Nudity or sexual content',
+          label: l10n.signalReportNudity,
           value: 'nudity',
         ),
         BottomSheetAction(
           icon: Icons.copyright,
-          label: 'Copyright violation',
+          label: l10n.signalReportCopyright,
           value: 'copyright',
         ),
         BottomSheetAction(
           icon: Icons.more_horiz,
-          label: 'Other',
+          label: l10n.signalReportOther,
           value: 'other',
         ),
       ],
@@ -1230,11 +1245,11 @@ class _SignalFeedScreenState extends ConsumerState<SignalFeedScreen>
           imageUrl: signal.mediaUrls.isNotEmpty ? signal.mediaUrls.first : null,
         );
         if (mounted) {
-          showSuccessSnackBar(context, 'Report submitted. Thank you.');
+          showSuccessSnackBar(context, l10n.signalReportSubmitted);
         }
       } catch (e) {
         if (mounted) {
-          showErrorSnackBar(context, 'Failed to report: $e');
+          showErrorSnackBar(context, l10n.signalReportFailed(e.toString()));
         }
       }
     }
@@ -1248,14 +1263,14 @@ class _SortButton extends StatelessWidget {
   final SignalSortOrder sortOrder;
   final ValueChanged<SignalSortOrder> onChanged;
 
-  String get _sortLabel {
+  String _sortLabel(BuildContext context) {
     switch (sortOrder) {
       case SignalSortOrder.proximity:
-        return 'Closest';
+        return context.l10n.signalSortClosest;
       case SignalSortOrder.expiring:
-        return 'Expiring';
+        return context.l10n.signalSortExpiring;
       case SignalSortOrder.newest:
-        return 'Newest';
+        return context.l10n.signalSortNewest;
     }
   }
 
@@ -1280,7 +1295,7 @@ class _SortButton extends StatelessWidget {
                 Icon(Icons.sort, size: 14, color: context.textTertiary),
                 const SizedBox(width: AppTheme.spacing4),
                 Text(
-                  _sortLabel,
+                  _sortLabel(context),
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w500,
@@ -1325,19 +1340,19 @@ class _SortButton extends StatelessWidget {
       items: [
         _buildMenuItem(
           SignalSortOrder.proximity,
-          'By Proximity',
+          context.l10n.signalSortByProximity,
           Icons.near_me,
           context,
         ),
         _buildMenuItem(
           SignalSortOrder.expiring,
-          'Expiring Soon',
+          context.l10n.signalSortExpiringSoon,
           Icons.schedule,
           context,
         ),
         _buildMenuItem(
           SignalSortOrder.newest,
-          'Most Recent',
+          context.l10n.signalSortMostRecent,
           Icons.schedule,
           context,
         ),
@@ -1394,21 +1409,21 @@ class _ViewModeSelector extends StatelessWidget {
           icon: Icons.view_list_rounded,
           isSelected: viewMode == SignalViewMode.list,
           onTap: () => onModeChanged(SignalViewMode.list),
-          tooltip: 'List view',
+          tooltip: context.l10n.signalViewList,
         ),
         const SizedBox(width: AppTheme.spacing4),
         _ViewModeButton(
           icon: Icons.grid_view_rounded,
           isSelected: viewMode == SignalViewMode.grid,
           onTap: () => onModeChanged(SignalViewMode.grid),
-          tooltip: 'Grid view',
+          tooltip: context.l10n.signalViewGrid,
         ),
         const SizedBox(width: AppTheme.spacing4),
         _ViewModeButton(
           icon: Icons.map_outlined,
           isSelected: viewMode == SignalViewMode.map,
           onTap: () => onModeChanged(SignalViewMode.map),
-          tooltip: 'Map view',
+          tooltip: context.l10n.signalViewMap,
         ),
       ],
     );
@@ -1467,7 +1482,7 @@ class _GalleryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Tooltip(
-      message: 'View gallery',
+      message: context.l10n.signalViewGallery,
       child: GestureDetector(
         onTap: onTap,
         child: Container(
@@ -2128,7 +2143,9 @@ class _ActiveAuthorsHeaderState extends State<_ActiveAuthorsHeader>
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              '${widget.authors.length} ${widget.authors.length == 1 ? "person" : "people"} active',
+                              context.l10n.signalPeopleActiveCount(
+                                widget.authors.length,
+                              ),
                               style: TextStyle(
                                 color: context.textPrimary,
                                 fontSize: 14,
@@ -2136,7 +2153,9 @@ class _ActiveAuthorsHeaderState extends State<_ActiveAuthorsHeader>
                               ),
                             ),
                             Text(
-                              '${widget.signalCount} ${widget.signalCount == 1 ? "signal" : "signals"} nearby',
+                              context.l10n.signalSignalsNearbyCount(
+                                widget.signalCount,
+                              ),
                               style: TextStyle(
                                 color: context.textTertiary,
                                 fontSize: 12,
@@ -2235,7 +2254,7 @@ class _ActiveTransfersSliver extends ConsumerWidget {
                   Icon(Icons.swap_vert, size: 14, color: context.accentColor),
                   const SizedBox(width: AppTheme.spacing4),
                   Text(
-                    'File Transfers',
+                    context.l10n.signalFileTransfers,
                     style: TextStyle(
                       color: context.accentColor,
                       fontSize: 12,

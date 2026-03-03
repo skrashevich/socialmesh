@@ -1371,7 +1371,7 @@ class NodeDexEntry {
       'NodeDexEntry(node: $nodeNum, '
       'encounters: $encounterCount, '
       'regions: $regionCount, '
-      'tag: ${socialTag?.displayLabel ?? "none"})';
+      'tag: ${socialTag?.name ?? "none"})';
 }
 
 /// Result of merging a single user-editable field.

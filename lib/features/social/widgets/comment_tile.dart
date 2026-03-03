@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/widgets/user_avatar.dart';
 import '../../../core/widgets/verified_badge.dart';
@@ -86,7 +87,8 @@ class CommentTile extends ConsumerWidget {
                           onTap: () =>
                               onAuthorTap?.call(comment.comment.authorId),
                           child: Text(
-                            comment.author?.displayName ?? 'Unknown',
+                            comment.author?.displayName ??
+                                context.l10n.socialCommentUnknown,
                             style: theme.textTheme.bodyMedium?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -140,7 +142,7 @@ class CommentTile extends ConsumerWidget {
                                 vertical: 4,
                               ),
                               child: Text(
-                                'Reply',
+                                context.l10n.socialCommentReply,
                                 style: theme.textTheme.bodySmall?.copyWith(
                                   color: theme.colorScheme.primary,
                                   fontWeight: FontWeight.w500,
@@ -178,9 +180,9 @@ class CommentTile extends ConsumerWidget {
   Future<void> _confirmDelete(BuildContext context, WidgetRef ref) async {
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Delete Comment',
-      message: 'Are you sure you want to delete this comment?',
-      confirmLabel: 'Delete',
+      title: context.l10n.socialCommentDeleteTitle,
+      message: context.l10n.socialCommentDeleteConfirm,
+      confirmLabel: context.l10n.socialDelete,
       isDestructive: true,
     );
 
@@ -189,7 +191,10 @@ class CommentTile extends ConsumerWidget {
         await deleteComment(ref, comment.comment.id);
       } catch (e) {
         if (context.mounted) {
-          showErrorSnackBar(context, 'Failed to delete: $e');
+          showErrorSnackBar(
+            context,
+            context.l10n.socialCommentDeleteFailed(e.toString()),
+          );
         }
       }
     }
@@ -267,7 +272,10 @@ class _CommentLikeButtonState extends ConsumerState<_CommentLikeButton>
       );
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.socialCommentActionFailed(e.toString()),
+        );
       }
     }
   }

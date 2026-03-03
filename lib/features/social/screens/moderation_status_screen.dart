@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/glass_scaffold.dart';
@@ -55,7 +56,7 @@ class _ModerationStatusScreenState extends ConsumerState<ModerationStatusScreen>
     final statusAsync = ref.watch(moderationStatusProvider);
 
     return GlassScaffold(
-      title: 'Account Status',
+      title: context.l10n.socialAccountStatusTitle,
       centerTitle: true,
       actions: [
         IconButton(
@@ -80,7 +81,9 @@ class _ModerationStatusScreenState extends ConsumerState<ModerationStatusScreen>
           ),
           error: (e, _) => SliverFillRemaining(
             hasScrollBody: false,
-            child: Center(child: Text('Error loading status: $e')),
+            child: Center(
+              child: Text(context.l10n.socialAccountStatusError(e.toString())),
+            ),
           ),
         ),
       ],
@@ -107,9 +110,9 @@ class _ModerationStatusScreenState extends ConsumerState<ModerationStatusScreen>
               ),
             ),
             const SizedBox(height: AppTheme.spacing24),
-            const Text(
-              'Account in Good Standing',
-              style: TextStyle(
+            Text(
+              context.l10n.socialAccountGoodStanding,
+              style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -117,7 +120,7 @@ class _ModerationStatusScreenState extends ConsumerState<ModerationStatusScreen>
             ),
             const SizedBox(height: AppTheme.spacing12),
             Text(
-              'You have no active warnings or strikes.\nKeep up the great work!',
+              context.l10n.socialAccountGoodStandingDesc,
               style: TextStyle(
                 fontSize: 15,
                 color: Colors.white.withValues(alpha: 0.7),
@@ -161,9 +164,9 @@ class _ModerationStatusScreenState extends ConsumerState<ModerationStatusScreen>
 
           // History section
           if (status.history.isNotEmpty) ...[
-            const Text(
-              'Recent Activity',
-              style: TextStyle(
+            Text(
+              context.l10n.socialAccountRecentActivity,
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -201,7 +204,7 @@ class _ModerationStatusScreenState extends ConsumerState<ModerationStatusScreen>
                     ),
                     const SizedBox(width: AppTheme.spacing12),
                     Text(
-                      'Questions? Contact Support',
+                      context.l10n.socialContactSupport,
                       style: TextStyle(
                         color: Colors.white.withValues(alpha: 0.8),
                         fontWeight: FontWeight.w500,
@@ -237,19 +240,19 @@ class _StatusOverviewCard extends StatelessWidget {
     if (isSuspended) {
       statusColor = AppTheme.errorRed;
       statusIcon = Icons.block_rounded;
-      statusText = 'Suspended';
+      statusText = context.l10n.socialAccountSuspended;
     } else if (hasStrikes) {
       statusColor = AccentColors.orange;
       statusIcon = Icons.warning_amber_rounded;
-      statusText = 'Warning: Strikes Active';
+      statusText = context.l10n.socialAccountWarningStrikesActive;
     } else if (hasWarnings) {
       statusColor = AppTheme.warningYellow;
       statusIcon = Icons.info_outline;
-      statusText = 'Warnings Active';
+      statusText = context.l10n.socialAccountWarningsActive;
     } else {
       statusColor = AppTheme.successGreen;
       statusIcon = Icons.check_circle_outline;
-      statusText = 'Good Standing';
+      statusText = context.l10n.socialAccountGoodStandingLabel;
     }
 
     return Container(
@@ -315,17 +318,17 @@ class _StatusOverviewCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 _StatItem(
-                  label: 'Warnings',
+                  label: context.l10n.socialAccountWarnings,
                   value: '${status.activeWarnings}',
                   color: AppTheme.warningYellow,
                 ),
                 _StatItem(
-                  label: 'Strikes',
+                  label: context.l10n.socialAccountStrikes,
                   value: '${status.activeStrikes}',
                   color: AccentColors.orange,
                 ),
                 _StatItem(
-                  label: 'Max Strikes',
+                  label: context.l10n.socialAccountMaxStrikes,
                   value: '3',
                   color: AppTheme.errorRed.withValues(alpha: 0.5),
                 ),
@@ -399,9 +402,9 @@ class _StrikeMeterCard extends StatelessWidget {
                 size: 20,
               ),
               const SizedBox(width: AppTheme.spacing8),
-              const Text(
-                'Strike Meter',
-                style: TextStyle(
+              Text(
+                context.l10n.socialAccountStrikeMeter,
+                style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
@@ -479,9 +482,9 @@ class _GuidelinesCard extends StatelessWidget {
                 size: 20,
               ),
               const SizedBox(width: AppTheme.spacing8),
-              const Text(
-                'Community Guidelines',
-                style: TextStyle(
+              Text(
+                context.l10n.socialCommunityGuidelines,
+                style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
@@ -498,10 +501,10 @@ class _GuidelinesCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppTheme.spacing12),
-          _GuidelineItem(text: 'No explicit or adult content'),
+          _GuidelineItem(text: context.l10n.socialGuidelineNoExplicit),
           _GuidelineItem(text: 'No violent or graphic imagery'),
-          _GuidelineItem(text: 'No harassment or hate speech'),
-          _GuidelineItem(text: 'No spam or misleading content'),
+          _GuidelineItem(text: context.l10n.socialGuidelineNoHarassment),
+          _GuidelineItem(text: context.l10n.socialGuidelineNoSpam),
         ],
       ),
     );

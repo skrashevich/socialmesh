@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:socialmesh/core/theme.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
 
 /// Utility functions for signal-related UI components.
 ///
@@ -51,31 +52,34 @@ Color getHopCountColor(int? hopCount) {
 /// Format relative time (e.g., "5m ago", "2h ago").
 ///
 /// [compact] - If true, omits "ago" suffix (e.g., "5m" instead of "5m ago")
-String formatTimeAgo(DateTime time, {bool compact = false}) {
+String formatTimeAgo(
+  DateTime time,
+  AppLocalizations l10n, {
+  bool compact = false,
+}) {
   final diff = DateTime.now().difference(time);
-  final suffix = compact ? '' : ' ago';
 
   if (diff.inMinutes < 1) {
-    return compact ? 'now' : 'Just now';
+    return compact ? l10n.signalTimeNowCompact : l10n.signalTimeJustNow;
   } else if (diff.inMinutes < 60) {
-    return '${diff.inMinutes}m$suffix';
+    return l10n.signalTimeMinutesAgo(diff.inMinutes);
   } else if (diff.inHours < 24) {
-    return '${diff.inHours}h$suffix';
+    return l10n.signalTimeHoursAgo(diff.inHours);
   } else if (diff.inDays < 7) {
-    return '${diff.inDays}d$suffix';
+    return l10n.signalTimeDaysAgo(diff.inDays);
   } else {
-    return '${(diff.inDays / 7).floor()}w$suffix';
+    return l10n.signalTimeWeeksAgo((diff.inDays / 7).floor());
   }
 }
 
 /// Format time as "Active Xm" style for signal cards.
-String formatActiveTime(DateTime time) {
+String formatActiveTime(DateTime time, AppLocalizations l10n) {
   final diff = DateTime.now().difference(time);
 
-  if (diff.inMinutes < 1) return 'Active now';
-  if (diff.inMinutes < 60) return 'Active ${diff.inMinutes}m';
-  if (diff.inHours < 24) return 'Active ${diff.inHours}h';
-  return 'Active ${diff.inDays}d';
+  if (diff.inMinutes < 1) return l10n.signalActiveNow;
+  if (diff.inMinutes < 60) return l10n.signalActiveMinutes(diff.inMinutes);
+  if (diff.inHours < 24) return l10n.signalActiveHours(diff.inHours);
+  return l10n.signalActiveDays(diff.inDays);
 }
 
 // =============================================================================
@@ -85,16 +89,31 @@ String formatActiveTime(DateTime time) {
 /// Format TTL remaining (e.g., "5m left" or "5m" for compact).
 ///
 /// [compact] - If true, omits "left" suffix
-String formatTtlRemaining(DateTime? expiresAt, {bool compact = false}) {
+String formatTtlRemaining(
+  DateTime? expiresAt,
+  AppLocalizations l10n, {
+  bool compact = false,
+}) {
   if (expiresAt == null) return '';
   final remaining = expiresAt.difference(DateTime.now());
-  if (remaining.isNegative) return 'Expired';
+  if (remaining.isNegative) return l10n.signalTtlExpired;
 
-  final suffix = compact ? '' : ' left';
-  if (remaining.inSeconds < 60) return '${remaining.inSeconds}s$suffix';
-  if (remaining.inMinutes < 60) return '${remaining.inMinutes}m$suffix';
-  if (remaining.inHours < 24) return '${remaining.inHours}h$suffix';
-  return '${remaining.inDays}d$suffix';
+  if (compact) {
+    if (remaining.inSeconds < 60) return '${remaining.inSeconds}s';
+    if (remaining.inMinutes < 60) return '${remaining.inMinutes}m';
+    if (remaining.inHours < 24) return '${remaining.inHours}h';
+    return '${remaining.inDays}d';
+  }
+  if (remaining.inSeconds < 60) {
+    return l10n.signalTtlSecondsLeft(remaining.inSeconds);
+  }
+  if (remaining.inMinutes < 60) {
+    return l10n.signalTtlMinutesLeft(remaining.inMinutes);
+  }
+  if (remaining.inHours < 24) {
+    return l10n.signalTtlHoursLeft(remaining.inHours);
+  }
+  return l10n.signalTtlDaysLeft(remaining.inDays);
 }
 
 /// Get TTL color based on urgency.
@@ -121,16 +140,20 @@ bool isSignalExpired(DateTime? expiresAt) {
 /// Format a TTL countdown string for signal cards.
 /// Uses seconds when remaining < 60s, minutes + seconds when < 10m,
 /// and returns "Faded" at or below 0.
-String formatSignalTtlCountdown(Duration? remaining) {
+String formatSignalTtlCountdown(Duration? remaining, AppLocalizations l10n) {
   if (remaining == null) return '';
-  if (remaining.inSeconds <= 0) return 'Faded';
-  if (remaining.inSeconds < 60) return 'Fades in ${remaining.inSeconds}s';
+  if (remaining.inSeconds <= 0) return l10n.signalFaded;
+  if (remaining.inSeconds < 60) {
+    return l10n.signalFadesInSeconds(remaining.inSeconds);
+  }
   if (remaining.inMinutes < 10) {
     final mins = remaining.inMinutes;
     final secs = remaining.inSeconds % 60;
-    return 'Fades in ${mins}m ${secs}s';
+    return l10n.signalFadesInMinutesSeconds(mins, secs);
   }
-  if (remaining.inMinutes < 60) return 'Fades in ${remaining.inMinutes}m';
-  if (remaining.inHours < 24) return 'Fades in ${remaining.inHours}h';
-  return 'Fades in ${remaining.inDays}d';
+  if (remaining.inMinutes < 60) {
+    return l10n.signalFadesInMinutes(remaining.inMinutes);
+  }
+  if (remaining.inHours < 24) return l10n.signalFadesInHours(remaining.inHours);
+  return l10n.signalFadesInDays(remaining.inDays);
 }

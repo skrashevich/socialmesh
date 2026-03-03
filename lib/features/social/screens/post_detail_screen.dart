@@ -2,6 +2,7 @@
 // lint-allow: haptic-feedback — GestureDetector onTap is primarily for keyboard dismissal and navigation
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../services/share_link_service.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -76,14 +77,14 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen>
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: GlassScaffold(
-        title: 'Post',
+        title: context.l10n.socialPostDetailTitle,
         slivers: [
           SliverFillRemaining(
             hasScrollBody: true,
             child: postAsync.when(
               data: (post) {
                 if (post == null) {
-                  return const Center(child: Text('Post not found'));
+                  return Center(child: Text(context.l10n.socialPostNotFound));
                 }
 
                 // Get actual comment count from stream (excluding deleted)
@@ -123,7 +124,7 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen>
                             child: Padding(
                               padding: const EdgeInsets.all(AppTheme.spacing16),
                               child: Text(
-                                'Comments',
+                                context.l10n.socialComments,
                                 style: Theme.of(context).textTheme.titleMedium
                                     ?.copyWith(fontWeight: FontWeight.bold),
                               ),
@@ -189,7 +190,7 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen>
           padding: const EdgeInsets.all(AppTheme.spacing32),
           child: Center(
             child: Text(
-              'No comments yet. Be the first!',
+              context.l10n.socialNoCommentsYet,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: Theme.of(
                   context,
@@ -282,7 +283,8 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen>
   void _handleReplyTo(CommentWithAuthor comment) {
     safeSetState(() {
       _replyingToId = comment.comment.id;
-      _replyingToAuthor = comment.author?.displayName ?? 'Unknown';
+      _replyingToAuthor =
+          comment.author?.displayName ?? context.l10n.socialCommentUnknown;
     });
     _commentFocusNode.requestFocus();
   }
@@ -366,7 +368,10 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen>
       );
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to post comment: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.socialCommentActionFailed(e.toString()),
+        );
       }
     } finally {
       safeSetState(() => _isSubmitting = false);
@@ -413,7 +418,7 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen>
     AppBottomSheet.showActions(
       context: context,
       header: Text(
-        node?.longName ?? 'Node $nodeId',
+        node?.longName ?? context.l10n.socialNodeLabel(nodeId),
         style: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.w600,
@@ -424,14 +429,14 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen>
         BottomSheetAction(
           icon: Icons.message_outlined,
           iconColor: context.accentColor,
-          label: 'Send Message',
+          label: context.l10n.socialSendMessage,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
               builder: (_) => ChatScreen(
                 type: ConversationType.directMessage,
                 nodeNum: nodeNum,
-                title: node?.longName ?? 'Node $nodeId',
+                title: node?.longName ?? context.l10n.socialNodeLabel(nodeId),
               ),
             ),
           ),
@@ -439,7 +444,7 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen>
         if (node?.hasPosition == true)
           BottomSheetAction(
             icon: Icons.map_outlined,
-            label: 'View on Map',
+            label: context.l10n.socialViewOnMap,
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
@@ -467,9 +472,9 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen>
                   Icons.delete_outline,
                   color: AppTheme.errorRed,
                 ),
-                title: const Text(
-                  'Delete Post',
-                  style: TextStyle(color: AppTheme.errorRed),
+                title: Text(
+                  context.l10n.socialDeletePost,
+                  style: const TextStyle(color: AppTheme.errorRed),
                 ),
                 onTap: () {
                   Navigator.pop(ctx);
@@ -479,7 +484,7 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen>
             if (!isOwnPost) ...[
               ListTile(
                 leading: const Icon(Icons.person_off_outlined),
-                title: const Text('Block User'),
+                title: Text(context.l10n.socialBlockUser),
                 onTap: () {
                   Navigator.pop(ctx);
                   _confirmBlockUser(post.authorId);
@@ -487,7 +492,7 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen>
               ),
               ListTile(
                 leading: const Icon(Icons.flag_outlined),
-                title: const Text('Report Post'),
+                title: Text(context.l10n.socialReportPost),
                 onTap: () {
                   Navigator.pop(ctx);
                   _reportPost(post.id, post.authorId);
@@ -496,7 +501,7 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen>
             ],
             ListTile(
               leading: const Icon(Icons.share_outlined),
-              title: const Text('Share'),
+              title: Text(context.l10n.socialShare),
               onTap: () {
                 Navigator.pop(ctx);
                 _sharePost(post);
@@ -504,7 +509,7 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen>
             ),
             ListTile(
               leading: const Icon(Icons.close),
-              title: const Text('Cancel'),
+              title: Text(context.l10n.socialCancel),
               onTap: () => Navigator.pop(ctx),
             ),
           ],
@@ -519,11 +524,13 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen>
     final navigator = Navigator.of(context);
     final queue = ref.read(mutationQueueProvider);
 
+    final l10n = context.l10n;
+
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Delete Post',
-      message: 'Are you sure you want to delete this post?',
-      confirmLabel: 'Delete',
+      title: l10n.socialDeletePost,
+      message: l10n.socialDeletePostConfirm,
+      confirmLabel: l10n.socialDelete,
       isDestructive: true,
     );
 
@@ -546,7 +553,7 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen>
           commitApply: (_) {
             if (mounted) {
               navigator.pop();
-              showSuccessSnackBar(context, 'Post deleted');
+              showSuccessSnackBar(context, l10n.socialPostDeleted);
             }
           },
           rollbackApply: () {
@@ -572,12 +579,13 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen>
     // Capture navigator before any await
     final navigator = Navigator.of(context);
 
+    final l10n = context.l10n;
+
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Block User',
-      message:
-          'You will no longer see posts from this user. You can unblock them later in settings.',
-      confirmLabel: 'Block',
+      title: l10n.socialBlockUser,
+      message: l10n.socialBlockUserConfirm,
+      confirmLabel: l10n.socialBlock,
       isDestructive: true,
     );
 
@@ -587,7 +595,7 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen>
         await blockUser(ref, userId);
         if (mounted) {
           navigator.pop();
-          showSuccessSnackBar(context, 'User blocked');
+          showSuccessSnackBar(context, l10n.socialUserBlocked);
         }
       } catch (e) {
         if (mounted) {
@@ -601,6 +609,7 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen>
     // Capture provider before any await
     final socialService = ref.read(socialServiceProvider);
 
+    final l10n = context.l10n;
     final reasonController = TextEditingController();
     final reason = await AppBottomSheet.show<String>(
       context: context,
@@ -609,7 +618,7 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen>
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'Report Post',
+              l10n.socialReportPost,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
@@ -618,15 +627,15 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen>
             ),
             const SizedBox(height: AppTheme.spacing12),
             Text(
-              'Why are you reporting this post?',
+              l10n.socialReportPostWhy,
               style: TextStyle(color: context.textSecondary),
             ),
             const SizedBox(height: AppTheme.spacing16),
             TextField(
               controller: reasonController,
               textCapitalization: TextCapitalization.sentences,
-              decoration: const InputDecoration(
-                hintText: 'Describe the issue...',
+              decoration: InputDecoration(
+                hintText: l10n.socialReportDescribeIssue,
                 border: OutlineInputBorder(),
                 counterText: '',
               ),
@@ -646,7 +655,7 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen>
                         borderRadius: BorderRadius.circular(AppTheme.radius12),
                       ),
                     ),
-                    child: const Text('Cancel'),
+                    child: Text(l10n.socialCancel),
                   ),
                 ),
                 const SizedBox(width: AppTheme.spacing12),
@@ -663,7 +672,7 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen>
                         borderRadius: BorderRadius.circular(AppTheme.radius12),
                       ),
                     ),
-                    child: const Text('Report'),
+                    child: Text(l10n.socialReport),
                   ),
                 ),
               ],
@@ -679,7 +688,7 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen>
       try {
         await socialService.reportPost(postId, reason);
         if (mounted) {
-          showSuccessSnackBar(context, 'Report submitted. Thank you.');
+          showSuccessSnackBar(context, l10n.socialReportSubmitted);
         }
       } catch (e) {
         if (mounted) {
@@ -910,7 +919,7 @@ class _CommentTileState extends ConsumerState<_CommentTile>
                         GestureDetector(
                           onTap: widget.onReplyTap,
                           child: Text(
-                            'Reply',
+                            context.l10n.socialReply,
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: theme.hintColor,
                               fontWeight: FontWeight.w600,
@@ -983,7 +992,7 @@ class _CommentTileState extends ConsumerState<_CommentTile>
                   color: theme.colorScheme.error,
                 ),
                 title: Text(
-                  'Delete',
+                  context.l10n.socialDelete,
                   style: TextStyle(
                     color: theme.colorScheme.error,
                     fontWeight: FontWeight.w500,
@@ -1003,7 +1012,7 @@ class _CommentTileState extends ConsumerState<_CommentTile>
                   color: theme.colorScheme.error,
                 ),
                 title: Text(
-                  'Report',
+                  context.l10n.socialReport,
                   style: TextStyle(
                     color: theme.colorScheme.error,
                     fontWeight: FontWeight.w500,
@@ -1036,7 +1045,7 @@ class _CommentTileState extends ConsumerState<_CommentTile>
           reason: reason,
         );
         if (mounted) {
-          showSuccessSnackBar(context, 'Comment reported');
+          showSuccessSnackBar(context, context.l10n.socialCommentReported);
         }
       } catch (e) {
         if (mounted) {
@@ -1049,9 +1058,9 @@ class _CommentTileState extends ConsumerState<_CommentTile>
   Future<void> _confirmDelete(BuildContext context) async {
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Delete Comment',
-      message: 'Are you sure you want to delete this comment?',
-      confirmLabel: 'Delete',
+      title: context.l10n.socialDeleteComment,
+      message: context.l10n.socialDeleteCommentConfirm,
+      confirmLabel: context.l10n.socialDelete,
       isDestructive: true,
     );
 
@@ -1170,7 +1179,7 @@ class _PostContent extends StatelessWidget {
                   ),
                   const SizedBox(width: AppTheme.spacing4),
                   Text(
-                    post.location!.name ?? 'Location',
+                    post.location!.name ?? context.l10n.socialLocationFallback,
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: theme.colorScheme.primary.withAlpha(180),
                       decoration: onLocationTap != null
@@ -1371,7 +1380,7 @@ class _CommentInput extends StatelessWidget {
                     ),
                     const SizedBox(width: AppTheme.spacing8),
                     Text(
-                      'Replying to $replyingTo',
+                      context.l10n.socialReplyingTo(replyingTo!),
                       style: theme.textTheme.bodySmall,
                     ),
                     const Spacer(),
@@ -1396,8 +1405,8 @@ class _CommentInput extends StatelessWidget {
                       focusNode: focusNode,
                       decoration: InputDecoration(
                         hintText: replyingTo != null
-                            ? 'Write a reply...'
-                            : 'Add a comment...',
+                            ? context.l10n.socialCommentHintReply
+                            : context.l10n.socialCommentHintAdd,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(
                             AppTheme.radius24,

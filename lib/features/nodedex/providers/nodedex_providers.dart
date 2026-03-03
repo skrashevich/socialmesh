@@ -38,7 +38,6 @@ import '../models/nodedex_entry.dart';
 import '../services/nodedex_database.dart';
 import '../services/nodedex_sqlite_store.dart';
 import '../services/nodedex_sync_service.dart';
-import '../services/field_note_generator.dart';
 import '../services/node_summary_engine.dart';
 import '../services/patina_score.dart';
 import '../services/progressive_disclosure.dart';
@@ -1028,18 +1027,6 @@ final nodeDexDisclosureProvider = Provider.family<DisclosureState, int>((
     );
   }
   return ProgressiveDisclosure.compute(entry);
-});
-
-/// Provider for the deterministic field note of a specific node.
-///
-/// Returns the auto-generated field journal observation text.
-/// The note is deterministic: same node + same trait = same note.
-final nodeDexFieldNoteProvider = Provider.family<String, int>((ref, nodeNum) {
-  final entry = ref.watch(nodeDexEntryProvider(nodeNum));
-  if (entry == null) return '';
-
-  final trait = ref.watch(nodeDexTraitProvider(nodeNum));
-  return FieldNoteGenerator.generate(entry: entry, trait: trait.primary);
 });
 
 // =============================================================================

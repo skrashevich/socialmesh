@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../../../core/widgets/user_avatar.dart';
 import '../../../core/widgets/verified_badge.dart';
@@ -51,12 +52,12 @@ class _FollowersScreenState extends ConsumerState<FollowersScreen>
   @override
   Widget build(BuildContext context) {
     return GlassScaffold(
-      title: 'Connections',
+      title: context.l10n.socialConnectionsTitle,
       bottom: TabBar(
         controller: _tabController,
-        tabs: const [
-          Tab(text: 'Followers'),
-          Tab(text: 'Following'),
+        tabs: [
+          Tab(text: context.l10n.socialTabFollowers),
+          Tab(text: context.l10n.socialTabFollowing),
         ],
       ),
       slivers: [
@@ -90,7 +91,7 @@ class _FollowersList extends ConsumerWidget {
           return _buildEmptyState(
             context,
             icon: Icons.people_outline,
-            message: 'No followers yet',
+            message: context.l10n.socialNoFollowersYet,
           );
         }
 
@@ -146,7 +147,7 @@ class _FollowingList extends ConsumerWidget {
           return _buildEmptyState(
             context,
             icon: Icons.person_add_outlined,
-            message: 'Not following anyone yet',
+            message: context.l10n.socialNotFollowingAnyone,
           );
         }
 
@@ -211,7 +212,7 @@ class _UserTile extends StatelessWidget {
         children: [
           Flexible(
             child: Text(
-              profile?.displayName ?? 'Unknown User',
+              profile?.displayName ?? context.l10n.socialUnknownUser,
               overflow: TextOverflow.ellipsis,
             ),
           ),
@@ -267,9 +268,9 @@ Widget _buildErrorState(
       children: [
         const Icon(Icons.error_outline, size: 48),
         const SizedBox(height: AppTheme.spacing16),
-        Text('Failed to load: $error'),
+        Text(context.l10n.socialFollowersError(error.toString())),
         const SizedBox(height: AppTheme.spacing16),
-        FilledButton(onPressed: onRetry, child: const Text('Retry')),
+        FilledButton(onPressed: onRetry, child: Text(context.l10n.socialRetry)),
       ],
     ),
   );

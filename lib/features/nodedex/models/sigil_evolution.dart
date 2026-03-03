@@ -22,6 +22,8 @@
 //
 // All methods are pure functions. No state, no side effects, no async.
 
+import 'package:socialmesh/l10n/app_localizations.dart';
+
 import 'nodedex_entry.dart';
 
 /// The five maturity stages of a sigil's visual evolution.
@@ -45,13 +47,13 @@ enum SigilStage {
   legacy;
 
   /// Human-readable label for display purposes.
-  String get displayLabel {
+  String displayLabel(AppLocalizations l10n) {
     return switch (this) {
-      SigilStage.seed => 'Seed',
-      SigilStage.marked => 'Marked',
-      SigilStage.inscribed => 'Inscribed',
-      SigilStage.heraldic => 'Heraldic',
-      SigilStage.legacy => 'Legacy',
+      SigilStage.seed => l10n.sigilStageSeed,
+      SigilStage.marked => l10n.sigilStageMarked,
+      SigilStage.inscribed => l10n.sigilStageInscribed,
+      SigilStage.heraldic => l10n.sigilStageHeraldic,
+      SigilStage.legacy => l10n.sigilStageLegacy,
     };
   }
 }
@@ -231,7 +233,7 @@ class SigilEvolution {
 
   @override
   String toString() =>
-      'SigilEvolution(${stage.displayLabel}, patina: $patinaScore, '
+      'SigilEvolution(${stage.name}, patina: $patinaScore, '
       'tier: $detailTier, weight: $lineWeightScale, tone: $toneScale'
       '${augments.isNotEmpty ? ', augments: $augments' : ''})';
 

@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/app_bottom_sheet.dart';
@@ -221,14 +222,14 @@ class _StoryViewerScreenState extends ConsumerState<StoryViewerScreen>
       actions.add(
         BottomSheetAction(
           icon: Icons.delete_outline,
-          label: 'Delete story',
+          label: context.l10n.socialDeleteStory,
           isDestructive: true,
           onTap: () async {
             final confirm = await AppBottomSheet.showConfirm(
               context: context,
-              title: 'Delete story?',
-              message: 'This story will be permanently deleted.',
-              confirmLabel: 'Delete',
+              title: '${context.l10n.socialDeleteStory}?',
+              message: context.l10n.socialDeleteStoryConfirm,
+              confirmLabel: context.l10n.socialDelete,
               isDestructive: true,
             );
             if (confirm == true && mounted) {
@@ -238,7 +239,7 @@ class _StoryViewerScreenState extends ConsumerState<StoryViewerScreen>
                 // Use provider function which also refreshes story groups
                 await deleteStory(ref, storyId);
                 if (mounted) {
-                  showSuccessSnackBar(context, 'Story deleted');
+                  showSuccessSnackBar(context, context.l10n.socialStoryDeleted);
                   // Pop only the story viewer (not additional routes)
                   if (Navigator.canPop(context)) {
                     Navigator.pop(context);
@@ -246,7 +247,10 @@ class _StoryViewerScreenState extends ConsumerState<StoryViewerScreen>
                 }
               } catch (e) {
                 if (mounted) {
-                  showErrorSnackBar(context, 'Failed to delete story: $e');
+                  showErrorSnackBar(
+                    context,
+                    context.l10n.socialStoryDeleteFailed(e.toString()),
+                  );
                   // Resume progress if delete failed
                   _startProgress();
                 }
@@ -262,7 +266,7 @@ class _StoryViewerScreenState extends ConsumerState<StoryViewerScreen>
       actions.add(
         BottomSheetAction(
           icon: Icons.location_on_outlined,
-          label: story.location!.name ?? 'View location',
+          label: story.location!.name ?? context.l10n.socialViewLocation,
           subtitle:
               '${story.location!.latitude.toStringAsFixed(4)}, ${story.location!.longitude.toStringAsFixed(4)}',
         ),
@@ -273,7 +277,7 @@ class _StoryViewerScreenState extends ConsumerState<StoryViewerScreen>
     actions.add(
       BottomSheetAction(
         icon: Icons.share_outlined,
-        label: 'Share',
+        label: context.l10n.socialShare,
         onTap: () {
           // Share functionality would go here
         },
@@ -285,7 +289,7 @@ class _StoryViewerScreenState extends ConsumerState<StoryViewerScreen>
       actions.add(
         BottomSheetAction(
           icon: Icons.flag_outlined,
-          label: 'Report story',
+          label: context.l10n.socialReportStory,
           isDestructive: true,
           onTap: () => _reportStory(story),
         ),
@@ -312,7 +316,7 @@ class _StoryViewerScreenState extends ConsumerState<StoryViewerScreen>
       );
 
       if (mounted) {
-        showSuccessSnackBar(context, 'Story reported. We\'ll review it soon.');
+        showSuccessSnackBar(context, context.l10n.socialStoryReported);
       }
     } catch (e) {
       if (mounted) {
@@ -325,7 +329,7 @@ class _StoryViewerScreenState extends ConsumerState<StoryViewerScreen>
     return AppBottomSheet.showActions<String>(
       context: context,
       header: Text(
-        'Why are you reporting this story?',
+        context.l10n.socialReportStoryWhy,
         style: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.w600,
@@ -335,32 +339,32 @@ class _StoryViewerScreenState extends ConsumerState<StoryViewerScreen>
       actions: [
         BottomSheetAction(
           icon: Icons.warning_outlined,
-          label: 'Spam or misleading',
+          label: context.l10n.socialReportStoryReasonSpam,
           value: 'spam',
         ),
         BottomSheetAction(
           icon: Icons.person_off_outlined,
-          label: 'Harassment or bullying',
+          label: context.l10n.socialReportStoryReasonHarassment,
           value: 'harassment',
         ),
         BottomSheetAction(
           icon: Icons.dangerous_outlined,
-          label: 'Violence or dangerous content',
+          label: context.l10n.socialReportStoryReasonViolence,
           value: 'violence',
         ),
         BottomSheetAction(
           icon: Icons.no_adult_content,
-          label: 'Nudity or sexual content',
+          label: context.l10n.socialReportStoryReasonNudity,
           value: 'nudity',
         ),
         BottomSheetAction(
           icon: Icons.copyright,
-          label: 'Copyright violation',
+          label: context.l10n.socialReportStoryReasonCopyright,
           value: 'copyright',
         ),
         BottomSheetAction(
           icon: Icons.more_horiz,
-          label: 'Other',
+          label: context.l10n.socialReportStoryReasonOther,
           value: 'other',
         ),
       ],
@@ -555,9 +559,9 @@ class _StoryContentState extends State<_StoryContent> {
                 ),
               ),
               const SizedBox(height: AppTheme.spacing16),
-              const Text(
-                'Content unavailable',
-                style: TextStyle(
+              Text(
+                context.l10n.socialStoryContentUnavailable,
+                style: const TextStyle(
                   color: Colors.white70,
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
@@ -565,7 +569,7 @@ class _StoryContentState extends State<_StoryContent> {
               ),
               const SizedBox(height: AppTheme.spacing8),
               Text(
-                'This story may have been removed',
+                context.l10n.socialStoryMayBeRemoved,
                 style: TextStyle(
                   color: Colors.white.withAlpha(100),
                   fontSize: 13,
@@ -875,7 +879,9 @@ class _OwnerStoryFooter extends StatelessWidget {
                 ),
                 const SizedBox(width: AppTheme.spacing4),
                 Text(
-                  story.viewCount == 1 ? 'view' : 'views',
+                  story.viewCount == 1
+                      ? context.l10n.socialViewLabel
+                      : context.l10n.socialViewsLabel,
                   style: TextStyle(color: Colors.white.withValues(alpha: 0.8)),
                 ),
               ],
@@ -963,7 +969,7 @@ class _ViewerStoryFooter extends ConsumerWidget {
                 ),
                 const SizedBox(width: AppTheme.spacing8),
                 Text(
-                  isLiked ? 'Liked' : 'Like',
+                  isLiked ? context.l10n.socialLiked : context.l10n.socialLike,
                   style: TextStyle(
                     color: isLiked ? AppTheme.errorRed : Colors.white,
                     fontWeight: FontWeight.w600,
@@ -1000,7 +1006,7 @@ class _ViewersSheet extends ConsumerWidget {
             child: Row(
               children: [
                 Text(
-                  'Viewers',
+                  context.l10n.socialViewersTitle,
                   style: TextStyle(
                     color: context.textPrimary,
                     fontSize: 18,
@@ -1032,7 +1038,7 @@ class _ViewersSheet extends ConsumerWidget {
                         ),
                         const SizedBox(height: AppTheme.spacing8),
                         Text(
-                          'No views yet',
+                          context.l10n.socialNoViewsYet,
                           style: TextStyle(color: context.textSecondary),
                         ),
                       ],
@@ -1057,7 +1063,7 @@ class _ViewersSheet extends ConsumerWidget {
               error: (e, _) => Padding(
                 padding: const EdgeInsets.all(AppTheme.spacing32),
                 child: Text(
-                  'Error loading viewers',
+                  context.l10n.socialErrorLoadingViewers,
                   style: TextStyle(color: context.textSecondary),
                 ),
               ),
@@ -1091,7 +1097,7 @@ class _ViewerTile extends ConsumerWidget {
             size: 40,
           ),
           title: Text(
-            profile?.displayName ?? 'User',
+            profile?.displayName ?? context.l10n.socialUserFallback,
             style: TextStyle(
               color: context.textPrimary,
               fontWeight: FontWeight.w500,

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../providers/auth_providers.dart';
 import '../../../providers/social_providers.dart';
@@ -109,7 +110,10 @@ class _FollowButtonState extends ConsumerState<FollowButton>
       }
     } catch (e) {
       if (context.mounted) {
-        showErrorSnackBar(context, 'Failed to update follow: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.socialFollowFailed(e.toString()),
+        );
       }
     } finally {
       safeSetState(() => _isLoading = false);
@@ -176,7 +180,7 @@ class _FollowButtonState extends ConsumerState<FollowButton>
               backgroundColor: SemanticColors.disabled,
               foregroundColor: Colors.white,
             ),
-            child: const Text('Following'),
+            child: Text(context.l10n.socialFollowing),
           ),
         );
       case FollowButtonState.requested:
@@ -190,7 +194,7 @@ class _FollowButtonState extends ConsumerState<FollowButton>
               backgroundColor: SemanticColors.disabled,
               foregroundColor: Colors.white,
             ),
-            child: const Text('Requested'),
+            child: Text(context.l10n.socialRequested),
           ),
         );
       case FollowButtonState.notFollowing:
@@ -202,7 +206,7 @@ class _FollowButtonState extends ConsumerState<FollowButton>
               padding: const EdgeInsets.symmetric(horizontal: 8),
               minimumSize: const Size(buttonWidth, 32),
             ),
-            child: const Text('Follow'),
+            child: Text(context.l10n.socialFollow),
           ),
         );
     }
@@ -214,7 +218,7 @@ class _FollowButtonState extends ConsumerState<FollowButton>
         return OutlinedButton.icon(
           onPressed: onPressed,
           icon: const Icon(Icons.check, size: 18),
-          label: const Text('Following'),
+          label: Text(context.l10n.socialFollowing),
           style: OutlinedButton.styleFrom(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           ),
@@ -223,7 +227,7 @@ class _FollowButtonState extends ConsumerState<FollowButton>
         return OutlinedButton.icon(
           onPressed: onPressed,
           icon: const Icon(Icons.schedule, size: 18),
-          label: const Text('Requested'),
+          label: Text(context.l10n.socialRequested),
           style: OutlinedButton.styleFrom(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             foregroundColor: SemanticColors.disabled,
@@ -233,7 +237,7 @@ class _FollowButtonState extends ConsumerState<FollowButton>
         return FilledButton.icon(
           onPressed: onPressed,
           icon: const Icon(Icons.person_add, size: 18),
-          label: const Text('Follow'),
+          label: Text(context.l10n.socialFollow),
           style: FilledButton.styleFrom(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           ),
@@ -305,7 +309,7 @@ class _FollowTextButtonState extends ConsumerState<FollowTextButton>
       error: (_, _) => TextButton(
         onPressed: () =>
             ref.invalidate(followStateProvider(widget.targetUserId)),
-        child: const Text('Retry'),
+        child: Text(context.l10n.commonRetry),
       ),
     );
   }
@@ -325,7 +329,10 @@ class _FollowTextButtonState extends ConsumerState<FollowTextButton>
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.socialFollowActionFailed(e.toString()),
+        );
       }
     } finally {
       safeSetState(() => _isLoading = false);
@@ -335,11 +342,11 @@ class _FollowTextButtonState extends ConsumerState<FollowTextButton>
   String _getButtonText(FollowButtonState state) {
     switch (state) {
       case FollowButtonState.following:
-        return 'Unfollow';
+        return context.l10n.socialUnfollow;
       case FollowButtonState.requested:
-        return 'Cancel';
+        return context.l10n.socialCancel;
       case FollowButtonState.notFollowing:
-        return 'Follow';
+        return context.l10n.socialFollow;
     }
   }
 

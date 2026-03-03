@@ -8,6 +8,7 @@
 
 import 'package:flutter/material.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../services/node_summary_engine.dart';
 
@@ -107,7 +108,7 @@ class _TimeDistributionBar extends StatelessWidget {
           children: TimeOfDayBucket.values.map((bucket) {
             final count = distribution[bucket] ?? 0;
             return _LegendItem(
-              label: bucket.label,
+              label: bucket.label(context.l10n),
               count: count,
               color: _bucketColor(bucket),
               isActive: count > 0,
@@ -185,7 +186,7 @@ class _StatsRow extends StatelessWidget {
       chips.add(
         _StatChip(
           icon: Icons.local_fire_department_outlined,
-          label: '${summary.currentStreak}-day streak',
+          label: context.l10n.nodedexStreakDays(summary.currentStreak),
         ),
       );
     }
@@ -194,7 +195,9 @@ class _StatsRow extends StatelessWidget {
       chips.add(
         _StatChip(
           icon: Icons.calendar_today_outlined,
-          label: 'Busiest ${_shortDayName(summary.busiestDayOfWeek!)}',
+          label: context.l10n.nodedexBusiestDay(
+            _shortDayName(context, summary.busiestDayOfWeek!),
+          ),
         ),
       );
     }
@@ -203,7 +206,7 @@ class _StatsRow extends StatelessWidget {
       chips.add(
         _StatChip(
           icon: Icons.grid_view_outlined,
-          label: '${summary.activeDaysLast14}/14 days',
+          label: context.l10n.nodedexActiveDaysOf14(summary.activeDaysLast14),
         ),
       );
     }
@@ -213,15 +216,16 @@ class _StatsRow extends StatelessWidget {
     return Wrap(spacing: 8, runSpacing: 8, children: chips);
   }
 
-  String _shortDayName(int weekday) {
+  String _shortDayName(BuildContext context, int weekday) {
+    final l10n = context.l10n;
     return switch (weekday) {
-      1 => 'Mon',
-      2 => 'Tue',
-      3 => 'Wed',
-      4 => 'Thu',
-      5 => 'Fri',
-      6 => 'Sat',
-      7 => 'Sun',
+      1 => l10n.nodedexDayMon,
+      2 => l10n.nodedexDayTue,
+      3 => l10n.nodedexDayWed,
+      4 => l10n.nodedexDayThu,
+      5 => l10n.nodedexDayFri,
+      6 => l10n.nodedexDaySat,
+      7 => l10n.nodedexDaySun,
       _ => '?',
     };
   }

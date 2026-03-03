@@ -8,6 +8,7 @@
 // always produces the same summary.
 
 import 'package:clock/clock.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
 
 import '../models/nodedex_entry.dart';
 
@@ -25,21 +26,21 @@ enum TimeOfDayBucket {
   /// 23:00 – 04:59
   night;
 
-  String get label {
+  String label(AppLocalizations l10n) {
     return switch (this) {
-      TimeOfDayBucket.dawn => 'Dawn',
-      TimeOfDayBucket.midday => 'Midday',
-      TimeOfDayBucket.evening => 'Evening',
-      TimeOfDayBucket.night => 'Night',
+      TimeOfDayBucket.dawn => l10n.nodedexTimeBucketDawn,
+      TimeOfDayBucket.midday => l10n.nodedexTimeBucketMidday,
+      TimeOfDayBucket.evening => l10n.nodedexTimeBucketEvening,
+      TimeOfDayBucket.night => l10n.nodedexTimeBucketNight,
     };
   }
 
-  String get range {
+  String range(AppLocalizations l10n) {
     return switch (this) {
-      TimeOfDayBucket.dawn => '5 AM – 11 AM',
-      TimeOfDayBucket.midday => '11 AM – 5 PM',
-      TimeOfDayBucket.evening => '5 PM – 11 PM',
-      TimeOfDayBucket.night => '11 PM – 5 AM',
+      TimeOfDayBucket.dawn => l10n.nodedexTimeBucketDawnRange,
+      TimeOfDayBucket.midday => l10n.nodedexTimeBucketMiddayRange,
+      TimeOfDayBucket.evening => l10n.nodedexTimeBucketEveningRange,
+      TimeOfDayBucket.night => l10n.nodedexTimeBucketNightRange,
     };
   }
 
@@ -284,7 +285,7 @@ class NodeSummaryEngine {
     // 1. Dominant time bucket.
     final dominant = _dominantBucket(timeDist);
     if (dominant != null) {
-      parts.add('Most active in the ${dominant.label.toLowerCase()}');
+      parts.add('Most active in the ${dominant.name}');
     }
 
     // 2. Streak or recent activity.
@@ -329,5 +330,66 @@ class NodeSummaryEngine {
       7 => 'Sunday',
       _ => 'Unknown',
     };
+  }
+
+  /// Localized day name for a given weekday (1=Mon, 7=Sun).
+  static String localizedDayName(int weekday, AppLocalizations l10n) {
+    return switch (weekday) {
+      1 => l10n.nodedexDayMonday,
+      2 => l10n.nodedexDayTuesday,
+      3 => l10n.nodedexDayWednesday,
+      4 => l10n.nodedexDayThursday,
+      5 => l10n.nodedexDayFriday,
+      6 => l10n.nodedexDaySaturday,
+      7 => l10n.nodedexDaySunday,
+      _ => weekday.toString(),
+    };
+  }
+
+  /// Generate a localized summary text from a [NodeSummary].
+  ///
+  /// Call from widget code to display the localized summary:
+  /// ```dart
+  /// NodeSummaryEngine.localizedSummaryText(summary, context.l10n)
+  /// ```
+  static String localizedSummaryText(
+    NodeSummary summary,
+    AppLocalizations l10n,
+  ) {
+    if (summary.totalEncounters < minEncountersForSummary) {
+      return l10n.nodedexSummaryKeepObserving;
+    }
+
+    final parts = <String>[];
+
+    // 1. Dominant time bucket.
+    final dominant = _dominantBucket(summary.timeDistribution);
+    if (dominant != null) {
+      parts.add(
+        l10n.nodedexSummaryMostActiveIn(dominant.label(l10n).toLowerCase()),
+      );
+    }
+
+    // 2. Streak or recent activity.
+    if (summary.currentStreak > 1) {
+      parts.add(l10n.nodedexSummarySeenDaysOf14(summary.activeDaysLast14));
+    } else if (summary.activeDaysLast14 > 0) {
+      parts.add(l10n.nodedexSummarySpottedDaysOf14(summary.activeDaysLast14));
+    }
+
+    // 3. Busiest day.
+    if (summary.busiestDayOfWeek != null) {
+      parts.add(
+        l10n.nodedexSummaryUsuallyOnDay(
+          localizedDayName(summary.busiestDayOfWeek!, l10n),
+        ),
+      );
+    }
+
+    if (parts.isEmpty) {
+      return l10n.nodedexSummaryEncountersRecorded(summary.totalEncounters);
+    }
+
+    return '${parts.join('. ')}.';
   }
 }

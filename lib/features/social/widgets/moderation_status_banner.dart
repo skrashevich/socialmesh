@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/widgets/animations.dart';
 import '../../../providers/social_providers.dart';
 import '../screens/moderation_status_screen.dart';
@@ -40,15 +41,15 @@ class ModerationStatusBanner extends ConsumerWidget {
           textColor = AccentColors.orange;
           icon = Icons.warning_amber_rounded;
           message = hasUnacknowledged
-              ? 'You have ${status.activeStrikes} strike${status.activeStrikes > 1 ? 's' : ''} - tap to review'
-              : '${status.activeStrikes} active strike${status.activeStrikes > 1 ? 's' : ''} on your account';
+              ? context.l10n.socialStrikeTapReview(status.activeStrikes)
+              : context.l10n.socialStrikesOnAccount(status.activeStrikes);
         } else if (hasActiveWarnings) {
           backgroundColor = AppTheme.warningYellow.withValues(alpha: 0.15);
           textColor = AppTheme.warningYellow;
           icon = Icons.info_outline;
           message = hasUnacknowledged
-              ? 'You have ${status.activeWarnings} warning${status.activeWarnings > 1 ? 's' : ''} - tap to review'
-              : '${status.activeWarnings} active warning${status.activeWarnings > 1 ? 's' : ''}';
+              ? context.l10n.socialWarningsTapReview(status.activeWarnings)
+              : context.l10n.socialWarningsOnAccount(status.activeWarnings);
         } else {
           return const SizedBox.shrink();
         }

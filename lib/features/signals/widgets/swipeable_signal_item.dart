@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 
 /// A swipeable signal item that reveals actions on swipe.
@@ -247,7 +248,9 @@ class _SwipeableSignalItemState extends State<SwipeableSignalItem>
                         icon: widget.isBookmarked
                             ? widget.rightActionIconActive
                             : widget.rightActionIcon,
-                        label: widget.isBookmarked ? 'Unsave' : 'Save',
+                        label: widget.isBookmarked
+                            ? context.l10n.signalSwipeUnsave
+                            : context.l10n.signalSwipeSave,
                         isHint: _showingHint,
                       ),
                     ),

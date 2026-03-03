@@ -12,6 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../core/legal/legal_constants.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/logging.dart';
 import '../../../core/theme.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
@@ -224,8 +225,8 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
 
   /// Get the reason why submission is blocked (for UI feedback)
   String? _submitBlockedReason(bool isDeviceConnected) {
-    if (!isDeviceConnected) return 'Device not connected';
-    if (_isValidatingImage) return 'Processing image...';
+    if (!isDeviceConnected) return context.l10n.signalDeviceNotConnected;
+    if (_isValidatingImage) return context.l10n.signalProcessingImage;
     return null;
   }
 
@@ -233,14 +234,15 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
 
   Future<void> _handleClose() async {
     _dismissKeyboard();
+    final l10n = context.l10n;
     if (_contentController.text.trim().isNotEmpty ||
         _imageLocalPaths.isNotEmpty) {
       final shouldDiscard = await AppBottomSheet.showConfirm(
         context: context,
-        title: 'Discard signal?',
-        message: 'Your draft will be lost.',
-        confirmLabel: 'Discard',
-        cancelLabel: 'Keep editing',
+        title: l10n.signalDiscardTitle,
+        message: l10n.signalDiscardMessage,
+        confirmLabel: l10n.signalDiscardConfirm,
+        cancelLabel: l10n.signalKeepEditing,
         isDestructive: true,
       );
 
@@ -261,11 +263,12 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
     final moderationService = ref.read(contentModerationServiceProvider);
     final feedNotifier = ref.read(signalFeedProvider.notifier);
     final navigator = Navigator.of(context);
+    final l10n = context.l10n;
 
     // Connection gating check
     if (!connectivity.isBleConnected) {
       AppLogging.social('🚫 Send blocked: device not connected');
-      showErrorSnackBar(context, 'Connect to a device to send signals');
+      showErrorSnackBar(context, l10n.signalConnectToSend);
       return;
     }
 
@@ -274,7 +277,7 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
     if (_imageLocalPaths.isNotEmpty &&
         (!connectivity.canUseCloud || meshOnlyDebug)) {
       safeSetState(() => _imageLocalPaths.clear());
-      showErrorSnackBar(context, 'Images require internet. Images removed.');
+      showErrorSnackBar(context, l10n.signalImagesRequireInternet);
       return;
     }
 
@@ -360,9 +363,7 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
         }
         if (_isLoadingLocation) {
           // Timed out - show a global snackbar (uses navigatorKey internally)
-          showGlobalErrorSnackBar(
-            'Location unavailable, sent without location.',
-          );
+          showGlobalErrorSnackBar(l10n.signalLocationUnavailableSent);
         }
       }
 
@@ -373,7 +374,7 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
 
       // Inform user that broadcast is in progress for mesh sends
       showGlobalInfoSnackBar(
-        !canUseCloudNow2 ? 'Broadcasting over mesh...' : 'Sending...',
+        !canUseCloudNow2 ? l10n.signalBroadcastingOverMesh : l10n.signalSending,
         duration: const Duration(seconds: 2),
       );
 
@@ -406,7 +407,7 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
         await _updatePresenceOnSend();
 
         if (!mounted) return;
-        showSuccessSnackBar(context, 'Signal sent');
+        showSuccessSnackBar(context, l10n.signalSent);
         navigator.pop();
 
         // Maybe prompt for review after successful signal creation
@@ -422,7 +423,7 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to create signal');
+        showErrorSnackBar(context, l10n.signalCreateFailed);
       }
     } finally {
       safeSetState(() => _isSubmitting = false);
@@ -480,7 +481,7 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
                 ),
                 const SizedBox(height: AppTheme.spacing20),
                 Text(
-                  'Your Intent',
+                  context.l10n.signalYourIntent,
                   style: TextStyle(
                     color: context.textPrimary,
                     fontSize: 18,
@@ -489,7 +490,7 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
                 ),
                 const SizedBox(height: AppTheme.spacing4),
                 Text(
-                  'Let others know why you\'re active',
+                  context.l10n.signalLetOthersKnowIntent,
                   style: TextStyle(color: context.textTertiary, fontSize: 13),
                 ),
                 const SizedBox(height: AppTheme.spacing16),
@@ -510,7 +511,7 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
                 _IntentOption(
                   intent: PresenceIntent.unknown,
                   isSelected: _selectedIntent == PresenceIntent.unknown,
-                  label: 'No intent',
+                  label: context.l10n.signalNoIntent,
                   onTap: () {
                     setState(() => _selectedIntent = PresenceIntent.unknown);
                     Navigator.pop(ctx);
@@ -532,15 +533,16 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
     final connectivity = ref.read(signalConnectivityProvider);
     final meshOnlyDebug = ref.read(meshOnlyDebugModeProvider);
     final settingsFuture = ref.read(settingsServiceProvider.future);
+    final l10n = context.l10n;
 
     // Image selection requires cloud features (auth + internet)
     if (!connectivity.canUseCloud || meshOnlyDebug) {
       showErrorSnackBar(
         context,
         meshOnlyDebug
-            ? 'Mesh-only debug mode enabled. Cloud features disabled.'
+            ? l10n.signalMeshOnlyDebugCloudDisabled
             : (connectivity.cloudDisabledReason ??
-                  'Cloud features unavailable.'),
+                  l10n.signalCloudFeaturesUnavailable),
       );
       return;
     }
@@ -552,7 +554,7 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
 
     if (remainingSlots <= 0) {
       if (mounted) {
-        showErrorSnackBar(context, 'Maximum of $maxImages images allowed');
+        showErrorSnackBar(context, l10n.signalMaxImagesAllowed(maxImages));
       }
       return;
     }
@@ -617,7 +619,7 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
         if (newImagePaths.length > 1) {
           showInfoSnackBar(
             context,
-            'Validating ${newImagePaths.length} images...',
+            l10n.signalValidatingImages(newImagePaths.length),
           );
         }
 
@@ -639,19 +641,22 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
         if (failedCount > 0 && passedCount > 0) {
           showErrorSnackBar(
             context,
-            '$failedCount image(s) blocked, $passedCount added',
+            l10n.signalImagesBlockedAndAdded(failedCount, passedCount),
           );
         } else if (failedCount > 0) {
           showErrorSnackBar(
             context,
             failedCount == 1
-                ? 'Image violates content guidelines and was blocked'
-                : '$failedCount images blocked by content guidelines',
+                ? l10n.signalImageBlockedSingular
+                : l10n.signalImagesBlockedPlural(failedCount),
           );
         } else if (passedCount > 0) {
           // Only show success if no failures
           if (passedCount > 1) {
-            showSuccessSnackBar(context, '$passedCount images added');
+            showSuccessSnackBar(
+              context,
+              l10n.signalImagesAddedCount(passedCount),
+            );
           }
         }
 
@@ -668,6 +673,7 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
   /// Much faster than sequential validation for multiple images.
   Future<List<bool>> _validateImagesInBatch(List<String> localPaths) async {
     if (localPaths.isEmpty) return [];
+    final l10n = context.l10n;
 
     final currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) {
@@ -813,7 +819,7 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
     } catch (e) {
       AppLogging.social('[CreateSignal] Batch validation error: $e');
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to validate images');
+        showErrorSnackBar(context, l10n.signalValidateImagesFailed);
       }
       return List.filled(localPaths.length, false);
     } finally {
@@ -841,6 +847,7 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
     // Capture providers BEFORE await
     final myNodeNum = ref.read(myNodeNumProvider);
     final nodes = ref.read(nodesProvider);
+    final l10n = context.l10n;
 
     safeSetState(() => _isLoadingLocation = true);
     _locationLoadingController.forward();
@@ -851,7 +858,7 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
       if (!mounted) return;
 
       if (myNodeNum == null) {
-        showErrorSnackBar(context, 'No connected device location available');
+        showErrorSnackBar(context, l10n.signalNoDeviceLocation);
         return;
       }
 
@@ -862,8 +869,8 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
       if (nodeLat == null || nodeLon == null) {
         showActionSnackBar(
           context,
-          'Device has no location yet. Enable GPS or set a fixed position.',
-          actionLabel: 'Settings',
+          l10n.signalEnableGpsOrFixedPosition,
+          actionLabel: l10n.signalSettings,
           type: SnackBarType.warning,
           onAction: () {
             if (!context.mounted) return;
@@ -880,12 +887,12 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
         latitude: nodeLat,
         longitude: nodeLon,
         radiusMeters: radiusMeters,
-        name: 'Approx. area (~${radiusMeters}m)',
+        name: l10n.signalApproxArea(radiusMeters),
       );
 
       safeSetState(() => _location = safeLocation);
     } catch (e) {
-      showErrorSnackBar(context, 'Failed to get location');
+      showErrorSnackBar(context, l10n.signalGetLocationFailed);
     } finally {
       if (mounted) {
         // Fade out the loading card, then update state
@@ -953,7 +960,7 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
               Expanded(
                 child: _InfoPill(
                   icon: Icons.location_on,
-                  label: _location!.name ?? 'Current location',
+                  label: _location!.name ?? context.l10n.signalCurrentLocation,
                 ),
               ),
               const SizedBox(width: AppTheme.spacing8),
@@ -1081,7 +1088,10 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
                         ),
                         const Spacer(),
                         // Local storage indicator
-                        _InfoPill(icon: Icons.phone_android, label: 'Local'),
+                        _InfoPill(
+                          icon: Icons.phone_android,
+                          label: context.l10n.signalLocal,
+                        ),
                       ],
                     ),
                   ),
@@ -1217,7 +1227,7 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
               ),
               const SizedBox(height: AppTheme.spacing20),
               Text(
-                'Signal Duration',
+                context.l10n.signalDuration,
                 style: TextStyle(
                   color: context.textPrimary,
                   fontSize: 18,
@@ -1226,7 +1236,7 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
               ),
               const SizedBox(height: AppTheme.spacing4),
               Text(
-                'How long until your signal fades',
+                context.l10n.signalDurationSubtitle,
                 style: TextStyle(color: context.textTertiary, fontSize: 13),
               ),
               const SizedBox(height: AppTheme.spacing20),
@@ -1278,16 +1288,13 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
         // Going offline with images - mark as hidden but don't remove
         setState(() => _imageHiddenDueToOffline = true);
         if (mounted) {
-          showInfoSnackBar(
-            context,
-            'Images hidden while offline. They will return when back online.',
-          );
+          showInfoSnackBar(context, context.l10n.signalImagesHiddenOffline);
         }
       } else if (!wasOnline && isOnline && _imageHiddenDueToOffline) {
         // Coming back online - restore the images visibility
         setState(() => _imageHiddenDueToOffline = false);
         if (mounted && _imageLocalPaths.isNotEmpty) {
-          showSuccessSnackBar(context, 'Images restored!');
+          showSuccessSnackBar(context, context.l10n.signalImagesRestored);
         }
       }
     });
@@ -1313,7 +1320,7 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'Go Active',
+              context.l10n.signalGoActive,
               style: TextStyle(
                 color: context.textPrimary,
                 fontWeight: FontWeight.w700,
@@ -1338,7 +1345,7 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
               color: context.textSecondary,
               size: 20,
             ),
-            tooltip: 'Your Responsibility',
+            tooltip: context.l10n.signalYourResponsibility,
             onPressed: () => LegalDocumentSheet.showTermsSection(
               context,
               LegalConstants.anchorAcceptableUse,
@@ -1396,7 +1403,7 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
                                   const SizedBox(width: AppTheme.spacing8),
                                   Expanded(
                                     child: Text(
-                                      'Connected to BLE but no mesh traffic detected. On iOS, Airplane Mode can block BLE traffic even when connected. Turn off Airplane Mode or toggle Bluetooth.',
+                                      context.l10n.signalBleNoMeshTrafficIos,
                                       style: TextStyle(
                                         color: context.textTertiary,
                                         fontSize: 12,
@@ -1450,7 +1457,9 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
                                           height: 1.4,
                                         ),
                                         decoration: InputDecoration(
-                                          hintText: 'What are you signaling?',
+                                          hintText: context
+                                              .l10n
+                                              .signalWhatAreYouSignaling,
                                           hintStyle: TextStyle(
                                             color: context.textTertiary,
                                             fontSize: 16,
@@ -1520,11 +1529,19 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
                                             isEnabled: hasNodeLocation,
                                             tooltip: hasNodeLocation
                                                 ? (_location != null
-                                                      ? 'Remove location'
-                                                      : 'Add location')
+                                                      ? context
+                                                            .l10n
+                                                            .signalRemoveLocation
+                                                      : context
+                                                            .l10n
+                                                            .signalAddLocation)
                                                 : (isAcquiringLocation
-                                                      ? 'Acquiring device location...'
-                                                      : 'No device connected'),
+                                                      ? context
+                                                            .l10n
+                                                            .signalAcquiringDeviceLocation
+                                                      : context
+                                                            .l10n
+                                                            .signalNoDeviceConnectedTooltip),
                                             onTap:
                                                 _isSubmitting ||
                                                     _isLoadingLocation
@@ -1543,7 +1560,9 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
                                                     HapticFeedback.lightImpact();
                                                     showInfoSnackBar(
                                                       context,
-                                                      'Connect a device to add location to your signal.',
+                                                      context
+                                                          .l10n
+                                                          .signalConnectToAddLocation,
                                                     );
                                                   }
                                                 : null,
@@ -1682,7 +1701,9 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
                                     ),
                                     const SizedBox(width: AppTheme.spacing10),
                                     Text(
-                                      'Retrieving device location...',
+                                      context
+                                          .l10n
+                                          .signalRetrievingDeviceLocation,
                                       style: TextStyle(
                                         color: context.textSecondary,
                                         fontSize: 14,
@@ -1721,7 +1742,8 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
                                   const SizedBox(width: AppTheme.spacing10),
                                   Expanded(
                                     child: Text(
-                                      _location!.name ?? 'Current location',
+                                      _location!.name ??
+                                          context.l10n.signalCurrentLocation,
                                       style: TextStyle(
                                         color: context.textPrimary,
                                         fontSize: 14,
@@ -1757,7 +1779,9 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
                               const SizedBox(width: AppTheme.spacing6),
                               Expanded(
                                 child: Text(
-                                  'Signal location uses mesh device position, rounded to ~${signalRadiusMeters}m.',
+                                  context.l10n.signalLocationPrivacyNote(
+                                    signalRadiusMeters,
+                                  ),
                                   style: TextStyle(
                                     color: context.textTertiary,
                                     fontSize: 11,
@@ -1811,10 +1835,16 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
                                         Expanded(
                                           child: Text(
                                             meshOnlyDebug
-                                                ? 'Mesh-only debug mode enabled. Signals use local DB + mesh only.'
+                                                ? context
+                                                      .l10n
+                                                      .signalMeshOnlyDebugBanner
                                                 : connectivity.hasInternet
-                                                ? 'Sign in to enable images and cloud features.'
-                                                : 'Offline: images and cloud features unavailable.',
+                                                ? context
+                                                      .l10n
+                                                      .signalSignInForCloudFeatures
+                                                : context
+                                                      .l10n
+                                                      .signalOfflineCloudUnavailable,
                                             style: TextStyle(
                                               color: context.textSecondary,
                                               fontSize: 12,
@@ -1902,7 +1932,9 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
                                     const SizedBox(width: AppTheme.spacing8),
                                     Expanded(
                                       child: Text(
-                                        'iOS Airplane Mode can pause BLE mesh traffic even when connected. If signals stop, turn off Airplane Mode or toggle Bluetooth.',
+                                        context
+                                            .l10n
+                                            .signalIosAirplaneModeWarning,
                                         style: TextStyle(
                                           color: context.textTertiary,
                                           fontSize: 12,
@@ -1918,8 +1950,7 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
                           StatusBanner(
                             type: StatusBannerType.custom,
                             color: context.textTertiary,
-                            title:
-                                'Signals are temporary. They fade automatically and exist only while active.',
+                            title: context.l10n.signalTemporaryBanner,
                             borderRadius: 8,
                           ),
                         ],
@@ -2007,7 +2038,7 @@ class _CreateSignalScreenState extends ConsumerState<CreateSignalScreen>
                                       ),
                                       const SizedBox(width: AppTheme.spacing10),
                                       Text(
-                                        'Send Signal',
+                                        context.l10n.signalSendButton,
                                         style: TextStyle(
                                           color: canSubmit
                                               ? Colors.white
@@ -2059,9 +2090,9 @@ class _MediaPickerSheet extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               // Title
-              const Text(
-                'Add Photos',
-                style: TextStyle(
+              Text(
+                context.l10n.signalAddPhotos,
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
@@ -2072,8 +2103,8 @@ class _MediaPickerSheet extends StatelessWidget {
               // Camera option
               _PickerOption(
                 icon: Icons.camera_alt,
-                label: 'Take Photo',
-                subtitle: 'Use camera',
+                label: context.l10n.signalTakePhoto,
+                subtitle: context.l10n.signalUseCamera,
                 onTap: () =>
                     Navigator.pop(context, _MediaPickerResult.camera()),
               ),
@@ -2083,8 +2114,8 @@ class _MediaPickerSheet extends StatelessWidget {
               // Gallery option
               _PickerOption(
                 icon: Icons.photo_library,
-                label: 'Choose from Gallery',
-                subtitle: 'Select up to 4 photos',
+                label: context.l10n.signalChooseFromGallery,
+                subtitle: context.l10n.signalSelectUpToFourPhotos,
                 onTap: () =>
                     Navigator.pop(context, _MediaPickerResult.gallery()),
               ),
@@ -2094,7 +2125,7 @@ class _MediaPickerSheet extends StatelessWidget {
               // Cancel button
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: const Text('Cancel'),
+                child: Text(context.l10n.signalCancel),
               ),
             ],
           ),
@@ -2339,7 +2370,7 @@ class _PresenceIntentRow extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Intent',
+                    context.l10n.signalIntentLabel,
                     style: TextStyle(
                       color: context.textTertiary,
                       fontSize: 11,
@@ -2348,7 +2379,7 @@ class _PresenceIntentRow extends StatelessWidget {
                   ),
                   const SizedBox(height: AppTheme.spacing2),
                   Text(
-                    hasIntent ? intent.label : 'Tap to set',
+                    hasIntent ? intent.label : context.l10n.signalTapToSet,
                     style: TextStyle(
                       color: hasIntent
                           ? context.textPrimary
@@ -2475,7 +2506,7 @@ class _ShortStatusField extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Short Status (optional)',
+                  context.l10n.signalShortStatusOptional,
                   style: TextStyle(
                     color: context.textTertiary,
                     fontSize: 11,
@@ -2491,7 +2522,7 @@ class _ShortStatusField extends StatelessWidget {
                   textCapitalization: TextCapitalization.sentences,
                   style: TextStyle(color: context.textPrimary, fontSize: 14),
                   decoration: InputDecoration(
-                    hintText: 'e.g. "On the trail near summit"',
+                    hintText: context.l10n.signalShortStatusHint,
                     hintStyle: TextStyle(
                       color: context.textTertiary,
                       fontSize: 14,

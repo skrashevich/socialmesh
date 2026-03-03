@@ -23,6 +23,7 @@
 
 import 'package:flutter/material.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../models/nodedex_entry.dart';
 import '../widgets/sigil_card.dart';
@@ -270,7 +271,7 @@ class _CountBadge extends StatelessWidget {
         border: Border.all(color: color.withValues(alpha: 0.2), width: 0.5),
       ),
       child: Text(
-        '$count collected',
+        context.l10n.nodedexCollectedCount(count),
         style: TextStyle(
           fontSize: AlbumConstants.pageHeaderCountSize,
           fontWeight: FontWeight.w600,

@@ -58,10 +58,11 @@ Future<void> showNodeDexExportSheet({
   final json = await notifier.exportJson();
   if (!context.mounted) return;
   if (json == null || json.isEmpty) {
-    showInfoSnackBar(context, 'Nothing to export — NodeDex is empty');
+    showInfoSnackBar(context, context.l10n.nodedexExportNothingToExport);
     return;
   }
 
+  final l10n = context.l10n;
   try {
     final tempDir = await getTemporaryDirectory();
     final timestamp = DateTime.now().toIso8601String().split('T').first;
@@ -72,12 +73,12 @@ Future<void> showNodeDexExportSheet({
     await Share.shareXFiles(
       [XFile(file.path)],
       subject: fileName,
-      text: 'Socialmesh NodeDex Export',
+      text: l10n.nodedexExportShareSubject,
       sharePositionOrigin: sharePosition,
     );
   } catch (e) {
     if (!context.mounted) return;
-    showErrorSnackBar(context, 'Export failed: $e');
+    showErrorSnackBar(context, l10n.nodedexExportFailed('$e'));
   }
 }
 
@@ -115,7 +116,7 @@ Future<void> startNodeDexImport({
 
     if (jsonString == null || jsonString.isEmpty) {
       if (!context.mounted) return;
-      showErrorSnackBar(context, 'Failed to read file');
+      showErrorSnackBar(context, context.l10n.nodedexImportFailedToReadFile);
       return;
     }
 
@@ -125,7 +126,7 @@ Future<void> startNodeDexImport({
 
     if (entries.isEmpty) {
       if (!context.mounted) return;
-      showInfoSnackBar(context, 'No valid NodeDex entries found in file');
+      showInfoSnackBar(context, context.l10n.nodedexImportNoValidEntries);
       return;
     }
 
@@ -141,7 +142,7 @@ Future<void> startNodeDexImport({
     );
   } catch (e) {
     if (!context.mounted) return;
-    showErrorSnackBar(context, 'Import failed: $e');
+    showErrorSnackBar(context, context.l10n.nodedexImportFailed('$e'));
   }
 }
 
@@ -227,7 +228,7 @@ class _ImportPreviewSheetState extends ConsumerState<_ImportPreviewSheet>
         ),
         const SizedBox(height: AppTheme.spacing12),
         Text(
-          'Nothing to import',
+          context.l10n.nodedexImportNothingToImportTitle,
           style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w600,
@@ -236,7 +237,7 @@ class _ImportPreviewSheetState extends ConsumerState<_ImportPreviewSheet>
         ),
         const SizedBox(height: AppTheme.spacing6),
         Text(
-          'The file contains no valid NodeDex entries.',
+          context.l10n.nodedexImportNothingToImportDescription,
           style: TextStyle(fontSize: 13, color: context.textTertiary),
         ),
         const SizedBox(height: AppTheme.spacing20),
@@ -266,7 +267,7 @@ class _ImportPreviewSheetState extends ConsumerState<_ImportPreviewSheet>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Import Preview',
+                context.l10n.nodedexImportPreviewTitle,
                 style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
@@ -276,7 +277,7 @@ class _ImportPreviewSheetState extends ConsumerState<_ImportPreviewSheet>
               ),
               const SizedBox(height: AppTheme.spacing2),
               Text(
-                'Review before applying',
+                context.l10n.nodedexImportPreviewSubtitle,
                 style: TextStyle(fontSize: 12, color: context.textTertiary),
               ),
             ],
@@ -303,7 +304,7 @@ class _ImportPreviewSheetState extends ConsumerState<_ImportPreviewSheet>
               Expanded(
                 child: _SummaryCell(
                   icon: Icons.add_circle_outline,
-                  label: 'New',
+                  label: context.l10n.nodedexImportSummaryNew,
                   value: '${preview.newEntryCount}',
                   color: AppTheme.successGreen,
                 ),
@@ -312,7 +313,7 @@ class _ImportPreviewSheetState extends ConsumerState<_ImportPreviewSheet>
               Expanded(
                 child: _SummaryCell(
                   icon: Icons.merge_outlined,
-                  label: 'Merge',
+                  label: context.l10n.nodedexImportSummaryMerge,
                   value: '${preview.mergeEntryCount}',
                   color: AppTheme.primaryBlue,
                 ),
@@ -321,7 +322,7 @@ class _ImportPreviewSheetState extends ConsumerState<_ImportPreviewSheet>
               Expanded(
                 child: _SummaryCell(
                   icon: Icons.warning_amber_outlined,
-                  label: 'Conflicts',
+                  label: context.l10n.nodedexImportSummaryConflicts,
                   value: '${preview.conflictCount}',
                   color: preview.hasConflicts
                       ? AppTheme.warningYellow
@@ -332,7 +333,7 @@ class _ImportPreviewSheetState extends ConsumerState<_ImportPreviewSheet>
           ),
           const SizedBox(height: AppTheme.spacing10),
           Text(
-            '${preview.totalImported} entries in file',
+            context.l10n.nodedexImportEntriesInFile(preview.totalImported),
             style: TextStyle(fontSize: 11, color: context.textTertiary),
           ),
         ],
@@ -359,7 +360,7 @@ class _ImportPreviewSheetState extends ConsumerState<_ImportPreviewSheet>
               const SizedBox(width: AppTheme.spacing8),
               Expanded(
                 child: Text(
-                  'Some entries have conflicting data',
+                  context.l10n.nodedexImportConflictingDataMessage,
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
@@ -384,7 +385,9 @@ class _ImportPreviewSheetState extends ConsumerState<_ImportPreviewSheet>
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  _showConflictDetails ? 'Hide details' : 'Show details',
+                  _showConflictDetails
+                      ? context.l10n.nodedexImportHideDetails
+                      : context.l10n.nodedexImportShowDetails,
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
@@ -406,21 +409,32 @@ class _ImportPreviewSheetState extends ConsumerState<_ImportPreviewSheet>
   }
 
   String _buildConflictSummaryText(ImportPreview preview) {
+    final l10n = context.l10n;
     final parts = <String>[];
     if (preview.socialTagConflictCount > 0) {
       parts.add(
-        '${preview.socialTagConflictCount} classification '
-        '${preview.socialTagConflictCount == 1 ? "conflict" : "conflicts"}',
+        preview.socialTagConflictCount == 1
+            ? l10n.nodedexImportClassificationConflictSingular(
+                preview.socialTagConflictCount,
+              )
+            : l10n.nodedexImportClassificationConflictPlural(
+                preview.socialTagConflictCount,
+              ),
       );
     }
     if (preview.userNoteConflictCount > 0) {
       parts.add(
-        '${preview.userNoteConflictCount} note '
-        '${preview.userNoteConflictCount == 1 ? "conflict" : "conflicts"}',
+        preview.userNoteConflictCount == 1
+            ? l10n.nodedexImportNoteConflictSingular(
+                preview.userNoteConflictCount,
+              )
+            : l10n.nodedexImportNoteConflictPlural(
+                preview.userNoteConflictCount,
+              ),
       );
     }
-    if (parts.isEmpty) return 'Conflicts detected in user-owned fields.';
-    return '${parts.join(" and ")}. Choose how to resolve below.';
+    if (parts.isEmpty) return l10n.nodedexImportConflictsFallback;
+    return l10n.nodedexImportConflictsResolveBelow(parts.join(' and '));
   }
 
   Widget _buildStrategySelector(BuildContext context) {
@@ -428,7 +442,7 @@ class _ImportPreviewSheetState extends ConsumerState<_ImportPreviewSheet>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Merge Strategy',
+          context.l10n.nodedexImportMergeStrategyLabel,
           style: TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w600,
@@ -438,8 +452,8 @@ class _ImportPreviewSheetState extends ConsumerState<_ImportPreviewSheet>
         const SizedBox(height: AppTheme.spacing10),
         _StrategyOption(
           icon: Icons.shield_outlined,
-          title: 'Keep Local',
-          description: 'Your classifications and notes stay unchanged',
+          title: context.l10n.nodedexImportStrategyKeepLocalTitle,
+          description: context.l10n.nodedexImportStrategyKeepLocalDescription,
           isSelected: _strategy == MergeStrategy.keepLocal,
           onTap: () {
             HapticFeedback.selectionClick();
@@ -449,8 +463,9 @@ class _ImportPreviewSheetState extends ConsumerState<_ImportPreviewSheet>
         const SizedBox(height: AppTheme.spacing8),
         _StrategyOption(
           icon: Icons.file_download_outlined,
-          title: 'Prefer Import',
-          description: 'Use imported classifications and notes where different',
+          title: context.l10n.nodedexImportStrategyPreferImportTitle,
+          description:
+              context.l10n.nodedexImportStrategyPreferImportDescription,
           isSelected: _strategy == MergeStrategy.preferImport,
           onTap: () {
             HapticFeedback.selectionClick();
@@ -460,8 +475,8 @@ class _ImportPreviewSheetState extends ConsumerState<_ImportPreviewSheet>
         const SizedBox(height: AppTheme.spacing8),
         _StrategyOption(
           icon: Icons.tune_outlined,
-          title: 'Review Each',
-          description: 'Decide per conflict which value to keep',
+          title: context.l10n.nodedexImportStrategyReviewEachTitle,
+          description: context.l10n.nodedexImportStrategyReviewEachDescription,
           isSelected: _strategy == MergeStrategy.reviewConflicts,
           onTap: () {
             HapticFeedback.selectionClick();
@@ -492,7 +507,7 @@ class _ImportPreviewSheetState extends ConsumerState<_ImportPreviewSheet>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Conflicting Entries',
+            context.l10n.nodedexImportConflictingEntriesLabel,
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w600,
@@ -556,9 +571,14 @@ class _ImportPreviewSheetState extends ConsumerState<_ImportPreviewSheet>
                 : const Icon(Icons.file_download_done_outlined),
             label: Text(
               _isImporting
-                  ? 'Importing...'
-                  : 'Import ${preview.totalImported} '
-                        '${preview.totalImported == 1 ? "entry" : "entries"}',
+                  ? context.l10n.nodedexImportImportingLabel
+                  : preview.totalImported == 1
+                  ? context.l10n.nodedexImportButtonLabelSingular(
+                      preview.totalImported,
+                    )
+                  : context.l10n.nodedexImportButtonLabelPlural(
+                      preview.totalImported,
+                    ),
             ),
             style: FilledButton.styleFrom(
               backgroundColor: context.accentColor,
@@ -610,14 +630,16 @@ class _ImportPreviewSheetState extends ConsumerState<_ImportPreviewSheet>
       // Use global snackbar — sheet context is invalidated after pop.
       if (count > 0) {
         showGlobalSuccessSnackBar(
-          'Imported $count ${count == 1 ? "entry" : "entries"}',
+          count == 1
+              ? context.l10n.nodedexImportSuccessSingular(count)
+              : context.l10n.nodedexImportSuccessPlural(count),
         );
       } else {
-        showGlobalInfoSnackBar('Nothing new to import');
+        showGlobalInfoSnackBar(context.l10n.nodedexImportNothingNewToImport);
       }
     } catch (e) {
       safeSetState(() => _isImporting = false);
-      showErrorSnackBar(context, 'Import failed: $e');
+      showErrorSnackBar(context, context.l10n.nodedexImportFailed('$e'));
     }
   }
 }
@@ -807,17 +829,17 @@ class _ConflictEntryRow extends StatelessWidget {
           if (entry.socialTagConflict != null) ...[
             const SizedBox(height: AppTheme.spacing8),
             _FieldConflictRow(
-              label: 'Classification',
+              label: context.l10n.nodedexImportFieldClassification,
               localValue:
                   entry.socialTagConflict!.localValue?.displayLabel(
                     context.l10n,
                   ) ??
-                  'None',
+                  context.l10n.nodedexImportNoneValue,
               importedValue:
                   entry.socialTagConflict!.importedValue?.displayLabel(
                     context.l10n,
                   ) ??
-                  'None',
+                  context.l10n.nodedexImportNoneValue,
               useImport: _resolvedTagChoice,
               canResolve: strategy == MergeStrategy.reviewConflicts,
               onToggle: (useImport) {
@@ -837,13 +859,15 @@ class _ConflictEntryRow extends StatelessWidget {
           if (entry.userNoteConflict != null) ...[
             const SizedBox(height: AppTheme.spacing8),
             _FieldConflictRow(
-              label: 'Note',
+              label: context.l10n.nodedexImportFieldNote,
               localValue: _truncate(
-                entry.userNoteConflict!.localValue ?? 'None',
+                entry.userNoteConflict!.localValue ??
+                    context.l10n.nodedexImportNoneValue,
                 60,
               ),
               importedValue: _truncate(
-                entry.userNoteConflict!.importedValue ?? 'None',
+                entry.userNoteConflict!.importedValue ??
+                    context.l10n.nodedexImportNoneValue,
                 60,
               ),
               useImport: _resolvedNoteChoice,
@@ -931,7 +955,7 @@ class _FieldConflictRow extends StatelessWidget {
             // Local value
             Expanded(
               child: _ConflictValueChip(
-                label: 'Local',
+                label: context.l10n.nodedexImportLocalLabel,
                 value: localValue,
                 isSelected: useImport == false,
                 color: AppTheme.primaryBlue,
@@ -949,7 +973,7 @@ class _FieldConflictRow extends StatelessWidget {
             // Import value
             Expanded(
               child: _ConflictValueChip(
-                label: 'Import',
+                label: context.l10n.nodedexImportImportLabel,
                 value: importedValue,
                 isSelected: useImport == true,
                 color: AppTheme.warningYellow,

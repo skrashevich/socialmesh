@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/logging.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/animations.dart';
@@ -71,23 +72,29 @@ class _SuspensionNotice extends StatelessWidget {
     required this.strikeCount,
   });
 
-  String _formatDuration(DateTime? until) {
-    if (until == null) return 'indefinitely';
+  String _formatDuration(BuildContext context, DateTime? until) {
+    if (until == null) return context.l10n.socialSuspendedIndefinitely;
 
     final now = DateTime.now();
     final difference = until.difference(now);
 
-    if (difference.isNegative) return 'shortly';
+    if (difference.isNegative) return context.l10n.socialSuspendedShortly;
 
     if (difference.inDays > 0) {
       final days = difference.inDays;
-      return '$days day${days > 1 ? 's' : ''}';
+      return days > 1
+          ? context.l10n.socialSuspendedDaysPlural(days)
+          : context.l10n.socialSuspendedDaysSingular(days);
     } else if (difference.inHours > 0) {
       final hours = difference.inHours;
-      return '$hours hour${hours > 1 ? 's' : ''}';
+      return hours > 1
+          ? context.l10n.socialSuspendedHoursPlural(hours)
+          : context.l10n.socialSuspendedHoursSingular(hours);
     } else {
       final minutes = difference.inMinutes;
-      return '$minutes minute${minutes > 1 ? 's' : ''}';
+      return minutes > 1
+          ? context.l10n.socialSuspendedMinutesPlural(minutes)
+          : context.l10n.socialSuspendedMinutesSingular(minutes);
     }
   }
 
@@ -122,7 +129,7 @@ class _SuspensionNotice extends StatelessWidget {
               child: IconButton(
                 icon: const Icon(Icons.arrow_back, color: Colors.white70),
                 onPressed: () => Navigator.of(context).pop(),
-                tooltip: 'Go back',
+                tooltip: context.l10n.socialSuspendedGoBack,
               ),
             ),
             // Main content
@@ -156,8 +163,8 @@ class _SuspensionNotice extends StatelessWidget {
                   // Title
                   Text(
                     isPermanent
-                        ? 'Account Suspended'
-                        : 'Posting Temporarily Suspended',
+                        ? context.l10n.socialSuspendedPermanent
+                        : context.l10n.socialSuspendedTemporary,
                     style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -191,8 +198,10 @@ class _SuspensionNotice extends StatelessWidget {
                         const SizedBox(width: AppTheme.spacing8),
                         Text(
                           isPermanent
-                              ? 'Indefinite suspension'
-                              : 'Remaining: ${_formatDuration(suspendedUntil)}',
+                              ? context.l10n.socialSuspendedIndefinite
+                              : context.l10n.socialSuspendedRemaining(
+                                  _formatDuration(context, suspendedUntil),
+                                ),
                           style: const TextStyle(
                             color: AppTheme.errorRed,
                             fontWeight: FontWeight.w600,
@@ -223,7 +232,7 @@ class _SuspensionNotice extends StatelessWidget {
                             ),
                             const SizedBox(width: AppTheme.spacing8),
                             Text(
-                              'Why am I seeing this?',
+                              context.l10n.socialSuspendedWhyTitle,
                               style: TextStyle(
                                 color: Colors.white.withValues(alpha: 0.9),
                                 fontWeight: FontWeight.w600,
@@ -234,9 +243,7 @@ class _SuspensionNotice extends StatelessWidget {
                         ),
                         const SizedBox(height: AppTheme.spacing12),
                         Text(
-                          reason ??
-                              'Your account has been suspended due to repeated '
-                                  'violations of our community guidelines.',
+                          reason ?? context.l10n.socialSuspendedDefaultReason,
                           style: TextStyle(
                             color: Colors.white.withValues(alpha: 0.7),
                             fontSize: 14,
@@ -254,7 +261,9 @@ class _SuspensionNotice extends StatelessWidget {
                               ),
                               const SizedBox(width: AppTheme.spacing8),
                               Text(
-                                '$strikeCount strike${strikeCount > 1 ? 's' : ''} on your account',
+                                context.l10n.socialSuspendedStrikesCount(
+                                  strikeCount,
+                                ),
                                 style: const TextStyle(
                                   color: AccentColors.orange,
                                   fontSize: 13,
@@ -291,7 +300,7 @@ class _SuspensionNotice extends StatelessWidget {
                             ),
                             const SizedBox(width: AppTheme.spacing8),
                             Text(
-                              'What can I do?',
+                              context.l10n.socialSuspendedWhatCanIDo,
                               style: TextStyle(
                                 color: accentColor.withValues(alpha: 0.9),
                                 fontWeight: FontWeight.w600,
@@ -303,18 +312,18 @@ class _SuspensionNotice extends StatelessWidget {
                         const SizedBox(height: AppTheme.spacing12),
                         _BulletPoint(
                           text: isPermanent
-                              ? 'Wait for your appeal to be reviewed'
-                              : 'Wait for the suspension period to end',
+                              ? context.l10n.socialSuspendedWaitAppeal
+                              : context.l10n.socialSuspendedWaitPeriod,
                           accentColor: accentColor,
                         ),
                         const SizedBox(height: AppTheme.spacing8),
                         _BulletPoint(
-                          text: 'Review our community guidelines',
+                          text: context.l10n.socialSuspendedReviewGuidelines,
                           accentColor: accentColor,
                         ),
                         const SizedBox(height: AppTheme.spacing8),
                         _BulletPoint(
-                          text: 'Contact support to appeal this decision',
+                          text: context.l10n.socialSuspendedContactSupport,
                           accentColor: accentColor,
                         ),
                       ],
@@ -352,13 +361,13 @@ class _SuspensionNotice extends StatelessWidget {
                           ),
                         ],
                       ),
-                      child: const Row(
+                      child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.email_outlined, color: Colors.white),
-                          SizedBox(width: AppTheme.spacing12),
+                          const Icon(Icons.email_outlined, color: Colors.white),
+                          const SizedBox(width: AppTheme.spacing12),
                           Text(
-                            'Contact Support',
+                            context.l10n.socialContactSupportButton,
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -377,7 +386,10 @@ class _SuspensionNotice extends StatelessWidget {
                       Clipboard.setData(
                         const ClipboardData(text: 'support@socialmesh.app'),
                       );
-                      showSuccessSnackBar(context, 'Email copied to clipboard');
+                      showSuccessSnackBar(
+                        context,
+                        context.l10n.socialEmailCopied,
+                      );
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

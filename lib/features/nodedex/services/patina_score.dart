@@ -27,6 +27,8 @@
 
 import 'dart:math' as math;
 
+import 'package:socialmesh/l10n/app_localizations.dart';
+
 import '../models/nodedex_entry.dart';
 
 /// Result of a patina score computation.
@@ -292,5 +294,25 @@ class PatinaScore {
       }
     }
     return label;
+  }
+
+  /// Localize a stamp label using the provided [AppLocalizations].
+  ///
+  /// Call this from widget code to display the localized stamp text:
+  /// ```dart
+  /// PatinaScore.localizedStampLabel(result.stampLabel, context.l10n)
+  /// ```
+  static String localizedStampLabel(String stampLabel, AppLocalizations l10n) {
+    return switch (stampLabel) {
+      'Trace' => l10n.nodedexPatinaStampTrace,
+      'Faint' => l10n.nodedexPatinaStampFaint,
+      'Noted' => l10n.nodedexPatinaStampNoted,
+      'Logged' => l10n.nodedexPatinaStampLogged,
+      'Inked' => l10n.nodedexPatinaStampInked,
+      'Etched' => l10n.nodedexPatinaStampEtched,
+      'Archival' => l10n.nodedexPatinaStampArchival,
+      'Canonical' => l10n.nodedexPatinaStampCanonical,
+      _ => stampLabel,
+    };
   }
 }

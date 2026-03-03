@@ -9,6 +9,8 @@ import 'package:socialmesh/features/nodedex/services/sigil_generator.dart';
 import 'package:socialmesh/features/nodedex/services/trait_engine.dart';
 import 'package:socialmesh/l10n/app_localizations_en.dart';
 
+final l10n = AppLocalizationsEn();
+
 // =============================================================================
 // Test helpers
 // =============================================================================
@@ -179,10 +181,12 @@ void main() {
           final note1 = FieldNoteGenerator.generate(
             entry: entry,
             trait: trait1.primary,
+            l10n: l10n,
           );
           final note2 = FieldNoteGenerator.generate(
             entry: entry,
             trait: trait2.primary,
+            l10n: l10n,
           );
 
           final disclosure1 = ProgressiveDisclosure.computeAt(entry, refTime);
@@ -269,6 +273,7 @@ void main() {
           final note = FieldNoteGenerator.generate(
             entry: entry,
             trait: trait.primary,
+            l10n: l10n,
           );
           final disclosure = ProgressiveDisclosure.computeAt(entry, refTime);
 
@@ -286,7 +291,11 @@ void main() {
             equals(patina.score),
           );
           expect(
-            FieldNoteGenerator.generate(entry: entry, trait: trait.primary),
+            FieldNoteGenerator.generate(
+              entry: entry,
+              trait: trait.primary,
+              l10n: l10n,
+            ),
             equals(note),
           );
           expect(
@@ -355,10 +364,12 @@ void main() {
           final noteBase = FieldNoteGenerator.generate(
             entry: base,
             trait: traitBase.primary,
+            l10n: l10n,
           );
           final noteBump = FieldNoteGenerator.generate(
             entry: bump,
             trait: traitBump.primary,
+            l10n: l10n,
           );
           // Both should be non-empty
           expect(noteBase.isNotEmpty, isTrue);
@@ -759,6 +770,7 @@ void main() {
         final note = FieldNoteGenerator.generate(
           entry: entry,
           trait: trait.primary,
+          l10n: l10n,
         );
 
         expect(note.isNotEmpty, isTrue);
@@ -819,10 +831,12 @@ void main() {
           final note1 = FieldNoteGenerator.generate(
             entry: entry1,
             trait: NodeTrait.sentinel,
+            l10n: l10n,
           );
           final note2 = FieldNoteGenerator.generate(
             entry: entry2,
             trait: NodeTrait.sentinel,
+            l10n: l10n,
           );
 
           // Both notes should share the same template structure.

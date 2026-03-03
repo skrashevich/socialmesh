@@ -65,6 +65,17 @@ extension CardRarityVisuals on CardRarity {
     };
   }
 
+  /// Localized label for display in UI contexts that have l10n access.
+  String localizedLabel(dynamic l10n) {
+    return switch (this) {
+      CardRarity.common => l10n.nodedexCardRarityStandard as String,
+      CardRarity.uncommon => l10n.nodedexCardRarityUncommon as String,
+      CardRarity.rare => l10n.nodedexCardRarityRare as String,
+      CardRarity.epic => l10n.nodedexCardRarityEpic as String,
+      CardRarity.legendary => l10n.nodedexCardRarityLegendary as String,
+    };
+  }
+
   Color get borderColor {
     return switch (this) {
       CardRarity.common => const Color(0xFF6B7280),
@@ -943,7 +954,7 @@ class _DeviceInfoGrid extends StatelessWidget {
         children: [
           // Hardware — full width row
           _DeviceInfoCell(
-            label: 'HARDWARE',
+            label: context.l10n.nodedexCardDeviceHardware,
             value: hw,
             color: sigil.primaryColor,
             scale: scale,
@@ -954,7 +965,7 @@ class _DeviceInfoGrid extends StatelessWidget {
             children: [
               Expanded(
                 child: _DeviceInfoCell(
-                  label: 'ROLE',
+                  label: context.l10n.nodedexCardDeviceRole,
                   value: deviceRole,
                   color: sigil.secondaryColor,
                   scale: scale,
@@ -963,7 +974,7 @@ class _DeviceInfoGrid extends StatelessWidget {
               SizedBox(width: AppTheme.spacing4 * scale),
               Expanded(
                 child: _DeviceInfoCell(
-                  label: 'FIRMWARE',
+                  label: context.l10n.nodedexCardDeviceFirmware,
                   value: fw,
                   color: sigil.tertiaryColor,
                   scale: scale,
@@ -1177,7 +1188,7 @@ class _BrandFooter extends StatelessWidget {
               ),
               SizedBox(width: AppTheme.spacing3 * scale),
               Text(
-                'SOCIALMESH',
+                context.l10n.nodedexCardBrandSocialmesh,
                 style: TextStyle(
                   fontSize: 6.5 * scale,
                   fontWeight: FontWeight.w700,
@@ -1191,7 +1202,7 @@ class _BrandFooter extends StatelessWidget {
 
           // Rarity label
           Text(
-            rarity.label,
+            rarity.localizedLabel(context.l10n),
             style: TextStyle(
               fontSize: 7 * scale,
               fontWeight: FontWeight.w800,

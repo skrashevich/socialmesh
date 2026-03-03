@@ -16,6 +16,7 @@
 
 import 'package:flutter/material.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../models/nodedex_entry.dart';
 import '../services/field_note_generator.dart';
@@ -64,7 +65,11 @@ class FieldNoteWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     if (!visible) return const SizedBox.shrink();
 
-    final note = FieldNoteGenerator.generate(entry: entry, trait: trait);
+    final note = FieldNoteGenerator.generate(
+      entry: entry,
+      trait: trait,
+      l10n: context.l10n,
+    );
 
     if (expanded) {
       return _buildExpanded(context, note);
@@ -119,7 +124,7 @@ class FieldNoteWidget extends StatelessWidget {
               ),
               const SizedBox(width: AppTheme.spacing6),
               Text(
-                'Field Note',
+                context.l10n.nodedexFieldNoteLabel,
                 style: TextStyle(
                   fontSize: 10,
                   fontWeight: FontWeight.w600,
@@ -234,6 +239,7 @@ class _CollapsibleFieldNoteState extends State<CollapsibleFieldNote>
     final note = FieldNoteGenerator.generate(
       entry: widget.entry,
       trait: widget.trait,
+      l10n: context.l10n,
     );
 
     return Container(

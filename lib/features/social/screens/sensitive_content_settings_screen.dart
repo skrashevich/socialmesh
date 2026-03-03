@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:socialmesh/core/safety/lifecycle_mixin.dart';
 import 'package:socialmesh/utils/snackbar.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
+
 import '../../../core/theme.dart';
 import '../../../core/widgets/animations.dart';
 import '../../../core/widgets/glass_scaffold.dart';
@@ -54,7 +56,7 @@ class _SensitiveContentSettingsScreenState
     final settings = _settings;
 
     return GlassScaffold(
-      title: 'Sensitive Content',
+      title: context.l10n.socialSensitiveContentTitle,
       slivers: [
         if (settings == null)
           const SliverFillRemaining(
@@ -74,8 +76,7 @@ class _SensitiveContentSettingsScreenState
                     16,
                   ),
                   child: Text(
-                    'Control how much sensitive content you see in Explore and recommendations. '
-                    'This doesn\'t affect content from accounts you follow.',
+                    context.l10n.socialSensitiveContentExplanation,
                     style: TextStyle(
                       fontSize: 14,
                       color: context.textSecondary,
@@ -85,11 +86,11 @@ class _SensitiveContentSettingsScreenState
 
                 // Filter level selection
                 _buildSection(
-                  title: 'Sensitive Content Control',
+                  title: context.l10n.socialSensitiveContentControl,
                   children: [
                     _FilterLevelTile(
-                      title: 'Less',
-                      subtitle: 'See more sensitive content in Explore',
+                      title: context.l10n.socialFilterLevelLess,
+                      subtitle: context.l10n.socialFilterLevelLessDesc,
                       value: SensitiveContentFilterLevel.less,
                       groupValue: settings.filterLevel,
                       onChanged: _isSaving
@@ -99,8 +100,8 @@ class _SensitiveContentSettingsScreenState
                             ),
                     ),
                     _FilterLevelTile(
-                      title: 'Standard',
-                      subtitle: 'Default setting for sensitive content',
+                      title: context.l10n.socialFilterLevelStandard,
+                      subtitle: context.l10n.socialFilterLevelStandardDesc,
                       value: SensitiveContentFilterLevel.standard,
                       groupValue: settings.filterLevel,
                       onChanged: _isSaving
@@ -111,8 +112,8 @@ class _SensitiveContentSettingsScreenState
                       isDefault: true,
                     ),
                     _FilterLevelTile(
-                      title: 'Less',
-                      subtitle: 'See less sensitive content in Explore',
+                      title: context.l10n.socialFilterLevelLess,
+                      subtitle: context.l10n.socialFilterLevelLessDesc,
                       value: SensitiveContentFilterLevel.strict,
                       groupValue: settings.filterLevel,
                       onChanged: _isSaving
@@ -128,13 +129,11 @@ class _SensitiveContentSettingsScreenState
 
                 // Additional settings
                 _buildSection(
-                  title: 'Display Options',
+                  title: context.l10n.socialDisplayOptions,
                   children: [
                     ListTile(
-                      title: const Text('Blur Sensitive Media'),
-                      subtitle: const Text(
-                        'Blur potentially sensitive images and videos until tapped',
-                      ),
+                      title: Text(context.l10n.socialBlurSensitiveMedia),
+                      subtitle: Text(context.l10n.socialBlurSensitiveDesc),
                       trailing: ThemedSwitch(
                         value: settings.blurSensitiveMedia,
                         onChanged: _isSaving
@@ -170,7 +169,7 @@ class _SensitiveContentSettingsScreenState
                             ),
                             const SizedBox(width: AppTheme.spacing8),
                             Text(
-                              'About Sensitive Content',
+                              context.l10n.socialAboutSensitiveContent,
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
@@ -183,8 +182,8 @@ class _SensitiveContentSettingsScreenState
                         Text(
                           'Sensitive content may include posts that depict violence, '
                           'nudity, or other content that some people may find offensive. '
-                          'This doesn\'t include content that violates our Community Guidelines, '
-                          'which is always removed.',
+                          'This doesn\'t include content that violates our '
+                          'Community Guidelines, which is always removed.',
                           style: TextStyle(
                             fontSize: 13,
                             color: context.textSecondary,
@@ -291,7 +290,7 @@ class _FilterLevelTile extends StatelessWidget {
                             ),
                           ),
                           child: Text(
-                            'Default',
+                            context.l10n.socialDefault,
                             style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w600,
@@ -404,10 +403,10 @@ class _StrikeWarningDialogState extends ConsumerState<StrikeWarningDialog>
         const SizedBox(height: AppTheme.spacing16),
         Text(
           isSuspension
-              ? 'Account Suspended'
+              ? context.l10n.socialAccountSuspendedTitle
               : isWarning
-              ? 'Community Guidelines Warning'
-              : 'Strike Against Your Account',
+              ? context.l10n.socialGuidelinesWarning
+              : context.l10n.socialStrikeAgainstAccount,
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 20,
@@ -424,11 +423,20 @@ class _StrikeWarningDialogState extends ConsumerState<StrikeWarningDialog>
         ),
         const SizedBox(height: AppTheme.spacing16),
         if (strike.expiresAt != null) ...[
-          _InfoRow(label: 'Expires', value: _formatDate(strike.expiresAt!)),
+          _InfoRow(
+            label: context.l10n.socialExpires,
+            value: _formatDate(strike.expiresAt!),
+          ),
         ],
-        _InfoRow(label: 'Date', value: _formatDate(strike.createdAt)),
+        _InfoRow(
+          label: context.l10n.socialDate,
+          value: _formatDate(strike.createdAt),
+        ),
         if (strike.contentType != null) ...[
-          _InfoRow(label: 'Content Type', value: strike.contentType!),
+          _InfoRow(
+            label: context.l10n.socialContentType,
+            value: strike.contentType!,
+          ),
         ],
         const SizedBox(height: AppTheme.spacing16),
         Container(
@@ -451,7 +459,10 @@ class _StrikeWarningDialogState extends ConsumerState<StrikeWarningDialog>
         if (widget.strikes.length > 1) ...[
           const SizedBox(height: AppTheme.spacing12),
           Text(
-            '${_currentIndex + 1} of ${widget.strikes.length} notices',
+            context.l10n.socialNoticesCount(
+              _currentIndex + 1,
+              widget.strikes.length,
+            ),
             style: context.bodySmallStyle?.copyWith(
               color: context.textSecondary,
             ),
@@ -470,8 +481,8 @@ class _StrikeWarningDialogState extends ConsumerState<StrikeWarningDialog>
                   )
                 : Text(
                     _currentIndex < widget.strikes.length - 1
-                        ? 'Next'
-                        : 'I Understand',
+                        ? context.l10n.socialNext
+                        : context.l10n.socialIUnderstand,
                   ),
           ),
         ),
@@ -568,7 +579,7 @@ class ContentBlockedSheet extends StatelessWidget {
           ),
           const SizedBox(height: AppTheme.spacing16),
           Text(
-            'Content Removed',
+            context.l10n.socialContentRemoved,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -587,7 +598,7 @@ class ContentBlockedSheet extends StatelessWidget {
           if (appealable && onAppeal != null) ...[
             OutlinedButton(
               onPressed: onAppeal,
-              child: const Text('Appeal Decision'),
+              child: Text(context.l10n.socialAppealDecision),
             ),
             const SizedBox(height: AppTheme.spacing8),
           ],
@@ -595,7 +606,7 @@ class ContentBlockedSheet extends StatelessWidget {
             width: double.infinity,
             child: FilledButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text('OK'),
+              child: Text(context.l10n.socialOK),
             ),
           ),
         ],
@@ -704,7 +715,7 @@ class _ModerationStatusDetails extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Account Status',
+            context.l10n.socialAccountStatusLabel,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -713,27 +724,27 @@ class _ModerationStatusDetails extends StatelessWidget {
           ),
           const SizedBox(height: AppTheme.spacing16),
           _StatusRow(
-            label: 'Active Strikes',
+            label: context.l10n.socialActiveStrikes,
             value: '${status.activeStrikes}',
             isWarning: status.activeStrikes > 0,
           ),
           _StatusRow(
-            label: 'Active Warnings',
+            label: context.l10n.socialActiveWarnings,
             value: '${status.activeWarnings}',
             isWarning: status.activeWarnings > 0,
           ),
           _StatusRow(
-            label: 'Account Status',
+            label: context.l10n.socialAccountStatusLabel,
             value: status.isPermanentlyBanned
-                ? 'Permanently Banned'
+                ? context.l10n.socialPermanentlyBanned
                 : status.isSuspended
-                ? 'Suspended'
-                : 'Active',
+                ? context.l10n.socialSuspendedLabel
+                : context.l10n.socialAccountStatusActive,
             isWarning: status.isSuspended || status.isPermanentlyBanned,
           ),
           if (status.isSuspended && status.suspendedUntil != null) ...[
             _StatusRow(
-              label: 'Suspension Ends',
+              label: context.l10n.socialSuspensionEnds,
               value:
                   '${status.suspendedUntil!.day}/${status.suspendedUntil!.month}/${status.suspendedUntil!.year}',
             ),
@@ -756,7 +767,7 @@ class _ModerationStatusDetails extends StatelessWidget {
                   const SizedBox(width: AppTheme.spacing8),
                   Expanded(
                     child: Text(
-                      'Strikes expire after 90 days of no violations.',
+                      context.l10n.socialStrikesExpireInfo,
                       style: TextStyle(
                         fontSize: 12,
                         color: context.textSecondary,
@@ -772,7 +783,7 @@ class _ModerationStatusDetails extends StatelessWidget {
             width: double.infinity,
             child: FilledButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Close'),
+              child: Text(context.l10n.socialClose),
             ),
           ),
         ],

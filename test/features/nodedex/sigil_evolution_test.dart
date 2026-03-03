@@ -3,6 +3,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:socialmesh/features/nodedex/models/nodedex_entry.dart';
 import 'package:socialmesh/features/nodedex/models/sigil_evolution.dart';
+import 'package:socialmesh/l10n/app_localizations_en.dart';
 
 void main() {
   // ===========================================================================
@@ -471,9 +472,10 @@ void main() {
     });
 
     test('all stages have non-empty display labels', () {
+      final l10n = AppLocalizationsEn();
       for (final stage in SigilStage.values) {
         expect(
-          stage.displayLabel.isNotEmpty,
+          stage.displayLabel(l10n).isNotEmpty,
           isTrue,
           reason: '${stage.name} should have a non-empty displayLabel',
         );
@@ -481,7 +483,8 @@ void main() {
     });
 
     test('display labels are unique', () {
-      final labels = SigilStage.values.map((s) => s.displayLabel).toSet();
+      final l10n = AppLocalizationsEn();
+      final labels = SigilStage.values.map((s) => s.displayLabel(l10n)).toSet();
       expect(labels.length, equals(SigilStage.values.length));
     });
   });

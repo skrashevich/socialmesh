@@ -4,6 +4,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:socialmesh/features/nodedex/models/nodedex_entry.dart';
 import 'package:socialmesh/features/nodedex/services/field_note_generator.dart';
 import 'package:socialmesh/features/nodedex/services/sigil_generator.dart';
+import 'package:socialmesh/l10n/app_localizations_en.dart';
+
+final _l10n = AppLocalizationsEn();
 
 // =============================================================================
 // Test helpers
@@ -137,10 +140,12 @@ void main() {
         final note1 = FieldNoteGenerator.generate(
           entry: entry,
           trait: NodeTrait.wanderer,
+          l10n: _l10n,
         );
         final note2 = FieldNoteGenerator.generate(
           entry: entry,
           trait: NodeTrait.wanderer,
+          l10n: _l10n,
         );
 
         expect(note1, equals(note2));
@@ -158,10 +163,12 @@ void main() {
           final a = FieldNoteGenerator.generate(
             entry: entry,
             trait: NodeTrait.sentinel,
+            l10n: _l10n,
           );
           final b = FieldNoteGenerator.generate(
             entry: entry,
             trait: NodeTrait.sentinel,
+            l10n: _l10n,
           );
 
           expect(a, equals(b), reason: 'Note mismatch for node $nodeNum');
@@ -179,10 +186,15 @@ void main() {
         );
 
         for (final trait in NodeTrait.values) {
-          final first = FieldNoteGenerator.generate(entry: entry, trait: trait);
+          final first = FieldNoteGenerator.generate(
+            entry: entry,
+            trait: trait,
+            l10n: _l10n,
+          );
           final second = FieldNoteGenerator.generate(
             entry: entry,
             trait: trait,
+            l10n: _l10n,
           );
 
           expect(
@@ -213,10 +225,12 @@ void main() {
           final note1 = FieldNoteGenerator.generate(
             entry: entry1,
             trait: NodeTrait.beacon,
+            l10n: _l10n,
           );
           final note2 = FieldNoteGenerator.generate(
             entry: entry2,
             trait: NodeTrait.beacon,
+            l10n: _l10n,
           );
 
           // The template structure should be the same; only interpolated values differ.
@@ -236,7 +250,11 @@ void main() {
         final entry = _makeEntry(nodeNum: 7, encounterCount: 10, ageDays: 14);
 
         for (final trait in NodeTrait.values) {
-          final note = FieldNoteGenerator.generate(entry: entry, trait: trait);
+          final note = FieldNoteGenerator.generate(
+            entry: entry,
+            trait: trait,
+            l10n: _l10n,
+          );
           expect(
             note.isNotEmpty,
             isTrue,
@@ -249,7 +267,11 @@ void main() {
         final entry = _makeEntry(nodeNum: 1, encounterCount: 1, ageDays: 0);
 
         for (final trait in NodeTrait.values) {
-          final note = FieldNoteGenerator.generate(entry: entry, trait: trait);
+          final note = FieldNoteGenerator.generate(
+            entry: entry,
+            trait: trait,
+            l10n: _l10n,
+          );
           expect(
             note.isNotEmpty,
             isTrue,
@@ -273,7 +295,11 @@ void main() {
         );
 
         for (final trait in NodeTrait.values) {
-          final note = FieldNoteGenerator.generate(entry: entry, trait: trait);
+          final note = FieldNoteGenerator.generate(
+            entry: entry,
+            trait: trait,
+            l10n: _l10n,
+          );
           expect(
             note.isNotEmpty,
             isTrue,
@@ -301,7 +327,13 @@ void main() {
 
         final notes = <String>{};
         for (final trait in NodeTrait.values) {
-          notes.add(FieldNoteGenerator.generate(entry: entry, trait: trait));
+          notes.add(
+            FieldNoteGenerator.generate(
+              entry: entry,
+              trait: trait,
+              l10n: _l10n,
+            ),
+          );
         }
 
         // With 9 traits and 8 templates each, we expect most notes to be
@@ -330,6 +362,7 @@ void main() {
               FieldNoteGenerator.generate(
                 entry: entry,
                 trait: NodeTrait.wanderer,
+                l10n: _l10n,
               ),
             );
           }
@@ -366,6 +399,7 @@ void main() {
           final note = FieldNoteGenerator.generate(
             entry: entry,
             trait: NodeTrait.wanderer,
+            l10n: _l10n,
           );
 
           if (note.contains('5')) {
@@ -395,6 +429,7 @@ void main() {
           final note = FieldNoteGenerator.generate(
             entry: entry,
             trait: NodeTrait.beacon,
+            l10n: _l10n,
           );
 
           // Encounter count is 30, rate would be ~4.3/day
@@ -425,6 +460,7 @@ void main() {
           final note = FieldNoteGenerator.generate(
             entry: entry,
             trait: NodeTrait.ghost,
+            l10n: _l10n,
           );
 
           if (note.contains('ago') ||
@@ -455,6 +491,7 @@ void main() {
           final note = FieldNoteGenerator.generate(
             entry: entry,
             trait: NodeTrait.courier,
+            l10n: _l10n,
           );
 
           if (note.contains('42')) {
@@ -483,6 +520,7 @@ void main() {
           final note = FieldNoteGenerator.generate(
             entry: entry,
             trait: NodeTrait.anchor,
+            l10n: _l10n,
           );
 
           if (note.contains('12')) {
@@ -511,6 +549,7 @@ void main() {
           final note = FieldNoteGenerator.generate(
             entry: entry,
             trait: NodeTrait.sentinel,
+            l10n: _l10n,
           );
 
           if (note.contains('45') || note.contains('14')) {
@@ -541,6 +580,7 @@ void main() {
           final note = FieldNoteGenerator.generate(
             entry: entry,
             trait: NodeTrait.unknown,
+            l10n: _l10n,
           );
 
           // Date format is "12 Mar" or "12 Mar 2025"
@@ -586,6 +626,7 @@ void main() {
             final note = FieldNoteGenerator.generate(
               entry: entry,
               trait: trait,
+              l10n: _l10n,
             );
 
             expect(
@@ -618,7 +659,11 @@ void main() {
         );
 
         for (final trait in NodeTrait.values) {
-          final note = FieldNoteGenerator.generate(entry: entry, trait: trait);
+          final note = FieldNoteGenerator.generate(
+            entry: entry,
+            trait: trait,
+            l10n: _l10n,
+          );
 
           expect(
             note.contains('{'),
@@ -663,10 +708,12 @@ void main() {
           final note1 = FieldNoteGenerator.generate(
             entry: entry1,
             trait: NodeTrait.wanderer,
+            l10n: _l10n,
           );
           final note2 = FieldNoteGenerator.generate(
             entry: entry2,
             trait: NodeTrait.wanderer,
+            l10n: _l10n,
           );
 
           // Both should be non-empty and well-formed.
@@ -701,7 +748,11 @@ void main() {
 
         String? previousNote;
         for (final trait in NodeTrait.values) {
-          final note = FieldNoteGenerator.generate(entry: entry, trait: trait);
+          final note = FieldNoteGenerator.generate(
+            entry: entry,
+            trait: trait,
+            l10n: _l10n,
+          );
 
           expect(note.isNotEmpty, isTrue);
 
@@ -739,10 +790,12 @@ void main() {
         final note1 = FieldNoteGenerator.generate(
           entry: entry1,
           trait: NodeTrait.wanderer,
+          l10n: _l10n,
         );
         final note2 = FieldNoteGenerator.generate(
           entry: entry2,
           trait: NodeTrait.wanderer,
+          l10n: _l10n,
         );
 
         // Both should be valid notes
@@ -776,6 +829,7 @@ void main() {
           final note = FieldNoteGenerator.generate(
             entry: entry,
             trait: NodeTrait.wanderer,
+            l10n: _l10n,
           );
 
           if (note.contains('km')) {
@@ -812,6 +866,7 @@ void main() {
           final note = FieldNoteGenerator.generate(
             entry: entry,
             trait: NodeTrait.wanderer,
+            l10n: _l10n,
           );
 
           if (note.contains('750m')) {
@@ -846,6 +901,7 @@ void main() {
           final note = FieldNoteGenerator.generate(
             entry: entry,
             trait: NodeTrait.ghost,
+            l10n: _l10n,
           );
 
           if (note.contains('3h ago')) {
@@ -896,6 +952,7 @@ void main() {
           final note = FieldNoteGenerator.generate(
             entry: entry,
             trait: traitEntry.key,
+            l10n: _l10n,
           );
 
           expect(note.isNotEmpty, isTrue);

@@ -3,6 +3,7 @@
 
 import 'package:flutter/material.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../services/trust_score.dart';
 
@@ -90,7 +91,7 @@ class TrustIndicator extends StatelessWidget {
       dot = GestureDetector(onTap: onTap, child: dot);
     }
 
-    return Tooltip(message: level.displayLabel, child: dot);
+    return Tooltip(message: level.displayLabel(context.l10n), child: dot);
   }
 
   Widget _buildCompact(BuildContext context) {
@@ -109,7 +110,7 @@ class TrustIndicator extends StatelessWidget {
           Icon(level.icon, size: 11, color: color),
           const SizedBox(width: AppTheme.spacing3),
           Text(
-            level.displayLabel,
+            level.displayLabel(context.l10n),
             style: TextStyle(
               fontSize: 10,
               fontWeight: FontWeight.w600,
@@ -149,7 +150,7 @@ class TrustIndicator extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                level.displayLabel,
+                level.displayLabel(context.l10n),
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
@@ -159,7 +160,7 @@ class TrustIndicator extends StatelessWidget {
                 ),
               ),
               Text(
-                level.description,
+                level.description(context.l10n),
                 style: TextStyle(
                   fontSize: 10,
                   color: color.withValues(alpha: 0.7),

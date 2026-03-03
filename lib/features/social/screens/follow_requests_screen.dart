@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../../../core/widgets/user_avatar.dart';
@@ -21,7 +22,7 @@ class FollowRequestsScreen extends ConsumerWidget {
     final requestsAsync = ref.watch(pendingFollowRequestsProvider);
 
     return GlassScaffold(
-      title: 'Follow Requests',
+      title: context.l10n.socialFollowRequestsTitle,
       slivers: [
         requestsAsync.when(
           data: (requests) {
@@ -62,17 +63,20 @@ class FollowRequestsScreen extends ConsumerWidget {
     WidgetRef ref,
     FollowRequestWithProfile request,
   ) async {
+    final l10n = context.l10n;
     try {
       await acceptFollowRequest(ref, request.request.requesterId);
       if (context.mounted) {
         showSuccessSnackBar(
           context,
-          'Accepted ${request.profile?.displayName ?? 'user'}\'s request',
+          l10n.socialFollowRequestAccepted(
+            request.profile?.displayName ?? 'user',
+          ),
         );
       }
     } catch (e) {
       if (context.mounted) {
-        showErrorSnackBar(context, 'Failed to accept request: $e');
+        showErrorSnackBar(context, l10n.socialFollowRequestAcceptFailed);
       }
     }
   }
@@ -82,17 +86,20 @@ class FollowRequestsScreen extends ConsumerWidget {
     WidgetRef ref,
     FollowRequestWithProfile request,
   ) async {
+    final l10n = context.l10n;
     try {
       await declineFollowRequest(ref, request.request.requesterId);
       if (context.mounted) {
         showInfoSnackBar(
           context,
-          'Declined ${request.profile?.displayName ?? 'user'}\'s request',
+          l10n.socialFollowRequestDeclined(
+            request.profile?.displayName ?? 'user',
+          ),
         );
       }
     } catch (e) {
       if (context.mounted) {
-        showErrorSnackBar(context, 'Failed to decline request: $e');
+        showErrorSnackBar(context, l10n.socialFollowRequestDeclineFailed);
       }
     }
   }
@@ -111,14 +118,14 @@ class FollowRequestsScreen extends ConsumerWidget {
           ),
           const SizedBox(height: AppTheme.spacing16),
           Text(
-            'No pending requests',
+            context.l10n.socialFollowRequestsEmpty,
             style: theme.textTheme.bodyLarge?.copyWith(
               color: theme.textTheme.bodyLarge?.color?.withAlpha(150),
             ),
           ),
           const SizedBox(height: AppTheme.spacing8),
           Text(
-            'When someone requests to follow you,\nyou\'ll see it here',
+            context.l10n.socialFollowRequestsEmptyDesc,
             textAlign: TextAlign.center,
             style: theme.textTheme.bodyMedium?.copyWith(
               color: theme.textTheme.bodyMedium?.color?.withAlpha(100),
@@ -140,9 +147,12 @@ class FollowRequestsScreen extends ConsumerWidget {
         children: [
           const Icon(Icons.error_outline, size: 48),
           const SizedBox(height: AppTheme.spacing16),
-          Text('Failed to load: $error'),
+          Text(context.l10n.socialFollowRequestsError(error.toString())),
           const SizedBox(height: AppTheme.spacing16),
-          FilledButton(onPressed: onRetry, child: const Text('Retry')),
+          FilledButton(
+            onPressed: onRetry,
+            child: Text(context.l10n.socialRetry),
+          ),
         ],
       ),
     );
@@ -221,7 +231,7 @@ class _RequestTileState extends ConsumerState<_RequestTile>
         children: [
           Flexible(
             child: Text(
-              profile?.displayName ?? 'Unknown User',
+              profile?.displayName ?? context.l10n.socialUnknownUser,
               overflow: TextOverflow.ellipsis,
             ),
           ),
@@ -240,7 +250,7 @@ class _RequestTileState extends ConsumerState<_RequestTile>
               style: TextStyle(color: theme.colorScheme.secondary),
             ),
           Text(
-            _formatTimeAgo(createdAt),
+            _formatTimeAgo(context, createdAt),
             style: theme.textTheme.bodySmall?.copyWith(
               color: theme.textTheme.bodySmall?.color?.withAlpha(150),
             ),
@@ -268,7 +278,7 @@ class _RequestTileState extends ConsumerState<_RequestTile>
                         color: Colors.white,
                       ),
                     )
-                  : const Text('Confirm', maxLines: 1),
+                  : Text(context.l10n.socialConfirm, maxLines: 1),
             ),
           ),
           const SizedBox(width: AppTheme.spacing8),
@@ -291,7 +301,7 @@ class _RequestTileState extends ConsumerState<_RequestTile>
                         color: Colors.white,
                       ),
                     )
-                  : const Text('Delete', maxLines: 1),
+                  : Text(context.l10n.socialDelete, maxLines: 1),
             ),
           ),
         ],
@@ -299,20 +309,20 @@ class _RequestTileState extends ConsumerState<_RequestTile>
     );
   }
 
-  String _formatTimeAgo(DateTime dateTime) {
+  String _formatTimeAgo(BuildContext context, DateTime dateTime) {
     final now = DateTime.now();
     final difference = now.difference(dateTime);
 
     if (difference.inDays > 7) {
       return '${dateTime.day}/${dateTime.month}/${dateTime.year}';
     } else if (difference.inDays > 0) {
-      return '${difference.inDays}d ago';
+      return context.l10n.socialTimeDaysAgo(difference.inDays);
     } else if (difference.inHours > 0) {
-      return '${difference.inHours}h ago';
+      return context.l10n.socialTimeHoursAgo(difference.inHours);
     } else if (difference.inMinutes > 0) {
-      return '${difference.inMinutes}m ago';
+      return context.l10n.socialTimeMinutesAgo(difference.inMinutes);
     } else {
-      return 'Just now';
+      return context.l10n.socialTimeJustNow;
     }
   }
 }

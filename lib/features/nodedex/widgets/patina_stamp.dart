@@ -19,6 +19,7 @@
 
 import 'package:flutter/material.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../services/patina_score.dart';
 
@@ -112,6 +113,7 @@ class PatinaStamp extends StatelessWidget {
   }
 
   void _showBreakdown(BuildContext context) {
+    final l10n = context.l10n;
     showModalBottomSheet<void>(
       context: context,
       backgroundColor: context.background,
@@ -143,7 +145,7 @@ class PatinaStamp extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      'Patina Breakdown',
+                      l10n.nodedexPatinaBreakdownTitle,
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w700,
@@ -160,51 +162,51 @@ class PatinaStamp extends StatelessWidget {
                 ),
                 const SizedBox(height: AppTheme.spacing4),
                 Text(
-                  'Accumulated history across six dimensions',
+                  l10n.nodedexPatinaBreakdownSubtitle,
                   style: TextStyle(fontSize: 12, color: context.textTertiary),
                 ),
                 const SizedBox(height: AppTheme.spacing20),
 
                 // Axis breakdowns
                 _AxisRow(
-                  label: 'Tenure',
+                  label: l10n.nodedexPatinaAxisTenure,
                   value: result.tenure,
-                  description: 'How long this node has been known',
+                  description: l10n.nodedexPatinaAxisTenureDescription,
                   color: accentColor,
                   context: sheetContext,
                 ),
                 _AxisRow(
-                  label: 'Encounters',
+                  label: l10n.nodedexPatinaAxisEncounters,
                   value: result.encounters,
-                  description: 'Number of distinct observations',
+                  description: l10n.nodedexPatinaAxisEncountersDescription,
                   color: accentColor,
                   context: sheetContext,
                 ),
                 _AxisRow(
-                  label: 'Reach',
+                  label: l10n.nodedexPatinaAxisReach,
                   value: result.reach,
-                  description: 'Geographic spread across regions',
+                  description: l10n.nodedexPatinaAxisReachDescription,
                   color: accentColor,
                   context: sheetContext,
                 ),
                 _AxisRow(
-                  label: 'Signal Depth',
+                  label: l10n.nodedexPatinaAxisSignalDepth,
                   value: result.signalDepth,
-                  description: 'Quality of signal records collected',
+                  description: l10n.nodedexPatinaAxisSignalDepthDescription,
                   color: accentColor,
                   context: sheetContext,
                 ),
                 _AxisRow(
-                  label: 'Social',
+                  label: l10n.nodedexPatinaAxisSocial,
                   value: result.social,
-                  description: 'Co-seen relationships and messages',
+                  description: l10n.nodedexPatinaAxisSocialDescription,
                   color: accentColor,
                   context: sheetContext,
                 ),
                 _AxisRow(
-                  label: 'Recency',
+                  label: l10n.nodedexPatinaAxisRecency,
                   value: result.recency,
-                  description: 'How recently this node was active',
+                  description: l10n.nodedexPatinaAxisRecencyDescription,
                   color: accentColor,
                   context: sheetContext,
                 ),

@@ -180,7 +180,9 @@ class _DefaultContent extends StatelessWidget {
         Icon(Icons.scatter_plot_outlined, size: 14, color: tertiaryColor),
         const SizedBox(width: AppTheme.spacing6),
         Text(
-          _formatCount(nodeCount, 'node', 'nodes'),
+          nodeCount == 1
+              ? context.l10n.nodedexNodeCountSingular(nodeCount)
+              : context.l10n.nodedexNodeCountPlural(nodeCount),
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w500,
@@ -195,7 +197,9 @@ class _DefaultContent extends StatelessWidget {
         Icon(Icons.link, size: 14, color: tertiaryColor),
         const SizedBox(width: AppTheme.spacing6),
         Text(
-          _formatCount(edgeCount, 'link', 'links'),
+          edgeCount == 1
+              ? context.l10n.nodedexLinkCountSingular(edgeCount)
+              : context.l10n.nodedexLinkCountPlural(edgeCount),
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w500,
@@ -214,7 +218,13 @@ class _DefaultContent extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppTheme.radius6),
           ),
           child: Text(
-            density.label,
+            switch (density) {
+              EdgeDensity.none => context.l10n.nodedexDensityStars,
+              EdgeDensity.sparse => context.l10n.nodedexDensitySparse,
+              EdgeDensity.normal => context.l10n.nodedexDensityNormal,
+              EdgeDensity.dense => context.l10n.nodedexDensityDense,
+              EdgeDensity.all => context.l10n.nodedexDensityAll,
+            },
             style: TextStyle(
               fontSize: 10,
               fontWeight: FontWeight.w600,
@@ -225,15 +235,6 @@ class _DefaultContent extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  /// Format a count with singular/plural label.
-  static String _formatCount(int count, String singular, String plural) {
-    if (count >= 10000) {
-      return '${(count / 1000).toStringAsFixed(1)}k $plural';
-    }
-    if (count == 1) return '$count $singular';
-    return '$count $plural';
   }
 }
 
@@ -319,7 +320,7 @@ class _SelectedContent extends ConsumerWidget {
                   ),
                   const SizedBox(width: AppTheme.spacing8),
                   Text(
-                    '${entry.coSeenCount} links',
+                    context.l10n.nodedexSelectedLinksCount(entry.coSeenCount),
                     style: TextStyle(
                       fontSize: 11,
                       color: tertiaryText,
@@ -345,7 +346,7 @@ class _SelectedContent extends ConsumerWidget {
               ),
             ),
             child: Text(
-              'Profile',
+              context.l10n.nodedexProfileButton,
               style: TextStyle(
                 fontSize: 11,
                 fontWeight: FontWeight.w600,

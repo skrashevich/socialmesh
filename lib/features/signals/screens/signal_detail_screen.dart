@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:socialmesh/features/settings/account_subscriptions_screen.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/logging.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
@@ -135,7 +136,7 @@ class _SignalDetailScreenState extends ConsumerState<SignalDetailScreen>
       // Already expired - pop immediately
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) {
-          showInfoSnackBar(context, 'This signal has faded');
+          showInfoSnackBar(context, context.l10n.signalHasFaded);
           Navigator.of(context).pop();
         }
       });
@@ -143,7 +144,7 @@ class _SignalDetailScreenState extends ConsumerState<SignalDetailScreen>
       // Schedule pop for when it expires
       _expiryTimer = Timer(remaining, () {
         if (mounted) {
-          showInfoSnackBar(context, 'This signal has faded');
+          showInfoSnackBar(context, context.l10n.signalHasFaded);
           Navigator.of(context).pop();
         }
       });
@@ -271,7 +272,7 @@ class _SignalDetailScreenState extends ConsumerState<SignalDetailScreen>
   void _handleReplyTo(SignalResponse response) {
     safeSetState(() {
       _replyingToId = response.id;
-      _replyingToAuthor = response.authorName ?? 'Someone';
+      _replyingToAuthor = response.authorName ?? context.l10n.signalSomeone;
     });
     _replyFocusNode.requestFocus();
   }
@@ -290,7 +291,7 @@ class _SignalDetailScreenState extends ConsumerState<SignalDetailScreen>
     if (!isAuthenticated) {
       AppLogging.social('🔒 Vote blocked: user not authenticated');
       if (mounted) {
-        showSignInRequiredSnackBar(context, 'Sign in to vote on responses');
+        showSignInRequiredSnackBar(context, context.l10n.signalSignInToVote);
       }
       return;
     }
@@ -310,6 +311,7 @@ class _SignalDetailScreenState extends ConsumerState<SignalDetailScreen>
     final previousVote = _myVotes[response.id];
     // Capture providers before any await
     if (!mounted) return;
+    final l10n = context.l10n;
     final service = ref.read(signalServiceProvider);
     final myNodeNum = ref.read(myNodeNumProvider);
     final queue = ref.read(mutationQueueProvider);
@@ -346,7 +348,7 @@ class _SignalDetailScreenState extends ConsumerState<SignalDetailScreen>
     } catch (e) {
       AppLogging.social('Vote error: $e');
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to submit vote');
+        showErrorSnackBar(context, l10n.signalVoteFailed);
       }
     }
   }
@@ -354,6 +356,7 @@ class _SignalDetailScreenState extends ConsumerState<SignalDetailScreen>
   Future<void> _removeVote(SignalResponse response) async {
     final previousVote = _myVotes[response.id];
     // Capture providers before any await
+    final l10n = context.l10n;
     final service = ref.read(signalServiceProvider);
     final myNodeNum = ref.read(myNodeNumProvider);
     final queue = ref.read(mutationQueueProvider);
@@ -385,7 +388,7 @@ class _SignalDetailScreenState extends ConsumerState<SignalDetailScreen>
     } catch (e) {
       AppLogging.social('Clear vote error: $e');
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to remove vote');
+        showErrorSnackBar(context, l10n.signalRemoveVoteFailed);
       }
     }
   }
@@ -396,6 +399,7 @@ class _SignalDetailScreenState extends ConsumerState<SignalDetailScreen>
     HapticFeedback.mediumImpact();
 
     // Capture all providers before any await
+    final l10n = context.l10n;
     final isAuthenticated = ref.read(isSignedInProvider);
     final moderationService = ref.read(contentModerationServiceProvider);
     final service = ref.read(signalServiceProvider);
@@ -405,8 +409,8 @@ class _SignalDetailScreenState extends ConsumerState<SignalDetailScreen>
       if (mounted) {
         showActionSnackBar(
           context,
-          'Sign in required to comment',
-          actionLabel: 'Profile',
+          l10n.signalSignInRequiredToComment,
+          actionLabel: l10n.signalProfile,
           onAction: () {
             Navigator.of(context).push(
               MaterialPageRoute(
@@ -517,13 +521,13 @@ class _SignalDetailScreenState extends ConsumerState<SignalDetailScreen>
           '📝 SignalDetailScreen: Response creation returned null',
         );
         if (mounted) {
-          showErrorSnackBar(context, 'Failed to send response');
+          showErrorSnackBar(context, l10n.signalSendResponseFailed);
         }
       }
     } catch (e) {
       AppLogging.social('Error creating response: $e');
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to send response');
+        showErrorSnackBar(context, l10n.signalSendResponseFailed);
       }
     } finally {
       safeSetState(() => _isSubmittingReply = false);
@@ -546,7 +550,7 @@ class _SignalDetailScreenState extends ConsumerState<SignalDetailScreen>
             ),
             const SizedBox(height: AppTheme.spacing16),
             Text(
-              'Loading comments...',
+              context.l10n.signalLoadingComments,
               style: TextStyle(color: context.textTertiary, fontSize: 13),
             ),
           ],
@@ -588,7 +592,7 @@ class _SignalDetailScreenState extends ConsumerState<SignalDetailScreen>
             ),
             const SizedBox(height: AppTheme.spacing16),
             Text(
-              'No comments yet',
+              context.l10n.signalNoCommentsYet,
               style: TextStyle(
                 color: context.textPrimary,
                 fontSize: 16,
@@ -597,7 +601,7 @@ class _SignalDetailScreenState extends ConsumerState<SignalDetailScreen>
             ),
             const SizedBox(height: AppTheme.spacing6),
             Text(
-              'Be the first to respond to this signal',
+              context.l10n.signalBeFirstToRespond,
               style: TextStyle(color: context.textTertiary, fontSize: 13),
             ),
           ],
@@ -736,7 +740,10 @@ class _SignalDetailScreenState extends ConsumerState<SignalDetailScreen>
                   size: 20,
                 ),
                 const SizedBox(width: AppTheme.spacing12),
-                Text('Delete', style: TextStyle(color: context.textPrimary)),
+                Text(
+                  context.l10n.signalDelete,
+                  style: TextStyle(color: context.textPrimary),
+                ),
               ],
             ),
           ),
@@ -751,7 +758,10 @@ class _SignalDetailScreenState extends ConsumerState<SignalDetailScreen>
                   size: 20,
                 ),
                 const SizedBox(width: AppTheme.spacing12),
-                Text('Report', style: TextStyle(color: context.textPrimary)),
+                Text(
+                  context.l10n.signalReport,
+                  style: TextStyle(color: context.textPrimary),
+                ),
               ],
             ),
           ),
@@ -761,14 +771,15 @@ class _SignalDetailScreenState extends ConsumerState<SignalDetailScreen>
 
   Future<void> _deleteSignal(Post signal) async {
     // Capture provider before any await
+    final l10n = context.l10n;
     final feedNotifier = ref.read(signalFeedProvider.notifier);
     final navigator = Navigator.of(context);
 
     final confirm = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Delete Signal?',
-      message: 'This signal will fade immediately.',
-      confirmLabel: 'Delete',
+      title: l10n.signalDeleteTitle,
+      message: l10n.signalDeleteMessage,
+      confirmLabel: l10n.signalDelete,
       isDestructive: true,
     );
 
@@ -784,12 +795,13 @@ class _SignalDetailScreenState extends ConsumerState<SignalDetailScreen>
 
   Future<void> _reportComment(SignalResponse response) async {
     // Capture provider before any await
+    final l10n = context.l10n;
     final socialService = ref.read(socialServiceProvider);
 
     final reason = await AppBottomSheet.showActions<String>(
       context: context,
       header: Text(
-        'Why are you reporting this comment?',
+        l10n.signalWhyReportComment,
         style: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.w600,
@@ -799,27 +811,27 @@ class _SignalDetailScreenState extends ConsumerState<SignalDetailScreen>
       actions: [
         BottomSheetAction(
           icon: Icons.warning_outlined,
-          label: 'Spam or misleading',
+          label: l10n.signalReportSpam,
           value: 'spam',
         ),
         BottomSheetAction(
           icon: Icons.person_off_outlined,
-          label: 'Harassment or bullying',
+          label: l10n.signalReportHarassment,
           value: 'harassment',
         ),
         BottomSheetAction(
           icon: Icons.dangerous_outlined,
-          label: 'Violence or dangerous content',
+          label: l10n.signalReportViolence,
           value: 'violence',
         ),
         BottomSheetAction(
           icon: Icons.no_adult_content,
-          label: 'Nudity or sexual content',
+          label: l10n.signalReportNudity,
           value: 'nudity',
         ),
         BottomSheetAction(
           icon: Icons.more_horiz,
-          label: 'Other',
+          label: l10n.signalReportOther,
           value: 'other',
         ),
       ],
@@ -837,11 +849,11 @@ class _SignalDetailScreenState extends ConsumerState<SignalDetailScreen>
           content: response.content,
         );
         if (mounted) {
-          showSuccessSnackBar(context, 'Comment reported. Thank you.');
+          showSuccessSnackBar(context, l10n.signalCommentReported);
         }
       } catch (e) {
         if (mounted) {
-          showErrorSnackBar(context, 'Failed to report: $e');
+          showErrorSnackBar(context, l10n.signalReportFailed('$e'));
         }
       }
     }
@@ -849,12 +861,13 @@ class _SignalDetailScreenState extends ConsumerState<SignalDetailScreen>
 
   Future<void> _reportSignal(Post signal) async {
     // Capture provider before any await
+    final l10n = context.l10n;
     final socialService = ref.read(socialServiceProvider);
 
     final reason = await AppBottomSheet.showActions<String>(
       context: context,
       header: Text(
-        'Why are you reporting this signal?',
+        l10n.signalWhyReportSignal,
         style: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.w600,
@@ -864,32 +877,32 @@ class _SignalDetailScreenState extends ConsumerState<SignalDetailScreen>
       actions: [
         BottomSheetAction(
           icon: Icons.warning_outlined,
-          label: 'Spam or misleading',
+          label: l10n.signalReportSpam,
           value: 'spam',
         ),
         BottomSheetAction(
           icon: Icons.person_off_outlined,
-          label: 'Harassment or bullying',
+          label: l10n.signalReportHarassment,
           value: 'harassment',
         ),
         BottomSheetAction(
           icon: Icons.dangerous_outlined,
-          label: 'Violence or dangerous content',
+          label: l10n.signalReportViolence,
           value: 'violence',
         ),
         BottomSheetAction(
           icon: Icons.no_adult_content,
-          label: 'Nudity or sexual content',
+          label: l10n.signalReportNudity,
           value: 'nudity',
         ),
         BottomSheetAction(
           icon: Icons.copyright,
-          label: 'Copyright violation',
+          label: l10n.signalReportCopyright,
           value: 'copyright',
         ),
         BottomSheetAction(
           icon: Icons.more_horiz,
-          label: 'Other',
+          label: l10n.signalReportOther,
           value: 'other',
         ),
       ],
@@ -906,11 +919,11 @@ class _SignalDetailScreenState extends ConsumerState<SignalDetailScreen>
           imageUrl: signal.mediaUrls.isNotEmpty ? signal.mediaUrls.first : null,
         );
         if (mounted) {
-          showSuccessSnackBar(context, 'Report submitted. Thank you.');
+          showSuccessSnackBar(context, l10n.signalReportSubmitted);
         }
       } catch (e) {
         if (mounted) {
-          showErrorSnackBar(context, 'Failed to report: $e');
+          showErrorSnackBar(context, l10n.signalReportFailed('$e'));
         }
       }
     }
@@ -953,7 +966,7 @@ class _SignalDetailScreenState extends ConsumerState<SignalDetailScreen>
                         Icon(Icons.reply, size: 16, color: context.accentColor),
                         const SizedBox(width: AppTheme.spacing8),
                         Text(
-                          'Replying to $_replyingToAuthor',
+                          context.l10n.signalReplyingTo(_replyingToAuthor!),
                           style: TextStyle(
                             color: context.textSecondary,
                             fontSize: 13,
@@ -986,8 +999,8 @@ class _SignalDetailScreenState extends ConsumerState<SignalDetailScreen>
                           style: TextStyle(color: context.textPrimary),
                           decoration: InputDecoration(
                             hintText: _replyingToAuthor != null
-                                ? 'Write a reply...'
-                                : 'Respond to this signal...',
+                                ? context.l10n.signalWriteReplyHint
+                                : context.l10n.signalRespondToSignalHint,
                             hintStyle: TextStyle(color: context.textTertiary),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(
@@ -1054,7 +1067,7 @@ class _SignalDetailScreenState extends ConsumerState<SignalDetailScreen>
         topicId: 'signal_detail',
         stepKeys: const {},
         child: GlassScaffold(
-          title: 'Signal',
+          title: context.l10n.signalDetailTitle,
           actions: [
             IcoHelpAppBarButton(topicId: 'signal_detail'),
             _buildSignalMenu(context, signal),
@@ -1127,7 +1140,7 @@ class _SignalDetailScreenState extends ConsumerState<SignalDetailScreen>
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Conversation',
+                                    context.l10n.signalConversation,
                                     style: TextStyle(
                                       color: context.textPrimary,
                                       fontSize: 14,
@@ -1137,7 +1150,9 @@ class _SignalDetailScreenState extends ConsumerState<SignalDetailScreen>
                                   if (_comments != null &&
                                       _comments!.isNotEmpty)
                                     Text(
-                                      '${_comments!.length} ${_comments!.length == 1 ? 'comment' : 'comments'}',
+                                      context.l10n.signalCommentCount(
+                                        _comments!.length,
+                                      ),
                                       style: TextStyle(
                                         color: context.textTertiary,
                                         fontSize: 12,
@@ -1320,7 +1335,7 @@ class _ResponseTile extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        response.authorName ?? 'Anonymous',
+                        response.authorName ?? context.l10n.signalAnonymous,
                         style: TextStyle(
                           color: context.textPrimary,
                           fontSize: 13,
@@ -1341,7 +1356,7 @@ class _ResponseTile extends StatelessWidget {
                             ),
                           ),
                           child: Text(
-                            'you',
+                            context.l10n.signalYouBadge,
                             style: TextStyle(
                               color: context.accentColor,
                               fontSize: 9,
@@ -1352,7 +1367,7 @@ class _ResponseTile extends StatelessWidget {
                       ],
                       const SizedBox(width: AppTheme.spacing4),
                       Text(
-                        '· ${formatTimeAgo(response.createdAt)}',
+                        '· ${formatTimeAgo(response.createdAt, context.l10n)}',
                         style: TextStyle(
                           color: context.textTertiary,
                           fontSize: 12,
@@ -1426,8 +1441,10 @@ class _ResponseTile extends StatelessWidget {
                             const SizedBox(width: AppTheme.spacing4),
                             Text(
                               response.replyCount > 0
-                                  ? 'Reply (${response.replyCount})'
-                                  : 'Reply',
+                                  ? context.l10n.signalReplyWithCount(
+                                      response.replyCount,
+                                    )
+                                  : context.l10n.signalReplyAction,
                               style: TextStyle(
                                 color: context.textTertiary,
                                 fontSize: 12,

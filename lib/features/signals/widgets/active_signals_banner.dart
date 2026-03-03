@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/gradient_border_container.dart';
 
@@ -79,7 +80,7 @@ class _ActiveSignalsBannerState extends State<ActiveSignalsBanner>
             ),
             const SizedBox(width: AppTheme.spacing10),
             Text(
-              '${widget.count} ${widget.count == 1 ? "signal" : "signals"} active',
+              context.l10n.signalActiveCount(widget.count),
               style: TextStyle(
                 color: accentColor,
                 fontSize: 14,

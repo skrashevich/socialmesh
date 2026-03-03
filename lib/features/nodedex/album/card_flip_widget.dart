@@ -490,37 +490,40 @@ class _StatsSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _SectionLabel(text: 'ENCOUNTER LOG', scale: scale),
+        _SectionLabel(
+          text: context.l10n.nodedexEncounterLogLabel,
+          scale: scale,
+        ),
         SizedBox(height: AppTheme.spacing4 * scale),
         _StatRow(
-          label: 'Encounters',
+          label: context.l10n.nodedexEncountersStatLabel,
           value: '${entry.encounterCount}',
           scale: scale,
         ),
         _StatRow(
-          label: 'Messages',
+          label: context.l10n.nodedexMessagesStatLabel,
           value: '${entry.messageCount}',
           scale: scale,
         ),
         _StatRow(
-          label: 'First Seen',
+          label: context.l10n.nodedexFirstSeenStatLabel,
           value: dateFormat.format(entry.firstSeen),
           scale: scale,
         ),
         _StatRow(
-          label: 'Last Seen',
+          label: context.l10n.nodedexLastSeenStatLabel,
           value: dateFormat.format(entry.lastSeen),
           scale: scale,
         ),
         if (entry.maxDistanceSeen != null && entry.maxDistanceSeen! > 0)
           _StatRow(
-            label: 'Max Distance',
+            label: context.l10n.nodedexMaxDistanceStatLabel,
             value: _formatDistance(entry.maxDistanceSeen!),
             scale: scale,
           ),
         if (entry.bestSnr != null)
           _StatRow(
-            label: 'Best SNR',
+            label: context.l10n.nodedexBestSnrStatLabel,
             value: '${entry.bestSnr} dB',
             scale: scale,
           ),
@@ -549,7 +552,10 @@ class _TraitSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _SectionLabel(text: 'CLASSIFICATION', scale: scale),
+        _SectionLabel(
+          text: context.l10n.nodedexClassificationLabel,
+          scale: scale,
+        ),
         SizedBox(height: AppTheme.spacing4 * scale),
         Row(
           children: [
@@ -639,7 +645,7 @@ class _PatinaSection extends StatelessWidget {
       children: [
         Row(
           children: [
-            _SectionLabel(text: 'PATINA', scale: scale),
+            _SectionLabel(text: context.l10n.nodedexPatinaLabel, scale: scale),
             const Spacer(),
             Container(
               padding: EdgeInsets.symmetric(
@@ -664,37 +670,37 @@ class _PatinaSection extends StatelessWidget {
         ),
         SizedBox(height: AppTheme.spacing4 * scale),
         _PatinaAxis(
-          label: 'Tenure',
+          label: context.l10n.nodedexPatinaTenure,
           value: result.tenure,
           color: accentColor,
           scale: scale,
         ),
         _PatinaAxis(
-          label: 'Encounters',
+          label: context.l10n.nodedexPatinaEncounters,
           value: result.encounters,
           color: accentColor,
           scale: scale,
         ),
         _PatinaAxis(
-          label: 'Reach',
+          label: context.l10n.nodedexPatinaReach,
           value: result.reach,
           color: accentColor,
           scale: scale,
         ),
         _PatinaAxis(
-          label: 'Signal',
+          label: context.l10n.nodedexPatinaSignal,
           value: result.signalDepth,
           color: accentColor,
           scale: scale,
         ),
         _PatinaAxis(
-          label: 'Social',
+          label: context.l10n.nodedexPatinaSocial,
           value: result.social,
           color: accentColor,
           scale: scale,
         ),
         _PatinaAxis(
-          label: 'Recency',
+          label: context.l10n.nodedexPatinaRecency,
           value: result.recency,
           color: accentColor,
           scale: scale,
@@ -796,21 +802,21 @@ class _BottomSummary extends StatelessWidget {
         _CompactStat(
           icon: Icons.map_outlined,
           value: '${entry.regionCount}',
-          label: 'Regions',
+          label: context.l10n.nodedexRegionsCompactLabel,
           color: rarity.borderColor,
           scale: scale,
         ),
         _CompactStat(
           icon: Icons.people_outline,
           value: '${entry.coSeenCount}',
-          label: 'Co-seen',
+          label: context.l10n.nodedexCoSeenCompactLabel,
           color: rarity.borderColor,
           scale: scale,
         ),
         _CompactStat(
           icon: Icons.calendar_today_outlined,
           value: '${entry.age.inDays}',
-          label: 'Days',
+          label: context.l10n.nodedexDaysCompactLabel,
           color: rarity.borderColor,
           scale: scale,
         ),
@@ -880,7 +886,7 @@ class _BackFooter extends StatelessWidget {
         ),
         SizedBox(width: AppTheme.spacing4 * scale),
         Text(
-          'TAP TO FLIP',
+          context.l10n.nodedexTapToFlip,
           style: TextStyle(
             fontSize: 7.0 * scale,
             fontWeight: FontWeight.w600,

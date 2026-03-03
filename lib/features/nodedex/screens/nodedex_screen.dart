@@ -116,7 +116,7 @@ class _NodeDexScreenState extends ConsumerState<NodeDexScreen> {
         onTap: _dismissKeyboard,
         child: GlassScaffold(
           resizeToAvoidBottomInset: false,
-          title: 'NodeDex',
+          title: context.l10n.nodedexTitle,
           actions: [
             // View mode toggle (list ↔ album).
             _ViewModeToggle(
@@ -135,7 +135,7 @@ class _NodeDexScreenState extends ConsumerState<NodeDexScreen> {
             // Settings link
             IconButton(
               icon: const Icon(Icons.settings_outlined, size: 22),
-              tooltip: 'Settings',
+              tooltip: context.l10n.nodedexSettingsTooltip,
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute<void>(
@@ -242,7 +242,7 @@ class _NodeDexScreenState extends ConsumerState<NodeDexScreen> {
           textScaler: MediaQuery.textScalerOf(context),
           searchController: _searchController,
           searchQuery: _searchQuery,
-          hintText: 'Find a node',
+          hintText: context.l10n.nodedexSearchHint,
           onSearchChanged: (value) {
             setState(() => _searchQuery = value);
             ref.read(nodeDexSearchProvider.notifier).setQuery(value);
@@ -259,7 +259,7 @@ class _NodeDexScreenState extends ConsumerState<NodeDexScreen> {
           ]),
           filterChips: [
             StatusFilterChip(
-              label: 'All',
+              label: context.l10n.nodedexFilterAll,
               count: stats.totalNodes,
               isSelected: currentFilter == NodeDexFilter.all,
               onTap: () => ref
@@ -267,7 +267,7 @@ class _NodeDexScreenState extends ConsumerState<NodeDexScreen> {
                   .setFilter(NodeDexFilter.all),
             ),
             StatusFilterChip(
-              label: 'Tagged',
+              label: context.l10n.nodedexFilterTagged,
               count: _taggedCount(stats),
               isSelected: currentFilter == NodeDexFilter.tagged,
               color: AccentColors.yellow,
@@ -315,7 +315,7 @@ class _NodeDexScreenState extends ConsumerState<NodeDexScreen> {
                   .setFilter(NodeDexFilter.tagFrequentPeer),
             ),
             StatusFilterChip(
-              label: 'Recent',
+              label: context.l10n.nodedexFilterRecent,
               count: 0,
               isSelected: currentFilter == NodeDexFilter.recent,
               color: AccentColors.cyan,
@@ -398,7 +398,9 @@ class _NodeDexScreenState extends ConsumerState<NodeDexScreen> {
       ] else if (myEntry.isNotEmpty) ...[
         SliverPersistentHeader(
           pinned: true,
-          delegate: SectionHeaderDelegate(title: 'Your Device'),
+          delegate: SectionHeaderDelegate(
+            title: context.l10n.nodedexSectionYourDevice,
+          ),
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate((context, index) {
@@ -419,7 +421,7 @@ class _NodeDexScreenState extends ConsumerState<NodeDexScreen> {
         SliverPersistentHeader(
           pinned: true,
           delegate: SectionHeaderDelegate(
-            title: 'Discovered Nodes',
+            title: context.l10n.nodedexSectionDiscoveredNodes,
             count: otherEntries.length,
           ),
         ),
@@ -515,7 +517,9 @@ class _ViewModeToggle extends StatelessWidget {
           size: 22,
         ),
       ),
-      tooltip: isAlbumMode ? 'Switch to list view' : 'Switch to album view',
+      tooltip: isAlbumMode
+          ? context.l10n.nodedexSwitchToListView
+          : context.l10n.nodedexSwitchToAlbumView,
       onPressed: onToggle,
     );
   }
@@ -851,13 +855,14 @@ class _NodeDexSortButton extends StatelessWidget {
 
   const _NodeDexSortButton({required this.sortOrder, required this.onChanged});
 
-  String get _sortLabel {
+  String _localizedSortLabel(BuildContext context) {
+    final l10n = context.l10n;
     return switch (sortOrder) {
-      NodeDexSortOrder.lastSeen => 'Last Seen',
-      NodeDexSortOrder.firstSeen => 'Discovered',
-      NodeDexSortOrder.encounters => 'Encounters',
-      NodeDexSortOrder.distance => 'Range',
-      NodeDexSortOrder.name => 'Name',
+      NodeDexSortOrder.lastSeen => l10n.nodedexSortLastSeen,
+      NodeDexSortOrder.firstSeen => l10n.nodedexSortDiscovered,
+      NodeDexSortOrder.encounters => l10n.nodedexSortEncounters,
+      NodeDexSortOrder.distance => l10n.nodedexSortRange,
+      NodeDexSortOrder.name => l10n.nodedexSortName,
     };
   }
 
@@ -881,7 +886,7 @@ class _NodeDexSortButton extends StatelessWidget {
             Icon(Icons.sort, size: 14, color: context.textSecondary),
             const SizedBox(width: AppTheme.spacing4),
             Text(
-              _sortLabel,
+              _localizedSortLabel(context),
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
@@ -913,31 +918,31 @@ class _NodeDexSortButton extends StatelessWidget {
         _buildMenuItem(
           context,
           NodeDexSortOrder.lastSeen,
-          'Last Seen',
+          context.l10n.nodedexSortLastSeen,
           Icons.schedule,
         ),
         _buildMenuItem(
           context,
           NodeDexSortOrder.firstSeen,
-          'First Discovered',
+          context.l10n.nodedexSortFirstDiscovered,
           Icons.calendar_today_outlined,
         ),
         _buildMenuItem(
           context,
           NodeDexSortOrder.encounters,
-          'Most Encounters',
+          context.l10n.nodedexSortMostEncounters,
           Icons.repeat,
         ),
         _buildMenuItem(
           context,
           NodeDexSortOrder.distance,
-          'Longest Range',
+          context.l10n.nodedexSortLongestRange,
           Icons.straighten,
         ),
         _buildMenuItem(
           context,
           NodeDexSortOrder.name,
-          'Name',
+          context.l10n.nodedexSortName,
           Icons.sort_by_alpha,
         ),
       ],
@@ -1098,14 +1103,17 @@ class _NodeDexListTile extends ConsumerWidget {
                         _MetricChip(
                           icon: Icons.repeat,
                           value: entry.encounterCount.toString(),
-                          tooltip: '${entry.encounterCount} encounters',
+                          tooltip: context.l10n.nodedexEncountersCount(
+                            entry.encounterCount,
+                          ),
                         ),
                         if (entry.maxDistanceSeen != null)
                           _MetricChip(
                             icon: Icons.straighten,
                             value: _shortDistance(entry.maxDistanceSeen!),
-                            tooltip:
-                                'Max range: ${_shortDistance(entry.maxDistanceSeen!)}',
+                            tooltip: context.l10n.nodedexMaxRange(
+                              _shortDistance(entry.maxDistanceSeen!),
+                            ),
                           ),
                       ],
                     ),
@@ -1222,7 +1230,7 @@ class _DiscoveryAgeBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final age = DateTime.now().difference(entry.firstSeen);
-    final label = _ageLabel(age);
+    final label = _ageLabel(age, context);
 
     return Padding(
       padding: const EdgeInsets.only(top: 3),
@@ -1247,13 +1255,18 @@ class _DiscoveryAgeBadge extends StatelessWidget {
     );
   }
 
-  static String _ageLabel(Duration age) {
-    if (age.inHours < 24) return 'new today';
-    if (age.inDays == 1) return 'discovered yesterday';
-    if (age.inDays < 7) return 'discovered ${age.inDays}d ago';
-    if (age.inDays < 30) return 'discovered ${age.inDays ~/ 7}w ago';
-    if (age.inDays < 365) return 'discovered ${age.inDays ~/ 30}mo ago';
-    return 'discovered ${age.inDays ~/ 365}y ago';
+  static String _ageLabel(Duration age, BuildContext context) {
+    final l10n = context.l10n;
+    if (age.inHours < 24) return l10n.nodedexAgeNewToday;
+    if (age.inDays == 1) return l10n.nodedexAgeDiscoveredYesterday;
+    if (age.inDays < 7) return l10n.nodedexAgeDiscoveredDaysAgo(age.inDays);
+    if (age.inDays < 30) {
+      return l10n.nodedexAgeDiscoveredWeeksAgo(age.inDays ~/ 7);
+    }
+    if (age.inDays < 365) {
+      return l10n.nodedexAgeDiscoveredMonthsAgo(age.inDays ~/ 30);
+    }
+    return l10n.nodedexAgeDiscoveredYearsAgo(age.inDays ~/ 365);
   }
 }
 
@@ -1418,15 +1431,15 @@ class _EmptyState extends StatelessWidget {
             Icons.hub_outlined,
             Icons.person_search,
           ],
-          taglines: const [
-            'No nodes discovered yet.\nConnect to a mesh device to start building your field journal.',
-            'NodeDex catalogs every node you encounter.\nEach one gets a unique procedural identity.',
-            'Discover wanderers, sentinels, and ghosts.\nPersonality traits emerge from behavior patterns.',
-            'Tag nodes as contacts or trusted relays.\nBuild your mesh community over time.',
+          taglines: [
+            context.l10n.nodedexEmptyTagline1,
+            context.l10n.nodedexEmptyTagline2,
+            context.l10n.nodedexEmptyTagline3,
+            context.l10n.nodedexEmptyTagline4,
           ],
-          titlePrefix: 'Your ',
-          titleKeyword: 'NodeDex',
-          titleSuffix: ' is empty',
+          titlePrefix: context.l10n.nodedexEmptyTitlePrefix,
+          titleKeyword: context.l10n.nodedexEmptyTitleKeyword,
+          titleSuffix: context.l10n.nodedexEmptyTitleSuffix,
         ),
       );
     }
@@ -1435,63 +1448,63 @@ class _EmptyState extends StatelessWidget {
     final (icon, title, subtitle) = switch (filter) {
       NodeDexFilter.all => (
         Icons.hexagon_outlined,
-        'No nodes discovered yet',
-        'Connect to a Meshtastic device and nodes will appear here as they are discovered on the mesh.',
+        context.l10n.nodedexEmptyAllTitle,
+        context.l10n.nodedexEmptyAllSubtitle,
       ),
       NodeDexFilter.tagged => (
         Icons.label_outline,
-        'No tagged nodes',
-        'Long-press a node in the list to assign a social tag like Contact, Trusted Node, or Known Relay.',
+        context.l10n.nodedexEmptyTaggedTitle,
+        context.l10n.nodedexEmptyTaggedSubtitle,
       ),
       NodeDexFilter.tagContact => (
         Icons.person_outline,
-        'No contacts',
-        'Nodes you classify as Contact will appear here. Long-press a node to assign this tag.',
+        context.l10n.nodedexEmptyContactTitle,
+        context.l10n.nodedexEmptyContactSubtitle,
       ),
       NodeDexFilter.tagTrustedNode => (
         Icons.verified_user_outlined,
-        'No trusted nodes',
-        'Nodes you classify as Trusted Node will appear here. Long-press a node to assign this tag.',
+        context.l10n.nodedexEmptyTrustedNodeTitle,
+        context.l10n.nodedexEmptyTrustedNodeSubtitle,
       ),
       NodeDexFilter.tagKnownRelay => (
         Icons.cell_tower,
-        'No known relays',
-        'Nodes you classify as Known Relay will appear here. Long-press a node to assign this tag.',
+        context.l10n.nodedexEmptyKnownRelayTitle,
+        context.l10n.nodedexEmptyKnownRelaySubtitle,
       ),
       NodeDexFilter.tagFrequentPeer => (
         Icons.people_outline,
-        'No frequent peers',
-        'Nodes you classify as Frequent Peer will appear here. Long-press a node to assign this tag.',
+        context.l10n.nodedexEmptyFrequentPeerTitle,
+        context.l10n.nodedexEmptyFrequentPeerSubtitle,
       ),
       NodeDexFilter.recent => (
         Icons.schedule,
-        'No recent discoveries',
-        'Nodes discovered in the last 24 hours will appear here.',
+        context.l10n.nodedexEmptyRecentTitle,
+        context.l10n.nodedexEmptyRecentSubtitle,
       ),
       NodeDexFilter.wanderers => (
         Icons.explore_outlined,
-        'No wanderers found',
-        'Wanderers are nodes seen across multiple locations. They emerge over time as position data accumulates.',
+        context.l10n.nodedexEmptyWanderersTitle,
+        context.l10n.nodedexEmptyWanderersSubtitle,
       ),
       NodeDexFilter.beacons => (
         Icons.flare_outlined,
-        'No beacons found',
-        'Beacons are nodes with very high activity and frequent encounters. They take time to classify.',
+        context.l10n.nodedexEmptyBeaconsTitle,
+        context.l10n.nodedexEmptyBeaconsSubtitle,
       ),
       NodeDexFilter.ghosts => (
         Icons.visibility_off_outlined,
-        'No ghosts found',
-        'Ghosts are nodes that appear rarely relative to how long they have been known.',
+        context.l10n.nodedexEmptyGhostsTitle,
+        context.l10n.nodedexEmptyGhostsSubtitle,
       ),
       NodeDexFilter.sentinels => (
         Icons.shield_outlined,
-        'No sentinels found',
-        'Sentinels are long-lived, fixed-position nodes with reliable presence.',
+        context.l10n.nodedexEmptySentinelsTitle,
+        context.l10n.nodedexEmptySentinelsSubtitle,
       ),
       NodeDexFilter.relays => (
         Icons.swap_horiz,
-        'No relays found',
-        'Relays are nodes with router roles and active traffic forwarding.',
+        context.l10n.nodedexEmptyRelaysTitle,
+        context.l10n.nodedexEmptyRelaysSubtitle,
       ),
     };
 

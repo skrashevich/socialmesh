@@ -12,6 +12,7 @@ import '../../../providers/file_transfer_providers.dart';
 import '../../../providers/signal_providers.dart';
 import '../../../services/protocol/socialmesh/sm_constants.dart';
 import '../../../services/signal_service.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../utils/snackbar.dart';
 import '../../file_transfer/widgets/file_transfer_card.dart';
 import 'ttl_selector.dart';
@@ -57,6 +58,8 @@ class _SignalComposerState extends ConsumerState<SignalComposer>
     safeSetState(() => _isSubmitting = true);
 
     try {
+      final l10n = context.l10n;
+
       // Send file attachment if present.
       if (_hasAttachment) {
         final ctx = context;
@@ -68,7 +71,7 @@ class _SignalComposerState extends ConsumerState<SignalComposer>
         );
 
         if (transfer == null && ctx.mounted) {
-          showErrorSnackBar(ctx, 'File transfer failed to start');
+          showErrorSnackBar(ctx, l10n.signalFileTransferFailed);
           return;
         }
       }
@@ -95,6 +98,7 @@ class _SignalComposerState extends ConsumerState<SignalComposer>
   }
 
   Future<void> _pickFile() async {
+    final l10n = context.l10n;
     final result = await FilePicker.platform.pickFiles(
       type: FileType.any,
       withData: true,
@@ -113,8 +117,7 @@ class _SignalComposerState extends ConsumerState<SignalComposer>
       if (!mounted) return;
       showWarningSnackBar(
         context,
-        'File too large. Mesh transfer is limited to '
-        '${SmFileTransferLimits.maxFileSize ~/ 1024} KB.',
+        l10n.signalFileTooLarge(SmFileTransferLimits.maxFileSize ~/ 1024),
       );
       return;
     }
@@ -175,7 +178,7 @@ class _SignalComposerState extends ConsumerState<SignalComposer>
               style: TextStyle(color: context.textPrimary),
               textCapitalization: TextCapitalization.sentences,
               decoration: InputDecoration(
-                hintText: 'Send a signal...',
+                hintText: context.l10n.signalSendASignal,
                 hintStyle: TextStyle(color: context.textTertiary),
                 border: InputBorder.none,
                 isDense: true,
@@ -195,7 +198,7 @@ class _SignalComposerState extends ConsumerState<SignalComposer>
                   ? context.accentColor
                   : context.textTertiary,
             ),
-            tooltip: 'Attach file',
+            tooltip: context.l10n.signalAttachFile,
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(),
           ),
@@ -247,7 +250,7 @@ class _SignalComposerState extends ConsumerState<SignalComposer>
             inputFormatters: [LengthLimitingTextInputFormatter(140)],
             style: TextStyle(color: context.textPrimary),
             decoration: InputDecoration(
-              hintText: 'What are you signaling?',
+              hintText: context.l10n.signalWhatAreYouSignaling,
               hintStyle: TextStyle(color: context.textTertiary),
               border: InputBorder.none,
               contentPadding: EdgeInsets.zero,
@@ -259,7 +262,7 @@ class _SignalComposerState extends ConsumerState<SignalComposer>
 
           // TTL selector
           Text(
-            'Fades in',
+            context.l10n.signalFadesIn,
             style: TextStyle(
               color: context.textSecondary,
               fontSize: 11,
@@ -304,7 +307,7 @@ class _SignalComposerState extends ConsumerState<SignalComposer>
                       : context.accentColor,
                 ),
                 label: Text(
-                  'Attach file',
+                  context.l10n.signalAttachFile,
                   style: TextStyle(
                     color: _isSubmitting
                         ? context.textTertiary
@@ -324,7 +327,9 @@ class _SignalComposerState extends ConsumerState<SignalComposer>
               ),
               const Spacer(),
               Text(
-                'Max ${SmFileTransferLimits.maxFileSize ~/ 1024} KB',
+                context.l10n.signalMaxFileSize(
+                  SmFileTransferLimits.maxFileSize ~/ 1024,
+                ),
                 style: TextStyle(color: context.textTertiary, fontSize: 10),
               ),
             ],
@@ -356,7 +361,11 @@ class _SignalComposerState extends ConsumerState<SignalComposer>
                       ),
                     )
                   : const Icon(Icons.sensors, size: 18),
-              label: Text(_isSubmitting ? 'Sending...' : 'Send signal'),
+              label: Text(
+                _isSubmitting
+                    ? context.l10n.signalSendingLabel
+                    : context.l10n.signalSendSignal,
+              ),
             ),
           ),
         ],

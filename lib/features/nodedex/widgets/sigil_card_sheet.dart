@@ -31,6 +31,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/constants.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/logging.dart';
 import '../../nodes/node_display_name_resolver.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
@@ -142,7 +143,7 @@ class _SigilCardSheetContentState extends ConsumerState<_SigilCardSheetContent>
             Icon(Icons.auto_awesome, size: 18, color: rarity.borderColor),
             const SizedBox(width: AppTheme.spacing8),
             Text(
-              'Sigil Card',
+              context.l10n.nodedexSigilCardTitle,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
@@ -168,7 +169,7 @@ class _SigilCardSheetContentState extends ConsumerState<_SigilCardSheetContent>
                     ),
                   ),
                   child: Text(
-                    rarity.label,
+                    rarity.localizedLabel(context.l10n),
                     style: TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w700,
@@ -234,8 +235,8 @@ class _SigilCardSheetContentState extends ConsumerState<_SigilCardSheetContent>
             child: FilledButton.icon(
               onPressed: _shareCard,
               icon: const Icon(Icons.share_outlined, size: 18),
-              label: const Text(
-                'Share Sigil Card',
+              label: Text(
+                context.l10n.nodedexShareSigilCard,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
               ),
@@ -275,8 +276,8 @@ class _SigilCardSheetContentState extends ConsumerState<_SigilCardSheetContent>
               child: OutlinedButton.icon(
                 onPressed: _addToAppleWallet,
                 icon: const Icon(Icons.wallet, size: 18),
-                label: const Text(
-                  'Add to Apple Wallet',
+                label: Text(
+                  context.l10n.nodedexAddToAppleWallet,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                 ),
@@ -354,7 +355,7 @@ class _SigilCardSheetContentState extends ConsumerState<_SigilCardSheetContent>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Card Rarity',
+            context.l10n.nodedexCardRarityInfoTitle,
             style: TextStyle(
               color: context.textPrimary,
               fontSize: 20,
@@ -363,9 +364,7 @@ class _SigilCardSheetContentState extends ConsumerState<_SigilCardSheetContent>
           ),
           const SizedBox(height: AppTheme.spacing12),
           Text(
-            'A card\'s rarity reflects how often you\'ve encountered '
-            'this node on the mesh. The more you cross paths, the '
-            'rarer the card becomes.',
+            context.l10n.nodedexCardRarityInfoDescription,
             style: TextStyle(
               color: context.textSecondary,
               fontSize: 14,
@@ -373,22 +372,37 @@ class _SigilCardSheetContentState extends ConsumerState<_SigilCardSheetContent>
             ),
           ),
           const SizedBox(height: AppTheme.spacing16),
-          _buildRarityRow(CardRarity.common, 'Under 5 encounters'),
+          _buildRarityRow(
+            CardRarity.common,
+            context.l10n.nodedexCardRarityUnder5,
+          ),
           const SizedBox(height: AppTheme.spacing8),
-          _buildRarityRow(CardRarity.uncommon, '5 - 19 encounters'),
+          _buildRarityRow(
+            CardRarity.uncommon,
+            context.l10n.nodedexCardRarity5to19,
+          ),
           const SizedBox(height: AppTheme.spacing8),
-          _buildRarityRow(CardRarity.rare, '20 - 49 encounters'),
+          _buildRarityRow(
+            CardRarity.rare,
+            context.l10n.nodedexCardRarity20to49,
+          ),
           const SizedBox(height: AppTheme.spacing8),
-          _buildRarityRow(CardRarity.epic, '50 - 99 encounters'),
+          _buildRarityRow(
+            CardRarity.epic,
+            context.l10n.nodedexCardRarity50to99,
+          ),
           const SizedBox(height: AppTheme.spacing8),
-          _buildRarityRow(CardRarity.legendary, '100+ encounters'),
+          _buildRarityRow(
+            CardRarity.legendary,
+            context.l10n.nodedexCardRarity100plus,
+          ),
           const SizedBox(height: AppTheme.spacing24),
           SizedBox(
             width: double.infinity,
             child: FilledButton(
               onPressed: () => Navigator.pop(context),
               child: Text(
-                'Got it',
+                context.l10n.nodedexGotIt,
                 style: TextStyle(color: SemanticColors.onAccent),
               ),
             ),
@@ -420,7 +434,7 @@ class _SigilCardSheetContentState extends ConsumerState<_SigilCardSheetContent>
         ),
         const SizedBox(width: AppTheme.spacing10),
         Text(
-          tier.label,
+          tier.localizedLabel(context.l10n),
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w700,
@@ -471,7 +485,7 @@ class _SigilCardSheetContentState extends ConsumerState<_SigilCardSheetContent>
           'Share failed — card image capture returned null '
           'for node ${widget.entry.nodeNum}',
         );
-        showErrorSnackBar(context, 'Failed to capture card image');
+        showErrorSnackBar(context, context.l10n.nodedexShareCardImageFailed);
         return;
       }
 
@@ -491,11 +505,12 @@ class _SigilCardSheetContentState extends ConsumerState<_SigilCardSheetContent>
 
       if (!mounted) return;
 
+      final l10n = context.l10n;
       final shareLines = <String>[
-        'Check out the Sigil Card for ${widget.displayName} on Socialmesh!',
+        l10n.nodedexShareCardCheckOut(widget.displayName),
         if (webUrl != null) webUrl,
         '',
-        'Get Socialmesh:',
+        l10n.nodedexShareGetSocialmesh,
         'iOS: ${AppUrls.appStoreUrl}',
         'Android: ${AppUrls.playStoreUrl}',
       ];
@@ -525,7 +540,7 @@ class _SigilCardSheetContentState extends ConsumerState<_SigilCardSheetContent>
         'Share failed for node ${widget.entry.nodeNum}: $e\n$stack',
       );
       if (!mounted) return;
-      showErrorSnackBar(context, 'Could not share card');
+      showErrorSnackBar(context, context.l10n.nodedexShareCouldNotShare);
     } finally {
       if (mounted) {
         setState(() => _isSharing = false);
@@ -553,7 +568,7 @@ class _SigilCardSheetContentState extends ConsumerState<_SigilCardSheetContent>
       if (!mounted) return;
 
       if (sigilId == null) {
-        showErrorSnackBar(context, 'Could not publish sigil card');
+        showErrorSnackBar(context, context.l10n.nodedexWalletCouldNotPublish);
         return;
       }
 
@@ -573,14 +588,14 @@ class _SigilCardSheetContentState extends ConsumerState<_SigilCardSheetContent>
       );
 
       if (!launched && mounted) {
-        showErrorSnackBar(context, 'Could not open Apple Wallet');
+        showErrorSnackBar(context, context.l10n.nodedexWalletCouldNotOpen);
       }
     } catch (e, stack) {
       AppLogging.nodeDex(
         'Add to Wallet failed for node ${widget.entry.nodeNum}: $e\n$stack',
       );
       if (!mounted) return;
-      showErrorSnackBar(context, 'Could not add to Apple Wallet');
+      showErrorSnackBar(context, context.l10n.nodedexWalletCouldNotAdd);
     } finally {
       if (mounted) {
         setState(() => _isAddingToWallet = false);

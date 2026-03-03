@@ -401,7 +401,7 @@ class _ConfidenceDot extends StatelessWidget {
     }
 
     return Tooltip(
-      message: 'Confidence: $percentage%',
+      message: context.l10n.nodedexConfidenceTooltip(percentage),
       child: SizedBox(
         width: size,
         height: size,
@@ -430,7 +430,7 @@ class _ConfidenceBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Confidence',
+              context.l10n.nodedexConfidenceLabel,
               style: TextStyle(
                 fontSize: 10,
                 fontWeight: FontWeight.w500,
@@ -609,7 +609,7 @@ class SocialTagSelector extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: 12),
           child: Text(
-            'Classify Node',
+            context.l10n.nodedexClassifyNodeTitle,
             style: TextStyle(
               fontSize: 17,
               fontWeight: FontWeight.w700,
@@ -618,8 +618,7 @@ class SocialTagSelector extends StatelessWidget {
           ),
         ),
         Text(
-          'Assign a personal classification to this node. '
-          'This is only visible to you.',
+          context.l10n.nodedexClassifyNodeDescription,
           style: TextStyle(fontSize: 13, color: context.textSecondary),
         ),
         const SizedBox(height: AppTheme.spacing16),
@@ -668,10 +667,13 @@ class _SocialTagOption extends StatelessWidget {
     };
 
     final description = switch (tag) {
-      NodeSocialTag.contact => 'A person you communicate with',
-      NodeSocialTag.trustedNode => 'Verified infrastructure you trust',
-      NodeSocialTag.knownRelay => 'A node that forwards traffic reliably',
-      NodeSocialTag.frequentPeer => 'Regularly seen on the mesh',
+      NodeSocialTag.contact => context.l10n.nodedexSocialTagContactDescription,
+      NodeSocialTag.trustedNode =>
+        context.l10n.nodedexSocialTagTrustedNodeDescription,
+      NodeSocialTag.knownRelay =>
+        context.l10n.nodedexSocialTagKnownRelayDescription,
+      NodeSocialTag.frequentPeer =>
+        context.l10n.nodedexSocialTagFrequentPeerDescription,
     };
 
     return Padding(
@@ -774,7 +776,7 @@ class _ClearTagOption extends StatelessWidget {
               ),
               const SizedBox(width: AppTheme.spacing12),
               Text(
-                'Remove Classification',
+                context.l10n.nodedexRemoveClassification,
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,

@@ -3,6 +3,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:socialmesh/features/nodedex/models/nodedex_entry.dart';
 import 'package:socialmesh/features/nodedex/services/trust_score.dart';
+import 'package:socialmesh/l10n/app_localizations_en.dart';
 
 void main() {
   // Reference time for deterministic testing.
@@ -30,14 +31,16 @@ void main() {
 
   group('TrustLevel enum', () {
     test('all levels have display labels', () {
+      final l10n = AppLocalizationsEn();
       for (final level in TrustLevel.values) {
-        expect(level.displayLabel.isNotEmpty, isTrue);
+        expect(level.displayLabel(l10n).isNotEmpty, isTrue);
       }
     });
 
     test('all levels have descriptions', () {
+      final l10n = AppLocalizationsEn();
       for (final level in TrustLevel.values) {
-        expect(level.description.isNotEmpty, isTrue);
+        expect(level.description(l10n).isNotEmpty, isTrue);
       }
     });
 
@@ -370,7 +373,7 @@ void main() {
         ),
         now,
       );
-      expect(result.toString(), contains(result.level.displayLabel));
+      expect(result.toString(), contains(result.level.name));
       expect(result.toString(), contains('%'));
     });
   });

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../providers/auth_providers.dart';
 import '../../../providers/social_providers.dart';
@@ -39,9 +40,9 @@ class _SubscribeButtonState extends ConsumerState<SubscribeButton>
       return TextButton(
         onPressed: () => showSignInRequiredSnackBar(
           context,
-          'Sign in to manage subscriptions',
+          context.l10n.socialSignInSubscriptions,
         ),
-        child: const Text('Subscribe'),
+        child: Text(context.l10n.socialSubscribe),
       );
     }
 
@@ -71,7 +72,7 @@ class _SubscribeButtonState extends ConsumerState<SubscribeButton>
       error: (e, s) => TextButton(
         onPressed: () =>
             ref.invalidate(signalSubscriptionProvider(widget.authorId)),
-        child: const Text('Subscribe'),
+        child: Text(context.l10n.socialSubscribe),
       ),
     );
   }
@@ -102,7 +103,9 @@ class _SubscribeButtonState extends ConsumerState<SubscribeButton>
       return GestureDetector(
         onTap: _handleToggle,
         child: Tooltip(
-          message: isSubscribed ? 'Subscribed' : 'Subscribe',
+          message: isSubscribed
+              ? context.l10n.socialSubscribed
+              : context.l10n.socialSubscribe,
           child: Icon(
             isSubscribed ? Icons.check : Icons.notifications_active,
             size: 18,
@@ -115,18 +118,19 @@ class _SubscribeButtonState extends ConsumerState<SubscribeButton>
         ? OutlinedButton.icon(
             onPressed: _handleToggle,
             icon: const Icon(Icons.check, size: 18),
-            label: const Text('Subscribed'),
+            label: Text(context.l10n.socialSubscribed),
           )
         : FilledButton.icon(
             onPressed: _handleToggle,
             icon: const Icon(Icons.notifications_active, size: 18),
-            label: const Text('Subscribe'),
+            label: Text(context.l10n.socialSubscribe),
           );
   }
 
   Future<void> _handleToggle() async {
     final service = ref.read(socialServiceProvider);
     final queue = ref.read(mutationQueueProvider);
+    final l10n = context.l10n;
 
     // Determine current subscription state
     final isSubscribed = await service.isSubscribedToAuthorSignals(
@@ -151,7 +155,7 @@ class _SubscribeButtonState extends ConsumerState<SubscribeButton>
         commitApply: (_) {
           showInfoSnackBar(
             context,
-            isSubscribed ? 'Unsubscribed' : 'Subscribed',
+            isSubscribed ? l10n.socialUnsubscribed : l10n.socialSubscribed,
           );
           ref.invalidate(signalSubscriptionProvider(widget.authorId));
         },
@@ -164,7 +168,7 @@ class _SubscribeButtonState extends ConsumerState<SubscribeButton>
       );
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to update subscription: $e');
+        showErrorSnackBar(context, l10n.socialSubscriptionFailed(e.toString()));
       }
     } finally {
       safeSetState(() => _isToggling = false);

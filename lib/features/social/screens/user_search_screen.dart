@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../../../core/widgets/search_filter_header.dart';
@@ -64,7 +65,7 @@ class _UserSearchScreenState extends ConsumerState<UserSearchScreen> {
       },
       child: GlassScaffold(
         resizeToAvoidBottomInset: false,
-        title: 'Search',
+        title: context.l10n.socialSearchTitle,
         slivers: [
           // Pinned search header
           SliverPersistentHeader(
@@ -73,7 +74,7 @@ class _UserSearchScreenState extends ConsumerState<UserSearchScreen> {
               searchController: _searchController,
               searchQuery: _searchQuery,
               onSearchChanged: _onSearchChanged,
-              hintText: 'Search users...',
+              hintText: context.l10n.socialSearchHint,
               focusNode: _searchFocusNode,
               textScaler: MediaQuery.textScalerOf(context),
             ),
@@ -104,7 +105,7 @@ class _SuggestionsView extends ConsumerWidget {
       children: [
         // Suggested users section
         Text(
-          'Suggested for you',
+          context.l10n.socialSuggestedForYou,
           style: theme.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.bold,
           ),
@@ -116,7 +117,7 @@ class _SuggestionsView extends ConsumerWidget {
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Text(
-                  'No suggestions available',
+                  context.l10n.socialNoSuggestions,
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: theme.textTheme.bodyMedium?.color?.withAlpha(150),
                   ),
@@ -139,7 +140,7 @@ class _SuggestionsView extends ConsumerWidget {
           error: (_, _) => Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
             child: Text(
-              'Failed to load suggestions',
+              context.l10n.socialSuggestionsFailed,
               style: TextStyle(color: theme.colorScheme.error),
             ),
           ),
@@ -149,7 +150,7 @@ class _SuggestionsView extends ConsumerWidget {
 
         // Recently active section
         Text(
-          'Recently active',
+          context.l10n.socialRecentlyActive,
           style: theme.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.bold,
           ),
@@ -161,7 +162,7 @@ class _SuggestionsView extends ConsumerWidget {
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Text(
-                  'No recent activity',
+                  context.l10n.socialNoRecentActivity,
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: theme.textTheme.bodyMedium?.color?.withAlpha(150),
                   ),
@@ -184,7 +185,7 @@ class _SuggestionsView extends ConsumerWidget {
           error: (_, _) => Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
             child: Text(
-              'Failed to load recent users',
+              context.l10n.socialRecentFailed,
               style: TextStyle(color: theme.colorScheme.error),
             ),
           ),
@@ -221,14 +222,14 @@ class _SearchResultsView extends ConsumerWidget {
                 ),
                 const SizedBox(height: AppTheme.spacing16),
                 Text(
-                  'No users found',
+                  context.l10n.socialNoUsersFound,
                   style: theme.textTheme.bodyLarge?.copyWith(
                     color: theme.textTheme.bodyLarge?.color?.withAlpha(150),
                   ),
                 ),
                 const SizedBox(height: AppTheme.spacing8),
                 Text(
-                  'Try a different search term',
+                  context.l10n.socialTryDifferentSearch,
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: theme.textTheme.bodyMedium?.color?.withAlpha(100),
                   ),
@@ -264,11 +265,11 @@ class _SearchResultsView extends ConsumerWidget {
           children: [
             const Icon(Icons.error_outline, size: 48),
             const SizedBox(height: AppTheme.spacing16),
-            Text('Search failed: $error'),
+            Text(context.l10n.socialSearchFailed(error.toString())),
             const SizedBox(height: AppTheme.spacing16),
             FilledButton(
               onPressed: () => ref.invalidate(userSearchProvider(query)),
-              child: const Text('Retry'),
+              child: Text(context.l10n.socialRetry),
             ),
           ],
         ),

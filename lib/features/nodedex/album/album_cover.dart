@@ -534,7 +534,7 @@ class _StatsGrid extends StatelessWidget {
         Expanded(
           child: _StatCell(
             value: _compactNumber(progress.totalNodes),
-            label: 'NODES',
+            label: context.l10n.nodedexStatsNodes,
             icon: Icons.hexagon_outlined,
           ),
         ),
@@ -542,7 +542,7 @@ class _StatsGrid extends StatelessWidget {
         Expanded(
           child: _StatCell(
             value: _compactNumber(progress.totalEncounters),
-            label: 'ENCOUNTERS',
+            label: context.l10n.nodedexStatsEncounters,
             icon: Icons.remove_red_eye_outlined,
           ),
         ),
@@ -550,7 +550,7 @@ class _StatsGrid extends StatelessWidget {
         Expanded(
           child: _StatCell(
             value: '${progress.totalRegions}',
-            label: 'REGIONS',
+            label: context.l10n.nodedexStatsRegions,
             icon: Icons.map_outlined,
           ),
         ),
@@ -558,7 +558,7 @@ class _StatsGrid extends StatelessWidget {
         Expanded(
           child: _StatCell(
             value: '${progress.daysExploring}',
-            label: 'DAYS',
+            label: context.l10n.nodedexStatsDays,
             icon: Icons.calendar_today_outlined,
           ),
         ),
@@ -783,7 +783,7 @@ class _TraitCompletionRow extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'TRAIT COLLECTION',
+              context.l10n.nodedexTraitCollectionLabel,
               style: TextStyle(
                 fontSize: 9,
                 fontWeight: FontWeight.w700,

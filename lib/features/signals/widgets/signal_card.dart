@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:socialmesh/features/settings/account_subscriptions_screen.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/safety/safe_image.dart';
 import '../../../core/theme.dart';
 import '../../../core/logging.dart';
@@ -152,7 +153,7 @@ class _SignalHeader extends ConsumerWidget {
 
     // Get author info — mesh identity (Sigil + node name) takes priority
     // so the card looks the same as what receivers see on their devices.
-    String authorName = 'Anonymous';
+    String authorName = context.l10n.signalAnonymous;
     String? authorShortName;
     String? avatarUrl;
     Color avatarColor = context.accentColor;
@@ -232,7 +233,7 @@ class _SignalHeader extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(AppTheme.radius4),
                         ),
                         child: Text(
-                          'you',
+                          context.l10n.signalYouBadge,
                           style: TextStyle(
                             color: AccentColors.yellow,
                             fontSize: 10,
@@ -273,7 +274,7 @@ class _SignalHeader extends ConsumerWidget {
                       ),
                     ],
                     Text(
-                      formatActiveTime(signal.createdAt),
+                      formatActiveTime(signal.createdAt, context.l10n),
                       style: TextStyle(
                         color: context.textTertiary,
                         fontSize: 12,
@@ -336,7 +337,7 @@ class _SignalHeader extends ConsumerWidget {
                         ),
                         const SizedBox(width: AppTheme.spacing12),
                         Text(
-                          'Delete',
+                          context.l10n.signalDelete,
                           style: TextStyle(color: context.textPrimary),
                         ),
                       ],
@@ -354,7 +355,7 @@ class _SignalHeader extends ConsumerWidget {
                         ),
                         const SizedBox(width: AppTheme.spacing12),
                         Text(
-                          'Report',
+                          context.l10n.signalReport,
                           style: TextStyle(color: context.textPrimary),
                         ),
                       ],
@@ -678,7 +679,9 @@ class _SignalImage extends ConsumerWidget {
                 ),
                 const SizedBox(width: AppTheme.spacing5),
                 Text(
-                  isCloud ? 'Cloud' : 'Local',
+                  isCloud
+                      ? context.l10n.signalCloudBadge
+                      : context.l10n.signalLocalBadge,
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 11,
@@ -749,7 +752,7 @@ class _SignalImage extends ConsumerWidget {
             Icon(Icons.image, size: 32, color: context.accentColor),
             const SizedBox(height: AppTheme.spacing8),
             Text(
-              'Sign in to view attached media',
+              context.l10n.signalSignInToViewMedia,
               style: TextStyle(
                 color: context.textSecondary,
                 fontSize: 14,
@@ -767,7 +770,7 @@ class _SignalImage extends ConsumerWidget {
                   fontSize: 14,
                 ),
               ),
-              child: const Text('Sign in'),
+              child: Text(context.l10n.signalSignIn),
             ),
           ],
         ),
@@ -820,7 +823,7 @@ class _SignalImage extends ConsumerWidget {
                       ],
                     ).createShader(bounds),
                     child: Text(
-                      'Syncing media',
+                      context.l10n.signalSyncingMedia,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 14,
@@ -945,7 +948,7 @@ class _SignalLocation extends StatelessWidget {
               const SizedBox(width: AppTheme.spacing6),
               Flexible(
                 child: Text(
-                  signal.location!.name ?? 'View Location',
+                  signal.location!.name ?? context.l10n.signalViewLocation,
                   style: TextStyle(
                     color: context.accentColor,
                     fontSize: 12,

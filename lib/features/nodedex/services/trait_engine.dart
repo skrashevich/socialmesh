@@ -26,6 +26,8 @@
 // - infer() — returns a single primary + optional secondary (legacy)
 // - inferAll() — returns all scored traits with evidence lines
 
+import 'package:socialmesh/l10n/app_localizations.dart';
+
 import '../models/nodedex_entry.dart';
 
 /// A single piece of evidence supporting a trait score.
@@ -100,9 +102,9 @@ class TraitResult {
 
   @override
   String toString() =>
-      'TraitResult(${primary.displayLabel} @ '
+      'TraitResult(${primary.name} @ '
       '${(confidence * 100).toStringAsFixed(0)}%'
-      '${secondary != null ? ', secondary: ${secondary!.displayLabel}' : ''})';
+      '${secondary != null ? ', secondary: ${secondary!.name}' : ''})';
 }
 
 /// Pure-function engine that infers personality traits from node data.
@@ -229,15 +231,18 @@ class TraitEngine {
     double? channelUtilization,
     double? airUtilTx,
     double minConfidence = 0.1,
+    AppLocalizations? l10n,
   }) {
     if (!_hasEnoughData(entry)) {
-      return const [
+      return [
         ScoredTrait(
           trait: NodeTrait.unknown,
           confidence: 1.0,
           evidence: [
             TraitEvidence(
-              observation: 'Insufficient data to classify',
+              observation:
+                  l10n?.nodedexEvidenceInsufficientData ??
+                  'Insufficient data to classify',
               weight: 1.0,
             ),
           ],
@@ -246,14 +251,14 @@ class TraitEngine {
     }
 
     final scored = <ScoredTrait>[
-      _scoreRelayWithEvidence(entry, role, channelUtilization, airUtilTx),
-      _scoreWandererWithEvidence(entry),
-      _scoreSentinelWithEvidence(entry, uptimeSeconds),
-      _scoreBeaconWithEvidence(entry),
-      _scoreGhostWithEvidence(entry),
-      _scoreCourierWithEvidence(entry),
-      _scoreAnchorWithEvidence(entry),
-      _scoreDrifterWithEvidence(entry),
+      _scoreRelayWithEvidence(entry, role, channelUtilization, airUtilTx, l10n),
+      _scoreWandererWithEvidence(entry, l10n),
+      _scoreSentinelWithEvidence(entry, uptimeSeconds, l10n),
+      _scoreBeaconWithEvidence(entry, l10n),
+      _scoreGhostWithEvidence(entry, l10n),
+      _scoreCourierWithEvidence(entry, l10n),
+      _scoreAnchorWithEvidence(entry, l10n),
+      _scoreDrifterWithEvidence(entry, l10n),
     ];
 
     // Filter by minimum confidence and sort descending.
@@ -604,6 +609,7 @@ class TraitEngine {
     String? role,
     double? channelUtilization,
     double? airUtilTx,
+    AppLocalizations? l10n,
   ) {
     final evidence = <TraitEvidence>[];
     double score = 0.0;
@@ -612,17 +618,24 @@ class TraitEngine {
       final s = 0.6;
       score += s;
       evidence.add(
-        TraitEvidence(observation: 'Role is ${role.toUpperCase()}', weight: s),
+        TraitEvidence(
+          observation:
+              l10n?.nodedexEvidenceRoleIs(role.toUpperCase()) ??
+              'Role is ${role.toUpperCase()}',
+          weight: s,
+        ),
       );
     }
 
     if (channelUtilization != null && channelUtilization > 10.0) {
       final s = 0.2 * (channelUtilization / 50.0).clamp(0.0, 1.0);
       score += s;
+      final pct = channelUtilization.toStringAsFixed(0);
       evidence.add(
         TraitEvidence(
           observation:
-              'Channel utilization ${channelUtilization.toStringAsFixed(0)}%',
+              l10n?.nodedexEvidenceChannelUtilization(pct) ??
+              'Channel utilization $pct%',
           weight: s,
         ),
       );
@@ -631,9 +644,11 @@ class TraitEngine {
     if (airUtilTx != null && airUtilTx > 5.0) {
       final s = 0.2 * (airUtilTx / 30.0).clamp(0.0, 1.0);
       score += s;
+      final pct = airUtilTx.toStringAsFixed(1);
       evidence.add(
         TraitEvidence(
-          observation: 'Airtime TX ${airUtilTx.toStringAsFixed(1)}%',
+          observation:
+              l10n?.nodedexEvidenceAirtimeTx(pct) ?? 'Airtime TX $pct%',
           weight: s,
         ),
       );
@@ -642,8 +657,10 @@ class TraitEngine {
     if (entry.encounterCount > 20) {
       score += 0.1;
       evidence.add(
-        const TraitEvidence(
-          observation: 'High encounter count (20+)',
+        TraitEvidence(
+          observation:
+              l10n?.nodedexEvidenceHighEncounterCount ??
+              'High encounter count (20+)',
           weight: 0.1,
         ),
       );
@@ -656,7 +673,10 @@ class TraitEngine {
     );
   }
 
-  static ScoredTrait _scoreWandererWithEvidence(NodeDexEntry entry) {
+  static ScoredTrait _scoreWandererWithEvidence(
+    NodeDexEntry entry,
+    AppLocalizations? l10n,
+  ) {
     final evidence = <TraitEvidence>[];
     double score = 0.0;
 
@@ -666,7 +686,9 @@ class TraitEngine {
       score += s;
       evidence.add(
         TraitEvidence(
-          observation: 'Observed at $positionCount distinct positions',
+          observation:
+              l10n?.nodedexEvidenceDistinctPositions(positionCount) ??
+              'Observed at $positionCount distinct positions',
           weight: s,
         ),
       );
@@ -677,7 +699,9 @@ class TraitEngine {
       score += s;
       evidence.add(
         TraitEvidence(
-          observation: 'Seen across ${entry.regionCount} regions',
+          observation:
+              l10n?.nodedexEvidenceSeenAcrossRegions(entry.regionCount) ??
+              'Seen across ${entry.regionCount} regions',
           weight: s,
         ),
       );
@@ -687,7 +711,12 @@ class TraitEngine {
       final s = 0.1 * (entry.maxDistanceSeen! / 50000.0).clamp(0.0, 1.0);
       score += s;
       final km = (entry.maxDistanceSeen! / 1000).toStringAsFixed(1);
-      evidence.add(TraitEvidence(observation: 'Max range ${km}km', weight: s));
+      evidence.add(
+        TraitEvidence(
+          observation: l10n?.nodedexEvidenceMaxRange(km) ?? 'Max range ${km}km',
+          weight: s,
+        ),
+      );
     }
 
     return ScoredTrait(
@@ -700,6 +729,7 @@ class TraitEngine {
   static ScoredTrait _scoreSentinelWithEvidence(
     NodeDexEntry entry,
     int? uptimeSeconds,
+    AppLocalizations? l10n,
   ) {
     final evidence = <TraitEvidence>[];
     double score = 0.0;
@@ -708,8 +738,10 @@ class TraitEngine {
     if (positionCount <= 1) {
       score += 0.3;
       evidence.add(
-        const TraitEvidence(
-          observation: 'Fixed position (single location)',
+        TraitEvidence(
+          observation:
+              l10n?.nodedexEvidenceFixedPosition ??
+              'Fixed position (single location)',
           weight: 0.3,
         ),
       );
@@ -720,7 +752,9 @@ class TraitEngine {
       score += s;
       evidence.add(
         TraitEvidence(
-          observation: 'Known for ${entry.age.inDays} days',
+          observation:
+              l10n?.nodedexEvidenceKnownForDays(entry.age.inDays) ??
+              'Known for ${entry.age.inDays} days',
           weight: s,
         ),
       );
@@ -731,9 +765,12 @@ class TraitEngine {
       if (encounterRate >= 1.0) {
         final s = 0.2 * (encounterRate / 5.0).clamp(0.0, 1.0);
         score += s;
+        final rateStr = encounterRate.toStringAsFixed(1);
         evidence.add(
           TraitEvidence(
-            observation: '${encounterRate.toStringAsFixed(1)} encounters/day',
+            observation:
+                l10n?.nodedexEvidenceEncounterRate(rateStr) ??
+                '$rateStr encounters/day',
             weight: s,
           ),
         );
@@ -744,7 +781,14 @@ class TraitEngine {
       final days = (uptimeSeconds / 86400.0).toStringAsFixed(1);
       final s = 0.2 * (uptimeSeconds / (7 * 86400.0)).clamp(0.0, 1.0);
       score += s;
-      evidence.add(TraitEvidence(observation: 'Uptime ${days}d', weight: s));
+      final uptimeDays = (uptimeSeconds / 86400.0).round();
+      evidence.add(
+        TraitEvidence(
+          observation:
+              l10n?.nodedexEvidenceUptime(uptimeDays) ?? 'Uptime ${days}d',
+          weight: s,
+        ),
+      );
     }
 
     return ScoredTrait(
@@ -754,7 +798,10 @@ class TraitEngine {
     );
   }
 
-  static ScoredTrait _scoreBeaconWithEvidence(NodeDexEntry entry) {
+  static ScoredTrait _scoreBeaconWithEvidence(
+    NodeDexEntry entry,
+    AppLocalizations? l10n,
+  ) {
     final evidence = <TraitEvidence>[];
     double score = 0.0;
 
@@ -763,9 +810,12 @@ class TraitEngine {
     if (encounterRate >= _beaconEncounterRateThreshold) {
       final s = 0.7 * (encounterRate / 20.0).clamp(0.0, 1.0);
       score += s;
+      final rateStr = encounterRate.toStringAsFixed(1);
       evidence.add(
         TraitEvidence(
-          observation: '${encounterRate.toStringAsFixed(1)} encounters/day',
+          observation:
+              l10n?.nodedexEvidenceEncounterRate(rateStr) ??
+              '$rateStr encounters/day',
           weight: s,
         ),
       );
@@ -773,10 +823,12 @@ class TraitEngine {
       final s =
           0.3 * (encounterRate / _beaconEncounterRateThreshold).clamp(0.0, 1.0);
       score += s;
+      final rateStr = encounterRate.toStringAsFixed(1);
       evidence.add(
         TraitEvidence(
           observation:
-              'Moderate encounter rate (${encounterRate.toStringAsFixed(1)}/day)',
+              l10n?.nodedexEvidenceModerateEncounterRate(rateStr) ??
+              'Moderate encounter rate ($rateStr/day)',
           weight: s,
         ),
       );
@@ -785,8 +837,10 @@ class TraitEngine {
     if (entry.timeSinceLastSeen.inMinutes < 60) {
       score += 0.15;
       evidence.add(
-        const TraitEvidence(
-          observation: 'Active within the last hour',
+        TraitEvidence(
+          observation:
+              l10n?.nodedexEvidenceActiveLastHour ??
+              'Active within the last hour',
           weight: 0.15,
         ),
       );
@@ -796,7 +850,9 @@ class TraitEngine {
       score += 0.15;
       evidence.add(
         TraitEvidence(
-          observation: '${entry.encounterCount} total encounters',
+          observation:
+              l10n?.nodedexEvidenceTotalEncounters(entry.encounterCount) ??
+              '${entry.encounterCount} total encounters',
           weight: 0.15,
         ),
       );
@@ -809,7 +865,10 @@ class TraitEngine {
     );
   }
 
-  static ScoredTrait _scoreGhostWithEvidence(NodeDexEntry entry) {
+  static ScoredTrait _scoreGhostWithEvidence(
+    NodeDexEntry entry,
+    AppLocalizations? l10n,
+  ) {
     final evidence = <TraitEvidence>[];
     double score = 0.0;
 
@@ -827,9 +886,12 @@ class TraitEngine {
             1.0,
           );
       score += s;
+      final rateStr = encounterRate.toStringAsFixed(2);
       evidence.add(
         TraitEvidence(
-          observation: 'Encounter rate ${encounterRate.toStringAsFixed(2)}/day',
+          observation:
+              l10n?.nodedexEvidenceEncounterRateLow(rateStr) ??
+              'Encounter rate $rateStr/day',
           weight: s,
         ),
       );
@@ -839,9 +901,14 @@ class TraitEngine {
       final s =
           0.2 * (entry.timeSinceLastSeen.inHours / (7 * 24.0)).clamp(0.0, 1.0);
       score += s;
-      final days = (entry.timeSinceLastSeen.inHours / 24.0).toStringAsFixed(1);
+      final days = (entry.timeSinceLastSeen.inHours / 24.0).round();
       evidence.add(
-        TraitEvidence(observation: 'Last seen ${days}d ago', weight: s),
+        TraitEvidence(
+          observation:
+              l10n?.nodedexEvidenceLastSeenDaysAgo(days) ??
+              'Last seen ${days}d ago',
+          weight: s,
+        ),
       );
     }
 
@@ -850,6 +917,10 @@ class TraitEngine {
       evidence.add(
         TraitEvidence(
           observation:
+              l10n?.nodedexEvidenceFewEncountersOverDays(
+                entry.encounterCount,
+                entry.age.inDays,
+              ) ??
               'Only ${entry.encounterCount} encounters over ${entry.age.inDays} days',
           weight: 0.2,
         ),
@@ -863,7 +934,10 @@ class TraitEngine {
     );
   }
 
-  static ScoredTrait _scoreCourierWithEvidence(NodeDexEntry entry) {
+  static ScoredTrait _scoreCourierWithEvidence(
+    NodeDexEntry entry,
+    AppLocalizations? l10n,
+  ) {
     final evidence = <TraitEvidence>[];
     double score = 0.0;
 
@@ -875,20 +949,24 @@ class TraitEngine {
     if (messageRatio >= 2.0) {
       final s = 0.5 * (messageRatio / 10.0).clamp(0.0, 1.0);
       score += s;
+      final ratioStr = messageRatio.toStringAsFixed(1);
       evidence.add(
         TraitEvidence(
           observation:
-              '${messageRatio.toStringAsFixed(1)} messages per encounter',
+              l10n?.nodedexEvidenceMessagesPerEncounter(ratioStr) ??
+              '$ratioStr messages per encounter',
           weight: s,
         ),
       );
     } else if (messageRatio >= 0.5) {
       final s = 0.2 * (messageRatio / 2.0).clamp(0.0, 1.0);
       score += s;
+      final ratioStr = messageRatio.toStringAsFixed(1);
       evidence.add(
         TraitEvidence(
           observation:
-              '${messageRatio.toStringAsFixed(1)} messages per encounter',
+              l10n?.nodedexEvidenceMessagesPerEncounter(ratioStr) ??
+              '$ratioStr messages per encounter',
           weight: s,
         ),
       );
@@ -899,7 +977,9 @@ class TraitEngine {
       score += s;
       evidence.add(
         TraitEvidence(
-          observation: '${entry.messageCount} messages exchanged',
+          observation:
+              l10n?.nodedexEvidenceMessagesExchanged(entry.messageCount) ??
+              '${entry.messageCount} messages exchanged',
           weight: s,
         ),
       );
@@ -908,8 +988,10 @@ class TraitEngine {
     if (entry.distinctPositionCount >= 2 && entry.messageCount >= 5) {
       score += 0.2;
       evidence.add(
-        const TraitEvidence(
-          observation: 'Mobile with active messaging',
+        TraitEvidence(
+          observation:
+              l10n?.nodedexEvidenceMobileWithMessaging ??
+              'Mobile with active messaging',
           weight: 0.2,
         ),
       );
@@ -922,7 +1004,10 @@ class TraitEngine {
     );
   }
 
-  static ScoredTrait _scoreAnchorWithEvidence(NodeDexEntry entry) {
+  static ScoredTrait _scoreAnchorWithEvidence(
+    NodeDexEntry entry,
+    AppLocalizations? l10n,
+  ) {
     final evidence = <TraitEvidence>[];
     double score = 0.0;
 
@@ -931,7 +1016,9 @@ class TraitEngine {
       score += s;
       evidence.add(
         TraitEvidence(
-          observation: 'Co-seen with ${entry.coSeenCount} nodes',
+          observation:
+              l10n?.nodedexEvidenceCoSeenWith(entry.coSeenCount) ??
+              'Co-seen with ${entry.coSeenCount} nodes',
           weight: s,
         ),
       );
@@ -940,7 +1027,9 @@ class TraitEngine {
       score += s;
       evidence.add(
         TraitEvidence(
-          observation: 'Co-seen with ${entry.coSeenCount} nodes',
+          observation:
+              l10n?.nodedexEvidenceCoSeenWith(entry.coSeenCount) ??
+              'Co-seen with ${entry.coSeenCount} nodes',
           weight: s,
         ),
       );
@@ -951,7 +1040,9 @@ class TraitEngine {
       score += s;
       evidence.add(
         TraitEvidence(
-          observation: 'Persistent presence (${entry.age.inDays} days)',
+          observation:
+              l10n?.nodedexEvidencePersistentPresence(entry.age.inDays) ??
+              'Persistent presence (${entry.age.inDays} days)',
           weight: s,
         ),
       );
@@ -960,7 +1051,10 @@ class TraitEngine {
     if (entry.distinctPositionCount <= 1) {
       score += 0.15;
       evidence.add(
-        const TraitEvidence(observation: 'Fixed location', weight: 0.15),
+        TraitEvidence(
+          observation: l10n?.nodedexEvidenceFixedLocation ?? 'Fixed location',
+          weight: 0.15,
+        ),
       );
     }
 
@@ -969,7 +1063,9 @@ class TraitEngine {
       score += s;
       evidence.add(
         TraitEvidence(
-          observation: '${entry.encounterCount} encounters (reliable)',
+          observation:
+              l10n?.nodedexEvidenceEncountersReliable(entry.encounterCount) ??
+              '${entry.encounterCount} encounters (reliable)',
           weight: s,
         ),
       );
@@ -982,7 +1078,10 @@ class TraitEngine {
     );
   }
 
-  static ScoredTrait _scoreDrifterWithEvidence(NodeDexEntry entry) {
+  static ScoredTrait _scoreDrifterWithEvidence(
+    NodeDexEntry entry,
+    AppLocalizations? l10n,
+  ) {
     final evidence = <TraitEvidence>[];
     double score = 0.0;
 
@@ -1016,7 +1115,9 @@ class TraitEngine {
           score += s;
           evidence.add(
             TraitEvidence(
-              observation: 'Irregular timing (CV ${cv.toStringAsFixed(1)})',
+              observation:
+                  l10n?.nodedexEvidenceIrregularTiming(cv.toStringAsFixed(1)) ??
+                  'Irregular timing (CV ${cv.toStringAsFixed(1)})',
               weight: s,
             ),
           );
@@ -1026,6 +1127,9 @@ class TraitEngine {
           evidence.add(
             TraitEvidence(
               observation:
+                  l10n?.nodedexEvidenceSomewhatIrregularTiming(
+                    cv.toStringAsFixed(1),
+                  ) ??
                   'Somewhat irregular timing (CV ${cv.toStringAsFixed(1)})',
               weight: s,
             ),
@@ -1044,6 +1148,9 @@ class TraitEngine {
         evidence.add(
           TraitEvidence(
             observation:
+                l10n?.nodedexEvidenceModerateEncounterRate(
+                  encounterRate.toStringAsFixed(1),
+                ) ??
                 'Moderate encounter rate (${encounterRate.toStringAsFixed(1)}/day)',
             weight: 0.3,
           ),
@@ -1055,7 +1162,11 @@ class TraitEngine {
         score += 0.2;
         evidence.add(
           TraitEvidence(
-            observation: '${entry.distinctPositionCount} positions observed',
+            observation:
+                l10n?.nodedexEvidencePositionsObserved(
+                  entry.distinctPositionCount,
+                ) ??
+                '${entry.distinctPositionCount} positions observed',
             weight: 0.2,
           ),
         );

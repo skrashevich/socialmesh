@@ -29,6 +29,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/logging.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/glass_scaffold.dart';
@@ -206,25 +207,35 @@ class _ConstellationScreenState extends ConsumerState<ConstellationScreen>
       child: GlassScaffold.body(
         resizeToAvoidBottomInset: false,
         physics: const NeverScrollableScrollPhysics(),
-        title: 'Constellation',
+        title: context.l10n.nodedexConstellationTitle,
         actions: [
           if (constellation.nodeCount > 0) ...[
             // Search
             IconButton(
               icon: Icon(_searchOpen ? Icons.close : Icons.search, size: 20),
-              tooltip: _searchOpen ? 'Close search' : 'Search nodes',
+              tooltip: _searchOpen
+                  ? context.l10n.nodedexConstellationCloseSearch
+                  : context.l10n.nodedexConstellationSearchNodes,
               onPressed: _toggleSearch,
             ),
             // Density cycle
             IconButton(
               icon: Icon(_edgeDensity.icon, size: 20),
-              tooltip: 'Edge density: ${_edgeDensity.label}',
+              tooltip: context.l10n.nodedexEdgeDensityTooltip(
+                switch (_edgeDensity) {
+                  EdgeDensity.none => context.l10n.nodedexDensityStars,
+                  EdgeDensity.sparse => context.l10n.nodedexDensitySparse,
+                  EdgeDensity.normal => context.l10n.nodedexDensityNormal,
+                  EdgeDensity.dense => context.l10n.nodedexDensityDense,
+                  EdgeDensity.all => context.l10n.nodedexDensityAll,
+                },
+              ),
               onPressed: _cycleDensity,
             ),
             // Reset view
             IconButton(
               icon: const Icon(Icons.center_focus_strong_outlined, size: 20),
-              tooltip: 'Reset view',
+              tooltip: context.l10n.nodedexResetViewTooltip,
               onPressed: _resetView,
             ),
           ],
@@ -482,7 +493,7 @@ class _ConstellationScreenState extends ConsumerState<ConstellationScreen>
             ),
             const SizedBox(height: AppTheme.spacing24),
             Text(
-              'No Constellation Yet',
+              context.l10n.nodedexConstellationEmptyTitle,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
@@ -492,8 +503,7 @@ class _ConstellationScreenState extends ConsumerState<ConstellationScreen>
             ),
             const SizedBox(height: AppTheme.spacing12),
             Text(
-              'Discover more nodes to see how they connect.\n'
-              'Nodes seen together form constellation links.',
+              context.l10n.nodedexConstellationEmptySubtitle,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 13,
@@ -1054,7 +1064,7 @@ class _ConstellationSearchBarState extends State<_ConstellationSearchBar> {
           color: context.textPrimary,
         ),
         decoration: InputDecoration(
-          hintText: 'Search by name or node ID\u2026',
+          hintText: context.l10n.nodedexConstellationSearchHint,
           hintStyle: TextStyle(
             fontSize: 14,
             fontFamily: AppTheme.fontFamily,

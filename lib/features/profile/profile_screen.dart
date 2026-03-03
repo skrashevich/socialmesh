@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/safety/error_handler.dart';
 import '../../core/theme.dart';
@@ -64,18 +65,18 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
       topicId: 'profile_overview',
       stepKeys: const {},
       child: GlassScaffold(
-        title: 'Profile',
+        title: context.l10n.profileTitle,
         leading: canPop ? const BackButton() : const HamburgerMenuButton(),
         centerTitle: true,
         actions: [
           IconButton(
             icon: const Icon(Icons.edit_outlined),
-            tooltip: 'Edit Profile',
+            tooltip: context.l10n.profileEditTooltip,
             onPressed: () => _showEditSheet(context),
           ),
           IconButton(
             icon: const Icon(Icons.help_outline),
-            tooltip: 'Help',
+            tooltip: context.l10n.profileHelpTooltip,
             onPressed: () =>
                 ref.read(helpProvider.notifier).startTour('profile_overview'),
           ),
@@ -188,7 +189,7 @@ class _EmptyProfileView extends ConsumerWidget {
           const SizedBox(height: AppTheme.spacing24),
 
           Text(
-            'Set up your profile',
+            context.l10n.profileSetup,
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -199,7 +200,7 @@ class _EmptyProfileView extends ConsumerWidget {
           const SizedBox(height: AppTheme.spacing8),
 
           Text(
-            'Add your name, photo, and bio to personalize your mesh presence.',
+            context.l10n.profileSetupDesc,
             style: TextStyle(
               fontSize: 14,
               color: context.textSecondary,
@@ -213,7 +214,7 @@ class _EmptyProfileView extends ConsumerWidget {
           FilledButton.icon(
             onPressed: onEditTap,
             icon: const Icon(Icons.edit),
-            label: const Text('Create Profile'),
+            label: Text(context.l10n.profileCreate),
             style: FilledButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
             ),
@@ -339,18 +340,18 @@ class _ProfileView extends ConsumerWidget {
 
                 // Info cards
                 _ProfileInfoCard(
-                  title: 'Details',
+                  title: context.l10n.profileDetailsSection,
                   items: [
                     if (profile.email != null)
                       _InfoItem(
                         icon: Icons.email_outlined,
-                        label: 'Email',
+                        label: context.l10n.profileEmailLabel,
                         value: profile.email!,
                       ),
                     if (user != null)
                       _InfoItem(
                         icon: Icons.fingerprint,
-                        label: 'UID',
+                        label: context.l10n.profileUidLabel,
                         value: user!.uid,
                         copyable: true,
                       ),
@@ -358,7 +359,7 @@ class _ProfileView extends ConsumerWidget {
                     if (isSignedIn)
                       _InfoItem(
                         icon: Icons.calendar_today_outlined,
-                        label: 'Member since',
+                        label: context.l10n.profileMemberSince,
                         value: _formatDate(profile.createdAt),
                       ),
                   ],
@@ -368,42 +369,42 @@ class _ProfileView extends ConsumerWidget {
                 if (profile.website != null ||
                     profile.socialLinks?.isEmpty == false) ...[
                   _ProfileInfoCard(
-                    title: 'Links',
+                    title: context.l10n.profileLinksSection,
                     items: [
                       if (profile.website != null)
                         _InfoItem(
                           icon: Icons.link,
-                          label: 'Website',
+                          label: context.l10n.profileWebsiteLabel,
                           value: profile.website!,
                         ),
                       if (profile.socialLinks?.twitter != null)
                         _InfoItem(
                           icon: Icons.alternate_email,
-                          label: 'Twitter',
+                          label: context.l10n.profileTwitterLabel,
                           value: '@${profile.socialLinks!.twitter}',
                         ),
                       if (profile.socialLinks?.mastodon != null)
                         _InfoItem(
                           icon: Icons.tag,
-                          label: 'Mastodon',
+                          label: context.l10n.profileMastodonLabel,
                           value: profile.socialLinks!.mastodon!,
                         ),
                       if (profile.socialLinks?.github != null)
                         _InfoItem(
                           icon: Icons.code,
-                          label: 'GitHub',
+                          label: context.l10n.profileGitHubLabel,
                           value: profile.socialLinks!.github!,
                         ),
                       if (profile.socialLinks?.discord != null)
                         _InfoItem(
                           icon: Icons.discord,
-                          label: 'Discord',
+                          label: context.l10n.profileDiscordLabel,
                           value: profile.socialLinks!.discord!,
                         ),
                       if (profile.socialLinks?.telegram != null)
                         _InfoItem(
                           icon: Icons.send,
-                          label: 'Telegram',
+                          label: context.l10n.profileTelegramLabel,
                           value: profile.socialLinks!.telegram!,
                         ),
                     ],
@@ -418,7 +419,7 @@ class _ProfileView extends ConsumerWidget {
                   child: OutlinedButton.icon(
                     onPressed: onEditTap,
                     icon: const Icon(Icons.edit),
-                    label: const Text('Edit Profile'),
+                    label: Text(context.l10n.profileEditButton),
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 12),
                     ),
@@ -484,14 +485,15 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection>
 
   String _getBackupStatusText() {
     if (!isSignedIn) {
-      return 'Not backed up';
+      return context.l10n.profileNotBackedUp;
     }
     final syncStatus = ref.watch(syncStatusProvider);
     return switch (syncStatus) {
-      SyncStatus.syncing => 'Syncing...',
-      SyncStatus.error => 'Sync error • Tap to retry',
-      SyncStatus.synced ||
-      SyncStatus.idle => 'Synced • ${widget.user!.email ?? 'Connected'}',
+      SyncStatus.syncing => context.l10n.profileSyncing,
+      SyncStatus.error => context.l10n.profileSyncError,
+      SyncStatus.synced || SyncStatus.idle => context.l10n.profileSynced(
+        widget.user!.email ?? 'Connected',
+      ),
     };
   }
 
@@ -522,7 +524,7 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection>
     return Row(
       children: [
         Text(
-          'Linked accounts',
+          context.l10n.profileLinkedAccounts,
           style: context.bodySmallStyle?.copyWith(color: context.textSecondary),
         ),
         const SizedBox(width: AppTheme.spacing12),
@@ -588,7 +590,7 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Cloud Backup',
+                          context.l10n.profileCloudBackup,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -647,7 +649,7 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection>
           Divider(color: context.border),
           SizedBox(height: AppTheme.spacing12),
           Text(
-            'Sign in to backup your profile to the cloud and sync across devices.',
+            context.l10n.profileSignInDesc,
             style: TextStyle(
               fontSize: 13,
               color: context.textSecondary,
@@ -660,7 +662,7 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection>
           _SocialSignInButton(
             onPressed: _isSigningIn ? null : () => _signInWithGoogle(context),
             icon: _GoogleLogo(),
-            label: 'Continue with Google',
+            label: context.l10n.profileContinueGoogle,
             backgroundColor: Colors.white,
             textColor: Colors.black87,
             isLoading: _isSigningIn,
@@ -672,7 +674,7 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection>
             _SocialSignInButton(
               onPressed: _isSigningIn ? null : () => _signInWithApple(context),
               icon: const Icon(Icons.apple, color: Colors.white, size: 22),
-              label: 'Continue with Apple',
+              label: context.l10n.profileContinueApple,
               backgroundColor: Colors.black,
               textColor: Colors.white,
               isLoading: _isSigningIn,
@@ -684,7 +686,7 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection>
           _SocialSignInButton(
             onPressed: _isSigningIn ? null : () => _signInWithGitHub(context),
             icon: _GitHubLogo(),
-            label: 'Continue with GitHub',
+            label: context.l10n.profileContinueGitHub,
             backgroundColor: const Color(0xFF24292F),
             textColor: Colors.white,
             isLoading: _isSigningIn,
@@ -728,7 +730,7 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection>
           // Sign out
           _AccountOptionTile(
             icon: Icons.logout,
-            label: 'Sign Out',
+            label: context.l10n.profileSignOut,
             onTap: () => _signOut(context),
           ),
 
@@ -736,7 +738,7 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection>
           const SizedBox(height: AppTheme.spacing8),
           _AccountOptionTile(
             icon: Icons.delete_outline,
-            label: 'Delete Account',
+            label: context.l10n.profileDeleteAccount,
             isDestructive: true,
             onTap: () => _deleteAccount(context),
           ),
@@ -751,18 +753,14 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection>
     final isOnline = ref.read(isOnlineProvider);
     if (!isOnline) {
       AppLogging.auth('[ProfileScreen] Sign-in blocked — offline');
-      showErrorSnackBar(context, 'Sign-in requires an internet connection.');
+      showErrorSnackBar(context, context.l10n.profileSignInRequiresInternet);
       return null;
     }
     final isReady =
         ref.read(firebaseReadyProvider).whenOrNull(data: (v) => v) ?? false;
     if (!isReady) {
       AppLogging.auth('Firebase not ready — sign-in blocked');
-      showErrorSnackBar(
-        context,
-        'Unable to connect to sign-in services. '
-        'Check your internet connection and try again.',
-      );
+      showErrorSnackBar(context, context.l10n.profileSignInServicesUnavailable);
       return null;
     }
     return ref.read(authServiceProvider);
@@ -776,7 +774,7 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection>
       if (authService == null) return;
       final credential = await authService.signInWithGoogle();
       if (context.mounted && credential.user != null) {
-        showSuccessSnackBar(context, 'Signed in with Google');
+        showSuccessSnackBar(context, context.l10n.profileSignedInGoogle);
         // Trigger auto-sync after sign-in
         await triggerManualSync(ref);
       }
@@ -788,7 +786,7 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection>
       }
     } catch (e) {
       if (context.mounted) {
-        showErrorSnackBar(context, 'Sign in failed');
+        showErrorSnackBar(context, context.l10n.profileSignInFailed);
       }
     } finally {
       if (mounted) setState(() => _isSigningIn = false);
@@ -803,7 +801,7 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection>
       if (authService == null) return;
       final credential = await authService.signInWithApple();
       if (context.mounted && credential.user != null) {
-        showSuccessSnackBar(context, 'Signed in with Apple');
+        showSuccessSnackBar(context, context.l10n.profileSignedInApple);
         // Trigger auto-sync after sign-in
         await triggerManualSync(ref);
       }
@@ -829,7 +827,7 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection>
       if (authService == null) return;
       final credential = await authService.signInWithGitHub();
       if (context.mounted && credential.user != null) {
-        showSuccessSnackBar(context, 'Signed in with GitHub');
+        showSuccessSnackBar(context, context.l10n.profileSignedInGitHub);
         // Trigger auto-sync after sign-in
         await triggerManualSync(ref);
       }
@@ -870,7 +868,7 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection>
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'Link GitHub Account',
+            context.l10n.profileLinkGitHub,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -879,8 +877,7 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection>
           ),
           const SizedBox(height: AppTheme.spacing12),
           Text(
-            'An account with ${e.email} already exists using $providerName.\n\n'
-            'Sign in with $providerName to link your GitHub account?',
+            context.l10n.profileLinkGitHubMsg(e.email, providerName),
             textAlign: TextAlign.center,
             style: TextStyle(color: context.textSecondary),
           ),
@@ -910,7 +907,9 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection>
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
                   ),
-                  child: Text('Sign in with $providerName'),
+                  child: Text(
+                    context.l10n.profileSignInWithProvider(providerName),
+                  ),
                 ),
               ),
             ],
@@ -934,12 +933,12 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection>
         await authService.linkPendingCredential(e.pendingCredential);
 
         if (context.mounted) {
-          showSuccessSnackBar(context, 'GitHub account linked successfully!');
+          showSuccessSnackBar(context, context.l10n.profileGitHubLinked);
           await triggerManualSync(ref);
         }
       } catch (linkError) {
         if (context.mounted) {
-          showErrorSnackBar(context, 'Failed to link accounts');
+          showErrorSnackBar(context, context.l10n.profileLinkFailed);
           AppLogging.auth('Account linking error: $linkError');
         }
       }
@@ -949,43 +948,43 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection>
   /// Convert raw sync error strings into user-friendly messages.
   /// Never expose internal error class names or field names to users.
   String _friendlySyncError(String? error) {
-    if (error == null) return 'Sync failed';
+    if (error == null) return context.l10n.profileSyncFailed;
     if (error.contains('LateInitializationError') ||
         error.contains('has not been initialized')) {
-      return 'Cloud services starting up — try again shortly';
+      return context.l10n.profileCloudStartingUp;
     }
     if (error.contains('unavailable') || error.contains('UNAVAILABLE')) {
-      return 'Cloud sync temporarily unavailable';
+      return context.l10n.profileSyncTempUnavailable2;
     }
     if (error.contains('permission') || error.contains('PERMISSION')) {
-      return 'Sync permission denied';
+      return context.l10n.profileSyncPermissionDenied;
     }
     if (error.contains('network') ||
         error.contains('connection') ||
         error.contains('SocketException')) {
-      return 'No internet connection';
+      return context.l10n.profileNoInternet;
     }
     if (error.contains('timeout') || error.contains('TimeoutException')) {
-      return 'Sync timed out — try again';
+      return context.l10n.profileSyncTimedOut;
     }
-    return 'Sync temporarily unavailable';
+    return context.l10n.profileSyncTempUnavailable;
   }
 
   Future<void> _retrySyncNow(BuildContext context) async {
     final isOnline = ref.read(isOnlineProvider);
     if (!isOnline) {
       AppLogging.auth('[ProfileScreen] Retry sync blocked — offline');
-      showErrorSnackBar(context, 'Syncing requires an internet connection.');
+      showErrorSnackBar(context, context.l10n.profileSyncRequiresInternet);
       return;
     }
     try {
       await triggerManualSync(ref);
       if (context.mounted) {
-        showSuccessSnackBar(context, 'Profile synced!');
+        showSuccessSnackBar(context, context.l10n.profileSynced2);
       }
     } catch (e) {
       if (context.mounted) {
-        showErrorSnackBar(context, 'Sync failed');
+        showErrorSnackBar(context, context.l10n.profileSyncFailed);
       }
     }
   }
@@ -994,18 +993,15 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection>
     final isOnline = ref.read(isOnlineProvider);
     if (!isOnline) {
       AppLogging.auth('[ProfileScreen] Sign out blocked — offline');
-      showErrorSnackBar(
-        context,
-        'Signing out requires an internet connection.',
-      );
+      showErrorSnackBar(context, context.l10n.profileSignOutRequiresInternet);
       return;
     }
 
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Sign Out',
-      message: 'Are you sure you want to sign out?',
-      confirmLabel: 'Sign Out',
+      title: context.l10n.profileSignOut,
+      message: context.l10n.profileSignOutConfirm,
+      confirmLabel: context.l10n.profileSignOut,
     );
 
     if (confirmed == true && context.mounted) {
@@ -1026,18 +1022,14 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection>
     final isOnline = ref.read(isOnlineProvider);
     if (!isOnline) {
       AppLogging.auth('[ProfileScreen] Delete account blocked — offline');
-      showErrorSnackBar(
-        context,
-        'Deleting your account requires an internet connection.',
-      );
+      showErrorSnackBar(context, context.l10n.profileDeleteRequiresInternet);
       return;
     }
 
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Delete Account',
-      message:
-          'This will permanently delete your account and all associated data. This action cannot be undone.',
+      title: context.l10n.profileDeleteAccount,
+      message: context.l10n.profileDeleteConfirmMsg,
       confirmLabel: 'Delete',
       isDestructive: true,
     );
@@ -1056,7 +1048,7 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection>
             const SizedBox(width: AppTheme.spacing20),
             Expanded(
               child: Text(
-                'Deleting account...',
+                context.l10n.profileDeletingAccount,
                 style: TextStyle(color: context.textPrimary),
               ),
             ),
@@ -1140,10 +1132,7 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection>
     } catch (e) {
       if (context.mounted) {
         Navigator.pop(context); // dismiss progress dialog
-        showErrorSnackBar(
-          context,
-          'Deletion failed. Please try again or contact support.',
-        );
+        showErrorSnackBar(context, context.l10n.profileDeletionFailed);
       }
     }
   }
@@ -1390,7 +1379,7 @@ class _SocialSignInButton extends StatelessWidget {
                   icon,
                 const SizedBox(width: AppTheme.spacing12),
                 Text(
-                  isLoading ? 'Signing in...' : label,
+                  isLoading ? context.l10n.profileSigningIn : label,
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w500,
@@ -1415,13 +1404,13 @@ class _SyncErrorBanner extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // Parse error to show user-friendly message
-    String message = 'Sync temporarily unavailable';
+    String message = context.l10n.profileSyncTempUnavailable;
     if (error.contains('unavailable')) {
-      message = 'Cloud sync temporarily unavailable';
+      message = context.l10n.profileSyncTempUnavailable2;
     } else if (error.contains('permission')) {
-      message = 'Sync permission denied';
+      message = context.l10n.profileSyncPermissionDenied;
     } else if (error.contains('network') || error.contains('connection')) {
-      message = 'No internet connection';
+      message = context.l10n.profileNoInternet;
     }
 
     return Container(
@@ -1814,7 +1803,7 @@ class _ProfileInfoCard extends StatelessWidget {
           Clipboard.setData(ClipboardData(text: item.value));
           showInfoSnackBar(
             context,
-            '${item.label} copied to clipboard',
+            context.l10n.profileCopiedToClipboard(item.label),
             duration: const Duration(seconds: 2),
           );
         },

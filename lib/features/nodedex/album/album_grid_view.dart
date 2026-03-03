@@ -135,7 +135,15 @@ List<Widget> buildAlbumSlivers({
           pinned: true,
           delegate: AlbumPageHeaderDelegate(
             title: page.nodeTrait != null
-                ? '${page.nodeTrait!.displayLabel(context.l10n)} Nodes'
+                ? context.l10n.nodedexTraitNodesPageTitle(
+                    page.nodeTrait!.displayLabel(context.l10n),
+                  )
+                : grouping == AlbumGrouping.byRarity
+                ? context.l10n.nodedexRarityCardsPageTitle(
+                    _localizedRarityLabel(page.groupKey, context),
+                  )
+                : page.title == 'Unknown Region'
+                ? context.l10n.nodedexUnknownRegion
                 : page.title,
             groupKey: page.groupKey,
             count: page.filledCount,
@@ -239,7 +247,7 @@ class _GroupingSelector extends StatelessWidget {
         children: [
           // Label
           Text(
-            'GROUP BY',
+            context.l10n.nodedexGroupByLabel,
             style: TextStyle(
               fontSize: 9,
               fontWeight: FontWeight.w700,
@@ -286,11 +294,11 @@ class _GroupingChip extends StatelessWidget {
     required this.onTap,
   });
 
-  String get _label {
+  String _localizedLabel(BuildContext context) {
     return switch (grouping) {
-      AlbumGrouping.byTrait => 'Trait',
-      AlbumGrouping.byRarity => 'Rarity',
-      AlbumGrouping.byRegion => 'Region',
+      AlbumGrouping.byTrait => context.l10n.nodedexGroupByTrait,
+      AlbumGrouping.byRarity => context.l10n.nodedexGroupByRarity,
+      AlbumGrouping.byRegion => context.l10n.nodedexGroupByRegion,
     };
   }
 
@@ -336,7 +344,7 @@ class _GroupingChip extends StatelessWidget {
             ),
             const SizedBox(width: AppTheme.spacing5),
             Text(
-              _label,
+              _localizedLabel(context),
               style: TextStyle(
                 fontSize: 11,
                 fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
@@ -349,6 +357,22 @@ class _GroupingChip extends StatelessWidget {
       ),
     );
   }
+}
+
+// =============================================================================
+// Localized rarity label
+// =============================================================================
+
+/// Maps a rarity group key to its localized display label.
+String _localizedRarityLabel(String groupKey, BuildContext context) {
+  return switch (groupKey) {
+    'legendary' => context.l10n.nodedexCardRarityLegendary,
+    'epic' => context.l10n.nodedexCardRarityEpic,
+    'rare' => context.l10n.nodedexCardRarityRare,
+    'uncommon' => context.l10n.nodedexCardRarityUncommon,
+    'common' => context.l10n.nodedexCardRarityStandard,
+    _ => groupKey,
+  };
 }
 
 // =============================================================================
@@ -497,7 +521,7 @@ class _EmptyAlbumState extends StatelessWidget {
             ),
             const SizedBox(height: AppTheme.spacing16),
             Text(
-              'No cards yet',
+              context.l10n.nodedexEmptyAlbumTitle,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
@@ -506,7 +530,7 @@ class _EmptyAlbumState extends StatelessWidget {
             ),
             const SizedBox(height: AppTheme.spacing8),
             Text(
-              'Connect to a mesh device and discover nodes\nto start building your collection',
+              context.l10n.nodedexEmptyAlbumDescription,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 13,
@@ -520,10 +544,13 @@ class _EmptyAlbumState extends StatelessWidget {
               children: [
                 _HintChip(
                   icon: Icons.bluetooth_searching,
-                  label: 'Scan for devices',
+                  label: context.l10n.nodedexEmptyAlbumHintScan,
                 ),
                 const SizedBox(width: AppTheme.spacing12),
-                _HintChip(icon: Icons.explore_outlined, label: 'Move around'),
+                _HintChip(
+                  icon: Icons.explore_outlined,
+                  label: context.l10n.nodedexEmptyAlbumHintMove,
+                ),
               ],
             ),
           ],

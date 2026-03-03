@@ -17,6 +17,8 @@
 // This ensures visual variety across nodes while maintaining
 // determinism within each node's identity.
 
+import 'package:socialmesh/l10n/app_localizations.dart';
+
 import '../models/nodedex_entry.dart';
 import 'sigil_generator.dart';
 
@@ -27,108 +29,8 @@ import 'sigil_generator.dart';
 class FieldNoteGenerator {
   FieldNoteGenerator._();
 
-  // ---------------------------------------------------------------------------
-  // Template families — grouped by trait
-  // ---------------------------------------------------------------------------
-
-  static const List<String> _wandererTemplates = [
-    'Recorded across {regions} regions. No fixed bearing.',
-    'Passes through without settling. {positions} positions logged.',
-    'Transient signal. Observed moving through {regions} zones.',
-    'Migratory pattern suspected. Range up to {distance}.',
-    'Appears at different coordinates each session.',
-    'No anchor point detected. Drift confirmed across {regions} regions.',
-    'Logged at {positions} positions. Path unclear.',
-    'Signal origin shifts between sessions.',
-  ];
-
-  static const List<String> _beaconTemplates = [
-    'Steady signal. {rate} sightings per day.',
-    'Persistent presence on the mesh. Always broadcasting.',
-    'Reliable and consistent. Last heard {lastSeen}.',
-    'High availability. {encounters} encounters recorded.',
-    'Continuous operation confirmed. Signal rarely drops.',
-    'Always-on presence. Dependable reference point.',
-    'Broadcasting consistently. {rate} daily observations.',
-    'Fixed rhythm. Predictable timing across sessions.',
-  ];
-
-  static const List<String> _ghostTemplates = [
-    'Rarely observed. Last confirmed sighting {lastSeen}.',
-    'Elusive. {encounters} encounters over {age} days.',
-    'Signal appears briefly then vanishes. Pattern unknown.',
-    'Intermittent trace only. Insufficient data for profile.',
-    'Faint and sporadic. Presence cannot be relied upon.',
-    'Appears without warning. Disappears without trace.',
-    'Low encounter density. Behavior difficult to classify.',
-    'Detected at the margins. Observation window narrow.',
-  ];
-
-  static const List<String> _sentinelTemplates = [
-    'Fixed position. Monitoring for {age} days.',
-    'Stationary installation. Signal consistent and strong.',
-    'Guardian presence. {encounters} observations from one location.',
-    'Long-lived post. First observed {firstSeen}.',
-    'No position variance. Infrastructure signature confirmed.',
-    'Holding position. Reliable since first contact.',
-    'Static deployment. Best signal {snr} dB SNR.',
-    'Permanent fixture. Observed continuously for {age} days.',
-  ];
-
-  static const List<String> _relayTemplates = [
-    'Forwarding traffic. Router role confirmed.',
-    'Active relay node. Channel utilization elevated.',
-    'Infrastructure role: traffic forwarding observed.',
-    'Router signature detected. High airtime usage.',
-    'Mesh backbone element. Facilitates connectivity.',
-    'Relay behavior consistent across {encounters} sessions.',
-    'Traffic handler. Forwarding pattern stable.',
-    'Network infrastructure. Routing confirmed by role.',
-  ];
-
-  static const List<String> _courierTemplates = [
-    'High message volume. {messages} messages across {encounters} encounters.',
-    'Data carrier. Message-to-encounter ratio elevated.',
-    'Active in message exchange. Courier behavior likely.',
-    'Carries data between mesh segments. {messages} messages logged.',
-    'Message density suggests deliberate data transport.',
-    'Communication-heavy node. {messages} exchanges recorded.',
-    'Frequent messenger. Moves data across the network.',
-    'Delivery pattern observed. Messages outpace encounters.',
-  ];
-
-  static const List<String> _anchorTemplates = [
-    'Hub node. Co-seen with {coSeen} other nodes.',
-    'Social center of local mesh. Many connections.',
-    'Persistent hub. {coSeen} nodes observed in proximity.',
-    'Anchor point for nearby nodes. Fixed and well-connected.',
-    'Central to local topology. High co-seen density.',
-    'Gravitational center. Other nodes cluster around this one.',
-    'Infrastructure anchor. {coSeen} peers linked.',
-    'Mesh nexus. Stable presence with broad connectivity.',
-  ];
-
-  static const List<String> _drifterTemplates = [
-    'Timing unpredictable. Appears and fades without pattern.',
-    'Irregular intervals between sightings.',
-    'No consistent schedule. Drift behavior confirmed.',
-    'Appears sporadically but not rarely. Timing erratic.',
-    'Signal comes and goes. No rhythm detected.',
-    'Present but unreliable. Intervals vary widely.',
-    'Observation timing scattered. No periodicity found.',
-    'Intermittent but active. Schedule defies prediction.',
-  ];
-
-  static const List<String> _unknownTemplates = [
-    'Recently discovered. Observation in progress.',
-    'New contact. Insufficient data for classification.',
-    'First logged {firstSeen}. Awaiting further signals.',
-    'Identity recorded. Behavioral profile pending.',
-    'Initial entry. More encounters needed for assessment.',
-    'Cataloged. No behavioral pattern yet established.',
-    'Signal acknowledged. Classification deferred.',
-    'Entry created. Monitoring initiated.',
-  ];
+  /// Number of templates available per trait.
+  static const int _templatesPerTrait = 8;
 
   // ---------------------------------------------------------------------------
   // Public API
@@ -141,133 +43,260 @@ class FieldNoteGenerator {
   ///
   /// [entry] — the NodeDex entry with encounter history.
   /// [trait] — the primary inferred trait for template selection.
+  /// [l10n] — localization strings for the current locale.
   ///
   /// Returns a non-empty string. Always deterministic.
   static String generate({
     required NodeDexEntry entry,
     required NodeTrait trait,
+    required AppLocalizations l10n,
   }) {
-    final templates = _templatesForTrait(trait);
-
     // Use the sigil hash to deterministically pick a template index.
     // This ensures the same node always gets the same template.
     final hash = SigilGenerator.mix(entry.nodeNum);
-    final templateIndex = _extractBits(hash, 0, 16) % templates.length;
-    final template = templates[templateIndex];
+    final templateIndex = _extractBits(hash, 0, 16) % _templatesPerTrait;
 
-    return _fillTemplate(template, entry);
+    return _noteForTrait(trait, templateIndex, l10n, entry);
   }
 
   // ---------------------------------------------------------------------------
-  // Template selection
+  // Per-trait localized note selection
   // ---------------------------------------------------------------------------
 
-  static List<String> _templatesForTrait(NodeTrait trait) {
+  static String _noteForTrait(
+    NodeTrait trait,
+    int index,
+    AppLocalizations l10n,
+    NodeDexEntry entry,
+  ) {
     return switch (trait) {
-      NodeTrait.wanderer => _wandererTemplates,
-      NodeTrait.beacon => _beaconTemplates,
-      NodeTrait.ghost => _ghostTemplates,
-      NodeTrait.sentinel => _sentinelTemplates,
-      NodeTrait.relay => _relayTemplates,
-      NodeTrait.courier => _courierTemplates,
-      NodeTrait.anchor => _anchorTemplates,
-      NodeTrait.drifter => _drifterTemplates,
-      NodeTrait.unknown => _unknownTemplates,
+      NodeTrait.wanderer => _wandererNote(index, l10n, entry),
+      NodeTrait.beacon => _beaconNote(index, l10n, entry),
+      NodeTrait.ghost => _ghostNote(index, l10n, entry),
+      NodeTrait.sentinel => _sentinelNote(index, l10n, entry),
+      NodeTrait.relay => _relayNote(index, l10n, entry),
+      NodeTrait.courier => _courierNote(index, l10n, entry),
+      NodeTrait.anchor => _anchorNote(index, l10n, entry),
+      NodeTrait.drifter => _drifterNote(index, l10n, entry),
+      NodeTrait.unknown => _unknownNote(index, l10n, entry),
+    };
+  }
+
+  static String _wandererNote(
+    int index,
+    AppLocalizations l10n,
+    NodeDexEntry entry,
+  ) {
+    return switch (index) {
+      0 => l10n.nodedexFieldNoteWanderer0(entry.regionCount),
+      1 => l10n.nodedexFieldNoteWanderer1(entry.distinctPositionCount),
+      2 => l10n.nodedexFieldNoteWanderer2(entry.regionCount),
+      3 => l10n.nodedexFieldNoteWanderer3(
+        _formatDistance(entry.maxDistanceSeen, l10n),
+      ),
+      4 => l10n.nodedexFieldNoteWanderer4,
+      5 => l10n.nodedexFieldNoteWanderer5(entry.regionCount),
+      6 => l10n.nodedexFieldNoteWanderer6(entry.distinctPositionCount),
+      7 => l10n.nodedexFieldNoteWanderer7,
+      _ => l10n.nodedexFieldNoteWanderer0(entry.regionCount),
+    };
+  }
+
+  static String _beaconNote(
+    int index,
+    AppLocalizations l10n,
+    NodeDexEntry entry,
+  ) {
+    final rate = _computeRate(entry);
+    return switch (index) {
+      0 => l10n.nodedexFieldNoteBeacon0(rate),
+      1 => l10n.nodedexFieldNoteBeacon1,
+      2 => l10n.nodedexFieldNoteBeacon2(
+        _formatRelativeTime(entry.timeSinceLastSeen, l10n),
+      ),
+      3 => l10n.nodedexFieldNoteBeacon3(entry.encounterCount),
+      4 => l10n.nodedexFieldNoteBeacon4,
+      5 => l10n.nodedexFieldNoteBeacon5,
+      6 => l10n.nodedexFieldNoteBeacon6(rate),
+      7 => l10n.nodedexFieldNoteBeacon7,
+      _ => l10n.nodedexFieldNoteBeacon0(rate),
+    };
+  }
+
+  static String _ghostNote(
+    int index,
+    AppLocalizations l10n,
+    NodeDexEntry entry,
+  ) {
+    return switch (index) {
+      0 => l10n.nodedexFieldNoteGhost0(
+        _formatRelativeTime(entry.timeSinceLastSeen, l10n),
+      ),
+      1 => l10n.nodedexFieldNoteGhost1(entry.encounterCount, entry.age.inDays),
+      2 => l10n.nodedexFieldNoteGhost2,
+      3 => l10n.nodedexFieldNoteGhost3,
+      4 => l10n.nodedexFieldNoteGhost4,
+      5 => l10n.nodedexFieldNoteGhost5,
+      6 => l10n.nodedexFieldNoteGhost6,
+      7 => l10n.nodedexFieldNoteGhost7,
+      _ => l10n.nodedexFieldNoteGhost0(
+        _formatRelativeTime(entry.timeSinceLastSeen, l10n),
+      ),
+    };
+  }
+
+  static String _sentinelNote(
+    int index,
+    AppLocalizations l10n,
+    NodeDexEntry entry,
+  ) {
+    return switch (index) {
+      0 => l10n.nodedexFieldNoteSentinel0(entry.age.inDays),
+      1 => l10n.nodedexFieldNoteSentinel1,
+      2 => l10n.nodedexFieldNoteSentinel2(entry.encounterCount),
+      3 => l10n.nodedexFieldNoteSentinel3(_formatDate(entry.firstSeen)),
+      4 => l10n.nodedexFieldNoteSentinel4,
+      5 => l10n.nodedexFieldNoteSentinel5,
+      6 => l10n.nodedexFieldNoteSentinel6(entry.bestSnr?.round() ?? 0),
+      7 => l10n.nodedexFieldNoteSentinel7(entry.age.inDays),
+      _ => l10n.nodedexFieldNoteSentinel0(entry.age.inDays),
+    };
+  }
+
+  static String _relayNote(
+    int index,
+    AppLocalizations l10n,
+    NodeDexEntry entry,
+  ) {
+    return switch (index) {
+      0 => l10n.nodedexFieldNoteRelay0,
+      1 => l10n.nodedexFieldNoteRelay1,
+      2 => l10n.nodedexFieldNoteRelay2,
+      3 => l10n.nodedexFieldNoteRelay3,
+      4 => l10n.nodedexFieldNoteRelay4,
+      5 => l10n.nodedexFieldNoteRelay5(entry.encounterCount),
+      6 => l10n.nodedexFieldNoteRelay6,
+      7 => l10n.nodedexFieldNoteRelay7,
+      _ => l10n.nodedexFieldNoteRelay0,
+    };
+  }
+
+  static String _courierNote(
+    int index,
+    AppLocalizations l10n,
+    NodeDexEntry entry,
+  ) {
+    return switch (index) {
+      0 => l10n.nodedexFieldNoteCourier0(
+        entry.messageCount,
+        entry.encounterCount,
+      ),
+      1 => l10n.nodedexFieldNoteCourier1,
+      2 => l10n.nodedexFieldNoteCourier2,
+      3 => l10n.nodedexFieldNoteCourier3(entry.messageCount),
+      4 => l10n.nodedexFieldNoteCourier4,
+      5 => l10n.nodedexFieldNoteCourier5(entry.messageCount),
+      6 => l10n.nodedexFieldNoteCourier6,
+      7 => l10n.nodedexFieldNoteCourier7,
+      _ => l10n.nodedexFieldNoteCourier0(
+        entry.messageCount,
+        entry.encounterCount,
+      ),
+    };
+  }
+
+  static String _anchorNote(
+    int index,
+    AppLocalizations l10n,
+    NodeDexEntry entry,
+  ) {
+    return switch (index) {
+      0 => l10n.nodedexFieldNoteAnchor0(entry.coSeenCount),
+      1 => l10n.nodedexFieldNoteAnchor1,
+      2 => l10n.nodedexFieldNoteAnchor2(entry.coSeenCount),
+      3 => l10n.nodedexFieldNoteAnchor3,
+      4 => l10n.nodedexFieldNoteAnchor4,
+      5 => l10n.nodedexFieldNoteAnchor5,
+      6 => l10n.nodedexFieldNoteAnchor6(entry.coSeenCount),
+      7 => l10n.nodedexFieldNoteAnchor7,
+      _ => l10n.nodedexFieldNoteAnchor0(entry.coSeenCount),
+    };
+  }
+
+  static String _drifterNote(
+    int index,
+    AppLocalizations l10n,
+    NodeDexEntry entry,
+  ) {
+    return switch (index) {
+      0 => l10n.nodedexFieldNoteDrifter0,
+      1 => l10n.nodedexFieldNoteDrifter1,
+      2 => l10n.nodedexFieldNoteDrifter2,
+      3 => l10n.nodedexFieldNoteDrifter3,
+      4 => l10n.nodedexFieldNoteDrifter4,
+      5 => l10n.nodedexFieldNoteDrifter5,
+      6 => l10n.nodedexFieldNoteDrifter6,
+      7 => l10n.nodedexFieldNoteDrifter7,
+      _ => l10n.nodedexFieldNoteDrifter0,
+    };
+  }
+
+  static String _unknownNote(
+    int index,
+    AppLocalizations l10n,
+    NodeDexEntry entry,
+  ) {
+    return switch (index) {
+      0 => l10n.nodedexFieldNoteUnknown0,
+      1 => l10n.nodedexFieldNoteUnknown1,
+      2 => l10n.nodedexFieldNoteUnknown2(_formatDate(entry.firstSeen)),
+      3 => l10n.nodedexFieldNoteUnknown3,
+      4 => l10n.nodedexFieldNoteUnknown4,
+      5 => l10n.nodedexFieldNoteUnknown5,
+      6 => l10n.nodedexFieldNoteUnknown6,
+      7 => l10n.nodedexFieldNoteUnknown7,
+      _ => l10n.nodedexFieldNoteUnknown0,
     };
   }
 
   // ---------------------------------------------------------------------------
-  // Template interpolation
+  // Value computation helpers
   // ---------------------------------------------------------------------------
 
-  static String _fillTemplate(String template, NodeDexEntry entry) {
-    var result = template;
-
-    if (result.contains('{regions}')) {
-      result = result.replaceAll('{regions}', entry.regionCount.toString());
-    }
-
-    if (result.contains('{positions}')) {
-      result = result.replaceAll(
-        '{positions}',
-        entry.distinctPositionCount.toString(),
-      );
-    }
-
-    if (result.contains('{encounters}')) {
-      result = result.replaceAll(
-        '{encounters}',
-        entry.encounterCount.toString(),
-      );
-    }
-
-    if (result.contains('{messages}')) {
-      result = result.replaceAll('{messages}', entry.messageCount.toString());
-    }
-
-    if (result.contains('{coSeen}')) {
-      result = result.replaceAll('{coSeen}', entry.coSeenCount.toString());
-    }
-
-    if (result.contains('{age}')) {
-      final days = entry.age.inDays;
-      result = result.replaceAll('{age}', days.toString());
-    }
-
-    if (result.contains('{distance}')) {
-      result = result.replaceAll(
-        '{distance}',
-        _formatDistance(entry.maxDistanceSeen),
-      );
-    }
-
-    if (result.contains('{rate}')) {
-      final ageDays = entry.age.inHours / 24.0;
-      final rate = ageDays > 0.01
-          ? (entry.encounterCount / ageDays).toStringAsFixed(1)
-          : entry.encounterCount.toString();
-      result = result.replaceAll('{rate}', rate);
-    }
-
-    if (result.contains('{lastSeen}')) {
-      result = result.replaceAll(
-        '{lastSeen}',
-        _formatRelativeTime(entry.timeSinceLastSeen),
-      );
-    }
-
-    if (result.contains('{firstSeen}')) {
-      result = result.replaceAll('{firstSeen}', _formatDate(entry.firstSeen));
-    }
-
-    if (result.contains('{snr}')) {
-      result = result.replaceAll('{snr}', entry.bestSnr?.toString() ?? '?');
-    }
-
-    return result;
+  static String _computeRate(NodeDexEntry entry) {
+    final ageDays = entry.age.inHours / 24.0;
+    return ageDays > 0.01
+        ? (entry.encounterCount / ageDays).toStringAsFixed(1)
+        : entry.encounterCount.toString();
   }
 
   // ---------------------------------------------------------------------------
   // Formatting helpers
   // ---------------------------------------------------------------------------
 
-  static String _formatDistance(double? meters) {
-    if (meters == null) return 'unknown range';
+  static String _formatDistance(double? meters, AppLocalizations l10n) {
+    if (meters == null) return l10n.nodedexDistanceUnknown;
     if (meters >= 1000) {
       return '${(meters / 1000).toStringAsFixed(1)}km';
     }
     return '${meters.round()}m';
   }
 
-  static String _formatRelativeTime(Duration duration) {
-    if (duration.inMinutes < 1) return 'moments ago';
-    if (duration.inMinutes < 60) return '${duration.inMinutes}m ago';
-    if (duration.inHours < 24) return '${duration.inHours}h ago';
-    if (duration.inDays == 1) return 'yesterday';
-    if (duration.inDays < 30) return '${duration.inDays}d ago';
+  static String _formatRelativeTime(Duration duration, AppLocalizations l10n) {
+    if (duration.inMinutes < 1) return l10n.nodedexRelativeTimeMomentsAgo;
+    if (duration.inMinutes < 60) {
+      return l10n.nodedexRelativeTimeMinutesAgo(duration.inMinutes);
+    }
+    if (duration.inHours < 24) {
+      return l10n.nodedexRelativeTimeHoursAgo(duration.inHours);
+    }
+    if (duration.inDays == 1) return l10n.nodedexRelativeTimeYesterday;
+    if (duration.inDays < 30) {
+      return l10n.nodedexRelativeTimeDaysAgo(duration.inDays);
+    }
     final months = duration.inDays ~/ 30;
-    if (months == 1) return '1 month ago';
-    return '$months months ago';
+    if (months == 1) return l10n.nodedexRelativeTimeOneMonthAgo;
+    return l10n.nodedexRelativeTimeMonthsAgo(months);
   }
 
   static String _formatDate(DateTime date) {

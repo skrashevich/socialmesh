@@ -9,6 +9,7 @@ import '../../../core/safety/safe_image.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/user_avatar.dart';
 import '../../../models/social.dart';
@@ -710,7 +711,9 @@ class _BottomInfoOverlay extends ConsumerWidget {
                     )
                   else
                     UserAvatar(
-                      initials: _getInitials(author?.displayName ?? 'Unknown'),
+                      initials: _getInitials(
+                        author?.displayName ?? context.l10n.signalUnknownAuthor,
+                      ),
                       imageUrl: author?.avatarUrl,
                       size: 40,
                     ),
@@ -722,7 +725,9 @@ class _BottomInfoOverlay extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          meshNodeName ?? author?.displayName ?? 'Unknown',
+                          meshNodeName ??
+                              author?.displayName ??
+                              context.l10n.signalUnknownAuthor,
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 15,
@@ -736,7 +741,7 @@ class _BottomInfoOverlay extends ConsumerWidget {
                           children: [
                             // Time ago
                             Text(
-                              formatTimeAgo(signal.createdAt),
+                              formatTimeAgo(signal.createdAt, context.l10n),
                               style: TextStyle(
                                 color: Colors.white.withValues(alpha: 0.7),
                                 fontSize: 12,
@@ -781,12 +786,12 @@ class _BottomInfoOverlay extends ConsumerWidget {
                         vertical: 8,
                       ),
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text('View'),
-                        SizedBox(width: AppTheme.spacing4),
-                        Icon(Icons.arrow_forward_ios, size: 12),
+                        Text(context.l10n.signalViewButton),
+                        const SizedBox(width: AppTheme.spacing4),
+                        const Icon(Icons.arrow_forward_ios, size: 12),
                       ],
                     ),
                   ),
@@ -830,23 +835,23 @@ class _BottomInfoOverlay extends ConsumerWidget {
                 children: [
                   // Saved/Bookmark badge
                   if (ref.watch(isSignalBookmarkedProvider(signal.id)))
-                    const _InfoBadge(
+                    _InfoBadge(
                       icon: Icons.bookmark_rounded,
-                      label: 'Saved',
+                      label: context.l10n.signalSavedBadge,
                       color: AccentColors.yellow,
                     ),
 
                   // TTL badge
                   if (signal.expiresAt != null)
-                    _buildTtlBadge(signal.expiresAt!),
+                    _buildTtlBadge(signal.expiresAt!, context),
 
                   // Hop count badge
                   if (signal.hopCount != null)
                     _InfoBadge(
                       icon: Icons.near_me,
                       label: signal.hopCount == 0
-                          ? 'Local'
-                          : '${signal.hopCount} hop${signal.hopCount! > 1 ? 's' : ''}',
+                          ? context.l10n.signalLocalBadgeGallery
+                          : context.l10n.signalHopsBadge(signal.hopCount!),
                       color: getHopCountColor(signal.hopCount),
                     ),
 
@@ -854,7 +859,9 @@ class _BottomInfoOverlay extends ConsumerWidget {
                   if (signal.location != null)
                     _InfoBadge(
                       icon: Icons.location_on,
-                      label: signal.location!.name ?? 'Location',
+                      label:
+                          signal.location!.name ??
+                          context.l10n.signalLocationBadge,
                       color: AccentColors.blue,
                     ),
 
@@ -874,12 +881,12 @@ class _BottomInfoOverlay extends ConsumerWidget {
     );
   }
 
-  Widget _buildTtlBadge(DateTime expiresAt) {
+  Widget _buildTtlBadge(DateTime expiresAt, BuildContext context) {
     final remaining = expiresAt.difference(DateTime.now());
     if (remaining.isNegative) {
-      return const _InfoBadge(
+      return _InfoBadge(
         icon: Icons.timer_off,
-        label: 'Expired',
+        label: context.l10n.signalExpiredBadge,
         color: AppTheme.errorRed,
       );
     }
@@ -891,16 +898,16 @@ class _BottomInfoOverlay extends ConsumerWidget {
     Color color;
 
     if (minutes < 5) {
-      label = '${remaining.inMinutes}m left';
+      label = context.l10n.signalTtlMinutesLeft(remaining.inMinutes);
       color = AppTheme.errorRed;
     } else if (minutes < 30) {
-      label = '${minutes}m left';
+      label = context.l10n.signalTtlMinutesLeft(minutes);
       color = AppTheme.warningYellow;
     } else if (hours < 1) {
-      label = '${minutes}m left';
+      label = context.l10n.signalTtlMinutesLeft(minutes);
       color = AccentColors.cyan;
     } else {
-      label = '${hours}h left';
+      label = context.l10n.signalTtlHoursLeft(hours);
       color = AccentColors.cyan;
     }
 

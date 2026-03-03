@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:socialmesh/core/safety/lifecycle_mixin.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/animations.dart';
 import '../../../providers/social_providers.dart';
@@ -53,6 +54,7 @@ class _StrikeAcknowledgmentDialogState
       _currentIndex >= widget.unacknowledgedStrikes.length - 1;
 
   Future<void> _acknowledge() async {
+    final l10n = context.l10n;
     safeSetState(() => _isAcknowledging = true);
 
     try {
@@ -69,7 +71,7 @@ class _StrikeAcknowledgmentDialogState
       }
     } catch (e) {
       safeSetState(() => _isAcknowledging = false);
-      safeShowSnackBar('Error: $e');
+      safeShowSnackBar(l10n.socialStrikeError(e.toString()));
     }
   }
 
@@ -147,7 +149,10 @@ class _StrikeAcknowledgmentDialogState
               ),
               const SizedBox(height: AppTheme.spacing16),
               Text(
-                '${_currentIndex + 1} of $totalStrikes',
+                context.l10n.socialStrikeOfTotal(
+                  _currentIndex + 1,
+                  totalStrikes,
+                ),
                 style: TextStyle(
                   color: Colors.white.withValues(alpha: 0.5),
                   fontSize: 12,
@@ -169,7 +174,7 @@ class _StrikeAcknowledgmentDialogState
 
             // Title
             Text(
-              'Content ${strike.typeDisplayName}',
+              context.l10n.socialStrikeContentTitle(strike.typeDisplayName),
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -181,8 +186,8 @@ class _StrikeAcknowledgmentDialogState
             // Message
             Text(
               strike.type == 'strike'
-                  ? 'You have received a strike on your account due to a community guideline violation.'
-                  : 'You have received a warning. Please review our community guidelines.',
+                  ? context.l10n.socialStrikeReceivedStrike
+                  : context.l10n.socialStrikeReceivedWarning,
               style: TextStyle(
                 fontSize: 14,
                 color: Colors.white.withValues(alpha: 0.7),
@@ -213,7 +218,7 @@ class _StrikeAcknowledgmentDialogState
                       ),
                       const SizedBox(width: AppTheme.spacing8),
                       Text(
-                        'Reason',
+                        context.l10n.socialStrikeReasonLabel,
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                           color: typeColor.withValues(alpha: 0.9),
@@ -242,7 +247,9 @@ class _StrikeAcknowledgmentDialogState
                         borderRadius: BorderRadius.circular(AppTheme.radius6),
                       ),
                       child: Text(
-                        'Content: ${strike.contentType}',
+                        context.l10n.socialStrikeContentLabel(
+                          strike.contentType ?? '',
+                        ),
                         style: TextStyle(
                           fontSize: 11,
                           color: Colors.white.withValues(alpha: 0.5),
@@ -276,7 +283,7 @@ class _StrikeAcknowledgmentDialogState
                     const SizedBox(width: AppTheme.spacing10),
                     Expanded(
                       child: Text(
-                        '3 strikes result in account suspension',
+                        context.l10n.socialStrike3Suspension,
                         style: TextStyle(
                           color: AppTheme.errorRed.withValues(alpha: 0.9),
                           fontSize: 13,
@@ -298,7 +305,7 @@ class _StrikeAcknowledgmentDialogState
                 color: context.accentColor.withValues(alpha: 0.8),
               ),
               label: Text(
-                'Questions? Contact Support',
+                context.l10n.socialContactSupport,
                 style: TextStyle(
                   color: context.accentColor.withValues(alpha: 0.8),
                   fontSize: 13,
@@ -333,7 +340,9 @@ class _StrikeAcknowledgmentDialogState
                             ),
                           )
                         : Text(
-                            _isLastStrike ? 'I Understand' : 'Next',
+                            _isLastStrike
+                                ? context.l10n.socialStrikeAcknowledge
+                                : context.l10n.socialStrikeNext,
                             style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,

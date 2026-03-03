@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/widgets/fullscreen_gallery.dart';
 import '../../../core/widgets/user_avatar.dart';
 import '../../../core/widgets/verified_badge.dart';
@@ -306,7 +307,7 @@ class _FeedLocationTag extends StatelessWidget {
         ),
         const SizedBox(width: AppTheme.spacing4),
         Text(
-          location.name ?? 'Location',
+          location.name ?? context.l10n.socialFeedLocationFallback,
           style: theme.textTheme.bodySmall?.copyWith(
             color: theme.colorScheme.primary.withAlpha(180),
           ),

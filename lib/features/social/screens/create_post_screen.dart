@@ -11,6 +11,7 @@ import '../../../core/safety/lifecycle_mixin.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/logging.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/animations.dart';
@@ -91,11 +92,11 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
     if (_imageUrls.isNotEmpty || _contentController.text.trim().isNotEmpty) {
       final shouldDiscard = await AppBottomSheet.showConfirm(
         context: context,
-        title: 'Discard post?',
+        title: context.l10n.socialCreatePostDiscardTitle,
         message: _imageUrls.isNotEmpty
-            ? 'Your uploaded images will be deleted.'
-            : 'Your draft will be lost.',
-        confirmLabel: 'Discard',
+            ? context.l10n.socialCreatePostDiscardMsgImages
+            : context.l10n.socialCreatePostDiscardMsgDraft,
+        confirmLabel: context.l10n.socialDiscard,
         isDestructive: true,
       );
 
@@ -115,10 +116,10 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
 
     if (currentUser == null) {
       return GlassScaffold.body(
-        title: 'Create Post',
+        title: context.l10n.socialCreatePostTitle,
         body: Center(
           child: Text(
-            'Sign in to create posts',
+            context.l10n.socialCreatePostSignIn,
             style: TextStyle(color: context.textSecondary),
           ),
         ),
@@ -126,7 +127,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
     }
 
     return GlassScaffold.body(
-      title: 'Create Post',
+      title: context.l10n.socialCreatePostTitle,
       leading: IconButton(
         icon: Icon(
           Icons.close,
@@ -160,7 +161,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
                       ),
                     )
                   : Text(
-                      'Post',
+                      context.l10n.socialCreatePostButton,
                       style: TextStyle(
                         color: _canPost ? Colors.white : context.textTertiary,
                         fontWeight: FontWeight.w600,
@@ -223,7 +224,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
                         height: 1.5,
                       ),
                       decoration: InputDecoration(
-                        hintText: 'What\'s happening on the mesh?',
+                        hintText: context.l10n.socialCreatePostHint,
                         hintStyle: TextStyle(
                           color: context.textTertiary,
                           fontSize: 16,
@@ -275,22 +276,25 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
                         ? null
                         : () => _addImage(),
                     tooltip: _imageUrls.isEmpty
-                        ? 'Add image'
-                        : '${_imageUrls.length}/$_maxImages images',
+                        ? context.l10n.socialCreatePostAddImage
+                        : context.l10n.socialCreatePostImageCount(
+                            _imageUrls.length,
+                            _maxImages,
+                          ),
                   ),
                   const SizedBox(width: AppTheme.spacing4),
                   _buildToolbarButton(
                     icon: Icons.location_on_outlined,
                     isActive: _location != null,
                     onTap: _isSubmitting ? null : _addLocation,
-                    tooltip: 'Add location',
+                    tooltip: context.l10n.socialCreatePostAddLocation,
                   ),
                   const SizedBox(width: AppTheme.spacing4),
                   _buildToolbarButton(
                     icon: Icons.router_outlined,
                     isActive: _nodeId != null,
                     onTap: _isSubmitting ? null : _tagNode,
-                    tooltip: 'Tag node',
+                    tooltip: context.l10n.socialCreatePostTagNode,
                   ),
                   const Spacer(),
                   // Character count
@@ -328,13 +332,13 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
     switch (_visibility) {
       case PostVisibility.public:
         icon = Icons.public;
-        label = 'Public';
+        label = context.l10n.socialVisibilityPublic;
       case PostVisibility.followersOnly:
         icon = Icons.people;
-        label = 'Followers';
+        label = context.l10n.socialVisibilityFollowers;
       case PostVisibility.private:
         icon = Icons.lock;
-        label = 'Only me';
+        label = context.l10n.socialVisibilityOnlyMe;
     }
 
     return BouncyTap(
@@ -396,7 +400,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
             Padding(
               padding: const EdgeInsets.all(AppTheme.spacing16),
               child: Text(
-                'Who can see this?',
+                context.l10n.socialVisibilityWhoCanSee,
                 style: TextStyle(
                   color: context.textPrimary,
                   fontSize: 18,
@@ -408,22 +412,22 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
               ctx,
               PostVisibility.public,
               Icons.public,
-              'Public',
-              'Anyone can see this post',
+              context.l10n.socialVisibilityPublic,
+              context.l10n.socialVisibilityPublicDesc,
             ),
             _buildVisibilityOption(
               ctx,
               PostVisibility.followersOnly,
               Icons.people,
-              'Followers',
-              'Only your followers can see this',
+              context.l10n.socialVisibilityFollowers,
+              context.l10n.socialVisibilityFollowersDesc,
             ),
             _buildVisibilityOption(
               ctx,
               PostVisibility.private,
               Icons.lock,
-              'Only me',
-              'Only you can see this post',
+              context.l10n.socialVisibilityOnlyMe,
+              context.l10n.socialVisibilityOnlyMeDesc,
             ),
             const SizedBox(height: AppTheme.spacing8),
           ],
@@ -657,7 +661,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
           Icon(Icons.location_on, size: 16, color: AppTheme.successGreen),
           const SizedBox(width: AppTheme.spacing6),
           Text(
-            _location!.name ?? 'Location',
+            _location!.name ?? context.l10n.socialCreatePostLocationLabel,
             style: TextStyle(
               color: AppTheme.successGreen,
               fontWeight: FontWeight.w500,
@@ -688,7 +692,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
           Icon(Icons.router, size: 16, color: AccentColors.cyan),
           const SizedBox(width: AppTheme.spacing6),
           Text(
-            'Node $_nodeId',
+            context.l10n.socialCreatePostNodeLabel(_nodeId!),
             style: TextStyle(
               color: AccentColors.cyan,
               fontWeight: FontWeight.w500,
@@ -707,7 +711,10 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
 
   Future<void> _addImage() async {
     if (_imageUrls.length >= _maxImages) {
-      showErrorSnackBar(context, 'Maximum $_maxImages images allowed');
+      showErrorSnackBar(
+        context,
+        context.l10n.socialCreatePostMaxImages(_maxImages),
+      );
       return;
     }
 
@@ -828,7 +835,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
             Padding(
               padding: const EdgeInsets.all(AppTheme.spacing16),
               child: Text(
-                'Add Location',
+                context.l10n.socialCreatePostLocationSheetTitle,
                 style: TextStyle(
                   color: context.textPrimary,
                   fontSize: 18,
@@ -869,7 +876,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Use Current Location',
+                            context.l10n.socialCreatePostUseCurrent,
                             style: TextStyle(
                               color: context.textPrimary,
                               fontWeight: FontWeight.w600,
@@ -877,7 +884,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
                             ),
                           ),
                           Text(
-                            'Share your GPS coordinates',
+                            context.l10n.socialCreatePostCurrentDesc,
                             style: TextStyle(
                               color: context.textTertiary,
                               fontSize: 13,
@@ -923,7 +930,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Enter Location Manually',
+                            context.l10n.socialCreatePostEnterManually,
                             style: TextStyle(
                               color: context.textPrimary,
                               fontWeight: FontWeight.w600,
@@ -931,7 +938,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
                             ),
                           ),
                           Text(
-                            'Type in a place name',
+                            context.l10n.socialCreatePostManualDesc,
                             style: TextStyle(
                               color: context.textTertiary,
                               fontSize: 13,
@@ -960,14 +967,17 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
         if (requested == LocationPermission.denied ||
             requested == LocationPermission.deniedForever) {
           if (!mounted) return;
-          showWarningSnackBar(context, 'Location permission denied');
+          showWarningSnackBar(
+            context,
+            context.l10n.socialCreatePostLocationDenied,
+          );
           return;
         }
       }
 
       final position = await Geolocator.getCurrentPosition();
       if (!mounted) return;
-      String locationName = 'Current Location';
+      String locationName = context.l10n.socialCreatePostCurrentLocation;
 
       try {
         final placemarks = await placemarkFromCoordinates(
@@ -1006,7 +1016,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Enter Location',
+            context.l10n.socialCreatePostEnterLocation,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -1019,7 +1029,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
             maxLength: 100,
             style: TextStyle(color: context.textPrimary),
             decoration: InputDecoration(
-              hintText: 'e.g., San Francisco, CA',
+              hintText: context.l10n.socialCreatePostLocationHint,
               hintStyle: TextStyle(color: context.textTertiary),
               filled: true,
               fillColor: context.background,
@@ -1053,7 +1063,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
                     ),
                   ),
                   child: Text(
-                    'Cancel',
+                    context.l10n.socialCancel,
                     style: TextStyle(color: context.textSecondary),
                   ),
                 ),
@@ -1081,7 +1091,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
                       borderRadius: BorderRadius.circular(AppTheme.radius12),
                     ),
                   ),
-                  child: const Text('Add'),
+                  child: Text(context.l10n.socialAdd),
                 ),
               ),
             ],
@@ -1095,13 +1105,13 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
     final nodes = ref.read(nodesProvider);
 
     if (nodes.isEmpty) {
-      showInfoSnackBar(context, 'No nodes available. Connect to a mesh first.');
+      showInfoSnackBar(context, context.l10n.socialCreatePostNoNodes);
       return;
     }
 
     final selection = await NodeSelectorSheet.show(
       context,
-      title: 'Tag a Node',
+      title: context.l10n.socialCreatePostTagNodeTitle,
       allowBroadcast: false,
     );
 
@@ -1120,6 +1130,9 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
     // Prevent double-tap by setting loading state immediately
     if (_isSubmitting) return;
     setState(() => _isSubmitting = true);
+
+    // Capture l10n before any awaits for async safety
+    final l10n = context.l10n;
 
     // Dismiss keyboard immediately using multiple methods for reliability
     _contentFocusNode.unfocus();
@@ -1234,10 +1247,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
             );
             if (!mounted) return;
             safeSetState(() => _isSubmitting = false);
-            showErrorSnackBar(
-              context,
-              'One or more images violated content policy.',
-            );
+            showErrorSnackBar(context, l10n.socialCreatePostImageViolation);
             return;
           }
         }
@@ -1272,14 +1282,14 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
         }
 
         Navigator.pop(context);
-        showSuccessSnackBar(context, 'Post created!');
+        showSuccessSnackBar(context, l10n.socialCreatePostCreated);
       } else {
         final createState = ref.read(createPostProvider);
         throw Exception(createState.error ?? 'Failed to create post');
       }
     } catch (e) {
       if (!mounted) return;
-      showErrorSnackBar(context, 'Failed to create post: $e');
+      showErrorSnackBar(context, l10n.socialCreatePostFailed(e.toString()));
       safeSetState(() => _isSubmitting = false);
     }
   }

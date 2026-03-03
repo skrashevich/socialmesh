@@ -20,6 +20,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/constants.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../models/presence_confidence.dart';
 import '../models/node_activity_event.dart';
@@ -64,7 +65,7 @@ class _NodeActivityTimelineState extends ConsumerState<NodeActivityTimeline> {
         padding: const EdgeInsets.all(AppTheme.spacing24),
         child: Center(
           child: Text(
-            'Could not load timeline',
+            context.l10n.nodedexTimelineCouldNotLoad,
             style: TextStyle(fontSize: 13, color: context.textTertiary),
           ),
         ),
@@ -165,7 +166,7 @@ class _EmptyTimeline extends StatelessWidget {
           ),
           const SizedBox(height: AppTheme.spacing12),
           Text(
-            'No activity yet',
+            context.l10n.nodedexTimelineNoActivityYet,
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w600,
@@ -174,7 +175,7 @@ class _EmptyTimeline extends StatelessWidget {
           ),
           const SizedBox(height: AppTheme.spacing4),
           Text(
-            'Events will appear here as you interact with this node.',
+            context.l10n.nodedexTimelineEventsAppearHere,
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 13, color: context.textTertiary),
           ),
@@ -259,7 +260,7 @@ class _TimelineEventTile extends StatelessWidget {
                 children: [
                   // Summary line
                   Text(
-                    _summaryText(),
+                    _summaryText(context),
                     style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w500,
@@ -271,7 +272,7 @@ class _TimelineEventTile extends StatelessWidget {
                   const SizedBox(height: AppTheme.spacing2),
                   // Timestamp row
                   Text(
-                    _formatTimestamp(event.timestamp),
+                    _formatTimestamp(context, event.timestamp),
                     style: TextStyle(
                       fontSize: 11,
                       color: context.textTertiary,
@@ -279,11 +280,11 @@ class _TimelineEventTile extends StatelessWidget {
                     ),
                   ),
                   // Optional detail line
-                  if (_detailText() != null)
+                  if (_detailText(context) != null)
                     Padding(
                       padding: const EdgeInsets.only(top: 2),
                       child: Text(
-                        _detailText()!,
+                        _detailText(context)!,
                         style: TextStyle(
                           fontSize: 11,
                           color: context.textTertiary,
@@ -322,7 +323,8 @@ class _TimelineEventTile extends StatelessWidget {
     };
   }
 
-  String _summaryText() {
+  String _summaryText(BuildContext context) {
+    final l10n = context.l10n;
     return switch (event) {
       EncounterActivityEvent(
         :final count,
@@ -333,6 +335,7 @@ class _TimelineEventTile extends StatelessWidget {
       ) =>
         count > 1
             ? _encounterSessionText(
+                context,
                 count,
                 sessionStart,
                 timestamp,
@@ -340,62 +343,70 @@ class _TimelineEventTile extends StatelessWidget {
                 snr,
               )
             : distanceMeters != null
-            ? 'Encountered at ${_formatDistance(distanceMeters)}'
+            ? l10n.nodedexTimelineEncounteredAtDistance(
+                _formatDistance(distanceMeters),
+              )
             : snr != null
-            ? 'Encountered (SNR ${snr}dB)'
-            : 'Encountered',
+            ? l10n.nodedexTimelineEncounteredSnr(snr)
+            : l10n.nodedexTimelineEncountered,
       MessageActivityEvent(:final outgoing, :final text) =>
         outgoing
-            ? 'Sent: ${_truncate(text, 60)}'
-            : 'Received: ${_truncate(text, 60)}',
+            ? l10n.nodedexTimelineSent(_truncate(text, 60))
+            : l10n.nodedexTimelineReceived(_truncate(text, 60)),
       PresenceChangeActivityEvent(:final fromState, :final toState) =>
-        '${_presenceLabel(fromState)} \u2192 ${_presenceLabel(toState)}',
-      SignalActivityEvent(:final content) =>
-        'Signal: ${_truncate(content, 60)}',
+        '${_presenceLabel(context, fromState)} \u2192 ${_presenceLabel(context, toState)}',
+      SignalActivityEvent(:final content) => l10n.nodedexTimelineSignal(
+        _truncate(content, 60),
+      ),
       MilestoneActivityEvent(:final label) => label,
     };
   }
 
   static String _encounterSessionText(
+    BuildContext context,
     int count,
     DateTime start,
     DateTime end,
     double? distance,
     int? snr,
   ) {
+    final l10n = context.l10n;
     final duration = end.difference(start);
     final durationLabel = duration.inMinutes < 1
-        ? '<1 min'
+        ? l10n.nodedexTimelineLessThanOneMin
         : duration.inMinutes < 60
-        ? '${duration.inMinutes} min'
-        : '${(duration.inMinutes / 60).toStringAsFixed(1)} hr';
+        ? l10n.nodedexTimelineMinutesUnit(duration.inMinutes)
+        : l10n.nodedexTimelineHoursUnit(
+            (duration.inMinutes / 60).toStringAsFixed(1),
+          );
 
     final detail = distance != null
-        ? ', closest ${_formatDistance(distance)}'
+        ? l10n.nodedexTimelineEncounterClosest(_formatDistance(distance))
         : snr != null
-        ? ', best SNR ${snr}dB'
+        ? l10n.nodedexTimelineEncounterBestSnr(snr)
         : '';
 
-    return '$count encounters over $durationLabel$detail';
+    return l10n.nodedexTimelineEncounterSession(count, durationLabel, detail);
   }
 
-  String? _detailText() {
+  String? _detailText(BuildContext context) {
     return switch (event) {
       EncounterActivityEvent(:final latitude, :final longitude)
           when latitude != null && longitude != null =>
         '${latitude.toStringAsFixed(4)}, ${longitude.toStringAsFixed(4)}',
       MessageActivityEvent(:final channel) when channel != null =>
-        'Channel $channel',
+        context.l10n.nodedexTimelineChannel('$channel'),
       _ => null,
     };
   }
 
-  static String _presenceLabel(PresenceConfidence c) {
+  static String _presenceLabel(BuildContext context, PresenceConfidence c) {
+    final l10n = context.l10n;
     return switch (c) {
-      PresenceConfidence.active => 'Active',
-      PresenceConfidence.fading => 'Fading',
-      PresenceConfidence.stale => 'Stale',
-      PresenceConfidence.unknown => 'Unknown',
+      PresenceConfidence.active => l10n.nodedexPresenceActive,
+      PresenceConfidence.fading => l10n.nodedexPresenceFading,
+      PresenceConfidence.stale => l10n.nodedexPresenceStale,
+      PresenceConfidence.unknown => l10n.nodedexPresenceUnknown,
     };
   }
 
@@ -411,23 +422,26 @@ class _TimelineEventTile extends StatelessWidget {
     return '${text.substring(0, maxLength - 1)}\u2026';
   }
 
-  static String _formatTimestamp(DateTime ts) {
+  static String _formatTimestamp(BuildContext context, DateTime ts) {
     final now = DateTime.now();
     final diff = now.difference(ts);
 
-    final relative = _relativeTime(diff);
+    final relative = _relativeTime(context, diff);
     final absolute = DateFormat('MMM d, HH:mm').format(ts);
     return '$relative \u00B7 $absolute';
   }
 
-  static String _relativeTime(Duration diff) {
-    if (diff.inMinutes < 1) return 'Just now';
-    if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
-    if (diff.inHours < 24) return '${diff.inHours}h ago';
-    if (diff.inDays < 7) return '${diff.inDays}d ago';
-    if (diff.inDays < 30) return '${(diff.inDays / 7).floor()}w ago';
-    if (diff.inDays < 365) return '${(diff.inDays / 30).floor()}mo ago';
-    return '${(diff.inDays / 365).floor()}y ago';
+  static String _relativeTime(BuildContext context, Duration diff) {
+    final l10n = context.l10n;
+    if (diff.inMinutes < 1) return l10n.nodedexTimelineJustNow;
+    if (diff.inMinutes < 60) {
+      return l10n.nodedexRelativeMinutesAgo(diff.inMinutes);
+    }
+    if (diff.inHours < 24) {
+      return l10n.nodedexRelativeHoursAgo(diff.inHours);
+    }
+    if (diff.inDays < 30) return l10n.nodedexRelativeDaysAgo(diff.inDays);
+    return l10n.nodedexRelativeMonthsAgo(diff.inDays ~/ 30);
   }
 }
 

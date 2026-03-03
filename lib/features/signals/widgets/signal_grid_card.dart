@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/safety/safe_image.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/animations.dart';
@@ -51,7 +52,7 @@ class SignalGridCard extends ConsumerWidget {
     );
 
     // Get author info
-    String authorName = 'Anon';
+    String authorName = context.l10n.signalAnonAuthor;
     String? authorShortName;
     String? avatarUrl;
     Color avatarColor = context.accentColor;
@@ -281,7 +282,7 @@ class SignalGridCard extends ConsumerWidget {
                                           ),
                                         ),
                                         child: Text(
-                                          'you',
+                                          context.l10n.signalYouBadge,
                                           style: TextStyle(
                                             color: AccentColors.yellow,
                                             fontSize: 8,

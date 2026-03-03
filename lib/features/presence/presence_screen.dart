@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/l10n/l10n_extension.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/animated_empty_state.dart';
 import '../../core/widgets/glass_scaffold.dart';
@@ -157,10 +158,26 @@ class _PresenceScreenState extends ConsumerState<PresenceScreen> {
         .toList();
 
     return [
-      _PresenceSection('Active', active, AppTheme.successGreen),
-      _PresenceSection('Seen Recently', fading, AppTheme.warningYellow),
-      _PresenceSection('Inactive', stale, context.textSecondary),
-      _PresenceSection('Unknown', unknown, context.textTertiary),
+      _PresenceSection(
+        context.l10n.presenceSectionActive,
+        active,
+        AppTheme.successGreen,
+      ),
+      _PresenceSection(
+        context.l10n.presenceSectionSeenRecently,
+        fading,
+        AppTheme.warningYellow,
+      ),
+      _PresenceSection(
+        context.l10n.presenceSectionInactive,
+        stale,
+        context.textSecondary,
+      ),
+      _PresenceSection(
+        context.l10n.presenceSectionUnknown,
+        unknown,
+        context.textTertiary,
+      ),
     ];
   }
 
@@ -179,7 +196,7 @@ class _PresenceScreenState extends ConsumerState<PresenceScreen> {
         stepKeys: const {},
         child: GlassScaffold(
           resizeToAvoidBottomInset: false,
-          title: 'Presence',
+          title: context.l10n.presenceTitle,
           actions: [IcoHelpAppBarButton(topicId: 'presence_overview')],
           slivers: [
             const SliverToBoxAdapter(
@@ -195,7 +212,7 @@ class _PresenceScreenState extends ConsumerState<PresenceScreen> {
                 searchQuery: _searchQuery,
                 onSearchChanged: (value) =>
                     setState(() => _searchQuery = value),
-                hintText: 'Search nodes',
+                hintText: context.l10n.presenceSearchHint,
                 textScaler: MediaQuery.textScalerOf(context),
                 rebuildKey: Object.hashAll([
                   _filter,
@@ -209,14 +226,14 @@ class _PresenceScreenState extends ConsumerState<PresenceScreen> {
                 ]),
                 filterChips: [
                   StatusFilterChip(
-                    label: 'All',
+                    label: context.l10n.presenceFilterAll,
                     count: _countForFilter(PresenceFilter.all, allPresences),
                     isSelected: _filter == PresenceFilter.all,
                     color: PresenceFilter.all.color(context),
                     onTap: () => setState(() => _filter = PresenceFilter.all),
                   ),
                   StatusFilterChip(
-                    label: 'Active',
+                    label: context.l10n.presenceFilterActive,
                     count: _countForFilter(PresenceFilter.active, allPresences),
                     isSelected: _filter == PresenceFilter.active,
                     color: PresenceFilter.active.color(context),
@@ -224,7 +241,7 @@ class _PresenceScreenState extends ConsumerState<PresenceScreen> {
                         setState(() => _filter = PresenceFilter.active),
                   ),
                   StatusFilterChip(
-                    label: 'Seen recently',
+                    label: context.l10n.presenceFilterFading,
                     count: _countForFilter(PresenceFilter.fading, allPresences),
                     isSelected: _filter == PresenceFilter.fading,
                     color: PresenceFilter.fading.color(context),
@@ -233,7 +250,7 @@ class _PresenceScreenState extends ConsumerState<PresenceScreen> {
                         setState(() => _filter = PresenceFilter.fading),
                   ),
                   StatusFilterChip(
-                    label: 'Inactive',
+                    label: context.l10n.presenceFilterInactive,
                     count: _countForFilter(
                       PresenceFilter.inactive,
                       allPresences,
@@ -245,7 +262,7 @@ class _PresenceScreenState extends ConsumerState<PresenceScreen> {
                         setState(() => _filter = PresenceFilter.inactive),
                   ),
                   StatusFilterChip(
-                    label: 'Unknown',
+                    label: context.l10n.presenceFilterUnknown,
                     count: _countForFilter(
                       PresenceFilter.unknown,
                       allPresences,
@@ -257,7 +274,7 @@ class _PresenceScreenState extends ConsumerState<PresenceScreen> {
                         setState(() => _filter = PresenceFilter.unknown),
                   ),
                   StatusFilterChip(
-                    label: 'Familiar',
+                    label: context.l10n.presenceFilterFamiliar,
                     count: _countForFilter(
                       PresenceFilter.familiar,
                       allPresences,
@@ -342,8 +359,13 @@ class _PresenceScreenState extends ConsumerState<PresenceScreen> {
                     ),
                     child: Text(
                       _filter == PresenceFilter.all && _searchQuery.isEmpty
-                          ? 'All Nodes'
-                          : '${filtered.length} ${filtered.length == 1 ? 'node' : 'nodes'}',
+                          ? context.l10n.presenceAllNodes
+                          : context.l10n.presenceNodeCount(
+                              filtered.length,
+                              filtered.length == 1
+                                  ? context.l10n.presenceNodeSingular
+                                  : context.l10n.presenceNodePlural,
+                            ),
                       style: theme.textTheme.labelLarge?.copyWith(
                         color: context.textSecondary,
                         fontWeight: FontWeight.w600,
@@ -384,15 +406,15 @@ class _PresenceScreenState extends ConsumerState<PresenceScreen> {
           Icons.wifi_tethering,
           Icons.hub_outlined,
         ],
-        taglines: const [
-          'No nodes discovered yet.\nConnect to a mesh device to see nearby presence.',
-          'Presence shows who is active on your mesh.\nNodes appear as they broadcast.',
-          'Watch nodes come and go in real time.\nActive, fading, and offline states.',
-          'Familiar faces are highlighted.\nBuild your mesh community over time.',
+        taglines: [
+          context.l10n.presenceEmptyTagline1,
+          context.l10n.presenceEmptyTagline2,
+          context.l10n.presenceEmptyTagline3,
+          context.l10n.presenceEmptyTagline4,
         ],
-        titlePrefix: 'No ',
-        titleKeyword: 'presence',
-        titleSuffix: ' detected',
+        titlePrefix: context.l10n.presenceEmptyTitlePrefix,
+        titleKeyword: context.l10n.presenceEmptyTitleKeyword,
+        titleSuffix: context.l10n.presenceEmptyTitleSuffix,
       ),
     );
   }
@@ -421,8 +443,8 @@ class _PresenceScreenState extends ConsumerState<PresenceScreen> {
           const SizedBox(height: AppTheme.spacing24),
           Text(
             hasActiveSearch
-                ? 'No nodes match your search'
-                : 'No nodes match this filter',
+                ? context.l10n.presenceNoMatchSearch
+                : context.l10n.presenceNoMatchFilter,
             style: theme.textTheme.titleMedium?.copyWith(
               color: context.textSecondary,
             ),
@@ -430,8 +452,8 @@ class _PresenceScreenState extends ConsumerState<PresenceScreen> {
           const SizedBox(height: AppTheme.spacing8),
           Text(
             hasActiveSearch || hasActiveFilter
-                ? 'Try a different search or filter'
-                : 'Nodes will appear here as they are discovered',
+                ? context.l10n.presenceTryDifferent
+                : context.l10n.presenceWillAppear,
             style: theme.textTheme.bodyMedium?.copyWith(
               color: context.textTertiary,
             ),
@@ -440,7 +462,7 @@ class _PresenceScreenState extends ConsumerState<PresenceScreen> {
             const SizedBox(height: AppTheme.spacing12),
             TextButton(
               onPressed: () => setState(() => _filter = PresenceFilter.all),
-              child: const Text('Show all nodes'),
+              child: Text(context.l10n.presenceShowAll),
             ),
           ],
         ],
@@ -528,7 +550,7 @@ class _PresenceScreenState extends ConsumerState<PresenceScreen> {
                 Icon(Icons.show_chart, color: context.textSecondary, size: 20),
                 const SizedBox(width: AppTheme.spacing8),
                 Text(
-                  'Recent Activity',
+                  context.l10n.presenceRecentActivity,
                   style: theme.textTheme.titleSmall?.copyWith(
                     color: context.textSecondary,
                     fontWeight: FontWeight.w600,
@@ -546,9 +568,15 @@ class _PresenceScreenState extends ConsumerState<PresenceScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _LegendItem(color: AppTheme.successGreen, label: '< 2 min'),
+                _LegendItem(
+                  color: AppTheme.successGreen,
+                  label: context.l10n.presenceLegendShort,
+                ),
                 const SizedBox(width: AppTheme.spacing24),
-                _LegendItem(color: AppTheme.warningYellow, label: '2-10 min'),
+                _LegendItem(
+                  color: AppTheme.warningYellow,
+                  label: context.l10n.presenceLegendMedium,
+                ),
               ],
             ),
           ],
@@ -1024,7 +1052,7 @@ class _QuietMeshHint extends StatelessWidget {
           const SizedBox(width: AppTheme.spacing10),
           Expanded(
             child: Text(
-              'Mesh is quiet right now — nodes appear as they come online.',
+              context.l10n.presenceQuietMesh,
               style: Theme.of(
                 context,
               ).textTheme.bodySmall?.copyWith(color: context.textSecondary),
@@ -1050,7 +1078,7 @@ class _FamiliarBadge extends StatelessWidget {
         border: Border.all(color: AppTheme.primaryPurple.withAlpha(51)),
       ),
       child: Text(
-        'Familiar',
+        context.l10n.presenceFamiliarBadge,
         style: Theme.of(context).textTheme.labelSmall?.copyWith(
           color: AppTheme.primaryPurple,
           fontSize: 10,
@@ -1075,7 +1103,7 @@ class _BackNearbyBadge extends StatelessWidget {
         border: Border.all(color: AppTheme.accentOrange.withAlpha(51)),
       ),
       child: Text(
-        'Back nearby',
+        context.l10n.presenceBackNearby,
         style: Theme.of(context).textTheme.labelSmall?.copyWith(
           color: AppTheme.accentOrange,
           fontSize: 10,

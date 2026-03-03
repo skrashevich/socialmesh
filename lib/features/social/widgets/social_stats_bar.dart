@@ -2,6 +2,7 @@
 // lint-allow: haptic-feedback — onTap delegates to parent callback
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:socialmesh/core/l10n/l10n_extension.dart';
 import 'package:socialmesh/core/theme.dart';
 
 /// A bar displaying social stats (followers, following, posts).
@@ -35,17 +36,21 @@ class SocialStatsBar extends StatelessWidget {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _CompactStat(count: postCount, label: 'Posts', onTap: onPostsTap),
+          _CompactStat(
+            count: postCount,
+            label: context.l10n.socialStatsBarPosts,
+            onTap: onPostsTap,
+          ),
           const SizedBox(width: AppTheme.spacing24),
           _CompactStat(
             count: followerCount,
-            label: 'Followers',
+            label: context.l10n.socialStatsBarFollowers,
             onTap: onFollowersTap,
           ),
           const SizedBox(width: AppTheme.spacing24),
           _CompactStat(
             count: followingCount,
-            label: 'Following',
+            label: context.l10n.socialStatsBarFollowing,
             onTap: onFollowingTap,
           ),
         ],
@@ -63,15 +68,19 @@ class SocialStatsBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _StatItem(count: postCount, label: 'Posts', onTap: onPostsTap),
+          _StatItem(
+            count: postCount,
+            label: context.l10n.socialStatsBarPosts,
+            onTap: onPostsTap,
+          ),
           _StatItem(
             count: followerCount,
-            label: 'Followers',
+            label: context.l10n.socialStatsBarFollowers,
             onTap: onFollowersTap,
           ),
           _StatItem(
             count: followingCount,
-            label: 'Following',
+            label: context.l10n.socialStatsBarFollowing,
             onTap: onFollowingTap,
           ),
         ],

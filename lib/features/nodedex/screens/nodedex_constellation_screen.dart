@@ -52,6 +52,16 @@ enum _EdgeDensity {
     final values = _EdgeDensity.values;
     return values[(index + 1) % values.length];
   }
+
+  String localizedLabel(BuildContext context) {
+    final l10n = context.l10n;
+    return switch (this) {
+      _EdgeDensity.sparse => l10n.nodedexEdgeDensitySparse,
+      _EdgeDensity.normal => l10n.nodedexEdgeDensityNormal,
+      _EdgeDensity.dense => l10n.nodedexEdgeDensityDense,
+      _EdgeDensity.all => l10n.nodedexEdgeDensityAll,
+    };
+  }
 }
 
 // =============================================================================
@@ -100,19 +110,21 @@ class _NodeDexConstellationScreenState
       topicId: 'nodedex_constellation',
       stepKeys: const {},
       child: GlassScaffold.body(
-        title: 'Constellation',
+        title: context.l10n.nodedexConstellationTitle,
         actions: [
           if (constellation.nodeCount > 0) ...[
             // Density cycle button
             IconButton(
               icon: Icon(_edgeDensity.icon, size: 20),
-              tooltip: 'Edge density: ${_edgeDensity.label}',
+              tooltip: context.l10n.nodedexEdgeDensityTooltip(
+                _edgeDensity.localizedLabel(context),
+              ),
               onPressed: _cycleDensity,
             ),
             // Reset view
             IconButton(
               icon: const Icon(Icons.center_focus_strong_outlined, size: 20),
-              tooltip: 'Reset view',
+              tooltip: context.l10n.nodedexResetViewTooltip,
               onPressed: _resetView,
             ),
           ],
@@ -323,7 +335,7 @@ class _NodeDexConstellationScreenState
             ),
             const SizedBox(height: AppTheme.spacing24),
             Text(
-              'No Constellation Yet',
+              context.l10n.nodedexConstellationEmptyTitle,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
@@ -333,8 +345,7 @@ class _NodeDexConstellationScreenState
             ),
             const SizedBox(height: AppTheme.spacing12),
             Text(
-              'Discover more nodes to see how they connect.\n'
-              'Nodes seen together form constellation links.',
+              context.l10n.nodedexConstellationEmptySubtitle,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 13,
@@ -700,7 +711,7 @@ class _BottomInfoBar extends ConsumerWidget {
         ),
         const SizedBox(width: AppTheme.spacing6),
         Text(
-          '$nodeCount nodes',
+          context.l10n.nodedexConstellationNodeCount(nodeCount),
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w500,
@@ -712,7 +723,7 @@ class _BottomInfoBar extends ConsumerWidget {
         Icon(Icons.link, size: 14, color: context.textTertiary),
         const SizedBox(width: AppTheme.spacing6),
         Text(
-          '$edgeCount links',
+          context.l10n.nodedexConstellationLinkCount(edgeCount),
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w500,
@@ -728,7 +739,7 @@ class _BottomInfoBar extends ConsumerWidget {
             borderRadius: BorderRadius.circular(AppTheme.radius6),
           ),
           child: Text(
-            density.label,
+            density.localizedLabel(context),
             style: TextStyle(
               fontSize: 10,
               fontWeight: FontWeight.w600,
@@ -797,7 +808,7 @@ class _BottomInfoBar extends ConsumerWidget {
                   ),
                   const SizedBox(width: AppTheme.spacing8),
                   Text(
-                    '${entry.coSeenCount} links',
+                    context.l10n.nodedexSelectedLinksCount(entry.coSeenCount),
                     style: TextStyle(
                       fontSize: 11,
                       color: context.textTertiary,
@@ -823,7 +834,7 @@ class _BottomInfoBar extends ConsumerWidget {
               ),
             ),
             child: Text(
-              'Profile',
+              context.l10n.nodedexConstellationProfile,
               style: TextStyle(
                 fontSize: 11,
                 fontWeight: FontWeight.w600,

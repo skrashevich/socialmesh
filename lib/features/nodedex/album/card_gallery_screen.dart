@@ -48,6 +48,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../providers/app_providers.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../services/haptic_service.dart';
 import '../models/nodedex_entry.dart';
@@ -418,7 +419,7 @@ class _GalleryTopBar extends StatelessWidget {
           _GlassButton(
             icon: Icons.close_rounded,
             onTap: onClose,
-            semanticLabel: 'Close gallery',
+            semanticLabel: context.l10n.nodedexCloseGallerySemanticLabel,
           ),
 
           const Spacer(),
@@ -435,7 +436,10 @@ class _GalleryTopBar extends StatelessWidget {
               ),
             ),
             child: Text(
-              '${currentIndex + 1} / $totalCount',
+              context.l10n.nodedexGalleryPositionCounter(
+                currentIndex + 1,
+                totalCount,
+              ),
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
@@ -455,7 +459,7 @@ class _GalleryTopBar extends StatelessWidget {
               HapticFeedback.lightImpact();
               // Hint — visual only, actual flip is on card tap.
             },
-            semanticLabel: 'Tap card to flip',
+            semanticLabel: context.l10n.nodedexTapCardToFlipSemanticLabel,
           ),
         ],
       ),
@@ -578,7 +582,7 @@ class _GalleryBottomBar extends ConsumerWidget {
 
           // Hint text.
           Text(
-            'Tap card to flip \u2022 Swipe to browse',
+            context.l10n.nodedexGalleryHint,
             style: TextStyle(
               fontSize: 10,
               color: Colors.white.withValues(alpha: 0.35),
@@ -725,7 +729,7 @@ class _EmptyGallery extends StatelessWidget {
                 child: _GlassButton(
                   icon: Icons.close_rounded,
                   onTap: onClose,
-                  semanticLabel: 'Close gallery',
+                  semanticLabel: context.l10n.nodedexCloseGallerySemanticLabel,
                 ),
               ),
             ),
@@ -739,7 +743,7 @@ class _EmptyGallery extends StatelessWidget {
             ),
             const SizedBox(height: AppTheme.spacing12),
             Text(
-              'No cards to display',
+              context.l10n.nodedexEmptyGalleryTitle,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
@@ -748,7 +752,7 @@ class _EmptyGallery extends StatelessWidget {
             ),
             const SizedBox(height: AppTheme.spacing8),
             Text(
-              'Discover nodes to fill your collection',
+              context.l10n.nodedexEmptyGalleryDescription,
               style: TextStyle(
                 fontSize: 12,
                 color: Colors.white.withValues(alpha: 0.3),

@@ -9,6 +9,7 @@ import 'package:timeago/timeago.dart' as timeago;
 import '../../../core/logging.dart';
 import '../../../core/safety/error_handler.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../../../core/widgets/app_bottom_sheet.dart';
@@ -45,7 +46,7 @@ class _ReportedContentScreenState extends ConsumerState<ReportedContentScreen>
     final socialService = ref.watch(socialServiceProvider);
 
     return GlassScaffold(
-      title: 'Reported Content',
+      title: context.l10n.socialReportedContentTitle,
       bottom: TabBar(
         controller: _tabController,
         isScrollable: true,
@@ -55,7 +56,10 @@ class _ReportedContentScreenState extends ConsumerState<ReportedContentScreen>
             stream: socialService.watchModerationQueue(),
             builder: (context, snapshot) {
               final count = snapshot.data?.length ?? 0;
-              return _TabWithBadge(label: 'Auto', count: count);
+              return _TabWithBadge(
+                label: context.l10n.socialReportedTabAuto,
+                count: count,
+              );
             },
           ),
           // All reports tab
@@ -63,7 +67,10 @@ class _ReportedContentScreenState extends ConsumerState<ReportedContentScreen>
             stream: socialService.watchPendingReports(),
             builder: (context, snapshot) {
               final count = snapshot.data?.length ?? 0;
-              return _TabWithBadge(label: 'All', count: count);
+              return _TabWithBadge(
+                label: context.l10n.socialReportedTabAll,
+                count: count,
+              );
             },
           ),
           // Posts tab
@@ -72,7 +79,10 @@ class _ReportedContentScreenState extends ConsumerState<ReportedContentScreen>
             builder: (context, snapshot) {
               final count =
                   snapshot.data?.where((r) => r['type'] == 'post').length ?? 0;
-              return _TabWithBadge(label: 'Posts', count: count);
+              return _TabWithBadge(
+                label: context.l10n.socialReportedTabPosts,
+                count: count,
+              );
             },
           ),
           // Comments tab
@@ -82,7 +92,10 @@ class _ReportedContentScreenState extends ConsumerState<ReportedContentScreen>
               final count =
                   snapshot.data?.where((r) => r['type'] == 'comment').length ??
                   0;
-              return _TabWithBadge(label: 'Comments', count: count);
+              return _TabWithBadge(
+                label: context.l10n.socialReportedTabComments,
+                count: count,
+              );
             },
           ),
           // Signals tab
@@ -92,7 +105,10 @@ class _ReportedContentScreenState extends ConsumerState<ReportedContentScreen>
               final count =
                   snapshot.data?.where((r) => r['type'] == 'signal').length ??
                   0;
-              return _TabWithBadge(label: 'Signals', count: count);
+              return _TabWithBadge(
+                label: context.l10n.socialReportedTabSignals,
+                count: count,
+              );
             },
           ),
           // Signal comments tab
@@ -104,7 +120,10 @@ class _ReportedContentScreenState extends ConsumerState<ReportedContentScreen>
                       ?.where((r) => r['type'] == 'signal_comment')
                       .length ??
                   0;
-              return _TabWithBadge(label: 'Sig. Comments', count: count);
+              return _TabWithBadge(
+                label: context.l10n.socialReportedTabSigComments,
+                count: count,
+              );
             },
           ),
         ],
@@ -203,7 +222,7 @@ class _ModerationQueueListState extends ConsumerState<_ModerationQueueList>
                   ),
                   const SizedBox(height: AppTheme.spacing16),
                   Text(
-                    'Error loading moderation queue',
+                    context.l10n.socialReportedErrorLoading,
                     style: theme.textTheme.titleMedium?.copyWith(
                       color: theme.colorScheme.error,
                     ),
@@ -236,14 +255,14 @@ class _ModerationQueueListState extends ConsumerState<_ModerationQueueList>
                 ),
                 const SizedBox(height: AppTheme.spacing16),
                 Text(
-                  'No flagged content',
+                  context.l10n.socialReportedNoFlagged,
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: theme.hintColor,
                   ),
                 ),
                 const SizedBox(height: AppTheme.spacing8),
                 Text(
-                  'Auto-moderation has not flagged any content',
+                  context.l10n.socialReportedNoFlaggedDesc,
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: theme.hintColor,
                   ),
@@ -299,9 +318,9 @@ class _ModerationQueueListState extends ConsumerState<_ModerationQueueList>
 
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Unsuspend User',
+      title: context.l10n.socialUnsuspendUser,
       message: 'Are you sure you want to lift the suspension for $displayName?',
-      confirmLabel: 'Unsuspend',
+      confirmLabel: context.l10n.socialUnsuspend,
     );
 
     if (confirmed == true && context.mounted) {
@@ -314,7 +333,7 @@ class _ModerationQueueListState extends ConsumerState<_ModerationQueueList>
           'reason': 'Admin lifted suspension',
         });
         if (context.mounted) {
-          showSuccessSnackBar(context, 'User unsuspended successfully');
+          showSuccessSnackBar(context, context.l10n.socialUserUnsuspended);
         }
       } catch (e) {
         if (context.mounted) {
@@ -357,10 +376,9 @@ class _ModerationQueueListState extends ConsumerState<_ModerationQueueList>
     final contentType = item['contentType'] as String? ?? 'content';
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Reject & Delete',
-      message:
-          'This will delete the $contentType and issue a warning to the user. Continue?',
-      confirmLabel: 'Reject',
+      title: context.l10n.socialRejectDelete,
+      message: context.l10n.socialRejectDeleteMsg(contentType),
+      confirmLabel: context.l10n.socialModerationReject,
       isDestructive: true,
     );
 
@@ -369,7 +387,10 @@ class _ModerationQueueListState extends ConsumerState<_ModerationQueueList>
       try {
         await socialService.rejectModerationItem(item['id']);
         if (context.mounted) {
-          showSuccessSnackBar(context, 'Content rejected and user warned');
+          showSuccessSnackBar(
+            context,
+            context.l10n.socialReportedContentRejected,
+          );
         }
       } catch (e) {
         if (context.mounted) {
@@ -463,9 +484,11 @@ class _ModerationCard extends StatelessWidget {
 
     // Map decision to display text
     final decisionLabel = switch (decision) {
-      'reject' || 'auto_reject' => 'REJECTED',
-      'review' || 'flag' || 'flag_for_review' => 'FLAGGED',
-      _ => 'PENDING',
+      'reject' || 'auto_reject' => context.l10n.socialStatusRejected,
+      'review' ||
+      'flag' ||
+      'flag_for_review' => context.l10n.socialStatusFlagged,
+      _ => context.l10n.socialStatusPending,
     };
 
     return Card(
@@ -568,7 +591,7 @@ class _ModerationCard extends StatelessWidget {
                         ),
                         const SizedBox(width: AppTheme.spacing8),
                         Text(
-                          'Violations Detected',
+                          context.l10n.socialViolationsDetected,
                           style: theme.textTheme.bodyMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: theme.colorScheme.error,
@@ -669,7 +692,7 @@ class _ModerationCard extends StatelessWidget {
                   child: OutlinedButton.icon(
                     onPressed: onApprove,
                     icon: const Icon(Icons.check_circle_outline, size: 18),
-                    label: const Text('Approve'),
+                    label: Text(context.l10n.socialModerationApprove),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: AppTheme.successGreen,
                       side: BorderSide(color: AppTheme.successGreen),
@@ -681,7 +704,7 @@ class _ModerationCard extends StatelessWidget {
                   child: FilledButton.icon(
                     onPressed: onReject,
                     icon: const Icon(Icons.delete_outline, size: 18),
-                    label: const Text('Reject'),
+                    label: Text(context.l10n.socialModerationReject),
                     style: FilledButton.styleFrom(
                       backgroundColor: theme.colorScheme.error,
                     ),
@@ -767,7 +790,9 @@ class _UserModerationCard extends StatelessWidget {
                       Icon(icon, size: 14, color: fgColor),
                       const SizedBox(width: AppTheme.spacing6),
                       Text(
-                        isSuspension ? 'SUSPENDED' : 'STRIKE',
+                        isSuspension
+                            ? context.l10n.socialStatusSuspended
+                            : context.l10n.socialStatusStrike,
                         style: TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.bold,
@@ -848,7 +873,7 @@ class _UserModerationCard extends StatelessWidget {
                       ),
                       const SizedBox(width: AppTheme.spacing8),
                       Text(
-                        'Reason',
+                        context.l10n.socialReason,
                         style: theme.textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: theme.colorScheme.error,
@@ -876,7 +901,7 @@ class _UserModerationCard extends StatelessWidget {
                   child: OutlinedButton.icon(
                     onPressed: onDismiss,
                     icon: const Icon(Icons.done, size: 18),
-                    label: const Text('Dismiss'),
+                    label: Text(context.l10n.socialDismiss),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: theme.hintColor,
                     ),
@@ -888,7 +913,7 @@ class _UserModerationCard extends StatelessWidget {
                     child: FilledButton.icon(
                       onPressed: onUnsuspend,
                       icon: const Icon(Icons.lock_open, size: 18),
-                      label: const Text('Unsuspend'),
+                      label: Text(context.l10n.socialUnsuspend),
                       style: FilledButton.styleFrom(
                         backgroundColor: AppTheme.successGreen,
                       ),
@@ -935,7 +960,7 @@ class _ReportsList extends ConsumerWidget {
                   ),
                   const SizedBox(height: AppTheme.spacing16),
                   Text(
-                    'Error loading reports',
+                    context.l10n.socialErrorLoadingReports,
                     style: theme.textTheme.titleMedium?.copyWith(
                       color: theme.colorScheme.error,
                     ),
@@ -983,8 +1008,8 @@ class _ReportsList extends ConsumerWidget {
                 const SizedBox(height: AppTheme.spacing16),
                 Text(
                   filter == null
-                      ? 'No pending reports'
-                      : 'No pending $filter reports',
+                      ? context.l10n.socialNoPendingReports
+                      : context.l10n.socialNoPendingFilterReports(filter!),
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: theme.hintColor,
                   ),
@@ -1023,7 +1048,7 @@ class _ReportsList extends ConsumerWidget {
     try {
       await socialService.dismissReport(reportId);
       if (context.mounted) {
-        showSuccessSnackBar(context, 'Report dismissed');
+        showSuccessSnackBar(context, context.l10n.socialReportDismissed);
       }
     } catch (e) {
       if (context.mounted) {
@@ -1044,8 +1069,8 @@ class _ReportsList extends ConsumerWidget {
 
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Delete $type',
-      message: 'This will permanently delete the reported $type. Continue?',
+      title: context.l10n.socialDeleteType(type),
+      message: context.l10n.socialDeleteTypeConfirm(type),
       confirmLabel: 'Delete',
       isDestructive: true,
     );
@@ -1054,7 +1079,10 @@ class _ReportsList extends ConsumerWidget {
       try {
         await socialService.deleteReportedContent(report['id']);
         if (context.mounted) {
-          showSuccessSnackBar(context, '${type.capitalize()} deleted');
+          showSuccessSnackBar(
+            context,
+            context.l10n.socialTypeDeleted(type.capitalize()),
+          );
         }
       } catch (e) {
         if (context.mounted) {
@@ -1073,7 +1101,7 @@ class _ReportsList extends ConsumerWidget {
     final targetId = report['targetId'] as String?;
 
     if (targetId == null) {
-      showErrorSnackBar(context, 'Content ID not found');
+      showErrorSnackBar(context, context.l10n.socialContentIdNotFound);
       return;
     }
 
@@ -1087,7 +1115,7 @@ class _ReportsList extends ConsumerWidget {
       if (postId != null) {
         Navigator.pushNamed(context, '/post-detail', arguments: postId);
       } else {
-        showErrorSnackBar(context, 'Post not found for this comment');
+        showErrorSnackBar(context, context.l10n.socialPostNotFoundForComment);
       }
     } else if (type == 'signal') {
       _showSignalPreviewSheet(context, report);
@@ -1190,7 +1218,7 @@ class _ReportsList extends ConsumerWidget {
         },
       );
       if (context.mounted) {
-        showErrorSnackBar(context, 'Cannot identify user to ban');
+        showErrorSnackBar(context, context.l10n.socialCannotIdentifyUser);
       }
       return;
     }
@@ -1256,7 +1284,10 @@ class _ReportsList extends ConsumerWidget {
 
       if (context.mounted) {
         Navigator.pop(context); // Close loading
-        showSuccessSnackBar(context, 'User banned and $type deleted');
+        showSuccessSnackBar(
+          context,
+          context.l10n.socialUserBannedAndDeleted(type),
+        );
       }
     } on FirebaseFunctionsException catch (e, stackTrace) {
       AppLogging.social(
@@ -1285,7 +1316,7 @@ class _ReportsList extends ConsumerWidget {
         Navigator.pop(context); // Close loading
         showErrorSnackBar(
           context,
-          'Failed to ban user: [${e.code}] ${e.message}',
+          context.l10n.socialBanUserFailed('[${e.code}] ${e.message}'),
         );
       }
     } catch (e, stackTrace) {
@@ -1314,7 +1345,10 @@ class _ReportsList extends ConsumerWidget {
 
       if (context.mounted) {
         Navigator.pop(context); // Close loading
-        showErrorSnackBar(context, 'Failed to ban user: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.socialBanUserFailed(e.toString()),
+        );
       }
     }
   }

@@ -121,7 +121,7 @@ class _NodeDexDetailScreenState extends ConsumerState<NodeDexDetailScreen>
 
     if (entry == null) {
       return GlassScaffold.body(
-        title: 'NodeDex',
+        title: context.l10n.nodedexTitle,
         body: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -133,7 +133,7 @@ class _NodeDexDetailScreenState extends ConsumerState<NodeDexDetailScreen>
               ),
               const SizedBox(height: AppTheme.spacing16),
               Text(
-                'Node not found in NodeDex',
+                context.l10n.nodedexDetailNotFoundTitle,
                 style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w600,
@@ -142,7 +142,7 @@ class _NodeDexDetailScreenState extends ConsumerState<NodeDexDetailScreen>
               ),
               const SizedBox(height: AppTheme.spacing8),
               Text(
-                'This node has not been discovered yet.',
+                context.l10n.nodedexDetailNotFoundSubtitle,
                 style: TextStyle(fontSize: 13, color: context.textTertiary),
               ),
             ],
@@ -171,7 +171,7 @@ class _NodeDexDetailScreenState extends ConsumerState<NodeDexDetailScreen>
               size: 20,
               color: context.accentColor,
             ),
-            tooltip: 'Share Sigil Card',
+            tooltip: context.l10n.nodedexShareSigilCard,
             onPressed: () {
               AppLogging.nodeDex(
                 'Sigil card sheet opened for node ${widget.nodeNum}',
@@ -191,11 +191,11 @@ class _NodeDexDetailScreenState extends ConsumerState<NodeDexDetailScreen>
               }
             },
             itemBuilder: (context) => [
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'send_file',
                 child: ListTile(
-                  leading: Icon(Icons.attach_file),
-                  title: Text('Send file'),
+                  leading: const Icon(Icons.attach_file),
+                  title: Text(context.l10n.nodedexSendFile),
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
@@ -237,7 +237,7 @@ class _NodeDexDetailScreenState extends ConsumerState<NodeDexDetailScreen>
               index: 1,
               reduceMotion: reduceMotion,
               child: _CardContainer(
-                title: 'Summary',
+                title: context.l10n.nodedexSummaryCardTitle,
                 icon: Icons.auto_awesome_outlined,
                 helpKey: 'auto_summary',
                 child: NodeSummaryCard(
@@ -296,7 +296,7 @@ class _NodeDexDetailScreenState extends ConsumerState<NodeDexDetailScreen>
                 index: 5,
                 reduceMotion: reduceMotion,
                 child: _CardContainer(
-                  title: 'Observation Timeline',
+                  title: context.l10n.nodedexObservationTimelineTitle,
                   icon: Icons.timeline,
                   helpKey: 'observation_timeline',
                   child: ObservationTimeline(
@@ -424,11 +424,11 @@ class _NodeDexDetailScreenState extends ConsumerState<NodeDexDetailScreen>
           SliverPersistentHeader(
             pinned: true,
             delegate: _NodeDexStickyHeaderDelegate(
-              title: 'Activity Timeline',
+              title: context.l10n.nodedexActivityTimelineTitle,
               icon: Icons.timeline,
               helpKey: 'activity_timeline',
               trailing: timelineEventCount != null
-                  ? '$timelineEventCount total'
+                  ? context.l10n.nodedexTotalCount(timelineEventCount)
                   : null,
             ),
           ),
@@ -450,10 +450,12 @@ class _NodeDexDetailScreenState extends ConsumerState<NodeDexDetailScreen>
             SliverPersistentHeader(
               pinned: true,
               delegate: _NodeDexStickyHeaderDelegate(
-                title: 'Co-Seen Links',
+                title: context.l10n.nodedexCoSeenLinksTitle,
                 icon: Icons.auto_awesome,
                 helpKey: 'coseen',
-                trailing: '${entry.coSeenNodes.length} total',
+                trailing: context.l10n.nodedexTotalCount(
+                  entry.coSeenNodes.length,
+                ),
               ),
             ),
             SliverToBoxAdapter(
@@ -503,6 +505,7 @@ class _NodeDexDetailScreenState extends ConsumerState<NodeDexDetailScreen>
   Future<void> _sendFileToNode(BuildContext ctx, int nodeNum) async {
     final haptics = ref.read(hapticServiceProvider);
     final notifier = ref.read(fileTransferStateProvider.notifier);
+    final l10n = ctx.l10n;
 
     await haptics.trigger(HapticType.medium);
     if (!ctx.mounted) return;
@@ -511,7 +514,10 @@ class _NodeDexDetailScreenState extends ConsumerState<NodeDexDetailScreen>
 
     if (!ctx.mounted) return;
     if (transfer != null) {
-      showSuccessSnackBar(ctx, 'File transfer started: ${transfer.filename}');
+      showSuccessSnackBar(
+        ctx,
+        l10n.nodedexFileTransferStarted(transfer.filename),
+      );
     }
   }
 
@@ -564,7 +570,7 @@ class _ScoredTraitsList extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'Additional Traits',
+            context.l10n.nodedexAdditionalTraits,
             style: TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w600,
@@ -929,7 +935,7 @@ class _SigilHeroSectionState extends ConsumerState<_SigilHeroSection> {
               decoration: InputDecoration(
                 isDense: true,
                 counterText: '',
-                hintText: 'Nickname',
+                hintText: context.l10n.nodedexNicknameHint,
                 hintStyle: TextStyle(
                   fontSize: 13,
                   color: context.textTertiary.withValues(alpha: 0.6),
@@ -995,7 +1001,9 @@ class _SigilHeroSectionState extends ConsumerState<_SigilHeroSection> {
           ),
           const SizedBox(width: AppTheme.spacing4),
           Text(
-            hasNickname ? widget.entry.localNickname! : 'Set nickname',
+            hasNickname
+                ? widget.entry.localNickname!
+                : context.l10n.nodedexSetNickname,
             style: TextStyle(
               fontSize: 12,
               fontStyle: hasNickname ? FontStyle.normal : FontStyle.italic,
@@ -1031,11 +1039,20 @@ class _ColorPalette extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _PaletteDot(color: sigil.primaryColor, label: 'Primary'),
+        _PaletteDot(
+          color: sigil.primaryColor,
+          label: context.l10n.nodedexPaletteColorPrimary,
+        ),
         const SizedBox(width: AppTheme.spacing12),
-        _PaletteDot(color: sigil.secondaryColor, label: 'Secondary'),
+        _PaletteDot(
+          color: sigil.secondaryColor,
+          label: context.l10n.nodedexPaletteColorSecondary,
+        ),
         const SizedBox(width: AppTheme.spacing12),
-        _PaletteDot(color: sigil.tertiaryColor, label: 'Tertiary'),
+        _PaletteDot(
+          color: sigil.tertiaryColor,
+          label: context.l10n.nodedexPaletteColorTertiary,
+        ),
       ],
     );
   }
@@ -1112,55 +1129,55 @@ class _DiscoveryStatsCard extends StatelessWidget {
     final lastSeenTime = timeFormat.format(entry.lastSeen);
     final ageDays = entry.age.inDays;
     final ageLabel = ageDays == 0
-        ? '${entry.age.inHours}h ago'
+        ? context.l10n.nodedexKnownForHoursAgo(entry.age.inHours)
         : ageDays == 1
-        ? '1 day ago'
-        : '$ageDays days ago';
+        ? context.l10n.nodedexKnownForOneDayAgo
+        : context.l10n.nodedexKnownForDaysAgo(ageDays);
 
     return _CardContainer(
-      title: 'Discovery',
+      title: context.l10n.nodedexDiscoveryTitle,
       icon: Icons.explore_outlined,
       helpKey: 'discovery',
       child: Column(
         children: [
           _InfoRow(
-            label: 'First Discovered',
+            label: context.l10n.nodedexFirstDiscovered,
             value: firstSeen,
             icon: Icons.calendar_today_outlined,
           ),
           _InfoRow(
-            label: 'Last Seen',
+            label: context.l10n.nodedexLastSeen,
             value: '$lastSeen at $lastSeenTime',
             icon: Icons.schedule,
           ),
           _InfoRow(
-            label: 'Known For',
+            label: context.l10n.nodedexKnownFor,
             value: ageLabel,
             icon: Icons.timelapse_outlined,
           ),
           _InfoRow(
-            label: 'Encounters',
+            label: context.l10n.nodedexEncountersLabel,
             value: entry.encounterCount.toString(),
             icon: Icons.repeat,
           ),
           if (entry.maxDistanceSeen != null)
             _InfoRow(
-              label: 'Max Range',
+              label: context.l10n.nodedexMaxRangeLabel,
               value: _formatDistance(entry.maxDistanceSeen!),
               icon: Icons.straighten,
             ),
           _InfoRow(
-            label: 'Messages',
+            label: context.l10n.nodedexMessagesLabel,
             value: entry.messageCount.toString(),
             icon: Icons.chat_bubble_outline,
           ),
           _InfoRow(
-            label: 'Regions',
+            label: context.l10n.nodedexRegionsLabel,
             value: entry.regionCount.toString(),
             icon: Icons.public_outlined,
           ),
           _InfoRow(
-            label: 'Positions',
+            label: context.l10n.nodedexPositionsLabel,
             value: entry.distinctPositionCount.toString(),
             icon: Icons.pin_drop_outlined,
           ),
@@ -1192,21 +1209,21 @@ class _SignalRecordsCard extends StatelessWidget {
     if (!hasSignalData) return const SizedBox.shrink();
 
     return _CardContainer(
-      title: 'Signal Records',
+      title: context.l10n.nodedexSignalRecordsTitle,
       icon: Icons.signal_cellular_alt,
       helpKey: 'signal',
       child: Column(
         children: [
           if (entry.bestSnr != null)
             _InfoRow(
-              label: 'Best SNR',
+              label: context.l10n.nodedexBestSnr,
               value: '${entry.bestSnr} dB',
               icon: Icons.trending_up,
               valueColor: _snrColor(entry.bestSnr!),
             ),
           if (entry.bestRssi != null)
             _InfoRow(
-              label: 'Best RSSI',
+              label: context.l10n.nodedexBestRssi,
               value: '${entry.bestRssi} dBm',
               icon: Icons.cell_tower,
               valueColor: _rssiColor(entry.bestRssi!),
@@ -1244,7 +1261,7 @@ class _SocialTagCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _CardContainer(
-      title: 'Classification',
+      title: context.l10n.nodedexClassificationTitle,
       icon: Icons.label_outline,
       helpKey: 'social_tag',
       trailing: GestureDetector(
@@ -1256,7 +1273,9 @@ class _SocialTagCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppTheme.radius12),
           ),
           child: Text(
-            entry.socialTag != null ? 'Change' : 'Classify',
+            entry.socialTag != null
+                ? context.l10n.nodedexClassificationChange
+                : context.l10n.nodedexClassificationClassify,
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
@@ -1273,7 +1292,7 @@ class _SocialTagCard extends StatelessWidget {
           : Padding(
               padding: const EdgeInsets.only(top: 4),
               child: Text(
-                'No classification assigned. Tap "Classify" to add one.',
+                context.l10n.nodedexNoClassification,
                 style: TextStyle(
                   fontSize: 13,
                   color: context.textTertiary,
@@ -1315,7 +1334,7 @@ class _UserNoteCard extends StatelessWidget {
       },
       behavior: HitTestBehavior.translucent,
       child: _CardContainer(
-        title: 'Note',
+        title: context.l10n.nodedexNoteTitle,
         icon: Icons.edit_note,
         helpKey: 'note',
         trailing: editing
@@ -1337,7 +1356,7 @@ class _UserNoteCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(AppTheme.radius12),
                       ),
                       child: Text(
-                        'Cancel',
+                        context.l10n.nodedexNoteCancel,
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
@@ -1362,7 +1381,7 @@ class _UserNoteCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(AppTheme.radius12),
                       ),
                       child: Text(
-                        'Save',
+                        context.l10n.nodedexNoteSave,
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
@@ -1385,7 +1404,9 @@ class _UserNoteCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(AppTheme.radius12),
                   ),
                   child: Text(
-                    entry.userNote != null ? 'Edit' : 'Add Note',
+                    entry.userNote != null
+                        ? context.l10n.nodedexNoteEdit
+                        : context.l10n.nodedexNoteAdd,
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
@@ -1409,7 +1430,7 @@ class _UserNoteCard extends StatelessWidget {
                   },
                   style: TextStyle(fontSize: 14, color: context.textPrimary),
                   decoration: InputDecoration(
-                    hintText: 'Write a note about this node...',
+                    hintText: context.l10n.nodedexNoteHint,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       color: context.textTertiary,
@@ -1458,7 +1479,7 @@ class _UserNoteCard extends StatelessWidget {
                         ),
                       )
                     : Text(
-                        'No note yet. Tap "Add Note" to write one.',
+                        context.l10n.nodedexNoNoteYet,
                         style: TextStyle(
                           fontSize: 13,
                           color: context.textTertiary,
@@ -1486,7 +1507,7 @@ class _RegionHistoryCard extends StatelessWidget {
       ..sort((a, b) => b.lastSeen.compareTo(a.lastSeen));
 
     return _CardContainer(
-      title: 'Regions',
+      title: context.l10n.nodedexRegionsLabel,
       icon: Icons.public_outlined,
       helpKey: 'regions',
       child: Column(
@@ -1524,7 +1545,7 @@ class _RegionHistoryCard extends StatelessWidget {
                       ),
                       const SizedBox(height: AppTheme.spacing2),
                       Text(
-                        '${region.encounterCount} encounter${region.encounterCount == 1 ? '' : 's'} '
+                        '${context.l10n.nodedexRegionEncounterCount(region.encounterCount)} '
                         '\u00B7 ${dateFormat.format(region.firstSeen)} \u2013 ${dateFormat.format(region.lastSeen)}',
                         style: TextStyle(
                           fontSize: 11,
@@ -1613,7 +1634,7 @@ class _EncounterActivityCardState extends State<_EncounterActivityCard> {
       initialDate: _selectedDate ?? latest,
       firstDate: DateTime(earliest.year, earliest.month, earliest.day),
       lastDate: DateTime(latest.year, latest.month, latest.day),
-      helpText: 'Filter encounters by date',
+      helpText: context.l10n.nodedexFilterByDateHelp,
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
@@ -1664,11 +1685,11 @@ class _EncounterActivityCardState extends State<_EncounterActivityCard> {
         : encounters.sublist(startIndex, endIndex);
 
     return _CardContainer(
-      title: 'Encounter Activity',
+      title: context.l10n.nodedexEncounterActivityTitle,
       icon: Icons.insights,
       helpKey: 'encounters',
       trailing: Text(
-        '${allEncounters.length} total',
+        context.l10n.nodedexTotalCount(allEncounters.length),
         style: TextStyle(
           fontSize: 11,
           color: context.textTertiary,
@@ -1712,7 +1733,7 @@ class _EncounterActivityCardState extends State<_EncounterActivityCard> {
                     ? DateFormat(
                         'MMM d, yyyy',
                       ).format(_selectedDate!).toUpperCase()
-                    : 'RECENT',
+                    : context.l10n.nodedexRecentLabel,
                 style: TextStyle(
                   fontSize: 10,
                   fontWeight: FontWeight.w700,
@@ -1746,7 +1767,7 @@ class _EncounterActivityCardState extends State<_EncounterActivityCard> {
                         Icon(Icons.close, size: 10, color: context.accentColor),
                         const SizedBox(width: AppTheme.spacing2),
                         Text(
-                          'Clear',
+                          context.l10n.nodedexClearFilter,
                           style: TextStyle(
                             fontSize: 9,
                             fontWeight: FontWeight.w600,
@@ -1761,7 +1782,7 @@ class _EncounterActivityCardState extends State<_EncounterActivityCard> {
               const Spacer(),
               if (encounters.isNotEmpty)
                 Text(
-                  '${encounters.length} encounter${encounters.length == 1 ? '' : 's'}',
+                  context.l10n.nodedexEncounterCountLabel(encounters.length),
                   style: TextStyle(fontSize: 9, color: context.textTertiary),
                 ),
               const SizedBox(width: AppTheme.spacing8),
@@ -1795,8 +1816,8 @@ class _EncounterActivityCardState extends State<_EncounterActivityCard> {
               child: Center(
                 child: Text(
                   _selectedDate != null
-                      ? 'No encounters on this date'
-                      : 'No encounters recorded',
+                      ? context.l10n.nodedexNoEncountersOnDate
+                      : context.l10n.nodedexNoEncountersRecorded,
                   style: TextStyle(
                     fontSize: 11,
                     color: context.textTertiary,
@@ -2016,15 +2037,24 @@ class _EncounterBarChart extends StatelessWidget {
         const SizedBox(height: AppTheme.spacing6),
         Row(
           children: [
-            _LegendDot(color: _signalColor(context, 'good'), label: 'Strong'),
+            _LegendDot(
+              color: _signalColor(context, 'good'),
+              label: context.l10n.nodedexLegendStrong,
+            ),
             const SizedBox(width: AppTheme.spacing10),
-            _LegendDot(color: _signalColor(context, 'mid'), label: 'Fair'),
+            _LegendDot(
+              color: _signalColor(context, 'mid'),
+              label: context.l10n.nodedexLegendFair,
+            ),
             const SizedBox(width: AppTheme.spacing10),
-            _LegendDot(color: _signalColor(context, 'weak'), label: 'Weak'),
+            _LegendDot(
+              color: _signalColor(context, 'weak'),
+              label: context.l10n.nodedexLegendWeak,
+            ),
             const SizedBox(width: AppTheme.spacing10),
             _LegendDot(
               color: context.accentColor.withValues(alpha: 0.5),
-              label: 'No data',
+              label: context.l10n.nodedexLegendNoData,
             ),
           ],
         ),
@@ -2122,7 +2152,7 @@ class _SingleDaySummary extends StatelessWidget {
           ),
           const SizedBox(height: AppTheme.spacing4),
           Text(
-            'encounter${count == 1 ? '' : 's'}',
+            context.l10n.nodedexEncountersLabel,
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w500,
@@ -2229,7 +2259,7 @@ class _ActivityBar extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 0.5),
       child: Tooltip(
-        message: '$count encounter${count == 1 ? '' : 's'}',
+        message: context.l10n.nodedexEncounterCountLabel(count),
         child: Container(
           height: barHeight,
           decoration: BoxDecoration(
@@ -2299,7 +2329,7 @@ class _SignalSparkline extends StatelessWidget {
             ),
             const SizedBox(width: AppTheme.spacing4),
             Text(
-              'SNR TREND',
+              context.l10n.nodedexSnrTrend,
               style: TextStyle(
                 fontSize: 10,
                 fontWeight: FontWeight.w700,
@@ -2309,7 +2339,7 @@ class _SignalSparkline extends StatelessWidget {
             ),
             const Spacer(),
             Text(
-              'Last ${withSnr.length} readings',
+              context.l10n.nodedexLastReadings(withSnr.length),
               style: TextStyle(fontSize: 9, color: context.textTertiary),
             ),
           ],
@@ -2573,7 +2603,7 @@ class _CoSeenNodesBodyState extends ConsumerState<_CoSeenNodesBody> {
       child: Column(
         children: [
           Text(
-            'Nodes frequently seen in the same session',
+            context.l10n.nodedexCoSeenDescription,
             style: TextStyle(fontSize: 12, color: context.textTertiary),
           ),
           const SizedBox(height: AppTheme.spacing8),
@@ -2675,7 +2705,9 @@ class _CoSeenNodesBodyState extends ConsumerState<_CoSeenNodesBody> {
                           ),
                         ),
                         Tooltip(
-                          message: 'Seen together ${relationship.count} times',
+                          message: context.l10n.nodedexSeenTogetherCount(
+                            relationship.count,
+                          ),
                           child: Container(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 8,
@@ -2829,45 +2861,45 @@ class _DeviceInfoCard extends StatelessWidget {
     if (!hasDeviceInfo) return const SizedBox.shrink();
 
     return _CardContainer(
-      title: 'Device',
+      title: context.l10n.nodedexDeviceTitle,
       icon: Icons.developer_board_outlined,
       helpKey: 'device',
       child: Column(
         children: [
           if (node.hardwareModel != null)
             _InfoRow(
-              label: 'Hardware',
+              label: context.l10n.nodedexHardwareLabel,
               value: node.hardwareModel!,
               icon: Icons.memory,
             ),
           if (node.firmwareVersion != null)
             _InfoRow(
-              label: 'Firmware',
+              label: context.l10n.nodedexFirmwareLabel,
               value: node.firmwareVersion!,
               icon: Icons.system_update_outlined,
             ),
           if (node.batteryLevel != null)
             _InfoRow(
-              label: 'Battery',
+              label: context.l10n.nodedexBatteryLabel,
               value: '${node.batteryLevel}%',
               icon: Icons.battery_std,
               valueColor: _batteryColor(node.batteryLevel!),
             ),
           if (node.uptimeSeconds != null)
             _InfoRow(
-              label: 'Uptime',
+              label: context.l10n.nodedexUptimeLabel,
               value: _formatUptime(node.uptimeSeconds!),
               icon: Icons.timer_outlined,
             ),
           if (node.channelUtilization != null)
             _InfoRow(
-              label: 'Channel Util',
+              label: context.l10n.nodedexChannelUtilLabel,
               value: '${node.channelUtilization!.toStringAsFixed(1)}%',
               icon: Icons.bar_chart,
             ),
           if (node.airUtilTx != null)
             _InfoRow(
-              label: 'Air Util TX',
+              label: context.l10n.nodedexAirUtilTxLabel,
               value: '${node.airUtilTx!.toStringAsFixed(1)}%',
               icon: Icons.cell_tower,
             ),
@@ -3019,7 +3051,7 @@ class _SectionInfoButton extends StatelessWidget {
                 ),
                 const SizedBox(width: AppTheme.spacing8),
                 Text(
-                  _titleForKey(helpKey),
+                  _titleForKey(helpKey, context),
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
@@ -3043,32 +3075,33 @@ class _SectionInfoButton extends StatelessWidget {
     );
   }
 
-  String _titleForKey(String key) {
+  String _titleForKey(String key, BuildContext context) {
+    final l10n = context.l10n;
     switch (key) {
       case 'sigil':
-        return 'Sigil';
+        return l10n.nodedexHelpSigil;
       case 'trait':
-        return 'Personality Trait';
+        return l10n.nodedexHelpPersonalityTrait;
       case 'discovery':
-        return 'Discovery Stats';
+        return l10n.nodedexHelpDiscoveryStats;
       case 'signal':
-        return 'Signal Records';
+        return l10n.nodedexHelpSignalRecords;
       case 'social_tag':
-        return 'Classification';
+        return l10n.nodedexHelpClassification;
       case 'note':
-        return 'Note';
+        return l10n.nodedexHelpNote;
       case 'regions':
-        return 'Region History';
+        return l10n.nodedexHelpRegionHistory;
       case 'encounters':
-        return 'Recent Encounters';
+        return l10n.nodedexHelpRecentEncounters;
       case 'activity_timeline':
-        return 'Activity Timeline';
+        return l10n.nodedexHelpActivityTimeline;
       case 'constellation':
-        return 'Constellation Links';
+        return l10n.nodedexHelpConstellationLinks;
       case 'device':
-        return 'Device Info';
+        return l10n.nodedexHelpDeviceInfo;
       default:
-        return 'Info';
+        return l10n.nodedexHelpInfoDefault;
     }
   }
 }
@@ -3407,7 +3440,7 @@ class _NodeFileTransfersCard extends ConsumerWidget {
                   Icon(Icons.swap_vert, size: 16, color: context.textSecondary),
                   const SizedBox(width: AppTheme.spacing6),
                   Text(
-                    'File Transfers',
+                    context.l10n.nodedexFileTransfersTitle,
                     style: TextStyle(
                       color: context.textSecondary,
                       fontSize: 13,

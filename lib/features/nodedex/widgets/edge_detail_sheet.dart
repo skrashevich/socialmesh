@@ -185,7 +185,7 @@ class EdgeDetailSheet extends ConsumerWidget {
         ),
         const SizedBox(height: AppTheme.spacing12),
         Text(
-          'No relationship data',
+          context.l10n.nodedexNoRelationshipDataTitle,
           style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w600,
@@ -194,7 +194,7 @@ class EdgeDetailSheet extends ConsumerWidget {
         ),
         const SizedBox(height: AppTheme.spacing6),
         Text(
-          'These nodes have not been observed together.',
+          context.l10n.nodedexNoRelationshipDataDescription,
           style: TextStyle(fontSize: 13, color: context.textTertiary),
         ),
         const SizedBox(height: AppTheme.spacing16),
@@ -226,7 +226,7 @@ class EdgeDetailSheet extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Constellation Link',
+                context.l10n.nodedexConstellationLinkTitle,
                 style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
@@ -236,7 +236,7 @@ class EdgeDetailSheet extends ConsumerWidget {
               ),
               const SizedBox(height: AppTheme.spacing2),
               Text(
-                'Co-seen relationship details',
+                context.l10n.nodedexCoSeenRelationshipDetails,
                 style: TextStyle(fontSize: 12, color: context.textTertiary),
               ),
             ],
@@ -346,7 +346,7 @@ class EdgeDetailSheet extends ConsumerWidget {
   ) {
     // Strength is a logarithmic scale based on co-seen count.
     // 1x = minimal, 5x = moderate, 10+ = strong, 25+ = very strong
-    final strength = _strengthLabel(relationship.count);
+    final strength = _strengthLabel(context, relationship.count);
     final strengthFraction = _strengthFraction(relationship.count);
     final isDark = context.isDarkMode;
 
@@ -358,7 +358,7 @@ class EdgeDetailSheet extends ConsumerWidget {
             Icon(Icons.signal_cellular_alt, size: 14, color: accent),
             const SizedBox(width: AppTheme.spacing6),
             Text(
-              'Link Strength',
+              context.l10n.nodedexLinkStrengthLabel,
               style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
@@ -433,7 +433,7 @@ class EdgeDetailSheet extends ConsumerWidget {
               Expanded(
                 child: _StatCell(
                   icon: Icons.visibility_outlined,
-                  label: 'Co-seen',
+                  label: context.l10n.nodedexStatCoSeen,
                   value: '${relationship.count}x',
                   color: accent,
                 ),
@@ -442,7 +442,7 @@ class EdgeDetailSheet extends ConsumerWidget {
               Expanded(
                 child: _StatCell(
                   icon: Icons.chat_bubble_outline,
-                  label: 'Messages',
+                  label: context.l10n.nodedexStatMessages,
                   value: '${relationship.messageCount}',
                   color: accent,
                 ),
@@ -455,7 +455,7 @@ class EdgeDetailSheet extends ConsumerWidget {
               Expanded(
                 child: _StatCell(
                   icon: Icons.calendar_today_outlined,
-                  label: 'First Link',
+                  label: context.l10n.nodedexStatFirstLink,
                   value: dateFormat.format(relationship.firstSeen),
                   color: accent,
                 ),
@@ -464,8 +464,11 @@ class EdgeDetailSheet extends ConsumerWidget {
               Expanded(
                 child: _StatCell(
                   icon: Icons.schedule_outlined,
-                  label: 'Last Seen',
-                  value: _formatRelativeTime(relationship.timeSinceLastSeen),
+                  label: context.l10n.nodedexStatLastSeen,
+                  value: _formatRelativeTime(
+                    context,
+                    relationship.timeSinceLastSeen,
+                  ),
                   color: accent,
                 ),
               ),
@@ -478,8 +481,11 @@ class EdgeDetailSheet extends ConsumerWidget {
                 Expanded(
                   child: _StatCell(
                     icon: Icons.timelapse_outlined,
-                    label: 'Duration',
-                    value: _formatDuration(relationship.relationshipAge),
+                    label: context.l10n.nodedexStatDuration,
+                    value: _formatDuration(
+                      context,
+                      relationship.relationshipAge,
+                    ),
                     color: accent,
                   ),
                 ),
@@ -509,7 +515,7 @@ class EdgeDetailSheet extends ConsumerWidget {
             Icon(Icons.timeline, size: 14, color: accent),
             const SizedBox(width: AppTheme.spacing6),
             Text(
-              'Relationship Timeline',
+              context.l10n.nodedexRelationshipTimeline,
               style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
@@ -543,7 +549,7 @@ class EdgeDetailSheet extends ConsumerWidget {
                     ),
                     const SizedBox(width: AppTheme.spacing6),
                     Text(
-                      'First',
+                      context.l10n.nodedexTimelineFirst,
                       style: TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.w600,
@@ -595,7 +601,7 @@ class EdgeDetailSheet extends ConsumerWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'Latest',
+                      context.l10n.nodedexTimelineLatest,
                       style: TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.w600,
@@ -648,7 +654,9 @@ class EdgeDetailSheet extends ConsumerWidget {
                   borderRadius: BorderRadius.circular(AppTheme.radius8),
                 ),
                 child: Text(
-                  'Linked for ${_formatDuration(relationship.relationshipAge)}',
+                  context.l10n.nodedexLinkedForDuration(
+                    _formatDuration(context, relationship.relationshipAge),
+                  ),
                   style: TextStyle(
                     fontSize: 11,
                     color: context.textTertiary,
@@ -696,7 +704,7 @@ class EdgeDetailSheet extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Message Activity',
+                  context.l10n.nodedexMessageActivity,
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
@@ -705,7 +713,9 @@ class EdgeDetailSheet extends ConsumerWidget {
                 ),
                 const SizedBox(height: AppTheme.spacing2),
                 Text(
-                  '${relationship.messageCount} messages exchanged while co-present',
+                  context.l10n.nodedexMessagesExchangedCoPresent(
+                    relationship.messageCount,
+                  ),
                   style: TextStyle(fontSize: 11, color: context.textSecondary),
                 ),
               ],
@@ -725,7 +735,7 @@ class EdgeDetailSheet extends ConsumerWidget {
                   ),
                 ),
                 Text(
-                  '/day',
+                  context.l10n.nodedexPerDay,
                   style: TextStyle(fontSize: 10, color: context.textTertiary),
                 ),
               ],
@@ -743,12 +753,13 @@ class EdgeDetailSheet extends ConsumerWidget {
     return NodeDisplayNameResolver.defaultName(nodeNum);
   }
 
-  String _strengthLabel(int count) {
-    if (count >= 25) return 'Very Strong';
-    if (count >= 10) return 'Strong';
-    if (count >= 5) return 'Moderate';
-    if (count >= 2) return 'Emerging';
-    return 'New';
+  String _strengthLabel(BuildContext context, int count) {
+    final l10n = context.l10n;
+    if (count >= 25) return l10n.nodedexStrengthVeryStrong;
+    if (count >= 10) return l10n.nodedexStrengthStrong;
+    if (count >= 5) return l10n.nodedexStrengthModerate;
+    if (count >= 2) return l10n.nodedexStrengthEmerging;
+    return l10n.nodedexStrengthNew;
   }
 
   double _strengthFraction(int count) {
@@ -759,30 +770,40 @@ class EdgeDetailSheet extends ConsumerWidget {
     return (math.log(count) / math.log(50)).clamp(0.05, 1.0);
   }
 
-  String _formatRelativeTime(Duration duration) {
-    if (duration.inMinutes < 1) return 'just now';
-    if (duration.inMinutes < 60) return '${duration.inMinutes}m ago';
-    if (duration.inHours < 24) return '${duration.inHours}h ago';
-    if (duration.inDays < 30) return '${duration.inDays}d ago';
-    return '${(duration.inDays / 30).floor()}mo ago';
+  String _formatRelativeTime(BuildContext context, Duration duration) {
+    final l10n = context.l10n;
+    if (duration.inMinutes < 1) return l10n.nodedexRelativeJustNow;
+    if (duration.inMinutes < 60) {
+      return l10n.nodedexRelativeMinutesAgo(duration.inMinutes);
+    }
+    if (duration.inHours < 24) {
+      return l10n.nodedexRelativeHoursAgo(duration.inHours);
+    }
+    if (duration.inDays < 30) {
+      return l10n.nodedexRelativeDaysAgo(duration.inDays);
+    }
+    return l10n.nodedexRelativeMonthsAgo((duration.inDays / 30).floor());
   }
 
-  String _formatDuration(Duration duration) {
+  String _formatDuration(BuildContext context, Duration duration) {
+    final l10n = context.l10n;
     if (duration.inDays >= 365) {
       final years = duration.inDays ~/ 365;
       final months = (duration.inDays % 365) ~/ 30;
-      if (months > 0) return '$years yr $months mo';
-      return '$years yr';
+      if (months > 0) return l10n.nodedexDurationYearsMonths(years, months);
+      return l10n.nodedexDurationYears(years);
     }
     if (duration.inDays >= 30) {
       final months = duration.inDays ~/ 30;
       final days = duration.inDays % 30;
-      if (days > 0) return '$months mo $days d';
-      return '$months mo';
+      if (days > 0) return l10n.nodedexDurationMonthsDays(months, days);
+      return l10n.nodedexDurationMonths(months);
     }
-    if (duration.inDays >= 1) return '${duration.inDays} d';
-    if (duration.inHours >= 1) return '${duration.inHours} hr';
-    return '${duration.inMinutes} min';
+    if (duration.inDays >= 1) return l10n.nodedexDurationDays(duration.inDays);
+    if (duration.inHours >= 1) {
+      return l10n.nodedexDurationHours(duration.inHours);
+    }
+    return l10n.nodedexDurationMinutes(duration.inMinutes);
   }
 }
 
@@ -881,7 +902,7 @@ class _EndpointTile extends StatelessWidget {
           if (onTap != null) ...[
             const SizedBox(height: AppTheme.spacing4),
             Text(
-              'View profile',
+              context.l10n.nodedexViewProfile,
               style: TextStyle(
                 fontSize: 9,
                 color: context.accentColor.withValues(alpha: 0.7),

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 
 import '../../../core/theme.dart';
@@ -23,7 +24,7 @@ class SocialHubScreen extends ConsumerWidget {
 
     if (currentUser == null) {
       return GlassScaffold(
-        title: 'Social',
+        title: context.l10n.socialHubTitle,
         slivers: [
           SliverFillRemaining(
             child: Center(
@@ -39,7 +40,7 @@ class SocialHubScreen extends ConsumerWidget {
                     ),
                     const SizedBox(height: AppTheme.spacing16),
                     Text(
-                      'Sign in to access Social',
+                      context.l10n.socialHubSignIn,
                       style: TextStyle(
                         color: context.textPrimary,
                         fontSize: 18,
@@ -48,7 +49,7 @@ class SocialHubScreen extends ConsumerWidget {
                     ),
                     const SizedBox(height: AppTheme.spacing8),
                     Text(
-                      'Create posts, follow users, and connect with the mesh community.',
+                      context.l10n.socialHubSignInDesc,
                       style: TextStyle(
                         color: context.textSecondary,
                         fontSize: 14,
@@ -60,7 +61,7 @@ class SocialHubScreen extends ConsumerWidget {
                       onPressed: () =>
                           Navigator.pushNamed(context, '/settings'),
                       icon: const Icon(Icons.login),
-                      label: const Text('Sign In'),
+                      label: Text(context.l10n.socialSignIn),
                     ),
                   ],
                 ),

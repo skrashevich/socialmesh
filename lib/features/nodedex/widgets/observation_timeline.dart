@@ -20,6 +20,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../models/nodedex_entry.dart';
 
@@ -79,7 +80,7 @@ class ObservationTimeline extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          'First Sighting',
+          context.l10n.nodedexFirstSighting,
           style: TextStyle(
             fontSize: 10,
             fontWeight: FontWeight.w600,
@@ -90,7 +91,7 @@ class ObservationTimeline extends StatelessWidget {
         if (showEncounterCount)
           _EncounterCountBadge(count: entry.encounterCount, color: accentColor),
         Text(
-          'Last Logged',
+          context.l10n.nodedexLastLogged,
           style: TextStyle(
             fontSize: 10,
             fontWeight: FontWeight.w600,
@@ -147,7 +148,7 @@ class ObservationTimeline extends StatelessWidget {
         ),
         if (!isSameDay)
           Text(
-            _formatDuration(entry.age),
+            _formatDuration(context, entry.age),
             style: TextStyle(
               fontSize: 9,
               color: context.textTertiary.withValues(alpha: 0.6),
@@ -168,9 +169,13 @@ class ObservationTimeline extends StatelessWidget {
 
   Widget _buildRelativeRow(BuildContext context) {
     final firstAgo = _formatRelative(
+      context,
       DateTime.now().difference(entry.firstSeen),
     );
-    final lastAgo = _formatRelative(DateTime.now().difference(entry.lastSeen));
+    final lastAgo = _formatRelative(
+      context,
+      DateTime.now().difference(entry.lastSeen),
+    );
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -196,30 +201,38 @@ class ObservationTimeline extends StatelessWidget {
   }
 
   /// Formats a duration as a compact relative label.
-  static String _formatRelative(Duration duration) {
-    if (duration.inMinutes < 1) return 'just now';
-    if (duration.inMinutes < 60) return '${duration.inMinutes}m ago';
-    if (duration.inHours < 24) return '${duration.inHours}h ago';
-    if (duration.inDays < 7) return '${duration.inDays}d ago';
-    if (duration.inDays < 30) return '${duration.inDays ~/ 7}w ago';
-    if (duration.inDays < 365) return '${duration.inDays ~/ 30}mo ago';
-    return '${duration.inDays ~/ 365}y ago';
+  static String _formatRelative(BuildContext context, Duration duration) {
+    final l10n = context.l10n;
+    if (duration.inMinutes < 1) return l10n.nodedexRelativeJustNow;
+    if (duration.inMinutes < 60) {
+      return l10n.nodedexRelativeMinutesAgo(duration.inMinutes);
+    }
+    if (duration.inHours < 24) {
+      return l10n.nodedexRelativeHoursAgo(duration.inHours);
+    }
+    if (duration.inDays < 30) {
+      return l10n.nodedexRelativeDaysAgo(duration.inDays);
+    }
+    return l10n.nodedexRelativeMonthsAgo(duration.inDays ~/ 30);
   }
 
-  static String _formatDuration(Duration duration) {
+  static String _formatDuration(BuildContext context, Duration duration) {
+    final l10n = context.l10n;
     if (duration.inDays > 365) {
       final years = duration.inDays ~/ 365;
       final months = (duration.inDays % 365) ~/ 30;
-      if (months > 0) return '${years}y ${months}mo';
-      return '${years}y';
+      if (months > 0) return l10n.nodedexDurationYearsMonths(years, months);
+      return l10n.nodedexDurationYears(years);
     }
     if (duration.inDays > 30) {
       final months = duration.inDays ~/ 30;
-      return '${months}mo';
+      return l10n.nodedexDurationMonths(months);
     }
-    if (duration.inDays > 0) return '${duration.inDays}d';
-    if (duration.inHours > 0) return '${duration.inHours}h';
-    return '${duration.inMinutes}m';
+    if (duration.inDays > 0) return l10n.nodedexDurationDays(duration.inDays);
+    if (duration.inHours > 0) {
+      return l10n.nodedexDurationHours(duration.inHours);
+    }
+    return l10n.nodedexDurationMinutes(duration.inMinutes);
   }
 }
 
@@ -240,7 +253,9 @@ class _EncounterCountBadge extends StatelessWidget {
         border: Border.all(color: color.withValues(alpha: 0.2), width: 0.5),
       ),
       child: Text(
-        '$count ${count == 1 ? 'sighting' : 'sightings'}',
+        count == 1
+            ? context.l10n.nodedexSightingsSingular(count)
+            : context.l10n.nodedexSightingsPlural(count),
         style: TextStyle(
           fontSize: 9,
           fontWeight: FontWeight.w600,
@@ -403,19 +418,25 @@ class ObservationSummary extends StatelessWidget {
 
     // First seen
     final dateFormat = DateFormat('d MMM');
-    parts.add('Observed ${dateFormat.format(entry.firstSeen)}');
+    parts.add(
+      context.l10n.nodedexObservedDate(dateFormat.format(entry.firstSeen)),
+    );
 
     // Encounter count
     if (entry.encounterCount > 1) {
-      parts.add('${entry.encounterCount} sightings');
+      parts.add(context.l10n.nodedexSightingsPlural(entry.encounterCount));
     }
 
     // Last seen relative
     final lastSeenDuration = entry.timeSinceLastSeen;
     if (lastSeenDuration.inMinutes < 1) {
-      parts.add('active now');
+      parts.add(context.l10n.nodedexActiveNow);
     } else {
-      parts.add('last ${_formatRelative(lastSeenDuration)}');
+      parts.add(
+        context.l10n.nodedexLastRelative(
+          _formatRelative(context, lastSeenDuration),
+        ),
+      );
     }
 
     return Text(
@@ -430,9 +451,14 @@ class ObservationSummary extends StatelessWidget {
     );
   }
 
-  static String _formatRelative(Duration duration) {
-    if (duration.inDays > 0) return '${duration.inDays}d ago';
-    if (duration.inHours > 0) return '${duration.inHours}h ago';
-    return '${duration.inMinutes}m ago';
+  static String _formatRelative(BuildContext context, Duration duration) {
+    final l10n = context.l10n;
+    if (duration.inDays > 0) {
+      return l10n.nodedexRelativeDaysAgo(duration.inDays);
+    }
+    if (duration.inHours > 0) {
+      return l10n.nodedexRelativeHoursAgo(duration.inHours);
+    }
+    return l10n.nodedexRelativeMinutesAgo(duration.inMinutes);
   }
 }

@@ -15,6 +15,7 @@ import '../../../services/share_link_service.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/theme.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/widgets/animated_empty_state.dart';
 import '../../../core/widgets/animated_gradient_background.dart';
 import '../../../core/widgets/animations.dart';
@@ -318,7 +319,7 @@ class _ProfileSocialScreenState extends ConsumerState<ProfileSocialScreen>
             ),
             const SizedBox(height: AppTheme.spacing20),
             Text(
-              'Profile not found',
+              context.l10n.socialProfileNotFound,
               style: TextStyle(
                 color: context.textPrimary,
                 fontSize: 17,
@@ -327,7 +328,7 @@ class _ProfileSocialScreenState extends ConsumerState<ProfileSocialScreen>
             ),
             const SizedBox(height: AppTheme.spacing8),
             Text(
-              'This profile may have been removed or is no longer available.',
+              context.l10n.socialProfileNotFoundDesc,
               style: TextStyle(
                 color: context.textTertiary,
                 fontSize: 13,
@@ -373,7 +374,7 @@ class _ProfileSocialScreenState extends ConsumerState<ProfileSocialScreen>
             ),
             const SizedBox(height: AppTheme.spacing20),
             Text(
-              'Failed to load profile',
+              context.l10n.socialProfileLoadFailed,
               style: TextStyle(
                 color: context.textPrimary,
                 fontSize: 17,
@@ -415,7 +416,7 @@ class _ProfileSocialScreenState extends ConsumerState<ProfileSocialScreen>
                   ),
                 ),
                 child: Text(
-                  'Retry',
+                  context.l10n.socialRetry,
                   style: TextStyle(
                     color: context.textPrimary,
                     fontWeight: FontWeight.w600,
@@ -935,7 +936,7 @@ class _ProfileSocialScreenState extends ConsumerState<ProfileSocialScreen>
           IconButton(
             icon: Icon(Icons.search, color: context.textPrimary),
             onPressed: _navigateToUserSearch,
-            tooltip: 'Search',
+            tooltip: context.l10n.socialSearchTooltip,
           ),
           IconButton(
             icon: Icon(Icons.settings_outlined, color: context.textPrimary),
@@ -943,7 +944,7 @@ class _ProfileSocialScreenState extends ConsumerState<ProfileSocialScreen>
               context,
               MaterialPageRoute(builder: (_) => const SettingsScreen()),
             ),
-            tooltip: 'Settings',
+            tooltip: context.l10n.socialSettingsTooltip,
           ),
         ] else ...[
           IconButton(
@@ -1001,8 +1002,8 @@ class _ProfileSocialScreenState extends ConsumerState<ProfileSocialScreen>
                       );
                       return _StatColumn(
                         count: postsState.posts.length,
-                        label: 'Posts',
-                        singularLabel: 'Post',
+                        label: context.l10n.socialStatPosts,
+                        singularLabel: context.l10n.socialStatPost,
                         onTap: null,
                       );
                     },
@@ -1010,15 +1011,15 @@ class _ProfileSocialScreenState extends ConsumerState<ProfileSocialScreen>
                   _GlassStatDivider(),
                   _StatColumn(
                     count: profile.followerCount,
-                    label: 'Followers',
-                    singularLabel: 'Follower',
+                    label: context.l10n.socialStatFollowers,
+                    singularLabel: context.l10n.socialStatFollower,
                     onTap: () =>
                         _navigateToFollowers(FollowersScreenMode.followers),
                   ),
                   _GlassStatDivider(),
                   _StatColumn(
                     count: profile.followingCount,
-                    label: 'Following',
+                    label: context.l10n.socialStatFollowing,
                     onTap: () =>
                         _navigateToFollowers(FollowersScreenMode.following),
                   ),
@@ -1066,7 +1067,7 @@ class _ProfileSocialScreenState extends ConsumerState<ProfileSocialScreen>
                       ),
                       const SizedBox(width: AppTheme.spacing6),
                       Text(
-                        'Online',
+                        context.l10n.socialOnline,
                         style: TextStyle(
                           color: AccentColors.green,
                           fontSize: 12,
@@ -1113,7 +1114,9 @@ class _ProfileSocialScreenState extends ConsumerState<ProfileSocialScreen>
                 ),
                 const SizedBox(width: AppTheme.spacing4),
                 Text(
-                  'Joined ${_formatJoinedDate(profile.createdAt!)}',
+                  context.l10n.socialJoined(
+                    _formatJoinedDate(profile.createdAt!),
+                  ),
                   style: TextStyle(color: context.textTertiary, fontSize: 13),
                 ),
               ],
@@ -1173,7 +1176,7 @@ class _ProfileSocialScreenState extends ConsumerState<ProfileSocialScreen>
                           ),
                           child: Center(
                             child: Text(
-                              'Edit profile',
+                              context.l10n.socialEditProfile,
                               style: TextStyle(
                                 color: context.textPrimary,
                                 fontWeight: FontWeight.w600,
@@ -1354,23 +1357,23 @@ class _ProfileSocialScreenState extends ConsumerState<ProfileSocialScreen>
     final filterInfo = switch (_selectedFilter) {
       PostFilter.photos => (
         Icons.image_outlined,
-        'No photo posts',
-        'Share a photo post to see it here',
+        context.l10n.socialNoPhotoPosts,
+        context.l10n.socialSharePhotoHint,
       ),
       PostFilter.location => (
         Icons.location_on_outlined,
-        'No location posts',
-        'Tag a location in your next post',
+        context.l10n.socialNoLocationPosts,
+        context.l10n.socialTagLocationHint,
       ),
       PostFilter.nodes => (
         Icons.router_outlined,
-        'No node posts',
-        'Link a mesh node to your next post',
+        context.l10n.socialNoNodePosts,
+        context.l10n.socialLinkNodeHint,
       ),
       PostFilter.all => (
         Icons.grid_on_outlined,
-        'No posts',
-        'Try selecting a different filter',
+        context.l10n.socialNoPosts,
+        context.l10n.socialTryDifferentFilter,
       ),
     };
 
@@ -1464,7 +1467,7 @@ class _ProfileSocialScreenState extends ConsumerState<ProfileSocialScreen>
               ),
               const SizedBox(height: AppTheme.spacing24),
               Text(
-                'This Account is Private',
+                context.l10n.socialPrivateAccount,
                 style: TextStyle(
                   color: context.textPrimary,
                   fontSize: 20,
@@ -1473,7 +1476,7 @@ class _ProfileSocialScreenState extends ConsumerState<ProfileSocialScreen>
               ),
               const SizedBox(height: AppTheme.spacing8),
               Text(
-                'Follow ${profile.displayName} to see their posts and linked devices.',
+                context.l10n.socialPrivateAccountDesc(profile.displayName),
                 style: TextStyle(
                   color: context.textTertiary,
                   fontSize: 13,
@@ -1500,16 +1503,16 @@ class _ProfileSocialScreenState extends ConsumerState<ProfileSocialScreen>
             Icons.public_outlined,
             Icons.auto_awesome,
           ],
-          taglines: const [
-            'Share photos and stories about your mesh adventures.',
-            'Post about your node setups, range tests, and discoveries.',
-            'Your mesh community is waiting to see what you build.',
-            'Document your adventures and share them with the mesh.',
+          taglines: [
+            context.l10n.socialEmptyPostsTagline1,
+            context.l10n.socialEmptyPostsTagline2,
+            context.l10n.socialEmptyPostsTagline3,
+            context.l10n.socialEmptyPostsTagline4,
           ],
-          titlePrefix: 'Share your first ',
-          titleKeyword: 'post',
+          titlePrefix: context.l10n.socialShareFirstPostPrefix,
+          titleKeyword: context.l10n.socialShareFirstPostKeyword,
           titleSuffix: '',
-          actionLabel: 'Create Post',
+          actionLabel: context.l10n.socialCreatePostAction,
           actionIcon: Icons.add_box_outlined,
           onAction: _navigateToCreatePost,
         ),
@@ -1547,7 +1550,7 @@ class _ProfileSocialScreenState extends ConsumerState<ProfileSocialScreen>
             ),
             const SizedBox(height: AppTheme.spacing24),
             Text(
-              'No posts yet',
+              context.l10n.socialNoPostsYet,
               style: TextStyle(
                 color: context.textPrimary,
                 fontSize: 20,
@@ -1634,7 +1637,9 @@ class _ProfileSocialScreenState extends ConsumerState<ProfileSocialScreen>
             ListTile(
               leading: Icon(Icons.photo_library, color: context.accentColor),
               title: Text(
-                profile.bannerUrl != null ? 'Change banner' : 'Add banner',
+                profile.bannerUrl != null
+                    ? context.l10n.socialChangeBanner
+                    : context.l10n.socialAddBanner,
                 style: TextStyle(color: context.textPrimary),
               ),
               onTap: () {
@@ -1648,8 +1653,8 @@ class _ProfileSocialScreenState extends ConsumerState<ProfileSocialScreen>
                   Icons.delete_outline,
                   color: AppTheme.errorRed,
                 ),
-                title: const Text(
-                  'Remove banner',
+                title: Text(
+                  context.l10n.socialRemoveBanner,
                   style: TextStyle(color: AppTheme.errorRed),
                 ),
                 onTap: () {
@@ -1682,7 +1687,7 @@ class _ProfileSocialScreenState extends ConsumerState<ProfileSocialScreen>
         if (!mounted) return;
         ref.invalidate(userProfileProvider);
         ref.invalidate(publicProfileStreamProvider(userId));
-        showSuccessSnackBar(context, 'Banner updated');
+        showSuccessSnackBar(context, context.l10n.socialBannerUpdated);
       } catch (e) {
         if (mounted) {
           if (e.toString().contains('Content policy violation') ||
@@ -1696,7 +1701,10 @@ class _ProfileSocialScreenState extends ConsumerState<ProfileSocialScreen>
               ),
             );
           } else {
-            showErrorSnackBar(context, 'Failed to upload banner: $e');
+            showErrorSnackBar(
+              context,
+              context.l10n.socialBannerUploadFailed(e.toString()),
+            );
           }
         }
       }
@@ -1714,10 +1722,13 @@ class _ProfileSocialScreenState extends ConsumerState<ProfileSocialScreen>
       if (!mounted) return;
       ref.invalidate(userProfileProvider);
       ref.invalidate(publicProfileStreamProvider(userId));
-      showSuccessSnackBar(context, 'Banner removed');
+      showSuccessSnackBar(context, context.l10n.socialBannerRemoved);
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to remove banner: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.socialBannerRemoveFailed(e.toString()),
+        );
       }
     }
   }
@@ -1786,7 +1797,7 @@ class _ProfileSocialScreenState extends ConsumerState<ProfileSocialScreen>
             const SizedBox(height: AppTheme.spacing16),
             ListTile(
               leading: const Icon(Icons.flag_outlined),
-              title: const Text('Report'),
+              title: Text(context.l10n.socialProfileReportLabel),
               onTap: () {
                 Navigator.pop(context);
                 _reportProfile(profile);
@@ -1794,7 +1805,7 @@ class _ProfileSocialScreenState extends ConsumerState<ProfileSocialScreen>
             ),
             ListTile(
               leading: const Icon(Icons.block_outlined),
-              title: const Text('Block'),
+              title: Text(context.l10n.socialProfileBlockLabel),
               onTap: () {
                 Navigator.pop(context);
                 _blockUser(profile);
@@ -1802,7 +1813,7 @@ class _ProfileSocialScreenState extends ConsumerState<ProfileSocialScreen>
             ),
             ListTile(
               leading: const Icon(Icons.share_outlined),
-              title: const Text('Share Profile'),
+              title: Text(context.l10n.socialProfileShareLabel),
               onTap: () {
                 Navigator.pop(context);
                 _shareProfile(profile);
@@ -1816,11 +1827,14 @@ class _ProfileSocialScreenState extends ConsumerState<ProfileSocialScreen>
   }
 
   void _reportProfile(PublicProfile profile) {
-    showSuccessSnackBar(context, 'Report submitted');
+    showSuccessSnackBar(context, context.l10n.socialReportProfileSubmitted);
   }
 
   void _blockUser(PublicProfile profile) {
-    showSuccessSnackBar(context, '${profile.displayName} blocked');
+    showSuccessSnackBar(
+      context,
+      context.l10n.socialUserBlockedName(profile.displayName),
+    );
   }
 }
 
@@ -2039,7 +2053,7 @@ class _AnimatedSocialIconsRow extends StatelessWidget {
             );
             showInfoSnackBar(
               context,
-              'Discord username copied: ${profile.socialLinks!.discord}',
+              context.l10n.socialDiscordCopied(profile.socialLinks!.discord!),
               duration: const Duration(seconds: 2),
             );
           },
@@ -2307,7 +2321,7 @@ class _PostGridTile extends StatelessWidget {
       padding: const EdgeInsets.all(AppTheme.spacing10),
       child: Center(
         child: Text(
-          post.content.isNotEmpty ? post.content : 'No content',
+          post.content.isNotEmpty ? post.content : context.l10n.socialNoContent,
           style: TextStyle(
             color: context.textSecondary,
             fontSize: 11,

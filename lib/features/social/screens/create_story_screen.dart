@@ -16,6 +16,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:vector_math/vector_math_64.dart' show Vector3;
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/logging.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/animations.dart';
@@ -32,16 +33,16 @@ import '../../../utils/snackbar.dart';
 enum AlbumFilterType { recents, videos, favorites, allAlbums }
 
 extension AlbumFilterTypeExtension on AlbumFilterType {
-  String get label {
+  String labelText(BuildContext context) {
     switch (this) {
       case AlbumFilterType.recents:
-        return 'Recents';
+        return context.l10n.socialAlbumRecents;
       case AlbumFilterType.videos:
-        return 'Videos';
+        return context.l10n.socialAlbumVideos;
       case AlbumFilterType.favorites:
-        return 'Favorites';
+        return context.l10n.socialAlbumFavorites;
       case AlbumFilterType.allAlbums:
-        return 'All Albums';
+        return context.l10n.socialAlbumAll;
     }
   }
 
@@ -324,7 +325,10 @@ class _CreateStoryScreenState extends ConsumerState<CreateStoryScreen>
         if (requested == LocationPermission.denied ||
             requested == LocationPermission.deniedForever) {
           if (mounted) {
-            showErrorSnackBar(context, 'Location permission required');
+            showErrorSnackBar(
+              context,
+              context.l10n.socialCreateStoryLocationRequired,
+            );
           }
           return;
         }
@@ -362,7 +366,10 @@ class _CreateStoryScreenState extends ConsumerState<CreateStoryScreen>
       });
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Could not get location');
+        showErrorSnackBar(
+          context,
+          context.l10n.socialCreateStoryLocationFailed,
+        );
       }
     }
   }
@@ -370,7 +377,7 @@ class _CreateStoryScreenState extends ConsumerState<CreateStoryScreen>
   Future<void> _selectNode() async {
     final selection = await NodeSelectorSheet.show(
       context,
-      title: 'Link to Node',
+      title: context.l10n.socialCreateStoryLinkNode,
       allowBroadcast: false,
     );
 
@@ -494,6 +501,7 @@ class _CreateStoryScreenState extends ConsumerState<CreateStoryScreen>
     // Capture provider refs before any awaits
     final moderationService = ref.read(contentModerationServiceProvider);
     final storyNotifier = ref.read(createStoryProvider.notifier);
+    final l10n = context.l10n;
 
     safeSetState(() => _isUploading = true);
 
@@ -581,7 +589,7 @@ class _CreateStoryScreenState extends ConsumerState<CreateStoryScreen>
 
       if (!mounted) return;
       if (story != null) {
-        showSuccessSnackBar(context, 'Story shared!');
+        showSuccessSnackBar(context, l10n.socialCreateStoryShared);
         Navigator.pop(context);
       } else {
         final error = ref.read(createStoryProvider).error;
@@ -596,7 +604,7 @@ class _CreateStoryScreenState extends ConsumerState<CreateStoryScreen>
             ),
           );
         } else {
-          showErrorSnackBar(context, error ?? 'Failed to create story');
+          showErrorSnackBar(context, error ?? l10n.socialCreateStoryFailed);
           safeSetState(() => _isUploading = false);
         }
       }
@@ -613,7 +621,7 @@ class _CreateStoryScreenState extends ConsumerState<CreateStoryScreen>
           ),
         );
       } else {
-        showErrorSnackBar(context, 'Failed to create story: $e');
+        showErrorSnackBar(context, l10n.socialCreateStoryFailed);
         safeSetState(() => _isUploading = false);
       }
     }
@@ -633,9 +641,9 @@ class _CreateStoryScreenState extends ConsumerState<CreateStoryScreen>
             onPressed: () => Navigator.pop(context),
           ),
         ),
-        body: const Center(
+        body: Center(
           child: Text(
-            'Sign in to create stories',
+            context.l10n.socialCreateStorySignIn,
             style: TextStyle(color: Colors.white70),
           ),
         ),
@@ -662,10 +670,10 @@ class _CreateStoryScreenState extends ConsumerState<CreateStoryScreen>
                 icon: const Icon(Icons.close, color: Colors.white),
                 onPressed: () => Navigator.pop(context),
               ),
-              const Expanded(
+              Expanded(
                 child: Text(
-                  'Add to Story',
-                  style: TextStyle(
+                  context.l10n.socialCreateStoryTitle,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
@@ -747,7 +755,7 @@ class _CreateStoryScreenState extends ConsumerState<CreateStoryScreen>
               ),
               const SizedBox(width: AppTheme.spacing12),
               Text(
-                filter.label,
+                filter.labelText(context),
                 style: TextStyle(
                   color: filter == _selectedAlbumFilter
                       ? context.accentColor
@@ -775,7 +783,7 @@ class _CreateStoryScreenState extends ConsumerState<CreateStoryScreen>
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              _selectedAlbum?.name ?? _selectedAlbumFilter.label,
+              _selectedAlbum?.name ?? _selectedAlbumFilter.labelText(context),
               style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w600,
@@ -798,7 +806,7 @@ class _CreateStoryScreenState extends ConsumerState<CreateStoryScreen>
     if (_allAlbums.isEmpty) {
       return Center(
         child: Text(
-          'No albums found',
+          context.l10n.socialNoAlbumsFound,
           style: TextStyle(color: Colors.white.withValues(alpha: 0.7)),
         ),
       );
@@ -827,9 +835,9 @@ class _CreateStoryScreenState extends ConsumerState<CreateStoryScreen>
               color: Colors.white.withValues(alpha: 0.5),
             ),
             const SizedBox(height: AppTheme.spacing16),
-            const Text(
-              'Allow access to your photos',
-              style: TextStyle(
+            Text(
+              context.l10n.socialPhotoAccessTitle,
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
@@ -838,7 +846,7 @@ class _CreateStoryScreenState extends ConsumerState<CreateStoryScreen>
             ),
             const SizedBox(height: AppTheme.spacing8),
             Text(
-              'To create stories, we need access to your photo library.',
+              context.l10n.socialPhotoAccessDesc,
               style: TextStyle(
                 color: Colors.white.withValues(alpha: 0.7),
                 fontSize: 14,
@@ -850,7 +858,7 @@ class _CreateStoryScreenState extends ConsumerState<CreateStoryScreen>
               onPressed: () async {
                 await PhotoManager.openSetting();
               },
-              child: const Text('Open Settings'),
+              child: Text(context.l10n.socialOpenSettings),
             ),
           ],
         ),
@@ -965,8 +973,8 @@ class _CreateStoryScreenState extends ConsumerState<CreateStoryScreen>
                     // Done button
                     TextButton(
                       onPressed: _finishTextInput,
-                      child: const Text(
-                        'Done',
+                      child: Text(
+                        context.l10n.socialDone,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 17,
@@ -978,7 +986,7 @@ class _CreateStoryScreenState extends ConsumerState<CreateStoryScreen>
                     TextButton(
                       onPressed: _isUploading ? null : _confirmText,
                       child: Text(
-                        'Done',
+                        context.l10n.socialDone,
                         style: TextStyle(
                           color: _isUploading
                               ? context.accentColor.withValues(alpha: 0.4)
@@ -1103,7 +1111,9 @@ class _CreateStoryScreenState extends ConsumerState<CreateStoryScreen>
 
     // Show placeholder when in text input mode with empty text
     final showPlaceholder = _isTextInputMode && displayText.isEmpty;
-    final textToShow = showPlaceholder ? 'Type something...' : displayText;
+    final textToShow = showPlaceholder
+        ? context.l10n.socialCreateStoryTypeSomething
+        : displayText;
 
     if (textToShow.isEmpty) return const SizedBox.shrink();
 
@@ -1339,7 +1349,7 @@ class _CreateStoryScreenState extends ConsumerState<CreateStoryScreen>
         children: [
           // Instructions
           Text(
-            'Drag to move • Pinch to resize • Long press to delete',
+            context.l10n.socialCreateStoryDragInstructions,
             style: TextStyle(
               color: Colors.white.withValues(alpha: 0.7),
               fontSize: 12,
@@ -1353,19 +1363,19 @@ class _CreateStoryScreenState extends ConsumerState<CreateStoryScreen>
             children: [
               _buildToolbarButton(
                 icon: Icons.edit,
-                label: 'Edit',
+                label: context.l10n.socialCreateStoryEdit,
                 onTap: _startTextEditing,
               ),
               const SizedBox(width: AppTheme.spacing16),
               _buildToolbarButton(
                 icon: Icons.check,
-                label: 'Done',
+                label: context.l10n.socialDone,
                 onTap: _confirmText,
               ),
               const SizedBox(width: AppTheme.spacing16),
               _buildToolbarButton(
                 icon: Icons.delete_outline,
-                label: 'Delete',
+                label: context.l10n.socialCreateStoryDelete,
                 onTap: _removeText,
                 isDestructive: true,
               ),
@@ -1429,7 +1439,8 @@ class _CreateStoryScreenState extends ConsumerState<CreateStoryScreen>
                     Chip(
                       avatar: const Icon(Icons.location_on, size: 16),
                       label: Text(
-                        _location!.name ?? 'Location',
+                        _location!.name ??
+                            context.l10n.socialCreatePostLocationLabel,
                         style: context.bodySmallStyle,
                       ),
                       onDeleted: _isUploading
@@ -1515,14 +1526,18 @@ class _CreateStoryScreenState extends ConsumerState<CreateStoryScreen>
                             strokeWidth: 2,
                           ),
                         )
-                      : const Row(
+                      : Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(Icons.send, color: Colors.white, size: 18),
-                            SizedBox(width: AppTheme.spacing8),
+                            const Icon(
+                              Icons.send,
+                              color: Colors.white,
+                              size: 18,
+                            ),
+                            const SizedBox(width: AppTheme.spacing8),
                             Text(
-                              'Share',
-                              style: TextStyle(
+                              context.l10n.socialShare,
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -1552,11 +1567,11 @@ class _CreateStoryScreenState extends ConsumerState<CreateStoryScreen>
   String get _visibilityLabel {
     switch (_visibility) {
       case StoryVisibility.public:
-        return 'Public';
+        return context.l10n.socialCreateStoryPublic;
       case StoryVisibility.followersOnly:
-        return 'Followers';
+        return context.l10n.socialCreateStoryFollowers;
       case StoryVisibility.closeFriends:
-        return 'Close Friends';
+        return context.l10n.socialCreateStoryCloseFriends;
     }
   }
 }
@@ -1573,14 +1588,14 @@ class _CameraButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: const BoxDecoration(gradient: AppTheme.brandGradient),
-        child: const Column(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.camera_alt, color: Colors.white, size: 32),
-            SizedBox(height: AppTheme.spacing4),
+            const Icon(Icons.camera_alt, color: Colors.white, size: 32),
+            const SizedBox(height: AppTheme.spacing4),
             Text(
-              'Camera',
-              style: TextStyle(
+              context.l10n.socialCreateStoryCamera,
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
@@ -1762,7 +1777,9 @@ class _AlbumListTileState extends State<_AlbumListTile>
         ),
       ),
       title: Text(
-        widget.album.name.isEmpty ? 'Untitled Album' : widget.album.name,
+        widget.album.name.isEmpty
+            ? context.l10n.socialCreateStoryUntitledAlbum
+            : widget.album.name,
         style: const TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.w500,
@@ -1771,7 +1788,7 @@ class _AlbumListTileState extends State<_AlbumListTile>
         overflow: TextOverflow.ellipsis,
       ),
       subtitle: Text(
-        '$_assetCount items',
+        context.l10n.socialCreateStoryItemsCount(_assetCount),
         style: TextStyle(
           color: Colors.white.withValues(alpha: 0.6),
           fontSize: 13,

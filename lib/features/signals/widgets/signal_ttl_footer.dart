@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../models/social.dart';
 import '../../../providers/signal_bookmark_provider.dart';
@@ -87,8 +88,8 @@ class _SignalTTLFooterState extends ConsumerState<SignalTTLFooter>
     return remaining.inMinutes < 1 && !remaining.isNegative;
   }
 
-  String get _expiresInText {
-    return formatSignalTtlCountdown(_remainingDuration);
+  String _expiresInText(BuildContext context) {
+    return formatSignalTtlCountdown(_remainingDuration, context.l10n);
   }
 
   @override
@@ -162,7 +163,7 @@ class _SignalTTLFooterState extends ConsumerState<SignalTTLFooter>
   Widget _buildTTLIndicator(BuildContext context, Color color) {
     final icon = Icon(Icons.schedule, size: 14, color: color);
     final text = Text(
-      _expiresInText,
+      _expiresInText(context),
       style: TextStyle(
         color: color,
         fontSize: 12,

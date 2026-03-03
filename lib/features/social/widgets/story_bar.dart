@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/logging.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/animations.dart';
@@ -222,7 +223,7 @@ class _AddStoryButton extends StatelessWidget {
             ),
             const SizedBox(height: AppTheme.spacing4),
             Text(
-              'Add',
+              context.l10n.socialStoryBarAdd,
               style: TextStyle(color: context.textSecondary, fontSize: 10),
             ),
           ],

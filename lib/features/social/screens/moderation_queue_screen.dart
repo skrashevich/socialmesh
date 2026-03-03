@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/glass_scaffold.dart';
@@ -47,13 +48,13 @@ class _ModerationQueueScreenState extends ConsumerState<ModerationQueueScreen>
     return GestureDetector(
       onTap: _dismissKeyboard,
       child: GlassScaffold(
-        title: 'Moderation Queue',
+        title: context.l10n.socialModerationQueueTitle,
         bottom: TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(text: 'Pending'),
-            Tab(text: 'Approved'),
-            Tab(text: 'Rejected'),
+          tabs: [
+            Tab(text: context.l10n.socialModerationTabPending),
+            Tab(text: context.l10n.socialModerationTabApproved),
+            Tab(text: context.l10n.socialModerationTabRejected),
           ],
         ),
         slivers: [
@@ -92,13 +93,13 @@ class _QueueList extends ConsumerWidget {
             Icon(Icons.error_outline, size: 48, color: context.textSecondary),
             const SizedBox(height: AppTheme.spacing16),
             Text(
-              'Error loading queue',
+              context.l10n.socialModerationErrorLoading,
               style: TextStyle(color: context.textSecondary),
             ),
             const SizedBox(height: AppTheme.spacing8),
             TextButton(
               onPressed: () => ref.invalidate(moderationQueueProvider(status)),
-              child: const Text('Retry'),
+              child: Text(context.l10n.socialRetry),
             ),
           ],
         ),
@@ -119,8 +120,8 @@ class _QueueList extends ConsumerWidget {
                 const SizedBox(height: AppTheme.spacing16),
                 Text(
                   status == 'pending'
-                      ? 'No items pending review'
-                      : 'No $status items',
+                      ? context.l10n.socialModerationNoPending
+                      : context.l10n.socialModerationNoStatus(status),
                   style: TextStyle(color: context.textSecondary),
                 ),
               ],
@@ -233,7 +234,7 @@ class _QueueItemCard extends ConsumerWidget {
 
             // User ID
             Text(
-              'User: ${item.userId}',
+              context.l10n.socialModerationUserLabel(item.userId),
               style: context.bodySmallStyle?.copyWith(
                 color: context.textSecondary,
               ),
@@ -248,7 +249,7 @@ class _QueueItemCard extends ConsumerWidget {
                     child: OutlinedButton.icon(
                       onPressed: () => _handleReview(context, ref, 'approve'),
                       icon: const Icon(Icons.check, size: 18),
-                      label: const Text('Approve'),
+                      label: Text(context.l10n.socialModerationApprove),
                       style: OutlinedButton.styleFrom(
                         foregroundColor: AppTheme.successGreen,
                       ),
@@ -259,7 +260,7 @@ class _QueueItemCard extends ConsumerWidget {
                     child: FilledButton.icon(
                       onPressed: () => _handleReview(context, ref, 'reject'),
                       icon: const Icon(Icons.close, size: 18),
-                      label: const Text('Reject'),
+                      label: Text(context.l10n.socialModerationReject),
                       style: FilledButton.styleFrom(
                         backgroundColor: AppTheme.errorRed,
                       ),
@@ -273,7 +274,7 @@ class _QueueItemCard extends ConsumerWidget {
             if (!showActions && item.reviewedBy != null) ...[
               const SizedBox(height: AppTheme.spacing12),
               Text(
-                'Reviewed by ${item.reviewedBy} on ${_formatDate(item.reviewedAt!)}',
+                '${context.l10n.socialModerationReviewedBy(item.reviewedBy!)} — ${_formatDate(item.reviewedAt!)}',
                 style: TextStyle(
                   fontSize: 12,
                   color: context.textSecondary,
@@ -294,6 +295,8 @@ class _QueueItemCard extends ConsumerWidget {
   ) async {
     String? notes;
 
+    final l10n = context.l10n;
+
     if (action == 'reject') {
       notes = await AppBottomSheet.show<String>(
         context: context,
@@ -312,9 +315,9 @@ class _QueueItemCard extends ConsumerWidget {
 
       if (context.mounted) {
         if (action == 'approve') {
-          showSuccessSnackBar(context, 'Content approved');
+          showSuccessSnackBar(context, l10n.socialModerationApproved);
         } else {
-          showErrorSnackBar(context, 'Content rejected');
+          showErrorSnackBar(context, l10n.socialModerationRejected);
         }
       }
     } catch (e) {
@@ -429,16 +432,7 @@ class _RejectNotesSheet extends StatefulWidget {
 class _RejectNotesSheetState extends State<_RejectNotesSheet> {
   final _controller = TextEditingController();
   String? _selectedReason;
-
-  final _reasons = [
-    'Nudity or sexual content',
-    'Violence or graphic content',
-    'Hate speech or discrimination',
-    'Harassment or bullying',
-    'Spam or misleading content',
-    'Illegal activity',
-    'Other',
-  ];
+  late List<String> _reasons;
 
   @override
   void dispose() {
@@ -448,6 +442,15 @@ class _RejectNotesSheetState extends State<_RejectNotesSheet> {
 
   @override
   Widget build(BuildContext context) {
+    _reasons = [
+      context.l10n.socialModerationReasonNudity,
+      context.l10n.socialModerationReasonViolence,
+      context.l10n.socialModerationReasonHateSpeech,
+      context.l10n.socialModerationReasonHarassment,
+      context.l10n.socialModerationReasonSpam,
+      context.l10n.socialModerationReasonIP,
+      context.l10n.socialModerationReasonOther,
+    ];
     return Padding(
       padding: EdgeInsets.fromLTRB(
         24,
@@ -460,7 +463,7 @@ class _RejectNotesSheetState extends State<_RejectNotesSheet> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Rejection Reason',
+            context.l10n.socialModerationRejectionReason,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -519,9 +522,9 @@ class _RejectNotesSheetState extends State<_RejectNotesSheet> {
             onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
             maxLength: 500,
             controller: _controller,
-            decoration: const InputDecoration(
-              labelText: 'Additional notes (optional)',
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              labelText: context.l10n.socialModerationAdditionalNotes,
+              border: const OutlineInputBorder(),
               counterText: '',
             ),
             maxLines: 2,
@@ -532,7 +535,7 @@ class _RejectNotesSheetState extends State<_RejectNotesSheet> {
               Expanded(
                 child: OutlinedButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('Cancel'),
+                  child: Text(context.l10n.socialCancel),
                 ),
               ),
               const SizedBox(width: AppTheme.spacing12),
@@ -548,7 +551,7 @@ class _RejectNotesSheetState extends State<_RejectNotesSheet> {
                                   : '');
                           Navigator.of(context).pop(notes);
                         },
-                  child: const Text('Reject'),
+                  child: Text(context.l10n.socialModerationReject),
                 ),
               ),
             ],

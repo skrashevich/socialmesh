@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/logging.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
@@ -265,7 +266,7 @@ class _ActivityTimelineScreenState extends ConsumerState<ActivityTimelineScreen>
     }
 
     return GlassScaffold(
-      title: 'Activity',
+      title: context.l10n.socialActivityTitle,
       actions: [
         if (showMenu)
           AppBarOverflowMenu<String>(
@@ -280,24 +281,24 @@ class _ActivityTimelineScreenState extends ConsumerState<ActivityTimelineScreen>
             itemBuilder: (context) {
               return [
                 if (hasUnread)
-                  const PopupMenuItem(
+                  PopupMenuItem(
                     value: 'markAllRead',
                     child: Row(
                       children: [
                         Icon(Icons.done_all, size: 20),
                         SizedBox(width: AppTheme.spacing12),
-                        Text('Mark all as read'),
+                        Text(context.l10n.socialActivityMarkAllRead),
                       ],
                     ),
                   ),
                 if (hasActivities)
-                  const PopupMenuItem(
+                  PopupMenuItem(
                     value: 'clear',
                     child: Row(
                       children: [
                         Icon(Icons.delete_outline, size: 20),
                         SizedBox(width: AppTheme.spacing12),
-                        Text('Clear all'),
+                        Text(context.l10n.socialActivityClearAll),
                       ],
                     ),
                   ),
@@ -350,15 +351,15 @@ class _ActivityTimelineScreenState extends ConsumerState<ActivityTimelineScreen>
           Icons.thumb_up_outlined,
           Icons.reply_outlined,
         ],
-        taglines: const [
-          'No activity yet.\nWhen people interact with your signals, you\'ll see it here.',
-          'Likes, comments, and replies.\nYour signal engagement all in one place.',
-          'Go active and broadcast a signal.\nActivity appears as others respond.',
-          'Build your mesh presence.\nEngagement grows with every signal.',
+        taglines: [
+          context.l10n.socialActivityTagline1,
+          context.l10n.socialActivityTagline2,
+          context.l10n.socialActivityTagline3,
+          context.l10n.socialActivityTagline4,
         ],
-        titlePrefix: 'No ',
-        titleKeyword: 'activity',
-        titleSuffix: ' yet',
+        titlePrefix: context.l10n.socialActivityTitlePrefix,
+        titleKeyword: context.l10n.socialActivityTitleKeyword,
+        titleSuffix: context.l10n.socialActivityTitleSuffix,
       ),
     );
   }
@@ -385,7 +386,7 @@ class _ActivityTimelineScreenState extends ConsumerState<ActivityTimelineScreen>
             ),
             const SizedBox(height: AppTheme.spacing24),
             Text(
-              'Failed to load activity',
+              context.l10n.socialActivityErrorLoading,
               style: TextStyle(
                 color: context.textPrimary,
                 fontSize: 16,
@@ -404,7 +405,7 @@ class _ActivityTimelineScreenState extends ConsumerState<ActivityTimelineScreen>
                 AppLogging.social('📬 [ActivityScreen] retry button pressed');
                 ref.read(activityFeedProvider.notifier).refresh();
               },
-              child: const Text('Retry'),
+              child: Text(context.l10n.socialRetry),
             ),
           ],
         ),
@@ -500,30 +501,42 @@ class _ActivityTimelineScreenState extends ConsumerState<ActivityTimelineScreen>
 
     if (todayActivities.isNotEmpty) {
       groups.add(
-        _ActivityGroupData(title: 'Today', activities: todayActivities),
+        _ActivityGroupData(
+          title: context.l10n.socialActivityGroupToday,
+          activities: todayActivities,
+        ),
       );
     }
     if (yesterdayActivities.isNotEmpty) {
       groups.add(
-        _ActivityGroupData(title: 'Yesterday', activities: yesterdayActivities),
+        _ActivityGroupData(
+          title: context.l10n.socialActivityGroupYesterday,
+          activities: yesterdayActivities,
+        ),
       );
     }
     if (thisWeekActivities.isNotEmpty) {
       groups.add(
-        _ActivityGroupData(title: 'This Week', activities: thisWeekActivities),
+        _ActivityGroupData(
+          title: context.l10n.socialActivityGroupThisWeek,
+          activities: thisWeekActivities,
+        ),
       );
     }
     if (thisMonthActivities.isNotEmpty) {
       groups.add(
         _ActivityGroupData(
-          title: 'This Month',
+          title: context.l10n.socialActivityGroupThisMonth,
           activities: thisMonthActivities,
         ),
       );
     }
     if (olderActivities.isNotEmpty) {
       groups.add(
-        _ActivityGroupData(title: 'Earlier', activities: olderActivities),
+        _ActivityGroupData(
+          title: context.l10n.socialActivityGroupEarlier,
+          activities: olderActivities,
+        ),
       );
     }
 
@@ -598,15 +611,21 @@ class _ActivityTimelineScreenState extends ConsumerState<ActivityTimelineScreen>
             builder: (context, snapshot) {
               if (snapshot.connectionState != ConnectionState.done) {
                 return Scaffold(
-                  appBar: AppBar(title: const Text('Loading Signal')),
+                  appBar: AppBar(
+                    title: Text(context.l10n.socialActivityLoadingSignal),
+                  ),
                   body: const Center(child: CircularProgressIndicator()),
                 );
               }
               final signal = snapshot.data;
               if (signal == null) {
                 return Scaffold(
-                  appBar: AppBar(title: const Text('Signal not found')),
-                  body: const Center(child: Text('Signal not found')),
+                  appBar: AppBar(
+                    title: Text(context.l10n.socialActivitySignalNotFound),
+                  ),
+                  body: Center(
+                    child: Text(context.l10n.socialActivitySignalNotFound),
+                  ),
                 );
               }
               return SignalDetailScreen(signal: signal);
@@ -635,11 +654,9 @@ class _ActivityTimelineScreenState extends ConsumerState<ActivityTimelineScreen>
     );
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Clear all activity?',
-      message:
-          'This will remove all activity from your feed. '
-          'This action cannot be undone.',
-      confirmLabel: 'Clear',
+      title: context.l10n.socialActivityClearConfirmTitle,
+      message: context.l10n.socialActivityClearConfirmMessage,
+      confirmLabel: context.l10n.socialActivityClearConfirmLabel,
       isDestructive: true,
     );
 
@@ -700,13 +717,15 @@ class _TimelineActivityTile extends ConsumerWidget {
   }
 
   /// Returns the action text for the activity type
-  String _getActionText() {
+  String _getActionText(BuildContext context) {
     return switch (activity.type) {
-      SocialActivityType.signalLike => ' liked your signal',
-      SocialActivityType.signalComment => ' commented on your signal',
-      SocialActivityType.signalCommentReply => ' replied to your comment',
+      SocialActivityType.signalLike => context.l10n.socialActivityLikedSignal,
+      SocialActivityType.signalComment =>
+        context.l10n.socialActivityCommentedSignal,
+      SocialActivityType.signalCommentReply =>
+        context.l10n.socialActivityRepliedComment,
       SocialActivityType.signalResponseVote => ' upvoted your response',
-      _ => ' interacted with your signal',
+      _ => context.l10n.socialActivityInteracted,
     };
   }
 
@@ -896,7 +915,7 @@ class _TimelineActivityTile extends ConsumerWidget {
                               ),
                             ],
                             TextSpan(
-                              text: _getActionText(),
+                              text: _getActionText(context),
                               style: TextStyle(
                                 color: context.textSecondary,
                                 fontSize: 14,

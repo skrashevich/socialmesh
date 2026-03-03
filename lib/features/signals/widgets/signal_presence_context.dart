@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme.dart';
 import '../../../models/presence_confidence.dart';
 import '../../../utils/number_format.dart';
@@ -120,7 +121,7 @@ class SignalPresenceContext extends StatelessWidget {
       suffix: 'x',
     );
     return Text(
-      'Seen $formattedCount',
+      context.l10n.signalSeenCount(formattedCount),
       style: TextStyle(color: context.textTertiary, fontSize: 11),
     );
   }
@@ -134,7 +135,7 @@ class SignalPresenceContext extends StatelessWidget {
 
   Widget _buildBackNearbyBadge(BuildContext context) {
     return Text(
-      'Back nearby',
+      context.l10n.signalBackNearby,
       style: TextStyle(
         color: AccentColors.cyan,
         fontSize: 11,

@@ -27,6 +27,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
 
 import '../models/nodedex_entry.dart';
 import 'package:socialmesh/core/theme.dart';
@@ -49,24 +50,24 @@ enum TrustLevel {
   established;
 
   /// Human-readable label for UI display.
-  String get displayLabel {
+  String displayLabel(AppLocalizations l10n) {
     return switch (this) {
-      TrustLevel.unknown => 'Unknown',
-      TrustLevel.observed => 'Observed',
-      TrustLevel.familiar => 'Familiar',
-      TrustLevel.trusted => 'Trusted',
-      TrustLevel.established => 'Established',
+      TrustLevel.unknown => l10n.nodedexTrustLevelUnknown,
+      TrustLevel.observed => l10n.nodedexTrustLevelObserved,
+      TrustLevel.familiar => l10n.nodedexTrustLevelFamiliar,
+      TrustLevel.trusted => l10n.nodedexTrustLevelTrusted,
+      TrustLevel.established => l10n.nodedexTrustLevelEstablished,
     };
   }
 
   /// Short description explaining this trust level.
-  String get description {
+  String description(AppLocalizations l10n) {
     return switch (this) {
-      TrustLevel.unknown => 'Not enough data to assess',
-      TrustLevel.observed => 'Seen a few times on the mesh',
-      TrustLevel.familiar => 'Regular presence with some history',
-      TrustLevel.trusted => 'Frequent, long-lived, communicative',
-      TrustLevel.established => 'Deep history across all dimensions',
+      TrustLevel.unknown => l10n.nodedexTrustDescriptionUnknown,
+      TrustLevel.observed => l10n.nodedexTrustDescriptionObserved,
+      TrustLevel.familiar => l10n.nodedexTrustDescriptionFamiliar,
+      TrustLevel.trusted => l10n.nodedexTrustDescriptionTrusted,
+      TrustLevel.established => l10n.nodedexTrustDescriptionEstablished,
     };
   }
 
@@ -123,7 +124,7 @@ class TrustResult {
 
   @override
   String toString() =>
-      'TrustResult(${level.displayLabel}: '
+      'TrustResult(${level.name}: '
       '${(score * 100).toStringAsFixed(0)}%)';
 }
 
