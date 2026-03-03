@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../models/social.dart';
 import '../../../providers/auth_providers.dart';
@@ -126,7 +127,7 @@ class _LikeButtonState extends ConsumerState<_LikeButton>
 
   Future<void> _handleLike(bool currentlyLiked) async {
     if (widget.currentUserId == null) {
-      showSignInRequiredSnackBar(context, 'Sign in to like posts');
+      showSignInRequiredSnackBar(context, context.l10n.socialSignInToLikePosts);
       return;
     }
 
@@ -167,7 +168,7 @@ class _LikeButtonState extends ConsumerState<_LikeButton>
               _optimisticIsLiked = revertIsLiked;
               _optimisticLikeCount = revertLikeCount;
             });
-            showErrorSnackBar(context, 'Failed to update like');
+            showErrorSnackBar(context, context.l10n.socialFailedToUpdateLike);
           }
         },
       );

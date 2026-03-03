@@ -213,7 +213,7 @@ class _ReviewModerationCardState extends ConsumerState<_ReviewModerationCard>
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Error: $e');
+        showErrorSnackBar(context, l10n.deviceShopErrorWithDetails('$e'));
       }
     } finally {
       safeSetState(() => _isProcessing = false);
@@ -308,7 +308,7 @@ class _ReviewModerationCardState extends ConsumerState<_ReviewModerationCard>
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Error: $e');
+        showErrorSnackBar(context, l10n.deviceShopErrorWithDetails('$e'));
       }
     } finally {
       safeSetState(() => _isProcessing = false);
@@ -340,7 +340,7 @@ class _ReviewModerationCardState extends ConsumerState<_ReviewModerationCard>
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Error: $e');
+        showErrorSnackBar(context, l10n.deviceShopErrorWithDetails('$e'));
       }
     } finally {
       safeSetState(() => _isProcessing = false);

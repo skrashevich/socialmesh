@@ -151,9 +151,9 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
             : context.l10n.widgetBuilderWizardStep3SubtitleData,
         icon: isQuickActions ? Icons.touch_app : Icons.data_usage,
       ),
-      const _WizardStep(
-        title: 'Make it Yours',
-        subtitle: 'Customize colors and layout',
+      _WizardStep(
+        title: context.l10n.widgetBuilderWizardStep4Title,
+        subtitle: context.l10n.widgetBuilderWizardStep4Subtitle,
         icon: Icons.palette,
       ),
     ];
@@ -700,10 +700,9 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
     // Show confirmation dialog
     final shouldClose = await AppBottomSheet.showConfirm(
       context: context,
-      title: 'Discard Changes?',
-      message:
-          'You have unsaved changes. Are you sure you want to close without saving?',
-      confirmLabel: 'Discard',
+      title: context.l10n.widgetBuilderDiscardChangesTitle,
+      message: context.l10n.widgetBuilderDiscardChangesMessage,
+      confirmLabel: context.l10n.widgetBuilderDiscard,
       isDestructive: true,
     );
 
@@ -766,7 +765,7 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
                 ),
                 SizedBox(width: AppTheme.spacing12),
                 Text(
-                  'Switch Template?',
+                  context.l10n.widgetBuilderSwitchTemplateTitle,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
@@ -777,17 +776,23 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
             ),
             const SizedBox(height: AppTheme.spacing16),
             Text(
-              'You have $itemCount $currentDataType selected.',
+              context.l10n.widgetBuilderSwitchTemplateItemCount(
+                itemCount,
+                currentDataType,
+              ),
               style: TextStyle(color: context.textSecondary),
             ),
             SizedBox(height: AppTheme.spacing12),
             Text(
-              '"${template.name}" uses $newDataType instead, so your current selections won\'t be used.',
+              context.l10n.widgetBuilderSwitchTemplateIncompatible(
+                template.name,
+                newDataType,
+              ),
               style: TextStyle(color: context.textSecondary),
             ),
             SizedBox(height: AppTheme.spacing12),
             Text(
-              'What would you like to do?',
+              context.l10n.widgetBuilderWhatWouldYouLikeToDo,
               style: TextStyle(
                 color: context.textPrimary,
                 fontWeight: FontWeight.w500,
@@ -852,14 +857,12 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
     if (_selectedTemplate?.id == 'actions') {
       // Quick Actions template should have actions, not bindings
       if (_selectedBindings.isNotEmpty && _selectedActions.isEmpty) {
-        return 'Quick Actions requires at least one action selected. '
-            'You have data bindings but no actions.';
+        return context.l10n.widgetBuilderValidationActionsRequired;
       }
     } else {
       // Data templates should have bindings, not actions
       if (_selectedActions.isNotEmpty && _selectedBindings.isEmpty) {
-        return 'This template requires data bindings. '
-            'You have actions selected but no data.';
+        return context.l10n.widgetBuilderValidationDataRequired;
       }
     }
     return null;
@@ -1082,7 +1085,7 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
                 Icon(Icons.preview, size: 14, color: context.textSecondary),
                 SizedBox(width: AppTheme.spacing6),
                 Text(
-                  'Live Preview',
+                  context.l10n.widgetBuilderLivePreview,
                   style: TextStyle(
                     color: context.textSecondary,
                     fontSize: 11,
@@ -1282,7 +1285,7 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
       children: [
         // Name field
         Text(
-          'Widget Name',
+          context.l10n.widgetBuilderWidgetName,
           style: TextStyle(
             color: context.textSecondary,
             fontSize: 13,
@@ -1295,7 +1298,7 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
           controller: _nameController,
           style: TextStyle(color: context.textPrimary, fontSize: 16),
           decoration: InputDecoration(
-            hintText: 'e.g., My Battery Widget',
+            hintText: context.l10n.widgetBuilderNameHint,
             hintStyle: TextStyle(color: context.textTertiary),
             filled: true,
             fillColor: context.card,
@@ -1938,9 +1941,8 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
 
   Widget _buildValidationWarningBanner(String message) {
     return StatusBanner.warning(
-      title: 'Cannot Save Widget',
-      subtitle:
-          '$message\n\nGo back to Step 1 to change your template, or Step 3 to update your selections.',
+      title: context.l10n.widgetBuilderCannotSaveTitle,
+      subtitle: context.l10n.widgetBuilderCannotSaveMessage(message),
     );
   }
 
@@ -3630,7 +3632,7 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
                         fontSize: 16,
                       ),
                       decoration: InputDecoration(
-                        hintText: 'Enter threshold value',
+                        hintText: context.l10n.widgetBuilderEnterThresholdValue,
                         hintStyle: TextStyle(color: context.textSecondary),
                         filled: true,
                         fillColor: context.surface,
@@ -3799,12 +3801,12 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Threshold Lines',
+            context.l10n.widgetBuilderThresholdLines,
             style: TextStyle(color: context.textPrimary, fontSize: 13),
           ),
           SizedBox(height: AppTheme.spacing4),
           Text(
-            'Add reference lines at specific values',
+            context.l10n.widgetBuilderAddReferenceLines,
             style: TextStyle(color: context.textSecondary, fontSize: 11),
           ),
           const SizedBox(height: AppTheme.spacing12),
@@ -4134,7 +4136,7 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
                     ),
                     const SizedBox(width: AppTheme.spacing10),
                     Text(
-                      'Add to Dashboard',
+                      context.l10n.widgetBuilderAddToDashboard,
                       style: TextStyle(
                         color: context.textPrimary,
                         fontSize: 14,
@@ -4273,7 +4275,10 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
       AppLogging.widgets('[WidgetWizard] ERROR in onSave: $e');
       AppLogging.widgets('[WidgetWizard] Stack trace: $stack');
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to save widget: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.widgetBuilderFailedToSaveWidget(e.toString()),
+        );
       }
       return;
     }
@@ -4284,7 +4289,9 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
       );
       showSuccessSnackBar(
         context,
-        _existingId != null ? 'Widget updated!' : 'Widget created!',
+        _existingId != null
+            ? context.l10n.widgetBuilderWidgetUpdated
+            : context.l10n.widgetBuilderWidgetCreated,
       );
       Navigator.pop(
         context,
@@ -4783,7 +4790,7 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
           children: [
             ElementSchema(
               type: ElementType.text,
-              text: 'No data selected',
+              text: context.l10n.widgetBuilderNoDataSelected,
               style: StyleSchema(
                 textColor: _colorToHex(context.textSecondary),
                 fontSize: 13,
@@ -5365,7 +5372,7 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
       children.add(
         ElementSchema(
           type: ElementType.text,
-          text: 'No info selected',
+          text: context.l10n.widgetBuilderNoInfoSelected,
           style: StyleSchema(
             textColor: _colorToHex(context.textSecondary),
             fontSize: 13,
@@ -5530,7 +5537,7 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
       children.add(
         ElementSchema(
           type: ElementType.text,
-          text: 'No location data selected',
+          text: context.l10n.widgetBuilderNoLocationDataSelected,
           style: StyleSchema(
             textColor: _colorToHex(context.textSecondary),
             fontSize: 13,
@@ -5725,7 +5732,7 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
       children.add(
         ElementSchema(
           type: ElementType.text,
-          text: 'No sensor data selected',
+          text: context.l10n.widgetBuilderNoSensorDataSelected,
           style: StyleSchema(
             textColor: _colorToHex(context.textSecondary),
             fontSize: 13,

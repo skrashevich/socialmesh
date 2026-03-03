@@ -1485,14 +1485,14 @@ class _PurchaseWebViewScreenState extends State<_PurchaseWebViewScreen> {
             IconButton(
               icon: const Icon(Icons.arrow_back),
               onPressed: () => _webViewController?.goBack(),
-              tooltip: 'Go back',
+              tooltip: context.l10n.deviceShopGoBackTooltip,
             ),
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: _hasLoadError
                 ? _retry
                 : () => _webViewController?.reload(),
-            tooltip: 'Refresh',
+            tooltip: context.l10n.deviceShopRefreshTooltip,
           ),
         ],
       ),
@@ -2232,7 +2232,10 @@ class _WriteReviewSheetState extends ConsumerState<_WriteReviewSheet>
       safeShowSnackBar(reviewSubmittedMsg);
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to submit review: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.deviceShopReviewSubmitFailed('$e'),
+        );
       }
     } finally {
       safeSetState(() => _isSubmitting = false);

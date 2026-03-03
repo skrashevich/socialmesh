@@ -721,7 +721,10 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
     // Get current user for metadata
     final currentUser = ref.read(currentUserProvider);
     if (currentUser == null) {
-      showSignInRequiredSnackBar(context, 'Sign in to upload images');
+      showSignInRequiredSnackBar(
+        context,
+        context.l10n.socialSignInToUploadImages,
+      );
       return;
     }
 
@@ -786,7 +789,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
             if (!mounted) return;
             showErrorSnackBar(
               context,
-              'Image violates content guidelines and was blocked.',
+              context.l10n.socialImageBlockedByModeration,
             );
             return;
           }
@@ -800,12 +803,12 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
       // Check for object-not-found which indicates moderation
       final errorStr = e.toString();
       if (errorStr.contains('object-not-found')) {
+        showErrorSnackBar(context, context.l10n.socialImageBlockedByModeration);
+      } else {
         showErrorSnackBar(
           context,
-          'Image violates content guidelines and was blocked.',
+          context.l10n.socialFailedToUploadImage('$e'),
         );
-      } else {
-        showErrorSnackBar(context, 'Failed to upload image: $e');
       }
     } finally {
       safeSetState(() => _isSubmitting = false);
@@ -1006,7 +1009,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
       });
     } catch (e) {
       if (!mounted) return;
-      showErrorSnackBar(context, 'Failed to get location: $e');
+      showErrorSnackBar(context, context.l10n.socialFailedToGetLocation('$e'));
     }
   }
 

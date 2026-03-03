@@ -258,7 +258,7 @@ class _FlightSearchSheetState extends State<FlightSearchSheet> {
                                   color: context.accentColor,
                                 ),
                                 onPressed: () => _onSubmitted(_controller.text),
-                                tooltip: 'Search',
+                                tooltip: context.l10n.aetherSearchTooltip,
                               ),
                               // Clear button
                               IconButton(

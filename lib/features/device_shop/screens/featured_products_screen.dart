@@ -211,7 +211,10 @@ class _FeaturedProductsScreenState extends ConsumerState<FeaturedProductsScreen>
     } catch (e) {
       safeSetState(() => _isSaving = false);
       if (mounted) {
-        showErrorSnackBar(context, 'Error: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.deviceShopErrorWithDetails('$e'),
+        );
       }
     }
   }
@@ -255,7 +258,10 @@ class _FeaturedProductsScreenState extends ConsumerState<FeaturedProductsScreen>
         showSuccessSnackBar(context, l10n.featuredProductsRemoved);
       } catch (e) {
         if (mounted) {
-          showErrorSnackBar(context, 'Error: $e');
+          showErrorSnackBar(
+            context,
+            context.l10n.deviceShopErrorWithDetails('$e'),
+          );
         }
       }
     }

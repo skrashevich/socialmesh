@@ -322,7 +322,7 @@ class _QueueItemCard extends ConsumerWidget {
       }
     } catch (e) {
       if (context.mounted) {
-        showErrorSnackBar(context, 'Error: $e');
+        showErrorSnackBar(context, l10n.socialErrorWithDetails('$e'));
       }
     }
   }

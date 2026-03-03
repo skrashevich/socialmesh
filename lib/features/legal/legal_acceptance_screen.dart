@@ -155,7 +155,7 @@ class _LegalAcceptanceScreenState extends ConsumerState<LegalAcceptanceScreen>
 
                     // Subtitle / summary
                     Semantics(
-                      label: 'Terms summary',
+                      label: context.l10n.legalAcceptanceTermsSummarySemantics,
                       child: Text(
                         _subtitle,
                         style: theme.textTheme.bodyLarge?.copyWith(
@@ -188,7 +188,7 @@ class _LegalAcceptanceScreenState extends ConsumerState<LegalAcceptanceScreen>
 
   Widget _buildAppIcon(BuildContext context) {
     return Semantics(
-      label: 'Socialmesh app icon',
+      label: context.l10n.legalAcceptanceAppIconSemantics,
       excludeSemantics: true,
       child: Container(
         width: 80,
@@ -211,11 +211,11 @@ class _LegalAcceptanceScreenState extends ConsumerState<LegalAcceptanceScreen>
             ),
           ],
         ),
-        child: const Icon(
+        child: Icon(
           Icons.shield_outlined,
           color: Colors.white,
           size: 40,
-          semanticLabel: 'Legal shield',
+          semanticLabel: context.l10n.legalAcceptanceLegalShieldSemantics,
         ),
       ),
     );
@@ -231,7 +231,7 @@ class _LegalAcceptanceScreenState extends ConsumerState<LegalAcceptanceScreen>
         // Terms of Service link
         Semantics(
           button: true,
-          label: 'View Terms of Service',
+          label: context.l10n.legalAcceptanceViewTermsSemantics,
           child: _DocumentLinkTile(
             icon: Icons.description_outlined,
             title: context.l10n.legalAcceptanceTermsOfService,
@@ -246,7 +246,7 @@ class _LegalAcceptanceScreenState extends ConsumerState<LegalAcceptanceScreen>
         // Privacy Policy link
         Semantics(
           button: true,
-          label: 'View Privacy Policy',
+          label: context.l10n.legalAcceptanceViewPrivacySemantics,
           child: _DocumentLinkTile(
             icon: Icons.privacy_tip_outlined,
             title: context.l10n.legalAcceptancePrivacyPolicy,
@@ -267,8 +267,7 @@ class _LegalAcceptanceScreenState extends ConsumerState<LegalAcceptanceScreen>
         // Agree button
         Semantics(
           button: true,
-          label:
-              'I agree to the Terms of Service and Privacy Policy. Tap to accept and continue.',
+          label: context.l10n.legalAcceptanceAgreeSemantics,
           child: SizedBox(
             height: 52,
             child: FilledButton(
@@ -307,7 +306,7 @@ class _LegalAcceptanceScreenState extends ConsumerState<LegalAcceptanceScreen>
         // Decline button
         Semantics(
           button: true,
-          label: 'Not now. Decline and exit the app.',
+          label: context.l10n.legalAcceptanceDeclineSemantics,
           child: SizedBox(
             height: 48,
             child: TextButton(
@@ -330,8 +329,7 @@ class _LegalAcceptanceScreenState extends ConsumerState<LegalAcceptanceScreen>
         Padding(
           padding: const EdgeInsets.only(top: 12),
           child: Semantics(
-            label:
-                'By tapping I Agree, you accept our Terms of Service and acknowledge our Privacy Policy.',
+            label: context.l10n.legalAcceptanceFinePrintSemantics,
             child: Text(
               context.l10n.legalAcceptanceFinePrint,
               style: TextStyle(
@@ -367,7 +365,7 @@ class _LegalAcceptanceScreenState extends ConsumerState<LegalAcceptanceScreen>
                 Icons.info_outline_rounded,
                 size: 56,
                 color: context.textTertiary,
-                semanticLabel: 'Information',
+                semanticLabel: context.l10n.legalAcceptanceInformationSemantics,
               ),
               const SizedBox(height: AppTheme.spacing24),
               Semantics(
@@ -393,7 +391,7 @@ class _LegalAcceptanceScreenState extends ConsumerState<LegalAcceptanceScreen>
               const SizedBox(height: AppTheme.spacing32),
               Semantics(
                 button: true,
-                label: 'Go back to review and accept the terms',
+                label: context.l10n.legalAcceptanceGoBackSemantics,
                 child: SizedBox(
                   height: 52,
                   width: double.infinity,

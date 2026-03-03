@@ -141,19 +141,25 @@ class _AirQualityCard extends StatelessWidget {
             children: [
               if (log.pm10Standard != null)
                 Expanded(
-                  child: _PmTile(label: 'PM1.0', value: log.pm10Standard!),
+                  child: _PmTile(
+                    label: context.l10n.telemetryAirQualityPm10Label,
+                    value: log.pm10Standard!,
+                  ),
                 ),
               if (log.pm25Standard != null)
                 Expanded(
                   child: _PmTile(
-                    label: 'PM2.5',
+                    label: context.l10n.telemetryAirQualityPm25Label,
                     value: log.pm25Standard!,
                     highlight: true,
                   ),
                 ),
               if (log.pm100Standard != null)
                 Expanded(
-                  child: _PmTile(label: 'PM10', value: log.pm100Standard!),
+                  child: _PmTile(
+                    label: context.l10n.telemetryAirQualityPm100Label,
+                    value: log.pm100Standard!,
+                  ),
                 ),
             ],
           ),
@@ -176,21 +182,21 @@ class _AirQualityCard extends StatelessWidget {
                 if (log.pm10Environmental != null)
                   Expanded(
                     child: _PmTile(
-                      label: 'PM1.0',
+                      label: context.l10n.telemetryAirQualityPm10Label,
                       value: log.pm10Environmental!,
                     ),
                   ),
                 if (log.pm25Environmental != null)
                   Expanded(
                     child: _PmTile(
-                      label: 'PM2.5',
+                      label: context.l10n.telemetryAirQualityPm25Label,
                       value: log.pm25Environmental!,
                     ),
                   ),
                 if (log.pm100Environmental != null)
                   Expanded(
                     child: _PmTile(
-                      label: 'PM10',
+                      label: context.l10n.telemetryAirQualityPm100Label,
                       value: log.pm100Environmental!,
                     ),
                   ),
@@ -217,17 +223,35 @@ class _AirQualityCard extends StatelessWidget {
               runSpacing: 8,
               children: [
                 if (log.particles03um != null)
-                  _ParticleChip(label: '>0.3µm', count: log.particles03um!),
+                  _ParticleChip(
+                    label: context.l10n.telemetryAirQualityParticle03um,
+                    count: log.particles03um!,
+                  ),
                 if (log.particles05um != null)
-                  _ParticleChip(label: '>0.5µm', count: log.particles05um!),
+                  _ParticleChip(
+                    label: context.l10n.telemetryAirQualityParticle05um,
+                    count: log.particles05um!,
+                  ),
                 if (log.particles10um != null)
-                  _ParticleChip(label: '>1.0µm', count: log.particles10um!),
+                  _ParticleChip(
+                    label: context.l10n.telemetryAirQualityParticle10um,
+                    count: log.particles10um!,
+                  ),
                 if (log.particles25um != null)
-                  _ParticleChip(label: '>2.5µm', count: log.particles25um!),
+                  _ParticleChip(
+                    label: context.l10n.telemetryAirQualityParticle25um,
+                    count: log.particles25um!,
+                  ),
                 if (log.particles50um != null)
-                  _ParticleChip(label: '>5.0µm', count: log.particles50um!),
+                  _ParticleChip(
+                    label: context.l10n.telemetryAirQualityParticle50um,
+                    count: log.particles50um!,
+                  ),
                 if (log.particles100um != null)
-                  _ParticleChip(label: '>10µm', count: log.particles100um!),
+                  _ParticleChip(
+                    label: context.l10n.telemetryAirQualityParticle100um,
+                    count: log.particles100um!,
+                  ),
               ],
             ),
           ],

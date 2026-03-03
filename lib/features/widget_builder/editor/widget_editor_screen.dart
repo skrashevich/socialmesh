@@ -154,7 +154,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
             color: _showToolbox ? context.accentColor : context.textPrimary,
           ),
           onPressed: () => setState(() => _showToolbox = !_showToolbox),
-          tooltip: 'Toggle Toolbox',
+          tooltip: context.l10n.widgetBuilderToggleToolbox,
         ),
         SizedBox(width: AppTheme.spacing8),
         // Save button
@@ -162,7 +162,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
           onPressed: _saveWidget,
           icon: Icon(Icons.save, color: context.accentColor),
           label: Text(
-            'Save',
+            context.l10n.widgetBuilderSave,
             style: TextStyle(
               color: context.accentColor,
               fontWeight: FontWeight.w600,
@@ -348,7 +348,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
                   ),
                   const SizedBox(width: AppTheme.spacing8),
                   Text(
-                    'Add Block',
+                    context.l10n.widgetBuilderAddBlock,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
@@ -365,42 +365,51 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
                 controller: scrollController,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 children: [
-                  _buildBlockPickerSection('Display Blocks', [
-                    _BlockItem(
-                      'info',
-                      'Info Block',
-                      Icons.info_outline,
-                      'Icon + Label + Data Value',
-                    ),
-                    _BlockItem(
-                      'metric',
-                      'Metric',
-                      Icons.trending_up,
-                      'Large value with label',
-                    ),
-                    _BlockItem(
-                      'status',
-                      'Status',
-                      Icons.circle,
-                      'Status indicator with binding',
-                    ),
-                  ]),
-                  _buildBlockPickerSection('Action Blocks', [
-                    _BlockItem(
-                      'action_button',
-                      'Action Button',
-                      Icons.touch_app,
-                      'Tappable button with action',
-                    ),
-                  ]),
-                  _buildBlockPickerSection('Layout', [
-                    _BlockItem(
-                      'row',
-                      'New Row',
-                      Icons.view_column,
-                      'Add a row for more blocks',
-                    ),
-                  ]),
+                  _buildBlockPickerSection(
+                    context.l10n.widgetBuilderSectionDisplayBlocks,
+                    [
+                      _BlockItem(
+                        'info',
+                        context.l10n.widgetBuilderBlockInfoBlock,
+                        Icons.info_outline,
+                        context.l10n.widgetBuilderBlockInfoBlockDesc,
+                      ),
+                      _BlockItem(
+                        'metric',
+                        context.l10n.widgetBuilderBlockMetric,
+                        Icons.trending_up,
+                        context.l10n.widgetBuilderBlockMetricDesc,
+                      ),
+                      _BlockItem(
+                        'status',
+                        context.l10n.widgetBuilderBlockStatus,
+                        Icons.circle,
+                        context.l10n.widgetBuilderBlockStatusDesc,
+                      ),
+                    ],
+                  ),
+                  _buildBlockPickerSection(
+                    context.l10n.widgetBuilderSectionActionBlocks,
+                    [
+                      _BlockItem(
+                        'action_button',
+                        context.l10n.widgetBuilderBlockActionButton,
+                        Icons.touch_app,
+                        context.l10n.widgetBuilderBlockActionButtonDesc,
+                      ),
+                    ],
+                  ),
+                  _buildBlockPickerSection(
+                    context.l10n.widgetBuilderSectionLayout,
+                    [
+                      _BlockItem(
+                        'row',
+                        context.l10n.widgetBuilderBlockNewRow,
+                        Icons.view_column,
+                        context.l10n.widgetBuilderBlockNewRowDesc,
+                      ),
+                    ],
+                  ),
                   const SizedBox(height: AppTheme.spacing16),
                 ],
               ),
@@ -461,7 +470,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: Text(
-                'What would you like to add?',
+                context.l10n.widgetBuilderWhatToAdd,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -479,32 +488,32 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
                     ctx,
                     parent,
                     ElementType.text,
-                    'Text',
-                    'Add a label or value',
+                    context.l10n.widgetBuilderAddText,
+                    context.l10n.widgetBuilderAddTextDesc,
                     Icons.text_fields,
                   ),
                   _buildSimpleAddOption(
                     ctx,
                     parent,
                     ElementType.icon,
-                    'Icon',
-                    'Add a symbol or emoji',
+                    context.l10n.widgetBuilderAddIcon,
+                    context.l10n.widgetBuilderAddIconDesc,
                     Icons.emoji_emotions_outlined,
                   ),
                   _buildSimpleAddOption(
                     ctx,
                     parent,
                     ElementType.gauge,
-                    'Progress Bar',
-                    'Show a value visually',
+                    context.l10n.widgetBuilderAddProgressBar,
+                    context.l10n.widgetBuilderAddProgressBarDesc,
                     Icons.linear_scale,
                   ),
                   _buildSimpleAddOption(
                     ctx,
                     parent,
                     ElementType.spacer,
-                    'Space',
-                    'Add empty space between items',
+                    context.l10n.widgetBuilderAddSpace,
+                    context.l10n.widgetBuilderAddSpaceDesc,
                     Icons.expand,
                   ),
                 ],
@@ -876,8 +885,8 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
           showInfoSnackBar(
             context,
             _schema.size == CustomWidgetSize.medium
-                ? 'Medium widgets only allow 1 row'
-                : 'Large widgets allow max 2 rows',
+                ? context.l10n.widgetBuilderMediumOnlyOneRow
+                : context.l10n.widgetBuilderLargeMaxTwoRows,
           );
           return null;
         }
@@ -1749,20 +1758,22 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
 
   List<Widget> _buildActionProperties(ElementSchema element) {
     final actionLabels = {
-      ActionType.none: 'No Action',
-      ActionType.sendMessage: 'Send Message',
-      ActionType.shareLocation: 'Share Location',
-      ActionType.traceroute: 'Traceroute',
-      ActionType.requestPositions: 'Request Positions',
-      ActionType.sos: 'Emergency SOS',
-      ActionType.navigate: 'Navigate',
-      ActionType.openUrl: 'Open URL',
-      ActionType.copyToClipboard: 'Copy to Clipboard',
+      ActionType.none: context.l10n.widgetBuilderActionNoAction,
+      ActionType.sendMessage: context.l10n.widgetBuilderActionSendMessage,
+      ActionType.shareLocation: context.l10n.widgetBuilderActionShareLocation,
+      ActionType.traceroute: context.l10n.widgetBuilderActionTraceroute,
+      ActionType.requestPositions:
+          context.l10n.widgetBuilderActionRequestPositions,
+      ActionType.sos: context.l10n.widgetBuilderActionEmergencySos,
+      ActionType.navigate: context.l10n.widgetBuilderActionNavigateLabel,
+      ActionType.openUrl: context.l10n.widgetBuilderActionOpenUrl,
+      ActionType.copyToClipboard:
+          context.l10n.widgetBuilderActionCopyToClipboard,
     };
 
     return [
       _buildDropdownField(
-        label: 'Add Action',
+        label: context.l10n.widgetBuilderAddAction,
         value: (element.action?.type ?? ActionType.none).name,
         options: ActionType.values.map((e) => e.name).toList(),
         displayLabels: actionLabels.values.toList(),
@@ -2525,10 +2536,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
     if (newSize == CustomWidgetSize.medium) {
       final rowCount = _countRootRows();
       if (rowCount > 1) {
-        showInfoSnackBar(
-          context,
-          'Remove extra rows first - medium allows only 1 row',
-        );
+        showInfoSnackBar(context, context.l10n.widgetBuilderRemoveExtraRows);
         return;
       }
     }
@@ -2544,8 +2552,8 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
       showInfoSnackBar(
         context,
         _schema.size == CustomWidgetSize.medium
-            ? 'Medium widgets only allow 1 row'
-            : 'Large widgets only allow 2 rows max',
+            ? context.l10n.widgetBuilderMediumOnlyOneRowLimit
+            : context.l10n.widgetBuilderLargeOnlyTwoRowsMax,
       );
       return;
     }
@@ -2896,7 +2904,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Widget Name',
+            context.l10n.widgetBuilderWidgetName,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -2910,7 +2918,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
             autofocus: true,
             style: TextStyle(color: context.textPrimary),
             decoration: InputDecoration(
-              hintText: 'Enter widget name',
+              hintText: context.l10n.widgetBuilderEnterWidgetName,
               hintStyle: TextStyle(color: context.textTertiary),
               counterText: '',
             ),

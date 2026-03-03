@@ -741,11 +741,19 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
 
     final player = RtttlPlayer();
     try {
-      showLoadingSnackBar(context, 'Playing "${widget.action.soundName}"...');
+      showLoadingSnackBar(
+        context,
+        context.l10n.automationActionPlayingSound(
+          widget.action.soundName ?? '',
+        ),
+      );
       await player.play(rtttl);
     } catch (e) {
       if (context.mounted) {
-        showErrorSnackBar(context, 'Failed to play sound: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.automationActionPlaySoundFailed('$e'),
+        );
       }
     } finally {
       await player.dispose();
@@ -1350,7 +1358,10 @@ class _SoundPickerSheetState extends State<_SoundPickerSheet>
       await _player!.play(item.rtttl);
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to play: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.automationActionPlayFailed('$e'),
+        );
       }
     } finally {
       safeSetState(() {

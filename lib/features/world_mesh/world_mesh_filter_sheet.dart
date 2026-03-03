@@ -646,7 +646,7 @@ class _WorldMeshFilterSheetState extends ConsumerState<WorldMeshFilterSheet> {
             children: [
               Expanded(
                 child: _buildTriStateButton(
-                  label: 'Any',
+                  label: context.l10n.worldMeshFilterAny,
                   isSelected: value == null,
                   onTap: () => onChanged(null),
                   accentColor: accentColor,
@@ -655,7 +655,7 @@ class _WorldMeshFilterSheetState extends ConsumerState<WorldMeshFilterSheet> {
               const SizedBox(width: AppTheme.spacing8),
               Expanded(
                 child: _buildTriStateButton(
-                  label: 'Yes',
+                  label: context.l10n.worldMeshFilterYes,
                   isSelected: value == true,
                   onTap: () => onChanged(true),
                   accentColor: accentColor,
@@ -664,7 +664,7 @@ class _WorldMeshFilterSheetState extends ConsumerState<WorldMeshFilterSheet> {
               const SizedBox(width: AppTheme.spacing8),
               Expanded(
                 child: _buildTriStateButton(
-                  label: 'No',
+                  label: context.l10n.worldMeshFilterNo,
                   isSelected: value == false,
                   onTap: () => onChanged(false),
                   accentColor: accentColor,

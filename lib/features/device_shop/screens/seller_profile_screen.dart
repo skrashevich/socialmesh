@@ -854,7 +854,7 @@ class _DiscountCodeSectionState extends ConsumerState<_DiscountCodeSection>
                           context.l10n.sellerProfileCodeCopied,
                         );
                       },
-                      tooltip: 'Copy code',
+                      tooltip: context.l10n.sellerProfileCopyCodeTooltip,
                     ),
                   ],
                 ),

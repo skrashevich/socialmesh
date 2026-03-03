@@ -505,43 +505,57 @@ class _EnvironmentMetricsCard extends StatelessWidget {
                 if (log.temperature != null)
                   _MetricChip(
                     icon: Icons.thermostat,
-                    label: '${log.temperature!.toStringAsFixed(1)}°C',
+                    label: context.l10n.telemetryEnvTemperatureValue(
+                      log.temperature!.toStringAsFixed(1),
+                    ),
                     color: _getTemperatureColor(log.temperature!),
                   ),
                 if (log.humidity != null)
                   _MetricChip(
                     icon: Icons.water_drop,
-                    label: '${log.humidity!.toStringAsFixed(1)}%',
+                    label: context.l10n.telemetryEnvHumidityValue(
+                      log.humidity!.toStringAsFixed(1),
+                    ),
                     color: AccentColors.cyan,
                   ),
                 if (log.barometricPressure != null)
                   _MetricChip(
                     icon: Icons.compress,
-                    label: '${log.barometricPressure!.toStringAsFixed(1)} hPa',
+                    label: context.l10n.telemetryEnvPressureValue(
+                      log.barometricPressure!.toStringAsFixed(1),
+                    ),
                     color: AppTheme.primaryPurple,
                   ),
                 if (log.gasResistance != null)
                   _MetricChip(
                     icon: Icons.air,
-                    label: '${log.gasResistance!.toStringAsFixed(0)} Ω',
+                    label: context.l10n.telemetryEnvGasResistanceValue(
+                      log.gasResistance!.toStringAsFixed(0),
+                    ),
                     color: AccentColors.green,
                   ),
                 if (log.iaq != null)
                   _MetricChip(
                     icon: Icons.eco,
-                    label: 'IAQ ${log.iaq}',
+                    label: context.l10n.telemetryEnvIaqValue(
+                      log.iaq!.toString(),
+                    ),
                     color: _getIaqColor(log.iaq!),
                   ),
                 if (log.lux != null)
                   _MetricChip(
                     icon: Icons.light_mode,
-                    label: '${log.lux!.toStringAsFixed(0)} lux',
+                    label: context.l10n.telemetryEnvLuxValue(
+                      log.lux!.toStringAsFixed(0),
+                    ),
                     color: AppTheme.warningYellow,
                   ),
                 if (log.windSpeed != null)
                   _MetricChip(
                     icon: Icons.wind_power,
-                    label: '${log.windSpeed!.toStringAsFixed(1)} m/s',
+                    label: context.l10n.telemetryEnvWindSpeedValue(
+                      log.windSpeed!.toStringAsFixed(1),
+                    ),
                     color: AppTheme.primaryBlue,
                   ),
               ],

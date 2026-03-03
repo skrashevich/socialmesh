@@ -1203,7 +1203,7 @@ class _ReportBottomSheetState extends ConsumerState<_ReportBottomSheet>
           safeNavigatorPop();
           return;
         }
-        showErrorSnackBar(context, 'Error: $e');
+        showErrorSnackBar(context, l10n.aetherErrorWithDetails('$e'));
       }
     } finally {
       safeSetState(() => _isSaving = false);

@@ -1216,6 +1216,12 @@ abstract class AppLocalizations {
   /// **'No Flights Found'**
   String get aetherEmptyAllTitle;
 
+  /// No description provided for @aetherErrorWithDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {error}'**
+  String aetherErrorWithDetails(String error);
+
   /// Empty state subtitle when user has no flights
   ///
   /// In en, this message translates to:
@@ -3692,6 +3698,24 @@ abstract class AppLocalizations {
   /// **'Play alert sound'**
   String get automationActionPlaySound;
 
+  /// No description provided for @automationActionPlayFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to play: {error}'**
+  String automationActionPlayFailed(String error);
+
+  /// No description provided for @automationActionPlaySoundFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to play sound: {error}'**
+  String automationActionPlaySoundFailed(String error);
+
+  /// No description provided for @automationActionPlayingSound.
+  ///
+  /// In en, this message translates to:
+  /// **'Playing \"{name}\"...'**
+  String automationActionPlayingSound(String name);
+
   /// Subtitle when custom notification sound is selected
   ///
   /// In en, this message translates to:
@@ -4573,6 +4597,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Alert'**
   String get automationNotificationFallbackTitle;
+
+  /// No description provided for @automationScheduledBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to run scheduled automation'**
+  String get automationScheduledBody;
+
+  /// No description provided for @automationScheduledTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled Automation'**
+  String get automationScheduledTitle;
 
   /// Menu item linking to acceptable use terms
   ///
@@ -8402,6 +8438,48 @@ abstract class AppLocalizations {
   /// **'Unable to load products'**
   String get deviceShopUnableToLoad;
 
+  /// No description provided for @deviceShopErrorWithDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {error}'**
+  String deviceShopErrorWithDetails(String error);
+
+  /// No description provided for @deviceShopFailedToUploadImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to upload image: {error}'**
+  String deviceShopFailedToUploadImage(String error);
+
+  /// No description provided for @deviceShopFailedToUploadLogo.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to upload logo: {error}'**
+  String deviceShopFailedToUploadLogo(String error);
+
+  /// No description provided for @deviceShopFieldRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get deviceShopFieldRequired;
+
+  /// Tooltip for back button on product detail screen
+  ///
+  /// In en, this message translates to:
+  /// **'Go back'**
+  String get deviceShopGoBackTooltip;
+
+  /// Tooltip for refresh button on product detail screen
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get deviceShopRefreshTooltip;
+
+  /// Error snackbar when review submission fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to submit review: {error}'**
+  String deviceShopReviewSubmitFailed(String error);
+
   /// Badge label shown on newly discovered node cards.
   ///
   /// In en, this message translates to:
@@ -9470,6 +9548,12 @@ abstract class AppLocalizations {
   /// **'Could not read file: {error}'**
   String fileTransferCouldNotReadFile(String error);
 
+  /// Error snackbar when file cannot be read
+  ///
+  /// In en, this message translates to:
+  /// **'Could not read file.'**
+  String get fileTransferCouldNotRead;
+
   /// Error snackbar when share fails
   ///
   /// In en, this message translates to:
@@ -10019,6 +10103,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'YAML'**
   String get fileTransferTypeYaml;
+
+  /// Label showing line count in file preview
+  ///
+  /// In en, this message translates to:
+  /// **'{count} lines'**
+  String fileTransferLineCount(int count);
 
   /// No description provided for @firmwareUpdateAvailable.
   ///
@@ -11424,6 +11514,18 @@ abstract class AppLocalizations {
   /// **'I Agree'**
   String get legalAcceptanceAgreeButton;
 
+  /// Semantics label for the agree button on the legal acceptance screen
+  ///
+  /// In en, this message translates to:
+  /// **'I agree to the Terms of Service and Privacy Policy. Tap to accept and continue.'**
+  String get legalAcceptanceAgreeSemantics;
+
+  /// Semantics label for the app icon on the legal acceptance screen
+  ///
+  /// In en, this message translates to:
+  /// **'Socialmesh app icon'**
+  String get legalAcceptanceAppIconSemantics;
+
   /// Month name used in formatting effective dates of legal documents
   ///
   /// In en, this message translates to:
@@ -11508,6 +11610,12 @@ abstract class AppLocalizations {
   /// **'Not Now'**
   String get legalAcceptanceDeclineButton;
 
+  /// Semantics label for the decline button on the legal acceptance screen
+  ///
+  /// In en, this message translates to:
+  /// **'Not now. Decline and exit the app.'**
+  String get legalAcceptanceDeclineSemantics;
+
   /// Title of the iOS-only decline explanation screen shown when user taps Not Now
   ///
   /// In en, this message translates to:
@@ -11519,6 +11627,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'By tapping \"I Agree\", you accept our Terms of Service and acknowledge our Privacy Policy.'**
   String get legalAcceptanceFinePrint;
+
+  /// Semantics label for the fine print text on the legal acceptance screen
+  ///
+  /// In en, this message translates to:
+  /// **'By tapping I Agree, you accept our Terms of Service and acknowledge our Privacy Policy.'**
+  String get legalAcceptanceFinePrintSemantics;
+
+  /// Semantics label for the go back button on the iOS decline explanation screen
+  ///
+  /// In en, this message translates to:
+  /// **'Go back to review and accept the terms'**
+  String get legalAcceptanceGoBackSemantics;
+
+  /// Semantics label for the information icon on the iOS decline explanation screen
+  ///
+  /// In en, this message translates to:
+  /// **'Information'**
+  String get legalAcceptanceInformationSemantics;
+
+  /// Semantics label for the shield icon on the legal acceptance screen
+  ///
+  /// In en, this message translates to:
+  /// **'Legal shield'**
+  String get legalAcceptanceLegalShieldSemantics;
 
   /// Subtitle showing the effective date of the Privacy Policy document
   ///
@@ -11562,6 +11694,12 @@ abstract class AppLocalizations {
   /// **'Terms of Service'**
   String get legalAcceptanceTermsOfService;
 
+  /// Semantics label for the terms summary text on the legal acceptance screen
+  ///
+  /// In en, this message translates to:
+  /// **'Terms summary'**
+  String get legalAcceptanceTermsSummarySemantics;
+
   /// Screen title shown on first launch when the user has never accepted the terms
   ///
   /// In en, this message translates to:
@@ -11573,6 +11711,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Updated Terms'**
   String get legalAcceptanceTitleUpdate;
+
+  /// Semantics label for the Privacy Policy link on the legal acceptance screen
+  ///
+  /// In en, this message translates to:
+  /// **'View Privacy Policy'**
+  String get legalAcceptanceViewPrivacySemantics;
+
+  /// Semantics label for the Terms of Service link on the legal acceptance screen
+  ///
+  /// In en, this message translates to:
+  /// **'View Terms of Service'**
+  String get legalAcceptanceViewTermsSemantics;
 
   /// Body text explaining the age requirement and that confirmation is needed to proceed
   ///
@@ -11586,6 +11736,12 @@ abstract class AppLocalizations {
   /// **'I Am 16 or Older'**
   String get legalEligibilityConfirmButton;
 
+  /// Semantics label for the confirm button on the eligibility gate screen
+  ///
+  /// In en, this message translates to:
+  /// **'I am 16 or older. Tap to confirm and continue.'**
+  String get legalEligibilityConfirmSemantics;
+
   /// Explanation shown on iOS when user taps Exit, since iOS cannot force-quit; informs them they can return and confirm later
   ///
   /// In en, this message translates to:
@@ -11598,6 +11754,12 @@ abstract class AppLocalizations {
   /// **'Exit'**
   String get legalEligibilityExitButton;
 
+  /// Semantics label for the exit button on the eligibility gate screen
+  ///
+  /// In en, this message translates to:
+  /// **'Exit. You must be 16 or older to use Socialmesh.'**
+  String get legalEligibilityExitSemantics;
+
   /// Title shown on the iOS exit explanation screen when user taps Exit
   ///
   /// In en, this message translates to:
@@ -11609,6 +11771,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Go Back'**
   String get legalEligibilityGoBackButton;
+
+  /// Semantics label for the go back button on the eligibility exit explanation screen
+  ///
+  /// In en, this message translates to:
+  /// **'Go back to confirm your age'**
+  String get legalEligibilityGoBackSemantics;
+
+  /// Semantics label for the age eligibility icon on the eligibility gate screen
+  ///
+  /// In en, this message translates to:
+  /// **'Age eligibility'**
+  String get legalEligibilityIconSemantics;
+
+  /// Semantics label for the information icon on the eligibility exit explanation screen
+  ///
+  /// In en, this message translates to:
+  /// **'Information'**
+  String get legalEligibilityInformationSemantics;
+
+  /// Semantics label for the age eligibility notice text on the eligibility gate screen
+  ///
+  /// In en, this message translates to:
+  /// **'Age eligibility notice'**
+  String get legalEligibilityNoticeSemantics;
 
   /// Tappable link text to view the Privacy Policy from the eligibility gate
   ///
@@ -11627,6 +11813,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Ages 16+'**
   String get legalEligibilityTitle;
+
+  /// Semantics label for the Privacy Policy link on the eligibility gate screen
+  ///
+  /// In en, this message translates to:
+  /// **'View Privacy Policy'**
+  String get legalEligibilityViewPrivacySemantics;
+
+  /// Semantics label for the Terms of Service link on the eligibility gate screen
+  ///
+  /// In en, this message translates to:
+  /// **'View Terms of Service'**
+  String get legalEligibilityViewTermsSemantics;
 
   /// No description provided for @lilygoModelPriceUnavailable.
   ///
@@ -15539,6 +15737,12 @@ abstract class AppLocalizations {
   /// **'{meters}m'**
   String nodeAnalyticsAltitude(String meters);
 
+  /// No description provided for @nodeAnalyticsAltitudeRowLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Altitude'**
+  String get nodeAnalyticsAltitudeRowLabel;
+
   /// No description provided for @nodeAnalyticsAvgBattery.
   ///
   /// In en, this message translates to:
@@ -17555,6 +17759,18 @@ abstract class AppLocalizations {
   /// **'Discovery'**
   String get nodedexDiscoveryTitle;
 
+  /// No description provided for @nodedexDistanceKilometers.
+  ///
+  /// In en, this message translates to:
+  /// **'{distance} km'**
+  String nodedexDistanceKilometers(String distance);
+
+  /// No description provided for @nodedexDistanceMeters.
+  ///
+  /// In en, this message translates to:
+  /// **'{distance} m'**
+  String nodedexDistanceMeters(String distance);
+
   /// No description provided for @nodedexDistanceUnknown.
   ///
   /// In en, this message translates to:
@@ -19001,6 +19217,12 @@ abstract class AppLocalizations {
   /// **'Last Seen'**
   String get nodedexLastSeenStatLabel;
 
+  /// No description provided for @nodedexLastSeenAtTime.
+  ///
+  /// In en, this message translates to:
+  /// **'{date} at {time}'**
+  String nodedexLastSeenAtTime(String date, String time);
+
   /// No description provided for @nodedexLegendFair.
   ///
   /// In en, this message translates to:
@@ -19559,6 +19781,24 @@ abstract class AppLocalizations {
   /// **'Reset view'**
   String get nodedexResetViewTooltip;
 
+  /// No description provided for @nodedexRngLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'RNG'**
+  String get nodedexRngLabel;
+
+  /// No description provided for @nodedexRssiDbmValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} dBm'**
+  String nodedexRssiDbmValue(String value);
+
+  /// No description provided for @nodedexRssiLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'RSSI'**
+  String get nodedexRssiLabel;
+
   /// No description provided for @nodedexSearchHint.
   ///
   /// In en, this message translates to:
@@ -19660,6 +19900,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Signal Records'**
   String get nodedexSignalRecordsTitle;
+
+  /// No description provided for @nodedexSnrDbValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} dB'**
+  String nodedexSnrDbValue(String value);
+
+  /// No description provided for @nodedexSnrLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'SNR'**
+  String get nodedexSnrLabel;
 
   /// No description provided for @nodedexSnrTrend.
   ///
@@ -20894,6 +21146,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Size'**
   String get onboardingEmotionSettingsSize;
+
+  /// Tooltip for the settings icon button on the emotion configurator screen
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get onboardingEmotionSettingsTooltip;
 
   /// Ico advisor speech recommending specific hardware by use case
   ///
@@ -22497,6 +22755,12 @@ abstract class AppLocalizations {
   /// **'Email'**
   String get profileEmailLabel;
 
+  /// No description provided for @profileErrorWithMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {message}'**
+  String profileErrorWithMessage(String message);
+
   /// No description provided for @profileGitHubHint.
   ///
   /// In en, this message translates to:
@@ -22812,7 +23076,7 @@ abstract class AppLocalizations {
   /// No description provided for @profileTwitterLabel.
   ///
   /// In en, this message translates to:
-  /// **'Twitter'**
+  /// **'Twitter / X'**
   String get profileTwitterLabel;
 
   /// No description provided for @profileUidLabel.
@@ -24596,6 +24860,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Seller'**
   String get sellerProfileTitle;
+
+  /// Tooltip for copy discount code button
+  ///
+  /// In en, this message translates to:
+  /// **'Copy code'**
+  String get sellerProfileCopyCodeTooltip;
 
   /// No description provided for @sellerProfileUnableToLoad.
   ///
@@ -28509,6 +28779,12 @@ abstract class AppLocalizations {
   /// **'Account Suspended'**
   String get socialAccountSuspendedTitle;
 
+  /// No description provided for @socialAccountSuspendedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account is currently suspended. You cannot post or comment until the suspension is lifted.'**
+  String get socialAccountSuspendedMessage;
+
   /// No description provided for @socialAccountWarningStrikesActive.
   ///
   /// In en, this message translates to:
@@ -29067,6 +29343,12 @@ abstract class AppLocalizations {
   /// **'Contact Support'**
   String get socialContactSupportButton;
 
+  /// No description provided for @socialContentApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Content approved'**
+  String get socialContentApproved;
+
   /// No description provided for @socialContentIdNotFound.
   ///
   /// In en, this message translates to:
@@ -29517,11 +29799,59 @@ abstract class AppLocalizations {
   /// **'Error loading viewers'**
   String get socialErrorLoadingViewers;
 
+  /// No description provided for @socialErrorWithDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {error}'**
+  String socialErrorWithDetails(String error);
+
   /// No description provided for @socialExpires.
   ///
   /// In en, this message translates to:
   /// **'Expires'**
   String get socialExpires;
+
+  /// No description provided for @socialFailedToBlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to block user: {error}'**
+  String socialFailedToBlock(String error);
+
+  /// No description provided for @socialFailedToDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to delete: {error}'**
+  String socialFailedToDelete(String error);
+
+  /// No description provided for @socialFailedToGetLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to get location: {error}'**
+  String socialFailedToGetLocation(String error);
+
+  /// No description provided for @socialFailedToReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to report: {error}'**
+  String socialFailedToReport(String error);
+
+  /// No description provided for @socialFailedToReportStory.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to report story: {error}'**
+  String socialFailedToReportStory(String error);
+
+  /// No description provided for @socialFailedToUpdateLike.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to update like'**
+  String get socialFailedToUpdateLike;
+
+  /// No description provided for @socialFailedToUploadImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to upload image: {error}'**
+  String socialFailedToUploadImage(String error);
 
   /// No description provided for @socialFeedLocationFallback.
   ///
@@ -29715,11 +30045,23 @@ abstract class AppLocalizations {
   /// **'I Understand'**
   String get socialIUnderstand;
 
+  /// No description provided for @socialImageBlockedByModeration.
+  ///
+  /// In en, this message translates to:
+  /// **'Image blocked by moderation'**
+  String get socialImageBlockedByModeration;
+
   /// No description provided for @socialImageUnavailable.
   ///
   /// In en, this message translates to:
   /// **'Image unavailable'**
   String get socialImageUnavailable;
+
+  /// No description provided for @socialInvalidNodeId.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid node ID'**
+  String get socialInvalidNodeId;
 
   /// No description provided for @socialJoined.
   ///
@@ -29738,6 +30080,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Liked'**
   String get socialLiked;
+
+  /// No description provided for @socialLikePlural.
+  ///
+  /// In en, this message translates to:
+  /// **'likes'**
+  String get socialLikePlural;
+
+  /// No description provided for @socialLikeSingular.
+  ///
+  /// In en, this message translates to:
+  /// **'like'**
+  String get socialLikeSingular;
 
   /// No description provided for @socialLinkNodeHint.
   ///
@@ -30183,11 +30537,23 @@ abstract class AppLocalizations {
   /// **'Replying to {name}'**
   String socialReplyingTo(String name);
 
+  /// No description provided for @socialRepeatedViolationsWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeated violations may result in account suspension.'**
+  String get socialRepeatedViolationsWarning;
+
   /// No description provided for @socialReport.
   ///
   /// In en, this message translates to:
   /// **'Report'**
   String get socialReport;
+
+  /// No description provided for @socialReportComment.
+  ///
+  /// In en, this message translates to:
+  /// **'Report Comment'**
+  String get socialReportComment;
 
   /// No description provided for @socialReportCommentTitle.
   ///
@@ -30447,6 +30813,12 @@ abstract class AppLocalizations {
   /// **'Sensitive Content Control'**
   String get socialSensitiveContentControl;
 
+  /// No description provided for @socialSensitiveContentDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Socialmesh uses automated systems to detect potentially sensitive content. You can adjust how this content is displayed.'**
+  String get socialSensitiveContentDescription;
+
   /// No description provided for @socialSensitiveContentExplanation.
   ///
   /// In en, this message translates to:
@@ -30494,6 +30866,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sign In'**
   String get socialSignIn;
+
+  /// No description provided for @socialSignInToLikePosts.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to like posts'**
+  String get socialSignInToLikePosts;
+
+  /// No description provided for @socialSignInToUploadImages.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to upload images'**
+  String get socialSignInToUploadImages;
 
   /// No description provided for @socialSignInSubscriptions.
   ///
@@ -30990,8 +31374,8 @@ abstract class AppLocalizations {
   /// No description provided for @socialUnsuspendConfirm.
   ///
   /// In en, this message translates to:
-  /// **'Are you sure you want to lift the suspension on this user?'**
-  String get socialUnsuspendConfirm;
+  /// **'Are you sure you want to lift the suspension on {displayName}?'**
+  String socialUnsuspendConfirm(String displayName);
 
   /// No description provided for @socialUnsuspendUser.
   ///
@@ -32910,13 +33294,13 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Air {percent}%'**
-  String telemetryDeviceMetricsAirUtil(int percent);
+  String telemetryDeviceMetricsAirUtil(String percent);
 
   /// Metric chip label showing channel utilization percentage with Ch prefix
   ///
   /// In en, this message translates to:
   /// **'Ch {percent}%'**
-  String telemetryDeviceMetricsChannelUtil(int percent);
+  String telemetryDeviceMetricsChannelUtil(String percent);
 
   /// Screen title for device metrics log.
   ///
@@ -32928,7 +33312,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'{voltage}V'**
-  String telemetryDeviceMetricsVoltageValue(double voltage);
+  String telemetryDeviceMetricsVoltageValue(String voltage);
 
   /// Empty-state headline when no device metrics exist.
   ///
@@ -32946,43 +33330,43 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'{value} Ω'**
-  String telemetryEnvGasResistanceValue(int value);
+  String telemetryEnvGasResistanceValue(String value);
 
   /// Metric chip label showing relative humidity percentage
   ///
   /// In en, this message translates to:
   /// **'{value}%'**
-  String telemetryEnvHumidityValue(int value);
+  String telemetryEnvHumidityValue(String value);
 
   /// Metric chip label showing the indoor air quality index value
   ///
   /// In en, this message translates to:
   /// **'IAQ {value}'**
-  String telemetryEnvIaqValue(int value);
+  String telemetryEnvIaqValue(String value);
 
   /// Metric chip label showing light level in lux
   ///
   /// In en, this message translates to:
   /// **'{value} lux'**
-  String telemetryEnvLuxValue(int value);
+  String telemetryEnvLuxValue(String value);
 
   /// Metric chip label showing barometric pressure in hectopascals
   ///
   /// In en, this message translates to:
   /// **'{value} hPa'**
-  String telemetryEnvPressureValue(int value);
+  String telemetryEnvPressureValue(String value);
 
   /// Metric chip label showing temperature value in degrees Celsius
   ///
   /// In en, this message translates to:
   /// **'{value}°C'**
-  String telemetryEnvTemperatureValue(int value);
+  String telemetryEnvTemperatureValue(String value);
 
   /// Metric chip label showing wind speed in metres per second
   ///
   /// In en, this message translates to:
   /// **'{value} m/s'**
-  String telemetryEnvWindSpeedValue(int value);
+  String telemetryEnvWindSpeedValue(String value);
 
   /// Filter chip label for gas resistance metrics.
   ///
@@ -34190,6 +34574,12 @@ abstract class AppLocalizations {
   /// **'Show a value visually'**
   String get widgetBuilderAddProgressBarDesc;
 
+  /// Chart threshold section subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Add reference lines at specific values'**
+  String get widgetBuilderAddReferenceLines;
+
   /// Add element option
   ///
   /// In en, this message translates to:
@@ -34225,6 +34615,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add to Dashboard'**
   String get widgetBuilderAddToDashboard;
+
+  /// Success snackbar when widget added to dashboard
+  ///
+  /// In en, this message translates to:
+  /// **'{name} added to Dashboard'**
+  String widgetBuilderAddedToDashboard(String name);
 
   /// Alignment option label (vertical end)
   ///
@@ -34273,6 +34669,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'All Nodes'**
   String get widgetBuilderAllNodes;
+
+  /// Success snackbar when widget approved
+  ///
+  /// In en, this message translates to:
+  /// **'{name} approved'**
+  String widgetBuilderApprovedSuccess(String name);
 
   /// Data binding label
   ///
@@ -35138,6 +35540,12 @@ abstract class AppLocalizations {
   /// **'Browse Marketplace'**
   String get widgetBuilderBrowseMarketplace;
 
+  /// Marketplace widget author attribution
+  ///
+  /// In en, this message translates to:
+  /// **'by {author}'**
+  String widgetBuilderByAuthor(String author);
+
   /// Cancel button label
   ///
   /// In en, this message translates to:
@@ -35149,6 +35557,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cancel'**
   String get widgetBuilderCancelButton;
+
+  /// Validation banner message with step instructions
+  ///
+  /// In en, this message translates to:
+  /// **'{message}\n\nGo back to Step 1 to change your template, or Step 3 to update your selections.'**
+  String widgetBuilderCannotSaveMessage(String message);
+
+  /// Validation banner title
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot Save Widget'**
+  String get widgetBuilderCannotSaveTitle;
 
   /// Category name for binding categories
   ///
@@ -35312,6 +35732,24 @@ abstract class AppLocalizations {
   /// **'Delete Widget?'**
   String get widgetBuilderDeleteWidgetTitle;
 
+  /// Discard changes button label
+  ///
+  /// In en, this message translates to:
+  /// **'Discard'**
+  String get widgetBuilderDiscard;
+
+  /// Discard changes confirmation message
+  ///
+  /// In en, this message translates to:
+  /// **'You have unsaved changes. Are you sure you want to close without saving?'**
+  String get widgetBuilderDiscardChangesMessage;
+
+  /// Discard changes confirmation title
+  ///
+  /// In en, this message translates to:
+  /// **'Discard Changes?'**
+  String get widgetBuilderDiscardChangesTitle;
+
   /// CTA subtitle
   ///
   /// In en, this message translates to:
@@ -35438,11 +35876,65 @@ abstract class AppLocalizations {
   /// **'Enable \"Provide phone location\" in Settings to share your position'**
   String get widgetBuilderEnablePhoneLocation;
 
+  /// Threshold input hint text
+  ///
+  /// In en, this message translates to:
+  /// **'Enter threshold value'**
+  String get widgetBuilderEnterThresholdValue;
+
   /// Rename dialog hint text
   ///
   /// In en, this message translates to:
   /// **'Enter widget name'**
   String get widgetBuilderEnterWidgetName;
+
+  /// Error snackbar when approval fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to approve: {error}'**
+  String widgetBuilderFailedToApprove(String error);
+
+  /// Error snackbar when widget import fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to import: {error}'**
+  String widgetBuilderFailedToImport(String error);
+
+  /// Error snackbar when marketplace install fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to install: {error}'**
+  String widgetBuilderFailedToInstall(String error);
+
+  /// Error snackbar when rejection fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to reject: {error}'**
+  String widgetBuilderFailedToReject(String error);
+
+  /// Error snackbar when position request fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to request positions: {error}'**
+  String widgetBuilderFailedToRequestPositions(String error);
+
+  /// Error snackbar when wizard save fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save widget: {error}'**
+  String widgetBuilderFailedToSaveWidget(String error);
+
+  /// Error snackbar when location share fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to share location: {error}'**
+  String widgetBuilderFailedToShareLocation(String error);
+
+  /// Error snackbar when marketplace submission fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to submit: {error}'**
+  String widgetBuilderFailedToSubmit(String error);
 
   /// Overflow menu item label
   ///
@@ -35894,6 +36386,12 @@ abstract class AppLocalizations {
   /// **'Widget imported successfully'**
   String get widgetBuilderImportedSuccessAction;
 
+  /// Success snackbar when marketplace widget installed
+  ///
+  /// In en, this message translates to:
+  /// **'{name} installed!'**
+  String widgetBuilderInstalledSuccess(String name);
+
   /// Relative time for recent events
   ///
   /// In en, this message translates to:
@@ -36002,6 +36500,12 @@ abstract class AppLocalizations {
   /// **'Large widgets only allow 2 rows max'**
   String get widgetBuilderLargeOnlyTwoRowsMax;
 
+  /// Preview section header in wizard
+  ///
+  /// In en, this message translates to:
+  /// **'Live Preview'**
+  String get widgetBuilderLivePreview;
+
   /// Success snackbar after broadcast share
   ///
   /// In en, this message translates to:
@@ -36013,6 +36517,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Location was shared recently — please wait before sharing again'**
   String get widgetBuilderLocationSharedRecently;
+
+  /// Success snackbar when location shared with specific node
+  ///
+  /// In en, this message translates to:
+  /// **'Location shared with {name}'**
+  String widgetBuilderLocationSharedWithNode(String name);
 
   /// Hint text for duplicate widget
   ///
@@ -36085,6 +36595,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tap the heart icon on any widget to add it here'**
   String get widgetBuilderMarketplaceFavoritesHint;
+
+  /// Favorites tab label with count
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites ({count})'**
+  String widgetBuilderMarketplaceFavoritesWithCount(int count);
 
   /// Tooltip for help button
   ///
@@ -36314,11 +36830,23 @@ abstract class AppLocalizations {
   /// **'My Widgets'**
   String get widgetBuilderMyWidgets;
 
+  /// Widget name text field hint
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., My Battery Widget'**
+  String get widgetBuilderNameHint;
+
   /// Default name for new widget
   ///
   /// In en, this message translates to:
   /// **'New Widget'**
   String get widgetBuilderNewWidget;
+
+  /// Placeholder text when no actions are selected in wizard preview
+  ///
+  /// In en, this message translates to:
+  /// **'No actions selected'**
+  String get widgetBuilderNoActionsSelected;
 
   /// Message when action has no configurable options
   ///
@@ -36332,11 +36860,35 @@ abstract class AppLocalizations {
   /// **'No data binding - use static text'**
   String get widgetBuilderNoDataBinding;
 
+  /// Placeholder text when no data bindings are selected in wizard preview
+  ///
+  /// In en, this message translates to:
+  /// **'No data selected'**
+  String get widgetBuilderNoDataSelected;
+
   /// Empty state when icon search yields no results
   ///
   /// In en, this message translates to:
   /// **'No icons found'**
   String get widgetBuilderNoIconsFound;
+
+  /// Placeholder text for info template with no bindings
+  ///
+  /// In en, this message translates to:
+  /// **'No info selected'**
+  String get widgetBuilderNoInfoSelected;
+
+  /// Placeholder text for location template with no bindings
+  ///
+  /// In en, this message translates to:
+  /// **'No location data selected'**
+  String get widgetBuilderNoLocationDataSelected;
+
+  /// Placeholder text for environment template with no bindings
+  ///
+  /// In en, this message translates to:
+  /// **'No sensor data selected'**
+  String get widgetBuilderNoSensorDataSelected;
 
   /// Empty state when variable search yields no results
   ///
@@ -36392,6 +36944,12 @@ abstract class AppLocalizations {
   /// **'Quick Start Templates'**
   String get widgetBuilderQuickStartTemplates;
 
+  /// Success snackbar when widget rejected
+  ///
+  /// In en, this message translates to:
+  /// **'{name} rejected'**
+  String widgetBuilderRejectedSuccess(String name);
+
   /// Snackbar message when downsizing with too many rows
   ///
   /// In en, this message translates to:
@@ -36403,6 +36961,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Remove from Dashboard'**
   String get widgetBuilderRemoveFromDashboard;
+
+  /// Info snackbar when widget removed from dashboard
+  ///
+  /// In en, this message translates to:
+  /// **'{name} removed from Dashboard'**
+  String widgetBuilderRemovedFromDashboard(String name);
 
   /// Review guidelines section title
   ///
@@ -36440,7 +37004,7 @@ abstract class AppLocalizations {
   /// **'Action'**
   String get widgetBuilderSectionAction;
 
-  /// Block picker section title
+  /// Block picker section title for action blocks
   ///
   /// In en, this message translates to:
   /// **'Action Blocks'**
@@ -36458,7 +37022,7 @@ abstract class AppLocalizations {
   /// **'Data Binding'**
   String get widgetBuilderSectionDataBinding;
 
-  /// Block picker section title
+  /// Block picker section title for display blocks
   ///
   /// In en, this message translates to:
   /// **'Display Blocks'**
@@ -36590,6 +37154,12 @@ abstract class AppLocalizations {
   /// **'A similar widget already exists in the marketplace:'**
   String get widgetBuilderSimilarWidgetExists;
 
+  /// Error snackbar for duplicate marketplace submission
+  ///
+  /// In en, this message translates to:
+  /// **'Similar widget already exists: {name}'**
+  String widgetBuilderSimilarWidgetExistsError(String name);
+
   /// Similar widget warning title
   ///
   /// In en, this message translates to:
@@ -36638,11 +37208,38 @@ abstract class AppLocalizations {
   /// **'Submit to Marketplace'**
   String get widgetBuilderSubmitToMarketplace;
 
+  /// Success snackbar when widget submitted to marketplace
+  ///
+  /// In en, this message translates to:
+  /// **'{name} submitted for review'**
+  String widgetBuilderSubmittedForReview(String name);
+
   /// Button label to switch widget style
   ///
   /// In en, this message translates to:
   /// **'Switch'**
   String get widgetBuilderSwitch;
+
+  /// Template switch warning about incompatible data types
+  ///
+  /// In en, this message translates to:
+  /// **'\"{templateName}\" uses {newDataType} instead, so your current selections won\'t be used.'**
+  String widgetBuilderSwitchTemplateIncompatible(
+    String templateName,
+    String newDataType,
+  );
+
+  /// Template switch warning showing current selection count
+  ///
+  /// In en, this message translates to:
+  /// **'You have {count} {dataType} selected.'**
+  String widgetBuilderSwitchTemplateItemCount(int count, String dataType);
+
+  /// Template switch confirmation title
+  ///
+  /// In en, this message translates to:
+  /// **'Switch Template?'**
+  String get widgetBuilderSwitchTemplateTitle;
 
   /// Template name
   ///
@@ -36703,6 +37300,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Track connectivity'**
   String get widgetBuilderTemplateSignalStrengthDesc;
+
+  /// Chart threshold section title
+  ///
+  /// In en, this message translates to:
+  /// **'Threshold Lines'**
+  String get widgetBuilderThresholdLines;
 
   /// Tooltip for toolbox toggle button
   ///
@@ -36938,6 +37541,12 @@ abstract class AppLocalizations {
   /// **'Use'**
   String get widgetBuilderUse;
 
+  /// Validation error when actions template has no actions
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Actions requires at least one action selected. You have data bindings but no actions.'**
+  String get widgetBuilderValidationActionsRequired;
+
   /// Validation error message
   ///
   /// In en, this message translates to:
@@ -36949,6 +37558,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Bind to data like SNR history'**
   String get widgetBuilderValidationChartNoBindingFix;
+
+  /// Validation error when data template has no bindings
+  ///
+  /// In en, this message translates to:
+  /// **'This template requires data bindings. You have actions selected but no data.'**
+  String get widgetBuilderValidationDataRequired;
 
   /// Validation fix suggestion
   ///
@@ -37166,6 +37781,18 @@ abstract class AppLocalizations {
   /// **'What would you like to add?'**
   String get widgetBuilderWhatToAdd;
 
+  /// Template switch prompt
+  ///
+  /// In en, this message translates to:
+  /// **'What would you like to do?'**
+  String get widgetBuilderWhatWouldYouLikeToDo;
+
+  /// Success snackbar after creating new widget
+  ///
+  /// In en, this message translates to:
+  /// **'Widget created!'**
+  String get widgetBuilderWidgetCreated;
+
   /// Rename dialog title
   ///
   /// In en, this message translates to:
@@ -37177,6 +37804,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Widget Types'**
   String get widgetBuilderWidgetTypes;
+
+  /// Success snackbar after updating existing widget
+  ///
+  /// In en, this message translates to:
+  /// **'Widget updated!'**
+  String get widgetBuilderWidgetUpdated;
 
   /// Wizard step 1 subtitle
   ///
@@ -37225,6 +37858,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pick Your Data'**
   String get widgetBuilderWizardStep3TitleData;
+
+  /// Wizard step 4 subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Customize colors and layout'**
+  String get widgetBuilderWizardStep4Subtitle;
+
+  /// Wizard step 4 title
+  ///
+  /// In en, this message translates to:
+  /// **'Make it Yours'**
+  String get widgetBuilderWizardStep4Title;
 
   /// No description provided for @worldMeshAddToFavorites.
   ///

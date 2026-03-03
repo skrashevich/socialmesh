@@ -160,7 +160,10 @@ class _AdminSellersScreenState extends ConsumerState<AdminSellersScreen>
       ref.invalidate(adminAllSellersProvider);
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Error: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.deviceShopErrorWithDetails('$e'),
+        );
       }
     }
   }
@@ -524,7 +527,9 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
                         counterText: '',
                       ),
                       keyboardType: TextInputType.url,
-                      validator: (v) => v?.isEmpty == true ? 'Required' : null,
+                      validator: (v) => v?.isEmpty == true
+                          ? context.l10n.deviceShopFieldRequired
+                          : null,
                     ),
                     const SizedBox(height: AppTheme.spacing16),
 
@@ -943,7 +948,10 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
     } catch (e) {
       safeSetState(() => _isUploadingLogo = false);
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to upload logo: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.deviceShopFailedToUploadLogo('$e'),
+        );
       }
     }
   }
@@ -1017,7 +1025,10 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
     } catch (e) {
       safeSetState(() => _isLoading = false);
       if (mounted) {
-        showErrorSnackBar(context, 'Error: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.deviceShopErrorWithDetails('$e'),
+        );
       }
     }
   }
@@ -1121,7 +1132,10 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
         showSuccessSnackBar(context, l10n.adminSellersDeleted);
       } catch (e) {
         if (mounted) {
-          showErrorSnackBar(context, 'Error: $e');
+          showErrorSnackBar(
+            context,
+            context.l10n.deviceShopErrorWithDetails('$e'),
+          );
         }
       }
     }

@@ -231,7 +231,7 @@ class _FileTransfersContainerScreenState
     } else if (file.path != null) {
       bytes = await File(file.path!).readAsBytes();
     } else {
-      showErrorSnackBar(context, 'Could not read file.');
+      showErrorSnackBar(context, context.l10n.fileTransferCouldNotRead);
       return;
     }
     if (!mounted) return;
@@ -246,7 +246,11 @@ class _FileTransfersContainerScreenState
       final limitKb = (SmFileTransferLimits.maxFileSize / 1024).truncate();
       showErrorSnackBar(
         context,
-        '${file.name} is $fileSizeKb KB — mesh transfer limit is $limitKb KB.',
+        context.l10n.fileTransferFileTooLarge(
+          file.name,
+          fileSizeKb,
+          '$limitKb',
+        ),
       );
       return;
     }

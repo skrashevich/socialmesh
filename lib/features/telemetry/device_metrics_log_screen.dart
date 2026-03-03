@@ -874,19 +874,25 @@ class _DeviceMetricsCard extends StatelessWidget {
                 if (log.voltage != null)
                   _MetricChip(
                     icon: Icons.bolt,
-                    label: '${log.voltage!.toStringAsFixed(2)}V',
+                    label: context.l10n.telemetryDeviceMetricsVoltageValue(
+                      log.voltage!.toStringAsFixed(2),
+                    ),
                     color: AppTheme.warningYellow,
                   ),
                 if (log.channelUtilization != null)
                   _MetricChip(
                     icon: Icons.signal_cellular_alt,
-                    label: 'Ch ${log.channelUtilization!.toStringAsFixed(1)}%',
+                    label: context.l10n.telemetryDeviceMetricsChannelUtil(
+                      log.channelUtilization!.toStringAsFixed(1),
+                    ),
                     color: AppTheme.primaryBlue,
                   ),
                 if (log.airUtilTx != null)
                   _MetricChip(
                     icon: Icons.wifi,
-                    label: 'Air ${log.airUtilTx!.toStringAsFixed(1)}%',
+                    label: context.l10n.telemetryDeviceMetricsAirUtil(
+                      log.airUtilTx!.toStringAsFixed(1),
+                    ),
                     color: AppTheme.primaryMagenta,
                   ),
                 if (log.uptimeSeconds != null)

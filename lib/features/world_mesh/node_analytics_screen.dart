@@ -875,7 +875,7 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
           ),
           if (node.altitude != null)
             InfoTableRow(
-              label: 'Altitude',
+              label: context.l10n.nodeAnalyticsAltitudeRowLabel,
               value: context.l10n.nodeAnalyticsAltitude('${node.altitude}'),
             ),
         ],

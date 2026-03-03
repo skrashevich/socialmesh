@@ -781,7 +781,10 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection>
     } on FirebaseAuthException catch (e) {
       if (context.mounted) {
         if (e.code != 'sign-in-cancelled') {
-          showErrorSnackBar(context, 'Error: ${e.message}');
+          showErrorSnackBar(
+            context,
+            context.l10n.profileErrorWithMessage(e.message ?? ''),
+          );
         }
       }
     } catch (e) {
@@ -807,7 +810,10 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection>
       }
     } on FirebaseAuthException catch (e) {
       if (context.mounted) {
-        showErrorSnackBar(context, 'Error: ${e.message}');
+        showErrorSnackBar(
+          context,
+          context.l10n.profileErrorWithMessage(e.message ?? ''),
+        );
       }
     } catch (e) {
       if (context.mounted) {
@@ -839,7 +845,10 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection>
     } on FirebaseAuthException catch (e) {
       if (context.mounted) {
         if (e.code != 'web-context-cancelled') {
-          showErrorSnackBar(context, 'Error: ${e.message}');
+          showErrorSnackBar(
+            context,
+            context.l10n.profileErrorWithMessage(e.message ?? ''),
+          );
         }
       }
     } catch (e) {
@@ -1127,7 +1136,10 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection>
     } on FirebaseAuthException catch (e) {
       if (context.mounted) {
         Navigator.pop(context); // dismiss progress dialog
-        showErrorSnackBar(context, 'Error: ${e.message}');
+        showErrorSnackBar(
+          context,
+          context.l10n.profileErrorWithMessage(e.message ?? ''),
+        );
       }
     } catch (e) {
       if (context.mounted) {
@@ -2800,12 +2812,12 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet>
                             const SizedBox(height: AppTheme.spacing16),
 
                             // Basic Info section
-                            _buildSectionHeader('Basic Info'),
+                            _buildSectionHeader(context.l10n.profileBasicInfo),
                             const SizedBox(height: AppTheme.spacing12),
                             _buildTextField(
                               controller: _displayNameController,
-                              label: 'Display Name',
-                              hint: 'How you want to be known',
+                              label: context.l10n.profileDisplayNameLabel,
+                              hint: context.l10n.profileDisplayNameHint,
                               icon: Icons.person_outline,
                               maxLength: 50,
                               validator: (value) {
@@ -2821,8 +2833,8 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet>
                             const SizedBox(height: AppTheme.spacing12),
                             _buildTextField(
                               controller: _callsignController,
-                              label: 'Callsign',
-                              hint: 'Amateur radio callsign or identifier',
+                              label: context.l10n.profileCallsignLabel,
+                              hint: context.l10n.profileCallsignHint,
                               icon: Icons.badge_outlined,
                               maxLength: 10,
                               textCapitalization: TextCapitalization.characters,
@@ -2831,14 +2843,16 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet>
                                   return null; // Callsign is optional
                                 }
                                 if (value.trim().length > 10) {
-                                  return 'Max 10 characters';
+                                  return context.l10n.profileCallsignMax;
                                 }
                                 // Use proper profanity checker
                                 final error = ProfanityChecker.instance.check(
                                   value.trim(),
                                 );
                                 if (error != null) {
-                                  return 'Callsign cannot contain inappropriate content';
+                                  return context
+                                      .l10n
+                                      .profileCallsignInappropriate;
                                 }
                                 return null;
                               },
@@ -2849,12 +2863,14 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet>
                             const SizedBox(height: AppTheme.spacing24),
 
                             // Links section
-                            _buildSectionHeader('Links'),
+                            _buildSectionHeader(
+                              context.l10n.profileLinksSection,
+                            ),
                             const SizedBox(height: AppTheme.spacing12),
                             _buildTextField(
                               controller: _websiteController,
-                              label: 'Website',
-                              hint: 'https://example.com',
+                              label: context.l10n.profileWebsiteLabel,
+                              hint: context.l10n.profileWebsiteHint,
                               icon: Icons.link,
                               keyboardType: TextInputType.url,
                               maxLength: 100,
@@ -2863,13 +2879,13 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet>
                                 final url = value.trim().toLowerCase();
                                 if (!url.startsWith('http://') &&
                                     !url.startsWith('https://')) {
-                                  return 'URL must start with http:// or https://';
+                                  return context.l10n.profileUrlMustStartHttp;
                                 }
                                 final urlPattern = RegExp(
                                   r'^https?:\/\/[a-zA-Z0-9][a-zA-Z0-9-]*(\.[a-zA-Z0-9][a-zA-Z0-9-]*)+([\/\?#].*)?$',
                                 );
                                 if (!urlPattern.hasMatch(url)) {
-                                  return 'Please enter a valid URL';
+                                  return context.l10n.profileUrlInvalid;
                                 }
                                 return null;
                               },
@@ -2877,12 +2893,14 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet>
                             const SizedBox(height: AppTheme.spacing24),
 
                             // Social links section
-                            _buildSectionHeader('Social'),
+                            _buildSectionHeader(
+                              context.l10n.profileSocialSection,
+                            ),
                             const SizedBox(height: AppTheme.spacing12),
                             _buildTextField(
                               controller: _twitterController,
-                              label: 'Twitter / X',
-                              hint: 'username',
+                              label: context.l10n.profileTwitterLabel,
+                              hint: context.l10n.profileTwitterHint,
                               icon: Icons.alternate_email,
                               prefixText: '@',
                               maxLength: 30,
@@ -2890,32 +2908,32 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet>
                             const SizedBox(height: AppTheme.spacing12),
                             _buildTextField(
                               controller: _mastodonController,
-                              label: 'Mastodon',
-                              hint: '@user@instance.social',
+                              label: context.l10n.profileMastodonLabel,
+                              hint: context.l10n.profileMastodonHint,
                               icon: Icons.tag,
                               maxLength: 100,
                             ),
                             const SizedBox(height: AppTheme.spacing12),
                             _buildTextField(
                               controller: _githubController,
-                              label: 'GitHub',
-                              hint: 'username',
+                              label: context.l10n.profileGitHubLabel,
+                              hint: context.l10n.profileGitHubHint,
                               icon: Icons.code,
                               maxLength: 39,
                             ),
                             const SizedBox(height: AppTheme.spacing12),
                             _buildTextField(
                               controller: _discordController,
-                              label: 'Discord',
-                              hint: 'username#0000',
+                              label: context.l10n.profileDiscordLabel,
+                              hint: context.l10n.profileDiscordHint,
                               icon: Icons.discord,
                               maxLength: 37,
                             ),
                             const SizedBox(height: AppTheme.spacing12),
                             _buildTextField(
                               controller: _telegramController,
-                              label: 'Telegram',
-                              hint: 'username',
+                              label: context.l10n.profileTelegramLabel,
+                              hint: context.l10n.profileTelegramHint,
                               icon: Icons.send,
                               maxLength: 32,
                             ),
@@ -2959,7 +2977,7 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet>
             Icon(Icons.format_quote, size: 18, color: context.textTertiary),
             SizedBox(width: AppTheme.spacing8),
             Text(
-              'Bio',
+              context.l10n.profileBioLabel,
               style: context.bodySmallStyle?.copyWith(
                 color: context.textTertiary,
               ),
@@ -2971,7 +2989,7 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet>
           controller: _bioController,
           focusNode: _bioFocusNode,
           decoration: InputDecoration(
-            hintText: 'Tell us about yourself',
+            hintText: context.l10n.profileBioHint,
             filled: true,
             fillColor: context.card,
             border: OutlineInputBorder(

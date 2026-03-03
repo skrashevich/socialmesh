@@ -198,7 +198,10 @@ class _AdminProductsScreenState extends ConsumerState<AdminProductsScreen>
       ref.invalidate(adminAllProductsProvider);
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Error: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.deviceShopErrorWithDetails('$e'),
+        );
       }
     }
   }
@@ -224,7 +227,10 @@ class _AdminProductsScreenState extends ConsumerState<AdminProductsScreen>
         showSuccessSnackBar(context, l10n.adminProductsDeleted);
       } catch (e) {
         if (mounted) {
-          showErrorSnackBar(context, 'Error: $e');
+          showErrorSnackBar(
+            context,
+            context.l10n.deviceShopErrorWithDetails('$e'),
+          );
         }
       }
     }
@@ -1205,7 +1211,10 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
     } catch (e) {
       setState(() => _isUploadingImage = false);
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to upload image: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.deviceShopFailedToUploadImage('$e'),
+        );
       }
     }
   }
@@ -1316,7 +1325,10 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
     } catch (e) {
       safeSetState(() => _isLoading = false);
       if (mounted) {
-        showErrorSnackBar(context, 'Error: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.deviceShopErrorWithDetails('$e'),
+        );
       }
     }
   }
@@ -1345,7 +1357,10 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
         safeShowSnackBar(l10n.adminProductsDeletedSuccess);
       } catch (e) {
         if (mounted) {
-          showErrorSnackBar(context, 'Error: $e');
+          showErrorSnackBar(
+            context,
+            context.l10n.deviceShopErrorWithDetails('$e'),
+          );
         }
       }
     }

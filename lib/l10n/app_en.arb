@@ -331,6 +331,14 @@
   "@aetherEmptyAllTitle": {
     "description": "Empty state title when search finds no flights"
   },
+  "aetherErrorWithDetails": "Error: {error}",
+  "@aetherErrorWithDetails": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "aetherEmptyMyFlightsSubtitle": "You haven't scheduled any flights yet.\nTap the button above to add one!",
   "@aetherEmptyMyFlightsSubtitle": {
     "description": "Empty state subtitle when user has no flights"
@@ -2161,6 +2169,30 @@
   "@automationActionPlaySound": {
     "description": "Display name for the playSound action type"
   },
+  "automationActionPlayFailed": "Failed to play: {error}",
+  "@automationActionPlayFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "automationActionPlaySoundFailed": "Failed to play sound: {error}",
+  "@automationActionPlaySoundFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "automationActionPlayingSound": "Playing \"{name}\"...",
+  "@automationActionPlayingSound": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "automationActionPlaysAfter": "Plays after notification",
   "@automationActionPlaysAfter": {
     "description": "Subtitle when custom notification sound is selected"
@@ -2842,6 +2874,8 @@
   "@automationNotificationFallbackTitle": {
     "description": "Fallback notification title when template rendering fails"
   },
+  "automationScheduledBody": "Tap to run scheduled automation",
+  "automationScheduledTitle": "Scheduled Automation",
   "automationScreenAcceptableUse": "Acceptable Use",
   "@automationScreenAcceptableUse": {
     "description": "Menu item linking to acceptable use terms"
@@ -4458,6 +4492,48 @@
   "deviceShopTryAgain": "Try again in a moment",
   "deviceShopTryDifferentKeywords": "Try different keywords",
   "deviceShopUnableToLoad": "Unable to load products",
+  "deviceShopErrorWithDetails": "Error: {error}",
+  "@deviceShopErrorWithDetails": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceShopFailedToUploadImage": "Failed to upload image: {error}",
+  "@deviceShopFailedToUploadImage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceShopFailedToUploadLogo": "Failed to upload logo: {error}",
+  "@deviceShopFailedToUploadLogo": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceShopFieldRequired": "Required",
+  "deviceShopGoBackTooltip": "Go back",
+  "@deviceShopGoBackTooltip": {
+    "description": "Tooltip for back button on product detail screen"
+  },
+  "deviceShopRefreshTooltip": "Refresh",
+  "@deviceShopRefreshTooltip": {
+    "description": "Tooltip for refresh button on product detail screen"
+  },
+  "deviceShopReviewSubmitFailed": "Failed to submit review: {error}",
+  "@deviceShopReviewSubmitFailed": {
+    "description": "Error snackbar when review submission fails",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "discoveryDiscoveredBadge": "DISCOVERED",
   "@discoveryDiscoveredBadge": {
     "description": "Badge label shown on newly discovered node cards."
@@ -5192,6 +5268,10 @@
       }
     }
   },
+  "fileTransferCouldNotRead": "Could not read file.",
+  "@fileTransferCouldNotRead": {
+    "description": "Error snackbar when file cannot be read"
+  },
   "fileTransferCouldNotSaveForSharing": "Could not save file for sharing",
   "@fileTransferCouldNotSaveForSharing": {
     "description": "Error snackbar when share fails"
@@ -5606,6 +5686,15 @@
   "fileTransferTypeYaml": "YAML",
   "@fileTransferTypeYaml": {
     "description": "File type label for YAML"
+  },
+  "fileTransferLineCount": "{count} lines",
+  "@fileTransferLineCount": {
+    "description": "Label showing line count in file preview",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "firmwareUpdateAvailable": "Update Available",
   "firmwareUpdateBackupWarningSubtitle": "Firmware updates may reset your device configuration. Consider exporting your settings before updating.",
@@ -6499,6 +6588,14 @@
   "@legalAcceptanceAgreeButton": {
     "description": "Primary action button to accept the Terms of Service and Privacy Policy and proceed into the app"
   },
+  "legalAcceptanceAgreeSemantics": "I agree to the Terms of Service and Privacy Policy. Tap to accept and continue.",
+  "@legalAcceptanceAgreeSemantics": {
+    "description": "Semantics label for the agree button on the legal acceptance screen"
+  },
+  "legalAcceptanceAppIconSemantics": "Socialmesh app icon",
+  "@legalAcceptanceAppIconSemantics": {
+    "description": "Semantics label for the app icon on the legal acceptance screen"
+  },
   "legalAcceptanceDateFormatApril": "April",
   "@legalAcceptanceDateFormatApril": {
     "description": "Month name used in formatting effective dates of legal documents"
@@ -6555,6 +6652,10 @@
   "@legalAcceptanceDeclineButton": {
     "description": "Secondary button to decline the terms and exit the app gracefully"
   },
+  "legalAcceptanceDeclineSemantics": "Not now. Decline and exit the app.",
+  "@legalAcceptanceDeclineSemantics": {
+    "description": "Semantics label for the decline button on the legal acceptance screen"
+  },
   "legalAcceptanceDeclineTitle": "Terms Required",
   "@legalAcceptanceDeclineTitle": {
     "description": "Title of the iOS-only decline explanation screen shown when user taps Not Now"
@@ -6562,6 +6663,22 @@
   "legalAcceptanceFinePrint": "By tapping \"I Agree\", you accept our Terms of Service and acknowledge our Privacy Policy.",
   "@legalAcceptanceFinePrint": {
     "description": "Fine print below the action buttons explaining the legal effect of tapping I Agree; no dark patterns, plain English"
+  },
+  "legalAcceptanceFinePrintSemantics": "By tapping I Agree, you accept our Terms of Service and acknowledge our Privacy Policy.",
+  "@legalAcceptanceFinePrintSemantics": {
+    "description": "Semantics label for the fine print text on the legal acceptance screen"
+  },
+  "legalAcceptanceGoBackSemantics": "Go back to review and accept the terms",
+  "@legalAcceptanceGoBackSemantics": {
+    "description": "Semantics label for the go back button on the iOS decline explanation screen"
+  },
+  "legalAcceptanceInformationSemantics": "Information",
+  "@legalAcceptanceInformationSemantics": {
+    "description": "Semantics label for the information icon on the iOS decline explanation screen"
+  },
+  "legalAcceptanceLegalShieldSemantics": "Legal shield",
+  "@legalAcceptanceLegalShieldSemantics": {
+    "description": "Semantics label for the shield icon on the legal acceptance screen"
   },
   "legalAcceptancePrivacyEffective": "Effective {date}",
   "@legalAcceptancePrivacyEffective": {
@@ -6601,6 +6718,10 @@
   "@legalAcceptanceTermsOfService": {
     "description": "Title text for the Terms of Service document link tile on the acceptance screen"
   },
+  "legalAcceptanceTermsSummarySemantics": "Terms summary",
+  "@legalAcceptanceTermsSummarySemantics": {
+    "description": "Semantics label for the terms summary text on the legal acceptance screen"
+  },
   "legalAcceptanceTitleInitial": "Terms & Privacy",
   "@legalAcceptanceTitleInitial": {
     "description": "Screen title shown on first launch when the user has never accepted the terms"
@@ -6608,6 +6729,14 @@
   "legalAcceptanceTitleUpdate": "Updated Terms",
   "@legalAcceptanceTitleUpdate": {
     "description": "Screen title shown when the terms or privacy policy version has been bumped and the user must re-accept"
+  },
+  "legalAcceptanceViewPrivacySemantics": "View Privacy Policy",
+  "@legalAcceptanceViewPrivacySemantics": {
+    "description": "Semantics label for the Privacy Policy link on the legal acceptance screen"
+  },
+  "legalAcceptanceViewTermsSemantics": "View Terms of Service",
+  "@legalAcceptanceViewTermsSemantics": {
+    "description": "Semantics label for the Terms of Service link on the legal acceptance screen"
   },
   "legalEligibilityBody": "Socialmesh is intended for people aged 16 or older. You must confirm you are 16+ to continue.",
   "@legalEligibilityBody": {
@@ -6617,6 +6746,10 @@
   "@legalEligibilityConfirmButton": {
     "description": "Primary action button confirming the user meets the minimum age requirement to use the app"
   },
+  "legalEligibilityConfirmSemantics": "I am 16 or older. Tap to confirm and continue.",
+  "@legalEligibilityConfirmSemantics": {
+    "description": "Semantics label for the confirm button on the eligibility gate screen"
+  },
   "legalEligibilityExitBody": "You must confirm you are 16 or older to use Socialmesh. You can confirm whenever you are ready.",
   "@legalEligibilityExitBody": {
     "description": "Explanation shown on iOS when user taps Exit, since iOS cannot force-quit; informs them they can return and confirm later"
@@ -6625,6 +6758,10 @@
   "@legalEligibilityExitButton": {
     "description": "Secondary button to exit the app if the user does not meet the age requirement"
   },
+  "legalEligibilityExitSemantics": "Exit. You must be 16 or older to use Socialmesh.",
+  "@legalEligibilityExitSemantics": {
+    "description": "Semantics label for the exit button on the eligibility gate screen"
+  },
   "legalEligibilityExitTitle": "Age Confirmation Required",
   "@legalEligibilityExitTitle": {
     "description": "Title shown on the iOS exit explanation screen when user taps Exit"
@@ -6632,6 +6769,22 @@
   "legalEligibilityGoBackButton": "Go Back",
   "@legalEligibilityGoBackButton": {
     "description": "Button to return from the exit explanation screen to the age confirmation screen"
+  },
+  "legalEligibilityGoBackSemantics": "Go back to confirm your age",
+  "@legalEligibilityGoBackSemantics": {
+    "description": "Semantics label for the go back button on the eligibility exit explanation screen"
+  },
+  "legalEligibilityIconSemantics": "Age eligibility",
+  "@legalEligibilityIconSemantics": {
+    "description": "Semantics label for the age eligibility icon on the eligibility gate screen"
+  },
+  "legalEligibilityInformationSemantics": "Information",
+  "@legalEligibilityInformationSemantics": {
+    "description": "Semantics label for the information icon on the eligibility exit explanation screen"
+  },
+  "legalEligibilityNoticeSemantics": "Age eligibility notice",
+  "@legalEligibilityNoticeSemantics": {
+    "description": "Semantics label for the age eligibility notice text on the eligibility gate screen"
   },
   "legalEligibilityPrivacyLink": "Privacy",
   "@legalEligibilityPrivacyLink": {
@@ -6644,6 +6797,14 @@
   "legalEligibilityTitle": "Ages 16+",
   "@legalEligibilityTitle": {
     "description": "Title on the age eligibility gate screen indicating the minimum age requirement"
+  },
+  "legalEligibilityViewPrivacySemantics": "View Privacy Policy",
+  "@legalEligibilityViewPrivacySemantics": {
+    "description": "Semantics label for the Privacy Policy link on the eligibility gate screen"
+  },
+  "legalEligibilityViewTermsSemantics": "View Terms of Service",
+  "@legalEligibilityViewTermsSemantics": {
+    "description": "Semantics label for the Terms of Service link on the eligibility gate screen"
   },
   "lilygoModelPriceUnavailable": "Price unavailable",
   "linkDeviceBannerLinkButton": "Link",
@@ -9291,6 +9452,7 @@
       }
     }
   },
+  "nodeAnalyticsAltitudeRowLabel": "Altitude",
   "nodeAnalyticsAvgBattery": "Avg Battery",
   "nodeAnalyticsBadgeLive": "LIVE",
   "nodeAnalyticsBattery": "Battery",
@@ -10412,6 +10574,22 @@
   "nodedexDetailNotFoundTitle": "Node not found in NodeDex",
   "nodedexDeviceTitle": "Device",
   "nodedexDiscoveryTitle": "Discovery",
+  "nodedexDistanceKilometers": "{distance} km",
+  "@nodedexDistanceKilometers": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "nodedexDistanceMeters": "{distance} m",
+  "@nodedexDistanceMeters": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
   "nodedexDistanceUnknown": "unknown range",
   "nodedexDurationDays": "{days} d",
   "@nodedexDurationDays": {
@@ -11218,6 +11396,17 @@
   },
   "nodedexLastSeen": "Last Seen",
   "nodedexLastSeenStatLabel": "Last Seen",
+  "nodedexLastSeenAtTime": "{date} at {time}",
+  "@nodedexLastSeenAtTime": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "nodedexLegendFair": "Fair",
   "nodedexLegendNoData": "No data",
   "nodedexLegendStrong": "Strong",
@@ -11445,6 +11634,16 @@
   "nodedexRelativeTimeYesterday": "yesterday",
   "nodedexRemoveClassification": "Remove Classification",
   "nodedexResetViewTooltip": "Reset view",
+  "nodedexRngLabel": "RNG",
+  "nodedexRssiDbmValue": "{value} dBm",
+  "@nodedexRssiDbmValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "nodedexRssiLabel": "RSSI",
   "nodedexSearchHint": "Find a node",
   "nodedexSectionDiscoveredNodes": "Discovered Nodes",
   "nodedexSectionYourDevice": "Your Device",
@@ -11497,6 +11696,15 @@
   },
   "nodedexSigilCardTitle": "Sigil Card",
   "nodedexSignalRecordsTitle": "Signal Records",
+  "nodedexSnrDbValue": "{value} dB",
+  "@nodedexSnrDbValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "nodedexSnrLabel": "SNR",
   "nodedexSnrTrend": "SNR TREND",
   "nodedexSocialTagContactDescription": "A person you communicate with",
   "nodedexSocialTagFrequentPeerDescription": "Regularly seen on the mesh",
@@ -12214,6 +12422,10 @@
   "onboardingEmotionSettingsSize": "Size",
   "@onboardingEmotionSettingsSize": {
     "description": "Slider label for brain size adjustment"
+  },
+  "onboardingEmotionSettingsTooltip": "Settings",
+  "@onboardingEmotionSettingsTooltip": {
+    "description": "Tooltip for the settings icon button on the emotion configurator screen"
   },
   "onboardingHardwareAdvisor": "Pick up a SenseCAP T1000-E for tracking, a Heltec V3 for range, or a RAK WisMesh for reliability. I'll work with any of them.",
   "@onboardingHardwareAdvisor": {
@@ -12948,6 +13160,14 @@
   "profileEditSheetTitle": "Edit Profile",
   "profileEditTooltip": "Edit Profile",
   "profileEmailLabel": "Email",
+  "profileErrorWithMessage": "Error: {message}",
+  "@profileErrorWithMessage": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
   "profileGitHubHint": "username",
   "profileGitHubLabel": "GitHub",
   "profileGitHubLinked": "GitHub account linked successfully!",
@@ -13031,7 +13251,7 @@
   "profileTelegramLabel": "Telegram",
   "profileTitle": "Profile",
   "profileTwitterHint": "username",
-  "profileTwitterLabel": "Twitter",
+  "profileTwitterLabel": "Twitter / X",
   "profileUidLabel": "UID",
   "profileUpdated": "Profile updated",
   "profileUrlInvalid": "Please enter a valid URL",
@@ -13891,6 +14111,10 @@
   "sellerProfileSearchHint": "Search products...",
   "sellerProfileShipsTo": "Ships to",
   "sellerProfileTitle": "Seller",
+  "sellerProfileCopyCodeTooltip": "Copy code",
+  "@sellerProfileCopyCodeTooltip": {
+    "description": "Tooltip for copy discount code button"
+  },
   "sellerProfileUnableToLoad": "Unable to load products",
   "sellerProfileWebsite": "Website",
   "serialConfigBaudRate": "Baud Rate",
@@ -15863,6 +16087,7 @@
   "socialAccountStrikes": "Strikes",
   "socialAccountSuspended": "Suspended",
   "socialAccountSuspendedTitle": "Account Suspended",
+  "socialAccountSuspendedMessage": "Your account is currently suspended. You cannot post or comment until the suspension is lifted.",
   "socialAccountWarningStrikesActive": "Warning: Strikes Active",
   "socialAccountWarnings": "Warnings",
   "socialAccountWarningsActive": "Warnings Active",
@@ -15998,6 +16223,7 @@
   "socialConnectionsTitle": "Connections",
   "socialContactSupport": "Questions? Contact Support",
   "socialContactSupportButton": "Contact Support",
+  "socialContentApproved": "Content approved",
   "socialContentIdNotFound": "Content ID not found",
   "socialContentNotAvailable": "Content not available",
   "socialContentRemoved": "Content Removed",
@@ -16132,7 +16358,64 @@
   "socialEmptyPostsTagline4": "Document your adventures and share them with the mesh.",
   "socialErrorLoadingReports": "Error loading reports",
   "socialErrorLoadingViewers": "Error loading viewers",
+  "socialErrorWithDetails": "Error: {error}",
+  "@socialErrorWithDetails": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "socialExpires": "Expires",
+  "socialFailedToBlock": "Failed to block user: {error}",
+  "@socialFailedToBlock": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "socialFailedToDelete": "Failed to delete: {error}",
+  "@socialFailedToDelete": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "socialFailedToGetLocation": "Failed to get location: {error}",
+  "@socialFailedToGetLocation": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "socialFailedToReport": "Failed to report: {error}",
+  "@socialFailedToReport": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "socialFailedToReportStory": "Failed to report story: {error}",
+  "@socialFailedToReportStory": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "socialFailedToUpdateLike": "Failed to update like",
+  "socialFailedToUploadImage": "Failed to upload image: {error}",
+  "@socialFailedToUploadImage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "socialFeedLocationFallback": "Location",
   "socialFilterAll": "All",
   "socialFilterLevelLess": "Less",
@@ -16217,7 +16500,9 @@
   "socialHubSignInDesc": "Create posts, follow users, and connect with the mesh community.",
   "socialHubTitle": "Social",
   "socialIUnderstand": "I Understand",
+  "socialImageBlockedByModeration": "Image blocked by moderation",
   "socialImageUnavailable": "Image unavailable",
+  "socialInvalidNodeId": "Invalid node ID",
   "socialJoined": "Joined {date}",
   "@socialJoined": {
     "placeholders": {
@@ -16228,6 +16513,8 @@
   },
   "socialLike": "Like",
   "socialLiked": "Liked",
+  "socialLikePlural": "likes",
+  "socialLikeSingular": "like",
   "socialLinkNodeHint": "Link a mesh node to your next post",
   "socialLocationFallback": "Location",
   "socialMediaLabel": "Media ({type})",
@@ -16382,7 +16669,9 @@
       }
     }
   },
+  "socialRepeatedViolationsWarning": "Repeated violations may result in account suspension.",
   "socialReport": "Report",
+  "socialReportComment": "Report Comment",
   "socialReportCommentTitle": "Report Comment",
   "socialReportCommentWhy": "Why are you reporting this comment?",
   "socialReportDescribeIssue": "Describe the issue...",
@@ -16433,6 +16722,7 @@
   "socialSearchTooltip": "Search",
   "socialSendMessage": "Send Message",
   "socialSensitiveContentControl": "Sensitive Content Control",
+  "socialSensitiveContentDescription": "Socialmesh uses automated systems to detect potentially sensitive content. You can adjust how this content is displayed.",
   "socialSensitiveContentExplanation": "Control what type of content you see in your feed. This affects AI-moderated content filtering across posts, signals, and stories.",
   "socialSensitiveContentTitle": "Sensitive Content",
   "socialSettingsTooltip": "Settings",
@@ -16441,6 +16731,8 @@
   "socialShareFirstPostPrefix": "Share your first ",
   "socialSharePhotoHint": "Share a photo post to see it here",
   "socialSignIn": "Sign In",
+  "socialSignInToLikePosts": "Sign in to like posts",
+  "socialSignInToUploadImages": "Sign in to upload images",
   "socialSignInSubscriptions": "Sign in to manage subscriptions",
   "socialSignalCommentLabel": "SIGNAL COMMENT",
   "socialSignalContentNotAvailable": "Signal content not available",
@@ -16673,7 +16965,14 @@
   "socialUnknownUser": "Unknown User",
   "socialUnsubscribed": "Unsubscribed",
   "socialUnsuspend": "Unsuspend",
-  "socialUnsuspendConfirm": "Are you sure you want to lift the suspension on this user?",
+  "socialUnsuspendConfirm": "Are you sure you want to lift the suspension on {displayName}?",
+  "@socialUnsuspendConfirm": {
+    "placeholders": {
+      "displayName": {
+        "type": "String"
+      }
+    }
+  },
   "socialUnsuspendUser": "Unsuspend User",
   "socialUserBannedAndDeleted": "User banned and {type} deleted",
   "@socialUserBannedAndDeleted": {
@@ -18125,7 +18424,7 @@
     "description": "Metric chip label showing air utilization TX percentage with Air prefix",
     "placeholders": {
       "percent": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -18134,7 +18433,7 @@
     "description": "Metric chip label showing channel utilization percentage with Ch prefix",
     "placeholders": {
       "percent": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -18147,7 +18446,7 @@
     "description": "Metric chip label showing voltage value with V unit suffix",
     "placeholders": {
       "voltage": {
-        "type": "double"
+        "type": "String"
       }
     }
   },
@@ -18164,7 +18463,7 @@
     "description": "Metric chip label showing gas resistance in ohms",
     "placeholders": {
       "value": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -18173,7 +18472,7 @@
     "description": "Metric chip label showing relative humidity percentage",
     "placeholders": {
       "value": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -18182,7 +18481,7 @@
     "description": "Metric chip label showing the indoor air quality index value",
     "placeholders": {
       "value": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -18191,7 +18490,7 @@
     "description": "Metric chip label showing light level in lux",
     "placeholders": {
       "value": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -18200,7 +18499,7 @@
     "description": "Metric chip label showing barometric pressure in hectopascals",
     "placeholders": {
       "value": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -18209,7 +18508,7 @@
     "description": "Metric chip label showing temperature value in degrees Celsius",
     "placeholders": {
       "value": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -18218,7 +18517,7 @@
     "description": "Metric chip label showing wind speed in metres per second",
     "placeholders": {
       "value": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -19241,6 +19540,10 @@
   "@widgetBuilderAddProgressBarDesc": {
     "description": "Add element description"
   },
+  "widgetBuilderAddReferenceLines": "Add reference lines at specific values",
+  "@widgetBuilderAddReferenceLines": {
+    "description": "Chart threshold section subtitle"
+  },
   "widgetBuilderAddSpace": "Space",
   "@widgetBuilderAddSpace": {
     "description": "Add element option"
@@ -19264,6 +19567,15 @@
   "widgetBuilderAddToDashboard": "Add to Dashboard",
   "@widgetBuilderAddToDashboard": {
     "description": "Context menu action"
+  },
+  "widgetBuilderAddedToDashboard": "{name} added to Dashboard",
+  "@widgetBuilderAddedToDashboard": {
+    "description": "Success snackbar when widget added to dashboard",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "widgetBuilderAlignBottom": "Bottom",
   "@widgetBuilderAlignBottom": {
@@ -19296,6 +19608,15 @@
   "widgetBuilderAllNodes": "All Nodes",
   "@widgetBuilderAllNodes": {
     "description": "Broadcast option label"
+  },
+  "widgetBuilderApprovedSuccess": "{name} approved",
+  "@widgetBuilderApprovedSuccess": {
+    "description": "Success snackbar when widget approved",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "widgetBuilderBindingActiveMeshNodes": "Active Mesh Nodes",
   "@widgetBuilderBindingActiveMeshNodes": {
@@ -19873,6 +20194,15 @@
   "@widgetBuilderBrowseMarketplace": {
     "description": "CTA title"
   },
+  "widgetBuilderByAuthor": "by {author}",
+  "@widgetBuilderByAuthor": {
+    "description": "Marketplace widget author attribution",
+    "placeholders": {
+      "author": {
+        "type": "String"
+      }
+    }
+  },
   "widgetBuilderCancel": "Cancel",
   "@widgetBuilderCancel": {
     "description": "Cancel button label"
@@ -19880,6 +20210,19 @@
   "widgetBuilderCancelButton": "Cancel",
   "@widgetBuilderCancelButton": {
     "description": "Cancel button label"
+  },
+  "widgetBuilderCannotSaveMessage": "{message}\n\nGo back to Step 1 to change your template, or Step 3 to update your selections.",
+  "@widgetBuilderCannotSaveMessage": {
+    "description": "Validation banner message with step instructions",
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "widgetBuilderCannotSaveTitle": "Cannot Save Widget",
+  "@widgetBuilderCannotSaveTitle": {
+    "description": "Validation banner title"
   },
   "widgetBuilderCatAirQuality": "Air Quality",
   "@widgetBuilderCatAirQuality": {
@@ -19989,6 +20332,18 @@
   "@widgetBuilderDeleteWidgetTitle": {
     "description": "Delete dialog title"
   },
+  "widgetBuilderDiscard": "Discard",
+  "@widgetBuilderDiscard": {
+    "description": "Discard changes button label"
+  },
+  "widgetBuilderDiscardChangesMessage": "You have unsaved changes. Are you sure you want to close without saving?",
+  "@widgetBuilderDiscardChangesMessage": {
+    "description": "Discard changes confirmation message"
+  },
+  "widgetBuilderDiscardChangesTitle": "Discard Changes?",
+  "@widgetBuilderDiscardChangesTitle": {
+    "description": "Discard changes confirmation title"
+  },
   "widgetBuilderDiscoverCommunity": "Discover widgets created by the community",
   "@widgetBuilderDiscoverCommunity": {
     "description": "CTA subtitle"
@@ -20073,9 +20428,85 @@
   "@widgetBuilderEnablePhoneLocation": {
     "description": "Warning when location sharing is disabled"
   },
+  "widgetBuilderEnterThresholdValue": "Enter threshold value",
+  "@widgetBuilderEnterThresholdValue": {
+    "description": "Threshold input hint text"
+  },
   "widgetBuilderEnterWidgetName": "Enter widget name",
   "@widgetBuilderEnterWidgetName": {
     "description": "Rename dialog hint text"
+  },
+  "widgetBuilderFailedToApprove": "Failed to approve: {error}",
+  "@widgetBuilderFailedToApprove": {
+    "description": "Error snackbar when approval fails",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "widgetBuilderFailedToImport": "Failed to import: {error}",
+  "@widgetBuilderFailedToImport": {
+    "description": "Error snackbar when widget import fails",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "widgetBuilderFailedToInstall": "Failed to install: {error}",
+  "@widgetBuilderFailedToInstall": {
+    "description": "Error snackbar when marketplace install fails",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "widgetBuilderFailedToReject": "Failed to reject: {error}",
+  "@widgetBuilderFailedToReject": {
+    "description": "Error snackbar when rejection fails",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "widgetBuilderFailedToRequestPositions": "Failed to request positions: {error}",
+  "@widgetBuilderFailedToRequestPositions": {
+    "description": "Error snackbar when position request fails",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "widgetBuilderFailedToSaveWidget": "Failed to save widget: {error}",
+  "@widgetBuilderFailedToSaveWidget": {
+    "description": "Error snackbar when wizard save fails",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "widgetBuilderFailedToShareLocation": "Failed to share location: {error}",
+  "@widgetBuilderFailedToShareLocation": {
+    "description": "Error snackbar when location share fails",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "widgetBuilderFailedToSubmit": "Failed to submit: {error}",
+  "@widgetBuilderFailedToSubmit": {
+    "description": "Error snackbar when marketplace submission fails",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
   },
   "widgetBuilderHelp": "Help",
   "@widgetBuilderHelp": {
@@ -20377,6 +20808,15 @@
   "@widgetBuilderImportedSuccessAction": {
     "description": "Success snackbar with action on import via edit"
   },
+  "widgetBuilderInstalledSuccess": "{name} installed!",
+  "@widgetBuilderInstalledSuccess": {
+    "description": "Success snackbar when marketplace widget installed",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "widgetBuilderJustNow": "Just now",
   "@widgetBuilderJustNow": {
     "description": "Relative time for recent events"
@@ -20449,6 +20889,10 @@
   "@widgetBuilderLargeOnlyTwoRowsMax": {
     "description": "Snackbar message for row limit on large"
   },
+  "widgetBuilderLivePreview": "Live Preview",
+  "@widgetBuilderLivePreview": {
+    "description": "Preview section header in wizard"
+  },
   "widgetBuilderLocationSharedMesh": "Location shared with mesh",
   "@widgetBuilderLocationSharedMesh": {
     "description": "Success snackbar after broadcast share"
@@ -20456,6 +20900,15 @@
   "widgetBuilderLocationSharedRecently": "Location was shared recently — please wait before sharing again",
   "@widgetBuilderLocationSharedRecently": {
     "description": "Warning for rate-limited location sharing"
+  },
+  "widgetBuilderLocationSharedWithNode": "Location shared with {name}",
+  "@widgetBuilderLocationSharedWithNode": {
+    "description": "Success snackbar when location shared with specific node",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "widgetBuilderMakeUnique": "Consider making your widget more unique before submitting.",
   "@widgetBuilderMakeUnique": {
@@ -20504,6 +20957,15 @@
   "widgetBuilderMarketplaceFavoritesHint": "Tap the heart icon on any widget to add it here",
   "@widgetBuilderMarketplaceFavoritesHint": {
     "description": "Empty state hint for favorites tab"
+  },
+  "widgetBuilderMarketplaceFavoritesWithCount": "Favorites ({count})",
+  "@widgetBuilderMarketplaceFavoritesWithCount": {
+    "description": "Favorites tab label with count",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "widgetBuilderMarketplaceHelpTooltip": "Help",
   "@widgetBuilderMarketplaceHelpTooltip": {
@@ -20657,9 +21119,17 @@
   "@widgetBuilderMyWidgets": {
     "description": "Screen title"
   },
+  "widgetBuilderNameHint": "e.g., My Battery Widget",
+  "@widgetBuilderNameHint": {
+    "description": "Widget name text field hint"
+  },
   "widgetBuilderNewWidget": "New Widget",
   "@widgetBuilderNewWidget": {
     "description": "Default name for new widget"
+  },
+  "widgetBuilderNoActionsSelected": "No actions selected",
+  "@widgetBuilderNoActionsSelected": {
+    "description": "Placeholder text when no actions are selected in wizard preview"
   },
   "widgetBuilderNoAdditionalOptions": "No additional options",
   "@widgetBuilderNoAdditionalOptions": {
@@ -20669,9 +21139,25 @@
   "@widgetBuilderNoDataBinding": {
     "description": "Description for no-binding option"
   },
+  "widgetBuilderNoDataSelected": "No data selected",
+  "@widgetBuilderNoDataSelected": {
+    "description": "Placeholder text when no data bindings are selected in wizard preview"
+  },
   "widgetBuilderNoIconsFound": "No icons found",
   "@widgetBuilderNoIconsFound": {
     "description": "Empty state when icon search yields no results"
+  },
+  "widgetBuilderNoInfoSelected": "No info selected",
+  "@widgetBuilderNoInfoSelected": {
+    "description": "Placeholder text for info template with no bindings"
+  },
+  "widgetBuilderNoLocationDataSelected": "No location data selected",
+  "@widgetBuilderNoLocationDataSelected": {
+    "description": "Placeholder text for location template with no bindings"
+  },
+  "widgetBuilderNoSensorDataSelected": "No sensor data selected",
+  "@widgetBuilderNoSensorDataSelected": {
+    "description": "Placeholder text for environment template with no bindings"
   },
   "widgetBuilderNoVariablesFound": "No variables found",
   "@widgetBuilderNoVariablesFound": {
@@ -20709,6 +21195,15 @@
   "@widgetBuilderQuickStartTemplates": {
     "description": "Section title"
   },
+  "widgetBuilderRejectedSuccess": "{name} rejected",
+  "@widgetBuilderRejectedSuccess": {
+    "description": "Success snackbar when widget rejected",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "widgetBuilderRemoveExtraRows": "Remove extra rows first - medium allows only 1 row",
   "@widgetBuilderRemoveExtraRows": {
     "description": "Snackbar message when downsizing with too many rows"
@@ -20716,6 +21211,15 @@
   "widgetBuilderRemoveFromDashboard": "Remove from Dashboard",
   "@widgetBuilderRemoveFromDashboard": {
     "description": "Context menu action"
+  },
+  "widgetBuilderRemovedFromDashboard": "{name} removed from Dashboard",
+  "@widgetBuilderRemovedFromDashboard": {
+    "description": "Info snackbar when widget removed from dashboard",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "widgetBuilderReviewGuidelines": "Review Guidelines",
   "@widgetBuilderReviewGuidelines": {
@@ -20743,7 +21247,7 @@
   },
   "widgetBuilderSectionActionBlocks": "Action Blocks",
   "@widgetBuilderSectionActionBlocks": {
-    "description": "Block picker section title"
+    "description": "Block picker section title for action blocks"
   },
   "widgetBuilderSectionContent": "Content",
   "@widgetBuilderSectionContent": {
@@ -20755,7 +21259,7 @@
   },
   "widgetBuilderSectionDisplayBlocks": "Display Blocks",
   "@widgetBuilderSectionDisplayBlocks": {
-    "description": "Block picker section title"
+    "description": "Block picker section title for display blocks"
   },
   "widgetBuilderSectionEmergency": "EMERGENCY",
   "@widgetBuilderSectionEmergency": {
@@ -20841,6 +21345,15 @@
   "@widgetBuilderSimilarWidgetExists": {
     "description": "Similar widget warning message"
   },
+  "widgetBuilderSimilarWidgetExistsError": "Similar widget already exists: {name}",
+  "@widgetBuilderSimilarWidgetExistsError": {
+    "description": "Error snackbar for duplicate marketplace submission",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "widgetBuilderSimilarWidgetFound": "Similar Widget Found",
   "@widgetBuilderSimilarWidgetFound": {
     "description": "Similar widget warning title"
@@ -20873,9 +21386,46 @@
   "@widgetBuilderSubmitToMarketplace": {
     "description": "Context menu action"
   },
+  "widgetBuilderSubmittedForReview": "{name} submitted for review",
+  "@widgetBuilderSubmittedForReview": {
+    "description": "Success snackbar when widget submitted to marketplace",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "widgetBuilderSwitch": "Switch",
   "@widgetBuilderSwitch": {
     "description": "Button label to switch widget style"
+  },
+  "widgetBuilderSwitchTemplateIncompatible": "\"{templateName}\" uses {newDataType} instead, so your current selections won't be used.",
+  "@widgetBuilderSwitchTemplateIncompatible": {
+    "description": "Template switch warning about incompatible data types",
+    "placeholders": {
+      "templateName": {
+        "type": "String"
+      },
+      "newDataType": {
+        "type": "String"
+      }
+    }
+  },
+  "widgetBuilderSwitchTemplateItemCount": "You have {count} {dataType} selected.",
+  "@widgetBuilderSwitchTemplateItemCount": {
+    "description": "Template switch warning showing current selection count",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "dataType": {
+        "type": "String"
+      }
+    }
+  },
+  "widgetBuilderSwitchTemplateTitle": "Switch Template?",
+  "@widgetBuilderSwitchTemplateTitle": {
+    "description": "Template switch confirmation title"
   },
   "widgetBuilderTemplateBatteryStatus": "Battery Status",
   "@widgetBuilderTemplateBatteryStatus": {
@@ -20916,6 +21466,10 @@
   "widgetBuilderTemplateSignalStrengthDesc": "Track connectivity",
   "@widgetBuilderTemplateSignalStrengthDesc": {
     "description": "Template description"
+  },
+  "widgetBuilderThresholdLines": "Threshold Lines",
+  "@widgetBuilderThresholdLines": {
+    "description": "Chart threshold section title"
   },
   "widgetBuilderToggleToolbox": "Toggle Toolbox",
   "@widgetBuilderToggleToolbox": {
@@ -21073,6 +21627,10 @@
   "@widgetBuilderUse": {
     "description": "Template use button label"
   },
+  "widgetBuilderValidationActionsRequired": "Quick Actions requires at least one action selected. You have data bindings but no actions.",
+  "@widgetBuilderValidationActionsRequired": {
+    "description": "Validation error when actions template has no actions"
+  },
   "widgetBuilderValidationChartNoBinding": "Chart has no data binding",
   "@widgetBuilderValidationChartNoBinding": {
     "description": "Validation error message"
@@ -21080,6 +21638,10 @@
   "widgetBuilderValidationChartNoBindingFix": "Bind to data like SNR history",
   "@widgetBuilderValidationChartNoBindingFix": {
     "description": "Validation fix suggestion"
+  },
+  "widgetBuilderValidationDataRequired": "This template requires data bindings. You have actions selected but no data.",
+  "@widgetBuilderValidationDataRequired": {
+    "description": "Validation error when data template has no bindings"
   },
   "widgetBuilderValidationDescTooLongFix": "Shorten the description",
   "@widgetBuilderValidationDescTooLongFix": {
@@ -21225,6 +21787,14 @@
   "@widgetBuilderWhatToAdd": {
     "description": "Add child dialog header"
   },
+  "widgetBuilderWhatWouldYouLikeToDo": "What would you like to do?",
+  "@widgetBuilderWhatWouldYouLikeToDo": {
+    "description": "Template switch prompt"
+  },
+  "widgetBuilderWidgetCreated": "Widget created!",
+  "@widgetBuilderWidgetCreated": {
+    "description": "Success snackbar after creating new widget"
+  },
   "widgetBuilderWidgetName": "Widget Name",
   "@widgetBuilderWidgetName": {
     "description": "Rename dialog title"
@@ -21232,6 +21802,10 @@
   "widgetBuilderWidgetTypes": "Widget Types",
   "@widgetBuilderWidgetTypes": {
     "description": "Section title"
+  },
+  "widgetBuilderWidgetUpdated": "Widget updated!",
+  "@widgetBuilderWidgetUpdated": {
+    "description": "Success snackbar after updating existing widget"
   },
   "widgetBuilderWizardStep1Subtitle": "How do you want your widget to look?",
   "@widgetBuilderWizardStep1Subtitle": {
@@ -21264,6 +21838,14 @@
   "widgetBuilderWizardStep3TitleData": "Pick Your Data",
   "@widgetBuilderWizardStep3TitleData": {
     "description": "Wizard step 3 title for data widgets"
+  },
+  "widgetBuilderWizardStep4Subtitle": "Customize colors and layout",
+  "@widgetBuilderWizardStep4Subtitle": {
+    "description": "Wizard step 4 subtitle"
+  },
+  "widgetBuilderWizardStep4Title": "Make it Yours",
+  "@widgetBuilderWizardStep4Title": {
+    "description": "Wizard step 4 title"
   },
   "worldMeshAddToFavorites": "Add to favorites",
   "worldMeshAddedToFavorites": "Added to favorites",

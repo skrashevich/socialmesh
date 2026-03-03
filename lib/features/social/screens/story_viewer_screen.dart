@@ -320,7 +320,10 @@ class _StoryViewerScreenState extends ConsumerState<StoryViewerScreen>
       }
     } catch (e) {
       if (mounted) {
-        showErrorSnackBar(context, 'Failed to report story: $e');
+        showErrorSnackBar(
+          context,
+          context.l10n.socialFailedToReportStory('$e'),
+        );
       }
     }
   }

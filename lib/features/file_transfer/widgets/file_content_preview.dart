@@ -187,7 +187,7 @@ class _TextViewer extends StatelessWidget {
               const Spacer(),
               _MetadataChip(
                 icon: Icons.format_list_numbered,
-                label: '$lineCount lines',
+                label: context.l10n.fileTransferLineCount(lineCount),
               ),
               const SizedBox(width: AppTheme.spacing8),
               _CopyButton(text: text),

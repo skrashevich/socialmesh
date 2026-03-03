@@ -1147,7 +1147,7 @@ class _DiscoveryStatsCard extends StatelessWidget {
           ),
           _InfoRow(
             label: context.l10n.nodedexLastSeen,
-            value: '$lastSeen at $lastSeenTime',
+            value: context.l10n.nodedexLastSeenAtTime(lastSeen, lastSeenTime),
             icon: Icons.schedule,
           ),
           _InfoRow(
@@ -1163,7 +1163,7 @@ class _DiscoveryStatsCard extends StatelessWidget {
           if (entry.maxDistanceSeen != null)
             _InfoRow(
               label: context.l10n.nodedexMaxRangeLabel,
-              value: _formatDistance(entry.maxDistanceSeen!),
+              value: _formatDistance(context, entry.maxDistanceSeen!),
               icon: Icons.straighten,
             ),
           _InfoRow(
@@ -1186,11 +1186,13 @@ class _DiscoveryStatsCard extends StatelessWidget {
     );
   }
 
-  String _formatDistance(double meters) {
+  String _formatDistance(BuildContext context, double meters) {
     if (meters >= 1000) {
-      return '${(meters / 1000).toStringAsFixed(2)} km';
+      return context.l10n.nodedexDistanceKilometers(
+        (meters / 1000).toStringAsFixed(2),
+      );
     }
-    return '${meters.round()} m';
+    return context.l10n.nodedexDistanceMeters(meters.round().toString());
   }
 }
 
@@ -1217,14 +1219,16 @@ class _SignalRecordsCard extends StatelessWidget {
           if (entry.bestSnr != null)
             _InfoRow(
               label: context.l10n.nodedexBestSnr,
-              value: '${entry.bestSnr} dB',
+              value: context.l10n.nodedexSnrDbValue(entry.bestSnr!.toString()),
               icon: Icons.trending_up,
               valueColor: _snrColor(entry.bestSnr!),
             ),
           if (entry.bestRssi != null)
             _InfoRow(
               label: context.l10n.nodedexBestRssi,
-              value: '${entry.bestRssi} dBm',
+              value: context.l10n.nodedexRssiDbmValue(
+                entry.bestRssi!.toString(),
+              ),
               icon: Icons.cell_tower,
               valueColor: _rssiColor(entry.bestRssi!),
             ),
@@ -2470,14 +2474,14 @@ class _CompactEncounterRow extends StatelessWidget {
           // Metrics
           if (encounter.snr != null)
             _CompactMetric(
-              label: 'SNR',
+              label: context.l10n.nodedexSnrLabel,
               value: '${encounter.snr}',
               context: context,
             ),
           if (encounter.rssi != null) ...[
             const SizedBox(width: AppTheme.spacing8),
             _CompactMetric(
-              label: 'RSSI',
+              label: context.l10n.nodedexRssiLabel,
               value: '${encounter.rssi}',
               context: context,
             ),
@@ -2485,8 +2489,8 @@ class _CompactEncounterRow extends StatelessWidget {
           if (encounter.distanceMeters != null) ...[
             const SizedBox(width: AppTheme.spacing8),
             _CompactMetric(
-              label: 'RNG',
-              value: _shortDist(encounter.distanceMeters!),
+              label: context.l10n.nodedexRngLabel,
+              value: _shortDist(context, encounter.distanceMeters!),
               context: context,
             ),
           ],
@@ -2504,9 +2508,13 @@ class _CompactEncounterRow extends StatelessWidget {
     return const Color(0xFFF87171);
   }
 
-  String _shortDist(double meters) {
-    if (meters >= 1000) return '${(meters / 1000).toStringAsFixed(1)}km';
-    return '${meters.round()}m';
+  String _shortDist(BuildContext context, double meters) {
+    if (meters >= 1000) {
+      return context.l10n.nodedexDistanceKilometers(
+        (meters / 1000).toStringAsFixed(1),
+      );
+    }
+    return context.l10n.nodedexDistanceMeters(meters.round().toString());
   }
 }
 

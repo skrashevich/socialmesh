@@ -311,15 +311,17 @@ class _ModerationQueueListState extends ConsumerState<_ModerationQueueList>
 
     if (userId == null) {
       if (context.mounted) {
-        showErrorSnackBar(context, 'Cannot identify user');
+        showErrorSnackBar(context, context.l10n.socialCannotIdentifyUser);
       }
       return;
     }
 
+    final l10n = context.l10n;
+
     final confirmed = await AppBottomSheet.showConfirm(
       context: context,
       title: context.l10n.socialUnsuspendUser,
-      message: 'Are you sure you want to lift the suspension for $displayName?',
+      message: l10n.socialUnsuspendConfirm(displayName),
       confirmLabel: context.l10n.socialUnsuspend,
     );
 
@@ -337,7 +339,7 @@ class _ModerationQueueListState extends ConsumerState<_ModerationQueueList>
         }
       } catch (e) {
         if (context.mounted) {
-          showErrorSnackBar(context, 'Error: $e');
+          showErrorSnackBar(context, l10n.socialErrorWithDetails('$e'));
         }
       }
     }
@@ -354,11 +356,11 @@ class _ModerationQueueListState extends ConsumerState<_ModerationQueueList>
     try {
       await socialService.approveModerationItem(itemId);
       if (context.mounted) {
-        showSuccessSnackBar(context, 'Content approved');
+        showSuccessSnackBar(context, context.l10n.socialContentApproved);
       }
     } catch (e) {
       if (context.mounted) {
-        showErrorSnackBar(context, 'Error: $e');
+        showErrorSnackBar(context, context.l10n.socialErrorWithDetails('$e'));
       }
     }
   }
@@ -394,7 +396,7 @@ class _ModerationQueueListState extends ConsumerState<_ModerationQueueList>
         }
       } catch (e) {
         if (context.mounted) {
-          showErrorSnackBar(context, 'Error: $e');
+          showErrorSnackBar(context, context.l10n.socialErrorWithDetails('$e'));
         }
       } finally {
         safeSetState(() => _isProcessing = false);
@@ -1052,7 +1054,7 @@ class _ReportsList extends ConsumerWidget {
       }
     } catch (e) {
       if (context.mounted) {
-        showErrorSnackBar(context, 'Error: $e');
+        showErrorSnackBar(context, context.l10n.socialErrorWithDetails('$e'));
       }
     }
   }
@@ -1071,7 +1073,7 @@ class _ReportsList extends ConsumerWidget {
       context: context,
       title: context.l10n.socialDeleteType(type),
       message: context.l10n.socialDeleteTypeConfirm(type),
-      confirmLabel: 'Delete',
+      confirmLabel: context.l10n.socialDelete,
       isDestructive: true,
     );
 
@@ -1086,7 +1088,7 @@ class _ReportsList extends ConsumerWidget {
         }
       } catch (e) {
         if (context.mounted) {
-          showErrorSnackBar(context, 'Error: $e');
+          showErrorSnackBar(context, context.l10n.socialErrorWithDetails('$e'));
         }
       }
     }
@@ -1591,15 +1593,15 @@ class _BanUserSheetState extends State<_BanUserSheet> {
   String? _selectedReason;
   bool _sendEmail = true;
 
-  static const _reasons = [
-    ('pornography', 'Pornography / Sexual content'),
-    ('violence', 'Violence / Threats'),
-    ('harassment', 'Harassment / Bullying'),
-    ('hate_speech', 'Hate speech / Discrimination'),
-    ('spam', 'Spam / Scam'),
-    ('illegal', 'Illegal activity'),
-    ('impersonation', 'Impersonation'),
-    ('other', 'Other violation'),
+  static List<(String, String)> _getReasons(BuildContext context) => [
+    ('pornography', context.l10n.socialBanReasonPornography),
+    ('violence', context.l10n.socialBanReasonViolence),
+    ('harassment', context.l10n.socialBanReasonHarassment),
+    ('hate_speech', context.l10n.socialBanReasonHateSpeech),
+    ('spam', context.l10n.socialBanReasonSpam),
+    ('illegal', context.l10n.socialBanReasonIllegal),
+    ('impersonation', context.l10n.socialBanReasonImpersonation),
+    ('other', context.l10n.socialBanReasonOther),
   ];
 
   @override
@@ -1700,9 +1702,9 @@ class _BanUserSheetState extends State<_BanUserSheet> {
           height: 200,
           child: ListView.builder(
             padding: const EdgeInsets.symmetric(horizontal: 12),
-            itemCount: _reasons.length,
+            itemCount: _getReasons(context).length,
             itemBuilder: (context, index) {
-              final (value, label) = _reasons[index];
+              final (value, label) = _getReasons(context)[index];
               final isSelected = _selectedReason == value;
               return InkWell(
                 onTap: () => setState(() => _selectedReason = value),

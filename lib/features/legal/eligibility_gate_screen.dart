@@ -116,7 +116,7 @@ class _EligibilityGateScreenState extends ConsumerState<EligibilityGateScreen>
 
                     // Body
                     Semantics(
-                      label: 'Age eligibility notice',
+                      label: context.l10n.legalEligibilityNoticeSemantics,
                       child: Text(
                         context.l10n.legalEligibilityBody,
                         style: theme.textTheme.bodyLarge?.copyWith(
@@ -171,11 +171,11 @@ class _EligibilityGateScreenState extends ConsumerState<EligibilityGateScreen>
             ),
           ],
         ),
-        child: const Icon(
+        child: Icon(
           Icons.verified_user_outlined,
           color: Colors.white,
           size: 40,
-          semanticLabel: 'Age eligibility',
+          semanticLabel: context.l10n.legalEligibilityIconSemantics,
         ),
       ),
     );
@@ -187,7 +187,7 @@ class _EligibilityGateScreenState extends ConsumerState<EligibilityGateScreen>
       children: [
         Semantics(
           button: true,
-          label: 'View Terms of Service',
+          label: context.l10n.legalEligibilityViewTermsSemantics,
           child: TextButton(
             onPressed: _openTerms,
             child: Text(
@@ -209,7 +209,7 @@ class _EligibilityGateScreenState extends ConsumerState<EligibilityGateScreen>
         ),
         Semantics(
           button: true,
-          label: 'View Privacy Policy',
+          label: context.l10n.legalEligibilityViewPrivacySemantics,
           child: TextButton(
             onPressed: _openPrivacy,
             child: Text(
@@ -233,7 +233,7 @@ class _EligibilityGateScreenState extends ConsumerState<EligibilityGateScreen>
         // Confirm button
         Semantics(
           button: true,
-          label: 'I am 16 or older. Tap to confirm and continue.',
+          label: context.l10n.legalEligibilityConfirmSemantics,
           child: SizedBox(
             height: 52,
             child: FilledButton(
@@ -272,7 +272,7 @@ class _EligibilityGateScreenState extends ConsumerState<EligibilityGateScreen>
         // Exit button
         Semantics(
           button: true,
-          label: 'Exit. You must be 16 or older to use Socialmesh.',
+          label: context.l10n.legalEligibilityExitSemantics,
           child: SizedBox(
             height: 48,
             child: TextButton(
@@ -312,7 +312,8 @@ class _EligibilityGateScreenState extends ConsumerState<EligibilityGateScreen>
                 Icons.info_outline_rounded,
                 size: 56,
                 color: context.textTertiary,
-                semanticLabel: 'Information',
+                semanticLabel:
+                    context.l10n.legalEligibilityInformationSemantics,
               ),
               const SizedBox(height: AppTheme.spacing24),
               Semantics(
@@ -338,7 +339,7 @@ class _EligibilityGateScreenState extends ConsumerState<EligibilityGateScreen>
               const SizedBox(height: AppTheme.spacing32),
               Semantics(
                 button: true,
-                label: 'Go back to confirm your age',
+                label: context.l10n.legalEligibilityGoBackSemantics,
                 child: SizedBox(
                   height: 52,
                   width: double.infinity,

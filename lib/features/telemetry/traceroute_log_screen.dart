@@ -637,12 +637,12 @@ class _TraceRouteCard extends StatelessWidget {
             runSpacing: 8,
             children: [
               _HopCountChip(
-                label: 'Hops \u2192',
+                label: context.l10n.telemetryTracerouteHopsForward,
                 count: log.hopsTowards,
                 color: AccentColors.teal,
               ),
               _HopCountChip(
-                label: 'Hops \u2190',
+                label: context.l10n.telemetryTracerouteHopsBack,
                 count: log.hopsBack,
                 color: AccentColors.purple,
               ),

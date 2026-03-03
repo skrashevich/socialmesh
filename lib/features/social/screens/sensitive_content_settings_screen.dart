@@ -180,10 +180,7 @@ class _SensitiveContentSettingsScreenState
                         ),
                         const SizedBox(height: AppTheme.spacing8),
                         Text(
-                          'Sensitive content may include posts that depict violence, '
-                          'nudity, or other content that some people may find offensive. '
-                          'This doesn\'t include content that violates our '
-                          'Community Guidelines, which is always removed.',
+                          context.l10n.socialSensitiveContentDescription,
                           style: TextStyle(
                             fontSize: 13,
                             color: context.textSecondary,
@@ -373,7 +370,7 @@ class _StrikeWarningDialogState extends ConsumerState<StrikeWarningDialog>
     } catch (e) {
       if (mounted) {
         safeSetState(() => _isAcknowledging = false);
-        showErrorSnackBar(context, 'Error: $e');
+        showErrorSnackBar(context, context.l10n.socialErrorWithDetails('$e'));
       }
     }
   }
@@ -447,10 +444,8 @@ class _StrikeWarningDialogState extends ConsumerState<StrikeWarningDialog>
           ),
           child: Text(
             isSuspension
-                ? 'Your account is temporarily suspended. You cannot post, '
-                      'comment, or create stories during this time.'
-                : 'Repeated violations may result in account suspension or '
-                      'permanent ban. Please review our Community Guidelines.',
+                ? context.l10n.socialAccountSuspendedMessage
+                : context.l10n.socialRepeatedViolationsWarning,
             style: context.bodySmallStyle?.copyWith(
               color: context.textSecondary,
             ),

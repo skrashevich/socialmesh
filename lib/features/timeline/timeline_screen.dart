@@ -636,7 +636,7 @@ class _TimelineScreenState extends ConsumerState<TimelineScreen> {
                     children: [
                       Expanded(
                         child: Text(
-                          event.title,
+                          _localizedEventTitle(event),
                           style: theme.textTheme.bodyMedium?.copyWith(
                             color: context.textPrimary,
                             fontWeight: FontWeight.w500,
@@ -654,7 +654,7 @@ class _TimelineScreenState extends ConsumerState<TimelineScreen> {
                   if (event.subtitle != null) ...[
                     const SizedBox(height: AppTheme.spacing4),
                     Text(
-                      event.subtitle!,
+                      _localizedEventSubtitle(event) ?? event.subtitle!,
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: context.textSecondary,
                       ),
@@ -669,6 +669,53 @@ class _TimelineScreenState extends ConsumerState<TimelineScreen> {
         ],
       ),
     );
+  }
+
+  String _localizedEventTitle(TimelineEvent event) {
+    final name = event.nodeName ?? _formatNodeId(event.nodeNum ?? 0);
+    switch (event.type) {
+      case TimelineEventType.nodeJoined:
+        return context.l10n.timelineNodeActive(name);
+      case TimelineEventType.signalChange:
+        return context.l10n.timelineWeakSignal(name);
+      case TimelineEventType.nodeLeft:
+        return context.l10n.timelineNodeInactive(name);
+      default:
+        return event.title;
+    }
+  }
+
+  String? _localizedEventSubtitle(TimelineEvent event) {
+    switch (event.type) {
+      case TimelineEventType.nodeJoined:
+        final rssi = event.metadata?['rssi'] as num?;
+        final snr = event.metadata?['snr'] as num?;
+        final parts = <String>[];
+        if (rssi != null) {
+          parts.add(context.l10n.timelineRssiValue(rssi.toDouble()));
+        }
+        if (snr != null) {
+          parts.add(context.l10n.timelineSnrValue(snr.toDouble()));
+        }
+        return parts.isNotEmpty ? parts.join(' · ') : event.subtitle;
+      case TimelineEventType.signalChange:
+        final snr = event.metadata?['snr'] as num?;
+        if (snr != null) {
+          return context.l10n.timelineSnrValue(snr.toDouble());
+        }
+        return event.subtitle;
+      case TimelineEventType.nodeLeft:
+        if (event.subtitle != null) {
+          return context.l10n.timelineLastHeard(
+            _formatTimeAgo(
+              event.timestamp.subtract(const Duration(minutes: 10)),
+            ),
+          );
+        }
+        return event.subtitle;
+      default:
+        return event.subtitle;
+    }
   }
 
   String _getDateKey(BuildContext context, DateTime timestamp) {

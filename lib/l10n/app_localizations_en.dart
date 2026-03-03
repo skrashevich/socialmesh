@@ -596,6 +596,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get aetherEmptyAllTitle => 'No Flights Found';
 
   @override
+  String aetherErrorWithDetails(String error) {
+    return 'Error: $error';
+  }
+
+  @override
   String get aetherEmptyMyFlightsSubtitle =>
       'You haven\'t scheduled any flights yet.\nTap the button above to add one!';
 
@@ -2042,6 +2047,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get automationActionPlaySound => 'Play alert sound';
 
   @override
+  String automationActionPlayFailed(String error) {
+    return 'Failed to play: $error';
+  }
+
+  @override
+  String automationActionPlaySoundFailed(String error) {
+    return 'Failed to play sound: $error';
+  }
+
+  @override
+  String automationActionPlayingSound(String name) {
+    return 'Playing \"$name\"...';
+  }
+
+  @override
   String get automationActionPlaysAfter => 'Plays after notification';
 
   @override
@@ -2535,6 +2555,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get automationNotificationFallbackTitle => 'Alert';
+
+  @override
+  String get automationScheduledBody => 'Tap to run scheduled automation';
+
+  @override
+  String get automationScheduledTitle => 'Scheduled Automation';
 
   @override
   String get automationScreenAcceptableUse => 'Acceptable Use';
@@ -4673,6 +4699,35 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deviceShopUnableToLoad => 'Unable to load products';
 
   @override
+  String deviceShopErrorWithDetails(String error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String deviceShopFailedToUploadImage(String error) {
+    return 'Failed to upload image: $error';
+  }
+
+  @override
+  String deviceShopFailedToUploadLogo(String error) {
+    return 'Failed to upload logo: $error';
+  }
+
+  @override
+  String get deviceShopFieldRequired => 'Required';
+
+  @override
+  String get deviceShopGoBackTooltip => 'Go back';
+
+  @override
+  String get deviceShopRefreshTooltip => 'Refresh';
+
+  @override
+  String deviceShopReviewSubmitFailed(String error) {
+    return 'Failed to submit review: $error';
+  }
+
+  @override
   String get discoveryDiscoveredBadge => 'DISCOVERED';
 
   @override
@@ -5267,6 +5322,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get fileTransferCouldNotRead => 'Could not read file.';
+
+  @override
   String get fileTransferCouldNotSaveForSharing =>
       'Could not save file for sharing';
 
@@ -5564,6 +5622,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get fileTransferTypeYaml => 'YAML';
+
+  @override
+  String fileTransferLineCount(int count) {
+    return '$count lines';
+  }
 
   @override
   String get firmwareUpdateAvailable => 'Update Available';
@@ -6356,6 +6419,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get legalAcceptanceAgreeButton => 'I Agree';
 
   @override
+  String get legalAcceptanceAgreeSemantics =>
+      'I agree to the Terms of Service and Privacy Policy. Tap to accept and continue.';
+
+  @override
+  String get legalAcceptanceAppIconSemantics => 'Socialmesh app icon';
+
+  @override
   String get legalAcceptanceDateFormatApril => 'April';
 
   @override
@@ -6399,11 +6469,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get legalAcceptanceDeclineButton => 'Not Now';
 
   @override
+  String get legalAcceptanceDeclineSemantics =>
+      'Not now. Decline and exit the app.';
+
+  @override
   String get legalAcceptanceDeclineTitle => 'Terms Required';
 
   @override
   String get legalAcceptanceFinePrint =>
       'By tapping \"I Agree\", you accept our Terms of Service and acknowledge our Privacy Policy.';
+
+  @override
+  String get legalAcceptanceFinePrintSemantics =>
+      'By tapping I Agree, you accept our Terms of Service and acknowledge our Privacy Policy.';
+
+  @override
+  String get legalAcceptanceGoBackSemantics =>
+      'Go back to review and accept the terms';
+
+  @override
+  String get legalAcceptanceInformationSemantics => 'Information';
+
+  @override
+  String get legalAcceptanceLegalShieldSemantics => 'Legal shield';
 
   @override
   String legalAcceptancePrivacyEffective(String date) {
@@ -6433,10 +6521,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get legalAcceptanceTermsOfService => 'Terms of Service';
 
   @override
+  String get legalAcceptanceTermsSummarySemantics => 'Terms summary';
+
+  @override
   String get legalAcceptanceTitleInitial => 'Terms & Privacy';
 
   @override
   String get legalAcceptanceTitleUpdate => 'Updated Terms';
+
+  @override
+  String get legalAcceptanceViewPrivacySemantics => 'View Privacy Policy';
+
+  @override
+  String get legalAcceptanceViewTermsSemantics => 'View Terms of Service';
 
   @override
   String get legalEligibilityBody =>
@@ -6446,6 +6543,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get legalEligibilityConfirmButton => 'I Am 16 or Older';
 
   @override
+  String get legalEligibilityConfirmSemantics =>
+      'I am 16 or older. Tap to confirm and continue.';
+
+  @override
   String get legalEligibilityExitBody =>
       'You must confirm you are 16 or older to use Socialmesh. You can confirm whenever you are ready.';
 
@@ -6453,10 +6554,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get legalEligibilityExitButton => 'Exit';
 
   @override
+  String get legalEligibilityExitSemantics =>
+      'Exit. You must be 16 or older to use Socialmesh.';
+
+  @override
   String get legalEligibilityExitTitle => 'Age Confirmation Required';
 
   @override
   String get legalEligibilityGoBackButton => 'Go Back';
+
+  @override
+  String get legalEligibilityGoBackSemantics => 'Go back to confirm your age';
+
+  @override
+  String get legalEligibilityIconSemantics => 'Age eligibility';
+
+  @override
+  String get legalEligibilityInformationSemantics => 'Information';
+
+  @override
+  String get legalEligibilityNoticeSemantics => 'Age eligibility notice';
 
   @override
   String get legalEligibilityPrivacyLink => 'Privacy';
@@ -6466,6 +6583,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get legalEligibilityTitle => 'Ages 16+';
+
+  @override
+  String get legalEligibilityViewPrivacySemantics => 'View Privacy Policy';
+
+  @override
+  String get legalEligibilityViewTermsSemantics => 'View Terms of Service';
 
   @override
   String get lilygoModelPriceUnavailable => 'Price unavailable';
@@ -8604,6 +8727,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get nodeAnalyticsAltitudeRowLabel => 'Altitude';
+
+  @override
   String get nodeAnalyticsAvgBattery => 'Avg Battery';
 
   @override
@@ -9767,6 +9893,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get nodedexDiscoveryTitle => 'Discovery';
 
   @override
+  String nodedexDistanceKilometers(String distance) {
+    return '$distance km';
+  }
+
+  @override
+  String nodedexDistanceMeters(String distance) {
+    return '$distance m';
+  }
+
+  @override
   String get nodedexDistanceUnknown => 'unknown range';
 
   @override
@@ -10719,6 +10855,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get nodedexLastSeenStatLabel => 'Last Seen';
 
   @override
+  String nodedexLastSeenAtTime(String date, String time) {
+    return '$date at $time';
+  }
+
+  @override
   String get nodedexLegendFair => 'Fair';
 
   @override
@@ -11045,6 +11186,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get nodedexResetViewTooltip => 'Reset view';
 
   @override
+  String get nodedexRngLabel => 'RNG';
+
+  @override
+  String nodedexRssiDbmValue(String value) {
+    return '$value dBm';
+  }
+
+  @override
+  String get nodedexRssiLabel => 'RSSI';
+
+  @override
   String get nodedexSearchHint => 'Find a node';
 
   @override
@@ -11104,6 +11256,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nodedexSignalRecordsTitle => 'Signal Records';
+
+  @override
+  String nodedexSnrDbValue(String value) {
+    return '$value dB';
+  }
+
+  @override
+  String get nodedexSnrLabel => 'SNR';
 
   @override
   String get nodedexSnrTrend => 'SNR TREND';
@@ -11793,6 +11953,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardingEmotionSettingsSize => 'Size';
+
+  @override
+  String get onboardingEmotionSettingsTooltip => 'Settings';
 
   @override
   String get onboardingHardwareAdvisor =>
@@ -12687,6 +12850,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileEmailLabel => 'Email';
 
   @override
+  String profileErrorWithMessage(String message) {
+    return 'Error: $message';
+  }
+
+  @override
   String get profileGitHubHint => 'username';
 
   @override
@@ -12863,7 +13031,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileTwitterHint => 'username';
 
   @override
-  String get profileTwitterLabel => 'Twitter';
+  String get profileTwitterLabel => 'Twitter / X';
 
   @override
   String get profileUidLabel => 'UID';
@@ -13886,6 +14054,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sellerProfileTitle => 'Seller';
+
+  @override
+  String get sellerProfileCopyCodeTooltip => 'Copy code';
 
   @override
   String get sellerProfileUnableToLoad => 'Unable to load products';
@@ -16083,6 +16254,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get socialAccountSuspendedTitle => 'Account Suspended';
 
   @override
+  String get socialAccountSuspendedMessage =>
+      'Your account is currently suspended. You cannot post or comment until the suspension is lifted.';
+
+  @override
   String get socialAccountWarningStrikesActive => 'Warning: Strikes Active';
 
   @override
@@ -16383,6 +16558,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get socialContactSupportButton => 'Contact Support';
 
   @override
+  String get socialContentApproved => 'Content approved';
+
+  @override
   String get socialContentIdNotFound => 'Content ID not found';
 
   @override
@@ -16636,7 +16814,45 @@ class AppLocalizationsEn extends AppLocalizations {
   String get socialErrorLoadingViewers => 'Error loading viewers';
 
   @override
+  String socialErrorWithDetails(String error) {
+    return 'Error: $error';
+  }
+
+  @override
   String get socialExpires => 'Expires';
+
+  @override
+  String socialFailedToBlock(String error) {
+    return 'Failed to block user: $error';
+  }
+
+  @override
+  String socialFailedToDelete(String error) {
+    return 'Failed to delete: $error';
+  }
+
+  @override
+  String socialFailedToGetLocation(String error) {
+    return 'Failed to get location: $error';
+  }
+
+  @override
+  String socialFailedToReport(String error) {
+    return 'Failed to report: $error';
+  }
+
+  @override
+  String socialFailedToReportStory(String error) {
+    return 'Failed to report story: $error';
+  }
+
+  @override
+  String get socialFailedToUpdateLike => 'Failed to update like';
+
+  @override
+  String socialFailedToUploadImage(String error) {
+    return 'Failed to upload image: $error';
+  }
 
   @override
   String get socialFeedLocationFallback => 'Location';
@@ -16754,7 +16970,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get socialIUnderstand => 'I Understand';
 
   @override
+  String get socialImageBlockedByModeration => 'Image blocked by moderation';
+
+  @override
   String get socialImageUnavailable => 'Image unavailable';
+
+  @override
+  String get socialInvalidNodeId => 'Invalid node ID';
 
   @override
   String socialJoined(String date) {
@@ -16766,6 +16988,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get socialLiked => 'Liked';
+
+  @override
+  String get socialLikePlural => 'likes';
+
+  @override
+  String get socialLikeSingular => 'like';
 
   @override
   String get socialLinkNodeHint => 'Link a mesh node to your next post';
@@ -17015,7 +17243,14 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get socialRepeatedViolationsWarning =>
+      'Repeated violations may result in account suspension.';
+
+  @override
   String get socialReport => 'Report';
+
+  @override
+  String get socialReportComment => 'Report Comment';
 
   @override
   String get socialReportCommentTitle => 'Report Comment';
@@ -17151,6 +17386,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get socialSensitiveContentControl => 'Sensitive Content Control';
 
   @override
+  String get socialSensitiveContentDescription =>
+      'Socialmesh uses automated systems to detect potentially sensitive content. You can adjust how this content is displayed.';
+
+  @override
   String get socialSensitiveContentExplanation =>
       'Control what type of content you see in your feed. This affects AI-moderated content filtering across posts, signals, and stories.';
 
@@ -17174,6 +17413,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get socialSignIn => 'Sign In';
+
+  @override
+  String get socialSignInToLikePosts => 'Sign in to like posts';
+
+  @override
+  String get socialSignInToUploadImages => 'Sign in to upload images';
 
   @override
   String get socialSignInSubscriptions => 'Sign in to manage subscriptions';
@@ -17472,8 +17717,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get socialUnsuspend => 'Unsuspend';
 
   @override
-  String get socialUnsuspendConfirm =>
-      'Are you sure you want to lift the suspension on this user?';
+  String socialUnsuspendConfirm(String displayName) {
+    return 'Are you sure you want to lift the suspension on $displayName?';
+  }
 
   @override
   String get socialUnsuspendUser => 'Unsuspend User';
@@ -18569,12 +18815,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get telemetryDeviceLegendVoltage => 'Voltage';
 
   @override
-  String telemetryDeviceMetricsAirUtil(int percent) {
+  String telemetryDeviceMetricsAirUtil(String percent) {
     return 'Air $percent%';
   }
 
   @override
-  String telemetryDeviceMetricsChannelUtil(int percent) {
+  String telemetryDeviceMetricsChannelUtil(String percent) {
     return 'Ch $percent%';
   }
 
@@ -18582,7 +18828,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get telemetryDeviceMetricsTitle => 'Device Metrics';
 
   @override
-  String telemetryDeviceMetricsVoltageValue(double voltage) {
+  String telemetryDeviceMetricsVoltageValue(String voltage) {
     return '${voltage}V';
   }
 
@@ -18593,37 +18839,37 @@ class AppLocalizationsEn extends AppLocalizations {
   String get telemetryEndDate => 'End Date';
 
   @override
-  String telemetryEnvGasResistanceValue(int value) {
+  String telemetryEnvGasResistanceValue(String value) {
     return '$value Ω';
   }
 
   @override
-  String telemetryEnvHumidityValue(int value) {
+  String telemetryEnvHumidityValue(String value) {
     return '$value%';
   }
 
   @override
-  String telemetryEnvIaqValue(int value) {
+  String telemetryEnvIaqValue(String value) {
     return 'IAQ $value';
   }
 
   @override
-  String telemetryEnvLuxValue(int value) {
+  String telemetryEnvLuxValue(String value) {
     return '$value lux';
   }
 
   @override
-  String telemetryEnvPressureValue(int value) {
+  String telemetryEnvPressureValue(String value) {
     return '$value hPa';
   }
 
   @override
-  String telemetryEnvTemperatureValue(int value) {
+  String telemetryEnvTemperatureValue(String value) {
     return '$value°C';
   }
 
   @override
-  String telemetryEnvWindSpeedValue(int value) {
+  String telemetryEnvWindSpeedValue(String value) {
     return '$value m/s';
   }
 
@@ -19331,6 +19577,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get widgetBuilderAddProgressBarDesc => 'Show a value visually';
 
   @override
+  String get widgetBuilderAddReferenceLines =>
+      'Add reference lines at specific values';
+
+  @override
   String get widgetBuilderAddSpace => 'Space';
 
   @override
@@ -19347,6 +19597,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get widgetBuilderAddToDashboard => 'Add to Dashboard';
+
+  @override
+  String widgetBuilderAddedToDashboard(String name) {
+    return '$name added to Dashboard';
+  }
 
   @override
   String get widgetBuilderAlignBottom => 'Bottom';
@@ -19371,6 +19626,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get widgetBuilderAllNodes => 'All Nodes';
+
+  @override
+  String widgetBuilderApprovedSuccess(String name) {
+    return '$name approved';
+  }
 
   @override
   String get widgetBuilderBindingActiveMeshNodes => 'Active Mesh Nodes';
@@ -19833,10 +20093,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get widgetBuilderBrowseMarketplace => 'Browse Marketplace';
 
   @override
+  String widgetBuilderByAuthor(String author) {
+    return 'by $author';
+  }
+
+  @override
   String get widgetBuilderCancel => 'Cancel';
 
   @override
   String get widgetBuilderCancelButton => 'Cancel';
+
+  @override
+  String widgetBuilderCannotSaveMessage(String message) {
+    return '$message\n\nGo back to Step 1 to change your template, or Step 3 to update your selections.';
+  }
+
+  @override
+  String get widgetBuilderCannotSaveTitle => 'Cannot Save Widget';
 
   @override
   String get widgetBuilderCatAirQuality => 'Air Quality';
@@ -19921,6 +20194,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get widgetBuilderDeleteWidgetTitle => 'Delete Widget?';
 
   @override
+  String get widgetBuilderDiscard => 'Discard';
+
+  @override
+  String get widgetBuilderDiscardChangesMessage =>
+      'You have unsaved changes. Are you sure you want to close without saving?';
+
+  @override
+  String get widgetBuilderDiscardChangesTitle => 'Discard Changes?';
+
+  @override
   String get widgetBuilderDiscoverCommunity =>
       'Discover widgets created by the community';
 
@@ -19986,7 +20269,50 @@ class AppLocalizationsEn extends AppLocalizations {
       'Enable \"Provide phone location\" in Settings to share your position';
 
   @override
+  String get widgetBuilderEnterThresholdValue => 'Enter threshold value';
+
+  @override
   String get widgetBuilderEnterWidgetName => 'Enter widget name';
+
+  @override
+  String widgetBuilderFailedToApprove(String error) {
+    return 'Failed to approve: $error';
+  }
+
+  @override
+  String widgetBuilderFailedToImport(String error) {
+    return 'Failed to import: $error';
+  }
+
+  @override
+  String widgetBuilderFailedToInstall(String error) {
+    return 'Failed to install: $error';
+  }
+
+  @override
+  String widgetBuilderFailedToReject(String error) {
+    return 'Failed to reject: $error';
+  }
+
+  @override
+  String widgetBuilderFailedToRequestPositions(String error) {
+    return 'Failed to request positions: $error';
+  }
+
+  @override
+  String widgetBuilderFailedToSaveWidget(String error) {
+    return 'Failed to save widget: $error';
+  }
+
+  @override
+  String widgetBuilderFailedToShareLocation(String error) {
+    return 'Failed to share location: $error';
+  }
+
+  @override
+  String widgetBuilderFailedToSubmit(String error) {
+    return 'Failed to submit: $error';
+  }
 
   @override
   String get widgetBuilderHelp => 'Help';
@@ -20218,6 +20544,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'Widget imported successfully';
 
   @override
+  String widgetBuilderInstalledSuccess(String name) {
+    return '$name installed!';
+  }
+
+  @override
   String get widgetBuilderJustNow => 'Just now';
 
   @override
@@ -20273,11 +20604,19 @@ class AppLocalizationsEn extends AppLocalizations {
       'Large widgets only allow 2 rows max';
 
   @override
+  String get widgetBuilderLivePreview => 'Live Preview';
+
+  @override
   String get widgetBuilderLocationSharedMesh => 'Location shared with mesh';
 
   @override
   String get widgetBuilderLocationSharedRecently =>
       'Location was shared recently — please wait before sharing again';
+
+  @override
+  String widgetBuilderLocationSharedWithNode(String name) {
+    return 'Location shared with $name';
+  }
 
   @override
   String get widgetBuilderMakeUnique =>
@@ -20319,6 +20658,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get widgetBuilderMarketplaceFavoritesHint =>
       'Tap the heart icon on any widget to add it here';
+
+  @override
+  String widgetBuilderMarketplaceFavoritesWithCount(int count) {
+    return 'Favorites ($count)';
+  }
 
   @override
   String get widgetBuilderMarketplaceHelpTooltip => 'Help';
@@ -20441,7 +20785,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get widgetBuilderMyWidgets => 'My Widgets';
 
   @override
+  String get widgetBuilderNameHint => 'e.g., My Battery Widget';
+
+  @override
   String get widgetBuilderNewWidget => 'New Widget';
+
+  @override
+  String get widgetBuilderNoActionsSelected => 'No actions selected';
 
   @override
   String get widgetBuilderNoAdditionalOptions => 'No additional options';
@@ -20450,7 +20800,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get widgetBuilderNoDataBinding => 'No data binding - use static text';
 
   @override
+  String get widgetBuilderNoDataSelected => 'No data selected';
+
+  @override
   String get widgetBuilderNoIconsFound => 'No icons found';
+
+  @override
+  String get widgetBuilderNoInfoSelected => 'No info selected';
+
+  @override
+  String get widgetBuilderNoLocationDataSelected => 'No location data selected';
+
+  @override
+  String get widgetBuilderNoSensorDataSelected => 'No sensor data selected';
 
   @override
   String get widgetBuilderNoVariablesFound => 'No variables found';
@@ -20481,11 +20843,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get widgetBuilderQuickStartTemplates => 'Quick Start Templates';
 
   @override
+  String widgetBuilderRejectedSuccess(String name) {
+    return '$name rejected';
+  }
+
+  @override
   String get widgetBuilderRemoveExtraRows =>
       'Remove extra rows first - medium allows only 1 row';
 
   @override
   String get widgetBuilderRemoveFromDashboard => 'Remove from Dashboard';
+
+  @override
+  String widgetBuilderRemovedFromDashboard(String name) {
+    return '$name removed from Dashboard';
+  }
 
   @override
   String get widgetBuilderReviewGuidelines => 'Review Guidelines';
@@ -20588,6 +20960,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'A similar widget already exists in the marketplace:';
 
   @override
+  String widgetBuilderSimilarWidgetExistsError(String name) {
+    return 'Similar widget already exists: $name';
+  }
+
+  @override
   String get widgetBuilderSimilarWidgetFound => 'Similar Widget Found';
 
   @override
@@ -20612,7 +20989,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get widgetBuilderSubmitToMarketplace => 'Submit to Marketplace';
 
   @override
+  String widgetBuilderSubmittedForReview(String name) {
+    return '$name submitted for review';
+  }
+
+  @override
   String get widgetBuilderSwitch => 'Switch';
+
+  @override
+  String widgetBuilderSwitchTemplateIncompatible(
+    String templateName,
+    String newDataType,
+  ) {
+    return '\"$templateName\" uses $newDataType instead, so your current selections won\'t be used.';
+  }
+
+  @override
+  String widgetBuilderSwitchTemplateItemCount(int count, String dataType) {
+    return 'You have $count $dataType selected.';
+  }
+
+  @override
+  String get widgetBuilderSwitchTemplateTitle => 'Switch Template?';
 
   @override
   String get widgetBuilderTemplateBatteryStatus => 'Battery Status';
@@ -20643,6 +21041,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get widgetBuilderTemplateSignalStrengthDesc => 'Track connectivity';
+
+  @override
+  String get widgetBuilderThresholdLines => 'Threshold Lines';
 
   @override
   String get widgetBuilderToggleToolbox => 'Toggle Toolbox';
@@ -20762,12 +21163,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get widgetBuilderUse => 'Use';
 
   @override
+  String get widgetBuilderValidationActionsRequired =>
+      'Quick Actions requires at least one action selected. You have data bindings but no actions.';
+
+  @override
   String get widgetBuilderValidationChartNoBinding =>
       'Chart has no data binding';
 
   @override
   String get widgetBuilderValidationChartNoBindingFix =>
       'Bind to data like SNR history';
+
+  @override
+  String get widgetBuilderValidationDataRequired =>
+      'This template requires data bindings. You have actions selected but no data.';
 
   @override
   String get widgetBuilderValidationDescTooLongFix => 'Shorten the description';
@@ -20895,10 +21304,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get widgetBuilderWhatToAdd => 'What would you like to add?';
 
   @override
+  String get widgetBuilderWhatWouldYouLikeToDo => 'What would you like to do?';
+
+  @override
+  String get widgetBuilderWidgetCreated => 'Widget created!';
+
+  @override
   String get widgetBuilderWidgetName => 'Widget Name';
 
   @override
   String get widgetBuilderWidgetTypes => 'Widget Types';
+
+  @override
+  String get widgetBuilderWidgetUpdated => 'Widget updated!';
 
   @override
   String get widgetBuilderWizardStep1Subtitle =>
@@ -20926,6 +21344,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get widgetBuilderWizardStep3TitleData => 'Pick Your Data';
+
+  @override
+  String get widgetBuilderWizardStep4Subtitle => 'Customize colors and layout';
+
+  @override
+  String get widgetBuilderWizardStep4Title => 'Make it Yours';
 
   @override
   String get worldMeshAddToFavorites => 'Add to favorites';

@@ -281,7 +281,7 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen>
           _deletingCommentIds.remove(commentId);
           _deletedCommentIds.remove(commentId);
         });
-        showErrorSnackBar(context, 'Failed to delete: $e');
+        showErrorSnackBar(context, context.l10n.socialFailedToDelete('$e'));
       }
     }
   }
@@ -414,7 +414,7 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen>
     // nodeId is stored as hex string (e.g., "A1B2C3D4")
     final nodeNum = int.tryParse(nodeId, radix: 16);
     if (nodeNum == null) {
-      showErrorSnackBar(context, 'Invalid node ID');
+      showErrorSnackBar(context, context.l10n.socialInvalidNodeId);
       return;
     }
 
@@ -575,7 +575,7 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen>
         );
       } catch (e) {
         if (mounted) {
-          showErrorSnackBar(context, 'Failed to delete: $e');
+          showErrorSnackBar(context, context.l10n.socialFailedToDelete('$e'));
         }
       }
     }
@@ -605,7 +605,7 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen>
         }
       } catch (e) {
         if (mounted) {
-          showErrorSnackBar(context, 'Failed to block: $e');
+          showErrorSnackBar(context, context.l10n.socialFailedToBlock('$e'));
         }
       }
     }
@@ -698,7 +698,7 @@ class _PostDetailScreenState extends ConsumerState<PostDetailScreen>
         }
       } catch (e) {
         if (mounted) {
-          showErrorSnackBar(context, 'Failed to report: $e');
+          showErrorSnackBar(context, context.l10n.socialFailedToReport('$e'));
         }
       }
     }
@@ -910,7 +910,7 @@ class _CommentTileState extends ConsumerState<_CommentTile>
                       if (_likeCount > 0) ...[
                         const SizedBox(width: AppTheme.spacing16),
                         Text(
-                          '$_likeCount ${_likeCount == 1 ? 'like' : 'likes'}',
+                          '$_likeCount ${_likeCount == 1 ? context.l10n.socialLikeSingular : context.l10n.socialLikePlural}',
                           style: theme.textTheme.bodySmall?.copyWith(
                             color: theme.hintColor,
                             fontWeight: FontWeight.w600,
@@ -1055,7 +1055,7 @@ class _CommentTileState extends ConsumerState<_CommentTile>
         }
       } catch (e) {
         if (mounted) {
-          showErrorSnackBar(context, 'Failed to report: $e');
+          showErrorSnackBar(context, context.l10n.socialFailedToReport('$e'));
         }
       }
     }
@@ -1463,14 +1463,14 @@ class _CommentInput extends StatelessWidget {
 Future<String?> _showReportReasonSheet(BuildContext context) {
   String? selectedReason;
 
-  const reasons = [
-    'Spam',
-    'Harassment or bullying',
-    'Hate speech',
-    'Violence or threats',
-    'Nudity or sexual content',
-    'False information',
-    'Other',
+  final reasons = [
+    context.l10n.socialReportReasonSpam,
+    context.l10n.socialReportReasonHarassment,
+    context.l10n.socialReportReasonHateSpeech,
+    context.l10n.socialReportReasonViolence,
+    context.l10n.socialReportReasonNudity,
+    context.l10n.socialReportReasonFalseInfo,
+    context.l10n.socialReportReasonOther,
   ];
 
   return AppBottomSheet.show<String>(
@@ -1484,7 +1484,7 @@ Future<String?> _showReportReasonSheet(BuildContext context) {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Report Comment',
+              context.l10n.socialReportComment,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
@@ -1493,7 +1493,7 @@ Future<String?> _showReportReasonSheet(BuildContext context) {
             ),
             const SizedBox(height: AppTheme.spacing12),
             Text(
-              'Why are you reporting this comment?',
+              context.l10n.socialReportCommentWhy,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: context.textSecondary,
               ),
