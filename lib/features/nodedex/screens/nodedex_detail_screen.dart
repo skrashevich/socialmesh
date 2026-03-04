@@ -184,23 +184,24 @@ class _NodeDexDetailScreenState extends ConsumerState<NodeDexDetailScreen>
               );
             },
           ),
-          AppBarOverflowMenu<String>(
-            onSelected: (value) {
-              if (value == 'send_file') {
-                _sendFileToNode(context, entry.nodeNum);
-              }
-            },
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                value: 'send_file',
-                child: ListTile(
-                  leading: const Icon(Icons.attach_file),
-                  title: Text(context.l10n.nodedexSendFile),
-                  contentPadding: EdgeInsets.zero,
+          if (AppFeatureFlags.isFileTransferEnabled)
+            AppBarOverflowMenu<String>(
+              onSelected: (value) {
+                if (value == 'send_file') {
+                  _sendFileToNode(context, entry.nodeNum);
+                }
+              },
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  value: 'send_file',
+                  child: ListTile(
+                    leading: const Icon(Icons.attach_file),
+                    title: Text(context.l10n.nodedexSendFile),
+                    contentPadding: EdgeInsets.zero,
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
           IcoHelpAppBarButton(topicId: 'nodedex_detail'),
         ],
         slivers: [
@@ -412,13 +413,14 @@ class _NodeDexDetailScreenState extends ConsumerState<NodeDexDetailScreen>
             ),
 
           // File transfer history with this node
-          SliverToBoxAdapter(
-            child: _DetailEntrance(
-              index: 14,
-              reduceMotion: reduceMotion,
-              child: _NodeFileTransfersCard(nodeNum: widget.nodeNum),
+          if (AppFeatureFlags.isFileTransferEnabled)
+            SliverToBoxAdapter(
+              child: _DetailEntrance(
+                index: 14,
+                reduceMotion: reduceMotion,
+                child: _NodeFileTransfersCard(nodeNum: widget.nodeNum),
+              ),
             ),
-          ),
 
           // Node activity timeline — unified chronological feed
           SliverPersistentHeader(

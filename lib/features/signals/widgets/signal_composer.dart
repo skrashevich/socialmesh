@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/constants.dart';
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
 import '../../../providers/file_transfer_providers.dart';
@@ -189,20 +190,22 @@ class _SignalComposerState extends ConsumerState<SignalComposer>
             ),
           ),
           const SizedBox(width: AppTheme.spacing8),
-          IconButton(
-            onPressed: _isSubmitting ? null : _pickFile,
-            icon: Icon(
-              Icons.attach_file,
-              size: 20,
-              color: _hasAttachment
-                  ? context.accentColor
-                  : context.textTertiary,
+          if (AppFeatureFlags.isFileTransferEnabled) ...[
+            IconButton(
+              onPressed: _isSubmitting ? null : _pickFile,
+              icon: Icon(
+                Icons.attach_file,
+                size: 20,
+                color: _hasAttachment
+                    ? context.accentColor
+                    : context.textTertiary,
+              ),
+              tooltip: context.l10n.signalAttachFile,
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(),
             ),
-            tooltip: context.l10n.signalAttachFile,
-            padding: EdgeInsets.zero,
-            constraints: const BoxConstraints(),
-          ),
-          const SizedBox(width: AppTheme.spacing8),
+            const SizedBox(width: AppTheme.spacing8),
+          ],
           IconButton(
             onPressed: _canSubmit ? _submit : null,
             icon: _isSubmitting
@@ -278,7 +281,7 @@ class _SignalComposerState extends ConsumerState<SignalComposer>
           ),
 
           // File attachment preview
-          if (_hasAttachment) ...[
+          if (AppFeatureFlags.isFileTransferEnabled && _hasAttachment) ...[
             const SizedBox(height: AppTheme.spacing12),
             FileAttachmentPreview(
               filename: _attachedFilename!,
@@ -294,46 +297,47 @@ class _SignalComposerState extends ConsumerState<SignalComposer>
 
           const SizedBox(height: AppTheme.spacing12),
 
-          // Attach file button
-          Row(
-            children: [
-              TextButton.icon(
-                onPressed: _isSubmitting ? null : _pickFile,
-                icon: Icon(
-                  Icons.attach_file,
-                  size: 16,
-                  color: _isSubmitting
-                      ? context.textTertiary
-                      : context.accentColor,
-                ),
-                label: Text(
-                  context.l10n.signalAttachFile,
-                  style: TextStyle(
+          // Attach file button (gated behind file transfer feature flag)
+          if (AppFeatureFlags.isFileTransferEnabled)
+            Row(
+              children: [
+                TextButton.icon(
+                  onPressed: _isSubmitting ? null : _pickFile,
+                  icon: Icon(
+                    Icons.attach_file,
+                    size: 16,
                     color: _isSubmitting
                         ? context.textTertiary
                         : context.accentColor,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
+                  ),
+                  label: Text(
+                    context.l10n.signalAttachFile,
+                    style: TextStyle(
+                      color: _isSubmitting
+                          ? context.textTertiary
+                          : context.accentColor,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppTheme.spacing8,
+                      vertical: AppTheme.spacing4,
+                    ),
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
                 ),
-                style: TextButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppTheme.spacing8,
-                    vertical: AppTheme.spacing4,
+                const Spacer(),
+                Text(
+                  context.l10n.signalMaxFileSize(
+                    SmFileTransferLimits.maxFileSize ~/ 1024,
                   ),
-                  minimumSize: Size.zero,
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  style: TextStyle(color: context.textTertiary, fontSize: 10),
                 ),
-              ),
-              const Spacer(),
-              Text(
-                context.l10n.signalMaxFileSize(
-                  SmFileTransferLimits.maxFileSize ~/ 1024,
-                ),
-                style: TextStyle(color: context.textTertiary, fontSize: 10),
-              ),
-            ],
-          ),
+              ],
+            ),
           const SizedBox(height: AppTheme.spacing16),
 
           // Submit button
