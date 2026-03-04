@@ -119,22 +119,32 @@ jobs:
                   )
 
               # Check that parameterized keys preserve placeholders
+              # Use @metadata to get the actual declared placeholders, not regex
+              # (regex falsely matches ICU plural/select branch content like other{s})
+              import re
               for key in locale_keys:
                   if key not in template_data:
                       continue
-                  template_val = template_data[key]
                   locale_val = locale_data[key]
-                  if not isinstance(template_val, str) or not isinstance(locale_val, str):
+                  if not isinstance(locale_val, str):
                       continue
 
-                  # Extract {param} placeholders from template
-                  import re
-                  template_params = set(re.findall(r"\{(\w+)\}", template_val))
-                  locale_params = set(re.findall(r"\{(\w+)\}", locale_val))
+                  # Get declared placeholders from @key metadata
+                  meta_key = f"@{key}"
+                  if meta_key in template_data and isinstance(template_data[meta_key], dict):
+                      placeholders = template_data[meta_key].get("placeholders", {})
+                      declared_params = set(placeholders.keys())
+                  else:
+                      # No metadata — skip placeholder check for this key
+                      continue
 
-                  # Missing placeholders in translation
-                  missing_params = template_params - locale_params
-                  if missing_params and locale_val != template_val:
+                  if not declared_params:
+                      continue
+
+                  # Check that each declared placeholder appears in the translation
+                  locale_params = set(re.findall(r"\{(\w+)\}", locale_val))
+                  missing_params = declared_params - locale_params
+                  if missing_params and locale_val != template_data[key]:
                       errors.append(
                           f"{arb_file}: Key '{key}' is missing placeholder(s): "
                           + ", ".join(sorted(missing_params))
