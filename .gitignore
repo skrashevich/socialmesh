@@ -131,6 +131,7 @@ assets/widget_templates/*.json
 !/docs/ARCHITECTURE.md
 !/docs/BACKEND.md
 !/docs/RELEASING.md
+!/docs/GLOSSARY*.md
 
 # Scripts dependencies
 /scripts/node_modules/
