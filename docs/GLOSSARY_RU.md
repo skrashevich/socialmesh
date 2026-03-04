@@ -135,7 +135,7 @@
 |---------|---------|------------|
 | Encryption | Шифрование | |
 | Public Key | Публичный ключ | |
-| Private Key | Закрытый ключ | |
+| Private Key | Приватный ключ | |
 | Admin Keys | Ключи администратора | |
 | Channel Key | Ключ канала | |
 | PSK | PSK | Не переводить — Pre-Shared Key |
