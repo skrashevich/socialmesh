@@ -4,13 +4,13 @@ on:
   push:
     branches: [main]
     paths:
-      - 'lib/l10n/**'
-      - 'l10n.yaml'
+      - "lib/l10n/**"
+      - "l10n.yaml"
   pull_request:
     branches: [main]
     paths:
-      - 'lib/l10n/**'
-      - 'l10n.yaml'
+      - "lib/l10n/**"
+      - "l10n.yaml"
   workflow_dispatch:
 
 jobs:
