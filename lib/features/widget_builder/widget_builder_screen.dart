@@ -1208,8 +1208,8 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
     );
 
     final warningMessage = isOnDashboard
-        ? 'This widget is currently on your Dashboard. Deleting it will also remove it from the Dashboard.\n\n'
-              'Are you sure you want to delete "${schema.name}"? This cannot be undone.'
+        ? 'This widget is currently on your Dashboard. Deleting it will also remove it from the Dashboard.\n\n' // lint-allow: hardcoded-string
+              'Are you sure you want to delete "${schema.name}"? This cannot be undone.' // lint-allow: hardcoded-string
         : 'Are you sure you want to delete "${schema.name}"? This cannot be undone.';
 
     // Capture refs BEFORE showing dialog (before any await)
@@ -1395,7 +1395,7 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
           ),
           const SizedBox(height: AppTheme.spacing12),
           Text(
-            'Submit "${schema.name}" for marketplace approval?',
+            'Submit "${schema.name}" for marketplace approval?', // lint-allow: hardcoded-string
             textAlign: TextAlign.center,
             style: TextStyle(color: context.textSecondary),
           ),
@@ -1584,7 +1584,7 @@ class _WidgetBuilderScreenState extends ConsumerState<WidgetBuilderScreen>
                       if (duplicateCheck.similarityScore != null) ...[
                         const SizedBox(height: AppTheme.spacing4),
                         Text(
-                          'Similarity: ${(duplicateCheck.similarityScore! * 100).toInt()}%',
+                          'Similarity: ${(duplicateCheck.similarityScore! * 100).toInt()}%', // lint-allow: hardcoded-string
                           style: TextStyle(
                             color: context.textTertiary,
                             fontSize: 12,

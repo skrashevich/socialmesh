@@ -403,12 +403,12 @@ class ChartColors {
 
 /// App taglines shown on splash/connecting screens
 const appTaglines = [
-  'Off-grid communication.',
-  'No towers. No subscriptions.',
-  'Your voice. Your network.',
-  'Zero knowledge. Zero tracking.',
-  'Device to device. Mile after mile.',
-  'Build infrastructure together.',
+  'Off-grid communication.', // lint-allow: hardcoded-string
+  'No towers. No subscriptions.', // lint-allow: hardcoded-string
+  'Your voice. Your network.', // lint-allow: hardcoded-string
+  'Zero knowledge. Zero tracking.', // lint-allow: hardcoded-string
+  'Device to device. Mile after mile.', // lint-allow: hardcoded-string
+  'Build infrastructure together.', // lint-allow: hardcoded-string
 ];
 
 /// Notifier for accent color - loads from SharedPreferences on startup

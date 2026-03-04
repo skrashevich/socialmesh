@@ -34,7 +34,7 @@ class AccountLinkingRequiredException implements Exception {
   });
 
   String get message =>
-      'Account exists with different credential. Sign in with ${existingProviders.join(" or ")} to link GitHub.';
+      'Account exists with different credential. Sign in with ${existingProviders.join(" or ")} to link GitHub.'; // lint-allow: hardcoded-string
 }
 
 /// Reactive provider that completes when Firebase is initialized (or fails).
@@ -358,7 +358,7 @@ class AuthService {
   /// Generate a random nonce string
   String _generateNonce([int length = 32]) {
     const charset =
-        '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
+        '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._'; // lint-allow: hardcoded-string
     final random = Random.secure();
     return List.generate(
       length,

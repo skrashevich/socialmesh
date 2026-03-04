@@ -372,11 +372,11 @@ class AutomationSqliteStore {
   /// Record a failed outbox attempt.
   Future<void> markOutboxAttemptFailed(int id, String error) async {
     await _db.rawUpdate(
-      'UPDATE ${AutomationTables.syncOutbox} SET '
+      'UPDATE ${AutomationTables.syncOutbox} SET ' // lint-allow: hardcoded-string
       '${AutomationTables.colOutboxAttemptCount} = '
       '${AutomationTables.colOutboxAttemptCount} + 1, '
       '${AutomationTables.colOutboxLastError} = ? '
-      'WHERE ${AutomationTables.colOutboxId} = ?',
+      'WHERE ${AutomationTables.colOutboxId} = ?', // lint-allow: hardcoded-string
       [error, id],
     );
   }
@@ -384,7 +384,7 @@ class AutomationSqliteStore {
   /// Get the count of pending outbox entries.
   Future<int> get outboxCount async {
     final result = await _db.rawQuery(
-      'SELECT COUNT(*) as cnt FROM ${AutomationTables.syncOutbox}',
+      'SELECT COUNT(*) as cnt FROM ${AutomationTables.syncOutbox}', // lint-allow: hardcoded-string
     );
     return Sqflite.firstIntValue(result) ?? 0;
   }

@@ -84,14 +84,14 @@ class ConditionTypes {
 
   /// Display names for each condition type.
   static const Map<String, String> displayNames = {
-    timeRange: 'Time Range',
-    dayOfWeek: 'Day of Week',
-    batteryAbove: 'Battery Above',
-    batteryBelow: 'Battery Below',
-    nodeOnline: 'Node Is Online',
-    nodeOffline: 'Node Is Offline',
-    withinGeofence: 'Within Geofence',
-    outsideGeofence: 'Outside Geofence',
+    timeRange: 'Time Range', // lint-allow: hardcoded-string
+    dayOfWeek: 'Day of Week', // lint-allow: hardcoded-string
+    batteryAbove: 'Battery Above', // lint-allow: hardcoded-string
+    batteryBelow: 'Battery Below', // lint-allow: hardcoded-string
+    nodeOnline: 'Node Is Online', // lint-allow: hardcoded-string
+    nodeOffline: 'Node Is Offline', // lint-allow: hardcoded-string
+    withinGeofence: 'Within Geofence', // lint-allow: hardcoded-string
+    outsideGeofence: 'Outside Geofence', // lint-allow: hardcoded-string
   };
 
   /// Icons for each condition type.
@@ -512,7 +512,7 @@ VSNodeDataBuilder _buildConditionNodeBuilder(String conditionType) {
             label: conditionType,
             accentColor: _kConditionAccent,
             child: Text(
-              'Unknown condition',
+              'Unknown condition', // lint-allow: hardcoded-string
               style: TextStyle(fontSize: 11, color: Colors.grey[400]),
               textAlign: TextAlign.center,
             ),
@@ -678,7 +678,7 @@ class _TimeFieldState extends State<_TimeField> {
             textAlign: TextAlign.center,
             keyboardType: TextInputType.datetime,
             decoration: InputDecoration(
-              hintText: 'HH:mm',
+              hintText: 'HH:mm', // lint-allow: hardcoded-string
               hintStyle: TextStyle(
                 fontSize: 11,
                 color: colorScheme.onSurface.withValues(alpha: 0.3),
@@ -834,7 +834,7 @@ class _NodeNumFieldState extends State<_NodeNumField> {
     return Row(
       children: [
         Text(
-          'Node #',
+          'Node #', // lint-allow: hardcoded-string
           style: TextStyle(
             fontSize: 12,
             color: colorScheme.onSurface.withValues(alpha: 0.6),

@@ -443,7 +443,7 @@ class TelemetryStorageService {
     final logs = await getDeviceMetrics(nodeNum);
     final buffer = StringBuffer();
     buffer.writeln(
-      'timestamp,batteryLevel,voltage,channelUtilization,airUtilTx,uptimeSeconds',
+      'timestamp,batteryLevel,voltage,channelUtilization,airUtilTx,uptimeSeconds', // lint-allow: hardcoded-string
     );
     for (final log in logs) {
       buffer.writeln(
@@ -457,7 +457,7 @@ class TelemetryStorageService {
     final logs = await getEnvironmentMetrics(nodeNum);
     final buffer = StringBuffer();
     buffer.writeln(
-      'timestamp,temperature,relativeHumidity,barometricPressure,gasResistance,iaq,lux,uvLux,whiteLux,windDirection,windSpeed,windGust,rainfall,soilMoisture,soilTemperature',
+      'timestamp,temperature,relativeHumidity,barometricPressure,gasResistance,iaq,lux,uvLux,whiteLux,windDirection,windSpeed,windGust,rainfall,soilMoisture,soilTemperature', // lint-allow: hardcoded-string
     );
     for (final log in logs) {
       buffer.writeln(
@@ -471,7 +471,7 @@ class TelemetryStorageService {
     final logs = await getPositionLogs(nodeNum);
     final buffer = StringBuffer();
     buffer.writeln(
-      'timestamp,latitude,longitude,altitude,heading,speed,satsInView',
+      'timestamp,latitude,longitude,altitude,heading,speed,satsInView', // lint-allow: hardcoded-string
     );
     for (final log in logs) {
       buffer.writeln(

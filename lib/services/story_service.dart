@@ -91,7 +91,8 @@ class StoryService {
               .child('stories/$currentUserId/$storyId')
               .delete();
           throw Exception(
-            validation.data['message'] ?? 'Content policy violation',
+            validation.data['message'] ??
+                'Content policy violation', // lint-allow: hardcoded-string
           );
         }
       } catch (e) {
@@ -230,7 +231,7 @@ class StoryService {
     );
     try {
       final storageRef = _storage.ref().child(
-        'stories/$currentUserId/$storyId',
+        'stories/$currentUserId/$storyId', // lint-allow: hardcoded-string
       );
       AppLogging.social(
         '🗑️ [StoryService.deleteStory] Storage path: stories/$currentUserId/$storyId',

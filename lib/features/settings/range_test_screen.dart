@@ -641,7 +641,7 @@ class _RangeTestScreenState extends ConsumerState<RangeTestScreen>
                   ),
                 ),
                 title: Text(
-                  'SNR: ${result.snr.toStringAsFixed(1)} dB • RSSI: ${result.rssi.toStringAsFixed(0)} dBm',
+                  'SNR: ${result.snr.toStringAsFixed(1)} dB • RSSI: ${result.rssi.toStringAsFixed(0)} dBm', // lint-allow: hardcoded-string
                   style: TextStyle(color: context.textPrimary, fontSize: 13),
                 ),
                 subtitle: Text(

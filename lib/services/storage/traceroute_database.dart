@@ -166,14 +166,14 @@ class TracerouteDatabase {
 
     // Index on created_at for chronological queries and pruning
     batch.execute(
-      'CREATE INDEX idx_runs_created_at '
-      'ON ${TracerouteTables.runs}(${TracerouteTables.colCreatedAt})',
+      'CREATE INDEX idx_runs_created_at ' // lint-allow: hardcoded-string
+      'ON ${TracerouteTables.runs}(${TracerouteTables.colCreatedAt})', // lint-allow: hardcoded-string
     );
 
     // Index on target_node_id for per-node lookups
     batch.execute(
-      'CREATE INDEX idx_runs_target_node_id '
-      'ON ${TracerouteTables.runs}(${TracerouteTables.colTargetNodeId})',
+      'CREATE INDEX idx_runs_target_node_id ' // lint-allow: hardcoded-string
+      'ON ${TracerouteTables.runs}(${TracerouteTables.colTargetNodeId})', // lint-allow: hardcoded-string
     );
 
     // -- traceroute_hops --
@@ -192,8 +192,8 @@ class TracerouteDatabase {
 
     // Index on run_id for joining hops to runs
     batch.execute(
-      'CREATE INDEX idx_hops_run_id '
-      'ON ${TracerouteTables.hops}(${TracerouteTables.colRunId})',
+      'CREATE INDEX idx_hops_run_id ' // lint-allow: hardcoded-string
+      'ON ${TracerouteTables.hops}(${TracerouteTables.colRunId})', // lint-allow: hardcoded-string
     );
 
     await batch.commit(noResult: true);

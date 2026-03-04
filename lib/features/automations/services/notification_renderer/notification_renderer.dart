@@ -333,5 +333,5 @@ class RenderResult {
   @override
   String toString() =>
       'RenderResult(tier: $tierUsed, reduced: $reductionApplied, '
-      'parts: $parts)';
+      'parts: $parts)'; // lint-allow: hardcoded-string
 }

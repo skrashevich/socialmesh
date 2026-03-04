@@ -323,7 +323,7 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
         ),
       );
       buffer.writeln(
-        'Map: https://www.google.com/maps?q=${node.latitudeDecimal},${node.longitudeDecimal}',
+        'Map: https://www.google.com/maps?q=${node.latitudeDecimal},${node.longitudeDecimal}', // lint-allow: hardcoded-string
       );
     }
 
@@ -478,7 +478,7 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
 
     final buffer = StringBuffer();
     buffer.writeln(
-      'timestamp,presenceConfidence,batteryLevel,voltage,channelUtil,airUtilTx,neighborCount,gatewayCount,latitude,longitude',
+      'timestamp,presenceConfidence,batteryLevel,voltage,channelUtil,airUtilTx,neighborCount,gatewayCount,latitude,longitude', // lint-allow: hardcoded-string
     );
 
     for (final entry in _history) {

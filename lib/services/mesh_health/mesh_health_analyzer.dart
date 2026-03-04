@@ -247,7 +247,7 @@ class MeshHealthAnalyzer {
             type: HealthIssueType.reliabilityDrop,
             severity: IssueSeverity.warning,
             message:
-                'Reliability drop likely caused by channel saturation (${utilization.toStringAsFixed(1)}%)',
+                'Reliability drop likely caused by channel saturation (${utilization.toStringAsFixed(1)}%)', // lint-allow: hardcoded-string
             metric: currentReliability,
             timestamp: now,
           ),
@@ -259,7 +259,7 @@ class MeshHealthAnalyzer {
             type: HealthIssueType.reliabilityDrop,
             severity: IssueSeverity.warning,
             message:
-                'Reliability drop correlated with spam from ${topSpammer.nodeId}',
+                'Reliability drop correlated with spam from ${topSpammer.nodeId}', // lint-allow: hardcoded-string
             nodeId: topSpammer.nodeId,
             metric: currentReliability,
             timestamp: now,
@@ -272,7 +272,7 @@ class MeshHealthAnalyzer {
             type: HealthIssueType.reliabilityDrop,
             severity: IssueSeverity.warning,
             message:
-                'Reliability drop correlated with hop flooding from ${topFlooder.nodeId}',
+                'Reliability drop correlated with hop flooding from ${topFlooder.nodeId}', // lint-allow: hardcoded-string
             nodeId: topFlooder.nodeId,
             metric: currentReliability,
             timestamp: now,
@@ -284,7 +284,7 @@ class MeshHealthAnalyzer {
             type: HealthIssueType.reliabilityDrop,
             severity: IssueSeverity.warning,
             message:
-                'Reliability drop likely caused by signal degradation (RSSI: ${avgRssi.toStringAsFixed(0)} dBm)',
+                'Reliability drop likely caused by signal degradation (RSSI: ${avgRssi.toStringAsFixed(0)} dBm)', // lint-allow: hardcoded-string
             metric: currentReliability,
             timestamp: now,
           ),
@@ -295,7 +295,7 @@ class MeshHealthAnalyzer {
             type: HealthIssueType.reliabilityDrop,
             severity: IssueSeverity.info,
             message:
-                'Reliability dropped to ${(currentReliability * 100).toStringAsFixed(1)}% - cause unknown',
+                'Reliability dropped to ${(currentReliability * 100).toStringAsFixed(1)}% - cause unknown', // lint-allow: hardcoded-string
             metric: currentReliability,
             timestamp: now,
           ),
@@ -323,7 +323,7 @@ class MeshHealthAnalyzer {
           type: HealthIssueType.channelSaturation,
           severity: IssueSeverity.critical,
           message:
-              'Channel critically saturated at ${utilization.toStringAsFixed(1)}%',
+              'Channel critically saturated at ${utilization.toStringAsFixed(1)}%', // lint-allow: hardcoded-string
           metric: utilization,
           timestamp: now,
         ),
@@ -334,7 +334,7 @@ class MeshHealthAnalyzer {
           type: HealthIssueType.channelSaturation,
           severity: IssueSeverity.warning,
           message:
-              'Channel utilization high at ${utilization.toStringAsFixed(1)}%',
+              'Channel utilization high at ${utilization.toStringAsFixed(1)}%', // lint-allow: hardcoded-string
           metric: utilization,
           timestamp: now,
         ),
@@ -349,7 +349,7 @@ class MeshHealthAnalyzer {
           type: HealthIssueType.intervalSpam,
           severity: IssueSeverity.warning,
           message:
-              'Node ${spammer.nodeId} transmitting every ${spammer.actualIntervalSec.toStringAsFixed(1)}s (configured: ${spammer.avgTxIntervalSec}s)',
+              'Node ${spammer.nodeId} transmitting every ${spammer.actualIntervalSec.toStringAsFixed(1)}s (configured: ${spammer.avgTxIntervalSec}s)', // lint-allow: hardcoded-string
           nodeId: spammer.nodeId,
           metric: spammer.actualIntervalSec,
           timestamp: now,
@@ -365,7 +365,7 @@ class MeshHealthAnalyzer {
           type: HealthIssueType.hopFlooding,
           severity: IssueSeverity.warning,
           message:
-              'Node ${flooder.nodeId} using max hops (${flooder.maxHopCount}) excessively',
+              'Node ${flooder.nodeId} using max hops (${flooder.maxHopCount}) excessively', // lint-allow: hardcoded-string
           nodeId: flooder.nodeId,
           metric: flooder.maxHopCount.toDouble(),
           timestamp: now,

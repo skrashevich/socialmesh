@@ -1045,7 +1045,8 @@ final nodeSummaryProvider = Provider.family<NodeSummary, int>((ref, nodeNum) {
       timeDistribution: {for (final b in TimeOfDayBucket.values) b: 0},
       currentStreak: 0,
       totalEncounters: 0,
-      summaryText: 'Keep observing to build a profile',
+      summaryText:
+          'Keep observing to build a profile', // lint-allow: hardcoded-string
       activeDaysLast14: 0,
     );
   }

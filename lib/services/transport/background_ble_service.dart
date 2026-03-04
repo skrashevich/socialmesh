@@ -60,7 +60,8 @@ class BackgroundBleService {
       androidNotificationOptions: AndroidNotificationOptions(
         channelId: 'ble_connection',
         channelName: 'Mesh Connection',
-        channelDescription: 'Keeps the BLE connection to your mesh radio alive',
+        channelDescription:
+            'Keeps the BLE connection to your mesh radio alive', // lint-allow: hardcoded-string
         channelImportance: NotificationChannelImportance.LOW,
         priority: NotificationPriority.LOW,
         // No sound or vibration -- this is a silent status indicator.
@@ -124,8 +125,10 @@ class BackgroundBleService {
     }
 
     final result = await FlutterForegroundTask.startService(
-      notificationTitle: 'Connected to $deviceName',
-      notificationText: 'Mesh radio connection active',
+      notificationTitle:
+          'Connected to $deviceName', // lint-allow: hardcoded-string
+      notificationText:
+          'Mesh radio connection active', // lint-allow: hardcoded-string
       serviceId: 500,
       callback: _foregroundTaskCallback,
     );
@@ -146,8 +149,10 @@ class BackgroundBleService {
     if (!Platform.isAndroid || !_isRunning) return;
 
     await FlutterForegroundTask.updateService(
-      notificationTitle: 'Connected to $deviceName',
-      notificationText: 'Mesh radio connection active',
+      notificationTitle:
+          'Connected to $deviceName', // lint-allow: hardcoded-string
+      notificationText:
+          'Mesh radio connection active', // lint-allow: hardcoded-string
     );
   }
 
@@ -158,8 +163,10 @@ class BackgroundBleService {
     if (!Platform.isAndroid || !_isRunning) return;
 
     await FlutterForegroundTask.updateService(
-      notificationTitle: 'Disconnected from $deviceName',
-      notificationText: 'Auto-reconnect failed. Tap to reopen.',
+      notificationTitle:
+          'Disconnected from $deviceName', // lint-allow: hardcoded-string
+      notificationText:
+          'Auto-reconnect failed. Tap to reopen.', // lint-allow: hardcoded-string
     );
   }
 

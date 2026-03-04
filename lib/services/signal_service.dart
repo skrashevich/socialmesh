@@ -110,7 +110,8 @@ class SignalResponse {
   bool get isExpired => DateTime.now().isAfter(expiresAt);
 
   /// Display content - shows "[deleted]" for soft-deleted comments
-  String get displayContent => isDeleted ? '[deleted]' : content;
+  String get displayContent =>
+      isDeleted ? '[deleted]' : content; // lint-allow: hardcoded-string
 
   /// Copy with new values
   SignalResponse copyWith({
@@ -496,7 +497,7 @@ class SignalService {
             final hasColumn = cols.any((c) => c['name'] == 'cloudSignalId');
             if (!hasColumn) {
               await db.execute(
-                'ALTER TABLE $_tableName ADD COLUMN cloudSignalId TEXT',
+                'ALTER TABLE $_tableName ADD COLUMN cloudSignalId TEXT', // lint-allow: hardcoded-string
               );
               AppLogging.social('Added cloudSignalId column to $_tableName');
             } else {
@@ -637,12 +638,12 @@ class SignalService {
 
     // Index for expiry queries
     await db.execute(
-      'CREATE INDEX idx_signals_expiresAt ON $_tableName(expiresAt)',
+      'CREATE INDEX idx_signals_expiresAt ON $_tableName(expiresAt)', // lint-allow: hardcoded-string
     );
 
     // Index for mesh node queries
     await db.execute(
-      'CREATE INDEX idx_signals_meshNodeId ON $_tableName(meshNodeId)',
+      'CREATE INDEX idx_signals_meshNodeId ON $_tableName(meshNodeId)', // lint-allow: hardcoded-string
     );
 
     await _createProximityTable(db);
@@ -683,16 +684,16 @@ class SignalService {
     ''');
 
     await db.execute(
-      'CREATE INDEX IF NOT EXISTS idx_comments_signalId '
-      'ON $_commentsTable(signalId)',
+      'CREATE INDEX IF NOT EXISTS idx_comments_signalId ' // lint-allow: hardcoded-string
+      'ON $_commentsTable(signalId)', // lint-allow: hardcoded-string
     );
     await db.execute(
-      'CREATE INDEX IF NOT EXISTS idx_comments_expiresAt '
-      'ON $_commentsTable(expiresAt)',
+      'CREATE INDEX IF NOT EXISTS idx_comments_expiresAt ' // lint-allow: hardcoded-string
+      'ON $_commentsTable(expiresAt)', // lint-allow: hardcoded-string
     );
     await db.execute(
-      'CREATE INDEX IF NOT EXISTS idx_comments_parentId '
-      'ON $_commentsTable(parentId)',
+      'CREATE INDEX IF NOT EXISTS idx_comments_parentId ' // lint-allow: hardcoded-string
+      'ON $_commentsTable(parentId)', // lint-allow: hardcoded-string
     );
   }
 
@@ -2005,7 +2006,7 @@ class SignalService {
 
           try {
             final ref = _storage.ref(
-              'signals/$_currentUserId/${signalId}_$i.jpg',
+              'signals/$_currentUserId/${signalId}_$i.jpg', // lint-allow: hardcoded-string
             );
             await ref.delete();
             AppLogging.social(
@@ -2127,9 +2128,12 @@ class SignalService {
 
     // Delete comments for expired signals
     if (expiredIds.isNotEmpty) {
-      final placeholders = List.filled(expiredIds.length, '?').join(',');
+      final placeholders = List.filled(
+        expiredIds.length,
+        '?',
+      ).join(','); // lint-allow: hardcoded-string
       await _db!.rawDelete(
-        'DELETE FROM $_commentsTable WHERE signalId IN ($placeholders)',
+        'DELETE FROM $_commentsTable WHERE signalId IN ($placeholders)', // lint-allow: hardcoded-string
         expiredIds,
       );
     }
@@ -2386,7 +2390,7 @@ class SignalService {
     final rows = await db.query(
       _tableName,
       where:
-          'mediaUrls IS NOT NULL AND (imageLocalPath IS NULL OR imageLocalPath = "")',
+          'mediaUrls IS NOT NULL AND (imageLocalPath IS NULL OR imageLocalPath = "")', // lint-allow: hardcoded-string
     );
 
     for (final row in rows) {
@@ -2478,7 +2482,7 @@ class SignalService {
 
       // Step 1: Upload to Firebase Storage
       final ref = _storage.ref(
-        'signals/$currentUid/$signalId$storageSuffix.jpg',
+        'signals/$currentUid/$signalId$storageSuffix.jpg', // lint-allow: hardcoded-string
       );
       final uploadTask = ref.putFile(file);
 
@@ -3625,8 +3629,8 @@ class SignalService {
     final now = DateTime.now().millisecondsSinceEpoch;
     final result = Sqflite.firstIntValue(
       await _db!.rawQuery(
-        'SELECT COUNT(*) FROM $_commentsTable '
-        'WHERE signalId = ? AND expiresAt > ?',
+        'SELECT COUNT(*) FROM $_commentsTable ' // lint-allow: hardcoded-string
+        'WHERE signalId = ? AND expiresAt > ?', // lint-allow: hardcoded-string
         [signalId, now],
       ),
     );

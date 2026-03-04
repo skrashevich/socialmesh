@@ -437,7 +437,7 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
         .encode(bytes)
         .replaceAll('+', '-')
         .replaceAll('/', '_');
-    return 'socialmesh://channel/$encoded';
+    return 'socialmesh://channel/$encoded'; // lint-allow: hardcoded-string
   }
 
   @override

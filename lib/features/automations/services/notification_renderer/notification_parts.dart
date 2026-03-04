@@ -49,9 +49,9 @@ class NotificationParts {
   @override
   String toString() =>
       'NotificationParts(title: "$title", body: "$body", '
-      'subtitle: ${subtitle != null ? '"$subtitle"' : 'null'}, '
-      'deepLink: ${deepLink != null ? '"$deepLink"' : 'null'}, '
-      'data: $data)';
+      'subtitle: ${subtitle != null ? '"$subtitle"' : 'null'}, ' // lint-allow: hardcoded-string
+      'deepLink: ${deepLink != null ? '"$deepLink"' : 'null'}, ' // lint-allow: hardcoded-string
+      'data: $data)'; // lint-allow: hardcoded-string
 
   @override
   bool operator ==(Object other) =>

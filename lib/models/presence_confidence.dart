@@ -15,11 +15,11 @@ enum LastSeenBucket {
   String get label {
     switch (this) {
       case LastSeenBucket.activeRecently:
-        return 'Active recently';
+        return 'Active recently'; // lint-allow: hardcoded-string
       case LastSeenBucket.seenToday:
-        return 'Seen today';
+        return 'Seen today'; // lint-allow: hardcoded-string
       case LastSeenBucket.seenThisWeek:
-        return 'Seen this week';
+        return 'Seen this week'; // lint-allow: hardcoded-string
       case LastSeenBucket.inactive:
         return 'Inactive';
     }
@@ -98,9 +98,9 @@ enum PresenceIntent {
       case PresenceIntent.traveling:
         return 'Traveling';
       case PresenceIntent.emergencyStandby:
-        return 'Emergency Standby';
+        return 'Emergency Standby'; // lint-allow: hardcoded-string
       case PresenceIntent.relayNode:
-        return 'Relay Node';
+        return 'Relay Node'; // lint-allow: hardcoded-string
       case PresenceIntent.passive:
         return 'Passive';
     }
@@ -248,7 +248,7 @@ extension PresenceConfidenceText on PresenceConfidence {
       case PresenceConfidence.active:
         return 'Active';
       case PresenceConfidence.fading:
-        return 'Seen recently';
+        return 'Seen recently'; // lint-allow: hardcoded-string
       case PresenceConfidence.stale:
         return 'Inactive';
       case PresenceConfidence.unknown:

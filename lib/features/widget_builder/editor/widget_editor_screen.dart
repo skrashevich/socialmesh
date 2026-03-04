@@ -1067,7 +1067,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
                           if (_shouldShowBinding(element)) ...[
                             const SizedBox(height: AppTheme.spacing16),
                             _buildPropertySection(
-                              'Data Binding',
+                              'Data Binding', // lint-allow: hardcoded-string
                               _buildBindingProperties(element),
                             ),
                           ],
@@ -1491,7 +1491,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
                 if (_shouldShowBinding(element)) ...[
                   const SizedBox(height: AppTheme.spacing16),
                   _buildPropertySection(
-                    'Data Binding',
+                    'Data Binding', // lint-allow: hardcoded-string
                     _buildBindingProperties(element),
                   ),
                 ],
@@ -2293,7 +2293,9 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
               final displayText =
                   displayLabels != null && index < displayLabels.length
                   ? displayLabels[index]
-                  : (option.isEmpty ? '(none)' : option);
+                  : (option.isEmpty
+                        ? '(none)'
+                        : option); // lint-allow: hardcoded-string
               return DropdownMenuItem(
                 value: option,
                 child: Text(displayText, overflow: TextOverflow.ellipsis),
@@ -2680,7 +2682,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
       case ElementType.button:
         return ElementSchema(
           type: type,
-          text: 'Tap me',
+          text: 'Tap me', // lint-allow: hardcoded-string
           iconName: 'touch_app',
           style: const StyleSchema(
             backgroundColor: '#4F6AF6',
@@ -2882,13 +2884,13 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
       case ElementType.container:
         return 'Group';
       case ElementType.row:
-        return 'Horizontal Stack';
+        return 'Horizontal Stack'; // lint-allow: hardcoded-string
       case ElementType.column:
-        return 'Vertical Stack';
+        return 'Vertical Stack'; // lint-allow: hardcoded-string
       case ElementType.spacer:
         return 'Space';
       case ElementType.stack:
-        return 'Layer Stack';
+        return 'Layer Stack'; // lint-allow: hardcoded-string
       case ElementType.button:
         return 'Button';
     }

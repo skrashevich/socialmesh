@@ -85,7 +85,7 @@ final widgetSyncServiceProvider = Provider<WidgetSyncService?>((ref) {
     final stateDesc = storeAsync.isLoading
         ? 'LOADING'
         : storeAsync.hasError
-        ? 'ERROR: ${storeAsync.error}'
+        ? 'ERROR: ${storeAsync.error}' // lint-allow: hardcoded-string
         : 'NULL';
     AppLogging.sync(
       '[WidgetProviders] widgetSyncServiceProvider: store is NULL '

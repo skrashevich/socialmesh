@@ -12,7 +12,8 @@ import 'package:socialmesh/core/theme.dart';
 mixin DeviceRequiredScreen<T extends ConsumerStatefulWidget>
     on ConsumerState<T> {
   /// Override to provide custom message when disconnected
-  String get disconnectedMessage => 'Connect device to use this feature';
+  String get disconnectedMessage =>
+      'Connect device to use this feature'; // lint-allow: hardcoded-string
 
   /// Override to provide custom action when disconnected
   VoidCallback? get onReconnectPressed => null;
@@ -180,7 +181,9 @@ class DeviceRequiredInteraction extends ConsumerWidget {
   }
 
   void _showBlockedMessage(BuildContext context) {
-    final message = blockedMessage ?? 'Connect device to use this feature';
+    final message =
+        blockedMessage ??
+        'Connect device to use this feature'; // lint-allow: hardcoded-string
     showInfoSnackBar(context, message, duration: const Duration(seconds: 2));
   }
 }
@@ -233,7 +236,9 @@ class DeviceRequiredButton extends ConsumerWidget {
   }
 
   void _showBlockedMessage(BuildContext context) {
-    final message = blockedMessage ?? 'Connect device to use this feature';
+    final message =
+        blockedMessage ??
+        'Connect device to use this feature'; // lint-allow: hardcoded-string
     showInfoSnackBar(context, message, duration: const Duration(seconds: 2));
   }
 }
@@ -271,7 +276,9 @@ class DeviceRequiredIconButton extends ConsumerWidget {
   }
 
   void _showBlockedMessage(BuildContext context) {
-    final message = blockedMessage ?? 'Connect device to use this feature';
+    final message =
+        blockedMessage ??
+        'Connect device to use this feature'; // lint-allow: hardcoded-string
     showInfoSnackBar(context, message, duration: const Duration(seconds: 2));
   }
 }

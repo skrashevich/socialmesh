@@ -1,10 +1,25 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:socialmesh/features/widget_builder/renderer/widget_renderer.dart';
 import 'package:socialmesh/features/widget_builder/models/widget_schema.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
 import 'package:socialmesh/models/mesh_models.dart';
+
+/// Wraps [child] in a [ProviderScope] and [MaterialApp] with localization
+/// delegates so that [WidgetRenderer] (a [ConsumerWidget] that uses
+/// `context.l10n`) can be tested.
+Widget _testHarness(Widget child) {
+  return ProviderScope(
+    child: MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: Scaffold(body: child),
+    ),
+  );
+}
 
 void main() {
   group('WidgetRenderer', () {
@@ -37,16 +52,15 @@ void main() {
 
     testWidgets('renders basic text element', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: WidgetRenderer(
-              schema: testSchema,
-              node: testNode,
-              accentColor: Colors.blue,
-            ),
+        _testHarness(
+          WidgetRenderer(
+            schema: testSchema,
+            node: testNode,
+            accentColor: Colors.blue,
           ),
         ),
       );
+      await tester.pumpAndSettle();
 
       expect(find.text('Hello World'), findsOneWidget);
     });
@@ -61,16 +75,15 @@ void main() {
       );
 
       await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: WidgetRenderer(
-              schema: bindingSchema,
-              node: testNode,
-              accentColor: Colors.blue,
-            ),
+        _testHarness(
+          WidgetRenderer(
+            schema: bindingSchema,
+            node: testNode,
+            accentColor: Colors.blue,
           ),
         ),
       );
+      await tester.pumpAndSettle();
 
       expect(find.text('Test Node'), findsOneWidget);
     });
@@ -88,16 +101,15 @@ void main() {
       );
 
       await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: WidgetRenderer(
-              schema: batterySchema,
-              node: testNode,
-              accentColor: Colors.blue,
-            ),
+        _testHarness(
+          WidgetRenderer(
+            schema: batterySchema,
+            node: testNode,
+            accentColor: Colors.blue,
           ),
         ),
       );
+      await tester.pumpAndSettle();
 
       expect(find.text('75%'), findsOneWidget);
     });
@@ -115,16 +127,15 @@ void main() {
       );
 
       await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: WidgetRenderer(
-              schema: bindingSchema,
-              node: null,
-              accentColor: Colors.blue,
-            ),
+        _testHarness(
+          WidgetRenderer(
+            schema: bindingSchema,
+            node: null,
+            accentColor: Colors.blue,
           ),
         ),
       );
+      await tester.pumpAndSettle();
 
       expect(find.text('No Data'), findsOneWidget);
     });
@@ -140,16 +151,15 @@ void main() {
       );
 
       await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: WidgetRenderer(
-              schema: iconSchema,
-              node: testNode,
-              accentColor: Colors.blue,
-            ),
+        _testHarness(
+          WidgetRenderer(
+            schema: iconSchema,
+            node: testNode,
+            accentColor: Colors.blue,
           ),
         ),
       );
+      await tester.pumpAndSettle();
 
       expect(find.byType(Icon), findsOneWidget);
     });
@@ -167,16 +177,15 @@ void main() {
       );
 
       await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: WidgetRenderer(
-              schema: rowSchema,
-              node: testNode,
-              accentColor: Colors.blue,
-            ),
+        _testHarness(
+          WidgetRenderer(
+            schema: rowSchema,
+            node: testNode,
+            accentColor: Colors.blue,
           ),
         ),
       );
+      await tester.pumpAndSettle();
 
       expect(find.text('Left'), findsOneWidget);
       expect(find.text('Right'), findsOneWidget);
@@ -195,16 +204,15 @@ void main() {
       );
 
       await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: WidgetRenderer(
-              schema: columnSchema,
-              node: testNode,
-              accentColor: Colors.blue,
-            ),
+        _testHarness(
+          WidgetRenderer(
+            schema: columnSchema,
+            node: testNode,
+            accentColor: Colors.blue,
           ),
         ),
       );
+      await tester.pumpAndSettle();
 
       expect(find.text('Top'), findsOneWidget);
       expect(find.text('Bottom'), findsOneWidget);
@@ -235,16 +243,15 @@ void main() {
       );
 
       await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: WidgetRenderer(
-              schema: nestedSchema,
-              node: testNode,
-              accentColor: Colors.blue,
-            ),
+        _testHarness(
+          WidgetRenderer(
+            schema: nestedSchema,
+            node: testNode,
+            accentColor: Colors.blue,
           ),
         ),
       );
+      await tester.pumpAndSettle();
 
       expect(find.text('A'), findsOneWidget);
       expect(find.text('B'), findsOneWidget);
@@ -261,18 +268,17 @@ void main() {
       );
 
       await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: WidgetRenderer(
-              schema: schema,
-              node: testNode,
-              accentColor: Colors.blue,
-              isPreview: true,
-              onElementTap: (id) => tappedId = id,
-            ),
+        _testHarness(
+          WidgetRenderer(
+            schema: schema,
+            node: testNode,
+            accentColor: Colors.blue,
+            isPreview: true,
+            onElementTap: (id) => tappedId = id,
           ),
         ),
       );
+      await tester.pumpAndSettle();
 
       await tester.tap(find.text('Tap Me'));
       await tester.pump();
@@ -287,19 +293,18 @@ void main() {
       );
 
       await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: WidgetRenderer(
-              schema: schema,
-              node: testNode,
-              accentColor: Colors.blue,
-              isPreview: true,
-              selectedElementId: schema.root.id,
-              onElementTap: (_) {},
-            ),
+        _testHarness(
+          WidgetRenderer(
+            schema: schema,
+            node: testNode,
+            accentColor: Colors.blue,
+            isPreview: true,
+            selectedElementId: schema.root.id,
+            onElementTap: (_) {},
           ),
         ),
       );
+      await tester.pumpAndSettle();
 
       // Find container with border (selection highlight)
       expect(find.text('Selected Text'), findsOneWidget);
@@ -320,20 +325,25 @@ void main() {
       );
 
       await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: SizedBox(
-              width: 200,
-              height: 100,
-              child: WidgetRenderer(
-                schema: gaugeSchema,
-                node: testNode,
-                accentColor: Colors.green,
+        ProviderScope(
+          child: MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: Scaffold(
+              body: SizedBox(
+                width: 200,
+                height: 100,
+                child: WidgetRenderer(
+                  schema: gaugeSchema,
+                  node: testNode,
+                  accentColor: Colors.green,
+                ),
               ),
             ),
           ),
         ),
       );
+      await tester.pumpAndSettle();
 
       // Gauge should render without throwing
       expect(find.byType(WidgetRenderer), findsOneWidget);
@@ -356,16 +366,15 @@ void main() {
       );
 
       await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: WidgetRenderer(
-              schema: spacerSchema,
-              node: testNode,
-              accentColor: Colors.blue,
-            ),
+        _testHarness(
+          WidgetRenderer(
+            schema: spacerSchema,
+            node: testNode,
+            accentColor: Colors.blue,
           ),
         ),
       );
+      await tester.pumpAndSettle();
 
       expect(find.text('Before'), findsOneWidget);
       expect(find.text('After'), findsOneWidget);
@@ -392,17 +401,16 @@ void main() {
       );
 
       await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: WidgetRenderer(
-              schema: networkSchema,
-              node: testNode,
-              allNodes: allNodes,
-              accentColor: Colors.blue,
-            ),
+        _testHarness(
+          WidgetRenderer(
+            schema: networkSchema,
+            node: testNode,
+            allNodes: allNodes,
+            accentColor: Colors.blue,
           ),
         ),
       );
+      await tester.pumpAndSettle();
 
       expect(find.text('3 nodes'), findsOneWidget);
     });

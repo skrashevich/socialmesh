@@ -134,12 +134,12 @@ void main() {
     test('creates with default values', () {
       final config = PositionConfig();
 
-      expect(config.positionBroadcastSecs, 900);
+      expect(config.positionBroadcastSecs, 3600);
       expect(config.smartBroadcastEnabled, true);
       expect(config.fixedPosition, false);
       expect(config.gpsMode, GpsMode.enabled);
-      expect(config.gpsUpdateInterval, 30);
-      expect(config.smartMinimumDistance, 100);
+      expect(config.gpsUpdateInterval, 0);
+      expect(config.smartMinimumDistance, 50);
       expect(config.smartMinimumIntervalSecs, 30);
     });
 

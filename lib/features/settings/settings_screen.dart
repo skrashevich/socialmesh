@@ -3004,7 +3004,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                               );
                               // Only show on Nothing Phone 3
                               if (!glyphService.deviceModel.contains(
-                                'Phone (3)',
+                                'Phone (3)', // lint-allow: hardcoded-string
                               )) {
                                 return const SizedBox.shrink();
                               }

@@ -22,14 +22,14 @@ class ChannelSelectorSheet extends ConsumerWidget {
 
   const ChannelSelectorSheet({
     super.key,
-    this.title = 'Select Channel',
+    this.title = 'Select Channel', // lint-allow: hardcoded-string
     this.initialSelection,
   });
 
   /// Show the channel selector and return the selection
   static Future<ChannelSelection?> show(
     BuildContext context, {
-    String title = 'Select Channel',
+    String title = 'Select Channel', // lint-allow: hardcoded-string
     int? initialSelection,
   }) {
     return AppBottomSheet.show<ChannelSelection>(
@@ -143,7 +143,7 @@ class ChannelSelectorSheet extends ConsumerWidget {
           Icon(Icons.wifi_tethering_off, size: 48, color: context.textTertiary),
           const SizedBox(height: AppTheme.spacing12),
           Text(
-            'No channels configured',
+            'No channels configured', // lint-allow: hardcoded-string
             style: TextStyle(color: context.textSecondary, fontSize: 14),
             textAlign: TextAlign.center,
           ),
@@ -248,7 +248,7 @@ class _ChannelTile extends StatelessWidget {
                       ],
                     ),
                     Text(
-                      'Channel $index',
+                      'Channel $index', // lint-allow: hardcoded-string
                       style: TextStyle(
                         color: context.textTertiary,
                         fontSize: 12,

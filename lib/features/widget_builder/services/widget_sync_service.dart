@@ -53,7 +53,8 @@ void _syncLog(String message, {bool verbose = false}) {
 /// Log a sync error with `[SYNC]` prefix.
 /// Logs to BOTH the widgets channel and the always-on sync channel.
 void _syncLogError(String message, [Object? error, StackTrace? stack]) {
-  final full = '[SYNC] ERROR: $message${error != null ? ' — $error' : ''}';
+  final full =
+      '[SYNC] ERROR: $message${error != null ? ' — $error' : ''}'; // lint-allow: hardcoded-string
   AppLogging.widgets(full);
   AppLogging.sync(
     '[Widget] ERROR: $message${error != null ? ' — $error' : ''}',
@@ -109,10 +110,10 @@ class WidgetSyncService {
     _diagnostics.recordEntitlementState(enabled);
 
     _syncLog(
-      'setEnabled: $wasEnabled -> $enabled '
-      '(store.syncEnabled=${_store.syncEnabled}, '
-      'service hashCode=${identityHashCode(this)}, '
-      'store hashCode=${identityHashCode(_store)})',
+      'setEnabled: $wasEnabled -> $enabled ' // lint-allow: hardcoded-string
+      '(store.syncEnabled=${_store.syncEnabled}, ' // lint-allow: hardcoded-string
+      'service hashCode=${identityHashCode(this)}, ' // lint-allow: hardcoded-string
+      'store hashCode=${identityHashCode(_store)})', // lint-allow: hardcoded-string
     );
 
     if (enabled) {
@@ -131,8 +132,8 @@ class WidgetSyncService {
   Future<void> syncNow() async {
     if (!_enabled) {
       _syncLog(
-        'syncNow: skipped — sync not enabled '
-        '(service hashCode=${identityHashCode(this)})',
+        'syncNow: skipped — sync not enabled ' // lint-allow: hardcoded-string
+        '(service hashCode=${identityHashCode(this)})', // lint-allow: hardcoded-string
       );
       return;
     }
@@ -151,14 +152,14 @@ class WidgetSyncService {
   /// outbox entries and uploading them to Firestore multiple times.
   Future<void> drainOutboxNow() async {
     _syncLog(
-      'drainOutboxNow: ENTER — enabled=$_enabled, isDraining=$_isDraining, '
-      'store.syncEnabled=${_store.syncEnabled}',
+      'drainOutboxNow: ENTER — enabled=$_enabled, isDraining=$_isDraining, ' // lint-allow: hardcoded-string
+      'store.syncEnabled=${_store.syncEnabled}', // lint-allow: hardcoded-string
     );
 
     if (!_enabled) {
       _syncLog(
-        'drainOutboxNow: SKIPPED — sync not enabled '
-        '(service hashCode=${identityHashCode(this)})',
+        'drainOutboxNow: SKIPPED — sync not enabled ' // lint-allow: hardcoded-string
+        '(service hashCode=${identityHashCode(this)})', // lint-allow: hardcoded-string
       );
       return;
     }
@@ -175,7 +176,7 @@ class WidgetSyncService {
     }
 
     _syncLog(
-      'drainOutboxNow: starting immediate drain for '
+      'drainOutboxNow: starting immediate drain for ' // lint-allow: hardcoded-string
       'uid=${user.uid.substring(0, 8)}...',
     );
 
@@ -191,13 +192,13 @@ class WidgetSyncService {
   void _startPeriodicSync() {
     _syncTimer?.cancel();
     _syncLog(
-      '_startPeriodicSync: creating timer '
-      '(interval=${_syncInterval.inSeconds}s, '
-      'service hashCode=${identityHashCode(this)})',
+      '_startPeriodicSync: creating timer ' // lint-allow: hardcoded-string
+      '(interval=${_syncInterval.inSeconds}s, ' // lint-allow: hardcoded-string
+      'service hashCode=${identityHashCode(this)})', // lint-allow: hardcoded-string
     );
     _syncTimer = Timer.periodic(_syncInterval, (_) {
       _syncLog(
-        'Periodic timer fired — enabled=$_enabled, isSyncing=$_isSyncing',
+        'Periodic timer fired — enabled=$_enabled, isSyncing=$_isSyncing', // lint-allow: hardcoded-string
       );
       if (_enabled && !_isSyncing) {
         _runSyncCycle();
@@ -213,8 +214,8 @@ class WidgetSyncService {
   /// Stop periodic sync.
   void _stopPeriodicSync() {
     _syncLog(
-      '_stopPeriodicSync: canceling timer '
-      '(service hashCode=${identityHashCode(this)})',
+      '_stopPeriodicSync: canceling timer ' // lint-allow: hardcoded-string
+      '(service hashCode=${identityHashCode(this)})', // lint-allow: hardcoded-string
     );
     _syncTimer?.cancel();
     _syncTimer = null;
@@ -231,11 +232,11 @@ class WidgetSyncService {
     final cycleStart = DateTime.now();
     _syncLog('========== Widget Sync cycle START ==========');
     _syncLog(
-      'Cycle context: enabled=$_enabled, '
-      'store.syncEnabled=${_store.syncEnabled}, '
-      'store.count=${_store.count}, '
-      'service hashCode=${identityHashCode(this)}, '
-      'store hashCode=${identityHashCode(_store)}',
+      'Cycle context: enabled=$_enabled, ' // lint-allow: hardcoded-string
+      'store.syncEnabled=${_store.syncEnabled}, ' // lint-allow: hardcoded-string
+      'store.count=${_store.count}, ' // lint-allow: hardcoded-string
+      'service hashCode=${identityHashCode(this)}, ' // lint-allow: hardcoded-string
+      'store hashCode=${identityHashCode(_store)}', // lint-allow: hardcoded-string
     );
 
     try {
@@ -246,7 +247,7 @@ class WidgetSyncService {
       }
 
       _syncLog(
-        'Sync cycle: uid=${user.uid.substring(0, 8)}... '
+        'Sync cycle: uid=${user.uid.substring(0, 8)}... ' // lint-allow: hardcoded-string
         'enabled=$_enabled store.syncEnabled=${_store.syncEnabled}',
       );
 
@@ -266,7 +267,7 @@ class WidgetSyncService {
 
       final elapsed = DateTime.now().difference(cycleStart).inMilliseconds;
       _syncLog(
-        '========== Widget Sync cycle COMPLETE (${elapsed}ms) ==========',
+        '========== Widget Sync cycle COMPLETE (${elapsed}ms) ==========', // lint-allow: hardcoded-string
       );
     } catch (e, stack) {
       final elapsed = DateTime.now().difference(cycleStart).inMilliseconds;
@@ -288,16 +289,16 @@ class WidgetSyncService {
     final existingWatermark = await _store.getSyncState(wmKey);
     if (existingWatermark != null) {
       _syncLog(
-        '_ensureInitialPushIfNeeded: watermark exists ($existingWatermark) '
-        '— not first sync, skipping initial push',
+        '_ensureInitialPushIfNeeded: watermark exists ($existingWatermark) ' // lint-allow: hardcoded-string
+        '— not first sync, skipping initial push', // lint-allow: hardcoded-string
       );
       return;
     }
 
     final localCount = _store.count;
     _syncLog(
-      '_ensureInitialPushIfNeeded: NO watermark (first sync), '
-      'localCount=$localCount',
+      '_ensureInitialPushIfNeeded: NO watermark (first sync), ' // lint-allow: hardcoded-string
+      'localCount=$localCount', // lint-allow: hardcoded-string
     );
     if (localCount == 0) {
       _syncLog('_ensureInitialPushIfNeeded: no local widgets to push');
@@ -307,15 +308,15 @@ class WidgetSyncService {
     final outboxCount = await _store.outboxCount;
     if (outboxCount > 0) {
       _syncLog(
-        '_ensureInitialPushIfNeeded: outbox already has $outboxCount entries '
-        '(e.g. from migration), skipping bulk enqueue',
+        '_ensureInitialPushIfNeeded: outbox already has $outboxCount entries ' // lint-allow: hardcoded-string
+        '(e.g. from migration), skipping bulk enqueue', // lint-allow: hardcoded-string
       );
       return;
     }
 
     _syncLog(
-      'Initial push: first sync for uid=${userId.substring(0, 8)}... '
-      '— enqueuing $localCount local widgets to outbox',
+      'Initial push: first sync for uid=${userId.substring(0, 8)}... ' // lint-allow: hardcoded-string
+      '— enqueuing $localCount local widgets to outbox', // lint-allow: hardcoded-string
     );
 
     final enqueued = await _store.enqueueAllForSync();
@@ -329,7 +330,7 @@ class WidgetSyncService {
   /// Drain pending outbox entries to Firestore.
   Future<void> _drainOutbox(String userId) async {
     _syncLog(
-      '_drainOutbox: ENTER — isDraining=$_isDraining, uid=${userId.substring(0, 8)}...',
+      '_drainOutbox: ENTER — isDraining=$_isDraining, uid=${userId.substring(0, 8)}...', // lint-allow: hardcoded-string
     );
     if (_isDraining) {
       _syncLog('_drainOutbox: SKIPPED — another drain already in progress');
@@ -356,8 +357,8 @@ class WidgetSyncService {
 
     final collectionPath = 'users/$userId/$_firestoreCollection';
     _syncLog(
-      'Drain: ${outboxEntries.length} outbox entries to push '
-      '-> $collectionPath',
+      'Drain: ${outboxEntries.length} outbox entries to push ' // lint-allow: hardcoded-string
+      '-> $collectionPath', // lint-allow: hardcoded-string
     );
 
     final collection = FirebaseFirestore.instance
@@ -378,14 +379,14 @@ class WidgetSyncService {
       final attemptCount = row['attempt_count'] as int? ?? 0;
 
       _syncLog(
-        'Drain: processing outbox[$id] $entityType/$entityId '
+        'Drain: processing outbox[$id] $entityType/$entityId ' // lint-allow: hardcoded-string
         'op=$op attempt=$attemptCount',
       );
 
       if (attemptCount >= _maxOutboxRetries) {
         _syncLog(
-          'Drain: SKIPPING outbox[$id] $entityType/$entityId '
-          '— max retries ($attemptCount) reached, removing from outbox',
+          'Drain: SKIPPING outbox[$id] $entityType/$entityId ' // lint-allow: hardcoded-string
+          '— max retries ($attemptCount) reached, removing from outbox', // lint-allow: hardcoded-string
         );
         await _store.removeOutboxEntry(id);
         skippedCount++;
@@ -408,8 +409,8 @@ class WidgetSyncService {
           }, SetOptions(merge: true));
         } else {
           _syncLog(
-            'Drain: UPLOADING upsert for $docId to $collectionPath '
-            '(payload ${payloadJson.length} chars)',
+            'Drain: UPLOADING upsert for $docId to $collectionPath ' // lint-allow: hardcoded-string
+            '(payload ${payloadJson.length} chars)', // lint-allow: hardcoded-string
           );
           final payload = jsonDecode(payloadJson) as Map<String, dynamic>;
           await collection.doc(docId).set({
@@ -425,12 +426,12 @@ class WidgetSyncService {
         _diagnostics.recordUploadSuccess(SyncType.widgetSchemas);
         successCount++;
         _syncLog(
-          'Drain: SUCCESS — outbox[$id] $entityType/$entityId '
-          'uploaded to Firestore as $docId',
+          'Drain: SUCCESS — outbox[$id] $entityType/$entityId ' // lint-allow: hardcoded-string
+          'uploaded to Firestore as $docId', // lint-allow: hardcoded-string
         );
       } catch (e, stack) {
         _syncLogError(
-          'Drain: FAILED outbox[$id] $entityType/$entityId '
+          'Drain: FAILED outbox[$id] $entityType/$entityId ' // lint-allow: hardcoded-string
           'doc=$docId attempt=${attemptCount + 1}: $e',
           null,
           stack,
@@ -438,14 +439,14 @@ class WidgetSyncService {
         await _store.markOutboxAttemptFailed(id, e.toString());
         _diagnostics.recordError(
           SyncType.widgetSchemas,
-          'Outbox push failed for $entityType/$entityId: $e',
+          'Outbox push failed for $entityType/$entityId: $e', // lint-allow: hardcoded-string
         );
         failCount++;
       }
     }
 
     _syncLog(
-      'Drain: COMPLETE — '
+      'Drain: COMPLETE — ' // lint-allow: hardcoded-string
       'success=$successCount fail=$failCount skipped=$skippedCount',
     );
   }
@@ -467,8 +468,8 @@ class WidgetSyncService {
       final lastPullMs = lastPullStr != null ? int.tryParse(lastPullStr) : null;
 
       _syncLog(
-        'Pull: querying $collectionPath '
-        'since watermark=${lastPullMs ?? "NONE (first pull)"}',
+        'Pull: querying $collectionPath ' // lint-allow: hardcoded-string
+        'since watermark=${lastPullMs ?? "NONE (first pull)"}', // lint-allow: hardcoded-string
       );
 
       final collection = FirebaseFirestore.instance
@@ -523,7 +524,7 @@ class WidgetSyncService {
             } catch (e) {
               parseErrors++;
               _syncLogError(
-                'Pull: failed to parse widget from doc=${doc.id}',
+                'Pull: failed to parse widget from doc=${doc.id}', // lint-allow: hardcoded-string
                 e,
               );
             }
@@ -532,7 +533,7 @@ class WidgetSyncService {
       }
 
       _syncLog(
-        'Pull: parsed ${remoteWidgets.length} widgets, '
+        'Pull: parsed ${remoteWidgets.length} widgets, ' // lint-allow: hardcoded-string
         '${remoteDeletedIds.length} deleted, $parseErrors parse errors',
       );
 
@@ -544,8 +545,8 @@ class WidgetSyncService {
       // Apply upserts
       if (remoteWidgets.isNotEmpty) {
         _syncLog(
-          'Pull: applying ${remoteWidgets.length} widgets '
-          'via applySyncPull',
+          'Pull: applying ${remoteWidgets.length} widgets ' // lint-allow: hardcoded-string
+          'via applySyncPull', // lint-allow: hardcoded-string
         );
         final applied = await _store.applySyncPull(remoteWidgets);
         _diagnostics.recordPullApplied(SyncType.widgetSchemas, count: applied);
@@ -562,9 +563,9 @@ class WidgetSyncService {
       await _store.setSyncState(wmKey, maxPullMs.toString());
 
       _syncLog(
-        'Pull: complete — ${remoteWidgets.length} upserts, '
+        'Pull: complete — ${remoteWidgets.length} upserts, ' // lint-allow: hardcoded-string
         '${remoteDeletedIds.length} deletions, '
-        'new watermark=$maxPullMs',
+        'new watermark=$maxPullMs', // lint-allow: hardcoded-string
       );
     } catch (e, stack) {
       _syncLogError('Pull FAILED from $collectionPath', e, stack);
@@ -611,7 +612,7 @@ class WidgetSyncService {
       );
     }
     stages['A'] =
-        'OK: enabled=$_enabled store.syncEnabled=${_store.syncEnabled}';
+        'OK: enabled=$_enabled store.syncEnabled=${_store.syncEnabled}'; // lint-allow: hardcoded-string
     probeLog('Stage A: OK');
 
     // Stage B: Check auth
@@ -662,8 +663,8 @@ class WidgetSyncService {
       final outboxCount = await _store.outboxCount;
       if (outboxCount == 0) {
         probeLog(
-          'Stage D: WARN — outbox empty after save. '
-          'syncEnabled=${_store.syncEnabled}',
+          'Stage D: WARN — outbox empty after save. ' // lint-allow: hardcoded-string
+          'syncEnabled=${_store.syncEnabled}', // lint-allow: hardcoded-string
         );
         stages['D'] = 'WARN: outbox empty (syncEnabled=${_store.syncEnabled})';
       } else {
@@ -721,7 +722,7 @@ class WidgetSyncService {
       final docData = docSnapshot.data()!;
       final remoteData = docData['data'] as Map<String, dynamic>?;
       probeLog(
-        'Stage F: OK — doc exists at $docPath '
+        'Stage F: OK — doc exists at $docPath ' // lint-allow: hardcoded-string
         'updated_at_ms=${docData['updated_at_ms']} '
         'has_data=${remoteData != null}',
       );
@@ -776,7 +777,7 @@ class WidgetSyncService {
       final nameMatch = localWidget.name == probeName;
       final descMatch = localWidget.description == probeDescription;
       probeLog(
-        'Stage H: local widget found — '
+        'Stage H: local widget found — ' // lint-allow: hardcoded-string
         'name=${localWidget.name} (match=$nameMatch) '
         'description=${localWidget.description} (match=$descMatch)',
       );
@@ -824,7 +825,7 @@ class WidgetSyncService {
 
     probeLog('=== WIDGET SYNC PROBE COMPLETE: ALL STAGES PASSED ===');
     _syncLog(
-      'PROBE_RESULT ok=true stages=${stages.entries.map((e) => "${e.key}=${e.value}").join(", ")}',
+      'PROBE_RESULT ok=true stages=${stages.entries.map((e) => "${e.key}=${e.value}").join(", ")}', // lint-allow: hardcoded-string
     );
 
     return SyncProbeResult.success(
@@ -851,7 +852,7 @@ class WidgetSyncService {
           final pendingCount = await _store.outboxCount;
           if (pendingCount > 0) {
             _syncLog(
-              'Dispose: draining $pendingCount outbox entries before shutdown',
+              'Dispose: draining $pendingCount outbox entries before shutdown', // lint-allow: hardcoded-string
             );
             await _drainOutbox(user.uid);
           } else {
@@ -868,8 +869,8 @@ class WidgetSyncService {
     }
 
     _syncLog(
-      'Dispose: setting store.syncEnabled=false '
-      '(was ${_store.syncEnabled})',
+      'Dispose: setting store.syncEnabled=false ' // lint-allow: hardcoded-string
+      '(was ${_store.syncEnabled})', // lint-allow: hardcoded-string
     );
     _store.syncEnabled = false;
     onPullApplied = null;

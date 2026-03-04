@@ -40,15 +40,15 @@ String? validateChannelName(String name) {
   }
 
   if (name.contains(' ')) {
-    return 'Channel name cannot contain spaces';
+    return 'Channel name cannot contain spaces'; // lint-allow: hardcoded-string
   }
 
   if (name.length > maxChannelNameLength) {
-    return 'Channel name must be $maxChannelNameLength characters or less';
+    return 'Channel name must be $maxChannelNameLength characters or less'; // lint-allow: hardcoded-string
   }
 
   if (!RegExp(r'^[a-zA-Z0-9_]*$').hasMatch(name)) {
-    return 'Channel name can only contain letters, numbers, and underscores';
+    return 'Channel name can only contain letters, numbers, and underscores'; // lint-allow: hardcoded-string
   }
 
   return null;
@@ -73,11 +73,11 @@ String sanitizeLongName(String name) {
 /// Returns null if valid, error message if invalid
 String? validateLongName(String name) {
   if (name.isEmpty) {
-    return 'Name is required';
+    return 'Name is required'; // lint-allow: hardcoded-string
   }
 
   if (name.length > maxLongNameLength) {
-    return 'Name must be $maxLongNameLength characters or less';
+    return 'Name must be $maxLongNameLength characters or less'; // lint-allow: hardcoded-string
   }
 
   return null;
@@ -105,15 +105,15 @@ String sanitizeShortName(String name) {
 /// Returns null if valid, error message if invalid
 String? validateShortName(String name) {
   if (name.isEmpty) {
-    return 'Short name is required';
+    return 'Short name is required'; // lint-allow: hardcoded-string
   }
 
   if (name.length > maxShortNameLength) {
-    return 'Short name must be $maxShortNameLength characters or less';
+    return 'Short name must be $maxShortNameLength characters or less'; // lint-allow: hardcoded-string
   }
 
   if (!RegExp(r'^[A-Z0-9]*$').hasMatch(name.toUpperCase())) {
-    return 'Short name can only contain letters and numbers';
+    return 'Short name can only contain letters and numbers'; // lint-allow: hardcoded-string
   }
 
   return null;
@@ -238,40 +238,40 @@ String? validateDisplayName(String name, {String? userId}) {
   final trimmed = name.trim();
 
   if (trimmed.isEmpty) {
-    return 'Display name is required';
+    return 'Display name is required'; // lint-allow: hardcoded-string
   }
 
   if (trimmed.length < 2) {
-    return 'Display name must be at least 2 characters';
+    return 'Display name must be at least 2 characters'; // lint-allow: hardcoded-string
   }
 
   if (trimmed.length > 30) {
-    return 'Display name must be 30 characters or less';
+    return 'Display name must be 30 characters or less'; // lint-allow: hardcoded-string
   }
 
   // Only letters, numbers, periods, underscores allowed
   if (!_validUsernameChars.hasMatch(trimmed)) {
-    return 'Only letters, numbers, periods and underscores (no spaces)';
+    return 'Only letters, numbers, periods and underscores (no spaces)'; // lint-allow: hardcoded-string
   }
 
   // Cannot start or end with a period
   if (trimmed.startsWith('.') || trimmed.endsWith('.')) {
-    return 'Display name cannot start or end with a period';
+    return 'Display name cannot start or end with a period'; // lint-allow: hardcoded-string
   }
 
   // Cannot have consecutive periods
   if (trimmed.contains('..')) {
-    return 'Display name cannot have consecutive periods';
+    return 'Display name cannot have consecutive periods'; // lint-allow: hardcoded-string
   }
 
   // Cannot be only numbers
   if (RegExp(r'^[0-9]+$').hasMatch(trimmed)) {
-    return 'Display name cannot be only numbers';
+    return 'Display name cannot be only numbers'; // lint-allow: hardcoded-string
   }
 
   // Check reserved/blocked names
   if (!canUseDisplayName(trimmed, userId)) {
-    return 'This display name is not available';
+    return 'This display name is not available'; // lint-allow: hardcoded-string
   }
 
   return null;

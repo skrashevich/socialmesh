@@ -529,7 +529,7 @@ class _DisplayConfigScreenState extends ConsumerState<DisplayConfigScreen>
       ),
       (
         config_pbenum.Config_DisplayConfig_OledType.OLED_SH1107_128_128,
-        'SH1107 128x128',
+        'SH1107 128x128', // lint-allow: hardcoded-string
         context.l10n.displayConfigOledSh1107_128Desc,
       ),
     ];

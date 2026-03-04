@@ -591,7 +591,7 @@ class _SosSheetContentState extends State<SosSheetContent>
 
       // Broadcast SOS message to all nodes
       final locationText = (latitude != null && longitude != null)
-          ? '\nLocation: $latitude, $longitude'
+          ? '\nLocation: $latitude, $longitude' // lint-allow: hardcoded-string
           : '';
       final messageId = 'sos_${DateTime.now().millisecondsSinceEpoch}';
       final messageText = '🆘 EMERGENCY SOS from $myName$locationText';

@@ -20,13 +20,13 @@ extension Mesh3DNodeFilterExt on Mesh3DNodeFilter {
   String get label {
     switch (this) {
       case Mesh3DNodeFilter.all:
-        return 'All Nodes';
+        return 'All Nodes'; // lint-allow: hardcoded-string
       case Mesh3DNodeFilter.active:
         return 'Active';
       case Mesh3DNodeFilter.activeFading:
         return 'Recent';
       case Mesh3DNodeFilter.gpsOnly:
-        return 'GPS Only';
+        return 'GPS Only'; // lint-allow: hardcoded-string
     }
   }
 
@@ -54,7 +54,7 @@ extension Mesh3DViewModeExt on Mesh3DViewMode {
       case Mesh3DViewMode.topology:
         return 'Topology';
       case Mesh3DViewMode.signalStrength:
-        return 'Signal Bars';
+        return 'Signal Bars'; // lint-allow: hardcoded-string
       case Mesh3DViewMode.activity:
         return 'Activity';
       case Mesh3DViewMode.terrain:
@@ -65,13 +65,13 @@ extension Mesh3DViewModeExt on Mesh3DViewMode {
   String get description {
     switch (this) {
       case Mesh3DViewMode.topology:
-        return 'Star layout from your node — signal quality as distance';
+        return 'Star layout from your node — signal quality as distance'; // lint-allow: hardcoded-string
       case Mesh3DViewMode.signalStrength:
-        return 'RSSI and SNR bars per node';
+        return 'RSSI and SNR bars per node'; // lint-allow: hardcoded-string
       case Mesh3DViewMode.activity:
-        return 'Node activity sorted by recency';
+        return 'Node activity sorted by recency'; // lint-allow: hardcoded-string
       case Mesh3DViewMode.terrain:
-        return 'GPS nodes on interpolated terrain';
+        return 'GPS nodes on interpolated terrain'; // lint-allow: hardcoded-string
     }
   }
 

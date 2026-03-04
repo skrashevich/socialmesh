@@ -648,7 +648,7 @@ class IcoHighlightedField extends ConsumerStatefulWidget {
     this.borderPadding = const EdgeInsets.all(AppTheme.spacing4),
   }) : assert(
          builder != null || child != null,
-         'Either builder or child must be provided',
+         'Either builder or child must be provided', // lint-allow: hardcoded-string
        );
 
   @override

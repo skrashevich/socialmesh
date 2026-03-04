@@ -272,7 +272,7 @@ class IftttService {
       eventName: 'meshtastic_message',
       value1: senderName,
       value2: message,
-      value3: channelName ?? 'Direct Message',
+      value3: channelName ?? 'Direct Message', // lint-allow: hardcoded-string
     );
   }
 
@@ -493,7 +493,8 @@ class IftttService {
     // Use configured geofence center or default Sydney coordinates
     final testLat = _config.geofenceLat ?? -33.8688;
     final testLon = _config.geofenceLon ?? 151.2093;
-    final testNodeName = _config.geofenceNodeName ?? 'Test Node';
+    final testNodeName =
+        _config.geofenceNodeName ?? 'Test Node'; // lint-allow: hardcoded-string
 
     return _triggerWebhook(
       eventName: 'meshtastic_position',

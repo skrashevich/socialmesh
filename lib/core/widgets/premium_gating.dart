@@ -722,7 +722,8 @@ class _PremiumInfoSheetState extends ConsumerState<PremiumInfoSheet>
       data: (products) => products[_purchase?.productId]?.priceString,
     );
     final displayPrice =
-        storePrice ?? '\$${_purchase?.price.toStringAsFixed(2) ?? "3.99"}';
+        storePrice ??
+        '\$${_purchase?.price.toStringAsFixed(2) ?? "3.99"}'; // lint-allow: hardcoded-string
 
     return DraggableScrollableSheet(
       initialChildSize: 0.65,

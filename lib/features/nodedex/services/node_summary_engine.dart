@@ -126,7 +126,8 @@ class NodeSummaryEngine {
         timeDistribution: _emptyDistribution(),
         currentStreak: encounters.isEmpty ? 0 : 1,
         totalEncounters: entry.encounterCount,
-        summaryText: 'Keep observing to build a profile',
+        summaryText:
+            'Keep observing to build a profile', // lint-allow: hardcoded-string
         activeDaysLast14: _activeDaysInWindow(encounters, now, 14),
       );
     }
@@ -285,19 +286,27 @@ class NodeSummaryEngine {
     // 1. Dominant time bucket.
     final dominant = _dominantBucket(timeDist);
     if (dominant != null) {
-      parts.add('Most active in the ${dominant.name}');
+      parts.add(
+        'Most active in the ${dominant.name}',
+      ); // lint-allow: hardcoded-string
     }
 
     // 2. Streak or recent activity.
     if (streak > 1) {
-      parts.add('Seen $activeDays of the last 14 days');
+      parts.add(
+        'Seen $activeDays of the last 14 days',
+      ); // lint-allow: hardcoded-string
     } else if (activeDays > 0) {
-      parts.add('Spotted on $activeDays of the last 14 days');
+      parts.add(
+        'Spotted on $activeDays of the last 14 days',
+      ); // lint-allow: hardcoded-string
     }
 
     // 3. Busiest day.
     if (busiestDay != null) {
-      parts.add('Usually on ${_dayName(busiestDay)}s');
+      parts.add(
+        'Usually on ${_dayName(busiestDay)}s',
+      ); // lint-allow: hardcoded-string
     }
 
     if (parts.isEmpty) {

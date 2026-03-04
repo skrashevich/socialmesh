@@ -131,8 +131,8 @@ class MeshPacketDedupeStore {
       )
     ''');
     await db.execute(
-      'CREATE INDEX IF NOT EXISTS idx_${_tableName}_receivedAt '
-      'ON $_tableName(receivedAt)',
+      'CREATE INDEX IF NOT EXISTS idx_${_tableName}_receivedAt ' // lint-allow: hardcoded-string
+      'ON $_tableName(receivedAt)', // lint-allow: hardcoded-string
     );
   }
 
@@ -252,7 +252,9 @@ class MeshPacketDedupeStore {
     final where = StringBuffer()
       ..write('packetType = ? AND senderNodeId = ? AND packetId = ? AND ')
       ..write(
-        key.channelIndex == null ? 'channelIndex IS NULL' : 'channelIndex = ?',
+        key.channelIndex == null
+            ? 'channelIndex IS NULL'
+            : 'channelIndex = ?', // lint-allow: hardcoded-string
       )
       ..write(' AND receivedAt > ?');
 

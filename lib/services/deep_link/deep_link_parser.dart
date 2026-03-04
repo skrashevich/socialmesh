@@ -92,7 +92,7 @@ class DeepLinkParser {
         'QR - 🔗 Parser: ERROR - Unsupported URI scheme: ${uri.scheme}',
       );
       return ParsedDeepLink.invalid(uriString, [
-        'Unsupported URI scheme: ${uri.scheme}',
+        'Unsupported URI scheme: ${uri.scheme}', // lint-allow: hardcoded-string
       ]);
     } catch (e) {
       AppLogging.qr('🔗 Parser: ERROR - Failed to parse URI: $e');
@@ -159,7 +159,7 @@ class DeepLinkParser {
         if (document == null ||
             (document != 'terms' && document != 'privacy')) {
           return ParsedDeepLink.invalid(original, [
-            'Invalid legal document type: $document',
+            'Invalid legal document type: $document', // lint-allow: hardcoded-string
           ]);
         }
         final anchor = uri.fragment.isNotEmpty ? uri.fragment : null;
@@ -209,7 +209,7 @@ class DeepLinkParser {
         'QR - 🔗 Parser: ERROR - Invalid web link path: ${uri.path}',
       );
       return ParsedDeepLink.invalid(original, [
-        'Invalid web link path: ${uri.path}',
+        'Invalid web link path: ${uri.path}', // lint-allow: hardcoded-string
       ]);
     }
 
@@ -242,7 +242,7 @@ class DeepLinkParser {
         if (id == null || id.isEmpty) {
           AppLogging.qr('🔗 Parser: ERROR - Missing profile display name');
           return ParsedDeepLink.invalid(original, [
-            'Missing profile display name',
+            'Missing profile display name', // lint-allow: hardcoded-string
           ]);
         }
         AppLogging.qr(
@@ -321,7 +321,7 @@ class DeepLinkParser {
 
       default:
         return ParsedDeepLink.invalid(original, [
-          'Unknown web link type: $type',
+          'Unknown web link type: $type', // lint-allow: hardcoded-string
         ]);
     }
   }
@@ -331,7 +331,7 @@ class DeepLinkParser {
     // Format: https://meshtastic.org/e/#{urlEncodedBase64}
     if (uri.fragment.isEmpty) {
       return ParsedDeepLink.invalid(original, [
-        'No channel data in URL fragment',
+        'No channel data in URL fragment', // lint-allow: hardcoded-string
       ]);
     }
 
@@ -347,7 +347,7 @@ class DeepLinkParser {
       );
     } catch (e) {
       return ParsedDeepLink.invalid(original, [
-        'Failed to decode channel data: $e',
+        'Failed to decode channel data: $e', // lint-allow: hardcoded-string
       ]);
     }
   }
@@ -368,7 +368,7 @@ class DeepLinkParser {
         'got segments=$segments',
       );
       return ParsedDeepLink.invalid(original, [
-        'Invalid Aether link path, expected /aether/flight/{shareId}',
+        'Invalid Aether link path, expected /aether/flight/{shareId}', // lint-allow: hardcoded-string
       ]);
     }
 
@@ -378,7 +378,7 @@ class DeepLinkParser {
         '\ud83d\udd17 Parser: ERROR - Missing Aether flight share ID',
       );
       return ParsedDeepLink.invalid(original, [
-        'Missing Aether flight share ID',
+        'Missing Aether flight share ID', // lint-allow: hardcoded-string
       ]);
     }
 
@@ -475,7 +475,7 @@ class DeepLinkParser {
       final firestoreId = data.substring(3);
       if (firestoreId.isEmpty) {
         return ParsedDeepLink.invalid(original, [
-          'Missing channel Firestore ID',
+          'Missing channel Firestore ID', // lint-allow: hardcoded-string
         ]);
       }
       AppLogging.qr('🔗 Parser: Detected Firestore channel ID: $firestoreId');
@@ -539,7 +539,7 @@ class DeepLinkParser {
       final firestoreId = data.substring(3);
       if (firestoreId.isEmpty) {
         return ParsedDeepLink.invalid(original, [
-          'Missing widget Firestore ID',
+          'Missing widget Firestore ID', // lint-allow: hardcoded-string
         ]);
       }
       AppLogging.qr('🔗 Parser: Detected Firestore widget ID: $firestoreId');
@@ -619,25 +619,29 @@ class DeepLinkParser {
 
     // Validate latitude
     if (latStr == null) {
-      errors.add('Missing latitude');
+      errors.add('Missing latitude'); // lint-allow: hardcoded-string
     } else {
       lat = double.tryParse(latStr);
       if (lat == null) {
-        errors.add('Invalid latitude');
+        errors.add('Invalid latitude'); // lint-allow: hardcoded-string
       } else if (lat < -90 || lat > 90) {
-        errors.add('Latitude out of range: $lat');
+        errors.add(
+          'Latitude out of range: $lat',
+        ); // lint-allow: hardcoded-string
       }
     }
 
     // Validate longitude
     if (lngStr == null) {
-      errors.add('Missing longitude');
+      errors.add('Missing longitude'); // lint-allow: hardcoded-string
     } else {
       lng = double.tryParse(lngStr);
       if (lng == null) {
-        errors.add('Invalid longitude');
+        errors.add('Invalid longitude'); // lint-allow: hardcoded-string
       } else if (lng < -180 || lng > 180) {
-        errors.add('Longitude out of range: $lng');
+        errors.add(
+          'Longitude out of range: $lng',
+        ); // lint-allow: hardcoded-string
       }
     }
 
@@ -736,7 +740,7 @@ class DeepLinkParser {
     if (secret == null || secret.isEmpty) {
       AppLogging.qr('🔗 Parser: Channel invite missing secret in fragment');
       return ParsedDeepLink.invalid(original, [
-        'Missing invite secret in URL fragment',
+        'Missing invite secret in URL fragment', // lint-allow: hardcoded-string
       ]);
     }
 

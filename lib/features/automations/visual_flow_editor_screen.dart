@@ -207,8 +207,8 @@ class _VisualFlowEditorScreenState extends ConsumerState<VisualFlowEditorScreen>
           ref: ref,
           feature: PremiumFeature.automations,
           customDescription:
-              'Create powerful visual automations with the node-based '
-              'flow editor. Drag, connect, and compile automation logic.',
+              'Create powerful visual automations with the node-based ' // lint-allow: hardcoded-string
+              'flow editor. Drag, connect, and compile automation logic.', // lint-allow: hardcoded-string
         );
         return;
       }

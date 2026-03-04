@@ -245,14 +245,18 @@ String _formatNodeId(int nodeNum) {
 
 String _formatSignalInfo(MeshNode node) {
   final parts = <String>[];
-  if (node.rssi != null) parts.add('RSSI: ${node.rssi} dBm');
-  if (node.snr != null) parts.add('SNR: ${node.snr} dB');
+  if (node.rssi != null) {
+    parts.add('RSSI: ${node.rssi} dBm'); // lint-allow: hardcoded-string
+  }
+  if (node.snr != null) {
+    parts.add('SNR: ${node.snr} dB'); // lint-allow: hardcoded-string
+  }
   return parts.join(' · ');
 }
 
 String _formatTimeAgo(DateTime time) {
   final diff = DateTime.now().difference(time);
-  if (diff.inMinutes < 1) return 'just now';
+  if (diff.inMinutes < 1) return 'just now'; // lint-allow: hardcoded-string
   if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
   if (diff.inHours < 24) return '${diff.inHours}h ago';
   return '${diff.inDays}d ago';

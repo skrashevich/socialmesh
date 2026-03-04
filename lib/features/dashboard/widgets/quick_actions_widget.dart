@@ -136,7 +136,7 @@ class _QuickActionsContentState extends ConsumerState<QuickActionsContent>
         case PublishDecision.blockedDisabled:
           showActionSnackBar(
             context,
-            'Enable "Provide phone location" in Settings to share your position',
+            'Enable "Provide phone location" in Settings to share your position', // lint-allow: hardcoded-string
             actionLabel: 'View',
             onAction: () => navigator.push(
               MaterialPageRoute(
@@ -148,19 +148,19 @@ class _QuickActionsContentState extends ConsumerState<QuickActionsContent>
           );
         case PublishDecision.blockedInterval:
           safeShowSnackBar(
-            'Location was shared recently — please wait before sharing again',
+            'Location was shared recently — please wait before sharing again', // lint-allow: hardcoded-string
             type: SnackBarType.warning,
           );
         case PublishDecision.blockedDistance:
         case PublishDecision.blockedNoPosition:
           safeShowSnackBar(
-            'Unable to get your location',
+            'Unable to get your location', // lint-allow: hardcoded-string
             type: SnackBarType.error,
           );
       }
     } catch (e) {
       safeShowSnackBar(
-        'Failed to share location: $e',
+        'Failed to share location: $e', // lint-allow: hardcoded-string
         type: SnackBarType.error,
       );
     }
@@ -196,7 +196,7 @@ class _QuickActionsContentState extends ConsumerState<QuickActionsContent>
       notifier.startPositionRequestCountdown();
     } catch (e) {
       safeShowSnackBar(
-        'Failed to request positions: $e',
+        'Failed to request positions: $e', // lint-allow: hardcoded-string
         type: SnackBarType.error,
       );
     }
@@ -457,7 +457,7 @@ class _SosButton extends StatelessWidget {
               ),
               SizedBox(width: AppTheme.spacing6),
               Text(
-                'Emergency SOS',
+                'Emergency SOS', // lint-allow: hardcoded-string
                 style: TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.w700,

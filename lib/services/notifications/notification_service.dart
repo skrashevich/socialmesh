@@ -110,7 +110,7 @@ class NotificationService {
 
     // Android settings
     const androidSettings = AndroidInitializationSettings(
-      '@mipmap/ic_launcher',
+      '@mipmap/ic_launcher', // lint-allow: hardcoded-string
     );
 
     // iOS settings - request permissions and enable foreground presentation
@@ -262,7 +262,7 @@ class NotificationService {
 
     final androidDetails = AndroidNotificationDetails(
       'new_nodes',
-      'New Nodes',
+      'New Nodes', // lint-allow: hardcoded-string
       channelDescription: _l10n.notificationChannelNodeDiscovery,
       importance: Importance.high,
       priority: Priority.high,
@@ -328,7 +328,7 @@ class NotificationService {
 
     final androidDetails = AndroidNotificationDetails(
       'aether_flights',
-      'Aether Flights',
+      'Aether Flights', // lint-allow: hardcoded-string
       channelDescription: _l10n.notificationChannelAetherFlights,
       importance: Importance.high,
       priority: Priority.high,
@@ -391,7 +391,7 @@ class NotificationService {
 
     final androidDetails = AndroidNotificationDetails(
       'firmware_alerts',
-      'Firmware Alerts',
+      'Firmware Alerts', // lint-allow: hardcoded-string
       channelDescription: _l10n.notificationChannelDeviceAlerts,
       importance: isError ? Importance.max : Importance.high,
       priority: isError ? Priority.max : Priority.high,
@@ -458,7 +458,7 @@ class NotificationService {
 
     final androidDetails = AndroidNotificationDetails(
       'detection_sensor',
-      'Detection Sensors',
+      'Detection Sensors', // lint-allow: hardcoded-string
       channelDescription: _l10n.notificationChannelDetectionSensor,
       importance: Importance.high,
       priority: Priority.high,
@@ -518,7 +518,7 @@ class NotificationService {
 
     final androidDetails = AndroidNotificationDetails(
       'tak_entity',
-      'TAK Entities',
+      'TAK Entities', // lint-allow: hardcoded-string
       channelDescription: _l10n.notificationChannelTakStale,
       importance: Importance.defaultImportance,
       priority: Priority.defaultPriority,
@@ -547,7 +547,7 @@ class NotificationService {
       id: notificationId,
       title: _l10n.notificationEntityStaleTitle(callsign),
       body:
-          'Last position: ${lat.toStringAsFixed(4)}, '
+          'Last position: ${lat.toStringAsFixed(4)}, ' // lint-allow: hardcoded-string
           '${lon.toStringAsFixed(4)} — $timeAgo',
       notificationDetails: notificationDetails,
       payload: 'tak:$uid',
@@ -576,7 +576,7 @@ class NotificationService {
 
     final androidDetails = AndroidNotificationDetails(
       'tak_entity',
-      'TAK Entities',
+      'TAK Entities', // lint-allow: hardcoded-string
       channelDescription: _l10n.notificationChannelTakProximity,
       importance: Importance.high,
       priority: Priority.high,
@@ -636,7 +636,7 @@ class NotificationService {
 
     final androidDetails = AndroidNotificationDetails(
       'direct_messages',
-      'Direct Messages',
+      'Direct Messages', // lint-allow: hardcoded-string
       channelDescription: _l10n.notificationChannelDirectMessages,
       importance: Importance.high,
       priority: Priority.high,
@@ -723,7 +723,7 @@ class NotificationService {
 
     final androidDetails = AndroidNotificationDetails(
       'channel_messages',
-      'Channel Messages',
+      'Channel Messages', // lint-allow: hardcoded-string
       channelDescription: _l10n.notificationChannelMessages,
       importance: Importance.high,
       priority: Priority.high,
@@ -859,7 +859,7 @@ class NotificationService {
 
     final androidDetails = AndroidNotificationDetails(
       'direct_messages',
-      'Direct Messages',
+      'Direct Messages', // lint-allow: hardcoded-string
       channelDescription: _l10n.notificationChannelDirectMessages,
       importance: Importance.high,
       priority: Priority.high,
@@ -925,7 +925,8 @@ class NotificationService {
       final channelNames = byChannel.values
           .map(
             (msgs) =>
-                msgs.first.channelName ?? 'Channel ${msgs.first.channelIndex}',
+                msgs.first.channelName ??
+                'Channel ${msgs.first.channelIndex}', // lint-allow: hardcoded-string
           )
           .take(3)
           .join(', ');
@@ -935,7 +936,7 @@ class NotificationService {
 
     final androidDetails = AndroidNotificationDetails(
       'channel_messages',
-      'Channel Messages',
+      'Channel Messages', // lint-allow: hardcoded-string
       channelDescription: _l10n.notificationChannelMessages,
       importance: Importance.high,
       priority: Priority.high,
@@ -998,7 +999,7 @@ class NotificationService {
 
     final androidDetails = AndroidNotificationDetails(
       'new_nodes',
-      'New Nodes',
+      'New Nodes', // lint-allow: hardcoded-string
       channelDescription: _l10n.notificationChannelNodeDiscovery,
       importance: Importance.high,
       priority: Priority.high,
@@ -1051,8 +1052,9 @@ class NotificationService {
 
     final androidDetails = AndroidNotificationDetails(
       'admin_bug_reports',
-      'Bug Reports',
-      channelDescription: 'Notifications for new user bug reports (admin only)',
+      'Bug Reports', // lint-allow: hardcoded-string
+      channelDescription:
+          'Notifications for new user bug reports (admin only)', // lint-allow: hardcoded-string
       importance: Importance.high,
       priority: Priority.high,
       icon: '@mipmap/ic_launcher',
@@ -1080,12 +1082,12 @@ class NotificationService {
         : description;
 
     final subtitle = email != null && email.isNotEmpty
-        ? 'From: $email'
+        ? 'From: $email' // lint-allow: hardcoded-string
         : 'Anonymous report';
 
     await _notifications.show(
       id: _bugReportNotificationId,
-      title: '🐛 New Bug Report',
+      title: '🐛 New Bug Report', // lint-allow: hardcoded-string
       body: '$subtitle\n$truncated',
       notificationDetails: notificationDetails,
       payload: 'bug_report|$reportId',

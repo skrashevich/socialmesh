@@ -264,8 +264,8 @@ class CreateStoryNotifier extends Notifier<CreateStoryState> {
       if (!isOnline) {
         state = const CreateStoryState(
           error:
-              'Stories require an internet connection. '
-              'Please try again when you are online.',
+              'Stories require an internet connection. ' // lint-allow: hardcoded-string
+              'Please try again when you are online.', // lint-allow: hardcoded-string
         );
         return null;
       }

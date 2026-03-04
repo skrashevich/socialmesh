@@ -47,7 +47,7 @@ final canCloudSyncWriteProvider = Provider<bool>((ref) {
 
   final stateDesc = entitlement.when(
     data: (e) =>
-        'data(state=${e.state}, canWrite=${e.canWrite}, canRead=${e.canRead})',
+        'data(state=${e.state}, canWrite=${e.canWrite}, canRead=${e.canRead})', // lint-allow: hardcoded-string
     loading: () => 'LOADING',
     error: (e, _) => 'ERROR($e)',
   );

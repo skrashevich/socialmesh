@@ -193,7 +193,7 @@ class CountdownNotifier extends Notifier<Map<String, CountdownTask>> {
   /// "region changed".
   void startDeviceRebootCountdown({String? reason}) {
     final label = reason != null
-        ? 'Device rebooting — $reason'
+        ? 'Device rebooting — $reason' // lint-allow: hardcoded-string
         : 'Device rebooting';
 
     startCountdown(
@@ -326,7 +326,7 @@ class CountdownNotifier extends Notifier<Map<String, CountdownTask>> {
     if (targetNodeNum == null) return;
 
     showGlobalActionSnackBar(
-      'Traceroute results may be ready',
+      'Traceroute results may be ready', // lint-allow: hardcoded-string
       actionLabel: 'View',
       onAction: () {
         final ctx = navigatorKey.currentContext;
@@ -349,21 +349,21 @@ class CountdownNotifier extends Notifier<Map<String, CountdownTask>> {
     // still trying. The auto-reconnect system handles the actual
     // reconnection independently.
     showGlobalInfoSnackBar(
-      'Device may still be rebooting — reconnecting automatically',
+      'Device may still be rebooting — reconnecting automatically', // lint-allow: hardcoded-string
       duration: const Duration(seconds: 4),
     );
   }
 
   void _onPositionRequestComplete(CountdownTask task) {
     showGlobalSuccessSnackBar(
-      'Mesh position updates received',
+      'Mesh position updates received', // lint-allow: hardcoded-string
       duration: const Duration(seconds: 3),
     );
   }
 
   void _onPositionBroadcastComplete(CountdownTask task) {
     showGlobalSuccessSnackBar(
-      'Position broadcast complete',
+      'Position broadcast complete', // lint-allow: hardcoded-string
       duration: const Duration(seconds: 3),
     );
   }
@@ -389,7 +389,7 @@ class CountdownNotifier extends Notifier<Map<String, CountdownTask>> {
     }
 
     showGlobalSuccessSnackBar(
-      'Device reconnected',
+      'Device reconnected', // lint-allow: hardcoded-string
       duration: const Duration(seconds: 3),
     );
   }

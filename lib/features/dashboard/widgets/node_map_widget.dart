@@ -167,7 +167,7 @@ class NodeMapContent extends ConsumerWidget {
                         ),
                         SizedBox(width: AppTheme.spacing4),
                         Text(
-                          'Tap to expand',
+                          'Tap to expand', // lint-allow: hardcoded-string
                           style: TextStyle(
                             fontSize: 10,
                             color: context.textTertiary,
@@ -207,7 +207,7 @@ class NodeMapContent extends ConsumerWidget {
           ),
           SizedBox(height: AppTheme.spacing8),
           Text(
-            'No GPS data',
+            'No GPS data', // lint-allow: hardcoded-string
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w500,
@@ -216,7 +216,7 @@ class NodeMapContent extends ConsumerWidget {
           ),
           SizedBox(height: AppTheme.spacing4),
           Text(
-            'Nodes will appear when\nthey report position',
+            'Nodes will appear when\nthey report position', // lint-allow: hardcoded-string
             style: Theme.of(
               context,
             ).textTheme.labelSmall?.copyWith(color: context.textTertiary),

@@ -653,11 +653,11 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
             const SizedBox(height: AppTheme.spacing8),
             StatusBanner.warning(
               title:
-                  'Changing your primary channel name will change '
-                  'your LoRa operating frequency. If you move your '
-                  'primary off LongFast, you will not see standard '
-                  'LongFast traffic even if LongFast is set as a '
-                  'secondary channel with the correct PSK.',
+                  'Changing your primary channel name will change ' // lint-allow: hardcoded-string
+                  'your LoRa operating frequency. If you move your ' // lint-allow: hardcoded-string
+                  'primary off LongFast, you will not see standard ' // lint-allow: hardcoded-string
+                  'LongFast traffic even if LongFast is set as a ' // lint-allow: hardcoded-string
+                  'secondary channel with the correct PSK.', // lint-allow: hardcoded-string
               margin: EdgeInsets.zero,
             ),
           ],
@@ -866,92 +866,92 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
       (
         config_pbenum.Config_LoRaConfig_RegionCode.US,
         context.l10n.radioConfigRegionUs,
-        '915MHz',
+        '915MHz', // lint-allow: hardcoded-string
       ),
       (
         config_pbenum.Config_LoRaConfig_RegionCode.EU_433,
         context.l10n.radioConfigRegionEu433,
-        '433MHz',
+        '433MHz', // lint-allow: hardcoded-string
       ),
       (
         config_pbenum.Config_LoRaConfig_RegionCode.EU_868,
         context.l10n.radioConfigRegionEu868,
-        '868MHz',
+        '868MHz', // lint-allow: hardcoded-string
       ),
       (
         config_pbenum.Config_LoRaConfig_RegionCode.CN,
         context.l10n.radioConfigRegionChina,
-        '470MHz',
+        '470MHz', // lint-allow: hardcoded-string
       ),
       (
         config_pbenum.Config_LoRaConfig_RegionCode.JP,
         context.l10n.radioConfigRegionJapan,
-        '920MHz',
+        '920MHz', // lint-allow: hardcoded-string
       ),
       (
         config_pbenum.Config_LoRaConfig_RegionCode.ANZ,
         context.l10n.radioConfigRegionAnz,
-        '915MHz',
+        '915MHz', // lint-allow: hardcoded-string
       ),
       (
         config_pbenum.Config_LoRaConfig_RegionCode.KR,
         context.l10n.radioConfigRegionKorea,
-        '920MHz',
+        '920MHz', // lint-allow: hardcoded-string
       ),
       (
         config_pbenum.Config_LoRaConfig_RegionCode.TW,
         context.l10n.radioConfigRegionTaiwan,
-        '920MHz',
+        '920MHz', // lint-allow: hardcoded-string
       ),
       (
         config_pbenum.Config_LoRaConfig_RegionCode.RU,
         context.l10n.radioConfigRegionRussia,
-        '868MHz',
+        '868MHz', // lint-allow: hardcoded-string
       ),
       (
         config_pbenum.Config_LoRaConfig_RegionCode.IN,
         context.l10n.radioConfigRegionIndia,
-        '865MHz',
+        '865MHz', // lint-allow: hardcoded-string
       ),
       (
         config_pbenum.Config_LoRaConfig_RegionCode.NZ_865,
         context.l10n.radioConfigRegionNz865,
-        '865MHz',
+        '865MHz', // lint-allow: hardcoded-string
       ),
       (
         config_pbenum.Config_LoRaConfig_RegionCode.TH,
         context.l10n.radioConfigRegionThailand,
-        '920MHz',
+        '920MHz', // lint-allow: hardcoded-string
       ),
       (
         config_pbenum.Config_LoRaConfig_RegionCode.UA_433,
         context.l10n.radioConfigRegionUkraine433,
-        '433MHz',
+        '433MHz', // lint-allow: hardcoded-string
       ),
       (
         config_pbenum.Config_LoRaConfig_RegionCode.UA_868,
         context.l10n.radioConfigRegionUkraine868,
-        '868MHz',
+        '868MHz', // lint-allow: hardcoded-string
       ),
       (
         config_pbenum.Config_LoRaConfig_RegionCode.MY_433,
         context.l10n.radioConfigRegionMalaysia433,
-        '433MHz',
+        '433MHz', // lint-allow: hardcoded-string
       ),
       (
         config_pbenum.Config_LoRaConfig_RegionCode.MY_919,
         context.l10n.radioConfigRegionMalaysia919,
-        '919MHz',
+        '919MHz', // lint-allow: hardcoded-string
       ),
       (
         config_pbenum.Config_LoRaConfig_RegionCode.SG_923,
         context.l10n.radioConfigRegionSingapore,
-        '923MHz',
+        '923MHz', // lint-allow: hardcoded-string
       ),
       (
         config_pbenum.Config_LoRaConfig_RegionCode.LORA_24,
         context.l10n.radioConfigRegionLora24,
-        '2.4GHz',
+        '2.4GHz', // lint-allow: hardcoded-string
       ),
     ];
 

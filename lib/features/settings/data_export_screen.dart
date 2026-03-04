@@ -727,7 +727,7 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
 
     final buffer = StringBuffer();
     buffer.writeln(
-      'timestamp,node_num,battery_level,voltage,channel_utilization,air_util_tx,uptime',
+      'timestamp,node_num,battery_level,voltage,channel_utilization,air_util_tx,uptime', // lint-allow: hardcoded-string
     );
 
     for (final log in logs) {
@@ -745,7 +745,7 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
 
     final buffer = StringBuffer();
     buffer.writeln(
-      'timestamp,node_num,temperature,relative_humidity,barometric_pressure,gas_resistance,iaq',
+      'timestamp,node_num,temperature,relative_humidity,barometric_pressure,gas_resistance,iaq', // lint-allow: hardcoded-string
     );
 
     for (final log in logs) {
@@ -779,7 +779,7 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
 
     final buffer = StringBuffer();
     buffer.writeln(
-      'timestamp,node_num,ch1_voltage,ch1_current,ch2_voltage,ch2_current,ch3_voltage,ch3_current',
+      'timestamp,node_num,ch1_voltage,ch1_current,ch2_voltage,ch2_current,ch3_voltage,ch3_current', // lint-allow: hardcoded-string
     );
 
     for (final log in logs) {
@@ -797,7 +797,7 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
 
     final buffer = StringBuffer();
     buffer.writeln(
-      'timestamp,node_num,latitude,longitude,altitude,sats_in_view,ground_speed,ground_track',
+      'timestamp,node_num,latitude,longitude,altitude,sats_in_view,ground_speed,ground_track', // lint-allow: hardcoded-string
     );
 
     for (final log in logs) {
@@ -823,7 +823,7 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
     final buffer = StringBuffer();
     buffer.writeln('<?xml version="1.0" encoding="UTF-8"?>');
     buffer.writeln(
-      '<gpx version="1.1" creator="Socialmesh" xmlns="http://www.topografix.com/GPX/1/1">',
+      '<gpx version="1.1" creator="Socialmesh" xmlns="http://www.topografix.com/GPX/1/1">', // lint-allow: hardcoded-string
     );
 
     for (final route in routes) {
@@ -835,7 +835,7 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
       buffer.writeln('    <trkseg>');
       for (final loc in route.locations) {
         buffer.write(
-          '      <trkpt lat="${loc.latitude}" lon="${loc.longitude}">',
+          '      <trkpt lat="${loc.latitude}" lon="${loc.longitude}">', // lint-allow: hardcoded-string
         );
         if (loc.altitude != null) {
           buffer.write('<ele>${loc.altitude}</ele>');
@@ -934,7 +934,7 @@ class _DataExportScreenState extends ConsumerState<DataExportScreen>
 
     final buffer = StringBuffer();
     buffer.writeln(
-      'node_num,user_id,long_name,short_name,hardware,role,latitude,longitude,altitude,battery_level,snr,last_heard',
+      'node_num,user_id,long_name,short_name,hardware,role,latitude,longitude,altitude,battery_level,snr,last_heard', // lint-allow: hardcoded-string
     );
 
     for (final node in nodes.values) {

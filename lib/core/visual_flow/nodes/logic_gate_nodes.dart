@@ -112,14 +112,14 @@ VSNodeDataBuilder _buildAndGateBuilder() {
       inputBuilder: (int index, VSOutputData? connection) {
         return EventSignalInputData(
           type: 'event_in_$index',
-          title: 'Input ${index + 1}',
+          title: 'Input ${index + 1}', // lint-allow: hardcoded-string
           initialConnection: connection,
         );
       },
       outputData: [
         EventSignalOutputData(
           type: 'event_out',
-          title: 'All Met',
+          title: 'All Met', // lint-allow: hardcoded-string
           outputFunction: (inputs) {
             // At compile time: walk all connected inputs and verify they
             // all carry a passed EventSignalPayload.
@@ -172,14 +172,14 @@ VSNodeDataBuilder _buildOrGateBuilder() {
       inputBuilder: (int index, VSOutputData? connection) {
         return EventSignalInputData(
           type: 'event_in_$index',
-          title: 'Input ${index + 1}',
+          title: 'Input ${index + 1}', // lint-allow: hardcoded-string
           initialConnection: connection,
         );
       },
       outputData: [
         EventSignalOutputData(
           type: 'event_out',
-          title: 'Any Met',
+          title: 'Any Met', // lint-allow: hardcoded-string
           outputFunction: (inputs) {
             // At compile time: walk all connected inputs and check if at
             // least one carries a passed EventSignalPayload.
@@ -406,10 +406,11 @@ String gateLabel(String gateType) {
 /// Returns a human-readable description of what the gate does.
 String gateDescription(String gateType) {
   return switch (gateType) {
-    LogicGateTypes.and => 'All inputs must pass',
-    LogicGateTypes.or => 'Any input can pass',
-    LogicGateTypes.not => 'Inverts the signal',
-    LogicGateTypes.delay => 'Delays the signal',
+    LogicGateTypes.and =>
+      'All inputs must pass', // lint-allow: hardcoded-string
+    LogicGateTypes.or => 'Any input can pass', // lint-allow: hardcoded-string
+    LogicGateTypes.not => 'Inverts the signal', // lint-allow: hardcoded-string
+    LogicGateTypes.delay => 'Delays the signal', // lint-allow: hardcoded-string
     _ => '',
   };
 }

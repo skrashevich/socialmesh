@@ -2123,7 +2123,7 @@ class _ActiveAuthorsHeaderState extends State<_ActiveAuthorsHeader>
                           ),
                           child: Center(
                             child: Text(
-                              '+$remainingCount',
+                              '+$remainingCount', // lint-allow: hardcoded-string
                               style: TextStyle(
                                 color: context.textSecondary,
                                 fontSize: 10,

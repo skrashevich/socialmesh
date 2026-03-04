@@ -42,10 +42,10 @@ enum NodeSocialTag {
 
   String get icon {
     return switch (this) {
-      NodeSocialTag.contact => '\u{1F4AC}',
-      NodeSocialTag.trustedNode => '\u{1F6E1}',
-      NodeSocialTag.knownRelay => '\u{1F4E1}',
-      NodeSocialTag.frequentPeer => '\u{1F91D}',
+      NodeSocialTag.contact => '\u{1F4AC}', // lint-allow: hardcoded-string
+      NodeSocialTag.trustedNode => '\u{1F6E1}', // lint-allow: hardcoded-string
+      NodeSocialTag.knownRelay => '\u{1F4E1}', // lint-allow: hardcoded-string
+      NodeSocialTag.frequentPeer => '\u{1F91D}', // lint-allow: hardcoded-string
     };
   }
 }
@@ -554,8 +554,8 @@ class CoSeenRelationship {
   @override
   String toString() =>
       'CoSeenRelationship(count: $count, '
-      'first: $firstSeen, last: $lastSeen, '
-      'messages: $messageCount)';
+      'first: $firstSeen, last: $lastSeen, ' // lint-allow: hardcoded-string
+      'messages: $messageCount)'; // lint-allow: hardcoded-string
 }
 
 // =============================================================================
@@ -1369,9 +1369,9 @@ class NodeDexEntry {
   @override
   String toString() =>
       'NodeDexEntry(node: $nodeNum, '
-      'encounters: $encounterCount, '
-      'regions: $regionCount, '
-      'tag: ${socialTag?.name ?? "none"})';
+      'encounters: $encounterCount, ' // lint-allow: hardcoded-string
+      'regions: $regionCount, ' // lint-allow: hardcoded-string
+      'tag: ${socialTag?.name ?? "none"})'; // lint-allow: hardcoded-string
 }
 
 /// Result of merging a single user-editable field.

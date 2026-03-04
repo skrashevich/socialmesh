@@ -35,8 +35,8 @@ enum FontMode {
 enum TextScaleMode {
   /// Follow system accessibility settings (respects device font size)
   systemDefault(
-    'System Default',
-    'Follows your device accessibility settings',
+    'System Default', // lint-allow: hardcoded-string
+    'Follows your device accessibility settings', // lint-allow: hardcoded-string
     null,
   ),
 

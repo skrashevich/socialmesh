@@ -329,7 +329,7 @@ class _WhatsNewCarouselState extends ConsumerState<_WhatsNewCarousel> {
                           ),
                           child: Center(
                             child: Text(
-                              'Got it',
+                              'Got it', // lint-allow: hardcoded-string
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
@@ -612,7 +612,7 @@ class _WhatsNewItemCard extends ConsumerWidget {
                         ),
                         child: Center(
                           child: Text(
-                            'Learn more',
+                            'Learn more', // lint-allow: hardcoded-string
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,

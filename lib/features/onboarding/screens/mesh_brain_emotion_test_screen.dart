@@ -404,7 +404,7 @@ class _MeshBrainEmotionTestScreenState
               const SizedBox(height: AppTheme.spacing24),
 
               Text(
-                'Brain Settings',
+                'Brain Settings', // lint-allow: hardcoded-string
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,

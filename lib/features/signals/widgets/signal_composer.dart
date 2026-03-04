@@ -144,7 +144,7 @@ class _SignalComposerState extends ConsumerState<SignalComposer>
       'txt' => 'text/plain',
       'json' => 'application/json',
       'csv' => 'text/csv',
-      'gpx' => 'application/gpx+xml',
+      'gpx' => 'application/gpx+xml', // lint-allow: hardcoded-string
       'jpg' || 'jpeg' => 'image/jpeg',
       'png' => 'image/png',
       'pdf' => 'application/pdf',

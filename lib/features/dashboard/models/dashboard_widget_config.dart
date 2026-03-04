@@ -119,7 +119,8 @@ class WidgetRegistry {
     WidgetTypeInfo(
       type: DashboardWidgetType.signalStrength,
       name: 'Signal Strength',
-      description: 'Live RSSI, SNR, and channel utilization chart',
+      description:
+          'Live RSSI, SNR, and channel utilization chart', // lint-allow: hardcoded-string
       icon: Icons.signal_cellular_alt,
       defaultSize: WidgetSize.large,
       supportedSizes: [WidgetSize.medium, WidgetSize.large],
@@ -127,14 +128,16 @@ class WidgetRegistry {
     WidgetTypeInfo(
       type: DashboardWidgetType.networkOverview,
       name: 'Network Overview',
-      description: 'Mesh network status at a glance',
+      description:
+          'Mesh network status at a glance', // lint-allow: hardcoded-string
       icon: Icons.hub,
       defaultSize: WidgetSize.medium,
     ),
     WidgetTypeInfo(
       type: DashboardWidgetType.recentMessages,
       name: 'Recent Messages',
-      description: 'Latest messages from the mesh',
+      description:
+          'Latest messages from the mesh', // lint-allow: hardcoded-string
       icon: Icons.chat_bubble_outline,
       defaultSize: WidgetSize.medium,
       supportedSizes: [WidgetSize.medium, WidgetSize.large],
@@ -142,7 +145,8 @@ class WidgetRegistry {
     WidgetTypeInfo(
       type: DashboardWidgetType.nearbyNodes,
       name: 'Nearby Nodes',
-      description: 'Closest nodes by signal or distance',
+      description:
+          'Closest nodes by signal or distance', // lint-allow: hardcoded-string
       icon: Icons.near_me,
       defaultSize: WidgetSize.medium,
       supportedSizes: [WidgetSize.medium, WidgetSize.large],
@@ -150,14 +154,16 @@ class WidgetRegistry {
     WidgetTypeInfo(
       type: DashboardWidgetType.channelActivity,
       name: 'Channel Activity',
-      description: 'Active channels and recent traffic',
+      description:
+          'Active channels and recent traffic', // lint-allow: hardcoded-string
       icon: Icons.wifi_tethering,
       defaultSize: WidgetSize.medium,
     ),
     WidgetTypeInfo(
       type: DashboardWidgetType.meshHealth,
       name: 'Mesh Health',
-      description: 'Overall mesh network health metrics',
+      description:
+          'Overall mesh network health metrics', // lint-allow: hardcoded-string
       icon: Icons.favorite,
       defaultSize: WidgetSize.small,
       supportedSizes: [WidgetSize.small, WidgetSize.medium],
@@ -165,7 +171,8 @@ class WidgetRegistry {
     WidgetTypeInfo(
       type: DashboardWidgetType.quickCompose,
       name: 'Quick Compose',
-      description: 'Send a quick broadcast message',
+      description:
+          'Send a quick broadcast message', // lint-allow: hardcoded-string
       icon: Icons.edit_note,
       defaultSize: WidgetSize.medium,
       supportedSizes: [WidgetSize.medium],
@@ -173,7 +180,8 @@ class WidgetRegistry {
     WidgetTypeInfo(
       type: DashboardWidgetType.nodeMap,
       name: 'Node Map',
-      description: 'Map showing nodes with GPS positions',
+      description:
+          'Map showing nodes with GPS positions', // lint-allow: hardcoded-string
       icon: Icons.map,
       defaultSize: WidgetSize.large,
       supportedSizes: [WidgetSize.medium, WidgetSize.large],
@@ -181,7 +189,8 @@ class WidgetRegistry {
     WidgetTypeInfo(
       type: DashboardWidgetType.custom,
       name: 'Custom Widget',
-      description: 'Schema-based widget from Widget Builder',
+      description:
+          'Schema-based widget from Widget Builder', // lint-allow: hardcoded-string
       icon: Icons.widgets,
       defaultSize: WidgetSize.medium,
       supportedSizes: [WidgetSize.small, WidgetSize.medium, WidgetSize.large],

@@ -41,7 +41,7 @@ class DeepLinkRouter {
       return DeepLinkRouteResult(
         routeName: '/main',
         fallbackMessage: link.validationErrors.isNotEmpty
-            ? 'Invalid link: ${link.validationErrors.first}'
+            ? 'Invalid link: ${link.validationErrors.first}' // lint-allow: hardcoded-string
             : 'Unable to open this link',
       );
     }

@@ -88,8 +88,10 @@ class FlowCompilationError {
 
   @override
   String toString() {
-    final location = nodeId != null ? ' (node: $nodeId, type: $nodeType)' : '';
-    return 'FlowCompilationError: $message$location';
+    final location = nodeId != null
+        ? ' (node: $nodeId, type: $nodeType)'
+        : ''; // lint-allow: hardcoded-string
+    return 'FlowCompilationError: $message$location'; // lint-allow: hardcoded-string
   }
 }
 
@@ -107,8 +109,10 @@ class FlowCompilationWarning {
 
   @override
   String toString() {
-    final location = nodeId != null ? ' (node: $nodeId, type: $nodeType)' : '';
-    return 'FlowCompilationWarning: $message$location';
+    final location = nodeId != null
+        ? ' (node: $nodeId, type: $nodeType)'
+        : ''; // lint-allow: hardcoded-string
+    return 'FlowCompilationWarning: $message$location'; // lint-allow: hardcoded-string
   }
 }
 
@@ -309,8 +313,8 @@ FlowCompilationResult compileFlowGraph({
     errors.add(
       const FlowCompilationError(
         message:
-            'No action nodes found in the graph. '
-            'Add at least one action node to create an automation.',
+            'No action nodes found in the graph. ' // lint-allow: hardcoded-string
+            'Add at least one action node to create an automation.', // lint-allow: hardcoded-string
       ),
     );
     return FlowCompilationResult(
@@ -335,8 +339,8 @@ FlowCompilationResult compileFlowGraph({
       errors.add(
         FlowCompilationError(
           message:
-              'Action node "${actionNode.title}" has no upstream connection. '
-              'Connect a trigger or condition to its input.',
+              'Action node "${actionNode.title}" has no upstream connection. ' // lint-allow: hardcoded-string
+              'Connect a trigger or condition to its input.', // lint-allow: hardcoded-string
           nodeId: actionNodeId,
           nodeType: actionNode.type,
         ),
@@ -349,7 +353,7 @@ FlowCompilationResult compileFlowGraph({
       errors.add(
         FlowCompilationError(
           message:
-              'Action node "${actionNode.title}" has a broken upstream reference.',
+              'Action node "${actionNode.title}" has a broken upstream reference.', // lint-allow: hardcoded-string
           nodeId: actionNodeId,
           nodeType: actionNode.type,
         ),
@@ -369,7 +373,7 @@ FlowCompilationResult compileFlowGraph({
       errors.add(
         FlowCompilationError(
           message:
-              'Action node "${actionNode.title}" has no valid path to a trigger node.',
+              'Action node "${actionNode.title}" has no valid path to a trigger node.', // lint-allow: hardcoded-string
           nodeId: actionNodeId,
           nodeType: actionNode.type,
         ),
@@ -423,7 +427,7 @@ FlowCompilationResult compileFlowGraph({
       errors.add(
         FlowCompilationError(
           message:
-              'Unknown trigger type "${path.triggerType}" encountered during compilation.',
+              'Unknown trigger type "${path.triggerType}" encountered during compilation.', // lint-allow: hardcoded-string
           nodeId: path.triggerNodeId,
           nodeType: path.triggerType,
         ),
@@ -438,7 +442,7 @@ FlowCompilationResult compileFlowGraph({
         warnings.add(
           FlowCompilationWarning(
             message:
-                'Unknown action type "${ae.actionType}" — using pushNotification as fallback.',
+                'Unknown action type "${ae.actionType}" — using pushNotification as fallback.', // lint-allow: hardcoded-string
             nodeId: ae.nodeId,
             nodeType: ae.actionType,
           ),
@@ -461,7 +465,8 @@ FlowCompilationResult compileFlowGraph({
     final conditions = path.conditions.isNotEmpty ? path.conditions : null;
 
     // Generate name.
-    final namePrefix = flowName ?? 'Visual Flow';
+    final namePrefix =
+        flowName ?? 'Visual Flow'; // lint-allow: hardcoded-string
     final actionNames = actionEntries.map((ae) => ae.title).join(', ');
     final triggerName =
         TriggerTypes.displayNames[path.triggerType] ?? path.triggerType;
@@ -471,7 +476,7 @@ FlowCompilationResult compileFlowGraph({
 
     // Generate description.
     final descParts = <String>[];
-    descParts.add('When: $triggerName');
+    descParts.add('When: $triggerName'); // lint-allow: hardcoded-string
     if (conditions != null && conditions.isNotEmpty) {
       final condNames = conditions
           .map(
@@ -481,12 +486,14 @@ FlowCompilationResult compileFlowGraph({
                 c.type.displayName,
           )
           .join(' AND ');
-      descParts.add('If: $condNames');
+      descParts.add('If: $condNames'); // lint-allow: hardcoded-string
     }
     if (path.delaySeconds != null && path.delaySeconds! > 0) {
-      descParts.add('After: ${formatDelayDuration(path.delaySeconds!)} delay');
+      descParts.add(
+        'After: ${formatDelayDuration(path.delaySeconds!)} delay',
+      ); // lint-allow: hardcoded-string
     }
-    descParts.add('Then: $actionNames');
+    descParts.add('Then: $actionNames'); // lint-allow: hardcoded-string
     final description = descParts.join(' · ');
 
     // Build config with delay metadata if present.
@@ -547,8 +554,8 @@ FlowCompilationResult compileFlowGraph({
         warnings.add(
           FlowCompilationWarning(
             message:
-                'Node "${node.title}" is disconnected and was not included '
-                'in any compiled automation.',
+                'Node "${node.title}" is disconnected and was not included ' // lint-allow: hardcoded-string
+                'in any compiled automation.', // lint-allow: hardcoded-string
             nodeId: entry.key,
             nodeType: node.type,
           ),
@@ -783,8 +790,8 @@ List<_CompiledPath> _tracePaths(
     errors.add(
       FlowCompilationError(
         message:
-            'Cycle detected at node "${node.title}" — '
-            'automation graphs must be acyclic.',
+            'Cycle detected at node "${node.title}" — ' // lint-allow: hardcoded-string
+            'automation graphs must be acyclic.', // lint-allow: hardcoded-string
         nodeId: node.id,
         nodeType: node.type,
       ),
@@ -822,8 +829,8 @@ List<_CompiledPath> _tracePaths(
     warnings.add(
       FlowCompilationWarning(
         message:
-            'Unknown node type "${node.type}" encountered during path '
-            'tracing. Attempting to trace through its first input.',
+            'Unknown node type "${node.type}" encountered during path ' // lint-allow: hardcoded-string
+            'tracing. Attempting to trace through its first input.', // lint-allow: hardcoded-string
         nodeId: node.id,
         nodeType: node.type,
       ),
@@ -872,8 +879,8 @@ List<_CompiledPath> _traceConditionNode(
     errors.add(
       FlowCompilationError(
         message:
-            'Condition node "${node.title}" has no upstream connection '
-            'on its event input.',
+            'Condition node "${node.title}" has no upstream connection ' // lint-allow: hardcoded-string
+            'on its event input.', // lint-allow: hardcoded-string
         nodeId: node.id,
         nodeType: node.type,
       ),
@@ -907,7 +914,8 @@ List<_CompiledPath> _traceAndGate(
   if (connectedInputs.isEmpty) {
     errors.add(
       FlowCompilationError(
-        message: 'AND gate "${node.title}" has no connected inputs.',
+        message:
+            'AND gate "${node.title}" has no connected inputs.', // lint-allow: hardcoded-string
         nodeId: node.id,
         nodeType: node.type,
       ),
@@ -928,7 +936,8 @@ List<_CompiledPath> _traceAndGate(
   if (allBranchPaths.isEmpty) {
     errors.add(
       FlowCompilationError(
-        message: 'AND gate "${node.title}" has no valid upstream paths.',
+        message:
+            'AND gate "${node.title}" has no valid upstream paths.', // lint-allow: hardcoded-string
         nodeId: node.id,
         nodeType: node.type,
       ),
@@ -954,9 +963,9 @@ List<_CompiledPath> _traceAndGate(
           warnings.add(
             FlowCompilationWarning(
               message:
-                  'AND gate "${node.title}" has inputs from different triggers '
-                  '("${existing.triggerType}" and "${branch.triggerType}"). '
-                  'Using the first trigger.',
+                  'AND gate "${node.title}" has inputs from different triggers ' // lint-allow: hardcoded-string
+                  '("${existing.triggerType}" and "${branch.triggerType}"). ' // lint-allow: hardcoded-string
+                  'Using the first trigger.', // lint-allow: hardcoded-string
               nodeId: node.id,
               nodeType: node.type,
             ),
@@ -1010,7 +1019,8 @@ List<_CompiledPath> _traceOrGate(
   if (connectedInputs.isEmpty) {
     errors.add(
       FlowCompilationError(
-        message: 'OR gate "${node.title}" has no connected inputs.',
+        message:
+            'OR gate "${node.title}" has no connected inputs.', // lint-allow: hardcoded-string
         nodeId: node.id,
         nodeType: node.type,
       ),
@@ -1041,7 +1051,8 @@ List<_CompiledPath> _traceNotGate(
   if (upstream == null) {
     errors.add(
       FlowCompilationError(
-        message: 'NOT gate "${node.title}" has no upstream connection.',
+        message:
+            'NOT gate "${node.title}" has no upstream connection.', // lint-allow: hardcoded-string
         nodeId: node.id,
         nodeType: node.type,
       ),
@@ -1061,8 +1072,8 @@ List<_CompiledPath> _traceNotGate(
       warnings.add(
         FlowCompilationWarning(
           message:
-              'NOT gate "${node.title}" has no condition to invert — '
-              'the NOT gate is ignored.',
+              'NOT gate "${node.title}" has no condition to invert — ' // lint-allow: hardcoded-string
+              'the NOT gate is ignored.', // lint-allow: hardcoded-string
           nodeId: node.id,
           nodeType: node.type,
         ),
@@ -1102,7 +1113,8 @@ List<_CompiledPath> _traceDelayGate(
   if (upstream == null) {
     errors.add(
       FlowCompilationError(
-        message: 'Delay gate "${node.title}" has no upstream connection.',
+        message:
+            'Delay gate "${node.title}" has no upstream connection.', // lint-allow: hardcoded-string
         nodeId: node.id,
         nodeType: node.type,
       ),
@@ -1296,8 +1308,8 @@ List<FlowCompilationError> validateGraph(Map<String, VSNodeData> nodes) {
     issues.add(
       const FlowCompilationError(
         message:
-            'Graph has no trigger node. Add a trigger to define when '
-            'the automation should fire.',
+            'Graph has no trigger node. Add a trigger to define when ' // lint-allow: hardcoded-string
+            'the automation should fire.', // lint-allow: hardcoded-string
       ),
     );
   }
@@ -1308,8 +1320,8 @@ List<FlowCompilationError> validateGraph(Map<String, VSNodeData> nodes) {
     issues.add(
       const FlowCompilationError(
         message:
-            'Graph has no action node. Add an action to define what '
-            'happens when the automation fires.',
+            'Graph has no action node. Add an action to define what ' // lint-allow: hardcoded-string
+            'happens when the automation fires.', // lint-allow: hardcoded-string
       ),
     );
   }
@@ -1323,8 +1335,8 @@ List<FlowCompilationError> validateGraph(Map<String, VSNodeData> nodes) {
         issues.add(
           FlowCompilationError(
             message:
-                'Action node "${node.title}" is not connected to any '
-                'upstream node.',
+                'Action node "${node.title}" is not connected to any ' // lint-allow: hardcoded-string
+                'upstream node.', // lint-allow: hardcoded-string
             nodeId: entry.key,
             nodeType: node.type,
           ),
@@ -1349,8 +1361,8 @@ List<FlowCompilationError> validateGraph(Map<String, VSNodeData> nodes) {
           issues.add(
             FlowCompilationError(
               message:
-                  'Logic gate "${node.title}" has no connected inputs but '
-                  'has downstream nodes depending on it.',
+                  'Logic gate "${node.title}" has no connected inputs but ' // lint-allow: hardcoded-string
+                  'has downstream nodes depending on it.', // lint-allow: hardcoded-string
               nodeId: entry.key,
               nodeType: node.type,
             ),

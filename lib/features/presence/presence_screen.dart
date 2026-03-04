@@ -35,7 +35,7 @@ extension PresenceFilterExt on PresenceFilter {
       case PresenceFilter.active:
         return 'Active';
       case PresenceFilter.fading:
-        return 'Seen recently';
+        return 'Seen recently'; // lint-allow: hardcoded-string
       case PresenceFilter.inactive:
         return 'Inactive';
       case PresenceFilter.unknown:

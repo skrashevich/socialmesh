@@ -1865,7 +1865,7 @@ class _WorldNodeInfoCardState extends ConsumerState<WorldNodeInfoCard> {
                       if (node.precisionMarginMeters != null)
                         _InfoItem(
                           context.l10n.worldMeshInfoPrecision,
-                          '±${_formatDistance(node.precisionMarginMeters!)}',
+                          '±${_formatDistance(node.precisionMarginMeters!)}', // lint-allow: hardcoded-string
                         ),
                     ]),
                   ],
@@ -2306,7 +2306,9 @@ class _WorldMeasurementCardState extends State<_WorldMeasurementCard> {
   String _pointLabel(LatLng point, WorldMeshNode? node, String prefix) {
     if (node != null) {
       final name = node.displayName;
-      final alt = node.altitude != null ? ' · ${node.altitude}m' : '';
+      final alt = node.altitude != null
+          ? ' · ${node.altitude}m'
+          : ''; // lint-allow: hardcoded-string
       return '$prefix: $name$alt';
     }
     return '$prefix: ${point.latitude.toStringAsFixed(4)}, '
@@ -2403,9 +2405,9 @@ class _WorldMeasurementCardState extends State<_WorldMeasurementCard> {
             Clipboard.setData(
               ClipboardData(
                 text:
-                    'A: ${a.latitude.toStringAsFixed(6)}, '
+                    'A: ${a.latitude.toStringAsFixed(6)}, ' // lint-allow: hardcoded-string
                     '${a.longitude.toStringAsFixed(6)}\n'
-                    'B: ${b.latitude.toStringAsFixed(6)}, '
+                    'B: ${b.latitude.toStringAsFixed(6)}, ' // lint-allow: hardcoded-string
                     '${b.longitude.toStringAsFixed(6)}',
               ),
             );
@@ -2451,9 +2453,9 @@ class _WorldMeasurementCardState extends State<_WorldMeasurementCard> {
                 ClipboardData(
                   text: context.l10n.worldMeshRfLinkBudgetClipboard(
                     _formatDist(distanceKm),
-                    '906 MHz',
+                    '906 MHz', // lint-allow: hardcoded-string
                     '${fspl.toStringAsFixed(1)} dB',
-                    'Alt A: ${altA}m · Alt B: ${altB}m\nBearing: ${bearing.toStringAsFixed(0)}° $cardinal',
+                    'Alt A: ${altA}m · Alt B: ${altB}m\nBearing: ${bearing.toStringAsFixed(0)}° $cardinal', // lint-allow: hardcoded-string
                   ),
                 ),
               );

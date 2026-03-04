@@ -93,9 +93,9 @@ class GlobalLayerPrivacySettings {
   @override
   String toString() =>
       'GlobalLayerPrivacySettings('
-      'shareMessages: $shareMessages, '
-      'shareTelemetry: $shareTelemetry, '
-      'allowInboundGlobal: $allowInboundGlobal)';
+      'shareMessages: $shareMessages, ' // lint-allow: hardcoded-string
+      'shareTelemetry: $shareTelemetry, ' // lint-allow: hardcoded-string
+      'allowInboundGlobal: $allowInboundGlobal)'; // lint-allow: hardcoded-string
 }
 
 /// A single topic subscription entry in the Global Layer config.
@@ -435,12 +435,18 @@ class GlobalLayerConfig {
   ///
   /// Safe to include in bug reports, logs, and clipboard exports.
   Map<String, dynamic> toRedactedJson() => {
-    'host': host.isEmpty ? '(empty)' : host,
+    'host': host.isEmpty ? '(empty)' : host, // lint-allow: hardcoded-string
     'port': port,
     'useTls': useTls,
-    'username': username.isEmpty ? '(empty)' : '***',
-    'password': password.isEmpty ? '(empty)' : '***',
-    'clientId': clientId.isEmpty ? '(auto)' : clientId,
+    'username': username.isEmpty
+        ? '(empty)'
+        : '***', // lint-allow: hardcoded-string
+    'password': password.isEmpty
+        ? '(empty)'
+        : '***', // lint-allow: hardcoded-string
+    'clientId': clientId.isEmpty
+        ? '(auto)'
+        : clientId, // lint-allow: hardcoded-string
     'topicRoot': topicRoot,
     'subscriptions': subscriptions.map((s) => s.toJson()).toList(),
     'privacy': privacy.toJson(),
@@ -497,13 +503,13 @@ class GlobalLayerConfig {
   @override
   String toString() =>
       'GlobalLayerConfig('
-      'host: $host, '
-      'port: $port, '
-      'useTls: $useTls, '
-      'username: ${username.isEmpty ? "(empty)" : "***"}, '
-      'topicRoot: $topicRoot, '
-      'enabled: $enabled, '
-      'setupComplete: $setupComplete, '
-      'subscriptions: ${subscriptions.length}, '
-      'privacy: $privacy)';
+      'host: $host, ' // lint-allow: hardcoded-string
+      'port: $port, ' // lint-allow: hardcoded-string
+      'useTls: $useTls, ' // lint-allow: hardcoded-string
+      'username: ${username.isEmpty ? "(empty)" : "***"}, ' // lint-allow: hardcoded-string
+      'topicRoot: $topicRoot, ' // lint-allow: hardcoded-string
+      'enabled: $enabled, ' // lint-allow: hardcoded-string
+      'setupComplete: $setupComplete, ' // lint-allow: hardcoded-string
+      'subscriptions: ${subscriptions.length}, ' // lint-allow: hardcoded-string
+      'privacy: $privacy)'; // lint-allow: hardcoded-string
 }

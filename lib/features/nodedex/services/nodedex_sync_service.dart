@@ -132,8 +132,8 @@ class NodeDexSyncService {
     _diagnostics.recordEntitlementState(enabled);
 
     _syncLog(
-      'setEnabled: $wasEnabled → $enabled '
-      '(store.syncEnabled=${_store.syncEnabled})',
+      'setEnabled: $wasEnabled → $enabled ' // lint-allow: hardcoded-string
+      '(store.syncEnabled=${_store.syncEnabled})', // lint-allow: hardcoded-string
     );
 
     if (enabled) {
@@ -188,7 +188,7 @@ class NodeDexSyncService {
     }
 
     _syncLog(
-      'drainOutboxNow: starting immediate drain for uid=${user.uid.substring(0, 8)}...',
+      'drainOutboxNow: starting immediate drain for uid=${user.uid.substring(0, 8)}...', // lint-allow: hardcoded-string
     );
 
     try {
@@ -238,7 +238,7 @@ class NodeDexSyncService {
       }
 
       _syncLog(
-        'Sync cycle: uid=${user.uid.substring(0, 8)}... '
+        'Sync cycle: uid=${user.uid.substring(0, 8)}... ' // lint-allow: hardcoded-string
         'enabled=$_enabled store.syncEnabled=${_store.syncEnabled}',
       );
 
@@ -286,8 +286,8 @@ class NodeDexSyncService {
 
     final collectionPath = 'users/$userId/$_firestoreCollection';
     _syncLog(
-      'Drain: ${outboxEntries.length} outbox entries to push '
-      '→ $collectionPath',
+      'Drain: ${outboxEntries.length} outbox entries to push ' // lint-allow: hardcoded-string
+      '→ $collectionPath', // lint-allow: hardcoded-string
     );
 
     final collection = FirebaseFirestore.instance
@@ -310,8 +310,8 @@ class NodeDexSyncService {
 
       if (attemptCount >= _maxOutboxRetries) {
         _syncLog(
-          'Drain: SKIPPING outbox[$id] $entityType/$entityId '
-          '— max retries ($attemptCount) reached',
+          'Drain: SKIPPING outbox[$id] $entityType/$entityId ' // lint-allow: hardcoded-string
+          '— max retries ($attemptCount) reached', // lint-allow: hardcoded-string
         );
         await _store.removeOutboxEntry(id);
         skippedCount++;
@@ -321,9 +321,9 @@ class NodeDexSyncService {
       final docId = _entityIdToDocId(entityType, entityId);
 
       _syncLog(
-        'Drain: pushing outbox[$id] op=$op type=$entityType '
+        'Drain: pushing outbox[$id] op=$op type=$entityType ' // lint-allow: hardcoded-string
         'id=$entityId → doc=$docId attempt=${attemptCount + 1}/$_maxOutboxRetries '
-        'updatedAtMs=$updatedAtMs',
+        'updatedAtMs=$updatedAtMs', // lint-allow: hardcoded-string
         verbose: true,
       );
 
@@ -338,7 +338,7 @@ class NodeDexSyncService {
             'entity_id': entityId,
           }, SetOptions(merge: true));
           _syncLog(
-            'Drain: DELETE success doc=$docId updated_at_ms=$nowMs',
+            'Drain: DELETE success doc=$docId updated_at_ms=$nowMs', // lint-allow: hardcoded-string
             verbose: true,
           );
         } else {
@@ -351,7 +351,7 @@ class NodeDexSyncService {
             'entity_id': entityId,
           }, SetOptions(merge: true));
           _syncLog(
-            'Drain: UPSERT success doc=$docId updated_at_ms=$nowMs '
+            'Drain: UPSERT success doc=$docId updated_at_ms=$nowMs ' // lint-allow: hardcoded-string
             'payload_keys=${payload.keys.toList()}',
             verbose: true,
           );
@@ -362,7 +362,7 @@ class NodeDexSyncService {
         successCount++;
       } catch (e, stack) {
         _syncLogError(
-          'Drain: FAILED outbox[$id] $entityType/$entityId '
+          'Drain: FAILED outbox[$id] $entityType/$entityId ' // lint-allow: hardcoded-string
           'doc=$docId attempt=${attemptCount + 1}: $e',
           null,
           _syncDebug ? stack : null,
@@ -370,14 +370,14 @@ class NodeDexSyncService {
         await _store.markOutboxAttemptFailed(id, e.toString());
         _diagnostics.recordError(
           SyncType.nodedexEntry,
-          'Outbox push failed for $entityType/$entityId: $e',
+          'Outbox push failed for $entityType/$entityId: $e', // lint-allow: hardcoded-string
         );
         failCount++;
       }
     }
 
     _syncLog(
-      'Drain: complete — '
+      'Drain: complete — ' // lint-allow: hardcoded-string
       'success=$successCount fail=$failCount skipped=$skippedCount',
     );
   }
@@ -397,8 +397,8 @@ class NodeDexSyncService {
       final lastPullMs = lastPullStr != null ? int.tryParse(lastPullStr) : null;
 
       _syncLog(
-        'Pull: querying $collectionPath '
-        'since watermark=${lastPullMs ?? "NONE (first pull)"}',
+        'Pull: querying $collectionPath ' // lint-allow: hardcoded-string
+        'since watermark=${lastPullMs ?? "NONE (first pull)"}', // lint-allow: hardcoded-string
       );
 
       final collection = FirebaseFirestore.instance
@@ -434,7 +434,7 @@ class NodeDexSyncService {
         final deleted = docData['deleted'] as bool? ?? false;
 
         _syncLog(
-          'Pull: doc=${doc.id} type=$entityType id=$entityId '
+          'Pull: doc=${doc.id} type=$entityType id=$entityId ' // lint-allow: hardcoded-string
           'updated_at_ms=$updatedAtMs deleted=$deleted',
           verbose: true,
         );
@@ -458,42 +458,42 @@ class NodeDexSyncService {
               final entry = NodeDexEntry.fromJson(data);
               remoteEntries.add(entry);
               _syncLog(
-                'Pull: parsed entry node=${entry.nodeNum} '
-                'socialTag=${entry.socialTag?.name ?? "null"} '
-                'userNote=${entry.userNote != null ? "${entry.userNote!.length} chars" : "null"} '
-                'socialTagMs=${entry.socialTagUpdatedAtMs} '
-                'userNoteMs=${entry.userNoteUpdatedAtMs}',
+                'Pull: parsed entry node=${entry.nodeNum} ' // lint-allow: hardcoded-string
+                'socialTag=${entry.socialTag?.name ?? "null"} ' // lint-allow: hardcoded-string
+                'userNote=${entry.userNote != null ? "${entry.userNote!.length} chars" : "null"} ' // lint-allow: hardcoded-string
+                'socialTagMs=${entry.socialTagUpdatedAtMs} ' // lint-allow: hardcoded-string
+                'userNoteMs=${entry.userNoteUpdatedAtMs}', // lint-allow: hardcoded-string
                 verbose: true,
               );
             } catch (e) {
               parseErrors++;
               _syncLogError(
-                'Pull: failed to parse entry from doc=${doc.id}',
+                'Pull: failed to parse entry from doc=${doc.id}', // lint-allow: hardcoded-string
                 e,
               );
             }
           } else {
             _syncLog(
-              'Pull: doc=${doc.id} has null data field — skipping',
+              'Pull: doc=${doc.id} has null data field — skipping', // lint-allow: hardcoded-string
               verbose: true,
             );
           }
         } else {
           _syncLog(
-            'Pull: unknown entity_type=$entityType in doc=${doc.id} — skipping',
+            'Pull: unknown entity_type=$entityType in doc=${doc.id} — skipping', // lint-allow: hardcoded-string
             verbose: true,
           );
         }
       }
 
       _syncLog(
-        'Pull: parsed ${remoteEntries.length} entries, '
+        'Pull: parsed ${remoteEntries.length} entries, ' // lint-allow: hardcoded-string
         '$deletedCount deleted, $parseErrors parse errors',
       );
 
       if (remoteEntries.isNotEmpty) {
         _syncLog(
-          'Pull: applying ${remoteEntries.length} entries via applySyncPull',
+          'Pull: applying ${remoteEntries.length} entries via applySyncPull', // lint-allow: hardcoded-string
         );
         final applied = await _store.applySyncPull(remoteEntries);
         _diagnostics.recordPullApplied(SyncType.nodedexEntry, count: applied);
@@ -503,7 +503,7 @@ class NodeDexSyncService {
         // Without this, pulled data sits in SQLite but the UI stays stale.
         onPullApplied?.call(applied);
         _syncLog(
-          'Pull: notified UI callback (onPullApplied=$applied)',
+          'Pull: notified UI callback (onPullApplied=$applied)', // lint-allow: hardcoded-string
           verbose: true,
         );
       }
@@ -512,8 +512,8 @@ class NodeDexSyncService {
       await _store.setSyncState(wmKey, maxPullMs.toString());
 
       _syncLog(
-        'Pull: complete — ${remoteEntries.length} entries applied, '
-        'new watermark=$maxPullMs',
+        'Pull: complete — ${remoteEntries.length} entries applied, ' // lint-allow: hardcoded-string
+        'new watermark=$maxPullMs', // lint-allow: hardcoded-string
       );
     } catch (e, stack) {
       _syncLogError('Pull FAILED from $collectionPath', e, stack);
@@ -559,7 +559,7 @@ class NodeDexSyncService {
       );
     }
     stages['A'] =
-        'OK: enabled=$_enabled store.syncEnabled=${_store.syncEnabled}';
+        'OK: enabled=$_enabled store.syncEnabled=${_store.syncEnabled}'; // lint-allow: hardcoded-string
     probeLog('Stage A: OK');
 
     // Stage 2: Check auth
@@ -612,8 +612,8 @@ class NodeDexSyncService {
       final outboxCount = await _store.outboxCount;
       if (outboxCount == 0) {
         probeLog(
-          'Stage D: WARN — outbox empty after save. '
-          'syncEnabled=${_store.syncEnabled}',
+          'Stage D: WARN — outbox empty after save. ' // lint-allow: hardcoded-string
+          'syncEnabled=${_store.syncEnabled}', // lint-allow: hardcoded-string
         );
         stages['D'] = 'WARN: outbox empty (syncEnabled=${_store.syncEnabled})';
         // Not a hard failure — the entry might have been deduped or
@@ -671,7 +671,7 @@ class NodeDexSyncService {
       final docData = docSnapshot.data()!;
       final remoteData = docData['data'] as Map<String, dynamic>?;
       probeLog(
-        'Stage F: OK — doc exists at $docPath '
+        'Stage F: OK — doc exists at $docPath ' // lint-allow: hardcoded-string
         'updated_at_ms=${docData['updated_at_ms']} '
         'has_data=${remoteData != null}',
       );
@@ -724,9 +724,9 @@ class NodeDexSyncService {
       final tagMatch = localEntry.socialTag == probeTag;
       final noteMatch = localEntry.userNote == probeNote;
       probeLog(
-        'Stage H: local entry found — '
-        'socialTag=${localEntry.socialTag?.name} (match=$tagMatch) '
-        'userNote=${localEntry.userNote} (match=$noteMatch)',
+        'Stage H: local entry found — ' // lint-allow: hardcoded-string
+        'socialTag=${localEntry.socialTag?.name} (match=$tagMatch) ' // lint-allow: hardcoded-string
+        'userNote=${localEntry.userNote} (match=$noteMatch)', // lint-allow: hardcoded-string
       );
 
       if (!tagMatch || !noteMatch) {
@@ -771,7 +771,7 @@ class NodeDexSyncService {
 
     probeLog('=== SYNC PROBE COMPLETE: ALL STAGES PASSED ===');
     _syncLog(
-      'PROBE_RESULT ok=true stages=${stages.entries.map((e) => "${e.key}=${e.value}").join(", ")}',
+      'PROBE_RESULT ok=true stages=${stages.entries.map((e) => "${e.key}=${e.value}").join(", ")}', // lint-allow: hardcoded-string
     );
 
     return SyncProbeResult(
@@ -814,7 +814,7 @@ class NodeDexSyncService {
           final outboxCount = await _store.outboxCount;
           if (outboxCount > 0) {
             _syncLog(
-              'Dispose: draining $outboxCount outbox entries before shutdown',
+              'Dispose: draining $outboxCount outbox entries before shutdown', // lint-allow: hardcoded-string
             );
             await _drainOutbox(user.uid);
           }

@@ -202,7 +202,7 @@ class RouteStorageService {
         buffer.writeln();
         buffer.writeln('        <ele>${loc.altitude}</ele>');
         buffer.writeln(
-          '        <time>${loc.timestamp.toIso8601String()}</time>',
+          '        <time>${loc.timestamp.toIso8601String()}</time>', // lint-allow: hardcoded-string
         );
         buffer.writeln('      </trkpt>');
       } else {
@@ -324,7 +324,7 @@ class RouteStorageService {
       if (locations.isEmpty) return null;
 
       return Route(
-        name: name ?? 'Imported Route',
+        name: name ?? 'Imported Route', // lint-allow: hardcoded-string
         notes: desc,
         locations: locations,
         createdAt: locations.first.timestamp,

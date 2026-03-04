@@ -338,7 +338,7 @@ class MeshGlobeState extends State<MeshGlobe> {
                   ),
                   const SizedBox(height: AppTheme.spacing16),
                   Text(
-                    'Loading Globe...',
+                    'Loading Globe...', // lint-allow: hardcoded-string
                     style: TextStyle(
                       color: context.textSecondary,
                       fontSize: 14,

@@ -39,7 +39,7 @@ class OneTimePurchases {
     id: 'theme_pack',
     name: 'Theme Pack',
     description:
-        'Unlock 12 stunning accent colors to personalize every screen, button, and highlight throughout the app — make it truly yours',
+        'Unlock 12 stunning accent colors to personalize every screen, button, and highlight throughout the app — make it truly yours', // lint-allow: hardcoded-string
     price: 4.99,
     productId: RevenueCatConfig.themePackProductId,
     unlocksFeature: PremiumFeature.premiumThemes,
@@ -49,7 +49,7 @@ class OneTimePurchases {
     id: 'ringtone_pack',
     name: 'Ringtone Pack',
     description:
-        'Access a massive searchable library of thousands of RTTTL ringtones — from classic melodies to TV themes, movie scores, and video game soundtracks',
+        'Access a massive searchable library of thousands of RTTTL ringtones — from classic melodies to TV themes, movie scores, and video game soundtracks', // lint-allow: hardcoded-string
     price: 1.99,
     productId: RevenueCatConfig.ringtonePackProductId,
     unlocksFeature: PremiumFeature.customRingtones,
@@ -59,7 +59,7 @@ class OneTimePurchases {
     id: 'widget_pack',
     name: 'Widgets',
     description:
-        'Build your own custom dashboard widgets with live data bindings, real-time charts, gauges, graphs, and status indicators — monitor battery, telemetry, environment sensors, and more at a glance',
+        'Build your own custom dashboard widgets with live data bindings, real-time charts, gauges, graphs, and status indicators — monitor battery, telemetry, environment sensors, and more at a glance', // lint-allow: hardcoded-string
     price: 4.99,
     productId: RevenueCatConfig.widgetPackProductId,
     unlocksFeature: PremiumFeature.homeWidgets,
@@ -69,7 +69,7 @@ class OneTimePurchases {
     id: 'automations_pack',
     name: 'Automations',
     description:
-        'Create powerful automation rules: auto-reply to messages, schedule broadcasts at specific times, trigger actions based on location or device events, and set up custom notification flows',
+        'Create powerful automation rules: auto-reply to messages, schedule broadcasts at specific times, trigger actions based on location or device events, and set up custom notification flows', // lint-allow: hardcoded-string
     price: 4.99,
     productId: RevenueCatConfig.automationsPackProductId,
     unlocksFeature: PremiumFeature.automations,
@@ -79,7 +79,7 @@ class OneTimePurchases {
     id: 'ifttt_pack',
     name: 'IFTTT Integration',
     description:
-        'Connect your mesh network to 700+ apps and services — trigger smart home devices, log events to spreadsheets, send Slack notifications, post to social media, and integrate with virtually anything',
+        'Connect your mesh network to 700+ apps and services — trigger smart home devices, log events to spreadsheets, send Slack notifications, post to social media, and integrate with virtually anything', // lint-allow: hardcoded-string
     price: 2.99,
     productId: RevenueCatConfig.iftttPackProductId,
     unlocksFeature: PremiumFeature.iftttIntegration,

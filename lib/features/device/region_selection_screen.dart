@@ -372,8 +372,8 @@ class _RegionSelectionScreenState extends ConsumerState<RegionSelectionScreen>
                   'optimistically marking region as configured and falling through to pop',
                 );
                 AppErrorHandler.addBreadcrumb(
-                  'Region: hard timeout ${_applyHardTimeout.inSeconds}s '
-                  '(region=$_selectedRegion, isInitialSetup=${widget.isInitialSetup})',
+                  'Region: hard timeout ${_applyHardTimeout.inSeconds}s ' // lint-allow: hardcoded-string
+                  '(region=$_selectedRegion, isInitialSetup=${widget.isInitialSetup})', // lint-allow: hardcoded-string
                 );
                 // Don't throw — fall through to the persist-and-pop below
               },
@@ -430,8 +430,8 @@ class _RegionSelectionScreenState extends ConsumerState<RegionSelectionScreen>
           '(region=$_selectedRegion)',
         );
         AppErrorHandler.addBreadcrumb(
-          'Region: reconnect timeout during initial setup '
-          '(region=$_selectedRegion)',
+          'Region: reconnect timeout during initial setup ' // lint-allow: hardcoded-string
+          '(region=$_selectedRegion)', // lint-allow: hardcoded-string
         );
         await settings.setRegionConfigured(true);
         if (!mounted) return;
@@ -453,8 +453,8 @@ class _RegionSelectionScreenState extends ConsumerState<RegionSelectionScreen>
       final pairingInvalidation = conn.isPairingInvalidationError(e);
       if (connState.isTerminalInvalidated || pairingInvalidation) {
         AppErrorHandler.addBreadcrumb(
-          'Region: pairing invalidation during apply '
-          '(region=$_selectedRegion)',
+          'Region: pairing invalidation during apply ' // lint-allow: hardcoded-string
+          '(region=$_selectedRegion)', // lint-allow: hardcoded-string
         );
         if (mounted) {
           navigator.pushNamed('/scanner');

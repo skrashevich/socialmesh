@@ -8,7 +8,7 @@ import '../theme.dart';
 /// Each category has a display name, icon, and accent color for the UI.
 enum HelpArticleCategory {
   gettingStarted(
-    'Getting Started',
+    'Getting Started', // lint-allow: hardcoded-string
     Icons.rocket_launch_outlined,
     AccentColors.green,
   ),

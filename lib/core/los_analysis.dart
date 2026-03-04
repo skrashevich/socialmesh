@@ -100,7 +100,8 @@ LosResult evaluateLos({
       requiredClearanceMeters: 0,
       actualClearanceMeters: 0,
       distanceMeters: 0,
-      explanation: 'Altitude data unavailable for one or both points.',
+      explanation:
+          'Altitude data unavailable for one or both points.', // lint-allow: hardcoded-string
     );
   }
 
@@ -139,22 +140,22 @@ LosResult evaluateLos({
   if (actualClearance < 0) {
     verdict = LosVerdict.obstructed;
     explanation =
-        'Earth curvature obstructs the path by '
+        'Earth curvature obstructs the path by ' // lint-allow: hardcoded-string
         '${(-actualClearance).toStringAsFixed(0)}m at midpoint. '
-        'Terrain/obstacles not considered.';
+        'Terrain/obstacles not considered.'; // lint-allow: hardcoded-string
   } else if (actualClearance >= requiredClearance + earthBulge) {
     verdict = LosVerdict.clear;
     explanation =
-        'Clear line of sight with ${actualClearance.toStringAsFixed(0)}m '
-        'clearance above earth bulge. '
-        'Terrain/obstacles not considered.';
+        'Clear line of sight with ${actualClearance.toStringAsFixed(0)}m ' // lint-allow: hardcoded-string
+        'clearance above earth bulge. ' // lint-allow: hardcoded-string
+        'Terrain/obstacles not considered.'; // lint-allow: hardcoded-string
   } else {
     verdict = LosVerdict.marginal;
     explanation =
-        'Marginal clearance (${actualClearance.toStringAsFixed(0)}m) — '
-        'below the recommended '
+        'Marginal clearance (${actualClearance.toStringAsFixed(0)}m) — ' // lint-allow: hardcoded-string
+        'below the recommended ' // lint-allow: hardcoded-string
         '${requiredClearance.toStringAsFixed(0)}m Fresnel clearance. '
-        'Terrain/obstacles not considered.';
+        'Terrain/obstacles not considered.'; // lint-allow: hardcoded-string
   }
 
   return LosResult(

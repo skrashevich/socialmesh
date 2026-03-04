@@ -131,7 +131,7 @@ class _WidgetApprovalScreenState extends ConsumerState<WidgetApprovalScreen>
           ),
           const SizedBox(height: AppTheme.spacing8),
           Text(
-            'Why is "${widget.name}" being rejected?',
+            'Why is "${widget.name}" being rejected?', // lint-allow: hardcoded-string
             style: TextStyle(color: context.textSecondary),
           ),
           const SizedBox(height: AppTheme.spacing16),

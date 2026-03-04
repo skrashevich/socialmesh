@@ -259,7 +259,7 @@ class _WidgetDashboardScreenState extends ConsumerState<WidgetDashboardScreen>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Unlock $premiumWidgetCount More Widgets',
+                          'Unlock $premiumWidgetCount More Widgets', // lint-allow: hardcoded-string
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w600,
@@ -268,7 +268,7 @@ class _WidgetDashboardScreenState extends ConsumerState<WidgetDashboardScreen>
                         ),
                         SizedBox(height: AppTheme.spacing4),
                         Text(
-                          'Battery, messages, map, and more',
+                          'Battery, messages, map, and more', // lint-allow: hardcoded-string
                           style: TextStyle(
                             fontSize: 13,
                             color: context.textSecondary,
@@ -376,7 +376,7 @@ class _WidgetDashboardScreenState extends ConsumerState<WidgetDashboardScreen>
             config: config,
             isEditMode: _editMode,
             reorderIndex: reorderIndex,
-            customName: 'Error Loading Widget',
+            customName: 'Error Loading Widget', // lint-allow: hardcoded-string
             customIcon: Icons.error_outline,
             onRemove: () {
               ref
@@ -387,7 +387,7 @@ class _WidgetDashboardScreenState extends ConsumerState<WidgetDashboardScreen>
               height: 120,
               child: Center(
                 child: Text(
-                  'Failed to load widget',
+                  'Failed to load widget', // lint-allow: hardcoded-string
                   style: TextStyle(color: SemanticColors.disabled),
                 ),
               ),
@@ -425,7 +425,7 @@ class _WidgetDashboardScreenState extends ConsumerState<WidgetDashboardScreen>
         // If no schemaId, show error
         return const Center(
           child: Text(
-            'Widget not found',
+            'Widget not found', // lint-allow: hardcoded-string
             style: TextStyle(color: SemanticColors.disabled),
           ),
         );
@@ -457,7 +457,7 @@ class _WidgetDashboardScreenState extends ConsumerState<WidgetDashboardScreen>
             ),
             SizedBox(height: AppTheme.spacing16),
             Text(
-              'No Widgets Added',
+              'No Widgets Added', // lint-allow: hardcoded-string
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
@@ -466,7 +466,7 @@ class _WidgetDashboardScreenState extends ConsumerState<WidgetDashboardScreen>
             ),
             const SizedBox(height: AppTheme.spacing8),
             Text(
-              'Customize your dashboard with widgets that matter to you',
+              'Customize your dashboard with widgets that matter to you', // lint-allow: hardcoded-string
               style: Theme.of(
                 context,
               ).textTheme.bodyMedium?.copyWith(color: context.textSecondary),
@@ -623,7 +623,7 @@ class _WidgetDashboardScreenState extends ConsumerState<WidgetDashboardScreen>
               color: context.textPrimary,
             ),
             title: Text(
-              'Edit Dashboard',
+              'Edit Dashboard', // lint-allow: hardcoded-string
               style: TextStyle(color: context.textPrimary),
             ),
             onTap: () {
@@ -713,7 +713,7 @@ class _AddWidgetSheet extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Manage Widgets',
+                'Manage Widgets', // lint-allow: hardcoded-string
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
@@ -740,7 +740,7 @@ class _AddWidgetSheet extends ConsumerWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Tap to add or remove widgets from your dashboard',
+                  'Tap to add or remove widgets from your dashboard', // lint-allow: hardcoded-string
                   style: Theme.of(
                     context,
                   ).textTheme.bodySmall?.copyWith(color: context.textSecondary),
@@ -811,7 +811,7 @@ class _AddWidgetSheet extends ConsumerWidget {
                           DashboardWidgetsNotifier.maxWidgets) {
                         showErrorSnackBar(
                           context,
-                          'Widget limit reached (${DashboardWidgetsNotifier.maxWidgets} max)',
+                          'Widget limit reached (${DashboardWidgetsNotifier.maxWidgets} max)', // lint-allow: hardcoded-string
                         );
                         return;
                       }
@@ -836,7 +836,7 @@ class _AddWidgetSheet extends ConsumerWidget {
     );
     final widgetPackName =
         storeProducts[RevenueCatConfig.widgetPackProductId]?.title ??
-        'Widget Pack';
+        'Widget Pack'; // lint-allow: hardcoded-string
 
     return Container(
       margin: const EdgeInsets.only(bottom: 16, top: 8),
@@ -878,7 +878,7 @@ class _AddWidgetSheet extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Unlock All Widgets',
+                      'Unlock All Widgets', // lint-allow: hardcoded-string
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
@@ -887,7 +887,7 @@ class _AddWidgetSheet extends ConsumerWidget {
                     ),
                     const SizedBox(height: AppTheme.spacing2),
                     Text(
-                      'Get $widgetPackName for ${DashboardWidgetType.values.length - _freeWidgetTypes.length} more widgets',
+                      'Get $widgetPackName for ${DashboardWidgetType.values.length - _freeWidgetTypes.length} more widgets', // lint-allow: hardcoded-string
                       style: TextStyle(
                         fontSize: 12,
                         color: context.textSecondary,

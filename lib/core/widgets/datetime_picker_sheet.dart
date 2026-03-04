@@ -27,7 +27,7 @@ class DatePickerSheet extends StatefulWidget {
     this.initialDate,
     this.firstDate,
     this.lastDate,
-    this.title = 'Select Date',
+    this.title = 'Select Date', // lint-allow: hardcoded-string
   });
 
   /// Shows the date picker and returns the selected date.
@@ -36,7 +36,7 @@ class DatePickerSheet extends StatefulWidget {
     DateTime? initialDate,
     DateTime? firstDate,
     DateTime? lastDate,
-    String title = 'Select Date',
+    String title = 'Select Date', // lint-allow: hardcoded-string
   }) {
     return AppBottomSheet.show<DateTime>(
       context: context,
@@ -209,7 +209,7 @@ class TimePickerSheet extends StatefulWidget {
   const TimePickerSheet({
     super.key,
     this.initialTime,
-    this.title = 'Select Time',
+    this.title = 'Select Time', // lint-allow: hardcoded-string
     this.use24HourFormat = false,
   });
 
@@ -217,7 +217,7 @@ class TimePickerSheet extends StatefulWidget {
   static Future<TimeOfDay?> show(
     BuildContext context, {
     TimeOfDay? initialTime,
-    String title = 'Select Time',
+    String title = 'Select Time', // lint-allow: hardcoded-string
     bool use24HourFormat = false,
   }) {
     return AppBottomSheet.show<TimeOfDay>(
@@ -387,7 +387,7 @@ class DateTimePickerSheet extends StatefulWidget {
     this.initialDateTime,
     this.firstDate,
     this.lastDate,
-    this.title = 'Select Date & Time',
+    this.title = 'Select Date & Time', // lint-allow: hardcoded-string
     this.use24HourFormat = false,
   });
 
@@ -397,7 +397,7 @@ class DateTimePickerSheet extends StatefulWidget {
     DateTime? initialDateTime,
     DateTime? firstDate,
     DateTime? lastDate,
-    String title = 'Select Date & Time',
+    String title = 'Select Date & Time', // lint-allow: hardcoded-string
     bool use24HourFormat = false,
   }) {
     return AppBottomSheet.show<DateTime>(

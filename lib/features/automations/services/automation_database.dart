@@ -151,12 +151,12 @@ class AutomationDatabase {
       )
     ''');
     batch.execute(
-      'CREATE INDEX idx_automations_updated '
-      'ON ${AutomationTables.automations}(${AutomationTables.colUpdatedAtMs})',
+      'CREATE INDEX idx_automations_updated ' // lint-allow: hardcoded-string
+      'ON ${AutomationTables.automations}(${AutomationTables.colUpdatedAtMs})', // lint-allow: hardcoded-string
     );
     batch.execute(
-      'CREATE INDEX idx_automations_deleted '
-      'ON ${AutomationTables.automations}(${AutomationTables.colDeleted})',
+      'CREATE INDEX idx_automations_deleted ' // lint-allow: hardcoded-string
+      'ON ${AutomationTables.automations}(${AutomationTables.colDeleted})', // lint-allow: hardcoded-string
     );
 
     // -- sync_state --
@@ -181,8 +181,8 @@ class AutomationDatabase {
       )
     ''');
     batch.execute(
-      'CREATE INDEX idx_outbox_entity '
-      'ON ${AutomationTables.syncOutbox}'
+      'CREATE INDEX idx_outbox_entity ' // lint-allow: hardcoded-string
+      'ON ${AutomationTables.syncOutbox}' // lint-allow: hardcoded-string
       '(${AutomationTables.colOutboxEntityType}, ${AutomationTables.colOutboxEntityId})',
     );
 

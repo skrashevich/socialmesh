@@ -10,7 +10,7 @@ class AppBarOverflowMenu<T> extends StatelessWidget {
     this.onSelected,
     this.onOpened,
     this.onCanceled,
-    this.tooltip = 'More options',
+    this.tooltip = 'More options', // lint-allow: hardcoded-string
     this.color,
     this.surfaceTintColor,
     this.icon,

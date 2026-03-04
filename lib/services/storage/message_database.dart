@@ -63,10 +63,10 @@ class MessageDatabase {
         );
         if (oldVersion < 2) {
           await db.execute(
-            'ALTER TABLE $_tableName ADD COLUMN reply_id INTEGER',
+            'ALTER TABLE $_tableName ADD COLUMN reply_id INTEGER', // lint-allow: hardcoded-string
           );
           await db.execute(
-            'ALTER TABLE $_tableName ADD COLUMN is_emoji INTEGER NOT NULL DEFAULT 0',
+            'ALTER TABLE $_tableName ADD COLUMN is_emoji INTEGER NOT NULL DEFAULT 0', // lint-allow: hardcoded-string
           );
           AppLogging.storage('Added reply_id and is_emoji columns (v2)');
         }
@@ -77,9 +77,9 @@ class MessageDatabase {
           // grapheme cluster) AND has a reply_id is almost certainly a
           // tapback reaction, not a real text message.
           final fixed = await db.rawUpdate(
-            'UPDATE $_tableName SET is_emoji = 1 '
-            'WHERE reply_id IS NOT NULL AND LENGTH(text) <= 8 '
-            'AND is_emoji = 0',
+            'UPDATE $_tableName SET is_emoji = 1 ' // lint-allow: hardcoded-string
+            'WHERE reply_id IS NOT NULL AND LENGTH(text) <= 8 ' // lint-allow: hardcoded-string
+            'AND is_emoji = 0', // lint-allow: hardcoded-string
           );
           AppLogging.storage(
             'v3 migration: retroactively flagged $fixed legacy tapback messages',
@@ -87,11 +87,11 @@ class MessageDatabase {
         }
         if (oldVersion < 4) {
           await db.execute(
-            'ALTER TABLE $_tableName ADD COLUMN hop_count INTEGER',
+            'ALTER TABLE $_tableName ADD COLUMN hop_count INTEGER', // lint-allow: hardcoded-string
           );
           await db.execute('ALTER TABLE $_tableName ADD COLUMN rx_snr REAL');
           await db.execute(
-            'ALTER TABLE $_tableName ADD COLUMN rx_rssi INTEGER',
+            'ALTER TABLE $_tableName ADD COLUMN rx_rssi INTEGER', // lint-allow: hardcoded-string
           );
           AppLogging.storage('Added hop_count, rx_snr, rx_rssi columns (v4)');
         }
@@ -173,14 +173,14 @@ class MessageDatabase {
   /// DM messages: `dm:<lower_node>:<higher_node>` (order-independent)
   static String conversationKey(Message message) {
     if (message.channel != null && message.channel! > 0) {
-      return 'channel:${message.channel}';
+      return 'channel:${message.channel}'; // lint-allow: hardcoded-string
     }
     // For DMs, use sorted node nums so both directions map to the same key
     final a = message.from;
     final b = message.to;
     final lower = a < b ? a : b;
     final higher = a < b ? b : a;
-    return 'dm:$lower:$higher';
+    return 'dm:$lower:$higher'; // lint-allow: hardcoded-string
   }
 
   /// Compute a conversation key from raw parameters (for queries).
@@ -190,12 +190,12 @@ class MessageDatabase {
     int? nodeB,
   }) {
     if (channel != null && channel > 0) {
-      return 'channel:$channel';
+      return 'channel:$channel'; // lint-allow: hardcoded-string
     }
     if (nodeA != null && nodeB != null) {
       final lower = nodeA < nodeB ? nodeA : nodeB;
       final higher = nodeA < nodeB ? nodeB : nodeA;
-      return 'dm:$lower:$higher';
+      return 'dm:$lower:$higher'; // lint-allow: hardcoded-string
     }
     throw ArgumentError('Must provide either channel or both nodeA and nodeB');
   }
@@ -269,7 +269,7 @@ class MessageDatabase {
       args.add(sinceMillis);
     }
     final result = await _database.rawQuery(
-      'SELECT COUNT(*) as cnt FROM $_tableName WHERE $where',
+      'SELECT COUNT(*) as cnt FROM $_tableName WHERE $where', // lint-allow: hardcoded-string
       args,
     );
     return Sqflite.firstIntValue(result) ?? 0;
@@ -332,7 +332,7 @@ class MessageDatabase {
   /// Remove oldest messages in a conversation if count exceeds the limit.
   Future<void> _trimConversation(String convKey) async {
     final countResult = await _database.rawQuery(
-      'SELECT COUNT(*) as cnt FROM $_tableName WHERE conversation_key = ?',
+      'SELECT COUNT(*) as cnt FROM $_tableName WHERE conversation_key = ?', // lint-allow: hardcoded-string
       [convKey],
     );
     final count = Sqflite.firstIntValue(countResult) ?? 0;

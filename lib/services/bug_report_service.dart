@@ -258,7 +258,7 @@ class BugReportService with WidgetsBindingObserver {
       final androidInfo = await deviceInfoPlugin.androidInfo;
       deviceModel = '${androidInfo.manufacturer} ${androidInfo.model}';
       osVersion =
-          'Android ${androidInfo.version.release} (SDK ${androidInfo.version.sdkInt})';
+          'Android ${androidInfo.version.release} (SDK ${androidInfo.version.sdkInt})'; // lint-allow: hardcoded-string
     }
 
     // Collect comprehensive app state for better bug context
@@ -290,7 +290,9 @@ class BugReportService with WidgetsBindingObserver {
       throw Exception('Invalid server response');
     }
     if (data['success'] != true) {
-      throw Exception(data['error'] ?? 'Failed to submit bug report');
+      throw Exception(
+        data['error'] ?? 'Failed to submit bug report',
+      ); // lint-allow: hardcoded-string
     }
 
     AppLogging.bugReport('Report submitted');

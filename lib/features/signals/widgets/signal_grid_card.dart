@@ -66,7 +66,10 @@ class SignalGridCard extends ConsumerWidget {
           : hexId;
       final node = nodes[signal.meshNodeId!];
       if (node != null) {
-        authorName = node.longName ?? node.shortName ?? '!$hexId';
+        authorName =
+            node.longName ??
+            node.shortName ??
+            '!$hexId'; // lint-allow: hardcoded-string
         authorShortName = node.shortName ?? shortHex;
         if (authorName.length > 12) {
           authorName = '${authorName.substring(0, 11)}…';

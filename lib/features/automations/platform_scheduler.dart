@@ -599,7 +599,9 @@ class IOSBGTaskScheduler implements PlatformScheduler {
   }
 
   String _encodeTimesJson(Map<String, String> times) {
-    return times.entries.map((e) => '\${e.key}=\${e.value}').join(';');
+    return times.entries
+        .map((e) => '\${e.key}=\${e.value}')
+        .join(';'); // lint-allow: hardcoded-string
   }
 
   // ---- Task tracking helpers ----

@@ -561,7 +561,7 @@ class AutomationsScreen extends ConsumerWidget {
   }
 
   static const _categoryOrder = [
-    'Node Status',
+    'Node Status', // lint-allow: hardcoded-string
     'Battery',
     'Messages',
     'Location',
@@ -1059,7 +1059,7 @@ class _AddAutomationSheet extends ConsumerWidget {
 
   /// Category order for display
   static const _categoryOrder = [
-    'Node Status',
+    'Node Status', // lint-allow: hardcoded-string
     'Battery',
     'Messages',
     'Location',
@@ -1338,7 +1338,7 @@ class _AddAutomationSheet extends ConsumerWidget {
               Icon(Icons.explore, size: 18, color: context.accentColor),
               const SizedBox(width: AppTheme.spacing6),
               Text(
-                'Start with a Trigger',
+                'Start with a Trigger', // lint-allow: hardcoded-string
                 style: Theme.of(
                   context,
                 ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
@@ -1350,7 +1350,7 @@ class _AddAutomationSheet extends ConsumerWidget {
         Padding(
           padding: const EdgeInsets.only(left: 4),
           child: Text(
-            'Choose what event starts your automation',
+            'Choose what event starts your automation', // lint-allow: hardcoded-string
             style: Theme.of(
               context,
             ).textTheme.bodySmall?.copyWith(color: context.textTertiary),

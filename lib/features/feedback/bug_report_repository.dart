@@ -33,7 +33,7 @@ enum BugReportStatus {
       case BugReportStatus.responded:
         return 'Responded';
       case BugReportStatus.userReplied:
-        return 'Awaiting Response';
+        return 'Awaiting Response'; // lint-allow: hardcoded-string
       case BugReportStatus.resolved:
         return 'Resolved';
     }

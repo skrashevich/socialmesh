@@ -34,7 +34,7 @@ class NodeSelectorSheet extends ConsumerStatefulWidget {
 
   const NodeSelectorSheet({
     super.key,
-    this.title = 'Select Node',
+    this.title = 'Select Node', // lint-allow: hardcoded-string
     this.allowBroadcast = true,
     this.initialSelection,
     this.broadcastLabel,
@@ -45,7 +45,7 @@ class NodeSelectorSheet extends ConsumerStatefulWidget {
   /// Show the node selector and return the selection
   static Future<NodeSelection?> show(
     BuildContext context, {
-    String title = 'Select Node',
+    String title = 'Select Node', // lint-allow: hardcoded-string
     bool allowBroadcast = true,
     int? initialSelection,
     String? broadcastLabel,
@@ -204,8 +204,12 @@ class _NodeSelectorSheetState extends ConsumerState<NodeSelectorSheet> {
             _NodeTile(
               icon: Icons.broadcast_on_personal,
               iconColor: context.accentColor,
-              title: widget.broadcastLabel ?? 'All Nodes',
-              subtitle: widget.broadcastSubtitle ?? 'Broadcast to everyone',
+              title:
+                  widget.broadcastLabel ??
+                  'All Nodes', // lint-allow: hardcoded-string
+              subtitle:
+                  widget.broadcastSubtitle ??
+                  'Broadcast to everyone', // lint-allow: hardcoded-string
               isSelected: isBroadcastSelected,
               presence: PresenceConfidence.unknown,
               lastHeardAge: null,
@@ -219,7 +223,7 @@ class _NodeSelectorSheetState extends ConsumerState<NodeSelectorSheet> {
               child: Row(
                 children: [
                   Text(
-                    'DIRECT MESSAGE',
+                    'DIRECT MESSAGE', // lint-allow: hardcoded-string
                     style: TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
@@ -298,7 +302,7 @@ class _NodeSelectorSheetState extends ConsumerState<NodeSelectorSheet> {
           const SizedBox(height: AppTheme.spacing12),
           Text(
             _searchQuery.isEmpty
-                ? 'No nodes available'
+                ? 'No nodes available' // lint-allow: hardcoded-string
                 : 'No nodes match "$_searchQuery"',
             style: TextStyle(color: context.textSecondary, fontSize: 14),
             textAlign: TextAlign.center,

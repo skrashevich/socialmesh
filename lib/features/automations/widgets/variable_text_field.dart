@@ -553,7 +553,9 @@ class VariableTextFieldState extends State<VariableTextField>
             horizontal: 12,
             vertical: 12,
           ),
-          errorText: hasError ? 'Invalid: ${invalidVars.join(", ")}' : null,
+          errorText: hasError
+              ? 'Invalid: ${invalidVars.join(", ")}'
+              : null, // lint-allow: hardcoded-string
           counterText: _hasFocus || isNearLimit
               ? '$currentLength / ${widget.maxLength}'
               : '',

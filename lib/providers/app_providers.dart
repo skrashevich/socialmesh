@@ -128,7 +128,7 @@ class AppInitNotifier extends Notifier<AppInitState> {
       if (ageState.needsConfirmation) {
         _transition(
           AppInitState.needsAgeEligibility,
-          'initialize:needsAgeEligibility',
+          'initialize:needsAgeEligibility', // lint-allow: hardcoded-string
         );
         return;
       }
@@ -137,7 +137,7 @@ class AppInitNotifier extends Notifier<AppInitState> {
       if (!settings.onboardingComplete) {
         _transition(
           AppInitState.needsOnboarding,
-          'initialize:!onboardingComplete',
+          'initialize:!onboardingComplete', // lint-allow: hardcoded-string
         );
         return;
       }
@@ -174,7 +174,7 @@ class AppInitNotifier extends Notifier<AppInitState> {
           // This respects the user's choice to not auto-connect
           _transition(
             AppInitState.needsScanner,
-            'initialize:paired+noAutoReconnect',
+            'initialize:paired+noAutoReconnect', // lint-allow: hardcoded-string
           );
         }
       } else {
@@ -2993,7 +2993,9 @@ class MessagesNotifier extends Notifier<List<Message>> {
       final channel = channels
           .where((c) => c.index == message.channel)
           .firstOrNull;
-      channelName = channel?.name ?? 'Channel ${message.channel}';
+      channelName =
+          channel?.name ??
+          'Channel ${message.channel}'; // lint-allow: hardcoded-string
 
       AppLogging.debug(
         '🔔 Queueing channel notification: $senderName in $channelName',
@@ -3045,7 +3047,9 @@ class MessagesNotifier extends Notifier<List<Message>> {
       final channel = channels
           .where((c) => c.index == message.channel)
           .firstOrNull;
-      channelName = channel?.name ?? 'Channel ${message.channel}';
+      channelName =
+          channel?.name ??
+          'Channel ${message.channel}'; // lint-allow: hardcoded-string
     }
 
     final automationMessage = AutomationMessage(
@@ -3082,7 +3086,9 @@ class MessagesNotifier extends Notifier<List<Message>> {
       final channel = channels
           .where((c) => c.index == message.channel)
           .firstOrNull;
-      channelName = channel?.name ?? 'Channel ${message.channel}';
+      channelName =
+          channel?.name ??
+          'Channel ${message.channel}'; // lint-allow: hardcoded-string
     }
 
     iftttService.processMessage(
@@ -3342,7 +3348,7 @@ class MessagesNotifier extends Notifier<List<Message>> {
 
   String _messageSignature(Message message) {
     final target = message.channel != null && message.channel! > 0
-        ? 'channel:${message.channel}'
+        ? 'channel:${message.channel}' // lint-allow: hardcoded-string
         : 'dm:${message.from == ref.read(myNodeNumProvider) ? message.to : message.from}';
     return '$target|${message.text}|${message.timestamp.millisecondsSinceEpoch}';
   }
@@ -4877,9 +4883,9 @@ class RegionConfigNotifier extends Notifier<RegionConfigState> {
         const Duration(seconds: 90), // Increased timeout for slow reboots
         onTimeout: () {
           AppErrorHandler.addBreadcrumb(
-            'Region: 90s confirmation timeout '
-            '(region=${region.name}, session=$sessionId, '
-            'sawDisconnect=$sawDisconnect, sawReconnect=$sawReconnect)',
+            'Region: 90s confirmation timeout ' // lint-allow: hardcoded-string
+            '(region=${region.name}, session=$sessionId, ' // lint-allow: hardcoded-string
+            'sawDisconnect=$sawDisconnect, sawReconnect=$sawReconnect)', // lint-allow: hardcoded-string
           );
           throw TimeoutException(
             'Timed out waiting for device to reconnect after region change',

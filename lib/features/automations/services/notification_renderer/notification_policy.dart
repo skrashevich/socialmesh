@@ -77,7 +77,7 @@ class VariablePolicy {
   @override
   String toString() =>
       'VariablePolicy(max: $maxGraphemes, priority: $priority, '
-      'fallback: "$fallback")';
+      'fallback: "$fallback")'; // lint-allow: hardcoded-string
 }
 
 /// The complete notification policy for a single delivery channel.
@@ -220,27 +220,27 @@ class NotificationPolicy {
     'zone.radius': VariablePolicy(
       maxGraphemes: 10,
       priority: ReductionPriority.low,
-      fallback: '?m',
+      fallback: '?m', // lint-allow: hardcoded-string
     ),
     'silent.duration': VariablePolicy(
       maxGraphemes: 15,
       priority: ReductionPriority.normal,
-      fallback: '? min',
+      fallback: '? min', // lint-allow: hardcoded-string
     ),
     'signal.threshold': VariablePolicy(
       maxGraphemes: 10,
       priority: ReductionPriority.low,
-      fallback: '? dB',
+      fallback: '? dB', // lint-allow: hardcoded-string
     ),
     'channel.name': VariablePolicy(
       maxGraphemes: 30,
       priority: ReductionPriority.normal,
-      fallback: 'Channel 0',
+      fallback: 'Channel 0', // lint-allow: hardcoded-string
     ),
   };
 
   @override
   String toString() =>
       'NotificationPolicy(channel: "$channel", title: $title, '
-      'body: $body, payload: $maxPayloadBytes)';
+      'body: $body, payload: $maxPayloadBytes)'; // lint-allow: hardcoded-string
 }

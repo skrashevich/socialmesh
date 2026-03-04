@@ -45,9 +45,12 @@ enum NodeDiscoverySource {
 
   /// Short description for tooltips and help text.
   String get description => switch (this) {
-    local => 'Discovered via your local mesh radio.',
-    remote => 'Discovered via the Global Layer broker.',
-    mixed => 'Seen both locally and via the Global Layer.',
+    local =>
+      'Discovered via your local mesh radio.', // lint-allow: hardcoded-string
+    remote =>
+      'Discovered via the Global Layer broker.', // lint-allow: hardcoded-string
+    mixed =>
+      'Seen both locally and via the Global Layer.', // lint-allow: hardcoded-string
   };
 
   /// Serialization key for JSON storage.
@@ -274,9 +277,9 @@ class RemoteSighting {
   @override
   String toString() =>
       'RemoteSighting(node: $nodeNum, '
-      'name: ${displayName ?? "(unknown)"}, '
-      'topic: $topic, '
-      'age: ${age.inMinutes}min)';
+      'name: ${displayName ?? "(unknown)"}, ' // lint-allow: hardcoded-string
+      'topic: $topic, ' // lint-allow: hardcoded-string
+      'age: ${age.inMinutes}min)'; // lint-allow: hardcoded-string
 }
 
 /// Aggregate statistics for remote sightings, displayed in the
@@ -367,9 +370,9 @@ class RemoteSightingStats {
   @override
   String toString() =>
       'RemoteSightingStats('
-      'unique: $uniqueNodes, '
-      'total: $totalSightings, '
-      'recent: $recentSightings)';
+      'unique: $uniqueNodes, ' // lint-allow: hardcoded-string
+      'total: $totalSightings, ' // lint-allow: hardcoded-string
+      'recent: $recentSightings)'; // lint-allow: hardcoded-string
 }
 
 /// Maximum number of remote sightings to retain in memory.

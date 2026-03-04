@@ -48,20 +48,32 @@ class NodeEncounter {
 
   /// Human-friendly encounter summary.
   String get encounterSummary {
-    if (encounterCount == 1) return 'First encounter';
-    return 'Seen $encounterCount times';
+    if (encounterCount == 1) {
+      return 'First encounter'; // lint-allow: hardcoded-string
+    }
+    return 'Seen $encounterCount times'; // lint-allow: hardcoded-string
   }
 
   /// Human-friendly relationship age text.
   String relationshipAgeText(DateTime now) {
     final days = relationshipAgeDays(now);
-    if (days == 0) return 'First seen today';
-    if (days == 1) return 'First seen yesterday';
-    if (days < 7) return 'First seen $days days ago';
-    if (days < 14) return 'First seen 1 week ago';
-    if (days < 30) return 'First seen ${days ~/ 7} weeks ago';
-    if (days < 60) return 'First seen 1 month ago';
-    return 'First seen ${days ~/ 30} months ago';
+    if (days == 0) return 'First seen today'; // lint-allow: hardcoded-string
+    if (days == 1) {
+      return 'First seen yesterday'; // lint-allow: hardcoded-string
+    }
+    if (days < 7) {
+      return 'First seen $days days ago'; // lint-allow: hardcoded-string
+    }
+    if (days < 14) {
+      return 'First seen 1 week ago'; // lint-allow: hardcoded-string
+    }
+    if (days < 30) {
+      return 'First seen ${days ~/ 7} weeks ago'; // lint-allow: hardcoded-string
+    }
+    if (days < 60) {
+      return 'First seen 1 month ago'; // lint-allow: hardcoded-string
+    }
+    return 'First seen ${days ~/ 30} months ago'; // lint-allow: hardcoded-string
   }
 
   /// Record a new encounter, updating counts appropriately.

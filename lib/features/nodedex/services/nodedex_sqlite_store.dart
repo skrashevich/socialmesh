@@ -423,7 +423,7 @@ class NodeDexSqliteStore {
       await _enqueueOutboxInTxn(
         txn,
         'entry',
-        'node:${entry.nodeNum}',
+        'node:${entry.nodeNum}', // lint-allow: hardcoded-string
         'upsert',
         payload,
       );
@@ -654,11 +654,11 @@ class NodeDexSqliteStore {
   /// Record a failed outbox attempt.
   Future<void> markOutboxAttemptFailed(int id, String error) async {
     await _db.rawUpdate(
-      'UPDATE ${NodeDexTables.syncOutbox} SET '
+      'UPDATE ${NodeDexTables.syncOutbox} SET ' // lint-allow: hardcoded-string
       '${NodeDexTables.colOutboxAttemptCount} = '
       '${NodeDexTables.colOutboxAttemptCount} + 1, '
       '${NodeDexTables.colOutboxLastError} = ? '
-      'WHERE ${NodeDexTables.colOutboxId} = ?',
+      'WHERE ${NodeDexTables.colOutboxId} = ?', // lint-allow: hardcoded-string
       [error, id],
     );
   }
@@ -666,7 +666,7 @@ class NodeDexSqliteStore {
   /// Get the count of pending outbox entries.
   Future<int> get outboxCount async {
     final result = await _db.rawQuery(
-      'SELECT COUNT(*) as cnt FROM ${NodeDexTables.syncOutbox}',
+      'SELECT COUNT(*) as cnt FROM ${NodeDexTables.syncOutbox}', // lint-allow: hardcoded-string
     );
     return Sqflite.firstIntValue(result) ?? 0;
   }

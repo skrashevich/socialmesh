@@ -75,7 +75,7 @@ class SigilWidget extends StatelessWidget {
     this.evolution,
   }) : assert(
          sigil != null || nodeNum != null,
-         'Either sigil or nodeNum must be provided',
+         'Either sigil or nodeNum must be provided', // lint-allow: hardcoded-string
        );
 
   @override
@@ -141,7 +141,7 @@ class SigilAvatar extends StatelessWidget {
     this.evolution,
   }) : assert(
          sigil != null || nodeNum != null,
-         'Either sigil or nodeNum must be provided',
+         'Either sigil or nodeNum must be provided', // lint-allow: hardcoded-string
        );
 
   @override
@@ -221,7 +221,7 @@ class SigilDisplay extends StatelessWidget {
     this.trait,
   }) : assert(
          sigil != null || nodeNum != null,
-         'Either sigil or nodeNum must be provided',
+         'Either sigil or nodeNum must be provided', // lint-allow: hardcoded-string
        );
 
   @override
@@ -777,7 +777,7 @@ class AnimatedSigilWidget extends StatefulWidget {
     this.animate = true,
   }) : assert(
          sigil != null || nodeNum != null,
-         'Either sigil or nodeNum must be provided',
+         'Either sigil or nodeNum must be provided', // lint-allow: hardcoded-string
        );
 
   @override

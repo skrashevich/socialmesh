@@ -87,7 +87,7 @@ class _ChannelKeyFieldState extends State<ChannelKeyField> {
         _keyValidationError = 'Invalid base64 encoding';
       } else {
         _keyValidationError =
-            'Invalid key size (${decoded.length} bytes). Use 1, 16, or 32 bytes.';
+            'Invalid key size (${decoded.length} bytes). Use 1, 16, or 32 bytes.'; // lint-allow: hardcoded-string
       }
       _detectedKeyBytes = null;
     } else if (validatedSize == 0) {

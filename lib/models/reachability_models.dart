@@ -244,9 +244,9 @@ class NodeReachabilityData {
   @override
   String toString() =>
       'NodeReachabilityData(nodeNum: $nodeNum, lastHeard: ${lastHeardSeconds}s ago, '
-      'minHops: $minimumObservedHopCount, rssi: ${averageRssi?.toStringAsFixed(1)}, '
-      'snr: ${averageSnr?.toStringAsFixed(1)}, direct: $directPacketCount, '
-      'indirect: $indirectPacketCount)';
+      'minHops: $minimumObservedHopCount, rssi: ${averageRssi?.toStringAsFixed(1)}, ' // lint-allow: hardcoded-string
+      'snr: ${averageSnr?.toStringAsFixed(1)}, direct: $directPacketCount, ' // lint-allow: hardcoded-string
+      'indirect: $indirectPacketCount)'; // lint-allow: hardcoded-string
 
   @override
   bool operator ==(Object other) =>

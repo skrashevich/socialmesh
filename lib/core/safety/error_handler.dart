@@ -231,13 +231,13 @@ class AppErrorHandler {
     // Remove potential tokens/keys (anything that looks like a long alphanumeric string)
     result = result.replaceAll(
       RegExp(r'[A-Za-z0-9_-]{32,}'),
-      '[REDACTED_TOKEN]',
+      '[REDACTED_TOKEN]', // lint-allow: hardcoded-string
     );
 
     // Remove email addresses
     result = result.replaceAll(
       RegExp(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'),
-      '[REDACTED_EMAIL]',
+      '[REDACTED_EMAIL]', // lint-allow: hardcoded-string
     );
 
     // Remove phone numbers (basic pattern)
@@ -246,7 +246,7 @@ class AppErrorHandler {
     // Remove URLs with query parameters (might contain tokens)
     result = result.replaceAll(
       RegExp(r'https?://[^\s]+\?[^\s]+'),
-      '[REDACTED_URL]',
+      '[REDACTED_URL]', // lint-allow: hardcoded-string
     );
 
     // Remove base64-like strings (potential encoded data)
@@ -254,7 +254,7 @@ class AppErrorHandler {
       RegExp(
         r'(?:[A-Za-z0-9+/]{4}){10,}(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?',
       ),
-      '[REDACTED_BASE64]',
+      '[REDACTED_BASE64]', // lint-allow: hardcoded-string
     );
 
     return result;

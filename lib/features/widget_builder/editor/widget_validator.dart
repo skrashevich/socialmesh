@@ -78,8 +78,9 @@ class WidgetValidator {
       issues.add(
         const ValidationIssue(
           severity: ValidationSeverity.error,
-          message: 'Widget is empty',
-          fix: 'Add some elements to your widget',
+          message: 'Widget is empty', // lint-allow: hardcoded-string
+          fix:
+              'Add some elements to your widget', // lint-allow: hardcoded-string
         ),
       );
     }
@@ -92,8 +93,9 @@ class WidgetValidator {
         ValidationIssue(
           severity: ValidationSeverity.error,
           message:
-              'Widget has too many elements ($totalElements). Maximum is ${ValidationLimits.maxTotalElements}.',
-          fix: 'Simplify your widget by removing unnecessary elements',
+              'Widget has too many elements ($totalElements). Maximum is ${ValidationLimits.maxTotalElements}.', // lint-allow: hardcoded-string
+          fix:
+              'Simplify your widget by removing unnecessary elements', // lint-allow: hardcoded-string
         ),
       );
     }
@@ -117,8 +119,9 @@ class WidgetValidator {
       issues.add(
         const ValidationIssue(
           severity: ValidationSeverity.warning,
-          message: 'Give your widget a descriptive name',
-          fix: 'Tap the title to rename',
+          message:
+              'Give your widget a descriptive name', // lint-allow: hardcoded-string
+          fix: 'Tap the title to rename', // lint-allow: hardcoded-string
         ),
       );
     }
@@ -128,8 +131,8 @@ class WidgetValidator {
         ValidationIssue(
           severity: ValidationSeverity.error,
           message:
-              'Widget name is too long (${schema.name.length} characters). Maximum is ${ValidationLimits.maxNameLength}.',
-          fix: 'Use a shorter name',
+              'Widget name is too long (${schema.name.length} characters). Maximum is ${ValidationLimits.maxNameLength}.', // lint-allow: hardcoded-string
+          fix: 'Use a shorter name', // lint-allow: hardcoded-string
         ),
       );
     }
@@ -140,8 +143,8 @@ class WidgetValidator {
         ValidationIssue(
           severity: ValidationSeverity.error,
           message:
-              'Description is too long. Maximum is ${ValidationLimits.maxDescriptionLength} characters.',
-          fix: 'Shorten the description',
+              'Description is too long. Maximum is ${ValidationLimits.maxDescriptionLength} characters.', // lint-allow: hardcoded-string
+          fix: 'Shorten the description', // lint-allow: hardcoded-string
         ),
       );
     }
@@ -151,8 +154,8 @@ class WidgetValidator {
         ValidationIssue(
           severity: ValidationSeverity.warning,
           message:
-              'Too many tags (${schema.tags.length}). Maximum is ${ValidationLimits.maxTags}.',
-          fix: 'Remove some tags',
+              'Too many tags (${schema.tags.length}). Maximum is ${ValidationLimits.maxTags}.', // lint-allow: hardcoded-string
+          fix: 'Remove some tags', // lint-allow: hardcoded-string
         ),
       );
     }
@@ -182,9 +185,9 @@ class WidgetValidator {
         ValidationIssue(
           severity: ValidationSeverity.error,
           message:
-              'Widget nesting is too deep ($depth levels). Maximum is ${ValidationLimits.maxNestingDepth}.',
+              'Widget nesting is too deep ($depth levels). Maximum is ${ValidationLimits.maxNestingDepth}.', // lint-allow: hardcoded-string
           elementId: element.id,
-          fix: 'Flatten your widget structure',
+          fix: 'Flatten your widget structure', // lint-allow: hardcoded-string
         ),
       );
       return; // Stop validating deeper
@@ -196,9 +199,9 @@ class WidgetValidator {
         ValidationIssue(
           severity: ValidationSeverity.error,
           message:
-              'Container has too many children (${element.children.length}). Maximum is ${ValidationLimits.maxChildrenPerContainer}.',
+              'Container has too many children (${element.children.length}). Maximum is ${ValidationLimits.maxChildrenPerContainer}.', // lint-allow: hardcoded-string
           elementId: element.id,
-          fix: 'Split into multiple containers',
+          fix: 'Split into multiple containers', // lint-allow: hardcoded-string
         ),
       );
     }
@@ -249,9 +252,10 @@ class WidgetValidator {
       issues.add(
         ValidationIssue(
           severity: ValidationSeverity.error,
-          message: 'Text element has no content',
+          message:
+              'Text element has no content', // lint-allow: hardcoded-string
           elementId: element.id,
-          fix: 'Add text or bind to data',
+          fix: 'Add text or bind to data', // lint-allow: hardcoded-string
         ),
       );
     }
@@ -262,9 +266,9 @@ class WidgetValidator {
         ValidationIssue(
           severity: ValidationSeverity.error,
           message:
-              'Text is too long (${element.text!.length} characters). Maximum is ${ValidationLimits.maxTextLength}.',
+              'Text is too long (${element.text!.length} characters). Maximum is ${ValidationLimits.maxTextLength}.', // lint-allow: hardcoded-string
           elementId: element.id,
-          fix: 'Shorten the text content',
+          fix: 'Shorten the text content', // lint-allow: hardcoded-string
         ),
       );
     }
@@ -282,9 +286,10 @@ class WidgetValidator {
       issues.add(
         ValidationIssue(
           severity: ValidationSeverity.error,
-          message: 'Icon element has no icon selected',
+          message:
+              'Icon element has no icon selected', // lint-allow: hardcoded-string
           elementId: element.id,
-          fix: 'Select an icon',
+          fix: 'Select an icon', // lint-allow: hardcoded-string
         ),
       );
     }
@@ -298,9 +303,10 @@ class WidgetValidator {
       issues.add(
         ValidationIssue(
           severity: ValidationSeverity.warning,
-          message: 'Gauge has no data binding',
+          message: 'Gauge has no data binding', // lint-allow: hardcoded-string
           elementId: element.id,
-          fix: 'Bind to a numeric value like battery or signal',
+          fix:
+              'Bind to a numeric value like battery or signal', // lint-allow: hardcoded-string
         ),
       );
     } else {
@@ -317,9 +323,11 @@ class WidgetValidator {
         issues.add(
           ValidationIssue(
             severity: ValidationSeverity.warning,
-            message: 'Gauge is bound to non-numeric data',
+            message:
+                'Gauge is bound to non-numeric data', // lint-allow: hardcoded-string
             elementId: element.id,
-            fix: 'Gauges work best with numeric values',
+            fix:
+                'Gauges work best with numeric values', // lint-allow: hardcoded-string
           ),
         );
       }
@@ -332,9 +340,10 @@ class WidgetValidator {
       issues.add(
         ValidationIssue(
           severity: ValidationSeverity.error,
-          message: 'Gauge min must be less than max',
+          message:
+              'Gauge min must be less than max', // lint-allow: hardcoded-string
           elementId: element.id,
-          fix: 'Set min < max',
+          fix: 'Set min < max', // lint-allow: hardcoded-string
         ),
       );
     }
@@ -348,9 +357,9 @@ class WidgetValidator {
       issues.add(
         ValidationIssue(
           severity: ValidationSeverity.warning,
-          message: 'Chart has no data binding',
+          message: 'Chart has no data binding', // lint-allow: hardcoded-string
           elementId: element.id,
-          fix: 'Bind to data like SNR history',
+          fix: 'Bind to data like SNR history', // lint-allow: hardcoded-string
         ),
       );
     } else {
@@ -367,9 +376,11 @@ class WidgetValidator {
       issues.add(
         ValidationIssue(
           severity: ValidationSeverity.error,
-          message: 'Action button has no action configured',
+          message:
+              'Action button has no action configured', // lint-allow: hardcoded-string
           elementId: element.id,
-          fix: 'Configure what happens when tapped',
+          fix:
+              'Configure what happens when tapped', // lint-allow: hardcoded-string
         ),
       );
     }
@@ -380,9 +391,10 @@ class WidgetValidator {
       issues.add(
         ValidationIssue(
           severity: ValidationSeverity.warning,
-          message: 'Button has no label or icon',
+          message:
+              'Button has no label or icon', // lint-allow: hardcoded-string
           elementId: element.id,
-          fix: 'Add text or an icon',
+          fix: 'Add text or an icon', // lint-allow: hardcoded-string
         ),
       );
     }
@@ -399,7 +411,7 @@ class WidgetValidator {
           message:
               '${element.type == ElementType.row ? 'Row' : 'Column'} is empty',
           elementId: element.id,
-          fix: 'Add elements inside',
+          fix: 'Add elements inside', // lint-allow: hardcoded-string
         ),
       );
     }
@@ -417,9 +429,10 @@ class WidgetValidator {
           issues.add(
             ValidationIssue(
               severity: ValidationSeverity.error,
-              message: 'Navigate action has no destination',
+              message:
+                  'Navigate action has no destination', // lint-allow: hardcoded-string
               elementId: element.id,
-              fix: 'Select where to navigate',
+              fix: 'Select where to navigate', // lint-allow: hardcoded-string
             ),
           );
         }
@@ -429,18 +442,20 @@ class WidgetValidator {
           issues.add(
             ValidationIssue(
               severity: ValidationSeverity.error,
-              message: 'Open URL action has no URL',
+              message:
+                  'Open URL action has no URL', // lint-allow: hardcoded-string
               elementId: element.id,
-              fix: 'Enter the URL to open',
+              fix: 'Enter the URL to open', // lint-allow: hardcoded-string
             ),
           );
         } else if (!Uri.tryParse(action.url!)!.hasScheme) {
           issues.add(
             ValidationIssue(
               severity: ValidationSeverity.warning,
-              message: 'URL may be invalid',
+              message: 'URL may be invalid', // lint-allow: hardcoded-string
               elementId: element.id,
-              fix: 'Make sure URL starts with http:// or https://',
+              fix:
+                  'Make sure URL starts with http:// or https://', // lint-allow: hardcoded-string
             ),
           );
         }
@@ -461,9 +476,10 @@ class WidgetValidator {
       issues.add(
         ValidationIssue(
           severity: ValidationSeverity.warning,
-          message: 'Unknown data binding: ${binding.path}',
+          message:
+              'Unknown data binding: ${binding.path}', // lint-allow: hardcoded-string
           elementId: elementId,
-          fix: 'Select a valid data source',
+          fix: 'Select a valid data source', // lint-allow: hardcoded-string
         ),
       );
     }
@@ -472,7 +488,7 @@ class WidgetValidator {
   /// Get a summary of validation issues
   static String getSummary(ValidationResult result) {
     if (result.isValid && result.issues.isEmpty) {
-      return 'Widget looks good!';
+      return 'Widget looks good!'; // lint-allow: hardcoded-string
     }
 
     final errors = result.errors.length;

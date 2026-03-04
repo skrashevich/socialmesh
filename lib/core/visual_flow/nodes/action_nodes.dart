@@ -53,16 +53,16 @@ class ActionTypes {
 
   /// Display names for each action type.
   static const Map<String, String> displayNames = {
-    sendMessage: 'Send Message',
-    playSound: 'Play Sound',
+    sendMessage: 'Send Message', // lint-allow: hardcoded-string
+    playSound: 'Play Sound', // lint-allow: hardcoded-string
     vibrate: 'Vibrate',
-    pushNotification: 'Push Notification',
-    triggerWebhook: 'Trigger Webhook',
-    logEvent: 'Log Event',
-    updateWidget: 'Update Widget',
-    sendToChannel: 'Send to Channel',
-    triggerShortcut: 'Trigger Shortcut',
-    glyphPattern: 'Glyph Pattern',
+    pushNotification: 'Push Notification', // lint-allow: hardcoded-string
+    triggerWebhook: 'Trigger Webhook', // lint-allow: hardcoded-string
+    logEvent: 'Log Event', // lint-allow: hardcoded-string
+    updateWidget: 'Update Widget', // lint-allow: hardcoded-string
+    sendToChannel: 'Send to Channel', // lint-allow: hardcoded-string
+    triggerShortcut: 'Trigger Shortcut', // lint-allow: hardcoded-string
+    glyphPattern: 'Glyph Pattern', // lint-allow: hardcoded-string
   };
 
   /// Icons for each action type.
@@ -288,13 +288,13 @@ Widget _buildSendMessageWidget(_SendMessageConfig config) {
       mainAxisSize: MainAxisSize.min,
       children: [
         _NodeNumField(
-          label: 'To Node #',
+          label: 'To Node #', // lint-allow: hardcoded-string
           value: config.targetNodeNum,
           onChanged: (v) => config.targetNodeNum = v,
         ),
         const SizedBox(height: AppTheme.spacing8),
         _TextInputField(
-          hint: 'Message text...',
+          hint: 'Message text...', // lint-allow: hardcoded-string
           value: config.messageText,
           onChanged: (v) => config.messageText = v,
           maxLines: 2,
@@ -313,13 +313,13 @@ Widget _buildPlaySoundWidget(_PlaySoundConfig config) {
       mainAxisSize: MainAxisSize.min,
       children: [
         _TextInputField(
-          hint: 'Sound name...',
+          hint: 'Sound name...', // lint-allow: hardcoded-string
           value: config.soundName ?? '',
           onChanged: (v) => config.soundName = v.isEmpty ? null : v,
         ),
         const SizedBox(height: AppTheme.spacing8),
         _TextInputField(
-          hint: 'RTTTL string (optional)...',
+          hint: 'RTTTL string (optional)...', // lint-allow: hardcoded-string
           value: config.soundRtttl ?? '',
           onChanged: (v) => config.soundRtttl = v.isEmpty ? null : v,
         ),
@@ -334,7 +334,7 @@ Widget _buildVibrateWidget() {
     icon: ActionTypes.icons[ActionTypes.vibrate]!,
     label: ActionTypes.displayNames[ActionTypes.vibrate]!,
     child: Text(
-      'Device vibration pattern',
+      'Device vibration pattern', // lint-allow: hardcoded-string
       style: TextStyle(fontSize: 11, color: Colors.grey[400]),
       textAlign: TextAlign.center,
     ),
@@ -350,13 +350,13 @@ Widget _buildPushNotificationWidget(_PushNotificationConfig config) {
       mainAxisSize: MainAxisSize.min,
       children: [
         _TextInputField(
-          hint: 'Notification title...',
+          hint: 'Notification title...', // lint-allow: hardcoded-string
           value: config.notificationTitle,
           onChanged: (v) => config.notificationTitle = v,
         ),
         const SizedBox(height: AppTheme.spacing8),
         _TextInputField(
-          hint: 'Notification body...',
+          hint: 'Notification body...', // lint-allow: hardcoded-string
           value: config.notificationBody,
           onChanged: (v) => config.notificationBody = v,
           maxLines: 2,
@@ -375,13 +375,13 @@ Widget _buildTriggerWebhookWidget(_WebhookConfig config) {
       mainAxisSize: MainAxisSize.min,
       children: [
         _TextInputField(
-          hint: 'Event name (IFTTT)...',
+          hint: 'Event name (IFTTT)...', // lint-allow: hardcoded-string
           value: config.webhookEventName,
           onChanged: (v) => config.webhookEventName = v,
         ),
         const SizedBox(height: AppTheme.spacing8),
         _TextInputField(
-          hint: 'Webhook URL...',
+          hint: 'Webhook URL...', // lint-allow: hardcoded-string
           value: config.webhookUrl,
           onChanged: (v) => config.webhookUrl = v,
         ),
@@ -396,7 +396,7 @@ Widget _buildLogEventWidget() {
     icon: ActionTypes.icons[ActionTypes.logEvent]!,
     label: ActionTypes.displayNames[ActionTypes.logEvent]!,
     child: Text(
-      'Records event to automation log',
+      'Records event to automation log', // lint-allow: hardcoded-string
       style: TextStyle(fontSize: 11, color: Colors.grey[400]),
       textAlign: TextAlign.center,
     ),
@@ -409,7 +409,7 @@ Widget _buildUpdateWidgetWidget() {
     icon: ActionTypes.icons[ActionTypes.updateWidget]!,
     label: ActionTypes.displayNames[ActionTypes.updateWidget]!,
     child: Text(
-      'Refreshes home dashboard widget',
+      'Refreshes home dashboard widget', // lint-allow: hardcoded-string
       style: TextStyle(fontSize: 11, color: Colors.grey[400]),
       textAlign: TextAlign.center,
     ),
@@ -425,13 +425,13 @@ Widget _buildSendToChannelWidget(_SendToChannelConfig config) {
       mainAxisSize: MainAxisSize.min,
       children: [
         _NodeNumField(
-          label: 'Channel #',
+          label: 'Channel #', // lint-allow: hardcoded-string
           value: config.targetChannelIndex,
           onChanged: (v) => config.targetChannelIndex = v,
         ),
         const SizedBox(height: AppTheme.spacing8),
         _TextInputField(
-          hint: 'Message text...',
+          hint: 'Message text...', // lint-allow: hardcoded-string
           value: config.messageText,
           onChanged: (v) => config.messageText = v,
           maxLines: 2,
@@ -447,7 +447,7 @@ Widget _buildTriggerShortcutWidget(_ShortcutConfig config) {
     icon: ActionTypes.icons[ActionTypes.triggerShortcut]!,
     label: ActionTypes.displayNames[ActionTypes.triggerShortcut]!,
     child: _TextInputField(
-      hint: 'Shortcut name...',
+      hint: 'Shortcut name...', // lint-allow: hardcoded-string
       value: config.shortcutName,
       onChanged: (v) => config.shortcutName = v,
     ),
@@ -460,7 +460,7 @@ Widget _buildGlyphPatternWidget(_GlyphPatternConfig config) {
     icon: ActionTypes.icons[ActionTypes.glyphPattern]!,
     label: ActionTypes.displayNames[ActionTypes.glyphPattern]!,
     child: _TextInputField(
-      hint: 'Glyph pattern...',
+      hint: 'Glyph pattern...', // lint-allow: hardcoded-string
       value: config.pattern,
       onChanged: (v) => config.pattern = v,
     ),
@@ -645,7 +645,7 @@ VSNodeDataBuilder _buildActionNodeBuilder(String actionType) {
             icon: Icons.play_arrow,
             label: actionType,
             child: Text(
-              'Unknown action',
+              'Unknown action', // lint-allow: hardcoded-string
               style: TextStyle(fontSize: 11, color: Colors.grey[400]),
               textAlign: TextAlign.center,
             ),
@@ -873,7 +873,7 @@ class _TextInputFieldState extends State<_TextInputField> {
 /// A compact integer input field for node numbers and channel indices.
 class _NodeNumField extends StatefulWidget {
   const _NodeNumField({
-    this.label = 'Node #',
+    this.label = 'Node #', // lint-allow: hardcoded-string
     this.value,
     required this.onChanged,
   });

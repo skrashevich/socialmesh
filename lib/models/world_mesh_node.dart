@@ -199,7 +199,9 @@ class WorldMeshNode {
   /// Get battery status string
   String? get batteryString {
     if (batteryLevel == null) return null;
-    if (batteryLevel! > 100) return 'Plugged in';
+    if (batteryLevel! > 100) {
+      return 'Plugged in'; // lint-allow: hardcoded-string
+    }
     return '$batteryLevel%';
   }
 

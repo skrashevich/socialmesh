@@ -57,7 +57,8 @@ class DeviceRouteObserver extends NavigatorObserver {
 
     showActionSnackBar(
       context,
-      metadata?.blockedMessage ?? 'Connect device to access this screen',
+      metadata?.blockedMessage ??
+          'Connect device to access this screen', // lint-allow: hardcoded-string
       actionLabel: 'Connect',
       onAction: () {
         navigator?.pushNamed('/scanner');
@@ -101,7 +102,9 @@ class ProtectedRoute extends ConsumerWidget {
 
     // Default blocked screen
     return _BlockedRouteScreen(
-      message: result.reason ?? 'This screen is not available',
+      message:
+          result.reason ??
+          'This screen is not available', // lint-allow: hardcoded-string
       fallbackRoute: result.fallbackRoute,
     );
   }

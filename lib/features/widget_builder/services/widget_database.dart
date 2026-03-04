@@ -148,12 +148,12 @@ class WidgetDatabase {
       )
     ''');
     batch.execute(
-      'CREATE INDEX idx_widgets_updated '
-      'ON ${WidgetTables.widgets}(${WidgetTables.colUpdatedAtMs})',
+      'CREATE INDEX idx_widgets_updated ' // lint-allow: hardcoded-string
+      'ON ${WidgetTables.widgets}(${WidgetTables.colUpdatedAtMs})', // lint-allow: hardcoded-string
     );
     batch.execute(
-      'CREATE INDEX idx_widgets_deleted '
-      'ON ${WidgetTables.widgets}(${WidgetTables.colDeleted})',
+      'CREATE INDEX idx_widgets_deleted ' // lint-allow: hardcoded-string
+      'ON ${WidgetTables.widgets}(${WidgetTables.colDeleted})', // lint-allow: hardcoded-string
     );
 
     // -- sync_state --
@@ -178,8 +178,8 @@ class WidgetDatabase {
       )
     ''');
     batch.execute(
-      'CREATE INDEX idx_widget_outbox_entity '
-      'ON ${WidgetTables.syncOutbox}'
+      'CREATE INDEX idx_widget_outbox_entity ' // lint-allow: hardcoded-string
+      'ON ${WidgetTables.syncOutbox}' // lint-allow: hardcoded-string
       '(${WidgetTables.colOutboxEntityType}, ${WidgetTables.colOutboxEntityId})',
     );
 

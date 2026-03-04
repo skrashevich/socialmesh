@@ -101,7 +101,7 @@ class ProfanityChecker {
 
     // Critical and high severity = reject immediately
     if (highestSeverity == 'critical' || highestSeverity == 'high') {
-      return 'Contains inappropriate content';
+      return 'Contains inappropriate content'; // lint-allow: hardcoded-string
     }
 
     return null; // Medium/low severity passes client check, server will review

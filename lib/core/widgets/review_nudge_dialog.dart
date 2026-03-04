@@ -90,7 +90,7 @@ class _ReviewNudgeDialogState extends ConsumerState<ReviewNudgeDialog>
         ),
         const SizedBox(height: AppTheme.spacing16),
         Text(
-          'Enjoying Socialmesh?',
+          'Enjoying Socialmesh?', // lint-allow: hardcoded-string
           style: theme.textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.w600,
           ),
@@ -98,7 +98,7 @@ class _ReviewNudgeDialogState extends ConsumerState<ReviewNudgeDialog>
         ),
         const SizedBox(height: AppTheme.spacing12),
         Text(
-          'Your feedback helps us improve the app and reach more mesh enthusiasts.',
+          'Your feedback helps us improve the app and reach more mesh enthusiasts.', // lint-allow: hardcoded-string
           style: theme.textTheme.bodyMedium?.copyWith(
             color: colorScheme.onSurfaceVariant,
           ),
@@ -118,7 +118,7 @@ class _ReviewNudgeDialogState extends ConsumerState<ReviewNudgeDialog>
                   ),
                 ),
                 child: Text(
-                  'Not now',
+                  'Not now', // lint-allow: hardcoded-string
                   style: TextStyle(color: colorScheme.onSurfaceVariant),
                 ),
               ),
@@ -143,7 +143,9 @@ class _ReviewNudgeDialogState extends ConsumerState<ReviewNudgeDialog>
                         ),
                       )
                     : const Icon(Icons.star_rounded, size: 18),
-                label: Text(_isLoading ? 'Opening...' : 'Rate it'),
+                label: Text(
+                  _isLoading ? 'Opening...' : 'Rate it',
+                ), // lint-allow: hardcoded-string
               ),
             ),
           ],

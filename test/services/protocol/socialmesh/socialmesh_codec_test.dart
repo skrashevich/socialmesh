@@ -1001,8 +1001,8 @@ void main() {
     });
 
     // -- Portnum set completeness ------------------------------------------
-    test('SmPortnum.all contains exactly the 3 extension portnums', () {
-      expect(SmPortnum.all, {260, 261, 262});
+    test('SmPortnum.all contains exactly the 4 extension portnums', () {
+      expect(SmPortnum.all, {260, 261, 262, 263});
       expect(
         SmPortnum.all.contains(SmPortnum.legacy),
         isFalse,

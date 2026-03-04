@@ -181,7 +181,7 @@ class SignalStrengthContentState extends ConsumerState<SignalStrengthContent> {
                 )
               : Center(
                   child: Text(
-                    'Waiting for signal data...',
+                    'Waiting for signal data...', // lint-allow: hardcoded-string
                     style: TextStyle(color: context.textTertiary, fontSize: 14),
                   ),
                 ),

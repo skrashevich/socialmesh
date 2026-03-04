@@ -70,22 +70,24 @@ class PushNotificationService {
   static const _kPreviousFcmToken = 'previous_fcm_token';
 
   /// Notification channel for Android
-  static const AndroidNotificationChannel _socialChannel =
-      AndroidNotificationChannel(
-        'social_notifications',
-        'Social Notifications',
-        description: 'Notifications for follows, likes, and comments',
-        importance: Importance.high,
-      );
+  static const AndroidNotificationChannel
+  _socialChannel = AndroidNotificationChannel(
+    'social_notifications',
+    'Social Notifications', // lint-allow: hardcoded-string
+    description:
+        'Notifications for follows, likes, and comments', // lint-allow: hardcoded-string
+    importance: Importance.high,
+  );
 
   /// Android notification channel for admin announcements
-  final AndroidNotificationChannel _announcementsChannel =
-      const AndroidNotificationChannel(
-        'announcements',
-        'Announcements',
-        description: 'Important announcements from Socialmesh',
-        importance: Importance.high,
-      );
+  final AndroidNotificationChannel
+  _announcementsChannel = const AndroidNotificationChannel(
+    'announcements',
+    'Announcements',
+    description:
+        'Important announcements from Socialmesh', // lint-allow: hardcoded-string
+    importance: Importance.high,
+  );
 
   /// Initialize the push notification service
   Future<void> initialize() async {

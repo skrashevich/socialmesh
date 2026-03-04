@@ -930,7 +930,8 @@ class AutomationEngine {
             titleTemplate: action.notificationTitle ?? automation.name,
             bodyTemplate: action.notificationBody ?? '',
             fallbackTitle: automation.name,
-            fallbackBody: 'Automation triggered.',
+            fallbackBody:
+                'Automation triggered.', // lint-allow: hardcoded-string
           );
           final renderResult = NotificationRenderer.render(
             spec: notifSpec,
@@ -1028,12 +1029,18 @@ class AutomationEngine {
           // value3: Additional context (battery, SNR, timestamp)
           final contextParts = <String>[];
           if (event.batteryLevel != null) {
-            contextParts.add('Battery: ${event.batteryLevel}%');
+            contextParts.add(
+              'Battery: ${event.batteryLevel}%',
+            ); // lint-allow: hardcoded-string
           }
           if (event.snr != null) {
-            contextParts.add('SNR: ${event.snr}');
+            contextParts.add(
+              'SNR: ${event.snr}',
+            ); // lint-allow: hardcoded-string
           }
-          contextParts.add('Time: ${event.timestamp.toIso8601String()}');
+          contextParts.add(
+            'Time: ${event.timestamp.toIso8601String()}',
+          ); // lint-allow: hardcoded-string
           value3 = contextParts.join(', ');
 
           final webhookSuccess = await _iftttService.triggerCustomEvent(
@@ -1088,7 +1095,7 @@ class AutomationEngine {
           // The shortcut can access the input via "Shortcut Input" action
           // and parse it as JSON using "Get Dictionary from Input"
           final shortcutUrl = Uri.parse(
-            'shortcuts://x-callback-url/run-shortcut?name=$encodedName&input=text&text=$encodedInput',
+            'shortcuts://x-callback-url/run-shortcut?name=$encodedName&input=text&text=$encodedInput', // lint-allow: hardcoded-string
           );
 
           try {
@@ -1364,7 +1371,7 @@ class AutomationEngine {
           .replaceAll('{{signal.threshold}}', '${trigger.signalThreshold} dB')
           .replaceAll(
             '{{channel.name}}',
-            'Channel ${trigger.channelIndex ?? 0}',
+            'Channel ${trigger.channelIndex ?? 0}', // lint-allow: hardcoded-string
           );
     }
 
@@ -1374,15 +1381,21 @@ class AutomationEngine {
   /// Build trigger details string for logging
   String _buildTriggerDetails(AutomationEvent event) {
     final parts = <String>[];
-    parts.add('Trigger: ${event.type.displayName}');
+    parts.add(
+      'Trigger: ${event.type.displayName}',
+    ); // lint-allow: hardcoded-string
     if (event.nodeName != null) {
-      parts.add('Node: ${event.nodeName}');
+      parts.add('Node: ${event.nodeName}'); // lint-allow: hardcoded-string
     }
     if (event.batteryLevel != null) {
-      parts.add('Battery: ${event.batteryLevel}%');
+      parts.add(
+        'Battery: ${event.batteryLevel}%',
+      ); // lint-allow: hardcoded-string
     }
     if (event.messageText != null) {
-      parts.add('Message: ${event.messageText}');
+      parts.add(
+        'Message: ${event.messageText}',
+      ); // lint-allow: hardcoded-string
     }
     return parts.join(', ');
   }

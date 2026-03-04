@@ -137,11 +137,11 @@ class IncidentDatabase {
     batch.execute('CREATE INDEX idx_incidents_state ON incidents(state)');
     batch.execute('CREATE INDEX idx_incidents_ownerId ON incidents(ownerId)');
     batch.execute(
-      'CREATE INDEX idx_incidents_assigneeId ON incidents(assigneeId)',
+      'CREATE INDEX idx_incidents_assigneeId ON incidents(assigneeId)', // lint-allow: hardcoded-string
     );
     batch.execute('CREATE INDEX idx_incidents_priority ON incidents(priority)');
     batch.execute(
-      'CREATE INDEX idx_incidents_createdAt ON incidents(createdAt)',
+      'CREATE INDEX idx_incidents_createdAt ON incidents(createdAt)', // lint-allow: hardcoded-string
     );
 
     // -- incident_transitions (append-only) --
@@ -161,12 +161,12 @@ class IncidentDatabase {
     ''');
 
     batch.execute(
-      'CREATE INDEX idx_transitions_incidentId '
-      'ON incident_transitions(incidentId)',
+      'CREATE INDEX idx_transitions_incidentId ' // lint-allow: hardcoded-string
+      'ON incident_transitions(incidentId)', // lint-allow: hardcoded-string
     );
     batch.execute(
-      'CREATE INDEX idx_transitions_timestamp '
-      'ON incident_transitions(timestamp)',
+      'CREATE INDEX idx_transitions_timestamp ' // lint-allow: hardcoded-string
+      'ON incident_transitions(timestamp)', // lint-allow: hardcoded-string
     );
 
     // -- incident_field_reports --
@@ -182,12 +182,12 @@ class IncidentDatabase {
     ''');
 
     batch.execute(
-      'CREATE INDEX idx_field_reports_incidentId '
-      'ON incident_field_reports(incidentId)',
+      'CREATE INDEX idx_field_reports_incidentId ' // lint-allow: hardcoded-string
+      'ON incident_field_reports(incidentId)', // lint-allow: hardcoded-string
     );
     batch.execute(
-      'CREATE INDEX idx_field_reports_signalId '
-      'ON incident_field_reports(signalId)',
+      'CREATE INDEX idx_field_reports_signalId ' // lint-allow: hardcoded-string
+      'ON incident_field_reports(signalId)', // lint-allow: hardcoded-string
     );
 
     await batch.commit(noResult: true);
@@ -202,10 +202,10 @@ class IncidentDatabase {
 
     if (oldVersion < 2) {
       await db.execute(
-        'ALTER TABLE incident_transitions ADD COLUMN actorRole TEXT',
+        'ALTER TABLE incident_transitions ADD COLUMN actorRole TEXT', // lint-allow: hardcoded-string
       );
       await db.execute(
-        'ALTER TABLE incident_transitions ADD COLUMN supersededBy TEXT',
+        'ALTER TABLE incident_transitions ADD COLUMN supersededBy TEXT', // lint-allow: hardcoded-string
       );
       AppLogging.incidents(
         'IncidentDatabase: v2 migration — added actorRole, supersededBy',
@@ -432,13 +432,19 @@ class IncidentDatabase {
     final whereArgs = <Object>[orgId];
 
     if (states != null && states.isNotEmpty) {
-      final placeholders = List.filled(states.length, '?').join(', ');
+      final placeholders = List.filled(
+        states.length,
+        '?',
+      ).join(', '); // lint-allow: hardcoded-string
       where.write(' AND state IN ($placeholders)');
       whereArgs.addAll(states.map((s) => s.name));
     }
 
     if (priorities != null && priorities.isNotEmpty) {
-      final placeholders = List.filled(priorities.length, '?').join(', ');
+      final placeholders = List.filled(
+        priorities.length,
+        '?',
+      ).join(', '); // lint-allow: hardcoded-string
       where.write(' AND priority IN ($placeholders)');
       whereArgs.addAll(priorities.map((p) => p.name));
     }

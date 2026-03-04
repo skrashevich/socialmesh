@@ -54,57 +54,61 @@ class BindingRegistry {
     // Node Info
     BindingDefinition(
       path: 'node.longName',
-      label: 'Node Name',
-      description: 'Full name of the node',
+      label: 'Node Name', // lint-allow: hardcoded-string
+      description: 'Full name of the node', // lint-allow: hardcoded-string
       category: BindingCategory.node,
       valueType: String,
     ),
     BindingDefinition(
       path: 'node.shortName',
-      label: 'Short Name',
-      description: 'Short 4-character node identifier',
+      label: 'Short Name', // lint-allow: hardcoded-string
+      description:
+          'Short 4-character node identifier', // lint-allow: hardcoded-string
       category: BindingCategory.node,
       valueType: String,
     ),
     BindingDefinition(
       path: 'node.nodeNum',
-      label: 'Node Number',
-      description: 'Unique node number',
+      label: 'Node Number', // lint-allow: hardcoded-string
+      description: 'Unique node number', // lint-allow: hardcoded-string
       category: BindingCategory.node,
       valueType: int,
     ),
     BindingDefinition(
       path: 'node.presenceConfidence',
-      label: 'Presence Confidence',
-      description: 'Inferred presence: active, fading, stale, unknown',
+      label: 'Presence Confidence', // lint-allow: hardcoded-string
+      description:
+          'Inferred presence: active, fading, stale, unknown', // lint-allow: hardcoded-string
       category: BindingCategory.node,
       valueType: String,
     ),
     BindingDefinition(
       path: 'node.lastHeard',
-      label: 'Last Heard',
-      description: 'When the node was last heard from',
+      label: 'Last Heard', // lint-allow: hardcoded-string
+      description:
+          'When the node was last heard from', // lint-allow: hardcoded-string
       category: BindingCategory.node,
       valueType: DateTime,
     ),
     BindingDefinition(
       path: 'node.role',
-      label: 'Node Role',
-      description: 'Role in the mesh (CLIENT, ROUTER, etc.)',
+      label: 'Node Role', // lint-allow: hardcoded-string
+      description:
+          'Role in the mesh (CLIENT, ROUTER, etc.)', // lint-allow: hardcoded-string
       category: BindingCategory.node,
       valueType: String,
     ),
     BindingDefinition(
       path: 'node.hardwareModel',
-      label: 'Hardware Model',
-      description: 'Device hardware model',
+      label: 'Hardware Model', // lint-allow: hardcoded-string
+      description: 'Device hardware model', // lint-allow: hardcoded-string
       category: BindingCategory.node,
       valueType: String,
     ),
     BindingDefinition(
       path: 'node.firmwareVersion',
-      label: 'Firmware Version',
-      description: 'Current firmware version',
+      label: 'Firmware Version', // lint-allow: hardcoded-string
+      description: 'Current firmware version', // lint-allow: hardcoded-string
       category: BindingCategory.node,
       valueType: String,
     ),
@@ -113,7 +117,7 @@ class BindingRegistry {
     BindingDefinition(
       path: 'node.snr',
       label: 'SNR',
-      description: 'Signal-to-noise ratio',
+      description: 'Signal-to-noise ratio', // lint-allow: hardcoded-string
       category: BindingCategory.node,
       valueType: int,
       unit: 'dB',
@@ -125,7 +129,7 @@ class BindingRegistry {
     BindingDefinition(
       path: 'device.snr',
       label: 'SNR',
-      description: 'Signal-to-noise ratio',
+      description: 'Signal-to-noise ratio', // lint-allow: hardcoded-string
       category: BindingCategory.device,
       valueType: int,
       unit: 'dB',
@@ -136,7 +140,8 @@ class BindingRegistry {
     BindingDefinition(
       path: 'node.rssi',
       label: 'RSSI',
-      description: 'Received signal strength indicator',
+      description:
+          'Received signal strength indicator', // lint-allow: hardcoded-string
       category: BindingCategory.node,
       valueType: int,
       unit: 'dBm',
@@ -148,7 +153,8 @@ class BindingRegistry {
     BindingDefinition(
       path: 'device.rssi',
       label: 'RSSI',
-      description: 'Received signal strength indicator',
+      description:
+          'Received signal strength indicator', // lint-allow: hardcoded-string
       category: BindingCategory.device,
       valueType: int,
       unit: 'dBm',
@@ -159,7 +165,7 @@ class BindingRegistry {
     BindingDefinition(
       path: 'node.distance',
       label: 'Distance',
-      description: 'Distance to node in meters',
+      description: 'Distance to node in meters', // lint-allow: hardcoded-string
       category: BindingCategory.node,
       valueType: double,
       unit: 'm',
@@ -169,8 +175,8 @@ class BindingRegistry {
     // Power & Battery
     BindingDefinition(
       path: 'node.batteryLevel',
-      label: 'Battery Level',
-      description: 'Battery percentage (0-100)',
+      label: 'Battery Level', // lint-allow: hardcoded-string
+      description: 'Battery percentage (0-100)', // lint-allow: hardcoded-string
       category: BindingCategory.power,
       valueType: int,
       unit: '%',
@@ -180,8 +186,8 @@ class BindingRegistry {
     ),
     BindingDefinition(
       path: 'node.voltage',
-      label: 'Battery Voltage',
-      description: 'Battery voltage',
+      label: 'Battery Voltage', // lint-allow: hardcoded-string
+      description: 'Battery voltage', // lint-allow: hardcoded-string
       category: BindingCategory.power,
       valueType: double,
       unit: 'V',
@@ -189,8 +195,9 @@ class BindingRegistry {
     ),
     BindingDefinition(
       path: 'node.channelUtilization',
-      label: 'Channel Utilization',
-      description: 'Current channel utilization percentage',
+      label: 'Channel Utilization', // lint-allow: hardcoded-string
+      description:
+          'Current channel utilization percentage', // lint-allow: hardcoded-string
       category: BindingCategory.device,
       valueType: double,
       unit: '%',
@@ -202,8 +209,9 @@ class BindingRegistry {
     // Aliases for node.channelUtilization
     BindingDefinition(
       path: 'device.channelUtilization',
-      label: 'Channel Utilization',
-      description: 'Current channel utilization percentage',
+      label: 'Channel Utilization', // lint-allow: hardcoded-string
+      description:
+          'Current channel utilization percentage', // lint-allow: hardcoded-string
       category: BindingCategory.device,
       valueType: double,
       unit: '%',
@@ -214,8 +222,9 @@ class BindingRegistry {
     ),
     BindingDefinition(
       path: 'device.channelUtil',
-      label: 'Channel Util',
-      description: 'Current channel utilization percentage',
+      label: 'Channel Util', // lint-allow: hardcoded-string
+      description:
+          'Current channel utilization percentage', // lint-allow: hardcoded-string
       category: BindingCategory.device,
       valueType: double,
       unit: '%',
@@ -226,8 +235,9 @@ class BindingRegistry {
     ),
     BindingDefinition(
       path: 'node.airUtilTx',
-      label: 'Airtime TX',
-      description: 'Transmission airtime utilization',
+      label: 'Airtime TX', // lint-allow: hardcoded-string
+      description:
+          'Transmission airtime utilization', // lint-allow: hardcoded-string
       category: BindingCategory.device,
       valueType: double,
       unit: '%',
@@ -239,7 +249,7 @@ class BindingRegistry {
     BindingDefinition(
       path: 'node.uptimeSeconds',
       label: 'Uptime',
-      description: 'Device uptime in seconds',
+      description: 'Device uptime in seconds', // lint-allow: hardcoded-string
       category: BindingCategory.device,
       valueType: int,
       unit: 's',
@@ -249,16 +259,17 @@ class BindingRegistry {
     BindingDefinition(
       path: 'node.temperature',
       label: 'Temperature',
-      description: 'Ambient temperature',
+      description: 'Ambient temperature', // lint-allow: hardcoded-string
       category: BindingCategory.environment,
       valueType: double,
-      unit: '°C',
+      unit: '°C', // lint-allow: hardcoded-string
       defaultFormat: '{value}°C',
     ),
     BindingDefinition(
       path: 'node.humidity',
       label: 'Humidity',
-      description: 'Relative humidity percentage',
+      description:
+          'Relative humidity percentage', // lint-allow: hardcoded-string
       category: BindingCategory.environment,
       valueType: double,
       unit: '%',
@@ -269,7 +280,7 @@ class BindingRegistry {
     BindingDefinition(
       path: 'node.barometricPressure',
       label: 'Pressure',
-      description: 'Barometric pressure',
+      description: 'Barometric pressure', // lint-allow: hardcoded-string
       category: BindingCategory.environment,
       valueType: double,
       unit: 'hPa',
@@ -279,7 +290,7 @@ class BindingRegistry {
     BindingDefinition(
       path: 'node.pressure',
       label: 'Pressure',
-      description: 'Barometric pressure',
+      description: 'Barometric pressure', // lint-allow: hardcoded-string
       category: BindingCategory.environment,
       valueType: double,
       unit: 'hPa',
@@ -287,8 +298,8 @@ class BindingRegistry {
     ),
     BindingDefinition(
       path: 'node.lux',
-      label: 'Light Level',
-      description: 'Ambient light level',
+      label: 'Light Level', // lint-allow: hardcoded-string
+      description: 'Ambient light level', // lint-allow: hardcoded-string
       category: BindingCategory.environment,
       valueType: double,
       unit: 'lux',
@@ -296,8 +307,8 @@ class BindingRegistry {
     ),
     BindingDefinition(
       path: 'node.iaq',
-      label: 'IAQ Index',
-      description: 'Indoor air quality index',
+      label: 'IAQ Index', // lint-allow: hardcoded-string
+      description: 'Indoor air quality index', // lint-allow: hardcoded-string
       category: BindingCategory.environment,
       valueType: int,
       minValue: 0,
@@ -307,8 +318,8 @@ class BindingRegistry {
     // Wind
     BindingDefinition(
       path: 'node.windSpeed',
-      label: 'Wind Speed',
-      description: 'Current wind speed',
+      label: 'Wind Speed', // lint-allow: hardcoded-string
+      description: 'Current wind speed', // lint-allow: hardcoded-string
       category: BindingCategory.environment,
       valueType: double,
       unit: 'm/s',
@@ -316,8 +327,8 @@ class BindingRegistry {
     ),
     BindingDefinition(
       path: 'node.windDirection',
-      label: 'Wind Direction',
-      description: 'Wind direction in degrees',
+      label: 'Wind Direction', // lint-allow: hardcoded-string
+      description: 'Wind direction in degrees', // lint-allow: hardcoded-string
       category: BindingCategory.environment,
       valueType: int,
       unit: '°',
@@ -327,8 +338,8 @@ class BindingRegistry {
     ),
     BindingDefinition(
       path: 'node.windGust',
-      label: 'Wind Gust',
-      description: 'Wind gust speed',
+      label: 'Wind Gust', // lint-allow: hardcoded-string
+      description: 'Wind gust speed', // lint-allow: hardcoded-string
       category: BindingCategory.environment,
       valueType: double,
       unit: 'm/s',
@@ -338,8 +349,8 @@ class BindingRegistry {
     // Rain
     BindingDefinition(
       path: 'node.rainfall1h',
-      label: 'Rainfall (1h)',
-      description: 'Rainfall in last hour',
+      label: 'Rainfall (1h)', // lint-allow: hardcoded-string
+      description: 'Rainfall in last hour', // lint-allow: hardcoded-string
       category: BindingCategory.environment,
       valueType: double,
       unit: 'mm',
@@ -347,8 +358,8 @@ class BindingRegistry {
     ),
     BindingDefinition(
       path: 'node.rainfall24h',
-      label: 'Rainfall (24h)',
-      description: 'Rainfall in last 24 hours',
+      label: 'Rainfall (24h)', // lint-allow: hardcoded-string
+      description: 'Rainfall in last 24 hours', // lint-allow: hardcoded-string
       category: BindingCategory.environment,
       valueType: double,
       unit: 'mm',
@@ -358,8 +369,8 @@ class BindingRegistry {
     // Soil
     BindingDefinition(
       path: 'node.soilMoisture',
-      label: 'Soil Moisture',
-      description: 'Soil moisture percentage',
+      label: 'Soil Moisture', // lint-allow: hardcoded-string
+      description: 'Soil moisture percentage', // lint-allow: hardcoded-string
       category: BindingCategory.environment,
       valueType: int,
       unit: '%',
@@ -369,46 +380,46 @@ class BindingRegistry {
     ),
     BindingDefinition(
       path: 'node.soilTemperature',
-      label: 'Soil Temperature',
-      description: 'Soil temperature',
+      label: 'Soil Temperature', // lint-allow: hardcoded-string
+      description: 'Soil temperature', // lint-allow: hardcoded-string
       category: BindingCategory.environment,
       valueType: double,
-      unit: '°C',
+      unit: '°C', // lint-allow: hardcoded-string
       defaultFormat: '{value}°C',
     ),
 
     // Air Quality
     BindingDefinition(
       path: 'node.pm25Standard',
-      label: 'PM2.5',
-      description: 'PM2.5 particulate matter',
+      label: 'PM2.5', // lint-allow: hardcoded-string
+      description: 'PM2.5 particulate matter', // lint-allow: hardcoded-string
       category: BindingCategory.airQuality,
       valueType: int,
-      unit: 'µg/m³',
+      unit: 'µg/m³', // lint-allow: hardcoded-string
       defaultFormat: '{value} µg/m³',
     ),
     BindingDefinition(
       path: 'node.pm10Standard',
-      label: 'PM1.0',
-      description: 'PM1.0 particulate matter',
+      label: 'PM1.0', // lint-allow: hardcoded-string
+      description: 'PM1.0 particulate matter', // lint-allow: hardcoded-string
       category: BindingCategory.airQuality,
       valueType: int,
-      unit: 'µg/m³',
+      unit: 'µg/m³', // lint-allow: hardcoded-string
       defaultFormat: '{value} µg/m³',
     ),
     BindingDefinition(
       path: 'node.pm100Standard',
       label: 'PM10',
-      description: 'PM10 particulate matter',
+      description: 'PM10 particulate matter', // lint-allow: hardcoded-string
       category: BindingCategory.airQuality,
       valueType: int,
-      unit: 'µg/m³',
+      unit: 'µg/m³', // lint-allow: hardcoded-string
       defaultFormat: '{value} µg/m³',
     ),
     BindingDefinition(
       path: 'node.co2',
       label: 'CO2',
-      description: 'CO2 concentration',
+      description: 'CO2 concentration', // lint-allow: hardcoded-string
       category: BindingCategory.airQuality,
       valueType: int,
       unit: 'ppm',
@@ -419,7 +430,7 @@ class BindingRegistry {
     BindingDefinition(
       path: 'node.latitude',
       label: 'Latitude',
-      description: 'GPS latitude coordinate',
+      description: 'GPS latitude coordinate', // lint-allow: hardcoded-string
       category: BindingCategory.gps,
       valueType: double,
       defaultFormat: '{value}°',
@@ -427,7 +438,7 @@ class BindingRegistry {
     BindingDefinition(
       path: 'node.longitude',
       label: 'Longitude',
-      description: 'GPS longitude coordinate',
+      description: 'GPS longitude coordinate', // lint-allow: hardcoded-string
       category: BindingCategory.gps,
       valueType: double,
       defaultFormat: '{value}°',
@@ -435,7 +446,7 @@ class BindingRegistry {
     BindingDefinition(
       path: 'node.altitude',
       label: 'Altitude',
-      description: 'Altitude above sea level',
+      description: 'Altitude above sea level', // lint-allow: hardcoded-string
       category: BindingCategory.gps,
       valueType: int,
       unit: 'm',
@@ -444,14 +455,15 @@ class BindingRegistry {
     BindingDefinition(
       path: 'node.satsInView',
       label: 'Satellites',
-      description: 'Number of GPS satellites in view',
+      description:
+          'Number of GPS satellites in view', // lint-allow: hardcoded-string
       category: BindingCategory.gps,
       valueType: int,
     ),
     BindingDefinition(
       path: 'node.groundSpeed',
-      label: 'Ground Speed',
-      description: 'Ground speed',
+      label: 'Ground Speed', // lint-allow: hardcoded-string
+      description: 'Ground speed', // lint-allow: hardcoded-string
       category: BindingCategory.gps,
       valueType: double,
       unit: 'm/s',
@@ -460,7 +472,8 @@ class BindingRegistry {
     BindingDefinition(
       path: 'node.groundTrack',
       label: 'Heading',
-      description: 'Ground track/heading in degrees',
+      description:
+          'Ground track/heading in degrees', // lint-allow: hardcoded-string
       category: BindingCategory.gps,
       valueType: double,
       unit: '°',
@@ -472,8 +485,8 @@ class BindingRegistry {
     // Power Channels
     BindingDefinition(
       path: 'node.ch1Voltage',
-      label: 'Channel 1 Voltage',
-      description: 'Power channel 1 voltage',
+      label: 'Channel 1 Voltage', // lint-allow: hardcoded-string
+      description: 'Power channel 1 voltage', // lint-allow: hardcoded-string
       category: BindingCategory.power,
       valueType: double,
       unit: 'V',
@@ -481,8 +494,8 @@ class BindingRegistry {
     ),
     BindingDefinition(
       path: 'node.ch1Current',
-      label: 'Channel 1 Current',
-      description: 'Power channel 1 current',
+      label: 'Channel 1 Current', // lint-allow: hardcoded-string
+      description: 'Power channel 1 current', // lint-allow: hardcoded-string
       category: BindingCategory.power,
       valueType: double,
       unit: 'A',
@@ -492,29 +505,31 @@ class BindingRegistry {
     // Network Stats
     BindingDefinition(
       path: 'node.numPacketsTx',
-      label: 'Packets TX',
-      description: 'Total packets transmitted',
+      label: 'Packets TX', // lint-allow: hardcoded-string
+      description: 'Total packets transmitted', // lint-allow: hardcoded-string
       category: BindingCategory.network,
       valueType: int,
     ),
     BindingDefinition(
       path: 'node.numPacketsRx',
-      label: 'Packets RX',
-      description: 'Total packets received',
+      label: 'Packets RX', // lint-allow: hardcoded-string
+      description: 'Total packets received', // lint-allow: hardcoded-string
       category: BindingCategory.network,
       valueType: int,
     ),
     BindingDefinition(
       path: 'node.numTxDropped',
-      label: 'Packets TX Dropped',
-      description: 'Packets dropped due to full TX queue',
+      label: 'Packets TX Dropped', // lint-allow: hardcoded-string
+      description:
+          'Packets dropped due to full TX queue', // lint-allow: hardcoded-string
       category: BindingCategory.network,
       valueType: int,
     ),
     BindingDefinition(
       path: 'node.noiseFloor',
-      label: 'Noise Floor',
-      description: 'Measured noise floor in dBm',
+      label: 'Noise Floor', // lint-allow: hardcoded-string
+      description:
+          'Measured noise floor in dBm', // lint-allow: hardcoded-string
       category: BindingCategory.network,
       valueType: int,
       unit: 'dBm',
@@ -522,22 +537,25 @@ class BindingRegistry {
     ),
     BindingDefinition(
       path: 'node.nodeStatus',
-      label: 'Node Status',
-      description: 'Custom status message from the node',
+      label: 'Node Status', // lint-allow: hardcoded-string
+      description:
+          'Custom status message from the node', // lint-allow: hardcoded-string
       category: BindingCategory.node,
       valueType: String,
     ),
     BindingDefinition(
       path: 'node.numOnlineNodes',
-      label: 'Nodes Heard (2h)',
-      description: 'Meshtastic metric: nodes heard in the last 2 hours',
+      label: 'Nodes Heard (2h)', // lint-allow: hardcoded-string
+      description:
+          'Meshtastic metric: nodes heard in the last 2 hours', // lint-allow: hardcoded-string
       category: BindingCategory.network,
       valueType: int,
     ),
     BindingDefinition(
       path: 'node.numTotalNodes',
-      label: 'Total Nodes',
-      description: 'Total number of known nodes',
+      label: 'Total Nodes', // lint-allow: hardcoded-string
+      description:
+          'Total number of known nodes', // lint-allow: hardcoded-string
       category: BindingCategory.network,
       valueType: int,
     ),
@@ -545,44 +563,47 @@ class BindingRegistry {
     // Network-wide bindings (not node-specific)
     BindingDefinition(
       path: 'network.totalNodes',
-      label: 'Total Mesh Nodes',
-      description: 'Total nodes in the mesh network',
+      label: 'Total Mesh Nodes', // lint-allow: hardcoded-string
+      description:
+          'Total nodes in the mesh network', // lint-allow: hardcoded-string
       category: BindingCategory.network,
       valueType: int,
     ),
     BindingDefinition(
       path: 'network.activeCount',
-      label: 'Active Mesh Nodes',
-      description: 'Nodes heard recently',
+      label: 'Active Mesh Nodes', // lint-allow: hardcoded-string
+      description: 'Nodes heard recently', // lint-allow: hardcoded-string
       category: BindingCategory.network,
       valueType: int,
     ),
     // Back-compat alias for older widgets
     BindingDefinition(
       path: 'network.onlineNodes',
-      label: 'Active Mesh Nodes (legacy)',
-      description: 'Alias for active node count (back-compat)',
+      label: 'Active Mesh Nodes (legacy)', // lint-allow: hardcoded-string
+      description:
+          'Alias for active node count (back-compat)', // lint-allow: hardcoded-string
       category: BindingCategory.network,
       valueType: int,
     ),
     BindingDefinition(
       path: 'network.unreadMessages',
-      label: 'Unread Messages',
-      description: 'Number of unread messages',
+      label: 'Unread Messages', // lint-allow: hardcoded-string
+      description: 'Number of unread messages', // lint-allow: hardcoded-string
       category: BindingCategory.messaging,
       valueType: int,
     ),
     BindingDefinition(
       path: 'messaging.recentCount',
-      label: 'Recent Messages',
-      description: 'Number of recent messages',
+      label: 'Recent Messages', // lint-allow: hardcoded-string
+      description: 'Number of recent messages', // lint-allow: hardcoded-string
       category: BindingCategory.messaging,
       valueType: int,
     ),
     BindingDefinition(
       path: 'node.displayName',
-      label: 'Display Name',
-      description: 'Node display name (long name or short name)',
+      label: 'Display Name', // lint-allow: hardcoded-string
+      description:
+          'Node display name (long name or short name)', // lint-allow: hardcoded-string
       category: BindingCategory.node,
       valueType: String,
     ),
@@ -590,8 +611,9 @@ class BindingRegistry {
     // RF Metadata
     BindingDefinition(
       path: 'node.hopCount',
-      label: 'Hop Count',
-      description: 'Number of hops from this node (0 = direct neighbor)',
+      label: 'Hop Count', // lint-allow: hardcoded-string
+      description:
+          'Number of hops from this node (0 = direct neighbor)', // lint-allow: hardcoded-string
       category: BindingCategory.node,
       valueType: int,
       minValue: 0,
@@ -599,15 +621,17 @@ class BindingRegistry {
     ),
     BindingDefinition(
       path: 'node.viaMqtt',
-      label: 'Via MQTT',
-      description: 'Whether this node was last heard via MQTT transport',
+      label: 'Via MQTT', // lint-allow: hardcoded-string
+      description:
+          'Whether this node was last heard via MQTT transport', // lint-allow: hardcoded-string
       category: BindingCategory.node,
       valueType: bool,
     ),
     BindingDefinition(
       path: 'node.firstHeard',
-      label: 'First Heard',
-      description: 'When the node was first discovered',
+      label: 'First Heard', // lint-allow: hardcoded-string
+      description:
+          'When the node was first discovered', // lint-allow: hardcoded-string
       category: BindingCategory.node,
       valueType: DateTime,
     ),
@@ -615,8 +639,8 @@ class BindingRegistry {
     // Additional Network Stats
     BindingDefinition(
       path: 'node.numPacketsRxBad',
-      label: 'Bad Packets RX',
-      description: 'Bad packets received',
+      label: 'Bad Packets RX', // lint-allow: hardcoded-string
+      description: 'Bad packets received', // lint-allow: hardcoded-string
       category: BindingCategory.network,
       valueType: int,
     ),
@@ -624,8 +648,8 @@ class BindingRegistry {
     // Additional Power Channels
     BindingDefinition(
       path: 'node.ch2Voltage',
-      label: 'Channel 2 Voltage',
-      description: 'Power channel 2 voltage',
+      label: 'Channel 2 Voltage', // lint-allow: hardcoded-string
+      description: 'Power channel 2 voltage', // lint-allow: hardcoded-string
       category: BindingCategory.power,
       valueType: double,
       unit: 'V',
@@ -633,8 +657,8 @@ class BindingRegistry {
     ),
     BindingDefinition(
       path: 'node.ch2Current',
-      label: 'Channel 2 Current',
-      description: 'Power channel 2 current',
+      label: 'Channel 2 Current', // lint-allow: hardcoded-string
+      description: 'Power channel 2 current', // lint-allow: hardcoded-string
       category: BindingCategory.power,
       valueType: double,
       unit: 'A',
@@ -642,8 +666,8 @@ class BindingRegistry {
     ),
     BindingDefinition(
       path: 'node.ch3Voltage',
-      label: 'Channel 3 Voltage',
-      description: 'Power channel 3 voltage',
+      label: 'Channel 3 Voltage', // lint-allow: hardcoded-string
+      description: 'Power channel 3 voltage', // lint-allow: hardcoded-string
       category: BindingCategory.power,
       valueType: double,
       unit: 'V',
@@ -651,8 +675,8 @@ class BindingRegistry {
     ),
     BindingDefinition(
       path: 'node.ch3Current',
-      label: 'Channel 3 Current',
-      description: 'Power channel 3 current',
+      label: 'Channel 3 Current', // lint-allow: hardcoded-string
+      description: 'Power channel 3 current', // lint-allow: hardcoded-string
       category: BindingCategory.power,
       valueType: double,
       unit: 'A',
@@ -681,19 +705,19 @@ class BindingRegistry {
   static String getCategoryName(BindingCategory category) {
     switch (category) {
       case BindingCategory.node:
-        return 'Node Info';
+        return 'Node Info'; // lint-allow: hardcoded-string
       case BindingCategory.device:
-        return 'Device Metrics';
+        return 'Device Metrics'; // lint-allow: hardcoded-string
       case BindingCategory.network:
         return 'Network';
       case BindingCategory.environment:
         return 'Environment';
       case BindingCategory.power:
-        return 'Power & Battery';
+        return 'Power & Battery'; // lint-allow: hardcoded-string
       case BindingCategory.airQuality:
-        return 'Air Quality';
+        return 'Air Quality'; // lint-allow: hardcoded-string
       case BindingCategory.gps:
-        return 'GPS & Position';
+        return 'GPS & Position'; // lint-allow: hardcoded-string
       case BindingCategory.messaging:
         return 'Messaging';
     }
@@ -1020,11 +1044,11 @@ class DataBindingEngine {
     switch (path) {
       // Node info
       case 'node.longName':
-        return 'Node Name';
+        return 'Node Name'; // lint-allow: hardcoded-string
       case 'node.shortName':
         return 'NODE';
       case 'node.displayName':
-        return 'Node Name';
+        return 'Node Name'; // lint-allow: hardcoded-string
       case 'node.nodeNum':
         return 12345678;
       case 'node.presenceConfidence':
@@ -1032,7 +1056,7 @@ class DataBindingEngine {
       case 'node.role':
         return 'CLIENT';
       case 'node.hardwareModel':
-        return 'T-Beam';
+        return 'T-Beam'; // lint-allow: hardcoded-string
       case 'node.firmwareVersion':
         return '2.3.0';
 
@@ -1430,7 +1454,8 @@ class DataBindingEngine {
     final diff = now.difference(dt);
 
     if (diff.inSeconds < 60) {
-      return _l10n?.widgetBuilderMarketplaceJustNow ?? 'Just now';
+      return _l10n?.widgetBuilderMarketplaceJustNow ??
+          'Just now'; // lint-allow: hardcoded-string
     } else if (diff.inMinutes < 60) {
       return _l10n?.widgetBuilderMarketplaceMinutesAgo(diff.inMinutes) ??
           '${diff.inMinutes}m ago';

@@ -74,7 +74,7 @@ class MapNodeDrawer extends StatelessWidget {
     required this.onSearchChanged,
     required this.content,
     this.headerExtra,
-    this.searchHintText = 'Search nodes...',
+    this.searchHintText = 'Search nodes...', // lint-allow: hardcoded-string
   });
 
   @override
@@ -230,7 +230,7 @@ class _DrawerSearchField extends StatelessWidget {
   const _DrawerSearchField({
     required this.controller,
     required this.onChanged,
-    this.hintText = 'Search nodes...',
+    this.hintText = 'Search nodes...', // lint-allow: hardcoded-string
   });
 
   @override
@@ -300,8 +300,8 @@ class DrawerEmptyState extends StatelessWidget {
   const DrawerEmptyState({
     super.key,
     this.icon = Icons.search_off,
-    this.message = 'No nodes found',
-    this.hint = 'Try a different search term',
+    this.message = 'No nodes found', // lint-allow: hardcoded-string
+    this.hint = 'Try a different search term', // lint-allow: hardcoded-string
   });
 
   @override

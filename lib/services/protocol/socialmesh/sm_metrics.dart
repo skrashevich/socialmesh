@@ -65,7 +65,7 @@ class SmMetrics {
   String toString() =>
       'SmMetrics(binary=$_binaryPacketsReceived, '
       'legacy=$_legacyPacketsReceived, '
-      'decodeNull=$_decodeNullCount, '
-      'dualSend=$_dualSendCount, '
-      'nullByPort=$_decodeNullByPortnum)';
+      'decodeNull=$_decodeNullCount, ' // lint-allow: hardcoded-string
+      'dualSend=$_dualSendCount, ' // lint-allow: hardcoded-string
+      'nullByPort=$_decodeNullByPortnum)'; // lint-allow: hardcoded-string
 }

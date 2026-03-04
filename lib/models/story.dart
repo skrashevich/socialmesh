@@ -61,7 +61,8 @@ class TextOverlay {
       x: (map['x'] as num).toDouble(),
       y: (map['y'] as num).toDouble(),
       fontSize: (map['fontSize'] as num?)?.toDouble() ?? 24,
-      color: map['color'] as String? ?? '#FFFFFF',
+      color:
+          map['color'] as String? ?? '#FFFFFF', // lint-allow: hardcoded-string
       fontFamily: map['fontFamily'] as String?,
       alignment: map['alignment'] as String? ?? 'center',
       backgroundColor: map['backgroundColor'] as String?,

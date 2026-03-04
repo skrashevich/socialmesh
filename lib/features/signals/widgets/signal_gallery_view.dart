@@ -663,7 +663,10 @@ class _BottomInfoOverlay extends ConsumerWidget {
           : hexId;
       if (nodes.containsKey(signal.meshNodeId)) {
         final node = nodes[signal.meshNodeId]!;
-        meshNodeName = node.longName ?? node.shortName ?? '!$hexId';
+        meshNodeName =
+            node.longName ??
+            node.shortName ??
+            '!$hexId'; // lint-allow: hardcoded-string
         meshNodeShort = node.shortName ?? shortHex;
       } else {
         meshNodeName = '!$hexId';

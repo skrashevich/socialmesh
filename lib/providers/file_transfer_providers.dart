@@ -505,8 +505,9 @@ class FileTransferStateNotifier extends Notifier<FileTransferListState> {
       '.txt' => 'text/plain',
       '.json' => 'application/json',
       '.csv' => 'text/csv',
-      '.gpx' => 'application/gpx+xml',
-      '.kml' => 'application/vnd.google-earth.kml+xml',
+      '.gpx' => 'application/gpx+xml', // lint-allow: hardcoded-string
+      '.kml' =>
+        'application/vnd.google-earth.kml+xml', // lint-allow: hardcoded-string
       '.jpg' || '.jpeg' => 'image/jpeg',
       '.png' => 'image/png',
       '.gif' => 'image/gif',
