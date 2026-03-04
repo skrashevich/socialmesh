@@ -23071,6 +23071,44 @@
   },
   "geofenceMonitoredNode": "Monitored Node",
   "geofenceRadius": "Radius",
+  "geofenceRadiusKm": "Radius: {value} km",
+  "@geofenceRadiusKm": {
+    "description": "Geofence radius display in kilometers.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "geofenceRadiusM": "Radius: {value} m",
+  "@geofenceRadiusM": {
+    "description": "Geofence radius display in meters.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "subscriptionFallbackRingtonePack": "Ringtone Pack",
+  "@subscriptionFallbackRingtonePack": {
+    "description": "Fallback name for ringtone pack subscription product."
+  },
+  "subscriptionFallbackThemePack": "Theme Pack",
+  "@subscriptionFallbackThemePack": {
+    "description": "Fallback name for theme pack subscription product."
+  },
+  "subscriptionFallbackWidgetPack": "Widget Pack",
+  "@subscriptionFallbackWidgetPack": {
+    "description": "Fallback name for widget pack subscription product."
+  },
+  "subscriptionFallbackAutomations": "Automations",
+  "@subscriptionFallbackAutomations": {
+    "description": "Fallback name for automations subscription product."
+  },
+  "subscriptionFallbackIfttt": "IFTTT",
+  "@subscriptionFallbackIfttt": {
+    "description": "Fallback name for IFTTT subscription product."
+  },
   "geofenceLocating": "Locating...",
   "geofenceUseMyLocation": "Use My Location",
   "geofenceSetGeofence": "Set Geofence",
@@ -23760,6 +23798,24 @@
   "radioConfigRegionUnset": "Unset",
   "radioConfigRegionNotConfigured": "Not configured",
   "radioConfigRegionSelectHint": "Select the region that matches your country's regulations",
+  "radioConfigRegionUs": "US",
+  "radioConfigRegionEu433": "EU 433",
+  "radioConfigRegionEu868": "EU 868",
+  "radioConfigRegionChina": "China",
+  "radioConfigRegionJapan": "Japan",
+  "radioConfigRegionAnz": "ANZ",
+  "radioConfigRegionKorea": "Korea",
+  "radioConfigRegionTaiwan": "Taiwan",
+  "radioConfigRegionRussia": "Russia",
+  "radioConfigRegionIndia": "India",
+  "radioConfigRegionNz865": "NZ 865",
+  "radioConfigRegionThailand": "Thailand",
+  "radioConfigRegionUkraine433": "Ukraine 433",
+  "radioConfigRegionUkraine868": "Ukraine 868",
+  "radioConfigRegionMalaysia433": "Malaysia 433",
+  "radioConfigRegionMalaysia919": "Malaysia 919",
+  "radioConfigRegionSingapore": "Singapore",
+  "radioConfigRegionLora24": "LoRa 2.4GHz",
   "radioConfigPresetLongFast": "Long Fast",
   "@radioConfigPresetLongFast": {
     "description": "LoRa modem preset: long range, fast data rate. 'Long' = range, 'Fast' = speed."

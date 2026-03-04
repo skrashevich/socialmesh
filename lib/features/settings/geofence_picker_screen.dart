@@ -512,7 +512,13 @@ class _GeofencePickerScreenState extends ConsumerState<GeofencePickerScreen>
                     if (_center != null) ...[
                       SizedBox(height: AppTheme.spacing8),
                       Text(
-                        'Radius: ${_radiusMeters >= 1000 ? '${(_radiusMeters / 1000).toStringAsFixed(1)} km' : '${_radiusMeters.toStringAsFixed(0)} m'}',
+                        _radiusMeters >= 1000
+                            ? context.l10n.geofenceRadiusKm(
+                                (_radiusMeters / 1000).toStringAsFixed(1),
+                              )
+                            : context.l10n.geofenceRadiusM(
+                                _radiusMeters.toStringAsFixed(0),
+                              ),
                         style: TextStyle(
                           color: context.textPrimary,
                           fontSize: 14,

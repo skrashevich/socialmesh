@@ -465,32 +465,32 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen>
                   Icons.music_note,
                   storeProducts[RevenueCatConfig.ringtonePackProductId]
                           ?.title ??
-                      'Ringtone Pack',
+                      context.l10n.subscriptionFallbackRingtonePack,
                   context.l10n.subscriptionTones(_ringtoneCountFormatted),
                 ),
                 _buildBundleFeature(
                   Icons.palette,
                   storeProducts[RevenueCatConfig.themePackProductId]?.title ??
-                      'Theme Pack',
+                      context.l10n.subscriptionFallbackThemePack,
                   context.l10n.subscriptionAccentColors,
                 ),
                 _buildBundleFeature(
                   Icons.widgets,
                   storeProducts[RevenueCatConfig.widgetPackProductId]?.title ??
-                      'Widget Pack',
+                      context.l10n.subscriptionFallbackWidgetPack,
                   context.l10n.subscriptionUnlimitedWidgets,
                 ),
                 _buildBundleFeature(
                   Icons.auto_awesome,
                   storeProducts[RevenueCatConfig.automationsPackProductId]
                           ?.title ??
-                      'Automations',
+                      context.l10n.subscriptionFallbackAutomations,
                   context.l10n.subscriptionTriggersSchedules,
                 ),
                 _buildBundleFeature(
                   Icons.webhook,
                   storeProducts[RevenueCatConfig.iftttPackProductId]?.title ??
-                      'IFTTT',
+                      context.l10n.subscriptionFallbackIfttt,
                   context.l10n.subscriptionAppIntegrations,
                 ),
               ],

@@ -40798,6 +40798,48 @@ abstract class AppLocalizations {
   /// **'Radius'**
   String get geofenceRadius;
 
+  /// Geofence radius display in kilometers.
+  ///
+  /// In en, this message translates to:
+  /// **'Radius: {value} km'**
+  String geofenceRadiusKm(String value);
+
+  /// Geofence radius display in meters.
+  ///
+  /// In en, this message translates to:
+  /// **'Radius: {value} m'**
+  String geofenceRadiusM(String value);
+
+  /// Fallback name for ringtone pack subscription product.
+  ///
+  /// In en, this message translates to:
+  /// **'Ringtone Pack'**
+  String get subscriptionFallbackRingtonePack;
+
+  /// Fallback name for theme pack subscription product.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme Pack'**
+  String get subscriptionFallbackThemePack;
+
+  /// Fallback name for widget pack subscription product.
+  ///
+  /// In en, this message translates to:
+  /// **'Widget Pack'**
+  String get subscriptionFallbackWidgetPack;
+
+  /// Fallback name for automations subscription product.
+  ///
+  /// In en, this message translates to:
+  /// **'Automations'**
+  String get subscriptionFallbackAutomations;
+
+  /// Fallback name for IFTTT subscription product.
+  ///
+  /// In en, this message translates to:
+  /// **'IFTTT'**
+  String get subscriptionFallbackIfttt;
+
   /// No description provided for @geofenceLocating.
   ///
   /// In en, this message translates to:
@@ -43316,6 +43358,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Select the region that matches your country\'s regulations'**
   String get radioConfigRegionSelectHint;
+
+  /// No description provided for @radioConfigRegionUs.
+  ///
+  /// In en, this message translates to:
+  /// **'US'**
+  String get radioConfigRegionUs;
+
+  /// No description provided for @radioConfigRegionEu433.
+  ///
+  /// In en, this message translates to:
+  /// **'EU 433'**
+  String get radioConfigRegionEu433;
+
+  /// No description provided for @radioConfigRegionEu868.
+  ///
+  /// In en, this message translates to:
+  /// **'EU 868'**
+  String get radioConfigRegionEu868;
+
+  /// No description provided for @radioConfigRegionChina.
+  ///
+  /// In en, this message translates to:
+  /// **'China'**
+  String get radioConfigRegionChina;
+
+  /// No description provided for @radioConfigRegionJapan.
+  ///
+  /// In en, this message translates to:
+  /// **'Japan'**
+  String get radioConfigRegionJapan;
+
+  /// No description provided for @radioConfigRegionAnz.
+  ///
+  /// In en, this message translates to:
+  /// **'ANZ'**
+  String get radioConfigRegionAnz;
+
+  /// No description provided for @radioConfigRegionKorea.
+  ///
+  /// In en, this message translates to:
+  /// **'Korea'**
+  String get radioConfigRegionKorea;
+
+  /// No description provided for @radioConfigRegionTaiwan.
+  ///
+  /// In en, this message translates to:
+  /// **'Taiwan'**
+  String get radioConfigRegionTaiwan;
+
+  /// No description provided for @radioConfigRegionRussia.
+  ///
+  /// In en, this message translates to:
+  /// **'Russia'**
+  String get radioConfigRegionRussia;
+
+  /// No description provided for @radioConfigRegionIndia.
+  ///
+  /// In en, this message translates to:
+  /// **'India'**
+  String get radioConfigRegionIndia;
+
+  /// No description provided for @radioConfigRegionNz865.
+  ///
+  /// In en, this message translates to:
+  /// **'NZ 865'**
+  String get radioConfigRegionNz865;
+
+  /// No description provided for @radioConfigRegionThailand.
+  ///
+  /// In en, this message translates to:
+  /// **'Thailand'**
+  String get radioConfigRegionThailand;
+
+  /// No description provided for @radioConfigRegionUkraine433.
+  ///
+  /// In en, this message translates to:
+  /// **'Ukraine 433'**
+  String get radioConfigRegionUkraine433;
+
+  /// No description provided for @radioConfigRegionUkraine868.
+  ///
+  /// In en, this message translates to:
+  /// **'Ukraine 868'**
+  String get radioConfigRegionUkraine868;
+
+  /// No description provided for @radioConfigRegionMalaysia433.
+  ///
+  /// In en, this message translates to:
+  /// **'Malaysia 433'**
+  String get radioConfigRegionMalaysia433;
+
+  /// No description provided for @radioConfigRegionMalaysia919.
+  ///
+  /// In en, this message translates to:
+  /// **'Malaysia 919'**
+  String get radioConfigRegionMalaysia919;
+
+  /// No description provided for @radioConfigRegionSingapore.
+  ///
+  /// In en, this message translates to:
+  /// **'Singapore'**
+  String get radioConfigRegionSingapore;
+
+  /// No description provided for @radioConfigRegionLora24.
+  ///
+  /// In en, this message translates to:
+  /// **'LoRa 2.4GHz'**
+  String get radioConfigRegionLora24;
 
   /// LoRa modem preset: long range, fast data rate. 'Long' = range, 'Fast' = speed.
   ///

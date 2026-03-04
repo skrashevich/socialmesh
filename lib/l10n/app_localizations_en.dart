@@ -23018,6 +23018,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get geofenceRadius => 'Radius';
 
   @override
+  String geofenceRadiusKm(String value) {
+    return 'Radius: $value km';
+  }
+
+  @override
+  String geofenceRadiusM(String value) {
+    return 'Radius: $value m';
+  }
+
+  @override
+  String get subscriptionFallbackRingtonePack => 'Ringtone Pack';
+
+  @override
+  String get subscriptionFallbackThemePack => 'Theme Pack';
+
+  @override
+  String get subscriptionFallbackWidgetPack => 'Widget Pack';
+
+  @override
+  String get subscriptionFallbackAutomations => 'Automations';
+
+  @override
+  String get subscriptionFallbackIfttt => 'IFTTT';
+
+  @override
   String get geofenceLocating => 'Locating...';
 
   @override
@@ -24419,6 +24444,60 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get radioConfigRegionSelectHint =>
       'Select the region that matches your country\'s regulations';
+
+  @override
+  String get radioConfigRegionUs => 'US';
+
+  @override
+  String get radioConfigRegionEu433 => 'EU 433';
+
+  @override
+  String get radioConfigRegionEu868 => 'EU 868';
+
+  @override
+  String get radioConfigRegionChina => 'China';
+
+  @override
+  String get radioConfigRegionJapan => 'Japan';
+
+  @override
+  String get radioConfigRegionAnz => 'ANZ';
+
+  @override
+  String get radioConfigRegionKorea => 'Korea';
+
+  @override
+  String get radioConfigRegionTaiwan => 'Taiwan';
+
+  @override
+  String get radioConfigRegionRussia => 'Russia';
+
+  @override
+  String get radioConfigRegionIndia => 'India';
+
+  @override
+  String get radioConfigRegionNz865 => 'NZ 865';
+
+  @override
+  String get radioConfigRegionThailand => 'Thailand';
+
+  @override
+  String get radioConfigRegionUkraine433 => 'Ukraine 433';
+
+  @override
+  String get radioConfigRegionUkraine868 => 'Ukraine 868';
+
+  @override
+  String get radioConfigRegionMalaysia433 => 'Malaysia 433';
+
+  @override
+  String get radioConfigRegionMalaysia919 => 'Malaysia 919';
+
+  @override
+  String get radioConfigRegionSingapore => 'Singapore';
+
+  @override
+  String get radioConfigRegionLora24 => 'LoRa 2.4GHz';
 
   @override
   String get radioConfigPresetLongFast => 'Long Fast';
