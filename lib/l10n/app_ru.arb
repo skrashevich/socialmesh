@@ -6913,9 +6913,9 @@
     "ringtoneValidationMissingColons": "Неверный формат: отсутствуют двоеточия. Ожидается name:defaults:notes",
     "ringtoneValidationInvalidFormat": "Неверный формат: ожидается name:defaults:notes",
     "ringtoneValidationInvalidDefaults": "Неверные значения по умолчанию: ожидается d=duration, o=octave, b=bpm",
-    "ringtoneValidationNoNotes": "В RTTTL строке не найдено нот", #TODO: fixit
-    "ringtoneValidationInvalidNote": "Неверная нота: «{note}»", #TODO: fixit
-    "ringtoneValidationNoValidNotes": "Не найдено допустимых нот", #TODO: fixit
+    "ringtoneValidationNoNotes": "В RTTTL строке не найдено нот",
+    "ringtoneValidationInvalidNote": "Неверная нота: «{note}»",
+    "ringtoneValidationNoValidNotes": "Не найдено допустимых нот",
     "accountSubTitle": "Аккаунт",
     "accountSubSectionAccount": "АККАУНТ",
     "accountSubSectionPremium": "ПРЕМИУМ",
@@ -8191,7 +8191,7 @@
     "helpCreateImageBubble": "Нажмите на **значок изображения**, чтобы прикрепить фото. Изображения загружаются через облако, когда есть интернет — по mesh передаётся только ссылка.",
     "helpCreateLocationBubble": "Нажмите на **метку местоположения**, чтобы прикрепить текущую GPS-позицию устройства. Ваше местоположение видно всем, кто получит сигнал.",
     "helpCreateTtlBubble": "**Значок таймера** задаёт TTL — как долго сигнал остаётся активным. Выбирайте от нескольких минут до нескольких часов.",
-    "helpCreateIntentBubble": "Выберите **Намерение присутствия**, чтобы сообщить сети, чем вы занимаетесь — исследуете, наблюдаете, нуждаетесь в помощи и т.д.", # TODO: fixit
+    "helpCreateIntentBubble": "Выберите **Намерение присутствия**, чтобы сообщить сети, чем вы занимаетесь — исследуете, наблюдаете, нуждаетесь в помощи и т.д.",
     "helpCreateStatusBubble": "Поле **краткого статуса** — это одна строка, которая отображается как подпись к вашему сигналу в ленте.",
     "helpCreateSubmitBubble": "Когда будете готовы, нажмите **Транслировать**! Ваш сигнал распространится по mesh-сети через радио. Он доступен всем в пределах досягаемости!",
     "helpDetailIntroBubble": "Это экран **подробностей сигнала**. Здесь можно прочитать полный текст, увидеть, откуда он пришёл, и ответить!",

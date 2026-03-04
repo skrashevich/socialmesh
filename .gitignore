@@ -132,6 +132,7 @@ assets/widget_templates/*.json
 !/docs/BACKEND.md
 !/docs/RELEASING.md
 !/docs/GLOSSARY*.md
+!/docs/TODO_*.md
 
 # Scripts dependencies
 /scripts/node_modules/
