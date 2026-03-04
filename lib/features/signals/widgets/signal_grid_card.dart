@@ -154,7 +154,8 @@ class SignalGridCard extends ConsumerWidget {
                         _BadgePill(
                           icon: _getHopIcon(signal.hopCount!),
                           iconColor: getHopCountColor(signal.hopCount!),
-                          text: '${signal.hopCount}h', // lint-allow: hardcoded-string
+                          text:
+                              '${signal.hopCount}h', // lint-allow: hardcoded-string
                         )
                       else
                         const SizedBox.shrink(),
