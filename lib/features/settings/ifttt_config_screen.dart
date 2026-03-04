@@ -37,11 +37,13 @@ class IftttConfigScreen extends ConsumerStatefulWidget {
 class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
     with LifecycleSafeMixin<IftttConfigScreen> {
   final _webhookKeyController = TextEditingController();
+  final _customUrlController = TextEditingController();
   final _geofenceRadiusController = TextEditingController();
   final _geofenceLatController = TextEditingController();
   final _geofenceLonController = TextEditingController();
 
   bool _enabled = false;
+  WebhookMode _webhookMode = WebhookMode.ifttt;
   bool _messageReceived = true;
   bool _nodeOnline = true;
   bool _nodeOffline = true;
@@ -70,12 +72,14 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
     final config = iftttService.config;
 
     _webhookKeyController.text = config.webhookKey;
+    _customUrlController.text = config.customWebhookUrl;
     _geofenceRadiusController.text = config.geofenceRadius.toStringAsFixed(0);
     _geofenceLatController.text = config.geofenceLat?.toStringAsFixed(6) ?? '';
     _geofenceLonController.text = config.geofenceLon?.toStringAsFixed(6) ?? '';
 
     safeSetState(() {
       _enabled = config.enabled;
+      _webhookMode = config.webhookMode;
       _messageReceived = config.messageReceived;
       _nodeOnline = config.nodeOnline;
       _nodeOffline = config.nodeOffline;
@@ -139,15 +143,24 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
 
     if (!mounted) return;
 
-    // Require valid webhook key when IFTTT is enabled
-    if (_enabled && _webhookKeyController.text.trim().isEmpty) {
-      showErrorSnackBar(context, l10n.iftttConfigEnterKeyToEnable);
-      return;
+    // Require valid credentials when webhooks are enabled
+    if (_enabled) {
+      if (_webhookMode == WebhookMode.custom &&
+          _customUrlController.text.trim().isEmpty) {
+        showErrorSnackBar(context, l10n.iftttConfigEnterUrlToEnable);
+        return;
+      } else if (_webhookMode == WebhookMode.ifttt &&
+          _webhookKeyController.text.trim().isEmpty) {
+        showErrorSnackBar(context, l10n.iftttConfigEnterKeyToEnable);
+        return;
+      }
     }
 
     final config = IftttConfig(
       enabled: _enabled,
+      webhookMode: _webhookMode,
       webhookKey: _webhookKeyController.text.trim(),
+      customWebhookUrl: _customUrlController.text.trim(),
       messageReceived: _messageReceived,
       nodeOnline: _nodeOnline,
       nodeOffline: _nodeOffline,
@@ -193,7 +206,12 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
 
   Future<void> _testWebhook() async {
     final l10n = context.l10n;
-    if (_webhookKeyController.text.trim().isEmpty) {
+    if (_webhookMode == WebhookMode.custom &&
+        _customUrlController.text.trim().isEmpty) {
+      showErrorSnackBar(context, l10n.iftttConfigEnterUrlFirst);
+      return;
+    } else if (_webhookMode == WebhookMode.ifttt &&
+        _webhookKeyController.text.trim().isEmpty) {
       showErrorSnackBar(context, l10n.iftttConfigEnterKeyFirst);
       return;
     }
@@ -203,7 +221,9 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
     final iftttService = ref.read(iftttServiceProvider);
     final tempConfig = IftttConfig(
       enabled: true,
+      webhookMode: _webhookMode,
       webhookKey: _webhookKeyController.text.trim(),
+      customWebhookUrl: _customUrlController.text.trim(),
       messageReceived: _messageReceived,
       nodeOnline: _nodeOnline,
       nodeOffline: _nodeOffline,
@@ -228,15 +248,26 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
     safeSetState(() => _isTesting = false);
 
     if (success) {
-      showSuccessSnackBar(context, l10n.iftttConfigTestSuccess);
+      showSuccessSnackBar(
+        context,
+        _webhookMode == WebhookMode.custom
+            ? l10n.iftttConfigTestSuccessCustom
+            : l10n.iftttConfigTestSuccess,
+      );
     } else {
-      showErrorSnackBar(context, l10n.iftttConfigTestFailed);
+      showErrorSnackBar(
+        context,
+        _webhookMode == WebhookMode.custom
+            ? l10n.iftttConfigTestFailedCustom
+            : l10n.iftttConfigTestFailed,
+      );
     }
   }
 
   @override
   void dispose() {
     _webhookKeyController.dispose();
+    _customUrlController.dispose();
     _geofenceRadiusController.dispose();
     _geofenceLatController.dispose();
     _geofenceLonController.dispose();
@@ -384,8 +415,10 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
   }
 
   Widget _buildWebhookSection() {
+    final l10n = context.l10n;
     return Column(
       children: [
+        // Mode selector
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
           padding: const EdgeInsets.all(AppTheme.spacing16),
@@ -396,40 +429,127 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextField(
-                maxLength: 64,
-                controller: _webhookKeyController,
-                autocorrect: false,
-                enableSuggestions: false,
-                keyboardType: TextInputType.text,
-                textInputAction: TextInputAction.done,
-                onSubmitted: (_) => FocusScope.of(context).unfocus(),
-                style: TextStyle(color: context.textPrimary),
-                decoration: InputDecoration(
-                  labelText: context.l10n.iftttConfigWebhookKeyLabel,
-                  labelStyle: TextStyle(color: context.textSecondary),
-                  hintText: context.l10n.iftttConfigWebhookKeyHint,
-                  hintStyle: TextStyle(color: SemanticColors.muted),
-                  helperText: context.l10n.iftttConfigWebhookKeyHelper,
-                  helperStyle: TextStyle(color: context.textTertiary),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(AppTheme.radius8),
-                    borderSide: BorderSide(color: context.border),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(AppTheme.radius8),
-                    borderSide: BorderSide(color: context.border),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(AppTheme.radius8),
-                    borderSide: BorderSide(color: context.accentColor),
-                  ),
-                  prefixIcon: Icon(Icons.key, color: context.textSecondary),
-                  filled: true,
-                  fillColor: context.background,
-                  counterText: '',
+              Text(
+                l10n.iftttConfigWebhookMode,
+                style: TextStyle(
+                  fontSize: 13,
+                  color: context.textSecondary,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
+              const SizedBox(height: AppTheme.spacing8),
+              Row(
+                children: [
+                  Expanded(
+                    child: _ModeButton(
+                      label: l10n.iftttConfigWebhookModeIfttt,
+                      subtitle: l10n.iftttConfigWebhookModeIftttDesc,
+                      icon: Icons.webhook,
+                      selected: _webhookMode == WebhookMode.ifttt,
+                      onTap: () {
+                        HapticFeedback.selectionClick();
+                        safeSetState(() => _webhookMode = WebhookMode.ifttt);
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: AppTheme.spacing8),
+                  Expanded(
+                    child: _ModeButton(
+                      label: l10n.iftttConfigWebhookModeCustom,
+                      subtitle: l10n.iftttConfigWebhookModeCustomDesc,
+                      icon: Icons.link,
+                      selected: _webhookMode == WebhookMode.custom,
+                      onTap: () {
+                        HapticFeedback.selectionClick();
+                        safeSetState(() => _webhookMode = WebhookMode.custom);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 4),
+        // Credentials card
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+          padding: const EdgeInsets.all(AppTheme.spacing16),
+          decoration: BoxDecoration(
+            color: context.card,
+            borderRadius: BorderRadius.circular(AppTheme.radius12),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (_webhookMode == WebhookMode.ifttt)
+                TextField(
+                  maxLength: 64,
+                  controller: _webhookKeyController,
+                  autocorrect: false,
+                  enableSuggestions: false,
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.done,
+                  onSubmitted: (_) => FocusScope.of(context).unfocus(),
+                  style: TextStyle(color: context.textPrimary),
+                  decoration: InputDecoration(
+                    labelText: l10n.iftttConfigWebhookKeyLabel,
+                    labelStyle: TextStyle(color: context.textSecondary),
+                    hintText: l10n.iftttConfigWebhookKeyHint,
+                    hintStyle: TextStyle(color: SemanticColors.muted),
+                    helperText: l10n.iftttConfigWebhookKeyHelper,
+                    helperStyle: TextStyle(color: context.textTertiary),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(AppTheme.radius8),
+                      borderSide: BorderSide(color: context.border),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(AppTheme.radius8),
+                      borderSide: BorderSide(color: context.border),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(AppTheme.radius8),
+                      borderSide: BorderSide(color: context.accentColor),
+                    ),
+                    prefixIcon: Icon(Icons.key, color: context.textSecondary),
+                    filled: true,
+                    fillColor: context.background,
+                    counterText: '',
+                  ),
+                )
+              else
+                TextField(
+                  controller: _customUrlController,
+                  autocorrect: false,
+                  enableSuggestions: false,
+                  keyboardType: TextInputType.url,
+                  textInputAction: TextInputAction.done,
+                  onSubmitted: (_) => FocusScope.of(context).unfocus(),
+                  style: TextStyle(color: context.textPrimary),
+                  decoration: InputDecoration(
+                    labelText: l10n.iftttConfigCustomUrlLabel,
+                    labelStyle: TextStyle(color: context.textSecondary),
+                    hintText: l10n.iftttConfigCustomUrlHint,
+                    hintStyle: TextStyle(color: SemanticColors.muted),
+                    helperText: l10n.iftttConfigCustomUrlHelper,
+                    helperStyle: TextStyle(color: context.textTertiary),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(AppTheme.radius8),
+                      borderSide: BorderSide(color: context.border),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(AppTheme.radius8),
+                      borderSide: BorderSide(color: context.border),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(AppTheme.radius8),
+                      borderSide: BorderSide(color: context.accentColor),
+                    ),
+                    prefixIcon: Icon(Icons.link, color: context.textSecondary),
+                    filled: true,
+                    fillColor: context.background,
+                  ),
+                ),
               SizedBox(height: AppTheme.spacing16),
               SizedBox(
                 width: double.infinity,
@@ -445,8 +565,8 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
                       : const Icon(Icons.send, size: 18),
                   label: Text(
                     _isTesting
-                        ? context.l10n.iftttConfigTesting
-                        : context.l10n.iftttConfigTestConnection,
+                        ? l10n.iftttConfigTesting
+                        : l10n.iftttConfigTestConnection,
                   ),
                 ),
               ),
@@ -1438,6 +1558,78 @@ class _SettingsTile extends StatelessWidget {
               ),
             ),
             if (trailing != null) trailing!,
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ModeButton extends StatelessWidget {
+  final String label;
+  final String subtitle;
+  final IconData icon;
+  final bool selected;
+  final VoidCallback onTap;
+
+  const _ModeButton({
+    required this.label,
+    required this.subtitle,
+    required this.icon,
+    required this.selected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 150),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+        decoration: BoxDecoration(
+          color: selected
+              ? context.accentColor.withAlpha(30)
+              : context.background,
+          borderRadius: BorderRadius.circular(AppTheme.radius8),
+          border: Border.all(
+            color: selected ? context.accentColor : context.border,
+            width: selected ? 1.5 : 1,
+          ),
+        ),
+        child: Row(
+          children: [
+            Icon(
+              icon,
+              size: 18,
+              color: selected ? context.accentColor : context.textSecondary,
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    label,
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: selected
+                          ? context.accentColor
+                          : context.textPrimary,
+                    ),
+                  ),
+                  Text(
+                    subtitle,
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: context.textTertiary,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

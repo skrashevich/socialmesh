@@ -46944,25 +46944,97 @@ abstract class AppLocalizations {
   /// No description provided for @iftttConfigEnable.
   ///
   /// In en, this message translates to:
-  /// **'Enable IFTTT'**
+  /// **'Enable Webhooks'**
   String get iftttConfigEnable;
 
   /// No description provided for @iftttConfigEnableSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Send events to IFTTT Webhooks service'**
+  /// **'Send events to a webhook endpoint'**
   String get iftttConfigEnableSubtitle;
+
+  /// No description provided for @iftttConfigWebhookMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Webhook Mode'**
+  String get iftttConfigWebhookMode;
+
+  /// No description provided for @iftttConfigWebhookModeIfttt.
+  ///
+  /// In en, this message translates to:
+  /// **'IFTTT'**
+  String get iftttConfigWebhookModeIfttt;
+
+  /// No description provided for @iftttConfigWebhookModeIftttDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Send to maker.ifttt.com'**
+  String get iftttConfigWebhookModeIftttDesc;
+
+  /// No description provided for @iftttConfigWebhookModeCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom URL'**
+  String get iftttConfigWebhookModeCustom;
+
+  /// No description provided for @iftttConfigWebhookModeCustomDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Send to any HTTP endpoint'**
+  String get iftttConfigWebhookModeCustomDesc;
+
+  /// No description provided for @iftttConfigCustomUrlLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Webhook URL'**
+  String get iftttConfigCustomUrlLabel;
+
+  /// No description provided for @iftttConfigCustomUrlHint.
+  ///
+  /// In en, this message translates to:
+  /// **'https://example.com/webhook'**
+  String get iftttConfigCustomUrlHint;
+
+  /// No description provided for @iftttConfigCustomUrlHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'POST requests will be sent with JSON body'**
+  String get iftttConfigCustomUrlHelper;
+
+  /// No description provided for @iftttConfigEnterUrlToEnable.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a Webhook URL to enable'**
+  String get iftttConfigEnterUrlToEnable;
+
+  /// No description provided for @iftttConfigEnterUrlFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your Webhook URL first'**
+  String get iftttConfigEnterUrlFirst;
+
+  /// No description provided for @iftttConfigTestSuccessCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Test webhook sent! Check your endpoint.'**
+  String get iftttConfigTestSuccessCustom;
+
+  /// No description provided for @iftttConfigTestFailedCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to send test webhook. Check your URL.'**
+  String get iftttConfigTestFailedCustom;
 
   /// No description provided for @iftttConfigDataSharingTitle.
   ///
   /// In en, this message translates to:
-  /// **'IFTTT Data Sharing'**
+  /// **'Webhook Data Sharing'**
   String get iftttConfigDataSharingTitle;
 
   /// No description provided for @iftttConfigDataSharingMsg.
   ///
   /// In en, this message translates to:
-  /// **'When IFTTT Webhooks are enabled, mesh event data (messages, node status, positions, battery levels) will be sent to IFTTT servers via your personal webhook key.\n\nIFTTT is a third-party service with its own privacy policy. Only the event types you select will be transmitted.'**
+  /// **'When Webhooks are enabled, mesh event data (messages, node status, positions, battery levels) will be sent to the configured endpoint.\n\nOnly the event types you select will be transmitted.'**
   String get iftttConfigDataSharingMsg;
 
   /// No description provided for @iftttConfigIUnderstand.

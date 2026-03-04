@@ -26430,18 +26430,57 @@ class AppLocalizationsRu extends AppLocalizations {
   String get iftttConfigSectionGeofencing => 'GEOFENCING';
 
   @override
-  String get iftttConfigEnable => 'Enable IFTTT';
+  String get iftttConfigEnable => 'Enable Webhooks';
 
   @override
-  String get iftttConfigEnableSubtitle =>
-      'Send events to IFTTT Webhooks service';
+  String get iftttConfigEnableSubtitle => 'Send events to a webhook endpoint';
 
   @override
-  String get iftttConfigDataSharingTitle => 'IFTTT Data Sharing';
+  String get iftttConfigWebhookMode => 'Webhook Mode';
+
+  @override
+  String get iftttConfigWebhookModeIfttt => 'IFTTT';
+
+  @override
+  String get iftttConfigWebhookModeIftttDesc => 'Send to maker.ifttt.com';
+
+  @override
+  String get iftttConfigWebhookModeCustom => 'Custom URL';
+
+  @override
+  String get iftttConfigWebhookModeCustomDesc => 'Send to any HTTP endpoint';
+
+  @override
+  String get iftttConfigCustomUrlLabel => 'Webhook URL';
+
+  @override
+  String get iftttConfigCustomUrlHint => 'https://example.com/webhook';
+
+  @override
+  String get iftttConfigCustomUrlHelper =>
+      'POST requests will be sent with JSON body';
+
+  @override
+  String get iftttConfigEnterUrlToEnable =>
+      'Please enter a Webhook URL to enable';
+
+  @override
+  String get iftttConfigEnterUrlFirst => 'Please enter your Webhook URL first';
+
+  @override
+  String get iftttConfigTestSuccessCustom =>
+      'Test webhook sent! Check your endpoint.';
+
+  @override
+  String get iftttConfigTestFailedCustom =>
+      'Failed to send test webhook. Check your URL.';
+
+  @override
+  String get iftttConfigDataSharingTitle => 'Webhook Data Sharing';
 
   @override
   String get iftttConfigDataSharingMsg =>
-      'When IFTTT Webhooks are enabled, mesh event data (messages, node status, positions, battery levels) will be sent to IFTTT servers via your personal webhook key.\n\nIFTTT is a third-party service with its own privacy policy. Only the event types you select will be transmitted.';
+      'When Webhooks are enabled, mesh event data (messages, node status, positions, battery levels) will be sent to the configured endpoint.\n\nOnly the event types you select will be transmitted.';
 
   @override
   String get iftttConfigIUnderstand => 'I Understand';

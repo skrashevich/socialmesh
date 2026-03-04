@@ -6,6 +6,12 @@ import 'package:socialmesh/core/logging.dart';
 import '../../models/mesh_models.dart';
 import '../../models/presence_confidence.dart';
 
+/// Webhook delivery mode
+enum WebhookMode {
+  ifttt, // IFTTT Webhooks service (maker.ifttt.com)
+  custom, // Arbitrary user-specified URL
+}
+
 /// IFTTT trigger types
 enum IftttTriggerType {
   messageReceived,
@@ -20,7 +26,9 @@ enum IftttTriggerType {
 /// IFTTT configuration model
 class IftttConfig {
   final bool enabled;
+  final WebhookMode webhookMode;
   final String webhookKey;
+  final String customWebhookUrl;
   final bool messageReceived;
   final bool nodeOnline;
   final bool nodeOffline;
@@ -39,7 +47,9 @@ class IftttConfig {
 
   const IftttConfig({
     this.enabled = false,
+    this.webhookMode = WebhookMode.ifttt,
     this.webhookKey = '',
+    this.customWebhookUrl = '',
     this.messageReceived = true,
     this.nodeOnline = true,
     this.nodeOffline = true,
@@ -59,7 +69,9 @@ class IftttConfig {
 
   IftttConfig copyWith({
     bool? enabled,
+    WebhookMode? webhookMode,
     String? webhookKey,
+    String? customWebhookUrl,
     bool? messageReceived,
     bool? nodeOnline,
     bool? nodeOffline,
@@ -78,7 +90,9 @@ class IftttConfig {
   }) {
     return IftttConfig(
       enabled: enabled ?? this.enabled,
+      webhookMode: webhookMode ?? this.webhookMode,
       webhookKey: webhookKey ?? this.webhookKey,
+      customWebhookUrl: customWebhookUrl ?? this.customWebhookUrl,
       messageReceived: messageReceived ?? this.messageReceived,
       nodeOnline: nodeOnline ?? this.nodeOnline,
       nodeOffline: nodeOffline ?? this.nodeOffline,
@@ -100,7 +114,9 @@ class IftttConfig {
 
   Map<String, dynamic> toJson() => {
     'enabled': enabled,
+    'webhookMode': webhookMode.name,
     'webhookKey': webhookKey,
+    'customWebhookUrl': customWebhookUrl,
     'messageReceived': messageReceived,
     'nodeOnline': nodeOnline,
     'nodeOffline': nodeOffline,
@@ -119,9 +135,18 @@ class IftttConfig {
   };
 
   factory IftttConfig.fromJson(Map<String, dynamic> json) {
+    final modeStr = json['webhookMode'] as String?;
+    final mode = modeStr != null
+        ? WebhookMode.values.firstWhere(
+            (e) => e.name == modeStr,
+            orElse: () => WebhookMode.ifttt,
+          )
+        : WebhookMode.ifttt;
     return IftttConfig(
       enabled: json['enabled'] as bool? ?? false,
+      webhookMode: mode,
       webhookKey: json['webhookKey'] as String? ?? '',
+      customWebhookUrl: json['customWebhookUrl'] as String? ?? '',
       messageReceived: json['messageReceived'] as bool? ?? true,
       nodeOnline: json['nodeOnline'] as bool? ?? true,
       nodeOffline: json['nodeOffline'] as bool? ?? true,
@@ -206,8 +231,14 @@ class IftttService {
     }
   }
 
-  /// Check if IFTTT is properly configured and enabled
-  bool get isActive => _config.enabled && _config.webhookKey.isNotEmpty;
+  /// Check if webhook is properly configured and enabled
+  bool get isActive {
+    if (!_config.enabled) return false;
+    if (_config.webhookMode == WebhookMode.custom) {
+      return _config.customWebhookUrl.isNotEmpty;
+    }
+    return _config.webhookKey.isNotEmpty;
+  }
 
   /// Trigger a webhook event
   Future<bool> _triggerWebhook({
@@ -219,12 +250,23 @@ class IftttService {
     if (!isActive) return false;
 
     try {
-      final url = '$_webhookBaseUrl/$eventName/with/key/${_config.webhookKey}';
+      final String url;
+      final Map<String, dynamic> body;
 
-      final body = <String, String>{};
-      if (value1 != null) body['value1'] = value1;
-      if (value2 != null) body['value2'] = value2;
-      if (value3 != null) body['value3'] = value3;
+      if (_config.webhookMode == WebhookMode.custom) {
+        url = _config.customWebhookUrl;
+        body = {'event': eventName};
+        if (value1 != null) body['value1'] = value1;
+        if (value2 != null) body['value2'] = value2;
+        if (value3 != null) body['value3'] = value3;
+      } else {
+        url = '$_webhookBaseUrl/$eventName/with/key/${_config.webhookKey}';
+        final iftttBody = <String, String>{};
+        if (value1 != null) iftttBody['value1'] = value1;
+        if (value2 != null) iftttBody['value2'] = value2;
+        if (value3 != null) iftttBody['value3'] = value3;
+        body = iftttBody;
+      }
 
       AppLogging.ifttt('IFTTT: Triggering $eventName');
 
@@ -236,7 +278,7 @@ class IftttService {
           )
           .timeout(const Duration(seconds: 10));
 
-      if (response.statusCode == 200) {
+      if (response.statusCode >= 200 && response.statusCode < 300) {
         AppLogging.ifttt('IFTTT: Webhook triggered successfully');
         return true;
       } else {
@@ -488,7 +530,11 @@ class IftttService {
   /// Test webhook configuration
   /// Sends a sample geofence alert so you can test your notification format
   Future<bool> testWebhook() async {
-    if (_config.webhookKey.isEmpty) return false;
+    if (_config.webhookMode == WebhookMode.custom) {
+      if (_config.customWebhookUrl.isEmpty) return false;
+    } else {
+      if (_config.webhookKey.isEmpty) return false;
+    }
 
     // Use configured geofence center or default Sydney coordinates
     final testLat = _config.geofenceLat ?? -33.8688;

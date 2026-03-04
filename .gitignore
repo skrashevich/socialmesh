@@ -127,10 +127,13 @@ app.*.map.json
 assets/widget_templates/*.json
 
 # Internal docs (keep public-facing docs for repo links)
-/docs/
+!/docs/
+/docs/*
 !/docs/ARCHITECTURE.md
 !/docs/BACKEND.md
 !/docs/RELEASING.md
+!/docs/WEBHOOKS.md
+
 
 # Scripts dependencies
 /scripts/node_modules/
