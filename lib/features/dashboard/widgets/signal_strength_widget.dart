@@ -474,7 +474,7 @@ class MultiLineChartPainter extends CustomPainter {
 
       final rssiValue = maxRssi - (i * (maxRssi - minRssi) / 4);
       textPainter.text = TextSpan(
-        text: '${rssiValue.toInt()}',
+        text: '${rssiValue.toInt()}', // lint-allow: hardcoded-string
         style: TextStyle(
           color: textTertiaryColor,
           fontSize: 9,
@@ -491,7 +491,7 @@ class MultiLineChartPainter extends CustomPainter {
       final utilValue =
           maxChannelUtil - (i * (maxChannelUtil - minChannelUtil) / 4);
       textPainter.text = TextSpan(
-        text: '${utilValue.toInt()}%',
+        text: '${utilValue.toInt()}%', // lint-allow: hardcoded-string
         style: const TextStyle(
           color: channelUtilColor,
           fontSize: 9,

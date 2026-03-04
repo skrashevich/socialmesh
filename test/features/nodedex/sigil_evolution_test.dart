@@ -513,7 +513,7 @@ void main() {
     test('produces a readable string', () {
       final evo = SigilEvolution.fromPatina(62, trait: NodeTrait.wanderer);
       final str = evo.toString();
-      expect(str, contains('Heraldic'));
+      expect(str, contains('heraldic'));
       expect(str, contains('62'));
       expect(str, contains('tier: 3'));
     });

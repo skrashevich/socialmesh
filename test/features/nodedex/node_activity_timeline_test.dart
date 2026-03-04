@@ -12,6 +12,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:socialmesh/features/nodedex/models/node_activity_event.dart';
 import 'package:socialmesh/features/nodedex/providers/nodedex_providers.dart';
 import 'package:socialmesh/features/nodedex/widgets/node_activity_timeline.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
 import 'package:socialmesh/models/presence_confidence.dart';
 
 // =============================================================================
@@ -61,6 +62,8 @@ Widget _buildTestWidget({required List overrides}) {
   return ProviderScope(
     overrides: overrides.cast(),
     child: MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       home: Scaffold(
         body: SingleChildScrollView(
           child: NodeActivityTimeline(

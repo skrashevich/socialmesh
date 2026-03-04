@@ -20444,6 +20444,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dateTimePickerPm => 'PM';
 
   @override
+  String get actionConnect => 'Connect';
+
+  @override
+  String get actionView => 'View';
+
+  @override
+  String albumRarityPageTitle(String rarity) {
+    return '$rarity Cards';
+  }
+
+  @override
   String get actionSheetQuickMessage => 'Quick Message';
 
   @override
@@ -29435,9 +29446,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get globalLayerNoTlsLabel => 'No TLS';
-
-  @override
-  String get helpCenterArticlesReadLabel => 'articles read';
 
   @override
   String get tapbackPoop => 'Poop';

@@ -233,14 +233,14 @@ class ConditionNode extends VSNodeData {
          inputData: [
            EventSignalInputData(
              type: 'event_in',
-             title: 'Event',
+             title: 'Event', // lint-allow: hardcoded-string
              initialConnection: ref,
            ),
          ],
          outputData: [
            EventSignalOutputData(
              type: 'event_out',
-             title: 'Event',
+             title: 'Event', // lint-allow: hardcoded-string
              outputFunction: (inputs) {
                // Pass through the upstream event signal with an added
                // condition marker. The compiler reads this to reconstruct
@@ -290,7 +290,7 @@ Widget _buildTimeRangeWidget(_TimeRangeConfig config) {
       children: [
         Expanded(
           child: _TimeField(
-            label: 'From',
+            label: 'From', // lint-allow: hardcoded-string
             value: config.timeStart,
             onChanged: (v) => config.timeStart = v,
           ),
@@ -307,7 +307,7 @@ Widget _buildTimeRangeWidget(_TimeRangeConfig config) {
         ),
         Expanded(
           child: _TimeField(
-            label: 'To',
+            label: 'To', // lint-allow: hardcoded-string
             value: config.timeEnd,
             onChanged: (v) => config.timeEnd = v,
           ),
@@ -383,7 +383,7 @@ Widget _buildGeofenceConditionWidget(
         _CoordinateDisplay(lat: config.lat, lon: config.lon),
         const SizedBox(height: AppTheme.spacing8),
         _ThresholdSlider(
-          label: 'Radius',
+          label: 'Radius', // lint-allow: hardcoded-string
           suffix: 'm',
           value: config.radius,
           min: 50,
@@ -853,7 +853,7 @@ class _NodeNumFieldState extends State<_NodeNumField> {
               },
               style: TextStyle(fontSize: 12, color: colorScheme.onSurface),
               decoration: InputDecoration(
-                hintText: 'Any',
+                hintText: 'Any', // lint-allow: hardcoded-string
                 hintStyle: TextStyle(
                   fontSize: 11,
                   color: colorScheme.onSurface.withValues(alpha: 0.3),

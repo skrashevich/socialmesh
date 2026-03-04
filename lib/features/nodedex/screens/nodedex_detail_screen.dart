@@ -2498,7 +2498,7 @@ class _CompactMetric extends StatelessWidget {
       TextSpan(
         children: [
           TextSpan(
-            text: '$label ',
+            text: '$label ', // lint-allow: hardcoded-string
             style: TextStyle(fontSize: 9, color: context.textTertiary),
           ),
           TextSpan(

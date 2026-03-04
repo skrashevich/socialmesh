@@ -130,7 +130,7 @@ class LifecycleCommandManager {
         CommandFailure(
           CommandError(
             type: CommandErrorType.executionFailed,
-            message: 'Cancelled',
+            message: 'Cancelled', // lint-allow: hardcoded-string
             userMessage: l10n.lifecycleActionCancelled,
           ),
         ),

@@ -5,9 +5,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:socialmesh/features/signals/widgets/signal_card.dart';
 import 'package:socialmesh/features/signals/widgets/signal_presence_context.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
 import 'package:socialmesh/models/social.dart';
 import 'package:socialmesh/models/presence_confidence.dart';
 import 'package:socialmesh/providers/auth_providers.dart';
+
+/// MaterialApp with localization delegates for widget tests.
+Widget _testApp({required Widget home}) => MaterialApp(
+  localizationsDelegates: AppLocalizations.localizationsDelegates,
+  supportedLocales: AppLocalizations.supportedLocales,
+  home: home,
+);
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -17,7 +25,7 @@ void main() {
       tester,
     ) async {
       await tester.pumpWidget(
-        const MaterialApp(home: Scaffold(body: SignalPresenceContext())),
+        _testApp(home: const Scaffold(body: SignalPresenceContext())),
       );
 
       // Should not find any intent chip, status, or badges
@@ -28,8 +36,8 @@ void main() {
 
     testWidgets('renders intent chip when intent is set', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
+        _testApp(
+          home: const Scaffold(
             body: SignalPresenceContext(intent: PresenceIntent.camping),
           ),
         ),
@@ -43,8 +51,8 @@ void main() {
       tester,
     ) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
+        _testApp(
+          home: const Scaffold(
             body: SignalPresenceContext(shortStatus: 'Out hiking today'),
           ),
         ),
@@ -58,8 +66,8 @@ void main() {
 
     testWidgets('renders both intent and status together', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
+        _testApp(
+          home: const Scaffold(
             body: SignalPresenceContext(
               intent: PresenceIntent.traveling,
               shortStatus: 'Road trip',
@@ -74,8 +82,8 @@ void main() {
 
     testWidgets('renders encounter count badge', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(body: SignalPresenceContext(encounterCount: 5)),
+        _testApp(
+          home: const Scaffold(body: SignalPresenceContext(encounterCount: 5)),
         ),
       );
 
@@ -86,8 +94,10 @@ void main() {
       tester,
     ) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(body: SignalPresenceContext(encounterCount: 1107)),
+        _testApp(
+          home: const Scaffold(
+            body: SignalPresenceContext(encounterCount: 1107),
+          ),
         ),
       );
 
@@ -96,8 +106,8 @@ void main() {
 
     testWidgets('does not render encounter count when 0', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(body: SignalPresenceContext(encounterCount: 0)),
+        _testApp(
+          home: const Scaffold(body: SignalPresenceContext(encounterCount: 0)),
         ),
       );
 
@@ -106,8 +116,8 @@ void main() {
 
     testWidgets('renders last seen bucket', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
+        _testApp(
+          home: const Scaffold(
             body: SignalPresenceContext(
               lastSeenBucket: LastSeenBucket.seenToday,
             ),
@@ -120,8 +130,8 @@ void main() {
 
     testWidgets('renders back nearby badge', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(body: SignalPresenceContext(isBackNearby: true)),
+        _testApp(
+          home: const Scaffold(body: SignalPresenceContext(isBackNearby: true)),
         ),
       );
 
@@ -130,8 +140,10 @@ void main() {
 
     testWidgets('does not render back nearby when false', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(body: SignalPresenceContext(isBackNearby: false)),
+        _testApp(
+          home: const Scaffold(
+            body: SignalPresenceContext(isBackNearby: false),
+          ),
         ),
       );
 
@@ -143,7 +155,7 @@ void main() {
     ) async {
       // Set a constrained width to test Wrap behavior
       await tester.pumpWidget(
-        MaterialApp(
+        _testApp(
           home: Scaffold(
             body: SizedBox(
               width: 300,
@@ -171,7 +183,7 @@ void main() {
 
     testWidgets('chips wrap correctly in narrow container', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        _testApp(
           home: Scaffold(
             body: SizedBox(
               width: 200, // Very narrow
@@ -197,8 +209,8 @@ void main() {
 
     testWidgets('does not render unknown intent', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
+        _testApp(
+          home: const Scaffold(
             body: SignalPresenceContext(intent: PresenceIntent.unknown),
           ),
         ),
@@ -212,8 +224,8 @@ void main() {
       tester,
     ) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(body: SignalPresenceContext(shortStatus: '   ')),
+        _testApp(
+          home: const Scaffold(body: SignalPresenceContext(shortStatus: '   ')),
         ),
       );
 
@@ -241,7 +253,7 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [currentUserProvider.overrideWith((ref) => null)],
-          child: MaterialApp(
+          child: _testApp(
             home: Scaffold(body: SignalCard(signal: post)),
           ),
         ),
@@ -269,7 +281,7 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [currentUserProvider.overrideWith((ref) => null)],
-          child: MaterialApp(
+          child: _testApp(
             home: Scaffold(body: SignalCard(signal: post)),
           ),
         ),
@@ -298,7 +310,7 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [currentUserProvider.overrideWith((ref) => null)],
-          child: MaterialApp(
+          child: _testApp(
             home: Scaffold(body: SignalCard(signal: post)),
           ),
         ),

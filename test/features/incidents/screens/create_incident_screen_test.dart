@@ -8,6 +8,7 @@ import 'package:socialmesh/core/auth/permission_provider.dart';
 import 'package:socialmesh/core/auth/permission_service.dart';
 import 'package:socialmesh/core/auth/role.dart';
 import 'package:socialmesh/features/incidents/screens/create_incident_screen.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -27,7 +28,11 @@ void main() {
               _permissionService(role: Role.operator, orgId: 'org-1'),
             ),
           ],
-          child: const MaterialApp(home: CreateIncidentScreen()),
+          child: MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: const CreateIncidentScreen(),
+          ),
         ),
       );
       await tester.pumpAndSettle();
@@ -51,7 +56,11 @@ void main() {
               _permissionService(role: Role.operator, orgId: 'org-1'),
             ),
           ],
-          child: const MaterialApp(home: CreateIncidentScreen()),
+          child: MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: const CreateIncidentScreen(),
+          ),
         ),
       );
       await tester.pumpAndSettle();
@@ -72,7 +81,11 @@ void main() {
               _permissionService(role: Role.operator, orgId: 'org-1'),
             ),
           ],
-          child: const MaterialApp(home: CreateIncidentScreen()),
+          child: MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: const CreateIncidentScreen(),
+          ),
         ),
       );
       await tester.pumpAndSettle();
@@ -93,7 +106,11 @@ void main() {
               _permissionService(role: Role.operator, orgId: 'org-1'),
             ),
           ],
-          child: const MaterialApp(home: CreateIncidentScreen()),
+          child: MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: const CreateIncidentScreen(),
+          ),
         ),
       );
       await tester.pumpAndSettle();
@@ -114,13 +131,17 @@ void main() {
               _permissionService(role: Role.operator, orgId: 'org-1'),
             ),
           ],
-          child: const MaterialApp(home: CreateIncidentScreen()),
+          child: MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: const CreateIncidentScreen(),
+          ),
         ),
       );
       await tester.pumpAndSettle();
 
       // Location capture button present
-      expect(find.text('Capture Location'), findsOneWidget);
+      expect(find.text('Location (optional)'), findsOneWidget);
     });
 
     testWidgets('title validation rejects empty input', (tester) async {
@@ -131,7 +152,11 @@ void main() {
               _permissionService(role: Role.operator, orgId: 'org-1'),
             ),
           ],
-          child: const MaterialApp(home: CreateIncidentScreen()),
+          child: MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: const CreateIncidentScreen(),
+          ),
         ),
       );
       await tester.pumpAndSettle();

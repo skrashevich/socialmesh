@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socialmesh/core/legal/legal_constants.dart';
 import 'package:socialmesh/core/legal/terms_acceptance_state.dart';
 import 'package:socialmesh/features/legal/legal_acceptance_screen.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
 import 'package:socialmesh/providers/terms_acceptance_provider.dart';
 import 'package:socialmesh/services/haptic_service.dart';
 
@@ -28,6 +29,8 @@ Widget _buildTestApp({TermsAcceptanceState? termsState}) {
       }),
     ],
     child: MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       theme: ThemeData.dark().copyWith(
         colorScheme: const ColorScheme.dark(primary: Color(0xFFE91E8C)),
       ),

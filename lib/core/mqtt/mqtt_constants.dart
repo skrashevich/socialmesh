@@ -340,7 +340,7 @@ class TopicTemplate {
   /// Standard topic templates available in the Topic Builder.
   static const List<TopicTemplate> builtIn = [
     TopicTemplate(
-      label: 'Chat',
+      label: 'Chat', // lint-allow: hardcoded-string
       iconName: 'chat_bubble_outline',
       description:
           'Text messages exchanged between mesh nodes on a specific channel.', // lint-allow: hardcoded-string
@@ -348,7 +348,7 @@ class TopicTemplate {
       enabledByDefault: false,
     ),
     TopicTemplate(
-      label: 'Telemetry',
+      label: 'Telemetry', // lint-allow: hardcoded-string
       iconName: 'monitor_heart_outlined',
       description:
           'Device health data such as battery level, voltage, and uptime.', // lint-allow: hardcoded-string
@@ -356,7 +356,7 @@ class TopicTemplate {
       enabledByDefault: false,
     ),
     TopicTemplate(
-      label: 'Position',
+      label: 'Position', // lint-allow: hardcoded-string
       iconName: 'location_on_outlined',
       description:
           'GPS coordinates reported by mesh nodes (privacy-sensitive).', // lint-allow: hardcoded-string

@@ -330,6 +330,7 @@ void main() {
     test(
       'multiple traceroutes for same target are stored separately',
       () async {
+        final base = DateTime(2026);
         for (var i = 0; i < 3; i++) {
           await storage.addTraceRouteLog(
             TraceRouteLog(
@@ -339,6 +340,7 @@ void main() {
               response: true,
               hopsTowards: i + 1,
               hopsBack: 0,
+              timestamp: base.add(Duration(seconds: i)),
             ),
           );
         }
@@ -750,6 +752,8 @@ void main() {
       'replaceOrAddTraceRouteLog appends when no pending entry exists',
       () async {
         const targetNode = 0xAABBCCDD;
+        final t1 = DateTime(2026);
+        final t2 = DateTime(2026, 1, 1, 0, 0, 1);
 
         // Store a completed traceroute first (no pending entry)
         await storage.addTraceRouteLog(
@@ -761,6 +765,7 @@ void main() {
             hopsTowards: 1,
             hopsBack: 0,
             hops: [TraceRouteHop(nodeNum: 0x11111111, snr: 5.0)],
+            timestamp: t1,
           ),
         );
 
@@ -778,6 +783,7 @@ void main() {
               TraceRouteHop(nodeNum: 0x22222222, snr: 8.0),
               TraceRouteHop(nodeNum: 0x33333333, snr: 6.0),
             ],
+            timestamp: t2,
           ),
         );
 

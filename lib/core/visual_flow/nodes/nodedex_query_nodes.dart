@@ -264,7 +264,7 @@ VSNodeDataBuilder _buildAllNodesBuilder() {
       title: 'All Nodes', // lint-allow: hardcoded-string
       outputData: NodeListOutputData(
         type: 'node_list_out',
-        title: 'Nodes',
+        title: 'Nodes', // lint-allow: hardcoded-string
         outputFunction: (_) {
           return const NodeListPayload(
             queryDescription: 'All Nodes',
@@ -509,7 +509,7 @@ VSNodeDataBuilder _buildSortBuilder() {
       type: NodeDexQueryTypes.sortNodes,
       widgetOffset: offset,
       nodeWidth: _kQueryNodeWidth,
-      title: 'Sort',
+      title: 'Sort', // lint-allow: hardcoded-string
       ref: ref,
       config: config,
       child: _QueryConfigWidget(
@@ -533,7 +533,7 @@ VSNodeDataBuilder _buildLimitBuilder() {
       type: NodeDexQueryTypes.limitNodes,
       widgetOffset: offset,
       nodeWidth: _kQueryNodeWidth,
-      title: 'Limit',
+      title: 'Limit', // lint-allow: hardcoded-string
       ref: ref,
       config: config,
       child: _QueryConfigWidget(
@@ -567,14 +567,14 @@ class _QueryFilterNode extends VSNodeData {
          inputData: [
            NodeListInputData(
              type: 'node_list_in',
-             title: 'Input',
+             title: 'Input', // lint-allow: hardcoded-string
              initialConnection: ref,
            ),
          ],
          outputData: [
            NodeListOutputData(
              type: 'node_list_out',
-             title: 'Filtered',
+             title: 'Filtered', // lint-allow: hardcoded-string
              outputFunction: (inputs) {
                final upstream = inputs['node_list_in'] as NodeListPayload?;
                final filter = buildFilter();
@@ -613,14 +613,14 @@ class _QuerySortNode extends VSNodeData {
          inputData: [
            NodeListInputData(
              type: 'node_list_in',
-             title: 'Input',
+             title: 'Input', // lint-allow: hardcoded-string
              initialConnection: ref,
            ),
          ],
          outputData: [
            NodeListOutputData(
              type: 'node_list_out',
-             title: 'Sorted',
+             title: 'Sorted', // lint-allow: hardcoded-string
              outputFunction: (inputs) {
                final upstream = inputs['node_list_in'] as NodeListPayload?;
                if (upstream == null) {
@@ -673,14 +673,14 @@ class _QueryLimitNode extends VSNodeData {
          inputData: [
            NodeListInputData(
              type: 'node_list_in',
-             title: 'Input',
+             title: 'Input', // lint-allow: hardcoded-string
              initialConnection: ref,
            ),
          ],
          outputData: [
            NodeListOutputData(
              type: 'node_list_out',
-             title: 'Limited',
+             title: 'Limited', // lint-allow: hardcoded-string
              outputFunction: (inputs) {
                final upstream = inputs['node_list_in'] as NodeListPayload?;
                if (upstream == null) {

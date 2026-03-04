@@ -55,11 +55,12 @@ class DeviceRouteObserver extends NavigatorObserver {
     final context = navigator?.context;
     if (context == null) return;
 
+    final l10n = context.l10n;
     showActionSnackBar(
       context,
       metadata?.blockedMessage ??
           'Connect device to access this screen', // lint-allow: hardcoded-string
-      actionLabel: 'Connect',
+      actionLabel: l10n.actionConnect,
       onAction: () {
         navigator?.pushNamed('/scanner');
       },

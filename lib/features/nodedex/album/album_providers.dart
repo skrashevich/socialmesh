@@ -15,8 +15,12 @@
 // that consume nodeDexProvider and nodeDexStatsProvider. They perform
 // no side effects and produce immutable snapshots of album state.
 
+import 'dart:ui' show PlatformDispatcher;
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../l10n/app_localizations.dart';
 
 import '../models/nodedex_entry.dart';
 import '../providers/nodedex_providers.dart';
@@ -401,13 +405,14 @@ List<AlbumPage> _groupByRarity(Ref ref, List<NodeDexEntry> all) {
     CardRarity.common,
   ];
 
+  final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
   final pages = <AlbumPage>[];
   for (final rarity in orderedRarities) {
     final list = groups[rarity];
     if (list != null && list.isNotEmpty) {
       pages.add(
         AlbumPage(
-          title: '${rarity.label} Cards',
+          title: l10n.albumRarityPageTitle(rarity.label),
           iconKey: rarity.name,
           entries: list,
           groupKey: rarity.name,

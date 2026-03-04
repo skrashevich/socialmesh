@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/connection_providers.dart';
 import '../../utils/snackbar.dart';
+import '../l10n/l10n_extension.dart';
 
 /// Route requirement types
 enum RouteRequirement {
@@ -173,7 +174,7 @@ class RouteGuard {
         showActionSnackBar(
           context,
           result.reason!,
-          actionLabel: 'Connect',
+          actionLabel: context.l10n.actionConnect,
           onAction: () => Navigator.of(context).pushNamed('/scanner'),
           type: SnackBarType.warning,
         );

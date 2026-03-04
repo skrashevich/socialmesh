@@ -363,6 +363,7 @@ class DeviceConnectionNotifier extends Notifier<DeviceConnectionState2> {
       );
       // Small delay to let UI render first
       Future.delayed(const Duration(milliseconds: 500), () {
+        if (!ref.mounted) return;
         if (!_userDisconnected) {
           // Route to appropriate protocol's connect method
           if (lastProtocol == 'meshcore') {

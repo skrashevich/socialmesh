@@ -275,7 +275,7 @@ Widget _buildBatteryWidget(_BatteryConfig config, String triggerType) {
         ),
         const SizedBox(height: AppTheme.spacing8),
         _ThresholdSlider(
-          label: 'Threshold',
+          label: 'Threshold', // lint-allow: hardcoded-string
           suffix: '%',
           value: config.threshold.toDouble(),
           min: 5,
@@ -317,7 +317,7 @@ Widget _buildGeofenceWidget(_GeofenceConfig config, String triggerType) {
         _CoordinateDisplay(lat: config.lat, lon: config.lon),
         const SizedBox(height: AppTheme.spacing8),
         _ThresholdSlider(
-          label: 'Radius',
+          label: 'Radius', // lint-allow: hardcoded-string
           suffix: 'm',
           value: config.radius,
           min: 50,
@@ -361,7 +361,7 @@ Widget _buildSilentWidget(_SilentConfig config) {
 Widget _buildScheduleWidget(_ScheduleConfig config) {
   return _TriggerConfigWidget(
     icon: Icons.schedule,
-    label: 'Scheduled',
+    label: 'Scheduled', // lint-allow: hardcoded-string
     child: _TextInputField(
       hint: 'Schedule (HH:mm)...', // lint-allow: hardcoded-string
       value: config.schedule,
@@ -403,7 +403,7 @@ Widget _buildChannelWidget(_ChannelConfig config) {
     icon: Icons.forum,
     label: 'Channel Activity', // lint-allow: hardcoded-string
     child: _NodeNumField(
-      label: 'Channel',
+      label: 'Channel', // lint-allow: hardcoded-string
       value: config.channelIndex,
       onChanged: (v) => config.channelIndex = v,
     ),
@@ -432,7 +432,7 @@ Widget _buildDetectionSensorWidget(_DetectionSensorConfig config) {
 Widget _buildManualWidget() {
   return _TriggerConfigWidget(
     icon: Icons.touch_app,
-    label: 'Manual',
+    label: 'Manual', // lint-allow: hardcoded-string
     child: Text(
       'Triggered via Siri Shortcuts or UI', // lint-allow: hardcoded-string
       style: TextStyle(fontSize: 11, color: Colors.grey[400]),
@@ -469,7 +469,7 @@ EventSignalOutputData _makeTriggerOutput(
 ) {
   return EventSignalOutputData(
     type: 'event_out',
-    title: 'Event',
+    title: 'Event', // lint-allow: hardcoded-string
     outputFunction: (inputs) {
       return EventSignalPayload(
         triggerType: triggerType,
@@ -613,7 +613,7 @@ VSNodeDataBuilder _buildTriggerNodeBuilder(String triggerType) {
           type: triggerType,
           widgetOffset: offset,
           nodeWidth: _kTriggerNodeWidth,
-          title: 'Scheduled',
+          title: 'Scheduled', // lint-allow: hardcoded-string
           outputData: _makeTriggerOutput(triggerType, () => config.toJson()),
           child: _buildScheduleWidget(config),
           getValue: () => config.toJson(),
@@ -672,7 +672,7 @@ VSNodeDataBuilder _buildTriggerNodeBuilder(String triggerType) {
           type: triggerType,
           widgetOffset: offset,
           nodeWidth: _kTriggerNodeWidth,
-          title: 'Manual',
+          title: 'Manual', // lint-allow: hardcoded-string
           outputData: _makeTriggerOutput(
             triggerType,
             () => <String, dynamic>{},
@@ -952,7 +952,7 @@ class _NodeNumFieldState extends State<_NodeNumField> {
               },
               style: TextStyle(fontSize: 12, color: colorScheme.onSurface),
               decoration: InputDecoration(
-                hintText: 'All',
+                hintText: 'All', // lint-allow: hardcoded-string
                 hintStyle: TextStyle(
                   fontSize: 11,
                   color: colorScheme.onSurface.withValues(alpha: 0.3),

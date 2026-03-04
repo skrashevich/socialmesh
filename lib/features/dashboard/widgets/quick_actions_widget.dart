@@ -137,7 +137,7 @@ class _QuickActionsContentState extends ConsumerState<QuickActionsContent>
           showActionSnackBar(
             context,
             'Enable "Provide phone location" in Settings to share your position', // lint-allow: hardcoded-string
-            actionLabel: 'View',
+            actionLabel: context.l10n.actionView,
             onAction: () => navigator.push(
               MaterialPageRoute(
                 builder: (_) =>

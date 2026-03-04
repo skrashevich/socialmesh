@@ -767,7 +767,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
             ),
             ElementSchema(
               type: ElementType.text,
-              text: 'Label',
+              text: 'Label', // lint-allow: hardcoded-string
               style: const StyleSchema(
                 textColor: 'accent',
                 fontSize: 9,
@@ -791,7 +791,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
             ),
             ElementSchema(
               type: ElementType.text,
-              text: '--',
+              text: '--', // lint-allow: hardcoded-string
               binding: const BindingSchema(path: '', defaultValue: '--'),
               style: const StyleSchema(
                 fontSize: 16,
@@ -801,7 +801,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
             ),
             ElementSchema(
               type: ElementType.text,
-              text: 'Value',
+              text: 'Value', // lint-allow: hardcoded-string
               style: const StyleSchema(fontSize: 10, textColor: '#888888'),
             ),
           ],
@@ -834,7 +834,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
             ),
             ElementSchema(
               type: ElementType.text,
-              text: 'Status',
+              text: 'Status', // lint-allow: hardcoded-string
               style: const StyleSchema(textColor: '#AAAAAA', fontSize: 11),
             ),
           ],
@@ -868,7 +868,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
             ),
             ElementSchema(
               type: ElementType.text,
-              text: 'Action',
+              text: 'Action', // lint-allow: hardcoded-string
               style: const StyleSchema(
                 textColor: 'accent',
                 fontSize: 9,
@@ -2604,7 +2604,7 @@ class _WidgetEditorScreenState extends ConsumerState<WidgetEditorScreen>
       case ElementType.text:
         return ElementSchema(
           type: type,
-          text: 'Text',
+          text: 'Text', // lint-allow: hardcoded-string
           style: const StyleSchema(textColor: '#FFFFFF', fontSize: 14),
         );
       case ElementType.icon:

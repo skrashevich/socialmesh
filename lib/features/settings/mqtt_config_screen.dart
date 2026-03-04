@@ -37,7 +37,7 @@ class _MqttConfigScreenState extends ConsumerState<MqttConfigScreen>
   final _addressController = TextEditingController();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _rootController = TextEditingController(text: 'msh');
+  final _rootController = TextEditingController(text: 'msh'); // lint-allow: hardcoded-string
   bool _encryptionEnabled = true;
   bool _jsonEnabled = false;
   bool _tlsEnabled = false;

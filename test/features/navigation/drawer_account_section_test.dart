@@ -171,30 +171,31 @@ void main() {
 
     test('_buildProfileTile shows Guest when profile is null', () {
       expect(
-        mainShellSource.contains("profile?.displayName ?? 'Guest'"),
+        mainShellSource.contains('context.l10n.navigationGuestName'),
         true,
         reason:
-            '_buildProfileTile must fall back to "Guest" '
+            '_buildProfileTile must fall back to l10n Guest name '
             'when profile is null',
       );
     });
 
     test('_buildProfileTile shows Not signed in when not authenticated', () {
       expect(
-        mainShellSource.contains("'Not signed in'"),
+        mainShellSource.contains('l10n.navigationNotSignedIn'),
         true,
         reason:
-            '_buildProfileTile must show "Not signed in" subtitle '
+            '_buildProfileTile must show l10n "Not signed in" subtitle '
             'when user is not authenticated',
       );
 
       final notSignedInPattern = RegExp(
-        r"if\s*\(\s*!isSignedIn\s*\)\s*return\s*'Not signed in'",
+        r'if\s*\(\s*!isSignedIn\s*\)\s*return\s*l10n\.navigationNotSignedIn',
       );
       expect(
         notSignedInPattern.hasMatch(mainShellSource),
         true,
-        reason: 'Not signed in text must be returned when isSignedIn is false',
+        reason:
+            'Not signed in l10n key must be returned when isSignedIn is false',
       );
     });
 

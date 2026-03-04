@@ -139,7 +139,7 @@ class BindingRegistry {
     ),
     BindingDefinition(
       path: 'node.rssi',
-      label: 'RSSI',
+      label: 'RSSI', // lint-allow: hardcoded-string
       description:
           'Received signal strength indicator', // lint-allow: hardcoded-string
       category: BindingCategory.node,
@@ -152,7 +152,7 @@ class BindingRegistry {
     // Alias for node.rssi (used by some marketplace widgets)
     BindingDefinition(
       path: 'device.rssi',
-      label: 'RSSI',
+      label: 'RSSI', // lint-allow: hardcoded-string
       description:
           'Received signal strength indicator', // lint-allow: hardcoded-string
       category: BindingCategory.device,
@@ -267,7 +267,7 @@ class BindingRegistry {
     ),
     BindingDefinition(
       path: 'node.humidity',
-      label: 'Humidity',
+      label: 'Humidity', // lint-allow: hardcoded-string
       description:
           'Relative humidity percentage', // lint-allow: hardcoded-string
       category: BindingCategory.environment,
@@ -454,7 +454,7 @@ class BindingRegistry {
     ),
     BindingDefinition(
       path: 'node.satsInView',
-      label: 'Satellites',
+      label: 'Satellites', // lint-allow: hardcoded-string
       description:
           'Number of GPS satellites in view', // lint-allow: hardcoded-string
       category: BindingCategory.gps,
@@ -471,7 +471,7 @@ class BindingRegistry {
     ),
     BindingDefinition(
       path: 'node.groundTrack',
-      label: 'Heading',
+      label: 'Heading', // lint-allow: hardcoded-string
       description:
           'Ground track/heading in degrees', // lint-allow: hardcoded-string
       category: BindingCategory.gps,

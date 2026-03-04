@@ -3505,7 +3505,7 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
     final thresholds = _seriesThresholds[bindingPath] ?? [];
     if (index >= thresholds.length) return;
     final threshold = thresholds[index];
-    final valueController = TextEditingController(text: '${threshold.value}');
+    final valueController = TextEditingController(text: '${threshold.value}'); // lint-allow: hardcoded-string
     final labelController = TextEditingController(text: threshold.label);
     Color selectedColor = threshold.color;
 

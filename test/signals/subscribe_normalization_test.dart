@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:socialmesh/features/signals/widgets/signal_card.dart';
 import 'package:socialmesh/features/social/widgets/subscribe_button.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
 import 'package:socialmesh/models/social.dart';
 import 'package:socialmesh/providers/auth_providers.dart';
 
@@ -33,6 +34,8 @@ void main() {
             currentUserProvider.overrideWith((ref) => null),
           ],
           child: MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
             home: Scaffold(body: SignalCard(signal: post)),
           ),
         ),

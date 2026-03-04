@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:socialmesh/features/aether/models/aether_flight.dart';
 import 'package:socialmesh/features/aether/providers/aether_flight_matcher_provider.dart';
 import 'package:socialmesh/features/aether/widgets/aether_flight_match_card.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
 import 'package:socialmesh/models/mesh_models.dart';
 
 AetherFlightMatch _makeMatch({
@@ -52,6 +53,8 @@ void main() {
     testWidgets('displays flight number', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           home: Scaffold(
             body: AetherFlightMatchCard(
               match: _makeMatch(flightNumber: 'DL456'),
@@ -66,6 +69,8 @@ void main() {
     testWidgets('displays departure and arrival airports', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           home: Scaffold(
             body: AetherFlightMatchCard(
               match: _makeMatch(departure: 'SFO', arrival: 'ORD'),
@@ -81,6 +86,8 @@ void main() {
     testWidgets('displays IN FLIGHT badge', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           home: Scaffold(body: AetherFlightMatchCard(match: _makeMatch())),
         ),
       );
@@ -91,6 +98,8 @@ void main() {
     testWidgets('displays node name', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           home: Scaffold(
             body: AetherFlightMatchCard(
               match: _makeMatch(nodeName: 'MountainRelay'),
@@ -105,6 +114,8 @@ void main() {
     testWidgets('displays RSSI when available', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           home: Scaffold(
             body: AetherFlightMatchCard(match: _makeMatch(rssi: -82)),
           ),
@@ -117,6 +128,8 @@ void main() {
     testWidgets('displays SNR when available', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           home: Scaffold(
             body: AetherFlightMatchCard(match: _makeMatch(snr: 12)),
           ),
@@ -129,6 +142,8 @@ void main() {
     testWidgets('hides RSSI and SNR when null', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           home: Scaffold(
             body: AetherFlightMatchCard(
               match: _makeMatch(rssi: null, snr: null),
@@ -144,6 +159,8 @@ void main() {
     testWidgets('shows report CTA text', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           home: Scaffold(body: AetherFlightMatchCard(match: _makeMatch())),
         ),
       );
@@ -154,6 +171,8 @@ void main() {
     testWidgets('shows flight icon', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           home: Scaffold(body: AetherFlightMatchCard(match: _makeMatch())),
         ),
       );

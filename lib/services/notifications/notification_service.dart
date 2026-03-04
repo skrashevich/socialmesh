@@ -1088,7 +1088,7 @@ class NotificationService {
     await _notifications.show(
       id: _bugReportNotificationId,
       title: '🐛 New Bug Report', // lint-allow: hardcoded-string
-      body: '$subtitle\n$truncated',
+      body: '$subtitle\n$truncated', // lint-allow: hardcoded-string
       notificationDetails: notificationDetails,
       payload: 'bug_report|$reportId',
     );

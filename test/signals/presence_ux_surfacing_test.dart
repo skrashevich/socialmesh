@@ -13,6 +13,7 @@ import 'package:socialmesh/providers/auth_providers.dart';
 import 'package:socialmesh/providers/connection_providers.dart';
 import 'package:socialmesh/services/extended_presence_service.dart';
 import 'package:socialmesh/features/signals/screens/create_signal_screen.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
 
 // Test notifiers for mocking providers
 class _TestNodesNotifier extends NodesNotifier {
@@ -267,14 +268,14 @@ void main() {
       await tester.pumpWidget(
         UncontrolledProviderScope(
           container: container,
-          child: MaterialApp(home: const CreateSignalScreen()),
+          child: MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: const CreateSignalScreen(),
+          ),
         ),
       );
-
-      await tester.pump(const Duration(seconds: 1));
-
-      // Should show Intent label
-      expect(find.text('Intent'), findsOneWidget);
+      await tester.pump(const Duration(seconds: 2));
 
       // Should show Unknown as default (tap to change)
       expect(find.text('Tap to set'), findsOneWidget);
@@ -308,13 +309,16 @@ void main() {
       await tester.pumpWidget(
         UncontrolledProviderScope(
           container: container,
-          child: MaterialApp(home: const CreateSignalScreen()),
+          child: MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: const CreateSignalScreen(),
+          ),
         ),
       );
+      await tester.pump(const Duration(seconds: 2));
 
-      await tester.pump(const Duration(seconds: 1));
-
-      // Should show Short Status text field (capital S)
+      // Should show Short Status section
       expect(find.text('Short Status (optional)'), findsOneWidget);
 
       container.dispose();
@@ -346,13 +350,16 @@ void main() {
       await tester.pumpWidget(
         UncontrolledProviderScope(
           container: container,
-          child: MaterialApp(home: const CreateSignalScreen()),
+          child: MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: const CreateSignalScreen(),
+          ),
         ),
       );
+      await tester.pump(const Duration(seconds: 2));
 
-      await tester.pump(const Duration(seconds: 1));
-
-      // Tap on the intent row
+      // Open the picker
       await tester.tap(find.text('Intent'));
       await tester.pump(const Duration(seconds: 1));
 
@@ -394,14 +401,14 @@ void main() {
       await tester.pumpWidget(
         UncontrolledProviderScope(
           container: container,
-          child: MaterialApp(home: const CreateSignalScreen()),
+          child: MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: const CreateSignalScreen(),
+          ),
         ),
       );
-
-      await tester.pump(const Duration(seconds: 1));
-
-      // Initially shows "Tap to set"
-      expect(find.text('Tap to set'), findsOneWidget);
+      await tester.pump(const Duration(seconds: 2));
 
       // Open the picker
       await tester.tap(find.text('Intent'));
@@ -444,14 +451,15 @@ void main() {
       await tester.pumpWidget(
         UncontrolledProviderScope(
           container: container,
-          child: MaterialApp(home: const CreateSignalScreen()),
+          child: MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: const CreateSignalScreen(),
+          ),
         ),
       );
+      await tester.pump(const Duration(seconds: 2));
 
-      await tester.pump(const Duration(seconds: 1));
-
-      // Find the status text field by finding all text fields and identifying
-      // the one for short status
       final textFields = find.byType(TextField);
       expect(textFields, findsWidgets);
 

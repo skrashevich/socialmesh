@@ -684,7 +684,7 @@ class MqttMockService implements MqttService {
         return DiagnosticCheckResult(
           type: request.type,
           status: DiagnosticStatus.failed,
-          message: 'Mock: ${request.type.title} timed out.',
+          message: 'Mock: ${request.type.title} timed out.', // lint-allow: hardcoded-string
           suggestion: 'Check network connectivity and broker availability.',
           duration: stopwatch.elapsed,
           completedAt: DateTime.now(),

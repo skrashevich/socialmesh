@@ -503,7 +503,9 @@ class _MapScreenState extends ConsumerState<MapScreen>
   void _copyCoordinates(LatLng point) {
     final lat = point.latitude.toStringAsFixed(6);
     final lng = point.longitude.toStringAsFixed(6);
-    Clipboard.setData(ClipboardData(text: '$lat, $lng'));
+    Clipboard.setData(
+      ClipboardData(text: '$lat, $lng'),
+    ); // lint-allow: hardcoded-string
     showSuccessSnackBar(context, context.l10n.mapCoordinatesCopied);
   }
 
@@ -1894,7 +1896,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
                       showActionSnackBar(
                         context,
                         'No position available. Enable GPS on your device or turn on "Provide phone location" in Settings.', // lint-allow: hardcoded-string
-                        actionLabel: 'View',
+                        actionLabel: context.l10n.actionView,
                         onAction: () => Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (_) => const SettingsScreen(

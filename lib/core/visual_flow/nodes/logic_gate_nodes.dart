@@ -107,7 +107,7 @@ VSNodeDataBuilder _buildAndGateBuilder() {
       type: LogicGateTypes.and,
       widgetOffset: offset,
       nodeWidth: _kGateNodeWidth,
-      title: 'AND',
+      title: 'AND', // lint-allow: hardcoded-string
       referenceConnection: ref,
       inputBuilder: (int index, VSOutputData? connection) {
         return EventSignalInputData(
@@ -167,7 +167,7 @@ VSNodeDataBuilder _buildOrGateBuilder() {
       type: LogicGateTypes.or,
       widgetOffset: offset,
       nodeWidth: _kGateNodeWidth,
-      title: 'OR',
+      title: 'OR', // lint-allow: hardcoded-string
       referenceConnection: ref,
       inputBuilder: (int index, VSOutputData? connection) {
         return EventSignalInputData(
@@ -230,18 +230,18 @@ VSNodeDataBuilder _buildNotGateBuilder() {
       type: LogicGateTypes.not,
       widgetOffset: offset,
       nodeWidth: _kGateNodeWidth,
-      title: 'NOT',
+      title: 'NOT', // lint-allow: hardcoded-string
       inputData: [
         EventSignalInputData(
           type: 'event_in',
-          title: 'Input',
+          title: 'Input', // lint-allow: hardcoded-string
           initialConnection: ref,
         ),
       ],
       outputData: [
         EventSignalOutputData(
           type: 'event_out',
-          title: 'Inverted',
+          title: 'Inverted', // lint-allow: hardcoded-string
           outputFunction: (inputs) {
             final upstream = inputs['event_in'] as EventSignalPayload?;
             if (upstream == null) {
@@ -279,7 +279,7 @@ VSNodeDataBuilder _buildDelayGateBuilder() {
       type: LogicGateTypes.delay,
       widgetOffset: offset,
       nodeWidth: _kGateNodeWidth,
-      title: 'Delay',
+      title: 'Delay', // lint-allow: hardcoded-string
       ref: ref,
       config: config,
     );
@@ -300,14 +300,14 @@ class _DelayNode extends VSNodeData {
          inputData: [
            EventSignalInputData(
              type: 'event_in',
-             title: 'Input',
+             title: 'Input', // lint-allow: hardcoded-string
              initialConnection: ref,
            ),
          ],
          outputData: [
            EventSignalOutputData(
              type: 'event_out',
-             title: 'Delayed',
+             title: 'Delayed', // lint-allow: hardcoded-string
              outputFunction: (inputs) {
                final upstream = inputs['event_in'] as EventSignalPayload?;
                if (upstream == null) {

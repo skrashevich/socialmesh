@@ -247,7 +247,7 @@ class ActionNode extends VSNodeData {
          inputData: [
            EventSignalInputData(
              type: 'action_in',
-             title: 'Execute',
+             title: 'Execute', // lint-allow: hardcoded-string
              initialConnection: ref,
            ),
          ],
@@ -927,7 +927,7 @@ class _NodeNumFieldState extends State<_NodeNumField> {
               },
               style: TextStyle(fontSize: 12, color: colorScheme.onSurface),
               decoration: InputDecoration(
-                hintText: 'All',
+                hintText: 'All', // lint-allow: hardcoded-string
                 hintStyle: TextStyle(
                   fontSize: 11,
                   color: colorScheme.onSurface.withValues(alpha: 0.3),

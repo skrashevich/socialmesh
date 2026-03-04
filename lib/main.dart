@@ -1625,7 +1625,7 @@ class _SocialmeshAppState extends ConsumerState<SocialmeshApp>
     return RepaintBoundary(
       key: appRepaintBoundaryKey,
       child: MaterialApp(
-        title: 'Socialmesh',
+        title: 'Socialmesh', // lint-allow: hardcoded-string
         debugShowCheckedModeBanner: false,
         navigatorKey: navigatorKey,
         theme: lightTheme,

@@ -7,12 +7,19 @@ import 'package:socialmesh/features/device_shop/models/shop_models.dart';
 import 'package:socialmesh/features/device_shop/screens/category_products_screen.dart';
 import 'package:socialmesh/features/device_shop/screens/search_products_screen.dart';
 import 'package:socialmesh/features/device_shop/screens/favorites_screen.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
+import 'package:socialmesh/l10n/app_localizations_en.dart';
 import 'package:socialmesh/core/widgets/app_bar_overflow_menu.dart';
 
 // Helper to wrap widgets for testing
 Widget createTestWidget(Widget child) {
   return ProviderScope(
-    child: MaterialApp(home: child, theme: ThemeData.dark()),
+    child: MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: child,
+      theme: ThemeData.dark(),
+    ),
   );
 }
 
@@ -295,8 +302,9 @@ void main() {
     });
 
     test('formattedPrice includes dollar sign', () {
+      final l10n = AppLocalizationsEn();
       final product = createTestProduct(price: 49.99);
-      expect(product.formattedPrice, '\$49.99');
+      expect(product.formattedPrice(l10n), '\$49.99');
     });
 
     test('formattedComparePrice is null when not on sale', () {

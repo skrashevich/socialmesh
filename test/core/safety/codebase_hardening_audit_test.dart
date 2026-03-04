@@ -453,9 +453,10 @@ void main() {
         final content = readFile(file);
         final fileName = file.path.split('/').last;
 
-        // Find TextEditingController field declarations
+        // Find TextEditingController field declarations (match only fields
+        // ending with = or ;, not method signatures ending with ().
         final controllerDeclarations = RegExp(
-          r'TextEditingController\s+(_\w+)',
+          r'TextEditingController\s+(_\w+)\s*[=;]',
         ).allMatches(content);
 
         for (final match in controllerDeclarations) {

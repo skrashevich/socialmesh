@@ -8,6 +8,8 @@ import 'package:http/testing.dart';
 import 'package:socialmesh/features/device_shop/services/lilygo_api_service.dart';
 import 'package:socialmesh/features/device_shop/models/lilygo_models.dart';
 import 'package:socialmesh/features/device_shop/models/shop_models.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
+import 'package:socialmesh/l10n/app_localizations_en.dart';
 
 void main() {
   group('LilygoApiService', () {
@@ -417,7 +419,8 @@ void main() {
         updatedAt: DateTime.now(),
       );
 
-      expect(product.priceRange, '\$49.99');
+      final AppLocalizations l10n = AppLocalizationsEn();
+      expect(product.priceRange(l10n), '\$49.99');
     });
 
     test('priceRange formats correctly for price range', () {
@@ -463,7 +466,8 @@ void main() {
         updatedAt: DateTime.now(),
       );
 
-      expect(product.priceRange, '\$30.00 - \$45.00');
+      final AppLocalizations l10n = AppLocalizationsEn();
+      expect(product.priceRange(l10n), '\$30.00 - \$45.00');
     });
   });
 }

@@ -8,6 +8,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:socialmesh/features/nodedex/models/nodedex_entry.dart';
 import 'package:socialmesh/features/nodedex/services/node_summary_engine.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
+import 'package:socialmesh/l10n/app_localizations_en.dart';
 
 // =============================================================================
 // Test helpers
@@ -387,17 +389,19 @@ void main() {
 
     group('TimeOfDayBucket', () {
       test('labels are capitalized', () {
-        expect(TimeOfDayBucket.dawn.label, 'Dawn');
-        expect(TimeOfDayBucket.midday.label, 'Midday');
-        expect(TimeOfDayBucket.evening.label, 'Evening');
-        expect(TimeOfDayBucket.night.label, 'Night');
+        final l10n = AppLocalizationsEn();
+        expect(TimeOfDayBucket.dawn.label(l10n), 'Dawn');
+        expect(TimeOfDayBucket.midday.label(l10n), 'Midday');
+        expect(TimeOfDayBucket.evening.label(l10n), 'Evening');
+        expect(TimeOfDayBucket.night.label(l10n), 'Night');
       });
 
       test('ranges are human-readable', () {
-        expect(TimeOfDayBucket.dawn.range, '5 AM – 11 AM');
-        expect(TimeOfDayBucket.midday.range, '11 AM – 5 PM');
-        expect(TimeOfDayBucket.evening.range, '5 PM – 11 PM');
-        expect(TimeOfDayBucket.night.range, '11 PM – 5 AM');
+        final l10n = AppLocalizationsEn();
+        expect(TimeOfDayBucket.dawn.range(l10n), '5 AM – 11 AM');
+        expect(TimeOfDayBucket.midday.range(l10n), '11 AM – 5 PM');
+        expect(TimeOfDayBucket.evening.range(l10n), '5 PM – 11 PM');
+        expect(TimeOfDayBucket.night.range(l10n), '11 PM – 5 AM');
       });
 
       test('all 24 hours map to a bucket', () {

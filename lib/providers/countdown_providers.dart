@@ -325,9 +325,10 @@ class CountdownNotifier extends Notifier<Map<String, CountdownTask>> {
     final targetNodeNum = task.targetNodeNum;
     if (targetNodeNum == null) return;
 
+    final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
     showGlobalActionSnackBar(
       'Traceroute results may be ready', // lint-allow: hardcoded-string
-      actionLabel: 'View',
+      actionLabel: l10n.actionView,
       onAction: () {
         final ctx = navigatorKey.currentContext;
         if (ctx == null) return;

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:socialmesh/features/device/widgets/meshcore_console.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
 import 'package:socialmesh/models/mesh_device.dart';
 import 'package:socialmesh/providers/meshcore_providers.dart';
 import 'package:socialmesh/services/meshcore/protocol/meshcore_capture.dart';
@@ -40,7 +41,11 @@ void main() {
               );
             }),
           ],
-          child: const MaterialApp(home: Scaffold(body: MeshCoreConsole())),
+          child: MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: const Scaffold(body: MeshCoreConsole()),
+          ),
         ),
       );
 
@@ -61,6 +66,8 @@ void main() {
             }),
           ],
           child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
             home: Scaffold(
               body: SingleChildScrollView(child: MeshCoreConsole()),
             ),
@@ -111,6 +118,8 @@ void main() {
             }),
           ],
           child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
             home: Scaffold(
               body: SingleChildScrollView(child: MeshCoreConsole()),
             ),
@@ -149,6 +158,8 @@ void main() {
             }),
           ],
           child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
             home: Scaffold(
               body: SingleChildScrollView(child: MeshCoreConsole()),
             ),
@@ -185,6 +196,8 @@ void main() {
             meshCoreCaptureSnapshotProvider.overrideWith(() => notifier),
           ],
           child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
             home: Scaffold(
               body: SingleChildScrollView(child: MeshCoreConsole()),
             ),
@@ -242,6 +255,8 @@ void main() {
             meshCoreCaptureSnapshotProvider.overrideWith(() => notifier),
           ],
           child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
             home: Scaffold(
               body: SingleChildScrollView(child: MeshCoreConsole()),
             ),

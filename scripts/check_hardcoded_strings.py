@@ -734,7 +734,11 @@ def _extract(path: Path, is_data_file: bool) -> list[Hit]:
         for pat in (RE_PTXT_SQ, RE_PTXT_DQ):
             for m in pat.finditer(raw):
                 param, text = m.group(1), m.group(2).strip()
-                if _looks_technical(text) or param in TECHNICAL_PARAMS:
+                if param in TECHNICAL_PARAMS:
+                    continue
+                # For UI_PARAMS, skip _looks_technical — single English
+                # words like 'Chat' or 'Settings' are valid findings.
+                if param not in UI_PARAMS and _looks_technical(text):
                     continue
                 if is_data_file and param in DATA_OBJECT_PARAMS:
                     continue
@@ -756,7 +760,11 @@ def _extract(path: Path, is_data_file: bool) -> list[Hit]:
         for pat in (RE_PARAM_SQ, RE_PARAM_DQ):
             for m in pat.finditer(raw):
                 param, text = m.group(1), m.group(2).strip()
-                if _looks_technical(text) or param in TECHNICAL_PARAMS:
+                if param in TECHNICAL_PARAMS:
+                    continue
+                # For UI_PARAMS, skip _looks_technical — single English
+                # words like 'Chat' or 'Settings' are valid findings.
+                if param not in UI_PARAMS and _looks_technical(text):
                     continue
                 if is_data_file and param in DATA_OBJECT_PARAMS:
                     continue
