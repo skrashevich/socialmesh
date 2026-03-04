@@ -7,6 +7,7 @@ import 'package:socialmesh/features/device_shop/models/shop_models.dart';
 import 'package:socialmesh/features/device_shop/providers/device_shop_providers.dart';
 import 'package:socialmesh/features/device_shop/services/device_shop_event_logger.dart';
 import 'package:socialmesh/features/device_shop/screens/device_shop_screen.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
 
 void main() {
   group('Device Shop LILYGO-only Tests', () {
@@ -45,7 +46,11 @@ void main() {
             }),
             deviceShopEventLoggerProvider.overrideWithValue(fakeLogger),
           ],
-          child: MaterialApp(home: DeviceShopScreen()),
+          child: MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: DeviceShopScreen(),
+          ),
         ),
       );
 
@@ -85,7 +90,11 @@ void main() {
             ),
             deviceShopEventLoggerProvider.overrideWithValue(fakeLogger),
           ],
-          child: MaterialApp(home: DeviceShopScreen()),
+          child: MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: DeviceShopScreen(),
+          ),
         ),
       );
 

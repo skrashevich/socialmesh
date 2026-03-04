@@ -2,8 +2,9 @@
 import '../../core/logging.dart';
 import 'dart:async';
 import 'dart:io';
-import 'dart:ui' show Color;
+import 'dart:ui' show Color, PlatformDispatcher;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
 import '../../models/mesh_models.dart';
 import 'package:socialmesh/core/theme.dart';
 
@@ -57,6 +58,11 @@ class NotificationService {
   factory NotificationService() => _instance;
   NotificationService._internal();
 
+  /// Resolve [AppLocalizations] from the platform locale.
+  /// Usable without [BuildContext] for background notifications.
+  AppLocalizations get _l10n =>
+      lookupAppLocalizations(PlatformDispatcher.instance.locale);
+
   final FlutterLocalNotificationsPlugin _notifications =
       FlutterLocalNotificationsPlugin();
 
@@ -104,7 +110,7 @@ class NotificationService {
 
     // Android settings
     const androidSettings = AndroidInitializationSettings(
-      '@mipmap/ic_launcher',
+      '@mipmap/ic_launcher', // lint-allow: hardcoded-string
     );
 
     // iOS settings - request permissions and enable foreground presentation
@@ -256,8 +262,8 @@ class NotificationService {
 
     final androidDetails = AndroidNotificationDetails(
       'new_nodes',
-      'New Nodes',
-      channelDescription: 'Notifications for newly discovered mesh nodes',
+      'New Nodes', // lint-allow: hardcoded-string
+      channelDescription: _l10n.notificationChannelNodeDiscovery,
       importance: Importance.high,
       priority: Priority.high,
       icon: '@mipmap/ic_launcher',
@@ -292,8 +298,8 @@ class NotificationService {
 
     await _notifications.show(
       id: notificationId,
-      title: 'New Node Discovered',
-      body: '$nodeName ($shortCode) joined the mesh',
+      title: _l10n.notificationNewNodeTitle,
+      body: _l10n.notificationNewNodeBody(nodeName, shortCode),
       notificationDetails: notificationDetails,
       payload: 'node:${node.nodeNum}',
     );
@@ -322,9 +328,8 @@ class NotificationService {
 
     final androidDetails = AndroidNotificationDetails(
       'aether_flights',
-      'Aether Flights',
-      channelDescription:
-          'Notifications when an airborne Aether flight node is detected in your mesh',
+      'Aether Flights', // lint-allow: hardcoded-string
+      channelDescription: _l10n.notificationChannelAetherFlights,
       importance: Importance.high,
       priority: Priority.high,
       icon: '@mipmap/ic_launcher',
@@ -352,7 +357,7 @@ class NotificationService {
 
     await _notifications.show(
       id: notificationId,
-      title: 'Aether Flight Detected',
+      title: _l10n.notificationAetherFlightTitle,
       body:
           '$nodeName is airborne on $flightNumber ($route) — report your reception!',
       notificationDetails: notificationDetails,
@@ -386,8 +391,8 @@ class NotificationService {
 
     final androidDetails = AndroidNotificationDetails(
       'firmware_alerts',
-      'Firmware Alerts',
-      channelDescription: 'Important notifications from your Meshtastic device',
+      'Firmware Alerts', // lint-allow: hardcoded-string
+      channelDescription: _l10n.notificationChannelDeviceAlerts,
       importance: isError ? Importance.max : Importance.high,
       priority: isError ? Priority.max : Priority.high,
       icon: '@mipmap/ic_launcher',
@@ -453,8 +458,8 @@ class NotificationService {
 
     final androidDetails = AndroidNotificationDetails(
       'detection_sensor',
-      'Detection Sensors',
-      channelDescription: 'Notifications for detection sensor events',
+      'Detection Sensors', // lint-allow: hardcoded-string
+      channelDescription: _l10n.notificationChannelDetectionSensor,
       importance: Importance.high,
       priority: Priority.high,
       icon: '@mipmap/ic_launcher',
@@ -483,8 +488,8 @@ class NotificationService {
 
     await _notifications.show(
       id: notificationId,
-      title: '$sensorName: $state',
-      body: 'From $displayName',
+      title: _l10n.notificationDetectionSensorTitle(sensorName, state),
+      body: _l10n.notificationDetectionSensorBody(displayName),
       notificationDetails: notificationDetails,
       payload: 'detection:$nodeNum:$detected',
     );
@@ -513,8 +518,8 @@ class NotificationService {
 
     final androidDetails = AndroidNotificationDetails(
       'tak_entity',
-      'TAK Entities',
-      channelDescription: 'Notifications when tracked TAK entities go stale',
+      'TAK Entities', // lint-allow: hardcoded-string
+      channelDescription: _l10n.notificationChannelTakStale,
       importance: Importance.defaultImportance,
       priority: Priority.defaultPriority,
       icon: '@mipmap/ic_launcher',
@@ -540,9 +545,9 @@ class NotificationService {
 
     await _notifications.show(
       id: notificationId,
-      title: 'Entity Stale: $callsign',
+      title: _l10n.notificationEntityStaleTitle(callsign),
       body:
-          'Last position: ${lat.toStringAsFixed(4)}, '
+          'Last position: ${lat.toStringAsFixed(4)}, ' // lint-allow: hardcoded-string
           '${lon.toStringAsFixed(4)} — $timeAgo',
       notificationDetails: notificationDetails,
       payload: 'tak:$uid',
@@ -571,8 +576,8 @@ class NotificationService {
 
     final androidDetails = AndroidNotificationDetails(
       'tak_entity',
-      'TAK Entities',
-      channelDescription: 'Notifications for TAK entity proximity alerts',
+      'TAK Entities', // lint-allow: hardcoded-string
+      channelDescription: _l10n.notificationChannelTakProximity,
       importance: Importance.high,
       priority: Priority.high,
       icon: '@mipmap/ic_launcher',
@@ -599,7 +604,7 @@ class NotificationService {
 
     await _notifications.show(
       id: notificationId,
-      title: 'Proximity Alert: $callsign',
+      title: _l10n.notificationProximityAlertTitle(callsign),
       body: body,
       notificationDetails: notificationDetails,
       payload: 'tak:$uid',
@@ -631,8 +636,8 @@ class NotificationService {
 
     final androidDetails = AndroidNotificationDetails(
       'direct_messages',
-      'Direct Messages',
-      channelDescription: 'Notifications for direct mesh messages',
+      'Direct Messages', // lint-allow: hardcoded-string
+      channelDescription: _l10n.notificationChannelDirectMessages,
       importance: Importance.high,
       priority: Priority.high,
       icon: '@mipmap/ic_launcher',
@@ -689,7 +694,7 @@ class NotificationService {
 
       await _notifications.show(
         id: notificationId,
-        title: 'Message from $senderName ($shortCode)',
+        title: _l10n.notificationDirectMessageTitle(senderName, shortCode),
         body: truncatedMessage,
         notificationDetails: notificationDetails,
         payload: 'dm:$fromNodeNum',
@@ -718,8 +723,8 @@ class NotificationService {
 
     final androidDetails = AndroidNotificationDetails(
       'channel_messages',
-      'Channel Messages',
-      channelDescription: 'Notifications for channel mesh messages',
+      'Channel Messages', // lint-allow: hardcoded-string
+      channelDescription: _l10n.notificationChannelMessages,
       importance: Importance.high,
       priority: Priority.high,
       icon: '@mipmap/ic_launcher',
@@ -768,7 +773,11 @@ class NotificationService {
 
     await _notifications.show(
       id: channelIndex + 2000000, // Channel indices are small, this is safe
-      title: '$senderName ($shortCode) in $channelName',
+      title: _l10n.notificationChannelMessageTitle(
+        senderName,
+        shortCode,
+        channelName,
+      ),
       body: truncatedMessage,
       notificationDetails: notificationDetails,
       payload: 'channel:$channelIndex:$fromNodeNum',
@@ -850,8 +859,8 @@ class NotificationService {
 
     final androidDetails = AndroidNotificationDetails(
       'direct_messages',
-      'Direct Messages',
-      channelDescription: 'Notifications for direct mesh messages',
+      'Direct Messages', // lint-allow: hardcoded-string
+      channelDescription: _l10n.notificationChannelDirectMessages,
       importance: Importance.high,
       priority: Priority.high,
       icon: '@mipmap/ic_launcher',
@@ -916,7 +925,8 @@ class NotificationService {
       final channelNames = byChannel.values
           .map(
             (msgs) =>
-                msgs.first.channelName ?? 'Channel ${msgs.first.channelIndex}',
+                msgs.first.channelName ??
+                'Channel ${msgs.first.channelIndex}', // lint-allow: hardcoded-string
           )
           .take(3)
           .join(', ');
@@ -926,8 +936,8 @@ class NotificationService {
 
     final androidDetails = AndroidNotificationDetails(
       'channel_messages',
-      'Channel Messages',
-      channelDescription: 'Notifications for channel mesh messages',
+      'Channel Messages', // lint-allow: hardcoded-string
+      channelDescription: _l10n.notificationChannelMessages,
       importance: Importance.high,
       priority: Priority.high,
       icon: '@mipmap/ic_launcher',
@@ -989,8 +999,8 @@ class NotificationService {
 
     final androidDetails = AndroidNotificationDetails(
       'new_nodes',
-      'New Nodes',
-      channelDescription: 'Notifications for newly discovered mesh nodes',
+      'New Nodes', // lint-allow: hardcoded-string
+      channelDescription: _l10n.notificationChannelNodeDiscovery,
       importance: Importance.high,
       priority: Priority.high,
       icon: '@mipmap/ic_launcher',
@@ -1042,8 +1052,9 @@ class NotificationService {
 
     final androidDetails = AndroidNotificationDetails(
       'admin_bug_reports',
-      'Bug Reports',
-      channelDescription: 'Notifications for new user bug reports (admin only)',
+      'Bug Reports', // lint-allow: hardcoded-string
+      channelDescription:
+          'Notifications for new user bug reports (admin only)', // lint-allow: hardcoded-string
       importance: Importance.high,
       priority: Priority.high,
       icon: '@mipmap/ic_launcher',
@@ -1071,13 +1082,13 @@ class NotificationService {
         : description;
 
     final subtitle = email != null && email.isNotEmpty
-        ? 'From: $email'
+        ? 'From: $email' // lint-allow: hardcoded-string
         : 'Anonymous report';
 
     await _notifications.show(
       id: _bugReportNotificationId,
-      title: '🐛 New Bug Report',
-      body: '$subtitle\n$truncated',
+      title: '🐛 New Bug Report', // lint-allow: hardcoded-string
+      body: '$subtitle\n$truncated', // lint-allow: hardcoded-string
       notificationDetails: notificationDetails,
       payload: 'bug_report|$reportId',
     );

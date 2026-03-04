@@ -206,13 +206,13 @@ class RtttlLibraryService {
 
     // Add some popular non-builtin tones
     final popularNames = {
-      'star wars',
-      'mission impossible',
-      'pink panther',
-      'indiana jones',
+      'star wars', // lint-allow: hardcoded-string
+      'mission impossible', // lint-allow: hardcoded-string
+      'pink panther', // lint-allow: hardcoded-string
+      'indiana jones', // lint-allow: hardcoded-string
       'tetris',
       'simpsons',
-      'knight rider',
+      'knight rider', // lint-allow: hardcoded-string
       'ghostbusters',
     };
 

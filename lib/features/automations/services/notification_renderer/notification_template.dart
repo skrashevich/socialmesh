@@ -35,7 +35,7 @@ class NotificationTemplateTier {
   @override
   String toString() =>
       'NotificationTemplateTier($level, title: "$titleTemplate", '
-      'body: "$bodyTemplate")';
+      'body: "$bodyTemplate")'; // lint-allow: hardcoded-string
 }
 
 /// Tier levels ordered from richest to most compact.
@@ -71,7 +71,8 @@ class NotificationSpec {
   const NotificationSpec({
     required this.tiers,
     this.fallbackTitle = 'Alert',
-    this.fallbackBody = 'An automation was triggered.',
+    this.fallbackBody =
+        'An automation was triggered.', // lint-allow: hardcoded-string
     this.deepLinkTemplate,
   });
 
@@ -87,7 +88,8 @@ class NotificationSpec {
     String? subtitleTemplate,
     String? deepLinkTemplate,
     String fallbackTitle = 'Alert',
-    String fallbackBody = 'An automation was triggered.',
+    String fallbackBody =
+        'An automation was triggered.', // lint-allow: hardcoded-string
   }) {
     return NotificationSpec(
       tiers: [
@@ -146,5 +148,5 @@ class NotificationSpec {
   @override
   String toString() =>
       'NotificationSpec(tiers: ${tiers.length}, '
-      'fallback: "$fallbackTitle / $fallbackBody")';
+      'fallback: "$fallbackTitle / $fallbackBody")'; // lint-allow: hardcoded-string
 }

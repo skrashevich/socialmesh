@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/connection_providers.dart';
 import '../../utils/snackbar.dart';
+import '../l10n/l10n_extension.dart';
 
 /// Route requirement types
 enum RouteRequirement {
@@ -51,13 +52,15 @@ class RouteRegistry {
       path: '/device-config',
       requirements: {RouteRequirement.deviceConnected},
       fallbackRoute: '/main',
-      blockedMessage: 'Connect device to access configuration',
+      blockedMessage:
+          'Connect device to access configuration', // lint-allow: hardcoded-string
     ),
     '/device-management': RouteMetadata(
       path: '/device-management',
       requirements: {RouteRequirement.deviceConnected},
       fallbackRoute: '/main',
-      blockedMessage: 'Connect device to access device management',
+      blockedMessage:
+          'Connect device to access device management', // lint-allow: hardcoded-string
     ),
     // Note: '/region-setup' is NOT a protected route - it's navigated to directly
     // from scanner to avoid route guard interference during device reboot.
@@ -139,7 +142,9 @@ class RouteGuard {
         case RouteRequirement.deviceConnected:
           if (!deviceState.isConnected) {
             return RouteGuardResult.blocked(
-              reason: metadata.blockedMessage ?? 'Device not connected',
+              reason:
+                  metadata.blockedMessage ??
+                  'Device not connected', // lint-allow: hardcoded-string
               fallbackRoute: metadata.fallbackRoute ?? '/main',
             );
           }
@@ -169,7 +174,7 @@ class RouteGuard {
         showActionSnackBar(
           context,
           result.reason!,
-          actionLabel: 'Connect',
+          actionLabel: context.l10n.actionConnect,
           onAction: () => Navigator.of(context).pushNamed('/scanner'),
           type: SnackBarType.warning,
         );

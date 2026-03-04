@@ -86,7 +86,7 @@ class MutationQueue {
           rollbackApply();
         } catch (rollbackError) {
           log(
-            'MutationQueue: rollback-failed key=$key '
+            'MutationQueue: rollback-failed key=$key ' // lint-allow: hardcoded-string
             'id=$id error=$rollbackError',
           );
         }

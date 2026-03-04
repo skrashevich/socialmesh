@@ -66,7 +66,8 @@ class AppIntentsService {
       default:
         throw PlatformException(
           code: 'UNSUPPORTED',
-          message: 'Method ${call.method} not supported',
+          message:
+              'Method ${call.method} not supported', // lint-allow: hardcoded-string
         );
     }
   }
@@ -344,7 +345,7 @@ class AppIntentsService {
     final diff = now.difference(lastHeard);
 
     if (diff.inMinutes < 1) {
-      return 'Just now';
+      return 'Just now'; // lint-allow: hardcoded-string
     } else if (diff.inMinutes < 60) {
       return '${diff.inMinutes}m ago';
     } else if (diff.inHours < 24) {

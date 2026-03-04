@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import 'dart:async';
+import 'dart:ui' show PlatformDispatcher;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
 
 import '../core/logging.dart';
 import '../core/navigation.dart';
@@ -170,9 +172,11 @@ class CountdownNotifier extends Notifier<Map<String, CountdownTask>> {
     final displayName =
         node?.displayName ?? NodeDisplayNameResolver.defaultName(nodeNum);
 
+    final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
+
     startCountdown(
       id: tracerouteId(nodeNum),
-      label: 'Traceroute to $displayName',
+      label: l10n.countdownTracerouteTo(displayName),
       totalSeconds: tracerouteCooldownSeconds,
       type: CountdownType.traceroute,
       targetNodeNum: nodeNum,
@@ -189,7 +193,7 @@ class CountdownNotifier extends Notifier<Map<String, CountdownTask>> {
   /// "region changed".
   void startDeviceRebootCountdown({String? reason}) {
     final label = reason != null
-        ? 'Device rebooting — $reason'
+        ? 'Device rebooting — $reason' // lint-allow: hardcoded-string
         : 'Device rebooting';
 
     startCountdown(
@@ -205,9 +209,10 @@ class CountdownNotifier extends Notifier<Map<String, CountdownTask>> {
   /// Shown after requesting positions from all mesh nodes. The countdown
   /// sets user expectations for how long positions take to trickle in.
   void startPositionRequestCountdown() {
+    final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
     startCountdown(
       id: positionRequestId,
-      label: 'Requesting mesh positions',
+      label: l10n.countdownRequestingPositions,
       totalSeconds: positionRequestSeconds,
       type: CountdownType.positionRequest,
     );
@@ -217,9 +222,10 @@ class CountdownNotifier extends Notifier<Map<String, CountdownTask>> {
   ///
   /// Shown after sharing the local device position to the mesh.
   void startPositionBroadcastCountdown() {
+    final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
     startCountdown(
       id: positionBroadcastId,
-      label: 'Broadcasting position to mesh',
+      label: l10n.countdownBroadcastingPosition,
       totalSeconds: positionBroadcastSeconds,
       type: CountdownType.positionBroadcast,
     );
@@ -319,9 +325,10 @@ class CountdownNotifier extends Notifier<Map<String, CountdownTask>> {
     final targetNodeNum = task.targetNodeNum;
     if (targetNodeNum == null) return;
 
+    final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
     showGlobalActionSnackBar(
-      'Traceroute results may be ready',
-      actionLabel: 'View',
+      'Traceroute results may be ready', // lint-allow: hardcoded-string
+      actionLabel: l10n.actionView,
       onAction: () {
         final ctx = navigatorKey.currentContext;
         if (ctx == null) return;
@@ -343,21 +350,21 @@ class CountdownNotifier extends Notifier<Map<String, CountdownTask>> {
     // still trying. The auto-reconnect system handles the actual
     // reconnection independently.
     showGlobalInfoSnackBar(
-      'Device may still be rebooting — reconnecting automatically',
+      'Device may still be rebooting — reconnecting automatically', // lint-allow: hardcoded-string
       duration: const Duration(seconds: 4),
     );
   }
 
   void _onPositionRequestComplete(CountdownTask task) {
     showGlobalSuccessSnackBar(
-      'Mesh position updates received',
+      'Mesh position updates received', // lint-allow: hardcoded-string
       duration: const Duration(seconds: 3),
     );
   }
 
   void _onPositionBroadcastComplete(CountdownTask task) {
     showGlobalSuccessSnackBar(
-      'Position broadcast complete',
+      'Position broadcast complete', // lint-allow: hardcoded-string
       duration: const Duration(seconds: 3),
     );
   }
@@ -383,7 +390,7 @@ class CountdownNotifier extends Notifier<Map<String, CountdownTask>> {
     }
 
     showGlobalSuccessSnackBar(
-      'Device reconnected',
+      'Device reconnected', // lint-allow: hardcoded-string
       duration: const Duration(seconds: 3),
     );
   }

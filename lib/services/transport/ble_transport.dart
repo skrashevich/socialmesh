@@ -46,17 +46,22 @@ class BleTransport implements DeviceTransport {
 
   // Meshtastic BLE service and characteristic UUIDs (from official docs)
   // https://meshtastic.org/docs/development/device/client-api/
-  static const String _serviceUuid = '6ba1b218-15a8-461f-9fa8-5dcae273eafd';
+  static const String _serviceUuid =
+      '6ba1b218-15a8-461f-9fa8-5dcae273eafd'; // lint-allow: hardcoded-string
   static const String _toRadioUuid = 'f75c76d2-129e-4dad-a1dd-7866124401e7';
-  static const String _fromRadioUuid = '2c55e69e-4993-11ed-b878-0242ac120002';
+  static const String _fromRadioUuid =
+      '2c55e69e-4993-11ed-b878-0242ac120002'; // lint-allow: hardcoded-string
   static const String _fromNumUuid = 'ed9da18c-a800-4f66-a670-aa7547e34453';
   // LogRadio characteristic - streams LogRecord protobufs from device firmware
-  static const String _logRadioUuid = '5a3d6e49-06e6-4423-9944-e9de8cdf9547';
+  static const String _logRadioUuid =
+      '5a3d6e49-06e6-4423-9944-e9de8cdf9547'; // lint-allow: hardcoded-string
 
   // Device Information Service UUIDs (standard BLE)
-  static const String _deviceInfoServiceUuid = '180a';
-  static const String _modelNumberUuid = '2a24';
-  static const String _manufacturerNameUuid = '2a29';
+  static const String _deviceInfoServiceUuid =
+      '180a'; // lint-allow: hardcoded-string
+  static const String _modelNumberUuid = '2a24'; // lint-allow: hardcoded-string
+  static const String _manufacturerNameUuid =
+      '2a29'; // lint-allow: hardcoded-string
 
   // Cached device info from Device Information Service
   String? _bleModelNumber;
@@ -239,7 +244,7 @@ class BleTransport implements DeviceTransport {
               // All retries exhausted
               controller.addError(
                 Exception(
-                  'Bluetooth is not ready. Please ensure Bluetooth is enabled and try again.',
+                  'Bluetooth is not ready. Please ensure Bluetooth is enabled and try again.', // lint-allow: hardcoded-string
                 ),
               );
               return;

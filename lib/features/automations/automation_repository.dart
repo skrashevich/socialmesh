@@ -500,8 +500,9 @@ class AutomationRepository extends ChangeNotifier {
     switch (templateName) {
       case 'low_battery_alert':
         return Automation(
-          name: 'Low Battery Alert',
-          description: 'Notify when a node battery drops below 20%',
+          name: 'Low Battery Alert', // lint-allow: hardcoded-string
+          description:
+              'Notify when a node battery drops below 20%', // lint-allow: hardcoded-string
           trigger: const AutomationTrigger(
             type: TriggerType.batteryLow,
             config: {'batteryThreshold': 20},
@@ -519,8 +520,9 @@ class AutomationRepository extends ChangeNotifier {
 
       case 'node_offline_alert':
         return Automation(
-          name: 'Node Offline Alert',
-          description: 'Notify when a node goes offline',
+          name: 'Node Offline Alert', // lint-allow: hardcoded-string
+          description:
+              'Notify when a node goes offline', // lint-allow: hardcoded-string
           trigger: const AutomationTrigger(type: TriggerType.nodeOffline),
           actions: const [
             AutomationAction(
@@ -535,8 +537,9 @@ class AutomationRepository extends ChangeNotifier {
 
       case 'geofence_exit':
         return Automation(
-          name: 'Geofence Exit Alert',
-          description: 'Alert when a node leaves a designated area',
+          name: 'Geofence Exit Alert', // lint-allow: hardcoded-string
+          description:
+              'Alert when a node leaves a designated area', // lint-allow: hardcoded-string
           trigger: const AutomationTrigger(
             type: TriggerType.geofenceExit,
             config: {'geofenceRadius': 500},
@@ -554,8 +557,9 @@ class AutomationRepository extends ChangeNotifier {
 
       case 'sos_response':
         return Automation(
-          name: 'SOS Auto-Response',
-          description: 'Auto-reply when receiving SOS message',
+          name: 'SOS Auto-Response', // lint-allow: hardcoded-string
+          description:
+              'Auto-reply when receiving SOS message', // lint-allow: hardcoded-string
           trigger: const AutomationTrigger(
             type: TriggerType.messageContains,
             config: {'keyword': 'SOS'},
@@ -574,8 +578,9 @@ class AutomationRepository extends ChangeNotifier {
 
       case 'dead_mans_switch':
         return Automation(
-          name: 'Dead Man\'s Switch',
-          description: 'Alert if no activity from node for 30 minutes',
+          name: 'Dead Man\'s Switch', // lint-allow: hardcoded-string
+          description:
+              'Alert if no activity from node for 30 minutes', // lint-allow: hardcoded-string
           trigger: const AutomationTrigger(
             type: TriggerType.nodeSilent,
             config: {'silentMinutes': 30},
@@ -594,7 +599,7 @@ class AutomationRepository extends ChangeNotifier {
 
       default:
         return Automation(
-          name: 'New Automation',
+          name: 'New Automation', // lint-allow: hardcoded-string
           trigger: const AutomationTrigger(type: TriggerType.messageReceived),
           actions: const [AutomationAction(type: ActionType.pushNotification)],
         );
@@ -607,32 +612,37 @@ class AutomationRepository extends ChangeNotifier {
     return const [
       (
         id: 'low_battery_alert',
-        name: 'Low Battery Alert',
-        description: 'Notify when battery drops below 20%',
+        name: 'Low Battery Alert', // lint-allow: hardcoded-string
+        description:
+            'Notify when battery drops below 20%', // lint-allow: hardcoded-string
         icon: Icons.battery_alert,
       ),
       (
         id: 'node_offline_alert',
-        name: 'Node Offline Alert',
-        description: 'Notify when a node goes offline',
+        name: 'Node Offline Alert', // lint-allow: hardcoded-string
+        description:
+            'Notify when a node goes offline', // lint-allow: hardcoded-string
         icon: Icons.wifi_off,
       ),
       (
         id: 'geofence_exit',
-        name: 'Geofence Exit Alert',
-        description: 'Alert when leaving a designated area',
+        name: 'Geofence Exit Alert', // lint-allow: hardcoded-string
+        description:
+            'Alert when leaving a designated area', // lint-allow: hardcoded-string
         icon: Icons.location_off,
       ),
       (
         id: 'sos_response',
-        name: 'SOS Response',
-        description: 'Alert on emergency messages',
+        name: 'SOS Response', // lint-allow: hardcoded-string
+        description:
+            'Alert on emergency messages', // lint-allow: hardcoded-string
         icon: Icons.sos,
       ),
       (
         id: 'dead_mans_switch',
-        name: 'Dead Man\'s Switch',
-        description: 'Alert if node silent too long',
+        name: 'Dead Man\'s Switch', // lint-allow: hardcoded-string
+        description:
+            'Alert if node silent too long', // lint-allow: hardcoded-string
         icon: Icons.timer_off,
       ),
     ];
@@ -645,6 +655,9 @@ class AutomationRepository extends ChangeNotifier {
     return switch (id) {
       'low_battery_alert' => l10n.automationTemplateLowBatteryTitle,
       'node_offline_alert' => l10n.automationTemplateNodeOfflineTitle,
+      'geofence_exit' => l10n.automationTemplateGeofenceExitTitle,
+      'sos_response' => l10n.automationTemplateSosTitle,
+      'dead_mans_switch' => l10n.automationTemplateDeadManTitle,
       'weather_report' => l10n.automationTemplateWeatherReportTitle,
       'channel_monitor' => l10n.automationTemplateChannelMonitorTitle,
       'emergency_beacon' => l10n.automationTemplateEmergencyBeaconTitle,
@@ -657,8 +670,11 @@ class AutomationRepository extends ChangeNotifier {
   /// Falls back to the template ID when no ARB key matches.
   static String localizedTemplateDescription(String id, AppLocalizations l10n) {
     return switch (id) {
-      'low_battery_alert' => l10n.automationTemplateLowBatteryDescription,
-      'node_offline_alert' => l10n.automationTemplateNodeOfflineDescription,
+      'low_battery_alert' => l10n.automationTemplateLowBatteryDesc,
+      'node_offline_alert' => l10n.automationTemplateNodeOfflineDesc,
+      'geofence_exit' => l10n.automationTemplateGeofenceExitDesc,
+      'sos_response' => l10n.automationTemplateSosDesc,
+      'dead_mans_switch' => l10n.automationTemplateDeadManDesc,
       'weather_report' => l10n.automationTemplateWeatherReportDescription,
       'channel_monitor' => l10n.automationTemplateChannelMonitorDescription,
       'emergency_beacon' => l10n.automationTemplateEmergencyBeaconDescription,

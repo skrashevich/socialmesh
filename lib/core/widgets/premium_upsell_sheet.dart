@@ -263,7 +263,8 @@ class _PremiumUpsellSheetState extends ConsumerState<PremiumUpsellSheet>
     );
 
     final displayPrice =
-        storePrice ?? '\$${purchase?.price.toStringAsFixed(2) ?? "3.99"}';
+        storePrice ??
+        '\$${purchase?.price.toStringAsFixed(2) ?? "3.99"}'; // lint-allow: hardcoded-string
 
     return DraggableScrollableSheet(
       initialChildSize: 0.7,

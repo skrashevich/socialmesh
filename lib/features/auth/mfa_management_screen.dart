@@ -244,7 +244,7 @@ class _MFAManagementScreenState extends ConsumerState<MFAManagementScreen>
         if (!mounted) return;
         await haptics.trigger(HapticType.error);
         if (!mounted) return;
-        final friendlyMsg = friendlyMFAError(retryErr);
+        final friendlyMsg = friendlyMFAError(retryErr, context.l10n);
         AppLogging.mfa('_removeFactor — showing error snackbar: $friendlyMsg');
         safeShowSnackBar(friendlyMsg);
       } catch (retryErr) {
@@ -255,7 +255,7 @@ class _MFAManagementScreenState extends ConsumerState<MFAManagementScreen>
         if (!mounted) return;
         await haptics.trigger(HapticType.error);
         if (!mounted) return;
-        safeShowSnackBar(friendlyMFAError(retryErr));
+        safeShowSnackBar(friendlyMFAError(retryErr, context.l10n));
       }
     } on FirebaseAuthException catch (e, st) {
       AppLogging.mfa(
@@ -281,7 +281,7 @@ class _MFAManagementScreenState extends ConsumerState<MFAManagementScreen>
         if (!mounted) return;
         await haptics.trigger(HapticType.warning);
         if (!mounted) return;
-        final friendlyMsg = friendlyMFAError(e);
+        final friendlyMsg = friendlyMFAError(e, context.l10n);
         AppLogging.mfa(
           '_removeFactor — showing warning snackbar: $friendlyMsg',
         );
@@ -292,7 +292,7 @@ class _MFAManagementScreenState extends ConsumerState<MFAManagementScreen>
       if (!mounted) return;
       await haptics.trigger(HapticType.error);
       if (!mounted) return;
-      final friendlyMsg = friendlyMFAError(e);
+      final friendlyMsg = friendlyMFAError(e, context.l10n);
       AppLogging.mfa('_removeFactor — showing error snackbar: $friendlyMsg');
       safeShowSnackBar(friendlyMsg);
     } on FirebaseException catch (e, st) {
@@ -303,7 +303,7 @@ class _MFAManagementScreenState extends ConsumerState<MFAManagementScreen>
       if (!mounted) return;
       await haptics.trigger(HapticType.error);
       if (!mounted) return;
-      final friendlyMsg = friendlyMFAError(e);
+      final friendlyMsg = friendlyMFAError(e, context.l10n);
       AppLogging.mfa('_removeFactor — showing error snackbar: $friendlyMsg');
       safeShowSnackBar(friendlyMsg);
     } catch (e, st) {
@@ -314,7 +314,7 @@ class _MFAManagementScreenState extends ConsumerState<MFAManagementScreen>
       if (!mounted) return;
       await haptics.trigger(HapticType.error);
       if (!mounted) return;
-      final friendlyMsg = friendlyMFAError(e);
+      final friendlyMsg = friendlyMFAError(e, context.l10n);
       AppLogging.mfa('_removeFactor — showing error snackbar: $friendlyMsg');
       safeShowSnackBar(friendlyMsg);
     }

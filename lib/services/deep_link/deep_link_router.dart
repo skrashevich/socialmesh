@@ -1,6 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import 'dart:ui' show PlatformDispatcher;
+
+import 'package:socialmesh/l10n/app_localizations.dart';
+
 import '../../core/logging.dart';
 import 'deep_link_types.dart';
+
+AppLocalizations get _l10n =>
+    lookupAppLocalizations(PlatformDispatcher.instance.locale);
 
 /// Routes parsed deep links to the appropriate screens.
 ///
@@ -34,7 +41,7 @@ class DeepLinkRouter {
       return DeepLinkRouteResult(
         routeName: '/main',
         fallbackMessage: link.validationErrors.isNotEmpty
-            ? 'Invalid link: ${link.validationErrors.first}'
+            ? 'Invalid link: ${link.validationErrors.first}' // lint-allow: hardcoded-string
             : 'Unable to open this link',
       );
     }
@@ -68,14 +75,14 @@ class DeepLinkRouter {
       return DeepLinkRouteResult(
         routeName: '/nodes',
         arguments: {'highlightNodeNum': link.nodeNum, 'scrollToNode': true},
-        fallbackMessage: 'Node added successfully',
+        fallbackMessage: _l10n.deepLinkNodeAddedSuccess,
       );
     }
 
     // Shouldn't reach here, but fallback safely
-    return const DeepLinkRouteResult(
+    return DeepLinkRouteResult(
       routeName: '/nodes',
-      fallbackMessage: 'Unable to load node data',
+      fallbackMessage: _l10n.deepLinkUnableToLoadNode,
     );
   }
 
@@ -88,7 +95,7 @@ class DeepLinkRouter {
         routeName: '/channel-import',
         arguments: {'firestoreId': link.channelFirestoreId},
         requiresDevice: true,
-        fallbackMessage: 'Connect a device to import this channel',
+        fallbackMessage: _l10n.deepLinkConnectToImportChannel,
       );
     }
 
@@ -98,22 +105,22 @@ class DeepLinkRouter {
         routeName: '/qr-scanner',
         arguments: {'base64Data': link.channelBase64Data},
         requiresDevice: true,
-        fallbackMessage: 'Connect a device to import this channel',
+        fallbackMessage: _l10n.deepLinkConnectToImportChannel,
       );
     }
 
-    return const DeepLinkRouteResult(
+    return DeepLinkRouteResult(
       routeName: '/channels',
-      fallbackMessage: 'Invalid channel data',
+      fallbackMessage: _l10n.deepLinkInvalidChannelData,
     );
   }
 
   /// Route a channel invite deep link.
   DeepLinkRouteResult _routeChannelInvite(ParsedDeepLink link) {
     if (!link.hasChannelInvite) {
-      return const DeepLinkRouteResult(
+      return DeepLinkRouteResult(
         routeName: '/channels',
-        fallbackMessage: 'Invalid or incomplete invite link',
+        fallbackMessage: _l10n.deepLinkInvalidInviteLink,
       );
     }
 
@@ -124,7 +131,7 @@ class DeepLinkRouter {
         'inviteSecret': link.channelInviteSecret,
       },
       requiresAuth: true,
-      fallbackMessage: 'Sign in to join this channel',
+      fallbackMessage: _l10n.deepLinkSignInToJoinChannel,
     );
   }
 
@@ -136,9 +143,9 @@ class DeepLinkRouter {
 
     if (link.profileDisplayName == null) {
       AppLogging.qr('🔗 Router: ERROR - Missing profile display name');
-      return const DeepLinkRouteResult(
+      return DeepLinkRouteResult(
         routeName: '/main',
-        fallbackMessage: 'Invalid profile link',
+        fallbackMessage: _l10n.deepLinkInvalidProfileLink,
       );
     }
 
@@ -174,9 +181,9 @@ class DeepLinkRouter {
 
     // Marketplace widget by ID
     if (link.widgetId == null) {
-      return const DeepLinkRouteResult(
+      return DeepLinkRouteResult(
         routeName: '/main',
-        fallbackMessage: 'Invalid widget link',
+        fallbackMessage: _l10n.deepLinkInvalidWidgetLink,
       );
     }
 
@@ -189,9 +196,9 @@ class DeepLinkRouter {
   /// Route a post deep link.
   DeepLinkRouteResult _routePost(ParsedDeepLink link) {
     if (link.postId == null) {
-      return const DeepLinkRouteResult(
+      return DeepLinkRouteResult(
         routeName: '/main',
-        fallbackMessage: 'Invalid post link',
+        fallbackMessage: _l10n.deepLinkInvalidPostLink,
       );
     }
 
@@ -204,9 +211,9 @@ class DeepLinkRouter {
   /// Route a location deep link.
   DeepLinkRouteResult _routeLocation(ParsedDeepLink link) {
     if (link.locationLatitude == null || link.locationLongitude == null) {
-      return const DeepLinkRouteResult(
+      return DeepLinkRouteResult(
         routeName: '/map',
-        fallbackMessage: 'Invalid location coordinates',
+        fallbackMessage: _l10n.deepLinkInvalidLocationCoordinates,
       );
     }
 
@@ -224,9 +231,9 @@ class DeepLinkRouter {
   DeepLinkRouteResult _routeAutomation(ParsedDeepLink link) {
     if (link.automationBase64Data == null &&
         link.automationFirestoreId == null) {
-      return const DeepLinkRouteResult(
+      return DeepLinkRouteResult(
         routeName: '/automations',
-        fallbackMessage: 'Invalid automation link',
+        fallbackMessage: _l10n.deepLinkInvalidAutomationLink,
       );
     }
 
@@ -243,9 +250,9 @@ class DeepLinkRouter {
   /// Route an Aether flight deep link.
   DeepLinkRouteResult _routeAetherFlight(ParsedDeepLink link) {
     if (!link.hasAetherFlightShareId) {
-      return const DeepLinkRouteResult(
+      return DeepLinkRouteResult(
         routeName: '/main',
-        fallbackMessage: 'Invalid Aether flight link',
+        fallbackMessage: _l10n.deepLinkInvalidAetherFlightLink,
       );
     }
 
@@ -260,9 +267,9 @@ class DeepLinkRouter {
   DeepLinkRouteResult _routeLegal(ParsedDeepLink link) {
     final document = link.legalDocument;
     if (document == null) {
-      return const DeepLinkRouteResult(
+      return DeepLinkRouteResult(
         routeName: '/main',
-        fallbackMessage: 'Invalid legal document link',
+        fallbackMessage: _l10n.deepLinkInvalidLegalDocumentLink,
       );
     }
 

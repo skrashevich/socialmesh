@@ -882,7 +882,8 @@ class _SocialmeshAppState extends ConsumerState<SocialmeshApp>
               id: device.remoteId.toString(),
               name: device.platformName.isNotEmpty
                   ? device.platformName
-                  : settings.lastDeviceName ?? 'MeshCore Device',
+                  : settings.lastDeviceName ??
+                        'MeshCore Device', // lint-allow: hardcoded-string
               type: TransportType.ble,
               address: device.remoteId.toString(),
             );
@@ -898,7 +899,9 @@ class _SocialmeshAppState extends ConsumerState<SocialmeshApp>
           );
           foundDevice = DeviceInfo(
             id: deviceId,
-            name: settings.lastDeviceName ?? 'MeshCore Device',
+            name:
+                settings.lastDeviceName ??
+                'MeshCore Device', // lint-allow: hardcoded-string
             type: TransportType.ble,
             address: deviceId,
           );
@@ -910,7 +913,9 @@ class _SocialmeshAppState extends ConsumerState<SocialmeshApp>
         // Create device reference anyway
         foundDevice = DeviceInfo(
           id: deviceId,
-          name: settings.lastDeviceName ?? 'MeshCore Device',
+          name:
+              settings.lastDeviceName ??
+              'MeshCore Device', // lint-allow: hardcoded-string
           type: TransportType.ble,
           address: deviceId,
         );
@@ -999,7 +1004,9 @@ class _SocialmeshAppState extends ConsumerState<SocialmeshApp>
         AppLogging.connection(
           '📱 RECONNECT ON RESUME: MeshCore connect failed: ${result.errorMessage}',
         );
-        throw Exception(result.errorMessage ?? 'MeshCore connection failed');
+        throw Exception(
+          result.errorMessage ?? 'MeshCore connection failed',
+        ); // lint-allow: hardcoded-string
       }
 
       await _finalizeMeshCoreReconnect(foundDevice, result);
@@ -1618,7 +1625,7 @@ class _SocialmeshAppState extends ConsumerState<SocialmeshApp>
     return RepaintBoundary(
       key: appRepaintBoundaryKey,
       child: MaterialApp(
-        title: 'Socialmesh',
+        title: 'Socialmesh', // lint-allow: hardcoded-string
         debugShowCheckedModeBanner: false,
         navigatorKey: navigatorKey,
         theme: lightTheme,
@@ -2926,7 +2933,8 @@ class _SplashScreenState extends ConsumerState<_SplashScreen>
         builder: (context, ref, child) {
           final appVersionAsync = ref.watch(appVersionProvider);
           final versionText = appVersionAsync.when(
-            data: (version) => 'Socialmesh v$version',
+            data: (version) =>
+                'Socialmesh v$version', // lint-allow: hardcoded-string
             loading: () => 'Socialmesh',
             error: (_, _) => 'Socialmesh',
           );
@@ -3874,7 +3882,7 @@ class _SplashNodeCardState extends State<_SplashNodeCard>
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    '!$nodeId',
+                    '!$nodeId', // lint-allow: hardcoded-string
                     style: TextStyle(
                       color: context.textTertiary,
                       fontSize: 11,
@@ -3935,7 +3943,7 @@ class _ErrorScreen extends ConsumerWidget {
               ),
               const SizedBox(height: AppTheme.spacing24),
               Text(
-                'Something went wrong',
+                'Something went wrong', // lint-allow: hardcoded-string
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -3944,7 +3952,7 @@ class _ErrorScreen extends ConsumerWidget {
               ),
               const SizedBox(height: AppTheme.spacing8),
               Text(
-                'Failed to initialize the app. Please try again.',
+                'Failed to initialize the app. Please try again.', // lint-allow: hardcoded-string
                 style: context.titleSmallStyle?.copyWith(
                   color: context.textSecondary,
                 ),

@@ -71,7 +71,7 @@ class ScreenshotThumbnail extends StatelessWidget {
                       ),
                       const SizedBox(width: AppTheme.spacing8),
                       Text(
-                        'Screenshot unavailable',
+                        'Screenshot unavailable', // lint-allow: hardcoded-string
                         style: TextStyle(
                           fontSize: 13,
                           color: context.textTertiary,
@@ -177,7 +177,7 @@ class _ScreenshotSkeletonState extends State<_ScreenshotSkeleton>
                     ),
                     const SizedBox(height: AppTheme.spacing8),
                     Text(
-                      'Loading screenshot...',
+                      'Loading screenshot...', // lint-allow: hardcoded-string
                       style: TextStyle(
                         fontSize: 12,
                         color: context.textTertiary.withValues(alpha: 0.5),

@@ -114,7 +114,7 @@ class AppReviewService {
       return (
         eligible: false,
         reason:
-            'TOO_SOON_AFTER_INSTALL (${daysSinceInstall.inDays} < ${minSinceInstall.inDays} days)',
+            'TOO_SOON_AFTER_INSTALL (${daysSinceInstall.inDays} < ${minSinceInstall.inDays} days)', // lint-allow: hardcoded-string
       );
     }
 
@@ -126,7 +126,7 @@ class AppReviewService {
         return (
           eligible: false,
           reason:
-              'COOLDOWN_ACTIVE (${daysSincePrompt.inDays} < ${cooldown.inDays} days)',
+              'COOLDOWN_ACTIVE (${daysSincePrompt.inDays} < ${cooldown.inDays} days)', // lint-allow: hardcoded-string
         );
       }
     }

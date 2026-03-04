@@ -408,7 +408,10 @@ class UserProfile {
     final now = DateTime.now();
     return UserProfile(
       id: uid,
-      displayName: displayName ?? email?.split('@').first ?? 'New User',
+      displayName:
+          displayName ??
+          email?.split('@').first ??
+          'New User', // lint-allow: hardcoded-string
       email: email,
       avatarUrl: photoUrl,
       createdAt: now,

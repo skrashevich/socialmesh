@@ -244,7 +244,7 @@ class SqliteTracerouteRepository implements TracerouteHistoryRepository {
         final totalCount =
             Sqflite.firstIntValue(
               await txn.rawQuery(
-                'SELECT COUNT(*) FROM ${TracerouteTables.runs}',
+                'SELECT COUNT(*) FROM ${TracerouteTables.runs}', // lint-allow: hardcoded-string
               ),
             ) ??
             0;
@@ -272,10 +272,10 @@ class SqliteTracerouteRepository implements TracerouteHistoryRepository {
 
         // 2. Per-node cap: delete oldest runs per node beyond maxRunsPerNode
         final nodeRows = await txn.rawQuery(
-          'SELECT ${TracerouteTables.colTargetNodeId}, COUNT(*) as cnt '
-          'FROM ${TracerouteTables.runs} '
-          'GROUP BY ${TracerouteTables.colTargetNodeId} '
-          'HAVING cnt > ?',
+          'SELECT ${TracerouteTables.colTargetNodeId}, COUNT(*) as cnt ' // lint-allow: hardcoded-string
+          'FROM ${TracerouteTables.runs} ' // lint-allow: hardcoded-string
+          'GROUP BY ${TracerouteTables.colTargetNodeId} ' // lint-allow: hardcoded-string
+          'HAVING cnt > ?', // lint-allow: hardcoded-string
           [maxRunsPerNode],
         );
 
@@ -421,12 +421,15 @@ class SqliteTracerouteRepository implements TracerouteHistoryRepository {
         i,
         i + batchSize > runIds.length ? runIds.length : i + batchSize,
       );
-      final placeholders = List.filled(batch.length, '?').join(',');
+      final placeholders = List.filled(
+        batch.length,
+        '?',
+      ).join(','); // lint-allow: hardcoded-string
 
       final rows = await _db.rawQuery(
-        'SELECT * FROM ${TracerouteTables.hops} '
-        'WHERE ${TracerouteTables.colRunId} IN ($placeholders) '
-        'ORDER BY ${TracerouteTables.colHopIndex} ASC',
+        'SELECT * FROM ${TracerouteTables.hops} ' // lint-allow: hardcoded-string
+        'WHERE ${TracerouteTables.colRunId} IN ($placeholders) ' // lint-allow: hardcoded-string
+        'ORDER BY ${TracerouteTables.colHopIndex} ASC', // lint-allow: hardcoded-string
         batch,
       );
       results.addAll(rows);
@@ -481,16 +484,19 @@ class SqliteTracerouteRepository implements TracerouteHistoryRepository {
         i,
         i + batchSize > ids.length ? ids.length : i + batchSize,
       );
-      final placeholders = List.filled(batch.length, '?').join(',');
+      final placeholders = List.filled(
+        batch.length,
+        '?',
+      ).join(','); // lint-allow: hardcoded-string
 
       await txn.rawDelete(
-        'DELETE FROM ${TracerouteTables.hops} '
-        'WHERE ${TracerouteTables.colRunId} IN ($placeholders)',
+        'DELETE FROM ${TracerouteTables.hops} ' // lint-allow: hardcoded-string
+        'WHERE ${TracerouteTables.colRunId} IN ($placeholders)', // lint-allow: hardcoded-string
         batch,
       );
       await txn.rawDelete(
-        'DELETE FROM ${TracerouteTables.runs} '
-        'WHERE ${TracerouteTables.colId} IN ($placeholders)',
+        'DELETE FROM ${TracerouteTables.runs} ' // lint-allow: hardcoded-string
+        'WHERE ${TracerouteTables.colId} IN ($placeholders)', // lint-allow: hardcoded-string
         batch,
       );
     }

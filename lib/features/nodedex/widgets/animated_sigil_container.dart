@@ -137,7 +137,7 @@ class AnimatedSigilContainer extends StatefulWidget {
     this.tracerDuration = const Duration(milliseconds: 8000),
   }) : assert(
          sigil != null || nodeNum != null,
-         'Either sigil or nodeNum must be provided',
+         'Either sigil or nodeNum must be provided', // lint-allow: hardcoded-string
        );
 
   @override

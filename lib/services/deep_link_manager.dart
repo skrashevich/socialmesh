@@ -163,37 +163,53 @@ class DeepLinkManager {
     switch (link.type) {
       case DeepLinkType.profile:
         final name = link.profileDisplayName?.toLowerCase();
-        return name != null ? 'profile:$name' : null;
+        return name != null
+            ? 'profile:$name'
+            : null; // lint-allow: hardcoded-string
       case DeepLinkType.node:
         final id = link.nodeFirestoreId ?? link.nodeNum?.toString();
-        return id != null ? 'node:$id' : null;
+        return id != null ? 'node:$id' : null; // lint-allow: hardcoded-string
       case DeepLinkType.widget:
-        return link.widgetId != null ? 'widget:${link.widgetId}' : null;
+        return link.widgetId != null
+            ? 'widget:${link.widgetId}'
+            : null; // lint-allow: hardcoded-string
       case DeepLinkType.post:
-        return link.postId != null ? 'post:${link.postId}' : null;
+        return link.postId != null
+            ? 'post:${link.postId}'
+            : null; // lint-allow: hardcoded-string
       case DeepLinkType.channel:
         // Channels are unique by their base64 data
         final data = link.channelBase64Data;
-        return data != null ? 'channel:${data.hashCode}' : null;
+        return data != null
+            ? 'channel:${data.hashCode}'
+            : null; // lint-allow: hardcoded-string
       case DeepLinkType.channelInvite:
         return link.channelInviteId != null
-            ? 'channel-invite:${link.channelInviteId}'
+            ? 'channel-invite:${link.channelInviteId}' // lint-allow: hardcoded-string
             : null;
       case DeepLinkType.location:
         final lat = link.locationLatitude;
         final lng = link.locationLongitude;
-        return lat != null && lng != null ? 'location:$lat,$lng' : null;
+        return lat != null && lng != null
+            ? 'location:$lat,$lng'
+            : null; // lint-allow: hardcoded-string
       case DeepLinkType.automation:
         final id =
             link.automationFirestoreId ??
             link.automationBase64Data?.hashCode.toString();
-        return id != null ? 'automation:$id' : null;
+        return id != null
+            ? 'automation:$id'
+            : null; // lint-allow: hardcoded-string
       case DeepLinkType.legal:
         final doc = link.legalDocument;
-        return doc != null ? 'legal:$doc' : null;
+        return doc != null
+            ? 'legal:$doc'
+            : null; // lint-allow: hardcoded-string
       case DeepLinkType.aetherFlight:
         final shareId = link.aetherFlightShareId;
-        return shareId != null ? 'aether-flight:$shareId' : null;
+        return shareId != null
+            ? 'aether-flight:$shareId'
+            : null; // lint-allow: hardcoded-string
       case DeepLinkType.invalid:
         return null;
     }
@@ -324,7 +340,8 @@ class DeepLinkManager {
         );
         if (!isConnected) {
           _showSnackBar(
-            routeResult.fallbackMessage ?? 'Connect a device first',
+            routeResult.fallbackMessage ??
+                'Connect a device first', // lint-allow: hardcoded-string
             isError: true,
           );
           return;

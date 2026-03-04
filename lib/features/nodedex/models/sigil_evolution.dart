@@ -234,8 +234,8 @@ class SigilEvolution {
   @override
   String toString() =>
       'SigilEvolution(${stage.name}, patina: $patinaScore, '
-      'tier: $detailTier, weight: $lineWeightScale, tone: $toneScale'
-      '${augments.isNotEmpty ? ', augments: $augments' : ''})';
+      'tier: $detailTier, weight: $lineWeightScale, tone: $toneScale' // lint-allow: hardcoded-string
+      '${augments.isNotEmpty ? ', augments: $augments' : ''})'; // lint-allow: hardcoded-string
 
   /// Shallow list equality without importing foundation.
   static bool _listEquals<T>(List<T> a, List<T> b) {

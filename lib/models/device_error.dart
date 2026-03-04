@@ -64,31 +64,31 @@ class DeviceError {
   String get description {
     switch (code) {
       case DeviceErrorCode.none:
-        return 'No error';
+        return 'No error'; // lint-allow: hardcoded-string
       case DeviceErrorCode.txWatchdog:
-        return 'Transmit watchdog timeout';
+        return 'Transmit watchdog timeout'; // lint-allow: hardcoded-string
       case DeviceErrorCode.sleepEnterWait:
-        return 'Device entering sleep mode';
+        return 'Device entering sleep mode'; // lint-allow: hardcoded-string
       case DeviceErrorCode.noRadio:
-        return 'Radio hardware not found';
+        return 'Radio hardware not found'; // lint-allow: hardcoded-string
       case DeviceErrorCode.unspecified:
-        return 'Unspecified error';
+        return 'Unspecified error'; // lint-allow: hardcoded-string
       case DeviceErrorCode.ubloxInitFailed:
-        return 'GPS initialization failed';
+        return 'GPS initialization failed'; // lint-allow: hardcoded-string
       case DeviceErrorCode.noAxp192:
-        return 'Power management chip not found';
+        return 'Power management chip not found'; // lint-allow: hardcoded-string
       case DeviceErrorCode.invalidRadioSetting:
-        return 'Invalid radio configuration';
+        return 'Invalid radio configuration'; // lint-allow: hardcoded-string
       case DeviceErrorCode.transmitFailed:
-        return 'Transmission failed';
+        return 'Transmission failed'; // lint-allow: hardcoded-string
       case DeviceErrorCode.brownout:
-        return 'Low voltage brownout detected';
+        return 'Low voltage brownout detected'; // lint-allow: hardcoded-string
       case DeviceErrorCode.sxTxTimeout:
-        return 'Radio transmit timeout';
+        return 'Radio transmit timeout'; // lint-allow: hardcoded-string
       case DeviceErrorCode.noAckFromRemoteRadio:
-        return 'No acknowledgment from remote device';
+        return 'No acknowledgment from remote device'; // lint-allow: hardcoded-string
       case DeviceErrorCode.unknown:
-        return 'Unknown error';
+        return 'Unknown error'; // lint-allow: hardcoded-string
     }
   }
 

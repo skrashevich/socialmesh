@@ -216,12 +216,12 @@ class NodeDexDatabase {
       )
     ''');
     batch.execute(
-      'CREATE INDEX idx_entries_last_seen '
-      'ON ${NodeDexTables.entries}(${NodeDexTables.colLastSeenMs})',
+      'CREATE INDEX idx_entries_last_seen ' // lint-allow: hardcoded-string
+      'ON ${NodeDexTables.entries}(${NodeDexTables.colLastSeenMs})', // lint-allow: hardcoded-string
     );
     batch.execute(
-      'CREATE INDEX idx_entries_deleted '
-      'ON ${NodeDexTables.entries}(${NodeDexTables.colDeleted})',
+      'CREATE INDEX idx_entries_deleted ' // lint-allow: hardcoded-string
+      'ON ${NodeDexTables.entries}(${NodeDexTables.colDeleted})', // lint-allow: hardcoded-string
     );
 
     // -- nodedex_encounters --
@@ -242,8 +242,8 @@ class NodeDexDatabase {
       )
     ''');
     batch.execute(
-      'CREATE INDEX idx_encounters_node_ts '
-      'ON ${NodeDexTables.encounters}'
+      'CREATE INDEX idx_encounters_node_ts ' // lint-allow: hardcoded-string
+      'ON ${NodeDexTables.encounters}' // lint-allow: hardcoded-string
       '(${NodeDexTables.colNodeNum}, ${NodeDexTables.colEncTsMs})',
     );
 
@@ -276,8 +276,8 @@ class NodeDexDatabase {
       )
     ''');
     batch.execute(
-      'CREATE INDEX idx_edges_b '
-      'ON ${NodeDexTables.coSeenEdges}(${NodeDexTables.colEdgeB})',
+      'CREATE INDEX idx_edges_b ' // lint-allow: hardcoded-string
+      'ON ${NodeDexTables.coSeenEdges}(${NodeDexTables.colEdgeB})', // lint-allow: hardcoded-string
     );
 
     // -- presence_transitions --
@@ -291,8 +291,8 @@ class NodeDexDatabase {
       )
     ''');
     batch.execute(
-      'CREATE INDEX idx_presence_transitions_node_ts '
-      'ON ${NodeDexTables.presenceTransitions}'
+      'CREATE INDEX idx_presence_transitions_node_ts ' // lint-allow: hardcoded-string
+      'ON ${NodeDexTables.presenceTransitions}' // lint-allow: hardcoded-string
       '(${NodeDexTables.colPtNodeNum}, ${NodeDexTables.colPtTsMs})',
     );
 
@@ -318,8 +318,8 @@ class NodeDexDatabase {
       )
     ''');
     batch.execute(
-      'CREATE INDEX idx_outbox_entity '
-      'ON ${NodeDexTables.syncOutbox}'
+      'CREATE INDEX idx_outbox_entity ' // lint-allow: hardcoded-string
+      'ON ${NodeDexTables.syncOutbox}' // lint-allow: hardcoded-string
       '(${NodeDexTables.colOutboxEntityType}, ${NodeDexTables.colOutboxEntityId})',
     );
 
@@ -341,12 +341,12 @@ class NodeDexDatabase {
       // v2: Add per-field timestamps for socialTag and userNote to support
       // last-write-wins conflict resolution during Cloud Sync.
       await db.execute(
-        'ALTER TABLE ${NodeDexTables.entries} '
-        'ADD COLUMN ${NodeDexTables.colSocialTagUpdatedAtMs} INTEGER',
+        'ALTER TABLE ${NodeDexTables.entries} ' // lint-allow: hardcoded-string
+        'ADD COLUMN ${NodeDexTables.colSocialTagUpdatedAtMs} INTEGER', // lint-allow: hardcoded-string
       );
       await db.execute(
-        'ALTER TABLE ${NodeDexTables.entries} '
-        'ADD COLUMN ${NodeDexTables.colUserNoteUpdatedAtMs} INTEGER',
+        'ALTER TABLE ${NodeDexTables.entries} ' // lint-allow: hardcoded-string
+        'ADD COLUMN ${NodeDexTables.colUserNoteUpdatedAtMs} INTEGER', // lint-allow: hardcoded-string
       );
       AppLogging.storage(
         'NodeDexDatabase: v2 migration — added socialTag/userNote timestamps',
@@ -357,8 +357,8 @@ class NodeDexDatabase {
       // even after reconnecting to a different device (when the original
       // nodes are no longer in the live nodesProvider).
       await db.execute(
-        'ALTER TABLE ${NodeDexTables.entries} '
-        'ADD COLUMN ${NodeDexTables.colLastKnownName} TEXT',
+        'ALTER TABLE ${NodeDexTables.entries} ' // lint-allow: hardcoded-string
+        'ADD COLUMN ${NodeDexTables.colLastKnownName} TEXT', // lint-allow: hardcoded-string
       );
       AppLogging.storage(
         'NodeDexDatabase: v3 migration — added last_known_name column',
@@ -368,16 +368,16 @@ class NodeDexDatabase {
       // v4: Cache device info (hardware model, role, firmware version) so
       // SigilCards display this data even when the node is offline.
       await db.execute(
-        'ALTER TABLE ${NodeDexTables.entries} '
-        'ADD COLUMN ${NodeDexTables.colLastKnownHardware} TEXT',
+        'ALTER TABLE ${NodeDexTables.entries} ' // lint-allow: hardcoded-string
+        'ADD COLUMN ${NodeDexTables.colLastKnownHardware} TEXT', // lint-allow: hardcoded-string
       );
       await db.execute(
-        'ALTER TABLE ${NodeDexTables.entries} '
-        'ADD COLUMN ${NodeDexTables.colLastKnownRole} TEXT',
+        'ALTER TABLE ${NodeDexTables.entries} ' // lint-allow: hardcoded-string
+        'ADD COLUMN ${NodeDexTables.colLastKnownRole} TEXT', // lint-allow: hardcoded-string
       );
       await db.execute(
-        'ALTER TABLE ${NodeDexTables.entries} '
-        'ADD COLUMN ${NodeDexTables.colLastKnownFirmware} TEXT',
+        'ALTER TABLE ${NodeDexTables.entries} ' // lint-allow: hardcoded-string
+        'ADD COLUMN ${NodeDexTables.colLastKnownFirmware} TEXT', // lint-allow: hardcoded-string
       );
       AppLogging.storage(
         'NodeDexDatabase: v4 migration — added hardware/role/firmware columns',
@@ -396,8 +396,8 @@ class NodeDexDatabase {
         )
       ''');
       await db.execute(
-        'CREATE INDEX idx_presence_transitions_node_ts '
-        'ON ${NodeDexTables.presenceTransitions}'
+        'CREATE INDEX idx_presence_transitions_node_ts ' // lint-allow: hardcoded-string
+        'ON ${NodeDexTables.presenceTransitions}' // lint-allow: hardcoded-string
         '(${NodeDexTables.colPtNodeNum}, ${NodeDexTables.colPtTsMs})',
       );
       AppLogging.storage(
@@ -409,12 +409,12 @@ class NodeDexDatabase {
       // all other name resolution sources. Per-field timestamp supports
       // last-write-wins conflict resolution during Cloud Sync.
       await db.execute(
-        'ALTER TABLE ${NodeDexTables.entries} '
-        'ADD COLUMN ${NodeDexTables.colLocalNickname} TEXT',
+        'ALTER TABLE ${NodeDexTables.entries} ' // lint-allow: hardcoded-string
+        'ADD COLUMN ${NodeDexTables.colLocalNickname} TEXT', // lint-allow: hardcoded-string
       );
       await db.execute(
-        'ALTER TABLE ${NodeDexTables.entries} '
-        'ADD COLUMN ${NodeDexTables.colLocalNicknameUpdatedAtMs} INTEGER',
+        'ALTER TABLE ${NodeDexTables.entries} ' // lint-allow: hardcoded-string
+        'ADD COLUMN ${NodeDexTables.colLocalNicknameUpdatedAtMs} INTEGER', // lint-allow: hardcoded-string
       );
       AppLogging.storage(
         'NodeDexDatabase: v6 migration — added local_nickname columns',

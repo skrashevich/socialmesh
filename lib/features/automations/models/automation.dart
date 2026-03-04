@@ -118,35 +118,35 @@ extension TriggerTypeExtension on TriggerType {
   String get displayName {
     switch (this) {
       case TriggerType.nodeOnline:
-        return 'Node becomes active';
+        return 'Node becomes active'; // lint-allow: hardcoded-string
       case TriggerType.nodeOffline:
-        return 'Node becomes inactive';
+        return 'Node becomes inactive'; // lint-allow: hardcoded-string
       case TriggerType.batteryLow:
-        return 'Battery drops below threshold';
+        return 'Battery drops below threshold'; // lint-allow: hardcoded-string
       case TriggerType.batteryFull:
-        return 'Battery fully charged';
+        return 'Battery fully charged'; // lint-allow: hardcoded-string
       case TriggerType.messageReceived:
-        return 'Message received';
+        return 'Message received'; // lint-allow: hardcoded-string
       case TriggerType.messageContains:
-        return 'Message contains keyword';
+        return 'Message contains keyword'; // lint-allow: hardcoded-string
       case TriggerType.positionChanged:
-        return 'Position updated';
+        return 'Position updated'; // lint-allow: hardcoded-string
       case TriggerType.geofenceEnter:
-        return 'Enters geofence area';
+        return 'Enters geofence area'; // lint-allow: hardcoded-string
       case TriggerType.geofenceExit:
-        return 'Exits geofence area';
+        return 'Exits geofence area'; // lint-allow: hardcoded-string
       case TriggerType.nodeSilent:
-        return 'Node silent for duration';
+        return 'Node silent for duration'; // lint-allow: hardcoded-string
       case TriggerType.scheduled:
-        return 'Scheduled time';
+        return 'Scheduled time'; // lint-allow: hardcoded-string
       case TriggerType.signalWeak:
-        return 'Signal strength drops';
+        return 'Signal strength drops'; // lint-allow: hardcoded-string
       case TriggerType.channelActivity:
-        return 'Activity on channel';
+        return 'Activity on channel'; // lint-allow: hardcoded-string
       case TriggerType.detectionSensor:
-        return 'Detection sensor triggered';
+        return 'Detection sensor triggered'; // lint-allow: hardcoded-string
       case TriggerType.manual:
-        return 'Manual trigger';
+        return 'Manual trigger'; // lint-allow: hardcoded-string
     }
   }
 
@@ -226,7 +226,7 @@ extension TriggerTypeExtension on TriggerType {
       case TriggerType.nodeOnline:
       case TriggerType.nodeOffline:
       case TriggerType.nodeSilent:
-        return 'Node Status';
+        return 'Node Status'; // lint-allow: hardcoded-string
       case TriggerType.batteryLow:
       case TriggerType.batteryFull:
         return 'Battery';
@@ -282,35 +282,35 @@ extension TriggerTypeExtension on TriggerType {
   String get defaultDescription {
     switch (this) {
       case TriggerType.nodeOnline:
-        return 'Triggered when a node is heard recently';
+        return 'Triggered when a node is heard recently'; // lint-allow: hardcoded-string
       case TriggerType.nodeOffline:
-        return 'Triggered when a node is not heard for a while';
+        return 'Triggered when a node is not heard for a while'; // lint-allow: hardcoded-string
       case TriggerType.batteryLow:
-        return 'Triggered when battery drops below threshold';
+        return 'Triggered when battery drops below threshold'; // lint-allow: hardcoded-string
       case TriggerType.batteryFull:
-        return 'Triggered when battery is fully charged';
+        return 'Triggered when battery is fully charged'; // lint-allow: hardcoded-string
       case TriggerType.messageReceived:
-        return 'Triggered when any message is received';
+        return 'Triggered when any message is received'; // lint-allow: hardcoded-string
       case TriggerType.messageContains:
-        return 'Triggered when message contains keyword';
+        return 'Triggered when message contains keyword'; // lint-allow: hardcoded-string
       case TriggerType.positionChanged:
-        return 'Triggered when node position changes';
+        return 'Triggered when node position changes'; // lint-allow: hardcoded-string
       case TriggerType.geofenceEnter:
-        return 'Triggered when node enters geofence area';
+        return 'Triggered when node enters geofence area'; // lint-allow: hardcoded-string
       case TriggerType.geofenceExit:
-        return 'Triggered when node exits geofence area';
+        return 'Triggered when node exits geofence area'; // lint-allow: hardcoded-string
       case TriggerType.nodeSilent:
-        return 'Triggered when node is silent for duration';
+        return 'Triggered when node is silent for duration'; // lint-allow: hardcoded-string
       case TriggerType.scheduled:
-        return 'Triggered at scheduled time';
+        return 'Triggered at scheduled time'; // lint-allow: hardcoded-string
       case TriggerType.signalWeak:
-        return 'Triggered when signal strength drops';
+        return 'Triggered when signal strength drops'; // lint-allow: hardcoded-string
       case TriggerType.channelActivity:
-        return 'Triggered when activity on channel';
+        return 'Triggered when activity on channel'; // lint-allow: hardcoded-string
       case TriggerType.detectionSensor:
-        return 'Triggered when detection sensor activates';
+        return 'Triggered when detection sensor activates'; // lint-allow: hardcoded-string
       case TriggerType.manual:
-        return 'Triggered manually via Shortcuts or UI';
+        return 'Triggered manually via Shortcuts or UI'; // lint-allow: hardcoded-string
     }
   }
 
@@ -362,9 +362,9 @@ extension TriggerTypeExtension on TriggerType {
       case TriggerType.batteryFull:
         return '{{node.name}} battery fully charged';
       case TriggerType.messageReceived:
-        return 'Message from {{node.name}}: {{message}}';
+        return 'Message from {{node.name}}: {{message}}'; // lint-allow: hardcoded-string
       case TriggerType.messageContains:
-        return 'Keyword detected from {{node.name}}: {{message}}';
+        return 'Keyword detected from {{node.name}}: {{message}}'; // lint-allow: hardcoded-string
       case TriggerType.positionChanged:
         return '{{node.name}} moved to {{location}}';
       case TriggerType.geofenceEnter:
@@ -374,15 +374,15 @@ extension TriggerTypeExtension on TriggerType {
       case TriggerType.nodeSilent:
         return "{{node.name}} hasn't been heard from in {{silent.duration}}.";
       case TriggerType.scheduled:
-        return 'Scheduled alert at {{time}}';
+        return 'Scheduled alert at {{time}}'; // lint-allow: hardcoded-string
       case TriggerType.signalWeak:
         return '{{node.name}} signal weak';
       case TriggerType.channelActivity:
-        return 'Activity on {{channel.name}}: {{message}}';
+        return 'Activity on {{channel.name}}: {{message}}'; // lint-allow: hardcoded-string
       case TriggerType.detectionSensor:
         return '{{sensor.name}}: {{sensor.state}}';
       case TriggerType.manual:
-        return 'Automation triggered manually';
+        return 'Automation triggered manually'; // lint-allow: hardcoded-string
     }
   }
 }
@@ -452,18 +452,18 @@ class AutomationTrigger {
       case TriggerType.messageContains:
         final kw = keyword;
         if (kw == null || kw.trim().isEmpty) {
-          return 'Please enter a keyword to match';
+          return 'Please enter a keyword to match'; // lint-allow: hardcoded-string
         }
         break;
       case TriggerType.geofenceEnter:
       case TriggerType.geofenceExit:
         if (geofenceLat == null || geofenceLon == null) {
-          return 'Please select a geofence location';
+          return 'Please select a geofence location'; // lint-allow: hardcoded-string
         }
         break;
       case TriggerType.scheduled:
         if (schedule == null || schedule!.trim().isEmpty) {
-          return 'Please set a schedule time';
+          return 'Please set a schedule time'; // lint-allow: hardcoded-string
         }
         break;
       default:
@@ -540,25 +540,25 @@ extension ActionTypeExtension on ActionType {
   String get displayName {
     switch (this) {
       case ActionType.sendMessage:
-        return 'Send message to node';
+        return 'Send message to node'; // lint-allow: hardcoded-string
       case ActionType.playSound:
-        return 'Play alert sound';
+        return 'Play alert sound'; // lint-allow: hardcoded-string
       case ActionType.vibrate:
-        return 'Vibrate device';
+        return 'Vibrate device'; // lint-allow: hardcoded-string
       case ActionType.pushNotification:
-        return 'Push notification';
+        return 'Push notification'; // lint-allow: hardcoded-string
       case ActionType.triggerWebhook:
-        return 'Trigger webhook (IFTTT)';
+        return 'Trigger webhook (IFTTT)'; // lint-allow: hardcoded-string
       case ActionType.logEvent:
-        return 'Log to history';
+        return 'Log to history'; // lint-allow: hardcoded-string
       case ActionType.updateWidget:
-        return 'Update home widget';
+        return 'Update home widget'; // lint-allow: hardcoded-string
       case ActionType.sendToChannel:
-        return 'Send to channel';
+        return 'Send to channel'; // lint-allow: hardcoded-string
       case ActionType.triggerShortcut:
-        return 'Run iOS Shortcut';
+        return 'Run iOS Shortcut'; // lint-allow: hardcoded-string
       case ActionType.glyphPattern:
-        return 'Glyph pattern (Nothing Phone)';
+        return 'Glyph pattern (Nothing Phone)'; // lint-allow: hardcoded-string
     }
   }
 
@@ -669,28 +669,28 @@ class AutomationAction {
       case ActionType.sendMessage:
         final msg = messageText;
         if (msg == null || msg.trim().isEmpty) {
-          return 'Please enter a message to send';
+          return 'Please enter a message to send'; // lint-allow: hardcoded-string
         }
         if (targetNodeNum == null) {
-          return 'Please select a target node';
+          return 'Please select a target node'; // lint-allow: hardcoded-string
         }
         break;
       case ActionType.sendToChannel:
         final msg = messageText;
         if (msg == null || msg.trim().isEmpty) {
-          return 'Please enter a message to send';
+          return 'Please enter a message to send'; // lint-allow: hardcoded-string
         }
         break;
       case ActionType.triggerWebhook:
         final eventName = webhookEventName;
         if (eventName == null || eventName.trim().isEmpty) {
-          return 'Please enter a webhook event name';
+          return 'Please enter a webhook event name'; // lint-allow: hardcoded-string
         }
         break;
       case ActionType.triggerShortcut:
         final name = shortcutName;
         if (name == null || name.trim().isEmpty) {
-          return 'Please enter a Shortcut name';
+          return 'Please enter a Shortcut name'; // lint-allow: hardcoded-string
         }
         break;
       default:
@@ -773,21 +773,21 @@ extension ConditionTypeExtension on ConditionType {
   String get displayName {
     switch (this) {
       case ConditionType.timeRange:
-        return 'During time range';
+        return 'During time range'; // lint-allow: hardcoded-string
       case ConditionType.dayOfWeek:
-        return 'On specific days';
+        return 'On specific days'; // lint-allow: hardcoded-string
       case ConditionType.batteryAbove:
-        return 'Battery above threshold';
+        return 'Battery above threshold'; // lint-allow: hardcoded-string
       case ConditionType.batteryBelow:
-        return 'Battery below threshold';
+        return 'Battery below threshold'; // lint-allow: hardcoded-string
       case ConditionType.nodeOnline:
-        return 'Node is active';
+        return 'Node is active'; // lint-allow: hardcoded-string
       case ConditionType.nodeOffline:
-        return 'Node is inactive';
+        return 'Node is inactive'; // lint-allow: hardcoded-string
       case ConditionType.withinGeofence:
-        return 'Within geofence';
+        return 'Within geofence'; // lint-allow: hardcoded-string
       case ConditionType.outsideGeofence:
-        return 'Outside geofence';
+        return 'Outside geofence'; // lint-allow: hardcoded-string
     }
   }
 

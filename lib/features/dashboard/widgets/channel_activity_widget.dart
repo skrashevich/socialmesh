@@ -174,7 +174,7 @@ class _ChannelTile extends StatelessWidget {
                 SizedBox(height: AppTheme.spacing2),
                 Text(
                   messageCount == 0
-                      ? 'No recent activity'
+                      ? 'No recent activity' // lint-allow: hardcoded-string
                       : '$messageCount message${messageCount == 1 ? '' : 's'} in last hour',
                   style: TextStyle(
                     fontSize: 11,

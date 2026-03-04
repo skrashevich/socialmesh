@@ -63,7 +63,9 @@ class UsbTransport implements DeviceTransport {
       for (final device in devices) {
         yield DeviceInfo(
           id: '${device.vid}:${device.pid}:${device.deviceId}',
-          name: device.productName ?? 'USB Serial Device',
+          name:
+              device.productName ??
+              'USB Serial Device', // lint-allow: hardcoded-string
           type: TransportType.usb,
           address: device.deviceName,
         );

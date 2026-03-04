@@ -76,7 +76,7 @@ class MqttInboundMessage {
   @override
   String toString() =>
       'MqttInboundMessage(topic: $topic, size: $payloadSize, '
-      'qos: $qos, retained: $retained)';
+      'qos: $qos, retained: $retained)'; // lint-allow: hardcoded-string
 }
 
 /// Result of a publish operation.
@@ -106,8 +106,8 @@ class MqttPublishResult {
   @override
   String toString() =>
       'MqttPublishResult(accepted: $accepted'
-      '${messageId != null ? ', id: $messageId' : ''}'
-      '${error != null ? ', error: $error' : ''})';
+      '${messageId != null ? ', id: $messageId' : ''}' // lint-allow: hardcoded-string
+      '${error != null ? ', error: $error' : ''})'; // lint-allow: hardcoded-string
 }
 
 /// Result of a subscribe operation.
@@ -142,8 +142,8 @@ class MqttSubscribeResult {
   @override
   String toString() =>
       'MqttSubscribeResult(topic: $topic, accepted: $accepted'
-      '${grantedQos != null ? ', qos: $grantedQos' : ''}'
-      '${error != null ? ', error: $error' : ''})';
+      '${grantedQos != null ? ', qos: $grantedQos' : ''}' // lint-allow: hardcoded-string
+      '${error != null ? ', error: $error' : ''})'; // lint-allow: hardcoded-string
 }
 
 /// Represents a connection event fired by the service.
@@ -170,8 +170,8 @@ class MqttConnectionEvent {
   @override
   String toString() =>
       'MqttConnectionEvent(${state.name}'
-      '${reason != null ? ', reason: $reason' : ''}'
-      '${errorMessage != null ? ', error: $errorMessage' : ''})';
+      '${reason != null ? ', reason: $reason' : ''}' // lint-allow: hardcoded-string
+      '${errorMessage != null ? ', error: $errorMessage' : ''})'; // lint-allow: hardcoded-string
 }
 
 /// Configuration for a diagnostic check run performed by the service.
@@ -210,8 +210,8 @@ class MqttPingResult {
   @override
   String toString() =>
       'MqttPingResult(success: $success'
-      '${roundTripMs != null ? ', rtt: ${roundTripMs}ms' : ''}'
-      '${error != null ? ', error: $error' : ''})';
+      '${roundTripMs != null ? ', rtt: ${roundTripMs}ms' : ''}' // lint-allow: hardcoded-string
+      '${error != null ? ', error: $error' : ''})'; // lint-allow: hardcoded-string
 }
 
 // ---------------------------------------------------------------------------

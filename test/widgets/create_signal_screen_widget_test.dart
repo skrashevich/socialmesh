@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:socialmesh/features/signals/screens/create_signal_screen.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
 import 'package:socialmesh/models/mesh_models.dart';
 import 'package:socialmesh/providers/app_providers.dart';
 import 'package:socialmesh/providers/connectivity_providers.dart';
@@ -56,7 +57,11 @@ void main() {
     await tester.pumpWidget(
       UncontrolledProviderScope(
         container: container,
-        child: MaterialApp(home: const CreateSignalScreen()),
+        child: MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: const CreateSignalScreen(),
+        ),
       ),
     );
 

@@ -445,11 +445,11 @@ class WidgetSqliteStore {
   /// Record a failed outbox attempt.
   Future<void> markOutboxAttemptFailed(int id, String error) async {
     await _db.rawUpdate(
-      'UPDATE ${WidgetTables.syncOutbox} SET '
+      'UPDATE ${WidgetTables.syncOutbox} SET ' // lint-allow: hardcoded-string
       '${WidgetTables.colOutboxAttemptCount} = '
       '${WidgetTables.colOutboxAttemptCount} + 1, '
       '${WidgetTables.colOutboxLastError} = ? '
-      'WHERE ${WidgetTables.colOutboxId} = ?',
+      'WHERE ${WidgetTables.colOutboxId} = ?', // lint-allow: hardcoded-string
       [error, id],
     );
     AppLogging.sync(
@@ -460,7 +460,7 @@ class WidgetSqliteStore {
   /// Get the count of pending outbox entries.
   Future<int> get outboxCount async {
     final result = await _db.rawQuery(
-      'SELECT COUNT(*) as cnt FROM ${WidgetTables.syncOutbox}',
+      'SELECT COUNT(*) as cnt FROM ${WidgetTables.syncOutbox}', // lint-allow: hardcoded-string
     );
     final count = Sqflite.firstIntValue(result) ?? 0;
     AppLogging.sync('[WidgetStore] outboxCount = $count');

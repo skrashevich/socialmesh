@@ -542,7 +542,8 @@ class ProfileCloudSyncService {
           // Delete uploaded file
           await ref.delete();
           throw Exception(
-            validation.data['message'] ?? 'Content policy violation',
+            validation.data['message'] ??
+                'Content policy violation', // lint-allow: hardcoded-string
           );
         }
       } catch (e) {
@@ -651,7 +652,8 @@ class ProfileCloudSyncService {
           // Delete uploaded file
           await ref.delete();
           throw Exception(
-            validation.data['message'] ?? 'Content policy violation',
+            validation.data['message'] ??
+                'Content policy violation', // lint-allow: hardcoded-string
           );
         }
       } catch (e) {
@@ -956,7 +958,7 @@ class DisplayNameTakenException implements Exception {
 
   @override
   String toString() =>
-      'The display name "$displayName" is already taken. Please choose a different name.';
+      'The display name "$displayName" is already taken. Please choose a different name.'; // lint-allow: hardcoded-string
 }
 
 /// Singleton instance — nullable because Firebase init is async and may fail.

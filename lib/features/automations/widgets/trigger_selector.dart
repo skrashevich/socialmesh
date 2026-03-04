@@ -952,12 +952,12 @@ class _TriggerSelectorState extends State<TriggerSelector> {
   ) {
     switch (scheduleType) {
       case 'daily':
-        return 'daily:$hour:$minute';
+        return 'daily:$hour:$minute'; // lint-allow: hardcoded-string
       case 'weekly':
         final days = daysOfWeek.join(',');
-        return 'weekly:$hour:$minute:$days';
+        return 'weekly:$hour:$minute:$days'; // lint-allow: hardcoded-string
       case 'interval':
-        return 'interval:$intervalMinutes';
+        return 'interval:$intervalMinutes'; // lint-allow: hardcoded-string
       default:
         return '';
     }
@@ -1129,7 +1129,7 @@ class _TriggerSelectorState extends State<TriggerSelector> {
 
   /// Category order for consistent display
   static const _categoryOrder = [
-    'Node Status',
+    'Node Status', // lint-allow: hardcoded-string
     'Battery',
     'Messages',
     'Location',

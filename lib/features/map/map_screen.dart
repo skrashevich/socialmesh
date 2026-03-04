@@ -503,7 +503,9 @@ class _MapScreenState extends ConsumerState<MapScreen>
   void _copyCoordinates(LatLng point) {
     final lat = point.latitude.toStringAsFixed(6);
     final lng = point.longitude.toStringAsFixed(6);
-    Clipboard.setData(ClipboardData(text: '$lat, $lng'));
+    Clipboard.setData(
+      ClipboardData(text: '$lat, $lng'),
+    ); // lint-allow: hardcoded-string
     showSuccessSnackBar(context, context.l10n.mapCoordinatesCopied);
   }
 
@@ -1551,9 +1553,9 @@ class _MapScreenState extends ConsumerState<MapScreen>
                           Clipboard.setData(
                             ClipboardData(
                               text:
-                                  'A: ${a.latitude.toStringAsFixed(6)}, '
+                                  'A: ${a.latitude.toStringAsFixed(6)}, ' // lint-allow: hardcoded-string
                                   '${a.longitude.toStringAsFixed(6)}\n'
-                                  'B: ${b.latitude.toStringAsFixed(6)}, '
+                                  'B: ${b.latitude.toStringAsFixed(6)}, ' // lint-allow: hardcoded-string
                                   '${b.longitude.toStringAsFixed(6)}',
                             ),
                           );
@@ -1893,8 +1895,8 @@ class _MapScreenState extends ConsumerState<MapScreen>
                     onLocationUnavailable: () {
                       showActionSnackBar(
                         context,
-                        'No position available. Enable GPS on your device or turn on "Provide phone location" in Settings.',
-                        actionLabel: 'View',
+                        'No position available. Enable GPS on your device or turn on "Provide phone location" in Settings.', // lint-allow: hardcoded-string
+                        actionLabel: context.l10n.actionView,
                         onAction: () => Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (_) => const SettingsScreen(
@@ -3141,7 +3143,9 @@ class _MeasurementCardState extends State<_MeasurementCard> {
   String _pointLabel(LatLng point, MeshNode? node, String prefix) {
     if (node != null) {
       final name = node.displayName;
-      final alt = node.altitude != null ? ' · ${node.altitude}m' : '';
+      final alt = node.altitude != null
+          ? ' · ${node.altitude}m'
+          : ''; // lint-allow: hardcoded-string
       return '$prefix: $name$alt';
     }
     return '$prefix: ${point.latitude.toStringAsFixed(4)}, '
@@ -3272,10 +3276,10 @@ class _MeasurementCardState extends State<_MeasurementCard> {
                 ClipboardData(
                   text: context.l10n.mapRfLinkBudgetClipboard(
                     _formatDistance(distanceKm),
-                    '906 MHz',
+                    '906 MHz', // lint-allow: hardcoded-string
                     '${fspl.toStringAsFixed(1)} dB',
-                    'Alt A: ${altA}m · Alt B: ${altB}m\n'
-                        'Bearing: ${bearing.toStringAsFixed(0)}° $cardinal',
+                    'Alt A: ${altA}m · Alt B: ${altB}m\n' // lint-allow: hardcoded-string
+                        'Bearing: ${bearing.toStringAsFixed(0)}° $cardinal', // lint-allow: hardcoded-string
                   ),
                 ),
               );

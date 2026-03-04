@@ -3,6 +3,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:socialmesh/features/nodedex/models/nodedex_entry.dart';
 import 'package:socialmesh/features/nodedex/services/trait_engine.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
+import 'package:socialmesh/l10n/app_localizations_en.dart';
 
 // =============================================================================
 // Test helpers — top-level so they can reference each other
@@ -721,7 +723,7 @@ void main() {
         const result = TraitResult(primary: NodeTrait.beacon, confidence: 0.85);
         final str = result.toString();
 
-        expect(str, contains('Beacon'));
+        expect(str, contains('beacon'));
         expect(str, contains('85%'));
       });
 
@@ -734,15 +736,15 @@ void main() {
         );
         final str = result.toString();
 
-        expect(str, contains('Relay'));
-        expect(str, contains('Sentinel'));
+        expect(str, contains('relay'));
+        expect(str, contains('sentinel'));
       });
 
       test('toString omits secondary when null', () {
         const result = TraitResult(primary: NodeTrait.ghost, confidence: 0.7);
         final str = result.toString();
 
-        expect(str, contains('Ghost'));
+        expect(str, contains('ghost'));
         expect(str, isNot(contains('secondary')));
       });
     });
@@ -828,15 +830,17 @@ void main() {
     // -------------------------------------------------------------------------
 
     group('NodeTrait enum', () {
+      final AppLocalizations l10n = AppLocalizationsEn();
+
       test('all traits have display labels', () {
         for (final trait in NodeTrait.values) {
-          expect(trait.displayLabel, isNotEmpty);
+          expect(trait.displayLabel(l10n), isNotEmpty);
         }
       });
 
       test('all traits have descriptions', () {
         for (final trait in NodeTrait.values) {
-          expect(trait.description, isNotEmpty);
+          expect(trait.description(l10n), isNotEmpty);
         }
       });
 
@@ -846,13 +850,15 @@ void main() {
           expect(
             trait.color.a,
             equals(1.0),
-            reason: '${trait.displayLabel} color is not fully opaque',
+            reason: '${trait.displayLabel(l10n)} color is not fully opaque',
           );
         }
       });
 
       test('display labels are unique', () {
-        final labels = NodeTrait.values.map((t) => t.displayLabel).toSet();
+        final labels = NodeTrait.values
+            .map((t) => t.displayLabel(l10n))
+            .toSet();
         expect(labels.length, equals(NodeTrait.values.length));
       });
     });

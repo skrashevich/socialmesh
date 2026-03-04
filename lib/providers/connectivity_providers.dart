@@ -245,13 +245,19 @@ class SignalConnectivityState {
   bool get canUseMesh => isBleConnected;
 
   String? get cloudDisabledReason {
-    if (!hasInternet) return 'No internet connection';
-    if (!isAuthenticated) return 'Sign in required for cloud features';
+    if (!hasInternet) {
+      return 'No internet connection'; // lint-allow: hardcoded-string
+    }
+    if (!isAuthenticated) {
+      return 'Sign in required for cloud features'; // lint-allow: hardcoded-string
+    }
     return null;
   }
 
   String? get meshDisabledReason {
-    if (!isBleConnected) return 'Device not connected';
+    if (!isBleConnected) {
+      return 'Device not connected'; // lint-allow: hardcoded-string
+    }
     return null;
   }
 }

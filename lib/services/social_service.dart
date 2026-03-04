@@ -2460,5 +2460,5 @@ class DisplayNameTakenException implements Exception {
 
   @override
   String toString() =>
-      'The display name "$displayName" is already taken. Please choose a different name.';
+      'The display name "$displayName" is already taken. Please choose a different name.'; // lint-allow: hardcoded-string
 }

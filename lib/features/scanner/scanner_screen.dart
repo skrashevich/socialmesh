@@ -117,7 +117,8 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
         if (mounted) {
           setState(() {
             _savedDeviceNotFoundName =
-                settings.lastDeviceName ?? 'Your saved device';
+                settings.lastDeviceName ??
+                'Your saved device'; // lint-allow: hardcoded-string
           });
         }
       });
@@ -355,7 +356,7 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
         '(state=$autoReconnectState), showing reconnecting UI instead of scanning',
       );
       AppErrorHandler.addBreadcrumb(
-        'Scanner: deferred to background reconnect ($autoReconnectState)',
+        'Scanner: deferred to background reconnect ($autoReconnectState)', // lint-allow: hardcoded-string
       );
       safeSetState(() {
         _autoReconnecting = true;
@@ -479,7 +480,9 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
         // Device not found, start regular scan and show info message
         safeSetState(() {
           _autoReconnecting = false;
-          _savedDeviceNotFoundName = lastDeviceName ?? 'your saved device';
+          _savedDeviceNotFoundName =
+              lastDeviceName ??
+              'your saved device'; // lint-allow: hardcoded-string
         });
         _startScan();
       }
@@ -758,7 +761,9 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
             '📡 SCANNER: Saved device $_savedDeviceId not found, may be connected elsewhere',
           );
           safeSetState(() {
-            _savedDeviceNotFoundName = _savedDeviceName ?? 'Your saved device';
+            _savedDeviceNotFoundName =
+                _savedDeviceName ??
+                'Your saved device'; // lint-allow: hardcoded-string
           });
         }
       }
@@ -854,7 +859,8 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
 
   DeviceInfo? _savedDevicePlaceholder() {
     if (_savedDeviceId == null) return null;
-    final name = _savedDeviceName ?? 'Saved Device';
+    final name =
+        _savedDeviceName ?? 'Saved Device'; // lint-allow: hardcoded-string
     final type = _savedDeviceTransportType ?? TransportType.ble;
     return DeviceInfo(id: _savedDeviceId!, name: name, type: type);
   }
@@ -896,7 +902,7 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
         if (mounted) {
           showErrorSnackBar(
             context,
-            'Unknown device protocol - cannot connect',
+            'Unknown device protocol - cannot connect', // lint-allow: hardcoded-string
           );
         }
         return;
@@ -1377,7 +1383,7 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
           errorLower.contains('android-code: 133');
       final isDiscoveryFailed = errorLower.contains('discovery failed');
       final isDeviceDisconnected = errorLower.contains(
-        'device is disconnected',
+        'device is disconnected', // lint-allow: hardcoded-string
       );
 
       String userMessage;
@@ -1418,8 +1424,8 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
         '(isAutoReconnect=$isAutoReconnect)',
       );
       AppErrorHandler.addBreadcrumb(
-        'Scanner: connect error, race guard active '
-        '(isAutoReconnect=$isAutoReconnect, err=${e.runtimeType})',
+        'Scanner: connect error, race guard active ' // lint-allow: hardcoded-string
+        '(isAutoReconnect=$isAutoReconnect, err=${e.runtimeType})', // lint-allow: hardcoded-string
       );
 
       // Only reset connecting state on error
@@ -1719,7 +1725,7 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Bluetooth pairing was removed. Forget “Meshtastic” in Settings > Bluetooth and reconnect to continue.',
+                          'Bluetooth pairing was removed. Forget “Meshtastic” in Settings > Bluetooth and reconnect to continue.', // lint-allow: hardcoded-string
                           style: TextStyle(
                             fontSize: 13,
                             color: context.textSecondary,
@@ -2035,13 +2041,13 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Detection: ${detection.reason}',
+                  'Detection: ${detection.reason}', // lint-allow: hardcoded-string
                   style: Theme.of(
                     context,
                   ).textTheme.labelSmall?.copyWith(fontFamily: 'monospace'),
                 ),
                 Text(
-                  'Confidence: ${(detection.confidence * 100).toStringAsFixed(0)}%',
+                  'Confidence: ${(detection.confidence * 100).toStringAsFixed(0)}%', // lint-allow: hardcoded-string
                   style: Theme.of(
                     context,
                   ).textTheme.labelSmall?.copyWith(fontFamily: 'monospace'),

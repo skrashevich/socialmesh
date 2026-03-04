@@ -1503,7 +1503,7 @@ class _RegionHistoryCard extends StatelessWidget {
                       const SizedBox(height: AppTheme.spacing2),
                       Text(
                         '${context.l10n.nodedexRegionEncounterCount(region.encounterCount)} '
-                        '\u00B7 ${dateFormat.format(region.firstSeen)} \u2013 ${dateFormat.format(region.lastSeen)}',
+                        '\u00B7 ${dateFormat.format(region.firstSeen)} \u2013 ${dateFormat.format(region.lastSeen)}', // lint-allow: hardcoded-string
                         style: TextStyle(
                           fontSize: 11,
                           color: context.textTertiary,
@@ -1688,7 +1688,7 @@ class _EncounterActivityCardState extends State<_EncounterActivityCard> {
               Text(
                 _selectedDate != null
                     ? DateFormat(
-                        'MMM d, yyyy',
+                        'MMM d, yyyy', // lint-allow: hardcoded-string
                       ).format(_selectedDate!).toUpperCase()
                     : context.l10n.nodedexRecentLabel,
                 style: TextStyle(
@@ -2498,7 +2498,7 @@ class _CompactMetric extends StatelessWidget {
       TextSpan(
         children: [
           TextSpan(
-            text: '$label ',
+            text: '$label ', // lint-allow: hardcoded-string
             style: TextStyle(fontSize: 9, color: context.textTertiary),
           ),
           TextSpan(

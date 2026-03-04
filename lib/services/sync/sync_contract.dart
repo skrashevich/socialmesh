@@ -131,8 +131,8 @@ const Map<SyncType, SyncTypeConfig> syncTypeConfigs = {
     usesOutbox: true,
     supportsTombstone: true,
     conflictPolicy:
-        'Metric merge: min firstSeen, max lastSeen, max counts. '
-        'Collections: union merge with dedup.',
+        'Metric merge: min firstSeen, max lastSeen, max counts. ' // lint-allow: hardcoded-string
+        'Collections: union merge with dedup.', // lint-allow: hardcoded-string
   ),
   SyncType.nodedexSocialTag: SyncTypeConfig(
     displayName: 'NodeDex Classification',
@@ -143,8 +143,8 @@ const Map<SyncType, SyncTypeConfig> syncTypeConfigs = {
     parentType: SyncType.nodedexEntry,
     hasPerFieldTimestamp: true,
     conflictPolicy:
-        'Last-write-wins by socialTagUpdatedAtMs. '
-        'Conflict copy if both edited within 5s window.',
+        'Last-write-wins by socialTagUpdatedAtMs. ' // lint-allow: hardcoded-string
+        'Conflict copy if both edited within 5s window.', // lint-allow: hardcoded-string
   ),
   SyncType.nodedexUserNote: SyncTypeConfig(
     displayName: 'NodeDex User Note',
@@ -155,8 +155,8 @@ const Map<SyncType, SyncTypeConfig> syncTypeConfigs = {
     parentType: SyncType.nodedexEntry,
     hasPerFieldTimestamp: true,
     conflictPolicy:
-        'Last-write-wins by userNoteUpdatedAtMs. '
-        'Conflict copy if both edited within 5s window.',
+        'Last-write-wins by userNoteUpdatedAtMs. ' // lint-allow: hardcoded-string
+        'Conflict copy if both edited within 5s window.', // lint-allow: hardcoded-string
   ),
   SyncType.userProfile: SyncTypeConfig(
     displayName: 'User Profile',
@@ -166,7 +166,7 @@ const Map<SyncType, SyncTypeConfig> syncTypeConfigs = {
     supportsTombstone: false,
     requiresEntitlement: false,
     conflictPolicy:
-        'Local-first with server merge via ProfileCloudSyncService.',
+        'Local-first with server merge via ProfileCloudSyncService.', // lint-allow: hardcoded-string
   ),
   SyncType.userPreferences: SyncTypeConfig(
     displayName: 'User Preferences',
@@ -177,8 +177,8 @@ const Map<SyncType, SyncTypeConfig> syncTypeConfigs = {
     parentType: SyncType.userProfile,
     requiresEntitlement: false,
     conflictPolicy:
-        'Null-coalescing merge: non-null values win per field. '
-        'Embedded in profile document.',
+        'Null-coalescing merge: non-null values win per field. ' // lint-allow: hardcoded-string
+        'Embedded in profile document.', // lint-allow: hardcoded-string
   ),
   SyncType.automations: SyncTypeConfig(
     displayName: 'Automations',
@@ -188,8 +188,8 @@ const Map<SyncType, SyncTypeConfig> syncTypeConfigs = {
     supportsTombstone: true,
     requiresEntitlement: true,
     conflictPolicy:
-        'Per-document last-write-wins. Each automation is an independent '
-        'Firestore document with its own updated_at_ms timestamp.',
+        'Per-document last-write-wins. Each automation is an independent ' // lint-allow: hardcoded-string
+        'Firestore document with its own updated_at_ms timestamp.', // lint-allow: hardcoded-string
   ),
   SyncType.widgetSchemas: SyncTypeConfig(
     displayName: 'Widget Schemas',
@@ -199,8 +199,8 @@ const Map<SyncType, SyncTypeConfig> syncTypeConfigs = {
     supportsTombstone: true,
     requiresEntitlement: true,
     conflictPolicy:
-        'Per-document last-write-wins. Each custom widget is an independent '
-        'Firestore document with its own updated_at_ms timestamp.',
+        'Per-document last-write-wins. Each custom widget is an independent ' // lint-allow: hardcoded-string
+        'Firestore document with its own updated_at_ms timestamp.', // lint-allow: hardcoded-string
   ),
   SyncType.incidentTransition: SyncTypeConfig(
     displayName: 'Incident Transitions',
@@ -209,9 +209,9 @@ const Map<SyncType, SyncTypeConfig> syncTypeConfigs = {
     usesOutbox: true,
     supportsTombstone: false,
     conflictPolicy:
-        'Deterministic 5-field chain: priorityRank > timestamp > '
-        'actorRoleRank > actorId > transitionId. '
-        'Losing transitions marked superseded, never deleted.',
+        'Deterministic 5-field chain: priorityRank > timestamp > ' // lint-allow: hardcoded-string
+        'actorRoleRank > actorId > transitionId. ' // lint-allow: hardcoded-string
+        'Losing transitions marked superseded, never deleted.', // lint-allow: hardcoded-string
   ),
   SyncType.taskTransition: SyncTypeConfig(
     displayName: 'Task Transitions',
@@ -220,10 +220,10 @@ const Map<SyncType, SyncTypeConfig> syncTypeConfigs = {
     usesOutbox: true,
     supportsTombstone: false,
     conflictPolicy:
-        '4 deterministic rules: (1) dual-ack first-timestamp-wins, '
-        '(2) COMPLETED beats CANCELLED, (3) reassignment coexistence, '
-        '(4) duplicate creation survival. '
-        'All transitions preserved append-only.',
+        '4 deterministic rules: (1) dual-ack first-timestamp-wins, ' // lint-allow: hardcoded-string
+        '(2) COMPLETED beats CANCELLED, (3) reassignment coexistence, ' // lint-allow: hardcoded-string
+        '(4) duplicate creation survival. ' // lint-allow: hardcoded-string
+        'All transitions preserved append-only.', // lint-allow: hardcoded-string
   ),
 };
 

@@ -507,7 +507,7 @@ class WidgetMarketplaceService {
         final duplicateName = json['duplicateName'] as String?;
         AppLogging.marketplace('   Duplicate name: $duplicateName');
         throw MarketplaceDuplicateException(
-          'A similar widget already exists${duplicateName != null ? ': $duplicateName' : ''}',
+          'A similar widget already exists${duplicateName != null ? ': $duplicateName' : ''}', // lint-allow: hardcoded-string
           duplicateName: duplicateName,
         );
       } else {
@@ -811,13 +811,13 @@ class WidgetCategories {
   static String getDisplayName(String category) {
     switch (category) {
       case deviceStatus:
-        return 'Device Status';
+        return 'Device Status'; // lint-allow: hardcoded-string
       case metrics:
         return 'Metrics';
       case charts:
         return 'Charts';
       case mesh:
-        return 'Mesh Network';
+        return 'Mesh Network'; // lint-allow: hardcoded-string
       case location:
         return 'Location';
       case weather:

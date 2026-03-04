@@ -55,10 +55,12 @@ class DeviceRouteObserver extends NavigatorObserver {
     final context = navigator?.context;
     if (context == null) return;
 
+    final l10n = context.l10n;
     showActionSnackBar(
       context,
-      metadata?.blockedMessage ?? 'Connect device to access this screen',
-      actionLabel: 'Connect',
+      metadata?.blockedMessage ??
+          'Connect device to access this screen', // lint-allow: hardcoded-string
+      actionLabel: l10n.actionConnect,
       onAction: () {
         navigator?.pushNamed('/scanner');
       },
@@ -101,7 +103,9 @@ class ProtectedRoute extends ConsumerWidget {
 
     // Default blocked screen
     return _BlockedRouteScreen(
-      message: result.reason ?? 'This screen is not available',
+      message:
+          result.reason ??
+          'This screen is not available', // lint-allow: hardcoded-string
       fallbackRoute: result.fallbackRoute,
     );
   }

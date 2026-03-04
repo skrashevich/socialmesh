@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:socialmesh/features/incidents/models/incident.dart';
 import 'package:socialmesh/features/incidents/models/incident_transition.dart';
 import 'package:socialmesh/features/incidents/widgets/transition_timeline.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -37,6 +38,8 @@ IncidentTransition _transition({
 
 Widget _testApp(Widget child) {
   return MaterialApp(
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
     home: Scaffold(body: SingleChildScrollView(child: child)),
   );
 }
@@ -71,9 +74,9 @@ void main() {
         _testApp(TransitionTimeline(transitions: transitions)),
       );
 
-      // Both transitions should render state badge texts
-      expect(find.text('draft'), findsAtLeast(2));
-      expect(find.text('open'), findsOneWidget);
+      // Both transitions should render state badge texts (capitalised l10n)
+      expect(find.text('Draft'), findsAtLeast(2));
+      expect(find.text('Open'), findsOneWidget);
       // Notes visible
       expect(find.text('Incident created'), findsOneWidget);
       expect(find.text('Submitted for review'), findsOneWidget);
@@ -138,8 +141,8 @@ void main() {
 
       // Actor role visible
       expect(find.textContaining('supervisor'), findsOneWidget);
-      // Truncated actor ID
-      expect(find.textContaining('abcdefgh...'), findsOneWidget);
+      // Truncated actor ID (widget uses Unicode ellipsis)
+      expect(find.textContaining('abcdefgh\u2026'), findsOneWidget);
     });
   });
 }

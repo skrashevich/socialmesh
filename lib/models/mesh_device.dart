@@ -160,15 +160,15 @@ extension MeshConnectionStateExtension on MeshConnectionState {
       case MeshConnectionState.disconnected:
         return 'Disconnected';
       case MeshConnectionState.scanning:
-        return 'Scanning...';
+        return 'Scanning...'; // lint-allow: hardcoded-string
       case MeshConnectionState.connecting:
-        return 'Connecting...';
+        return 'Connecting...'; // lint-allow: hardcoded-string
       case MeshConnectionState.identifying:
-        return 'Identifying protocol...';
+        return 'Identifying protocol...'; // lint-allow: hardcoded-string
       case MeshConnectionState.connected:
         return 'Connected';
       case MeshConnectionState.disconnecting:
-        return 'Disconnecting...';
+        return 'Disconnecting...'; // lint-allow: hardcoded-string
       case MeshConnectionState.error:
         return 'Error';
     }
@@ -211,28 +211,28 @@ extension MeshProtocolErrorMessages on MeshProtocolError {
   String get userMessage {
     switch (this) {
       case MeshProtocolError.pairingRequired:
-        return 'Pairing required. The default PIN may be shown on the device '
-            'display, or try 123456.';
+        return 'Pairing required. The default PIN may be shown on the device ' // lint-allow: hardcoded-string
+            'display, or try 123456.'; // lint-allow: hardcoded-string
       case MeshProtocolError.timeout:
-        return 'Connection timed out. Make sure the device is powered on and '
+        return 'Connection timed out. Make sure the device is powered on and ' // lint-allow: hardcoded-string
             'nearby.';
       case MeshProtocolError.identificationFailed:
-        return 'Failed to identify the device. It may be running incompatible '
+        return 'Failed to identify the device. It may be running incompatible ' // lint-allow: hardcoded-string
             'firmware.';
       case MeshProtocolError.communicationError:
-        return 'Communication error. Try moving closer to the device.';
+        return 'Communication error. Try moving closer to the device.'; // lint-allow: hardcoded-string
       case MeshProtocolError.requestRejected:
-        return 'The device rejected the request.';
+        return 'The device rejected the request.'; // lint-allow: hardcoded-string
       case MeshProtocolError.unsupportedVersion:
-        return 'The device firmware version is not supported.';
+        return 'The device firmware version is not supported.'; // lint-allow: hardcoded-string
       case MeshProtocolError.unsupportedDevice:
-        return 'This device is missing required BLE characteristics. '
-            'It may not be compatible.';
+        return 'This device is missing required BLE characteristics. ' // lint-allow: hardcoded-string
+            'It may not be compatible.'; // lint-allow: hardcoded-string
       case MeshProtocolError.connectionInProgress:
-        return 'A connection attempt is already in progress. '
-            'Please wait for it to complete.';
+        return 'A connection attempt is already in progress. ' // lint-allow: hardcoded-string
+            'Please wait for it to complete.'; // lint-allow: hardcoded-string
       case MeshProtocolError.cancelled:
-        return 'Connection was cancelled.';
+        return 'Connection was cancelled.'; // lint-allow: hardcoded-string
     }
   }
 
@@ -240,21 +240,21 @@ extension MeshProtocolErrorMessages on MeshProtocolError {
   String get title {
     switch (this) {
       case MeshProtocolError.pairingRequired:
-        return 'Pairing Required';
+        return 'Pairing Required'; // lint-allow: hardcoded-string
       case MeshProtocolError.timeout:
         return 'Timeout';
       case MeshProtocolError.identificationFailed:
-        return 'Identification Failed';
+        return 'Identification Failed'; // lint-allow: hardcoded-string
       case MeshProtocolError.communicationError:
-        return 'Communication Error';
+        return 'Communication Error'; // lint-allow: hardcoded-string
       case MeshProtocolError.requestRejected:
-        return 'Request Rejected';
+        return 'Request Rejected'; // lint-allow: hardcoded-string
       case MeshProtocolError.unsupportedVersion:
-        return 'Unsupported Version';
+        return 'Unsupported Version'; // lint-allow: hardcoded-string
       case MeshProtocolError.unsupportedDevice:
-        return 'Unsupported Device';
+        return 'Unsupported Device'; // lint-allow: hardcoded-string
       case MeshProtocolError.connectionInProgress:
-        return 'Connection In Progress';
+        return 'Connection In Progress'; // lint-allow: hardcoded-string
       case MeshProtocolError.cancelled:
         return 'Cancelled';
     }
@@ -289,6 +289,6 @@ class MeshProtocolResult<T> {
 
   @override
   String toString() => isSuccess
-      ? 'MeshProtocolResult.success($value)'
+      ? 'MeshProtocolResult.success($value)' // lint-allow: hardcoded-string
       : 'MeshProtocolResult.failure($error: $errorMessage)';
 }

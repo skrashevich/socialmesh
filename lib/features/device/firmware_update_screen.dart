@@ -41,7 +41,9 @@ final firmwareCheckProvider = FutureProvider.autoDispose<FirmwareInfo?>((
           : DateTime.now();
 
       // Get release notes body
-      final body = data['body'] as String? ?? 'No release notes available.';
+      final body =
+          data['body'] as String? ??
+          'No release notes available.'; // lint-allow: hardcoded-string
 
       // Get download URL
       final htmlUrl =

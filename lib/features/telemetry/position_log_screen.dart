@@ -318,7 +318,7 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
       final nodes = ref.read(nodesProvider);
       final buffer = StringBuffer();
       buffer.writeln(
-        'timestamp,node_num,node_name,latitude,longitude,altitude,sats_in_view,ground_speed,ground_track',
+        'timestamp,node_num,node_name,latitude,longitude,altitude,sats_in_view,ground_speed,ground_track', // lint-allow: hardcoded-string
       );
 
       for (final log in logs) {
@@ -328,7 +328,7 @@ class _PositionLogScreenState extends ConsumerState<PositionLogScreen>
         buffer.writeln(
           '${log.timestamp.toIso8601String()},'
           '${log.nodeNum},'
-          '"$nodeName",'
+          '"$nodeName",' // lint-allow: hardcoded-string
           '${log.latitude},'
           '${log.longitude},'
           '${log.altitude ?? ""},'
@@ -782,7 +782,7 @@ class _DateRangeBanner extends StatelessWidget {
     final label = startDate != null && endDate != null
         ? '${fmt.format(startDate!)} – ${fmt.format(endDate!)}'
         : startDate != null
-        ? 'From ${fmt.format(startDate!)}'
+        ? 'From ${fmt.format(startDate!)}' // lint-allow: hardcoded-string
         : 'Until ${fmt.format(endDate!)}';
 
     return Padding(

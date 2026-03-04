@@ -25,6 +25,7 @@ import 'dart:async' show Timer, unawaited;
 import 'package:clock/clock.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/foundation.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
 
 import '../../../core/logging.dart';
 import '../../../models/mesh_models.dart';
@@ -1044,7 +1045,8 @@ final nodeSummaryProvider = Provider.family<NodeSummary, int>((ref, nodeNum) {
       timeDistribution: {for (final b in TimeOfDayBucket.values) b: 0},
       currentStreak: 0,
       totalEncounters: 0,
-      summaryText: 'Keep observing to build a profile',
+      summaryText:
+          'Keep observing to build a profile', // lint-allow: hardcoded-string
       activeDaysLast14: 0,
     );
   }
@@ -1161,12 +1163,14 @@ Future<List<NodeActivityEvent>> _buildTimeline(Ref ref, int nodeNum) async {
   if (entry != null) {
     events.addAll(_groupEncounters(entry.encounters));
 
+    final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
+
     // 2. First-seen milestone.
     events.add(
       MilestoneActivityEvent(
         timestamp: entry.firstSeen,
         kind: MilestoneKind.firstSeen,
-        label: 'First discovered',
+        label: l10n.nodedexMilestoneFirstDiscovered,
       ),
     );
 
@@ -1178,7 +1182,7 @@ Future<List<NodeActivityEvent>> _buildTimeline(Ref ref, int nodeNum) async {
           MilestoneActivityEvent(
             timestamp: milestone.timestamp,
             kind: MilestoneKind.encounterMilestone,
-            label: 'Encounter #$m',
+            label: l10n.nodedexMilestoneEncounterN(m),
           ),
         );
       }

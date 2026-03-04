@@ -1,5 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import 'dart:ui' show PlatformDispatcher;
+
 import 'package:flutter/material.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
 import '../theme.dart';
 import '../../providers/splash_mesh_provider.dart';
 import 'animated_tagline.dart';
@@ -20,65 +23,81 @@ class ConnectionStatusInfo {
   });
 
   /// Predefined status for initializing state
-  static ConnectionStatusInfo initializing(Color accentColor) =>
-      ConnectionStatusInfo(
-        text: 'Initializing',
-        icon: Icons.hourglass_empty_rounded,
-        color: accentColor,
-        showSpinner: true,
-      );
+  static ConnectionStatusInfo initializing(Color accentColor) {
+    final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
+    return ConnectionStatusInfo(
+      text: l10n.connectingStatusInitializing,
+      icon: Icons.hourglass_empty_rounded,
+      color: accentColor,
+      showSpinner: true,
+    );
+  }
 
   /// Predefined status for scanning state
-  static ConnectionStatusInfo scanning(Color accentColor) =>
-      ConnectionStatusInfo(
-        text: 'Scanning for device',
-        icon: Icons.bluetooth_searching_rounded,
-        color: accentColor,
-        showSpinner: true,
-      );
+  static ConnectionStatusInfo scanning(Color accentColor) {
+    final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
+    return ConnectionStatusInfo(
+      text: l10n.connectingStatusScanning,
+      icon: Icons.bluetooth_searching_rounded,
+      color: accentColor,
+      showSpinner: true,
+    );
+  }
 
   /// Predefined status for connecting state
-  static ConnectionStatusInfo connecting(Color accentColor) =>
-      ConnectionStatusInfo(
-        text: 'Connecting',
-        icon: Icons.bluetooth_connected_rounded,
-        color: accentColor,
-        showSpinner: true,
-      );
+  static ConnectionStatusInfo connecting(Color accentColor) {
+    final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
+    return ConnectionStatusInfo(
+      text: l10n.connectingStatusConnecting,
+      icon: Icons.bluetooth_connected_rounded,
+      color: accentColor,
+      showSpinner: true,
+    );
+  }
 
   /// Predefined status for auto-reconnecting state
-  static ConnectionStatusInfo autoReconnecting(Color accentColor) =>
-      ConnectionStatusInfo(
-        text: 'Auto-reconnecting',
-        icon: Icons.bluetooth_connected_rounded,
-        color: accentColor,
-        showSpinner: true,
-      );
+  static ConnectionStatusInfo autoReconnecting(Color accentColor) {
+    final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
+    return ConnectionStatusInfo(
+      text: l10n.connectingStatusAutoReconnecting,
+      icon: Icons.bluetooth_connected_rounded,
+      color: accentColor,
+      showSpinner: true,
+    );
+  }
 
   /// Predefined status for configuring state
-  static ConnectionStatusInfo configuring(Color accentColor) =>
-      ConnectionStatusInfo(
-        text: 'Configuring device',
-        icon: Icons.settings_rounded,
-        color: accentColor,
-        showSpinner: true,
-      );
+  static ConnectionStatusInfo configuring(Color accentColor) {
+    final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
+    return ConnectionStatusInfo(
+      text: l10n.connectingStatusConfiguring,
+      icon: Icons.settings_rounded,
+      color: accentColor,
+      showSpinner: true,
+    );
+  }
 
   /// Predefined status for connected state
-  static ConnectionStatusInfo connected() => const ConnectionStatusInfo(
-    text: 'Connected',
-    icon: Icons.check_circle_rounded,
-    color: AppTheme.successGreen,
-    showSpinner: false,
-  );
+  static ConnectionStatusInfo connected() {
+    final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
+    return ConnectionStatusInfo(
+      text: l10n.connectingStatusConnected,
+      icon: Icons.check_circle_rounded,
+      color: AppTheme.successGreen,
+      showSpinner: false,
+    );
+  }
 
   /// Predefined status for failed state
-  static ConnectionStatusInfo failed() => const ConnectionStatusInfo(
-    text: 'Connection failed',
-    icon: Icons.error_outline_rounded,
-    color: AppTheme.errorRed,
-    showSpinner: false,
-  );
+  static ConnectionStatusInfo failed() {
+    final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
+    return ConnectionStatusInfo(
+      text: l10n.connectingStatusFailed,
+      icon: Icons.error_outline_rounded,
+      color: AppTheme.errorRed,
+      showSpinner: false,
+    );
+  }
 }
 
 /// Shared connecting content widget used by both splash screen and scanner screen

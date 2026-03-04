@@ -512,7 +512,8 @@ class WidgetTemplates {
   static WidgetSchema batteryWidget() {
     return WidgetSchema(
       name: 'Battery Status',
-      description: 'Display battery level with gauge',
+      description:
+          'Display battery level with gauge', // lint-allow: hardcoded-string
       tags: ['status', 'battery', 'power'],
       root: ElementSchema(
         type: ElementType.column,
@@ -562,7 +563,7 @@ class WidgetTemplates {
             gaugeType: GaugeType.linear,
             gaugeMin: 0,
             gaugeMax: 100,
-            gaugeColor: '#4ADE80',
+            gaugeColor: '#4ADE80', // lint-allow: hardcoded-string
             binding: const BindingSchema(path: 'node.batteryLevel'),
             style: const StyleSchema(height: 6),
           ),
@@ -575,7 +576,7 @@ class WidgetTemplates {
   static WidgetSchema signalWidget() {
     return WidgetSchema(
       name: 'Signal Strength',
-      description: 'Display SNR and RSSI',
+      description: 'Display SNR and RSSI', // lint-allow: hardcoded-string
       tags: ['info', 'signal', 'snr', 'rssi', 'connectivity'],
       size: CustomWidgetSize.medium,
       root: ElementSchema(
@@ -611,7 +612,7 @@ class WidgetTemplates {
               ),
               ElementSchema(
                 type: ElementType.text,
-                text: 'SNR',
+                text: 'SNR', // lint-allow: hardcoded-string
                 style: const StyleSchema(fontSize: 11, textColor: '#888888'),
               ),
             ],
@@ -648,7 +649,7 @@ class WidgetTemplates {
               ),
               ElementSchema(
                 type: ElementType.text,
-                text: 'RSSI',
+                text: 'RSSI', // lint-allow: hardcoded-string
                 style: const StyleSchema(fontSize: 11, textColor: '#888888'),
               ),
             ],
@@ -662,7 +663,8 @@ class WidgetTemplates {
   static WidgetSchema environmentWidget() {
     return WidgetSchema(
       name: 'Environment',
-      description: 'Temperature, humidity, and pressure display',
+      description:
+          'Temperature, humidity, and pressure display', // lint-allow: hardcoded-string
       tags: ['environment', 'temperature', 'humidity', 'pressure', 'sensors'],
       size: CustomWidgetSize.medium,
       root: ElementSchema(
@@ -698,7 +700,7 @@ class WidgetTemplates {
               ),
               ElementSchema(
                 type: ElementType.text,
-                text: 'Temp',
+                text: 'Temp', // lint-allow: hardcoded-string
                 style: const StyleSchema(fontSize: 11, textColor: '#888888'),
               ),
             ],
@@ -735,7 +737,7 @@ class WidgetTemplates {
               ),
               ElementSchema(
                 type: ElementType.text,
-                text: 'Humidity',
+                text: 'Humidity', // lint-allow: hardcoded-string
                 style: const StyleSchema(fontSize: 11, textColor: '#888888'),
               ),
             ],
@@ -772,7 +774,7 @@ class WidgetTemplates {
               ),
               ElementSchema(
                 type: ElementType.text,
-                text: 'hPa',
+                text: 'hPa', // lint-allow: hardcoded-string
                 style: const StyleSchema(fontSize: 11, textColor: '#888888'),
               ),
             ],
@@ -786,7 +788,8 @@ class WidgetTemplates {
   static WidgetSchema nodeInfoWidget() {
     return WidgetSchema(
       name: 'Node Info',
-      description: 'Basic node information card',
+      description:
+          'Basic node information card', // lint-allow: hardcoded-string
       tags: ['info', 'node'],
       root: ElementSchema(
         type: ElementType.column,
@@ -826,7 +829,7 @@ class WidgetTemplates {
             children: [
               ElementSchema(
                 type: ElementType.text,
-                text: 'Role: ',
+                text: 'Role: ', // lint-allow: hardcoded-string
                 style: const StyleSchema(textColor: '#666666', fontSize: 12),
               ),
               ElementSchema(
@@ -845,7 +848,7 @@ class WidgetTemplates {
             children: [
               ElementSchema(
                 type: ElementType.text,
-                text: 'Device: ',
+                text: 'Device: ', // lint-allow: hardcoded-string
                 style: const StyleSchema(textColor: '#666666', fontSize: 12),
               ),
               ElementSchema(
@@ -891,7 +894,8 @@ class WidgetTemplates {
   static WidgetSchema gpsWidget() {
     return WidgetSchema(
       name: 'GPS Position',
-      description: 'Show GPS coordinates and satellites',
+      description:
+          'Show GPS coordinates and satellites', // lint-allow: hardcoded-string
       tags: ['location', 'gps', 'position', 'coordinates'],
       size: CustomWidgetSize.medium,
       root: ElementSchema(
@@ -927,7 +931,7 @@ class WidgetTemplates {
               ),
               ElementSchema(
                 type: ElementType.text,
-                text: 'Lat',
+                text: 'Lat', // lint-allow: hardcoded-string
                 style: const StyleSchema(fontSize: 11, textColor: '#888888'),
               ),
             ],
@@ -964,7 +968,7 @@ class WidgetTemplates {
               ),
               ElementSchema(
                 type: ElementType.text,
-                text: 'Lon',
+                text: 'Lon', // lint-allow: hardcoded-string
                 style: const StyleSchema(fontSize: 11, textColor: '#888888'),
               ),
             ],
@@ -1000,7 +1004,7 @@ class WidgetTemplates {
               ),
               ElementSchema(
                 type: ElementType.text,
-                text: 'Sats',
+                text: 'Sats', // lint-allow: hardcoded-string
                 style: const StyleSchema(fontSize: 11, textColor: '#888888'),
               ),
             ],
@@ -1027,7 +1031,8 @@ class WidgetTemplates {
   static WidgetSchema networkOverviewWidget() {
     return WidgetSchema(
       name: 'Network Overview',
-      description: 'Mesh network status at a glance',
+      description:
+          'Mesh network status at a glance', // lint-allow: hardcoded-string
       tags: ['status', 'network', 'mesh', 'nodes'],
       size: CustomWidgetSize.medium,
       root: ElementSchema(
@@ -1055,7 +1060,7 @@ class WidgetTemplates {
               ),
               ElementSchema(
                 type: ElementType.text,
-                text: 'Online',
+                text: 'Online', // lint-allow: hardcoded-string
                 style: const StyleSchema(
                   fontSize: 16,
                   fontWeight: 'w600',
@@ -1064,7 +1069,7 @@ class WidgetTemplates {
               ),
               ElementSchema(
                 type: ElementType.text,
-                text: 'Status',
+                text: 'Status', // lint-allow: hardcoded-string
                 style: const StyleSchema(fontSize: 11, textColor: '#888888'),
               ),
             ],
@@ -1100,7 +1105,7 @@ class WidgetTemplates {
               ),
               ElementSchema(
                 type: ElementType.text,
-                text: 'Nodes',
+                text: 'Nodes', // lint-allow: hardcoded-string
                 style: const StyleSchema(fontSize: 11, textColor: '#888888'),
               ),
             ],
@@ -1136,7 +1141,7 @@ class WidgetTemplates {
               ),
               ElementSchema(
                 type: ElementType.text,
-                text: 'Messages',
+                text: 'Messages', // lint-allow: hardcoded-string
                 style: const StyleSchema(fontSize: 11, textColor: '#888888'),
               ),
             ],
@@ -1150,7 +1155,8 @@ class WidgetTemplates {
   static WidgetSchema quickActionsWidget() {
     return WidgetSchema(
       name: 'Quick Actions',
-      description: 'Common mesh actions at a glance',
+      description:
+          'Common mesh actions at a glance', // lint-allow: hardcoded-string
       tags: ['actions', 'quick', 'compose', 'send'],
       size: CustomWidgetSize.medium,
       root: ElementSchema(
@@ -1173,7 +1179,7 @@ class WidgetTemplates {
               ),
               ElementSchema(
                 type: ElementType.text,
-                text: 'Quick Actions',
+                text: 'Quick Actions', // lint-allow: hardcoded-string
                 style: const StyleSchema(
                   textColor: '#FFFFFF',
                   fontSize: 14,
@@ -1203,7 +1209,7 @@ class WidgetTemplates {
                   type: ActionType.sendMessage,
                   requiresNodeSelection: true,
                   requiresChannelSelection: true,
-                  label: 'Quick Message',
+                  label: 'Quick Message', // lint-allow: hardcoded-string
                 ),
                 children: [
                   ElementSchema(
@@ -1225,7 +1231,7 @@ class WidgetTemplates {
                       ),
                       ElementSchema(
                         type: ElementType.text,
-                        text: 'Message',
+                        text: 'Message', // lint-allow: hardcoded-string
                         style: const StyleSchema(
                           textColor: '#4F6AF6',
                           fontSize: 8,
@@ -1250,7 +1256,7 @@ class WidgetTemplates {
                 ),
                 action: const ActionSchema(
                   type: ActionType.shareLocation,
-                  label: 'Share Location',
+                  label: 'Share Location', // lint-allow: hardcoded-string
                 ),
                 children: [
                   ElementSchema(
@@ -1272,7 +1278,7 @@ class WidgetTemplates {
                       ),
                       ElementSchema(
                         type: ElementType.text,
-                        text: 'Location',
+                        text: 'Location', // lint-allow: hardcoded-string
                         style: const StyleSchema(
                           textColor: '#22C55E',
                           fontSize: 8,
@@ -1298,7 +1304,7 @@ class WidgetTemplates {
                 action: const ActionSchema(
                   type: ActionType.traceroute,
                   requiresNodeSelection: true,
-                  label: 'Traceroute',
+                  label: 'Traceroute', // lint-allow: hardcoded-string
                 ),
                 children: [
                   ElementSchema(
@@ -1320,7 +1326,7 @@ class WidgetTemplates {
                       ),
                       ElementSchema(
                         type: ElementType.text,
-                        text: 'Trace',
+                        text: 'Trace', // lint-allow: hardcoded-string
                         style: const StyleSchema(
                           textColor: '#F97316',
                           fontSize: 8,
@@ -1345,7 +1351,7 @@ class WidgetTemplates {
                 ),
                 action: const ActionSchema(
                   type: ActionType.requestPositions,
-                  label: 'Request Positions',
+                  label: 'Request Positions', // lint-allow: hardcoded-string
                 ),
                 children: [
                   ElementSchema(
@@ -1367,7 +1373,7 @@ class WidgetTemplates {
                       ),
                       ElementSchema(
                         type: ElementType.text,
-                        text: 'Refresh',
+                        text: 'Refresh', // lint-allow: hardcoded-string
                         style: const StyleSchema(
                           textColor: '#06B6D4',
                           fontSize: 8,

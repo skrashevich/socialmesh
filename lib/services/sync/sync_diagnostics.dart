@@ -173,8 +173,8 @@ class SyncDiagnostics {
     final queued = _queuedItems[type] ?? 0;
     _queuedItems[type] = (queued - count).clamp(0, queued);
     _log(
-      'Upload success ${type.name}: $count items '
-      '(queued: ${_queuedItems[type]})',
+      'Upload success ${type.name}: $count items ' // lint-allow: hardcoded-string
+      '(queued: ${_queuedItems[type]})', // lint-allow: hardcoded-string
     );
   }
 
@@ -188,8 +188,8 @@ class SyncDiagnostics {
   void recordConflict(SyncType type, {String? details}) {
     _conflicts[type] = (_conflicts[type] ?? 0) + 1;
     _log(
-      'Conflict ${type.name}: ${details ?? "detected"} '
-      '(total: ${_conflicts[type]})',
+      'Conflict ${type.name}: ${details ?? "detected"} ' // lint-allow: hardcoded-string
+      '(total: ${_conflicts[type]})', // lint-allow: hardcoded-string
     );
   }
 

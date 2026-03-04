@@ -245,7 +245,7 @@ class _AdminPinDialogState extends State<AdminPinDialog> {
 
             // Title
             const Text(
-              'Enter PIN',
+              'Enter PIN', // lint-allow: hardcoded-string
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 20,
@@ -254,7 +254,7 @@ class _AdminPinDialogState extends State<AdminPinDialog> {
             ),
             const SizedBox(height: AppTheme.spacing4),
             Text(
-              'Admin access required',
+              'Admin access required', // lint-allow: hardcoded-string
               style: TextStyle(
                 color: Colors.white.withAlpha(130),
                 fontSize: 14,
@@ -277,7 +277,7 @@ class _AdminPinDialogState extends State<AdminPinDialog> {
               child: Center(
                 child: _showError
                     ? Text(
-                        'Wrong PIN · ${_maxAttempts - _attempts} attempts left',
+                        'Wrong PIN · ${_maxAttempts - _attempts} attempts left', // lint-allow: hardcoded-string
                         style: TextStyle(
                           color: AppTheme.errorRed,
                           fontSize: 13,

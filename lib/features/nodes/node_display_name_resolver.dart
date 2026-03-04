@@ -48,7 +48,7 @@ class NodeDisplayNameResolver {
   /// Returns the default display name for a node with no user-configured
   /// name, matching the official Meshtastic app: "Meshtastic XXXX".
   static String defaultName(int nodeNum) {
-    return 'Meshtastic ${shortHex(nodeNum)}';
+    return 'Meshtastic ${shortHex(nodeNum)}'; // lint-allow: hardcoded-string
   }
 
   /// Returns the default short name for a node: last 4 hex digits.

@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'dart:async';
+import 'dart:ui' show PlatformDispatcher;
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
 import '../core/command/commands.dart';
 import '../core/logging.dart';
 import 'connection_providers.dart';
@@ -59,11 +62,12 @@ class LifecycleCommandManager {
     AppLogging.debug(
       'LifecycleCommandManager: Rejected ${command.runtimeType} (app inactive)',
     );
+    final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
     return CommandFailure(
       CommandError(
         type: CommandErrorType.executionFailed,
-        message: 'App is not active',
-        userMessage: 'Action cancelled - app is in background',
+        message: l10n.lifecycleAppNotActive,
+        userMessage: l10n.lifecycleActionCancelledBackground,
       ),
     );
   }
@@ -72,6 +76,7 @@ class LifecycleCommandManager {
   void _processDeferredCommands() {
     if (_deferredCommands.isEmpty) return;
 
+    final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
     final now = DateTime.now();
     final expiredCommands = <_DeferredCommand>[];
     final validCommands = <_DeferredCommand>[];
@@ -92,8 +97,8 @@ class LifecycleCommandManager {
         CommandFailure(
           CommandError(
             type: CommandErrorType.executionFailed,
-            message: 'Command expired',
-            userMessage: 'Action expired while app was in background',
+            message: l10n.lifecycleCommandExpired,
+            userMessage: l10n.lifecycleActionExpiredBackground,
           ),
         ),
       );
@@ -119,13 +124,14 @@ class LifecycleCommandManager {
 
   /// Cancel all deferred commands
   void cancelAllDeferred() {
+    final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
     for (final deferred in _deferredCommands) {
       deferred.completer.complete(
         CommandFailure(
           CommandError(
             type: CommandErrorType.executionFailed,
-            message: 'Cancelled',
-            userMessage: 'Action cancelled',
+            message: 'Cancelled', // lint-allow: hardcoded-string
+            userMessage: l10n.lifecycleActionCancelled,
           ),
         ),
       );

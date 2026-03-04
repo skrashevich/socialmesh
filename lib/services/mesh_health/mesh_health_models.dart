@@ -161,17 +161,17 @@ class HealthIssue {
   String get typeLabel {
     switch (type) {
       case HealthIssueType.channelSaturation:
-        return 'Channel Saturation';
+        return 'Channel Saturation'; // lint-allow: hardcoded-string
       case HealthIssueType.intervalSpam:
-        return 'Interval Spam';
+        return 'Interval Spam'; // lint-allow: hardcoded-string
       case HealthIssueType.hopFlooding:
-        return 'Hop Flooding';
+        return 'Hop Flooding'; // lint-allow: hardcoded-string
       case HealthIssueType.reliabilityDrop:
-        return 'Reliability Drop';
+        return 'Reliability Drop'; // lint-allow: hardcoded-string
       case HealthIssueType.signalDegradation:
-        return 'Signal Degradation';
+        return 'Signal Degradation'; // lint-allow: hardcoded-string
       case HealthIssueType.unknownNodeFlood:
-        return 'Unknown Node Flood';
+        return 'Unknown Node Flood'; // lint-allow: hardcoded-string
     }
   }
 }

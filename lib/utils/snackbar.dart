@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:ui';
 
+import '../core/l10n/l10n_extension.dart';
 import '../core/widgets/loading_indicator.dart';
 import '../core/navigation.dart';
 import 'package:socialmesh/core/theme.dart';
@@ -464,7 +465,7 @@ void showSignInRequiredSnackBar(BuildContext context, String message) {
   showActionSnackBar(
     context,
     message,
-    actionLabel: 'Sign In',
+    actionLabel: context.l10n.commonSignIn,
     onAction: () => Navigator.pushNamed(context, '/account'),
     type: SnackBarType.info,
   );

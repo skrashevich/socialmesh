@@ -5,12 +5,14 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io' show Platform;
 import 'dart:math' as math;
+import 'dart:ui' show PlatformDispatcher;
 
 import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/logging.dart';
@@ -819,6 +821,7 @@ class AutomationEngine {
     Automation automation,
   ) async {
     final actionName = action.type.displayName;
+    final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
 
     try {
       switch (action.type) {
@@ -827,14 +830,14 @@ class AutomationEngine {
             return ActionResult(
               actionName: actionName,
               success: false,
-              errorMessage: 'Send message callback not configured',
+              errorMessage: l10n.automationErrorSendMsgNotConfigured,
             );
           }
           if (action.targetNodeNum == null) {
             return ActionResult(
               actionName: actionName,
               success: false,
-              errorMessage: 'No target node specified',
+              errorMessage: l10n.automationErrorNoTargetNode,
             );
           }
           final message = _interpolateVariables(
@@ -846,7 +849,7 @@ class AutomationEngine {
           return ActionResult(
             actionName: actionName,
             success: sent,
-            errorMessage: sent ? null : 'Failed to send message',
+            errorMessage: sent ? null : l10n.automationErrorSendMsgFailed,
           );
 
         case ActionType.sendToChannel:
@@ -854,14 +857,14 @@ class AutomationEngine {
             return ActionResult(
               actionName: actionName,
               success: false,
-              errorMessage: 'Send to channel callback not configured',
+              errorMessage: l10n.automationErrorSendChannelNotConfigured,
             );
           }
           if (action.targetChannelIndex == null) {
             return ActionResult(
               actionName: actionName,
               success: false,
-              errorMessage: 'No target channel specified',
+              errorMessage: l10n.automationErrorNoTargetChannel,
             );
           }
           final message = _interpolateVariables(
@@ -876,7 +879,7 @@ class AutomationEngine {
           return ActionResult(
             actionName: actionName,
             success: sent,
-            errorMessage: sent ? null : 'Failed to send to channel',
+            errorMessage: sent ? null : l10n.automationErrorSendChannelFailed,
           );
 
         case ActionType.playSound:
@@ -885,7 +888,7 @@ class AutomationEngine {
             return ActionResult(
               actionName: actionName,
               success: false,
-              errorMessage: 'No sound configured',
+              errorMessage: l10n.automationErrorNoSoundConfigured,
             );
           }
           final player = RtttlPlayer();
@@ -896,7 +899,7 @@ class AutomationEngine {
             return ActionResult(
               actionName: actionName,
               success: false,
-              errorMessage: 'Failed to play sound: $e',
+              errorMessage: l10n.automationErrorPlaySoundFailed(e.toString()),
             );
           } finally {
             await player.dispose();
@@ -915,7 +918,7 @@ class AutomationEngine {
             return ActionResult(
               actionName: actionName,
               success: false,
-              errorMessage: 'Notifications not initialized',
+              errorMessage: l10n.automationErrorNotificationsNotInit,
             );
           }
 
@@ -927,7 +930,8 @@ class AutomationEngine {
             titleTemplate: action.notificationTitle ?? automation.name,
             bodyTemplate: action.notificationBody ?? '',
             fallbackTitle: automation.name,
-            fallbackBody: 'Automation triggered.',
+            fallbackBody:
+                'Automation triggered.', // lint-allow: hardcoded-string
           );
           final renderResult = NotificationRenderer.render(
             spec: notifSpec,
@@ -992,7 +996,7 @@ class AutomationEngine {
             return ActionResult(
               actionName: actionName,
               success: false,
-              errorMessage: 'No webhook event name specified',
+              errorMessage: l10n.automationErrorNoWebhookEvent,
             );
           }
 
@@ -1001,8 +1005,7 @@ class AutomationEngine {
             return ActionResult(
               actionName: actionName,
               success: false,
-              errorMessage:
-                  'IFTTT not configured - enable IFTTT and set webhook key in settings',
+              errorMessage: l10n.automationErrorIftttNotConfigured,
             );
           }
 
@@ -1026,12 +1029,18 @@ class AutomationEngine {
           // value3: Additional context (battery, SNR, timestamp)
           final contextParts = <String>[];
           if (event.batteryLevel != null) {
-            contextParts.add('Battery: ${event.batteryLevel}%');
+            contextParts.add(
+              'Battery: ${event.batteryLevel}%',
+            ); // lint-allow: hardcoded-string
           }
           if (event.snr != null) {
-            contextParts.add('SNR: ${event.snr}');
+            contextParts.add(
+              'SNR: ${event.snr}',
+            ); // lint-allow: hardcoded-string
           }
-          contextParts.add('Time: ${event.timestamp.toIso8601String()}');
+          contextParts.add(
+            'Time: ${event.timestamp.toIso8601String()}',
+          ); // lint-allow: hardcoded-string
           value3 = contextParts.join(', ');
 
           final webhookSuccess = await _iftttService.triggerCustomEvent(
@@ -1045,7 +1054,7 @@ class AutomationEngine {
             success: webhookSuccess,
             errorMessage: webhookSuccess
                 ? null
-                : 'Webhook request failed - check network connection',
+                : l10n.automationErrorWebhookFailed,
           );
 
         case ActionType.logEvent:
@@ -1062,7 +1071,7 @@ class AutomationEngine {
             return ActionResult(
               actionName: actionName,
               success: false,
-              errorMessage: 'Shortcuts only available on iOS',
+              errorMessage: l10n.automationErrorShortcutsIosOnly,
             );
           }
 
@@ -1071,7 +1080,7 @@ class AutomationEngine {
             return ActionResult(
               actionName: actionName,
               success: false,
-              errorMessage: 'No shortcut name specified',
+              errorMessage: l10n.automationErrorNoShortcutName,
             );
           }
 
@@ -1086,7 +1095,7 @@ class AutomationEngine {
           // The shortcut can access the input via "Shortcut Input" action
           // and parse it as JSON using "Get Dictionary from Input"
           final shortcutUrl = Uri.parse(
-            'shortcuts://x-callback-url/run-shortcut?name=$encodedName&input=text&text=$encodedInput',
+            'shortcuts://x-callback-url/run-shortcut?name=$encodedName&input=text&text=$encodedInput', // lint-allow: hardcoded-string
           );
 
           try {
@@ -1098,7 +1107,9 @@ class AutomationEngine {
               return ActionResult(
                 actionName: actionName,
                 success: false,
-                errorMessage: 'Could not launch shortcut "$shortcutName"',
+                errorMessage: l10n.automationErrorShortcutLaunchFailed(
+                  shortcutName,
+                ),
               );
             }
             return ActionResult(actionName: actionName, success: true);
@@ -1106,7 +1117,7 @@ class AutomationEngine {
             return ActionResult(
               actionName: actionName,
               success: false,
-              errorMessage: 'Failed to run shortcut: $e',
+              errorMessage: l10n.automationErrorShortcutRunFailed(e.toString()),
             );
           }
 
@@ -1116,7 +1127,7 @@ class AutomationEngine {
             return ActionResult(
               actionName: actionName,
               success: false,
-              errorMessage: 'Glyph interface not available',
+              errorMessage: l10n.automationErrorGlyphNotAvailable,
             );
           }
 
@@ -1158,7 +1169,9 @@ class AutomationEngine {
             return ActionResult(
               actionName: actionName,
               success: false,
-              errorMessage: 'Failed to show glyph pattern: $e',
+              errorMessage: l10n.automationErrorGlyphPatternFailed(
+                e.toString(),
+              ),
             );
           }
       }
@@ -1358,7 +1371,7 @@ class AutomationEngine {
           .replaceAll('{{signal.threshold}}', '${trigger.signalThreshold} dB')
           .replaceAll(
             '{{channel.name}}',
-            'Channel ${trigger.channelIndex ?? 0}',
+            'Channel ${trigger.channelIndex ?? 0}', // lint-allow: hardcoded-string
           );
     }
 
@@ -1368,15 +1381,21 @@ class AutomationEngine {
   /// Build trigger details string for logging
   String _buildTriggerDetails(AutomationEvent event) {
     final parts = <String>[];
-    parts.add('Trigger: ${event.type.displayName}');
+    parts.add(
+      'Trigger: ${event.type.displayName}',
+    ); // lint-allow: hardcoded-string
     if (event.nodeName != null) {
-      parts.add('Node: ${event.nodeName}');
+      parts.add('Node: ${event.nodeName}'); // lint-allow: hardcoded-string
     }
     if (event.batteryLevel != null) {
-      parts.add('Battery: ${event.batteryLevel}%');
+      parts.add(
+        'Battery: ${event.batteryLevel}%',
+      ); // lint-allow: hardcoded-string
     }
     if (event.messageText != null) {
-      parts.add('Message: ${event.messageText}');
+      parts.add(
+        'Message: ${event.messageText}',
+      ); // lint-allow: hardcoded-string
     }
     return parts.join(', ');
   }

@@ -437,7 +437,7 @@ class SocialmeshSplitFlapLogo extends StatelessWidget {
         ),
         // "mesh" - animated with gradient (LOWERCASE)
         SplitFlapText(
-          text: 'mesh',
+          text: 'mesh', // lint-allow: hardcoded-string
           style: baseStyle,
           useGradient: true,
           gradientColors: gradientColors,

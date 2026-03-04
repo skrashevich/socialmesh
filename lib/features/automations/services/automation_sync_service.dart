@@ -105,8 +105,8 @@ class AutomationSyncService {
     _diagnostics.recordEntitlementState(enabled);
 
     _syncLog(
-      'setEnabled: $wasEnabled → $enabled '
-      '(store.syncEnabled=${_store.syncEnabled})',
+      'setEnabled: $wasEnabled → $enabled ' // lint-allow: hardcoded-string
+      '(store.syncEnabled=${_store.syncEnabled})', // lint-allow: hardcoded-string
     );
 
     if (enabled) {
@@ -158,7 +158,7 @@ class AutomationSyncService {
     }
 
     _syncLog(
-      'drainOutboxNow: starting immediate drain for '
+      'drainOutboxNow: starting immediate drain for ' // lint-allow: hardcoded-string
       'uid=${user.uid.substring(0, 8)}...',
     );
 
@@ -206,7 +206,7 @@ class AutomationSyncService {
       }
 
       _syncLog(
-        'Sync cycle: uid=${user.uid.substring(0, 8)}... '
+        'Sync cycle: uid=${user.uid.substring(0, 8)}... ' // lint-allow: hardcoded-string
         'enabled=$_enabled store.syncEnabled=${_store.syncEnabled}',
       );
 
@@ -276,15 +276,15 @@ class AutomationSyncService {
     final blobFlag = await _store.getSyncState(blobImportedSyncKey);
     if (blobFlag == 'true') {
       _syncLog(
-        'Initial push: skipped — data was blob-imported, '
-        'waiting for pull to reconcile',
+        'Initial push: skipped — data was blob-imported, ' // lint-allow: hardcoded-string
+        'waiting for pull to reconcile', // lint-allow: hardcoded-string
       );
       return;
     }
 
     _syncLog(
-      'Initial push: first sync for uid=${userId.substring(0, 8)}... '
-      '— enqueuing $localCount local automations to outbox',
+      'Initial push: first sync for uid=${userId.substring(0, 8)}... ' // lint-allow: hardcoded-string
+      '— enqueuing $localCount local automations to outbox', // lint-allow: hardcoded-string
     );
 
     final enqueued = await _store.enqueueAllForSync();
@@ -313,8 +313,8 @@ class AutomationSyncService {
     if (survivorCount > 0) {
       final enqueued = await _store.enqueueAllForSync();
       _syncLog(
-        'Blob reconciliation: pull applied, '
-        'enqueued $enqueued surviving automations for sync',
+        'Blob reconciliation: pull applied, ' // lint-allow: hardcoded-string
+        'enqueued $enqueued surviving automations for sync', // lint-allow: hardcoded-string
       );
 
       // Drain immediately so surviving items reach Firestore promptly.
@@ -351,8 +351,8 @@ class AutomationSyncService {
 
     final collectionPath = 'users/$userId/$_firestoreCollection';
     _syncLog(
-      'Drain: ${outboxEntries.length} outbox entries to push '
-      '→ $collectionPath',
+      'Drain: ${outboxEntries.length} outbox entries to push ' // lint-allow: hardcoded-string
+      '→ $collectionPath', // lint-allow: hardcoded-string
     );
 
     final collection = FirebaseFirestore.instance
@@ -374,8 +374,8 @@ class AutomationSyncService {
 
       if (attemptCount >= _maxOutboxRetries) {
         _syncLog(
-          'Drain: SKIPPING outbox[$id] $entityType/$entityId '
-          '— max retries ($attemptCount) reached',
+          'Drain: SKIPPING outbox[$id] $entityType/$entityId ' // lint-allow: hardcoded-string
+          '— max retries ($attemptCount) reached', // lint-allow: hardcoded-string
         );
         await _store.removeOutboxEntry(id);
         skippedCount++;
@@ -411,7 +411,7 @@ class AutomationSyncService {
         successCount++;
       } catch (e, stack) {
         _syncLogError(
-          'Drain: FAILED outbox[$id] $entityType/$entityId '
+          'Drain: FAILED outbox[$id] $entityType/$entityId ' // lint-allow: hardcoded-string
           'doc=$docId attempt=${attemptCount + 1}: $e',
           null,
           stack,
@@ -419,14 +419,14 @@ class AutomationSyncService {
         await _store.markOutboxAttemptFailed(id, e.toString());
         _diagnostics.recordError(
           SyncType.automations,
-          'Outbox push failed for $entityType/$entityId: $e',
+          'Outbox push failed for $entityType/$entityId: $e', // lint-allow: hardcoded-string
         );
         failCount++;
       }
     }
 
     _syncLog(
-      'Drain: complete — '
+      'Drain: complete — ' // lint-allow: hardcoded-string
       'success=$successCount fail=$failCount skipped=$skippedCount',
     );
   }
@@ -446,8 +446,8 @@ class AutomationSyncService {
       final lastPullMs = lastPullStr != null ? int.tryParse(lastPullStr) : null;
 
       _syncLog(
-        'Pull: querying $collectionPath '
-        'since watermark=${lastPullMs ?? "NONE (first pull)"}',
+        'Pull: querying $collectionPath ' // lint-allow: hardcoded-string
+        'since watermark=${lastPullMs ?? "NONE (first pull)"}', // lint-allow: hardcoded-string
       );
 
       final collection = FirebaseFirestore.instance
@@ -501,7 +501,7 @@ class AutomationSyncService {
             } catch (e) {
               parseErrors++;
               _syncLogError(
-                'Pull: failed to parse automation from doc=${doc.id}',
+                'Pull: failed to parse automation from doc=${doc.id}', // lint-allow: hardcoded-string
                 e,
               );
             }
@@ -510,7 +510,7 @@ class AutomationSyncService {
       }
 
       _syncLog(
-        'Pull: parsed ${remoteAutomations.length} automations, '
+        'Pull: parsed ${remoteAutomations.length} automations, ' // lint-allow: hardcoded-string
         '${remoteDeletedIds.length} deleted, $parseErrors parse errors',
       );
 
@@ -522,8 +522,8 @@ class AutomationSyncService {
       // Apply upserts
       if (remoteAutomations.isNotEmpty) {
         _syncLog(
-          'Pull: applying ${remoteAutomations.length} automations '
-          'via applySyncPull',
+          'Pull: applying ${remoteAutomations.length} automations ' // lint-allow: hardcoded-string
+          'via applySyncPull', // lint-allow: hardcoded-string
         );
         final applied = await _store.applySyncPull(remoteAutomations);
         _diagnostics.recordPullApplied(SyncType.automations, count: applied);
@@ -540,9 +540,9 @@ class AutomationSyncService {
       await _store.setSyncState(wmKey, maxPullMs.toString());
 
       _syncLog(
-        'Pull: complete — ${remoteAutomations.length} upserts, '
+        'Pull: complete — ${remoteAutomations.length} upserts, ' // lint-allow: hardcoded-string
         '${remoteDeletedIds.length} deletions, '
-        'new watermark=$maxPullMs',
+        'new watermark=$maxPullMs', // lint-allow: hardcoded-string
       );
     } catch (e, stack) {
       _syncLogError('Pull FAILED from $collectionPath', e, stack);
@@ -589,7 +589,7 @@ class AutomationSyncService {
       );
     }
     stages['A'] =
-        'OK: enabled=$_enabled store.syncEnabled=${_store.syncEnabled}';
+        'OK: enabled=$_enabled store.syncEnabled=${_store.syncEnabled}'; // lint-allow: hardcoded-string
     probeLog('Stage A: OK');
 
     // Stage B: Check auth
@@ -642,8 +642,8 @@ class AutomationSyncService {
       final outboxCount = await _store.outboxCount;
       if (outboxCount == 0) {
         probeLog(
-          'Stage D: WARN — outbox empty after save. '
-          'syncEnabled=${_store.syncEnabled}',
+          'Stage D: WARN — outbox empty after save. ' // lint-allow: hardcoded-string
+          'syncEnabled=${_store.syncEnabled}', // lint-allow: hardcoded-string
         );
         stages['D'] = 'WARN: outbox empty (syncEnabled=${_store.syncEnabled})';
       } else {
@@ -701,7 +701,7 @@ class AutomationSyncService {
       final docData = docSnapshot.data()!;
       final remoteData = docData['data'] as Map<String, dynamic>?;
       probeLog(
-        'Stage F: OK — doc exists at $docPath '
+        'Stage F: OK — doc exists at $docPath ' // lint-allow: hardcoded-string
         'updated_at_ms=${docData['updated_at_ms']} '
         'has_data=${remoteData != null}',
       );
@@ -756,7 +756,7 @@ class AutomationSyncService {
       final nameMatch = localAutomation.name == probeName;
       final descMatch = localAutomation.description == probeDescription;
       probeLog(
-        'Stage H: local automation found — '
+        'Stage H: local automation found — ' // lint-allow: hardcoded-string
         'name=${localAutomation.name} (match=$nameMatch) '
         'description=${localAutomation.description} (match=$descMatch)',
       );
@@ -804,7 +804,7 @@ class AutomationSyncService {
 
     probeLog('=== AUTOMATION SYNC PROBE COMPLETE: ALL STAGES PASSED ===');
     _syncLog(
-      'PROBE_RESULT ok=true stages=${stages.entries.map((e) => "${e.key}=${e.value}").join(", ")}',
+      'PROBE_RESULT ok=true stages=${stages.entries.map((e) => "${e.key}=${e.value}").join(", ")}', // lint-allow: hardcoded-string
     );
 
     return SyncProbeResult.success(
@@ -831,7 +831,7 @@ class AutomationSyncService {
           final pendingCount = await _store.outboxCount;
           if (pendingCount > 0) {
             _syncLog(
-              'Dispose: draining $pendingCount outbox entries before shutdown',
+              'Dispose: draining $pendingCount outbox entries before shutdown', // lint-allow: hardcoded-string
             );
             await _drainOutbox(user.uid);
           }

@@ -270,7 +270,7 @@ class _CollapsibleFieldNoteState extends State<CollapsibleFieldNote>
                   ),
                   const SizedBox(width: AppTheme.spacing6),
                   Text(
-                    'Field Note',
+                    'Field Note', // lint-allow: hardcoded-string
                     style: TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w600,

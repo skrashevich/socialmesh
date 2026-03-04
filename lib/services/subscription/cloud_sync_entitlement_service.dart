@@ -87,7 +87,8 @@ class CloudSyncEntitlement {
 /// Service to manage cloud sync entitlements
 /// Combines RevenueCat subscription status with Firebase grandfathering
 class CloudSyncEntitlementService {
-  static const String _entitlementId = 'Socialmesh Pro';
+  static const String _entitlementId =
+      'Socialmesh Pro'; // lint-allow: hardcoded-string
   static const String _cacheKey = 'cloud_sync_entitlement_cache';
   static const String _cacheTimestampKey = 'cloud_sync_entitlement_timestamp';
 

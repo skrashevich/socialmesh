@@ -359,14 +359,18 @@ class _TopStatusBannerState extends ConsumerState<TopStatusBanner>
         : Icons.bluetooth_disabled_rounded;
 
     final invalidatedMessage =
-        'Device was reset or replaced. Forget it from Bluetooth settings and set it up again.';
+        'Device was reset or replaced. Forget it from Bluetooth settings and set it up again.'; // lint-allow: hardcoded-string
     final message = isTerminalInvalidated
         ? invalidatedMessage
         : isReconnecting
-        ? (isScanning ? 'Searching for device...' : 'Reconnecting...')
+        ? (isScanning
+              ? 'Searching for device...'
+              : 'Reconnecting...') // lint-allow: hardcoded-string
         : isAuthFailed
-        ? 'Authentication failed — re-pair in Scanner'
-        : (isFailed ? 'Device not found' : 'Disconnected');
+        ? 'Authentication failed — re-pair in Scanner' // lint-allow: hardcoded-string
+        : (isFailed
+              ? 'Device not found'
+              : 'Disconnected'); // lint-allow: hardcoded-string
     // Don't show retry for auth failures — retrying background connect
     // hits the same PIN/auth issue. The user needs Scanner to manually
     // re-pair (which triggers the system PIN dialog).
@@ -501,7 +505,7 @@ class _TopStatusBannerState extends ConsumerState<TopStatusBanner>
                             ),
                           ] else if (isTerminalInvalidated) ...[
                             Text(
-                              'Scan for Devices',
+                              'Scan for Devices', // lint-allow: hardcoded-string
                               style: TextStyle(
                                 color: foregroundColor,
                                 fontSize: 13,

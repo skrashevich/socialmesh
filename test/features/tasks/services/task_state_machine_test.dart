@@ -677,8 +677,12 @@ void main() {
         orderBy: 'timestamp ASC, id ASC',
       );
       expect(newTransitions.length, 2);
-      expect(newTransitions[0]['toState'], 'created');
-      expect(newTransitions[1]['toState'], 'assigned');
+      // Both transitions share the same timestamp so UUID-based ordering
+      // is non-deterministic. Assert set membership instead of index order.
+      final toStates = newTransitions
+          .map((r) => r['toState'] as String)
+          .toSet();
+      expect(toStates, containsAll(<String>['created', 'assigned']));
     });
   });
 
@@ -892,12 +896,20 @@ void main() {
       expect(row!.state, TaskState.assigned);
 
       // Two transitions: created -> created, created -> assigned.
+      // Both share the same timestamp, so UUID-based ordering is
+      // non-deterministic. Assert set membership instead.
       final transitions = await db.getTransitionsByTaskId(task.id);
       expect(transitions.length, 2);
-      expect(transitions[0].fromState, TaskState.created);
-      expect(transitions[0].toState, TaskState.created);
-      expect(transitions[1].fromState, TaskState.created);
-      expect(transitions[1].toState, TaskState.assigned);
+      // Both originate from created state.
+      expect(
+        transitions.every((t) => t.fromState == TaskState.created),
+        isTrue,
+      );
+      final toStates = transitions.map((t) => t.toState).toSet();
+      expect(
+        toStates,
+        containsAll(<TaskState>[TaskState.created, TaskState.assigned]),
+      );
     });
   });
 

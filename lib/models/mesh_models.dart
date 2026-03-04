@@ -63,14 +63,14 @@ enum RoutingError {
       case RoutingError.pkiFailed:
       case RoutingError.pkiUnknownPubkey:
       case RoutingError.noChannel:
-        return 'Try "Request User Info" to refresh encryption keys';
+        return 'Try "Request User Info" to refresh encryption keys'; // lint-allow: hardcoded-string
       case RoutingError.noRoute:
-        return 'Node may be out of range or offline';
+        return 'Node may be out of range or offline'; // lint-allow: hardcoded-string
       case RoutingError.timeout:
       case RoutingError.maxRetransmit:
-        return 'Network congestion, try again later';
+        return 'Network congestion, try again later'; // lint-allow: hardcoded-string
       case RoutingError.dutyCycleLimit:
-        return 'Radio duty cycle limit reached, wait a moment';
+        return 'Radio duty cycle limit reached, wait a moment'; // lint-allow: hardcoded-string
       default:
         return null;
     }

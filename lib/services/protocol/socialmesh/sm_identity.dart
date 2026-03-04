@@ -191,5 +191,5 @@ class SmIdentity {
   String toString() =>
       'SmIdentity(hash=${sigilHash.toRadixString(16)}, '
       'trait=$trait, encounters=$encounterCount, '
-      'isRequest=$isRequest, isResponse=$isResponse)';
+      'isRequest=$isRequest, isResponse=$isResponse)'; // lint-allow: hardcoded-string
 }

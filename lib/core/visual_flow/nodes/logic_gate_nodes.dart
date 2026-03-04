@@ -107,19 +107,19 @@ VSNodeDataBuilder _buildAndGateBuilder() {
       type: LogicGateTypes.and,
       widgetOffset: offset,
       nodeWidth: _kGateNodeWidth,
-      title: 'AND',
+      title: 'AND', // lint-allow: hardcoded-string
       referenceConnection: ref,
       inputBuilder: (int index, VSOutputData? connection) {
         return EventSignalInputData(
           type: 'event_in_$index',
-          title: 'Input ${index + 1}',
+          title: 'Input ${index + 1}', // lint-allow: hardcoded-string
           initialConnection: connection,
         );
       },
       outputData: [
         EventSignalOutputData(
           type: 'event_out',
-          title: 'All Met',
+          title: 'All Met', // lint-allow: hardcoded-string
           outputFunction: (inputs) {
             // At compile time: walk all connected inputs and verify they
             // all carry a passed EventSignalPayload.
@@ -167,19 +167,19 @@ VSNodeDataBuilder _buildOrGateBuilder() {
       type: LogicGateTypes.or,
       widgetOffset: offset,
       nodeWidth: _kGateNodeWidth,
-      title: 'OR',
+      title: 'OR', // lint-allow: hardcoded-string
       referenceConnection: ref,
       inputBuilder: (int index, VSOutputData? connection) {
         return EventSignalInputData(
           type: 'event_in_$index',
-          title: 'Input ${index + 1}',
+          title: 'Input ${index + 1}', // lint-allow: hardcoded-string
           initialConnection: connection,
         );
       },
       outputData: [
         EventSignalOutputData(
           type: 'event_out',
-          title: 'Any Met',
+          title: 'Any Met', // lint-allow: hardcoded-string
           outputFunction: (inputs) {
             // At compile time: walk all connected inputs and check if at
             // least one carries a passed EventSignalPayload.
@@ -230,18 +230,18 @@ VSNodeDataBuilder _buildNotGateBuilder() {
       type: LogicGateTypes.not,
       widgetOffset: offset,
       nodeWidth: _kGateNodeWidth,
-      title: 'NOT',
+      title: 'NOT', // lint-allow: hardcoded-string
       inputData: [
         EventSignalInputData(
           type: 'event_in',
-          title: 'Input',
+          title: 'Input', // lint-allow: hardcoded-string
           initialConnection: ref,
         ),
       ],
       outputData: [
         EventSignalOutputData(
           type: 'event_out',
-          title: 'Inverted',
+          title: 'Inverted', // lint-allow: hardcoded-string
           outputFunction: (inputs) {
             final upstream = inputs['event_in'] as EventSignalPayload?;
             if (upstream == null) {
@@ -279,7 +279,7 @@ VSNodeDataBuilder _buildDelayGateBuilder() {
       type: LogicGateTypes.delay,
       widgetOffset: offset,
       nodeWidth: _kGateNodeWidth,
-      title: 'Delay',
+      title: 'Delay', // lint-allow: hardcoded-string
       ref: ref,
       config: config,
     );
@@ -300,14 +300,14 @@ class _DelayNode extends VSNodeData {
          inputData: [
            EventSignalInputData(
              type: 'event_in',
-             title: 'Input',
+             title: 'Input', // lint-allow: hardcoded-string
              initialConnection: ref,
            ),
          ],
          outputData: [
            EventSignalOutputData(
              type: 'event_out',
-             title: 'Delayed',
+             title: 'Delayed', // lint-allow: hardcoded-string
              outputFunction: (inputs) {
                final upstream = inputs['event_in'] as EventSignalPayload?;
                if (upstream == null) {
@@ -406,10 +406,11 @@ String gateLabel(String gateType) {
 /// Returns a human-readable description of what the gate does.
 String gateDescription(String gateType) {
   return switch (gateType) {
-    LogicGateTypes.and => 'All inputs must pass',
-    LogicGateTypes.or => 'Any input can pass',
-    LogicGateTypes.not => 'Inverts the signal',
-    LogicGateTypes.delay => 'Delays the signal',
+    LogicGateTypes.and =>
+      'All inputs must pass', // lint-allow: hardcoded-string
+    LogicGateTypes.or => 'Any input can pass', // lint-allow: hardcoded-string
+    LogicGateTypes.not => 'Inverts the signal', // lint-allow: hardcoded-string
+    LogicGateTypes.delay => 'Delays the signal', // lint-allow: hardcoded-string
     _ => '',
   };
 }

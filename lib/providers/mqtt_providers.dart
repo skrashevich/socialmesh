@@ -220,7 +220,8 @@ class GlobalLayerConnectionStateNotifier
   bool connect({String? reason}) {
     return transitionTo(
       GlobalLayerConnectionState.connecting,
-      reason: reason ?? 'User initiated connect',
+      reason:
+          reason ?? 'User initiated connect', // lint-allow: hardcoded-string
     );
   }
 
@@ -228,7 +229,8 @@ class GlobalLayerConnectionStateNotifier
   bool disconnect({String? reason}) {
     return transitionTo(
       GlobalLayerConnectionState.disconnecting,
-      reason: reason ?? 'User initiated disconnect',
+      reason:
+          reason ?? 'User initiated disconnect', // lint-allow: hardcoded-string
     );
   }
 
@@ -236,7 +238,8 @@ class GlobalLayerConnectionStateNotifier
   bool markConnected({String? reason}) {
     return transitionTo(
       GlobalLayerConnectionState.connected,
-      reason: reason ?? 'Connection established',
+      reason:
+          reason ?? 'Connection established', // lint-allow: hardcoded-string
     );
   }
 
@@ -244,7 +247,7 @@ class GlobalLayerConnectionStateNotifier
   bool markDegraded({String? reason}) {
     return transitionTo(
       GlobalLayerConnectionState.degraded,
-      reason: reason ?? 'Connection degraded',
+      reason: reason ?? 'Connection degraded', // lint-allow: hardcoded-string
     );
   }
 
@@ -252,7 +255,7 @@ class GlobalLayerConnectionStateNotifier
   bool markError({required String errorMessage, String? reason}) {
     return transitionTo(
       GlobalLayerConnectionState.error,
-      reason: reason ?? 'Error occurred',
+      reason: reason ?? 'Error occurred', // lint-allow: hardcoded-string
       errorMessage: errorMessage,
     );
   }
@@ -261,7 +264,8 @@ class GlobalLayerConnectionStateNotifier
   bool startReconnecting({String? reason}) {
     return transitionTo(
       GlobalLayerConnectionState.reconnecting,
-      reason: reason ?? 'Attempting to reconnect',
+      reason:
+          reason ?? 'Attempting to reconnect', // lint-allow: hardcoded-string
     );
   }
 

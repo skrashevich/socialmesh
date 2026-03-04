@@ -527,7 +527,7 @@ class _SignalPreviewCard extends StatelessWidget {
                         )
                       else
                         Text(
-                          '📡 ${context.l10n.signalFallbackContent}',
+                          '📡 ${context.l10n.signalFallbackContent}', // lint-allow: hardcoded-string
                           style: TextStyle(
                             color: SemanticColors.disabled,
                             fontSize: 14,

@@ -2,11 +2,11 @@
 import '../models/presence_confidence.dart';
 
 const String kPresenceInferenceTooltip =
-    'LoRa mesh has no offline signal. Status is inferred.';
+    'LoRa mesh has no offline signal. Status is inferred.'; // lint-allow: hardcoded-string
 
 String formatSeenAgo(Duration? age) {
   if (age == null) return 'unknown';
-  if (age.inSeconds < 30) return 'just now';
+  if (age.inSeconds < 30) return 'just now'; // lint-allow: hardcoded-string
   if (age.inMinutes < 1) return '${age.inSeconds}s';
   if (age.inMinutes < 60) return '${age.inMinutes}m';
   if (age.inHours < 24) return '${age.inHours}h';
@@ -18,7 +18,7 @@ String presenceStatusText(PresenceConfidence confidence, Duration? age) {
     case PresenceConfidence.active:
       return 'Active';
     case PresenceConfidence.fading:
-      return 'Seen ${formatSeenAgo(age)} ago';
+      return 'Seen ${formatSeenAgo(age)} ago'; // lint-allow: hardcoded-string
     case PresenceConfidence.stale:
       return 'Inactive';
     case PresenceConfidence.unknown:

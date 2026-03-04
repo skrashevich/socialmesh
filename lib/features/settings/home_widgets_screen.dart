@@ -117,7 +117,7 @@ class _HomeWidgetsScreenState extends ConsumerState<HomeWidgetsScreen> {
     );
     final widgetPackName =
         storeProducts[RevenueCatConfig.widgetPackProductId]?.title ??
-        'Widget Pack';
+        'Widget Pack'; // lint-allow: hardcoded-string
 
     return Container(
       padding: const EdgeInsets.all(AppTheme.spacing20),

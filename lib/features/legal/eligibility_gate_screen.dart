@@ -203,7 +203,7 @@ class _EligibilityGateScreenState extends ConsumerState<EligibilityGateScreen>
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Text(
-            '\u2022',
+            '\u2022', // lint-allow: hardcoded-string
             style: TextStyle(color: context.textTertiary, fontSize: 14),
           ),
         ),

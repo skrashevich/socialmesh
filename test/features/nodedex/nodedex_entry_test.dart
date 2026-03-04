@@ -5,6 +5,7 @@ import 'dart:ui';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:socialmesh/features/nodedex/models/nodedex_entry.dart';
+import 'package:socialmesh/l10n/app_localizations_en.dart';
 
 void main() {
   // ===========================================================================
@@ -1230,7 +1231,7 @@ void main() {
 
         expect(str, contains('42'));
         expect(str, contains('5'));
-        expect(str, contains('Frequent Peer'));
+        expect(str, contains('frequentPeer'));
       });
 
       test('shows none when no social tag', () {
@@ -1550,8 +1551,9 @@ void main() {
 
     group('social tags', () {
       test('all social tags have display labels', () {
+        final l10n = AppLocalizationsEn();
         for (final tag in NodeSocialTag.values) {
-          expect(tag.displayLabel, isNotEmpty);
+          expect(tag.displayLabel(l10n), isNotEmpty);
         }
       });
 
@@ -1769,14 +1771,16 @@ void main() {
 
   group('ExplorerTitle', () {
     test('all titles have display labels', () {
+      final l10n = AppLocalizationsEn();
       for (final title in ExplorerTitle.values) {
-        expect(title.displayLabel, isNotEmpty);
+        expect(title.displayLabel(l10n), isNotEmpty);
       }
     });
 
     test('all titles have descriptions', () {
+      final l10n = AppLocalizationsEn();
       for (final title in ExplorerTitle.values) {
-        expect(title.description, isNotEmpty);
+        expect(title.description(l10n), isNotEmpty);
       }
     });
   });

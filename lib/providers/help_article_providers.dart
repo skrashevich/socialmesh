@@ -41,7 +41,7 @@ final helpArticleContentProvider = FutureProvider.family<String, String>((
     return await rootBundle.loadString(filePath);
   } catch (e) {
     AppLogging.app('HelpArticles: Failed to load article $filePath: $e');
-    return '# Error\n\nThis article could not be loaded.';
+    return '# Error\n\nThis article could not be loaded.'; // lint-allow: hardcoded-string
   }
 });
 

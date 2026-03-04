@@ -74,7 +74,7 @@ class _MessageContextMenuState extends ConsumerState<MessageContextMenu>
             Padding(
               padding: const EdgeInsets.fromLTRB(AppTheme.spacing16, 12, 16, 4),
               child: Text(
-                'Channel: ${widget.channelIndex}',
+                'Channel: ${widget.channelIndex}', // lint-allow: hardcoded-string
                 style: context.bodySmallStyle?.copyWith(
                   color: context.textTertiary,
                 ),
@@ -337,7 +337,7 @@ class _MessageContextMenuState extends ConsumerState<MessageContextMenu>
               child: Row(
                 children: [
                   Text(
-                    'From: ${widget.senderName}',
+                    'From: ${widget.senderName}', // lint-allow: hardcoded-string
                     style: TextStyle(
                       fontSize: 14,
                       color: context.textSecondary,
@@ -414,7 +414,8 @@ class _MessageContextMenuState extends ConsumerState<MessageContextMenu>
         return context.l10n.messageContextMenuStatusDelivered;
       case MessageStatus.failed:
         return context.l10n.messageContextMenuStatusFailed(
-          widget.message.errorMessage ?? 'Unknown error',
+          widget.message.errorMessage ??
+              'Unknown error', // lint-allow: hardcoded-string
         );
     }
   }

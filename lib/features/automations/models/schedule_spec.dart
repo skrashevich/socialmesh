@@ -270,13 +270,13 @@ class ScheduleSpec {
   String generateSlotKey(DateTime scheduledFor, {int? intervalCount}) {
     switch (kind) {
       case ScheduleKind.oneShot:
-        return 'oneShot:${scheduledFor.toIso8601String()}';
+        return 'oneShot:${scheduledFor.toIso8601String()}'; // lint-allow: hardcoded-string
       case ScheduleKind.interval:
-        return 'interval:${intervalCount ?? 0}';
+        return 'interval:${intervalCount ?? 0}'; // lint-allow: hardcoded-string
       case ScheduleKind.daily:
-        return 'daily:${_formatLocalSlotTime(scheduledFor)}';
+        return 'daily:${_formatLocalSlotTime(scheduledFor)}'; // lint-allow: hardcoded-string
       case ScheduleKind.weekly:
-        return 'weekly:${_formatLocalSlotTime(scheduledFor)}';
+        return 'weekly:${_formatLocalSlotTime(scheduledFor)}'; // lint-allow: hardcoded-string
     }
   }
 
@@ -291,7 +291,7 @@ class ScheduleSpec {
     final time =
         '${hour?.toString().padLeft(2, '0')}:${minute?.toString().padLeft(2, '0')}';
     return '$date'
-        'T$time$sign$hours:$minutes';
+        'T$time$sign$hours:$minutes'; // lint-allow: hardcoded-string
   }
 
   /// Check if a slot key has already been fired
@@ -502,5 +502,5 @@ class ScheduledFireEvent {
   @override
   String toString() =>
       'ScheduledFireEvent(scheduleId: $scheduleId, slotKey: $slotKey, '
-      'scheduledFor: $scheduledFor, isCatchUp: $isCatchUp)';
+      'scheduledFor: $scheduledFor, isCatchUp: $isCatchUp)'; // lint-allow: hardcoded-string
 }

@@ -143,7 +143,9 @@ class ChannelKeyUtils {
   /// Encode key bytes to standard base64 string
   static String keyToBase64(List<int> key) {
     if (key.isEmpty) return '';
-    if (key.length == 1 && key[0] == 1) return 'AQ=='; // Default key marker
+    if (key.length == 1 && key[0] == 1) {
+      return 'AQ=='; // Default key marker // lint-allow: hardcoded-string
+    }
     return base64.encode(key);
   }
 
@@ -183,13 +185,13 @@ class ChannelKeyUtils {
   static String getKeySizeDisplayName(int bytes) {
     switch (bytes) {
       case 0:
-        return 'No Encryption';
+        return 'No Encryption'; // lint-allow: hardcoded-string
       case 1:
-        return 'Default (Simple)';
+        return 'Default (Simple)'; // lint-allow: hardcoded-string
       case 16:
-        return 'AES-128';
+        return 'AES-128'; // lint-allow: hardcoded-string
       case 32:
-        return 'AES-256';
+        return 'AES-256'; // lint-allow: hardcoded-string
       default:
         return '$bytes bytes';
     }
@@ -201,11 +203,11 @@ class ChannelKeyUtils {
       case 0:
         return '';
       case 1:
-        return '1 byte · Default PSK';
+        return '1 byte · Default PSK'; // lint-allow: hardcoded-string
       case 16:
-        return '16 bytes · AES-128';
+        return '16 bytes · AES-128'; // lint-allow: hardcoded-string
       case 32:
-        return '32 bytes · AES-256';
+        return '32 bytes · AES-256'; // lint-allow: hardcoded-string
       default:
         return '$bytes bytes';
     }

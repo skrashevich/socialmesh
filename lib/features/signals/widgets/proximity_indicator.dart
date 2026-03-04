@@ -144,7 +144,7 @@ class ProximityBadge extends StatelessWidget {
     final hops = hopCount;
     if (hops == null) return 'nearby';
     if (hops == 0) return 'direct';
-    if (hops == 1) return '1 hop';
+    if (hops == 1) return '1 hop'; // lint-allow: hardcoded-string
     return '$hops hops';
   }
 

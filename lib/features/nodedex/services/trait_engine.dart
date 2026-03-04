@@ -104,7 +104,7 @@ class TraitResult {
   String toString() =>
       'TraitResult(${primary.name} @ '
       '${(confidence * 100).toStringAsFixed(0)}%'
-      '${secondary != null ? ', secondary: ${secondary!.name}' : ''})';
+      '${secondary != null ? ', secondary: ${secondary!.name}' : ''})'; // lint-allow: hardcoded-string
 }
 
 /// Pure-function engine that infers personality traits from node data.
@@ -242,7 +242,7 @@ class TraitEngine {
             TraitEvidence(
               observation:
                   l10n?.nodedexEvidenceInsufficientData ??
-                  'Insufficient data to classify',
+                  'Insufficient data to classify', // lint-allow: hardcoded-string
               weight: 1.0,
             ),
           ],
@@ -621,7 +621,7 @@ class TraitEngine {
         TraitEvidence(
           observation:
               l10n?.nodedexEvidenceRoleIs(role.toUpperCase()) ??
-              'Role is ${role.toUpperCase()}',
+              'Role is ${role.toUpperCase()}', // lint-allow: hardcoded-string
           weight: s,
         ),
       );
@@ -635,7 +635,7 @@ class TraitEngine {
         TraitEvidence(
           observation:
               l10n?.nodedexEvidenceChannelUtilization(pct) ??
-              'Channel utilization $pct%',
+              'Channel utilization $pct%', // lint-allow: hardcoded-string
           weight: s,
         ),
       );
@@ -648,7 +648,8 @@ class TraitEngine {
       evidence.add(
         TraitEvidence(
           observation:
-              l10n?.nodedexEvidenceAirtimeTx(pct) ?? 'Airtime TX $pct%',
+              l10n?.nodedexEvidenceAirtimeTx(pct) ??
+              'Airtime TX $pct%', // lint-allow: hardcoded-string
           weight: s,
         ),
       );
@@ -660,7 +661,7 @@ class TraitEngine {
         TraitEvidence(
           observation:
               l10n?.nodedexEvidenceHighEncounterCount ??
-              'High encounter count (20+)',
+              'High encounter count (20+)', // lint-allow: hardcoded-string
           weight: 0.1,
         ),
       );
@@ -688,7 +689,7 @@ class TraitEngine {
         TraitEvidence(
           observation:
               l10n?.nodedexEvidenceDistinctPositions(positionCount) ??
-              'Observed at $positionCount distinct positions',
+              'Observed at $positionCount distinct positions', // lint-allow: hardcoded-string
           weight: s,
         ),
       );
@@ -701,7 +702,7 @@ class TraitEngine {
         TraitEvidence(
           observation:
               l10n?.nodedexEvidenceSeenAcrossRegions(entry.regionCount) ??
-              'Seen across ${entry.regionCount} regions',
+              'Seen across ${entry.regionCount} regions', // lint-allow: hardcoded-string
           weight: s,
         ),
       );
@@ -713,7 +714,9 @@ class TraitEngine {
       final km = (entry.maxDistanceSeen! / 1000).toStringAsFixed(1);
       evidence.add(
         TraitEvidence(
-          observation: l10n?.nodedexEvidenceMaxRange(km) ?? 'Max range ${km}km',
+          observation:
+              l10n?.nodedexEvidenceMaxRange(km) ??
+              'Max range ${km}km', // lint-allow: hardcoded-string
           weight: s,
         ),
       );
@@ -741,7 +744,7 @@ class TraitEngine {
         TraitEvidence(
           observation:
               l10n?.nodedexEvidenceFixedPosition ??
-              'Fixed position (single location)',
+              'Fixed position (single location)', // lint-allow: hardcoded-string
           weight: 0.3,
         ),
       );
@@ -754,7 +757,7 @@ class TraitEngine {
         TraitEvidence(
           observation:
               l10n?.nodedexEvidenceKnownForDays(entry.age.inDays) ??
-              'Known for ${entry.age.inDays} days',
+              'Known for ${entry.age.inDays} days', // lint-allow: hardcoded-string
           weight: s,
         ),
       );
@@ -785,7 +788,8 @@ class TraitEngine {
       evidence.add(
         TraitEvidence(
           observation:
-              l10n?.nodedexEvidenceUptime(uptimeDays) ?? 'Uptime ${days}d',
+              l10n?.nodedexEvidenceUptime(uptimeDays) ??
+              'Uptime ${days}d', // lint-allow: hardcoded-string
           weight: s,
         ),
       );
@@ -828,7 +832,7 @@ class TraitEngine {
         TraitEvidence(
           observation:
               l10n?.nodedexEvidenceModerateEncounterRate(rateStr) ??
-              'Moderate encounter rate ($rateStr/day)',
+              'Moderate encounter rate ($rateStr/day)', // lint-allow: hardcoded-string
           weight: s,
         ),
       );
@@ -840,7 +844,7 @@ class TraitEngine {
         TraitEvidence(
           observation:
               l10n?.nodedexEvidenceActiveLastHour ??
-              'Active within the last hour',
+              'Active within the last hour', // lint-allow: hardcoded-string
           weight: 0.15,
         ),
       );
@@ -891,7 +895,7 @@ class TraitEngine {
         TraitEvidence(
           observation:
               l10n?.nodedexEvidenceEncounterRateLow(rateStr) ??
-              'Encounter rate $rateStr/day',
+              'Encounter rate $rateStr/day', // lint-allow: hardcoded-string
           weight: s,
         ),
       );
@@ -906,7 +910,7 @@ class TraitEngine {
         TraitEvidence(
           observation:
               l10n?.nodedexEvidenceLastSeenDaysAgo(days) ??
-              'Last seen ${days}d ago',
+              'Last seen ${days}d ago', // lint-allow: hardcoded-string
           weight: s,
         ),
       );
@@ -921,7 +925,7 @@ class TraitEngine {
                 entry.encounterCount,
                 entry.age.inDays,
               ) ??
-              'Only ${entry.encounterCount} encounters over ${entry.age.inDays} days',
+              'Only ${entry.encounterCount} encounters over ${entry.age.inDays} days', // lint-allow: hardcoded-string
           weight: 0.2,
         ),
       );
@@ -991,7 +995,7 @@ class TraitEngine {
         TraitEvidence(
           observation:
               l10n?.nodedexEvidenceMobileWithMessaging ??
-              'Mobile with active messaging',
+              'Mobile with active messaging', // lint-allow: hardcoded-string
           weight: 0.2,
         ),
       );
@@ -1018,7 +1022,7 @@ class TraitEngine {
         TraitEvidence(
           observation:
               l10n?.nodedexEvidenceCoSeenWith(entry.coSeenCount) ??
-              'Co-seen with ${entry.coSeenCount} nodes',
+              'Co-seen with ${entry.coSeenCount} nodes', // lint-allow: hardcoded-string
           weight: s,
         ),
       );
@@ -1029,7 +1033,7 @@ class TraitEngine {
         TraitEvidence(
           observation:
               l10n?.nodedexEvidenceCoSeenWith(entry.coSeenCount) ??
-              'Co-seen with ${entry.coSeenCount} nodes',
+              'Co-seen with ${entry.coSeenCount} nodes', // lint-allow: hardcoded-string
           weight: s,
         ),
       );
@@ -1042,7 +1046,7 @@ class TraitEngine {
         TraitEvidence(
           observation:
               l10n?.nodedexEvidencePersistentPresence(entry.age.inDays) ??
-              'Persistent presence (${entry.age.inDays} days)',
+              'Persistent presence (${entry.age.inDays} days)', // lint-allow: hardcoded-string
           weight: s,
         ),
       );
@@ -1052,7 +1056,9 @@ class TraitEngine {
       score += 0.15;
       evidence.add(
         TraitEvidence(
-          observation: l10n?.nodedexEvidenceFixedLocation ?? 'Fixed location',
+          observation:
+              l10n?.nodedexEvidenceFixedLocation ??
+              'Fixed location', // lint-allow: hardcoded-string
           weight: 0.15,
         ),
       );
@@ -1117,7 +1123,7 @@ class TraitEngine {
             TraitEvidence(
               observation:
                   l10n?.nodedexEvidenceIrregularTiming(cv.toStringAsFixed(1)) ??
-                  'Irregular timing (CV ${cv.toStringAsFixed(1)})',
+                  'Irregular timing (CV ${cv.toStringAsFixed(1)})', // lint-allow: hardcoded-string
               weight: s,
             ),
           );
@@ -1130,7 +1136,7 @@ class TraitEngine {
                   l10n?.nodedexEvidenceSomewhatIrregularTiming(
                     cv.toStringAsFixed(1),
                   ) ??
-                  'Somewhat irregular timing (CV ${cv.toStringAsFixed(1)})',
+                  'Somewhat irregular timing (CV ${cv.toStringAsFixed(1)})', // lint-allow: hardcoded-string
               weight: s,
             ),
           );
@@ -1151,7 +1157,7 @@ class TraitEngine {
                 l10n?.nodedexEvidenceModerateEncounterRate(
                   encounterRate.toStringAsFixed(1),
                 ) ??
-                'Moderate encounter rate (${encounterRate.toStringAsFixed(1)}/day)',
+                'Moderate encounter rate (${encounterRate.toStringAsFixed(1)}/day)', // lint-allow: hardcoded-string
             weight: 0.3,
           ),
         );

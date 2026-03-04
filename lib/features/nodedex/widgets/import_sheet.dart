@@ -546,7 +546,7 @@ class _ImportPreviewSheetState extends ConsumerState<_ImportPreviewSheet>
             child: Text(
               '$unresolvedCount '
               '${unresolvedCount == 1 ? "conflict" : "conflicts"} '
-              'unresolved — using "Keep Local" as default',
+              'unresolved — using "Keep Local" as default', // lint-allow: hardcoded-string
               style: TextStyle(
                 fontSize: 11,
                 color: AppTheme.warningYellow,

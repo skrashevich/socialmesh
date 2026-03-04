@@ -291,9 +291,9 @@ extension MeshConfigSaveLocationX on MeshConfigSaveLocation {
   String get displayName {
     switch (this) {
       case MeshConfigSaveLocation.localDevice:
-        return 'This Device Only';
+        return 'This Device Only'; // lint-allow: hardcoded-string
       case MeshConfigSaveLocation.global:
-        return 'All Devices (Global)';
+        return 'All Devices (Global)'; // lint-allow: hardcoded-string
     }
   }
 
@@ -309,9 +309,9 @@ extension MeshConfigSaveLocationX on MeshConfigSaveLocation {
   String get description {
     switch (this) {
       case MeshConfigSaveLocation.localDevice:
-        return 'Settings are saved to this device only';
+        return 'Settings are saved to this device only'; // lint-allow: hardcoded-string
       case MeshConfigSaveLocation.global:
-        return 'Settings sync across all devices via Firestore';
+        return 'Settings sync across all devices via Firestore'; // lint-allow: hardcoded-string
     }
   }
 }

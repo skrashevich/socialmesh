@@ -10,6 +10,7 @@ import 'package:socialmesh/core/auth/role.dart';
 import 'package:socialmesh/features/incidents/models/incident.dart';
 import 'package:socialmesh/features/incidents/providers/incident_providers.dart';
 import 'package:socialmesh/features/incidents/screens/incident_list_screen.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -61,7 +62,11 @@ void main() {
               _permissionService(role: Role.operator, orgId: 'org-1'),
             ),
           ],
-          child: const MaterialApp(home: IncidentListScreen()),
+          child: MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: const IncidentListScreen(),
+          ),
         ),
       );
       await tester.pumpAndSettle();
@@ -70,7 +75,7 @@ void main() {
       expect(find.text('No incidents'), findsOneWidget);
       expect(
         find.text(
-          'Incidents track operational events from creation '
+          'Incidents track events from creation '
           'through resolution. Create one to get started.',
         ),
         findsOneWidget,
@@ -91,7 +96,11 @@ void main() {
               _permissionService(role: Role.operator, orgId: 'org-1'),
             ),
           ],
-          child: const MaterialApp(home: IncidentListScreen()),
+          child: MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: const IncidentListScreen(),
+          ),
         ),
       );
       await tester.pumpAndSettle();
@@ -113,7 +122,11 @@ void main() {
               _permissionService(role: Role.observer, orgId: 'org-1'),
             ),
           ],
-          child: const MaterialApp(home: IncidentListScreen()),
+          child: MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: const IncidentListScreen(),
+          ),
         ),
       );
       await tester.pumpAndSettle();
@@ -133,7 +146,11 @@ void main() {
               _permissionService(role: Role.operator, orgId: 'org-1'),
             ),
           ],
-          child: const MaterialApp(home: IncidentListScreen()),
+          child: MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: const IncidentListScreen(),
+          ),
         ),
       );
       await tester.pumpAndSettle();
@@ -153,7 +170,11 @@ void main() {
               _permissionService(role: Role.observer, orgId: 'org-1'),
             ),
           ],
-          child: const MaterialApp(home: IncidentListScreen()),
+          child: MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: const IncidentListScreen(),
+          ),
         ),
       );
       await tester.pumpAndSettle();
@@ -173,7 +194,11 @@ void main() {
               _permissionService(role: Role.admin, orgId: 'org-1'),
             ),
           ],
-          child: const MaterialApp(home: IncidentListScreen()),
+          child: MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: const IncidentListScreen(),
+          ),
         ),
       );
       await tester.pumpAndSettle();

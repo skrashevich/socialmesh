@@ -1,0 +1,215 @@
+name: Check Translations
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "lib/l10n/**"
+      - "l10n.yaml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "lib/l10n/**"
+      - "l10n.yaml"
+  workflow_dispatch:
+
+jobs:
+  validate-translations:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Create .env for CI
+        run: cp .env.ci .env
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.38.9"
+          channel: "stable"
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Validate ARB files (flutter gen-l10n)
+        run: |
+          echo "Running flutter gen-l10n to validate ARB files..."
+          flutter gen-l10n
+          echo "All ARB files are valid."
+
+      - name: Check ARB key consistency
+        run: |
+          python3 << 'SCRIPT'
+          import json
+          import sys
+          import os
+
+          l10n_dir = "lib/l10n"
+          template = "app_en.arb"
+
+          # Load template keys
+          with open(os.path.join(l10n_dir, template), "r") as f:
+              template_data = json.load(f)
+
+          template_keys = sorted(
+              k for k in template_data if not k.startswith("@") and k != "@@locale"
+          )
+          template_meta_keys = sorted(
+              k for k in template_data if k.startswith("@") and k != "@@locale"
+          )
+
+          print(f"Template ({template}): {len(template_keys)} keys, {len(template_meta_keys)} metadata entries")
+
+          errors = []
+          warnings = []
+
+          # Check each locale ARB file
+          arb_files = sorted(
+              f for f in os.listdir(l10n_dir)
+              if f.endswith(".arb") and f != template
+          )
+
+          for arb_file in arb_files:
+              path = os.path.join(l10n_dir, arb_file)
+              try:
+                  with open(path, "r") as f:
+                      locale_data = json.load(f)
+              except json.JSONDecodeError as e:
+                  errors.append(f"{arb_file}: Invalid JSON - {e}")
+                  continue
+
+              locale_keys = sorted(
+                  k for k in locale_data if not k.startswith("@") and k != "@@locale"
+              )
+
+              # Check for missing keys
+              missing = set(template_keys) - set(locale_keys)
+              if missing:
+                  errors.append(
+                      f"{arb_file}: {len(missing)} missing key(s): "
+                      + ", ".join(sorted(missing)[:10])
+                      + ("..." if len(missing) > 10 else "")
+                  )
+
+              # Check for extra keys not in template
+              extra = set(locale_keys) - set(template_keys)
+              if extra:
+                  errors.append(
+                      f"{arb_file}: {len(extra)} extra key(s) not in template: "
+                      + ", ".join(sorted(extra)[:10])
+                      + ("..." if len(extra) > 10 else "")
+                  )
+
+              # Check @@locale is present
+              if "@@locale" not in locale_data:
+                  errors.append(f"{arb_file}: Missing @@locale field")
+
+              # Check for empty string values (warn only)
+              empty_keys = [
+                  k for k in locale_keys
+                  if isinstance(locale_data[k], str) and locale_data[k].strip() == ""
+              ]
+              if empty_keys:
+                  warnings.append(
+                      f"{arb_file}: {len(empty_keys)} empty value(s): "
+                      + ", ".join(empty_keys[:5])
+                      + ("..." if len(empty_keys) > 5 else "")
+                  )
+
+              # Check that parameterized keys preserve placeholders
+              for key in locale_keys:
+                  if key not in template_data:
+                      continue
+                  template_val = template_data[key]
+                  locale_val = locale_data[key]
+                  if not isinstance(template_val, str) or not isinstance(locale_val, str):
+                      continue
+
+                  # Extract {param} placeholders from template
+                  import re
+                  template_params = set(re.findall(r"\{(\w+)\}", template_val))
+                  locale_params = set(re.findall(r"\{(\w+)\}", locale_val))
+
+                  # Missing placeholders in translation
+                  missing_params = template_params - locale_params
+                  if missing_params and locale_val != template_val:
+                      errors.append(
+                          f"{arb_file}: Key '{key}' is missing placeholder(s): "
+                          + ", ".join(sorted(missing_params))
+                      )
+
+              print(f"  {arb_file}: {len(locale_keys)} keys")
+
+          # Report
+          if warnings:
+              print(f"\n{'='*60}")
+              print(f"WARNINGS ({len(warnings)}):")
+              for w in warnings:
+                  print(f"  {w}")
+
+          if errors:
+              print(f"\n{'='*60}")
+              print(f"ERRORS ({len(errors)}):")
+              for e in errors:
+                  print(f"  {e}")
+              sys.exit(1)
+
+          print(f"\nAll translation files are consistent.")
+          SCRIPT
+
+      - name: Translation coverage report
+        if: always()
+        run: |
+          python3 << 'SCRIPT'
+          import json
+          import os
+
+          l10n_dir = "lib/l10n"
+          template = "app_en.arb"
+
+          with open(os.path.join(l10n_dir, template), "r") as f:
+              template_data = json.load(f)
+
+          template_keys = [
+              k for k in template_data if not k.startswith("@") and k != "@@locale"
+          ]
+          total = len(template_keys)
+
+          arb_files = sorted(
+              f for f in os.listdir(l10n_dir)
+              if f.endswith(".arb") and f != template
+          )
+
+          print(f"Translation Coverage Report")
+          print(f"{'='*50}")
+          print(f"Template: {total} keys\n")
+
+          for arb_file in arb_files:
+              path = os.path.join(l10n_dir, arb_file)
+              try:
+                  with open(path, "r") as f:
+                      locale_data = json.load(f)
+              except json.JSONDecodeError:
+                  print(f"  {arb_file}: INVALID JSON")
+                  continue
+
+              translated = 0
+              untranslated = 0
+              for key in template_keys:
+                  if key not in locale_data:
+                      untranslated += 1
+                      continue
+                  locale_val = locale_data[key]
+                  template_val = template_data[key]
+                  if locale_val == template_val:
+                      untranslated += 1
+                  else:
+                      translated += 1
+
+              pct = (translated / total * 100) if total > 0 else 0
+              print(f"  {arb_file}: {translated}/{total} translated ({pct:.1f}%)")
+
+          print(f"\nNote: Keys with values identical to English are counted as untranslated.")
+          SCRIPT

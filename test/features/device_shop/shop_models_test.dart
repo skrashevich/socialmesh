@@ -2,6 +2,7 @@
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:socialmesh/features/device_shop/models/shop_models.dart';
+import 'package:socialmesh/l10n/app_localizations_en.dart';
 
 void main() {
   group('DeviceCategory', () {
@@ -295,8 +296,9 @@ void main() {
     });
 
     test('formattedPrice formats correctly', () {
-      expect(basicProduct.formattedPrice, '\$49.99');
-      expect(saleProduct.formattedPrice, '\$39.99');
+      final l10n = AppLocalizationsEn();
+      expect(basicProduct.formattedPrice(l10n), '\$49.99');
+      expect(saleProduct.formattedPrice(l10n), '\$39.99');
     });
 
     test('formattedComparePrice formats correctly', () {

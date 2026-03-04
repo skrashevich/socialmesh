@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import 'dart:ui' show PlatformDispatcher;
+
+import 'package:socialmesh/l10n/app_localizations.dart';
 import 'package:uuid/uuid.dart';
 
 /// A canned (quick) response for fast messaging
@@ -53,44 +56,57 @@ class CannedResponse {
 
 /// Default canned responses
 class DefaultCannedResponses {
-  static List<CannedResponse> get all => [
-    CannedResponse(id: 'default_ok', text: 'OK', sortOrder: 0, isDefault: true),
-    CannedResponse(
-      id: 'default_yes',
-      text: 'Yes',
-      sortOrder: 1,
-      isDefault: true,
-    ),
-    CannedResponse(id: 'default_no', text: 'No', sortOrder: 2, isDefault: true),
-    CannedResponse(
-      id: 'default_omw',
-      text: 'On my way',
-      sortOrder: 3,
-      isDefault: true,
-    ),
-    CannedResponse(
-      id: 'default_help',
-      text: 'Need help',
-      sortOrder: 4,
-      isDefault: true,
-    ),
-    CannedResponse(
-      id: 'default_safe',
-      text: "I'm safe",
-      sortOrder: 5,
-      isDefault: true,
-    ),
-    CannedResponse(
-      id: 'default_wait',
-      text: 'Wait for me',
-      sortOrder: 6,
-      isDefault: true,
-    ),
-    CannedResponse(
-      id: 'default_thanks',
-      text: 'Thanks!',
-      sortOrder: 7,
-      isDefault: true,
-    ),
-  ];
+  static List<CannedResponse> get all {
+    final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
+    return [
+      CannedResponse(
+        id: 'default_ok',
+        text: l10n.cannedResponseOk,
+        sortOrder: 0,
+        isDefault: true,
+      ),
+      CannedResponse(
+        id: 'default_yes',
+        text: l10n.cannedResponseYes,
+        sortOrder: 1,
+        isDefault: true,
+      ),
+      CannedResponse(
+        id: 'default_no',
+        text: l10n.cannedResponseNo,
+        sortOrder: 2,
+        isDefault: true,
+      ),
+      CannedResponse(
+        id: 'default_omw',
+        text: l10n.cannedResponseOnMyWay,
+        sortOrder: 3,
+        isDefault: true,
+      ),
+      CannedResponse(
+        id: 'default_help',
+        text: l10n.cannedResponseNeedHelp,
+        sortOrder: 4,
+        isDefault: true,
+      ),
+      CannedResponse(
+        id: 'default_safe',
+        text: l10n.cannedResponseImSafe,
+        sortOrder: 5,
+        isDefault: true,
+      ),
+      CannedResponse(
+        id: 'default_wait',
+        text: l10n.cannedResponseWaitForMe,
+        sortOrder: 6,
+        isDefault: true,
+      ),
+      CannedResponse(
+        id: 'default_thanks',
+        text: l10n.cannedResponseThanks,
+        sortOrder: 7,
+        isDefault: true,
+      ),
+    ];
+  }
 }

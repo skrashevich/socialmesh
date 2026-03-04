@@ -3004,7 +3004,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                               );
                               // Only show on Nothing Phone 3
                               if (!glyphService.deviceModel.contains(
-                                'Phone (3)',
+                                'Phone (3)', // lint-allow: hardcoded-string
                               )) {
                                 return const SizedBox.shrink();
                               }
@@ -3655,7 +3655,9 @@ class _PremiumFeatureTile extends ConsumerWidget {
         : null;
     final priceLabel =
         storeProduct?.priceString ??
-        (purchase != null ? '\$${purchase.price.toStringAsFixed(2)}' : null);
+        (purchase != null
+            ? '\$${purchase.price.toStringAsFixed(2)}'
+            : null); // lint-allow: hardcoded-string
 
     // When upsell is enabled, non-owned features should look explorable (not locked)
     final isExplorable = hasFeature || upsellEnabled;

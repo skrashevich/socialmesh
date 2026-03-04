@@ -92,7 +92,7 @@ class _MFAVerificationDialogState extends ConsumerState<MFAVerificationDialog>
         verificationFailed: (e) {
           safeSetState(() {
             _isSendingCode = false;
-            _errorMessage = friendlyMFAError(e);
+            _errorMessage = friendlyMFAError(e, context.l10n);
           });
         },
         codeSent: (verificationId, resendToken) {
@@ -106,7 +106,7 @@ class _MFAVerificationDialogState extends ConsumerState<MFAVerificationDialog>
     } catch (e) {
       safeSetState(() {
         _isSendingCode = false;
-        _errorMessage = friendlyMFAError(e);
+        _errorMessage = friendlyMFAError(e, context.l10n);
       });
     }
   }
@@ -146,12 +146,12 @@ class _MFAVerificationDialogState extends ConsumerState<MFAVerificationDialog>
     } on FirebaseAuthException catch (e) {
       safeSetState(() {
         _isVerifying = false;
-        _errorMessage = friendlyMFAError(e);
+        _errorMessage = friendlyMFAError(e, context.l10n);
       });
     } catch (e) {
       safeSetState(() {
         _isVerifying = false;
-        _errorMessage = friendlyMFAError(e);
+        _errorMessage = friendlyMFAError(e, context.l10n);
       });
     }
   }

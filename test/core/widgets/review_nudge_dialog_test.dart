@@ -189,8 +189,8 @@ void main() {
       await tester.pump(const Duration(milliseconds: 50));
 
       // Find the Not now button and check if it's disabled
-      final notNowButton = tester.widget<TextButton>(
-        find.widgetWithText(TextButton, 'Not now'),
+      final notNowButton = tester.widget<OutlinedButton>(
+        find.widgetWithText(OutlinedButton, 'Not now'),
       );
       expect(notNowButton.onPressed, isNull);
 

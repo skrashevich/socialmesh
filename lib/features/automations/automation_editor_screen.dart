@@ -791,7 +791,7 @@ class _AutomationEditorScreenState extends ConsumerState<AutomationEditorScreen>
           ref: ref,
           feature: PremiumFeature.automations,
           customDescription:
-              'Create powerful automatic alerts, smart messages, and scheduled actions that run in the background.',
+              'Create powerful automatic alerts, smart messages, and scheduled actions that run in the background.', // lint-allow: hardcoded-string
         );
         // User doesn't have premium - their config is preserved so they can try again after purchase
         return;

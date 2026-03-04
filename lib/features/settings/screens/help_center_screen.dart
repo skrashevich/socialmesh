@@ -525,7 +525,7 @@ class _ProgressHeaderDelegate extends SliverPersistentHeaderDelegate {
   _ProgressHeaderDelegate({
     required this.completedCount,
     required this.totalCount,
-    this.label = 'articles read',
+    required this.label,
   });
 
   static const double _maxHeight = 104.0;

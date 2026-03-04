@@ -210,9 +210,9 @@ ReachLikelihood _scoreToLikelihood(double score) {
 /// Format hop count into human-readable label.
 String _formatPathDepth(int? hopCount) {
   if (hopCount == null) return 'Unknown';
-  if (hopCount == 0) return 'Direct RF';
-  if (hopCount == 1) return 'Seen via 1 hop';
-  return 'Seen via $hopCount hops';
+  if (hopCount == 0) return 'Direct RF'; // lint-allow: hardcoded-string
+  if (hopCount == 1) return 'Seen via 1 hop'; // lint-allow: hardcoded-string
+  return 'Seen via $hopCount hops'; // lint-allow: hardcoded-string
 }
 
 /// Format seconds into human-readable freshness label.

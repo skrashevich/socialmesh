@@ -718,14 +718,14 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '30°C',
+                      '30°C', // lint-allow: hardcoded-string
                       style: TextStyle(
                         fontSize: 12,
                         color: context.textTertiary,
                       ),
                     ),
                     Text(
-                      '80°C',
+                      '80°C', // lint-allow: hardcoded-string
                       style: TextStyle(
                         fontSize: 12,
                         color: context.textTertiary,
@@ -1297,27 +1297,27 @@ class _IftttConfigScreenState extends ConsumerState<IftttConfigScreen>
                 children: [
                   _buildEventRow(
                     'meshtastic_message',
-                    'sender, message, channel',
+                    'sender, message, channel', // lint-allow: hardcoded-string
                   ),
                   _buildEventRow(
                     'meshtastic_node_online',
-                    'name, nodeId, timestamp',
+                    'name, nodeId, timestamp', // lint-allow: hardcoded-string
                   ),
                   _buildEventRow(
                     'meshtastic_node_offline',
-                    'name, nodeId, timestamp',
+                    'name, nodeId, timestamp', // lint-allow: hardcoded-string
                   ),
                   _buildEventRow(
                     'meshtastic_battery_low',
-                    'name, level%, threshold%',
+                    'name, level%, threshold%', // lint-allow: hardcoded-string
                   ),
                   _buildEventRow(
                     'meshtastic_temperature',
-                    'name, temp°C, threshold°C',
+                    'name, temp°C, threshold°C', // lint-allow: hardcoded-string
                   ),
                   _buildEventRow(
                     'meshtastic_position',
-                    'name, lat/lon, distance',
+                    'name, lat/lon, distance', // lint-allow: hardcoded-string
                   ),
                   _buildEventRow('meshtastic_sos', 'name, nodeId, location'),
                   _buildEventRow('meshtastic_test', 'app, message, timestamp'),

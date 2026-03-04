@@ -1268,7 +1268,7 @@ class _TemplateTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        template.label,
+                        template.localizedLabel(context.l10n),
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: textColor,
                           fontWeight: FontWeight.w600,

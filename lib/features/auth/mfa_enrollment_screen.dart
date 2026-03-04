@@ -113,7 +113,7 @@ class _MFAEnrollmentScreenState extends ConsumerState<MFAEnrollmentScreen>
             return;
           }
           safeSetState(() => _isLoading = false);
-          final friendlyMsg = friendlyMFAErrorCode(errorCode);
+          final friendlyMsg = friendlyMFAErrorCode(errorCode, context.l10n);
           AppLogging.mfa('_sendCode — showing error snackbar: $friendlyMsg');
           showErrorSnackBar(context, friendlyMsg);
         },
@@ -174,7 +174,10 @@ class _MFAEnrollmentScreenState extends ConsumerState<MFAEnrollmentScreen>
             );
             if (!mounted) return;
             safeSetState(() => _isLoading = false);
-            showErrorSnackBar(context, friendlyMFAErrorCode(errorCode));
+            showErrorSnackBar(
+              context,
+              friendlyMFAErrorCode(errorCode, context.l10n),
+            );
           },
         );
         AppLogging.mfa('_sendCode — retry enrollMFA returned');
@@ -185,7 +188,7 @@ class _MFAEnrollmentScreenState extends ConsumerState<MFAEnrollmentScreen>
         );
         if (!mounted) return;
         safeSetState(() => _isLoading = false);
-        showErrorSnackBar(context, friendlyMFAError(retryErr));
+        showErrorSnackBar(context, friendlyMFAError(retryErr, context.l10n));
       }
     } catch (e) {
       // enrollMFA normally uses onError callback, but re-auth exceptions
@@ -195,7 +198,7 @@ class _MFAEnrollmentScreenState extends ConsumerState<MFAEnrollmentScreen>
       );
       if (!mounted) return;
       safeSetState(() => _isLoading = false);
-      showErrorSnackBar(context, friendlyMFAError(e));
+      showErrorSnackBar(context, friendlyMFAError(e, context.l10n));
     }
   }
 
@@ -262,7 +265,7 @@ class _MFAEnrollmentScreenState extends ConsumerState<MFAEnrollmentScreen>
       if (!mounted) return;
       await haptics.trigger(HapticType.error);
       if (!mounted) return;
-      final friendlyMsg = friendlyMFAError(e);
+      final friendlyMsg = friendlyMFAError(e, context.l10n);
       AppLogging.mfa('_verifyCode — showing error snackbar: $friendlyMsg');
       safeShowSnackBar(friendlyMsg);
       safeSetState(() => _isLoading = false);

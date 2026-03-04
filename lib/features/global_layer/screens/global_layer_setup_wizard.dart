@@ -318,13 +318,13 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
         return DiagnosticCheckResult.failed(
           DiagnosticCheckType.dnsResolution,
           message: l10n.globalLayerDiagBrokerEmpty,
-          suggestion: 'Enter a valid broker hostname.',
+          suggestion: l10n.globalLayerDiagSuggestionValidHostname,
           relatedFields: ['host'],
         );
       }
       return DiagnosticCheckResult.passed(
         DiagnosticCheckType.dnsResolution,
-        'Hostname looks valid: ${config.host}',
+        l10n.globalLayerWizardDnsValid(config.host),
         duration: const Duration(milliseconds: 400),
       );
     });
@@ -340,7 +340,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
       await Future<void>.delayed(const Duration(milliseconds: 500));
       return DiagnosticCheckResult.passed(
         DiagnosticCheckType.tcpConnection,
-        'TCP connection to ${config.host}:${config.effectivePort} looks reachable.',
+        l10n.globalLayerWizardTcpReachable(config.host, config.effectivePort),
         duration: const Duration(milliseconds: 500),
       );
     });
@@ -352,7 +352,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
         await Future<void>.delayed(const Duration(milliseconds: 300));
         return DiagnosticCheckResult.passed(
           DiagnosticCheckType.tlsHandshake,
-          'TLS handshake parameters accepted.',
+          l10n.globalLayerWizardTlsAccepted,
           duration: const Duration(milliseconds: 300),
         );
       });
@@ -366,15 +366,15 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
         return DiagnosticCheckResult.warning(
           DiagnosticCheckType.authentication,
           message: l10n.globalLayerDiagUsernameNoPassword,
-          suggestion: 'Some brokers require both username and password.',
+          suggestion: l10n.globalLayerDiagSuggestionBothCredentials,
           relatedFields: ['password'],
         );
       }
       return DiagnosticCheckResult.passed(
         DiagnosticCheckType.authentication,
         config.hasCredentials
-            ? 'Credentials provided and accepted.'
-            : 'No credentials — using anonymous access.',
+            ? l10n.globalLayerWizardCredentialsAccepted
+            : l10n.globalLayerWizardAnonymousAccess,
         duration: const Duration(milliseconds: 300),
       );
     });
@@ -385,7 +385,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
       await Future<void>.delayed(const Duration(milliseconds: 250));
       return DiagnosticCheckResult.passed(
         DiagnosticCheckType.subscribeTest,
-        'Subscribe permissions verified.',
+        l10n.globalLayerWizardSubscribeVerified,
         duration: const Duration(milliseconds: 250),
       );
     });
@@ -396,7 +396,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
       await Future<void>.delayed(const Duration(milliseconds: 250));
       return DiagnosticCheckResult.passed(
         DiagnosticCheckType.publishTest,
-        'Publish permissions verified.',
+        l10n.globalLayerWizardPublishVerified,
         duration: const Duration(milliseconds: 250),
       );
     });
@@ -675,7 +675,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
           ),
           const SizedBox(height: AppTheme.spacing24),
           Text(
-            GlobalLayerCopy.explainTitle,
+            context.l10n.globalLayerCopyExplainTitle,
             style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
@@ -684,7 +684,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
           ),
           const SizedBox(height: AppTheme.spacing16),
           Text(
-            GlobalLayerCopy.explainBody,
+            context.l10n.globalLayerCopyExplainBody,
             style: TextStyle(
               fontSize: 15,
               color: context.textSecondary,
@@ -698,7 +698,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
             icon: Icons.check_circle_outline,
             iconColor: AppTheme.successGreen,
             title: context.l10n.globalLayerWhatItDoes,
-            body: GlobalLayerCopy.explainWhatItDoes,
+            body: context.l10n.globalLayerCopyExplainWhatItDoes,
           ),
           const SizedBox(height: AppTheme.spacing12),
           // What it does NOT do
@@ -707,7 +707,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
             icon: Icons.info_outline,
             iconColor: context.accentColor,
             title: context.l10n.globalLayerWhatItDoesNot,
-            body: GlobalLayerCopy.explainWhatItDoesNot,
+            body: context.l10n.globalLayerCopyExplainWhatItDoesNot,
           ),
           const SizedBox(height: AppTheme.spacing24),
           // Technical note
@@ -808,7 +808,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            GlobalLayerCopy.brokerTitle,
+            context.l10n.globalLayerCopyBrokerTitle,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -817,7 +817,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
           ),
           const SizedBox(height: AppTheme.spacing8),
           Text(
-            GlobalLayerCopy.brokerBody,
+            context.l10n.globalLayerCopyBrokerBody,
             style: TextStyle(
               fontSize: 14,
               color: context.textSecondary,
@@ -886,7 +886,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              preset.name,
+                              preset.localizedName(context.l10n),
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
@@ -897,7 +897,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
                             ),
                             const SizedBox(height: AppTheme.spacing2),
                             Text(
-                              preset.description,
+                              preset.localizedDescription(context.l10n),
                               style: TextStyle(
                                 fontSize: 12,
                                 color: context.textTertiary,
@@ -947,7 +947,8 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
                   const SizedBox(width: AppTheme.spacing8),
                   Expanded(
                     child: Text(
-                      selectedPreset.note!,
+                      selectedPreset.localizedNote(context.l10n) ??
+                          selectedPreset.note!,
                       style: TextStyle(
                         fontSize: 12,
                         color: context.textTertiary,
@@ -1025,7 +1026,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
                           const SizedBox(width: AppTheme.spacing8),
                           Expanded(
                             child: Text(
-                              'TLS',
+                              context.l10n.globalLayerTlsLabel,
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
@@ -1157,7 +1158,9 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
                 ),
                 const SizedBox(width: AppTheme.spacing4),
                 Text(
-                  preset.useTls ? 'TLS' : 'No TLS',
+                  preset.useTls
+                      ? context.l10n.globalLayerTlsLabel
+                      : context.l10n.globalLayerNoTlsLabel,
                   style: TextStyle(
                     fontSize: 12,
                     color: preset.useTls
@@ -1254,7 +1257,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            GlobalLayerCopy.topicsTitle,
+            context.l10n.globalLayerCopyTopicsTitle,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -1263,7 +1266,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
           ),
           const SizedBox(height: AppTheme.spacing8),
           Text(
-            GlobalLayerCopy.topicsBody,
+            context.l10n.globalLayerCopyTopicsBody,
             style: TextStyle(
               fontSize: 14,
               color: context.textSecondary,
@@ -1364,7 +1367,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      template.label,
+                      template.localizedLabel(context.l10n),
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
@@ -1373,7 +1376,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
                     ),
                     const SizedBox(height: AppTheme.spacing2),
                     Text(
-                      template.description,
+                      template.localizedDescription(context.l10n),
                       style: TextStyle(
                         fontSize: 12,
                         color: context.textSecondary,
@@ -1433,7 +1436,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            GlobalLayerCopy.privacyTitle,
+            context.l10n.globalLayerCopyPrivacyTitle,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -1442,7 +1445,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
           ),
           const SizedBox(height: AppTheme.spacing8),
           Text(
-            GlobalLayerCopy.privacyBody,
+            context.l10n.globalLayerCopyPrivacyBody,
             style: TextStyle(
               fontSize: 14,
               color: context.textSecondary,
@@ -1456,9 +1459,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
             context,
             icon: Icons.chat_outlined,
             title: context.l10n.globalLayerShareMessages,
-            subtitle:
-                'Your local mesh chat messages will be forwarded to the '
-                'broker for other connected meshes to receive.',
+            subtitle: context.l10n.globalLayerShareMessagesSubtitle,
             value: _shareMessages,
             onChanged: (value) {
               HapticFeedback.selectionClick();
@@ -1470,9 +1471,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
             context,
             icon: Icons.analytics_outlined,
             title: context.l10n.globalLayerShareTelemetry,
-            subtitle:
-                'Battery level, voltage, and device uptime will be published '
-                'to the broker.',
+            subtitle: context.l10n.globalLayerShareTelemetrySubtitle,
             value: _shareTelemetry,
             onChanged: (value) {
               HapticFeedback.selectionClick();
@@ -1484,9 +1483,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
             context,
             icon: Icons.move_to_inbox_outlined,
             title: context.l10n.globalLayerAllowInboundChat,
-            subtitle:
-                'Messages from other meshes connected to the same broker '
-                'will be delivered to your local channels.',
+            subtitle: context.l10n.globalLayerAllowInboundSubtitle,
             value: _allowInbound,
             onChanged: (value) {
               HapticFeedback.selectionClick();
@@ -1518,7 +1515,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Broker Trust',
+                        context.l10n.globalLayerBrokerTrust,
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w600,
@@ -1527,7 +1524,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
                       ),
                       const SizedBox(height: AppTheme.spacing4),
                       Text(
-                        GlobalLayerCopy.privacyBrokerTrustWarning,
+                        context.l10n.globalLayerCopyPrivacyBrokerTrustWarning,
                         style: TextStyle(
                           fontSize: 12,
                           color: context.textSecondary,
@@ -1614,7 +1611,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            GlobalLayerCopy.testTitle,
+            context.l10n.globalLayerCopyTestTitle,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -1623,7 +1620,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
           ),
           const SizedBox(height: AppTheme.spacing8),
           Text(
-            GlobalLayerCopy.testBody,
+            context.l10n.globalLayerCopyTestBody,
             style: TextStyle(
               fontSize: 14,
               color: context.textSecondary,
@@ -1656,7 +1653,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
                       ),
                       const SizedBox(width: AppTheme.spacing8),
                       Text(
-                        'Run Connection Test',
+                        context.l10n.globalLayerRunConnectionTest,
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w600,
@@ -1671,7 +1668,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
             const SizedBox(height: AppTheme.spacing16),
             Center(
               child: Text(
-                'You can skip this step and test later.',
+                context.l10n.globalLayerSkipTestHint,
                 style: TextStyle(fontSize: 12, color: context.textTertiary),
               ),
             ),
@@ -1699,7 +1696,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
                     color: context.textSecondary,
                   ),
                   label: Text(
-                    'Run Again',
+                    context.l10n.globalLayerRunAgain,
                     style: TextStyle(color: context.textSecondary),
                   ),
                 ),
@@ -1763,7 +1760,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  result.type.title,
+                  result.type.localizedTitle(context.l10n),
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
@@ -1810,24 +1807,27 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
   }
 
   Widget _buildOverallResult(BuildContext context, DiagnosticReport report) {
-    final (icon, color, label) = switch (report.overallStatus) {
-      DiagnosticStatus.passed => (
-        Icons.check_circle_outline,
-        AppTheme.successGreen,
-        'All checks passed',
-      ),
-      DiagnosticStatus.warning => (
-        Icons.warning_amber_rounded,
-        AppTheme.warningYellow,
-        'Passed with warnings',
-      ),
-      DiagnosticStatus.failed => (
-        Icons.error_outline,
-        AppTheme.errorRed,
-        'Some checks failed',
-      ),
-      _ => (Icons.info_outline, context.textSecondary, 'Test in progress'),
-    };
+    late final IconData icon;
+    late final Color color;
+    late final String label;
+    switch (report.overallStatus) {
+      case DiagnosticStatus.passed:
+        icon = Icons.check_circle_outline;
+        color = AppTheme.successGreen;
+        label = context.l10n.globalLayerWizardAllChecksPassed;
+      case DiagnosticStatus.warning:
+        icon = Icons.warning_amber_rounded;
+        color = AppTheme.warningYellow;
+        label = context.l10n.globalLayerPassedWithWarnings;
+      case DiagnosticStatus.failed:
+        icon = Icons.error_outline;
+        color = AppTheme.errorRed;
+        label = context.l10n.globalLayerSomeChecksFailed;
+      default:
+        icon = Icons.info_outline;
+        color = context.textSecondary;
+        label = context.l10n.globalLayerTestInProgress;
+    }
 
     return Container(
       padding: const EdgeInsets.all(AppTheme.spacing14),
@@ -1884,7 +1884,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            GlobalLayerCopy.summaryTitle,
+            context.l10n.globalLayerCopySummaryTitle,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -1893,7 +1893,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
           ),
           const SizedBox(height: AppTheme.spacing8),
           Text(
-            GlobalLayerCopy.summaryBody,
+            context.l10n.globalLayerCopySummaryBody,
             style: TextStyle(
               fontSize: 14,
               color: context.textSecondary,
@@ -1903,42 +1903,60 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
           const SizedBox(height: AppTheme.spacing24),
 
           // Broker summary
-          _SectionLabel(text: 'BROKER'),
+          _SectionLabel(text: context.l10n.globalLayerSummaryBrokerSection),
           const SizedBox(height: AppTheme.spacing8),
           _buildSummaryCard(
             context,
             children: [
-              _buildSummaryRow(context, 'Address', config.host),
               _buildSummaryRow(
                 context,
-                'Port',
+                context.l10n.globalLayerSummaryAddress,
+                config.host,
+              ),
+              _buildSummaryRow(
+                context,
+                context.l10n.globalLayerSummaryPort,
                 config.effectivePort.toString(),
               ),
               _buildSummaryRow(
                 context,
-                'TLS',
-                config.useTls ? 'Enabled' : 'Disabled',
+                context.l10n.globalLayerSummaryTls,
+                config.useTls
+                    ? context.l10n.globalLayerSummaryTlsEnabled
+                    : context.l10n.globalLayerSummaryTlsDisabled,
               ),
               if (config.username.isNotEmpty)
-                _buildSummaryRow(context, 'Auth', 'Credentials configured'),
+                _buildSummaryRow(
+                  context,
+                  context.l10n.globalLayerSummaryAuth,
+                  context.l10n.globalLayerSummaryAuthCredentials,
+                ),
               if (config.username.isEmpty)
-                _buildSummaryRow(context, 'Auth', 'Anonymous'),
+                _buildSummaryRow(
+                  context,
+                  context.l10n.globalLayerSummaryAuth,
+                  context.l10n.globalLayerSummaryAuthAnonymous,
+                ),
             ],
           ),
           const SizedBox(height: AppTheme.spacing16),
 
           // Topics summary
-          _SectionLabel(text: 'TOPICS'),
+          _SectionLabel(text: context.l10n.globalLayerSummaryTopicsSection),
           const SizedBox(height: AppTheme.spacing8),
           _buildSummaryCard(
             context,
             children: [
-              _buildSummaryRow(context, 'Root', config.topicRoot),
               _buildSummaryRow(
                 context,
-                'Enabled',
+                context.l10n.globalLayerSummaryRoot,
+                config.topicRoot,
+              ),
+              _buildSummaryRow(
+                context,
+                context.l10n.globalLayerSummaryTopicsEnabled,
                 enabledTopics.isEmpty
-                    ? 'None'
+                    ? context.l10n.globalLayerSummaryTopicsNone
                     : enabledTopics.map((t) => t.label).join(', '),
               ),
             ],
@@ -1946,31 +1964,37 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
           const SizedBox(height: AppTheme.spacing16),
 
           // Privacy summary
-          _SectionLabel(text: 'PRIVACY'),
+          _SectionLabel(text: context.l10n.globalLayerSummaryPrivacySection),
           const SizedBox(height: AppTheme.spacing8),
           _buildSummaryCard(
             context,
             children: [
               _buildSummaryRow(
                 context,
-                'Share messages',
-                privacy.shareMessages ? 'ON' : 'OFF',
+                context.l10n.globalLayerSummaryShareMessages,
+                privacy.shareMessages
+                    ? context.l10n.globalLayerSummaryOn
+                    : context.l10n.globalLayerSummaryOff,
                 valueColor: privacy.shareMessages
                     ? AppTheme.warningYellow
                     : null,
               ),
               _buildSummaryRow(
                 context,
-                'Share telemetry',
-                privacy.shareTelemetry ? 'ON' : 'OFF',
+                context.l10n.globalLayerSummaryShareTelemetry,
+                privacy.shareTelemetry
+                    ? context.l10n.globalLayerSummaryOn
+                    : context.l10n.globalLayerSummaryOff,
                 valueColor: privacy.shareTelemetry
                     ? AppTheme.warningYellow
                     : null,
               ),
               _buildSummaryRow(
                 context,
-                'Inbound global',
-                privacy.allowInboundGlobal ? 'ON' : 'OFF',
+                context.l10n.globalLayerSummaryInboundGlobal,
+                privacy.allowInboundGlobal
+                    ? context.l10n.globalLayerSummaryOn
+                    : context.l10n.globalLayerSummaryOff,
                 valueColor: privacy.allowInboundGlobal
                     ? AppTheme.warningYellow
                     : null,
@@ -1997,8 +2021,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
                   const SizedBox(width: AppTheme.spacing8),
                   Expanded(
                     child: Text(
-                      'All sharing is OFF. Your mesh data stays local until '
-                      'you enable sharing.',
+                      context.l10n.globalLayerAllSharingOff,
                       style: TextStyle(
                         fontSize: 12,
                         color: context.textSecondary,
@@ -2014,7 +2037,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
           // Test results summary
           if (_testReport != null && _testReport!.isComplete) ...[
             const SizedBox(height: AppTheme.spacing16),
-            _SectionLabel(text: 'CONNECTION TEST'),
+            _SectionLabel(text: context.l10n.globalLayerConnectionTestLabel),
             const SizedBox(height: AppTheme.spacing8),
             _buildOverallResult(context, _testReport!),
           ],

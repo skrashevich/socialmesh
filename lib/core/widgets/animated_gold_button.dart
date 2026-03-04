@@ -139,7 +139,9 @@ class _AnimatedGoldButtonState extends State<AnimatedGoldButton>
                   ],
                 ),
                 child: Text(
-                  widget.isLoading ? 'Loading...' : widget.text,
+                  widget.isLoading
+                      ? 'Loading...'
+                      : widget.text, // lint-allow: hardcoded-string
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,

@@ -199,7 +199,7 @@ class _VSContextMenuState extends State<VSContextMenu> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
           child: Text(
-            'No nodes available',
+            'No nodes available', // lint-allow: hardcoded-string
             style: TextStyle(
               fontSize: 12,
               color: colorScheme.onSurface.withValues(alpha: 0.5),

@@ -7092,7 +7092,7 @@ class ProtocolService {
         AppLogging.protocol(
           'Inferred hardware from manufacturer "$_bleManufacturerName": Tracker T1000-E',
         );
-        return 'Tracker T1000-E';
+        return 'Tracker T1000-E'; // lint-allow: hardcoded-string
       }
     }
 

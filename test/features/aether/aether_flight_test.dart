@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:socialmesh/features/aether/models/aether_flight.dart';
+import 'package:socialmesh/l10n/app_localizations_en.dart';
 
 void main() {
   group('AetherFlight', () {
@@ -462,7 +463,8 @@ void main() {
             isActive: true,
           );
 
-          expect(flight.statusText, 'In Flight');
+          final l10n = AppLocalizationsEn();
+          expect(flight.statusText(l10n), 'In Flight');
         });
 
         test('returns "Completed" when past', () {
@@ -481,7 +483,8 @@ void main() {
             isActive: false,
           );
 
-          expect(flight.statusText, 'Completed');
+          final l10n = AppLocalizationsEn();
+          expect(flight.statusText(l10n), 'Completed');
         });
 
         test('returns "Upcoming" when 5 hours in future', () {
@@ -497,7 +500,8 @@ void main() {
             isActive: false,
           );
 
-          expect(flight.statusText, 'Upcoming');
+          final l10n = AppLocalizationsEn();
+          expect(flight.statusText(l10n), 'Upcoming');
         });
 
         test('returns "Scheduled" when 3 days in future', () {
@@ -513,7 +517,8 @@ void main() {
             isActive: false,
           );
 
-          expect(flight.statusText, 'Scheduled');
+          final l10n = AppLocalizationsEn();
+          expect(flight.statusText(l10n), 'Scheduled');
         });
       });
     });

@@ -60,7 +60,7 @@ enum GlobalLayerConnectionState {
 
   /// Human-readable label for the status panel.
   String get displayLabel => switch (this) {
-    disabled => 'Not Set Up',
+    disabled => 'Not Set Up', // lint-allow: hardcoded-string
     disconnected => 'Disconnected',
     connecting => 'Connecting',
     connected => 'Connected',
@@ -72,14 +72,22 @@ enum GlobalLayerConnectionState {
 
   /// Short description shown below the status label.
   String get displayDescription => switch (this) {
-    disabled => 'Complete setup to connect your mesh to the wider world.',
-    disconnected => 'The Global Layer is configured but not active.',
-    connecting => 'Establishing a connection to the broker\u2026',
-    connected => 'Your mesh is bridged to the Global Layer.',
-    degraded => 'Connected with issues. Some data may not be flowing.',
-    reconnecting => 'Connection lost. Attempting to reconnect\u2026',
-    disconnecting => 'Closing the connection\u2026',
-    error => 'Something went wrong. Check diagnostics for details.',
+    disabled =>
+      'Complete setup to connect your mesh to the wider world.', // lint-allow: hardcoded-string
+    disconnected =>
+      'The Global Layer is configured but not active.', // lint-allow: hardcoded-string
+    connecting =>
+      'Establishing a connection to the broker\u2026', // lint-allow: hardcoded-string
+    connected =>
+      'Your mesh is bridged to the Global Layer.', // lint-allow: hardcoded-string
+    degraded =>
+      'Connected with issues. Some data may not be flowing.', // lint-allow: hardcoded-string
+    reconnecting =>
+      'Connection lost. Attempting to reconnect\u2026', // lint-allow: hardcoded-string
+    disconnecting =>
+      'Closing the connection\u2026', // lint-allow: hardcoded-string
+    error =>
+      'Something went wrong. Check diagnostics for details.', // lint-allow: hardcoded-string
   };
 
   /// Material icon for the status indicator.
@@ -260,12 +268,12 @@ class GlobalLayerStateMachine {
     GlobalLayerConnectionState to,
   ) {
     if (from == to) {
-      return 'Cannot transition from ${from.name} to itself.';
+      return 'Cannot transition from ${from.name} to itself.'; // lint-allow: hardcoded-string
     }
     if (!canTransition(from, to)) {
       final reachable = reachableFrom(from).map((s) => s.name).join(', ');
-      return 'Invalid transition: ${from.name} -> ${to.name}. '
-          'Valid targets from ${from.name}: [$reachable].';
+      return 'Invalid transition: ${from.name} -> ${to.name}. ' // lint-allow: hardcoded-string
+          'Valid targets from ${from.name}: [$reachable].'; // lint-allow: hardcoded-string
     }
     return null;
   }
@@ -316,6 +324,6 @@ class GlobalLayerStateTransition {
   String toString() =>
       'GlobalLayerStateTransition(${from.name} -> ${to.name}, '
       '${timestamp.toIso8601String()}'
-      '${reason != null ? ', reason: $reason' : ''}'
-      '${errorMessage != null ? ', error: $errorMessage' : ''})';
+      '${reason != null ? ', reason: $reason' : ''}' // lint-allow: hardcoded-string
+      '${errorMessage != null ? ', error: $errorMessage' : ''})'; // lint-allow: hardcoded-string
 }

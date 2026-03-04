@@ -1367,7 +1367,7 @@ class _ResponseTile extends StatelessWidget {
                       ],
                       const SizedBox(width: AppTheme.spacing4),
                       Text(
-                        '· ${formatTimeAgo(response.createdAt, context.l10n)}',
+                        '· ${formatTimeAgo(response.createdAt, context.l10n)}', // lint-allow: hardcoded-string
                         style: TextStyle(
                           color: context.textTertiary,
                           fontSize: 12,
@@ -1409,7 +1409,7 @@ class _ResponseTile extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 2),
                           child: Text(
                             response.score > 0
-                                ? '+${response.score}'
+                                ? '+${response.score}' // lint-allow: hardcoded-string
                                 : '${response.score}',
                             style: TextStyle(
                               color: response.score > 0

@@ -307,7 +307,7 @@ class IncidentConflictResolver {
       if (!reachableStates.contains(t.fromState)) {
         supersededIds.add(t.id);
         debugParts.add(
-          'orphan: ${t.fromState.name}->${t.toState.name} '
+          'orphan: ${t.fromState.name}->${t.toState.name} ' // lint-allow: hardcoded-string
           '(${t.fromState.name} unreachable)',
         );
       }
@@ -336,43 +336,43 @@ class IncidentConflictResolver {
 
     // Outside window: pure timestamp.
     if (tsDiff > conflictWindowMs) {
-      return 'timestamp(${winner.toState.name} earlier by ${tsDiff}ms) '
-          '-> ${winner.toState.name} wins';
+      return 'timestamp(${winner.toState.name} earlier by ${tsDiff}ms) ' // lint-allow: hardcoded-string
+          '-> ${winner.toState.name} wins'; // lint-allow: hardcoded-string
     }
 
     // Within window: walk the chain.
     final prW = transitionTypeRank(winner.toState);
     final prL = transitionTypeRank(loser.toState);
     if (prW != prL) {
-      return 'priorityRank(${winner.toState.name}=$prW>'
+      return 'priorityRank(${winner.toState.name}=$prW>' // lint-allow: hardcoded-string
           '${loser.toState.name}=$prL) '
-          '-> ${winner.toState.name} wins';
+          '-> ${winner.toState.name} wins'; // lint-allow: hardcoded-string
     }
 
     final tiePrefix = 'priorityRank(tie)';
 
     if (tsW != tsL) {
       return '$tiePrefix -> timestamp(${winner.toState.name} earlier) '
-          '-> ${winner.toState.name} wins';
+          '-> ${winner.toState.name} wins'; // lint-allow: hardcoded-string
     }
 
     final arW = actorRoleRank(winner.actorRole);
     final arL = actorRoleRank(loser.actorRole);
     if (arW != arL) {
       return '$tiePrefix -> timestamp(tie) -> '
-          'actorRoleRank(${winner.actorRole}>${loser.actorRole}) '
-          '-> ${winner.toState.name} wins';
+          'actorRoleRank(${winner.actorRole}>${loser.actorRole}) ' // lint-allow: hardcoded-string
+          '-> ${winner.toState.name} wins'; // lint-allow: hardcoded-string
     }
 
     if (winner.actorId != loser.actorId) {
       return '$tiePrefix -> timestamp(tie) -> actorRoleRank(tie) -> '
-          'actorId(${winner.actorId}<${loser.actorId}) '
-          '-> ${winner.toState.name} wins';
+          'actorId(${winner.actorId}<${loser.actorId}) ' // lint-allow: hardcoded-string
+          '-> ${winner.toState.name} wins'; // lint-allow: hardcoded-string
     }
 
     return '$tiePrefix -> timestamp(tie) -> actorRoleRank(tie) -> '
-        'actorId(tie) -> '
-        'transitionId(${winner.id}<${loser.id}) '
-        '-> ${winner.toState.name} wins';
+        'actorId(tie) -> ' // lint-allow: hardcoded-string
+        'transitionId(${winner.id}<${loser.id}) ' // lint-allow: hardcoded-string
+        '-> ${winner.toState.name} wins'; // lint-allow: hardcoded-string
   }
 }

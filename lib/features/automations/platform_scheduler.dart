@@ -4,6 +4,7 @@ import 'dart:io' show Platform;
 
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
 import 'package:workmanager/workmanager.dart' as wm;
 import 'package:background_fetch/background_fetch.dart' as bgf;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -399,11 +400,12 @@ class IOSBGTaskScheduler implements PlatformScheduler {
     // Strategy B: Schedule a local notification for exact-time UX
     // This doesn't execute code but alerts the user
     if (_notifications != null) {
+      final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
       await _scheduleLocalNotification(
         taskId: taskId,
         scheduledFor: scheduledFor,
-        title: 'Scheduled Automation', // lint-allow: hardcoded-string
-        body: 'Tap to run scheduled automation', // lint-allow: hardcoded-string
+        title: l10n.automationScheduledTitle,
+        body: l10n.automationScheduledBody,
       );
     }
 
@@ -597,7 +599,9 @@ class IOSBGTaskScheduler implements PlatformScheduler {
   }
 
   String _encodeTimesJson(Map<String, String> times) {
-    return times.entries.map((e) => '\${e.key}=\${e.value}').join(';');
+    return times.entries
+        .map((e) => '\${e.key}=\${e.value}')
+        .join(';'); // lint-allow: hardcoded-string
   }
 
   // ---- Task tracking helpers ----

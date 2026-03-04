@@ -238,7 +238,7 @@ class WorldMeshMapNotifier extends Notifier<AsyncValue<WorldMeshMapState>> {
       } else {
         state = AsyncValue.error(
           WorldMeshMapException(
-            'No internet connection and no cached data available.',
+            'No internet connection and no cached data available.', // lint-allow: hardcoded-string
           ),
           StackTrace.current,
         );

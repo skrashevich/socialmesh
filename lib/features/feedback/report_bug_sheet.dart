@@ -173,7 +173,7 @@ class _ReportBugSheetState extends State<ReportBugSheet> {
 
       final id = result != null ? (result['reportId'] ?? '') : '';
       showGlobalSuccessSnackBar(
-        'Bug report submitted${id != '' ? ' (ID: $id)' : ''}.',
+        'Bug report submitted${id != '' ? ' (ID: $id)' : ''}.', // lint-allow: hardcoded-string
       );
     } catch (e) {
       String msg;

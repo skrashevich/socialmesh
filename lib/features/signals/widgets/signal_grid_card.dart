@@ -66,7 +66,10 @@ class SignalGridCard extends ConsumerWidget {
           : hexId;
       final node = nodes[signal.meshNodeId!];
       if (node != null) {
-        authorName = node.longName ?? node.shortName ?? '!$hexId';
+        authorName =
+            node.longName ??
+            node.shortName ??
+            '!$hexId'; // lint-allow: hardcoded-string
         authorShortName = node.shortName ?? shortHex;
         if (authorName.length > 12) {
           authorName = '${authorName.substring(0, 11)}…';
@@ -151,7 +154,8 @@ class SignalGridCard extends ConsumerWidget {
                         _BadgePill(
                           icon: _getHopIcon(signal.hopCount!),
                           iconColor: getHopCountColor(signal.hopCount!),
-                          text: '${signal.hopCount}h',
+                          text:
+                              '${signal.hopCount}h', // lint-allow: hardcoded-string
                         )
                       else
                         const SizedBox.shrink(),

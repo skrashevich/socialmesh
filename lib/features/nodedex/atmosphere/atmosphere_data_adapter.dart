@@ -109,9 +109,9 @@ class AtmosphereIntensities {
   @override
   String toString() =>
       'AtmosphereIntensities(rain: ${rain.toStringAsFixed(2)}, '
-      'ember: ${ember.toStringAsFixed(2)}, '
-      'mist: ${mist.toStringAsFixed(2)}, '
-      'starlight: ${starlight.toStringAsFixed(2)})';
+      'ember: ${ember.toStringAsFixed(2)}, ' // lint-allow: hardcoded-string
+      'mist: ${mist.toStringAsFixed(2)}, ' // lint-allow: hardcoded-string
+      'starlight: ${starlight.toStringAsFixed(2)})'; // lint-allow: hardcoded-string
 }
 
 /// Raw mesh metrics consumed by the adapter.

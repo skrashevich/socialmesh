@@ -564,7 +564,7 @@ class _ConstellationPainter extends CustomPainter {
             ui.ParagraphStyle(
               textAlign: TextAlign.center,
               maxLines: 1,
-              ellipsis: '\u2026',
+              ellipsis: '\u2026', // lint-allow: hardcoded-string
             ),
           )
           ..pushStyle(style)

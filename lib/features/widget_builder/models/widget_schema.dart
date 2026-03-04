@@ -1157,12 +1157,14 @@ class JsonEncoder {
     if (value == null) return 'null';
     if (value is bool) return value.toString();
     if (value is num) return value.toString();
-    if (value is String) return '"${_escapeString(value)}"';
+    if (value is String) {
+      return '"${_escapeString(value)}"'; // lint-allow: hardcoded-string
+    }
 
     if (value is List) {
       if (value.isEmpty) return '[]';
       final items = value.map((v) => '$nextSpaces${_encode(v, depth + 1)}');
-      return '[\n${items.join(',\n')}\n$spaces]';
+      return '[\n${items.join(',\n')}\n$spaces]'; // lint-allow: hardcoded-string
     }
 
     if (value is Map<String, dynamic>) {

@@ -245,7 +245,7 @@ class SmSignal {
       'SmSignal(id=${signalId.toRadixString(16)}, '
       'content="${content.length > 30 ? '${content.substring(0, 30)}...' : content}", '
       'ttl=$ttl, priority=$priority, '
-      'hasImage=$hasImage, '
+      'hasImage=$hasImage, ' // lint-allow: hardcoded-string
       'lat=${latitude?.toStringAsFixed(5)}, '
       'lng=${longitude?.toStringAsFixed(5)})';
 }

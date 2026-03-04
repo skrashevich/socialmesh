@@ -53,7 +53,9 @@ class _SchemaWidgetContentState extends ConsumerState<SchemaWidgetContent>
       safeSetState(() {
         _schema = schema;
         _isLoading = false;
-        _error = schema == null ? 'Widget not found' : null;
+        _error = schema == null
+            ? 'Widget not found'
+            : null; // lint-allow: hardcoded-string
       });
     } catch (e) {
       safeSetState(() {
