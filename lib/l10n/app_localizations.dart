@@ -51458,6 +51458,2854 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count} nodes seen via Global Layer'**
   String globalLayerNodesSeenVia(int count);
+
+  /// Title for channel_creation help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Creating a Channel'**
+  String get helpChannelCreationTitle;
+
+  /// Description for channel_creation help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Learn how to create and configure mesh channels'**
+  String get helpChannelCreationDescription;
+
+  /// Title for encryption_levels help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Channel Encryption'**
+  String get helpEncryptionLevelsTitle;
+
+  /// Description for encryption_levels help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Understanding privacy and encryption options'**
+  String get helpEncryptionLevelsDescription;
+
+  /// Title for message_routing help topic
+  ///
+  /// In en, this message translates to:
+  /// **'How Messages Travel'**
+  String get helpMessageRoutingTitle;
+
+  /// Description for message_routing help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Understanding mesh routing and message hops'**
+  String get helpMessageRoutingDescription;
+
+  /// Title for nodes_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Your Mesh Network'**
+  String get helpNodesOverviewTitle;
+
+  /// Description for nodes_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Understanding the nodes in your mesh'**
+  String get helpNodesOverviewDescription;
+
+  /// Title for node_roles help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Node Roles'**
+  String get helpNodeRolesTitle;
+
+  /// Description for node_roles help topic
+  ///
+  /// In en, this message translates to:
+  /// **'CLIENT vs ROUTER vs REPEATER explained'**
+  String get helpNodeRolesDescription;
+
+  /// Title for region_selection help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Selecting Your Region'**
+  String get helpRegionSelectionTitle;
+
+  /// Description for region_selection help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Frequency bands and legal compliance'**
+  String get helpRegionSelectionDescription;
+
+  /// Title for device_connection help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Connecting Your Device'**
+  String get helpDeviceConnectionTitle;
+
+  /// Description for device_connection help topic
+  ///
+  /// In en, this message translates to:
+  /// **'BLE vs USB and pairing process'**
+  String get helpDeviceConnectionDescription;
+
+  /// Title for gps_settings help topic
+  ///
+  /// In en, this message translates to:
+  /// **'GPS & Position Sharing'**
+  String get helpGpsSettingsTitle;
+
+  /// Description for gps_settings help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Location updates and privacy'**
+  String get helpGpsSettingsDescription;
+
+  /// Title for signal_metrics help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Understanding Signal Strength'**
+  String get helpSignalMetricsTitle;
+
+  /// Description for signal_metrics help topic
+  ///
+  /// In en, this message translates to:
+  /// **'SNR, RSSI, and what they mean'**
+  String get helpSignalMetricsDescription;
+
+  /// Title for map_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh Map'**
+  String get helpMapOverviewTitle;
+
+  /// Description for map_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'See your mesh network on a map'**
+  String get helpMapOverviewDescription;
+
+  /// Title for channels_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Your Channels'**
+  String get helpChannelsOverviewTitle;
+
+  /// Description for channels_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Managing mesh communication channels'**
+  String get helpChannelsOverviewDescription;
+
+  /// Title for automations_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Automations'**
+  String get helpAutomationsOverviewTitle;
+
+  /// Description for automations_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic actions for your mesh'**
+  String get helpAutomationsOverviewDescription;
+
+  /// Title for dashboard_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Your Dashboard'**
+  String get helpDashboardOverviewTitle;
+
+  /// Description for dashboard_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Your customizable mesh command center'**
+  String get helpDashboardOverviewDescription;
+
+  /// Title for widget_builder_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Widget Builder'**
+  String get helpWidgetBuilderOverviewTitle;
+
+  /// Description for widget_builder_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Create your own custom widgets'**
+  String get helpWidgetBuilderOverviewDescription;
+
+  /// Title for marketplace_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Widget Marketplace'**
+  String get helpMarketplaceOverviewTitle;
+
+  /// Description for marketplace_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Discover widgets made by the community'**
+  String get helpMarketplaceOverviewDescription;
+
+  /// Title for signals_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Signals'**
+  String get helpSignalsOverviewTitle;
+
+  /// Description for signals_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Broadcast ephemeral signals to your mesh'**
+  String get helpSignalsOverviewDescription;
+
+  /// Title for signal_creation help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Creating a Signal'**
+  String get helpSignalCreationTitle;
+
+  /// Description for signal_creation help topic
+  ///
+  /// In en, this message translates to:
+  /// **'How to compose and broadcast a signal'**
+  String get helpSignalCreationDescription;
+
+  /// Title for signal_detail help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Signal Details'**
+  String get helpSignalDetailTitle;
+
+  /// Description for signal_detail help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Interacting with a signal and its responses'**
+  String get helpSignalDetailDescription;
+
+  /// Title for world_mesh_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'World Mesh'**
+  String get helpWorldMeshOverviewTitle;
+
+  /// Description for world_mesh_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Global mesh network visualization'**
+  String get helpWorldMeshOverviewDescription;
+
+  /// Title for routes_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Routes'**
+  String get helpRoutesOverviewTitle;
+
+  /// Description for routes_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Record and share GPS routes'**
+  String get helpRoutesOverviewDescription;
+
+  /// Title for position_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Position History'**
+  String get helpPositionOverviewTitle;
+
+  /// Description for position_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'GPS position logs for all nodes on your mesh'**
+  String get helpPositionOverviewDescription;
+
+  /// Title for settings_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get helpSettingsOverviewTitle;
+
+  /// Description for settings_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Configure your app and device'**
+  String get helpSettingsOverviewDescription;
+
+  /// Title for profile_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Your Profile'**
+  String get helpProfileOverviewTitle;
+
+  /// Description for profile_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your mesh identity'**
+  String get helpProfileOverviewDescription;
+
+  /// Title for mesh_3d_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh 3D'**
+  String get helpMesh3dOverviewTitle;
+
+  /// Description for mesh_3d_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'3D network topology visualization'**
+  String get helpMesh3dOverviewDescription;
+
+  /// Title for globe_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Globe View'**
+  String get helpGlobeOverviewTitle;
+
+  /// Description for globe_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'3D globe with your mesh'**
+  String get helpGlobeOverviewDescription;
+
+  /// Title for timeline_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Timeline'**
+  String get helpTimelineOverviewTitle;
+
+  /// Description for timeline_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Your mesh activity history'**
+  String get helpTimelineOverviewDescription;
+
+  /// Title for device_shop_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Device Shop'**
+  String get helpDeviceShopOverviewTitle;
+
+  /// Description for device_shop_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Browse Meshtastic hardware'**
+  String get helpDeviceShopOverviewDescription;
+
+  /// Title for offline_maps_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Offline Maps'**
+  String get helpOfflineMapsOverviewTitle;
+
+  /// Description for offline_maps_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Map display settings and controls'**
+  String get helpOfflineMapsOverviewDescription;
+
+  /// Title for radio_config_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Radio Settings'**
+  String get helpRadioConfigOverviewTitle;
+
+  /// Description for radio_config_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Configure your LoRa radio'**
+  String get helpRadioConfigOverviewDescription;
+
+  /// Title for presence_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Node Presence'**
+  String get helpPresenceOverviewTitle;
+
+  /// Description for presence_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Track which nodes are active on your mesh'**
+  String get helpPresenceOverviewDescription;
+
+  /// Title for reachability_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh Reachability'**
+  String get helpReachabilityOverviewTitle;
+
+  /// Description for reachability_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Understand which nodes you can reach'**
+  String get helpReachabilityOverviewDescription;
+
+  /// Title for mesh_health_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh Health'**
+  String get helpMeshHealthOverviewTitle;
+
+  /// Description for mesh_health_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Monitor your mesh network health'**
+  String get helpMeshHealthOverviewDescription;
+
+  /// Title for traceroute_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Traceroute'**
+  String get helpTracerouteOverviewTitle;
+
+  /// Description for traceroute_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Discover the route packets take across your mesh'**
+  String get helpTracerouteOverviewDescription;
+
+  /// Title for nodedex_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'NodeDex Field Journal'**
+  String get helpNodedexOverviewTitle;
+
+  /// Description for nodedex_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Your personal record of every node discovered on the mesh'**
+  String get helpNodedexOverviewDescription;
+
+  /// Title for nodedex_album help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Collector Album'**
+  String get helpNodedexAlbumTitle;
+
+  /// Description for nodedex_album help topic
+  ///
+  /// In en, this message translates to:
+  /// **'A collectible card view of your discovered nodes'**
+  String get helpNodedexAlbumDescription;
+
+  /// Title for nodedex_constellation help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Constellation View'**
+  String get helpNodedexConstellationTitle;
+
+  /// Description for nodedex_constellation help topic
+  ///
+  /// In en, this message translates to:
+  /// **'A star-map visualization of co-seen node relationships'**
+  String get helpNodedexConstellationDescription;
+
+  /// No description provided for @helpNodedexDetailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Node Profile'**
+  String get helpNodedexDetailTitle;
+
+  /// No description provided for @helpNodedexDetailDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Understanding a node\'s full identity and history'**
+  String get helpNodedexDetailDescription;
+
+  /// Title for cloud_sync_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Cloud Sync'**
+  String get helpCloudSyncOverviewTitle;
+
+  /// Description for cloud_sync_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Premium cross-device sync for your mesh data'**
+  String get helpCloudSyncOverviewDescription;
+
+  /// Title for aether_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Aether'**
+  String get helpAetherOverviewTitle;
+
+  /// Description for aether_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Track Meshtastic nodes at altitude'**
+  String get helpAetherOverviewDescription;
+
+  /// Title for tak_gateway_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'TAK Gateway'**
+  String get helpTakGatewayOverviewTitle;
+
+  /// Description for tak_gateway_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Bridge your mesh into the TAK ecosystem'**
+  String get helpTakGatewayOverviewDescription;
+
+  /// Title for radio_compliance help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Radio Rules & Your Responsibilities'**
+  String get helpRadioComplianceTitle;
+
+  /// Description for radio_compliance help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Understand your legal obligations when using radio devices'**
+  String get helpRadioComplianceDescription;
+
+  /// Title for acceptable_use help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Acceptable Use & Prohibited Activities'**
+  String get helpAcceptableUseTitle;
+
+  /// Description for acceptable_use help topic
+  ///
+  /// In en, this message translates to:
+  /// **'What you can and cannot do with Socialmesh'**
+  String get helpAcceptableUseDescription;
+
+  /// Title for user_responsibility help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Your Data, Your Responsibility'**
+  String get helpUserResponsibilityTitle;
+
+  /// Description for user_responsibility help topic
+  ///
+  /// In en, this message translates to:
+  /// **'How Socialmesh handles data and what you are responsible for'**
+  String get helpUserResponsibilityDescription;
+
+  /// Title for file_transfer_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'File Transfers'**
+  String get helpFileTransferOverviewTitle;
+
+  /// Description for file_transfer_overview help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Send files over the mesh radio without internet'**
+  String get helpFileTransferOverviewDescription;
+
+  /// Title for file_transfer_limits help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Why Only 8 KB?'**
+  String get helpFileTransferLimitsTitle;
+
+  /// Description for file_transfer_limits help topic
+  ///
+  /// In en, this message translates to:
+  /// **'Airtime budget and LoRa duty cycle explained'**
+  String get helpFileTransferLimitsDescription;
+
+  /// Help bubble text for step channel_intro
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s make a **channel**! It\'s like a walkie-talkie. Only your friends who know the secret can listen in.'**
+  String get helpChannelIntroBubble;
+
+  /// Help bubble text for step channel_name
+  ///
+  /// In en, this message translates to:
+  /// **'First, pick a **name** for your channel. Something easy to remember, like \'Family\' or \'Hiking Buddies\'.'**
+  String get helpChannelNameBubble;
+
+  /// Help bubble text for step privacy_level
+  ///
+  /// In en, this message translates to:
+  /// **'How secret should your channel be?\\n\\n**OPEN**: Anyone can listen in.\\n**SHARED**: Like a password everyone knows.\\n**PRIVATE**: Only friends you invite.\\n**MAXIMUM**: Super duper secret!'**
+  String get helpPrivacyLevelBubble;
+
+  /// Help bubble text for step encryption_key
+  ///
+  /// In en, this message translates to:
+  /// **'I made a **secret key** for you! It scrambles your messages so only your friends can read them. Like a secret code!'**
+  String get helpEncryptionKeyBubble;
+
+  /// Help bubble text for step channel_complete
+  ///
+  /// In en, this message translates to:
+  /// **'All done! Show your friends the **QR code** and they can join your channel. Easy peasy!'**
+  String get helpChannelCompleteBubble;
+
+  /// Help bubble text for step encryption_intro
+  ///
+  /// In en, this message translates to:
+  /// **'Let me explain **encryption levels**. It\'s like choosing how secret your messages are!'**
+  String get helpEncryptionIntroBubble;
+
+  /// Help bubble text for step default_key
+  ///
+  /// In en, this message translates to:
+  /// **'**DEFAULT KEY** means everyone in the mesh can read your messages. It\'s public! Use this for general announcements or testing.'**
+  String get helpDefaultKeyBubble;
+
+  /// Help bubble text for step psk_encryption
+  ///
+  /// In en, this message translates to:
+  /// **'**PSK** (Pre-Shared Key) means you generate a random secret key. Only people with this exact key can decode your messages. Much more private!'**
+  String get helpPskEncryptionBubble;
+
+  /// Help bubble text for step psk_sharing
+  ///
+  /// In en, this message translates to:
+  /// **'Share your PSK via **QR code**! When someone scans it, they get the key and channel settings. Easy peasy!'**
+  String get helpPskSharingBubble;
+
+  /// Help bubble text for step routing_intro
+  ///
+  /// In en, this message translates to:
+  /// **'Want to see how I work? When you send a message, I **bounce it from node to node** like a game of hot potato!'**
+  String get helpRoutingIntroBubble;
+
+  /// Help bubble text for step routing_hops
+  ///
+  /// In en, this message translates to:
+  /// **'Each **hop** is when a node receives your message and forwards it. Most messages need **1-3 hops** to reach their destination!'**
+  String get helpRoutingHopsBubble;
+
+  /// Help bubble text for step routing_router_role
+  ///
+  /// In en, this message translates to:
+  /// **'**ROUTER** nodes are the mesh superheroes - they relay messages for everyone! **CLIENT** nodes only send/receive their own messages.'**
+  String get helpRoutingRouterRoleBubble;
+
+  /// Help bubble text for step routing_store_forward
+  ///
+  /// In en, this message translates to:
+  /// **'**Store & Forward** is awesome! If the recipient hasn\'t been heard recently, I\'ll hold onto the message and deliver it when a packet arrives.'**
+  String get helpRoutingStoreForwardBubble;
+
+  /// Help bubble text for step nodes_intro
+  ///
+  /// In en, this message translates to:
+  /// **'This is your **mesh network**! Every device you see here is a node that can talk to you.'**
+  String get helpNodesIntroBubble;
+
+  /// Help bubble text for step nodes_status
+  ///
+  /// In en, this message translates to:
+  /// **'**Green dot** means **Active** (heard very recently). **Yellow** means **Seen recently**. **Gray** means **Inactive**. LoRa has no offline signal—status is inferred.'**
+  String get helpNodesStatusBubble;
+
+  /// Help bubble text for step nodes_info
+  ///
+  /// In en, this message translates to:
+  /// **'Each card shows the node\'s **name**, **battery level**, and **signal strength**. Tap any node to see more details!'**
+  String get helpNodesInfoBubble;
+
+  /// Help bubble text for step nodes_filters
+  ///
+  /// In en, this message translates to:
+  /// **'Use the **filters** at the top to find specific nodes. You can show only **Active** nodes, favorites, or nodes with GPS.'**
+  String get helpNodesFiltersBubble;
+
+  /// Help bubble text for step nodes_actions
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a node to **send a message**, see their **location on the map**, or check their **telemetry data**!'**
+  String get helpNodesActionsBubble;
+
+  /// Help bubble text for step roles_intro
+  ///
+  /// In en, this message translates to:
+  /// **'**Node roles** determine how your device helps the mesh. Let me break it down for you!'**
+  String get helpRolesIntroBubble;
+
+  /// Help bubble text for step role_client
+  ///
+  /// In en, this message translates to:
+  /// **'**CLIENT**: Your device sends and receives messages but doesn\'t relay for others. Great for **battery life**!'**
+  String get helpRoleClientBubble;
+
+  /// Help bubble text for step role_router
+  ///
+  /// In en, this message translates to:
+  /// **'**ROUTER**: You\'re a mesh superhero! You relay messages for everyone. Uses more battery but makes the mesh stronger!'**
+  String get helpRoleRouterBubble;
+
+  /// Help bubble text for step role_router_late
+  ///
+  /// In en, this message translates to:
+  /// **'**ROUTER LATE**: Rebroadcasts after other routers. Extends coverage without taking priority hops. Great for backup relays!'**
+  String get helpRoleRouterLateBubble;
+
+  /// Help bubble text for step role_client_base
+  ///
+  /// In en, this message translates to:
+  /// **'**CLIENT BASE**: Base station for your favorited nodes. Routes their packets like a router, handles everything else like a client!'**
+  String get helpRoleClientBaseBubble;
+
+  /// Help bubble text for step region_intro
+  ///
+  /// In en, this message translates to:
+  /// **'This is important! Your **region** determines which radio frequencies you can legally use.'**
+  String get helpRegionIntroBubble;
+
+  /// Help bubble text for step region_legal
+  ///
+  /// In en, this message translates to:
+  /// **'Each country has different rules. Using the **wrong frequency** can be illegal! Always match your physical location.'**
+  String get helpRegionLegalBubble;
+
+  /// Help bubble text for step region_bands
+  ///
+  /// In en, this message translates to:
+  /// **'Most regions use **915MHz** (Americas) or **868MHz** (Europe). Some use **433MHz**. Your device\'s hardware must support the frequency!'**
+  String get helpRegionBandsBubble;
+
+  /// Help bubble text for step region_warning
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong region = **can\'t communicate** with others! Make sure everyone in your mesh uses the same region setting.'**
+  String get helpRegionWarningBubble;
+
+  /// Help bubble text for step connection_intro
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s connect your Meshtastic device! There are two ways: **Bluetooth** or **USB**.'**
+  String get helpConnectionIntroBubble;
+
+  /// Help bubble text for step connection_ble
+  ///
+  /// In en, this message translates to:
+  /// **'**BLUETOOTH** (BLE): Wireless! Your device shows up as **Meshtastic_XXXX**. Just tap to connect. Works while device is in your pocket!'**
+  String get helpConnectionBleBubble;
+
+  /// Help bubble text for step connection_usb
+  ///
+  /// In en, this message translates to:
+  /// **'**USB**: Plug in with a cable. More reliable, charges your device, slightly faster. Great for configuration!'**
+  String get helpConnectionUsbBubble;
+
+  /// Help bubble text for step connection_pairing
+  ///
+  /// In en, this message translates to:
+  /// **'First time? Your device needs to be in **pairing mode**. Check for a Bluetooth icon on the screen or press the button!'**
+  String get helpConnectionPairingBubble;
+
+  /// Help bubble text for step connection_troubleshoot
+  ///
+  /// In en, this message translates to:
+  /// **'Can\'t find your device? Check:\\n- **Bluetooth is on**\\n- Device has power\\n- Device isn\'t connected elsewhere\\n- You\'re close enough (under 10m)'**
+  String get helpConnectionTroubleshootBubble;
+
+  /// Help bubble text for step gps_intro
+  ///
+  /// In en, this message translates to:
+  /// **'**GPS** lets others see where you are on the map! Let me explain how it works.'**
+  String get helpGpsIntroBubble;
+
+  /// Help bubble text for step gps_broadcast
+  ///
+  /// In en, this message translates to:
+  /// **'Your device broadcasts **position updates** every few minutes. Other nodes see you appear on their map!'**
+  String get helpGpsBroadcastBubble;
+
+  /// Help bubble text for step gps_privacy
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy matters! You can **disable GPS** or set update intervals. Turn it off when you want to stay hidden!'**
+  String get helpGpsPrivacyBubble;
+
+  /// Help bubble text for step gps_battery
+  ///
+  /// In en, this message translates to:
+  /// **'GPS uses **battery**! Longer update intervals = better battery life. Balance privacy and utility!'**
+  String get helpGpsBatteryBubble;
+
+  /// Help bubble text for step metrics_intro
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s decode those signal numbers! They tell you how good your connection is.'**
+  String get helpMetricsIntroBubble;
+
+  /// Help bubble text for step metrics_rssi
+  ///
+  /// In en, this message translates to:
+  /// **'**RSSI** (Received Signal Strength): How loud the signal is. Higher is better! **-50 dBm** = excellent, **-120 dBm** = barely hanging on.'**
+  String get helpMetricsRssiBubble;
+
+  /// Help bubble text for step metrics_snr
+  ///
+  /// In en, this message translates to:
+  /// **'**SNR** (Signal-to-Noise Ratio): How clear the signal is. Positive = good, negative = noisy! **+10 dB** = great, **-10 dB** = struggling.'**
+  String get helpMetricsSnrBubble;
+
+  /// Help bubble text for step metrics_practical
+  ///
+  /// In en, this message translates to:
+  /// **'In practice: **Green** = excellent, **yellow** = okay, **red** = poor. Move closer or find higher ground to improve!'**
+  String get helpMetricsPracticalBubble;
+
+  /// Help bubble text for step map_intro
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to the **Mesh Map**! Every dot you see is a node with GPS. They\'re all part of your network!'**
+  String get helpMapIntroBubble;
+
+  /// Help bubble text for step map_markers
+  ///
+  /// In en, this message translates to:
+  /// **'**Tap any marker** to see who it is. You can send them a message, check their battery, or see when they were last heard!'**
+  String get helpMapMarkersBubble;
+
+  /// Help bubble text for step map_features
+  ///
+  /// In en, this message translates to:
+  /// **'Try the **heatmap** to see where nodes cluster, or **connection lines** to see who can talk to who!'**
+  String get helpMapFeaturesBubble;
+
+  /// Help bubble text for step map_measure
+  ///
+  /// In en, this message translates to:
+  /// **'Use **measure mode** to check distances between points. Great for planning where to put a new node!'**
+  String get helpMapMeasureBubble;
+
+  /// Help bubble text for step map_filters
+  ///
+  /// In en, this message translates to:
+  /// **'Use **filters** to show only **Active** nodes, or nodes with GPS. Helps when your map gets crowded!'**
+  String get helpMapFiltersBubble;
+
+  /// Help bubble text for step channels_intro
+  ///
+  /// In en, this message translates to:
+  /// **'These are your **channels**! Think of them like different radio frequencies. Each one is a separate conversation.'**
+  String get helpChannelsIntroBubble;
+
+  /// Help bubble text for step channels_primary
+  ///
+  /// In en, this message translates to:
+  /// **'The **Primary** channel is special. It\'s always slot 0 and can\'t be deleted. Most mesh traffic goes here!'**
+  String get helpChannelsPrimaryBubble;
+
+  /// Help bubble text for step channels_secondary
+  ///
+  /// In en, this message translates to:
+  /// **'**Secondary channels** are for private groups. Create one for your family, hiking club, or emergency team!'**
+  String get helpChannelsSecondaryBubble;
+
+  /// Help bubble text for step channels_encryption
+  ///
+  /// In en, this message translates to:
+  /// **'See the **lock icon**? That means the channel is encrypted. Only people with the key can read messages!'**
+  String get helpChannelsEncryptionBubble;
+
+  /// Help bubble text for step channels_share
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a channel to see its **QR code**. Friends can scan it to join instantly with the right settings!'**
+  String get helpChannelsShareBubble;
+
+  /// Help bubble text for step automations_intro
+  ///
+  /// In en, this message translates to:
+  /// **'**Automations** make your mesh smarter! Set up rules and I\'ll do things automatically for you.'**
+  String get helpAutomationsIntroBubble;
+
+  /// Help bubble text for step automations_triggers
+  ///
+  /// In en, this message translates to:
+  /// **'Every automation starts with a **trigger**. Like when a node becomes inactive, battery gets low, or you enter an area!'**
+  String get helpAutomationsTriggersBubble;
+
+  /// Help bubble text for step automations_actions
+  ///
+  /// In en, this message translates to:
+  /// **'Then pick an **action**! Send a message, play a sound, show a notification, or even trigger IFTTT!'**
+  String get helpAutomationsActionsBubble;
+
+  /// Help bubble text for step automations_examples
+  ///
+  /// In en, this message translates to:
+  /// **'Example: **Alert me when Dad\'s battery drops below 20%**. Or **Send \'I\'m home!\' when I enter my geofence**!'**
+  String get helpAutomationsExamplesBubble;
+
+  /// Help bubble text for step automations_toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Use the **toggle switch** to enable or disable automations. Test them out before going live!'**
+  String get helpAutomationsToggleBubble;
+
+  /// Help bubble text for step dashboard_intro
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to your **Dashboard**! This is your personalized command center. Everything you need, at a glance!'**
+  String get helpDashboardIntroBubble;
+
+  /// Help bubble text for step dashboard_widgets
+  ///
+  /// In en, this message translates to:
+  /// **'Each card is a **widget**. They show live data from your mesh - battery levels, messages, weather, and more!'**
+  String get helpDashboardWidgetsBubble;
+
+  /// Help bubble text for step dashboard_reorder
+  ///
+  /// In en, this message translates to:
+  /// **'**Long-press and drag** to rearrange widgets. Put your favorites at the top! Tap **Edit** to add or remove them.'**
+  String get helpDashboardReorderBubble;
+
+  /// Help bubble text for step dashboard_tap
+  ///
+  /// In en, this message translates to:
+  /// **'**Tap any widget** to see more details or take action. Try tapping a node widget to see all their info!'**
+  String get helpDashboardTapBubble;
+
+  /// Help bubble text for step builder_intro
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to the **Widget Builder**! Here you can create your own custom widgets from scratch!'**
+  String get helpBuilderIntroBubble;
+
+  /// Help bubble text for step builder_templates
+  ///
+  /// In en, this message translates to:
+  /// **'Start with a **template** or build from blank. Templates give you gauges, charts, and status cards ready to customize!'**
+  String get helpBuilderTemplatesBubble;
+
+  /// Help bubble text for step builder_bindings
+  ///
+  /// In en, this message translates to:
+  /// **'The magic is in **data bindings**! Connect any element to live mesh data - battery, GPS, temperature, signal strength!'**
+  String get helpBuilderBindingsBubble;
+
+  /// Help bubble text for step builder_preview
+  ///
+  /// In en, this message translates to:
+  /// **'Use **Preview** to see how your widget looks with real data before saving. Tweak until it\'s perfect!'**
+  String get helpBuilderPreviewBubble;
+
+  /// Help bubble text for step marketplace_intro
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to the **Marketplace**! Browse widgets created by other mesh enthusiasts around the world!'**
+  String get helpMarketplaceIntroBubble;
+
+  /// Help bubble text for step marketplace_browse
+  ///
+  /// In en, this message translates to:
+  /// **'Browse by **category** - find status displays, charts, gauges, or creative designs. Tap any widget to preview it!'**
+  String get helpMarketplaceBrowseBubble;
+
+  /// Help bubble text for step marketplace_install
+  ///
+  /// In en, this message translates to:
+  /// **'Found one you like? **Tap install** and it\'s added to your collection. Use it on your dashboard right away!'**
+  String get helpMarketplaceInstallBubble;
+
+  /// Help bubble text for step marketplace_share
+  ///
+  /// In en, this message translates to:
+  /// **'Made something cool? **Share your widgets** to the marketplace and help the community!'**
+  String get helpMarketplaceShareBubble;
+
+  /// Help bubble text for step signals_intro
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to **Signals**! Broadcast moments to your mesh. Signals are **ephemeral** - you choose how long they last, from **15 minutes** up to **24 hours**.'**
+  String get helpSignalsIntroBubble;
+
+  /// Help bubble text for step signals_create
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the **sensor icon** to go active! Add text, a photo, or your location. Choose your TTL - shorter times work great for quick check-ins.'**
+  String get helpSignalsCreateBubble;
+
+  /// Help bubble text for step signals_proximity
+  ///
+  /// In en, this message translates to:
+  /// **'Signals show **proximity badges** - how many hops away the sender is. **Nearby** signals (0-1 hops) appear first!'**
+  String get helpSignalsProximityBubble;
+
+  /// Help bubble text for step signals_filters
+  ///
+  /// In en, this message translates to:
+  /// **'Use **filters** to focus on what matters: nearby signals, mesh-only, or content with media. Toggle between **list** and **grid** views!'**
+  String get helpSignalsFiltersBubble;
+
+  /// Help bubble text for step signals_privacy
+  ///
+  /// In en, this message translates to:
+  /// **'Signals are **mesh-first** - they travel through the radio network. When they fade, they\'re gone. True ephemeral, off-grid content!'**
+  String get helpSignalsPrivacyBubble;
+
+  /// Help bubble text for step create_intro
+  ///
+  /// In en, this message translates to:
+  /// **'Time to **Go Active**! A signal is an ephemeral broadcast — it lives on the mesh for a set time, then fades away. Let me walk you through it.'**
+  String get helpCreateIntroBubble;
+
+  /// Help bubble text for step create_text
+  ///
+  /// In en, this message translates to:
+  /// **'Type your message in the main field — up to **280 characters**. The circular counter in the corner shows how many you have left.'**
+  String get helpCreateTextBubble;
+
+  /// Help bubble text for step create_image
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the **image icon** to attach a photo. Images are uploaded via cloud when you are online — they are not available in mesh-only mode.'**
+  String get helpCreateImageBubble;
+
+  /// Help bubble text for step create_location
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the **location pin** to attach your device\'s GPS position. Your location is fuzzed to a configurable radius for privacy. Tap again to remove it.'**
+  String get helpCreateLocationBubble;
+
+  /// Help bubble text for step create_ttl
+  ///
+  /// In en, this message translates to:
+  /// **'The **timer icon** sets your TTL — how long the signal stays alive. Choose from **15 minutes** up to **24 hours**. Shorter times work great for quick check-ins.'**
+  String get helpCreateTtlBubble;
+
+  /// Help bubble text for step create_intent
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a **Presence Intent** to tell the mesh what you are up to — exploring, monitoring, helping, or just listening. It adds context without extra words.'**
+  String get helpCreateIntentBubble;
+
+  /// Help bubble text for step create_status
+  ///
+  /// In en, this message translates to:
+  /// **'The **short status** field is a one-liner that appears as a subtitle on your signal card. Think of it as a mood or caption.'**
+  String get helpCreateStatusBubble;
+
+  /// Help bubble text for step create_submit
+  ///
+  /// In en, this message translates to:
+  /// **'When you are ready, hit **Broadcast**! Your signal travels through the mesh radio first. If cloud is available, it syncs there too for wider reach.'**
+  String get helpCreateSubmitBubble;
+
+  /// Help bubble text for step detail_intro
+  ///
+  /// In en, this message translates to:
+  /// **'This is the **signal detail** screen. You can read the full content, see where it was posted, and browse all responses.'**
+  String get helpDetailIntroBubble;
+
+  /// Help bubble text for step detail_ttl
+  ///
+  /// In en, this message translates to:
+  /// **'The **TTL bar** shows how much time the signal has left. When it reaches zero the signal expires and this screen closes automatically.'**
+  String get helpDetailTtlBubble;
+
+  /// Help bubble text for step detail_responses
+  ///
+  /// In en, this message translates to:
+  /// **'Responses are **threaded**. You can reply directly to the signal or to another person\'s response. Nested replies indent so you can follow the conversation.'**
+  String get helpDetailResponsesBubble;
+
+  /// Help bubble text for step detail_voting
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the **up or down arrow** on any response to vote. Votes surface the most useful replies. You can change your vote at any time.'**
+  String get helpDetailVotingBubble;
+
+  /// Help bubble text for step detail_reply
+  ///
+  /// In en, this message translates to:
+  /// **'Use the **reply bar** at the bottom to respond. Tap the reply icon on any response to start a threaded conversation with that person.'**
+  String get helpDetailReplyBubble;
+
+  /// Help bubble text for step detail_actions
+  ///
+  /// In en, this message translates to:
+  /// **'The **overflow menu** (three dots) lets you **delete** your own signal or **report** someone else\'s. Only one of those options appears depending on whether you authored the signal.'**
+  String get helpDetailActionsBubble;
+
+  /// Help bubble text for step world_intro
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to **World Mesh**! See the entire global Meshtastic network. Every dot is a node sharing its location!'**
+  String get helpWorldIntroBubble;
+
+  /// Help bubble text for step world_scope
+  ///
+  /// In en, this message translates to:
+  /// **'Zoom out to see the **worldwide mesh**, or zoom in to explore local clusters. It\'s amazing how many nodes exist!'**
+  String get helpWorldScopeBubble;
+
+  /// Help bubble text for step world_data
+  ///
+  /// In en, this message translates to:
+  /// **'Data comes from **MQTT** - nodes that opted to share their position publicly. Your local nodes appear too!'**
+  String get helpWorldDataBubble;
+
+  /// Help bubble text for step world_filters
+  ///
+  /// In en, this message translates to:
+  /// **'Use **filters** to show specific regions or time ranges. Find active meshes near places you\'re visiting!'**
+  String get helpWorldFiltersBubble;
+
+  /// Help bubble text for step routes_intro
+  ///
+  /// In en, this message translates to:
+  /// **'**Routes** lets you record your journeys! Perfect for hikes, bike rides, or any adventure off the grid.'**
+  String get helpRoutesIntroBubble;
+
+  /// Help bubble text for step routes_record
+  ///
+  /// In en, this message translates to:
+  /// **'Tap **Record** to start tracking. I\'ll save your GPS points as you move. Works even without cell signal!'**
+  String get helpRoutesRecordBubble;
+
+  /// Help bubble text for step routes_gpx
+  ///
+  /// In en, this message translates to:
+  /// **'**Import GPX files** to follow existing trails. Export your routes to share with others or use in other apps!'**
+  String get helpRoutesGpxBubble;
+
+  /// Help bubble text for step routes_share
+  ///
+  /// In en, this message translates to:
+  /// **'Share routes with your mesh buddies! Great for coordinating meet-up points or showing others your favorite trails.'**
+  String get helpRoutesShareBubble;
+
+  /// Help bubble text for step position_intro
+  ///
+  /// In en, this message translates to:
+  /// **'**Position History** records every GPS position broadcast by nodes on your mesh. Think of it as a flight recorder for location data!'**
+  String get helpPositionIntroBubble;
+
+  /// Help bubble text for step position_list_map
+  ///
+  /// In en, this message translates to:
+  /// **'Switch between **list view** and **map view** using the overflow menu. The map draws colour-coded trails per node so you can visualise movement over time.'**
+  String get helpPositionListMapBubble;
+
+  /// Help bubble text for step position_filters
+  ///
+  /// In en, this message translates to:
+  /// **'Use **filter chips** to narrow results: today, this week, good GPS fix, or just your own node. Combine with a **custom date range** for precise slicing.'**
+  String get helpPositionFiltersBubble;
+
+  /// Help bubble text for step position_search
+  ///
+  /// In en, this message translates to:
+  /// **'The **search bar** filters by node name. Handy when you have dozens of nodes and want to track a specific one.'**
+  String get helpPositionSearchBubble;
+
+  /// Help bubble text for step position_map_nodes
+  ///
+  /// In en, this message translates to:
+  /// **'In map view, tap the **node list** button to pick a single node. Each node gets its own colour trail with distance calculations between points.'**
+  String get helpPositionMapNodesBubble;
+
+  /// Help bubble text for step position_export
+  ///
+  /// In en, this message translates to:
+  /// **'**Export as CSV** from the overflow menu for analysis in spreadsheets or GIS tools. Great for documenting coverage tests!'**
+  String get helpPositionExportBubble;
+
+  /// Help bubble text for step position_good_fix
+  ///
+  /// In en, this message translates to:
+  /// **'The **Good Fix** filter shows only positions with 6+ satellites. This helps you ignore noisy indoor fixes and focus on reliable outdoor data.'**
+  String get helpPositionGoodFixBubble;
+
+  /// Help bubble text for step settings_intro
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to **Settings**! Here you can customize everything about your app and connected device.'**
+  String get helpSettingsIntroBubble;
+
+  /// Help bubble text for step settings_device
+  ///
+  /// In en, this message translates to:
+  /// **'**Device settings** let you configure your Meshtastic radio - name, region, power levels, and modules!'**
+  String get helpSettingsDeviceBubble;
+
+  /// Help bubble text for step settings_app
+  ///
+  /// In en, this message translates to:
+  /// **'**App settings** control themes, notifications, privacy options, and how the app behaves.'**
+  String get helpSettingsAppBubble;
+
+  /// Help bubble text for step settings_cloud
+  ///
+  /// In en, this message translates to:
+  /// **'**Cloud Sync** is a premium subscription that syncs your **NodeDex**, **automations**, **widgets**, and **profile** across all your devices. It also serves as your **backup** — if you ever delete the app or switch phones, Cloud Sync restores everything. Without it, all data lives only on this device and is lost if the app is removed.'**
+  String get helpSettingsCloudBubble;
+
+  /// Help bubble text for step profile_intro
+  ///
+  /// In en, this message translates to:
+  /// **'This is **your profile**! Customize your mesh identity with a display name, callsign, and avatar.'**
+  String get helpProfileIntroBubble;
+
+  /// Help bubble text for step profile_customize
+  ///
+  /// In en, this message translates to:
+  /// **'Your profile is **optional and private by default**. Customize it to stand out on the mesh!'**
+  String get helpProfileCustomizeBubble;
+
+  /// Help bubble text for step profile_share
+  ///
+  /// In en, this message translates to:
+  /// **'Add a **callsign**, **avatar**, and **links** to make your profile yours.'**
+  String get helpProfileShareBubble;
+
+  /// Help bubble text for step profile_cloud
+  ///
+  /// In en, this message translates to:
+  /// **'**Cloud Sync** is a premium feature that backs up your profile, NodeDex, automations, and widgets to the cloud. It protects your data — if you delete the app or get a new phone, everything **restores automatically** when you sign back in. Without it, your data exists only on this device.'**
+  String get helpProfileCloudBubble;
+
+  /// Help bubble text for step mesh3d_intro
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to **Mesh 3D**! See your entire network in three dimensions. Drag to rotate, pinch to zoom!'**
+  String get helpMesh3dIntroBubble;
+
+  /// Help bubble text for step mesh3d_nodes
+  ///
+  /// In en, this message translates to:
+  /// **'Each sphere is a **node**. Lines show connections based on signal strength. Closer = stronger signal!'**
+  String get helpMesh3dNodesBubble;
+
+  /// Help bubble text for step mesh3d_colors
+  ///
+  /// In en, this message translates to:
+  /// **'Colors show **node health**. Green = active, yellow = fading, gray = inactive. Status is inferred from last heard.'**
+  String get helpMesh3dColorsBubble;
+
+  /// Help bubble text for step mesh3d_tap
+  ///
+  /// In en, this message translates to:
+  /// **'**Tap any node** to select it and see details. Great for understanding your network topology!'**
+  String get helpMesh3dTapBubble;
+
+  /// Help bubble text for step globe_intro
+  ///
+  /// In en, this message translates to:
+  /// **'Spin the **Globe** to see your mesh from space! Every glowing point is a node with GPS coordinates.'**
+  String get helpGlobeIntroBubble;
+
+  /// Help bubble text for step globe_interact
+  ///
+  /// In en, this message translates to:
+  /// **'**Drag to spin**, pinch to zoom. Tap a node to fly to its location and see details!'**
+  String get helpGlobeInteractBubble;
+
+  /// Help bubble text for step globe_arcs
+  ///
+  /// In en, this message translates to:
+  /// **'Watch the **connection arcs** - they show message paths traveling across your mesh in real-time!'**
+  String get helpGlobeArcsBubble;
+
+  /// Help bubble text for step timeline_intro
+  ///
+  /// In en, this message translates to:
+  /// **'The **Timeline** shows everything happening on your mesh. Messages, node changes, telemetry - all in order!'**
+  String get helpTimelineIntroBubble;
+
+  /// Help bubble text for step timeline_filter
+  ///
+  /// In en, this message translates to:
+  /// **'Use **filters** to focus on specific event types. Just messages? Only node joins? You control the view!'**
+  String get helpTimelineFilterBubble;
+
+  /// Help bubble text for step timeline_tap
+  ///
+  /// In en, this message translates to:
+  /// **'**Tap any event** to see full details. Great for debugging or understanding what\'s happening on your network!'**
+  String get helpTimelineTapBubble;
+
+  /// Help bubble text for step shop_intro
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to the **Device Shop**! Browse Meshtastic-compatible radios and accessories.'**
+  String get helpShopIntroBubble;
+
+  /// Help bubble text for step shop_compare
+  ///
+  /// In en, this message translates to:
+  /// **'**Compare devices** by range, battery, and features. I\'ve rated each one to help you choose!'**
+  String get helpShopCompareBubble;
+
+  /// Help bubble text for step shop_links
+  ///
+  /// In en, this message translates to:
+  /// **'Tap **Buy** to visit trusted vendors. Prices and availability shown are from real stores!'**
+  String get helpShopLinksBubble;
+
+  /// Help bubble text for step offline_intro
+  ///
+  /// In en, this message translates to:
+  /// **'**Offline Maps** let you use the map without internet! Essential for adventures off the grid.'**
+  String get helpOfflineIntroBubble;
+
+  /// Help bubble text for step offline_download
+  ///
+  /// In en, this message translates to:
+  /// **'**Select a region** and zoom level, then tap download. I\'ll save all the map tiles to your device!'**
+  String get helpOfflineDownloadBubble;
+
+  /// Help bubble text for step offline_manage
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your downloads here - see storage used and **delete** old regions you don\'t need anymore.'**
+  String get helpOfflineManageBubble;
+
+  /// Help bubble text for step radio_intro
+  ///
+  /// In en, this message translates to:
+  /// **'**Radio settings** control how your device transmits. Region, power, and modem preset are key!'**
+  String get helpRadioIntroBubble;
+
+  /// Help bubble text for step radio_region
+  ///
+  /// In en, this message translates to:
+  /// **'Your **region** determines legal frequencies. Set this wrong and you could interfere with other services!'**
+  String get helpRadioRegionBubble;
+
+  /// Help bubble text for step radio_modem
+  ///
+  /// In en, this message translates to:
+  /// **'**Modem preset** balances range vs speed. Long-range = slower but further. Short-fast = quick but closer.'**
+  String get helpRadioModemBubble;
+
+  /// Help bubble text for step radio_power
+  ///
+  /// In en, this message translates to:
+  /// **'Higher **TX power** means more range but uses more battery. Find the sweet spot for your needs!'**
+  String get helpRadioPowerBubble;
+
+  /// Help bubble text for step presence_intro
+  ///
+  /// In en, this message translates to:
+  /// **'**Presence** shows which nodes are active, recently seen, or inactive on your mesh network.'**
+  String get helpPresenceIntroBubble;
+
+  /// Help bubble text for step presence_active
+  ///
+  /// In en, this message translates to:
+  /// **'**Active** nodes (green) sent a message in the last 2 minutes. They\'re definitely online!'**
+  String get helpPresenceActiveBubble;
+
+  /// Help bubble text for step presence_recent
+  ///
+  /// In en, this message translates to:
+  /// **'**Recently seen** nodes (yellow) were active 2-10 minutes ago. Probably still around.'**
+  String get helpPresenceRecentBubble;
+
+  /// Help bubble text for step presence_inactive
+  ///
+  /// In en, this message translates to:
+  /// **'**Inactive** nodes (gray) haven\'t been heard from in over 10 minutes. They might be out of range or powered off.'**
+  String get helpPresenceInactiveBubble;
+
+  /// Help bubble text for step presence_chart
+  ///
+  /// In en, this message translates to:
+  /// **'The **activity chart** shows recent node activity over time. Watch the mesh come alive!'**
+  String get helpPresenceChartBubble;
+
+  /// Help bubble text for step reachability_intro
+  ///
+  /// In en, this message translates to:
+  /// **'**Reachability** estimates how likely you are to reach each node. This is based on passively observed mesh data.'**
+  String get helpReachabilityIntroBubble;
+
+  /// Help bubble text for step reachability_beta
+  ///
+  /// In en, this message translates to:
+  /// **'This is **BETA** - we don\'t send test packets! Everything is estimated from messages we see flowing through the mesh.'**
+  String get helpReachabilityBetaBubble;
+
+  /// Help bubble text for step reachability_high
+  ///
+  /// In en, this message translates to:
+  /// **'**High** reachability (bright) means we\'ve seen lots of communication with that node. Messages will probably get through!'**
+  String get helpReachabilityHighBubble;
+
+  /// Help bubble text for step reachability_medium
+  ///
+  /// In en, this message translates to:
+  /// **'**Medium** reachability (dimmer) means some communication but not consistent. Messages might make it.'**
+  String get helpReachabilityMediumBubble;
+
+  /// Help bubble text for step reachability_low
+  ///
+  /// In en, this message translates to:
+  /// **'**Low** reachability (very dim) means we rarely see communication. The node might be too far or behind obstacles.'**
+  String get helpReachabilityLowBubble;
+
+  /// Help bubble text for step health_intro
+  ///
+  /// In en, this message translates to:
+  /// **'**Mesh Health** monitors your network for issues like congestion, packet loss, and problematic nodes.'**
+  String get helpHealthIntroBubble;
+
+  /// Help bubble text for step health_status
+  ///
+  /// In en, this message translates to:
+  /// **'The **status indicator** shows overall mesh health. Green = healthy, yellow = issues detected, red = critical problems.'**
+  String get helpHealthStatusBubble;
+
+  /// Help bubble text for step health_metrics
+  ///
+  /// In en, this message translates to:
+  /// **'**Metrics** show packet counts, retransmissions, and hop counts. Watch for high retransmit rates!'**
+  String get helpHealthMetricsBubble;
+
+  /// Help bubble text for step health_utilization
+  ///
+  /// In en, this message translates to:
+  /// **'The **utilization chart** shows how busy your mesh is over time. Spikes might indicate problems.'**
+  String get helpHealthUtilizationBubble;
+
+  /// Help bubble text for step health_issues
+  ///
+  /// In en, this message translates to:
+  /// **'**Issues** section highlights specific problems and suggests fixes. Check here if things seem slow!'**
+  String get helpHealthIssuesBubble;
+
+  /// Help bubble text for step health_monitoring
+  ///
+  /// In en, this message translates to:
+  /// **'Use the **pause** button to stop monitoring if you want to save battery. Hit **reset** to clear the data and start fresh!'**
+  String get helpHealthMonitoringBubble;
+
+  /// Help bubble text for step traceroute_intro
+  ///
+  /// In en, this message translates to:
+  /// **'**Traceroute** discovers the actual path your packets take to reach another node. It reveals which relays are forwarding your data.'**
+  String get helpTracerouteIntroBubble;
+
+  /// Help bubble text for step traceroute_how
+  ///
+  /// In en, this message translates to:
+  /// **'When you send a traceroute, each relay along the route adds itself to the packet. The destination sends it back so you can see **both directions**.'**
+  String get helpTracerouteHowBubble;
+
+  /// Help bubble text for step traceroute_send
+  ///
+  /// In en, this message translates to:
+  /// **'Send a traceroute from a **node\'s detail sheet** (tap the route icon) or from **Dashboard Quick Actions** where you can pick any known node.'**
+  String get helpTracerouteSendBubble;
+
+  /// Help bubble text for step traceroute_cooldown
+  ///
+  /// In en, this message translates to:
+  /// **'There is a **30-second cooldown** between traceroutes to respect airtime fairness. A visible countdown shows the remaining time.'**
+  String get helpTracerouteCooldownBubble;
+
+  /// Help bubble text for step traceroute_results
+  ///
+  /// In en, this message translates to:
+  /// **'Results show **forward** and **return** hop paths with per-hop **SNR** (signal-to-noise ratio). This lets you correlate route quality with link performance.'**
+  String get helpTracerouteResultsBubble;
+
+  /// Help bubble text for step traceroute_history
+  ///
+  /// In en, this message translates to:
+  /// **'All traceroutes are saved to **Traceroute History** (Settings > Telemetry Logs). Filter by response status, search by node name, and compare runs over time.'**
+  String get helpTracerouteHistoryBubble;
+
+  /// Help bubble text for step traceroute_export
+  ///
+  /// In en, this message translates to:
+  /// **'Export your traceroute history as **CSV** for trend analysis or documentation. Use the overflow menu on the history screen.'**
+  String get helpTracerouteExportBubble;
+
+  /// Help bubble text for step traceroute_tips
+  ///
+  /// In en, this message translates to:
+  /// **'**Pro tip:** Run traceroutes after repositioning nodes, changing antennas, or adjusting channels to validate your changes with real route data!'**
+  String get helpTracerouteTipsBubble;
+
+  /// Help bubble text for step nodedex_intro
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to the **NodeDex** — your personal mesh field journal! Every node you discover is recorded here with a unique **Sigil** and personality **Trait**.'**
+  String get helpNodedexIntroBubble;
+
+  /// Help bubble text for step nodedex_sigils
+  ///
+  /// In en, this message translates to:
+  /// **'Each node gets a **procedural Sigil** — a geometric glyph generated from its identity. No two nodes share the same sigil. Think of it as a visual fingerprint for the mesh!'**
+  String get helpNodedexSigilsBubble;
+
+  /// Help bubble text for step nodedex_traits
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes earn **Traits** based on real behavior — **Wanderer** moves between regions, **Beacon** is always online, **Ghost** is rarely seen, **Sentinel** holds a fixed position, **Relay** forwards traffic.'**
+  String get helpNodedexTraitsBubble;
+
+  /// Help bubble text for step nodedex_filters
+  ///
+  /// In en, this message translates to:
+  /// **'Use the **filter chips** to show only specific traits, recently discovered nodes, or nodes you have tagged. The **search bar** finds nodes by name or hex ID.'**
+  String get helpNodedexFiltersBubble;
+
+  /// Help bubble text for step nodedex_field_journal
+  ///
+  /// In en, this message translates to:
+  /// **'As you observe more nodes, your **field journal** fills in — each node earns a **Patina score** and **identity overlay** based on real encounters. The more you observe, the richer the detail!'**
+  String get helpNodedexFieldJournalBubble;
+
+  /// Help bubble text for step nodedex_album_mode
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the **view toggle** in the app bar to switch to **Album mode** — a collector-style card grid grouped by trait, rarity, or region. Each card shows the node\'s sigil with a holographic shimmer based on rarity!'**
+  String get helpNodedexAlbumModeBubble;
+
+  /// Help bubble text for step nodedex_atmosphere
+  ///
+  /// In en, this message translates to:
+  /// **'Notice the subtle **ambient particles** behind the screen? That is the **Elemental Atmosphere** — rain, embers, mist, and starlight driven by your real mesh data. More nodes and activity means more atmosphere!'**
+  String get helpNodedexAtmosphereBubble;
+
+  /// Help bubble text for step nodedex_cloud_sync
+  ///
+  /// In en, this message translates to:
+  /// **'Your NodeDex is stored locally in SQLite and survives app restarts — but **not** app deletion. If you uninstall the app or switch phones, your local NodeDex is gone. With a **Cloud Sync** subscription, your entire journal — sigils, encounters, social tags, notes, and co-seen links — backs up to the cloud and **restores automatically** on any device you sign into.'**
+  String get helpNodedexCloudSyncBubble;
+
+  /// Help bubble text for step nodedex_export
+  ///
+  /// In en, this message translates to:
+  /// **'Use the **menu** to **export** your NodeDex as a JSON file for backup, or **import** one from another device. Your field journal travels with you — even without Cloud Sync!'**
+  String get helpNodedexExportBubble;
+
+  /// Help bubble text for step nodedex_sigil
+  ///
+  /// In en, this message translates to:
+  /// **'This is the node\'s **Sigil** — a unique procedural glyph generated from its identity. No two nodes share the same sigil. It\'s like a visual fingerprint!'**
+  String get helpNodedexSigilBubble;
+
+  /// Help bubble text for step nodedex_trait
+  ///
+  /// In en, this message translates to:
+  /// **'The **Trait** is an inferred personality based on how this node behaves — movement patterns, signal consistency, encounter frequency. Confidence grows with more data.'**
+  String get helpNodedexTraitBubble;
+
+  /// Help bubble text for step nodedex_auto_summary
+  ///
+  /// In en, this message translates to:
+  /// **'**Auto-Summary** computes insights from encounter history — time-of-day distribution, observation streaks, and busiest-day patterns. Everything updates automatically as new encounters arrive.'**
+  String get helpNodedexAutoSummaryBubble;
+
+  /// Help bubble text for step nodedex_observation_timeline
+  ///
+  /// In en, this message translates to:
+  /// **'The **Observation Timeline** visualizes this node\'s encounter density over time, with relative labels showing how recently each observation was recorded.'**
+  String get helpNodedexObservationTimelineBubble;
+
+  /// Help bubble text for step nodedex_discovery
+  ///
+  /// In en, this message translates to:
+  /// **'**Discovery Stats** show when you first and last saw this node, how many encounters you\'ve had, and the closest range recorded. These update automatically.'**
+  String get helpNodedexDiscoveryBubble;
+
+  /// Help bubble text for step nodedex_signal
+  ///
+  /// In en, this message translates to:
+  /// **'**Signal Records** track the best and most recent SNR and RSSI values. These help you understand link quality — higher SNR and less negative RSSI mean stronger signals.'**
+  String get helpNodedexSignalBubble;
+
+  /// Help bubble text for step nodedex_social_tag
+  ///
+  /// In en, this message translates to:
+  /// **'The **Social Tag** is a label you assign to categorize this node — friend, relay, base station, or anything else. It\'s your personal metadata, never shared over the mesh.'**
+  String get helpNodedexSocialTagBubble;
+
+  /// Help bubble text for step nodedex_note
+  ///
+  /// In en, this message translates to:
+  /// **'**Your Note** is a free-text field for anything you want to remember about this node. Location hints, operator name, antenna type — whatever helps you.'**
+  String get helpNodedexNoteBubble;
+
+  /// Help bubble text for step nodedex_regions
+  ///
+  /// In en, this message translates to:
+  /// **'**Region History** records every regulatory region where this node has been observed. Useful for tracking mobile nodes across different areas.'**
+  String get helpNodedexRegionsBubble;
+
+  /// Help bubble text for step nodedex_encounters
+  ///
+  /// In en, this message translates to:
+  /// **'**Recent Encounters** is a timeline of when this node appeared on your mesh. Each entry shows the timestamp, signal quality, and range if GPS was available.'**
+  String get helpNodedexEncountersBubble;
+
+  /// Help bubble text for step nodedex_activity_timeline
+  ///
+  /// In en, this message translates to:
+  /// **'The **Activity Timeline** is a unified chronological feed of everything observed about this node — encounters, messages, presence changes, signals, and milestones.'**
+  String get helpNodedexActivityTimelineBubble;
+
+  /// Help bubble text for step nodedex_coseen
+  ///
+  /// In en, this message translates to:
+  /// **'**Co-Seen Links** show nodes frequently observed in the same session as this one. Tap any link to see the full relationship — shared encounters, message counts, and connection strength.'**
+  String get helpNodedexCoseenBubble;
+
+  /// Help bubble text for step nodedex_device
+  ///
+  /// In en, this message translates to:
+  /// **'**Device Info** shows live telemetry — battery level, hardware model, firmware version, and uptime. This data comes from the node directly and updates in real time.'**
+  String get helpNodedexDeviceBubble;
+
+  /// Help bubble text for step album_intro
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to the **Collector Album** — a card-collector view of your NodeDex! Every discovered node becomes a collectible card with its sigil, trait, and rarity tier.'**
+  String get helpAlbumIntroBubble;
+
+  /// Help bubble text for step album_cover
+  ///
+  /// In en, this message translates to:
+  /// **'The **Album Cover** is your dashboard — it shows your **Explorer Title**, total nodes, encounters, regions explored, and a rarity breakdown bar. Watch your collection grow!'**
+  String get helpAlbumCoverBubble;
+
+  /// Help bubble text for step album_grouping
+  ///
+  /// In en, this message translates to:
+  /// **'Use the **group chips** to organize cards by **Trait** (Beacon, Relay, Ghost...), **Rarity** (Common through Legendary), or **Region** (geographic area). Each group gets its own album page.'**
+  String get helpAlbumGroupingBubble;
+
+  /// Help bubble text for step album_rarity
+  ///
+  /// In en, this message translates to:
+  /// **'Cards earn **rarity tiers** based on encounter count and trait. **Common** nodes are newly seen, while **Legendary** cards combine rare traits with deep observation history. Rarity drives the border glow and holographic shimmer!'**
+  String get helpAlbumRarityBubble;
+
+  /// Help bubble text for step album_interactions
+  ///
+  /// In en, this message translates to:
+  /// **'**Tap** a card to open the node\'s full profile. **Long-press** to open the **Card Gallery** — a full-screen carousel where you can swipe through cards and tap to flip them over for stats!'**
+  String get helpAlbumInteractionsBubble;
+
+  /// Help bubble text for step album_gallery
+  ///
+  /// In en, this message translates to:
+  /// **'In the **Card Gallery**, swipe left and right to browse cards. **Tap** a card to flip it — the back shows discovery stats, signal records, encounter count, and patina score. Swipe down to dismiss.'**
+  String get helpAlbumGalleryBubble;
+
+  /// Help bubble text for step album_holographic
+  ///
+  /// In en, this message translates to:
+  /// **'Higher-rarity cards shimmer with a **holographic effect** — the rarer the card, the brighter the glow. This effect respects your **reduce-motion** setting and uses an optimized painter for grid thumbnails.'**
+  String get helpAlbumHolographicBubble;
+
+  /// Help bubble text for step album_persistence
+  ///
+  /// In en, this message translates to:
+  /// **'Your album view preference and grouping choice are **saved automatically**. With **Cloud Sync**, your entire collection — sigils, encounters, tags, notes — backs up and syncs across all your devices. Delete the app, get a new phone — your collection is safe and restores on sign-in.'**
+  String get helpAlbumPersistenceBubble;
+
+  /// Help bubble text for step constellation_intro
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to the **Constellation** — a star-map of your mesh network! Nodes appear as stars, and lines between them show **co-seen relationships** — nodes observed in the same session.'**
+  String get helpConstellationIntroBubble;
+
+  /// Help bubble text for step constellation_layout
+  ///
+  /// In en, this message translates to:
+  /// **'The layout is **force-directed** — nodes that are frequently co-seen cluster together, while isolated nodes drift to the edges. The graph stabilizes after a moment so nothing shifts while you explore.'**
+  String get helpConstellationLayoutBubble;
+
+  /// Help bubble text for step constellation_interactions
+  ///
+  /// In en, this message translates to:
+  /// **'**Tap** a node to highlight its connections. **Double-tap** to zoom into a cluster. **Long-press** to open the node\'s full profile. **Pinch** to zoom in and out of the star map.'**
+  String get helpConstellationInteractionsBubble;
+
+  /// Help bubble text for step constellation_edges
+  ///
+  /// In en, this message translates to:
+  /// **'Use the **edge density** button in the app bar to control how many connections are shown. **Sparse** shows only the strongest links, **All** shows everything. The right density depends on your network size.'**
+  String get helpConstellationEdgesBubble;
+
+  /// Help bubble text for step constellation_search
+  ///
+  /// In en, this message translates to:
+  /// **'The **search** icon lets you find a specific node by name or hex ID. The view automatically zooms and pans to center the matching node with a pulse highlight.'**
+  String get helpConstellationSearchBubble;
+
+  /// Help bubble text for step constellation_atmosphere
+  ///
+  /// In en, this message translates to:
+  /// **'The constellation has its own **Elemental Atmosphere** — subtle starlight and mist particles behind the graph, driven by your real mesh data. It never obstructs the visualization.'**
+  String get helpConstellationAtmosphereBubble;
+
+  /// Help bubble text for step constellation_data
+  ///
+  /// In en, this message translates to:
+  /// **'Co-seen data is built **automatically** from your encounters. The more sessions you observe, the richer the constellation becomes. All relationship data is stored locally — but is **lost if you delete the app**. With **Cloud Sync**, your entire constellation backs up and restores on any device you sign into.'**
+  String get helpConstellationDataBubble;
+
+  /// Help bubble text for step cloud_sync_intro
+  ///
+  /// In en, this message translates to:
+  /// **'**Cloud Sync** is a premium subscription that keeps your mesh data synchronized across all your devices — and serves as your **backup**. Without it, all data lives only on-device and is permanently lost if you delete the app or lose your phone.'**
+  String get helpCloudSyncIntroBubble;
+
+  /// Help bubble text for step cloud_sync_what_syncs
+  ///
+  /// In en, this message translates to:
+  /// **'Cloud Sync backs up your **NodeDex** (sigils, encounters, social tags, notes, co-seen links), **automations**, **custom widgets**, and **profile**. Reinstall the app, switch phones, or sign in on a second device — your entire mesh identity restores automatically.'**
+  String get helpCloudSyncWhatSyncsBubble;
+
+  /// Help bubble text for step cloud_sync_offline_first
+  ///
+  /// In en, this message translates to:
+  /// **'The app is **offline-first**. Changes are saved locally to SQLite immediately and queued in an **outbox**. When you are online, the outbox drains to the cloud automatically — no manual sync needed.'**
+  String get helpCloudSyncOfflineFirstBubble;
+
+  /// Help bubble text for step cloud_sync_conflict
+  ///
+  /// In en, this message translates to:
+  /// **'If you edit the same node on two devices, Cloud Sync uses **last-write-wins** conflict resolution with per-field timestamps. Social tags and notes resolve independently so you never lose both edits.'**
+  String get helpCloudSyncConflictBubble;
+
+  /// Help bubble text for step cloud_sync_subscription
+  ///
+  /// In en, this message translates to:
+  /// **'Cloud Sync is available as a **monthly** or **yearly** subscription. You can subscribe from **Settings > Account & Subscription**. Cancelled subscriptions keep working until the billing period ends.'**
+  String get helpCloudSyncSubscriptionBubble;
+
+  /// Help bubble text for step cloud_sync_without
+  ///
+  /// In en, this message translates to:
+  /// **'Without Cloud Sync, all your data stays on-device only. It survives app restarts, but **not** app deletion or a phone reset. You can **export** your NodeDex as JSON for manual backup. Cloud Sync automates this and adds cross-device restore — but the app works fully offline without it.'**
+  String get helpCloudSyncWithoutBubble;
+
+  /// Help bubble text for step aether_intro
+  ///
+  /// In en, this message translates to:
+  /// **'**Aether** lets you track Meshtastic nodes at altitude! At 35,000 ft, LoRa signals can reach **400+ km** — far beyond typical ground-level range.'**
+  String get helpAetherIntroBubble;
+
+  /// Help bubble text for step aether_schedule
+  ///
+  /// In en, this message translates to:
+  /// **'**Schedule a flight** before you fly. Enter your flight number, airports, departure time, and your node\'s ID. Other mesh enthusiasts can then track your journey and try to receive your signal.'**
+  String get helpAetherScheduleBubble;
+
+  /// Help bubble text for step aether_active
+  ///
+  /// In en, this message translates to:
+  /// **'**Active flights** show live position data from the OpenSky Network API. You\'ll see altitude, speed, heading, and estimated coverage radius based on radio horizon calculations.'**
+  String get helpAetherActiveBubble;
+
+  /// Help bubble text for step aether_reports
+  ///
+  /// In en, this message translates to:
+  /// **'**Reception reports** let ground stations report when they receive your signal. Reports include distance, RSSI, and SNR. All reports are saved to the **global leaderboard**.'**
+  String get helpAetherReportsBubble;
+
+  /// Help bubble text for step aether_leaderboard
+  ///
+  /// In en, this message translates to:
+  /// **'The **leaderboard is global and persistent** — stored in the cloud, not on your device. Rankings survive app reinstalls and are visible to the entire Socialmesh community. Top 3 get gold, silver, and bronze!'**
+  String get helpAetherLeaderboardBubble;
+
+  /// Help bubble text for step aether_tips
+  ///
+  /// In en, this message translates to:
+  /// **'**Tips**: Window seats help. Turn off airplane mode briefly during cruise altitude (where permitted). Ground stations with elevated antennas have better odds. Good luck!'**
+  String get helpAetherTipsBubble;
+
+  /// Help bubble text for step tak_intro
+  ///
+  /// In en, this message translates to:
+  /// **'**TAK Gateway** bridges your mesh into the Team Awareness Kit (TAK) ecosystem. It streams live **Cursor-on-Target** entities from a TAK server straight onto your map.'**
+  String get helpTakIntroBubble;
+
+  /// Help bubble text for step tak_connect
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the **link icon** in the app bar to connect or disconnect. The status card shows your gateway URL, connection uptime, and total events received.'**
+  String get helpTakConnectBubble;
+
+  /// Help bubble text for step tak_affiliations
+  ///
+  /// In en, this message translates to:
+  /// **'Every entity is colored by **standard affiliation** — blue for friendly, red for hostile, green for neutral, yellow for unknown. The icon changes by dimension too: ground, air, sea, or space.'**
+  String get helpTakAffiliationsBubble;
+
+  /// Help bubble text for step tak_filter
+  ///
+  /// In en, this message translates to:
+  /// **'Use the **filter chips** to narrow the list by affiliation, or type a callsign in the **search bar**. The stale-mode chip cycles between all, active-only, and stale-only.'**
+  String get helpTakFilterBubble;
+
+  /// Help bubble text for step tak_detail
+  ///
+  /// In en, this message translates to:
+  /// **'Tap any entity to open its **detail screen** — full CoT fields, coordinates, speed, course, and raw XML. Use the map icon to jump straight to its position on the map.'**
+  String get helpTakDetailBubble;
+
+  /// Help bubble text for step tak_tracking
+  ///
+  /// In en, this message translates to:
+  /// **'**Long-press** an entity tile to toggle tracking. Tracked entities are highlighted on the map and stay visible even when the TAK screen is closed.'**
+  String get helpTakTrackingBubble;
+
+  /// Help bubble text for step tak_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Open **TAK Settings** from the overflow menu to change the gateway URL, toggle auto-connect, and adjust the stale timeout. All settings persist between sessions.'**
+  String get helpTakSettingsBubble;
+
+  /// Help bubble text for step radio_responsibility
+  ///
+  /// In en, this message translates to:
+  /// **'**You** are responsible for making sure your radio equipment is legal in your country and that you operate within permitted frequency bands and power limits.'**
+  String get helpRadioResponsibilityBubble;
+
+  /// Help bubble text for step radio_licence
+  ///
+  /// In en, this message translates to:
+  /// **'Some regions require an **amateur radio licence** before you can transmit. Check with your local regulatory authority — for example, ACMA in Australia or FCC in the US.'**
+  String get helpRadioLicenceBubble;
+
+  /// Help bubble text for step radio_interference
+  ///
+  /// In en, this message translates to:
+  /// **'Never interfere with **emergency communications** or licensed services. Violations can result in fines or criminal penalties.'**
+  String get helpRadioInterferenceBubble;
+
+  /// Help bubble text for step radio_terms_link
+  ///
+  /// In en, this message translates to:
+  /// **'For full details, check the **Radio and Legal Compliance** section in our Terms of Service. You can find it in Settings under Terms of Service.'**
+  String get helpRadioTermsLinkBubble;
+
+  /// Help bubble text for step use_intro
+  ///
+  /// In en, this message translates to:
+  /// **'Socialmesh is a powerful tool — automations, signals, and mesh messaging give you a lot of capability. With that comes responsibility!'**
+  String get helpUseIntroBubble;
+
+  /// Help bubble text for step use_lawful
+  ///
+  /// In en, this message translates to:
+  /// **'Use the App only for **lawful purposes**. Do not transmit harmful, threatening, or abusive content over the mesh network.'**
+  String get helpUseLawfulBubble;
+
+  /// Help bubble text for step use_automations
+  ///
+  /// In en, this message translates to:
+  /// **'Automations are great for alerts and notifications, but do not use them to **spam the mesh** or flood other users with unwanted messages.'**
+  String get helpUseAutomationsBubble;
+
+  /// Help bubble text for step use_impersonation
+  ///
+  /// In en, this message translates to:
+  /// **'Do not **impersonate** other people or entities on the mesh network. Be yourself!'**
+  String get helpUseImpersonationBubble;
+
+  /// Help bubble text for step use_terms_link
+  ///
+  /// In en, this message translates to:
+  /// **'The full list of prohibited activities is in the **Use of the Service** section of our Terms. You can review it anytime in Settings.'**
+  String get helpUseTermsLinkBubble;
+
+  /// Help bubble text for step responsibility_intro
+  ///
+  /// In en, this message translates to:
+  /// **'Socialmesh is designed to be **privacy-first**. Your messages and data stay on your device — we do not store them on any server.'**
+  String get helpResponsibilityIntroBubble;
+
+  /// Help bubble text for step responsibility_signals
+  ///
+  /// In en, this message translates to:
+  /// **'When you create a **Signal**, it is broadcast over the mesh network. Anyone within range can receive it. Think of it like a public radio broadcast.'**
+  String get helpResponsibilitySignalsBubble;
+
+  /// Help bubble text for step responsibility_content
+  ///
+  /// In en, this message translates to:
+  /// **'You are responsible for **everything you transmit**. Do not share personal information, sensitive data, or content that could harm others.'**
+  String get helpResponsibilityContentBubble;
+
+  /// Help bubble text for step responsibility_third_party
+  ///
+  /// In en, this message translates to:
+  /// **'Some features use **third-party services** like RevenueCat for purchases and Firebase for crash reports. These have their own privacy policies.'**
+  String get helpResponsibilityThirdPartyBubble;
+
+  /// Help bubble text for step responsibility_terms_link
+  ///
+  /// In en, this message translates to:
+  /// **'For complete details, review our **Terms of Service** and **Privacy Policy** in Settings. They explain exactly what data stays local and what is shared.'**
+  String get helpResponsibilityTermsLinkBubble;
+
+  /// Help bubble text for step ft_intro
+  ///
+  /// In en, this message translates to:
+  /// **'**File Transfers** let you send small files — text, configs, coordinates — directly over LoRa radio. No internet, no servers.'**
+  String get helpFtIntroBubble;
+
+  /// Help bubble text for step ft_how
+  ///
+  /// In en, this message translates to:
+  /// **'Files are split into **~200-byte chunks** and sent one at a time over the mesh. The receiver reassembles them automatically.'**
+  String get helpFtHowBubble;
+
+  /// Help bubble text for step ft_nack
+  ///
+  /// In en, this message translates to:
+  /// **'Missed a chunk? No problem. The receiver sends a **NACK** (negative acknowledgement) to request retransmission of exactly the missing pieces.'**
+  String get helpFtNackBubble;
+
+  /// Help bubble text for step ft_limit
+  ///
+  /// In en, this message translates to:
+  /// **'Files are capped at **8 KB**. LoRa is a slow, shared, low-power radio — a single transfer can occupy the channel for up to a minute at long-range settings.'**
+  String get helpFtLimitBubble;
+
+  /// Help bubble text for step ft_beta
+  ///
+  /// In en, this message translates to:
+  /// **'This feature is **BETA**. Both nodes must be running Socialmesh on the same mesh channel. Standard Meshtastic nodes cannot receive these transfers.'**
+  String get helpFtBetaBubble;
+
+  /// Help bubble text for step ft_contacts
+  ///
+  /// In en, this message translates to:
+  /// **'Use the **Contacts** tab to choose a node, then tap **Send File**. The Contacts tab shows every node your device has seen on the mesh.'**
+  String get helpFtContactsBubble;
+
+  /// Help bubble text for step ftl_shared
+  ///
+  /// In en, this message translates to:
+  /// **'LoRa channels are **shared and slow**. Every byte you send is airtime stolen from every other node in range. Treat it like a walkie-talkie frequency, not Wi-Fi.'**
+  String get helpFtlSharedBubble;
+
+  /// Help bubble text for step ftl_toa
+  ///
+  /// In en, this message translates to:
+  /// **'**Time on Air** per chunk depends on Spreading Factor (SF). SF7 (fast, short range): ~30 ms/chunk. SF12 (slow, long range): ~1,500 ms/chunk.'**
+  String get helpFtlToaBubble;
+
+  /// Help bubble text for step ftl_math
+  ///
+  /// In en, this message translates to:
+  /// **'8 KB ÷ 200 bytes/chunk = **41 chunks**. At SF7: ~1.2 seconds total. At SF12: **~62 seconds** of continuous radio transmission.'**
+  String get helpFtlMathBubble;
+
+  /// Help bubble text for step ftl_duty
+  ///
+  /// In en, this message translates to:
+  /// **'EU868 and similar bands impose a **1% duty cycle** — your radio can only transmit for 36 seconds per hour. At SF12, one 8 KB transfer nearly exhausts that entire budget.'**
+  String get helpFtlDutyBubble;
+
+  /// Help bubble text for step ftl_cap
+  ///
+  /// In en, this message translates to:
+  /// **'8 KB is the **safest ceiling** that keeps transfers survivable at worst-case spreading factors without violating duty cycle regulations or blocking the mesh for minutes.'**
+  String get helpFtlCapBubble;
+
+  /// Help bubble text for step ftl_usb
+  ///
+  /// In en, this message translates to:
+  /// **'BLE and USB-connected transfers carry no radio duty-cycle risk. In a future release, higher limits will be unlocked for direct wired connections.'**
+  String get helpFtlUsbBubble;
+
+  /// Section help text for sigil in nodeDexSectionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'A unique procedural glyph generated from this node\'s identity. '**
+  String get helpNodeDexSectionSigil;
+
+  /// Section help text for trait in nodeDexSectionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'An inferred personality archetype derived from behavioral signals: '**
+  String get helpNodeDexSectionTrait;
+
+  /// Section help text for auto_summary in nodeDexSectionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Computed insights from this node\'s encounter history. The time-of-day '**
+  String get helpNodeDexSectionAutoSummary;
+
+  /// Section help text for observation_timeline in nodeDexSectionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'A visual timeline of this node\'s observation history. The bar shows '**
+  String get helpNodeDexSectionObservationTimeline;
+
+  /// Section help text for discovery in nodeDexSectionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Tracks when this node was first and last seen on your mesh, the total '**
+  String get helpNodeDexSectionDiscovery;
+
+  /// Section help text for signal in nodeDexSectionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Best and most recent SNR (Signal-to-Noise Ratio) and RSSI '**
+  String get helpNodeDexSectionSignal;
+
+  /// Section help text for social_tag in nodeDexSectionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'A personal label you assign to categorize this node. Social tags are '**
+  String get helpNodeDexSectionSocialTag;
+
+  /// Section help text for note in nodeDexSectionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'A free-text note for anything you want to remember about this node. '**
+  String get helpNodeDexSectionNote;
+
+  /// Section help text for regions in nodeDexSectionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Every regulatory region where this node has been observed. Region '**
+  String get helpNodeDexSectionRegions;
+
+  /// Section help text for encounters in nodeDexSectionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'A chronological timeline of when this node appeared on your mesh. '**
+  String get helpNodeDexSectionEncounters;
+
+  /// Section help text for activity_timeline in nodeDexSectionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'A unified chronological feed of everything observed about this node: '**
+  String get helpNodeDexSectionActivityTimeline;
+
+  /// Section help text for coseen in nodeDexSectionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes that are frequently observed in the same session as this node. '**
+  String get helpNodeDexSectionCoseen;
+
+  /// Section help text for device in nodeDexSectionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Live telemetry from the node: battery percentage, hardware model, '**
+  String get helpNodeDexSectionDevice;
+
+  /// Section help text for album_rarity in nodeDexSectionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Rarity tiers are computed from encounter count and inferred trait. '**
+  String get helpNodeDexSectionAlbumRarity;
+
+  /// Section help text for album_grouping in nodeDexSectionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Cards can be grouped by Trait (behavioral archetype), Rarity '**
+  String get helpNodeDexSectionAlbumGrouping;
+
+  /// Section help text for album_explorer_title in nodeDexSectionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Your Explorer Title reflects your overall collection progress. '**
+  String get helpNodeDexSectionAlbumExplorerTitle;
+
+  /// Section help text for album_holographic in nodeDexSectionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'The holographic shimmer on cards is a visual indicator of rarity. '**
+  String get helpNodeDexSectionAlbumHolographic;
+
+  /// Section help text for album_patina in nodeDexSectionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Patina is a composite score reflecting how deeply you have observed '**
+  String get helpNodeDexSectionAlbumPatina;
+
+  /// Section help text for album_cloud_sync in nodeDexSectionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'With a Cloud Sync subscription, your entire NodeDex album backs up '**
+  String get helpNodeDexSectionAlbumCloudSync;
+
+  /// Section help text for status in takSectionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'The status card shows whether the WebSocket connection to the TAK '**
+  String get helpTakSectionStatus;
+
+  /// Section help text for affiliation in takSectionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Affiliation describes the relationship of an entity to '**
+  String get helpTakSectionAffiliation;
+
+  /// Section help text for cot_type in takSectionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'The CoT type string encodes an entity\'s affiliation, dimension, '**
+  String get helpTakSectionCotType;
+
+  /// Section help text for identity in takSectionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'The UID uniquely identifies this entity across all CoT messages. '**
+  String get helpTakSectionIdentity;
+
+  /// Section help text for position in takSectionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Latitude and longitude in WGS-84 decimal degrees as reported in '**
+  String get helpTakSectionPosition;
+
+  /// Section help text for motion in takSectionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Speed, course, and altitude parsed from the CoT event\'s track and '**
+  String get helpTakSectionMotion;
+
+  /// Section help text for timestamps in takSectionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Event Time is when the CoT event was generated. Stale Time is when '**
+  String get helpTakSectionTimestamps;
+
+  /// Section help text for tracking in takSectionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Tracked entities are pinned and highlighted on the map with a '**
+  String get helpTakSectionTracking;
+
+  /// Section help text for raw_payload in takSectionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'The raw JSON payload as received from the TAK Gateway WebSocket. '**
+  String get helpTakSectionRawPayload;
+
+  /// Section help text for filters in takSectionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'Filter chips let you narrow the entity list by affiliation. The '**
+  String get helpTakSectionFilters;
+
+  /// Section help text for settings in takSectionHelp
+  ///
+  /// In en, this message translates to:
+  /// **'TAK Settings let you configure the gateway URL, toggle auto-connect '**
+  String get helpTakSectionSettings;
+
+  /// Help category name: Channels
+  ///
+  /// In en, this message translates to:
+  /// **'Channels'**
+  String get helpCategoryChannels;
+
+  /// Help category name: Messaging
+  ///
+  /// In en, this message translates to:
+  /// **'Messaging'**
+  String get helpCategoryMessaging;
+
+  /// Help category name: Nodes
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes'**
+  String get helpCategoryNodes;
+
+  /// Help category name: Device
+  ///
+  /// In en, this message translates to:
+  /// **'Device'**
+  String get helpCategoryDevice;
+
+  /// Help category name: Network
+  ///
+  /// In en, this message translates to:
+  /// **'Network'**
+  String get helpCategoryNetwork;
+
+  /// Help category name: Automations
+  ///
+  /// In en, this message translates to:
+  /// **'Automations'**
+  String get helpCategoryAutomations;
+
+  /// Help category name: Settings
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get helpCategorySettings;
+
+  /// Help category name: Legal & Safety
+  ///
+  /// In en, this message translates to:
+  /// **'Legal & Safety'**
+  String get helpCategoryLegal;
+
+  /// Title for blocked route screen
+  ///
+  /// In en, this message translates to:
+  /// **'Access Restricted'**
+  String get accessRestrictedTitle;
+
+  /// Generic go back button label
+  ///
+  /// In en, this message translates to:
+  /// **'Go Back'**
+  String get goBack;
+
+  /// Title when device is not connected
+  ///
+  /// In en, this message translates to:
+  /// **'Device Not Connected'**
+  String get deviceNotConnected;
+
+  /// Button label to connect device
+  ///
+  /// In en, this message translates to:
+  /// **'Connect Device'**
+  String get connectDevice;
+
+  /// Message when trying to use feature without device
+  ///
+  /// In en, this message translates to:
+  /// **'Connect device to use this feature'**
+  String get connectDeviceToUseFeature;
+
+  /// Snackbar message after requesting position
+  ///
+  /// In en, this message translates to:
+  /// **'Position requested from {name}'**
+  String positionRequestedFrom(String name);
+
+  /// Generic failure message with error
+  ///
+  /// In en, this message translates to:
+  /// **'Failed: {error}'**
+  String failedGeneric(String error);
+
+  /// Last heard time when node was never heard
+  ///
+  /// In en, this message translates to:
+  /// **'Never'**
+  String get lastHeardNever;
+
+  /// Last heard time for less than a minute ago
+  ///
+  /// In en, this message translates to:
+  /// **'Just now'**
+  String get lastHeardJustNow;
+
+  /// Last heard time in minutes
+  ///
+  /// In en, this message translates to:
+  /// **'{count}m ago'**
+  String lastHeardMinutesAgo(int count);
+
+  /// Last heard time in hours
+  ///
+  /// In en, this message translates to:
+  /// **'{count}h ago'**
+  String lastHeardHoursAgo(int count);
+
+  /// Last heard time in days
+  ///
+  /// In en, this message translates to:
+  /// **'{count}d ago'**
+  String lastHeardDaysAgo(int count);
+
+  /// Error when signal location radius update fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to update signal location radius: {error}'**
+  String failedToUpdateSignalLocationRadius(String error);
+
+  /// Error when saving global layer configuration fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save configuration: {error}'**
+  String failedToSaveConfiguration(String error);
+
+  /// Error message for automation action validation
+  ///
+  /// In en, this message translates to:
+  /// **'Action {index}: {error}'**
+  String automationActionError(int index, String error);
+
+  /// Error when ringtone playback fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to play: {error}'**
+  String failedToPlay(String error);
+
+  /// What's new subtitle for version 1.9.0
+  ///
+  /// In en, this message translates to:
+  /// **'Version 1.9.0'**
+  String get whatsNewVersion190Subtitle;
+
+  /// What's new feature title: Reachability
+  ///
+  /// In en, this message translates to:
+  /// **'Reachability'**
+  String get whatsNewReachabilityTitle;
+
+  /// What's new description for Reachability feature
+  ///
+  /// In en, this message translates to:
+  /// **'Estimate how likely you are to reach each node on your mesh — without sending a single test packet.\\n\\nReachability passively observes traffic flowing through the network and assigns High, Medium, or Low confidence to every node. Find it in the drawer menu under Mesh.'**
+  String get whatsNewReachabilityDescription;
+
+  /// What's new subtitle for version 1.10.0
+  ///
+  /// In en, this message translates to:
+  /// **'Version 1.10.0'**
+  String get whatsNewVersion1100Subtitle;
+
+  /// What's new feature title: World Map
+  ///
+  /// In en, this message translates to:
+  /// **'World Map'**
+  String get whatsNewWorldMapTitle;
+
+  /// What's new description for World Map feature
+  ///
+  /// In en, this message translates to:
+  /// **'See the entire global Meshtastic network on a single map. Every dot is a node sharing its location — zoom, pan, and tap to explore node details, hardware info, and last-seen times.\\n\\nNo connection required. The World Map pulls live data from the Socialmesh backend so you can explore the mesh anywhere.'**
+  String get whatsNewWorldMapDescription;
+
+  /// What's new subtitle for version 1.10.1
+  ///
+  /// In en, this message translates to:
+  /// **'Version 1.10.1'**
+  String get whatsNewVersion1101Subtitle;
+
+  /// What's new feature title: Presence
+  ///
+  /// In en, this message translates to:
+  /// **'Presence'**
+  String get whatsNewPresenceTitle;
+
+  /// What's new description for Presence feature
+  ///
+  /// In en, this message translates to:
+  /// **'See who is active on your mesh at a glance. Presence shows real-time node activity with intent indicators — whether someone is monitoring, mobile, or at a fixed base station.\\n\\nFilter by activity level, search by name, and tap any node to see their full profile. Find it in the drawer under Social.'**
+  String get whatsNewPresenceDescription;
+
+  /// What's new subtitle for version 1.11.0
+  ///
+  /// In en, this message translates to:
+  /// **'Version 1.11.0'**
+  String get whatsNewVersion1110Subtitle;
+
+  /// What's new feature title: Signals
+  ///
+  /// In en, this message translates to:
+  /// **'Signals'**
+  String get whatsNewSignalsTitle;
+
+  /// What's new description for Signals feature
+  ///
+  /// In en, this message translates to:
+  /// **'Broadcast ephemeral moments to your mesh. Signals are short-lived posts — share text, a photo, or your location with a TTL from 15 minutes up to 24 hours.\\n\\nNearby signals appear first with proximity badges showing hop count. When they fade, they are gone. True off-grid, ephemeral content.'**
+  String get whatsNewSignalsDescription;
+
+  /// What's new subtitle for version 1.13.0
+  ///
+  /// In en, this message translates to:
+  /// **'Version 1.13.0'**
+  String get whatsNewVersion1130Subtitle;
+
+  /// What's new feature title: NodeDex
+  ///
+  /// In en, this message translates to:
+  /// **'NodeDex'**
+  String get whatsNewNodeDexTitle;
+
+  /// What's new description for NodeDex feature
+  ///
+  /// In en, this message translates to:
+  /// **'A living field journal of the mesh world. Every node you discover is automatically recorded with a unique procedural Sigil and a personality Trait derived from real behavior.\\n\\nFind it in the drawer menu under Social. Filter by trait, search by name or hex ID, and tap any entry to explore its full profile — signal history, discovery timeline, and more.'**
+  String get whatsNewNodeDexDescription;
+
+  /// What's new subtitle for version 1.15.0
+  ///
+  /// In en, this message translates to:
+  /// **'Version 1.15.0'**
+  String get whatsNewVersion1150Subtitle;
+
+  /// What's new feature title: Aether
+  ///
+  /// In en, this message translates to:
+  /// **'Aether'**
+  String get whatsNewAetherTitle;
+
+  /// What's new description for Aether feature
+  ///
+  /// In en, this message translates to:
+  /// **'Track Meshtastic nodes at altitude! Schedule your flight with your mesh node and let ground stations around the world listen for your signal.\\n\\nAt 35,000 ft, LoRa can reach 400+ km. Report receptions, compete on the distance leaderboard, and set new range records. Find it in the drawer menu under Social.'**
+  String get whatsNewAetherDescription;
+
+  /// What's new subtitle for version 1.16.0
+  ///
+  /// In en, this message translates to:
+  /// **'Version 1.16.0'**
+  String get whatsNewVersion1160Subtitle;
+
+  /// What's new feature title: TAK Gateway
+  ///
+  /// In en, this message translates to:
+  /// **'TAK Gateway'**
+  String get whatsNewTakGatewayTitle;
+
+  /// What's new description for TAK Gateway feature
+  ///
+  /// In en, this message translates to:
+  /// **'Bridge your mesh into the Team Awareness Kit (TAK) ecosystem. Socialmesh now connects to a TAK Gateway via WebSocket and streams live Cursor-on-Target entities onto your map.\\n\\nEvery entity is colored by standard affiliation and given a dimension-specific icon. Filter by affiliation, search callsigns, track entities with a long-press, and tap any marker for full CoT details. Find it in the drawer menu under Mesh.'**
+  String get whatsNewTakGatewayDescription;
+
+  /// Notification title for new node discovery
+  ///
+  /// In en, this message translates to:
+  /// **'New Node Discovered'**
+  String get notificationNewNodeTitle;
+
+  /// Notification body for new node discovery
+  ///
+  /// In en, this message translates to:
+  /// **'{nodeName} ({shortCode}) joined the mesh'**
+  String notificationNewNodeBody(String nodeName, String shortCode);
+
+  /// Notification title for aether flight detection
+  ///
+  /// In en, this message translates to:
+  /// **'Aether Flight Detected'**
+  String get notificationAetherFlightTitle;
+
+  /// Notification title for detection sensor
+  ///
+  /// In en, this message translates to:
+  /// **'{sensorName}: {state}'**
+  String notificationDetectionSensorTitle(String sensorName, String state);
+
+  /// Notification body for detection sensor
+  ///
+  /// In en, this message translates to:
+  /// **'From {displayName}'**
+  String notificationDetectionSensorBody(String displayName);
+
+  /// Notification title for stale TAK entity
+  ///
+  /// In en, this message translates to:
+  /// **'Entity Stale: {callsign}'**
+  String notificationEntityStaleTitle(String callsign);
+
+  /// Notification title for TAK proximity alert
+  ///
+  /// In en, this message translates to:
+  /// **'Proximity Alert: {callsign}'**
+  String notificationProximityAlertTitle(String callsign);
+
+  /// Notification title for direct message
+  ///
+  /// In en, this message translates to:
+  /// **'Message from {senderName} ({shortCode})'**
+  String notificationDirectMessageTitle(String senderName, String shortCode);
+
+  /// Notification title for channel message
+  ///
+  /// In en, this message translates to:
+  /// **'{senderName} ({shortCode}) in {channelName}'**
+  String notificationChannelMessageTitle(
+    String senderName,
+    String shortCode,
+    String channelName,
+  );
+
+  /// Android notification channel description for node discovery
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications for newly discovered mesh nodes'**
+  String get notificationChannelNodeDiscovery;
+
+  /// Android notification channel description for Aether flights
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications for Aether flight detection events'**
+  String get notificationChannelAetherFlights;
+
+  /// Android notification channel description for device alerts
+  ///
+  /// In en, this message translates to:
+  /// **'Important notifications from your Meshtastic device'**
+  String get notificationChannelDeviceAlerts;
+
+  /// Android notification channel description for detection sensors
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications for detection sensor events'**
+  String get notificationChannelDetectionSensor;
+
+  /// Android notification channel description for TAK stale entities
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications when tracked TAK entities go stale'**
+  String get notificationChannelTakStale;
+
+  /// Android notification channel description for TAK proximity
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications for TAK entity proximity alerts'**
+  String get notificationChannelTakProximity;
+
+  /// Android notification channel description for direct messages
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications for direct mesh messages'**
+  String get notificationChannelDirectMessages;
+
+  /// Android notification channel description for channel messages
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications for channel mesh messages'**
+  String get notificationChannelMessages;
+
+  /// Visual flow node title: Event
+  ///
+  /// In en, this message translates to:
+  /// **'Event'**
+  String get flowNodeEvent;
+
+  /// Visual flow node title: Message Contains
+  ///
+  /// In en, this message translates to:
+  /// **'Message Contains'**
+  String get flowNodeMessageContains;
+
+  /// Visual flow node title: Node Silent
+  ///
+  /// In en, this message translates to:
+  /// **'Node Silent'**
+  String get flowNodeNodeSilent;
+
+  /// Visual flow node title: Scheduled
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled'**
+  String get flowNodeScheduled;
+
+  /// Visual flow node title: Signal Weak
+  ///
+  /// In en, this message translates to:
+  /// **'Signal Weak'**
+  String get flowNodeSignalWeak;
+
+  /// Visual flow node title: Channel Activity
+  ///
+  /// In en, this message translates to:
+  /// **'Channel Activity'**
+  String get flowNodeChannelActivity;
+
+  /// Visual flow node title: Detection Sensor
+  ///
+  /// In en, this message translates to:
+  /// **'Detection Sensor'**
+  String get flowNodeDetectionSensor;
+
+  /// Visual flow node title: Manual
+  ///
+  /// In en, this message translates to:
+  /// **'Manual'**
+  String get flowNodeManual;
+
+  /// Visual flow node title: All Nodes
+  ///
+  /// In en, this message translates to:
+  /// **'All Nodes'**
+  String get flowNodeAllNodes;
+
+  /// Visual flow port title: Nodes
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes'**
+  String get flowNodeNodes;
+
+  /// Visual flow node title: Trait Filter
+  ///
+  /// In en, this message translates to:
+  /// **'Trait Filter'**
+  String get flowNodeTraitFilter;
+
+  /// Visual flow node title: Distance Filter
+  ///
+  /// In en, this message translates to:
+  /// **'Distance Filter'**
+  String get flowNodeDistanceFilter;
+
+  /// Visual flow node title: Encounter Filter
+  ///
+  /// In en, this message translates to:
+  /// **'Encounter Filter'**
+  String get flowNodeEncounterFilter;
+
+  /// Visual flow node title: Online Filter
+  ///
+  /// In en, this message translates to:
+  /// **'Online Filter'**
+  String get flowNodeOnlineFilter;
+
+  /// Visual flow node title: Battery Filter
+  ///
+  /// In en, this message translates to:
+  /// **'Battery Filter'**
+  String get flowNodeBatteryFilter;
+
+  /// Visual flow node title: Name Filter
+  ///
+  /// In en, this message translates to:
+  /// **'Name Filter'**
+  String get flowNodeNameFilter;
+
+  /// Visual flow node title: Sort
+  ///
+  /// In en, this message translates to:
+  /// **'Sort'**
+  String get flowNodeSort;
+
+  /// Visual flow node title: Limit
+  ///
+  /// In en, this message translates to:
+  /// **'Limit'**
+  String get flowNodeLimit;
+
+  /// Visual flow port title: Input
+  ///
+  /// In en, this message translates to:
+  /// **'Input'**
+  String get flowNodeInput;
+
+  /// Visual flow port title: Filtered
+  ///
+  /// In en, this message translates to:
+  /// **'Filtered'**
+  String get flowNodeFiltered;
+
+  /// Visual flow port title: Sorted
+  ///
+  /// In en, this message translates to:
+  /// **'Sorted'**
+  String get flowNodeSorted;
+
+  /// Visual flow port title: Limited
+  ///
+  /// In en, this message translates to:
+  /// **'Limited'**
+  String get flowNodeLimited;
+
+  /// Visual flow port title: Execute
+  ///
+  /// In en, this message translates to:
+  /// **'Execute'**
+  String get flowNodeExecute;
+
+  /// Visual flow logic gate: AND
+  ///
+  /// In en, this message translates to:
+  /// **'AND'**
+  String get flowNodeAnd;
+
+  /// Visual flow logic gate: OR
+  ///
+  /// In en, this message translates to:
+  /// **'OR'**
+  String get flowNodeOr;
+
+  /// Visual flow logic gate: NOT
+  ///
+  /// In en, this message translates to:
+  /// **'NOT'**
+  String get flowNodeNot;
+
+  /// Visual flow logic gate: Delay
+  ///
+  /// In en, this message translates to:
+  /// **'Delay'**
+  String get flowNodeDelay;
+
+  /// Visual flow port title: Input N
+  ///
+  /// In en, this message translates to:
+  /// **'Input {index}'**
+  String flowNodeInputN(int index);
+
+  /// Visual flow port title: All Met
+  ///
+  /// In en, this message translates to:
+  /// **'All Met'**
+  String get flowNodeAllMet;
+
+  /// Visual flow port title: Any Met
+  ///
+  /// In en, this message translates to:
+  /// **'Any Met'**
+  String get flowNodeAnyMet;
+
+  /// Visual flow port title: Inverted
+  ///
+  /// In en, this message translates to:
+  /// **'Inverted'**
+  String get flowNodeInverted;
+
+  /// Visual flow port title: Delayed
+  ///
+  /// In en, this message translates to:
+  /// **'Delayed'**
+  String get flowNodeDelayed;
+
+  /// Automation template title
+  ///
+  /// In en, this message translates to:
+  /// **'Low Battery Alert'**
+  String get automationTemplateLowBatteryTitle;
+
+  /// Automation template description
+  ///
+  /// In en, this message translates to:
+  /// **'Get notified when your device battery drops below 20%'**
+  String get automationTemplateLowBatteryDescription;
+
+  /// Automation template title
+  ///
+  /// In en, this message translates to:
+  /// **'Node Offline Alert'**
+  String get automationTemplateNodeOfflineTitle;
+
+  /// Automation template description
+  ///
+  /// In en, this message translates to:
+  /// **'Alert when a specific node hasn\'t been seen for 30 minutes'**
+  String get automationTemplateNodeOfflineDescription;
+
+  /// Automation template title
+  ///
+  /// In en, this message translates to:
+  /// **'Weather Report'**
+  String get automationTemplateWeatherReportTitle;
+
+  /// Automation template description
+  ///
+  /// In en, this message translates to:
+  /// **'Send periodic weather data from environment sensors'**
+  String get automationTemplateWeatherReportDescription;
+
+  /// Automation template title
+  ///
+  /// In en, this message translates to:
+  /// **'Channel Monitor'**
+  String get automationTemplateChannelMonitorTitle;
+
+  /// Automation template description
+  ///
+  /// In en, this message translates to:
+  /// **'Log activity for a specific channel'**
+  String get automationTemplateChannelMonitorDescription;
+
+  /// Automation template title
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency Beacon'**
+  String get automationTemplateEmergencyBeaconTitle;
+
+  /// Automation template description
+  ///
+  /// In en, this message translates to:
+  /// **'Broadcast emergency position every 5 minutes when triggered'**
+  String get automationTemplateEmergencyBeaconDescription;
+
+  /// Widget template description for battery gauge
+  ///
+  /// In en, this message translates to:
+  /// **'Display battery level with gauge'**
+  String get widgetTemplateBatteryGaugeDescription;
+
+  /// Widget template description for signal meter
+  ///
+  /// In en, this message translates to:
+  /// **'Display SNR and RSSI'**
+  String get widgetTemplateSignalMeterDescription;
+
+  /// Widget template description for environment
+  ///
+  /// In en, this message translates to:
+  /// **'Temperature, humidity, and pressure display'**
+  String get widgetTemplateEnvironmentDescription;
+
+  /// Widget template description for node info
+  ///
+  /// In en, this message translates to:
+  /// **'Basic node information card'**
+  String get widgetTemplateNodeInfoDescription;
+
+  /// Widget template description for GPS
+  ///
+  /// In en, this message translates to:
+  /// **'Show GPS coordinates and satellites'**
+  String get widgetTemplateGpsDescription;
+
+  /// Widget template description for mesh status
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh network status at a glance'**
+  String get widgetTemplateMeshStatusDescription;
+
+  /// Widget template description for quick actions
+  ///
+  /// In en, this message translates to:
+  /// **'Common mesh actions at a glance'**
+  String get widgetTemplateQuickActionsDescription;
+
+  /// What's new CTA button: Open World Map
+  ///
+  /// In en, this message translates to:
+  /// **'Open World Map'**
+  String get whatsNewCtaOpenWorldMap;
+
+  /// What's new CTA button: Open Presence
+  ///
+  /// In en, this message translates to:
+  /// **'Open Presence'**
+  String get whatsNewCtaOpenPresence;
+
+  /// What's new CTA button: Open NodeDex
+  ///
+  /// In en, this message translates to:
+  /// **'Open NodeDex'**
+  String get whatsNewCtaOpenNodedex;
+
+  /// What's new CTA button: Open Aether
+  ///
+  /// In en, this message translates to:
+  /// **'Open Aether'**
+  String get whatsNewCtaOpenAether;
+
+  /// What's new CTA button: Open Reachability
+  ///
+  /// In en, this message translates to:
+  /// **'Open Reachability'**
+  String get whatsNewCtaOpenReachability;
+
+  /// What's new CTA button: Open Signals
+  ///
+  /// In en, this message translates to:
+  /// **'Open Signals'**
+  String get whatsNewCtaOpenSignals;
+
+  /// What's new CTA button: Open TAK Gateway
+  ///
+  /// In en, this message translates to:
+  /// **'Open TAK Gateway'**
+  String get whatsNewCtaOpenTakGateway;
+
+  /// Headline for What's New popup
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s New in Socialmesh'**
+  String get whatsNewHeadline;
 }
 
 class _AppLocalizationsDelegate

@@ -822,7 +822,7 @@ class _RingtoneScreenState extends ConsumerState<RingtoneScreen>
       }
     } catch (e) {
       if (!mounted) return;
-      showErrorSnackBar(context, 'Failed to play: ${e.toString()}');
+      showErrorSnackBar(context, context.l10n.failedToPlay(e.toString()));
     } finally {
       safeSetState(() => _playing = false);
     }

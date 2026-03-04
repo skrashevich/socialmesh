@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/connection_providers.dart';
 import '../../utils/snackbar.dart';
+import '../l10n/l10n_extension.dart';
 import '../widgets/glass_scaffold.dart';
 import 'route_guard.dart';
 import 'package:socialmesh/core/theme.dart';
@@ -118,7 +119,7 @@ class _BlockedRouteScreen extends StatelessWidget {
     final theme = Theme.of(context);
 
     return GlassScaffold.body(
-      title: 'Access Restricted',
+      title: context.l10n.accessRestrictedTitle,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(AppTheme.spacing32),
@@ -150,7 +151,7 @@ class _BlockedRouteScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).pushReplacementNamed(fallbackRoute!);
                   },
-                  child: const Text('Go Back'),
+                  child: Text(context.l10n.goBack),
                 ),
             ],
           ),

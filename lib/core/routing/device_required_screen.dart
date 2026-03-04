@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/connection_providers.dart';
 import '../../utils/snackbar.dart';
+import '../l10n/l10n_extension.dart';
 import 'package:socialmesh/core/theme.dart';
 
 /// Mixin for screens that require device connection.
@@ -101,7 +102,7 @@ class _DefaultDisconnectedOverlay extends StatelessWidget {
                 ),
                 const SizedBox(height: AppTheme.spacing24),
                 Text(
-                  'Device Not Connected',
+                  context.l10n.deviceNotConnected,
                   style: theme.textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -118,7 +119,7 @@ class _DefaultDisconnectedOverlay extends StatelessWidget {
                 FilledButton.icon(
                   onPressed: onReconnect,
                   icon: const Icon(Icons.bluetooth_searching),
-                  label: const Text('Connect Device'),
+                  label: Text(context.l10n.connectDevice),
                 ),
                 const SizedBox(height: AppTheme.spacing12),
                 TextButton(
@@ -127,7 +128,7 @@ class _DefaultDisconnectedOverlay extends StatelessWidget {
                       Navigator.of(context).pop();
                     }
                   },
-                  child: const Text('Go Back'),
+                  child: Text(context.l10n.goBack),
                 ),
               ],
             ),

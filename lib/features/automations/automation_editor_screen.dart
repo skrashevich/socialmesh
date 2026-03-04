@@ -752,7 +752,10 @@ class _AutomationEditorScreenState extends ConsumerState<AutomationEditorScreen>
       // Validate action configuration
       final actionError = action.validate();
       if (actionError != null) {
-        showWarningSnackBar(context, 'Action ${i + 1}: $actionError');
+        showWarningSnackBar(
+          context,
+          context.l10n.automationActionError(i + 1, actionError),
+        );
         return;
       }
 

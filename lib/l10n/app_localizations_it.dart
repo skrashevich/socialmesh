@@ -28959,4 +28959,1789 @@ class AppLocalizationsIt extends AppLocalizations {
   String globalLayerNodesSeenVia(int count) {
     return '$count nodes seen via Global Layer';
   }
+
+  @override
+  String get helpChannelCreationTitle => 'Creating a Channel';
+
+  @override
+  String get helpChannelCreationDescription =>
+      'Learn how to create and configure mesh channels';
+
+  @override
+  String get helpEncryptionLevelsTitle => 'Channel Encryption';
+
+  @override
+  String get helpEncryptionLevelsDescription =>
+      'Understanding privacy and encryption options';
+
+  @override
+  String get helpMessageRoutingTitle => 'How Messages Travel';
+
+  @override
+  String get helpMessageRoutingDescription =>
+      'Understanding mesh routing and message hops';
+
+  @override
+  String get helpNodesOverviewTitle => 'Your Mesh Network';
+
+  @override
+  String get helpNodesOverviewDescription =>
+      'Understanding the nodes in your mesh';
+
+  @override
+  String get helpNodeRolesTitle => 'Node Roles';
+
+  @override
+  String get helpNodeRolesDescription =>
+      'CLIENT vs ROUTER vs REPEATER explained';
+
+  @override
+  String get helpRegionSelectionTitle => 'Selecting Your Region';
+
+  @override
+  String get helpRegionSelectionDescription =>
+      'Frequency bands and legal compliance';
+
+  @override
+  String get helpDeviceConnectionTitle => 'Connecting Your Device';
+
+  @override
+  String get helpDeviceConnectionDescription =>
+      'BLE vs USB and pairing process';
+
+  @override
+  String get helpGpsSettingsTitle => 'GPS & Position Sharing';
+
+  @override
+  String get helpGpsSettingsDescription => 'Location updates and privacy';
+
+  @override
+  String get helpSignalMetricsTitle => 'Understanding Signal Strength';
+
+  @override
+  String get helpSignalMetricsDescription => 'SNR, RSSI, and what they mean';
+
+  @override
+  String get helpMapOverviewTitle => 'Mesh Map';
+
+  @override
+  String get helpMapOverviewDescription => 'See your mesh network on a map';
+
+  @override
+  String get helpChannelsOverviewTitle => 'Your Channels';
+
+  @override
+  String get helpChannelsOverviewDescription =>
+      'Managing mesh communication channels';
+
+  @override
+  String get helpAutomationsOverviewTitle => 'Automations';
+
+  @override
+  String get helpAutomationsOverviewDescription =>
+      'Automatic actions for your mesh';
+
+  @override
+  String get helpDashboardOverviewTitle => 'Your Dashboard';
+
+  @override
+  String get helpDashboardOverviewDescription =>
+      'Your customizable mesh command center';
+
+  @override
+  String get helpWidgetBuilderOverviewTitle => 'Widget Builder';
+
+  @override
+  String get helpWidgetBuilderOverviewDescription =>
+      'Create your own custom widgets';
+
+  @override
+  String get helpMarketplaceOverviewTitle => 'Widget Marketplace';
+
+  @override
+  String get helpMarketplaceOverviewDescription =>
+      'Discover widgets made by the community';
+
+  @override
+  String get helpSignalsOverviewTitle => 'Signals';
+
+  @override
+  String get helpSignalsOverviewDescription =>
+      'Broadcast ephemeral signals to your mesh';
+
+  @override
+  String get helpSignalCreationTitle => 'Creating a Signal';
+
+  @override
+  String get helpSignalCreationDescription =>
+      'How to compose and broadcast a signal';
+
+  @override
+  String get helpSignalDetailTitle => 'Signal Details';
+
+  @override
+  String get helpSignalDetailDescription =>
+      'Interacting with a signal and its responses';
+
+  @override
+  String get helpWorldMeshOverviewTitle => 'World Mesh';
+
+  @override
+  String get helpWorldMeshOverviewDescription =>
+      'Global mesh network visualization';
+
+  @override
+  String get helpRoutesOverviewTitle => 'Routes';
+
+  @override
+  String get helpRoutesOverviewDescription => 'Record and share GPS routes';
+
+  @override
+  String get helpPositionOverviewTitle => 'Position History';
+
+  @override
+  String get helpPositionOverviewDescription =>
+      'GPS position logs for all nodes on your mesh';
+
+  @override
+  String get helpSettingsOverviewTitle => 'Settings';
+
+  @override
+  String get helpSettingsOverviewDescription => 'Configure your app and device';
+
+  @override
+  String get helpProfileOverviewTitle => 'Your Profile';
+
+  @override
+  String get helpProfileOverviewDescription => 'Manage your mesh identity';
+
+  @override
+  String get helpMesh3dOverviewTitle => 'Mesh 3D';
+
+  @override
+  String get helpMesh3dOverviewDescription =>
+      '3D network topology visualization';
+
+  @override
+  String get helpGlobeOverviewTitle => 'Globe View';
+
+  @override
+  String get helpGlobeOverviewDescription => '3D globe with your mesh';
+
+  @override
+  String get helpTimelineOverviewTitle => 'Timeline';
+
+  @override
+  String get helpTimelineOverviewDescription => 'Your mesh activity history';
+
+  @override
+  String get helpDeviceShopOverviewTitle => 'Device Shop';
+
+  @override
+  String get helpDeviceShopOverviewDescription => 'Browse Meshtastic hardware';
+
+  @override
+  String get helpOfflineMapsOverviewTitle => 'Offline Maps';
+
+  @override
+  String get helpOfflineMapsOverviewDescription =>
+      'Map display settings and controls';
+
+  @override
+  String get helpRadioConfigOverviewTitle => 'Radio Settings';
+
+  @override
+  String get helpRadioConfigOverviewDescription => 'Configure your LoRa radio';
+
+  @override
+  String get helpPresenceOverviewTitle => 'Node Presence';
+
+  @override
+  String get helpPresenceOverviewDescription =>
+      'Track which nodes are active on your mesh';
+
+  @override
+  String get helpReachabilityOverviewTitle => 'Mesh Reachability';
+
+  @override
+  String get helpReachabilityOverviewDescription =>
+      'Understand which nodes you can reach';
+
+  @override
+  String get helpMeshHealthOverviewTitle => 'Mesh Health';
+
+  @override
+  String get helpMeshHealthOverviewDescription =>
+      'Monitor your mesh network health';
+
+  @override
+  String get helpTracerouteOverviewTitle => 'Traceroute';
+
+  @override
+  String get helpTracerouteOverviewDescription =>
+      'Discover the route packets take across your mesh';
+
+  @override
+  String get helpNodedexOverviewTitle => 'NodeDex Field Journal';
+
+  @override
+  String get helpNodedexOverviewDescription =>
+      'Your personal record of every node discovered on the mesh';
+
+  @override
+  String get helpNodedexAlbumTitle => 'Collector Album';
+
+  @override
+  String get helpNodedexAlbumDescription =>
+      'A collectible card view of your discovered nodes';
+
+  @override
+  String get helpNodedexConstellationTitle => 'Constellation View';
+
+  @override
+  String get helpNodedexConstellationDescription =>
+      'A star-map visualization of co-seen node relationships';
+
+  @override
+  String get helpNodedexDetailTitle => 'Node Profile';
+
+  @override
+  String get helpNodedexDetailDescription =>
+      'Understanding a node\'s full identity and history';
+
+  @override
+  String get helpCloudSyncOverviewTitle => 'Cloud Sync';
+
+  @override
+  String get helpCloudSyncOverviewDescription =>
+      'Premium cross-device sync for your mesh data';
+
+  @override
+  String get helpAetherOverviewTitle => 'Aether';
+
+  @override
+  String get helpAetherOverviewDescription =>
+      'Track Meshtastic nodes at altitude';
+
+  @override
+  String get helpTakGatewayOverviewTitle => 'TAK Gateway';
+
+  @override
+  String get helpTakGatewayOverviewDescription =>
+      'Bridge your mesh into the TAK ecosystem';
+
+  @override
+  String get helpRadioComplianceTitle => 'Radio Rules & Your Responsibilities';
+
+  @override
+  String get helpRadioComplianceDescription =>
+      'Understand your legal obligations when using radio devices';
+
+  @override
+  String get helpAcceptableUseTitle => 'Acceptable Use & Prohibited Activities';
+
+  @override
+  String get helpAcceptableUseDescription =>
+      'What you can and cannot do with Socialmesh';
+
+  @override
+  String get helpUserResponsibilityTitle => 'Your Data, Your Responsibility';
+
+  @override
+  String get helpUserResponsibilityDescription =>
+      'How Socialmesh handles data and what you are responsible for';
+
+  @override
+  String get helpFileTransferOverviewTitle => 'File Transfers';
+
+  @override
+  String get helpFileTransferOverviewDescription =>
+      'Send files over the mesh radio without internet';
+
+  @override
+  String get helpFileTransferLimitsTitle => 'Why Only 8 KB?';
+
+  @override
+  String get helpFileTransferLimitsDescription =>
+      'Airtime budget and LoRa duty cycle explained';
+
+  @override
+  String get helpChannelIntroBubble =>
+      'Let\'s make a **channel**! It\'s like a walkie-talkie. Only your friends who know the secret can listen in.';
+
+  @override
+  String get helpChannelNameBubble =>
+      'First, pick a **name** for your channel. Something easy to remember, like \'Family\' or \'Hiking Buddies\'.';
+
+  @override
+  String get helpPrivacyLevelBubble =>
+      'How secret should your channel be?\\n\\n**OPEN**: Anyone can listen in.\\n**SHARED**: Like a password everyone knows.\\n**PRIVATE**: Only friends you invite.\\n**MAXIMUM**: Super duper secret!';
+
+  @override
+  String get helpEncryptionKeyBubble =>
+      'I made a **secret key** for you! It scrambles your messages so only your friends can read them. Like a secret code!';
+
+  @override
+  String get helpChannelCompleteBubble =>
+      'All done! Show your friends the **QR code** and they can join your channel. Easy peasy!';
+
+  @override
+  String get helpEncryptionIntroBubble =>
+      'Let me explain **encryption levels**. It\'s like choosing how secret your messages are!';
+
+  @override
+  String get helpDefaultKeyBubble =>
+      '**DEFAULT KEY** means everyone in the mesh can read your messages. It\'s public! Use this for general announcements or testing.';
+
+  @override
+  String get helpPskEncryptionBubble =>
+      '**PSK** (Pre-Shared Key) means you generate a random secret key. Only people with this exact key can decode your messages. Much more private!';
+
+  @override
+  String get helpPskSharingBubble =>
+      'Share your PSK via **QR code**! When someone scans it, they get the key and channel settings. Easy peasy!';
+
+  @override
+  String get helpRoutingIntroBubble =>
+      'Want to see how I work? When you send a message, I **bounce it from node to node** like a game of hot potato!';
+
+  @override
+  String get helpRoutingHopsBubble =>
+      'Each **hop** is when a node receives your message and forwards it. Most messages need **1-3 hops** to reach their destination!';
+
+  @override
+  String get helpRoutingRouterRoleBubble =>
+      '**ROUTER** nodes are the mesh superheroes - they relay messages for everyone! **CLIENT** nodes only send/receive their own messages.';
+
+  @override
+  String get helpRoutingStoreForwardBubble =>
+      '**Store & Forward** is awesome! If the recipient hasn\'t been heard recently, I\'ll hold onto the message and deliver it when a packet arrives.';
+
+  @override
+  String get helpNodesIntroBubble =>
+      'This is your **mesh network**! Every device you see here is a node that can talk to you.';
+
+  @override
+  String get helpNodesStatusBubble =>
+      '**Green dot** means **Active** (heard very recently). **Yellow** means **Seen recently**. **Gray** means **Inactive**. LoRa has no offline signal—status is inferred.';
+
+  @override
+  String get helpNodesInfoBubble =>
+      'Each card shows the node\'s **name**, **battery level**, and **signal strength**. Tap any node to see more details!';
+
+  @override
+  String get helpNodesFiltersBubble =>
+      'Use the **filters** at the top to find specific nodes. You can show only **Active** nodes, favorites, or nodes with GPS.';
+
+  @override
+  String get helpNodesActionsBubble =>
+      'Tap a node to **send a message**, see their **location on the map**, or check their **telemetry data**!';
+
+  @override
+  String get helpRolesIntroBubble =>
+      '**Node roles** determine how your device helps the mesh. Let me break it down for you!';
+
+  @override
+  String get helpRoleClientBubble =>
+      '**CLIENT**: Your device sends and receives messages but doesn\'t relay for others. Great for **battery life**!';
+
+  @override
+  String get helpRoleRouterBubble =>
+      '**ROUTER**: You\'re a mesh superhero! You relay messages for everyone. Uses more battery but makes the mesh stronger!';
+
+  @override
+  String get helpRoleRouterLateBubble =>
+      '**ROUTER LATE**: Rebroadcasts after other routers. Extends coverage without taking priority hops. Great for backup relays!';
+
+  @override
+  String get helpRoleClientBaseBubble =>
+      '**CLIENT BASE**: Base station for your favorited nodes. Routes their packets like a router, handles everything else like a client!';
+
+  @override
+  String get helpRegionIntroBubble =>
+      'This is important! Your **region** determines which radio frequencies you can legally use.';
+
+  @override
+  String get helpRegionLegalBubble =>
+      'Each country has different rules. Using the **wrong frequency** can be illegal! Always match your physical location.';
+
+  @override
+  String get helpRegionBandsBubble =>
+      'Most regions use **915MHz** (Americas) or **868MHz** (Europe). Some use **433MHz**. Your device\'s hardware must support the frequency!';
+
+  @override
+  String get helpRegionWarningBubble =>
+      'Wrong region = **can\'t communicate** with others! Make sure everyone in your mesh uses the same region setting.';
+
+  @override
+  String get helpConnectionIntroBubble =>
+      'Let\'s connect your Meshtastic device! There are two ways: **Bluetooth** or **USB**.';
+
+  @override
+  String get helpConnectionBleBubble =>
+      '**BLUETOOTH** (BLE): Wireless! Your device shows up as **Meshtastic_XXXX**. Just tap to connect. Works while device is in your pocket!';
+
+  @override
+  String get helpConnectionUsbBubble =>
+      '**USB**: Plug in with a cable. More reliable, charges your device, slightly faster. Great for configuration!';
+
+  @override
+  String get helpConnectionPairingBubble =>
+      'First time? Your device needs to be in **pairing mode**. Check for a Bluetooth icon on the screen or press the button!';
+
+  @override
+  String get helpConnectionTroubleshootBubble =>
+      'Can\'t find your device? Check:\\n- **Bluetooth is on**\\n- Device has power\\n- Device isn\'t connected elsewhere\\n- You\'re close enough (under 10m)';
+
+  @override
+  String get helpGpsIntroBubble =>
+      '**GPS** lets others see where you are on the map! Let me explain how it works.';
+
+  @override
+  String get helpGpsBroadcastBubble =>
+      'Your device broadcasts **position updates** every few minutes. Other nodes see you appear on their map!';
+
+  @override
+  String get helpGpsPrivacyBubble =>
+      'Privacy matters! You can **disable GPS** or set update intervals. Turn it off when you want to stay hidden!';
+
+  @override
+  String get helpGpsBatteryBubble =>
+      'GPS uses **battery**! Longer update intervals = better battery life. Balance privacy and utility!';
+
+  @override
+  String get helpMetricsIntroBubble =>
+      'Let\'s decode those signal numbers! They tell you how good your connection is.';
+
+  @override
+  String get helpMetricsRssiBubble =>
+      '**RSSI** (Received Signal Strength): How loud the signal is. Higher is better! **-50 dBm** = excellent, **-120 dBm** = barely hanging on.';
+
+  @override
+  String get helpMetricsSnrBubble =>
+      '**SNR** (Signal-to-Noise Ratio): How clear the signal is. Positive = good, negative = noisy! **+10 dB** = great, **-10 dB** = struggling.';
+
+  @override
+  String get helpMetricsPracticalBubble =>
+      'In practice: **Green** = excellent, **yellow** = okay, **red** = poor. Move closer or find higher ground to improve!';
+
+  @override
+  String get helpMapIntroBubble =>
+      'Welcome to the **Mesh Map**! Every dot you see is a node with GPS. They\'re all part of your network!';
+
+  @override
+  String get helpMapMarkersBubble =>
+      '**Tap any marker** to see who it is. You can send them a message, check their battery, or see when they were last heard!';
+
+  @override
+  String get helpMapFeaturesBubble =>
+      'Try the **heatmap** to see where nodes cluster, or **connection lines** to see who can talk to who!';
+
+  @override
+  String get helpMapMeasureBubble =>
+      'Use **measure mode** to check distances between points. Great for planning where to put a new node!';
+
+  @override
+  String get helpMapFiltersBubble =>
+      'Use **filters** to show only **Active** nodes, or nodes with GPS. Helps when your map gets crowded!';
+
+  @override
+  String get helpChannelsIntroBubble =>
+      'These are your **channels**! Think of them like different radio frequencies. Each one is a separate conversation.';
+
+  @override
+  String get helpChannelsPrimaryBubble =>
+      'The **Primary** channel is special. It\'s always slot 0 and can\'t be deleted. Most mesh traffic goes here!';
+
+  @override
+  String get helpChannelsSecondaryBubble =>
+      '**Secondary channels** are for private groups. Create one for your family, hiking club, or emergency team!';
+
+  @override
+  String get helpChannelsEncryptionBubble =>
+      'See the **lock icon**? That means the channel is encrypted. Only people with the key can read messages!';
+
+  @override
+  String get helpChannelsShareBubble =>
+      'Tap a channel to see its **QR code**. Friends can scan it to join instantly with the right settings!';
+
+  @override
+  String get helpAutomationsIntroBubble =>
+      '**Automations** make your mesh smarter! Set up rules and I\'ll do things automatically for you.';
+
+  @override
+  String get helpAutomationsTriggersBubble =>
+      'Every automation starts with a **trigger**. Like when a node becomes inactive, battery gets low, or you enter an area!';
+
+  @override
+  String get helpAutomationsActionsBubble =>
+      'Then pick an **action**! Send a message, play a sound, show a notification, or even trigger IFTTT!';
+
+  @override
+  String get helpAutomationsExamplesBubble =>
+      'Example: **Alert me when Dad\'s battery drops below 20%**. Or **Send \'I\'m home!\' when I enter my geofence**!';
+
+  @override
+  String get helpAutomationsToggleBubble =>
+      'Use the **toggle switch** to enable or disable automations. Test them out before going live!';
+
+  @override
+  String get helpDashboardIntroBubble =>
+      'Welcome to your **Dashboard**! This is your personalized command center. Everything you need, at a glance!';
+
+  @override
+  String get helpDashboardWidgetsBubble =>
+      'Each card is a **widget**. They show live data from your mesh - battery levels, messages, weather, and more!';
+
+  @override
+  String get helpDashboardReorderBubble =>
+      '**Long-press and drag** to rearrange widgets. Put your favorites at the top! Tap **Edit** to add or remove them.';
+
+  @override
+  String get helpDashboardTapBubble =>
+      '**Tap any widget** to see more details or take action. Try tapping a node widget to see all their info!';
+
+  @override
+  String get helpBuilderIntroBubble =>
+      'Welcome to the **Widget Builder**! Here you can create your own custom widgets from scratch!';
+
+  @override
+  String get helpBuilderTemplatesBubble =>
+      'Start with a **template** or build from blank. Templates give you gauges, charts, and status cards ready to customize!';
+
+  @override
+  String get helpBuilderBindingsBubble =>
+      'The magic is in **data bindings**! Connect any element to live mesh data - battery, GPS, temperature, signal strength!';
+
+  @override
+  String get helpBuilderPreviewBubble =>
+      'Use **Preview** to see how your widget looks with real data before saving. Tweak until it\'s perfect!';
+
+  @override
+  String get helpMarketplaceIntroBubble =>
+      'Welcome to the **Marketplace**! Browse widgets created by other mesh enthusiasts around the world!';
+
+  @override
+  String get helpMarketplaceBrowseBubble =>
+      'Browse by **category** - find status displays, charts, gauges, or creative designs. Tap any widget to preview it!';
+
+  @override
+  String get helpMarketplaceInstallBubble =>
+      'Found one you like? **Tap install** and it\'s added to your collection. Use it on your dashboard right away!';
+
+  @override
+  String get helpMarketplaceShareBubble =>
+      'Made something cool? **Share your widgets** to the marketplace and help the community!';
+
+  @override
+  String get helpSignalsIntroBubble =>
+      'Welcome to **Signals**! Broadcast moments to your mesh. Signals are **ephemeral** - you choose how long they last, from **15 minutes** up to **24 hours**.';
+
+  @override
+  String get helpSignalsCreateBubble =>
+      'Tap the **sensor icon** to go active! Add text, a photo, or your location. Choose your TTL - shorter times work great for quick check-ins.';
+
+  @override
+  String get helpSignalsProximityBubble =>
+      'Signals show **proximity badges** - how many hops away the sender is. **Nearby** signals (0-1 hops) appear first!';
+
+  @override
+  String get helpSignalsFiltersBubble =>
+      'Use **filters** to focus on what matters: nearby signals, mesh-only, or content with media. Toggle between **list** and **grid** views!';
+
+  @override
+  String get helpSignalsPrivacyBubble =>
+      'Signals are **mesh-first** - they travel through the radio network. When they fade, they\'re gone. True ephemeral, off-grid content!';
+
+  @override
+  String get helpCreateIntroBubble =>
+      'Time to **Go Active**! A signal is an ephemeral broadcast — it lives on the mesh for a set time, then fades away. Let me walk you through it.';
+
+  @override
+  String get helpCreateTextBubble =>
+      'Type your message in the main field — up to **280 characters**. The circular counter in the corner shows how many you have left.';
+
+  @override
+  String get helpCreateImageBubble =>
+      'Tap the **image icon** to attach a photo. Images are uploaded via cloud when you are online — they are not available in mesh-only mode.';
+
+  @override
+  String get helpCreateLocationBubble =>
+      'Tap the **location pin** to attach your device\'s GPS position. Your location is fuzzed to a configurable radius for privacy. Tap again to remove it.';
+
+  @override
+  String get helpCreateTtlBubble =>
+      'The **timer icon** sets your TTL — how long the signal stays alive. Choose from **15 minutes** up to **24 hours**. Shorter times work great for quick check-ins.';
+
+  @override
+  String get helpCreateIntentBubble =>
+      'Pick a **Presence Intent** to tell the mesh what you are up to — exploring, monitoring, helping, or just listening. It adds context without extra words.';
+
+  @override
+  String get helpCreateStatusBubble =>
+      'The **short status** field is a one-liner that appears as a subtitle on your signal card. Think of it as a mood or caption.';
+
+  @override
+  String get helpCreateSubmitBubble =>
+      'When you are ready, hit **Broadcast**! Your signal travels through the mesh radio first. If cloud is available, it syncs there too for wider reach.';
+
+  @override
+  String get helpDetailIntroBubble =>
+      'This is the **signal detail** screen. You can read the full content, see where it was posted, and browse all responses.';
+
+  @override
+  String get helpDetailTtlBubble =>
+      'The **TTL bar** shows how much time the signal has left. When it reaches zero the signal expires and this screen closes automatically.';
+
+  @override
+  String get helpDetailResponsesBubble =>
+      'Responses are **threaded**. You can reply directly to the signal or to another person\'s response. Nested replies indent so you can follow the conversation.';
+
+  @override
+  String get helpDetailVotingBubble =>
+      'Tap the **up or down arrow** on any response to vote. Votes surface the most useful replies. You can change your vote at any time.';
+
+  @override
+  String get helpDetailReplyBubble =>
+      'Use the **reply bar** at the bottom to respond. Tap the reply icon on any response to start a threaded conversation with that person.';
+
+  @override
+  String get helpDetailActionsBubble =>
+      'The **overflow menu** (three dots) lets you **delete** your own signal or **report** someone else\'s. Only one of those options appears depending on whether you authored the signal.';
+
+  @override
+  String get helpWorldIntroBubble =>
+      'Welcome to **World Mesh**! See the entire global Meshtastic network. Every dot is a node sharing its location!';
+
+  @override
+  String get helpWorldScopeBubble =>
+      'Zoom out to see the **worldwide mesh**, or zoom in to explore local clusters. It\'s amazing how many nodes exist!';
+
+  @override
+  String get helpWorldDataBubble =>
+      'Data comes from **MQTT** - nodes that opted to share their position publicly. Your local nodes appear too!';
+
+  @override
+  String get helpWorldFiltersBubble =>
+      'Use **filters** to show specific regions or time ranges. Find active meshes near places you\'re visiting!';
+
+  @override
+  String get helpRoutesIntroBubble =>
+      '**Routes** lets you record your journeys! Perfect for hikes, bike rides, or any adventure off the grid.';
+
+  @override
+  String get helpRoutesRecordBubble =>
+      'Tap **Record** to start tracking. I\'ll save your GPS points as you move. Works even without cell signal!';
+
+  @override
+  String get helpRoutesGpxBubble =>
+      '**Import GPX files** to follow existing trails. Export your routes to share with others or use in other apps!';
+
+  @override
+  String get helpRoutesShareBubble =>
+      'Share routes with your mesh buddies! Great for coordinating meet-up points or showing others your favorite trails.';
+
+  @override
+  String get helpPositionIntroBubble =>
+      '**Position History** records every GPS position broadcast by nodes on your mesh. Think of it as a flight recorder for location data!';
+
+  @override
+  String get helpPositionListMapBubble =>
+      'Switch between **list view** and **map view** using the overflow menu. The map draws colour-coded trails per node so you can visualise movement over time.';
+
+  @override
+  String get helpPositionFiltersBubble =>
+      'Use **filter chips** to narrow results: today, this week, good GPS fix, or just your own node. Combine with a **custom date range** for precise slicing.';
+
+  @override
+  String get helpPositionSearchBubble =>
+      'The **search bar** filters by node name. Handy when you have dozens of nodes and want to track a specific one.';
+
+  @override
+  String get helpPositionMapNodesBubble =>
+      'In map view, tap the **node list** button to pick a single node. Each node gets its own colour trail with distance calculations between points.';
+
+  @override
+  String get helpPositionExportBubble =>
+      '**Export as CSV** from the overflow menu for analysis in spreadsheets or GIS tools. Great for documenting coverage tests!';
+
+  @override
+  String get helpPositionGoodFixBubble =>
+      'The **Good Fix** filter shows only positions with 6+ satellites. This helps you ignore noisy indoor fixes and focus on reliable outdoor data.';
+
+  @override
+  String get helpSettingsIntroBubble =>
+      'Welcome to **Settings**! Here you can customize everything about your app and connected device.';
+
+  @override
+  String get helpSettingsDeviceBubble =>
+      '**Device settings** let you configure your Meshtastic radio - name, region, power levels, and modules!';
+
+  @override
+  String get helpSettingsAppBubble =>
+      '**App settings** control themes, notifications, privacy options, and how the app behaves.';
+
+  @override
+  String get helpSettingsCloudBubble =>
+      '**Cloud Sync** is a premium subscription that syncs your **NodeDex**, **automations**, **widgets**, and **profile** across all your devices. It also serves as your **backup** — if you ever delete the app or switch phones, Cloud Sync restores everything. Without it, all data lives only on this device and is lost if the app is removed.';
+
+  @override
+  String get helpProfileIntroBubble =>
+      'This is **your profile**! Customize your mesh identity with a display name, callsign, and avatar.';
+
+  @override
+  String get helpProfileCustomizeBubble =>
+      'Your profile is **optional and private by default**. Customize it to stand out on the mesh!';
+
+  @override
+  String get helpProfileShareBubble =>
+      'Add a **callsign**, **avatar**, and **links** to make your profile yours.';
+
+  @override
+  String get helpProfileCloudBubble =>
+      '**Cloud Sync** is a premium feature that backs up your profile, NodeDex, automations, and widgets to the cloud. It protects your data — if you delete the app or get a new phone, everything **restores automatically** when you sign back in. Without it, your data exists only on this device.';
+
+  @override
+  String get helpMesh3dIntroBubble =>
+      'Welcome to **Mesh 3D**! See your entire network in three dimensions. Drag to rotate, pinch to zoom!';
+
+  @override
+  String get helpMesh3dNodesBubble =>
+      'Each sphere is a **node**. Lines show connections based on signal strength. Closer = stronger signal!';
+
+  @override
+  String get helpMesh3dColorsBubble =>
+      'Colors show **node health**. Green = active, yellow = fading, gray = inactive. Status is inferred from last heard.';
+
+  @override
+  String get helpMesh3dTapBubble =>
+      '**Tap any node** to select it and see details. Great for understanding your network topology!';
+
+  @override
+  String get helpGlobeIntroBubble =>
+      'Spin the **Globe** to see your mesh from space! Every glowing point is a node with GPS coordinates.';
+
+  @override
+  String get helpGlobeInteractBubble =>
+      '**Drag to spin**, pinch to zoom. Tap a node to fly to its location and see details!';
+
+  @override
+  String get helpGlobeArcsBubble =>
+      'Watch the **connection arcs** - they show message paths traveling across your mesh in real-time!';
+
+  @override
+  String get helpTimelineIntroBubble =>
+      'The **Timeline** shows everything happening on your mesh. Messages, node changes, telemetry - all in order!';
+
+  @override
+  String get helpTimelineFilterBubble =>
+      'Use **filters** to focus on specific event types. Just messages? Only node joins? You control the view!';
+
+  @override
+  String get helpTimelineTapBubble =>
+      '**Tap any event** to see full details. Great for debugging or understanding what\'s happening on your network!';
+
+  @override
+  String get helpShopIntroBubble =>
+      'Welcome to the **Device Shop**! Browse Meshtastic-compatible radios and accessories.';
+
+  @override
+  String get helpShopCompareBubble =>
+      '**Compare devices** by range, battery, and features. I\'ve rated each one to help you choose!';
+
+  @override
+  String get helpShopLinksBubble =>
+      'Tap **Buy** to visit trusted vendors. Prices and availability shown are from real stores!';
+
+  @override
+  String get helpOfflineIntroBubble =>
+      '**Offline Maps** let you use the map without internet! Essential for adventures off the grid.';
+
+  @override
+  String get helpOfflineDownloadBubble =>
+      '**Select a region** and zoom level, then tap download. I\'ll save all the map tiles to your device!';
+
+  @override
+  String get helpOfflineManageBubble =>
+      'Manage your downloads here - see storage used and **delete** old regions you don\'t need anymore.';
+
+  @override
+  String get helpRadioIntroBubble =>
+      '**Radio settings** control how your device transmits. Region, power, and modem preset are key!';
+
+  @override
+  String get helpRadioRegionBubble =>
+      'Your **region** determines legal frequencies. Set this wrong and you could interfere with other services!';
+
+  @override
+  String get helpRadioModemBubble =>
+      '**Modem preset** balances range vs speed. Long-range = slower but further. Short-fast = quick but closer.';
+
+  @override
+  String get helpRadioPowerBubble =>
+      'Higher **TX power** means more range but uses more battery. Find the sweet spot for your needs!';
+
+  @override
+  String get helpPresenceIntroBubble =>
+      '**Presence** shows which nodes are active, recently seen, or inactive on your mesh network.';
+
+  @override
+  String get helpPresenceActiveBubble =>
+      '**Active** nodes (green) sent a message in the last 2 minutes. They\'re definitely online!';
+
+  @override
+  String get helpPresenceRecentBubble =>
+      '**Recently seen** nodes (yellow) were active 2-10 minutes ago. Probably still around.';
+
+  @override
+  String get helpPresenceInactiveBubble =>
+      '**Inactive** nodes (gray) haven\'t been heard from in over 10 minutes. They might be out of range or powered off.';
+
+  @override
+  String get helpPresenceChartBubble =>
+      'The **activity chart** shows recent node activity over time. Watch the mesh come alive!';
+
+  @override
+  String get helpReachabilityIntroBubble =>
+      '**Reachability** estimates how likely you are to reach each node. This is based on passively observed mesh data.';
+
+  @override
+  String get helpReachabilityBetaBubble =>
+      'This is **BETA** - we don\'t send test packets! Everything is estimated from messages we see flowing through the mesh.';
+
+  @override
+  String get helpReachabilityHighBubble =>
+      '**High** reachability (bright) means we\'ve seen lots of communication with that node. Messages will probably get through!';
+
+  @override
+  String get helpReachabilityMediumBubble =>
+      '**Medium** reachability (dimmer) means some communication but not consistent. Messages might make it.';
+
+  @override
+  String get helpReachabilityLowBubble =>
+      '**Low** reachability (very dim) means we rarely see communication. The node might be too far or behind obstacles.';
+
+  @override
+  String get helpHealthIntroBubble =>
+      '**Mesh Health** monitors your network for issues like congestion, packet loss, and problematic nodes.';
+
+  @override
+  String get helpHealthStatusBubble =>
+      'The **status indicator** shows overall mesh health. Green = healthy, yellow = issues detected, red = critical problems.';
+
+  @override
+  String get helpHealthMetricsBubble =>
+      '**Metrics** show packet counts, retransmissions, and hop counts. Watch for high retransmit rates!';
+
+  @override
+  String get helpHealthUtilizationBubble =>
+      'The **utilization chart** shows how busy your mesh is over time. Spikes might indicate problems.';
+
+  @override
+  String get helpHealthIssuesBubble =>
+      '**Issues** section highlights specific problems and suggests fixes. Check here if things seem slow!';
+
+  @override
+  String get helpHealthMonitoringBubble =>
+      'Use the **pause** button to stop monitoring if you want to save battery. Hit **reset** to clear the data and start fresh!';
+
+  @override
+  String get helpTracerouteIntroBubble =>
+      '**Traceroute** discovers the actual path your packets take to reach another node. It reveals which relays are forwarding your data.';
+
+  @override
+  String get helpTracerouteHowBubble =>
+      'When you send a traceroute, each relay along the route adds itself to the packet. The destination sends it back so you can see **both directions**.';
+
+  @override
+  String get helpTracerouteSendBubble =>
+      'Send a traceroute from a **node\'s detail sheet** (tap the route icon) or from **Dashboard Quick Actions** where you can pick any known node.';
+
+  @override
+  String get helpTracerouteCooldownBubble =>
+      'There is a **30-second cooldown** between traceroutes to respect airtime fairness. A visible countdown shows the remaining time.';
+
+  @override
+  String get helpTracerouteResultsBubble =>
+      'Results show **forward** and **return** hop paths with per-hop **SNR** (signal-to-noise ratio). This lets you correlate route quality with link performance.';
+
+  @override
+  String get helpTracerouteHistoryBubble =>
+      'All traceroutes are saved to **Traceroute History** (Settings > Telemetry Logs). Filter by response status, search by node name, and compare runs over time.';
+
+  @override
+  String get helpTracerouteExportBubble =>
+      'Export your traceroute history as **CSV** for trend analysis or documentation. Use the overflow menu on the history screen.';
+
+  @override
+  String get helpTracerouteTipsBubble =>
+      '**Pro tip:** Run traceroutes after repositioning nodes, changing antennas, or adjusting channels to validate your changes with real route data!';
+
+  @override
+  String get helpNodedexIntroBubble =>
+      'Welcome to the **NodeDex** — your personal mesh field journal! Every node you discover is recorded here with a unique **Sigil** and personality **Trait**.';
+
+  @override
+  String get helpNodedexSigilsBubble =>
+      'Each node gets a **procedural Sigil** — a geometric glyph generated from its identity. No two nodes share the same sigil. Think of it as a visual fingerprint for the mesh!';
+
+  @override
+  String get helpNodedexTraitsBubble =>
+      'Nodes earn **Traits** based on real behavior — **Wanderer** moves between regions, **Beacon** is always online, **Ghost** is rarely seen, **Sentinel** holds a fixed position, **Relay** forwards traffic.';
+
+  @override
+  String get helpNodedexFiltersBubble =>
+      'Use the **filter chips** to show only specific traits, recently discovered nodes, or nodes you have tagged. The **search bar** finds nodes by name or hex ID.';
+
+  @override
+  String get helpNodedexFieldJournalBubble =>
+      'As you observe more nodes, your **field journal** fills in — each node earns a **Patina score** and **identity overlay** based on real encounters. The more you observe, the richer the detail!';
+
+  @override
+  String get helpNodedexAlbumModeBubble =>
+      'Tap the **view toggle** in the app bar to switch to **Album mode** — a collector-style card grid grouped by trait, rarity, or region. Each card shows the node\'s sigil with a holographic shimmer based on rarity!';
+
+  @override
+  String get helpNodedexAtmosphereBubble =>
+      'Notice the subtle **ambient particles** behind the screen? That is the **Elemental Atmosphere** — rain, embers, mist, and starlight driven by your real mesh data. More nodes and activity means more atmosphere!';
+
+  @override
+  String get helpNodedexCloudSyncBubble =>
+      'Your NodeDex is stored locally in SQLite and survives app restarts — but **not** app deletion. If you uninstall the app or switch phones, your local NodeDex is gone. With a **Cloud Sync** subscription, your entire journal — sigils, encounters, social tags, notes, and co-seen links — backs up to the cloud and **restores automatically** on any device you sign into.';
+
+  @override
+  String get helpNodedexExportBubble =>
+      'Use the **menu** to **export** your NodeDex as a JSON file for backup, or **import** one from another device. Your field journal travels with you — even without Cloud Sync!';
+
+  @override
+  String get helpNodedexSigilBubble =>
+      'This is the node\'s **Sigil** — a unique procedural glyph generated from its identity. No two nodes share the same sigil. It\'s like a visual fingerprint!';
+
+  @override
+  String get helpNodedexTraitBubble =>
+      'The **Trait** is an inferred personality based on how this node behaves — movement patterns, signal consistency, encounter frequency. Confidence grows with more data.';
+
+  @override
+  String get helpNodedexAutoSummaryBubble =>
+      '**Auto-Summary** computes insights from encounter history — time-of-day distribution, observation streaks, and busiest-day patterns. Everything updates automatically as new encounters arrive.';
+
+  @override
+  String get helpNodedexObservationTimelineBubble =>
+      'The **Observation Timeline** visualizes this node\'s encounter density over time, with relative labels showing how recently each observation was recorded.';
+
+  @override
+  String get helpNodedexDiscoveryBubble =>
+      '**Discovery Stats** show when you first and last saw this node, how many encounters you\'ve had, and the closest range recorded. These update automatically.';
+
+  @override
+  String get helpNodedexSignalBubble =>
+      '**Signal Records** track the best and most recent SNR and RSSI values. These help you understand link quality — higher SNR and less negative RSSI mean stronger signals.';
+
+  @override
+  String get helpNodedexSocialTagBubble =>
+      'The **Social Tag** is a label you assign to categorize this node — friend, relay, base station, or anything else. It\'s your personal metadata, never shared over the mesh.';
+
+  @override
+  String get helpNodedexNoteBubble =>
+      '**Your Note** is a free-text field for anything you want to remember about this node. Location hints, operator name, antenna type — whatever helps you.';
+
+  @override
+  String get helpNodedexRegionsBubble =>
+      '**Region History** records every regulatory region where this node has been observed. Useful for tracking mobile nodes across different areas.';
+
+  @override
+  String get helpNodedexEncountersBubble =>
+      '**Recent Encounters** is a timeline of when this node appeared on your mesh. Each entry shows the timestamp, signal quality, and range if GPS was available.';
+
+  @override
+  String get helpNodedexActivityTimelineBubble =>
+      'The **Activity Timeline** is a unified chronological feed of everything observed about this node — encounters, messages, presence changes, signals, and milestones.';
+
+  @override
+  String get helpNodedexCoseenBubble =>
+      '**Co-Seen Links** show nodes frequently observed in the same session as this one. Tap any link to see the full relationship — shared encounters, message counts, and connection strength.';
+
+  @override
+  String get helpNodedexDeviceBubble =>
+      '**Device Info** shows live telemetry — battery level, hardware model, firmware version, and uptime. This data comes from the node directly and updates in real time.';
+
+  @override
+  String get helpAlbumIntroBubble =>
+      'Welcome to the **Collector Album** — a card-collector view of your NodeDex! Every discovered node becomes a collectible card with its sigil, trait, and rarity tier.';
+
+  @override
+  String get helpAlbumCoverBubble =>
+      'The **Album Cover** is your dashboard — it shows your **Explorer Title**, total nodes, encounters, regions explored, and a rarity breakdown bar. Watch your collection grow!';
+
+  @override
+  String get helpAlbumGroupingBubble =>
+      'Use the **group chips** to organize cards by **Trait** (Beacon, Relay, Ghost...), **Rarity** (Common through Legendary), or **Region** (geographic area). Each group gets its own album page.';
+
+  @override
+  String get helpAlbumRarityBubble =>
+      'Cards earn **rarity tiers** based on encounter count and trait. **Common** nodes are newly seen, while **Legendary** cards combine rare traits with deep observation history. Rarity drives the border glow and holographic shimmer!';
+
+  @override
+  String get helpAlbumInteractionsBubble =>
+      '**Tap** a card to open the node\'s full profile. **Long-press** to open the **Card Gallery** — a full-screen carousel where you can swipe through cards and tap to flip them over for stats!';
+
+  @override
+  String get helpAlbumGalleryBubble =>
+      'In the **Card Gallery**, swipe left and right to browse cards. **Tap** a card to flip it — the back shows discovery stats, signal records, encounter count, and patina score. Swipe down to dismiss.';
+
+  @override
+  String get helpAlbumHolographicBubble =>
+      'Higher-rarity cards shimmer with a **holographic effect** — the rarer the card, the brighter the glow. This effect respects your **reduce-motion** setting and uses an optimized painter for grid thumbnails.';
+
+  @override
+  String get helpAlbumPersistenceBubble =>
+      'Your album view preference and grouping choice are **saved automatically**. With **Cloud Sync**, your entire collection — sigils, encounters, tags, notes — backs up and syncs across all your devices. Delete the app, get a new phone — your collection is safe and restores on sign-in.';
+
+  @override
+  String get helpConstellationIntroBubble =>
+      'Welcome to the **Constellation** — a star-map of your mesh network! Nodes appear as stars, and lines between them show **co-seen relationships** — nodes observed in the same session.';
+
+  @override
+  String get helpConstellationLayoutBubble =>
+      'The layout is **force-directed** — nodes that are frequently co-seen cluster together, while isolated nodes drift to the edges. The graph stabilizes after a moment so nothing shifts while you explore.';
+
+  @override
+  String get helpConstellationInteractionsBubble =>
+      '**Tap** a node to highlight its connections. **Double-tap** to zoom into a cluster. **Long-press** to open the node\'s full profile. **Pinch** to zoom in and out of the star map.';
+
+  @override
+  String get helpConstellationEdgesBubble =>
+      'Use the **edge density** button in the app bar to control how many connections are shown. **Sparse** shows only the strongest links, **All** shows everything. The right density depends on your network size.';
+
+  @override
+  String get helpConstellationSearchBubble =>
+      'The **search** icon lets you find a specific node by name or hex ID. The view automatically zooms and pans to center the matching node with a pulse highlight.';
+
+  @override
+  String get helpConstellationAtmosphereBubble =>
+      'The constellation has its own **Elemental Atmosphere** — subtle starlight and mist particles behind the graph, driven by your real mesh data. It never obstructs the visualization.';
+
+  @override
+  String get helpConstellationDataBubble =>
+      'Co-seen data is built **automatically** from your encounters. The more sessions you observe, the richer the constellation becomes. All relationship data is stored locally — but is **lost if you delete the app**. With **Cloud Sync**, your entire constellation backs up and restores on any device you sign into.';
+
+  @override
+  String get helpCloudSyncIntroBubble =>
+      '**Cloud Sync** is a premium subscription that keeps your mesh data synchronized across all your devices — and serves as your **backup**. Without it, all data lives only on-device and is permanently lost if you delete the app or lose your phone.';
+
+  @override
+  String get helpCloudSyncWhatSyncsBubble =>
+      'Cloud Sync backs up your **NodeDex** (sigils, encounters, social tags, notes, co-seen links), **automations**, **custom widgets**, and **profile**. Reinstall the app, switch phones, or sign in on a second device — your entire mesh identity restores automatically.';
+
+  @override
+  String get helpCloudSyncOfflineFirstBubble =>
+      'The app is **offline-first**. Changes are saved locally to SQLite immediately and queued in an **outbox**. When you are online, the outbox drains to the cloud automatically — no manual sync needed.';
+
+  @override
+  String get helpCloudSyncConflictBubble =>
+      'If you edit the same node on two devices, Cloud Sync uses **last-write-wins** conflict resolution with per-field timestamps. Social tags and notes resolve independently so you never lose both edits.';
+
+  @override
+  String get helpCloudSyncSubscriptionBubble =>
+      'Cloud Sync is available as a **monthly** or **yearly** subscription. You can subscribe from **Settings > Account & Subscription**. Cancelled subscriptions keep working until the billing period ends.';
+
+  @override
+  String get helpCloudSyncWithoutBubble =>
+      'Without Cloud Sync, all your data stays on-device only. It survives app restarts, but **not** app deletion or a phone reset. You can **export** your NodeDex as JSON for manual backup. Cloud Sync automates this and adds cross-device restore — but the app works fully offline without it.';
+
+  @override
+  String get helpAetherIntroBubble =>
+      '**Aether** lets you track Meshtastic nodes at altitude! At 35,000 ft, LoRa signals can reach **400+ km** — far beyond typical ground-level range.';
+
+  @override
+  String get helpAetherScheduleBubble =>
+      '**Schedule a flight** before you fly. Enter your flight number, airports, departure time, and your node\'s ID. Other mesh enthusiasts can then track your journey and try to receive your signal.';
+
+  @override
+  String get helpAetherActiveBubble =>
+      '**Active flights** show live position data from the OpenSky Network API. You\'ll see altitude, speed, heading, and estimated coverage radius based on radio horizon calculations.';
+
+  @override
+  String get helpAetherReportsBubble =>
+      '**Reception reports** let ground stations report when they receive your signal. Reports include distance, RSSI, and SNR. All reports are saved to the **global leaderboard**.';
+
+  @override
+  String get helpAetherLeaderboardBubble =>
+      'The **leaderboard is global and persistent** — stored in the cloud, not on your device. Rankings survive app reinstalls and are visible to the entire Socialmesh community. Top 3 get gold, silver, and bronze!';
+
+  @override
+  String get helpAetherTipsBubble =>
+      '**Tips**: Window seats help. Turn off airplane mode briefly during cruise altitude (where permitted). Ground stations with elevated antennas have better odds. Good luck!';
+
+  @override
+  String get helpTakIntroBubble =>
+      '**TAK Gateway** bridges your mesh into the Team Awareness Kit (TAK) ecosystem. It streams live **Cursor-on-Target** entities from a TAK server straight onto your map.';
+
+  @override
+  String get helpTakConnectBubble =>
+      'Tap the **link icon** in the app bar to connect or disconnect. The status card shows your gateway URL, connection uptime, and total events received.';
+
+  @override
+  String get helpTakAffiliationsBubble =>
+      'Every entity is colored by **standard affiliation** — blue for friendly, red for hostile, green for neutral, yellow for unknown. The icon changes by dimension too: ground, air, sea, or space.';
+
+  @override
+  String get helpTakFilterBubble =>
+      'Use the **filter chips** to narrow the list by affiliation, or type a callsign in the **search bar**. The stale-mode chip cycles between all, active-only, and stale-only.';
+
+  @override
+  String get helpTakDetailBubble =>
+      'Tap any entity to open its **detail screen** — full CoT fields, coordinates, speed, course, and raw XML. Use the map icon to jump straight to its position on the map.';
+
+  @override
+  String get helpTakTrackingBubble =>
+      '**Long-press** an entity tile to toggle tracking. Tracked entities are highlighted on the map and stay visible even when the TAK screen is closed.';
+
+  @override
+  String get helpTakSettingsBubble =>
+      'Open **TAK Settings** from the overflow menu to change the gateway URL, toggle auto-connect, and adjust the stale timeout. All settings persist between sessions.';
+
+  @override
+  String get helpRadioResponsibilityBubble =>
+      '**You** are responsible for making sure your radio equipment is legal in your country and that you operate within permitted frequency bands and power limits.';
+
+  @override
+  String get helpRadioLicenceBubble =>
+      'Some regions require an **amateur radio licence** before you can transmit. Check with your local regulatory authority — for example, ACMA in Australia or FCC in the US.';
+
+  @override
+  String get helpRadioInterferenceBubble =>
+      'Never interfere with **emergency communications** or licensed services. Violations can result in fines or criminal penalties.';
+
+  @override
+  String get helpRadioTermsLinkBubble =>
+      'For full details, check the **Radio and Legal Compliance** section in our Terms of Service. You can find it in Settings under Terms of Service.';
+
+  @override
+  String get helpUseIntroBubble =>
+      'Socialmesh is a powerful tool — automations, signals, and mesh messaging give you a lot of capability. With that comes responsibility!';
+
+  @override
+  String get helpUseLawfulBubble =>
+      'Use the App only for **lawful purposes**. Do not transmit harmful, threatening, or abusive content over the mesh network.';
+
+  @override
+  String get helpUseAutomationsBubble =>
+      'Automations are great for alerts and notifications, but do not use them to **spam the mesh** or flood other users with unwanted messages.';
+
+  @override
+  String get helpUseImpersonationBubble =>
+      'Do not **impersonate** other people or entities on the mesh network. Be yourself!';
+
+  @override
+  String get helpUseTermsLinkBubble =>
+      'The full list of prohibited activities is in the **Use of the Service** section of our Terms. You can review it anytime in Settings.';
+
+  @override
+  String get helpResponsibilityIntroBubble =>
+      'Socialmesh is designed to be **privacy-first**. Your messages and data stay on your device — we do not store them on any server.';
+
+  @override
+  String get helpResponsibilitySignalsBubble =>
+      'When you create a **Signal**, it is broadcast over the mesh network. Anyone within range can receive it. Think of it like a public radio broadcast.';
+
+  @override
+  String get helpResponsibilityContentBubble =>
+      'You are responsible for **everything you transmit**. Do not share personal information, sensitive data, or content that could harm others.';
+
+  @override
+  String get helpResponsibilityThirdPartyBubble =>
+      'Some features use **third-party services** like RevenueCat for purchases and Firebase for crash reports. These have their own privacy policies.';
+
+  @override
+  String get helpResponsibilityTermsLinkBubble =>
+      'For complete details, review our **Terms of Service** and **Privacy Policy** in Settings. They explain exactly what data stays local and what is shared.';
+
+  @override
+  String get helpFtIntroBubble =>
+      '**File Transfers** let you send small files — text, configs, coordinates — directly over LoRa radio. No internet, no servers.';
+
+  @override
+  String get helpFtHowBubble =>
+      'Files are split into **~200-byte chunks** and sent one at a time over the mesh. The receiver reassembles them automatically.';
+
+  @override
+  String get helpFtNackBubble =>
+      'Missed a chunk? No problem. The receiver sends a **NACK** (negative acknowledgement) to request retransmission of exactly the missing pieces.';
+
+  @override
+  String get helpFtLimitBubble =>
+      'Files are capped at **8 KB**. LoRa is a slow, shared, low-power radio — a single transfer can occupy the channel for up to a minute at long-range settings.';
+
+  @override
+  String get helpFtBetaBubble =>
+      'This feature is **BETA**. Both nodes must be running Socialmesh on the same mesh channel. Standard Meshtastic nodes cannot receive these transfers.';
+
+  @override
+  String get helpFtContactsBubble =>
+      'Use the **Contacts** tab to choose a node, then tap **Send File**. The Contacts tab shows every node your device has seen on the mesh.';
+
+  @override
+  String get helpFtlSharedBubble =>
+      'LoRa channels are **shared and slow**. Every byte you send is airtime stolen from every other node in range. Treat it like a walkie-talkie frequency, not Wi-Fi.';
+
+  @override
+  String get helpFtlToaBubble =>
+      '**Time on Air** per chunk depends on Spreading Factor (SF). SF7 (fast, short range): ~30 ms/chunk. SF12 (slow, long range): ~1,500 ms/chunk.';
+
+  @override
+  String get helpFtlMathBubble =>
+      '8 KB ÷ 200 bytes/chunk = **41 chunks**. At SF7: ~1.2 seconds total. At SF12: **~62 seconds** of continuous radio transmission.';
+
+  @override
+  String get helpFtlDutyBubble =>
+      'EU868 and similar bands impose a **1% duty cycle** — your radio can only transmit for 36 seconds per hour. At SF12, one 8 KB transfer nearly exhausts that entire budget.';
+
+  @override
+  String get helpFtlCapBubble =>
+      '8 KB is the **safest ceiling** that keeps transfers survivable at worst-case spreading factors without violating duty cycle regulations or blocking the mesh for minutes.';
+
+  @override
+  String get helpFtlUsbBubble =>
+      'BLE and USB-connected transfers carry no radio duty-cycle risk. In a future release, higher limits will be unlocked for direct wired connections.';
+
+  @override
+  String get helpNodeDexSectionSigil =>
+      'A unique procedural glyph generated from this node\'s identity. ';
+
+  @override
+  String get helpNodeDexSectionTrait =>
+      'An inferred personality archetype derived from behavioral signals: ';
+
+  @override
+  String get helpNodeDexSectionAutoSummary =>
+      'Computed insights from this node\'s encounter history. The time-of-day ';
+
+  @override
+  String get helpNodeDexSectionObservationTimeline =>
+      'A visual timeline of this node\'s observation history. The bar shows ';
+
+  @override
+  String get helpNodeDexSectionDiscovery =>
+      'Tracks when this node was first and last seen on your mesh, the total ';
+
+  @override
+  String get helpNodeDexSectionSignal =>
+      'Best and most recent SNR (Signal-to-Noise Ratio) and RSSI ';
+
+  @override
+  String get helpNodeDexSectionSocialTag =>
+      'A personal label you assign to categorize this node. Social tags are ';
+
+  @override
+  String get helpNodeDexSectionNote =>
+      'A free-text note for anything you want to remember about this node. ';
+
+  @override
+  String get helpNodeDexSectionRegions =>
+      'Every regulatory region where this node has been observed. Region ';
+
+  @override
+  String get helpNodeDexSectionEncounters =>
+      'A chronological timeline of when this node appeared on your mesh. ';
+
+  @override
+  String get helpNodeDexSectionActivityTimeline =>
+      'A unified chronological feed of everything observed about this node: ';
+
+  @override
+  String get helpNodeDexSectionCoseen =>
+      'Nodes that are frequently observed in the same session as this node. ';
+
+  @override
+  String get helpNodeDexSectionDevice =>
+      'Live telemetry from the node: battery percentage, hardware model, ';
+
+  @override
+  String get helpNodeDexSectionAlbumRarity =>
+      'Rarity tiers are computed from encounter count and inferred trait. ';
+
+  @override
+  String get helpNodeDexSectionAlbumGrouping =>
+      'Cards can be grouped by Trait (behavioral archetype), Rarity ';
+
+  @override
+  String get helpNodeDexSectionAlbumExplorerTitle =>
+      'Your Explorer Title reflects your overall collection progress. ';
+
+  @override
+  String get helpNodeDexSectionAlbumHolographic =>
+      'The holographic shimmer on cards is a visual indicator of rarity. ';
+
+  @override
+  String get helpNodeDexSectionAlbumPatina =>
+      'Patina is a composite score reflecting how deeply you have observed ';
+
+  @override
+  String get helpNodeDexSectionAlbumCloudSync =>
+      'With a Cloud Sync subscription, your entire NodeDex album backs up ';
+
+  @override
+  String get helpTakSectionStatus =>
+      'The status card shows whether the WebSocket connection to the TAK ';
+
+  @override
+  String get helpTakSectionAffiliation =>
+      'Affiliation describes the relationship of an entity to ';
+
+  @override
+  String get helpTakSectionCotType =>
+      'The CoT type string encodes an entity\'s affiliation, dimension, ';
+
+  @override
+  String get helpTakSectionIdentity =>
+      'The UID uniquely identifies this entity across all CoT messages. ';
+
+  @override
+  String get helpTakSectionPosition =>
+      'Latitude and longitude in WGS-84 decimal degrees as reported in ';
+
+  @override
+  String get helpTakSectionMotion =>
+      'Speed, course, and altitude parsed from the CoT event\'s track and ';
+
+  @override
+  String get helpTakSectionTimestamps =>
+      'Event Time is when the CoT event was generated. Stale Time is when ';
+
+  @override
+  String get helpTakSectionTracking =>
+      'Tracked entities are pinned and highlighted on the map with a ';
+
+  @override
+  String get helpTakSectionRawPayload =>
+      'The raw JSON payload as received from the TAK Gateway WebSocket. ';
+
+  @override
+  String get helpTakSectionFilters =>
+      'Filter chips let you narrow the entity list by affiliation. The ';
+
+  @override
+  String get helpTakSectionSettings =>
+      'TAK Settings let you configure the gateway URL, toggle auto-connect ';
+
+  @override
+  String get helpCategoryChannels => 'Channels';
+
+  @override
+  String get helpCategoryMessaging => 'Messaging';
+
+  @override
+  String get helpCategoryNodes => 'Nodes';
+
+  @override
+  String get helpCategoryDevice => 'Device';
+
+  @override
+  String get helpCategoryNetwork => 'Network';
+
+  @override
+  String get helpCategoryAutomations => 'Automations';
+
+  @override
+  String get helpCategorySettings => 'Settings';
+
+  @override
+  String get helpCategoryLegal => 'Legal & Safety';
+
+  @override
+  String get accessRestrictedTitle => 'Access Restricted';
+
+  @override
+  String get goBack => 'Go Back';
+
+  @override
+  String get deviceNotConnected => 'Device Not Connected';
+
+  @override
+  String get connectDevice => 'Connect Device';
+
+  @override
+  String get connectDeviceToUseFeature => 'Connect device to use this feature';
+
+  @override
+  String positionRequestedFrom(String name) {
+    return 'Position requested from $name';
+  }
+
+  @override
+  String failedGeneric(String error) {
+    return 'Failed: $error';
+  }
+
+  @override
+  String get lastHeardNever => 'Never';
+
+  @override
+  String get lastHeardJustNow => 'Just now';
+
+  @override
+  String lastHeardMinutesAgo(int count) {
+    return '${count}m ago';
+  }
+
+  @override
+  String lastHeardHoursAgo(int count) {
+    return '${count}h ago';
+  }
+
+  @override
+  String lastHeardDaysAgo(int count) {
+    return '${count}d ago';
+  }
+
+  @override
+  String failedToUpdateSignalLocationRadius(String error) {
+    return 'Failed to update signal location radius: $error';
+  }
+
+  @override
+  String failedToSaveConfiguration(String error) {
+    return 'Failed to save configuration: $error';
+  }
+
+  @override
+  String automationActionError(int index, String error) {
+    return 'Action $index: $error';
+  }
+
+  @override
+  String failedToPlay(String error) {
+    return 'Failed to play: $error';
+  }
+
+  @override
+  String get whatsNewVersion190Subtitle => 'Version 1.9.0';
+
+  @override
+  String get whatsNewReachabilityTitle => 'Reachability';
+
+  @override
+  String get whatsNewReachabilityDescription =>
+      'Estimate how likely you are to reach each node on your mesh — without sending a single test packet.\\n\\nReachability passively observes traffic flowing through the network and assigns High, Medium, or Low confidence to every node. Find it in the drawer menu under Mesh.';
+
+  @override
+  String get whatsNewVersion1100Subtitle => 'Version 1.10.0';
+
+  @override
+  String get whatsNewWorldMapTitle => 'World Map';
+
+  @override
+  String get whatsNewWorldMapDescription =>
+      'See the entire global Meshtastic network on a single map. Every dot is a node sharing its location — zoom, pan, and tap to explore node details, hardware info, and last-seen times.\\n\\nNo connection required. The World Map pulls live data from the Socialmesh backend so you can explore the mesh anywhere.';
+
+  @override
+  String get whatsNewVersion1101Subtitle => 'Version 1.10.1';
+
+  @override
+  String get whatsNewPresenceTitle => 'Presence';
+
+  @override
+  String get whatsNewPresenceDescription =>
+      'See who is active on your mesh at a glance. Presence shows real-time node activity with intent indicators — whether someone is monitoring, mobile, or at a fixed base station.\\n\\nFilter by activity level, search by name, and tap any node to see their full profile. Find it in the drawer under Social.';
+
+  @override
+  String get whatsNewVersion1110Subtitle => 'Version 1.11.0';
+
+  @override
+  String get whatsNewSignalsTitle => 'Signals';
+
+  @override
+  String get whatsNewSignalsDescription =>
+      'Broadcast ephemeral moments to your mesh. Signals are short-lived posts — share text, a photo, or your location with a TTL from 15 minutes up to 24 hours.\\n\\nNearby signals appear first with proximity badges showing hop count. When they fade, they are gone. True off-grid, ephemeral content.';
+
+  @override
+  String get whatsNewVersion1130Subtitle => 'Version 1.13.0';
+
+  @override
+  String get whatsNewNodeDexTitle => 'NodeDex';
+
+  @override
+  String get whatsNewNodeDexDescription =>
+      'A living field journal of the mesh world. Every node you discover is automatically recorded with a unique procedural Sigil and a personality Trait derived from real behavior.\\n\\nFind it in the drawer menu under Social. Filter by trait, search by name or hex ID, and tap any entry to explore its full profile — signal history, discovery timeline, and more.';
+
+  @override
+  String get whatsNewVersion1150Subtitle => 'Version 1.15.0';
+
+  @override
+  String get whatsNewAetherTitle => 'Aether';
+
+  @override
+  String get whatsNewAetherDescription =>
+      'Track Meshtastic nodes at altitude! Schedule your flight with your mesh node and let ground stations around the world listen for your signal.\\n\\nAt 35,000 ft, LoRa can reach 400+ km. Report receptions, compete on the distance leaderboard, and set new range records. Find it in the drawer menu under Social.';
+
+  @override
+  String get whatsNewVersion1160Subtitle => 'Version 1.16.0';
+
+  @override
+  String get whatsNewTakGatewayTitle => 'TAK Gateway';
+
+  @override
+  String get whatsNewTakGatewayDescription =>
+      'Bridge your mesh into the Team Awareness Kit (TAK) ecosystem. Socialmesh now connects to a TAK Gateway via WebSocket and streams live Cursor-on-Target entities onto your map.\\n\\nEvery entity is colored by standard affiliation and given a dimension-specific icon. Filter by affiliation, search callsigns, track entities with a long-press, and tap any marker for full CoT details. Find it in the drawer menu under Mesh.';
+
+  @override
+  String get notificationNewNodeTitle => 'New Node Discovered';
+
+  @override
+  String notificationNewNodeBody(String nodeName, String shortCode) {
+    return '$nodeName ($shortCode) joined the mesh';
+  }
+
+  @override
+  String get notificationAetherFlightTitle => 'Aether Flight Detected';
+
+  @override
+  String notificationDetectionSensorTitle(String sensorName, String state) {
+    return '$sensorName: $state';
+  }
+
+  @override
+  String notificationDetectionSensorBody(String displayName) {
+    return 'From $displayName';
+  }
+
+  @override
+  String notificationEntityStaleTitle(String callsign) {
+    return 'Entity Stale: $callsign';
+  }
+
+  @override
+  String notificationProximityAlertTitle(String callsign) {
+    return 'Proximity Alert: $callsign';
+  }
+
+  @override
+  String notificationDirectMessageTitle(String senderName, String shortCode) {
+    return 'Message from $senderName ($shortCode)';
+  }
+
+  @override
+  String notificationChannelMessageTitle(
+    String senderName,
+    String shortCode,
+    String channelName,
+  ) {
+    return '$senderName ($shortCode) in $channelName';
+  }
+
+  @override
+  String get notificationChannelNodeDiscovery =>
+      'Notifications for newly discovered mesh nodes';
+
+  @override
+  String get notificationChannelAetherFlights =>
+      'Notifications for Aether flight detection events';
+
+  @override
+  String get notificationChannelDeviceAlerts =>
+      'Important notifications from your Meshtastic device';
+
+  @override
+  String get notificationChannelDetectionSensor =>
+      'Notifications for detection sensor events';
+
+  @override
+  String get notificationChannelTakStale =>
+      'Notifications when tracked TAK entities go stale';
+
+  @override
+  String get notificationChannelTakProximity =>
+      'Notifications for TAK entity proximity alerts';
+
+  @override
+  String get notificationChannelDirectMessages =>
+      'Notifications for direct mesh messages';
+
+  @override
+  String get notificationChannelMessages =>
+      'Notifications for channel mesh messages';
+
+  @override
+  String get flowNodeEvent => 'Event';
+
+  @override
+  String get flowNodeMessageContains => 'Message Contains';
+
+  @override
+  String get flowNodeNodeSilent => 'Node Silent';
+
+  @override
+  String get flowNodeScheduled => 'Scheduled';
+
+  @override
+  String get flowNodeSignalWeak => 'Signal Weak';
+
+  @override
+  String get flowNodeChannelActivity => 'Channel Activity';
+
+  @override
+  String get flowNodeDetectionSensor => 'Detection Sensor';
+
+  @override
+  String get flowNodeManual => 'Manual';
+
+  @override
+  String get flowNodeAllNodes => 'All Nodes';
+
+  @override
+  String get flowNodeNodes => 'Nodes';
+
+  @override
+  String get flowNodeTraitFilter => 'Trait Filter';
+
+  @override
+  String get flowNodeDistanceFilter => 'Distance Filter';
+
+  @override
+  String get flowNodeEncounterFilter => 'Encounter Filter';
+
+  @override
+  String get flowNodeOnlineFilter => 'Online Filter';
+
+  @override
+  String get flowNodeBatteryFilter => 'Battery Filter';
+
+  @override
+  String get flowNodeNameFilter => 'Name Filter';
+
+  @override
+  String get flowNodeSort => 'Sort';
+
+  @override
+  String get flowNodeLimit => 'Limit';
+
+  @override
+  String get flowNodeInput => 'Input';
+
+  @override
+  String get flowNodeFiltered => 'Filtered';
+
+  @override
+  String get flowNodeSorted => 'Sorted';
+
+  @override
+  String get flowNodeLimited => 'Limited';
+
+  @override
+  String get flowNodeExecute => 'Execute';
+
+  @override
+  String get flowNodeAnd => 'AND';
+
+  @override
+  String get flowNodeOr => 'OR';
+
+  @override
+  String get flowNodeNot => 'NOT';
+
+  @override
+  String get flowNodeDelay => 'Delay';
+
+  @override
+  String flowNodeInputN(int index) {
+    return 'Input $index';
+  }
+
+  @override
+  String get flowNodeAllMet => 'All Met';
+
+  @override
+  String get flowNodeAnyMet => 'Any Met';
+
+  @override
+  String get flowNodeInverted => 'Inverted';
+
+  @override
+  String get flowNodeDelayed => 'Delayed';
+
+  @override
+  String get automationTemplateLowBatteryTitle => 'Low Battery Alert';
+
+  @override
+  String get automationTemplateLowBatteryDescription =>
+      'Get notified when your device battery drops below 20%';
+
+  @override
+  String get automationTemplateNodeOfflineTitle => 'Node Offline Alert';
+
+  @override
+  String get automationTemplateNodeOfflineDescription =>
+      'Alert when a specific node hasn\'t been seen for 30 minutes';
+
+  @override
+  String get automationTemplateWeatherReportTitle => 'Weather Report';
+
+  @override
+  String get automationTemplateWeatherReportDescription =>
+      'Send periodic weather data from environment sensors';
+
+  @override
+  String get automationTemplateChannelMonitorTitle => 'Channel Monitor';
+
+  @override
+  String get automationTemplateChannelMonitorDescription =>
+      'Log activity for a specific channel';
+
+  @override
+  String get automationTemplateEmergencyBeaconTitle => 'Emergency Beacon';
+
+  @override
+  String get automationTemplateEmergencyBeaconDescription =>
+      'Broadcast emergency position every 5 minutes when triggered';
+
+  @override
+  String get widgetTemplateBatteryGaugeDescription =>
+      'Display battery level with gauge';
+
+  @override
+  String get widgetTemplateSignalMeterDescription => 'Display SNR and RSSI';
+
+  @override
+  String get widgetTemplateEnvironmentDescription =>
+      'Temperature, humidity, and pressure display';
+
+  @override
+  String get widgetTemplateNodeInfoDescription => 'Basic node information card';
+
+  @override
+  String get widgetTemplateGpsDescription =>
+      'Show GPS coordinates and satellites';
+
+  @override
+  String get widgetTemplateMeshStatusDescription =>
+      'Mesh network status at a glance';
+
+  @override
+  String get widgetTemplateQuickActionsDescription =>
+      'Common mesh actions at a glance';
+
+  @override
+  String get whatsNewCtaOpenWorldMap => 'Open World Map';
+
+  @override
+  String get whatsNewCtaOpenPresence => 'Open Presence';
+
+  @override
+  String get whatsNewCtaOpenNodedex => 'Open NodeDex';
+
+  @override
+  String get whatsNewCtaOpenAether => 'Open Aether';
+
+  @override
+  String get whatsNewCtaOpenReachability => 'Open Reachability';
+
+  @override
+  String get whatsNewCtaOpenSignals => 'Open Signals';
+
+  @override
+  String get whatsNewCtaOpenTakGateway => 'Open TAK Gateway';
+
+  @override
+  String get whatsNewHeadline => 'What\'s New in Socialmesh';
 }

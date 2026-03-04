@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 
+import '../../l10n/app_localizations.dart';
 import '../constants.dart';
 
 /// A single feature item within a What's New payload.
@@ -385,5 +386,102 @@ class WhatsNewRegistry {
       if (a[i] != b[i]) return a[i].compareTo(b[i]);
     }
     return 0;
+  }
+
+  // ===========================================================================
+  // LOCALIZATION
+  // ===========================================================================
+
+  /// Returns a localized copy of [allPayloads].
+  static List<WhatsNewPayload> localizedPayloads(AppLocalizations l10n) {
+    return _payloads.map((p) => _localizePayload(p, l10n)).toList();
+  }
+
+  static WhatsNewPayload _localizePayload(
+    WhatsNewPayload p,
+    AppLocalizations l10n,
+  ) {
+    return WhatsNewPayload(
+      version: p.version,
+      headline: l10n.whatsNewHeadline,
+      subtitle: _localizeSubtitle(p.version, l10n),
+      items: p.items.map((i) => _localizeItem(i, l10n)).toList(),
+    );
+  }
+
+  /// Maps a version string to its localized subtitle.
+  /// Falls back to the original subtitle when no key exists.
+  static String? _localizeSubtitle(String version, AppLocalizations l10n) {
+    switch (version) {
+      case '1.9.0':
+        return l10n.whatsNewVersion190Subtitle;
+      case '1.10.0':
+        return l10n.whatsNewVersion1100Subtitle;
+      case '1.10.1':
+        return l10n.whatsNewVersion1101Subtitle;
+      case '1.11.0':
+        return l10n.whatsNewVersion1110Subtitle;
+      case '1.13.0':
+        return l10n.whatsNewVersion1130Subtitle;
+      case '1.15.0':
+        return l10n.whatsNewVersion1150Subtitle;
+      case '1.16.0':
+        return l10n.whatsNewVersion1160Subtitle;
+      default:
+        return null;
+    }
+  }
+
+  /// Maps a [WhatsNewItem.id] to localized title, description, and ctaLabel.
+  /// Falls back to the original values when no localization key exists.
+  static WhatsNewItem _localizeItem(WhatsNewItem i, AppLocalizations l10n) {
+    final String title;
+    final String description;
+    final String? ctaLabel;
+
+    switch (i.id) {
+      case 'reachability_intro':
+        title = l10n.whatsNewReachabilityTitle;
+        description = l10n.whatsNewReachabilityDescription;
+        ctaLabel = l10n.whatsNewCtaOpenReachability;
+      case 'world_map_intro':
+        title = l10n.whatsNewWorldMapTitle;
+        description = l10n.whatsNewWorldMapDescription;
+        ctaLabel = l10n.whatsNewCtaOpenWorldMap;
+      case 'presence_intro':
+        title = l10n.whatsNewPresenceTitle;
+        description = l10n.whatsNewPresenceDescription;
+        ctaLabel = l10n.whatsNewCtaOpenPresence;
+      case 'signals_intro':
+        title = l10n.whatsNewSignalsTitle;
+        description = l10n.whatsNewSignalsDescription;
+        ctaLabel = l10n.whatsNewCtaOpenSignals;
+      case 'nodedex_intro':
+        title = l10n.whatsNewNodeDexTitle;
+        description = l10n.whatsNewNodeDexDescription;
+        ctaLabel = l10n.whatsNewCtaOpenNodedex;
+      case 'aether_intro':
+        title = l10n.whatsNewAetherTitle;
+        description = l10n.whatsNewAetherDescription;
+        ctaLabel = l10n.whatsNewCtaOpenAether;
+      case 'tak_gateway_intro':
+        title = l10n.whatsNewTakGatewayTitle;
+        description = l10n.whatsNewTakGatewayDescription;
+        ctaLabel = l10n.whatsNewCtaOpenTakGateway;
+      default:
+        return i;
+    }
+
+    return WhatsNewItem(
+      id: i.id,
+      title: title,
+      description: description,
+      icon: i.icon,
+      iconColor: i.iconColor,
+      deepLinkRoute: i.deepLinkRoute,
+      helpTopicId: i.helpTopicId,
+      badgeKey: i.badgeKey,
+      ctaLabel: ctaLabel,
+    );
   }
 }

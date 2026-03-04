@@ -16,6 +16,7 @@ import '../../providers/help_providers.dart';
 import '../../providers/whats_new_providers.dart';
 import '../../services/haptic_service.dart';
 import '../help/help_content.dart';
+import '../l10n/l10n_extension.dart';
 import '../navigation.dart';
 import '../theme.dart';
 import '../widgets/animations.dart';
@@ -172,14 +173,25 @@ class _WhatsNewCarouselState extends ConsumerState<_WhatsNewCarousel> {
   late final PageController _pageController;
   List<Color> _pageColors = const [];
   int _currentPage = 0;
+  bool _initialized = false;
 
   @override
   void initState() {
     super.initState();
-    // All payloads in reverse chronological order (newest first)
-    _payloads = WhatsNewRegistry.allPayloads.reversed.toList();
     _pageController = PageController();
     _pageController.addListener(_onPageScroll);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_initialized) {
+      _initialized = true;
+      // All payloads in reverse chronological order (newest first)
+      _payloads = WhatsNewRegistry.localizedPayloads(
+        context.l10n,
+      ).reversed.toList();
+    }
   }
 
   @override

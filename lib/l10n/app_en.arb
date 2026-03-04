@@ -25711,7 +25711,13 @@
   "adminFollowRequestFrom": "FROM",
   "adminFollowRequestTo": "TO",
   "adminPostsFilteredCount": "Filtered ({count})",
-  "@adminPostsFilteredCount": {"placeholders": {"count": {"type": "int"}}},
+  "@adminPostsFilteredCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "dashboardAddToFavorites": "Add to favorites",
   "dashboardAddWidget": "Add Widget",
   "dashboardAddWidgets": "Add Widgets",
@@ -25739,7 +25745,13 @@
   "dashboardRemoveFromFavorites": "Remove from favorites",
   "dashboardRemoveWidget": "Remove widget",
   "dashboardRemoveWidgetMessage": "Are you sure you want to remove \"{displayName}\" from your dashboard?",
-  "@dashboardRemoveWidgetMessage": {"placeholders": {"displayName": {"type": "String"}}},
+  "@dashboardRemoveWidgetMessage": {
+    "placeholders": {
+      "displayName": {
+        "type": "String"
+      }
+    }
+  },
   "dashboardRemoveWidgetTitle": "Remove Widget?",
   "dashboardRssiLabel": "RSSI",
   "dashboardSettings": "Settings",
@@ -25800,11 +25812,26 @@
   "globalLayerPort": "Port",
   "globalLayerPreConfiguredAuth": "Pre-configured (public credentials)",
   "globalLayerSaveConfigFailed": "Failed to save configuration: {error}",
-  "@globalLayerSaveConfigFailed": {"placeholders": {"error": {"type": "String"}}},
+  "@globalLayerSaveConfigFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "globalLayerServer": "Server",
   "globalLayerSetupTitle": "Global Layer Setup",
   "globalLayerStepOf": "Step {current} of {total}",
-  "@globalLayerStepOf": {"placeholders": {"current": {"type": "String"}, "total": {"type": "int"}}},
+  "@globalLayerStepOf": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "globalLayerTopicRoot": "TOPIC ROOT",
   "globalLayerTopicRootDescription": "The root prefix for all topics. Change this to keep your mesh traffic separate from others on the same broker.",
   "globalLayerTopicRootLabel": "Topic Root",
@@ -25812,19 +25839,52 @@
   "globalLayerWhatItDoes": "What it does",
   "globalLayerWhatItDoesNot": "What it does NOT do",
   "helpCenterProgressLabel": "{completed} / {total}",
-  "@helpCenterProgressLabel": {"placeholders": {"completed": {"type": "int"}, "total": {"type": "int"}}},
+  "@helpCenterProgressLabel": {
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "mapControlsCenterOnMe": "Center on me",
   "mapControlsFitAll": "Fit all",
   "mapControlsResetNorth": "Reset north",
   "mapNodeDrawerClosePanel": "Close panel",
   "messageDetailFrom": "From: {senderName}",
-  "@messageDetailFrom": {"placeholders": {"senderName": {"type": "String"}}},
+  "@messageDetailFrom": {
+    "placeholders": {
+      "senderName": {
+        "type": "String"
+      }
+    }
+  },
   "messageDetailHops": "{count, plural, =1{1 hop} other{{count} hops}}",
-  "@messageDetailHops": {"placeholders": {"count": {"type": "int"}}},
+  "@messageDetailHops": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "messageDetailRssi": "RSSI {value} dBm",
-  "@messageDetailRssi": {"placeholders": {"value": {"type": "double"}}},
+  "@messageDetailRssi": {
+    "placeholders": {
+      "value": {
+        "type": "double"
+      }
+    }
+  },
   "messageDetailSnr": "SNR {value} dB",
-  "@messageDetailSnr": {"placeholders": {"value": {"type": "double"}}},
+  "@messageDetailSnr": {
+    "placeholders": {
+      "value": {
+        "type": "double"
+      }
+    }
+  },
   "nodeSelectorSearchHint": "Search nodes...",
   "portalViewBroker": "Broker",
   "portalViewLocalMesh": "Local Mesh",
@@ -25847,19 +25907,49 @@
   "signalQualityVeryGood": "Very Good",
   "signalQualityWeak": "Weak",
   "themeSettingsError": "Error: {error}",
-  "@themeSettingsError": {"placeholders": {"error": {"type": "String"}}},
+  "@themeSettingsError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "timelineWeakSignalFrom": "Weak signal from {nodeName}",
-  "@timelineWeakSignalFrom": {"placeholders": {"nodeName": {"type": "String"}}},
+  "@timelineWeakSignalFrom": {
+    "placeholders": {
+      "nodeName": {
+        "type": "String"
+      }
+    }
+  },
   "widgetWizardAdd": "Add",
   "dashboardRequestPositions": "Request\nPositions",
   "adminPostsDeleteAllCount": "Delete all ({count})",
-  "@adminPostsDeleteAllCount": {"placeholders": {"count": {"type": "int"}}},
+  "@adminPostsDeleteAllCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "adminPostsCreatedDate": "Created {date}",
-  "@adminPostsCreatedDate": {"placeholders": {"date": {"type": "String"}}},
+  "@adminPostsCreatedDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "globalLayerAllowInboundChat": "Allow inbound global chat",
   "globalLayerDiagBrokerEmpty": "Broker address is empty.",
   "globalLayerDiagUnexpectedError": "Unexpected error: {error}",
-  "@globalLayerDiagUnexpectedError": {"placeholders": {"error": {"type": "String"}}},
+  "@globalLayerDiagUnexpectedError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "globalLayerDiagUsernameNoPassword": "Username provided but password is empty.",
   "globalLayerShareMessages": "Share messages to Global Layer",
   "globalLayerShareTelemetry": "Share telemetry",
@@ -25874,5 +25964,1998 @@
         "type": "int"
       }
     }
+  },
+  "helpChannelCreationTitle": "Creating a Channel",
+  "@helpChannelCreationTitle": {
+    "description": "Title for channel_creation help topic"
+  },
+  "helpChannelCreationDescription": "Learn how to create and configure mesh channels",
+  "@helpChannelCreationDescription": {
+    "description": "Description for channel_creation help topic"
+  },
+  "helpEncryptionLevelsTitle": "Channel Encryption",
+  "@helpEncryptionLevelsTitle": {
+    "description": "Title for encryption_levels help topic"
+  },
+  "helpEncryptionLevelsDescription": "Understanding privacy and encryption options",
+  "@helpEncryptionLevelsDescription": {
+    "description": "Description for encryption_levels help topic"
+  },
+  "helpMessageRoutingTitle": "How Messages Travel",
+  "@helpMessageRoutingTitle": {
+    "description": "Title for message_routing help topic"
+  },
+  "helpMessageRoutingDescription": "Understanding mesh routing and message hops",
+  "@helpMessageRoutingDescription": {
+    "description": "Description for message_routing help topic"
+  },
+  "helpNodesOverviewTitle": "Your Mesh Network",
+  "@helpNodesOverviewTitle": {
+    "description": "Title for nodes_overview help topic"
+  },
+  "helpNodesOverviewDescription": "Understanding the nodes in your mesh",
+  "@helpNodesOverviewDescription": {
+    "description": "Description for nodes_overview help topic"
+  },
+  "helpNodeRolesTitle": "Node Roles",
+  "@helpNodeRolesTitle": {
+    "description": "Title for node_roles help topic"
+  },
+  "helpNodeRolesDescription": "CLIENT vs ROUTER vs REPEATER explained",
+  "@helpNodeRolesDescription": {
+    "description": "Description for node_roles help topic"
+  },
+  "helpRegionSelectionTitle": "Selecting Your Region",
+  "@helpRegionSelectionTitle": {
+    "description": "Title for region_selection help topic"
+  },
+  "helpRegionSelectionDescription": "Frequency bands and legal compliance",
+  "@helpRegionSelectionDescription": {
+    "description": "Description for region_selection help topic"
+  },
+  "helpDeviceConnectionTitle": "Connecting Your Device",
+  "@helpDeviceConnectionTitle": {
+    "description": "Title for device_connection help topic"
+  },
+  "helpDeviceConnectionDescription": "BLE vs USB and pairing process",
+  "@helpDeviceConnectionDescription": {
+    "description": "Description for device_connection help topic"
+  },
+  "helpGpsSettingsTitle": "GPS & Position Sharing",
+  "@helpGpsSettingsTitle": {
+    "description": "Title for gps_settings help topic"
+  },
+  "helpGpsSettingsDescription": "Location updates and privacy",
+  "@helpGpsSettingsDescription": {
+    "description": "Description for gps_settings help topic"
+  },
+  "helpSignalMetricsTitle": "Understanding Signal Strength",
+  "@helpSignalMetricsTitle": {
+    "description": "Title for signal_metrics help topic"
+  },
+  "helpSignalMetricsDescription": "SNR, RSSI, and what they mean",
+  "@helpSignalMetricsDescription": {
+    "description": "Description for signal_metrics help topic"
+  },
+  "helpMapOverviewTitle": "Mesh Map",
+  "@helpMapOverviewTitle": {
+    "description": "Title for map_overview help topic"
+  },
+  "helpMapOverviewDescription": "See your mesh network on a map",
+  "@helpMapOverviewDescription": {
+    "description": "Description for map_overview help topic"
+  },
+  "helpChannelsOverviewTitle": "Your Channels",
+  "@helpChannelsOverviewTitle": {
+    "description": "Title for channels_overview help topic"
+  },
+  "helpChannelsOverviewDescription": "Managing mesh communication channels",
+  "@helpChannelsOverviewDescription": {
+    "description": "Description for channels_overview help topic"
+  },
+  "helpAutomationsOverviewTitle": "Automations",
+  "@helpAutomationsOverviewTitle": {
+    "description": "Title for automations_overview help topic"
+  },
+  "helpAutomationsOverviewDescription": "Automatic actions for your mesh",
+  "@helpAutomationsOverviewDescription": {
+    "description": "Description for automations_overview help topic"
+  },
+  "helpDashboardOverviewTitle": "Your Dashboard",
+  "@helpDashboardOverviewTitle": {
+    "description": "Title for dashboard_overview help topic"
+  },
+  "helpDashboardOverviewDescription": "Your customizable mesh command center",
+  "@helpDashboardOverviewDescription": {
+    "description": "Description for dashboard_overview help topic"
+  },
+  "helpWidgetBuilderOverviewTitle": "Widget Builder",
+  "@helpWidgetBuilderOverviewTitle": {
+    "description": "Title for widget_builder_overview help topic"
+  },
+  "helpWidgetBuilderOverviewDescription": "Create your own custom widgets",
+  "@helpWidgetBuilderOverviewDescription": {
+    "description": "Description for widget_builder_overview help topic"
+  },
+  "helpMarketplaceOverviewTitle": "Widget Marketplace",
+  "@helpMarketplaceOverviewTitle": {
+    "description": "Title for marketplace_overview help topic"
+  },
+  "helpMarketplaceOverviewDescription": "Discover widgets made by the community",
+  "@helpMarketplaceOverviewDescription": {
+    "description": "Description for marketplace_overview help topic"
+  },
+  "helpSignalsOverviewTitle": "Signals",
+  "@helpSignalsOverviewTitle": {
+    "description": "Title for signals_overview help topic"
+  },
+  "helpSignalsOverviewDescription": "Broadcast ephemeral signals to your mesh",
+  "@helpSignalsOverviewDescription": {
+    "description": "Description for signals_overview help topic"
+  },
+  "helpSignalCreationTitle": "Creating a Signal",
+  "@helpSignalCreationTitle": {
+    "description": "Title for signal_creation help topic"
+  },
+  "helpSignalCreationDescription": "How to compose and broadcast a signal",
+  "@helpSignalCreationDescription": {
+    "description": "Description for signal_creation help topic"
+  },
+  "helpSignalDetailTitle": "Signal Details",
+  "@helpSignalDetailTitle": {
+    "description": "Title for signal_detail help topic"
+  },
+  "helpSignalDetailDescription": "Interacting with a signal and its responses",
+  "@helpSignalDetailDescription": {
+    "description": "Description for signal_detail help topic"
+  },
+  "helpWorldMeshOverviewTitle": "World Mesh",
+  "@helpWorldMeshOverviewTitle": {
+    "description": "Title for world_mesh_overview help topic"
+  },
+  "helpWorldMeshOverviewDescription": "Global mesh network visualization",
+  "@helpWorldMeshOverviewDescription": {
+    "description": "Description for world_mesh_overview help topic"
+  },
+  "helpRoutesOverviewTitle": "Routes",
+  "@helpRoutesOverviewTitle": {
+    "description": "Title for routes_overview help topic"
+  },
+  "helpRoutesOverviewDescription": "Record and share GPS routes",
+  "@helpRoutesOverviewDescription": {
+    "description": "Description for routes_overview help topic"
+  },
+  "helpPositionOverviewTitle": "Position History",
+  "@helpPositionOverviewTitle": {
+    "description": "Title for position_overview help topic"
+  },
+  "helpPositionOverviewDescription": "GPS position logs for all nodes on your mesh",
+  "@helpPositionOverviewDescription": {
+    "description": "Description for position_overview help topic"
+  },
+  "helpSettingsOverviewTitle": "Settings",
+  "@helpSettingsOverviewTitle": {
+    "description": "Title for settings_overview help topic"
+  },
+  "helpSettingsOverviewDescription": "Configure your app and device",
+  "@helpSettingsOverviewDescription": {
+    "description": "Description for settings_overview help topic"
+  },
+  "helpProfileOverviewTitle": "Your Profile",
+  "@helpProfileOverviewTitle": {
+    "description": "Title for profile_overview help topic"
+  },
+  "helpProfileOverviewDescription": "Manage your mesh identity",
+  "@helpProfileOverviewDescription": {
+    "description": "Description for profile_overview help topic"
+  },
+  "helpMesh3dOverviewTitle": "Mesh 3D",
+  "@helpMesh3dOverviewTitle": {
+    "description": "Title for mesh_3d_overview help topic"
+  },
+  "helpMesh3dOverviewDescription": "3D network topology visualization",
+  "@helpMesh3dOverviewDescription": {
+    "description": "Description for mesh_3d_overview help topic"
+  },
+  "helpGlobeOverviewTitle": "Globe View",
+  "@helpGlobeOverviewTitle": {
+    "description": "Title for globe_overview help topic"
+  },
+  "helpGlobeOverviewDescription": "3D globe with your mesh",
+  "@helpGlobeOverviewDescription": {
+    "description": "Description for globe_overview help topic"
+  },
+  "helpTimelineOverviewTitle": "Timeline",
+  "@helpTimelineOverviewTitle": {
+    "description": "Title for timeline_overview help topic"
+  },
+  "helpTimelineOverviewDescription": "Your mesh activity history",
+  "@helpTimelineOverviewDescription": {
+    "description": "Description for timeline_overview help topic"
+  },
+  "helpDeviceShopOverviewTitle": "Device Shop",
+  "@helpDeviceShopOverviewTitle": {
+    "description": "Title for device_shop_overview help topic"
+  },
+  "helpDeviceShopOverviewDescription": "Browse Meshtastic hardware",
+  "@helpDeviceShopOverviewDescription": {
+    "description": "Description for device_shop_overview help topic"
+  },
+  "helpOfflineMapsOverviewTitle": "Offline Maps",
+  "@helpOfflineMapsOverviewTitle": {
+    "description": "Title for offline_maps_overview help topic"
+  },
+  "helpOfflineMapsOverviewDescription": "Map display settings and controls",
+  "@helpOfflineMapsOverviewDescription": {
+    "description": "Description for offline_maps_overview help topic"
+  },
+  "helpRadioConfigOverviewTitle": "Radio Settings",
+  "@helpRadioConfigOverviewTitle": {
+    "description": "Title for radio_config_overview help topic"
+  },
+  "helpRadioConfigOverviewDescription": "Configure your LoRa radio",
+  "@helpRadioConfigOverviewDescription": {
+    "description": "Description for radio_config_overview help topic"
+  },
+  "helpPresenceOverviewTitle": "Node Presence",
+  "@helpPresenceOverviewTitle": {
+    "description": "Title for presence_overview help topic"
+  },
+  "helpPresenceOverviewDescription": "Track which nodes are active on your mesh",
+  "@helpPresenceOverviewDescription": {
+    "description": "Description for presence_overview help topic"
+  },
+  "helpReachabilityOverviewTitle": "Mesh Reachability",
+  "@helpReachabilityOverviewTitle": {
+    "description": "Title for reachability_overview help topic"
+  },
+  "helpReachabilityOverviewDescription": "Understand which nodes you can reach",
+  "@helpReachabilityOverviewDescription": {
+    "description": "Description for reachability_overview help topic"
+  },
+  "helpMeshHealthOverviewTitle": "Mesh Health",
+  "@helpMeshHealthOverviewTitle": {
+    "description": "Title for mesh_health_overview help topic"
+  },
+  "helpMeshHealthOverviewDescription": "Monitor your mesh network health",
+  "@helpMeshHealthOverviewDescription": {
+    "description": "Description for mesh_health_overview help topic"
+  },
+  "helpTracerouteOverviewTitle": "Traceroute",
+  "@helpTracerouteOverviewTitle": {
+    "description": "Title for traceroute_overview help topic"
+  },
+  "helpTracerouteOverviewDescription": "Discover the route packets take across your mesh",
+  "@helpTracerouteOverviewDescription": {
+    "description": "Description for traceroute_overview help topic"
+  },
+  "helpNodedexOverviewTitle": "NodeDex Field Journal",
+  "@helpNodedexOverviewTitle": {
+    "description": "Title for nodedex_overview help topic"
+  },
+  "helpNodedexOverviewDescription": "Your personal record of every node discovered on the mesh",
+  "@helpNodedexOverviewDescription": {
+    "description": "Description for nodedex_overview help topic"
+  },
+  "helpNodedexAlbumTitle": "Collector Album",
+  "@helpNodedexAlbumTitle": {
+    "description": "Title for nodedex_album help topic"
+  },
+  "helpNodedexAlbumDescription": "A collectible card view of your discovered nodes",
+  "@helpNodedexAlbumDescription": {
+    "description": "Description for nodedex_album help topic"
+  },
+  "helpNodedexConstellationTitle": "Constellation View",
+  "@helpNodedexConstellationTitle": {
+    "description": "Title for nodedex_constellation help topic"
+  },
+  "helpNodedexConstellationDescription": "A star-map visualization of co-seen node relationships",
+  "helpNodedexDetailTitle": "Node Profile",
+  "helpNodedexDetailDescription": "Understanding a node's full identity and history",
+  "@helpNodedexConstellationDescription": {
+    "description": "Description for nodedex_constellation help topic"
+  },
+  "helpCloudSyncOverviewTitle": "Cloud Sync",
+  "@helpCloudSyncOverviewTitle": {
+    "description": "Title for cloud_sync_overview help topic"
+  },
+  "helpCloudSyncOverviewDescription": "Premium cross-device sync for your mesh data",
+  "@helpCloudSyncOverviewDescription": {
+    "description": "Description for cloud_sync_overview help topic"
+  },
+  "helpAetherOverviewTitle": "Aether",
+  "@helpAetherOverviewTitle": {
+    "description": "Title for aether_overview help topic"
+  },
+  "helpAetherOverviewDescription": "Track Meshtastic nodes at altitude",
+  "@helpAetherOverviewDescription": {
+    "description": "Description for aether_overview help topic"
+  },
+  "helpTakGatewayOverviewTitle": "TAK Gateway",
+  "@helpTakGatewayOverviewTitle": {
+    "description": "Title for tak_gateway_overview help topic"
+  },
+  "helpTakGatewayOverviewDescription": "Bridge your mesh into the TAK ecosystem",
+  "@helpTakGatewayOverviewDescription": {
+    "description": "Description for tak_gateway_overview help topic"
+  },
+  "helpRadioComplianceTitle": "Radio Rules & Your Responsibilities",
+  "@helpRadioComplianceTitle": {
+    "description": "Title for radio_compliance help topic"
+  },
+  "helpRadioComplianceDescription": "Understand your legal obligations when using radio devices",
+  "@helpRadioComplianceDescription": {
+    "description": "Description for radio_compliance help topic"
+  },
+  "helpAcceptableUseTitle": "Acceptable Use & Prohibited Activities",
+  "@helpAcceptableUseTitle": {
+    "description": "Title for acceptable_use help topic"
+  },
+  "helpAcceptableUseDescription": "What you can and cannot do with Socialmesh",
+  "@helpAcceptableUseDescription": {
+    "description": "Description for acceptable_use help topic"
+  },
+  "helpUserResponsibilityTitle": "Your Data, Your Responsibility",
+  "@helpUserResponsibilityTitle": {
+    "description": "Title for user_responsibility help topic"
+  },
+  "helpUserResponsibilityDescription": "How Socialmesh handles data and what you are responsible for",
+  "@helpUserResponsibilityDescription": {
+    "description": "Description for user_responsibility help topic"
+  },
+  "helpFileTransferOverviewTitle": "File Transfers",
+  "@helpFileTransferOverviewTitle": {
+    "description": "Title for file_transfer_overview help topic"
+  },
+  "helpFileTransferOverviewDescription": "Send files over the mesh radio without internet",
+  "@helpFileTransferOverviewDescription": {
+    "description": "Description for file_transfer_overview help topic"
+  },
+  "helpFileTransferLimitsTitle": "Why Only 8 KB?",
+  "@helpFileTransferLimitsTitle": {
+    "description": "Title for file_transfer_limits help topic"
+  },
+  "helpFileTransferLimitsDescription": "Airtime budget and LoRa duty cycle explained",
+  "@helpFileTransferLimitsDescription": {
+    "description": "Description for file_transfer_limits help topic"
+  },
+  "helpChannelIntroBubble": "Let's make a **channel**! It's like a walkie-talkie. Only your friends who know the secret can listen in.",
+  "@helpChannelIntroBubble": {
+    "description": "Help bubble text for step channel_intro"
+  },
+  "helpChannelNameBubble": "First, pick a **name** for your channel. Something easy to remember, like 'Family' or 'Hiking Buddies'.",
+  "@helpChannelNameBubble": {
+    "description": "Help bubble text for step channel_name"
+  },
+  "helpPrivacyLevelBubble": "How secret should your channel be?\\n\\n**OPEN**: Anyone can listen in.\\n**SHARED**: Like a password everyone knows.\\n**PRIVATE**: Only friends you invite.\\n**MAXIMUM**: Super duper secret!",
+  "@helpPrivacyLevelBubble": {
+    "description": "Help bubble text for step privacy_level"
+  },
+  "helpEncryptionKeyBubble": "I made a **secret key** for you! It scrambles your messages so only your friends can read them. Like a secret code!",
+  "@helpEncryptionKeyBubble": {
+    "description": "Help bubble text for step encryption_key"
+  },
+  "helpChannelCompleteBubble": "All done! Show your friends the **QR code** and they can join your channel. Easy peasy!",
+  "@helpChannelCompleteBubble": {
+    "description": "Help bubble text for step channel_complete"
+  },
+  "helpEncryptionIntroBubble": "Let me explain **encryption levels**. It's like choosing how secret your messages are!",
+  "@helpEncryptionIntroBubble": {
+    "description": "Help bubble text for step encryption_intro"
+  },
+  "helpDefaultKeyBubble": "**DEFAULT KEY** means everyone in the mesh can read your messages. It's public! Use this for general announcements or testing.",
+  "@helpDefaultKeyBubble": {
+    "description": "Help bubble text for step default_key"
+  },
+  "helpPskEncryptionBubble": "**PSK** (Pre-Shared Key) means you generate a random secret key. Only people with this exact key can decode your messages. Much more private!",
+  "@helpPskEncryptionBubble": {
+    "description": "Help bubble text for step psk_encryption"
+  },
+  "helpPskSharingBubble": "Share your PSK via **QR code**! When someone scans it, they get the key and channel settings. Easy peasy!",
+  "@helpPskSharingBubble": {
+    "description": "Help bubble text for step psk_sharing"
+  },
+  "helpRoutingIntroBubble": "Want to see how I work? When you send a message, I **bounce it from node to node** like a game of hot potato!",
+  "@helpRoutingIntroBubble": {
+    "description": "Help bubble text for step routing_intro"
+  },
+  "helpRoutingHopsBubble": "Each **hop** is when a node receives your message and forwards it. Most messages need **1-3 hops** to reach their destination!",
+  "@helpRoutingHopsBubble": {
+    "description": "Help bubble text for step routing_hops"
+  },
+  "helpRoutingRouterRoleBubble": "**ROUTER** nodes are the mesh superheroes - they relay messages for everyone! **CLIENT** nodes only send/receive their own messages.",
+  "@helpRoutingRouterRoleBubble": {
+    "description": "Help bubble text for step routing_router_role"
+  },
+  "helpRoutingStoreForwardBubble": "**Store & Forward** is awesome! If the recipient hasn't been heard recently, I'll hold onto the message and deliver it when a packet arrives.",
+  "@helpRoutingStoreForwardBubble": {
+    "description": "Help bubble text for step routing_store_forward"
+  },
+  "helpNodesIntroBubble": "This is your **mesh network**! Every device you see here is a node that can talk to you.",
+  "@helpNodesIntroBubble": {
+    "description": "Help bubble text for step nodes_intro"
+  },
+  "helpNodesStatusBubble": "**Green dot** means **Active** (heard very recently). **Yellow** means **Seen recently**. **Gray** means **Inactive**. LoRa has no offline signal—status is inferred.",
+  "@helpNodesStatusBubble": {
+    "description": "Help bubble text for step nodes_status"
+  },
+  "helpNodesInfoBubble": "Each card shows the node's **name**, **battery level**, and **signal strength**. Tap any node to see more details!",
+  "@helpNodesInfoBubble": {
+    "description": "Help bubble text for step nodes_info"
+  },
+  "helpNodesFiltersBubble": "Use the **filters** at the top to find specific nodes. You can show only **Active** nodes, favorites, or nodes with GPS.",
+  "@helpNodesFiltersBubble": {
+    "description": "Help bubble text for step nodes_filters"
+  },
+  "helpNodesActionsBubble": "Tap a node to **send a message**, see their **location on the map**, or check their **telemetry data**!",
+  "@helpNodesActionsBubble": {
+    "description": "Help bubble text for step nodes_actions"
+  },
+  "helpRolesIntroBubble": "**Node roles** determine how your device helps the mesh. Let me break it down for you!",
+  "@helpRolesIntroBubble": {
+    "description": "Help bubble text for step roles_intro"
+  },
+  "helpRoleClientBubble": "**CLIENT**: Your device sends and receives messages but doesn't relay for others. Great for **battery life**!",
+  "@helpRoleClientBubble": {
+    "description": "Help bubble text for step role_client"
+  },
+  "helpRoleRouterBubble": "**ROUTER**: You're a mesh superhero! You relay messages for everyone. Uses more battery but makes the mesh stronger!",
+  "@helpRoleRouterBubble": {
+    "description": "Help bubble text for step role_router"
+  },
+  "helpRoleRouterLateBubble": "**ROUTER LATE**: Rebroadcasts after other routers. Extends coverage without taking priority hops. Great for backup relays!",
+  "@helpRoleRouterLateBubble": {
+    "description": "Help bubble text for step role_router_late"
+  },
+  "helpRoleClientBaseBubble": "**CLIENT BASE**: Base station for your favorited nodes. Routes their packets like a router, handles everything else like a client!",
+  "@helpRoleClientBaseBubble": {
+    "description": "Help bubble text for step role_client_base"
+  },
+  "helpRegionIntroBubble": "This is important! Your **region** determines which radio frequencies you can legally use.",
+  "@helpRegionIntroBubble": {
+    "description": "Help bubble text for step region_intro"
+  },
+  "helpRegionLegalBubble": "Each country has different rules. Using the **wrong frequency** can be illegal! Always match your physical location.",
+  "@helpRegionLegalBubble": {
+    "description": "Help bubble text for step region_legal"
+  },
+  "helpRegionBandsBubble": "Most regions use **915MHz** (Americas) or **868MHz** (Europe). Some use **433MHz**. Your device's hardware must support the frequency!",
+  "@helpRegionBandsBubble": {
+    "description": "Help bubble text for step region_bands"
+  },
+  "helpRegionWarningBubble": "Wrong region = **can't communicate** with others! Make sure everyone in your mesh uses the same region setting.",
+  "@helpRegionWarningBubble": {
+    "description": "Help bubble text for step region_warning"
+  },
+  "helpConnectionIntroBubble": "Let's connect your Meshtastic device! There are two ways: **Bluetooth** or **USB**.",
+  "@helpConnectionIntroBubble": {
+    "description": "Help bubble text for step connection_intro"
+  },
+  "helpConnectionBleBubble": "**BLUETOOTH** (BLE): Wireless! Your device shows up as **Meshtastic_XXXX**. Just tap to connect. Works while device is in your pocket!",
+  "@helpConnectionBleBubble": {
+    "description": "Help bubble text for step connection_ble"
+  },
+  "helpConnectionUsbBubble": "**USB**: Plug in with a cable. More reliable, charges your device, slightly faster. Great for configuration!",
+  "@helpConnectionUsbBubble": {
+    "description": "Help bubble text for step connection_usb"
+  },
+  "helpConnectionPairingBubble": "First time? Your device needs to be in **pairing mode**. Check for a Bluetooth icon on the screen or press the button!",
+  "@helpConnectionPairingBubble": {
+    "description": "Help bubble text for step connection_pairing"
+  },
+  "helpConnectionTroubleshootBubble": "Can't find your device? Check:\\n- **Bluetooth is on**\\n- Device has power\\n- Device isn't connected elsewhere\\n- You're close enough (under 10m)",
+  "@helpConnectionTroubleshootBubble": {
+    "description": "Help bubble text for step connection_troubleshoot"
+  },
+  "helpGpsIntroBubble": "**GPS** lets others see where you are on the map! Let me explain how it works.",
+  "@helpGpsIntroBubble": {
+    "description": "Help bubble text for step gps_intro"
+  },
+  "helpGpsBroadcastBubble": "Your device broadcasts **position updates** every few minutes. Other nodes see you appear on their map!",
+  "@helpGpsBroadcastBubble": {
+    "description": "Help bubble text for step gps_broadcast"
+  },
+  "helpGpsPrivacyBubble": "Privacy matters! You can **disable GPS** or set update intervals. Turn it off when you want to stay hidden!",
+  "@helpGpsPrivacyBubble": {
+    "description": "Help bubble text for step gps_privacy"
+  },
+  "helpGpsBatteryBubble": "GPS uses **battery**! Longer update intervals = better battery life. Balance privacy and utility!",
+  "@helpGpsBatteryBubble": {
+    "description": "Help bubble text for step gps_battery"
+  },
+  "helpMetricsIntroBubble": "Let's decode those signal numbers! They tell you how good your connection is.",
+  "@helpMetricsIntroBubble": {
+    "description": "Help bubble text for step metrics_intro"
+  },
+  "helpMetricsRssiBubble": "**RSSI** (Received Signal Strength): How loud the signal is. Higher is better! **-50 dBm** = excellent, **-120 dBm** = barely hanging on.",
+  "@helpMetricsRssiBubble": {
+    "description": "Help bubble text for step metrics_rssi"
+  },
+  "helpMetricsSnrBubble": "**SNR** (Signal-to-Noise Ratio): How clear the signal is. Positive = good, negative = noisy! **+10 dB** = great, **-10 dB** = struggling.",
+  "@helpMetricsSnrBubble": {
+    "description": "Help bubble text for step metrics_snr"
+  },
+  "helpMetricsPracticalBubble": "In practice: **Green** = excellent, **yellow** = okay, **red** = poor. Move closer or find higher ground to improve!",
+  "@helpMetricsPracticalBubble": {
+    "description": "Help bubble text for step metrics_practical"
+  },
+  "helpMapIntroBubble": "Welcome to the **Mesh Map**! Every dot you see is a node with GPS. They're all part of your network!",
+  "@helpMapIntroBubble": {
+    "description": "Help bubble text for step map_intro"
+  },
+  "helpMapMarkersBubble": "**Tap any marker** to see who it is. You can send them a message, check their battery, or see when they were last heard!",
+  "@helpMapMarkersBubble": {
+    "description": "Help bubble text for step map_markers"
+  },
+  "helpMapFeaturesBubble": "Try the **heatmap** to see where nodes cluster, or **connection lines** to see who can talk to who!",
+  "@helpMapFeaturesBubble": {
+    "description": "Help bubble text for step map_features"
+  },
+  "helpMapMeasureBubble": "Use **measure mode** to check distances between points. Great for planning where to put a new node!",
+  "@helpMapMeasureBubble": {
+    "description": "Help bubble text for step map_measure"
+  },
+  "helpMapFiltersBubble": "Use **filters** to show only **Active** nodes, or nodes with GPS. Helps when your map gets crowded!",
+  "@helpMapFiltersBubble": {
+    "description": "Help bubble text for step map_filters"
+  },
+  "helpChannelsIntroBubble": "These are your **channels**! Think of them like different radio frequencies. Each one is a separate conversation.",
+  "@helpChannelsIntroBubble": {
+    "description": "Help bubble text for step channels_intro"
+  },
+  "helpChannelsPrimaryBubble": "The **Primary** channel is special. It's always slot 0 and can't be deleted. Most mesh traffic goes here!",
+  "@helpChannelsPrimaryBubble": {
+    "description": "Help bubble text for step channels_primary"
+  },
+  "helpChannelsSecondaryBubble": "**Secondary channels** are for private groups. Create one for your family, hiking club, or emergency team!",
+  "@helpChannelsSecondaryBubble": {
+    "description": "Help bubble text for step channels_secondary"
+  },
+  "helpChannelsEncryptionBubble": "See the **lock icon**? That means the channel is encrypted. Only people with the key can read messages!",
+  "@helpChannelsEncryptionBubble": {
+    "description": "Help bubble text for step channels_encryption"
+  },
+  "helpChannelsShareBubble": "Tap a channel to see its **QR code**. Friends can scan it to join instantly with the right settings!",
+  "@helpChannelsShareBubble": {
+    "description": "Help bubble text for step channels_share"
+  },
+  "helpAutomationsIntroBubble": "**Automations** make your mesh smarter! Set up rules and I'll do things automatically for you.",
+  "@helpAutomationsIntroBubble": {
+    "description": "Help bubble text for step automations_intro"
+  },
+  "helpAutomationsTriggersBubble": "Every automation starts with a **trigger**. Like when a node becomes inactive, battery gets low, or you enter an area!",
+  "@helpAutomationsTriggersBubble": {
+    "description": "Help bubble text for step automations_triggers"
+  },
+  "helpAutomationsActionsBubble": "Then pick an **action**! Send a message, play a sound, show a notification, or even trigger IFTTT!",
+  "@helpAutomationsActionsBubble": {
+    "description": "Help bubble text for step automations_actions"
+  },
+  "helpAutomationsExamplesBubble": "Example: **Alert me when Dad's battery drops below 20%**. Or **Send 'I'm home!' when I enter my geofence**!",
+  "@helpAutomationsExamplesBubble": {
+    "description": "Help bubble text for step automations_examples"
+  },
+  "helpAutomationsToggleBubble": "Use the **toggle switch** to enable or disable automations. Test them out before going live!",
+  "@helpAutomationsToggleBubble": {
+    "description": "Help bubble text for step automations_toggle"
+  },
+  "helpDashboardIntroBubble": "Welcome to your **Dashboard**! This is your personalized command center. Everything you need, at a glance!",
+  "@helpDashboardIntroBubble": {
+    "description": "Help bubble text for step dashboard_intro"
+  },
+  "helpDashboardWidgetsBubble": "Each card is a **widget**. They show live data from your mesh - battery levels, messages, weather, and more!",
+  "@helpDashboardWidgetsBubble": {
+    "description": "Help bubble text for step dashboard_widgets"
+  },
+  "helpDashboardReorderBubble": "**Long-press and drag** to rearrange widgets. Put your favorites at the top! Tap **Edit** to add or remove them.",
+  "@helpDashboardReorderBubble": {
+    "description": "Help bubble text for step dashboard_reorder"
+  },
+  "helpDashboardTapBubble": "**Tap any widget** to see more details or take action. Try tapping a node widget to see all their info!",
+  "@helpDashboardTapBubble": {
+    "description": "Help bubble text for step dashboard_tap"
+  },
+  "helpBuilderIntroBubble": "Welcome to the **Widget Builder**! Here you can create your own custom widgets from scratch!",
+  "@helpBuilderIntroBubble": {
+    "description": "Help bubble text for step builder_intro"
+  },
+  "helpBuilderTemplatesBubble": "Start with a **template** or build from blank. Templates give you gauges, charts, and status cards ready to customize!",
+  "@helpBuilderTemplatesBubble": {
+    "description": "Help bubble text for step builder_templates"
+  },
+  "helpBuilderBindingsBubble": "The magic is in **data bindings**! Connect any element to live mesh data - battery, GPS, temperature, signal strength!",
+  "@helpBuilderBindingsBubble": {
+    "description": "Help bubble text for step builder_bindings"
+  },
+  "helpBuilderPreviewBubble": "Use **Preview** to see how your widget looks with real data before saving. Tweak until it's perfect!",
+  "@helpBuilderPreviewBubble": {
+    "description": "Help bubble text for step builder_preview"
+  },
+  "helpMarketplaceIntroBubble": "Welcome to the **Marketplace**! Browse widgets created by other mesh enthusiasts around the world!",
+  "@helpMarketplaceIntroBubble": {
+    "description": "Help bubble text for step marketplace_intro"
+  },
+  "helpMarketplaceBrowseBubble": "Browse by **category** - find status displays, charts, gauges, or creative designs. Tap any widget to preview it!",
+  "@helpMarketplaceBrowseBubble": {
+    "description": "Help bubble text for step marketplace_browse"
+  },
+  "helpMarketplaceInstallBubble": "Found one you like? **Tap install** and it's added to your collection. Use it on your dashboard right away!",
+  "@helpMarketplaceInstallBubble": {
+    "description": "Help bubble text for step marketplace_install"
+  },
+  "helpMarketplaceShareBubble": "Made something cool? **Share your widgets** to the marketplace and help the community!",
+  "@helpMarketplaceShareBubble": {
+    "description": "Help bubble text for step marketplace_share"
+  },
+  "helpSignalsIntroBubble": "Welcome to **Signals**! Broadcast moments to your mesh. Signals are **ephemeral** - you choose how long they last, from **15 minutes** up to **24 hours**.",
+  "@helpSignalsIntroBubble": {
+    "description": "Help bubble text for step signals_intro"
+  },
+  "helpSignalsCreateBubble": "Tap the **sensor icon** to go active! Add text, a photo, or your location. Choose your TTL - shorter times work great for quick check-ins.",
+  "@helpSignalsCreateBubble": {
+    "description": "Help bubble text for step signals_create"
+  },
+  "helpSignalsProximityBubble": "Signals show **proximity badges** - how many hops away the sender is. **Nearby** signals (0-1 hops) appear first!",
+  "@helpSignalsProximityBubble": {
+    "description": "Help bubble text for step signals_proximity"
+  },
+  "helpSignalsFiltersBubble": "Use **filters** to focus on what matters: nearby signals, mesh-only, or content with media. Toggle between **list** and **grid** views!",
+  "@helpSignalsFiltersBubble": {
+    "description": "Help bubble text for step signals_filters"
+  },
+  "helpSignalsPrivacyBubble": "Signals are **mesh-first** - they travel through the radio network. When they fade, they're gone. True ephemeral, off-grid content!",
+  "@helpSignalsPrivacyBubble": {
+    "description": "Help bubble text for step signals_privacy"
+  },
+  "helpCreateIntroBubble": "Time to **Go Active**! A signal is an ephemeral broadcast — it lives on the mesh for a set time, then fades away. Let me walk you through it.",
+  "@helpCreateIntroBubble": {
+    "description": "Help bubble text for step create_intro"
+  },
+  "helpCreateTextBubble": "Type your message in the main field — up to **280 characters**. The circular counter in the corner shows how many you have left.",
+  "@helpCreateTextBubble": {
+    "description": "Help bubble text for step create_text"
+  },
+  "helpCreateImageBubble": "Tap the **image icon** to attach a photo. Images are uploaded via cloud when you are online — they are not available in mesh-only mode.",
+  "@helpCreateImageBubble": {
+    "description": "Help bubble text for step create_image"
+  },
+  "helpCreateLocationBubble": "Tap the **location pin** to attach your device's GPS position. Your location is fuzzed to a configurable radius for privacy. Tap again to remove it.",
+  "@helpCreateLocationBubble": {
+    "description": "Help bubble text for step create_location"
+  },
+  "helpCreateTtlBubble": "The **timer icon** sets your TTL — how long the signal stays alive. Choose from **15 minutes** up to **24 hours**. Shorter times work great for quick check-ins.",
+  "@helpCreateTtlBubble": {
+    "description": "Help bubble text for step create_ttl"
+  },
+  "helpCreateIntentBubble": "Pick a **Presence Intent** to tell the mesh what you are up to — exploring, monitoring, helping, or just listening. It adds context without extra words.",
+  "@helpCreateIntentBubble": {
+    "description": "Help bubble text for step create_intent"
+  },
+  "helpCreateStatusBubble": "The **short status** field is a one-liner that appears as a subtitle on your signal card. Think of it as a mood or caption.",
+  "@helpCreateStatusBubble": {
+    "description": "Help bubble text for step create_status"
+  },
+  "helpCreateSubmitBubble": "When you are ready, hit **Broadcast**! Your signal travels through the mesh radio first. If cloud is available, it syncs there too for wider reach.",
+  "@helpCreateSubmitBubble": {
+    "description": "Help bubble text for step create_submit"
+  },
+  "helpDetailIntroBubble": "This is the **signal detail** screen. You can read the full content, see where it was posted, and browse all responses.",
+  "@helpDetailIntroBubble": {
+    "description": "Help bubble text for step detail_intro"
+  },
+  "helpDetailTtlBubble": "The **TTL bar** shows how much time the signal has left. When it reaches zero the signal expires and this screen closes automatically.",
+  "@helpDetailTtlBubble": {
+    "description": "Help bubble text for step detail_ttl"
+  },
+  "helpDetailResponsesBubble": "Responses are **threaded**. You can reply directly to the signal or to another person's response. Nested replies indent so you can follow the conversation.",
+  "@helpDetailResponsesBubble": {
+    "description": "Help bubble text for step detail_responses"
+  },
+  "helpDetailVotingBubble": "Tap the **up or down arrow** on any response to vote. Votes surface the most useful replies. You can change your vote at any time.",
+  "@helpDetailVotingBubble": {
+    "description": "Help bubble text for step detail_voting"
+  },
+  "helpDetailReplyBubble": "Use the **reply bar** at the bottom to respond. Tap the reply icon on any response to start a threaded conversation with that person.",
+  "@helpDetailReplyBubble": {
+    "description": "Help bubble text for step detail_reply"
+  },
+  "helpDetailActionsBubble": "The **overflow menu** (three dots) lets you **delete** your own signal or **report** someone else's. Only one of those options appears depending on whether you authored the signal.",
+  "@helpDetailActionsBubble": {
+    "description": "Help bubble text for step detail_actions"
+  },
+  "helpWorldIntroBubble": "Welcome to **World Mesh**! See the entire global Meshtastic network. Every dot is a node sharing its location!",
+  "@helpWorldIntroBubble": {
+    "description": "Help bubble text for step world_intro"
+  },
+  "helpWorldScopeBubble": "Zoom out to see the **worldwide mesh**, or zoom in to explore local clusters. It's amazing how many nodes exist!",
+  "@helpWorldScopeBubble": {
+    "description": "Help bubble text for step world_scope"
+  },
+  "helpWorldDataBubble": "Data comes from **MQTT** - nodes that opted to share their position publicly. Your local nodes appear too!",
+  "@helpWorldDataBubble": {
+    "description": "Help bubble text for step world_data"
+  },
+  "helpWorldFiltersBubble": "Use **filters** to show specific regions or time ranges. Find active meshes near places you're visiting!",
+  "@helpWorldFiltersBubble": {
+    "description": "Help bubble text for step world_filters"
+  },
+  "helpRoutesIntroBubble": "**Routes** lets you record your journeys! Perfect for hikes, bike rides, or any adventure off the grid.",
+  "@helpRoutesIntroBubble": {
+    "description": "Help bubble text for step routes_intro"
+  },
+  "helpRoutesRecordBubble": "Tap **Record** to start tracking. I'll save your GPS points as you move. Works even without cell signal!",
+  "@helpRoutesRecordBubble": {
+    "description": "Help bubble text for step routes_record"
+  },
+  "helpRoutesGpxBubble": "**Import GPX files** to follow existing trails. Export your routes to share with others or use in other apps!",
+  "@helpRoutesGpxBubble": {
+    "description": "Help bubble text for step routes_gpx"
+  },
+  "helpRoutesShareBubble": "Share routes with your mesh buddies! Great for coordinating meet-up points or showing others your favorite trails.",
+  "@helpRoutesShareBubble": {
+    "description": "Help bubble text for step routes_share"
+  },
+  "helpPositionIntroBubble": "**Position History** records every GPS position broadcast by nodes on your mesh. Think of it as a flight recorder for location data!",
+  "@helpPositionIntroBubble": {
+    "description": "Help bubble text for step position_intro"
+  },
+  "helpPositionListMapBubble": "Switch between **list view** and **map view** using the overflow menu. The map draws colour-coded trails per node so you can visualise movement over time.",
+  "@helpPositionListMapBubble": {
+    "description": "Help bubble text for step position_list_map"
+  },
+  "helpPositionFiltersBubble": "Use **filter chips** to narrow results: today, this week, good GPS fix, or just your own node. Combine with a **custom date range** for precise slicing.",
+  "@helpPositionFiltersBubble": {
+    "description": "Help bubble text for step position_filters"
+  },
+  "helpPositionSearchBubble": "The **search bar** filters by node name. Handy when you have dozens of nodes and want to track a specific one.",
+  "@helpPositionSearchBubble": {
+    "description": "Help bubble text for step position_search"
+  },
+  "helpPositionMapNodesBubble": "In map view, tap the **node list** button to pick a single node. Each node gets its own colour trail with distance calculations between points.",
+  "@helpPositionMapNodesBubble": {
+    "description": "Help bubble text for step position_map_nodes"
+  },
+  "helpPositionExportBubble": "**Export as CSV** from the overflow menu for analysis in spreadsheets or GIS tools. Great for documenting coverage tests!",
+  "@helpPositionExportBubble": {
+    "description": "Help bubble text for step position_export"
+  },
+  "helpPositionGoodFixBubble": "The **Good Fix** filter shows only positions with 6+ satellites. This helps you ignore noisy indoor fixes and focus on reliable outdoor data.",
+  "@helpPositionGoodFixBubble": {
+    "description": "Help bubble text for step position_good_fix"
+  },
+  "helpSettingsIntroBubble": "Welcome to **Settings**! Here you can customize everything about your app and connected device.",
+  "@helpSettingsIntroBubble": {
+    "description": "Help bubble text for step settings_intro"
+  },
+  "helpSettingsDeviceBubble": "**Device settings** let you configure your Meshtastic radio - name, region, power levels, and modules!",
+  "@helpSettingsDeviceBubble": {
+    "description": "Help bubble text for step settings_device"
+  },
+  "helpSettingsAppBubble": "**App settings** control themes, notifications, privacy options, and how the app behaves.",
+  "@helpSettingsAppBubble": {
+    "description": "Help bubble text for step settings_app"
+  },
+  "helpSettingsCloudBubble": "**Cloud Sync** is a premium subscription that syncs your **NodeDex**, **automations**, **widgets**, and **profile** across all your devices. It also serves as your **backup** — if you ever delete the app or switch phones, Cloud Sync restores everything. Without it, all data lives only on this device and is lost if the app is removed.",
+  "@helpSettingsCloudBubble": {
+    "description": "Help bubble text for step settings_cloud"
+  },
+  "helpProfileIntroBubble": "This is **your profile**! Customize your mesh identity with a display name, callsign, and avatar.",
+  "@helpProfileIntroBubble": {
+    "description": "Help bubble text for step profile_intro"
+  },
+  "helpProfileCustomizeBubble": "Your profile is **optional and private by default**. Customize it to stand out on the mesh!",
+  "@helpProfileCustomizeBubble": {
+    "description": "Help bubble text for step profile_customize"
+  },
+  "helpProfileShareBubble": "Add a **callsign**, **avatar**, and **links** to make your profile yours.",
+  "@helpProfileShareBubble": {
+    "description": "Help bubble text for step profile_share"
+  },
+  "helpProfileCloudBubble": "**Cloud Sync** is a premium feature that backs up your profile, NodeDex, automations, and widgets to the cloud. It protects your data — if you delete the app or get a new phone, everything **restores automatically** when you sign back in. Without it, your data exists only on this device.",
+  "@helpProfileCloudBubble": {
+    "description": "Help bubble text for step profile_cloud"
+  },
+  "helpMesh3dIntroBubble": "Welcome to **Mesh 3D**! See your entire network in three dimensions. Drag to rotate, pinch to zoom!",
+  "@helpMesh3dIntroBubble": {
+    "description": "Help bubble text for step mesh3d_intro"
+  },
+  "helpMesh3dNodesBubble": "Each sphere is a **node**. Lines show connections based on signal strength. Closer = stronger signal!",
+  "@helpMesh3dNodesBubble": {
+    "description": "Help bubble text for step mesh3d_nodes"
+  },
+  "helpMesh3dColorsBubble": "Colors show **node health**. Green = active, yellow = fading, gray = inactive. Status is inferred from last heard.",
+  "@helpMesh3dColorsBubble": {
+    "description": "Help bubble text for step mesh3d_colors"
+  },
+  "helpMesh3dTapBubble": "**Tap any node** to select it and see details. Great for understanding your network topology!",
+  "@helpMesh3dTapBubble": {
+    "description": "Help bubble text for step mesh3d_tap"
+  },
+  "helpGlobeIntroBubble": "Spin the **Globe** to see your mesh from space! Every glowing point is a node with GPS coordinates.",
+  "@helpGlobeIntroBubble": {
+    "description": "Help bubble text for step globe_intro"
+  },
+  "helpGlobeInteractBubble": "**Drag to spin**, pinch to zoom. Tap a node to fly to its location and see details!",
+  "@helpGlobeInteractBubble": {
+    "description": "Help bubble text for step globe_interact"
+  },
+  "helpGlobeArcsBubble": "Watch the **connection arcs** - they show message paths traveling across your mesh in real-time!",
+  "@helpGlobeArcsBubble": {
+    "description": "Help bubble text for step globe_arcs"
+  },
+  "helpTimelineIntroBubble": "The **Timeline** shows everything happening on your mesh. Messages, node changes, telemetry - all in order!",
+  "@helpTimelineIntroBubble": {
+    "description": "Help bubble text for step timeline_intro"
+  },
+  "helpTimelineFilterBubble": "Use **filters** to focus on specific event types. Just messages? Only node joins? You control the view!",
+  "@helpTimelineFilterBubble": {
+    "description": "Help bubble text for step timeline_filter"
+  },
+  "helpTimelineTapBubble": "**Tap any event** to see full details. Great for debugging or understanding what's happening on your network!",
+  "@helpTimelineTapBubble": {
+    "description": "Help bubble text for step timeline_tap"
+  },
+  "helpShopIntroBubble": "Welcome to the **Device Shop**! Browse Meshtastic-compatible radios and accessories.",
+  "@helpShopIntroBubble": {
+    "description": "Help bubble text for step shop_intro"
+  },
+  "helpShopCompareBubble": "**Compare devices** by range, battery, and features. I've rated each one to help you choose!",
+  "@helpShopCompareBubble": {
+    "description": "Help bubble text for step shop_compare"
+  },
+  "helpShopLinksBubble": "Tap **Buy** to visit trusted vendors. Prices and availability shown are from real stores!",
+  "@helpShopLinksBubble": {
+    "description": "Help bubble text for step shop_links"
+  },
+  "helpOfflineIntroBubble": "**Offline Maps** let you use the map without internet! Essential for adventures off the grid.",
+  "@helpOfflineIntroBubble": {
+    "description": "Help bubble text for step offline_intro"
+  },
+  "helpOfflineDownloadBubble": "**Select a region** and zoom level, then tap download. I'll save all the map tiles to your device!",
+  "@helpOfflineDownloadBubble": {
+    "description": "Help bubble text for step offline_download"
+  },
+  "helpOfflineManageBubble": "Manage your downloads here - see storage used and **delete** old regions you don't need anymore.",
+  "@helpOfflineManageBubble": {
+    "description": "Help bubble text for step offline_manage"
+  },
+  "helpRadioIntroBubble": "**Radio settings** control how your device transmits. Region, power, and modem preset are key!",
+  "@helpRadioIntroBubble": {
+    "description": "Help bubble text for step radio_intro"
+  },
+  "helpRadioRegionBubble": "Your **region** determines legal frequencies. Set this wrong and you could interfere with other services!",
+  "@helpRadioRegionBubble": {
+    "description": "Help bubble text for step radio_region"
+  },
+  "helpRadioModemBubble": "**Modem preset** balances range vs speed. Long-range = slower but further. Short-fast = quick but closer.",
+  "@helpRadioModemBubble": {
+    "description": "Help bubble text for step radio_modem"
+  },
+  "helpRadioPowerBubble": "Higher **TX power** means more range but uses more battery. Find the sweet spot for your needs!",
+  "@helpRadioPowerBubble": {
+    "description": "Help bubble text for step radio_power"
+  },
+  "helpPresenceIntroBubble": "**Presence** shows which nodes are active, recently seen, or inactive on your mesh network.",
+  "@helpPresenceIntroBubble": {
+    "description": "Help bubble text for step presence_intro"
+  },
+  "helpPresenceActiveBubble": "**Active** nodes (green) sent a message in the last 2 minutes. They're definitely online!",
+  "@helpPresenceActiveBubble": {
+    "description": "Help bubble text for step presence_active"
+  },
+  "helpPresenceRecentBubble": "**Recently seen** nodes (yellow) were active 2-10 minutes ago. Probably still around.",
+  "@helpPresenceRecentBubble": {
+    "description": "Help bubble text for step presence_recent"
+  },
+  "helpPresenceInactiveBubble": "**Inactive** nodes (gray) haven't been heard from in over 10 minutes. They might be out of range or powered off.",
+  "@helpPresenceInactiveBubble": {
+    "description": "Help bubble text for step presence_inactive"
+  },
+  "helpPresenceChartBubble": "The **activity chart** shows recent node activity over time. Watch the mesh come alive!",
+  "@helpPresenceChartBubble": {
+    "description": "Help bubble text for step presence_chart"
+  },
+  "helpReachabilityIntroBubble": "**Reachability** estimates how likely you are to reach each node. This is based on passively observed mesh data.",
+  "@helpReachabilityIntroBubble": {
+    "description": "Help bubble text for step reachability_intro"
+  },
+  "helpReachabilityBetaBubble": "This is **BETA** - we don't send test packets! Everything is estimated from messages we see flowing through the mesh.",
+  "@helpReachabilityBetaBubble": {
+    "description": "Help bubble text for step reachability_beta"
+  },
+  "helpReachabilityHighBubble": "**High** reachability (bright) means we've seen lots of communication with that node. Messages will probably get through!",
+  "@helpReachabilityHighBubble": {
+    "description": "Help bubble text for step reachability_high"
+  },
+  "helpReachabilityMediumBubble": "**Medium** reachability (dimmer) means some communication but not consistent. Messages might make it.",
+  "@helpReachabilityMediumBubble": {
+    "description": "Help bubble text for step reachability_medium"
+  },
+  "helpReachabilityLowBubble": "**Low** reachability (very dim) means we rarely see communication. The node might be too far or behind obstacles.",
+  "@helpReachabilityLowBubble": {
+    "description": "Help bubble text for step reachability_low"
+  },
+  "helpHealthIntroBubble": "**Mesh Health** monitors your network for issues like congestion, packet loss, and problematic nodes.",
+  "@helpHealthIntroBubble": {
+    "description": "Help bubble text for step health_intro"
+  },
+  "helpHealthStatusBubble": "The **status indicator** shows overall mesh health. Green = healthy, yellow = issues detected, red = critical problems.",
+  "@helpHealthStatusBubble": {
+    "description": "Help bubble text for step health_status"
+  },
+  "helpHealthMetricsBubble": "**Metrics** show packet counts, retransmissions, and hop counts. Watch for high retransmit rates!",
+  "@helpHealthMetricsBubble": {
+    "description": "Help bubble text for step health_metrics"
+  },
+  "helpHealthUtilizationBubble": "The **utilization chart** shows how busy your mesh is over time. Spikes might indicate problems.",
+  "@helpHealthUtilizationBubble": {
+    "description": "Help bubble text for step health_utilization"
+  },
+  "helpHealthIssuesBubble": "**Issues** section highlights specific problems and suggests fixes. Check here if things seem slow!",
+  "@helpHealthIssuesBubble": {
+    "description": "Help bubble text for step health_issues"
+  },
+  "helpHealthMonitoringBubble": "Use the **pause** button to stop monitoring if you want to save battery. Hit **reset** to clear the data and start fresh!",
+  "@helpHealthMonitoringBubble": {
+    "description": "Help bubble text for step health_monitoring"
+  },
+  "helpTracerouteIntroBubble": "**Traceroute** discovers the actual path your packets take to reach another node. It reveals which relays are forwarding your data.",
+  "@helpTracerouteIntroBubble": {
+    "description": "Help bubble text for step traceroute_intro"
+  },
+  "helpTracerouteHowBubble": "When you send a traceroute, each relay along the route adds itself to the packet. The destination sends it back so you can see **both directions**.",
+  "@helpTracerouteHowBubble": {
+    "description": "Help bubble text for step traceroute_how"
+  },
+  "helpTracerouteSendBubble": "Send a traceroute from a **node's detail sheet** (tap the route icon) or from **Dashboard Quick Actions** where you can pick any known node.",
+  "@helpTracerouteSendBubble": {
+    "description": "Help bubble text for step traceroute_send"
+  },
+  "helpTracerouteCooldownBubble": "There is a **30-second cooldown** between traceroutes to respect airtime fairness. A visible countdown shows the remaining time.",
+  "@helpTracerouteCooldownBubble": {
+    "description": "Help bubble text for step traceroute_cooldown"
+  },
+  "helpTracerouteResultsBubble": "Results show **forward** and **return** hop paths with per-hop **SNR** (signal-to-noise ratio). This lets you correlate route quality with link performance.",
+  "@helpTracerouteResultsBubble": {
+    "description": "Help bubble text for step traceroute_results"
+  },
+  "helpTracerouteHistoryBubble": "All traceroutes are saved to **Traceroute History** (Settings > Telemetry Logs). Filter by response status, search by node name, and compare runs over time.",
+  "@helpTracerouteHistoryBubble": {
+    "description": "Help bubble text for step traceroute_history"
+  },
+  "helpTracerouteExportBubble": "Export your traceroute history as **CSV** for trend analysis or documentation. Use the overflow menu on the history screen.",
+  "@helpTracerouteExportBubble": {
+    "description": "Help bubble text for step traceroute_export"
+  },
+  "helpTracerouteTipsBubble": "**Pro tip:** Run traceroutes after repositioning nodes, changing antennas, or adjusting channels to validate your changes with real route data!",
+  "@helpTracerouteTipsBubble": {
+    "description": "Help bubble text for step traceroute_tips"
+  },
+  "helpNodedexIntroBubble": "Welcome to the **NodeDex** — your personal mesh field journal! Every node you discover is recorded here with a unique **Sigil** and personality **Trait**.",
+  "@helpNodedexIntroBubble": {
+    "description": "Help bubble text for step nodedex_intro"
+  },
+  "helpNodedexSigilsBubble": "Each node gets a **procedural Sigil** — a geometric glyph generated from its identity. No two nodes share the same sigil. Think of it as a visual fingerprint for the mesh!",
+  "@helpNodedexSigilsBubble": {
+    "description": "Help bubble text for step nodedex_sigils"
+  },
+  "helpNodedexTraitsBubble": "Nodes earn **Traits** based on real behavior — **Wanderer** moves between regions, **Beacon** is always online, **Ghost** is rarely seen, **Sentinel** holds a fixed position, **Relay** forwards traffic.",
+  "@helpNodedexTraitsBubble": {
+    "description": "Help bubble text for step nodedex_traits"
+  },
+  "helpNodedexFiltersBubble": "Use the **filter chips** to show only specific traits, recently discovered nodes, or nodes you have tagged. The **search bar** finds nodes by name or hex ID.",
+  "@helpNodedexFiltersBubble": {
+    "description": "Help bubble text for step nodedex_filters"
+  },
+  "helpNodedexFieldJournalBubble": "As you observe more nodes, your **field journal** fills in — each node earns a **Patina score** and **identity overlay** based on real encounters. The more you observe, the richer the detail!",
+  "@helpNodedexFieldJournalBubble": {
+    "description": "Help bubble text for step nodedex_field_journal"
+  },
+  "helpNodedexAlbumModeBubble": "Tap the **view toggle** in the app bar to switch to **Album mode** — a collector-style card grid grouped by trait, rarity, or region. Each card shows the node's sigil with a holographic shimmer based on rarity!",
+  "@helpNodedexAlbumModeBubble": {
+    "description": "Help bubble text for step nodedex_album_mode"
+  },
+  "helpNodedexAtmosphereBubble": "Notice the subtle **ambient particles** behind the screen? That is the **Elemental Atmosphere** — rain, embers, mist, and starlight driven by your real mesh data. More nodes and activity means more atmosphere!",
+  "@helpNodedexAtmosphereBubble": {
+    "description": "Help bubble text for step nodedex_atmosphere"
+  },
+  "helpNodedexCloudSyncBubble": "Your NodeDex is stored locally in SQLite and survives app restarts — but **not** app deletion. If you uninstall the app or switch phones, your local NodeDex is gone. With a **Cloud Sync** subscription, your entire journal — sigils, encounters, social tags, notes, and co-seen links — backs up to the cloud and **restores automatically** on any device you sign into.",
+  "@helpNodedexCloudSyncBubble": {
+    "description": "Help bubble text for step nodedex_cloud_sync"
+  },
+  "helpNodedexExportBubble": "Use the **menu** to **export** your NodeDex as a JSON file for backup, or **import** one from another device. Your field journal travels with you — even without Cloud Sync!",
+  "@helpNodedexExportBubble": {
+    "description": "Help bubble text for step nodedex_export"
+  },
+  "helpNodedexSigilBubble": "This is the node's **Sigil** — a unique procedural glyph generated from its identity. No two nodes share the same sigil. It's like a visual fingerprint!",
+  "@helpNodedexSigilBubble": {
+    "description": "Help bubble text for step nodedex_sigil"
+  },
+  "helpNodedexTraitBubble": "The **Trait** is an inferred personality based on how this node behaves — movement patterns, signal consistency, encounter frequency. Confidence grows with more data.",
+  "@helpNodedexTraitBubble": {
+    "description": "Help bubble text for step nodedex_trait"
+  },
+  "helpNodedexAutoSummaryBubble": "**Auto-Summary** computes insights from encounter history — time-of-day distribution, observation streaks, and busiest-day patterns. Everything updates automatically as new encounters arrive.",
+  "@helpNodedexAutoSummaryBubble": {
+    "description": "Help bubble text for step nodedex_auto_summary"
+  },
+  "helpNodedexObservationTimelineBubble": "The **Observation Timeline** visualizes this node's encounter density over time, with relative labels showing how recently each observation was recorded.",
+  "@helpNodedexObservationTimelineBubble": {
+    "description": "Help bubble text for step nodedex_observation_timeline"
+  },
+  "helpNodedexDiscoveryBubble": "**Discovery Stats** show when you first and last saw this node, how many encounters you've had, and the closest range recorded. These update automatically.",
+  "@helpNodedexDiscoveryBubble": {
+    "description": "Help bubble text for step nodedex_discovery"
+  },
+  "helpNodedexSignalBubble": "**Signal Records** track the best and most recent SNR and RSSI values. These help you understand link quality — higher SNR and less negative RSSI mean stronger signals.",
+  "@helpNodedexSignalBubble": {
+    "description": "Help bubble text for step nodedex_signal"
+  },
+  "helpNodedexSocialTagBubble": "The **Social Tag** is a label you assign to categorize this node — friend, relay, base station, or anything else. It's your personal metadata, never shared over the mesh.",
+  "@helpNodedexSocialTagBubble": {
+    "description": "Help bubble text for step nodedex_social_tag"
+  },
+  "helpNodedexNoteBubble": "**Your Note** is a free-text field for anything you want to remember about this node. Location hints, operator name, antenna type — whatever helps you.",
+  "@helpNodedexNoteBubble": {
+    "description": "Help bubble text for step nodedex_note"
+  },
+  "helpNodedexRegionsBubble": "**Region History** records every regulatory region where this node has been observed. Useful for tracking mobile nodes across different areas.",
+  "@helpNodedexRegionsBubble": {
+    "description": "Help bubble text for step nodedex_regions"
+  },
+  "helpNodedexEncountersBubble": "**Recent Encounters** is a timeline of when this node appeared on your mesh. Each entry shows the timestamp, signal quality, and range if GPS was available.",
+  "@helpNodedexEncountersBubble": {
+    "description": "Help bubble text for step nodedex_encounters"
+  },
+  "helpNodedexActivityTimelineBubble": "The **Activity Timeline** is a unified chronological feed of everything observed about this node — encounters, messages, presence changes, signals, and milestones.",
+  "@helpNodedexActivityTimelineBubble": {
+    "description": "Help bubble text for step nodedex_activity_timeline"
+  },
+  "helpNodedexCoseenBubble": "**Co-Seen Links** show nodes frequently observed in the same session as this one. Tap any link to see the full relationship — shared encounters, message counts, and connection strength.",
+  "@helpNodedexCoseenBubble": {
+    "description": "Help bubble text for step nodedex_coseen"
+  },
+  "helpNodedexDeviceBubble": "**Device Info** shows live telemetry — battery level, hardware model, firmware version, and uptime. This data comes from the node directly and updates in real time.",
+  "@helpNodedexDeviceBubble": {
+    "description": "Help bubble text for step nodedex_device"
+  },
+  "helpAlbumIntroBubble": "Welcome to the **Collector Album** — a card-collector view of your NodeDex! Every discovered node becomes a collectible card with its sigil, trait, and rarity tier.",
+  "@helpAlbumIntroBubble": {
+    "description": "Help bubble text for step album_intro"
+  },
+  "helpAlbumCoverBubble": "The **Album Cover** is your dashboard — it shows your **Explorer Title**, total nodes, encounters, regions explored, and a rarity breakdown bar. Watch your collection grow!",
+  "@helpAlbumCoverBubble": {
+    "description": "Help bubble text for step album_cover"
+  },
+  "helpAlbumGroupingBubble": "Use the **group chips** to organize cards by **Trait** (Beacon, Relay, Ghost...), **Rarity** (Common through Legendary), or **Region** (geographic area). Each group gets its own album page.",
+  "@helpAlbumGroupingBubble": {
+    "description": "Help bubble text for step album_grouping"
+  },
+  "helpAlbumRarityBubble": "Cards earn **rarity tiers** based on encounter count and trait. **Common** nodes are newly seen, while **Legendary** cards combine rare traits with deep observation history. Rarity drives the border glow and holographic shimmer!",
+  "@helpAlbumRarityBubble": {
+    "description": "Help bubble text for step album_rarity"
+  },
+  "helpAlbumInteractionsBubble": "**Tap** a card to open the node's full profile. **Long-press** to open the **Card Gallery** — a full-screen carousel where you can swipe through cards and tap to flip them over for stats!",
+  "@helpAlbumInteractionsBubble": {
+    "description": "Help bubble text for step album_interactions"
+  },
+  "helpAlbumGalleryBubble": "In the **Card Gallery**, swipe left and right to browse cards. **Tap** a card to flip it — the back shows discovery stats, signal records, encounter count, and patina score. Swipe down to dismiss.",
+  "@helpAlbumGalleryBubble": {
+    "description": "Help bubble text for step album_gallery"
+  },
+  "helpAlbumHolographicBubble": "Higher-rarity cards shimmer with a **holographic effect** — the rarer the card, the brighter the glow. This effect respects your **reduce-motion** setting and uses an optimized painter for grid thumbnails.",
+  "@helpAlbumHolographicBubble": {
+    "description": "Help bubble text for step album_holographic"
+  },
+  "helpAlbumPersistenceBubble": "Your album view preference and grouping choice are **saved automatically**. With **Cloud Sync**, your entire collection — sigils, encounters, tags, notes — backs up and syncs across all your devices. Delete the app, get a new phone — your collection is safe and restores on sign-in.",
+  "@helpAlbumPersistenceBubble": {
+    "description": "Help bubble text for step album_persistence"
+  },
+  "helpConstellationIntroBubble": "Welcome to the **Constellation** — a star-map of your mesh network! Nodes appear as stars, and lines between them show **co-seen relationships** — nodes observed in the same session.",
+  "@helpConstellationIntroBubble": {
+    "description": "Help bubble text for step constellation_intro"
+  },
+  "helpConstellationLayoutBubble": "The layout is **force-directed** — nodes that are frequently co-seen cluster together, while isolated nodes drift to the edges. The graph stabilizes after a moment so nothing shifts while you explore.",
+  "@helpConstellationLayoutBubble": {
+    "description": "Help bubble text for step constellation_layout"
+  },
+  "helpConstellationInteractionsBubble": "**Tap** a node to highlight its connections. **Double-tap** to zoom into a cluster. **Long-press** to open the node's full profile. **Pinch** to zoom in and out of the star map.",
+  "@helpConstellationInteractionsBubble": {
+    "description": "Help bubble text for step constellation_interactions"
+  },
+  "helpConstellationEdgesBubble": "Use the **edge density** button in the app bar to control how many connections are shown. **Sparse** shows only the strongest links, **All** shows everything. The right density depends on your network size.",
+  "@helpConstellationEdgesBubble": {
+    "description": "Help bubble text for step constellation_edges"
+  },
+  "helpConstellationSearchBubble": "The **search** icon lets you find a specific node by name or hex ID. The view automatically zooms and pans to center the matching node with a pulse highlight.",
+  "@helpConstellationSearchBubble": {
+    "description": "Help bubble text for step constellation_search"
+  },
+  "helpConstellationAtmosphereBubble": "The constellation has its own **Elemental Atmosphere** — subtle starlight and mist particles behind the graph, driven by your real mesh data. It never obstructs the visualization.",
+  "@helpConstellationAtmosphereBubble": {
+    "description": "Help bubble text for step constellation_atmosphere"
+  },
+  "helpConstellationDataBubble": "Co-seen data is built **automatically** from your encounters. The more sessions you observe, the richer the constellation becomes. All relationship data is stored locally — but is **lost if you delete the app**. With **Cloud Sync**, your entire constellation backs up and restores on any device you sign into.",
+  "@helpConstellationDataBubble": {
+    "description": "Help bubble text for step constellation_data"
+  },
+  "helpCloudSyncIntroBubble": "**Cloud Sync** is a premium subscription that keeps your mesh data synchronized across all your devices — and serves as your **backup**. Without it, all data lives only on-device and is permanently lost if you delete the app or lose your phone.",
+  "@helpCloudSyncIntroBubble": {
+    "description": "Help bubble text for step cloud_sync_intro"
+  },
+  "helpCloudSyncWhatSyncsBubble": "Cloud Sync backs up your **NodeDex** (sigils, encounters, social tags, notes, co-seen links), **automations**, **custom widgets**, and **profile**. Reinstall the app, switch phones, or sign in on a second device — your entire mesh identity restores automatically.",
+  "@helpCloudSyncWhatSyncsBubble": {
+    "description": "Help bubble text for step cloud_sync_what_syncs"
+  },
+  "helpCloudSyncOfflineFirstBubble": "The app is **offline-first**. Changes are saved locally to SQLite immediately and queued in an **outbox**. When you are online, the outbox drains to the cloud automatically — no manual sync needed.",
+  "@helpCloudSyncOfflineFirstBubble": {
+    "description": "Help bubble text for step cloud_sync_offline_first"
+  },
+  "helpCloudSyncConflictBubble": "If you edit the same node on two devices, Cloud Sync uses **last-write-wins** conflict resolution with per-field timestamps. Social tags and notes resolve independently so you never lose both edits.",
+  "@helpCloudSyncConflictBubble": {
+    "description": "Help bubble text for step cloud_sync_conflict"
+  },
+  "helpCloudSyncSubscriptionBubble": "Cloud Sync is available as a **monthly** or **yearly** subscription. You can subscribe from **Settings > Account & Subscription**. Cancelled subscriptions keep working until the billing period ends.",
+  "@helpCloudSyncSubscriptionBubble": {
+    "description": "Help bubble text for step cloud_sync_subscription"
+  },
+  "helpCloudSyncWithoutBubble": "Without Cloud Sync, all your data stays on-device only. It survives app restarts, but **not** app deletion or a phone reset. You can **export** your NodeDex as JSON for manual backup. Cloud Sync automates this and adds cross-device restore — but the app works fully offline without it.",
+  "@helpCloudSyncWithoutBubble": {
+    "description": "Help bubble text for step cloud_sync_without"
+  },
+  "helpAetherIntroBubble": "**Aether** lets you track Meshtastic nodes at altitude! At 35,000 ft, LoRa signals can reach **400+ km** — far beyond typical ground-level range.",
+  "@helpAetherIntroBubble": {
+    "description": "Help bubble text for step aether_intro"
+  },
+  "helpAetherScheduleBubble": "**Schedule a flight** before you fly. Enter your flight number, airports, departure time, and your node's ID. Other mesh enthusiasts can then track your journey and try to receive your signal.",
+  "@helpAetherScheduleBubble": {
+    "description": "Help bubble text for step aether_schedule"
+  },
+  "helpAetherActiveBubble": "**Active flights** show live position data from the OpenSky Network API. You'll see altitude, speed, heading, and estimated coverage radius based on radio horizon calculations.",
+  "@helpAetherActiveBubble": {
+    "description": "Help bubble text for step aether_active"
+  },
+  "helpAetherReportsBubble": "**Reception reports** let ground stations report when they receive your signal. Reports include distance, RSSI, and SNR. All reports are saved to the **global leaderboard**.",
+  "@helpAetherReportsBubble": {
+    "description": "Help bubble text for step aether_reports"
+  },
+  "helpAetherLeaderboardBubble": "The **leaderboard is global and persistent** — stored in the cloud, not on your device. Rankings survive app reinstalls and are visible to the entire Socialmesh community. Top 3 get gold, silver, and bronze!",
+  "@helpAetherLeaderboardBubble": {
+    "description": "Help bubble text for step aether_leaderboard"
+  },
+  "helpAetherTipsBubble": "**Tips**: Window seats help. Turn off airplane mode briefly during cruise altitude (where permitted). Ground stations with elevated antennas have better odds. Good luck!",
+  "@helpAetherTipsBubble": {
+    "description": "Help bubble text for step aether_tips"
+  },
+  "helpTakIntroBubble": "**TAK Gateway** bridges your mesh into the Team Awareness Kit (TAK) ecosystem. It streams live **Cursor-on-Target** entities from a TAK server straight onto your map.",
+  "@helpTakIntroBubble": {
+    "description": "Help bubble text for step tak_intro"
+  },
+  "helpTakConnectBubble": "Tap the **link icon** in the app bar to connect or disconnect. The status card shows your gateway URL, connection uptime, and total events received.",
+  "@helpTakConnectBubble": {
+    "description": "Help bubble text for step tak_connect"
+  },
+  "helpTakAffiliationsBubble": "Every entity is colored by **standard affiliation** — blue for friendly, red for hostile, green for neutral, yellow for unknown. The icon changes by dimension too: ground, air, sea, or space.",
+  "@helpTakAffiliationsBubble": {
+    "description": "Help bubble text for step tak_affiliations"
+  },
+  "helpTakFilterBubble": "Use the **filter chips** to narrow the list by affiliation, or type a callsign in the **search bar**. The stale-mode chip cycles between all, active-only, and stale-only.",
+  "@helpTakFilterBubble": {
+    "description": "Help bubble text for step tak_filter"
+  },
+  "helpTakDetailBubble": "Tap any entity to open its **detail screen** — full CoT fields, coordinates, speed, course, and raw XML. Use the map icon to jump straight to its position on the map.",
+  "@helpTakDetailBubble": {
+    "description": "Help bubble text for step tak_detail"
+  },
+  "helpTakTrackingBubble": "**Long-press** an entity tile to toggle tracking. Tracked entities are highlighted on the map and stay visible even when the TAK screen is closed.",
+  "@helpTakTrackingBubble": {
+    "description": "Help bubble text for step tak_tracking"
+  },
+  "helpTakSettingsBubble": "Open **TAK Settings** from the overflow menu to change the gateway URL, toggle auto-connect, and adjust the stale timeout. All settings persist between sessions.",
+  "@helpTakSettingsBubble": {
+    "description": "Help bubble text for step tak_settings"
+  },
+  "helpRadioResponsibilityBubble": "**You** are responsible for making sure your radio equipment is legal in your country and that you operate within permitted frequency bands and power limits.",
+  "@helpRadioResponsibilityBubble": {
+    "description": "Help bubble text for step radio_responsibility"
+  },
+  "helpRadioLicenceBubble": "Some regions require an **amateur radio licence** before you can transmit. Check with your local regulatory authority — for example, ACMA in Australia or FCC in the US.",
+  "@helpRadioLicenceBubble": {
+    "description": "Help bubble text for step radio_licence"
+  },
+  "helpRadioInterferenceBubble": "Never interfere with **emergency communications** or licensed services. Violations can result in fines or criminal penalties.",
+  "@helpRadioInterferenceBubble": {
+    "description": "Help bubble text for step radio_interference"
+  },
+  "helpRadioTermsLinkBubble": "For full details, check the **Radio and Legal Compliance** section in our Terms of Service. You can find it in Settings under Terms of Service.",
+  "@helpRadioTermsLinkBubble": {
+    "description": "Help bubble text for step radio_terms_link"
+  },
+  "helpUseIntroBubble": "Socialmesh is a powerful tool — automations, signals, and mesh messaging give you a lot of capability. With that comes responsibility!",
+  "@helpUseIntroBubble": {
+    "description": "Help bubble text for step use_intro"
+  },
+  "helpUseLawfulBubble": "Use the App only for **lawful purposes**. Do not transmit harmful, threatening, or abusive content over the mesh network.",
+  "@helpUseLawfulBubble": {
+    "description": "Help bubble text for step use_lawful"
+  },
+  "helpUseAutomationsBubble": "Automations are great for alerts and notifications, but do not use them to **spam the mesh** or flood other users with unwanted messages.",
+  "@helpUseAutomationsBubble": {
+    "description": "Help bubble text for step use_automations"
+  },
+  "helpUseImpersonationBubble": "Do not **impersonate** other people or entities on the mesh network. Be yourself!",
+  "@helpUseImpersonationBubble": {
+    "description": "Help bubble text for step use_impersonation"
+  },
+  "helpUseTermsLinkBubble": "The full list of prohibited activities is in the **Use of the Service** section of our Terms. You can review it anytime in Settings.",
+  "@helpUseTermsLinkBubble": {
+    "description": "Help bubble text for step use_terms_link"
+  },
+  "helpResponsibilityIntroBubble": "Socialmesh is designed to be **privacy-first**. Your messages and data stay on your device — we do not store them on any server.",
+  "@helpResponsibilityIntroBubble": {
+    "description": "Help bubble text for step responsibility_intro"
+  },
+  "helpResponsibilitySignalsBubble": "When you create a **Signal**, it is broadcast over the mesh network. Anyone within range can receive it. Think of it like a public radio broadcast.",
+  "@helpResponsibilitySignalsBubble": {
+    "description": "Help bubble text for step responsibility_signals"
+  },
+  "helpResponsibilityContentBubble": "You are responsible for **everything you transmit**. Do not share personal information, sensitive data, or content that could harm others.",
+  "@helpResponsibilityContentBubble": {
+    "description": "Help bubble text for step responsibility_content"
+  },
+  "helpResponsibilityThirdPartyBubble": "Some features use **third-party services** like RevenueCat for purchases and Firebase for crash reports. These have their own privacy policies.",
+  "@helpResponsibilityThirdPartyBubble": {
+    "description": "Help bubble text for step responsibility_third_party"
+  },
+  "helpResponsibilityTermsLinkBubble": "For complete details, review our **Terms of Service** and **Privacy Policy** in Settings. They explain exactly what data stays local and what is shared.",
+  "@helpResponsibilityTermsLinkBubble": {
+    "description": "Help bubble text for step responsibility_terms_link"
+  },
+  "helpFtIntroBubble": "**File Transfers** let you send small files — text, configs, coordinates — directly over LoRa radio. No internet, no servers.",
+  "@helpFtIntroBubble": {
+    "description": "Help bubble text for step ft_intro"
+  },
+  "helpFtHowBubble": "Files are split into **~200-byte chunks** and sent one at a time over the mesh. The receiver reassembles them automatically.",
+  "@helpFtHowBubble": {
+    "description": "Help bubble text for step ft_how"
+  },
+  "helpFtNackBubble": "Missed a chunk? No problem. The receiver sends a **NACK** (negative acknowledgement) to request retransmission of exactly the missing pieces.",
+  "@helpFtNackBubble": {
+    "description": "Help bubble text for step ft_nack"
+  },
+  "helpFtLimitBubble": "Files are capped at **8 KB**. LoRa is a slow, shared, low-power radio — a single transfer can occupy the channel for up to a minute at long-range settings.",
+  "@helpFtLimitBubble": {
+    "description": "Help bubble text for step ft_limit"
+  },
+  "helpFtBetaBubble": "This feature is **BETA**. Both nodes must be running Socialmesh on the same mesh channel. Standard Meshtastic nodes cannot receive these transfers.",
+  "@helpFtBetaBubble": {
+    "description": "Help bubble text for step ft_beta"
+  },
+  "helpFtContactsBubble": "Use the **Contacts** tab to choose a node, then tap **Send File**. The Contacts tab shows every node your device has seen on the mesh.",
+  "@helpFtContactsBubble": {
+    "description": "Help bubble text for step ft_contacts"
+  },
+  "helpFtlSharedBubble": "LoRa channels are **shared and slow**. Every byte you send is airtime stolen from every other node in range. Treat it like a walkie-talkie frequency, not Wi-Fi.",
+  "@helpFtlSharedBubble": {
+    "description": "Help bubble text for step ftl_shared"
+  },
+  "helpFtlToaBubble": "**Time on Air** per chunk depends on Spreading Factor (SF). SF7 (fast, short range): ~30 ms/chunk. SF12 (slow, long range): ~1,500 ms/chunk.",
+  "@helpFtlToaBubble": {
+    "description": "Help bubble text for step ftl_toa"
+  },
+  "helpFtlMathBubble": "8 KB ÷ 200 bytes/chunk = **41 chunks**. At SF7: ~1.2 seconds total. At SF12: **~62 seconds** of continuous radio transmission.",
+  "@helpFtlMathBubble": {
+    "description": "Help bubble text for step ftl_math"
+  },
+  "helpFtlDutyBubble": "EU868 and similar bands impose a **1% duty cycle** — your radio can only transmit for 36 seconds per hour. At SF12, one 8 KB transfer nearly exhausts that entire budget.",
+  "@helpFtlDutyBubble": {
+    "description": "Help bubble text for step ftl_duty"
+  },
+  "helpFtlCapBubble": "8 KB is the **safest ceiling** that keeps transfers survivable at worst-case spreading factors without violating duty cycle regulations or blocking the mesh for minutes.",
+  "@helpFtlCapBubble": {
+    "description": "Help bubble text for step ftl_cap"
+  },
+  "helpFtlUsbBubble": "BLE and USB-connected transfers carry no radio duty-cycle risk. In a future release, higher limits will be unlocked for direct wired connections.",
+  "@helpFtlUsbBubble": {
+    "description": "Help bubble text for step ftl_usb"
+  },
+  "helpNodeDexSectionSigil": "A unique procedural glyph generated from this node's identity. ",
+  "@helpNodeDexSectionSigil": {
+    "description": "Section help text for sigil in nodeDexSectionHelp"
+  },
+  "helpNodeDexSectionTrait": "An inferred personality archetype derived from behavioral signals: ",
+  "@helpNodeDexSectionTrait": {
+    "description": "Section help text for trait in nodeDexSectionHelp"
+  },
+  "helpNodeDexSectionAutoSummary": "Computed insights from this node's encounter history. The time-of-day ",
+  "@helpNodeDexSectionAutoSummary": {
+    "description": "Section help text for auto_summary in nodeDexSectionHelp"
+  },
+  "helpNodeDexSectionObservationTimeline": "A visual timeline of this node's observation history. The bar shows ",
+  "@helpNodeDexSectionObservationTimeline": {
+    "description": "Section help text for observation_timeline in nodeDexSectionHelp"
+  },
+  "helpNodeDexSectionDiscovery": "Tracks when this node was first and last seen on your mesh, the total ",
+  "@helpNodeDexSectionDiscovery": {
+    "description": "Section help text for discovery in nodeDexSectionHelp"
+  },
+  "helpNodeDexSectionSignal": "Best and most recent SNR (Signal-to-Noise Ratio) and RSSI ",
+  "@helpNodeDexSectionSignal": {
+    "description": "Section help text for signal in nodeDexSectionHelp"
+  },
+  "helpNodeDexSectionSocialTag": "A personal label you assign to categorize this node. Social tags are ",
+  "@helpNodeDexSectionSocialTag": {
+    "description": "Section help text for social_tag in nodeDexSectionHelp"
+  },
+  "helpNodeDexSectionNote": "A free-text note for anything you want to remember about this node. ",
+  "@helpNodeDexSectionNote": {
+    "description": "Section help text for note in nodeDexSectionHelp"
+  },
+  "helpNodeDexSectionRegions": "Every regulatory region where this node has been observed. Region ",
+  "@helpNodeDexSectionRegions": {
+    "description": "Section help text for regions in nodeDexSectionHelp"
+  },
+  "helpNodeDexSectionEncounters": "A chronological timeline of when this node appeared on your mesh. ",
+  "@helpNodeDexSectionEncounters": {
+    "description": "Section help text for encounters in nodeDexSectionHelp"
+  },
+  "helpNodeDexSectionActivityTimeline": "A unified chronological feed of everything observed about this node: ",
+  "@helpNodeDexSectionActivityTimeline": {
+    "description": "Section help text for activity_timeline in nodeDexSectionHelp"
+  },
+  "helpNodeDexSectionCoseen": "Nodes that are frequently observed in the same session as this node. ",
+  "@helpNodeDexSectionCoseen": {
+    "description": "Section help text for coseen in nodeDexSectionHelp"
+  },
+  "helpNodeDexSectionDevice": "Live telemetry from the node: battery percentage, hardware model, ",
+  "@helpNodeDexSectionDevice": {
+    "description": "Section help text for device in nodeDexSectionHelp"
+  },
+  "helpNodeDexSectionAlbumRarity": "Rarity tiers are computed from encounter count and inferred trait. ",
+  "@helpNodeDexSectionAlbumRarity": {
+    "description": "Section help text for album_rarity in nodeDexSectionHelp"
+  },
+  "helpNodeDexSectionAlbumGrouping": "Cards can be grouped by Trait (behavioral archetype), Rarity ",
+  "@helpNodeDexSectionAlbumGrouping": {
+    "description": "Section help text for album_grouping in nodeDexSectionHelp"
+  },
+  "helpNodeDexSectionAlbumExplorerTitle": "Your Explorer Title reflects your overall collection progress. ",
+  "@helpNodeDexSectionAlbumExplorerTitle": {
+    "description": "Section help text for album_explorer_title in nodeDexSectionHelp"
+  },
+  "helpNodeDexSectionAlbumHolographic": "The holographic shimmer on cards is a visual indicator of rarity. ",
+  "@helpNodeDexSectionAlbumHolographic": {
+    "description": "Section help text for album_holographic in nodeDexSectionHelp"
+  },
+  "helpNodeDexSectionAlbumPatina": "Patina is a composite score reflecting how deeply you have observed ",
+  "@helpNodeDexSectionAlbumPatina": {
+    "description": "Section help text for album_patina in nodeDexSectionHelp"
+  },
+  "helpNodeDexSectionAlbumCloudSync": "With a Cloud Sync subscription, your entire NodeDex album backs up ",
+  "@helpNodeDexSectionAlbumCloudSync": {
+    "description": "Section help text for album_cloud_sync in nodeDexSectionHelp"
+  },
+  "helpTakSectionStatus": "The status card shows whether the WebSocket connection to the TAK ",
+  "@helpTakSectionStatus": {
+    "description": "Section help text for status in takSectionHelp"
+  },
+  "helpTakSectionAffiliation": "Affiliation describes the relationship of an entity to ",
+  "@helpTakSectionAffiliation": {
+    "description": "Section help text for affiliation in takSectionHelp"
+  },
+  "helpTakSectionCotType": "The CoT type string encodes an entity's affiliation, dimension, ",
+  "@helpTakSectionCotType": {
+    "description": "Section help text for cot_type in takSectionHelp"
+  },
+  "helpTakSectionIdentity": "The UID uniquely identifies this entity across all CoT messages. ",
+  "@helpTakSectionIdentity": {
+    "description": "Section help text for identity in takSectionHelp"
+  },
+  "helpTakSectionPosition": "Latitude and longitude in WGS-84 decimal degrees as reported in ",
+  "@helpTakSectionPosition": {
+    "description": "Section help text for position in takSectionHelp"
+  },
+  "helpTakSectionMotion": "Speed, course, and altitude parsed from the CoT event's track and ",
+  "@helpTakSectionMotion": {
+    "description": "Section help text for motion in takSectionHelp"
+  },
+  "helpTakSectionTimestamps": "Event Time is when the CoT event was generated. Stale Time is when ",
+  "@helpTakSectionTimestamps": {
+    "description": "Section help text for timestamps in takSectionHelp"
+  },
+  "helpTakSectionTracking": "Tracked entities are pinned and highlighted on the map with a ",
+  "@helpTakSectionTracking": {
+    "description": "Section help text for tracking in takSectionHelp"
+  },
+  "helpTakSectionRawPayload": "The raw JSON payload as received from the TAK Gateway WebSocket. ",
+  "@helpTakSectionRawPayload": {
+    "description": "Section help text for raw_payload in takSectionHelp"
+  },
+  "helpTakSectionFilters": "Filter chips let you narrow the entity list by affiliation. The ",
+  "@helpTakSectionFilters": {
+    "description": "Section help text for filters in takSectionHelp"
+  },
+  "helpTakSectionSettings": "TAK Settings let you configure the gateway URL, toggle auto-connect ",
+  "@helpTakSectionSettings": {
+    "description": "Section help text for settings in takSectionHelp"
+  },
+  "helpCategoryChannels": "Channels",
+  "@helpCategoryChannels": {
+    "description": "Help category name: Channels"
+  },
+  "helpCategoryMessaging": "Messaging",
+  "@helpCategoryMessaging": {
+    "description": "Help category name: Messaging"
+  },
+  "helpCategoryNodes": "Nodes",
+  "@helpCategoryNodes": {
+    "description": "Help category name: Nodes"
+  },
+  "helpCategoryDevice": "Device",
+  "@helpCategoryDevice": {
+    "description": "Help category name: Device"
+  },
+  "helpCategoryNetwork": "Network",
+  "@helpCategoryNetwork": {
+    "description": "Help category name: Network"
+  },
+  "helpCategoryAutomations": "Automations",
+  "@helpCategoryAutomations": {
+    "description": "Help category name: Automations"
+  },
+  "helpCategorySettings": "Settings",
+  "@helpCategorySettings": {
+    "description": "Help category name: Settings"
+  },
+  "helpCategoryLegal": "Legal & Safety",
+  "@helpCategoryLegal": {
+    "description": "Help category name: Legal & Safety"
+  },
+  "accessRestrictedTitle": "Access Restricted",
+  "@accessRestrictedTitle": {
+    "description": "Title for blocked route screen"
+  },
+  "goBack": "Go Back",
+  "@goBack": {
+    "description": "Generic go back button label"
+  },
+  "deviceNotConnected": "Device Not Connected",
+  "@deviceNotConnected": {
+    "description": "Title when device is not connected"
+  },
+  "connectDevice": "Connect Device",
+  "@connectDevice": {
+    "description": "Button label to connect device"
+  },
+  "connectDeviceToUseFeature": "Connect device to use this feature",
+  "@connectDeviceToUseFeature": {
+    "description": "Message when trying to use feature without device"
+  },
+  "positionRequestedFrom": "Position requested from {name}",
+  "@positionRequestedFrom": {
+    "description": "Snackbar message after requesting position",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "failedGeneric": "Failed: {error}",
+  "@failedGeneric": {
+    "description": "Generic failure message with error",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "lastHeardNever": "Never",
+  "@lastHeardNever": {
+    "description": "Last heard time when node was never heard"
+  },
+  "lastHeardJustNow": "Just now",
+  "@lastHeardJustNow": {
+    "description": "Last heard time for less than a minute ago"
+  },
+  "lastHeardMinutesAgo": "{count}m ago",
+  "@lastHeardMinutesAgo": {
+    "description": "Last heard time in minutes",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "lastHeardHoursAgo": "{count}h ago",
+  "@lastHeardHoursAgo": {
+    "description": "Last heard time in hours",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "lastHeardDaysAgo": "{count}d ago",
+  "@lastHeardDaysAgo": {
+    "description": "Last heard time in days",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "failedToUpdateSignalLocationRadius": "Failed to update signal location radius: {error}",
+  "@failedToUpdateSignalLocationRadius": {
+    "description": "Error when signal location radius update fails",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "failedToSaveConfiguration": "Failed to save configuration: {error}",
+  "@failedToSaveConfiguration": {
+    "description": "Error when saving global layer configuration fails",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "automationActionError": "Action {index}: {error}",
+  "@automationActionError": {
+    "description": "Error message for automation action validation",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "failedToPlay": "Failed to play: {error}",
+  "@failedToPlay": {
+    "description": "Error when ringtone playback fails",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "whatsNewVersion190Subtitle": "Version 1.9.0",
+  "@whatsNewVersion190Subtitle": {
+    "description": "What's new subtitle for version 1.9.0"
+  },
+  "whatsNewReachabilityTitle": "Reachability",
+  "@whatsNewReachabilityTitle": {
+    "description": "What's new feature title: Reachability"
+  },
+  "whatsNewReachabilityDescription": "Estimate how likely you are to reach each node on your mesh — without sending a single test packet.\\n\\nReachability passively observes traffic flowing through the network and assigns High, Medium, or Low confidence to every node. Find it in the drawer menu under Mesh.",
+  "@whatsNewReachabilityDescription": {
+    "description": "What's new description for Reachability feature"
+  },
+  "whatsNewVersion1100Subtitle": "Version 1.10.0",
+  "@whatsNewVersion1100Subtitle": {
+    "description": "What's new subtitle for version 1.10.0"
+  },
+  "whatsNewWorldMapTitle": "World Map",
+  "@whatsNewWorldMapTitle": {
+    "description": "What's new feature title: World Map"
+  },
+  "whatsNewWorldMapDescription": "See the entire global Meshtastic network on a single map. Every dot is a node sharing its location — zoom, pan, and tap to explore node details, hardware info, and last-seen times.\\n\\nNo connection required. The World Map pulls live data from the Socialmesh backend so you can explore the mesh anywhere.",
+  "@whatsNewWorldMapDescription": {
+    "description": "What's new description for World Map feature"
+  },
+  "whatsNewVersion1101Subtitle": "Version 1.10.1",
+  "@whatsNewVersion1101Subtitle": {
+    "description": "What's new subtitle for version 1.10.1"
+  },
+  "whatsNewPresenceTitle": "Presence",
+  "@whatsNewPresenceTitle": {
+    "description": "What's new feature title: Presence"
+  },
+  "whatsNewPresenceDescription": "See who is active on your mesh at a glance. Presence shows real-time node activity with intent indicators — whether someone is monitoring, mobile, or at a fixed base station.\\n\\nFilter by activity level, search by name, and tap any node to see their full profile. Find it in the drawer under Social.",
+  "@whatsNewPresenceDescription": {
+    "description": "What's new description for Presence feature"
+  },
+  "whatsNewVersion1110Subtitle": "Version 1.11.0",
+  "@whatsNewVersion1110Subtitle": {
+    "description": "What's new subtitle for version 1.11.0"
+  },
+  "whatsNewSignalsTitle": "Signals",
+  "@whatsNewSignalsTitle": {
+    "description": "What's new feature title: Signals"
+  },
+  "whatsNewSignalsDescription": "Broadcast ephemeral moments to your mesh. Signals are short-lived posts — share text, a photo, or your location with a TTL from 15 minutes up to 24 hours.\\n\\nNearby signals appear first with proximity badges showing hop count. When they fade, they are gone. True off-grid, ephemeral content.",
+  "@whatsNewSignalsDescription": {
+    "description": "What's new description for Signals feature"
+  },
+  "whatsNewVersion1130Subtitle": "Version 1.13.0",
+  "@whatsNewVersion1130Subtitle": {
+    "description": "What's new subtitle for version 1.13.0"
+  },
+  "whatsNewNodeDexTitle": "NodeDex",
+  "@whatsNewNodeDexTitle": {
+    "description": "What's new feature title: NodeDex"
+  },
+  "whatsNewNodeDexDescription": "A living field journal of the mesh world. Every node you discover is automatically recorded with a unique procedural Sigil and a personality Trait derived from real behavior.\\n\\nFind it in the drawer menu under Social. Filter by trait, search by name or hex ID, and tap any entry to explore its full profile — signal history, discovery timeline, and more.",
+  "@whatsNewNodeDexDescription": {
+    "description": "What's new description for NodeDex feature"
+  },
+  "whatsNewVersion1150Subtitle": "Version 1.15.0",
+  "@whatsNewVersion1150Subtitle": {
+    "description": "What's new subtitle for version 1.15.0"
+  },
+  "whatsNewAetherTitle": "Aether",
+  "@whatsNewAetherTitle": {
+    "description": "What's new feature title: Aether"
+  },
+  "whatsNewAetherDescription": "Track Meshtastic nodes at altitude! Schedule your flight with your mesh node and let ground stations around the world listen for your signal.\\n\\nAt 35,000 ft, LoRa can reach 400+ km. Report receptions, compete on the distance leaderboard, and set new range records. Find it in the drawer menu under Social.",
+  "@whatsNewAetherDescription": {
+    "description": "What's new description for Aether feature"
+  },
+  "whatsNewVersion1160Subtitle": "Version 1.16.0",
+  "@whatsNewVersion1160Subtitle": {
+    "description": "What's new subtitle for version 1.16.0"
+  },
+  "whatsNewTakGatewayTitle": "TAK Gateway",
+  "@whatsNewTakGatewayTitle": {
+    "description": "What's new feature title: TAK Gateway"
+  },
+  "whatsNewTakGatewayDescription": "Bridge your mesh into the Team Awareness Kit (TAK) ecosystem. Socialmesh now connects to a TAK Gateway via WebSocket and streams live Cursor-on-Target entities onto your map.\\n\\nEvery entity is colored by standard affiliation and given a dimension-specific icon. Filter by affiliation, search callsigns, track entities with a long-press, and tap any marker for full CoT details. Find it in the drawer menu under Mesh.",
+  "@whatsNewTakGatewayDescription": {
+    "description": "What's new description for TAK Gateway feature"
+  },
+  "notificationNewNodeTitle": "New Node Discovered",
+  "@notificationNewNodeTitle": {
+    "description": "Notification title for new node discovery"
+  },
+  "notificationNewNodeBody": "{nodeName} ({shortCode}) joined the mesh",
+  "@notificationNewNodeBody": {
+    "description": "Notification body for new node discovery",
+    "placeholders": {
+      "nodeName": {
+        "type": "String"
+      },
+      "shortCode": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationAetherFlightTitle": "Aether Flight Detected",
+  "@notificationAetherFlightTitle": {
+    "description": "Notification title for aether flight detection"
+  },
+  "notificationDetectionSensorTitle": "{sensorName}: {state}",
+  "@notificationDetectionSensorTitle": {
+    "description": "Notification title for detection sensor",
+    "placeholders": {
+      "sensorName": {
+        "type": "String"
+      },
+      "state": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationDetectionSensorBody": "From {displayName}",
+  "@notificationDetectionSensorBody": {
+    "description": "Notification body for detection sensor",
+    "placeholders": {
+      "displayName": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationEntityStaleTitle": "Entity Stale: {callsign}",
+  "@notificationEntityStaleTitle": {
+    "description": "Notification title for stale TAK entity",
+    "placeholders": {
+      "callsign": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationProximityAlertTitle": "Proximity Alert: {callsign}",
+  "@notificationProximityAlertTitle": {
+    "description": "Notification title for TAK proximity alert",
+    "placeholders": {
+      "callsign": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationDirectMessageTitle": "Message from {senderName} ({shortCode})",
+  "@notificationDirectMessageTitle": {
+    "description": "Notification title for direct message",
+    "placeholders": {
+      "senderName": {
+        "type": "String"
+      },
+      "shortCode": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationChannelMessageTitle": "{senderName} ({shortCode}) in {channelName}",
+  "@notificationChannelMessageTitle": {
+    "description": "Notification title for channel message",
+    "placeholders": {
+      "senderName": {
+        "type": "String"
+      },
+      "shortCode": {
+        "type": "String"
+      },
+      "channelName": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationChannelNodeDiscovery": "Notifications for newly discovered mesh nodes",
+  "@notificationChannelNodeDiscovery": {
+    "description": "Android notification channel description for node discovery"
+  },
+  "notificationChannelAetherFlights": "Notifications for Aether flight detection events",
+  "@notificationChannelAetherFlights": {
+    "description": "Android notification channel description for Aether flights"
+  },
+  "notificationChannelDeviceAlerts": "Important notifications from your Meshtastic device",
+  "@notificationChannelDeviceAlerts": {
+    "description": "Android notification channel description for device alerts"
+  },
+  "notificationChannelDetectionSensor": "Notifications for detection sensor events",
+  "@notificationChannelDetectionSensor": {
+    "description": "Android notification channel description for detection sensors"
+  },
+  "notificationChannelTakStale": "Notifications when tracked TAK entities go stale",
+  "@notificationChannelTakStale": {
+    "description": "Android notification channel description for TAK stale entities"
+  },
+  "notificationChannelTakProximity": "Notifications for TAK entity proximity alerts",
+  "@notificationChannelTakProximity": {
+    "description": "Android notification channel description for TAK proximity"
+  },
+  "notificationChannelDirectMessages": "Notifications for direct mesh messages",
+  "@notificationChannelDirectMessages": {
+    "description": "Android notification channel description for direct messages"
+  },
+  "notificationChannelMessages": "Notifications for channel mesh messages",
+  "@notificationChannelMessages": {
+    "description": "Android notification channel description for channel messages"
+  },
+  "flowNodeEvent": "Event",
+  "@flowNodeEvent": {
+    "description": "Visual flow node title: Event"
+  },
+  "flowNodeMessageContains": "Message Contains",
+  "@flowNodeMessageContains": {
+    "description": "Visual flow node title: Message Contains"
+  },
+  "flowNodeNodeSilent": "Node Silent",
+  "@flowNodeNodeSilent": {
+    "description": "Visual flow node title: Node Silent"
+  },
+  "flowNodeScheduled": "Scheduled",
+  "@flowNodeScheduled": {
+    "description": "Visual flow node title: Scheduled"
+  },
+  "flowNodeSignalWeak": "Signal Weak",
+  "@flowNodeSignalWeak": {
+    "description": "Visual flow node title: Signal Weak"
+  },
+  "flowNodeChannelActivity": "Channel Activity",
+  "@flowNodeChannelActivity": {
+    "description": "Visual flow node title: Channel Activity"
+  },
+  "flowNodeDetectionSensor": "Detection Sensor",
+  "@flowNodeDetectionSensor": {
+    "description": "Visual flow node title: Detection Sensor"
+  },
+  "flowNodeManual": "Manual",
+  "@flowNodeManual": {
+    "description": "Visual flow node title: Manual"
+  },
+  "flowNodeAllNodes": "All Nodes",
+  "@flowNodeAllNodes": {
+    "description": "Visual flow node title: All Nodes"
+  },
+  "flowNodeNodes": "Nodes",
+  "@flowNodeNodes": {
+    "description": "Visual flow port title: Nodes"
+  },
+  "flowNodeTraitFilter": "Trait Filter",
+  "@flowNodeTraitFilter": {
+    "description": "Visual flow node title: Trait Filter"
+  },
+  "flowNodeDistanceFilter": "Distance Filter",
+  "@flowNodeDistanceFilter": {
+    "description": "Visual flow node title: Distance Filter"
+  },
+  "flowNodeEncounterFilter": "Encounter Filter",
+  "@flowNodeEncounterFilter": {
+    "description": "Visual flow node title: Encounter Filter"
+  },
+  "flowNodeOnlineFilter": "Online Filter",
+  "@flowNodeOnlineFilter": {
+    "description": "Visual flow node title: Online Filter"
+  },
+  "flowNodeBatteryFilter": "Battery Filter",
+  "@flowNodeBatteryFilter": {
+    "description": "Visual flow node title: Battery Filter"
+  },
+  "flowNodeNameFilter": "Name Filter",
+  "@flowNodeNameFilter": {
+    "description": "Visual flow node title: Name Filter"
+  },
+  "flowNodeSort": "Sort",
+  "@flowNodeSort": {
+    "description": "Visual flow node title: Sort"
+  },
+  "flowNodeLimit": "Limit",
+  "@flowNodeLimit": {
+    "description": "Visual flow node title: Limit"
+  },
+  "flowNodeInput": "Input",
+  "@flowNodeInput": {
+    "description": "Visual flow port title: Input"
+  },
+  "flowNodeFiltered": "Filtered",
+  "@flowNodeFiltered": {
+    "description": "Visual flow port title: Filtered"
+  },
+  "flowNodeSorted": "Sorted",
+  "@flowNodeSorted": {
+    "description": "Visual flow port title: Sorted"
+  },
+  "flowNodeLimited": "Limited",
+  "@flowNodeLimited": {
+    "description": "Visual flow port title: Limited"
+  },
+  "flowNodeExecute": "Execute",
+  "@flowNodeExecute": {
+    "description": "Visual flow port title: Execute"
+  },
+  "flowNodeAnd": "AND",
+  "@flowNodeAnd": {
+    "description": "Visual flow logic gate: AND"
+  },
+  "flowNodeOr": "OR",
+  "@flowNodeOr": {
+    "description": "Visual flow logic gate: OR"
+  },
+  "flowNodeNot": "NOT",
+  "@flowNodeNot": {
+    "description": "Visual flow logic gate: NOT"
+  },
+  "flowNodeDelay": "Delay",
+  "@flowNodeDelay": {
+    "description": "Visual flow logic gate: Delay"
+  },
+  "flowNodeInputN": "Input {index}",
+  "@flowNodeInputN": {
+    "description": "Visual flow port title: Input N",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "flowNodeAllMet": "All Met",
+  "@flowNodeAllMet": {
+    "description": "Visual flow port title: All Met"
+  },
+  "flowNodeAnyMet": "Any Met",
+  "@flowNodeAnyMet": {
+    "description": "Visual flow port title: Any Met"
+  },
+  "flowNodeInverted": "Inverted",
+  "@flowNodeInverted": {
+    "description": "Visual flow port title: Inverted"
+  },
+  "flowNodeDelayed": "Delayed",
+  "@flowNodeDelayed": {
+    "description": "Visual flow port title: Delayed"
+  },
+  "automationTemplateLowBatteryTitle": "Low Battery Alert",
+  "@automationTemplateLowBatteryTitle": {
+    "description": "Automation template title"
+  },
+  "automationTemplateLowBatteryDescription": "Get notified when your device battery drops below 20%",
+  "@automationTemplateLowBatteryDescription": {
+    "description": "Automation template description"
+  },
+  "automationTemplateNodeOfflineTitle": "Node Offline Alert",
+  "@automationTemplateNodeOfflineTitle": {
+    "description": "Automation template title"
+  },
+  "automationTemplateNodeOfflineDescription": "Alert when a specific node hasn't been seen for 30 minutes",
+  "@automationTemplateNodeOfflineDescription": {
+    "description": "Automation template description"
+  },
+  "automationTemplateWeatherReportTitle": "Weather Report",
+  "@automationTemplateWeatherReportTitle": {
+    "description": "Automation template title"
+  },
+  "automationTemplateWeatherReportDescription": "Send periodic weather data from environment sensors",
+  "@automationTemplateWeatherReportDescription": {
+    "description": "Automation template description"
+  },
+  "automationTemplateChannelMonitorTitle": "Channel Monitor",
+  "@automationTemplateChannelMonitorTitle": {
+    "description": "Automation template title"
+  },
+  "automationTemplateChannelMonitorDescription": "Log activity for a specific channel",
+  "@automationTemplateChannelMonitorDescription": {
+    "description": "Automation template description"
+  },
+  "automationTemplateEmergencyBeaconTitle": "Emergency Beacon",
+  "@automationTemplateEmergencyBeaconTitle": {
+    "description": "Automation template title"
+  },
+  "automationTemplateEmergencyBeaconDescription": "Broadcast emergency position every 5 minutes when triggered",
+  "@automationTemplateEmergencyBeaconDescription": {
+    "description": "Automation template description"
+  },
+  "widgetTemplateBatteryGaugeDescription": "Display battery level with gauge",
+  "@widgetTemplateBatteryGaugeDescription": {
+    "description": "Widget template description for battery gauge"
+  },
+  "widgetTemplateSignalMeterDescription": "Display SNR and RSSI",
+  "@widgetTemplateSignalMeterDescription": {
+    "description": "Widget template description for signal meter"
+  },
+  "widgetTemplateEnvironmentDescription": "Temperature, humidity, and pressure display",
+  "@widgetTemplateEnvironmentDescription": {
+    "description": "Widget template description for environment"
+  },
+  "widgetTemplateNodeInfoDescription": "Basic node information card",
+  "@widgetTemplateNodeInfoDescription": {
+    "description": "Widget template description for node info"
+  },
+  "widgetTemplateGpsDescription": "Show GPS coordinates and satellites",
+  "@widgetTemplateGpsDescription": {
+    "description": "Widget template description for GPS"
+  },
+  "widgetTemplateMeshStatusDescription": "Mesh network status at a glance",
+  "@widgetTemplateMeshStatusDescription": {
+    "description": "Widget template description for mesh status"
+  },
+  "widgetTemplateQuickActionsDescription": "Common mesh actions at a glance",
+  "@widgetTemplateQuickActionsDescription": {
+    "description": "Widget template description for quick actions"
+  },
+  "whatsNewCtaOpenWorldMap": "Open World Map",
+  "@whatsNewCtaOpenWorldMap": {
+    "description": "What's new CTA button: Open World Map"
+  },
+  "whatsNewCtaOpenPresence": "Open Presence",
+  "@whatsNewCtaOpenPresence": {
+    "description": "What's new CTA button: Open Presence"
+  },
+  "whatsNewCtaOpenNodedex": "Open NodeDex",
+  "@whatsNewCtaOpenNodedex": {
+    "description": "What's new CTA button: Open NodeDex"
+  },
+  "whatsNewCtaOpenAether": "Open Aether",
+  "@whatsNewCtaOpenAether": {
+    "description": "What's new CTA button: Open Aether"
+  },
+  "whatsNewCtaOpenReachability": "Open Reachability",
+  "@whatsNewCtaOpenReachability": {
+    "description": "What's new CTA button: Open Reachability"
+  },
+  "whatsNewCtaOpenSignals": "Open Signals",
+  "@whatsNewCtaOpenSignals": {
+    "description": "What's new CTA button: Open Signals"
+  },
+  "whatsNewCtaOpenTakGateway": "Open TAK Gateway",
+  "@whatsNewCtaOpenTakGateway": {
+    "description": "What's new CTA button: Open TAK Gateway"
+  },
+  "whatsNewHeadline": "What's New in Socialmesh",
+  "@whatsNewHeadline": {
+    "description": "Headline for What's New popup"
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/connection_providers.dart';
 import '../../utils/snackbar.dart';
+import '../l10n/l10n_extension.dart';
 import '../command/commands.dart';
 import 'package:socialmesh/core/theme.dart';
 
@@ -304,7 +305,7 @@ class CommandIconButton extends ConsumerWidget {
   }
 
   void _showDisconnectedMessage(BuildContext context) {
-    showInfoSnackBar(context, 'Connect device to use this feature');
+    showInfoSnackBar(context, context.l10n.connectDeviceToUseFeature);
   }
 }
 

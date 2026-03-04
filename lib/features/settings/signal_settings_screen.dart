@@ -103,7 +103,10 @@ class _SignalSettingsScreenState extends ConsumerState<SignalSettingsScreen>
       await settings.setSignalLocationRadiusMeters(meters);
     } catch (e) {
       if (!mounted) return;
-      showErrorSnackBar(context, 'Failed to update signal location radius: $e');
+      showErrorSnackBar(
+        context,
+        context.l10n.failedToUpdateSignalLocationRadius('$e'),
+      );
     }
   }
 

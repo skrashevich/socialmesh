@@ -280,7 +280,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
       if (!mounted) return;
       navigator.pop(true);
     } catch (e) {
-      showErrorSnackBar(context, 'Failed to save configuration: $e');
+      showErrorSnackBar(context, context.l10n.failedToSaveConfiguration('$e'));
     }
   }
 

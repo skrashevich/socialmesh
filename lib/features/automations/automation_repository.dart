@@ -3,6 +3,7 @@ import '../../core/logging.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
 
 import 'models/automation.dart';
 import 'models/schedule_spec.dart';
@@ -635,5 +636,33 @@ class AutomationRepository extends ChangeNotifier {
         icon: Icons.timer_off,
       ),
     ];
+  }
+
+  /// Resolve the localized title for a template by its ID.
+  ///
+  /// Falls back to the hardcoded English string when no ARB key matches.
+  static String localizedTemplateTitle(String id, AppLocalizations l10n) {
+    return switch (id) {
+      'low_battery_alert' => l10n.automationTemplateLowBatteryTitle,
+      'node_offline_alert' => l10n.automationTemplateNodeOfflineTitle,
+      'weather_report' => l10n.automationTemplateWeatherReportTitle,
+      'channel_monitor' => l10n.automationTemplateChannelMonitorTitle,
+      'emergency_beacon' => l10n.automationTemplateEmergencyBeaconTitle,
+      _ => id,
+    };
+  }
+
+  /// Resolve the localized description for a template by its ID.
+  ///
+  /// Falls back to the template ID when no ARB key matches.
+  static String localizedTemplateDescription(String id, AppLocalizations l10n) {
+    return switch (id) {
+      'low_battery_alert' => l10n.automationTemplateLowBatteryDescription,
+      'node_offline_alert' => l10n.automationTemplateNodeOfflineDescription,
+      'weather_report' => l10n.automationTemplateWeatherReportDescription,
+      'channel_monitor' => l10n.automationTemplateChannelMonitorDescription,
+      'emergency_beacon' => l10n.automationTemplateEmergencyBeaconDescription,
+      _ => id,
+    };
   }
 }

@@ -10,6 +10,7 @@ import '../../providers/app_providers.dart';
 import '../../providers/presence_providers.dart';
 import '../../utils/snackbar.dart';
 import '../../utils/presence_utils.dart';
+import '../l10n/l10n_extension.dart';
 import '../theme.dart';
 
 /// Reusable node information card widget
@@ -65,12 +66,12 @@ class NodeInfoCard extends ConsumerWidget {
       if (context.mounted) {
         showInfoSnackBar(
           context,
-          'Position requested from ${node.displayName}',
+          context.l10n.positionRequestedFrom(node.displayName),
         );
       }
     } catch (e) {
       if (context.mounted) {
-        showErrorSnackBar(context, 'Failed: $e');
+        showErrorSnackBar(context, context.l10n.failedGeneric('$e'));
       }
     }
   }
@@ -85,8 +86,12 @@ class NodeInfoCard extends ConsumerWidget {
     if (lastHeard == null) return 'Never';
     final diff = DateTime.now().difference(lastHeard);
     if (diff.inMinutes < 1) return 'Just now';
-    if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
-    if (diff.inHours < 24) return '${diff.inHours}h ago';
+    if (diff.inMinutes < 60) {
+      return '${diff.inMinutes}m ago';
+    }
+    if (diff.inHours < 24) {
+      return '${diff.inHours}h ago';
+    }
     return '${diff.inDays}d ago';
   }
 
