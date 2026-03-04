@@ -67,7 +67,7 @@ class LifecycleCommandManager {
       CommandError(
         type: CommandErrorType.executionFailed,
         message: l10n.lifecycleAppNotActive,
-        userMessage: 'Action cancelled - app is in background',
+        userMessage: l10n.lifecycleActionCancelledBackground,
       ),
     );
   }
@@ -98,7 +98,7 @@ class LifecycleCommandManager {
           CommandError(
             type: CommandErrorType.executionFailed,
             message: l10n.lifecycleCommandExpired,
-            userMessage: 'Action expired while app was in background',
+            userMessage: l10n.lifecycleActionExpiredBackground,
           ),
         ),
       );
@@ -124,13 +124,14 @@ class LifecycleCommandManager {
 
   /// Cancel all deferred commands
   void cancelAllDeferred() {
+    final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
     for (final deferred in _deferredCommands) {
       deferred.completer.complete(
         CommandFailure(
           CommandError(
             type: CommandErrorType.executionFailed,
             message: 'Cancelled',
-            userMessage: 'Action cancelled',
+            userMessage: l10n.lifecycleActionCancelled,
           ),
         ),
       );

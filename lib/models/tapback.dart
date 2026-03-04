@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import 'dart:ui' show PlatformDispatcher;
+
+import 'package:socialmesh/l10n/app_localizations.dart';
 import 'package:uuid/uuid.dart';
 
 /// Message tapback reaction
@@ -91,64 +94,67 @@ class TapbackConfig {
 
 /// Default tapback configurations matching Meshtastic iOS
 class DefaultTapbacks {
-  static List<TapbackConfig> get all => [
-    TapbackConfig(
-      id: 'default_wave',
-      type: TapbackType.wave,
-      emoji: '👋',
-      label: 'Wave',
-      sortOrder: 0,
-    ),
-    TapbackConfig(
-      id: 'default_heart',
-      type: TapbackType.heart,
-      emoji: '❤️',
-      label: 'Heart',
-      sortOrder: 1,
-    ),
-    TapbackConfig(
-      id: 'default_like',
-      type: TapbackType.like,
-      emoji: '👍',
-      label: 'Thumbs Up',
-      sortOrder: 2,
-    ),
-    TapbackConfig(
-      id: 'default_dislike',
-      type: TapbackType.dislike,
-      emoji: '👎',
-      label: 'Thumbs Down',
-      sortOrder: 3,
-    ),
-    TapbackConfig(
-      id: 'default_laugh',
-      type: TapbackType.laugh,
-      emoji: '🤣',
-      label: 'HaHa',
-      sortOrder: 4,
-    ),
-    TapbackConfig(
-      id: 'default_exclamation',
-      type: TapbackType.exclamation,
-      emoji: '‼️',
-      label: 'Exclamation',
-      sortOrder: 5,
-    ),
-    TapbackConfig(
-      id: 'default_question',
-      type: TapbackType.question,
-      emoji: '❓',
-      label: 'Question',
-      sortOrder: 6,
-    ),
-    TapbackConfig(
-      id: 'default_poop',
-      type: TapbackType.poop,
-      emoji: '💩',
-      label: 'Poop',
-      sortOrder: 7,
-    ),
-  ];
+  static List<TapbackConfig> get all {
+    final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
+    return [
+      TapbackConfig(
+        id: 'default_wave',
+        type: TapbackType.wave,
+        emoji: '👋',
+        label: l10n.tapbackWave,
+        sortOrder: 0,
+      ),
+      TapbackConfig(
+        id: 'default_heart',
+        type: TapbackType.heart,
+        emoji: '❤️',
+        label: l10n.tapbackHeart,
+        sortOrder: 1,
+      ),
+      TapbackConfig(
+        id: 'default_like',
+        type: TapbackType.like,
+        emoji: '👍',
+        label: l10n.tapbackThumbsUp,
+        sortOrder: 2,
+      ),
+      TapbackConfig(
+        id: 'default_dislike',
+        type: TapbackType.dislike,
+        emoji: '👎',
+        label: l10n.tapbackThumbsDown,
+        sortOrder: 3,
+      ),
+      TapbackConfig(
+        id: 'default_laugh',
+        type: TapbackType.laugh,
+        emoji: '🤣',
+        label: l10n.tapbackHaha,
+        sortOrder: 4,
+      ),
+      TapbackConfig(
+        id: 'default_exclamation',
+        type: TapbackType.exclamation,
+        emoji: '‼️',
+        label: l10n.tapbackExclamation,
+        sortOrder: 5,
+      ),
+      TapbackConfig(
+        id: 'default_question',
+        type: TapbackType.question,
+        emoji: '❓',
+        label: l10n.tapbackQuestion,
+        sortOrder: 6,
+      ),
+      TapbackConfig(
+        id: 'default_poop',
+        type: TapbackType.poop,
+        emoji: '💩',
+        label: l10n.tapbackPoop,
+        sortOrder: 7,
+      ),
+    ];
+  }
 }
 
 /// Tapback reaction to a message.

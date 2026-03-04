@@ -651,7 +651,7 @@ void main() {
 
   group('DeepLinkRouteResult', () {
     test('fallback returns /main route', () {
-      const result = DeepLinkRouteResult.fallback;
+      final result = DeepLinkRouteResult.fallback;
 
       expect(result.routeName, '/main');
       expect(result.arguments, isNull);

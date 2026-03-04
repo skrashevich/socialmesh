@@ -29432,4 +29432,120 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get globalLayerNoTlsLabel => 'No TLS';
+
+  @override
+  String get helpCenterArticlesReadLabel => 'articles read';
+
+  @override
+  String get tapbackPoop => 'Poop';
+
+  @override
+  String get tapbackQuestion => 'Question';
+
+  @override
+  String get tapbackExclamation => 'Exclamation';
+
+  @override
+  String get tapbackHaha => 'HaHa';
+
+  @override
+  String get tapbackThumbsDown => 'Thumbs Down';
+
+  @override
+  String get tapbackThumbsUp => 'Thumbs Up';
+
+  @override
+  String get tapbackHeart => 'Heart';
+
+  @override
+  String get tapbackWave => 'Wave';
+
+  @override
+  String get cannedResponseThanks => 'Thanks!';
+
+  @override
+  String get cannedResponseWaitForMe => 'Wait for me';
+
+  @override
+  String get cannedResponseImSafe => 'I\'m safe';
+
+  @override
+  String get cannedResponseNeedHelp => 'Need help';
+
+  @override
+  String get cannedResponseOnMyWay => 'On my way';
+
+  @override
+  String get cannedResponseNo => 'No';
+
+  @override
+  String get cannedResponseYes => 'Yes';
+
+  @override
+  String get cannedResponseOk => 'OK';
+
+  @override
+  String get deepLinkUnableToOpenLink => 'Unable to open link';
+
+  @override
+  String get deepLinkInvalidLegalDocumentLink => 'Invalid legal document link';
+
+  @override
+  String get deepLinkInvalidAetherFlightLink => 'Invalid Aether flight link';
+
+  @override
+  String get deepLinkInvalidAutomationLink => 'Invalid automation link';
+
+  @override
+  String get deepLinkInvalidLocationCoordinates =>
+      'Invalid location coordinates';
+
+  @override
+  String get deepLinkInvalidPostLink => 'Invalid post link';
+
+  @override
+  String get deepLinkInvalidWidgetLink => 'Invalid widget link';
+
+  @override
+  String get deepLinkInvalidProfileLink => 'Invalid profile link';
+
+  @override
+  String get deepLinkSignInToJoinChannel => 'Sign in to join this channel';
+
+  @override
+  String get deepLinkInvalidInviteLink => 'Invalid or incomplete invite link';
+
+  @override
+  String get deepLinkInvalidChannelData => 'Invalid channel data';
+
+  @override
+  String get deepLinkConnectToImportChannel =>
+      'Connect a device to import this channel';
+
+  @override
+  String get deepLinkUnableToLoadNode => 'Unable to load node data';
+
+  @override
+  String get deepLinkNodeAddedSuccess => 'Node added successfully';
+
+  @override
+  String get lifecycleActionCancelled => 'Action cancelled';
+
+  @override
+  String get lifecycleActionExpiredBackground =>
+      'Action expired while app was in background';
+
+  @override
+  String get lifecycleActionCancelledBackground =>
+      'Action cancelled — app is in background';
+
+  @override
+  String get commandErrorCheckInternet => 'Check your internet connection';
+
+  @override
+  String get commandErrorWaitingConfig => 'Waiting for device configuration';
+
+  @override
+  String get commandErrorConnectDevice =>
+      'Connect your device to use this feature';
 }

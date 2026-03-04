@@ -1,5 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import 'dart:ui' show PlatformDispatcher;
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
 import '../../providers/connection_providers.dart';
 
 /// Result type for command execution
@@ -31,26 +34,35 @@ class CommandError {
     this.unmetRequirement,
   });
 
-  factory CommandError.deviceNotConnected() => const CommandError(
-    type: CommandErrorType.deviceNotConnected,
-    message: 'Device not connected', // lint-allow: hardcoded-string
-    userMessage: 'Connect your device to use this feature',
-    unmetRequirement: FeatureRequirement.deviceConnection,
-  );
+  factory CommandError.deviceNotConnected() {
+    final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
+    return CommandError(
+      type: CommandErrorType.deviceNotConnected,
+      message: 'Device not connected', // lint-allow: hardcoded-string
+      userMessage: l10n.commandErrorConnectDevice,
+      unmetRequirement: FeatureRequirement.deviceConnection,
+    );
+  }
 
-  factory CommandError.protocolNotReady() => const CommandError(
-    type: CommandErrorType.protocolNotReady,
-    message: 'Protocol not configured', // lint-allow: hardcoded-string
-    userMessage: 'Waiting for device configuration',
-    unmetRequirement: FeatureRequirement.deviceConnection,
-  );
+  factory CommandError.protocolNotReady() {
+    final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
+    return CommandError(
+      type: CommandErrorType.protocolNotReady,
+      message: 'Protocol not configured', // lint-allow: hardcoded-string
+      userMessage: l10n.commandErrorWaitingConfig,
+      unmetRequirement: FeatureRequirement.deviceConnection,
+    );
+  }
 
-  factory CommandError.networkUnavailable() => const CommandError(
-    type: CommandErrorType.networkUnavailable,
-    message: 'Network unavailable', // lint-allow: hardcoded-string
-    userMessage: 'Check your internet connection',
-    unmetRequirement: FeatureRequirement.network,
-  );
+  factory CommandError.networkUnavailable() {
+    final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
+    return CommandError(
+      type: CommandErrorType.networkUnavailable,
+      message: 'Network unavailable', // lint-allow: hardcoded-string
+      userMessage: l10n.commandErrorCheckInternet,
+      unmetRequirement: FeatureRequirement.network,
+    );
+  }
 
   factory CommandError.executionFailed(String message) => CommandError(
     type: CommandErrorType.executionFailed,

@@ -51967,6 +51967,228 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No TLS'**
   String get globalLayerNoTlsLabel;
+
+  /// Progress label showing how many help articles the user has read.
+  ///
+  /// In en, this message translates to:
+  /// **'articles read'**
+  String get helpCenterArticlesReadLabel;
+
+  /// Accessibility label for the poop reaction emoji.
+  ///
+  /// In en, this message translates to:
+  /// **'Poop'**
+  String get tapbackPoop;
+
+  /// Accessibility label for the question mark reaction emoji.
+  ///
+  /// In en, this message translates to:
+  /// **'Question'**
+  String get tapbackQuestion;
+
+  /// Accessibility label for the exclamation mark reaction emoji.
+  ///
+  /// In en, this message translates to:
+  /// **'Exclamation'**
+  String get tapbackExclamation;
+
+  /// Accessibility label for the laughing reaction emoji.
+  ///
+  /// In en, this message translates to:
+  /// **'HaHa'**
+  String get tapbackHaha;
+
+  /// Accessibility label for the thumbs-down (dislike) reaction emoji.
+  ///
+  /// In en, this message translates to:
+  /// **'Thumbs Down'**
+  String get tapbackThumbsDown;
+
+  /// Accessibility label for the thumbs-up (like) reaction emoji.
+  ///
+  /// In en, this message translates to:
+  /// **'Thumbs Up'**
+  String get tapbackThumbsUp;
+
+  /// Accessibility label for the heart (love) reaction emoji.
+  ///
+  /// In en, this message translates to:
+  /// **'Heart'**
+  String get tapbackHeart;
+
+  /// Accessibility label for the wave (greeting) reaction emoji.
+  ///
+  /// In en, this message translates to:
+  /// **'Wave'**
+  String get tapbackWave;
+
+  /// Default quick reply: gratitude.
+  ///
+  /// In en, this message translates to:
+  /// **'Thanks!'**
+  String get cannedResponseThanks;
+
+  /// Default quick reply: asking others to wait.
+  ///
+  /// In en, this message translates to:
+  /// **'Wait for me'**
+  String get cannedResponseWaitForMe;
+
+  /// Default quick reply: confirming safety.
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m safe'**
+  String get cannedResponseImSafe;
+
+  /// Default quick reply: requesting assistance.
+  ///
+  /// In en, this message translates to:
+  /// **'Need help'**
+  String get cannedResponseNeedHelp;
+
+  /// Default quick reply: en route.
+  ///
+  /// In en, this message translates to:
+  /// **'On my way'**
+  String get cannedResponseOnMyWay;
+
+  /// Default quick reply: negative.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get cannedResponseNo;
+
+  /// Default quick reply: affirmative.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get cannedResponseYes;
+
+  /// Default quick reply: acknowledgement.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get cannedResponseOk;
+
+  /// Generic fallback when a deep link cannot be opened.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to open link'**
+  String get deepLinkUnableToOpenLink;
+
+  /// Shown when a legal document deep link is malformed.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid legal document link'**
+  String get deepLinkInvalidLegalDocumentLink;
+
+  /// Shown when an Aether flight deep link is malformed. Do not translate 'Aether'.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid Aether flight link'**
+  String get deepLinkInvalidAetherFlightLink;
+
+  /// Shown when an automation deep link is malformed.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid automation link'**
+  String get deepLinkInvalidAutomationLink;
+
+  /// Shown when a location deep link has invalid lat/lng.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid location coordinates'**
+  String get deepLinkInvalidLocationCoordinates;
+
+  /// Shown when a post deep link is malformed.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid post link'**
+  String get deepLinkInvalidPostLink;
+
+  /// Shown when a widget deep link is malformed.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid widget link'**
+  String get deepLinkInvalidWidgetLink;
+
+  /// Shown when a profile deep link is malformed.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid profile link'**
+  String get deepLinkInvalidProfileLink;
+
+  /// Shown when a channel invite requires authentication.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to join this channel'**
+  String get deepLinkSignInToJoinChannel;
+
+  /// Shown when a channel invite link is malformed.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid or incomplete invite link'**
+  String get deepLinkInvalidInviteLink;
+
+  /// Shown when a channel deep link has corrupt or missing data.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid channel data'**
+  String get deepLinkInvalidChannelData;
+
+  /// Shown when a channel deep link requires a connected device.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect a device to import this channel'**
+  String get deepLinkConnectToImportChannel;
+
+  /// Shown when a node deep link cannot resolve node data.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to load node data'**
+  String get deepLinkUnableToLoadNode;
+
+  /// Shown after a node deep link is processed successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Node added successfully'**
+  String get deepLinkNodeAddedSuccess;
+
+  /// Message when all deferred commands are cancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Action cancelled'**
+  String get lifecycleActionCancelled;
+
+  /// Message when a deferred command exceeded its max age while backgrounded.
+  ///
+  /// In en, this message translates to:
+  /// **'Action expired while app was in background'**
+  String get lifecycleActionExpiredBackground;
+
+  /// Message when a command is rejected because the app is not in the foreground.
+  ///
+  /// In en, this message translates to:
+  /// **'Action cancelled — app is in background'**
+  String get lifecycleActionCancelledBackground;
+
+  /// Error message when a command requires network and it is unavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your internet connection'**
+  String get commandErrorCheckInternet;
+
+  /// Error message while the mesh protocol is still initializing.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for device configuration'**
+  String get commandErrorWaitingConfig;
+
+  /// Error message when a command requires a connected mesh device.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect your device to use this feature'**
+  String get commandErrorConnectDevice;
 }
 
 class _AppLocalizationsDelegate
