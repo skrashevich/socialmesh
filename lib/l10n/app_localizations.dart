@@ -5204,13 +5204,13 @@ abstract class AppLocalizations {
   /// **'Key cannot be empty'**
   String get channelFormKeyEmpty;
 
-  /// No description provided for @channelFormKeySizeAes128.
+  /// AES-128 encryption. Do not translate the acronym.
   ///
   /// In en, this message translates to:
   /// **'AES-128'**
   String get channelFormKeySizeAes128;
 
-  /// No description provided for @channelFormKeySizeAes256.
+  /// AES-256 encryption. Do not translate the acronym.
   ///
   /// In en, this message translates to:
   /// **'AES-256'**
@@ -5222,7 +5222,7 @@ abstract class AppLocalizations {
   /// **'{bits}-bit encryption key'**
   String channelFormKeySizeBitDesc(int bits);
 
-  /// No description provided for @channelFormKeySizeDefault.
+  /// Default encryption uses a well-known 1-byte shared key. Simple means easy to set up but NOT secure.
   ///
   /// In en, this message translates to:
   /// **'Default (Simple)'**
@@ -5234,7 +5234,7 @@ abstract class AppLocalizations {
   /// **'1-byte simple key (AQ==)'**
   String get channelFormKeySizeDefaultDesc;
 
-  /// No description provided for @channelFormKeySizeNone.
+  /// Channel with no encryption. Messages are transmitted in plaintext.
   ///
   /// In en, this message translates to:
   /// **'No Encryption'**
@@ -6080,7 +6080,7 @@ abstract class AppLocalizations {
   /// **'Position'**
   String get channelsFilterPosition;
 
-  /// No description provided for @channelsFilterPrimary.
+  /// Filter for the primary mesh channel (Channel 0 in Meshtastic).
   ///
   /// In en, this message translates to:
   /// **'Primary'**
@@ -6146,7 +6146,7 @@ abstract class AppLocalizations {
   /// **'No encryption'**
   String get channelsTileNoEncryption;
 
-  /// No description provided for @channelsTilePrimaryBadge.
+  /// Badge label indicating this is the primary (Channel 0) mesh channel.
   ///
   /// In en, this message translates to:
   /// **'PRIMARY'**
@@ -6890,7 +6890,7 @@ abstract class AppLocalizations {
   /// **'Changes to device configuration will cause the device to reboot.'**
   String get deviceConfigRebootWarning;
 
-  /// No description provided for @deviceConfigRebroadcastAll.
+  /// Meshtastic rebroadcast mode: the node relays every packet it receives to extend mesh coverage.
   ///
   /// In en, this message translates to:
   /// **'All'**
@@ -6902,7 +6902,7 @@ abstract class AppLocalizations {
   /// **'Rebroadcast any observed message. Default behavior.'**
   String get deviceConfigRebroadcastAllDesc;
 
-  /// No description provided for @deviceConfigRebroadcastAllSkipDecoding.
+  /// Meshtastic rebroadcast mode: relays all packets without parsing their contents, reducing CPU usage.
   ///
   /// In en, this message translates to:
   /// **'All (Skip Decoding)'**
@@ -6914,7 +6914,7 @@ abstract class AppLocalizations {
   /// **'Rebroadcast all messages without decoding. Faster, less CPU.'**
   String get deviceConfigRebroadcastAllSkipDecodingDesc;
 
-  /// No description provided for @deviceConfigRebroadcastCorePortnumsOnly.
+  /// Meshtastic rebroadcast mode: only relays essential protocol messages (position, nodeinfo, routing). Port numbers are Meshtastic message type identifiers, not TCP ports.
   ///
   /// In en, this message translates to:
   /// **'Core Port Numbers Only'**
@@ -6926,7 +6926,7 @@ abstract class AppLocalizations {
   /// **'Rebroadcast only core Meshtastic packets (position, telemetry, etc).'**
   String get deviceConfigRebroadcastCorePortnumsOnlyDesc;
 
-  /// No description provided for @deviceConfigRebroadcastKnownOnly.
+  /// Meshtastic rebroadcast mode: only relays packets from nodes already in the local node database.
   ///
   /// In en, this message translates to:
   /// **'Known Only'**
@@ -6938,7 +6938,7 @@ abstract class AppLocalizations {
   /// **'Only rebroadcast messages from nodes in the node database.'**
   String get deviceConfigRebroadcastKnownOnlyDesc;
 
-  /// No description provided for @deviceConfigRebroadcastLocalOnly.
+  /// Meshtastic rebroadcast mode: only relays packets from nodes within direct (1-hop) radio range.
   ///
   /// In en, this message translates to:
   /// **'Local Only'**
@@ -6950,7 +6950,7 @@ abstract class AppLocalizations {
   /// **'Only rebroadcast messages from local senders. Good for isolated networks.'**
   String get deviceConfigRebroadcastLocalOnlyDesc;
 
-  /// No description provided for @deviceConfigRebroadcastNone.
+  /// Meshtastic rebroadcast mode: the node does not relay any packets; it only receives.
   ///
   /// In en, this message translates to:
   /// **'None'**
@@ -7022,7 +7022,7 @@ abstract class AppLocalizations {
   /// **'Client'**
   String get deviceConfigRoleClient;
 
-  /// No description provided for @deviceConfigRoleClientBase.
+  /// Meshtastic device role: a mains-powered client with higher rebroadcast priority than battery-powered clients.
   ///
   /// In en, this message translates to:
   /// **'Client Base'**
@@ -7040,7 +7040,7 @@ abstract class AppLocalizations {
   /// **'Default role. Mesh packets are routed through this node. Can send and receive messages.'**
   String get deviceConfigRoleClientDesc;
 
-  /// No description provided for @deviceConfigRoleClientHidden.
+  /// Meshtastic device role: a client that does not broadcast its identity, making it invisible to other nodes.
   ///
   /// In en, this message translates to:
   /// **'Client Hidden'**
@@ -7064,7 +7064,7 @@ abstract class AppLocalizations {
   /// **'Same as client but will not transmit any messages from itself. Useful for monitoring.'**
   String get deviceConfigRoleClientMuteDesc;
 
-  /// No description provided for @deviceConfigRoleLostAndFound.
+  /// Meshtastic device role: optimized for asset tracking with infrequent position reports.
   ///
   /// In en, this message translates to:
   /// **'Lost and Found'**
@@ -7076,7 +7076,7 @@ abstract class AppLocalizations {
   /// **'Optimized for finding lost devices. Sends periodic beacons.'**
   String get deviceConfigRoleLostAndFoundDesc;
 
-  /// No description provided for @deviceConfigRoleRouter.
+  /// Meshtastic device role: a dedicated packet forwarder that stays powered on.
   ///
   /// In en, this message translates to:
   /// **'Router'**
@@ -7088,7 +7088,7 @@ abstract class AppLocalizations {
   /// **'Routes mesh packets between nodes. Screen and Bluetooth disabled to conserve power.'**
   String get deviceConfigRoleRouterDesc;
 
-  /// No description provided for @deviceConfigRoleRouterLate.
+  /// Meshtastic device role: acts as a router only if no other router has already relayed the packet.
   ///
   /// In en, this message translates to:
   /// **'Router Late'**
@@ -7238,7 +7238,7 @@ abstract class AppLocalizations {
   /// **'Node Info Broadcast'**
   String get deviceConfigSectionNodeInfoBroadcast;
 
-  /// No description provided for @deviceConfigSectionRebroadcastMode.
+  /// Section header for rebroadcast mode setting. Rebroadcasting = relaying received radio packets to extend mesh network range.
   ///
   /// In en, this message translates to:
   /// **'Rebroadcast Mode'**
@@ -7706,7 +7706,7 @@ abstract class AppLocalizations {
   /// **'Categories'**
   String get deviceShopCategories;
 
-  /// No description provided for @deviceShopClear.
+  /// Button to clear/reset device shop search filters.
   ///
   /// In en, this message translates to:
   /// **'Clear'**
@@ -9354,7 +9354,7 @@ abstract class AppLocalizations {
   /// **'Wait for device to reboot and reconnect'**
   String get firmwareUpdateStep4;
 
-  /// No description provided for @firmwareUpdateSupported.
+  /// Label indicating the device supports over-the-air firmware updates.
   ///
   /// In en, this message translates to:
   /// **'Supported'**
@@ -14693,7 +14693,7 @@ abstract class AppLocalizations {
   /// **'Charging'**
   String get nodeAnalyticsCharging;
 
-  /// No description provided for @nodeAnalyticsClear.
+  /// Button to clear/reset accumulated node analytics data.
   ///
   /// In en, this message translates to:
   /// **'Clear'**
@@ -14909,7 +14909,7 @@ abstract class AppLocalizations {
   /// **'Removed from favorites'**
   String get nodeAnalyticsRemovedFromFavorites;
 
-  /// No description provided for @nodeAnalyticsRole.
+  /// Label for the Meshtastic device role (Router, Client, etc.), not a person's role.
   ///
   /// In en, this message translates to:
   /// **'Role'**
@@ -15179,7 +15179,7 @@ abstract class AppLocalizations {
   /// **'Node ID copied'**
   String get nodeComparisonNodeIdCopied;
 
-  /// No description provided for @nodeComparisonRowAirTimeTx.
+  /// Air Time TX = the percentage of time this node radio was actively transmitting.
   ///
   /// In en, this message translates to:
   /// **'Air Time TX'**
@@ -15191,7 +15191,7 @@ abstract class AppLocalizations {
   /// **'Battery'**
   String get nodeComparisonRowBattery;
 
-  /// No description provided for @nodeComparisonRowChannelUtil.
+  /// Channel Utilization = the percentage of time any radio traffic was detected on the frequency.
   ///
   /// In en, this message translates to:
   /// **'Channel Util'**
@@ -15233,7 +15233,7 @@ abstract class AppLocalizations {
   /// **'Region'**
   String get nodeComparisonRowRegion;
 
-  /// No description provided for @nodeComparisonRowRole.
+  /// Label for the Meshtastic device role column in the node comparison table.
   ///
   /// In en, this message translates to:
   /// **'Role'**
@@ -16031,7 +16031,7 @@ abstract class AppLocalizations {
   /// **'Battery'**
   String get nodeHistoryMetricBattery;
 
-  /// No description provided for @nodeHistoryMetricChannelUtil.
+  /// Channel Utilization metric shown in node history graph.
   ///
   /// In en, this message translates to:
   /// **'Channel Util'**
@@ -16283,7 +16283,7 @@ abstract class AppLocalizations {
   /// **'HARDWARE'**
   String get nodedexCardDeviceHardware;
 
-  /// No description provided for @nodedexCardDeviceRole.
+  /// Label on the NodeDex collectible card showing the Meshtastic device role.
   ///
   /// In en, this message translates to:
   /// **'ROLE'**
@@ -16361,7 +16361,7 @@ abstract class AppLocalizations {
   /// **'Under 5 encounters'**
   String get nodedexCardRarityUnder5;
 
-  /// No description provided for @nodedexChannelUtilLabel.
+  /// Channel Utilization = the percentage of time any radio traffic was detected on the frequency.
   ///
   /// In en, this message translates to:
   /// **'Channel Util'**
@@ -16613,7 +16613,7 @@ abstract class AppLocalizations {
   /// **'All'**
   String get nodedexDensityAll;
 
-  /// No description provided for @nodedexDensityDense.
+  /// Constellation graph setting: show more connection edges between nodes.
   ///
   /// In en, this message translates to:
   /// **'Dense'**
@@ -16625,7 +16625,7 @@ abstract class AppLocalizations {
   /// **'Normal'**
   String get nodedexDensityNormal;
 
-  /// No description provided for @nodedexDensitySparse.
+  /// Constellation graph setting: show fewer connection edges, filtering out weak links.
   ///
   /// In en, this message translates to:
   /// **'Sparse'**
@@ -16841,7 +16841,7 @@ abstract class AppLocalizations {
   /// **'Ghosts are nodes that appear rarely relative to how long they have been known.'**
   String get nodedexEmptyGhostsSubtitle;
 
-  /// No description provided for @nodedexEmptyGhostsTitle.
+  /// Empty state for Ghosts: nodes that are rarely seen relative to their age.
   ///
   /// In en, this message translates to:
   /// **'No ghosts found'**
@@ -16889,7 +16889,7 @@ abstract class AppLocalizations {
   /// **'Sentinels are long-lived, fixed-position nodes with reliable presence.'**
   String get nodedexEmptySentinelsSubtitle;
 
-  /// No description provided for @nodedexEmptySentinelsTitle.
+  /// Empty state for Sentinels: nodes that have been online for a long time in a fixed position.
   ///
   /// In en, this message translates to:
   /// **'No sentinels found'**
@@ -18839,7 +18839,7 @@ abstract class AppLocalizations {
   /// **'Name'**
   String get nodedexSortName;
 
-  /// No description provided for @nodedexSortRange.
+  /// Sort option: sort nodes by estimated radio range (distance), not a numeric range.
   ///
   /// In en, this message translates to:
   /// **'Range'**
@@ -25557,31 +25557,31 @@ abstract class AppLocalizations {
   /// **'Tap a card to snap it away (Thanos style)'**
   String get showcaseTapInstruction;
 
-  /// No description provided for @sigilStageHeraldic.
+  /// Sigil progression stage 4 of 5. Heraldic = coat-of-arms level of complexity.
   ///
   /// In en, this message translates to:
   /// **'Heraldic'**
   String get sigilStageHeraldic;
 
-  /// No description provided for @sigilStageInscribed.
+  /// Sigil progression stage 3 of 5.
   ///
   /// In en, this message translates to:
   /// **'Inscribed'**
   String get sigilStageInscribed;
 
-  /// No description provided for @sigilStageLegacy.
+  /// Sigil progression stage 5 of 5. The final, most ornate stage.
   ///
   /// In en, this message translates to:
   /// **'Legacy'**
   String get sigilStageLegacy;
 
-  /// No description provided for @sigilStageMarked.
+  /// Sigil progression stage 2 of 5.
   ///
   /// In en, this message translates to:
   /// **'Marked'**
   String get sigilStageMarked;
 
-  /// No description provided for @sigilStageSeed.
+  /// Sigil progression stage 1 of 5. Sigils are decorative node identity emblems that evolve with mesh experience.
   ///
   /// In en, this message translates to:
   /// **'Seed'**
@@ -34860,7 +34860,7 @@ abstract class AppLocalizations {
   /// **'Region'**
   String get worldMeshFilterCatRegion;
 
-  /// No description provided for @worldMeshFilterCatRole.
+  /// Filter category for mesh device roles in the World Mesh view.
   ///
   /// In en, this message translates to:
   /// **'Role'**
@@ -37061,7 +37061,7 @@ abstract class AppLocalizations {
   /// **'Unlock \${price}'**
   String settingsPremiumUnlockPrice(String price);
 
-  /// No description provided for @glyphMatrixTitle.
+  /// Title for a feature that triggers LED patterns on Nothing Phone devices via BLE. Glyph is the Nothing Phone brand name for its LED patterns.
   ///
   /// In en, this message translates to:
   /// **'GLYPH MATRIX'**
@@ -37073,7 +37073,7 @@ abstract class AppLocalizations {
   /// **'Turn off'**
   String get glyphMatrixTurnOff;
 
-  /// No description provided for @glyphMatrixInitializing.
+  /// Loading message while the Glyph Matrix BLE connection is being established.
   ///
   /// In en, this message translates to:
   /// **'INITIALIZING GLYPH MATRIX...'**
@@ -37097,7 +37097,7 @@ abstract class AppLocalizations {
   /// **'Glyph Matrix requires\nNothing Phone (3)'**
   String get glyphMatrixRequiresDevice;
 
-  /// No description provided for @glyphMatrixSwipeToExecute.
+  /// Instruction to swipe a button to trigger the LED pattern. Execute means activate the command.
   ///
   /// In en, this message translates to:
   /// **'← SWIPE TO EXECUTE →'**
@@ -39538,7 +39538,7 @@ abstract class AppLocalizations {
   /// **'Connected Device'**
   String get linkedDevicesConnectedDevice;
 
-  /// No description provided for @linkedDevicesLinkButton.
+  /// Button label: Link means pair/connect a BLE mesh radio device, not a URL hyperlink.
   ///
   /// In en, this message translates to:
   /// **'Link'**
@@ -39820,7 +39820,7 @@ abstract class AppLocalizations {
   /// **'Failed to save: {error}'**
   String radioConfigSaveFailed(String error);
 
-  /// No description provided for @radioConfigTitle.
+  /// Title for the LoRa radio configuration screen (frequency, bandwidth, spreading factor).
   ///
   /// In en, this message translates to:
   /// **'Radio'**
@@ -39886,7 +39886,7 @@ abstract class AppLocalizations {
   /// **'TX Power Override'**
   String get radioConfigTxPowerOverride;
 
-  /// No description provided for @radioConfigTxPowerDefault.
+  /// Default transmit power setting for the LoRa radio.
   ///
   /// In en, this message translates to:
   /// **'Default'**
@@ -40942,7 +40942,7 @@ abstract class AppLocalizations {
   /// **'Disabled'**
   String get powerConfigDisabled;
 
-  /// No description provided for @powerConfigTitle.
+  /// Title for LoRa radio transmit power configuration screen.
   ///
   /// In en, this message translates to:
   /// **'Power'**
@@ -42814,7 +42814,7 @@ abstract class AppLocalizations {
   /// **'Device not connected. Connect to a device to manage it.'**
   String get deviceMgmtNotConnected;
 
-  /// No description provided for @deviceMgmtSectionPower.
+  /// Section header for device power management (shutdown, reboot, sleep).
   ///
   /// In en, this message translates to:
   /// **'POWER'**
@@ -42826,7 +42826,7 @@ abstract class AppLocalizations {
   /// **'TIME'**
   String get deviceMgmtSectionTime;
 
-  /// No description provided for @deviceMgmtSectionReset.
+  /// Section header for device reset operations (factory reset, node database reset).
   ///
   /// In en, this message translates to:
   /// **'RESET'**
@@ -43192,7 +43192,7 @@ abstract class AppLocalizations {
   /// **'Override automatic OLED detection'**
   String get displayConfigOledTypeDesc;
 
-  /// No description provided for @displayConfigOledAuto.
+  /// OLED display setting: automatic brightness or rotation mode.
   ///
   /// In en, this message translates to:
   /// **'Auto'**
@@ -47044,7 +47044,7 @@ abstract class AppLocalizations {
   /// **'Topics'**
   String get globalLayerTopicsAction;
 
-  /// No description provided for @globalLayerBrokerHeader.
+  /// Header for the MQTT broker configuration section. An MQTT broker is a server that distributes messages between connected clients.
   ///
   /// In en, this message translates to:
   /// **'Broker'**
@@ -51427,6 +51427,546 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Alex'**
   String get onboardingSignalAuthorAlex;
+
+  /// Global Layer wizard step 1 title: explains what the Global Layer feature is.
+  ///
+  /// In en, this message translates to:
+  /// **'What is the Global Layer?'**
+  String get globalLayerCopyExplainTitle;
+
+  /// Global Layer wizard step 1 body: high-level description of the feature.
+  ///
+  /// In en, this message translates to:
+  /// **'Your mesh radio connects nearby devices over radio waves — no internet needed. The Global Layer extends that reach by bridging your local mesh to a server (called a broker) over the internet.\n\nThink of it as a portal: messages from your mesh can travel through the portal to reach other meshes connected to the same broker, anywhere in the world.'**
+  String get globalLayerCopyExplainBody;
+
+  /// Explains what Global Layer does: bridges local mesh to internet.
+  ///
+  /// In en, this message translates to:
+  /// **'Bridges your local mesh to remote meshes via an internet server.'**
+  String get globalLayerCopyExplainWhatItDoes;
+
+  /// Explains what Global Layer does NOT do: not a replacement for direct mesh.
+  ///
+  /// In en, this message translates to:
+  /// **'Does NOT replace your radio. Local mesh works independently even if the Global Layer is offline.'**
+  String get globalLayerCopyExplainWhatItDoesNot;
+
+  /// Wizard step title for MQTT broker configuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a Broker'**
+  String get globalLayerCopyBrokerTitle;
+
+  /// Wizard step body for MQTT broker configuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a broker to connect through. Most users should start with the official Meshtastic server — it works out of the box with no setup required.'**
+  String get globalLayerCopyBrokerBody;
+
+  /// Wizard step title for MQTT topic selection.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose What to Share'**
+  String get globalLayerCopyTopicsTitle;
+
+  /// Wizard step body for MQTT topic selection.
+  ///
+  /// In en, this message translates to:
+  /// **'Topics control which types of data flow through the Global Layer. You can enable or disable each type independently.'**
+  String get globalLayerCopyTopicsBody;
+
+  /// Wizard step title for privacy/sharing settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy & Safety'**
+  String get globalLayerCopyPrivacyTitle;
+
+  /// Wizard step body for privacy/sharing settings.
+  ///
+  /// In en, this message translates to:
+  /// **'The Global Layer is opt-in. Nothing is shared until you explicitly enable it below. You can change these settings at any time.'**
+  String get globalLayerCopyPrivacyBody;
+
+  /// Warning that the user must trust the MQTT broker operator since data passes through their server.
+  ///
+  /// In en, this message translates to:
+  /// **'Your broker can see all data you send through it. Only connect to brokers you trust.'**
+  String get globalLayerCopyPrivacyBrokerTrustWarning;
+
+  /// Wizard step title for connection test.
+  ///
+  /// In en, this message translates to:
+  /// **'Test Connection'**
+  String get globalLayerCopyTestTitle;
+
+  /// Wizard step body for connection test.
+  ///
+  /// In en, this message translates to:
+  /// **'Verifying that your broker is reachable and configured correctly.'**
+  String get globalLayerCopyTestBody;
+
+  /// Wizard step title for final configuration summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready to Connect'**
+  String get globalLayerCopySummaryTitle;
+
+  /// Wizard step body for final configuration summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Review your Global Layer settings below. You can change any of these later from the Global Layer status screen.'**
+  String get globalLayerCopySummaryBody;
+
+  /// MQTT topic template label for mesh chat messages.
+  ///
+  /// In en, this message translates to:
+  /// **'Chat'**
+  String get mqttTopicChatLabel;
+
+  /// MQTT topic template description for mesh chat messages.
+  ///
+  /// In en, this message translates to:
+  /// **'Text messages exchanged between mesh nodes on a specific channel.'**
+  String get mqttTopicChatDescription;
+
+  /// MQTT topic template label for device telemetry data.
+  ///
+  /// In en, this message translates to:
+  /// **'Telemetry'**
+  String get mqttTopicTelemetryLabel;
+
+  /// MQTT topic template description for device telemetry data.
+  ///
+  /// In en, this message translates to:
+  /// **'Device health data such as battery level, voltage, and uptime.'**
+  String get mqttTopicTelemetryDescription;
+
+  /// MQTT topic template label for GPS position reports.
+  ///
+  /// In en, this message translates to:
+  /// **'Position'**
+  String get mqttTopicPositionLabel;
+
+  /// MQTT topic template description for GPS position reports.
+  ///
+  /// In en, this message translates to:
+  /// **'GPS coordinates reported by mesh nodes (privacy-sensitive).'**
+  String get mqttTopicPositionDescription;
+
+  /// MQTT topic template label for node identity/info updates.
+  ///
+  /// In en, this message translates to:
+  /// **'Node Info'**
+  String get mqttTopicNodeInfoLabel;
+
+  /// MQTT topic template description for node identity/info updates.
+  ///
+  /// In en, this message translates to:
+  /// **'Node identity broadcasts including long name, short name, and hardware model.'**
+  String get mqttTopicNodeInfoDescription;
+
+  /// MQTT topic template label for map report packets.
+  ///
+  /// In en, this message translates to:
+  /// **'Map Reports'**
+  String get mqttTopicMapReportsLabel;
+
+  /// MQTT topic template description for map report packets.
+  ///
+  /// In en, this message translates to:
+  /// **'Periodic position reports for public mesh mapping services.'**
+  String get mqttTopicMapReportsDescription;
+
+  /// Name of the official Meshtastic public MQTT broker. Do not translate 'Meshtastic'.
+  ///
+  /// In en, this message translates to:
+  /// **'Meshtastic (Official)'**
+  String get mqttBrokerMeshtasticName;
+
+  /// Description of the official Meshtastic public MQTT broker.
+  ///
+  /// In en, this message translates to:
+  /// **'The default Meshtastic MQTT server. Connects you to the worldwide Meshtastic mesh network. No account needed.'**
+  String get mqttBrokerMeshtasticDescription;
+
+  /// Note about the official Meshtastic broker (e.g. requires authentication).
+  ///
+  /// In en, this message translates to:
+  /// **'Public credentials are shared by all Meshtastic users.'**
+  String get mqttBrokerMeshtasticNote;
+
+  /// Name of the Eclipse Mosquitto test MQTT broker. Do not translate 'Mosquitto'.
+  ///
+  /// In en, this message translates to:
+  /// **'Mosquitto Test'**
+  String get mqttBrokerMosquittoName;
+
+  /// Description of the Eclipse Mosquitto test MQTT broker.
+  ///
+  /// In en, this message translates to:
+  /// **'A free public test broker run by the Eclipse Mosquitto project. Good for testing your setup before connecting to a production broker.'**
+  String get mqttBrokerMosquittoDescription;
+
+  /// Note about the Mosquitto test broker (e.g. public, no auth).
+  ///
+  /// In en, this message translates to:
+  /// **'Test broker — not for production use. May have downtime.'**
+  String get mqttBrokerMosquittoNote;
+
+  /// Name for the custom/self-hosted MQTT broker option.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom Broker'**
+  String get mqttBrokerCustomName;
+
+  /// Description for the custom/self-hosted MQTT broker option.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your own broker details manually.'**
+  String get mqttBrokerCustomDescription;
+
+  /// Diagnostic check title: validates MQTT configuration fields.
+  ///
+  /// In en, this message translates to:
+  /// **'Configuration'**
+  String get globalLayerDiagConfigTitle;
+
+  /// Diagnostic check description: validates host, port, and credentials.
+  ///
+  /// In en, this message translates to:
+  /// **'Verifying that the broker address, port, and topic root are correctly formatted.'**
+  String get globalLayerDiagConfigDescription;
+
+  /// Diagnostic check title: DNS resolution of the MQTT broker hostname.
+  ///
+  /// In en, this message translates to:
+  /// **'DNS Resolution'**
+  String get globalLayerDiagDnsTitle;
+
+  /// Diagnostic check description: attempts to resolve the broker hostname.
+  ///
+  /// In en, this message translates to:
+  /// **'Looking up the broker hostname to find its network address.'**
+  String get globalLayerDiagDnsDescription;
+
+  /// Diagnostic check title: TCP connection to the MQTT broker.
+  ///
+  /// In en, this message translates to:
+  /// **'TCP Connection'**
+  String get globalLayerDiagTcpTitle;
+
+  /// Diagnostic check description: attempts a TCP socket connection.
+  ///
+  /// In en, this message translates to:
+  /// **'Establishing a network connection to the broker.'**
+  String get globalLayerDiagTcpDescription;
+
+  /// Diagnostic check title: TLS/SSL handshake with the MQTT broker.
+  ///
+  /// In en, this message translates to:
+  /// **'TLS Handshake'**
+  String get globalLayerDiagTlsTitle;
+
+  /// Diagnostic check description: validates the TLS certificate chain.
+  ///
+  /// In en, this message translates to:
+  /// **'Negotiating a secure (encrypted) connection with the broker.'**
+  String get globalLayerDiagTlsDescription;
+
+  /// Diagnostic check title: MQTT authentication with broker.
+  ///
+  /// In en, this message translates to:
+  /// **'Authentication'**
+  String get globalLayerDiagAuthTitle;
+
+  /// Diagnostic check description: validates username/password credentials.
+  ///
+  /// In en, this message translates to:
+  /// **'Verifying your username and password with the broker.'**
+  String get globalLayerDiagAuthDescription;
+
+  /// Diagnostic check title: MQTT subscribe operation.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscribe Test'**
+  String get globalLayerDiagSubscribeTitle;
+
+  /// Diagnostic check description: attempts to subscribe to a test topic.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscribing to a test topic to verify read access.'**
+  String get globalLayerDiagSubscribeDescription;
+
+  /// Diagnostic check title: MQTT publish operation.
+  ///
+  /// In en, this message translates to:
+  /// **'Publish Test'**
+  String get globalLayerDiagPublishTitle;
+
+  /// Diagnostic check description: attempts to publish a test message.
+  ///
+  /// In en, this message translates to:
+  /// **'Publishing a test message to verify write access.'**
+  String get globalLayerDiagPublishDescription;
+
+  /// No description provided for @globalLayerDiagSuggestionCorrectFields.
+  ///
+  /// In en, this message translates to:
+  /// **'Correct the highlighted fields and try again.'**
+  String get globalLayerDiagSuggestionCorrectFields;
+
+  /// No description provided for @globalLayerDiagSuggestionUnexpectedBehavior.
+  ///
+  /// In en, this message translates to:
+  /// **'These issues may not prevent connection but could cause unexpected behavior.'**
+  String get globalLayerDiagSuggestionUnexpectedBehavior;
+
+  /// No description provided for @globalLayerDiagConfigValid.
+  ///
+  /// In en, this message translates to:
+  /// **'All configuration fields are valid.'**
+  String get globalLayerDiagConfigValid;
+
+  /// No description provided for @globalLayerDiagSuggestionValidHostname.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid broker hostname.'**
+  String get globalLayerDiagSuggestionValidHostname;
+
+  /// No description provided for @globalLayerDiagSuggestionBothCredentials.
+  ///
+  /// In en, this message translates to:
+  /// **'Some brokers require both username and password.'**
+  String get globalLayerDiagSuggestionBothCredentials;
+
+  /// No description provided for @globalLayerWizardDnsValid.
+  ///
+  /// In en, this message translates to:
+  /// **'Hostname looks valid: {host}'**
+  String globalLayerWizardDnsValid(String host);
+
+  /// No description provided for @globalLayerWizardTcpReachable.
+  ///
+  /// In en, this message translates to:
+  /// **'TCP connection to {host}:{port} looks reachable.'**
+  String globalLayerWizardTcpReachable(String host, int port);
+
+  /// No description provided for @globalLayerWizardTlsAccepted.
+  ///
+  /// In en, this message translates to:
+  /// **'TLS handshake parameters accepted.'**
+  String get globalLayerWizardTlsAccepted;
+
+  /// No description provided for @globalLayerWizardCredentialsAccepted.
+  ///
+  /// In en, this message translates to:
+  /// **'Credentials provided and accepted.'**
+  String get globalLayerWizardCredentialsAccepted;
+
+  /// No description provided for @globalLayerWizardAnonymousAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'No credentials — using anonymous access.'**
+  String get globalLayerWizardAnonymousAccess;
+
+  /// No description provided for @globalLayerWizardSubscribeVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscribe permissions verified.'**
+  String get globalLayerWizardSubscribeVerified;
+
+  /// No description provided for @globalLayerWizardPublishVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Publish permissions verified.'**
+  String get globalLayerWizardPublishVerified;
+
+  /// No description provided for @globalLayerShareMessagesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your local mesh chat messages will be forwarded to the broker for other connected meshes to receive.'**
+  String get globalLayerShareMessagesSubtitle;
+
+  /// No description provided for @globalLayerShareTelemetrySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery level, voltage, and device uptime will be published to the broker.'**
+  String get globalLayerShareTelemetrySubtitle;
+
+  /// No description provided for @globalLayerAllowInboundSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages from other meshes connected to the same broker will be delivered to your local channels.'**
+  String get globalLayerAllowInboundSubtitle;
+
+  /// No description provided for @globalLayerBrokerTrust.
+  ///
+  /// In en, this message translates to:
+  /// **'Broker Trust'**
+  String get globalLayerBrokerTrust;
+
+  /// No description provided for @globalLayerRunConnectionTest.
+  ///
+  /// In en, this message translates to:
+  /// **'Run Connection Test'**
+  String get globalLayerRunConnectionTest;
+
+  /// No description provided for @globalLayerSkipTestHint.
+  ///
+  /// In en, this message translates to:
+  /// **'You can skip this step and test later.'**
+  String get globalLayerSkipTestHint;
+
+  /// No description provided for @globalLayerWizardAllChecksPassed.
+  ///
+  /// In en, this message translates to:
+  /// **'All checks passed'**
+  String get globalLayerWizardAllChecksPassed;
+
+  /// No description provided for @globalLayerPassedWithWarnings.
+  ///
+  /// In en, this message translates to:
+  /// **'Passed with warnings'**
+  String get globalLayerPassedWithWarnings;
+
+  /// No description provided for @globalLayerSomeChecksFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Some checks failed'**
+  String get globalLayerSomeChecksFailed;
+
+  /// No description provided for @globalLayerTestInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Test in progress'**
+  String get globalLayerTestInProgress;
+
+  /// No description provided for @globalLayerSummaryBrokerSection.
+  ///
+  /// In en, this message translates to:
+  /// **'BROKER'**
+  String get globalLayerSummaryBrokerSection;
+
+  /// No description provided for @globalLayerSummaryTopicsSection.
+  ///
+  /// In en, this message translates to:
+  /// **'TOPICS'**
+  String get globalLayerSummaryTopicsSection;
+
+  /// No description provided for @globalLayerSummaryPrivacySection.
+  ///
+  /// In en, this message translates to:
+  /// **'PRIVACY'**
+  String get globalLayerSummaryPrivacySection;
+
+  /// No description provided for @globalLayerSummaryAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get globalLayerSummaryAddress;
+
+  /// No description provided for @globalLayerSummaryPort.
+  ///
+  /// In en, this message translates to:
+  /// **'Port'**
+  String get globalLayerSummaryPort;
+
+  /// No description provided for @globalLayerSummaryTls.
+  ///
+  /// In en, this message translates to:
+  /// **'TLS'**
+  String get globalLayerSummaryTls;
+
+  /// No description provided for @globalLayerSummaryTlsEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Enabled'**
+  String get globalLayerSummaryTlsEnabled;
+
+  /// No description provided for @globalLayerSummaryTlsDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Disabled'**
+  String get globalLayerSummaryTlsDisabled;
+
+  /// No description provided for @globalLayerSummaryAuth.
+  ///
+  /// In en, this message translates to:
+  /// **'Auth'**
+  String get globalLayerSummaryAuth;
+
+  /// No description provided for @globalLayerSummaryAuthCredentials.
+  ///
+  /// In en, this message translates to:
+  /// **'Credentials configured'**
+  String get globalLayerSummaryAuthCredentials;
+
+  /// No description provided for @globalLayerSummaryAuthAnonymous.
+  ///
+  /// In en, this message translates to:
+  /// **'Anonymous'**
+  String get globalLayerSummaryAuthAnonymous;
+
+  /// No description provided for @globalLayerSummaryRoot.
+  ///
+  /// In en, this message translates to:
+  /// **'Root'**
+  String get globalLayerSummaryRoot;
+
+  /// No description provided for @globalLayerSummaryTopicsEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Enabled'**
+  String get globalLayerSummaryTopicsEnabled;
+
+  /// No description provided for @globalLayerSummaryTopicsNone.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get globalLayerSummaryTopicsNone;
+
+  /// No description provided for @globalLayerSummaryShareMessages.
+  ///
+  /// In en, this message translates to:
+  /// **'Share messages'**
+  String get globalLayerSummaryShareMessages;
+
+  /// No description provided for @globalLayerSummaryShareTelemetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Share telemetry'**
+  String get globalLayerSummaryShareTelemetry;
+
+  /// No description provided for @globalLayerSummaryInboundGlobal.
+  ///
+  /// In en, this message translates to:
+  /// **'Inbound global'**
+  String get globalLayerSummaryInboundGlobal;
+
+  /// No description provided for @globalLayerSummaryOn.
+  ///
+  /// In en, this message translates to:
+  /// **'ON'**
+  String get globalLayerSummaryOn;
+
+  /// No description provided for @globalLayerSummaryOff.
+  ///
+  /// In en, this message translates to:
+  /// **'OFF'**
+  String get globalLayerSummaryOff;
+
+  /// No description provided for @globalLayerAllSharingOff.
+  ///
+  /// In en, this message translates to:
+  /// **'All sharing is OFF. Your mesh data stays local until you enable sharing.'**
+  String get globalLayerAllSharingOff;
+
+  /// No description provided for @globalLayerNoTlsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'No TLS'**
+  String get globalLayerNoTlsLabel;
 }
 
 class _AppLocalizationsDelegate

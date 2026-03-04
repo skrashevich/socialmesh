@@ -6,6 +6,8 @@
 /// are centralized here to avoid hardcoding across the module.
 library;
 
+import '../../l10n/app_localizations.dart';
+
 /// Network and connection constants for the Global Layer.
 class GlobalLayerConstants {
   GlobalLayerConstants._();
@@ -198,6 +200,32 @@ class BrokerPreset {
     this.note,
   });
 
+  /// Localised name for this preset, resolved by [host].
+  String localizedName(AppLocalizations l10n) => switch (host) {
+    'mqtt.meshtastic.org' => l10n.mqttBrokerMeshtasticName,
+    'test.mosquitto.org' => l10n.mqttBrokerMosquittoName,
+    '' => l10n.mqttBrokerCustomName,
+    _ => name,
+  };
+
+  /// Localised description for this preset, resolved by [host].
+  String localizedDescription(AppLocalizations l10n) => switch (host) {
+    'mqtt.meshtastic.org' => l10n.mqttBrokerMeshtasticDescription,
+    'test.mosquitto.org' => l10n.mqttBrokerMosquittoDescription,
+    '' => l10n.mqttBrokerCustomDescription,
+    _ => description,
+  };
+
+  /// Localised note for this preset, resolved by [host].
+  String? localizedNote(AppLocalizations l10n) {
+    if (note == null) return null;
+    return switch (host) {
+      'mqtt.meshtastic.org' => l10n.mqttBrokerMeshtasticNote,
+      'test.mosquitto.org' => l10n.mqttBrokerMosquittoNote,
+      _ => note,
+    };
+  }
+
   /// Whether this preset provides default credentials.
   bool get hasDefaultCredentials =>
       defaultUsername.isNotEmpty && defaultPassword.isNotEmpty;
@@ -286,6 +314,26 @@ class TopicTemplate {
     required this.pattern,
     this.enabledByDefault = false,
   });
+
+  /// Localised label for this template, resolved by [pattern].
+  String localizedLabel(AppLocalizations l10n) => switch (pattern) {
+    '{root}/chat/{channel}' => l10n.mqttTopicChatLabel,
+    '{root}/telemetry/{nodeId}' => l10n.mqttTopicTelemetryLabel,
+    '{root}/position/{nodeId}' => l10n.mqttTopicPositionLabel,
+    '{root}/nodeinfo/{nodeId}' => l10n.mqttTopicNodeInfoLabel,
+    '{root}/map/{nodeId}' => l10n.mqttTopicMapReportsLabel,
+    _ => label,
+  };
+
+  /// Localised description for this template, resolved by [pattern].
+  String localizedDescription(AppLocalizations l10n) => switch (pattern) {
+    '{root}/chat/{channel}' => l10n.mqttTopicChatDescription,
+    '{root}/telemetry/{nodeId}' => l10n.mqttTopicTelemetryDescription,
+    '{root}/position/{nodeId}' => l10n.mqttTopicPositionDescription,
+    '{root}/nodeinfo/{nodeId}' => l10n.mqttTopicNodeInfoDescription,
+    '{root}/map/{nodeId}' => l10n.mqttTopicMapReportsDescription,
+    _ => description,
+  };
 
   /// Standard topic templates available in the Topic Builder.
   static const List<TopicTemplate> builtIn = [

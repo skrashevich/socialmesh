@@ -108,8 +108,12 @@ class _GlobalLayerDiagnosticsScreenState
           final skippedResult = DiagnosticCheckResult(
             type: checkType,
             status: DiagnosticStatus.skipped,
-            message: l10n.globalLayerSkippedBecauseFailed(prereq.title),
-            suggestion: l10n.globalLayerFixCheckFirst(prereq.title),
+            message: l10n.globalLayerSkippedBecauseFailed(
+              prereq.localizedTitle(l10n),
+            ),
+            suggestion: l10n.globalLayerFixCheckFirst(
+              prereq.localizedTitle(l10n),
+            ),
           );
           _updateResult(skippedResult);
           continue;
@@ -645,7 +649,7 @@ class _DiagnosticCheckTile extends StatelessWidget {
                 const SizedBox(width: AppTheme.spacing10),
                 Expanded(
                   child: Text(
-                    result.type.title,
+                    result.type.localizedTitle(context.l10n),
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: context.textPrimary,
                       fontWeight: FontWeight.w500,
@@ -668,7 +672,7 @@ class _DiagnosticCheckTile extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 28),
                 child: Text(
-                  result.type.description,
+                  result.type.localizedDescription(context.l10n),
                   style: Theme.of(
                     context,
                   ).textTheme.labelSmall?.copyWith(color: context.textTertiary),

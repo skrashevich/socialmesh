@@ -14,7 +14,9 @@
 library;
 
 import 'dart:convert';
+import 'dart:ui' show PlatformDispatcher;
 
+import '../../l10n/app_localizations.dart';
 import 'mqtt_config.dart';
 import 'mqtt_connection_state.dart';
 import 'mqtt_metrics.dart';
@@ -98,6 +100,17 @@ enum DiagnosticCheckType {
     publishTest => 'Publish Test',
   };
 
+  /// Localised title for the check.
+  String localizedTitle(AppLocalizations l10n) => switch (this) {
+    configValidation => l10n.globalLayerDiagConfigTitle,
+    dnsResolution => l10n.globalLayerDiagDnsTitle,
+    tcpConnection => l10n.globalLayerDiagTcpTitle,
+    tlsHandshake => l10n.globalLayerDiagTlsTitle,
+    authentication => l10n.globalLayerDiagAuthTitle,
+    subscribeTest => l10n.globalLayerDiagSubscribeTitle,
+    publishTest => l10n.globalLayerDiagPublishTitle,
+  };
+
   /// Longer description of what this check verifies.
   String get description => switch (this) {
     configValidation =>
@@ -111,6 +124,17 @@ enum DiagnosticCheckType {
     authentication => 'Verifying your username and password with the broker.',
     subscribeTest => 'Subscribing to a test topic to verify read access.',
     publishTest => 'Publishing a test message to verify write access.',
+  };
+
+  /// Localised description of what this check verifies.
+  String localizedDescription(AppLocalizations l10n) => switch (this) {
+    configValidation => l10n.globalLayerDiagConfigDescription,
+    dnsResolution => l10n.globalLayerDiagDnsDescription,
+    tcpConnection => l10n.globalLayerDiagTcpDescription,
+    tlsHandshake => l10n.globalLayerDiagTlsDescription,
+    authentication => l10n.globalLayerDiagAuthDescription,
+    subscribeTest => l10n.globalLayerDiagSubscribeDescription,
+    publishTest => l10n.globalLayerDiagPublishDescription,
   };
 
   /// Icon name (Material Icons) for the check.
@@ -587,10 +611,12 @@ class ConfigDiagnostics {
 
     stopwatch.stop();
 
+    final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
+
     if (issues.isEmpty) {
       return DiagnosticCheckResult.passed(
         DiagnosticCheckType.configValidation,
-        'All configuration fields are valid.',
+        l10n.globalLayerDiagConfigValid,
         duration: stopwatch.elapsed,
       );
     }
@@ -606,7 +632,7 @@ class ConfigDiagnostics {
       return DiagnosticCheckResult.failed(
         DiagnosticCheckType.configValidation,
         message: issues.join(' '),
-        suggestion: 'Correct the highlighted fields and try again.',
+        suggestion: l10n.globalLayerDiagSuggestionCorrectFields,
         relatedFields: fields,
         duration: stopwatch.elapsed,
       );
@@ -615,9 +641,7 @@ class ConfigDiagnostics {
     return DiagnosticCheckResult.warning(
       DiagnosticCheckType.configValidation,
       message: issues.join(' '),
-      suggestion:
-          'These issues may not prevent connection but could cause '
-          'unexpected behavior.',
+      suggestion: l10n.globalLayerDiagSuggestionUnexpectedBehavior,
       relatedFields: fields,
       duration: stopwatch.elapsed,
     );

@@ -29117,4 +29117,319 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get onboardingSignalAuthorAlex => 'Alex';
+
+  @override
+  String get globalLayerCopyExplainTitle => 'What is the Global Layer?';
+
+  @override
+  String get globalLayerCopyExplainBody =>
+      'Your mesh radio connects nearby devices over radio waves — no internet needed. The Global Layer extends that reach by bridging your local mesh to a server (called a broker) over the internet.\n\nThink of it as a portal: messages from your mesh can travel through the portal to reach other meshes connected to the same broker, anywhere in the world.';
+
+  @override
+  String get globalLayerCopyExplainWhatItDoes =>
+      'Bridges your local mesh to remote meshes via an internet server.';
+
+  @override
+  String get globalLayerCopyExplainWhatItDoesNot =>
+      'Does NOT replace your radio. Local mesh works independently even if the Global Layer is offline.';
+
+  @override
+  String get globalLayerCopyBrokerTitle => 'Choose a Broker';
+
+  @override
+  String get globalLayerCopyBrokerBody =>
+      'Pick a broker to connect through. Most users should start with the official Meshtastic server — it works out of the box with no setup required.';
+
+  @override
+  String get globalLayerCopyTopicsTitle => 'Choose What to Share';
+
+  @override
+  String get globalLayerCopyTopicsBody =>
+      'Topics control which types of data flow through the Global Layer. You can enable or disable each type independently.';
+
+  @override
+  String get globalLayerCopyPrivacyTitle => 'Privacy & Safety';
+
+  @override
+  String get globalLayerCopyPrivacyBody =>
+      'The Global Layer is opt-in. Nothing is shared until you explicitly enable it below. You can change these settings at any time.';
+
+  @override
+  String get globalLayerCopyPrivacyBrokerTrustWarning =>
+      'Your broker can see all data you send through it. Only connect to brokers you trust.';
+
+  @override
+  String get globalLayerCopyTestTitle => 'Test Connection';
+
+  @override
+  String get globalLayerCopyTestBody =>
+      'Verifying that your broker is reachable and configured correctly.';
+
+  @override
+  String get globalLayerCopySummaryTitle => 'Ready to Connect';
+
+  @override
+  String get globalLayerCopySummaryBody =>
+      'Review your Global Layer settings below. You can change any of these later from the Global Layer status screen.';
+
+  @override
+  String get mqttTopicChatLabel => 'Chat';
+
+  @override
+  String get mqttTopicChatDescription =>
+      'Text messages exchanged between mesh nodes on a specific channel.';
+
+  @override
+  String get mqttTopicTelemetryLabel => 'Telemetry';
+
+  @override
+  String get mqttTopicTelemetryDescription =>
+      'Device health data such as battery level, voltage, and uptime.';
+
+  @override
+  String get mqttTopicPositionLabel => 'Position';
+
+  @override
+  String get mqttTopicPositionDescription =>
+      'GPS coordinates reported by mesh nodes (privacy-sensitive).';
+
+  @override
+  String get mqttTopicNodeInfoLabel => 'Node Info';
+
+  @override
+  String get mqttTopicNodeInfoDescription =>
+      'Node identity broadcasts including long name, short name, and hardware model.';
+
+  @override
+  String get mqttTopicMapReportsLabel => 'Map Reports';
+
+  @override
+  String get mqttTopicMapReportsDescription =>
+      'Periodic position reports for public mesh mapping services.';
+
+  @override
+  String get mqttBrokerMeshtasticName => 'Meshtastic (Official)';
+
+  @override
+  String get mqttBrokerMeshtasticDescription =>
+      'The default Meshtastic MQTT server. Connects you to the worldwide Meshtastic mesh network. No account needed.';
+
+  @override
+  String get mqttBrokerMeshtasticNote =>
+      'Public credentials are shared by all Meshtastic users.';
+
+  @override
+  String get mqttBrokerMosquittoName => 'Mosquitto Test';
+
+  @override
+  String get mqttBrokerMosquittoDescription =>
+      'A free public test broker run by the Eclipse Mosquitto project. Good for testing your setup before connecting to a production broker.';
+
+  @override
+  String get mqttBrokerMosquittoNote =>
+      'Test broker — not for production use. May have downtime.';
+
+  @override
+  String get mqttBrokerCustomName => 'Custom Broker';
+
+  @override
+  String get mqttBrokerCustomDescription =>
+      'Enter your own broker details manually.';
+
+  @override
+  String get globalLayerDiagConfigTitle => 'Configuration';
+
+  @override
+  String get globalLayerDiagConfigDescription =>
+      'Verifying that the broker address, port, and topic root are correctly formatted.';
+
+  @override
+  String get globalLayerDiagDnsTitle => 'DNS Resolution';
+
+  @override
+  String get globalLayerDiagDnsDescription =>
+      'Looking up the broker hostname to find its network address.';
+
+  @override
+  String get globalLayerDiagTcpTitle => 'TCP Connection';
+
+  @override
+  String get globalLayerDiagTcpDescription =>
+      'Establishing a network connection to the broker.';
+
+  @override
+  String get globalLayerDiagTlsTitle => 'TLS Handshake';
+
+  @override
+  String get globalLayerDiagTlsDescription =>
+      'Negotiating a secure (encrypted) connection with the broker.';
+
+  @override
+  String get globalLayerDiagAuthTitle => 'Authentication';
+
+  @override
+  String get globalLayerDiagAuthDescription =>
+      'Verifying your username and password with the broker.';
+
+  @override
+  String get globalLayerDiagSubscribeTitle => 'Subscribe Test';
+
+  @override
+  String get globalLayerDiagSubscribeDescription =>
+      'Subscribing to a test topic to verify read access.';
+
+  @override
+  String get globalLayerDiagPublishTitle => 'Publish Test';
+
+  @override
+  String get globalLayerDiagPublishDescription =>
+      'Publishing a test message to verify write access.';
+
+  @override
+  String get globalLayerDiagSuggestionCorrectFields =>
+      'Correct the highlighted fields and try again.';
+
+  @override
+  String get globalLayerDiagSuggestionUnexpectedBehavior =>
+      'These issues may not prevent connection but could cause unexpected behavior.';
+
+  @override
+  String get globalLayerDiagConfigValid =>
+      'All configuration fields are valid.';
+
+  @override
+  String get globalLayerDiagSuggestionValidHostname =>
+      'Enter a valid broker hostname.';
+
+  @override
+  String get globalLayerDiagSuggestionBothCredentials =>
+      'Some brokers require both username and password.';
+
+  @override
+  String globalLayerWizardDnsValid(String host) {
+    return 'Hostname looks valid: $host';
+  }
+
+  @override
+  String globalLayerWizardTcpReachable(String host, int port) {
+    return 'TCP connection to $host:$port looks reachable.';
+  }
+
+  @override
+  String get globalLayerWizardTlsAccepted =>
+      'TLS handshake parameters accepted.';
+
+  @override
+  String get globalLayerWizardCredentialsAccepted =>
+      'Credentials provided and accepted.';
+
+  @override
+  String get globalLayerWizardAnonymousAccess =>
+      'No credentials — using anonymous access.';
+
+  @override
+  String get globalLayerWizardSubscribeVerified =>
+      'Subscribe permissions verified.';
+
+  @override
+  String get globalLayerWizardPublishVerified =>
+      'Publish permissions verified.';
+
+  @override
+  String get globalLayerShareMessagesSubtitle =>
+      'Your local mesh chat messages will be forwarded to the broker for other connected meshes to receive.';
+
+  @override
+  String get globalLayerShareTelemetrySubtitle =>
+      'Battery level, voltage, and device uptime will be published to the broker.';
+
+  @override
+  String get globalLayerAllowInboundSubtitle =>
+      'Messages from other meshes connected to the same broker will be delivered to your local channels.';
+
+  @override
+  String get globalLayerBrokerTrust => 'Broker Trust';
+
+  @override
+  String get globalLayerRunConnectionTest => 'Run Connection Test';
+
+  @override
+  String get globalLayerSkipTestHint =>
+      'You can skip this step and test later.';
+
+  @override
+  String get globalLayerWizardAllChecksPassed => 'All checks passed';
+
+  @override
+  String get globalLayerPassedWithWarnings => 'Passed with warnings';
+
+  @override
+  String get globalLayerSomeChecksFailed => 'Some checks failed';
+
+  @override
+  String get globalLayerTestInProgress => 'Test in progress';
+
+  @override
+  String get globalLayerSummaryBrokerSection => 'BROKER';
+
+  @override
+  String get globalLayerSummaryTopicsSection => 'TOPICS';
+
+  @override
+  String get globalLayerSummaryPrivacySection => 'PRIVACY';
+
+  @override
+  String get globalLayerSummaryAddress => 'Address';
+
+  @override
+  String get globalLayerSummaryPort => 'Port';
+
+  @override
+  String get globalLayerSummaryTls => 'TLS';
+
+  @override
+  String get globalLayerSummaryTlsEnabled => 'Enabled';
+
+  @override
+  String get globalLayerSummaryTlsDisabled => 'Disabled';
+
+  @override
+  String get globalLayerSummaryAuth => 'Auth';
+
+  @override
+  String get globalLayerSummaryAuthCredentials => 'Credentials configured';
+
+  @override
+  String get globalLayerSummaryAuthAnonymous => 'Anonymous';
+
+  @override
+  String get globalLayerSummaryRoot => 'Root';
+
+  @override
+  String get globalLayerSummaryTopicsEnabled => 'Enabled';
+
+  @override
+  String get globalLayerSummaryTopicsNone => 'None';
+
+  @override
+  String get globalLayerSummaryShareMessages => 'Share messages';
+
+  @override
+  String get globalLayerSummaryShareTelemetry => 'Share telemetry';
+
+  @override
+  String get globalLayerSummaryInboundGlobal => 'Inbound global';
+
+  @override
+  String get globalLayerSummaryOn => 'ON';
+
+  @override
+  String get globalLayerSummaryOff => 'OFF';
+
+  @override
+  String get globalLayerAllSharingOff =>
+      'All sharing is OFF. Your mesh data stays local until you enable sharing.';
+
+  @override
+  String get globalLayerNoTlsLabel => 'No TLS';
 }

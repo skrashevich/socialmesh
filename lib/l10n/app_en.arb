@@ -3256,7 +3256,13 @@
     },
     "channelFormKeyEmpty": "Key cannot be empty",
     "channelFormKeySizeAes128": "AES-128",
+    "@channelFormKeySizeAes128": {
+        "description": "AES-128 encryption. Do not translate the acronym."
+    },
     "channelFormKeySizeAes256": "AES-256",
+    "@channelFormKeySizeAes256": {
+        "description": "AES-256 encryption. Do not translate the acronym."
+    },
     "channelFormKeySizeBitDesc": "{bits}-bit encryption key",
     "@channelFormKeySizeBitDesc": {
         "placeholders": {
@@ -3266,8 +3272,14 @@
         }
     },
     "channelFormKeySizeDefault": "Default (Simple)",
+    "@channelFormKeySizeDefault": {
+        "description": "Default encryption uses a well-known 1-byte shared key. Simple means easy to set up but NOT secure."
+    },
     "channelFormKeySizeDefaultDesc": "1-byte simple key (AQ==)",
     "channelFormKeySizeNone": "No Encryption",
+    "@channelFormKeySizeNone": {
+        "description": "Channel with no encryption. Messages are transmitted in plaintext."
+    },
     "channelFormKeySizeNoneDesc": "Messages sent in plaintext",
     "channelFormMaxChannelsReached": "Maximum 8 channels allowed",
     "channelFormMqttLabel": "MQTT",
@@ -3499,6 +3511,9 @@
     },
     "channelsFilterPosition": "Position",
     "channelsFilterPrimary": "Primary",
+    "@channelsFilterPrimary": {
+        "description": "Filter for the primary mesh channel (Channel 0 in Meshtastic)."
+    },
     "channelsMenuAddChannel": "Add Channel",
     "channelsMenuHelp": "Help",
     "channelsMenuScanQrCode": "Scan QR Code",
@@ -3524,6 +3539,9 @@
     "channelsTileEncrypted": "Encrypted",
     "channelsTileNoEncryption": "No encryption",
     "channelsTilePrimaryBadge": "PRIMARY",
+    "@channelsTilePrimaryBadge": {
+        "description": "Badge label indicating this is the primary (Channel 0) mesh channel."
+    },
     "channelsUnreadOverflow": "99+",
     "commonCancel": "Cancel",
     "@commonCancel": {
@@ -3911,19 +3929,37 @@
     "deviceConfigPosixTimezoneHint": "Leave empty for UTC",
     "deviceConfigRebootWarning": "Changes to device configuration will cause the device to reboot.",
     "deviceConfigRebroadcastAll": "All",
+    "@deviceConfigRebroadcastAll": {
+        "description": "Meshtastic rebroadcast mode: the node relays every packet it receives to extend mesh coverage."
+    },
     "deviceConfigRebroadcastAllDesc": "Rebroadcast any observed message. Default behavior.",
     "deviceConfigRebroadcastAllSkipDecoding": "All (Skip Decoding)",
+    "@deviceConfigRebroadcastAllSkipDecoding": {
+        "description": "Meshtastic rebroadcast mode: relays all packets without parsing their contents, reducing CPU usage."
+    },
     "deviceConfigRebroadcastAllSkipDecodingDesc": "Rebroadcast all messages without decoding. Faster, less CPU.",
     "deviceConfigRebroadcastCorePortnumsOnly": "Core Port Numbers Only",
+    "@deviceConfigRebroadcastCorePortnumsOnly": {
+        "description": "Meshtastic rebroadcast mode: only relays essential protocol messages (position, nodeinfo, routing). Port numbers are Meshtastic message type identifiers, not TCP ports."
+    },
     "deviceConfigRebroadcastCorePortnumsOnlyDesc": "Rebroadcast only core Meshtastic packets (position, telemetry, etc).",
     "@deviceConfigRebroadcastCorePortnumsOnlyDesc": {
         "description": "Core Meshtastic packets = essential protocol messages like position and telemetry. Portnum = packet type identifier."
     },
     "deviceConfigRebroadcastKnownOnly": "Known Only",
+    "@deviceConfigRebroadcastKnownOnly": {
+        "description": "Meshtastic rebroadcast mode: only relays packets from nodes already in the local node database."
+    },
     "deviceConfigRebroadcastKnownOnlyDesc": "Only rebroadcast messages from nodes in the node database.",
     "deviceConfigRebroadcastLocalOnly": "Local Only",
+    "@deviceConfigRebroadcastLocalOnly": {
+        "description": "Meshtastic rebroadcast mode: only relays packets from nodes within direct (1-hop) radio range."
+    },
     "deviceConfigRebroadcastLocalOnlyDesc": "Only rebroadcast messages from local senders. Good for isolated networks.",
     "deviceConfigRebroadcastNone": "None",
+    "@deviceConfigRebroadcastNone": {
+        "description": "Meshtastic rebroadcast mode: the node does not relay any packets; it only receives."
+    },
     "deviceConfigRebroadcastNoneDesc": "Do not rebroadcast any messages. Node only receives.",
     "deviceConfigRemoteAdminConfiguring": "Configuring: {nodeName}",
     "@deviceConfigRemoteAdminConfiguring": {
@@ -3950,6 +3986,9 @@
     "deviceConfigResetNodeDbSuccess": "Node database reset initiated",
     "deviceConfigRoleClient": "Client",
     "deviceConfigRoleClientBase": "Client Base",
+    "@deviceConfigRoleClientBase": {
+        "description": "Meshtastic device role: a mains-powered client with higher rebroadcast priority than battery-powered clients."
+    },
     "deviceConfigRoleClientBaseDesc": "Base station for favorited nodes. Routes their packets like a router, others as client.",
     "@deviceConfigRoleClientBaseDesc": {
         "description": "Base station = fixed node that prioritizes routing for 'favorited' nodes. Routes like a router for favorites, like a client for others."
@@ -3959,6 +3998,9 @@
         "description": "Mesh packets = radio data units relayed between Meshtastic nodes."
     },
     "deviceConfigRoleClientHidden": "Client Hidden",
+    "@deviceConfigRoleClientHidden": {
+        "description": "Meshtastic device role: a client that does not broadcast its identity, making it invisible to other nodes."
+    },
     "deviceConfigRoleClientHiddenDesc": "Acts as client but hides from the node list. Still routes traffic.",
     "deviceConfigRoleClientMute": "Client Mute",
     "@deviceConfigRoleClientMute": {
@@ -3966,16 +4008,25 @@
     },
     "deviceConfigRoleClientMuteDesc": "Same as client but will not transmit any messages from itself. Useful for monitoring.",
     "deviceConfigRoleLostAndFound": "Lost and Found",
+    "@deviceConfigRoleLostAndFound": {
+        "description": "Meshtastic device role: optimized for asset tracking with infrequent position reports."
+    },
     "deviceConfigRoleLostAndFoundDesc": "Optimized for finding lost devices. Sends periodic beacons.",
     "@deviceConfigRoleLostAndFoundDesc": {
         "description": "Lost and Found = device role that sends periodic radio beacons to help locate it."
     },
     "deviceConfigRoleRouter": "Router",
+    "@deviceConfigRoleRouter": {
+        "description": "Meshtastic device role: a dedicated packet forwarder that stays powered on."
+    },
     "deviceConfigRoleRouterDesc": "Routes mesh packets between nodes. Screen and Bluetooth disabled to conserve power.",
     "@deviceConfigRoleRouterDesc": {
         "description": "Router = a Meshtastic device role dedicated to relaying mesh packets. Disables screen and Bluetooth to save power."
     },
     "deviceConfigRoleRouterLate": "Router Late",
+    "@deviceConfigRoleRouterLate": {
+        "description": "Meshtastic device role: acts as a router only if no other router has already relayed the packet."
+    },
     "deviceConfigRoleRouterLateDesc": "Rebroadcasts all packets after other routers. Extends coverage without consuming priority hops.",
     "@deviceConfigRoleRouterLateDesc": {
         "description": "Router Late = rebroadcasts after other routers, extending coverage without using priority hops."
@@ -4026,6 +4077,9 @@
     "deviceConfigSectionLed": "LED",
     "deviceConfigSectionNodeInfoBroadcast": "Node Info Broadcast",
     "deviceConfigSectionRebroadcastMode": "Rebroadcast Mode",
+    "@deviceConfigSectionRebroadcastMode": {
+        "description": "Section header for rebroadcast mode setting. Rebroadcasting = relaying received radio packets to extend mesh network range."
+    },
     "deviceConfigSectionSerial": "Serial",
     "deviceConfigSectionTimezone": "Timezone",
     "deviceConfigSectionUserFlags": "User Flags",
@@ -4149,6 +4203,9 @@
     "deviceShopBrowseByCategory": "Browse by Category",
     "deviceShopCategories": "Categories",
     "deviceShopClear": "Clear",
+    "@deviceShopClear": {
+        "description": "Button to clear/reset device shop search filters."
+    },
     "deviceShopConnectToBrowse": "Connect to browse devices",
     "deviceShopContactUs": "Contact Us",
     "deviceShopErrorLoadingProducts": "Error loading products",
@@ -5180,6 +5237,9 @@
     "firmwareUpdateStep3": "Use the Meshtastic Web Flasher or CLI to flash",
     "firmwareUpdateStep4": "Wait for device to reboot and reconnect",
     "firmwareUpdateSupported": "Supported",
+    "@firmwareUpdateSupported": {
+        "description": "Label indicating the device supports over-the-air firmware updates."
+    },
     "firmwareUpdateTitle": "Firmware Update",
     "firmwareUpdateUnableToCheck": "Unable to check for updates",
     "firmwareUpdateUnknown": "Unknown",
@@ -8809,6 +8869,9 @@
     },
     "nodeAnalyticsCharging": "Charging",
     "nodeAnalyticsClear": "Clear",
+    "@nodeAnalyticsClear": {
+        "description": "Button to clear/reset accumulated node analytics data."
+    },
     "nodeAnalyticsClearConfirm": "Clear",
     "nodeAnalyticsClearHistoryMessage": "This will delete all historical data for this node. This action cannot be undone.",
     "nodeAnalyticsClearHistoryTitle": "Clear History",
@@ -8880,6 +8943,9 @@
     "nodeAnalyticsRemoveFavoriteTooltip": "Remove from favorites",
     "nodeAnalyticsRemovedFromFavorites": "Removed from favorites",
     "nodeAnalyticsRole": "Role",
+    "@nodeAnalyticsRole": {
+        "description": "Label for the Meshtastic device role (Router, Client, etc.), not a person's role."
+    },
     "nodeAnalyticsSectionDeviceInfo": "Device Info",
     "nodeAnalyticsSectionDeviceMetrics": "Device Metrics",
     "nodeAnalyticsSectionHistory": "History",
@@ -9040,8 +9106,14 @@
     "nodeComparisonNoData": "--",
     "nodeComparisonNodeIdCopied": "Node ID copied",
     "nodeComparisonRowAirTimeTx": "Air Time TX",
+    "@nodeComparisonRowAirTimeTx": {
+        "description": "Air Time TX = the percentage of time this node radio was actively transmitting."
+    },
     "nodeComparisonRowBattery": "Battery",
     "nodeComparisonRowChannelUtil": "Channel Util",
+    "@nodeComparisonRowChannelUtil": {
+        "description": "Channel Utilization = the percentage of time any radio traffic was detected on the frequency."
+    },
     "nodeComparisonRowFirmware": "Firmware",
     "nodeComparisonRowGateways": "Gateways",
     "nodeComparisonRowHardware": "Hardware",
@@ -9049,6 +9121,9 @@
     "nodeComparisonRowNeighbors": "Neighbors",
     "nodeComparisonRowRegion": "Region",
     "nodeComparisonRowRole": "Role",
+    "@nodeComparisonRowRole": {
+        "description": "Label for the Meshtastic device role column in the node comparison table."
+    },
     "nodeComparisonRowStatus": "Status",
     "nodeComparisonRowUptime": "Uptime",
     "nodeComparisonRowVoltage": "Voltage",
@@ -9719,6 +9794,9 @@
     },
     "nodeHistoryMetricBattery": "Battery",
     "nodeHistoryMetricChannelUtil": "Channel Util",
+    "@nodeHistoryMetricChannelUtil": {
+        "description": "Channel Utilization metric shown in node history graph."
+    },
     "nodeHistoryMetricConnectivity": "Connectivity",
     "nodeHistoryNeedMoreData": "Need more data for charts",
     "nodeHistoryNoMetricData": "No {metric} data",
@@ -9839,6 +9917,9 @@
     "nodedexCardDeviceFirmware": "FIRMWARE",
     "nodedexCardDeviceHardware": "HARDWARE",
     "nodedexCardDeviceRole": "ROLE",
+    "@nodedexCardDeviceRole": {
+        "description": "Label on the NodeDex collectible card showing the Meshtastic device role."
+    },
     "nodedexCardRarity100plus": "100+ encounters",
     "nodedexCardRarity20to49": "20 - 49 encounters",
     "nodedexCardRarity50to99": "50 - 99 encounters",
@@ -9852,6 +9933,9 @@
     "nodedexCardRarityUncommon": "UNCOMMON",
     "nodedexCardRarityUnder5": "Under 5 encounters",
     "nodedexChannelUtilLabel": "Channel Util",
+    "@nodedexChannelUtilLabel": {
+        "description": "Channel Utilization = the percentage of time any radio traffic was detected on the frequency."
+    },
     "nodedexClassificationChange": "Change",
     "nodedexClassificationClassify": "Classify",
     "nodedexClassificationLabel": "CLASSIFICATION",
@@ -9922,8 +10006,14 @@
     "nodedexDaysCompactLabel": "Days",
     "nodedexDensityAll": "All",
     "nodedexDensityDense": "Dense",
+    "@nodedexDensityDense": {
+        "description": "Constellation graph setting: show more connection edges between nodes."
+    },
     "nodedexDensityNormal": "Normal",
     "nodedexDensitySparse": "Sparse",
+    "@nodedexDensitySparse": {
+        "description": "Constellation graph setting: show fewer connection edges, filtering out weak links."
+    },
     "nodedexDensityStars": "Stars",
     "nodedexDetailNotFoundSubtitle": "This node has not been discovered yet.",
     "nodedexDetailNotFoundTitle": "Node not found in NodeDex",
@@ -10042,6 +10132,9 @@
     "nodedexEmptyGalleryTitle": "No cards to display",
     "nodedexEmptyGhostsSubtitle": "Ghosts are nodes that appear rarely relative to how long they have been known.",
     "nodedexEmptyGhostsTitle": "No ghosts found",
+    "@nodedexEmptyGhostsTitle": {
+        "description": "Empty state for Ghosts: nodes that are rarely seen relative to their age."
+    },
     "nodedexEmptyKnownRelaySubtitle": "Nodes you classify as Known Relay will appear here. Long-press a node to assign this tag.",
     "nodedexEmptyKnownRelayTitle": "No known relays",
     "nodedexEmptyRecentSubtitle": "Nodes discovered in the last 24 hours will appear here.",
@@ -10050,6 +10143,9 @@
     "nodedexEmptyRelaysTitle": "No relays found",
     "nodedexEmptySentinelsSubtitle": "Sentinels are long-lived, fixed-position nodes with reliable presence.",
     "nodedexEmptySentinelsTitle": "No sentinels found",
+    "@nodedexEmptySentinelsTitle": {
+        "description": "Empty state for Sentinels: nodes that have been online for a long time in a fixed position."
+    },
     "nodedexEmptyTaggedSubtitle": "Long-press a node in the list to assign a social tag like Contact, Trusted Node, or Known Relay.",
     "nodedexEmptyTaggedTitle": "No tagged nodes",
     "nodedexEmptyTagline1": "No nodes discovered yet.\nConnect to a mesh device to start building your field journal.",
@@ -11051,6 +11147,9 @@
     "nodedexSortMostEncounters": "Most Encounters",
     "nodedexSortName": "Name",
     "nodedexSortRange": "Range",
+    "@nodedexSortRange": {
+        "description": "Sort option: sort nodes by estimated radio range (distance), not a numeric range."
+    },
     "nodedexStatCoSeen": "Co-seen",
     "nodedexStatDuration": "Duration",
     "nodedexStatFirstLink": "First Link",
@@ -14522,10 +14621,25 @@
         "description": "Instruction text"
     },
     "sigilStageHeraldic": "Heraldic",
+    "@sigilStageHeraldic": {
+        "description": "Sigil progression stage 4 of 5. Heraldic = coat-of-arms level of complexity."
+    },
     "sigilStageInscribed": "Inscribed",
+    "@sigilStageInscribed": {
+        "description": "Sigil progression stage 3 of 5."
+    },
     "sigilStageLegacy": "Legacy",
+    "@sigilStageLegacy": {
+        "description": "Sigil progression stage 5 of 5. The final, most ornate stage."
+    },
     "sigilStageMarked": "Marked",
+    "@sigilStageMarked": {
+        "description": "Sigil progression stage 2 of 5."
+    },
     "sigilStageSeed": "Seed",
+    "@sigilStageSeed": {
+        "description": "Sigil progression stage 1 of 5. Sigils are decorative node identity emblems that evolve with mesh experience."
+    },
     "signalAcquiringDeviceLocation": "Acquiring device location...",
     "signalActiveCount": "{count} active",
     "@signalActiveCount": {
@@ -19913,6 +20027,9 @@
     },
     "worldMeshFilterCatRegion": "Region",
     "worldMeshFilterCatRole": "Role",
+    "@worldMeshFilterCatRole": {
+        "description": "Filter category for mesh device roles in the World Mesh view."
+    },
     "worldMeshFilterCatStatus": "Status",
     "worldMeshFilterClearAll": "Clear All",
     "worldMeshFilterEnvironmentSensors": "Environment Sensors",
@@ -20571,12 +20688,21 @@
         }
     },
     "glyphMatrixTitle": "GLYPH MATRIX",
+    "@glyphMatrixTitle": {
+        "description": "Title for a feature that triggers LED patterns on Nothing Phone devices via BLE. Glyph is the Nothing Phone brand name for its LED patterns."
+    },
     "glyphMatrixTurnOff": "Turn off",
     "glyphMatrixInitializing": "INITIALIZING GLYPH MATRIX...",
+    "@glyphMatrixInitializing": {
+        "description": "Loading message while the Glyph Matrix BLE connection is being established."
+    },
     "glyphMatrixInitFailed": "INIT FAILED",
     "glyphMatrixNotSupported": "DEVICE NOT SUPPORTED",
     "glyphMatrixRequiresDevice": "Glyph Matrix requires\nNothing Phone (3)",
     "glyphMatrixSwipeToExecute": "← SWIPE TO EXECUTE →",
+    "@glyphMatrixSwipeToExecute": {
+        "description": "Instruction to swipe a button to trigger the LED pattern. Execute means activate the command."
+    },
     "batteryOptTitle": "Optimize for {oemName}",
     "@batteryOptTitle": {
         "placeholders": {
@@ -21322,6 +21448,9 @@
     },
     "linkedDevicesConnectedDevice": "Connected Device",
     "linkedDevicesLinkButton": "Link",
+    "@linkedDevicesLinkButton": {
+        "description": "Button label: Link means pair/connect a BLE mesh radio device, not a URL hyperlink."
+    },
     "linkedDevicesPrimaryBadge": "PRIMARY",
     "linkedDevicesSendMessage": "Send Message",
     "linkedDevicesViewOnMap": "View on Map",
@@ -21379,6 +21508,9 @@
         }
     },
     "radioConfigTitle": "Radio",
+    "@radioConfigTitle": {
+        "description": "Title for the LoRa radio configuration screen (frequency, bandwidth, spreading factor)."
+    },
     "radioConfigHelp": "Help",
     "radioConfigSave": "Save",
     "radioConfigSectionRegion": "REGION",
@@ -21396,6 +21528,9 @@
     "radioConfigHopLimitSubtitle": "Number of times messages can be relayed",
     "radioConfigTxPowerOverride": "TX Power Override",
     "radioConfigTxPowerDefault": "Default",
+    "@radioConfigTxPowerDefault": {
+        "description": "Default transmit power setting for the LoRa radio."
+    },
     "radioConfigTxPowerSubtitle": "Override transmit power (0 = use default)",
     "radioConfigSectionAdvanced": "ADVANCED",
     "radioConfigUsePreset": "Use Preset",
@@ -21650,6 +21785,9 @@
     },
     "powerConfigDisabled": "Disabled",
     "powerConfigTitle": "Power",
+    "@powerConfigTitle": {
+        "description": "Title for LoRa radio transmit power configuration screen."
+    },
     "powerConfigSave": "Save",
     "powerConfigSectionPower": "POWER",
     "powerConfigPowerSaving": "Power Saving Mode",
@@ -22133,8 +22271,14 @@
     },
     "deviceMgmtNotConnected": "Device not connected. Connect to a device to manage it.",
     "deviceMgmtSectionPower": "POWER",
+    "@deviceMgmtSectionPower": {
+        "description": "Section header for device power management (shutdown, reboot, sleep)."
+    },
     "deviceMgmtSectionTime": "TIME",
     "deviceMgmtSectionReset": "RESET",
+    "@deviceMgmtSectionReset": {
+        "description": "Section header for device reset operations (factory reset, node database reset)."
+    },
     "deviceMgmtSectionFirmware": "FIRMWARE",
     "deviceMgmtRebootTitle": "Reboot Device",
     "deviceMgmtRebootSubtitle": "Restart the device",
@@ -22217,6 +22361,9 @@
     "displayConfigOledTypeTitle": "OLED Type",
     "displayConfigOledTypeDesc": "Override automatic OLED detection",
     "displayConfigOledAuto": "Auto",
+    "@displayConfigOledAuto": {
+        "description": "OLED display setting: automatic brightness or rotation mode."
+    },
     "displayConfigOledAutoDesc": "Automatically detect OLED type",
     "displayConfigOledSsd1306Desc": "Common 128x64 OLED",
     "displayConfigOledSh1106Desc": "132x64 OLED controller",
@@ -23316,6 +23463,9 @@
     "globalLayerDiagnoseAction": "Diagnose",
     "globalLayerTopicsAction": "Topics",
     "globalLayerBrokerHeader": "Broker",
+    "@globalLayerBrokerHeader": {
+        "description": "Header for the MQTT broker configuration section. An MQTT broker is a server that distributes messages between connected clients."
+    },
     "globalLayerHostLabel": "Host",
     "globalLayerPortLabel": "Port",
     "globalLayerTlsLabel": "TLS",
@@ -25713,5 +25863,276 @@
     "onboardingSignalAuthorSarah": "Sarah",
     "onboardingSignalContentSarah": "Just reached the summit! Signal is crystal clear up here.",
     "onboardingSignalAuthorMike": "Mike",
-    "onboardingSignalAuthorAlex": "Alex"
+    "onboardingSignalAuthorAlex": "Alex",
+
+
+
+    "globalLayerCopyExplainTitle": "What is the Global Layer?",
+    "@globalLayerCopyExplainTitle": {
+        "description": "Global Layer wizard step 1 title: explains what the Global Layer feature is."
+    },
+    "globalLayerCopyExplainBody": "Your mesh radio connects nearby devices over radio waves — no internet needed. The Global Layer extends that reach by bridging your local mesh to a server (called a broker) over the internet.\n\nThink of it as a portal: messages from your mesh can travel through the portal to reach other meshes connected to the same broker, anywhere in the world.",
+    "@globalLayerCopyExplainBody": {
+        "description": "Global Layer wizard step 1 body: high-level description of the feature."
+    },
+    "globalLayerCopyExplainWhatItDoes": "Bridges your local mesh to remote meshes via an internet server.",
+    "@globalLayerCopyExplainWhatItDoes": {
+        "description": "Explains what Global Layer does: bridges local mesh to internet."
+    },
+    "globalLayerCopyExplainWhatItDoesNot": "Does NOT replace your radio. Local mesh works independently even if the Global Layer is offline.",
+    "@globalLayerCopyExplainWhatItDoesNot": {
+        "description": "Explains what Global Layer does NOT do: not a replacement for direct mesh."
+    },
+    "globalLayerCopyBrokerTitle": "Choose a Broker",
+    "@globalLayerCopyBrokerTitle": {
+        "description": "Wizard step title for MQTT broker configuration."
+    },
+    "globalLayerCopyBrokerBody": "Pick a broker to connect through. Most users should start with the official Meshtastic server — it works out of the box with no setup required.",
+    "@globalLayerCopyBrokerBody": {
+        "description": "Wizard step body for MQTT broker configuration."
+    },
+    "globalLayerCopyTopicsTitle": "Choose What to Share",
+    "@globalLayerCopyTopicsTitle": {
+        "description": "Wizard step title for MQTT topic selection."
+    },
+    "globalLayerCopyTopicsBody": "Topics control which types of data flow through the Global Layer. You can enable or disable each type independently.",
+    "@globalLayerCopyTopicsBody": {
+        "description": "Wizard step body for MQTT topic selection."
+    },
+    "globalLayerCopyPrivacyTitle": "Privacy & Safety",
+    "@globalLayerCopyPrivacyTitle": {
+        "description": "Wizard step title for privacy/sharing settings."
+    },
+    "globalLayerCopyPrivacyBody": "The Global Layer is opt-in. Nothing is shared until you explicitly enable it below. You can change these settings at any time.",
+    "@globalLayerCopyPrivacyBody": {
+        "description": "Wizard step body for privacy/sharing settings."
+    },
+    "globalLayerCopyPrivacyBrokerTrustWarning": "Your broker can see all data you send through it. Only connect to brokers you trust.",
+    "@globalLayerCopyPrivacyBrokerTrustWarning": {
+        "description": "Warning that the user must trust the MQTT broker operator since data passes through their server."
+    },
+    "globalLayerCopyTestTitle": "Test Connection",
+    "@globalLayerCopyTestTitle": {
+        "description": "Wizard step title for connection test."
+    },
+    "globalLayerCopyTestBody": "Verifying that your broker is reachable and configured correctly.",
+    "@globalLayerCopyTestBody": {
+        "description": "Wizard step body for connection test."
+    },
+    "globalLayerCopySummaryTitle": "Ready to Connect",
+    "@globalLayerCopySummaryTitle": {
+        "description": "Wizard step title for final configuration summary."
+    },
+    "globalLayerCopySummaryBody": "Review your Global Layer settings below. You can change any of these later from the Global Layer status screen.",
+    "@globalLayerCopySummaryBody": {
+        "description": "Wizard step body for final configuration summary."
+    },
+
+
+
+    "mqttTopicChatLabel": "Chat",
+    "@mqttTopicChatLabel": {
+        "description": "MQTT topic template label for mesh chat messages."
+    },
+    "mqttTopicChatDescription": "Text messages exchanged between mesh nodes on a specific channel.",
+    "@mqttTopicChatDescription": {
+        "description": "MQTT topic template description for mesh chat messages."
+    },
+    "mqttTopicTelemetryLabel": "Telemetry",
+    "@mqttTopicTelemetryLabel": {
+        "description": "MQTT topic template label for device telemetry data."
+    },
+    "mqttTopicTelemetryDescription": "Device health data such as battery level, voltage, and uptime.",
+    "@mqttTopicTelemetryDescription": {
+        "description": "MQTT topic template description for device telemetry data."
+    },
+    "mqttTopicPositionLabel": "Position",
+    "@mqttTopicPositionLabel": {
+        "description": "MQTT topic template label for GPS position reports."
+    },
+    "mqttTopicPositionDescription": "GPS coordinates reported by mesh nodes (privacy-sensitive).",
+    "@mqttTopicPositionDescription": {
+        "description": "MQTT topic template description for GPS position reports."
+    },
+    "mqttTopicNodeInfoLabel": "Node Info",
+    "@mqttTopicNodeInfoLabel": {
+        "description": "MQTT topic template label for node identity/info updates."
+    },
+    "mqttTopicNodeInfoDescription": "Node identity broadcasts including long name, short name, and hardware model.",
+    "@mqttTopicNodeInfoDescription": {
+        "description": "MQTT topic template description for node identity/info updates."
+    },
+    "mqttTopicMapReportsLabel": "Map Reports",
+    "@mqttTopicMapReportsLabel": {
+        "description": "MQTT topic template label for map report packets."
+    },
+    "mqttTopicMapReportsDescription": "Periodic position reports for public mesh mapping services.",
+    "@mqttTopicMapReportsDescription": {
+        "description": "MQTT topic template description for map report packets."
+    },
+
+
+
+    "mqttBrokerMeshtasticName": "Meshtastic (Official)",
+    "@mqttBrokerMeshtasticName": {
+        "description": "Name of the official Meshtastic public MQTT broker. Do not translate 'Meshtastic'."
+    },
+    "mqttBrokerMeshtasticDescription": "The default Meshtastic MQTT server. Connects you to the worldwide Meshtastic mesh network. No account needed.",
+    "@mqttBrokerMeshtasticDescription": {
+        "description": "Description of the official Meshtastic public MQTT broker."
+    },
+    "mqttBrokerMeshtasticNote": "Public credentials are shared by all Meshtastic users.",
+    "@mqttBrokerMeshtasticNote": {
+        "description": "Note about the official Meshtastic broker (e.g. requires authentication)."
+    },
+    "mqttBrokerMosquittoName": "Mosquitto Test",
+    "@mqttBrokerMosquittoName": {
+        "description": "Name of the Eclipse Mosquitto test MQTT broker. Do not translate 'Mosquitto'."
+    },
+    "mqttBrokerMosquittoDescription": "A free public test broker run by the Eclipse Mosquitto project. Good for testing your setup before connecting to a production broker.",
+    "@mqttBrokerMosquittoDescription": {
+        "description": "Description of the Eclipse Mosquitto test MQTT broker."
+    },
+    "mqttBrokerMosquittoNote": "Test broker — not for production use. May have downtime.",
+    "@mqttBrokerMosquittoNote": {
+        "description": "Note about the Mosquitto test broker (e.g. public, no auth)."
+    },
+    "mqttBrokerCustomName": "Custom Broker",
+    "@mqttBrokerCustomName": {
+        "description": "Name for the custom/self-hosted MQTT broker option."
+    },
+    "mqttBrokerCustomDescription": "Enter your own broker details manually.",
+    "@mqttBrokerCustomDescription": {
+        "description": "Description for the custom/self-hosted MQTT broker option."
+    },
+
+
+
+    "globalLayerDiagConfigTitle": "Configuration",
+    "@globalLayerDiagConfigTitle": {
+        "description": "Diagnostic check title: validates MQTT configuration fields."
+    },
+    "globalLayerDiagConfigDescription": "Verifying that the broker address, port, and topic root are correctly formatted.",
+    "@globalLayerDiagConfigDescription": {
+        "description": "Diagnostic check description: validates host, port, and credentials."
+    },
+    "globalLayerDiagDnsTitle": "DNS Resolution",
+    "@globalLayerDiagDnsTitle": {
+        "description": "Diagnostic check title: DNS resolution of the MQTT broker hostname."
+    },
+    "globalLayerDiagDnsDescription": "Looking up the broker hostname to find its network address.",
+    "@globalLayerDiagDnsDescription": {
+        "description": "Diagnostic check description: attempts to resolve the broker hostname."
+    },
+    "globalLayerDiagTcpTitle": "TCP Connection",
+    "@globalLayerDiagTcpTitle": {
+        "description": "Diagnostic check title: TCP connection to the MQTT broker."
+    },
+    "globalLayerDiagTcpDescription": "Establishing a network connection to the broker.",
+    "@globalLayerDiagTcpDescription": {
+        "description": "Diagnostic check description: attempts a TCP socket connection."
+    },
+    "globalLayerDiagTlsTitle": "TLS Handshake",
+    "@globalLayerDiagTlsTitle": {
+        "description": "Diagnostic check title: TLS/SSL handshake with the MQTT broker."
+    },
+    "globalLayerDiagTlsDescription": "Negotiating a secure (encrypted) connection with the broker.",
+    "@globalLayerDiagTlsDescription": {
+        "description": "Diagnostic check description: validates the TLS certificate chain."
+    },
+    "globalLayerDiagAuthTitle": "Authentication",
+    "@globalLayerDiagAuthTitle": {
+        "description": "Diagnostic check title: MQTT authentication with broker."
+    },
+    "globalLayerDiagAuthDescription": "Verifying your username and password with the broker.",
+    "@globalLayerDiagAuthDescription": {
+        "description": "Diagnostic check description: validates username/password credentials."
+    },
+    "globalLayerDiagSubscribeTitle": "Subscribe Test",
+    "@globalLayerDiagSubscribeTitle": {
+        "description": "Diagnostic check title: MQTT subscribe operation."
+    },
+    "globalLayerDiagSubscribeDescription": "Subscribing to a test topic to verify read access.",
+    "@globalLayerDiagSubscribeDescription": {
+        "description": "Diagnostic check description: attempts to subscribe to a test topic."
+    },
+    "globalLayerDiagPublishTitle": "Publish Test",
+    "@globalLayerDiagPublishTitle": {
+        "description": "Diagnostic check title: MQTT publish operation."
+    },
+    "globalLayerDiagPublishDescription": "Publishing a test message to verify write access.",
+    "@globalLayerDiagPublishDescription": {
+        "description": "Diagnostic check description: attempts to publish a test message."
+    },
+
+
+
+    "globalLayerDiagSuggestionCorrectFields": "Correct the highlighted fields and try again.",
+    "globalLayerDiagSuggestionUnexpectedBehavior": "These issues may not prevent connection but could cause unexpected behavior.",
+    "globalLayerDiagConfigValid": "All configuration fields are valid.",
+    "globalLayerDiagSuggestionValidHostname": "Enter a valid broker hostname.",
+    "globalLayerDiagSuggestionBothCredentials": "Some brokers require both username and password.",
+
+
+
+    "globalLayerWizardDnsValid": "Hostname looks valid: {host}",
+    "@globalLayerWizardDnsValid": {
+        "placeholders": {
+            "host": {
+                "type": "String"
+            }
+        }
+    },
+    "globalLayerWizardTcpReachable": "TCP connection to {host}:{port} looks reachable.",
+    "@globalLayerWizardTcpReachable": {
+        "placeholders": {
+            "host": {
+                "type": "String"
+            },
+            "port": {
+                "type": "int"
+            }
+        }
+    },
+    "globalLayerWizardTlsAccepted": "TLS handshake parameters accepted.",
+    "globalLayerWizardCredentialsAccepted": "Credentials provided and accepted.",
+    "globalLayerWizardAnonymousAccess": "No credentials — using anonymous access.",
+    "globalLayerWizardSubscribeVerified": "Subscribe permissions verified.",
+    "globalLayerWizardPublishVerified": "Publish permissions verified.",
+
+
+
+    "globalLayerShareMessagesSubtitle": "Your local mesh chat messages will be forwarded to the broker for other connected meshes to receive.",
+    "globalLayerShareTelemetrySubtitle": "Battery level, voltage, and device uptime will be published to the broker.",
+    "globalLayerAllowInboundSubtitle": "Messages from other meshes connected to the same broker will be delivered to your local channels.",
+    "globalLayerBrokerTrust": "Broker Trust",
+    "globalLayerRunConnectionTest": "Run Connection Test",
+    "globalLayerSkipTestHint": "You can skip this step and test later.",
+    "globalLayerRunAgain": "Run Again",
+    "globalLayerWizardAllChecksPassed": "All checks passed",
+    "globalLayerPassedWithWarnings": "Passed with warnings",
+    "globalLayerSomeChecksFailed": "Some checks failed",
+    "globalLayerTestInProgress": "Test in progress",
+    "globalLayerSummaryBrokerSection": "BROKER",
+    "globalLayerSummaryTopicsSection": "TOPICS",
+    "globalLayerSummaryPrivacySection": "PRIVACY",
+    "globalLayerSummaryAddress": "Address",
+    "globalLayerSummaryPort": "Port",
+    "globalLayerSummaryTls": "TLS",
+    "globalLayerSummaryTlsEnabled": "Enabled",
+    "globalLayerSummaryTlsDisabled": "Disabled",
+    "globalLayerSummaryAuth": "Auth",
+    "globalLayerSummaryAuthCredentials": "Credentials configured",
+    "globalLayerSummaryAuthAnonymous": "Anonymous",
+    "globalLayerSummaryRoot": "Root",
+    "globalLayerSummaryTopicsEnabled": "Enabled",
+    "globalLayerSummaryTopicsNone": "None",
+    "globalLayerSummaryShareMessages": "Share messages",
+    "globalLayerSummaryShareTelemetry": "Share telemetry",
+    "globalLayerSummaryInboundGlobal": "Inbound global",
+    "globalLayerSummaryOn": "ON",
+    "globalLayerSummaryOff": "OFF",
+    "globalLayerAllSharingOff": "All sharing is OFF. Your mesh data stays local until you enable sharing.",
+    "globalLayerTlsLabel": "TLS",
+    "globalLayerNoTlsLabel": "No TLS"
 }
