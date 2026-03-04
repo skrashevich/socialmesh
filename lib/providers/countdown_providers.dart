@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import 'dart:async';
+import 'dart:ui' show PlatformDispatcher;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
 
 import '../core/logging.dart';
 import '../core/navigation.dart';
@@ -170,9 +172,11 @@ class CountdownNotifier extends Notifier<Map<String, CountdownTask>> {
     final displayName =
         node?.displayName ?? NodeDisplayNameResolver.defaultName(nodeNum);
 
+    final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
+
     startCountdown(
       id: tracerouteId(nodeNum),
-      label: 'Traceroute to $displayName',
+      label: l10n.countdownTracerouteTo(displayName),
       totalSeconds: tracerouteCooldownSeconds,
       type: CountdownType.traceroute,
       targetNodeNum: nodeNum,
@@ -205,9 +209,10 @@ class CountdownNotifier extends Notifier<Map<String, CountdownTask>> {
   /// Shown after requesting positions from all mesh nodes. The countdown
   /// sets user expectations for how long positions take to trickle in.
   void startPositionRequestCountdown() {
+    final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
     startCountdown(
       id: positionRequestId,
-      label: 'Requesting mesh positions',
+      label: l10n.countdownRequestingPositions,
       totalSeconds: positionRequestSeconds,
       type: CountdownType.positionRequest,
     );
@@ -217,9 +222,10 @@ class CountdownNotifier extends Notifier<Map<String, CountdownTask>> {
   ///
   /// Shown after sharing the local device position to the mesh.
   void startPositionBroadcastCountdown() {
+    final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
     startCountdown(
       id: positionBroadcastId,
-      label: 'Broadcasting position to mesh',
+      label: l10n.countdownBroadcastingPosition,
       totalSeconds: positionBroadcastSeconds,
       type: CountdownType.positionBroadcast,
     );

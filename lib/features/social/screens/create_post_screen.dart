@@ -973,7 +973,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen>
           showActionSnackBar(
             context,
             context.l10n.socialCreatePostLocationDenied,
-            actionLabel: 'Open Settings',
+            actionLabel: context.l10n.commonOpenSettings,
             onAction: () => Geolocator.openAppSettings(),
             type: SnackBarType.warning,
           );

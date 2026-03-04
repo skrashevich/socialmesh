@@ -1115,9 +1115,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
               padding: const EdgeInsets.symmetric(horizontal: 8),
               children: [
                 _buildSignalCard(
-                  authorName: 'Sarah',
-                  content:
-                      'Just reached the summit! Signal is crystal clear up here.',
+                  authorName: context.l10n.onboardingSignalAuthorSarah,
+                  content: context.l10n.onboardingSignalContentSarah,
                   hasImage: true,
                   ttlMinutes: 23,
                   hopCount: 1,
@@ -1127,8 +1126,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                 ),
                 const SizedBox(width: AppTheme.spacing12),
                 _buildSignalCard(
-                  authorName: 'Mike',
-                  content: 'Base camp is set. Ready when you are.',
+                  authorName: context.l10n.onboardingSignalAuthorMike,
+                  content: context.l10n.onboardingSignalContentMike,
                   hasLocation: true,
                   ttlMinutes: 45,
                   hopCount: 0,
@@ -1137,8 +1136,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                 ),
                 const SizedBox(width: AppTheme.spacing12),
                 _buildSignalCard(
-                  authorName: 'Alex',
-                  content: 'On my way, ETA 15 min',
+                  authorName: context.l10n.onboardingSignalAuthorAlex,
+                  content: context.l10n.onboardingSignalContentAlex,
                   ttlMinutes: 8,
                   hopCount: 2,
                   color: AccentColors.yellow,

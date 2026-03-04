@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'dart:async';
+import 'dart:ui' show PlatformDispatcher;
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
 import '../core/command/commands.dart';
 import '../core/logging.dart';
 import 'connection_providers.dart';
@@ -59,10 +62,11 @@ class LifecycleCommandManager {
     AppLogging.debug(
       'LifecycleCommandManager: Rejected ${command.runtimeType} (app inactive)',
     );
+    final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
     return CommandFailure(
       CommandError(
         type: CommandErrorType.executionFailed,
-        message: 'App is not active',
+        message: l10n.lifecycleAppNotActive,
         userMessage: 'Action cancelled - app is in background',
       ),
     );
@@ -72,6 +76,7 @@ class LifecycleCommandManager {
   void _processDeferredCommands() {
     if (_deferredCommands.isEmpty) return;
 
+    final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
     final now = DateTime.now();
     final expiredCommands = <_DeferredCommand>[];
     final validCommands = <_DeferredCommand>[];
@@ -92,7 +97,7 @@ class LifecycleCommandManager {
         CommandFailure(
           CommandError(
             type: CommandErrorType.executionFailed,
-            message: 'Command expired',
+            message: l10n.lifecycleCommandExpired,
             userMessage: 'Action expired while app was in background',
           ),
         ),

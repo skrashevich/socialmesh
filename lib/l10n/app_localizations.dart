@@ -1036,12 +1036,6 @@ abstract class AppLocalizations {
   /// **'Arrival'**
   String get aetherDetailArrival;
 
-  /// Encouragement text when no reports exist for an active flight
-  ///
-  /// In en, this message translates to:
-  /// **'Be the first to report this flight!'**
-  String get aetherDetailBeFirstReport;
-
   /// Label for the estimated coverage radius row
   ///
   /// In en, this message translates to:
@@ -1083,12 +1077,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Live Position'**
   String get aetherDetailLivePosition;
-
-  /// Empty state text when no reception reports exist
-  ///
-  /// In en, this message translates to:
-  /// **'No receptions reported yet'**
-  String get aetherDetailNoReports;
 
   /// Label for the Meshtastic node detail row
   ///
@@ -1318,12 +1306,6 @@ abstract class AppLocalizations {
   /// **'Upcoming'**
   String get aetherFilterUpcoming;
 
-  /// Reception count label on a flight card (singular/plural)
-  ///
-  /// In en, this message translates to:
-  /// **'{count} reception{count, plural, =1{} other{s}}'**
-  String aetherFlightReceptionCount(int count, String s);
-
   /// Form validation error when flight number is empty
   ///
   /// In en, this message translates to:
@@ -1472,36 +1454,6 @@ abstract class AppLocalizations {
     String status,
   );
 
-  /// Validation result message when flight is active in OpenSky
-  ///
-  /// In en, this message translates to:
-  /// **'Flight is currently active'**
-  String get aetherOpenSkyFlightActive;
-
-  /// Validation result when flight was not found in departure records
-  ///
-  /// In en, this message translates to:
-  /// **'Flight not found in historical departures'**
-  String get aetherOpenSkyFlightNotFound;
-
-  /// Fallback message when callsign validation returns not_found from API
-  ///
-  /// In en, this message translates to:
-  /// **'Flight not currently in the air'**
-  String get aetherOpenSkyFlightNotInAir;
-
-  /// Validation result for future flights that can't be verified yet
-  ///
-  /// In en, this message translates to:
-  /// **'Flight is scheduled for the future. Will validate when active.'**
-  String get aetherOpenSkyFlightPending;
-
-  /// Validation result message when flight is found in historical data
-  ///
-  /// In en, this message translates to:
-  /// **'Flight verified in historical data'**
-  String get aetherOpenSkyFlightVerified;
-
   /// Badge label shown when a flight node is detected in the mesh
   ///
   /// In en, this message translates to:
@@ -1556,23 +1508,11 @@ abstract class AppLocalizations {
   /// **'Search by code, city, or name'**
   String get aetherPickerSearchHint;
 
-  /// Default title for the airport picker screen
-  ///
-  /// In en, this message translates to:
-  /// **'Select Airport'**
-  String get aetherPickerTitle;
-
   /// Button label to expand the optional notes field
   ///
   /// In en, this message translates to:
   /// **'Add Notes'**
   String get aetherReportAddNotes;
-
-  /// Error when user tries to report the same flight twice
-  ///
-  /// In en, this message translates to:
-  /// **'You have already reported this flight'**
-  String get aetherReportDuplicate;
 
   /// Label prefix for estimated distance in report sheet
   ///
@@ -1802,12 +1742,6 @@ abstract class AppLocalizations {
   /// **'From'**
   String get aetherScheduleFromLabel;
 
-  /// Status pill label when flight is airborne
-  ///
-  /// In en, this message translates to:
-  /// **'In Flight'**
-  String get aetherScheduleInFlight;
-
   /// Message explaining which fields could not be auto-filled
   ///
   /// In en, this message translates to:
@@ -1825,12 +1759,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Schedule your flight and share it on aether.socialmesh.app so the community can try to receive your signal!'**
   String get aetherScheduleIntroBanner;
-
-  /// Title of the live flight data sticky header
-  ///
-  /// In en, this message translates to:
-  /// **'Live Flight Data'**
-  String get aetherScheduleLiveFlightData;
 
   /// Warning when flights are still loading during save
   ///
@@ -1864,18 +1792,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Notes'**
   String get aetherScheduleNotesLabel;
-
-  /// Status pill label when flight is on the ground
-  ///
-  /// In en, this message translates to:
-  /// **'On Ground'**
-  String get aetherScheduleOnGround;
-
-  /// InfoChip label when flight is on the ground in sticky header
-  ///
-  /// In en, this message translates to:
-  /// **'On ground'**
-  String get aetherScheduleOnGroundChip;
 
   /// Tooltip for the legal/responsibility icon button
   ///
@@ -2360,161 +2276,11 @@ abstract class AppLocalizations {
   /// **'Socialmesh'**
   String get appTitle;
 
-  /// Alert message for low battery (interpolated)
-  ///
-  /// In en, this message translates to:
-  /// **'Low battery: {percent}%'**
-  String arAlertLowBattery(String percent);
-
-  /// Alert message for new node
-  ///
-  /// In en, this message translates to:
-  /// **'New node discovered'**
-  String get arAlertNewNodeDiscovered;
-
-  /// Alert message for moving node
-  ///
-  /// In en, this message translates to:
-  /// **'Node in motion'**
-  String get arAlertNodeInMotion;
-
   /// Loading overlay subtitle
   ///
   /// In en, this message translates to:
   /// **'Calibrating sensors...'**
   String get arCalibratingSensors;
-
-  /// Calibration result message
-  ///
-  /// In en, this message translates to:
-  /// **'Calibration acceptable - can improve'**
-  String get arCalibrationAcceptable;
-
-  /// Calibration progress message
-  ///
-  /// In en, this message translates to:
-  /// **'Almost there - keep moving'**
-  String get arCalibrationAlmostThere;
-
-  /// Calibration analysis phase message
-  ///
-  /// In en, this message translates to:
-  /// **'Analyzing calibration data...'**
-  String get arCalibrationAnalyzing;
-
-  /// Calibration result message
-  ///
-  /// In en, this message translates to:
-  /// **'Calibration complete - Excellent!'**
-  String get arCalibrationCompleteExcellent;
-
-  /// Calibration result message
-  ///
-  /// In en, this message translates to:
-  /// **'Calibration complete - Good'**
-  String get arCalibrationCompleteGood;
-
-  /// Compass status display text
-  ///
-  /// In en, this message translates to:
-  /// **'Excellent accuracy'**
-  String get arCalibrationExcellentAccuracy;
-
-  /// Calibration progress message
-  ///
-  /// In en, this message translates to:
-  /// **'Excellent! Finishing up...'**
-  String get arCalibrationExcellentFinishing;
-
-  /// Calibration result message
-  ///
-  /// In en, this message translates to:
-  /// **'Calibration failed'**
-  String get arCalibrationFailed;
-
-  /// Compass status display text
-  ///
-  /// In en, this message translates to:
-  /// **'Fair accuracy'**
-  String get arCalibrationFairAccuracy;
-
-  /// Compass status display text
-  ///
-  /// In en, this message translates to:
-  /// **'Good accuracy'**
-  String get arCalibrationGoodAccuracy;
-
-  /// Calibration progress message
-  ///
-  /// In en, this message translates to:
-  /// **'Good progress - continue rotating'**
-  String get arCalibrationGoodProgress;
-
-  /// GPS status text when unknown
-  ///
-  /// In en, this message translates to:
-  /// **'Acquiring...'**
-  String get arCalibrationGpsAcquiring;
-
-  /// GPS accuracy display (interpolated)
-  ///
-  /// In en, this message translates to:
-  /// **'±{meters}m (Excellent)'**
-  String arCalibrationGpsExcellent(String meters);
-
-  /// GPS accuracy display (interpolated)
-  ///
-  /// In en, this message translates to:
-  /// **'±{meters}m (Fair)'**
-  String arCalibrationGpsFair(String meters);
-
-  /// GPS accuracy display (interpolated)
-  ///
-  /// In en, this message translates to:
-  /// **'±{meters}m (Good)'**
-  String arCalibrationGpsGood(String meters);
-
-  /// GPS accuracy display (interpolated)
-  ///
-  /// In en, this message translates to:
-  /// **'±{meters}m (Poor)'**
-  String arCalibrationGpsPoor(String meters);
-
-  /// Calibration result message
-  ///
-  /// In en, this message translates to:
-  /// **'Calibration incomplete - please try again'**
-  String get arCalibrationIncomplete;
-
-  /// Calibration progress message
-  ///
-  /// In en, this message translates to:
-  /// **'Keep rotating - try all orientations'**
-  String get arCalibrationKeepRotating;
-
-  /// Calibration instruction
-  ///
-  /// In en, this message translates to:
-  /// **'Move device in figure-8 pattern'**
-  String get arCalibrationMoveFigure8;
-
-  /// Calibration progress message
-  ///
-  /// In en, this message translates to:
-  /// **'Move device in figure-8 pattern...'**
-  String get arCalibrationMoveFigure8Ellipsis;
-
-  /// Compass status display text
-  ///
-  /// In en, this message translates to:
-  /// **'Not calibrated'**
-  String get arCalibrationNotCalibrated;
-
-  /// Compass status display text
-  ///
-  /// In en, this message translates to:
-  /// **'Poor accuracy'**
-  String get arCalibrationPoorAccuracy;
 
   /// Success subtitle
   ///
@@ -2576,30 +2342,6 @@ abstract class AppLocalizations {
   /// **'COMPASS CALIBRATION'**
   String get arCalibrationScreenTitle;
 
-  /// Calibration message
-  ///
-  /// In en, this message translates to:
-  /// **'Starting calibration...'**
-  String get arCalibrationStarting;
-
-  /// Compass badge label when calibration needed
-  ///
-  /// In en, this message translates to:
-  /// **'CALIBRATE'**
-  String get arCompassBadgeCalibrate;
-
-  /// Compass badge label default
-  ///
-  /// In en, this message translates to:
-  /// **'COMPASS'**
-  String get arCompassBadgeCompass;
-
-  /// Compass badge label when calibrated
-  ///
-  /// In en, this message translates to:
-  /// **'COMPASS OK'**
-  String get arCompassBadgeOk;
-
   /// Info snackbar when maps fails (interpolated)
   ///
   /// In en, this message translates to:
@@ -2611,66 +2353,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'AR ENGINE ERROR'**
   String get arEngineError;
-
-  /// Error message (interpolated)
-  ///
-  /// In en, this message translates to:
-  /// **'Failed to start AR: {error}'**
-  String arFailedToStart(String error);
-
-  /// FOV preset name
-  ///
-  /// In en, this message translates to:
-  /// **'iPhone (0.5x)'**
-  String get arFovPresetIphone05x;
-
-  /// FOV preset name
-  ///
-  /// In en, this message translates to:
-  /// **'iPhone (1x)'**
-  String get arFovPresetIphone1x;
-
-  /// FOV preset name
-  ///
-  /// In en, this message translates to:
-  /// **'Narrow'**
-  String get arFovPresetNarrow;
-
-  /// FOV preset name
-  ///
-  /// In en, this message translates to:
-  /// **'Google Pixel'**
-  String get arFovPresetPixel;
-
-  /// FOV preset name
-  ///
-  /// In en, this message translates to:
-  /// **'Samsung Galaxy'**
-  String get arFovPresetSamsung;
-
-  /// FOV preset name
-  ///
-  /// In en, this message translates to:
-  /// **'Wide (default)'**
-  String get arFovPresetWide;
-
-  /// GPS accuracy badge label when no signal
-  ///
-  /// In en, this message translates to:
-  /// **'NO GPS'**
-  String get arGpsBadgeNoGps;
-
-  /// Altimeter HUD label
-  ///
-  /// In en, this message translates to:
-  /// **'ALT'**
-  String get arHudAltLabel;
-
-  /// Fallback node name in HUD painter
-  ///
-  /// In en, this message translates to:
-  /// **'Unknown'**
-  String get arHudUnknownNode;
 
   /// Loading overlay title
   ///
@@ -2888,18 +2570,6 @@ abstract class AppLocalizations {
   /// **'VIEW MODE'**
   String get arSettingsViewMode;
 
-  /// Share sheet subject (interpolated)
-  ///
-  /// In en, this message translates to:
-  /// **'Mesh Node: {name}'**
-  String arShareSubjectMeshNode(String name);
-
-  /// Share text footer
-  ///
-  /// In en, this message translates to:
-  /// **'Shared via Socialmesh AR'**
-  String get arSharedViaSocialmesh;
-
   /// Snackbar when touch lock activated
   ///
   /// In en, this message translates to:
@@ -2911,30 +2581,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Touch unlocked'**
   String get arTouchUnlocked;
-
-  /// View mode display name
-  ///
-  /// In en, this message translates to:
-  /// **'Explorer'**
-  String get arViewModeExplorer;
-
-  /// View mode description
-  ///
-  /// In en, this message translates to:
-  /// **'Navigation-focused with large markers and trails'**
-  String get arViewModeExplorerDesc;
-
-  /// View mode display name
-  ///
-  /// In en, this message translates to:
-  /// **'Minimal'**
-  String get arViewModeMinimal;
-
-  /// View mode description
-  ///
-  /// In en, this message translates to:
-  /// **'Clean view with simple markers only'**
-  String get arViewModeMinimalDesc;
 
   /// Explorer mode abbreviation
   ///
@@ -2954,18 +2600,6 @@ abstract class AppLocalizations {
   /// **'ADV'**
   String get arViewModeSelectorTac;
 
-  /// View mode display name
-  ///
-  /// In en, this message translates to:
-  /// **'Advanced'**
-  String get arViewModeTactical;
-
-  /// View mode description
-  ///
-  /// In en, this message translates to:
-  /// **'Full HUD with compass, horizon, and detailed info'**
-  String get arViewModeTacticalDesc;
-
   /// Section heading for the list of enrolled MFA factors
   ///
   /// In en, this message translates to:
@@ -2983,12 +2617,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Change Phone Number'**
   String get authMfaChangePhoneNumber;
-
-  /// Hint text placeholder for the 6-digit verification code input field
-  ///
-  /// In en, this message translates to:
-  /// **'000000'**
-  String get authMfaCodeHint;
 
   /// Success snackbar confirming the SMS code was sent to the given phone number
   ///
@@ -4112,66 +3740,6 @@ abstract class AppLocalizations {
   /// **'Within geofence'**
   String get automationConditionWithinGeofence;
 
-  /// Skip reason when battery level is above threshold
-  ///
-  /// In en, this message translates to:
-  /// **'Battery threshold not met'**
-  String get automationDebugBatteryNotMet;
-
-  /// Skip reason when channel doesn't match filter
-  ///
-  /// In en, this message translates to:
-  /// **'Channel filter mismatch'**
-  String get automationDebugChannelMismatch;
-
-  /// Skip reason when an additional condition was not met
-  ///
-  /// In en, this message translates to:
-  /// **'Condition failed'**
-  String get automationDebugConditionFailed;
-
-  /// Skip reason display name when automation is disabled
-  ///
-  /// In en, this message translates to:
-  /// **'Disabled'**
-  String get automationDebugDisabled;
-
-  /// Skip reason when keyword isn't found in message
-  ///
-  /// In en, this message translates to:
-  /// **'Keyword not matched'**
-  String get automationDebugKeywordNotMatched;
-
-  /// Skip reason when node doesn't match the filter
-  ///
-  /// In en, this message translates to:
-  /// **'Node filter mismatch'**
-  String get automationDebugNodeFilterMismatch;
-
-  /// Skip reason when signal is above threshold
-  ///
-  /// In en, this message translates to:
-  /// **'Signal threshold not met'**
-  String get automationDebugSignalNotMet;
-
-  /// Skip reason when automation was throttled
-  ///
-  /// In en, this message translates to:
-  /// **'Throttled'**
-  String get automationDebugThrottled;
-
-  /// Skip reason when event type doesn't match trigger
-  ///
-  /// In en, this message translates to:
-  /// **'Trigger type mismatch'**
-  String get automationDebugTriggerMismatch;
-
-  /// Default message template for manual trigger actions
-  ///
-  /// In en, this message translates to:
-  /// **'Automation triggered manually'**
-  String get automationDefaultMsgManual;
-
   /// Button label and sheet title for adding a new action
   ///
   /// In en, this message translates to:
@@ -4333,12 +3901,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'WHEN'**
   String get automationEditorWhen;
-
-  /// Fallback body in push notification action within the engine
-  ///
-  /// In en, this message translates to:
-  /// **'Automation triggered.'**
-  String get automationEngineAutomationTriggered;
 
   /// Title of the node palette overlay
   ///
@@ -4586,30 +4148,6 @@ abstract class AppLocalizations {
   /// **'This automation will be imported as disabled. Review and enable it when ready.'**
   String get automationImportWarning;
 
-  /// Fallback notification body when template rendering fails
-  ///
-  /// In en, this message translates to:
-  /// **'An automation was triggered.'**
-  String get automationNotificationFallbackBody;
-
-  /// Fallback notification title when template rendering fails
-  ///
-  /// In en, this message translates to:
-  /// **'Alert'**
-  String get automationNotificationFallbackTitle;
-
-  /// No description provided for @automationScheduledBody.
-  ///
-  /// In en, this message translates to:
-  /// **'Tap to run scheduled automation'**
-  String get automationScheduledBody;
-
-  /// No description provided for @automationScheduledTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Scheduled Automation'**
-  String get automationScheduledTitle;
-
   /// Menu item linking to acceptable use terms
   ///
   /// In en, this message translates to:
@@ -4855,120 +4393,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Share Automation'**
   String get automationShareTitle;
-
-  /// Template description for dead man's switch
-  ///
-  /// In en, this message translates to:
-  /// **'Alert if no activity from node for 30 minutes'**
-  String get automationTemplateDeadManDesc;
-
-  /// Template name for dead man's switch automation
-  ///
-  /// In en, this message translates to:
-  /// **'Dead Man\'s Switch'**
-  String get automationTemplateDeadManName;
-
-  /// Short template description for dead man's switch in templates list
-  ///
-  /// In en, this message translates to:
-  /// **'Alert if node silent too long'**
-  String get automationTemplateDeadManSwitchDesc;
-
-  /// Default name for a new automation (fallback template)
-  ///
-  /// In en, this message translates to:
-  /// **'New Automation'**
-  String get automationTemplateDefaultName;
-
-  /// Template description for geofence exit alert (templates list)
-  ///
-  /// In en, this message translates to:
-  /// **'Alert when a node leaves a designated area'**
-  String get automationTemplateGeofenceExitDesc;
-
-  /// Alternate short description for geofence exit in templates list
-  ///
-  /// In en, this message translates to:
-  /// **'Alert when leaving a designated area'**
-  String get automationTemplateGeofenceExitFullDesc;
-
-  /// Template name for geofence exit alert automation
-  ///
-  /// In en, this message translates to:
-  /// **'Geofence Exit Alert'**
-  String get automationTemplateGeofenceExitName;
-
-  /// Template description for low battery alert
-  ///
-  /// In en, this message translates to:
-  /// **'Notify when a node battery drops below 20%'**
-  String get automationTemplateLowBatteryDesc;
-
-  /// Template name for the low battery alert automation
-  ///
-  /// In en, this message translates to:
-  /// **'Low Battery Alert'**
-  String get automationTemplateLowBatteryName;
-
-  /// Short template description for low battery alert in templates list
-  ///
-  /// In en, this message translates to:
-  /// **'Notify when battery drops below 20%'**
-  String get automationTemplateLowBatteryShortDesc;
-
-  /// Template description for node offline alert
-  ///
-  /// In en, this message translates to:
-  /// **'Notify when a node goes offline'**
-  String get automationTemplateNodeOfflineDesc;
-
-  /// Template name for node offline alert automation
-  ///
-  /// In en, this message translates to:
-  /// **'Node Offline Alert'**
-  String get automationTemplateNodeOfflineName;
-
-  /// Notification title for dead man's switch template
-  ///
-  /// In en, this message translates to:
-  /// **'Node Silent'**
-  String get automationTemplateNotifDeadManTitle;
-
-  /// Notification title for geofence exit template
-  ///
-  /// In en, this message translates to:
-  /// **'Left Area'**
-  String get automationTemplateNotifGeofenceTitle;
-
-  /// Notification title for the node offline template
-  ///
-  /// In en, this message translates to:
-  /// **'Node Offline'**
-  String get automationTemplateNotifNodeOfflineTitle;
-
-  /// Notification title for SOS auto-response template
-  ///
-  /// In en, this message translates to:
-  /// **'Emergency Alert'**
-  String get automationTemplateNotifSosTitle;
-
-  /// Template description for SOS auto-response
-  ///
-  /// In en, this message translates to:
-  /// **'Auto-reply when receiving SOS message'**
-  String get automationTemplateSosDesc;
-
-  /// Template name for SOS auto-response automation
-  ///
-  /// In en, this message translates to:
-  /// **'SOS Auto-Response'**
-  String get automationTemplateSosName;
-
-  /// Short template description for SOS response in templates list
-  ///
-  /// In en, this message translates to:
-  /// **'Alert on emergency messages'**
-  String get automationTemplateSosResponseDesc;
 
   /// Placeholder for the channel dropdown when no channel is selected
   ///
@@ -6740,24 +6164,6 @@ abstract class AppLocalizations {
   /// **'Cancel'**
   String get commonCancel;
 
-  /// Label for a Close button.
-  ///
-  /// In en, this message translates to:
-  /// **'Close'**
-  String get commonClose;
-
-  /// Label for a Confirm button.
-  ///
-  /// In en, this message translates to:
-  /// **'Confirm'**
-  String get commonConfirm;
-
-  /// Label for a Continue button.
-  ///
-  /// In en, this message translates to:
-  /// **'Continue'**
-  String get commonContinue;
-
   /// Label for a Delete button.
   ///
   /// In en, this message translates to:
@@ -7022,48 +6428,6 @@ abstract class AppLocalizations {
   /// **'Filter Log Levels'**
   String get debugScreenDeviceFilterTitle;
 
-  /// Device log level label: critical
-  ///
-  /// In en, this message translates to:
-  /// **'CRIT'**
-  String get debugScreenDeviceLogCrit;
-
-  /// Device log level label: debug
-  ///
-  /// In en, this message translates to:
-  /// **'DEBUG'**
-  String get debugScreenDeviceLogDebug;
-
-  /// Device log level label: error
-  ///
-  /// In en, this message translates to:
-  /// **'ERROR'**
-  String get debugScreenDeviceLogError;
-
-  /// Device log level label: info
-  ///
-  /// In en, this message translates to:
-  /// **'INFO'**
-  String get debugScreenDeviceLogInfo;
-
-  /// Device log level label: trace
-  ///
-  /// In en, this message translates to:
-  /// **'TRACE'**
-  String get debugScreenDeviceLogTrace;
-
-  /// Device log level label: unset
-  ///
-  /// In en, this message translates to:
-  /// **'UNSET'**
-  String get debugScreenDeviceLogUnset;
-
-  /// Device log level label: warning
-  ///
-  /// In en, this message translates to:
-  /// **'WARN'**
-  String get debugScreenDeviceLogWarn;
-
   /// Success snackbar after copying device logs
   ///
   /// In en, this message translates to:
@@ -7147,30 +6511,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Log copied to clipboard'**
   String get debugScreenLogCopied;
-
-  /// Log level label for debug
-  ///
-  /// In en, this message translates to:
-  /// **'DEBUG'**
-  String get debugScreenLogLevelDebug;
-
-  /// Log level label for error
-  ///
-  /// In en, this message translates to:
-  /// **'ERROR'**
-  String get debugScreenLogLevelError;
-
-  /// Log level label for info
-  ///
-  /// In en, this message translates to:
-  /// **'INFO'**
-  String get debugScreenLogLevelInfo;
-
-  /// Log level label for warning
-  ///
-  /// In en, this message translates to:
-  /// **'WARN'**
-  String get debugScreenLogLevelWarn;
 
   /// Empty state subtitle
   ///
@@ -9080,12 +8420,6 @@ abstract class AppLocalizations {
   /// **'Include screenshot in report'**
   String get feedbackIncludeScreenshot;
 
-  /// Exception message shown to user
-  ///
-  /// In en, this message translates to:
-  /// **'You must be signed in to reply'**
-  String get feedbackMustBeSignedIn;
-
   /// Empty state headline
   ///
   /// In en, this message translates to:
@@ -9200,30 +8534,6 @@ abstract class AppLocalizations {
   /// **'Shake device to report a bug'**
   String get feedbackShakeToReport;
 
-  /// Bug report status label
-  ///
-  /// In en, this message translates to:
-  /// **'Awaiting Response'**
-  String get feedbackStatusAwaitingResponse;
-
-  /// Bug report status label
-  ///
-  /// In en, this message translates to:
-  /// **'Open'**
-  String get feedbackStatusOpen;
-
-  /// Bug report status label
-  ///
-  /// In en, this message translates to:
-  /// **'Resolved'**
-  String get feedbackStatusResolved;
-
-  /// Bug report status label
-  ///
-  /// In en, this message translates to:
-  /// **'Responded'**
-  String get feedbackStatusResponded;
-
   /// Toggle tile subtitle
   ///
   /// In en, this message translates to:
@@ -9325,60 +8635,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Transfer cancelled'**
   String get fileTransferCancelled;
-
-  /// Card status text for cancelled transfer
-  ///
-  /// In en, this message translates to:
-  /// **'Cancelled'**
-  String get fileTransferCardCancelled;
-
-  /// Card status text for completed transfer
-  ///
-  /// In en, this message translates to:
-  /// **'Complete'**
-  String get fileTransferCardComplete;
-
-  /// Card status text for pending offer
-  ///
-  /// In en, this message translates to:
-  /// **'Incoming file — tap to review'**
-  String get fileTransferCardOfferPending;
-
-  /// Card status text for offer sent state
-  ///
-  /// In en, this message translates to:
-  /// **'Offer sent, waiting...'**
-  String get fileTransferCardOfferSent;
-
-  /// Card status text for created state
-  ///
-  /// In en, this message translates to:
-  /// **'Preparing...'**
-  String get fileTransferCardPreparing;
-
-  /// Card status text for inbound chunking (interpolated)
-  ///
-  /// In en, this message translates to:
-  /// **'Receiving {pct}%'**
-  String fileTransferCardReceivingPercent(String pct);
-
-  /// Card status text during recovery
-  ///
-  /// In en, this message translates to:
-  /// **'Recovering missing chunks...'**
-  String get fileTransferCardRecovering;
-
-  /// Card status text for outbound chunking (interpolated)
-  ///
-  /// In en, this message translates to:
-  /// **'Sending {pct}%'**
-  String fileTransferCardSendingPercent(String pct);
-
-  /// Chunk progress indicator (interpolated)
-  ///
-  /// In en, this message translates to:
-  /// **'{completed}/{total} chunks'**
-  String fileTransferChunkProgress(String completed, int total);
 
   /// Overflow menu item
   ///
@@ -9506,12 +8762,6 @@ abstract class AppLocalizations {
   /// **'No nodes on the mesh yet'**
   String get fileTransferContactsNoNodes;
 
-  /// Section header in detail sheet
-  ///
-  /// In en, this message translates to:
-  /// **'RECENT TRANSFERS'**
-  String get fileTransferContactsRecentTransfers;
-
   /// Search bar hint text
   ///
   /// In en, this message translates to:
@@ -9553,12 +8803,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Transfer started: {filename}'**
   String fileTransferContactsStarted(String filename);
-
-  /// Contact subtitle showing transfer count (interpolated, pluralized)
-  ///
-  /// In en, this message translates to:
-  /// **'{count} file(s) transferred'**
-  String fileTransferContactsTransferCount(int count);
 
   /// Overflow menu item
   ///
@@ -9728,54 +8972,6 @@ abstract class AppLocalizations {
   /// **'Expired transfers purged'**
   String get fileTransferExpiredPurged;
 
-  /// Failure reason text
-  ///
-  /// In en, this message translates to:
-  /// **'Transfer expired'**
-  String get fileTransferFailExpired;
-
-  /// Generic failure reason text
-  ///
-  /// In en, this message translates to:
-  /// **'Failed'**
-  String get fileTransferFailGeneric;
-
-  /// Failure reason text
-  ///
-  /// In en, this message translates to:
-  /// **'Invalid data received'**
-  String get fileTransferFailInvalidData;
-
-  /// Failure reason text
-  ///
-  /// In en, this message translates to:
-  /// **'Max retries exceeded'**
-  String get fileTransferFailMaxRetries;
-
-  /// Failure reason text
-  ///
-  /// In en, this message translates to:
-  /// **'Rate limited — try again later'**
-  String get fileTransferFailRateLimited;
-
-  /// Failure reason text
-  ///
-  /// In en, this message translates to:
-  /// **'Transfer timed out'**
-  String get fileTransferFailTimedOut;
-
-  /// Failure reason text
-  ///
-  /// In en, this message translates to:
-  /// **'File too large for mesh transfer'**
-  String get fileTransferFailTooLarge;
-
-  /// Failure reason text
-  ///
-  /// In en, this message translates to:
-  /// **'File verification failed'**
-  String get fileTransferFailVerification;
-
   /// Warning snackbar for empty files
   ///
   /// In en, this message translates to:
@@ -9930,18 +9126,6 @@ abstract class AppLocalizations {
   /// **'Transfer ID'**
   String get fileTransferInfoTransferId;
 
-  /// Metadata text for inbound direction (interpolated)
-  ///
-  /// In en, this message translates to:
-  /// **'from {nodeName}'**
-  String fileTransferMetaFrom(String nodeName);
-
-  /// Metadata text for outbound direction (interpolated)
-  ///
-  /// In en, this message translates to:
-  /// **'to {nodeName}'**
-  String fileTransferMetaTo(String nodeName);
-
   /// Truncation indicator in hex viewer (interpolated)
   ///
   /// In en, this message translates to:
@@ -10020,54 +9204,6 @@ abstract class AppLocalizations {
   /// **'Transfer started: {filename}'**
   String fileTransferStarted(String filename);
 
-  /// Transfer state label in info sheet
-  ///
-  /// In en, this message translates to:
-  /// **'Cancelled'**
-  String get fileTransferStateCancelled;
-
-  /// Transfer state label in info sheet
-  ///
-  /// In en, this message translates to:
-  /// **'Complete'**
-  String get fileTransferStateComplete;
-
-  /// Transfer state label in info sheet
-  ///
-  /// In en, this message translates to:
-  /// **'Failed'**
-  String get fileTransferStateFailed;
-
-  /// Transfer state label in info sheet
-  ///
-  /// In en, this message translates to:
-  /// **'Offer Sent'**
-  String get fileTransferStateOfferSent;
-
-  /// Transfer state label in info sheet
-  ///
-  /// In en, this message translates to:
-  /// **'Pending Acceptance'**
-  String get fileTransferStatePendingAcceptance;
-
-  /// Transfer state label in info sheet
-  ///
-  /// In en, this message translates to:
-  /// **'Preparing'**
-  String get fileTransferStatePreparing;
-
-  /// Transfer state label in info sheet
-  ///
-  /// In en, this message translates to:
-  /// **'Recovering'**
-  String get fileTransferStateRecovering;
-
-  /// Transfer state label in info sheet
-  ///
-  /// In en, this message translates to:
-  /// **'Transferring'**
-  String get fileTransferStateTransferring;
-
   /// Tab label
   ///
   /// In en, this message translates to:
@@ -10080,119 +9216,11 @@ abstract class AppLocalizations {
   /// **'Files'**
   String get fileTransferTabFiles;
 
-  /// Relative time label
-  ///
-  /// In en, this message translates to:
-  /// **'just now'**
-  String get fileTransferTimeJustNow;
-
   /// Screen title
   ///
   /// In en, this message translates to:
   /// **'File Transfers'**
   String get fileTransferTitle;
-
-  /// File type label for ZIP/TAR/etc
-  ///
-  /// In en, this message translates to:
-  /// **'Archive'**
-  String get fileTransferTypeArchive;
-
-  /// File type label for audio
-  ///
-  /// In en, this message translates to:
-  /// **'Audio'**
-  String get fileTransferTypeAudio;
-
-  /// File type label for firmware/binary
-  ///
-  /// In en, this message translates to:
-  /// **'Binary'**
-  String get fileTransferTypeBinary;
-
-  /// Generic file type label
-  ///
-  /// In en, this message translates to:
-  /// **'File'**
-  String get fileTransferTypeFile;
-
-  /// File type label for GPX files
-  ///
-  /// In en, this message translates to:
-  /// **'GPS Track'**
-  String get fileTransferTypeGpsTrack;
-
-  /// File type label for HTML
-  ///
-  /// In en, this message translates to:
-  /// **'HTML'**
-  String get fileTransferTypeHtml;
-
-  /// File type label for images
-  ///
-  /// In en, this message translates to:
-  /// **'Image'**
-  String get fileTransferTypeImage;
-
-  /// File type label for JSON
-  ///
-  /// In en, this message translates to:
-  /// **'JSON'**
-  String get fileTransferTypeJson;
-
-  /// File type label for KML/KMZ
-  ///
-  /// In en, this message translates to:
-  /// **'Map'**
-  String get fileTransferTypeMap;
-
-  /// File type label for Markdown
-  ///
-  /// In en, this message translates to:
-  /// **'Markdown'**
-  String get fileTransferTypeMarkdown;
-
-  /// File type label for PDF
-  ///
-  /// In en, this message translates to:
-  /// **'PDF'**
-  String get fileTransferTypePdf;
-
-  /// File type label for Protobuf
-  ///
-  /// In en, this message translates to:
-  /// **'Protobuf'**
-  String get fileTransferTypeProtobuf;
-
-  /// File type label for CSV
-  ///
-  /// In en, this message translates to:
-  /// **'Spreadsheet'**
-  String get fileTransferTypeSpreadsheet;
-
-  /// File type label for plain text
-  ///
-  /// In en, this message translates to:
-  /// **'Text'**
-  String get fileTransferTypeText;
-
-  /// File type label for video
-  ///
-  /// In en, this message translates to:
-  /// **'Video'**
-  String get fileTransferTypeVideo;
-
-  /// File type label for XML
-  ///
-  /// In en, this message translates to:
-  /// **'XML'**
-  String get fileTransferTypeXml;
-
-  /// File type label for YAML
-  ///
-  /// In en, this message translates to:
-  /// **'YAML'**
-  String get fileTransferTypeYaml;
 
   /// Label showing line count in file preview
   ///
@@ -11484,12 +10512,6 @@ abstract class AppLocalizations {
   /// **'Routine'**
   String get incidentPriorityRoutine;
 
-  /// Error message shown when user attempts an action without being authenticated
-  ///
-  /// In en, this message translates to:
-  /// **'Not authenticated'**
-  String get incidentProviderNotAuthenticated;
-
   /// Role hint shown in tooltip when only the assigned operator can act (resolve)
   ///
   /// In en, this message translates to:
@@ -11513,12 +10535,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'assigneeId is required when transitioning to assigned'**
   String get incidentStateMachineAssigneeRequired;
-
-  /// Error message when attempting to transition to draft state (invalid)
-  ///
-  /// In en, this message translates to:
-  /// **'Cannot transition to draft'**
-  String get incidentStateMachineCannotTransitionToDraft;
 
   /// Permission error when user lacks createIncident permission. Placeholder: roleName
   ///
@@ -11585,12 +10601,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Transition History'**
   String get incidentTransitionHistoryHeader;
-
-  /// Note recorded on the initial transition when an incident is created; may appear in timeline
-  ///
-  /// In en, this message translates to:
-  /// **'Incident created'**
-  String get incidentTransitionNoteCreated;
 
   /// Error message when transition history fails to load. Placeholder: error
   ///
@@ -12581,54 +11591,6 @@ abstract class AppLocalizations {
   /// **'Change View'**
   String get mesh3dChangeViewTooltip;
 
-  /// Activity view mode description
-  ///
-  /// In en, this message translates to:
-  /// **'Node activity sorted by recency'**
-  String get mesh3dDescActivity;
-
-  /// Signal bars view mode description
-  ///
-  /// In en, this message translates to:
-  /// **'RSSI and SNR bars per node'**
-  String get mesh3dDescSignalBars;
-
-  /// Terrain view mode description
-  ///
-  /// In en, this message translates to:
-  /// **'GPS nodes on interpolated terrain'**
-  String get mesh3dDescTerrain;
-
-  /// Topology view mode description
-  ///
-  /// In en, this message translates to:
-  /// **'Star layout from your node — signal quality as distance'**
-  String get mesh3dDescTopology;
-
-  /// Node filter label: active only
-  ///
-  /// In en, this message translates to:
-  /// **'Active'**
-  String get mesh3dFilterActive;
-
-  /// Node filter label: all
-  ///
-  /// In en, this message translates to:
-  /// **'All Nodes'**
-  String get mesh3dFilterAllNodes;
-
-  /// Node filter label: GPS nodes only
-  ///
-  /// In en, this message translates to:
-  /// **'GPS Only'**
-  String get mesh3dFilterGpsOnly;
-
-  /// Node filter label: active + fading
-  ///
-  /// In en, this message translates to:
-  /// **'Recent'**
-  String get mesh3dFilterRecent;
-
   /// Node count badge when filter is active
   ///
   /// In en, this message translates to:
@@ -12791,35 +11753,11 @@ abstract class AppLocalizations {
   /// **'Stop Rotation'**
   String get mesh3dStopRotation;
 
-  /// View mode label: activity
-  ///
-  /// In en, this message translates to:
-  /// **'Activity'**
-  String get mesh3dViewActivity;
-
   /// View mode selector bottom sheet title
   ///
   /// In en, this message translates to:
   /// **'View Mode'**
   String get mesh3dViewModeTitle;
-
-  /// View mode label: signal strength
-  ///
-  /// In en, this message translates to:
-  /// **'Signal Bars'**
-  String get mesh3dViewSignalBars;
-
-  /// View mode label: terrain
-  ///
-  /// In en, this message translates to:
-  /// **'Terrain'**
-  String get mesh3dViewTerrain;
-
-  /// View mode label: topology
-  ///
-  /// In en, this message translates to:
-  /// **'Topology'**
-  String get mesh3dViewTopology;
 
   /// Status subtitle showing active nodes and packet count
   ///
@@ -13091,12 +12029,6 @@ abstract class AppLocalizations {
   /// **'Add Contact'**
   String get meshcoreAddContactButton;
 
-  /// Bottom sheet title for adding a contact
-  ///
-  /// In en, this message translates to:
-  /// **'Add Contact'**
-  String get meshcoreAddContactSheetTitle;
-
   /// Success snackbar after sending advertisement
   ///
   /// In en, this message translates to:
@@ -13180,12 +12112,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cancel'**
   String get meshcoreCancel;
-
-  /// Cancel button label in settings dialogs
-  ///
-  /// In en, this message translates to:
-  /// **'Cancel'**
-  String get meshcoreCancelButton;
 
   /// Button label to center map on a contact
   ///
@@ -13529,12 +12455,6 @@ abstract class AppLocalizations {
   /// **'Disconnect'**
   String get meshcoreDisconnect;
 
-  /// Overflow menu item to disconnect
-  ///
-  /// In en, this message translates to:
-  /// **'Disconnect'**
-  String get meshcoreDisconnectMenuItem;
-
   /// Disconnected state description on channels screen
   ///
   /// In en, this message translates to:
@@ -13546,12 +12466,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Connect to a MeshCore device to view contacts'**
   String get meshcoreDisconnectedContactsDescription;
-
-  /// Disconnected state title on contacts screen
-  ///
-  /// In en, this message translates to:
-  /// **'MeshCore Disconnected'**
-  String get meshcoreDisconnectedContactsTitle;
 
   /// Disconnected state description on map screen
   ///
@@ -13739,12 +12653,6 @@ abstract class AppLocalizations {
   /// **'Frequency'**
   String get meshcoreFrequencyLabel;
 
-  /// Info row label for channel index
-  ///
-  /// In en, this message translates to:
-  /// **'Index'**
-  String get meshcoreIndexLabel;
-
   /// Error snackbar for invalid channel code format
   ///
   /// In en, this message translates to:
@@ -13804,12 +12712,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Just now'**
   String get meshcoreJustNow;
-
-  /// Info row label for last seen time
-  ///
-  /// In en, this message translates to:
-  /// **'Last Seen'**
-  String get meshcoreLastSeenLabel;
 
   /// Confirm button label for leaving a channel
   ///
@@ -13895,12 +12797,6 @@ abstract class AppLocalizations {
   /// **'Location'**
   String get meshcoreLocationInfoLabel;
 
-  /// Detail row label for contact location
-  ///
-  /// In en, this message translates to:
-  /// **'Location'**
-  String get meshcoreLocationLabel;
-
   /// Settings tile title for location
   ///
   /// In en, this message translates to:
@@ -13943,12 +12839,6 @@ abstract class AppLocalizations {
   /// **'MeshCore Device'**
   String get meshcoreMeshCoreDevice;
 
-  /// Button label to send a message to a contact
-  ///
-  /// In en, this message translates to:
-  /// **'Message'**
-  String get meshcoreMessage;
-
   /// Button label to message a contact from map
   ///
   /// In en, this message translates to:
@@ -13978,12 +12868,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'New measurement'**
   String get meshcoreNewMeasurement;
-
-  /// Boolean value label for no
-  ///
-  /// In en, this message translates to:
-  /// **'No'**
-  String get meshcoreNo;
 
   /// Empty state title when no channels exist
   ///
@@ -14129,18 +13013,6 @@ abstract class AppLocalizations {
   /// **'Paste contact code here...'**
   String get meshcorePasteContactCodeHint;
 
-  /// Info row label for path on map contact sheet
-  ///
-  /// In en, this message translates to:
-  /// **'Path'**
-  String get meshcorePathInfoLabel;
-
-  /// Info row label for path
-  ///
-  /// In en, this message translates to:
-  /// **'Path'**
-  String get meshcorePathLabel;
-
   /// Instruction text for channel QR scanning
   ///
   /// In en, this message translates to:
@@ -14183,12 +13055,6 @@ abstract class AppLocalizations {
   /// **'Private Channel'**
   String get meshcorePrivateChannel;
 
-  /// Channel info type label for private channel
-  ///
-  /// In en, this message translates to:
-  /// **'Private Channel'**
-  String get meshcorePrivateChannelLabel;
-
   /// Settings tile title for protocol capture
   ///
   /// In en, this message translates to:
@@ -14219,12 +13085,6 @@ abstract class AppLocalizations {
   /// **'Public Channel'**
   String get meshcorePublicChannel;
 
-  /// Channel info type label for public channel
-  ///
-  /// In en, this message translates to:
-  /// **'Public Channel'**
-  String get meshcorePublicChannelLabel;
-
   /// Toggle label for public hashtag channel option
   ///
   /// In en, this message translates to:
@@ -14242,18 +13102,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Public key copied'**
   String get meshcorePublicKeyCopiedSettings;
-
-  /// Info row label for public key on map contact sheet
-  ///
-  /// In en, this message translates to:
-  /// **'Public Key'**
-  String get meshcorePublicKeyInfoLabel;
-
-  /// Info row label for public key
-  ///
-  /// In en, this message translates to:
-  /// **'Public Key'**
-  String get meshcorePublicKeyLabel;
 
   /// Info row label for public key in settings
   ///
@@ -14464,12 +13312,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Scan QR Code'**
   String get meshcoreScanQrCode;
-
-  /// Option title for scanning a contact QR code
-  ///
-  /// In en, this message translates to:
-  /// **'Scan QR Code'**
-  String get meshcoreScanQrCodeOption;
 
   /// QR share sheet info text for channel sharing
   ///
@@ -15029,12 +13871,6 @@ abstract class AppLocalizations {
   /// **'Trace Path'**
   String get meshcoreTracePathTitle;
 
-  /// Info row label for TX power in device info sheet
-  ///
-  /// In en, this message translates to:
-  /// **'TX Power'**
-  String get meshcoreTxPowerInfoLabel;
-
   /// Info row label for TX power
   ///
   /// In en, this message translates to:
@@ -15071,12 +13907,6 @@ abstract class AppLocalizations {
   /// **'Unknown'**
   String get meshcoreUnknown;
 
-  /// Fallback name for unnamed contacts on map
-  ///
-  /// In en, this message translates to:
-  /// **'Unknown'**
-  String get meshcoreUnknownContact;
-
   /// Settings tile subtitle for time sync
   ///
   /// In en, this message translates to:
@@ -15106,12 +13936,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'View LoRa radio configuration'**
   String get meshcoreViewLoRaConfig;
-
-  /// Boolean value label for yes
-  ///
-  /// In en, this message translates to:
-  /// **'Yes'**
-  String get meshcoreYes;
 
   /// Label for the Copy action in the message context menu.
   ///
@@ -17603,12 +16427,6 @@ abstract class AppLocalizations {
   /// **'Nodes frequently seen in the same session'**
   String get nodedexCoSeenDescription;
 
-  /// No description provided for @nodedexCoSeenLinksCount.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} links'**
-  String nodedexCoSeenLinksCount(int count);
-
   /// No description provided for @nodedexCoSeenLinksTitle.
   ///
   /// In en, this message translates to:
@@ -17788,18 +16606,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Days'**
   String get nodedexDaysCompactLabel;
-
-  /// No description provided for @nodedexDefaultStampLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Trace'**
-  String get nodedexDefaultStampLabel;
-
-  /// No description provided for @nodedexDefaultSummaryText.
-  ///
-  /// In en, this message translates to:
-  /// **'Keep observing to build a profile'**
-  String get nodedexDefaultSummaryText;
 
   /// No description provided for @nodedexDensityAll.
   ///
@@ -18827,18 +17633,6 @@ abstract class AppLocalizations {
   /// **'Signal origin shifts between sessions.'**
   String get nodedexFieldNoteWanderer7;
 
-  /// No description provided for @nodedexFileTransferStarted.
-  ///
-  /// In en, this message translates to:
-  /// **'File transfer started: {filename}'**
-  String nodedexFileTransferStarted(String filename);
-
-  /// No description provided for @nodedexFileTransfersTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'File Transfers'**
-  String get nodedexFileTransfersTitle;
-
   /// No description provided for @nodedexFilterAll.
   ///
   /// In en, this message translates to:
@@ -18892,12 +17686,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tap card to flip • Swipe to browse'**
   String get nodedexGalleryHint;
-
-  /// No description provided for @nodedexGalleryLinksCount.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} links'**
-  String nodedexGalleryLinksCount(int count);
 
   /// No description provided for @nodedexGalleryPositionCounter.
   ///
@@ -19247,18 +18035,6 @@ abstract class AppLocalizations {
   /// **'New'**
   String get nodedexImportSummaryNew;
 
-  /// No description provided for @nodedexImportUnresolvedConflictsPlural.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} conflicts unresolved — using \"Keep Local\" as default'**
-  String nodedexImportUnresolvedConflictsPlural(int count);
-
-  /// No description provided for @nodedexImportUnresolvedConflictsSingular.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} conflict unresolved — using \"Keep Local\" as default'**
-  String nodedexImportUnresolvedConflictsSingular(int count);
-
   /// No description provided for @nodedexKnownFor.
   ///
   /// In en, this message translates to:
@@ -19408,18 +18184,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Messages'**
   String get nodedexMessagesStatLabel;
-
-  /// No description provided for @nodedexMilestoneEncounterN.
-  ///
-  /// In en, this message translates to:
-  /// **'Encounter #{count}'**
-  String nodedexMilestoneEncounterN(int count);
-
-  /// No description provided for @nodedexMilestoneFirstDiscovered.
-  ///
-  /// In en, this message translates to:
-  /// **'First discovered'**
-  String get nodedexMilestoneFirstDiscovered;
 
   /// No description provided for @nodedexNicknameHint.
   ///
@@ -19924,12 +18688,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count} links'**
   String nodedexSelectedLinksCount(int count);
-
-  /// No description provided for @nodedexSendFile.
-  ///
-  /// In en, this message translates to:
-  /// **'Send file'**
-  String get nodedexSendFile;
 
   /// No description provided for @nodedexSetNickname.
   ///
@@ -20499,12 +19257,6 @@ abstract class AppLocalizations {
   /// **'Irregular timing, fades in and out'**
   String get nodedexTraitDrifterDescription;
 
-  /// No description provided for @nodedexTraitEvidenceNotFound.
-  ///
-  /// In en, this message translates to:
-  /// **'Node not found in NodeDex'**
-  String get nodedexTraitEvidenceNotFound;
-
   /// Display label for the Ghost node trait.
   ///
   /// In en, this message translates to:
@@ -20985,12 +19737,6 @@ abstract class AppLocalizations {
   /// **'YOU'**
   String get nodesScreenYouBadge;
 
-  /// Display name of the mesh brain advisor character shown in the speech bubble header
-  ///
-  /// In en, this message translates to:
-  /// **'Ico'**
-  String get onboardingAdvisorName;
-
   /// Demo automation name in the automations showcase
   ///
   /// In en, this message translates to:
@@ -21189,24 +19935,6 @@ abstract class AppLocalizations {
   /// **'Compact GPS tracker with long battery life'**
   String get onboardingDeviceSensecapDescription;
 
-  /// Settings bottom sheet title
-  ///
-  /// In en, this message translates to:
-  /// **'Brain Settings'**
-  String get onboardingEmotionBrainSettings;
-
-  /// Filter chip label to show all mood categories
-  ///
-  /// In en, this message translates to:
-  /// **'All'**
-  String get onboardingEmotionCategoryAll;
-
-  /// Tooltip for the settings icon button
-  ///
-  /// In en, this message translates to:
-  /// **'Settings'**
-  String get onboardingEmotionConfiguratorSettings;
-
   /// Screen title for the Ico emotion test/preview screen
   ///
   /// In en, this message translates to:
@@ -21218,30 +19946,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reset to Defaults'**
   String get onboardingEmotionResetDefaults;
-
-  /// Toggle label for facial expression overlay visibility
-  ///
-  /// In en, this message translates to:
-  /// **'Show Expression Effects'**
-  String get onboardingEmotionSettingsExpression;
-
-  /// Slider label for glow intensity adjustment
-  ///
-  /// In en, this message translates to:
-  /// **'Glow Intensity'**
-  String get onboardingEmotionSettingsGlow;
-
-  /// Toggle label for thought particle visibility
-  ///
-  /// In en, this message translates to:
-  /// **'Show Particles'**
-  String get onboardingEmotionSettingsParticles;
-
-  /// Slider label for brain size adjustment
-  ///
-  /// In en, this message translates to:
-  /// **'Size'**
-  String get onboardingEmotionSettingsSize;
 
   /// Tooltip for the settings icon button on the emotion configurator screen
   ///
@@ -21266,306 +19970,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Compatible Hardware'**
   String get onboardingHardwareTitle;
-
-  /// Display name for Ico's alarmed mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Alarmed'**
-  String get onboardingMoodAlarmed;
-
-  /// Display name for Ico's alert mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Alert'**
-  String get onboardingMoodAlert;
-
-  /// Display name for Ico's angry mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Angry'**
-  String get onboardingMoodAngry;
-
-  /// Display name for Ico's annoyed mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Annoyed'**
-  String get onboardingMoodAnnoyed;
-
-  /// Display name for Ico's approving mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Approving'**
-  String get onboardingMoodApproving;
-
-  /// Display name for Ico's bored mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Bored'**
-  String get onboardingMoodBored;
-
-  /// Category label for alert mood states
-  ///
-  /// In en, this message translates to:
-  /// **'Alert'**
-  String get onboardingMoodCategoryAlert;
-
-  /// Category label for negative/low-energy mood states
-  ///
-  /// In en, this message translates to:
-  /// **'Negative'**
-  String get onboardingMoodCategoryNegative;
-
-  /// Category label for neutral/communicative mood states
-  ///
-  /// In en, this message translates to:
-  /// **'Neutral'**
-  String get onboardingMoodCategoryNeutral;
-
-  /// Category label for positive mood states
-  ///
-  /// In en, this message translates to:
-  /// **'Positive'**
-  String get onboardingMoodCategoryPositive;
-
-  /// Category label for special effect mood states
-  ///
-  /// In en, this message translates to:
-  /// **'Special'**
-  String get onboardingMoodCategorySpecial;
-
-  /// Display name for Ico's celebrating mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Celebrating'**
-  String get onboardingMoodCelebrating;
-
-  /// Display name for Ico's confused mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Confused'**
-  String get onboardingMoodConfused;
-
-  /// Display name for Ico's curious mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Curious'**
-  String get onboardingMoodCurious;
-
-  /// Display name for Ico's dizzy mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Dizzy'**
-  String get onboardingMoodDizzy;
-
-  /// Display name for Ico's dormant mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Dormant'**
-  String get onboardingMoodDormant;
-
-  /// Display name for Ico's embarrassed mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Embarrassed'**
-  String get onboardingMoodEmbarrassed;
-
-  /// Display name for Ico's energized mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Energized'**
-  String get onboardingMoodEnergized;
-
-  /// Display name for Ico's error mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Error'**
-  String get onboardingMoodError;
-
-  /// Display name for Ico's excited mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Excited'**
-  String get onboardingMoodExcited;
-
-  /// Display name for Ico's focused mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Focused'**
-  String get onboardingMoodFocused;
-
-  /// Display name for Ico's glitching mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Glitching'**
-  String get onboardingMoodGlitching;
-
-  /// Display name for Ico's grateful mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Grateful'**
-  String get onboardingMoodGrateful;
-
-  /// Display name for Ico's grumpy mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Grumpy'**
-  String get onboardingMoodGrumpy;
-
-  /// Display name for Ico's happy mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Happy'**
-  String get onboardingMoodHappy;
-
-  /// Display name for Ico's hopeful mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Hopeful'**
-  String get onboardingMoodHopeful;
-
-  /// Display name for Ico's hypnotized mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Hypnotized'**
-  String get onboardingMoodHypnotized;
-
-  /// Display name for Ico's idle mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Idle'**
-  String get onboardingMoodIdle;
-
-  /// Display name for Ico's inviting mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Inviting'**
-  String get onboardingMoodInviting;
-
-  /// Display name for Ico's laughing mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Laughing'**
-  String get onboardingMoodLaughing;
-
-  /// Display name for Ico's listening mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Listening'**
-  String get onboardingMoodListening;
-
-  /// Display name for Ico's loading mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Loading'**
-  String get onboardingMoodLoading;
-
-  /// Display name for Ico's love mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Love'**
-  String get onboardingMoodLove;
-
-  /// Display name for Ico's mischievous mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Mischievous'**
-  String get onboardingMoodMischievous;
-
-  /// Display name for Ico's nervous mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Nervous'**
-  String get onboardingMoodNervous;
-
-  /// Display name for Ico's playful mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Playful'**
-  String get onboardingMoodPlayful;
-
-  /// Display name for Ico's proud mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Proud'**
-  String get onboardingMoodProud;
-
-  /// Display name for Ico's sad mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Sad'**
-  String get onboardingMoodSad;
-
-  /// Display name for Ico's sassy mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Sassy'**
-  String get onboardingMoodSassy;
-
-  /// Display name for Ico's scared mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Scared'**
-  String get onboardingMoodScared;
-
-  /// Display name for Ico's shy mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Shy'**
-  String get onboardingMoodShy;
-
-  /// Display name for Ico's smiling mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Smiling'**
-  String get onboardingMoodSmiling;
-
-  /// Display name for Ico's speaking mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Speaking'**
-  String get onboardingMoodSpeaking;
-
-  /// Display name for Ico's success mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Success'**
-  String get onboardingMoodSuccess;
-
-  /// Display name for Ico's surprised mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Surprised'**
-  String get onboardingMoodSurprised;
-
-  /// Display name for Ico's thinking mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Thinking'**
-  String get onboardingMoodThinking;
-
-  /// Display name for Ico's tickled mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Tickled'**
-  String get onboardingMoodTickled;
-
-  /// Display name for Ico's tired mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Tired'**
-  String get onboardingMoodTired;
-
-  /// Display name for Ico's winking mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Winking'**
-  String get onboardingMoodWinking;
-
-  /// Display name for Ico's zen mood state
-  ///
-  /// In en, this message translates to:
-  /// **'Zen'**
-  String get onboardingMoodZen;
 
   /// Ico advisor speech explaining NodeDex sigils, rarity, and patina
   ///
@@ -21674,42 +20078,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Setting up your device...'**
   String get onboardingSettingUpDevice;
-
-  /// Demo author name in the Signals showcase
-  ///
-  /// In en, this message translates to:
-  /// **'Alex'**
-  String get onboardingSignalAuthorAlex;
-
-  /// Demo author name in the Signals showcase
-  ///
-  /// In en, this message translates to:
-  /// **'Mike'**
-  String get onboardingSignalAuthorMike;
-
-  /// Demo author name in the Signals showcase
-  ///
-  /// In en, this message translates to:
-  /// **'Sarah'**
-  String get onboardingSignalAuthorSarah;
-
-  /// Demo signal message content in the Signals showcase
-  ///
-  /// In en, this message translates to:
-  /// **'On my way, ETA 15 min'**
-  String get onboardingSignalContentAlex;
-
-  /// Demo signal message content in the Signals showcase
-  ///
-  /// In en, this message translates to:
-  /// **'Base camp is set. Ready when you are.'**
-  String get onboardingSignalContentMike;
-
-  /// Demo signal message content in the Signals showcase
-  ///
-  /// In en, this message translates to:
-  /// **'Just reached the summit! Signal is crystal clear up here.'**
-  String get onboardingSignalContentSarah;
 
   /// Proximity badge label for a direct (0-hop) signal
   ///
@@ -22617,66 +20985,6 @@ abstract class AppLocalizations {
   /// **'Your Review *'**
   String get productDetailYourReview;
 
-  /// No description provided for @profileAvatarRemoveFailed.
-  ///
-  /// In en, this message translates to:
-  /// **'Failed to remove avatar: {error}'**
-  String profileAvatarRemoveFailed(String error);
-
-  /// No description provided for @profileAvatarRemoved.
-  ///
-  /// In en, this message translates to:
-  /// **'Avatar removed'**
-  String get profileAvatarRemoved;
-
-  /// No description provided for @profileAvatarRequiresInternet.
-  ///
-  /// In en, this message translates to:
-  /// **'Uploading avatars requires an internet connection.'**
-  String get profileAvatarRequiresInternet;
-
-  /// No description provided for @profileAvatarUpdated.
-  ///
-  /// In en, this message translates to:
-  /// **'Avatar updated'**
-  String get profileAvatarUpdated;
-
-  /// No description provided for @profileAvatarUploadFailed.
-  ///
-  /// In en, this message translates to:
-  /// **'Failed to upload avatar: {error}'**
-  String profileAvatarUploadFailed(String error);
-
-  /// No description provided for @profileBannerRemoveFailed.
-  ///
-  /// In en, this message translates to:
-  /// **'Failed to remove banner: {error}'**
-  String profileBannerRemoveFailed(String error);
-
-  /// No description provided for @profileBannerRemoved.
-  ///
-  /// In en, this message translates to:
-  /// **'Banner removed'**
-  String get profileBannerRemoved;
-
-  /// No description provided for @profileBannerRequiresInternet.
-  ///
-  /// In en, this message translates to:
-  /// **'Uploading banners requires an internet connection.'**
-  String get profileBannerRequiresInternet;
-
-  /// No description provided for @profileBannerUpdated.
-  ///
-  /// In en, this message translates to:
-  /// **'Banner updated'**
-  String get profileBannerUpdated;
-
-  /// No description provided for @profileBannerUploadFailed.
-  ///
-  /// In en, this message translates to:
-  /// **'Failed to upload banner: {error}'**
-  String profileBannerUploadFailed(String error);
-
   /// No description provided for @profileBasicInfo.
   ///
   /// In en, this message translates to:
@@ -22821,12 +21129,6 @@ abstract class AppLocalizations {
   /// **'Display Name'**
   String get profileDisplayNameLabel;
 
-  /// No description provided for @profileDisplayNameTaken.
-  ///
-  /// In en, this message translates to:
-  /// **'This display name is already taken. Please choose a different one.'**
-  String get profileDisplayNameTaken;
-
   /// No description provided for @profileEditButton.
   ///
   /// In en, this message translates to:
@@ -22880,18 +21182,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Help'**
   String get profileHelpTooltip;
-
-  /// No description provided for @profileImageAccessError.
-  ///
-  /// In en, this message translates to:
-  /// **'Could not access the selected image. Try saving it to your device first.'**
-  String get profileImageAccessError;
-
-  /// No description provided for @profileImageLoadError.
-  ///
-  /// In en, this message translates to:
-  /// **'Could not load the selected image. Make sure the file is downloaded locally and try again.'**
-  String get profileImageLoadError;
 
   /// No description provided for @profileLinkFailed.
   ///
@@ -22952,48 +21242,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Not backed up'**
   String get profileNotBackedUp;
-
-  /// No description provided for @profileRemoveAvatar.
-  ///
-  /// In en, this message translates to:
-  /// **'Remove Avatar'**
-  String get profileRemoveAvatar;
-
-  /// No description provided for @profileRemoveAvatarRequiresInternet.
-  ///
-  /// In en, this message translates to:
-  /// **'Removing avatars requires an internet connection.'**
-  String get profileRemoveAvatarRequiresInternet;
-
-  /// No description provided for @profileRemoveBanner.
-  ///
-  /// In en, this message translates to:
-  /// **'Remove Banner'**
-  String get profileRemoveBanner;
-
-  /// No description provided for @profileRemoveBannerRequiresInternet.
-  ///
-  /// In en, this message translates to:
-  /// **'Removing banners requires an internet connection.'**
-  String get profileRemoveBannerRequiresInternet;
-
-  /// No description provided for @profileSave.
-  ///
-  /// In en, this message translates to:
-  /// **'Save'**
-  String get profileSave;
-
-  /// No description provided for @profileSaveFailed.
-  ///
-  /// In en, this message translates to:
-  /// **'Failed to save profile: {error}'**
-  String profileSaveFailed(String error);
-
-  /// No description provided for @profileSaveRequiresInternet.
-  ///
-  /// In en, this message translates to:
-  /// **'Saving your profile requires an internet connection.'**
-  String get profileSaveRequiresInternet;
 
   /// No description provided for @profileSetup.
   ///
@@ -23181,12 +21429,6 @@ abstract class AppLocalizations {
   /// **'UID'**
   String get profileUidLabel;
 
-  /// No description provided for @profileUpdated.
-  ///
-  /// In en, this message translates to:
-  /// **'Profile updated'**
-  String get profileUpdated;
-
   /// No description provided for @profileUrlInvalid.
   ///
   /// In en, this message translates to:
@@ -23318,12 +21560,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Imported'**
   String get qrScannerImportedChannelName;
-
-  /// Exception message
-  ///
-  /// In en, this message translates to:
-  /// **'Invalid channel data'**
-  String get qrScannerInvalidChannelData;
 
   /// Exception message for channel limit
   ///
@@ -24663,12 +22899,6 @@ abstract class AppLocalizations {
   /// **'Your phone removed the stored pairing info for this device. Return to Settings > Bluetooth, forget \"Meshtastic_XXXX\", and try again.'**
   String get scannerPairingInvalidatedError;
 
-  /// Hint shown when BLE pairing was invalidated (e.g. factory reset).
-  ///
-  /// In en, this message translates to:
-  /// **'Bluetooth pairing was removed. Forget \"Meshtastic\" in Settings > Bluetooth and reconnect to continue.'**
-  String get scannerPairingRemovedHint;
-
   /// Error thrown when Meshtastic config is not received, indicating a PIN/auth issue.
   ///
   /// In en, this message translates to:
@@ -24698,12 +22928,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Retry Scan'**
   String get scannerRetryScan;
-
-  /// Fallback name used when the last connected device has no stored name.
-  ///
-  /// In en, this message translates to:
-  /// **'Your saved device'**
-  String get scannerSavedDeviceFallbackName;
 
   /// Banner subtitle shown when the device list is empty during scan.
   ///
@@ -25563,18 +23787,6 @@ abstract class AppLocalizations {
   /// **'Automations Pack'**
   String get settingsSearchAutomationsPackTitle;
 
-  /// Subtitle for the Bluetooth config search item.
-  ///
-  /// In en, this message translates to:
-  /// **'Bluetooth settings and PIN'**
-  String get settingsSearchBluetoothConfigSubtitle;
-
-  /// Title for the Bluetooth config search item.
-  ///
-  /// In en, this message translates to:
-  /// **'Bluetooth config'**
-  String get settingsSearchBluetoothConfigTitle;
-
   /// Subtitle for the canned messages search item.
   ///
   /// In en, this message translates to:
@@ -25622,30 +23834,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Push notifications for comments and @mentions'**
   String get settingsSearchCommentsSubtitle;
-
-  /// Subtitle for the device config search item.
-  ///
-  /// In en, this message translates to:
-  /// **'Device name, role, and behavior'**
-  String get settingsSearchDeviceConfigSubtitle;
-
-  /// Title for the device config search item.
-  ///
-  /// In en, this message translates to:
-  /// **'Device config'**
-  String get settingsSearchDeviceConfigTitle;
-
-  /// Subtitle for the display config search item.
-  ///
-  /// In en, this message translates to:
-  /// **'Screen brightness and timeout'**
-  String get settingsSearchDisplayConfigSubtitle;
-
-  /// Title for the display config search item.
-  ///
-  /// In en, this message translates to:
-  /// **'Display config'**
-  String get settingsSearchDisplayConfigTitle;
 
   /// Subtitle for the direct message notifications search item.
   ///
@@ -25701,12 +23889,6 @@ abstract class AppLocalizations {
   /// **'Light, medium, or heavy feedback'**
   String get settingsSearchHapticIntensitySubtitle;
 
-  /// Subtitle for the Help & Support search item.
-  ///
-  /// In en, this message translates to:
-  /// **'FAQ, troubleshooting, and contact info'**
-  String get settingsSearchHelpSupportSubtitle;
-
   /// Hint text in the settings search field.
   ///
   /// In en, this message translates to:
@@ -25737,18 +23919,6 @@ abstract class AppLocalizations {
   /// **'IFTTT Pack'**
   String get settingsSearchIftttPackTitle;
 
-  /// Subtitle for the import channel via QR search item.
-  ///
-  /// In en, this message translates to:
-  /// **'Scan a Meshtastic channel QR code'**
-  String get settingsSearchImportChannelSubtitle;
-
-  /// Title for the import channel via QR search item.
-  ///
-  /// In en, this message translates to:
-  /// **'Import channel via QR'**
-  String get settingsSearchImportChannelTitle;
-
   /// Subtitle for the Likes search item.
   ///
   /// In en, this message translates to:
@@ -25766,18 +23936,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Linked Devices'**
   String get settingsSearchLinkedDevicesTitle;
-
-  /// Subtitle for the network config search item.
-  ///
-  /// In en, this message translates to:
-  /// **'WiFi and network settings'**
-  String get settingsSearchNetworkConfigSubtitle;
-
-  /// Title for the network config search item.
-  ///
-  /// In en, this message translates to:
-  /// **'Network config'**
-  String get settingsSearchNetworkConfigTitle;
 
   /// Subtitle for the New followers search item.
   ///
@@ -25821,59 +23979,17 @@ abstract class AppLocalizations {
   /// **'Notification vibration'**
   String get settingsSearchNotificationVibrationTitle;
 
-  /// Subtitle for the position config search item.
-  ///
-  /// In en, this message translates to:
-  /// **'GPS and position sharing'**
-  String get settingsSearchPositionConfigSubtitle;
-
-  /// Title for the position config search item.
-  ///
-  /// In en, this message translates to:
-  /// **'Position config'**
-  String get settingsSearchPositionConfigTitle;
-
-  /// Subtitle for the power config search item.
-  ///
-  /// In en, this message translates to:
-  /// **'Power saving and sleep settings'**
-  String get settingsSearchPowerConfigSubtitle;
-
-  /// Title for the power config search item.
-  ///
-  /// In en, this message translates to:
-  /// **'Power config'**
-  String get settingsSearchPowerConfigTitle;
-
   /// Subtitle for the Unlock Features search item in the premium section.
   ///
   /// In en, this message translates to:
   /// **'Ringtones, themes, automations, IFTTT, widgets'**
   String get settingsSearchPremiumSubtitle;
 
-  /// Subtitle for the Privacy Policy search item.
-  ///
-  /// In en, this message translates to:
-  /// **'How we handle your data'**
-  String get settingsSearchPrivacySubtitle;
-
   /// Subtitle for the Profile search item.
   ///
   /// In en, this message translates to:
   /// **'Your display name, avatar, and bio'**
   String get settingsSearchProfileSubtitle;
-
-  /// Subtitle for the radio config search item.
-  ///
-  /// In en, this message translates to:
-  /// **'LoRa, modem, channel settings'**
-  String get settingsSearchRadioConfigSubtitle;
-
-  /// Title for the radio config search item (lowercase variant).
-  ///
-  /// In en, this message translates to:
-  /// **'Radio config'**
-  String get settingsSearchRadioConfigTitle;
 
   /// Subtitle for the region search item.
   ///
@@ -25935,12 +24051,6 @@ abstract class AppLocalizations {
   /// **'Scan for device'**
   String get settingsSearchScanForDeviceTitle;
 
-  /// Subtitle for the Socialmesh search item in the About section.
-  ///
-  /// In en, this message translates to:
-  /// **'Meshtastic companion app'**
-  String get settingsSearchSocialmeshSubtitle;
-
   /// Subtitle for the TAK Gateway search item.
   ///
   /// In en, this message translates to:
@@ -25952,12 +24062,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'TAK Gateway'**
   String get settingsSearchTakGatewayTitle;
-
-  /// Subtitle for the Terms of Service search item.
-  ///
-  /// In en, this message translates to:
-  /// **'Legal terms and conditions'**
-  String get settingsSearchTermsSubtitle;
 
   /// Subtitle for the theme pack search item.
   ///
@@ -27543,12 +25647,6 @@ abstract class AppLocalizations {
   /// **'Anonymous'**
   String get signalAnonymous;
 
-  /// No description provided for @signalAnonymousAuthor.
-  ///
-  /// In en, this message translates to:
-  /// **'Anonymous'**
-  String get signalAnonymousAuthor;
-
   /// No description provided for @signalAnonymousFeed.
   ///
   /// In en, this message translates to:
@@ -28215,30 +26313,6 @@ abstract class AppLocalizations {
   /// **'Profile'**
   String get signalProfile;
 
-  /// No description provided for @signalProximityDirect.
-  ///
-  /// In en, this message translates to:
-  /// **'direct'**
-  String get signalProximityDirect;
-
-  /// No description provided for @signalProximityHops.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} hops'**
-  String signalProximityHops(int count);
-
-  /// No description provided for @signalProximityNearby.
-  ///
-  /// In en, this message translates to:
-  /// **'nearby'**
-  String get signalProximityNearby;
-
-  /// No description provided for @signalProximityOneHop.
-  ///
-  /// In en, this message translates to:
-  /// **'1 hop'**
-  String get signalProximityOneHop;
-
   /// No description provided for @signalRemoveLocation.
   ///
   /// In en, this message translates to:
@@ -28532,12 +26606,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Newest'**
   String get signalSortNewest;
-
-  /// No description provided for @signalSwipeHide.
-  ///
-  /// In en, this message translates to:
-  /// **'Hide'**
-  String get signalSwipeHide;
 
   /// No description provided for @signalSwipeSave.
   ///
@@ -28833,24 +26901,6 @@ abstract class AppLocalizations {
   /// **'Account Status'**
   String get socialAccountStatusTitle;
 
-  /// No description provided for @socialAccountStrike1.
-  ///
-  /// In en, this message translates to:
-  /// **'First offense. Review our guidelines.'**
-  String get socialAccountStrike1;
-
-  /// No description provided for @socialAccountStrike2.
-  ///
-  /// In en, this message translates to:
-  /// **'Second offense. One more and your account will be suspended.'**
-  String get socialAccountStrike2;
-
-  /// No description provided for @socialAccountStrike3.
-  ///
-  /// In en, this message translates to:
-  /// **'Account will be suspended.'**
-  String get socialAccountStrike3;
-
   /// No description provided for @socialAccountStrikeMeter.
   ///
   /// In en, this message translates to:
@@ -28911,12 +26961,6 @@ abstract class AppLocalizations {
   /// **'Active Warnings'**
   String get socialActiveWarnings;
 
-  /// No description provided for @socialActivityAllRead.
-  ///
-  /// In en, this message translates to:
-  /// **'All activity marked as read'**
-  String get socialActivityAllRead;
-
   /// No description provided for @socialActivityClearAll.
   ///
   /// In en, this message translates to:
@@ -28941,18 +26985,6 @@ abstract class AppLocalizations {
   /// **'Clear all activity?'**
   String get socialActivityClearConfirmTitle;
 
-  /// No description provided for @socialActivityCleared.
-  ///
-  /// In en, this message translates to:
-  /// **'Activity cleared'**
-  String get socialActivityCleared;
-
-  /// No description provided for @socialActivityCommentedPost.
-  ///
-  /// In en, this message translates to:
-  /// **' commented on your post'**
-  String get socialActivityCommentedPost;
-
   /// No description provided for @socialActivityCommentedSignal.
   ///
   /// In en, this message translates to:
@@ -28964,18 +26996,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed to load activity'**
   String get socialActivityErrorLoading;
-
-  /// No description provided for @socialActivityFollowRequest.
-  ///
-  /// In en, this message translates to:
-  /// **' requested to follow you'**
-  String get socialActivityFollowRequest;
-
-  /// No description provided for @socialActivityFollowed.
-  ///
-  /// In en, this message translates to:
-  /// **' started following you'**
-  String get socialActivityFollowed;
 
   /// No description provided for @socialActivityGroupEarlier.
   ///
@@ -29013,29 +27033,11 @@ abstract class AppLocalizations {
   /// **' interacted with your content'**
   String get socialActivityInteracted;
 
-  /// No description provided for @socialActivityLikedComment.
-  ///
-  /// In en, this message translates to:
-  /// **' liked your comment'**
-  String get socialActivityLikedComment;
-
-  /// No description provided for @socialActivityLikedPost.
-  ///
-  /// In en, this message translates to:
-  /// **' liked your post'**
-  String get socialActivityLikedPost;
-
   /// No description provided for @socialActivityLikedSignal.
   ///
   /// In en, this message translates to:
   /// **' liked your signal'**
   String get socialActivityLikedSignal;
-
-  /// No description provided for @socialActivityLikedStory.
-  ///
-  /// In en, this message translates to:
-  /// **' liked your story'**
-  String get socialActivityLikedStory;
 
   /// No description provided for @socialActivityLoadingSignal.
   ///
@@ -29109,12 +27111,6 @@ abstract class AppLocalizations {
   /// **' yet'**
   String get socialActivityTitleSuffix;
 
-  /// No description provided for @socialActivityViewedStory.
-  ///
-  /// In en, this message translates to:
-  /// **' viewed your story'**
-  String get socialActivityViewedStory;
-
   /// No description provided for @socialAdd.
   ///
   /// In en, this message translates to:
@@ -29156,12 +27152,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Appeal Decision'**
   String get socialAppealDecision;
-
-  /// No description provided for @socialAuthorLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Author: '**
-  String get socialAuthorLabel;
 
   /// No description provided for @socialBanReasonHarassment.
   ///
@@ -29211,24 +27201,6 @@ abstract class AppLocalizations {
   /// **'Violence / Threats'**
   String get socialBanReasonViolence;
 
-  /// No description provided for @socialBanSelectReason.
-  ///
-  /// In en, this message translates to:
-  /// **'Select ban reason'**
-  String get socialBanSelectReason;
-
-  /// No description provided for @socialBanSendEmail.
-  ///
-  /// In en, this message translates to:
-  /// **'Send notification email to user'**
-  String get socialBanSendEmail;
-
-  /// No description provided for @socialBanSendEmailDesc.
-  ///
-  /// In en, this message translates to:
-  /// **'Inform them why their account was banned'**
-  String get socialBanSendEmailDesc;
-
   /// No description provided for @socialBanUserAndDelete.
   ///
   /// In en, this message translates to:
@@ -29241,29 +27213,11 @@ abstract class AppLocalizations {
   /// **'Ban User'**
   String get socialBanUserButton;
 
-  /// No description provided for @socialBanUserDesc.
-  ///
-  /// In en, this message translates to:
-  /// **'This will permanently disable their account'**
-  String get socialBanUserDesc;
-
   /// No description provided for @socialBanUserFailed.
   ///
   /// In en, this message translates to:
   /// **'Failed to ban user: {error}'**
   String socialBanUserFailed(String error);
-
-  /// No description provided for @socialBanUserIdLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'User ID: '**
-  String get socialBanUserIdLabel;
-
-  /// No description provided for @socialBanUserTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Ban User'**
-  String get socialBanUserTitle;
 
   /// No description provided for @socialBannerRemoveFailed.
   ///
@@ -29385,12 +27339,6 @@ abstract class AppLocalizations {
   /// **'Reply'**
   String get socialCommentReply;
 
-  /// No description provided for @socialCommentReportFailed.
-  ///
-  /// In en, this message translates to:
-  /// **'Failed to report: {error}'**
-  String socialCommentReportFailed(String error);
-
   /// No description provided for @socialCommentReported.
   ///
   /// In en, this message translates to:
@@ -29451,12 +27399,6 @@ abstract class AppLocalizations {
   /// **'Content ID not found'**
   String get socialContentIdNotFound;
 
-  /// No description provided for @socialContentNotAvailable.
-  ///
-  /// In en, this message translates to:
-  /// **'Content not available'**
-  String get socialContentNotAvailable;
-
   /// No description provided for @socialContentRemoved.
   ///
   /// In en, this message translates to:
@@ -29468,12 +27410,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Content Type'**
   String get socialContentType;
-
-  /// No description provided for @socialContentUnavailable.
-  ///
-  /// In en, this message translates to:
-  /// **'Content unavailable'**
-  String get socialContentUnavailable;
 
   /// No description provided for @socialCreatePostAction.
   ///
@@ -29955,12 +27891,6 @@ abstract class AppLocalizations {
   /// **'Location'**
   String get socialFeedLocationFallback;
 
-  /// No description provided for @socialFilterAll.
-  ///
-  /// In en, this message translates to:
-  /// **'All'**
-  String get socialFilterAll;
-
   /// No description provided for @socialFilterLevelLess.
   ///
   /// In en, this message translates to:
@@ -29984,24 +27914,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Content that may be upsetting or offensive is filtered. You may still see some borderline content.'**
   String get socialFilterLevelStandardDesc;
-
-  /// No description provided for @socialFilterLocation.
-  ///
-  /// In en, this message translates to:
-  /// **'Location'**
-  String get socialFilterLocation;
-
-  /// No description provided for @socialFilterNodes.
-  ///
-  /// In en, this message translates to:
-  /// **'Nodes'**
-  String get socialFilterNodes;
-
-  /// No description provided for @socialFilterPhotos.
-  ///
-  /// In en, this message translates to:
-  /// **'Photos'**
-  String get socialFilterPhotos;
 
   /// No description provided for @socialFollow.
   ///
@@ -30069,12 +27981,6 @@ abstract class AppLocalizations {
   /// **'Follow Requests'**
   String get socialFollowRequestsTitle;
 
-  /// No description provided for @socialFollowersAndPosts.
-  ///
-  /// In en, this message translates to:
-  /// **'{followers} followers • {posts} posts'**
-  String socialFollowersAndPosts(String followers, String posts);
-
   /// No description provided for @socialFollowersError.
   ///
   /// In en, this message translates to:
@@ -30104,12 +28010,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No spam, scams, or misleading content'**
   String get socialGuidelineNoSpam;
-
-  /// No description provided for @socialGuidelineRespectful.
-  ///
-  /// In en, this message translates to:
-  /// **'Be respectful and constructive'**
-  String get socialGuidelineRespectful;
 
   /// No description provided for @socialGuidelinesWarning.
   ///
@@ -30146,12 +28046,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Image blocked by moderation'**
   String get socialImageBlockedByModeration;
-
-  /// No description provided for @socialImageUnavailable.
-  ///
-  /// In en, this message translates to:
-  /// **'Image unavailable'**
-  String get socialImageUnavailable;
 
   /// No description provided for @socialInvalidNodeId.
   ///
@@ -30200,12 +28094,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Location'**
   String get socialLocationFallback;
-
-  /// No description provided for @socialMediaLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Media ({type})'**
-  String socialMediaLabel(String type);
 
   /// No description provided for @socialModerationAdditionalNotes.
   ///
@@ -30410,12 +28298,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No posts yet'**
   String get socialNoPostsYet;
-
-  /// No description provided for @socialNoReasonProvided.
-  ///
-  /// In en, this message translates to:
-  /// **'No reason provided'**
-  String get socialNoReasonProvided;
 
   /// No description provided for @socialNoRecentActivity.
   ///
@@ -30651,12 +28533,6 @@ abstract class AppLocalizations {
   /// **'Report Comment'**
   String get socialReportComment;
 
-  /// No description provided for @socialReportCommentTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Report Comment'**
-  String get socialReportCommentTitle;
-
   /// No description provided for @socialReportCommentWhy.
   ///
   /// In en, this message translates to:
@@ -30788,12 +28664,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Report submitted. Thank you.'**
   String get socialReportSubmitted;
-
-  /// No description provided for @socialReportedContentApproved.
-  ///
-  /// In en, this message translates to:
-  /// **'Content approved'**
-  String get socialReportedContentApproved;
 
   /// No description provided for @socialReportedContentRejected.
   ///
@@ -30981,30 +28851,6 @@ abstract class AppLocalizations {
   /// **'Sign in to manage subscriptions'**
   String get socialSignInSubscriptions;
 
-  /// No description provided for @socialSignalCommentLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'SIGNAL COMMENT'**
-  String get socialSignalCommentLabel;
-
-  /// No description provided for @socialSignalContentNotAvailable.
-  ///
-  /// In en, this message translates to:
-  /// **'Signal content not available'**
-  String get socialSignalContentNotAvailable;
-
-  /// No description provided for @socialSignalIdLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Signal: {id}'**
-  String socialSignalIdLabel(String id);
-
-  /// No description provided for @socialSignalLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'SIGNAL'**
-  String get socialSignalLabel;
-
   /// No description provided for @socialStatFollower.
   ///
   /// In en, this message translates to:
@@ -31106,12 +28952,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Story deleted'**
   String get socialStoryDeleted;
-
-  /// No description provided for @socialStoryLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'STORY'**
-  String get socialStoryLabel;
 
   /// No description provided for @socialStoryMayBeRemoved.
   ///
@@ -31508,12 +29348,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'User unsuspended successfully'**
   String get socialUserUnsuspended;
-
-  /// No description provided for @socialVideoContent.
-  ///
-  /// In en, this message translates to:
-  /// **'Video content'**
-  String get socialVideoContent;
 
   /// No description provided for @socialView.
   ///
@@ -32295,59 +30129,6 @@ abstract class AppLocalizations {
   /// **'Navigate to {callsign}'**
   String takNavigateTitle(String callsign);
 
-  /// ETA value in hours and minutes. {hours} and {minutes} are integers.
-  ///
-  /// In en, this message translates to:
-  /// **'{hours}h {minutes}m'**
-  String takNavigationEtaHoursMinutes(int hours, int minutes);
-
-  /// ETA value when arrival time is less than one minute
-  ///
-  /// In en, this message translates to:
-  /// **'< 1 min'**
-  String get takNavigationEtaLessThanOneMin;
-
-  /// ETA value in minutes. {count} is the number of minutes.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} min'**
-  String takNavigationEtaMinutes(int count);
-
-  /// Navigation status text when target is moving but course is unknown. {speed} is km/h.
-  ///
-  /// In en, this message translates to:
-  /// **'Target moving at {speed} km/h'**
-  String takNavigationTargetMoving(int speed);
-
-  /// Navigation status text when target is moving. {direction} is formatted course (e.g. '045° NE'), {speed} is km/h.
-  ///
-  /// In en, this message translates to:
-  /// **'Target moving {direction} at {speed} km/h'**
-  String takNavigationTargetMovingWithDirection(String direction, int speed);
-
-  /// Navigation status text when the target entity is not moving
-  ///
-  /// In en, this message translates to:
-  /// **'Target stationary'**
-  String get takNavigationTargetStationary;
-
-  /// Proximity alert notification body for a moving entity. {affiliation} is Hostile/Unknown/etc, {distance} is formatted, {heading} is course, {speed} is km/h.
-  ///
-  /// In en, this message translates to:
-  /// **'{affiliation} entity at {distance} -- heading {heading} at {speed} km/h'**
-  String takProximityAlertMovingBody(
-    String affiliation,
-    int distance,
-    String heading,
-    int speed,
-  );
-
-  /// Proximity alert notification body for a stationary entity. {affiliation} is Hostile/Unknown/etc, {distance} is formatted.
-  ///
-  /// In en, this message translates to:
-  /// **'{affiliation} entity at {distance} -- stationary'**
-  String takProximityAlertStationaryBody(String affiliation, int distance);
-
   /// Empty state action button label to initiate gateway connection
   ///
   /// In en, this message translates to:
@@ -32575,18 +30356,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Gateway URL'**
   String get takSettingsGatewayUrlTitle;
-
-  /// Interval selector display for values >= 60 seconds. {minutes} is an integer.
-  ///
-  /// In en, this message translates to:
-  /// **'{minutes}m'**
-  String takSettingsIntervalMinutes(int minutes);
-
-  /// Interval selector display for values under 60 seconds. {seconds} is an integer.
-  ///
-  /// In en, this message translates to:
-  /// **'{seconds}s'**
-  String takSettingsIntervalSeconds(int seconds);
 
   /// Settings tile subtitle explaining the publish interval
   ///
@@ -32888,42 +30657,6 @@ abstract class AppLocalizations {
   /// **'reassigned'**
   String get taskStateReassigned;
 
-  /// Transition note recorded when a task is assigned; may appear in timeline UI. Placeholder: assigneeId
-  ///
-  /// In en, this message translates to:
-  /// **'Assigned to {assigneeId}'**
-  String taskTransitionNoteAssignedTo(String assigneeId);
-
-  /// Transition note recorded when a task is first created; may appear in timeline UI
-  ///
-  /// In en, this message translates to:
-  /// **'Task created'**
-  String get taskTransitionNoteCreated;
-
-  /// Transition note on the new task created by reassignment; may appear in timeline. Placeholder: originalTaskId
-  ///
-  /// In en, this message translates to:
-  /// **'Task created via reassignment from {originalTaskId}'**
-  String taskTransitionNoteCreatedViaReassignment(String originalTaskId);
-
-  /// Transition note when original task is reassigned; may appear in timeline. Placeholder: newTaskId
-  ///
-  /// In en, this message translates to:
-  /// **'Reassigned to new task {newTaskId}'**
-  String taskTransitionNoteReassignedToNewTask(String newTaskId);
-
-  /// Empty state message when no air quality data exists
-  ///
-  /// In en, this message translates to:
-  /// **'No air quality data recorded yet'**
-  String get telemetryAirQualityEmpty;
-
-  /// Screen title for the air quality metrics history screen
-  ///
-  /// In en, this message translates to:
-  /// **'Air Quality Log'**
-  String get telemetryAirQualityLogTitle;
-
   /// Empty-state message when no air quality data exists.
   ///
   /// In en, this message translates to:
@@ -32971,18 +30704,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Particle Counts (per 0.1L)'**
   String get telemetryAirQualityParticleCounts;
-
-  /// Section header label for environmental particulate matter readings
-  ///
-  /// In en, this message translates to:
-  /// **'Particulate Matter (Environmental)'**
-  String get telemetryAirQualityParticulateEnvironmental;
-
-  /// Section header label for standard particulate matter readings
-  ///
-  /// In en, this message translates to:
-  /// **'Particulate Matter (Standard)'**
-  String get telemetryAirQualityParticulateStandard;
 
   /// Label for PM10 particulate matter measurement tile
   ///
@@ -33062,23 +30783,11 @@ abstract class AppLocalizations {
   /// **'Unhealthy (S)'**
   String get telemetryAqiUnhealthySensitive;
 
-  /// Battery status text shown when the battery level exceeds 100% (device is charging)
-  ///
-  /// In en, this message translates to:
-  /// **'Charging'**
-  String get telemetryBatteryCharging;
-
   /// Button label to clear all active filters.
   ///
   /// In en, this message translates to:
   /// **'Clear all filters'**
   String get telemetryClearAllFilters;
-
-  /// Destructive confirm button label in the clear data dialog (used in position and traceroute)
-  ///
-  /// In en, this message translates to:
-  /// **'Clear'**
-  String get telemetryClearConfirmLabel;
 
   /// Menu item label for clearing telemetry data.
   ///
@@ -33116,23 +30825,11 @@ abstract class AppLocalizations {
   /// **'CO₂ - {rating}'**
   String telemetryCo2Label(String rating);
 
-  /// CO₂ quality label combining the CO₂ prefix with the quality rating (e.g. CO₂ - Good)
-  ///
-  /// In en, this message translates to:
-  /// **'CO₂ - {quality}'**
-  String telemetryCo2LabelPrefix(String quality);
-
   /// CO₂ quality rating for poor levels (≥ 2000 ppm).
   ///
   /// In en, this message translates to:
   /// **'Poor'**
   String get telemetryCo2Poor;
-
-  /// CO₂ level display with parts-per-million value and unit
-  ///
-  /// In en, this message translates to:
-  /// **'{ppm} ppm'**
-  String telemetryCo2Ppm(String ppm);
 
   /// PM1.0/PM2.5/PM10 = particulate matter sizes in micrometers. CO2 = carbon dioxide. Air quality sensor readings.
   ///
@@ -33260,12 +30957,6 @@ abstract class AppLocalizations {
   /// **'Date range'**
   String get telemetryDateRangeTooltip;
 
-  /// Badge label when the detection sensor reports no detection (all clear)
-  ///
-  /// In en, this message translates to:
-  /// **'Clear'**
-  String get telemetryDetectionClear;
-
   /// Badge label when a detection sensor is in clear state.
   ///
   /// In en, this message translates to:
@@ -33295,30 +30986,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Detection Sensor'**
   String get telemetryDetectionSensor;
-
-  /// Default name shown for a detection sensor when no name is provided
-  ///
-  /// In en, this message translates to:
-  /// **'Detection Sensor'**
-  String get telemetryDetectionSensorDefault;
-
-  /// Empty state message when no detection sensor events exist
-  ///
-  /// In en, this message translates to:
-  /// **'No sensor events recorded yet'**
-  String get telemetryDetectionSensorEmpty;
-
-  /// Screen title for the detection sensor history screen
-  ///
-  /// In en, this message translates to:
-  /// **'Detection Sensor Log'**
-  String get telemetryDetectionSensorLogTitle;
-
-  /// Empty state subtitle explaining what detection sensors do
-  ///
-  /// In en, this message translates to:
-  /// **'Detection sensors report motion and presence'**
-  String get telemetryDetectionSensorSubtitle;
 
   /// Screen title for the detection sensor log.
   ///
@@ -33518,12 +31185,6 @@ abstract class AppLocalizations {
   /// **'Temperature'**
   String get telemetryEnvironmentLegendTemperature;
 
-  /// Screen title for the environment metrics history screen
-  ///
-  /// In en, this message translates to:
-  /// **'Environment Metrics'**
-  String get telemetryEnvironmentMetricsTitle;
-
   /// Empty-state headline when no environment metrics exist.
   ///
   /// In en, this message translates to:
@@ -33541,12 +31202,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Error: {error}'**
   String telemetryError(String error);
-
-  /// Generic error message prefix shown in error states (used across all telemetry screens)
-  ///
-  /// In en, this message translates to:
-  /// **'Error: {error}'**
-  String telemetryErrorPrefix(String error);
 
   /// Menu item label for exporting data as CSV.
   ///
@@ -33572,89 +31227,11 @@ abstract class AppLocalizations {
   /// **'Failed to clear data: {error}'**
   String telemetryFailedToClear(String error);
 
-  /// Error snackbar message when clearing data fails (used in position and traceroute)
-  ///
-  /// In en, this message translates to:
-  /// **'Failed to clear data: {error}'**
-  String telemetryFailedToClearData(String error);
-
-  /// Filter chip label to filter by air utilization transmit metrics
-  ///
-  /// In en, this message translates to:
-  /// **'Air Util'**
-  String get telemetryFilterAirUtil;
-
   /// Filter chip label showing all entries.
   ///
   /// In en, this message translates to:
   /// **'All'**
   String get telemetryFilterAll;
-
-  /// Filter chip label to filter by battery metrics
-  ///
-  /// In en, this message translates to:
-  /// **'Battery'**
-  String get telemetryFilterBattery;
-
-  /// Filter chip label to filter by channel utilization metrics
-  ///
-  /// In en, this message translates to:
-  /// **'Channel'**
-  String get telemetryFilterChannel;
-
-  /// Filter chip label for gas resistance metrics
-  ///
-  /// In en, this message translates to:
-  /// **'Gas'**
-  String get telemetryFilterGas;
-
-  /// Filter chip label for humidity metrics
-  ///
-  /// In en, this message translates to:
-  /// **'Humidity'**
-  String get telemetryFilterHumidity;
-
-  /// Filter chip label for indoor air quality index metrics
-  ///
-  /// In en, this message translates to:
-  /// **'IAQ'**
-  String get telemetryFilterIaq;
-
-  /// Filter chip label for light/lux sensor metrics
-  ///
-  /// In en, this message translates to:
-  /// **'Light'**
-  String get telemetryFilterLight;
-
-  /// Filter chip label for barometric pressure metrics
-  ///
-  /// In en, this message translates to:
-  /// **'Pressure'**
-  String get telemetryFilterPressure;
-
-  /// Filter chip label for temperature metrics
-  ///
-  /// In en, this message translates to:
-  /// **'Temp'**
-  String get telemetryFilterTemp;
-
-  /// Filter chip label to filter by device uptime metrics
-  ///
-  /// In en, this message translates to:
-  /// **'Uptime'**
-  String get telemetryFilterUptime;
-
-  /// Filter chip label to filter by voltage metrics
-  ///
-  /// In en, this message translates to:
-  /// **'Voltage'**
-  String get telemetryFilterVoltage;
-
-  /// Filter chip label for wind speed metrics
-  ///
-  /// In en, this message translates to:
-  /// **'Wind'**
-  String get telemetryFilterWind;
 
   /// Menu item label for opening help.
   ///
@@ -33662,65 +31239,11 @@ abstract class AppLocalizations {
   /// **'Help'**
   String get telemetryHelp;
 
-  /// Chart legend label for the air utilization TX data series
-  ///
-  /// In en, this message translates to:
-  /// **'Air Util'**
-  String get telemetryLegendAirUtil;
-
-  /// Chart legend label for the battery level data series
-  ///
-  /// In en, this message translates to:
-  /// **'Battery'**
-  String get telemetryLegendBattery;
-
-  /// Chart legend label for the channel utilization data series
-  ///
-  /// In en, this message translates to:
-  /// **'Ch Util'**
-  String get telemetryLegendChUtil;
-
-  /// Chart legend label for the humidity data series
-  ///
-  /// In en, this message translates to:
-  /// **'Humidity'**
-  String get telemetryLegendHumidity;
-
-  /// Chart legend label for the temperature data series
-  ///
-  /// In en, this message translates to:
-  /// **'Temperature'**
-  String get telemetryLegendTemperature;
-
-  /// Chart legend label for the voltage data series
-  ///
-  /// In en, this message translates to:
-  /// **'Voltage'**
-  String get telemetryLegendVoltage;
-
-  /// Menu section header for map tile style options
-  ///
-  /// In en, this message translates to:
-  /// **'Map Style'**
-  String get telemetryMapStyle;
-
   /// Empty-state subtitle when no telemetry has been received yet.
   ///
   /// In en, this message translates to:
   /// **'Metrics will appear when your device reports telemetry'**
   String get telemetryMetricsWillAppear;
-
-  /// Empty state headline when no device metrics have been recorded
-  ///
-  /// In en, this message translates to:
-  /// **'No device metrics yet'**
-  String get telemetryNoDeviceMetricsYet;
-
-  /// Empty state headline when no environment metrics have been recorded
-  ///
-  /// In en, this message translates to:
-  /// **'No environment metrics yet'**
-  String get telemetryNoEnvironmentMetricsYet;
 
   /// Empty-state headline when filters exclude all metrics.
   ///
@@ -33733,24 +31256,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Bluetooth'**
   String get telemetryPaxBluetooth;
-
-  /// Empty state message when no PAX counter data exists
-  ///
-  /// In en, this message translates to:
-  /// **'No PAX data recorded yet'**
-  String get telemetryPaxCounterEmpty;
-
-  /// Screen title for the PAX counter history screen
-  ///
-  /// In en, this message translates to:
-  /// **'PAX Counter Log'**
-  String get telemetryPaxCounterLogTitle;
-
-  /// Empty state subtitle explaining what PAX counter does
-  ///
-  /// In en, this message translates to:
-  /// **'PAX counter detects nearby devices'**
-  String get telemetryPaxCounterSubtitle;
 
   /// Empty-state subtitle for PAX counter screen.
   ///
@@ -33776,30 +31281,6 @@ abstract class AppLocalizations {
   /// **'Uptime: {uptime}'**
   String telemetryPaxUptime(String uptime);
 
-  /// PAX uptime formatted as days and hours (>= 1d)
-  ///
-  /// In en, this message translates to:
-  /// **'{days}d {hours}h'**
-  String telemetryPaxUptimeDaysHours(int days, int hours);
-
-  /// PAX uptime formatted as hours and minutes (< 1d)
-  ///
-  /// In en, this message translates to:
-  /// **'{hours}h {minutes}m'**
-  String telemetryPaxUptimeHoursMinutes(int hours, int minutes);
-
-  /// PAX uptime formatted as minutes (< 1h)
-  ///
-  /// In en, this message translates to:
-  /// **'{minutes}m'**
-  String telemetryPaxUptimeMinutes(int minutes);
-
-  /// PAX uptime formatted as seconds (< 60s)
-  ///
-  /// In en, this message translates to:
-  /// **'{seconds}s'**
-  String telemetryPaxUptimeSeconds(int seconds);
-
   /// Label for WiFi device count in PAX counter.
   ///
   /// In en, this message translates to:
@@ -33817,12 +31298,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'All Nodes'**
   String get telemetryPositionAllNodesOption;
-
-  /// Altitude badge showing elevation in metres
-  ///
-  /// In en, this message translates to:
-  /// **'{meters}m'**
-  String telemetryPositionAltitude(double meters);
 
   /// Confirm button label for the clear-position-data sheet.
   ///
@@ -33853,12 +31328,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count} position{count, plural, =1{} other{s}}'**
   String telemetryPositionCount(int count);
-
-  /// Success snackbar message after clearing position data
-  ///
-  /// In en, this message translates to:
-  /// **'Position data cleared'**
-  String get telemetryPositionDataCleared;
 
   /// Popup menu label for date range selection.
   ///
@@ -33914,12 +31383,6 @@ abstract class AppLocalizations {
   /// **'List view'**
   String get telemetryPositionListView;
 
-  /// Tooltip for the button to switch to list view (shown when in map mode)
-  ///
-  /// In en, this message translates to:
-  /// **'List view'**
-  String get telemetryPositionListViewTooltip;
-
   /// Popup menu section header for map style options.
   ///
   /// In en, this message translates to:
@@ -33931,18 +31394,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Map view'**
   String get telemetryPositionMapView;
-
-  /// Tooltip for the button to switch to map view (shown when in list mode)
-  ///
-  /// In en, this message translates to:
-  /// **'Map view'**
-  String get telemetryPositionMapViewTooltip;
-
-  /// Snackbar message when attempting to export but no position data exists
-  ///
-  /// In en, this message translates to:
-  /// **'No position data to export'**
-  String get telemetryPositionNoDataExport;
 
   /// Map empty-state message when no positions are visible.
   ///
@@ -33968,59 +31419,11 @@ abstract class AppLocalizations {
   /// **'No positions match filters'**
   String get telemetryPositionNoMatch;
 
-  /// Empty state message when active filters exclude all positions
-  ///
-  /// In en, this message translates to:
-  /// **'No positions match filters'**
-  String get telemetryPositionNoMatchFilters;
-
-  /// Map view empty state when no positions are available for the map
-  ///
-  /// In en, this message translates to:
-  /// **'No positions to display'**
-  String get telemetryPositionNoPositionsToDisplay;
-
-  /// Label in the node count pill showing total number of nodes on the map
-  ///
-  /// In en, this message translates to:
-  /// **'{count} nodes'**
-  String telemetryPositionNodeCount(int count);
-
-  /// Title of the node list drawer panel in the map view
-  ///
-  /// In en, this message translates to:
-  /// **'Nodes'**
-  String get telemetryPositionNodeDrawerTitle;
-
   /// Node count pill label on the position map.
   ///
   /// In en, this message translates to:
   /// **'{count} nodes'**
   String telemetryPositionNodesCount(int count);
-
-  /// Badge showing number of GPS satellites in view
-  ///
-  /// In en, this message translates to:
-  /// **'{count} sats'**
-  String telemetryPositionSats(int count);
-
-  /// Label for the 'show all nodes' option in the node list drawer
-  ///
-  /// In en, this message translates to:
-  /// **'All Nodes'**
-  String get telemetryPositionShowAllNodes;
-
-  /// Subtitle for the 'all nodes' option in the node list drawer
-  ///
-  /// In en, this message translates to:
-  /// **'Show positions from all nodes'**
-  String get telemetryPositionShowAllSubtitle;
-
-  /// Badge showing ground speed in kilometres per hour
-  ///
-  /// In en, this message translates to:
-  /// **'{speed} km/h'**
-  String telemetryPositionSpeed(int speed);
 
   /// Stat label for total distance on map.
   ///
@@ -34100,41 +31503,17 @@ abstract class AppLocalizations {
   /// **'Traceroute data cleared'**
   String get telemetryTracerouteCleared;
 
-  /// Success snackbar message after clearing traceroute data
-  ///
-  /// In en, this message translates to:
-  /// **'Traceroute data cleared'**
-  String get telemetryTracerouteDataCleared;
-
-  /// Caption label above the destination node name in a traceroute card
-  ///
-  /// In en, this message translates to:
-  /// **'To'**
-  String get telemetryTracerouteDestinationLabel;
-
   /// Hint shown when a traceroute has zero hops (direct link).
   ///
   /// In en, this message translates to:
   /// **'Direct connection — no intermediate hops'**
   String get telemetryTracerouteDirectConnection;
 
-  /// Empty state message when no traceroutes have been recorded
-  ///
-  /// In en, this message translates to:
-  /// **'No traceroutes recorded yet'**
-  String get telemetryTracerouteEmpty;
-
   /// Empty-state subtitle for the traceroute screen.
   ///
   /// In en, this message translates to:
   /// **'Send a traceroute from a node to see network paths'**
   String get telemetryTracerouteEmptyHint;
-
-  /// Empty state subtitle explaining how to get traceroute data
-  ///
-  /// In en, this message translates to:
-  /// **'Send a traceroute from a node to see network paths'**
-  String get telemetryTracerouteEmptySubtitle;
 
   /// Share sheet subject for traceroute CSV export.
   ///
@@ -34166,18 +31545,6 @@ abstract class AppLocalizations {
   /// **'Forward Path'**
   String get telemetryTracerouteForwardPath;
 
-  /// Screen title for the traceroute history screen
-  ///
-  /// In en, this message translates to:
-  /// **'Traceroute History'**
-  String get telemetryTracerouteHistoryTitle;
-
-  /// SNR value displayed next to individual hop entries in the route path
-  ///
-  /// In en, this message translates to:
-  /// **'{value} dB'**
-  String telemetryTracerouteHopSnr(int value);
-
   /// Label for the return hop count chip in a traceroute card (← is a left arrow)
   ///
   /// In en, this message translates to:
@@ -34201,12 +31568,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No traceroutes recorded yet'**
   String get telemetryTracerouteNoData;
-
-  /// Snackbar message when attempting to export but no traceroute data exists
-  ///
-  /// In en, this message translates to:
-  /// **'No traceroute data to export'**
-  String get telemetryTracerouteNoDataExport;
 
   /// Snackbar message when there is no traceroute data to export.
   ///
@@ -34238,12 +31599,6 @@ abstract class AppLocalizations {
   /// **'Return Path'**
   String get telemetryTracerouteReturnPath;
 
-  /// Signal-to-noise ratio display with decibel unit in a traceroute card
-  ///
-  /// In en, this message translates to:
-  /// **'SNR: {value} dB'**
-  String telemetryTracerouteSnr(int value);
-
   /// Screen title for traceroute log.
   ///
   /// In en, this message translates to:
@@ -34262,41 +31617,11 @@ abstract class AppLocalizations {
   /// **'Try adjusting your search or filters'**
   String get telemetryTryAdjustingFilters;
 
-  /// Formatted uptime string for durations of 1+ days (e.g. '3d 12h')
-  ///
-  /// In en, this message translates to:
-  /// **'{days}d {hours}h'**
-  String telemetryUptimeDaysHours(int days, int hours);
-
-  /// Formatted uptime string for durations of 1+ hours (e.g. '5h 30m')
-  ///
-  /// In en, this message translates to:
-  /// **'{hours}h {minutes}m'**
-  String telemetryUptimeHoursMinutes(int hours, int minutes);
-
-  /// Formatted uptime string for durations under 1 hour (e.g. '45m')
-  ///
-  /// In en, this message translates to:
-  /// **'{minutes}m'**
-  String telemetryUptimeMinutes(int minutes);
-
   /// Empty state subtitle when no events
   ///
   /// In en, this message translates to:
   /// **'Activity will appear here as it happens'**
   String get timelineActivityWillAppear;
-
-  /// Relative time: days ago
-  ///
-  /// In en, this message translates to:
-  /// **'{count}d ago'**
-  String timelineDaysAgo(int count);
-
-  /// Event title for a direct message between two nodes
-  ///
-  /// In en, this message translates to:
-  /// **'{from} → {to}'**
-  String timelineDirectMessage(String from, String to);
 
   /// Filter label: all events
   ///
@@ -34334,29 +31659,11 @@ abstract class AppLocalizations {
   /// **'Friday'**
   String get timelineFriday;
 
-  /// Relative time: hours ago
-  ///
-  /// In en, this message translates to:
-  /// **'{count}h ago'**
-  String timelineHoursAgo(int count);
-
-  /// Relative time: less than 1 minute ago
-  ///
-  /// In en, this message translates to:
-  /// **'just now'**
-  String get timelineJustNow;
-
   /// Event subtitle showing when node was last heard
   ///
   /// In en, this message translates to:
   /// **'Last heard {timeAgo}'**
   String timelineLastHeard(String timeAgo);
-
-  /// Relative time: minutes ago
-  ///
-  /// In en, this message translates to:
-  /// **'{count}m ago'**
-  String timelineMinutesAgo(int count);
 
   /// Weekday name for date group header
   ///
@@ -34412,23 +31719,11 @@ abstract class AppLocalizations {
   /// **'Search events'**
   String get timelineSearchHint;
 
-  /// Event title when another node sent a message
-  ///
-  /// In en, this message translates to:
-  /// **'{name} sent a message'**
-  String timelineSentMessage(String name);
-
   /// Button to clear filter and show all events
   ///
   /// In en, this message translates to:
   /// **'Show all events'**
   String get timelineShowAllEvents;
-
-  /// Signal info showing SNR value
-  ///
-  /// In en, this message translates to:
-  /// **'SNR: {value} dB'**
-  String timelineSnrSignalInfo(double value);
 
   /// Event subtitle showing SNR value
   ///
@@ -34472,12 +31767,6 @@ abstract class AppLocalizations {
   /// **'Tuesday'**
   String get timelineTuesday;
 
-  /// Event title when a node updates GPS position
-  ///
-  /// In en, this message translates to:
-  /// **'{name} updated position'**
-  String timelineUpdatedPosition(String name);
-
   /// Event title for weak signal detection
   ///
   /// In en, this message translates to:
@@ -34495,18 +31784,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Yesterday'**
   String get timelineYesterday;
-
-  /// Event title when user sent a message
-  ///
-  /// In en, this message translates to:
-  /// **'You sent a message'**
-  String get timelineYouSentMessage;
-
-  /// Color option label for accent color
-  ///
-  /// In en, this message translates to:
-  /// **'Accent'**
-  String get widgetBuilderAccent;
 
   /// Action type label
   ///
@@ -34717,42 +31994,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{name} added to Dashboard'**
   String widgetBuilderAddedToDashboard(String name);
-
-  /// Alignment option label (vertical end)
-  ///
-  /// In en, this message translates to:
-  /// **'Bottom'**
-  String get widgetBuilderAlignBottom;
-
-  /// Alignment option label
-  ///
-  /// In en, this message translates to:
-  /// **'Center'**
-  String get widgetBuilderAlignCenter;
-
-  /// Alignment option label (horizontal start)
-  ///
-  /// In en, this message translates to:
-  /// **'Left'**
-  String get widgetBuilderAlignLeft;
-
-  /// Alignment option label (horizontal end)
-  ///
-  /// In en, this message translates to:
-  /// **'Right'**
-  String get widgetBuilderAlignRight;
-
-  /// Alignment option label for space-between
-  ///
-  /// In en, this message translates to:
-  /// **'Spread'**
-  String get widgetBuilderAlignSpread;
-
-  /// Alignment option label (vertical start)
-  ///
-  /// In en, this message translates to:
-  /// **'Top'**
-  String get widgetBuilderAlignTop;
 
   /// Category filter chip label for showing all bindings
   ///
@@ -35648,12 +32889,6 @@ abstract class AppLocalizations {
   /// **'Cancel'**
   String get widgetBuilderCancel;
 
-  /// Cancel button label
-  ///
-  /// In en, this message translates to:
-  /// **'Cancel'**
-  String get widgetBuilderCancelButton;
-
   /// Validation banner message with step instructions
   ///
   /// In en, this message translates to:
@@ -35665,54 +32900,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cannot Save Widget'**
   String get widgetBuilderCannotSaveTitle;
-
-  /// Category name for binding categories
-  ///
-  /// In en, this message translates to:
-  /// **'Air Quality'**
-  String get widgetBuilderCatAirQuality;
-
-  /// Category name for binding categories
-  ///
-  /// In en, this message translates to:
-  /// **'Device Metrics'**
-  String get widgetBuilderCatDeviceMetrics;
-
-  /// Category name for binding categories
-  ///
-  /// In en, this message translates to:
-  /// **'Environment'**
-  String get widgetBuilderCatEnvironment;
-
-  /// Category name for binding categories
-  ///
-  /// In en, this message translates to:
-  /// **'GPS & Position'**
-  String get widgetBuilderCatGpsPosition;
-
-  /// Category name for binding categories
-  ///
-  /// In en, this message translates to:
-  /// **'Messaging'**
-  String get widgetBuilderCatMessaging;
-
-  /// Category name for binding categories
-  ///
-  /// In en, this message translates to:
-  /// **'Network'**
-  String get widgetBuilderCatNetwork;
-
-  /// Category name for binding categories
-  ///
-  /// In en, this message translates to:
-  /// **'Node Info'**
-  String get widgetBuilderCatNodeInfo;
-
-  /// Category name for binding categories
-  ///
-  /// In en, this message translates to:
-  /// **'Power & Battery'**
-  String get widgetBuilderCatPowerBattery;
 
   /// Category display name
   ///
@@ -35870,107 +33057,11 @@ abstract class AppLocalizations {
   /// **'Edit'**
   String get widgetBuilderEdit;
 
-  /// Context menu action
-  ///
-  /// In en, this message translates to:
-  /// **'Edit'**
-  String get widgetBuilderEditAction;
-
-  /// Element type display name
-  ///
-  /// In en, this message translates to:
-  /// **'Button'**
-  String get widgetBuilderElementButton;
-
-  /// Element type display name
-  ///
-  /// In en, this message translates to:
-  /// **'Chart'**
-  String get widgetBuilderElementChart;
-
-  /// Element type display name
-  ///
-  /// In en, this message translates to:
-  /// **'Gauge'**
-  String get widgetBuilderElementGauge;
-
-  /// Element type display name for container
-  ///
-  /// In en, this message translates to:
-  /// **'Group'**
-  String get widgetBuilderElementGroup;
-
-  /// Element type display name for row
-  ///
-  /// In en, this message translates to:
-  /// **'Horizontal Stack'**
-  String get widgetBuilderElementHorizontalStack;
-
-  /// Element type display name
-  ///
-  /// In en, this message translates to:
-  /// **'Icon'**
-  String get widgetBuilderElementIcon;
-
-  /// Element type display name
-  ///
-  /// In en, this message translates to:
-  /// **'Image'**
-  String get widgetBuilderElementImage;
-
-  /// Element type display name for stack
-  ///
-  /// In en, this message translates to:
-  /// **'Layer Stack'**
-  String get widgetBuilderElementLayerStack;
-
-  /// Element type display name
-  ///
-  /// In en, this message translates to:
-  /// **'Map'**
-  String get widgetBuilderElementMap;
-
   /// Error state when selected element cannot be located
   ///
   /// In en, this message translates to:
   /// **'Element not found'**
   String get widgetBuilderElementNotFound;
-
-  /// Element type display name
-  ///
-  /// In en, this message translates to:
-  /// **'Shape'**
-  String get widgetBuilderElementShape;
-
-  /// Element type display name
-  ///
-  /// In en, this message translates to:
-  /// **'Show/Hide'**
-  String get widgetBuilderElementShowHide;
-
-  /// Element type display name for spacer
-  ///
-  /// In en, this message translates to:
-  /// **'Space'**
-  String get widgetBuilderElementSpace;
-
-  /// Element type display name
-  ///
-  /// In en, this message translates to:
-  /// **'Text'**
-  String get widgetBuilderElementText;
-
-  /// Element type display name for column
-  ///
-  /// In en, this message translates to:
-  /// **'Vertical Stack'**
-  String get widgetBuilderElementVerticalStack;
-
-  /// Toolbox header
-  ///
-  /// In en, this message translates to:
-  /// **'Elements'**
-  String get widgetBuilderElements;
 
   /// Warning when location sharing is disabled
   ///
@@ -36494,12 +33585,6 @@ abstract class AppLocalizations {
   /// **'{name} installed!'**
   String widgetBuilderInstalledSuccess(String name);
 
-  /// Relative time for recent events
-  ///
-  /// In en, this message translates to:
-  /// **'Just now'**
-  String get widgetBuilderJustNow;
-
   /// Button label to keep current widget style
   ///
   /// In en, this message translates to:
@@ -36512,12 +33597,6 @@ abstract class AppLocalizations {
   /// **'Accent'**
   String get widgetBuilderLabelAccent;
 
-  /// Property field label for action dropdown
-  ///
-  /// In en, this message translates to:
-  /// **'Add Action'**
-  String get widgetBuilderLabelAddAction;
-
   /// Property field label for data binding
   ///
   /// In en, this message translates to:
@@ -36529,12 +33608,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Gap between items'**
   String get widgetBuilderLabelGap;
-
-  /// Alignment label for row
-  ///
-  /// In en, this message translates to:
-  /// **'Horizontal'**
-  String get widgetBuilderLabelHorizontal;
 
   /// Hint text for threshold label input field
   ///
@@ -36595,12 +33668,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'URL'**
   String get widgetBuilderLabelUrl;
-
-  /// Alignment label for column
-  ///
-  /// In en, this message translates to:
-  /// **'Vertical'**
-  String get widgetBuilderLabelVertical;
 
   /// Size constraint info text
   ///
@@ -36848,12 +33915,6 @@ abstract class AppLocalizations {
   /// **'Processing...'**
   String get widgetBuilderMarketplaceProcessing;
 
-  /// Reject button label
-  ///
-  /// In en, this message translates to:
-  /// **'Reject'**
-  String get widgetBuilderMarketplaceReject;
-
   /// Card reject button label
   ///
   /// In en, this message translates to:
@@ -36877,12 +33938,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Retry'**
   String get widgetBuilderMarketplaceRetry;
-
-  /// Retry button label
-  ///
-  /// In en, this message translates to:
-  /// **'Retry'**
-  String get widgetBuilderMarketplaceRetryButton;
 
   /// Search bar hint text
   ///
@@ -36992,12 +34047,6 @@ abstract class AppLocalizations {
   /// **'New Widget'**
   String get widgetBuilderNewWidget;
 
-  /// Placeholder text when no actions are selected in wizard preview
-  ///
-  /// In en, this message translates to:
-  /// **'No actions selected'**
-  String get widgetBuilderNoActionsSelected;
-
   /// Message when action has no configurable options
   ///
   /// In en, this message translates to:
@@ -37039,12 +34088,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No sensor data selected'**
   String get widgetBuilderNoSensorDataSelected;
-
-  /// Empty state when variable search yields no results
-  ///
-  /// In en, this message translates to:
-  /// **'No variables found'**
-  String get widgetBuilderNoVariablesFound;
 
   /// Option label for no binding selected
   ///
@@ -37148,29 +34191,11 @@ abstract class AppLocalizations {
   /// **'Search variables...'**
   String get widgetBuilderSearchVariables;
 
-  /// Property section title
-  ///
-  /// In en, this message translates to:
-  /// **'Action'**
-  String get widgetBuilderSectionAction;
-
   /// Block picker section title for action blocks
   ///
   /// In en, this message translates to:
   /// **'Action Blocks'**
   String get widgetBuilderSectionActionBlocks;
-
-  /// Property section title
-  ///
-  /// In en, this message translates to:
-  /// **'Content'**
-  String get widgetBuilderSectionContent;
-
-  /// Property section title
-  ///
-  /// In en, this message translates to:
-  /// **'Data Binding'**
-  String get widgetBuilderSectionDataBinding;
 
   /// Block picker section title for display blocks
   ///
@@ -37201,12 +34226,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'NETWORK'**
   String get widgetBuilderSectionNetwork;
-
-  /// Property section title
-  ///
-  /// In en, this message translates to:
-  /// **'Style'**
-  String get widgetBuilderSectionStyle;
 
   /// Button label when no action selected
   ///
@@ -37475,108 +34494,6 @@ abstract class AppLocalizations {
   /// **'Toggle Toolbox'**
   String get widgetBuilderToggleToolbox;
 
-  /// Toolbox element label
-  ///
-  /// In en, this message translates to:
-  /// **'Chart'**
-  String get widgetBuilderToolboxChart;
-
-  /// Toolbox element label
-  ///
-  /// In en, this message translates to:
-  /// **'Column'**
-  String get widgetBuilderToolboxColumn;
-
-  /// Toolbox element label
-  ///
-  /// In en, this message translates to:
-  /// **'Conditional'**
-  String get widgetBuilderToolboxConditional;
-
-  /// Toolbox element label
-  ///
-  /// In en, this message translates to:
-  /// **'Container'**
-  String get widgetBuilderToolboxContainer;
-
-  /// Toolbox section title
-  ///
-  /// In en, this message translates to:
-  /// **'Content'**
-  String get widgetBuilderToolboxContent;
-
-  /// Toolbox section title
-  ///
-  /// In en, this message translates to:
-  /// **'Data Display'**
-  String get widgetBuilderToolboxDataDisplay;
-
-  /// Toolbox element label
-  ///
-  /// In en, this message translates to:
-  /// **'Gauge'**
-  String get widgetBuilderToolboxGauge;
-
-  /// Toolbox element label
-  ///
-  /// In en, this message translates to:
-  /// **'Icon'**
-  String get widgetBuilderToolboxIcon;
-
-  /// Toolbox element label
-  ///
-  /// In en, this message translates to:
-  /// **'Image'**
-  String get widgetBuilderToolboxImage;
-
-  /// Toolbox section title
-  ///
-  /// In en, this message translates to:
-  /// **'Layout'**
-  String get widgetBuilderToolboxLayout;
-
-  /// Toolbox section title
-  ///
-  /// In en, this message translates to:
-  /// **'Logic'**
-  String get widgetBuilderToolboxLogic;
-
-  /// Toolbox element label
-  ///
-  /// In en, this message translates to:
-  /// **'Map'**
-  String get widgetBuilderToolboxMap;
-
-  /// Toolbox element label
-  ///
-  /// In en, this message translates to:
-  /// **'Row'**
-  String get widgetBuilderToolboxRow;
-
-  /// Toolbox element label
-  ///
-  /// In en, this message translates to:
-  /// **'Shape'**
-  String get widgetBuilderToolboxShape;
-
-  /// Toolbox element label
-  ///
-  /// In en, this message translates to:
-  /// **'Spacer'**
-  String get widgetBuilderToolboxSpacer;
-
-  /// Toolbox element label
-  ///
-  /// In en, this message translates to:
-  /// **'Stack'**
-  String get widgetBuilderToolboxStack;
-
-  /// Toolbox element label
-  ///
-  /// In en, this message translates to:
-  /// **'Text'**
-  String get widgetBuilderToolboxText;
-
   /// Traceroute description without node picker
   ///
   /// In en, this message translates to:
@@ -37709,221 +34626,11 @@ abstract class AppLocalizations {
   /// **'Quick Actions requires at least one action selected. You have data bindings but no actions.'**
   String get widgetBuilderValidationActionsRequired;
 
-  /// Validation error message
-  ///
-  /// In en, this message translates to:
-  /// **'Chart has no data binding'**
-  String get widgetBuilderValidationChartNoBinding;
-
-  /// Validation fix suggestion
-  ///
-  /// In en, this message translates to:
-  /// **'Bind to data like SNR history'**
-  String get widgetBuilderValidationChartNoBindingFix;
-
   /// Validation error when data template has no bindings
   ///
   /// In en, this message translates to:
   /// **'This template requires data bindings. You have actions selected but no data.'**
   String get widgetBuilderValidationDataRequired;
-
-  /// Validation fix suggestion
-  ///
-  /// In en, this message translates to:
-  /// **'Shorten the description'**
-  String get widgetBuilderValidationDescTooLongFix;
-
-  /// Validation error message
-  ///
-  /// In en, this message translates to:
-  /// **'Widget is empty'**
-  String get widgetBuilderValidationEmpty;
-
-  /// Validation fix suggestion
-  ///
-  /// In en, this message translates to:
-  /// **'Add elements inside'**
-  String get widgetBuilderValidationEmptyContainerFix;
-
-  /// Validation fix suggestion
-  ///
-  /// In en, this message translates to:
-  /// **'Add some elements to your widget'**
-  String get widgetBuilderValidationEmptyFix;
-
-  /// Validation error message
-  ///
-  /// In en, this message translates to:
-  /// **'Gauge min must be less than max'**
-  String get widgetBuilderValidationGaugeMinMax;
-
-  /// Validation fix suggestion
-  ///
-  /// In en, this message translates to:
-  /// **'Set min < max'**
-  String get widgetBuilderValidationGaugeMinMaxFix;
-
-  /// Validation error message
-  ///
-  /// In en, this message translates to:
-  /// **'Gauge has no data binding'**
-  String get widgetBuilderValidationGaugeNoBinding;
-
-  /// Validation fix suggestion
-  ///
-  /// In en, this message translates to:
-  /// **'Bind to a numeric value like battery or signal'**
-  String get widgetBuilderValidationGaugeNoBindingFix;
-
-  /// Validation warning message
-  ///
-  /// In en, this message translates to:
-  /// **'Gauge is bound to non-numeric data'**
-  String get widgetBuilderValidationGaugeNonNumeric;
-
-  /// Validation fix suggestion
-  ///
-  /// In en, this message translates to:
-  /// **'Gauges work best with numeric values'**
-  String get widgetBuilderValidationGaugeNonNumericFix;
-
-  /// Validation fix suggestion
-  ///
-  /// In en, this message translates to:
-  /// **'Select a valid data source'**
-  String get widgetBuilderValidationInvalidBindingFix;
-
-  /// Validation warning message
-  ///
-  /// In en, this message translates to:
-  /// **'URL may be invalid'**
-  String get widgetBuilderValidationInvalidUrl;
-
-  /// Success message when no validation issues
-  ///
-  /// In en, this message translates to:
-  /// **'Widget looks good!'**
-  String get widgetBuilderValidationLooksGood;
-
-  /// Validation fix suggestion
-  ///
-  /// In en, this message translates to:
-  /// **'Use a shorter name'**
-  String get widgetBuilderValidationNameTooLongFix;
-
-  /// Validation error message
-  ///
-  /// In en, this message translates to:
-  /// **'Give your widget a descriptive name'**
-  String get widgetBuilderValidationNeedName;
-
-  /// Validation fix suggestion
-  ///
-  /// In en, this message translates to:
-  /// **'Tap the title to rename'**
-  String get widgetBuilderValidationNeedNameFix;
-
-  /// Validation fix suggestion
-  ///
-  /// In en, this message translates to:
-  /// **'Flatten your widget structure'**
-  String get widgetBuilderValidationNestingFix;
-
-  /// Validation error message
-  ///
-  /// In en, this message translates to:
-  /// **'Action button has no action configured'**
-  String get widgetBuilderValidationNoAction;
-
-  /// Validation fix suggestion
-  ///
-  /// In en, this message translates to:
-  /// **'Configure what happens when tapped'**
-  String get widgetBuilderValidationNoActionFix;
-
-  /// Validation error message
-  ///
-  /// In en, this message translates to:
-  /// **'Navigate action has no destination'**
-  String get widgetBuilderValidationNoDestination;
-
-  /// Validation fix suggestion
-  ///
-  /// In en, this message translates to:
-  /// **'Select where to navigate'**
-  String get widgetBuilderValidationNoDestinationFix;
-
-  /// Validation error message
-  ///
-  /// In en, this message translates to:
-  /// **'Icon element has no icon selected'**
-  String get widgetBuilderValidationNoIcon;
-
-  /// Validation fix suggestion
-  ///
-  /// In en, this message translates to:
-  /// **'Select an icon'**
-  String get widgetBuilderValidationNoIconFix;
-
-  /// Validation error message
-  ///
-  /// In en, this message translates to:
-  /// **'Button has no label or icon'**
-  String get widgetBuilderValidationNoLabel;
-
-  /// Validation fix suggestion
-  ///
-  /// In en, this message translates to:
-  /// **'Add text or an icon'**
-  String get widgetBuilderValidationNoLabelFix;
-
-  /// Validation error message
-  ///
-  /// In en, this message translates to:
-  /// **'Text element has no content'**
-  String get widgetBuilderValidationNoText;
-
-  /// Validation fix suggestion
-  ///
-  /// In en, this message translates to:
-  /// **'Add text or bind to data'**
-  String get widgetBuilderValidationNoTextFix;
-
-  /// Validation error message
-  ///
-  /// In en, this message translates to:
-  /// **'Open URL action has no URL'**
-  String get widgetBuilderValidationNoUrl;
-
-  /// Validation fix suggestion
-  ///
-  /// In en, this message translates to:
-  /// **'Enter the URL to open'**
-  String get widgetBuilderValidationNoUrlFix;
-
-  /// Validation fix suggestion
-  ///
-  /// In en, this message translates to:
-  /// **'Shorten the text content'**
-  String get widgetBuilderValidationTextTooLongFix;
-
-  /// Validation fix suggestion
-  ///
-  /// In en, this message translates to:
-  /// **'Split into multiple containers'**
-  String get widgetBuilderValidationTooManyChildrenFix;
-
-  /// Validation fix suggestion
-  ///
-  /// In en, this message translates to:
-  /// **'Simplify your widget by removing unnecessary elements'**
-  String get widgetBuilderValidationTooManyElementsFix;
-
-  /// Validation fix suggestion
-  ///
-  /// In en, this message translates to:
-  /// **'Remove some tags'**
-  String get widgetBuilderValidationTooManyTagsFix;
 
   /// Action label for settings navigation
   ///
@@ -38884,12 +35591,6 @@ abstract class AppLocalizations {
   /// **'Widget not found'**
   String get deepLinkWidgetNotFound;
 
-  /// No description provided for @deepLinkCouldNotDecryptChannel.
-  ///
-  /// In en, this message translates to:
-  /// **'Could not decrypt channel key'**
-  String get deepLinkCouldNotDecryptChannel;
-
   /// No description provided for @deepLinkAlreadyHaveChannel.
   ///
   /// In en, this message translates to:
@@ -39051,24 +35752,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'(no key set)'**
   String get channelKeyNoKeySet;
-
-  /// No description provided for @channelKeyInvalidBase64.
-  ///
-  /// In en, this message translates to:
-  /// **'Invalid base64 encoding'**
-  String get channelKeyInvalidBase64;
-
-  /// No description provided for @channelKeyInvalidSize.
-  ///
-  /// In en, this message translates to:
-  /// **'Invalid key size ({size} bytes). Use 1, 16, or 32 bytes.'**
-  String channelKeyInvalidSize(int size);
-
-  /// No description provided for @channelKeyEmpty.
-  ///
-  /// In en, this message translates to:
-  /// **'Key cannot be empty'**
-  String get channelKeyEmpty;
 
   /// No description provided for @channelKeyHide.
   ///
@@ -39393,24 +36076,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Link Device'**
   String get devicePrivacyLinkDevice;
-
-  /// No description provided for @dateTimePickerSelectDate.
-  ///
-  /// In en, this message translates to:
-  /// **'Select Date'**
-  String get dateTimePickerSelectDate;
-
-  /// No description provided for @dateTimePickerSelectTime.
-  ///
-  /// In en, this message translates to:
-  /// **'Select Time'**
-  String get dateTimePickerSelectTime;
-
-  /// No description provided for @dateTimePickerSelectDateTime.
-  ///
-  /// In en, this message translates to:
-  /// **'Select Date & Time'**
-  String get dateTimePickerSelectDateTime;
 
   /// No description provided for @dateTimePickerMonthJanuary.
   ///
@@ -41980,12 +38645,6 @@ abstract class AppLocalizations {
   /// **'Russian'**
   String get appearanceLanguageRussian;
 
-  /// No description provided for @appearanceLanguagePickerTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Select Language'**
-  String get appearanceLanguagePickerTitle;
-
   /// No description provided for @appearanceFont.
   ///
   /// In en, this message translates to:
@@ -42141,12 +38800,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Glyph Matrix Test'**
   String get settingsGlyphMatrixTest;
-
-  /// No description provided for @settingsGlyphMatrixSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Nothing Phone 3 LED patterns'**
-  String get settingsGlyphMatrixSubtitle;
 
   /// No description provided for @cloudSyncUnableToLoad.
   ///
@@ -45650,24 +42303,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Linking an account requires an internet connection.'**
   String get accountSubLinkingRequiresInternet;
-
-  /// No description provided for @accountSubIftttDataSharing.
-  ///
-  /// In en, this message translates to:
-  /// **'IFTTT Data Sharing'**
-  String get accountSubIftttDataSharing;
-
-  /// No description provided for @accountSubIftttDisclosureMsg.
-  ///
-  /// In en, this message translates to:
-  /// **'When IFTTT Webhooks are enabled, mesh event data (messages, node status, positions, battery levels) will be sent to IFTTT servers via your personal webhook key.\n\nIFTTT is a third-party service with its own privacy policy. Only the event types you select will be transmitted.'**
-  String get accountSubIftttDisclosureMsg;
-
-  /// No description provided for @accountSubIUnderstand.
-  ///
-  /// In en, this message translates to:
-  /// **'I Understand'**
-  String get accountSubIUnderstand;
 
   /// No description provided for @accountSubConfirm.
   ///
@@ -50865,12 +47500,6 @@ abstract class AppLocalizations {
   /// **'Add Widgets'**
   String get dashboardAddWidgets;
 
-  /// No description provided for @dashboardChLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Ch'**
-  String get dashboardChLabel;
-
   /// No description provided for @dashboardChUtilLabel.
   ///
   /// In en, this message translates to:
@@ -50888,12 +47517,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Edit Dashboard'**
   String get dashboardEditTitle;
-
-  /// No description provided for @dashboardEmptyDashboardMessage.
-  ///
-  /// In en, this message translates to:
-  /// **'Customize your dashboard with widgets that matter to you'**
-  String get dashboardEmptyDashboardMessage;
 
   /// No description provided for @dashboardHealthConnection.
   ///
@@ -50960,12 +47583,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No nearby nodes detected'**
   String get dashboardNoNearbyNodes;
-
-  /// No description provided for @dashboardNoWidgetsAdded.
-  ///
-  /// In en, this message translates to:
-  /// **'No Widgets Added'**
-  String get dashboardNoWidgetsAdded;
 
   /// No description provided for @dashboardNoSignalData.
   ///
@@ -51363,12 +47980,6 @@ abstract class AppLocalizations {
   /// **'Pre-configured (public credentials)'**
   String get globalLayerPreConfiguredAuth;
 
-  /// No description provided for @globalLayerSaveConfigFailed.
-  ///
-  /// In en, this message translates to:
-  /// **'Failed to save configuration: {error}'**
-  String globalLayerSaveConfigFailed(String error);
-
   /// No description provided for @globalLayerServer.
   ///
   /// In en, this message translates to:
@@ -51452,30 +48063,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Close panel'**
   String get mapNodeDrawerClosePanel;
-
-  /// No description provided for @messageDetailFrom.
-  ///
-  /// In en, this message translates to:
-  /// **'From: {senderName}'**
-  String messageDetailFrom(String senderName);
-
-  /// No description provided for @messageDetailHops.
-  ///
-  /// In en, this message translates to:
-  /// **'{count, plural, =1{1 hop} other{{count} hops}}'**
-  String messageDetailHops(int count);
-
-  /// No description provided for @messageDetailRssi.
-  ///
-  /// In en, this message translates to:
-  /// **'RSSI {value} dBm'**
-  String messageDetailRssi(double value);
-
-  /// No description provided for @messageDetailSnr.
-  ///
-  /// In en, this message translates to:
-  /// **'SNR {value} dB'**
-  String messageDetailSnr(double value);
 
   /// No description provided for @nodeSelectorSearchHint.
   ///
@@ -51609,12 +48196,6 @@ abstract class AppLocalizations {
   /// **'Error: {error}'**
   String themeSettingsError(String error);
 
-  /// No description provided for @timelineWeakSignalFrom.
-  ///
-  /// In en, this message translates to:
-  /// **'Weak signal from {nodeName}'**
-  String timelineWeakSignalFrom(String nodeName);
-
   /// No description provided for @widgetWizardAdd.
   ///
   /// In en, this message translates to:
@@ -51632,12 +48213,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete all ({count})'**
   String adminPostsDeleteAllCount(int count);
-
-  /// No description provided for @adminPostsCreatedDate.
-  ///
-  /// In en, this message translates to:
-  /// **'Created {date}'**
-  String adminPostsCreatedDate(String date);
 
   /// No description provided for @globalLayerAllowInboundChat.
   ///
@@ -53829,54 +50404,6 @@ abstract class AppLocalizations {
   /// **'TAK Settings let you configure the gateway URL, toggle auto-connect '**
   String get helpTakSectionSettings;
 
-  /// Help category name: Channels
-  ///
-  /// In en, this message translates to:
-  /// **'Channels'**
-  String get helpCategoryChannels;
-
-  /// Help category name: Messaging
-  ///
-  /// In en, this message translates to:
-  /// **'Messaging'**
-  String get helpCategoryMessaging;
-
-  /// Help category name: Nodes
-  ///
-  /// In en, this message translates to:
-  /// **'Nodes'**
-  String get helpCategoryNodes;
-
-  /// Help category name: Device
-  ///
-  /// In en, this message translates to:
-  /// **'Device'**
-  String get helpCategoryDevice;
-
-  /// Help category name: Network
-  ///
-  /// In en, this message translates to:
-  /// **'Network'**
-  String get helpCategoryNetwork;
-
-  /// Help category name: Automations
-  ///
-  /// In en, this message translates to:
-  /// **'Automations'**
-  String get helpCategoryAutomations;
-
-  /// Help category name: Settings
-  ///
-  /// In en, this message translates to:
-  /// **'Settings'**
-  String get helpCategorySettings;
-
-  /// Help category name: Legal & Safety
-  ///
-  /// In en, this message translates to:
-  /// **'Legal & Safety'**
-  String get helpCategoryLegal;
-
   /// Title for blocked route screen
   ///
   /// In en, this message translates to:
@@ -53918,36 +50445,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed: {error}'**
   String failedGeneric(String error);
-
-  /// Last heard time when node was never heard
-  ///
-  /// In en, this message translates to:
-  /// **'Never'**
-  String get lastHeardNever;
-
-  /// Last heard time for less than a minute ago
-  ///
-  /// In en, this message translates to:
-  /// **'Just now'**
-  String get lastHeardJustNow;
-
-  /// Last heard time in minutes
-  ///
-  /// In en, this message translates to:
-  /// **'{count}m ago'**
-  String lastHeardMinutesAgo(int count);
-
-  /// Last heard time in hours
-  ///
-  /// In en, this message translates to:
-  /// **'{count}h ago'**
-  String lastHeardHoursAgo(int count);
-
-  /// Last heard time in days
-  ///
-  /// In en, this message translates to:
-  /// **'{count}d ago'**
-  String lastHeardDaysAgo(int count);
 
   /// Error when signal location radius update fails
   ///
@@ -54367,12 +50864,6 @@ abstract class AppLocalizations {
   /// **'Delay'**
   String get flowNodeDelay;
 
-  /// Visual flow port title: Input N
-  ///
-  /// In en, this message translates to:
-  /// **'Input {index}'**
-  String flowNodeInputN(int index);
-
   /// Visual flow port title: All Met
   ///
   /// In en, this message translates to:
@@ -54403,23 +50894,11 @@ abstract class AppLocalizations {
   /// **'Low Battery Alert'**
   String get automationTemplateLowBatteryTitle;
 
-  /// Automation template description
-  ///
-  /// In en, this message translates to:
-  /// **'Get notified when your device battery drops below 20%'**
-  String get automationTemplateLowBatteryDescription;
-
   /// Automation template title
   ///
   /// In en, this message translates to:
   /// **'Node Offline Alert'**
   String get automationTemplateNodeOfflineTitle;
-
-  /// Automation template description
-  ///
-  /// In en, this message translates to:
-  /// **'Alert when a specific node hasn\'t been seen for 30 minutes'**
-  String get automationTemplateNodeOfflineDescription;
 
   /// Automation template title
   ///
@@ -54457,47 +50936,23 @@ abstract class AppLocalizations {
   /// **'Broadcast emergency position every 5 minutes when triggered'**
   String get automationTemplateEmergencyBeaconDescription;
 
-  /// Widget template description for battery gauge
+  /// Automation template title
   ///
   /// In en, this message translates to:
-  /// **'Display battery level with gauge'**
-  String get widgetTemplateBatteryGaugeDescription;
+  /// **'Geofence Exit Alert'**
+  String get automationTemplateGeofenceExitTitle;
 
-  /// Widget template description for signal meter
+  /// Automation template title
   ///
   /// In en, this message translates to:
-  /// **'Display SNR and RSSI'**
-  String get widgetTemplateSignalMeterDescription;
+  /// **'SOS Response'**
+  String get automationTemplateSosTitle;
 
-  /// Widget template description for environment
+  /// Automation template title
   ///
   /// In en, this message translates to:
-  /// **'Temperature, humidity, and pressure display'**
-  String get widgetTemplateEnvironmentDescription;
-
-  /// Widget template description for node info
-  ///
-  /// In en, this message translates to:
-  /// **'Basic node information card'**
-  String get widgetTemplateNodeInfoDescription;
-
-  /// Widget template description for GPS
-  ///
-  /// In en, this message translates to:
-  /// **'Show GPS coordinates and satellites'**
-  String get widgetTemplateGpsDescription;
-
-  /// Widget template description for mesh status
-  ///
-  /// In en, this message translates to:
-  /// **'Mesh network status at a glance'**
-  String get widgetTemplateMeshStatusDescription;
-
-  /// Widget template description for quick actions
-  ///
-  /// In en, this message translates to:
-  /// **'Common mesh actions at a glance'**
-  String get widgetTemplateQuickActionsDescription;
+  /// **'Dead Man\'s Switch'**
+  String get automationTemplateDeadManTitle;
 
   /// What's new CTA button: Open World Map
   ///
@@ -54546,6 +51001,432 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'What\'s New in Socialmesh'**
   String get whatsNewHeadline;
+
+  /// No description provided for @connectingStatusInitializing.
+  ///
+  /// In en, this message translates to:
+  /// **'Initializing'**
+  String get connectingStatusInitializing;
+
+  /// No description provided for @connectingStatusScanning.
+  ///
+  /// In en, this message translates to:
+  /// **'Scanning for device'**
+  String get connectingStatusScanning;
+
+  /// No description provided for @connectingStatusConnecting.
+  ///
+  /// In en, this message translates to:
+  /// **'Connecting'**
+  String get connectingStatusConnecting;
+
+  /// No description provided for @connectingStatusAutoReconnecting.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-reconnecting'**
+  String get connectingStatusAutoReconnecting;
+
+  /// No description provided for @connectingStatusConfiguring.
+  ///
+  /// In en, this message translates to:
+  /// **'Configuring device'**
+  String get connectingStatusConfiguring;
+
+  /// No description provided for @connectingStatusConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected'**
+  String get connectingStatusConnected;
+
+  /// No description provided for @connectingStatusFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection failed'**
+  String get connectingStatusFailed;
+
+  /// No description provided for @profileAvatarUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Avatar updated'**
+  String get profileAvatarUpdated;
+
+  /// No description provided for @profileAvatarRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'Avatar removed'**
+  String get profileAvatarRemoved;
+
+  /// No description provided for @profileBannerUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Banner updated'**
+  String get profileBannerUpdated;
+
+  /// No description provided for @profileBannerRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'Banner removed'**
+  String get profileBannerRemoved;
+
+  /// No description provided for @commonOpenSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Settings'**
+  String get commonOpenSettings;
+
+  /// No description provided for @socialGuidelineNoViolentImagery.
+  ///
+  /// In en, this message translates to:
+  /// **'No violent or graphic imagery'**
+  String get socialGuidelineNoViolentImagery;
+
+  /// No description provided for @globalLayerConnectionTestLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'CONNECTION TEST'**
+  String get globalLayerConnectionTestLabel;
+
+  /// No description provided for @commonSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign In'**
+  String get commonSignIn;
+
+  /// No description provided for @onboardingSignalContentMike.
+  ///
+  /// In en, this message translates to:
+  /// **'Base camp is set. Ready when you are.'**
+  String get onboardingSignalContentMike;
+
+  /// No description provided for @onboardingSignalContentAlex.
+  ///
+  /// In en, this message translates to:
+  /// **'On my way, ETA 15 min'**
+  String get onboardingSignalContentAlex;
+
+  /// No description provided for @automationErrorSendMsgNotConfigured.
+  ///
+  /// In en, this message translates to:
+  /// **'Send message callback not configured'**
+  String get automationErrorSendMsgNotConfigured;
+
+  /// No description provided for @automationErrorNoTargetNode.
+  ///
+  /// In en, this message translates to:
+  /// **'No target node specified'**
+  String get automationErrorNoTargetNode;
+
+  /// No description provided for @automationErrorSendChannelNotConfigured.
+  ///
+  /// In en, this message translates to:
+  /// **'Send to channel callback not configured'**
+  String get automationErrorSendChannelNotConfigured;
+
+  /// No description provided for @automationErrorNoTargetChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'No target channel specified'**
+  String get automationErrorNoTargetChannel;
+
+  /// No description provided for @automationErrorNoSoundConfigured.
+  ///
+  /// In en, this message translates to:
+  /// **'No sound configured'**
+  String get automationErrorNoSoundConfigured;
+
+  /// No description provided for @automationErrorPlaySoundFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to play sound: {error}'**
+  String automationErrorPlaySoundFailed(String error);
+
+  /// No description provided for @automationErrorNotificationsNotInit.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications not initialized'**
+  String get automationErrorNotificationsNotInit;
+
+  /// No description provided for @automationErrorNoWebhookEvent.
+  ///
+  /// In en, this message translates to:
+  /// **'No webhook event name specified'**
+  String get automationErrorNoWebhookEvent;
+
+  /// No description provided for @automationErrorIftttNotConfigured.
+  ///
+  /// In en, this message translates to:
+  /// **'IFTTT not configured — enable IFTTT and set webhook key in settings'**
+  String get automationErrorIftttNotConfigured;
+
+  /// No description provided for @automationErrorWebhookFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Webhook request failed — check network connection'**
+  String get automationErrorWebhookFailed;
+
+  /// No description provided for @automationErrorSendMsgFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to send message'**
+  String get automationErrorSendMsgFailed;
+
+  /// No description provided for @automationErrorSendChannelFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to send to channel'**
+  String get automationErrorSendChannelFailed;
+
+  /// No description provided for @automationErrorShortcutsIosOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Shortcuts only available on iOS'**
+  String get automationErrorShortcutsIosOnly;
+
+  /// No description provided for @automationErrorNoShortcutName.
+  ///
+  /// In en, this message translates to:
+  /// **'No shortcut name specified'**
+  String get automationErrorNoShortcutName;
+
+  /// No description provided for @automationErrorShortcutLaunchFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not launch shortcut \"{name}\"'**
+  String automationErrorShortcutLaunchFailed(String name);
+
+  /// No description provided for @automationErrorShortcutRunFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to run shortcut: {error}'**
+  String automationErrorShortcutRunFailed(String error);
+
+  /// No description provided for @automationErrorGlyphNotAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Glyph interface not available'**
+  String get automationErrorGlyphNotAvailable;
+
+  /// No description provided for @automationErrorGlyphPatternFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to show glyph pattern: {error}'**
+  String automationErrorGlyphPatternFailed(String error);
+
+  /// No description provided for @automationTemplateLowBatteryDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Notify when a node battery drops below 20%'**
+  String get automationTemplateLowBatteryDesc;
+
+  /// No description provided for @automationTemplateNodeOfflineDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Notify when a node goes offline'**
+  String get automationTemplateNodeOfflineDesc;
+
+  /// No description provided for @automationTemplateGeofenceExitDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Alert when a node leaves a designated area'**
+  String get automationTemplateGeofenceExitDesc;
+
+  /// No description provided for @automationTemplateSosDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-reply when receiving SOS message'**
+  String get automationTemplateSosDesc;
+
+  /// No description provided for @automationTemplateDeadManDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Alert if no activity from node for 30 minutes'**
+  String get automationTemplateDeadManDesc;
+
+  /// No description provided for @automationScheduledTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled Automation'**
+  String get automationScheduledTitle;
+
+  /// No description provided for @automationScheduledBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to run scheduled automation'**
+  String get automationScheduledBody;
+
+  /// No description provided for @authErrorGoogleSignInCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Google sign in was cancelled'**
+  String get authErrorGoogleSignInCancelled;
+
+  /// No description provided for @authErrorGoogleNoIdToken.
+  ///
+  /// In en, this message translates to:
+  /// **'Google sign in did not return an ID token'**
+  String get authErrorGoogleNoIdToken;
+
+  /// No description provided for @authErrorNoCurrentUser.
+  ///
+  /// In en, this message translates to:
+  /// **'No user is currently signed in'**
+  String get authErrorNoCurrentUser;
+
+  /// No description provided for @authErrorGoogleReauthCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Google re-authentication was cancelled'**
+  String get authErrorGoogleReauthCancelled;
+
+  /// No description provided for @authErrorNoSupportedProvider.
+  ///
+  /// In en, this message translates to:
+  /// **'No supported provider found for re-authentication'**
+  String get authErrorNoSupportedProvider;
+
+  /// No description provided for @authErrorNoUserSignedIn.
+  ///
+  /// In en, this message translates to:
+  /// **'No user signed in'**
+  String get authErrorNoUserSignedIn;
+
+  /// No description provided for @authErrorSessionLost.
+  ///
+  /// In en, this message translates to:
+  /// **'User session lost during re-authentication'**
+  String get authErrorSessionLost;
+
+  /// No description provided for @authErrorVerificationCodeFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to send verification code'**
+  String get authErrorVerificationCodeFailed;
+
+  /// No description provided for @connectionErrorBluetoothDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Bluetooth is disabled'**
+  String get connectionErrorBluetoothDisabled;
+
+  /// No description provided for @connectionErrorDeviceNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Device not found'**
+  String get connectionErrorDeviceNotFound;
+
+  /// No description provided for @connectionErrorDeviceReset.
+  ///
+  /// In en, this message translates to:
+  /// **'Device was reset or replaced. Set it up again.'**
+  String get connectionErrorDeviceReset;
+
+  /// No description provided for @countdownTracerouteTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Traceroute to {displayName}'**
+  String countdownTracerouteTo(String displayName);
+
+  /// No description provided for @countdownRequestingPositions.
+  ///
+  /// In en, this message translates to:
+  /// **'Requesting mesh positions'**
+  String get countdownRequestingPositions;
+
+  /// No description provided for @countdownBroadcastingPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Broadcasting position to mesh'**
+  String get countdownBroadcastingPosition;
+
+  /// No description provided for @lifecycleAppNotActive.
+  ///
+  /// In en, this message translates to:
+  /// **'App is not active'**
+  String get lifecycleAppNotActive;
+
+  /// No description provided for @lifecycleCommandExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Command expired'**
+  String get lifecycleCommandExpired;
+
+  /// No description provided for @nodedexMilestoneFirstDiscovered.
+  ///
+  /// In en, this message translates to:
+  /// **'First discovered'**
+  String get nodedexMilestoneFirstDiscovered;
+
+  /// No description provided for @nodedexMilestoneEncounterN.
+  ///
+  /// In en, this message translates to:
+  /// **'Encounter #{count}'**
+  String nodedexMilestoneEncounterN(int count);
+
+  /// No description provided for @meshHealthRssiDegraded.
+  ///
+  /// In en, this message translates to:
+  /// **'Average RSSI degraded to {rssi} dBm'**
+  String meshHealthRssiDegraded(String rssi);
+
+  /// No description provided for @offlineQueueMaxRetries.
+  ///
+  /// In en, this message translates to:
+  /// **'Max retries reached: {error}'**
+  String offlineQueueMaxRetries(String error);
+
+  /// No description provided for @connectionAlreadyInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection already in progress'**
+  String get connectionAlreadyInProgress;
+
+  /// No description provided for @connectionCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection was cancelled'**
+  String get connectionCancelled;
+
+  /// No description provided for @adminConformanceBundleTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Socialmesh Conformance Bundle'**
+  String get adminConformanceBundleTitle;
+
+  /// No description provided for @adminDiagnosticBundleText.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin diagnostic bundle from Socialmesh'**
+  String get adminDiagnosticBundleText;
+
+  /// No description provided for @adminDiagnosticBundleSubject.
+  ///
+  /// In en, this message translates to:
+  /// **'Socialmesh Diagnostic {runId}'**
+  String adminDiagnosticBundleSubject(String runId);
+
+  /// No description provided for @onboardingSignalAuthorSarah.
+  ///
+  /// In en, this message translates to:
+  /// **'Sarah'**
+  String get onboardingSignalAuthorSarah;
+
+  /// No description provided for @onboardingSignalContentSarah.
+  ///
+  /// In en, this message translates to:
+  /// **'Just reached the summit! Signal is crystal clear up here.'**
+  String get onboardingSignalContentSarah;
+
+  /// No description provided for @onboardingSignalAuthorMike.
+  ///
+  /// In en, this message translates to:
+  /// **'Mike'**
+  String get onboardingSignalAuthorMike;
+
+  /// No description provided for @onboardingSignalAuthorAlex.
+  ///
+  /// In en, this message translates to:
+  /// **'Alex'**
+  String get onboardingSignalAuthorAlex;
 }
 
 class _AppLocalizationsDelegate

@@ -1979,7 +1979,7 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet>
         if (mounted) {
           ref.invalidate(userProfileProvider);
           safeSetState(() => _hasChanges = true);
-          safeShowSnackBar('Avatar updated');
+          safeShowSnackBar(context.l10n.profileAvatarUpdated);
         }
       } catch (e) {
         if (e.toString().contains('Content policy violation') ||
@@ -2025,7 +2025,7 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet>
       if (mounted) {
         ref.invalidate(userProfileProvider);
         safeSetState(() => _hasChanges = true);
-        safeShowSnackBar('Avatar removed');
+        safeShowSnackBar(context.l10n.profileAvatarRemoved);
       }
     } catch (e) {
       safeShowSnackBar(
@@ -2082,7 +2082,7 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet>
         if (mounted) {
           ref.invalidate(userProfileProvider);
           safeSetState(() => _hasChanges = true);
-          safeShowSnackBar('Banner updated');
+          safeShowSnackBar(context.l10n.profileBannerUpdated);
         }
       } catch (e) {
         if (e.toString().contains('Content policy violation') ||
@@ -2128,7 +2128,7 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet>
       if (mounted) {
         ref.invalidate(userProfileProvider);
         safeSetState(() => _hasChanges = true);
-        safeShowSnackBar('Banner removed');
+        safeShowSnackBar(context.l10n.profileBannerRemoved);
       }
     } catch (e) {
       safeShowSnackBar(

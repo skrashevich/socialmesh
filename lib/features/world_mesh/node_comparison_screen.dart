@@ -143,14 +143,16 @@ class NodeComparisonScreen extends StatelessWidget {
           GestureDetector(
             onTap: () {
               HapticFeedback.lightImpact();
-              Clipboard.setData(ClipboardData(text: '!$nodeId'));
+              Clipboard.setData(
+                ClipboardData(text: '!$nodeId'),
+              ); // lint-allow: hardcoded-string
               showSuccessSnackBar(
                 context,
                 context.l10n.nodeComparisonNodeIdCopied,
               );
             },
             child: Text(
-              '!$nodeId',
+              '!$nodeId', // lint-allow: hardcoded-string
               style: TextStyle(
                 fontSize: 11,
                 color: context.textTertiary,

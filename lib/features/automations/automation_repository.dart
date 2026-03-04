@@ -645,6 +645,9 @@ class AutomationRepository extends ChangeNotifier {
     return switch (id) {
       'low_battery_alert' => l10n.automationTemplateLowBatteryTitle,
       'node_offline_alert' => l10n.automationTemplateNodeOfflineTitle,
+      'geofence_exit' => l10n.automationTemplateGeofenceExitTitle,
+      'sos_response' => l10n.automationTemplateSosTitle,
+      'dead_mans_switch' => l10n.automationTemplateDeadManTitle,
       'weather_report' => l10n.automationTemplateWeatherReportTitle,
       'channel_monitor' => l10n.automationTemplateChannelMonitorTitle,
       'emergency_beacon' => l10n.automationTemplateEmergencyBeaconTitle,
@@ -657,8 +660,11 @@ class AutomationRepository extends ChangeNotifier {
   /// Falls back to the template ID when no ARB key matches.
   static String localizedTemplateDescription(String id, AppLocalizations l10n) {
     return switch (id) {
-      'low_battery_alert' => l10n.automationTemplateLowBatteryDescription,
-      'node_offline_alert' => l10n.automationTemplateNodeOfflineDescription,
+      'low_battery_alert' => l10n.automationTemplateLowBatteryDesc,
+      'node_offline_alert' => l10n.automationTemplateNodeOfflineDesc,
+      'geofence_exit' => l10n.automationTemplateGeofenceExitDesc,
+      'sos_response' => l10n.automationTemplateSosDesc,
+      'dead_mans_switch' => l10n.automationTemplateDeadManDesc,
       'weather_report' => l10n.automationTemplateWeatherReportDescription,
       'channel_monitor' => l10n.automationTemplateChannelMonitorDescription,
       'emergency_beacon' => l10n.automationTemplateEmergencyBeaconDescription,

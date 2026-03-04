@@ -699,7 +699,7 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
                 ),
                 const SizedBox(height: AppTheme.spacing4),
                 Text(
-                  '!$_nodeId',
+                  '!$_nodeId', // lint-allow: hardcoded-string
                   style: TextStyle(
                     fontSize: 13,
                     color: context.textSecondary,
@@ -723,7 +723,9 @@ class _NodeAnalyticsScreenState extends State<NodeAnalyticsScreen> {
             icon: Icon(Icons.copy, size: 20),
             color: context.textTertiary,
             onPressed: () {
-              Clipboard.setData(ClipboardData(text: '!$_nodeId'));
+              Clipboard.setData(
+                ClipboardData(text: '!$_nodeId'),
+              ); // lint-allow: hardcoded-string
               showSuccessSnackBar(
                 context,
                 context.l10n.nodeAnalyticsNodeIdCopied,

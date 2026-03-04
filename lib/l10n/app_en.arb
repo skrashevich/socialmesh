@@ -25508,17 +25508,9 @@
     "@automationTemplateLowBatteryTitle": {
         "description": "Automation template title"
     },
-    "automationTemplateLowBatteryDescription": "Get notified when your device battery drops below 20%",
-    "@automationTemplateLowBatteryDescription": {
-        "description": "Automation template description"
-    },
     "automationTemplateNodeOfflineTitle": "Node Offline Alert",
     "@automationTemplateNodeOfflineTitle": {
         "description": "Automation template title"
-    },
-    "automationTemplateNodeOfflineDescription": "Alert when a specific node hasn't been seen for 30 minutes",
-    "@automationTemplateNodeOfflineDescription": {
-        "description": "Automation template description"
     },
     "automationTemplateWeatherReportTitle": "Weather Report",
     "@automationTemplateWeatherReportTitle": {
@@ -25543,6 +25535,18 @@
     "automationTemplateEmergencyBeaconDescription": "Broadcast emergency position every 5 minutes when triggered",
     "@automationTemplateEmergencyBeaconDescription": {
         "description": "Automation template description"
+    },
+    "automationTemplateGeofenceExitTitle": "Geofence Exit Alert",
+    "@automationTemplateGeofenceExitTitle": {
+        "description": "Automation template title"
+    },
+    "automationTemplateSosTitle": "SOS Response",
+    "@automationTemplateSosTitle": {
+        "description": "Automation template title"
+    },
+    "automationTemplateDeadManTitle": "Dead Man's Switch",
+    "@automationTemplateDeadManTitle": {
+        "description": "Automation template title"
     },
     "whatsNewCtaOpenWorldMap": "Open World Map",
     "@whatsNewCtaOpenWorldMap": {
@@ -25575,5 +25579,139 @@
     "whatsNewHeadline": "What's New in Socialmesh",
     "@whatsNewHeadline": {
         "description": "Headline for What's New popup"
-    }
+    },
+    "connectingStatusInitializing": "Initializing",
+    "connectingStatusScanning": "Scanning for device",
+    "connectingStatusConnecting": "Connecting",
+    "connectingStatusAutoReconnecting": "Auto-reconnecting",
+    "connectingStatusConfiguring": "Configuring device",
+    "connectingStatusConnected": "Connected",
+    "connectingStatusFailed": "Connection failed",
+    "profileAvatarUpdated": "Avatar updated",
+    "profileAvatarRemoved": "Avatar removed",
+    "profileBannerUpdated": "Banner updated",
+    "profileBannerRemoved": "Banner removed",
+    "commonOpenSettings": "Open Settings",
+    "socialGuidelineNoViolentImagery": "No violent or graphic imagery",
+    "globalLayerConnectionTestLabel": "CONNECTION TEST",
+    "commonSignIn": "Sign In",
+    "onboardingSignalContentMike": "Base camp is set. Ready when you are.",
+    "onboardingSignalContentAlex": "On my way, ETA 15 min",
+    "automationErrorSendMsgNotConfigured": "Send message callback not configured",
+    "automationErrorNoTargetNode": "No target node specified",
+    "automationErrorSendChannelNotConfigured": "Send to channel callback not configured",
+    "automationErrorNoTargetChannel": "No target channel specified",
+    "automationErrorNoSoundConfigured": "No sound configured",
+    "automationErrorPlaySoundFailed": "Failed to play sound: {error}",
+    "@automationErrorPlaySoundFailed": {
+        "placeholders": {
+            "error": {
+                "type": "String"
+            }
+        }
+    },
+    "automationErrorNotificationsNotInit": "Notifications not initialized",
+    "automationErrorNoWebhookEvent": "No webhook event name specified",
+    "automationErrorIftttNotConfigured": "IFTTT not configured — enable IFTTT and set webhook key in settings",
+    "automationErrorWebhookFailed": "Webhook request failed — check network connection",
+    "automationErrorSendMsgFailed": "Failed to send message",
+    "automationErrorSendChannelFailed": "Failed to send to channel",
+    "automationErrorShortcutsIosOnly": "Shortcuts only available on iOS",
+    "automationErrorNoShortcutName": "No shortcut name specified",
+    "automationErrorShortcutLaunchFailed": "Could not launch shortcut \"{name}\"",
+    "@automationErrorShortcutLaunchFailed": {
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "automationErrorShortcutRunFailed": "Failed to run shortcut: {error}",
+    "@automationErrorShortcutRunFailed": {
+        "placeholders": {
+            "error": {
+                "type": "String"
+            }
+        }
+    },
+    "automationErrorGlyphNotAvailable": "Glyph interface not available",
+    "automationErrorGlyphPatternFailed": "Failed to show glyph pattern: {error}",
+    "@automationErrorGlyphPatternFailed": {
+        "placeholders": {
+            "error": {
+                "type": "String"
+            }
+        }
+    },
+    "automationTemplateLowBatteryDesc": "Notify when a node battery drops below 20%",
+    "automationTemplateNodeOfflineDesc": "Notify when a node goes offline",
+    "automationTemplateGeofenceExitDesc": "Alert when a node leaves a designated area",
+    "automationTemplateSosDesc": "Auto-reply when receiving SOS message",
+    "automationTemplateDeadManDesc": "Alert if no activity from node for 30 minutes",
+    "automationScheduledTitle": "Scheduled Automation",
+    "automationScheduledBody": "Tap to run scheduled automation",
+    "authErrorGoogleSignInCancelled": "Google sign in was cancelled",
+    "authErrorGoogleNoIdToken": "Google sign in did not return an ID token",
+    "authErrorNoCurrentUser": "No user is currently signed in",
+    "authErrorGoogleReauthCancelled": "Google re-authentication was cancelled",
+    "authErrorNoSupportedProvider": "No supported provider found for re-authentication",
+    "authErrorNoUserSignedIn": "No user signed in",
+    "authErrorSessionLost": "User session lost during re-authentication",
+    "authErrorVerificationCodeFailed": "Failed to send verification code",
+    "connectionErrorBluetoothDisabled": "Bluetooth is disabled",
+    "connectionErrorDeviceNotFound": "Device not found",
+    "connectionErrorDeviceReset": "Device was reset or replaced. Set it up again.",
+    "countdownTracerouteTo": "Traceroute to {displayName}",
+    "@countdownTracerouteTo": {
+        "placeholders": {
+            "displayName": {
+                "type": "String"
+            }
+        }
+    },
+    "countdownRequestingPositions": "Requesting mesh positions",
+    "countdownBroadcastingPosition": "Broadcasting position to mesh",
+    "lifecycleAppNotActive": "App is not active",
+    "lifecycleCommandExpired": "Command expired",
+    "nodedexMilestoneFirstDiscovered": "First discovered",
+    "nodedexMilestoneEncounterN": "Encounter #{count}",
+    "@nodedexMilestoneEncounterN": {
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "meshHealthRssiDegraded": "Average RSSI degraded to {rssi} dBm",
+    "@meshHealthRssiDegraded": {
+        "placeholders": {
+            "rssi": {
+                "type": "String"
+            }
+        }
+    },
+    "offlineQueueMaxRetries": "Max retries reached: {error}",
+    "@offlineQueueMaxRetries": {
+        "placeholders": {
+            "error": {
+                "type": "String"
+            }
+        }
+    },
+    "connectionAlreadyInProgress": "Connection already in progress",
+    "connectionCancelled": "Connection was cancelled",
+    "adminConformanceBundleTitle": "Socialmesh Conformance Bundle",
+    "adminDiagnosticBundleText": "Admin diagnostic bundle from Socialmesh",
+    "adminDiagnosticBundleSubject": "Socialmesh Diagnostic {runId}",
+    "@adminDiagnosticBundleSubject": {
+        "placeholders": {
+            "runId": {
+                "type": "String"
+            }
+        }
+    },
+    "onboardingSignalAuthorSarah": "Sarah",
+    "onboardingSignalContentSarah": "Just reached the summit! Signal is crystal clear up here.",
+    "onboardingSignalAuthorMike": "Mike",
+    "onboardingSignalAuthorAlex": "Alex"
 }

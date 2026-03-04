@@ -33,21 +33,21 @@ class CommandError {
 
   factory CommandError.deviceNotConnected() => const CommandError(
     type: CommandErrorType.deviceNotConnected,
-    message: 'Device not connected',
+    message: 'Device not connected', // lint-allow: hardcoded-string
     userMessage: 'Connect your device to use this feature',
     unmetRequirement: FeatureRequirement.deviceConnection,
   );
 
   factory CommandError.protocolNotReady() => const CommandError(
     type: CommandErrorType.protocolNotReady,
-    message: 'Protocol not configured',
+    message: 'Protocol not configured', // lint-allow: hardcoded-string
     userMessage: 'Waiting for device configuration',
     unmetRequirement: FeatureRequirement.deviceConnection,
   );
 
   factory CommandError.networkUnavailable() => const CommandError(
     type: CommandErrorType.networkUnavailable,
-    message: 'Network unavailable',
+    message: 'Network unavailable', // lint-allow: hardcoded-string
     userMessage: 'Check your internet connection',
     unmetRequirement: FeatureRequirement.network,
   );

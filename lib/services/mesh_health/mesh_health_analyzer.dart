@@ -7,6 +7,9 @@
 
 import 'dart:async';
 import 'dart:math' as math;
+import 'dart:ui' show PlatformDispatcher;
+
+import 'package:socialmesh/l10n/app_localizations.dart';
 
 import 'mesh_health_models.dart';
 
@@ -410,7 +413,9 @@ class MeshHealthAnalyzer {
           severity: avgRssi < -110
               ? IssueSeverity.critical
               : IssueSeverity.warning,
-          message: 'Average RSSI degraded to ${avgRssi.toStringAsFixed(0)} dBm',
+          message: lookupAppLocalizations(
+            PlatformDispatcher.instance.locale,
+          ).meshHealthRssiDegraded(avgRssi.toStringAsFixed(0)),
           metric: avgRssi,
           timestamp: now,
         ),

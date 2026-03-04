@@ -6,6 +6,7 @@ import 'dart:ui';
 import 'package:archive/archive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
 
 import '../../../../core/logging.dart';
 import '../../../../utils/share_utils.dart';
@@ -109,10 +110,11 @@ Format: NDJSON lines are newline-delimited JSON (one object per line).
     required String runId,
     Rect? sharePosition,
   }) async {
+    final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
     await shareFiles(
       [XFile(zipPath)],
-      subject: 'Socialmesh Diagnostic $runId',
-      text: 'Admin diagnostic bundle from Socialmesh',
+      subject: l10n.adminDiagnosticBundleSubject(runId),
+      text: l10n.adminDiagnosticBundleText,
       sharePositionOrigin: sharePosition,
     );
   }

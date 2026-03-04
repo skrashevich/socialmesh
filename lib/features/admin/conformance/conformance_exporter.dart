@@ -6,6 +6,7 @@ import 'dart:ui';
 import 'package:archive/archive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
 
 import '../../../core/logging.dart';
 import 'conformance_runner.dart';
@@ -83,7 +84,9 @@ class ConformanceExporter {
     await SharePlus.instance.share(
       ShareParams(
         files: [xFile],
-        title: 'Socialmesh Conformance Bundle',
+        title: lookupAppLocalizations(
+          PlatformDispatcher.instance.locale,
+        ).adminConformanceBundleTitle,
         sharePositionOrigin: sharePositionOrigin,
       ),
     );

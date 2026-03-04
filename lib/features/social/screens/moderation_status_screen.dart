@@ -502,7 +502,7 @@ class _GuidelinesCard extends StatelessWidget {
           ),
           const SizedBox(height: AppTheme.spacing12),
           _GuidelineItem(text: context.l10n.socialGuidelineNoExplicit),
-          _GuidelineItem(text: 'No violent or graphic imagery'),
+          _GuidelineItem(text: context.l10n.socialGuidelineNoViolentImagery),
           _GuidelineItem(text: context.l10n.socialGuidelineNoHarassment),
           _GuidelineItem(text: context.l10n.socialGuidelineNoSpam),
         ],

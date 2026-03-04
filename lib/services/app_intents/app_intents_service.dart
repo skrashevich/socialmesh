@@ -66,7 +66,8 @@ class AppIntentsService {
       default:
         throw PlatformException(
           code: 'UNSUPPORTED',
-          message: 'Method ${call.method} not supported',
+          message:
+              'Method ${call.method} not supported', // lint-allow: hardcoded-string
         );
     }
   }

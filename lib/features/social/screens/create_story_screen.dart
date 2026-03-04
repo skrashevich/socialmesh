@@ -328,7 +328,7 @@ class _CreateStoryScreenState extends ConsumerState<CreateStoryScreen>
             showActionSnackBar(
               context,
               context.l10n.socialCreateStoryLocationRequired,
-              actionLabel: 'Open Settings',
+              actionLabel: context.l10n.commonOpenSettings,
               onAction: () => Geolocator.openAppSettings(),
               type: SnackBarType.warning,
             );

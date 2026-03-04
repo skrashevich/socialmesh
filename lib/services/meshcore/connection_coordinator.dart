@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 
 import '../../core/logging.dart';
 import '../../core/transport.dart';
+import '../../l10n/app_localizations.dart';
 import '../../models/mesh_device.dart';
 import '../../providers/meshcore_providers.dart';
 import '../protocol/protocol_service.dart';
@@ -62,18 +63,20 @@ class ConnectionResult {
 
   /// Factory for "already connecting" guard result.
   factory ConnectionResult.alreadyConnecting() {
+    final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
     return ConnectionResult._(
       success: false,
-      errorMessage: 'Connection already in progress',
+      errorMessage: l10n.connectionAlreadyInProgress,
       protocolError: MeshProtocolError.connectionInProgress,
     );
   }
 
   /// Factory for cancelled connection result.
   factory ConnectionResult.cancelled() {
+    final l10n = lookupAppLocalizations(PlatformDispatcher.instance.locale);
     return ConnectionResult._(
       success: false,
-      errorMessage: 'Connection was cancelled',
+      errorMessage: l10n.connectionCancelled,
       protocolError: MeshProtocolError.cancelled,
     );
   }

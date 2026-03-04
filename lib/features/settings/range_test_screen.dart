@@ -240,7 +240,8 @@ class _RangeTestScreenState extends ConsumerState<RangeTestScreen>
       ); // captured before await
       // Send a range test message to the target node
       await protocol.sendMessage(
-        text: 'RT ${DateTime.now().millisecondsSinceEpoch}',
+        text:
+            'RT ${DateTime.now().millisecondsSinceEpoch}', // lint-allow: hardcoded-string
         to: _selectedTargetNode!,
       );
     } catch (e) {

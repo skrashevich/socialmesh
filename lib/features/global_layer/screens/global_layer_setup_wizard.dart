@@ -2014,7 +2014,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
           // Test results summary
           if (_testReport != null && _testReport!.isComplete) ...[
             const SizedBox(height: AppTheme.spacing16),
-            _SectionLabel(text: 'CONNECTION TEST'),
+            _SectionLabel(text: context.l10n.globalLayerConnectionTestLabel),
             const SizedBox(height: AppTheme.spacing8),
             _buildOverallResult(context, _testReport!),
           ],

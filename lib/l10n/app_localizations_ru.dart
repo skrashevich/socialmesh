@@ -496,9 +496,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get aetherDetailArrival => 'Arrival';
 
   @override
-  String get aetherDetailBeFirstReport => 'Be the first to report this flight!';
-
-  @override
   String get aetherDetailCoverageRadius => 'Coverage Radius';
 
   @override
@@ -520,9 +517,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get aetherDetailLivePosition => 'Live Position';
-
-  @override
-  String get aetherDetailNoReports => 'No receptions reported yet';
 
   @override
   String get aetherDetailNode => 'Node';
@@ -657,17 +651,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get aetherFilterUpcoming => 'Upcoming';
 
   @override
-  String aetherFlightReceptionCount(int count, String s) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 's',
-      one: '',
-    );
-    return '$count reception$_temp0';
-  }
-
-  @override
   String get aetherFormEnterFlightNumber => 'Enter flight number';
 
   @override
@@ -750,24 +733,6 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get aetherOpenSkyFlightActive => 'Flight is currently active';
-
-  @override
-  String get aetherOpenSkyFlightNotFound =>
-      'Flight not found in historical departures';
-
-  @override
-  String get aetherOpenSkyFlightNotInAir => 'Flight not currently in the air';
-
-  @override
-  String get aetherOpenSkyFlightPending =>
-      'Flight is scheduled for the future. Will validate when active.';
-
-  @override
-  String get aetherOpenSkyFlightVerified =>
-      'Flight verified in historical data';
-
-  @override
   String get aetherOverlayDetected => 'DETECTED';
 
   @override
@@ -805,13 +770,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get aetherPickerSearchHint => 'Search by code, city, or name';
 
   @override
-  String get aetherPickerTitle => 'Select Airport';
-
-  @override
   String get aetherReportAddNotes => 'Add Notes';
-
-  @override
-  String get aetherReportDuplicate => 'You have already reported this flight';
 
   @override
   String get aetherReportEstimatedDistance => 'Estimated distance ';
@@ -943,9 +902,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get aetherScheduleFromLabel => 'From';
 
   @override
-  String get aetherScheduleInFlight => 'In Flight';
-
-  @override
   String aetherScheduleIncompleteMessage(String fields) {
     return 'Could not auto-fill $fields from OpenSky Network. Please enter these details manually below.';
   }
@@ -956,9 +912,6 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get aetherScheduleIntroBanner =>
       'Schedule your flight and share it on aether.socialmesh.app so the community can try to receive your signal!';
-
-  @override
-  String get aetherScheduleLiveFlightData => 'Live Flight Data';
 
   @override
   String get aetherScheduleLoadingFlights =>
@@ -981,12 +934,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get aetherScheduleNotesLabel => 'Notes';
-
-  @override
-  String get aetherScheduleOnGround => 'On Ground';
-
-  @override
-  String get aetherScheduleOnGroundChip => 'On ground';
 
   @override
   String get aetherScheduleResponsibilityTooltip => 'Your Responsibility';
@@ -1269,96 +1216,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get appTitle => 'Socialmesh';
 
   @override
-  String arAlertLowBattery(String percent) {
-    return 'Low battery: $percent%';
-  }
-
-  @override
-  String get arAlertNewNodeDiscovered => 'New node discovered';
-
-  @override
-  String get arAlertNodeInMotion => 'Node in motion';
-
-  @override
   String get arCalibratingSensors => 'Calibrating sensors...';
-
-  @override
-  String get arCalibrationAcceptable => 'Calibration acceptable - can improve';
-
-  @override
-  String get arCalibrationAlmostThere => 'Almost there - keep moving';
-
-  @override
-  String get arCalibrationAnalyzing => 'Analyzing calibration data...';
-
-  @override
-  String get arCalibrationCompleteExcellent =>
-      'Calibration complete - Excellent!';
-
-  @override
-  String get arCalibrationCompleteGood => 'Calibration complete - Good';
-
-  @override
-  String get arCalibrationExcellentAccuracy => 'Excellent accuracy';
-
-  @override
-  String get arCalibrationExcellentFinishing => 'Excellent! Finishing up...';
-
-  @override
-  String get arCalibrationFailed => 'Calibration failed';
-
-  @override
-  String get arCalibrationFairAccuracy => 'Fair accuracy';
-
-  @override
-  String get arCalibrationGoodAccuracy => 'Good accuracy';
-
-  @override
-  String get arCalibrationGoodProgress => 'Good progress - continue rotating';
-
-  @override
-  String get arCalibrationGpsAcquiring => 'Acquiring...';
-
-  @override
-  String arCalibrationGpsExcellent(String meters) {
-    return '±${meters}m (Excellent)';
-  }
-
-  @override
-  String arCalibrationGpsFair(String meters) {
-    return '±${meters}m (Fair)';
-  }
-
-  @override
-  String arCalibrationGpsGood(String meters) {
-    return '±${meters}m (Good)';
-  }
-
-  @override
-  String arCalibrationGpsPoor(String meters) {
-    return '±${meters}m (Poor)';
-  }
-
-  @override
-  String get arCalibrationIncomplete =>
-      'Calibration incomplete - please try again';
-
-  @override
-  String get arCalibrationKeepRotating =>
-      'Keep rotating - try all orientations';
-
-  @override
-  String get arCalibrationMoveFigure8 => 'Move device in figure-8 pattern';
-
-  @override
-  String get arCalibrationMoveFigure8Ellipsis =>
-      'Move device in figure-8 pattern...';
-
-  @override
-  String get arCalibrationNotCalibrated => 'Not calibrated';
-
-  @override
-  String get arCalibrationPoorAccuracy => 'Poor accuracy';
 
   @override
   String get arCalibrationScreenAccuracyImproved => 'Compass accuracy improved';
@@ -1395,56 +1253,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get arCalibrationScreenTitle => 'COMPASS CALIBRATION';
 
   @override
-  String get arCalibrationStarting => 'Starting calibration...';
-
-  @override
-  String get arCompassBadgeCalibrate => 'CALIBRATE';
-
-  @override
-  String get arCompassBadgeCompass => 'COMPASS';
-
-  @override
-  String get arCompassBadgeOk => 'COMPASS OK';
-
-  @override
   String arCouldNotOpenMaps(String name) {
     return 'Could not open maps for $name';
   }
 
   @override
   String get arEngineError => 'AR ENGINE ERROR';
-
-  @override
-  String arFailedToStart(String error) {
-    return 'Failed to start AR: $error';
-  }
-
-  @override
-  String get arFovPresetIphone05x => 'iPhone (0.5x)';
-
-  @override
-  String get arFovPresetIphone1x => 'iPhone (1x)';
-
-  @override
-  String get arFovPresetNarrow => 'Narrow';
-
-  @override
-  String get arFovPresetPixel => 'Google Pixel';
-
-  @override
-  String get arFovPresetSamsung => 'Samsung Galaxy';
-
-  @override
-  String get arFovPresetWide => 'Wide (default)';
-
-  @override
-  String get arGpsBadgeNoGps => 'NO GPS';
-
-  @override
-  String get arHudAltLabel => 'ALT';
-
-  @override
-  String get arHudUnknownNode => 'Unknown';
 
   @override
   String get arInitializingEngine => 'INITIALIZING AR ENGINE';
@@ -1555,31 +1369,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get arSettingsViewMode => 'VIEW MODE';
 
   @override
-  String arShareSubjectMeshNode(String name) {
-    return 'Mesh Node: $name';
-  }
-
-  @override
-  String get arSharedViaSocialmesh => 'Shared via Socialmesh AR';
-
-  @override
   String get arTouchLocked => 'Touch locked';
 
   @override
   String get arTouchUnlocked => 'Touch unlocked';
-
-  @override
-  String get arViewModeExplorer => 'Explorer';
-
-  @override
-  String get arViewModeExplorerDesc =>
-      'Navigation-focused with large markers and trails';
-
-  @override
-  String get arViewModeMinimal => 'Minimal';
-
-  @override
-  String get arViewModeMinimalDesc => 'Clean view with simple markers only';
 
   @override
   String get arViewModeSelectorExp => 'EXP';
@@ -1591,13 +1384,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get arViewModeSelectorTac => 'ADV';
 
   @override
-  String get arViewModeTactical => 'Advanced';
-
-  @override
-  String get arViewModeTacticalDesc =>
-      'Full HUD with compass, horizon, and detailed info';
-
-  @override
   String get authMfaActiveMethods => 'Active Methods';
 
   @override
@@ -1605,9 +1391,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get authMfaChangePhoneNumber => 'Change Phone Number';
-
-  @override
-  String get authMfaCodeHint => '000000';
 
   @override
   String authMfaCodeSentTo(String phoneNumber) {
@@ -2284,36 +2067,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get automationConditionWithinGeofence => 'Within geofence';
 
   @override
-  String get automationDebugBatteryNotMet => 'Battery threshold not met';
-
-  @override
-  String get automationDebugChannelMismatch => 'Channel filter mismatch';
-
-  @override
-  String get automationDebugConditionFailed => 'Condition failed';
-
-  @override
-  String get automationDebugDisabled => 'Disabled';
-
-  @override
-  String get automationDebugKeywordNotMatched => 'Keyword not matched';
-
-  @override
-  String get automationDebugNodeFilterMismatch => 'Node filter mismatch';
-
-  @override
-  String get automationDebugSignalNotMet => 'Signal threshold not met';
-
-  @override
-  String get automationDebugThrottled => 'Throttled';
-
-  @override
-  String get automationDebugTriggerMismatch => 'Trigger type mismatch';
-
-  @override
-  String get automationDefaultMsgManual => 'Automation triggered manually';
-
-  @override
   String get automationEditorAddAction => 'Add Action';
 
   @override
@@ -2403,9 +2156,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get automationEditorWhen => 'WHEN';
-
-  @override
-  String get automationEngineAutomationTriggered => 'Automation triggered.';
 
   @override
   String get automationFlowAddNode => 'Add Node';
@@ -2548,19 +2298,6 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get automationImportWarning =>
       'This automation will be imported as disabled. Review and enable it when ready.';
-
-  @override
-  String get automationNotificationFallbackBody =>
-      'An automation was triggered.';
-
-  @override
-  String get automationNotificationFallbackTitle => 'Alert';
-
-  @override
-  String get automationScheduledBody => 'Tap to run scheduled automation';
-
-  @override
-  String get automationScheduledTitle => 'Scheduled Automation';
 
   @override
   String get automationScreenAcceptableUse => 'Acceptable Use';
@@ -2711,71 +2448,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get automationShareTitle => 'Share Automation';
-
-  @override
-  String get automationTemplateDeadManDesc =>
-      'Alert if no activity from node for 30 minutes';
-
-  @override
-  String get automationTemplateDeadManName => 'Dead Man\'s Switch';
-
-  @override
-  String get automationTemplateDeadManSwitchDesc =>
-      'Alert if node silent too long';
-
-  @override
-  String get automationTemplateDefaultName => 'New Automation';
-
-  @override
-  String get automationTemplateGeofenceExitDesc =>
-      'Alert when a node leaves a designated area';
-
-  @override
-  String get automationTemplateGeofenceExitFullDesc =>
-      'Alert when leaving a designated area';
-
-  @override
-  String get automationTemplateGeofenceExitName => 'Geofence Exit Alert';
-
-  @override
-  String get automationTemplateLowBatteryDesc =>
-      'Notify when a node battery drops below 20%';
-
-  @override
-  String get automationTemplateLowBatteryName => 'Low Battery Alert';
-
-  @override
-  String get automationTemplateLowBatteryShortDesc =>
-      'Notify when battery drops below 20%';
-
-  @override
-  String get automationTemplateNodeOfflineDesc =>
-      'Notify when a node goes offline';
-
-  @override
-  String get automationTemplateNodeOfflineName => 'Node Offline Alert';
-
-  @override
-  String get automationTemplateNotifDeadManTitle => 'Node Silent';
-
-  @override
-  String get automationTemplateNotifGeofenceTitle => 'Left Area';
-
-  @override
-  String get automationTemplateNotifNodeOfflineTitle => 'Node Offline';
-
-  @override
-  String get automationTemplateNotifSosTitle => 'Emergency Alert';
-
-  @override
-  String get automationTemplateSosDesc =>
-      'Auto-reply when receiving SOS message';
-
-  @override
-  String get automationTemplateSosName => 'SOS Auto-Response';
-
-  @override
-  String get automationTemplateSosResponseDesc => 'Alert on emergency messages';
 
   @override
   String get automationTriggerAnyChannel => 'Any channel';
@@ -3763,15 +3435,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get commonCancel => 'Отмена';
 
   @override
-  String get commonClose => 'Закрыть';
-
-  @override
-  String get commonConfirm => 'Подтвердить';
-
-  @override
-  String get commonContinue => 'Продолжить';
-
-  @override
   String get commonDelete => 'Удалить';
 
   @override
@@ -3926,27 +3589,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get debugScreenDeviceFilterTitle => 'Filter Log Levels';
 
   @override
-  String get debugScreenDeviceLogCrit => 'CRIT';
-
-  @override
-  String get debugScreenDeviceLogDebug => 'DEBUG';
-
-  @override
-  String get debugScreenDeviceLogError => 'ERROR';
-
-  @override
-  String get debugScreenDeviceLogInfo => 'INFO';
-
-  @override
-  String get debugScreenDeviceLogTrace => 'TRACE';
-
-  @override
-  String get debugScreenDeviceLogUnset => 'UNSET';
-
-  @override
-  String get debugScreenDeviceLogWarn => 'WARN';
-
-  @override
   String get debugScreenDeviceLogsCopied => 'Device logs copied to clipboard';
 
   @override
@@ -3991,18 +3633,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get debugScreenLogCopied => 'Log copied to clipboard';
-
-  @override
-  String get debugScreenLogLevelDebug => 'DEBUG';
-
-  @override
-  String get debugScreenLogLevelError => 'ERROR';
-
-  @override
-  String get debugScreenLogLevelInfo => 'INFO';
-
-  @override
-  String get debugScreenLogLevelWarn => 'WARN';
 
   @override
   String get debugScreenLogsWillAppear =>
@@ -5057,9 +4687,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get feedbackIncludeScreenshot => 'Include screenshot in report';
 
   @override
-  String get feedbackMustBeSignedIn => 'You must be signed in to reply';
-
-  @override
   String get feedbackNoBugReports => 'No bug reports yet';
 
   @override
@@ -5121,18 +4748,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get feedbackShakeToReport => 'Shake device to report a bug';
 
   @override
-  String get feedbackStatusAwaitingResponse => 'Awaiting Response';
-
-  @override
-  String get feedbackStatusOpen => 'Open';
-
-  @override
-  String get feedbackStatusResolved => 'Resolved';
-
-  @override
-  String get feedbackStatusResponded => 'Responded';
-
-  @override
   String get feedbackToggleOff => 'Toggle off to disable';
 
   @override
@@ -5189,39 +4804,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get fileTransferCancelled => 'Transfer cancelled';
-
-  @override
-  String get fileTransferCardCancelled => 'Cancelled';
-
-  @override
-  String get fileTransferCardComplete => 'Complete';
-
-  @override
-  String get fileTransferCardOfferPending => 'Incoming file — tap to review';
-
-  @override
-  String get fileTransferCardOfferSent => 'Offer sent, waiting...';
-
-  @override
-  String get fileTransferCardPreparing => 'Preparing...';
-
-  @override
-  String fileTransferCardReceivingPercent(String pct) {
-    return 'Receiving $pct%';
-  }
-
-  @override
-  String get fileTransferCardRecovering => 'Recovering missing chunks...';
-
-  @override
-  String fileTransferCardSendingPercent(String pct) {
-    return 'Sending $pct%';
-  }
-
-  @override
-  String fileTransferChunkProgress(String completed, int total) {
-    return '$completed/$total chunks';
-  }
 
   @override
   String get fileTransferClearCompleted => 'Clear Completed';
@@ -5301,9 +4883,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get fileTransferContactsNoNodes => 'No nodes on the mesh yet';
 
   @override
-  String get fileTransferContactsRecentTransfers => 'RECENT TRANSFERS';
-
-  @override
   String get fileTransferContactsSearchHint => 'Search contacts';
 
   @override
@@ -5324,11 +4903,6 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String fileTransferContactsStarted(String filename) {
     return 'Transfer started: $filename';
-  }
-
-  @override
-  String fileTransferContactsTransferCount(int count) {
-    return '$count file(s) transferred';
   }
 
   @override
@@ -5433,30 +5007,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get fileTransferExpiredPurged => 'Expired transfers purged';
 
   @override
-  String get fileTransferFailExpired => 'Transfer expired';
-
-  @override
-  String get fileTransferFailGeneric => 'Failed';
-
-  @override
-  String get fileTransferFailInvalidData => 'Invalid data received';
-
-  @override
-  String get fileTransferFailMaxRetries => 'Max retries exceeded';
-
-  @override
-  String get fileTransferFailRateLimited => 'Rate limited — try again later';
-
-  @override
-  String get fileTransferFailTimedOut => 'Transfer timed out';
-
-  @override
-  String get fileTransferFailTooLarge => 'File too large for mesh transfer';
-
-  @override
-  String get fileTransferFailVerification => 'File verification failed';
-
-  @override
   String get fileTransferFileEmpty => 'The selected file is empty.';
 
   @override
@@ -5538,16 +5088,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get fileTransferInfoTransferId => 'Transfer ID';
 
   @override
-  String fileTransferMetaFrom(String nodeName) {
-    return 'from $nodeName';
-  }
-
-  @override
-  String fileTransferMetaTo(String nodeName) {
-    return 'to $nodeName';
-  }
-
-  @override
   String fileTransferMoreBytes(int count) {
     return '... $count more bytes';
   }
@@ -5593,91 +5133,13 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get fileTransferStateCancelled => 'Cancelled';
-
-  @override
-  String get fileTransferStateComplete => 'Complete';
-
-  @override
-  String get fileTransferStateFailed => 'Failed';
-
-  @override
-  String get fileTransferStateOfferSent => 'Offer Sent';
-
-  @override
-  String get fileTransferStatePendingAcceptance => 'Pending Acceptance';
-
-  @override
-  String get fileTransferStatePreparing => 'Preparing';
-
-  @override
-  String get fileTransferStateRecovering => 'Recovering';
-
-  @override
-  String get fileTransferStateTransferring => 'Transferring';
-
-  @override
   String get fileTransferTabContacts => 'Contacts';
 
   @override
   String get fileTransferTabFiles => 'Files';
 
   @override
-  String get fileTransferTimeJustNow => 'just now';
-
-  @override
   String get fileTransferTitle => 'File Transfers';
-
-  @override
-  String get fileTransferTypeArchive => 'Archive';
-
-  @override
-  String get fileTransferTypeAudio => 'Audio';
-
-  @override
-  String get fileTransferTypeBinary => 'Binary';
-
-  @override
-  String get fileTransferTypeFile => 'File';
-
-  @override
-  String get fileTransferTypeGpsTrack => 'GPS Track';
-
-  @override
-  String get fileTransferTypeHtml => 'HTML';
-
-  @override
-  String get fileTransferTypeImage => 'Image';
-
-  @override
-  String get fileTransferTypeJson => 'JSON';
-
-  @override
-  String get fileTransferTypeMap => 'Map';
-
-  @override
-  String get fileTransferTypeMarkdown => 'Markdown';
-
-  @override
-  String get fileTransferTypePdf => 'PDF';
-
-  @override
-  String get fileTransferTypeProtobuf => 'Protobuf';
-
-  @override
-  String get fileTransferTypeSpreadsheet => 'Spreadsheet';
-
-  @override
-  String get fileTransferTypeText => 'Text';
-
-  @override
-  String get fileTransferTypeVideo => 'Video';
-
-  @override
-  String get fileTransferTypeXml => 'XML';
-
-  @override
-  String get fileTransferTypeYaml => 'YAML';
 
   @override
   String fileTransferLineCount(int count) {
@@ -6397,9 +5859,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get incidentPriorityRoutine => 'Routine';
 
   @override
-  String get incidentProviderNotAuthenticated => 'Not authenticated';
-
-  @override
   String get incidentRoleHintAssignedOperator => 'Assigned Operator';
 
   @override
@@ -6411,10 +5870,6 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get incidentStateMachineAssigneeRequired =>
       'assigneeId is required when transitioning to assigned';
-
-  @override
-  String get incidentStateMachineCannotTransitionToDraft =>
-      'Cannot transition to draft';
 
   @override
   String incidentStateMachineCreateDenied(String roleName) {
@@ -6462,9 +5917,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get incidentTransitionHistoryHeader => 'Transition History';
-
-  @override
-  String get incidentTransitionNoteCreated => 'Incident created';
 
   @override
   String incidentTransitionsLoadError(String error) {
@@ -7022,31 +6474,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get mesh3dChangeViewTooltip => 'Change View';
 
   @override
-  String get mesh3dDescActivity => 'Node activity sorted by recency';
-
-  @override
-  String get mesh3dDescSignalBars => 'RSSI and SNR bars per node';
-
-  @override
-  String get mesh3dDescTerrain => 'GPS nodes on interpolated terrain';
-
-  @override
-  String get mesh3dDescTopology =>
-      'Star layout from your node — signal quality as distance';
-
-  @override
-  String get mesh3dFilterActive => 'Active';
-
-  @override
-  String get mesh3dFilterAllNodes => 'All Nodes';
-
-  @override
-  String get mesh3dFilterGpsOnly => 'GPS Only';
-
-  @override
-  String get mesh3dFilterRecent => 'Recent';
-
-  @override
   String mesh3dFilteredNodeCount(int filtered, int total) {
     return '$filtered/$total nodes';
   }
@@ -7132,19 +6559,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get mesh3dStopRotation => 'Stop Rotation';
 
   @override
-  String get mesh3dViewActivity => 'Activity';
-
-  @override
   String get mesh3dViewModeTitle => 'View Mode';
-
-  @override
-  String get mesh3dViewSignalBars => 'Signal Bars';
-
-  @override
-  String get mesh3dViewTerrain => 'Terrain';
-
-  @override
-  String get mesh3dViewTopology => 'Topology';
 
   @override
   String meshHealthActiveNodesPackets(int activeNodeCount, int totalPackets) {
@@ -7293,9 +6708,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get meshcoreAddContactButton => 'Add Contact';
 
   @override
-  String get meshcoreAddContactSheetTitle => 'Add Contact';
-
-  @override
   String get meshcoreAdvertisementSent => 'Advertisement sent';
 
   @override
@@ -7338,9 +6750,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get meshcoreCancel => 'Cancel';
-
-  @override
-  String get meshcoreCancelButton => 'Cancel';
 
   @override
   String get meshcoreCenter => 'Center';
@@ -7535,18 +6944,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get meshcoreDisconnect => 'Disconnect';
 
   @override
-  String get meshcoreDisconnectMenuItem => 'Disconnect';
-
-  @override
   String get meshcoreDisconnectedChannelsDescription =>
       'Connect to a MeshCore device to view channels';
 
   @override
   String get meshcoreDisconnectedContactsDescription =>
       'Connect to a MeshCore device to view contacts';
-
-  @override
-  String get meshcoreDisconnectedContactsTitle => 'MeshCore Disconnected';
 
   @override
   String get meshcoreDisconnectedMapDescription =>
@@ -7646,9 +7049,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get meshcoreFrequencyLabel => 'Frequency';
 
   @override
-  String get meshcoreIndexLabel => 'Index';
-
-  @override
   String get meshcoreInvalidChannelCodeFormat =>
       'Invalid channel code format (expected: name:pskHex)';
 
@@ -7683,9 +7083,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get meshcoreJustNow => 'Just now';
-
-  @override
-  String get meshcoreLastSeenLabel => 'Last Seen';
 
   @override
   String get meshcoreLeave => 'Leave';
@@ -7735,9 +7132,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get meshcoreLocationInfoLabel => 'Location';
 
   @override
-  String get meshcoreLocationLabel => 'Location';
-
-  @override
   String get meshcoreLocationSetting => 'Location';
 
   @override
@@ -7759,9 +7153,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get meshcoreMeshCoreDevice => 'MeshCore Device';
 
   @override
-  String get meshcoreMessage => 'Message';
-
-  @override
   String get meshcoreMessageButton => 'Message';
 
   @override
@@ -7775,9 +7166,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get meshcoreNewMeasurement => 'New measurement';
-
-  @override
-  String get meshcoreNo => 'No';
 
   @override
   String get meshcoreNoChannels => 'No Channels';
@@ -7857,12 +7245,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get meshcorePasteContactCodeHint => 'Paste contact code here...';
 
   @override
-  String get meshcorePathInfoLabel => 'Path';
-
-  @override
-  String get meshcorePathLabel => 'Path';
-
-  @override
   String get meshcorePointCameraAtChannelQr =>
       'Point your camera at a MeshCore channel QR code';
 
@@ -7887,9 +7269,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get meshcorePrivateChannel => 'Private Channel';
 
   @override
-  String get meshcorePrivateChannelLabel => 'Private Channel';
-
-  @override
   String get meshcoreProtocolCapture => 'Protocol Capture';
 
   @override
@@ -7906,9 +7285,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get meshcorePublicChannel => 'Public Channel';
 
   @override
-  String get meshcorePublicChannelLabel => 'Public Channel';
-
-  @override
   String get meshcorePublicHashtagChannel => 'Public Hashtag Channel';
 
   @override
@@ -7916,12 +7292,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get meshcorePublicKeyCopiedSettings => 'Public key copied';
-
-  @override
-  String get meshcorePublicKeyInfoLabel => 'Public Key';
-
-  @override
-  String get meshcorePublicKeyLabel => 'Public Key';
 
   @override
   String get meshcorePublicKeySettingsLabel => 'Public Key';
@@ -8033,9 +7403,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get meshcoreScanQrCode => 'Scan QR Code';
-
-  @override
-  String get meshcoreScanQrCodeOption => 'Scan QR Code';
 
   @override
   String get meshcoreScanQrToJoinChannel =>
@@ -8349,9 +7716,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get meshcoreTracePathTitle => 'Trace Path';
 
   @override
-  String get meshcoreTxPowerInfoLabel => 'TX Power';
-
-  @override
   String get meshcoreTxPowerLabel => 'TX Power';
 
   @override
@@ -8370,9 +7734,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get meshcoreUnknown => 'Unknown';
 
   @override
-  String get meshcoreUnknownContact => 'Unknown';
-
-  @override
   String get meshcoreUpdateDeviceClock => 'Update device clock';
 
   @override
@@ -8388,9 +7749,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get meshcoreViewLoRaConfig => 'View LoRa radio configuration';
-
-  @override
-  String get meshcoreYes => 'Yes';
 
   @override
   String get messageContextMenuCopy => 'Copy';
@@ -9815,11 +9173,6 @@ class AppLocalizationsRu extends AppLocalizations {
       'Nodes frequently seen in the same session';
 
   @override
-  String nodedexCoSeenLinksCount(int count) {
-    return '$count links';
-  }
-
-  @override
   String get nodedexCoSeenLinksTitle => 'Co-Seen Links';
 
   @override
@@ -9917,12 +9270,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get nodedexDaysCompactLabel => 'Days';
-
-  @override
-  String get nodedexDefaultStampLabel => 'Trace';
-
-  @override
-  String get nodedexDefaultSummaryText => 'Keep observing to build a profile';
 
   @override
   String get nodedexDensityAll => 'All';
@@ -10625,14 +9972,6 @@ class AppLocalizationsRu extends AppLocalizations {
       'Signal origin shifts between sessions.';
 
   @override
-  String nodedexFileTransferStarted(String filename) {
-    return 'File transfer started: $filename';
-  }
-
-  @override
-  String get nodedexFileTransfersTitle => 'File Transfers';
-
-  @override
   String get nodedexFilterAll => 'All';
 
   @override
@@ -10658,11 +9997,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get nodedexGalleryHint => 'Tap card to flip • Swipe to browse';
-
-  @override
-  String nodedexGalleryLinksCount(int count) {
-    return '$count links';
-  }
 
   @override
   String nodedexGalleryPositionCounter(int current, int total) {
@@ -10870,16 +10204,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get nodedexImportSummaryNew => 'New';
 
   @override
-  String nodedexImportUnresolvedConflictsPlural(int count) {
-    return '$count conflicts unresolved — using \"Keep Local\" as default';
-  }
-
-  @override
-  String nodedexImportUnresolvedConflictsSingular(int count) {
-    return '$count conflict unresolved — using \"Keep Local\" as default';
-  }
-
-  @override
   String get nodedexKnownFor => 'Known For';
 
   @override
@@ -10973,14 +10297,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get nodedexMessagesStatLabel => 'Messages';
-
-  @override
-  String nodedexMilestoneEncounterN(int count) {
-    return 'Encounter #$count';
-  }
-
-  @override
-  String get nodedexMilestoneFirstDiscovered => 'First discovered';
 
   @override
   String get nodedexNicknameHint => 'Nickname';
@@ -11274,9 +10590,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String nodedexSelectedLinksCount(int count) {
     return '$count links';
   }
-
-  @override
-  String get nodedexSendFile => 'Send file';
 
   @override
   String get nodedexSetNickname => 'Set nickname';
@@ -11617,9 +10930,6 @@ class AppLocalizationsRu extends AppLocalizations {
       'Нерегулярные появления, исчезает и появляется';
 
   @override
-  String get nodedexTraitEvidenceNotFound => 'Node not found in NodeDex';
-
-  @override
   String get nodedexTraitGhost => 'Призрак';
 
   @override
@@ -11876,9 +11186,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get nodesScreenYouBadge => 'YOU';
 
   @override
-  String get onboardingAdvisorName => 'Ico';
-
-  @override
   String get onboardingAutomationGeofence => 'Base Camp Geofence';
 
   @override
@@ -11987,31 +11294,10 @@ class AppLocalizationsRu extends AppLocalizations {
       'Compact GPS tracker with long battery life';
 
   @override
-  String get onboardingEmotionBrainSettings => 'Brain Settings';
-
-  @override
-  String get onboardingEmotionCategoryAll => 'All';
-
-  @override
-  String get onboardingEmotionConfiguratorSettings => 'Settings';
-
-  @override
   String get onboardingEmotionConfiguratorTitle => 'Emotion Configurator';
 
   @override
   String get onboardingEmotionResetDefaults => 'Reset to Defaults';
-
-  @override
-  String get onboardingEmotionSettingsExpression => 'Show Expression Effects';
-
-  @override
-  String get onboardingEmotionSettingsGlow => 'Glow Intensity';
-
-  @override
-  String get onboardingEmotionSettingsParticles => 'Show Particles';
-
-  @override
-  String get onboardingEmotionSettingsSize => 'Size';
 
   @override
   String get onboardingEmotionSettingsTooltip => 'Settings';
@@ -12026,156 +11312,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get onboardingHardwareTitle => 'Compatible Hardware';
-
-  @override
-  String get onboardingMoodAlarmed => 'Alarmed';
-
-  @override
-  String get onboardingMoodAlert => 'Alert';
-
-  @override
-  String get onboardingMoodAngry => 'Angry';
-
-  @override
-  String get onboardingMoodAnnoyed => 'Annoyed';
-
-  @override
-  String get onboardingMoodApproving => 'Approving';
-
-  @override
-  String get onboardingMoodBored => 'Bored';
-
-  @override
-  String get onboardingMoodCategoryAlert => 'Alert';
-
-  @override
-  String get onboardingMoodCategoryNegative => 'Negative';
-
-  @override
-  String get onboardingMoodCategoryNeutral => 'Neutral';
-
-  @override
-  String get onboardingMoodCategoryPositive => 'Positive';
-
-  @override
-  String get onboardingMoodCategorySpecial => 'Special';
-
-  @override
-  String get onboardingMoodCelebrating => 'Celebrating';
-
-  @override
-  String get onboardingMoodConfused => 'Confused';
-
-  @override
-  String get onboardingMoodCurious => 'Curious';
-
-  @override
-  String get onboardingMoodDizzy => 'Dizzy';
-
-  @override
-  String get onboardingMoodDormant => 'Dormant';
-
-  @override
-  String get onboardingMoodEmbarrassed => 'Embarrassed';
-
-  @override
-  String get onboardingMoodEnergized => 'Energized';
-
-  @override
-  String get onboardingMoodError => 'Error';
-
-  @override
-  String get onboardingMoodExcited => 'Excited';
-
-  @override
-  String get onboardingMoodFocused => 'Focused';
-
-  @override
-  String get onboardingMoodGlitching => 'Glitching';
-
-  @override
-  String get onboardingMoodGrateful => 'Grateful';
-
-  @override
-  String get onboardingMoodGrumpy => 'Grumpy';
-
-  @override
-  String get onboardingMoodHappy => 'Happy';
-
-  @override
-  String get onboardingMoodHopeful => 'Hopeful';
-
-  @override
-  String get onboardingMoodHypnotized => 'Hypnotized';
-
-  @override
-  String get onboardingMoodIdle => 'Idle';
-
-  @override
-  String get onboardingMoodInviting => 'Inviting';
-
-  @override
-  String get onboardingMoodLaughing => 'Laughing';
-
-  @override
-  String get onboardingMoodListening => 'Listening';
-
-  @override
-  String get onboardingMoodLoading => 'Loading';
-
-  @override
-  String get onboardingMoodLove => 'Love';
-
-  @override
-  String get onboardingMoodMischievous => 'Mischievous';
-
-  @override
-  String get onboardingMoodNervous => 'Nervous';
-
-  @override
-  String get onboardingMoodPlayful => 'Playful';
-
-  @override
-  String get onboardingMoodProud => 'Proud';
-
-  @override
-  String get onboardingMoodSad => 'Sad';
-
-  @override
-  String get onboardingMoodSassy => 'Sassy';
-
-  @override
-  String get onboardingMoodScared => 'Scared';
-
-  @override
-  String get onboardingMoodShy => 'Shy';
-
-  @override
-  String get onboardingMoodSmiling => 'Smiling';
-
-  @override
-  String get onboardingMoodSpeaking => 'Speaking';
-
-  @override
-  String get onboardingMoodSuccess => 'Success';
-
-  @override
-  String get onboardingMoodSurprised => 'Surprised';
-
-  @override
-  String get onboardingMoodThinking => 'Thinking';
-
-  @override
-  String get onboardingMoodTickled => 'Tickled';
-
-  @override
-  String get onboardingMoodTired => 'Tired';
-
-  @override
-  String get onboardingMoodWinking => 'Winking';
-
-  @override
-  String get onboardingMoodZen => 'Zen';
 
   @override
   String get onboardingNodedexAdvisor =>
@@ -12236,26 +11372,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get onboardingSettingUpDevice => 'Setting up your device...';
-
-  @override
-  String get onboardingSignalAuthorAlex => 'Alex';
-
-  @override
-  String get onboardingSignalAuthorMike => 'Mike';
-
-  @override
-  String get onboardingSignalAuthorSarah => 'Sarah';
-
-  @override
-  String get onboardingSignalContentAlex => 'On my way, ETA 15 min';
-
-  @override
-  String get onboardingSignalContentMike =>
-      'Base camp is set. Ready when you are.';
-
-  @override
-  String get onboardingSignalContentSarah =>
-      'Just reached the summit! Signal is crystal clear up here.';
 
   @override
   String get onboardingSignalDirect => 'Direct';
@@ -12774,46 +11890,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get productDetailYourReview => 'Your Review *';
 
   @override
-  String profileAvatarRemoveFailed(String error) {
-    return 'Failed to remove avatar: $error';
-  }
-
-  @override
-  String get profileAvatarRemoved => 'Avatar removed';
-
-  @override
-  String get profileAvatarRequiresInternet =>
-      'Uploading avatars requires an internet connection.';
-
-  @override
-  String get profileAvatarUpdated => 'Avatar updated';
-
-  @override
-  String profileAvatarUploadFailed(String error) {
-    return 'Failed to upload avatar: $error';
-  }
-
-  @override
-  String profileBannerRemoveFailed(String error) {
-    return 'Failed to remove banner: $error';
-  }
-
-  @override
-  String get profileBannerRemoved => 'Banner removed';
-
-  @override
-  String get profileBannerRequiresInternet =>
-      'Uploading banners requires an internet connection.';
-
-  @override
-  String get profileBannerUpdated => 'Banner updated';
-
-  @override
-  String profileBannerUploadFailed(String error) {
-    return 'Failed to upload banner: $error';
-  }
-
-  @override
   String get profileBasicInfo => 'Basic Info';
 
   @override
@@ -12893,10 +11969,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get profileDisplayNameLabel => 'Display Name';
 
   @override
-  String get profileDisplayNameTaken =>
-      'This display name is already taken. Please choose a different one.';
-
-  @override
   String get profileEditButton => 'Edit Profile';
 
   @override
@@ -12924,14 +11996,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get profileHelpTooltip => 'Help';
-
-  @override
-  String get profileImageAccessError =>
-      'Could not access the selected image. Try saving it to your device first.';
-
-  @override
-  String get profileImageLoadError =>
-      'Could not load the selected image. Make sure the file is downloaded locally and try again.';
 
   @override
   String get profileLinkFailed => 'Failed to link accounts';
@@ -12964,32 +12028,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get profileNotBackedUp => 'Not backed up';
-
-  @override
-  String get profileRemoveAvatar => 'Remove Avatar';
-
-  @override
-  String get profileRemoveAvatarRequiresInternet =>
-      'Removing avatars requires an internet connection.';
-
-  @override
-  String get profileRemoveBanner => 'Remove Banner';
-
-  @override
-  String get profileRemoveBannerRequiresInternet =>
-      'Removing banners requires an internet connection.';
-
-  @override
-  String get profileSave => 'Save';
-
-  @override
-  String profileSaveFailed(String error) {
-    return 'Failed to save profile: $error';
-  }
-
-  @override
-  String get profileSaveRequiresInternet =>
-      'Saving your profile requires an internet connection.';
 
   @override
   String get profileSetup => 'Set up your profile';
@@ -13096,9 +12134,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get profileUidLabel => 'UID';
 
   @override
-  String get profileUpdated => 'Profile updated';
-
-  @override
   String get profileUrlInvalid => 'Please enter a valid URL';
 
   @override
@@ -13176,9 +12211,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get qrScannerImportedChannelName => 'Imported';
-
-  @override
-  String get qrScannerInvalidChannelData => 'Invalid channel data';
 
   @override
   String get qrScannerMaxChannels => 'Maximum 8 channels - delete one first';
@@ -13947,10 +12979,6 @@ class AppLocalizationsRu extends AppLocalizations {
       'Your phone removed the stored pairing info for this device. Return to Settings > Bluetooth, forget \"Meshtastic_XXXX\", and try again.';
 
   @override
-  String get scannerPairingRemovedHint =>
-      'Bluetooth pairing was removed. Forget \"Meshtastic\" in Settings > Bluetooth and reconnect to continue.';
-
-  @override
   String get scannerPinRequiredError =>
       'Connection failed - please try again and enter the PIN when prompted';
 
@@ -13965,9 +12993,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get scannerRetryScan => 'Retry Scan';
-
-  @override
-  String get scannerSavedDeviceFallbackName => 'Your saved device';
 
   @override
   String get scannerScanningSubtitle => 'Looking for Meshtastic devices...';
@@ -14457,13 +13482,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get settingsSearchAutomationsPackTitle => 'Automations Pack';
 
   @override
-  String get settingsSearchBluetoothConfigSubtitle =>
-      'Bluetooth settings and PIN';
-
-  @override
-  String get settingsSearchBluetoothConfigTitle => 'Bluetooth config';
-
-  @override
   String get settingsSearchCannedMessagesSubtitle =>
       'Pre-configured device messages';
 
@@ -14492,20 +13510,6 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get settingsSearchCommentsSubtitle =>
       'Push notifications for comments and @mentions';
-
-  @override
-  String get settingsSearchDeviceConfigSubtitle =>
-      'Device name, role, and behavior';
-
-  @override
-  String get settingsSearchDeviceConfigTitle => 'Device config';
-
-  @override
-  String get settingsSearchDisplayConfigSubtitle =>
-      'Screen brightness and timeout';
-
-  @override
-  String get settingsSearchDisplayConfigTitle => 'Display config';
 
   @override
   String get settingsSearchDmNotificationsSubtitle =>
@@ -14539,10 +13543,6 @@ class AppLocalizationsRu extends AppLocalizations {
       'Light, medium, or heavy feedback';
 
   @override
-  String get settingsSearchHelpSupportSubtitle =>
-      'FAQ, troubleshooting, and contact info';
-
-  @override
   String get settingsSearchHint => 'Find a setting';
 
   @override
@@ -14559,13 +13559,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get settingsSearchIftttPackTitle => 'IFTTT Pack';
 
   @override
-  String get settingsSearchImportChannelSubtitle =>
-      'Scan a Meshtastic channel QR code';
-
-  @override
-  String get settingsSearchImportChannelTitle => 'Import channel via QR';
-
-  @override
   String get settingsSearchLikesSubtitle => 'Push notifications for post likes';
 
   @override
@@ -14574,12 +13567,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get settingsSearchLinkedDevicesTitle => 'Linked Devices';
-
-  @override
-  String get settingsSearchNetworkConfigSubtitle => 'WiFi and network settings';
-
-  @override
-  String get settingsSearchNetworkConfigTitle => 'Network config';
 
   @override
   String get settingsSearchNewFollowersSubtitle =>
@@ -14609,35 +13596,12 @@ class AppLocalizationsRu extends AppLocalizations {
       'Notification vibration';
 
   @override
-  String get settingsSearchPositionConfigSubtitle => 'GPS and position sharing';
-
-  @override
-  String get settingsSearchPositionConfigTitle => 'Position config';
-
-  @override
-  String get settingsSearchPowerConfigSubtitle =>
-      'Power saving and sleep settings';
-
-  @override
-  String get settingsSearchPowerConfigTitle => 'Power config';
-
-  @override
   String get settingsSearchPremiumSubtitle =>
       'Ringtones, themes, automations, IFTTT, widgets';
 
   @override
-  String get settingsSearchPrivacySubtitle => 'How we handle your data';
-
-  @override
   String get settingsSearchProfileSubtitle =>
       'Your display name, avatar, and bio';
-
-  @override
-  String get settingsSearchRadioConfigSubtitle =>
-      'LoRa, modem, channel settings';
-
-  @override
-  String get settingsSearchRadioConfigTitle => 'Radio config';
 
   @override
   String get settingsSearchRegionSubtitle => 'Device radio frequency region';
@@ -14672,17 +13636,11 @@ class AppLocalizationsRu extends AppLocalizations {
   String get settingsSearchScanForDeviceTitle => 'Scan for device';
 
   @override
-  String get settingsSearchSocialmeshSubtitle => 'Meshtastic companion app';
-
-  @override
   String get settingsSearchTakGatewaySubtitle =>
       'Gateway URL, position publishing, callsign';
 
   @override
   String get settingsSearchTakGatewayTitle => 'TAK Gateway';
-
-  @override
-  String get settingsSearchTermsSubtitle => 'Legal terms and conditions';
 
   @override
   String get settingsSearchThemePackSubtitle =>
@@ -15555,9 +14513,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get signalAnonymous => 'Anonymous';
 
   @override
-  String get signalAnonymousAuthor => 'Anonymous';
-
-  @override
   String get signalAnonymousFeed => 'Anonymous';
 
   @override
@@ -15945,20 +14900,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get signalProfile => 'Profile';
 
   @override
-  String get signalProximityDirect => 'direct';
-
-  @override
-  String signalProximityHops(int count) {
-    return '$count hops';
-  }
-
-  @override
-  String get signalProximityNearby => 'nearby';
-
-  @override
-  String get signalProximityOneHop => '1 hop';
-
-  @override
   String get signalRemoveLocation => 'Remove location';
 
   @override
@@ -16116,9 +15057,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get signalSortNewest => 'Newest';
-
-  @override
-  String get signalSwipeHide => 'Hide';
 
   @override
   String get signalSwipeSave => 'Save';
@@ -16291,16 +15229,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get socialAccountStatusTitle => 'Account Status';
 
   @override
-  String get socialAccountStrike1 => 'First offense. Review our guidelines.';
-
-  @override
-  String get socialAccountStrike2 =>
-      'Second offense. One more and your account will be suspended.';
-
-  @override
-  String get socialAccountStrike3 => 'Account will be suspended.';
-
-  @override
   String get socialAccountStrikeMeter => 'Strike Meter';
 
   @override
@@ -16332,9 +15260,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get socialActiveWarnings => 'Active Warnings';
 
   @override
-  String get socialActivityAllRead => 'All activity marked as read';
-
-  @override
   String get socialActivityClearAll => 'Clear all';
 
   @override
@@ -16348,22 +15273,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get socialActivityClearConfirmTitle => 'Clear all activity?';
 
   @override
-  String get socialActivityCleared => 'Activity cleared';
-
-  @override
-  String get socialActivityCommentedPost => ' commented on your post';
-
-  @override
   String get socialActivityCommentedSignal => ' commented on your signal';
 
   @override
   String get socialActivityErrorLoading => 'Failed to load activity';
-
-  @override
-  String get socialActivityFollowRequest => ' requested to follow you';
-
-  @override
-  String get socialActivityFollowed => ' started following you';
 
   @override
   String get socialActivityGroupEarlier => 'Earlier';
@@ -16384,16 +15297,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get socialActivityInteracted => ' interacted with your content';
 
   @override
-  String get socialActivityLikedComment => ' liked your comment';
-
-  @override
-  String get socialActivityLikedPost => ' liked your post';
-
-  @override
   String get socialActivityLikedSignal => ' liked your signal';
-
-  @override
-  String get socialActivityLikedStory => ' liked your story';
 
   @override
   String get socialActivityLoadingSignal => 'Loading Signal...';
@@ -16436,9 +15340,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get socialActivityTitleSuffix => ' yet';
 
   @override
-  String get socialActivityViewedStory => ' viewed your story';
-
-  @override
   String get socialAdd => 'Add';
 
   @override
@@ -16458,9 +15359,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get socialAppealDecision => 'Appeal Decision';
-
-  @override
-  String get socialAuthorLabel => 'Author: ';
 
   @override
   String get socialBanReasonHarassment => 'Harassment / Bullying';
@@ -16487,34 +15385,15 @@ class AppLocalizationsRu extends AppLocalizations {
   String get socialBanReasonViolence => 'Violence / Threats';
 
   @override
-  String get socialBanSelectReason => 'Select ban reason';
-
-  @override
-  String get socialBanSendEmail => 'Send notification email to user';
-
-  @override
-  String get socialBanSendEmailDesc =>
-      'Inform them why their account was banned';
-
-  @override
   String get socialBanUserAndDelete => 'Ban User & Delete';
 
   @override
   String get socialBanUserButton => 'Ban User';
 
   @override
-  String get socialBanUserDesc => 'This will permanently disable their account';
-
-  @override
   String socialBanUserFailed(String error) {
     return 'Failed to ban user: $error';
   }
-
-  @override
-  String get socialBanUserIdLabel => 'User ID: ';
-
-  @override
-  String get socialBanUserTitle => 'Ban User';
 
   @override
   String socialBannerRemoveFailed(String error) {
@@ -16588,11 +15467,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get socialCommentReply => 'Reply';
 
   @override
-  String socialCommentReportFailed(String error) {
-    return 'Failed to report: $error';
-  }
-
-  @override
   String get socialCommentReported => 'Comment reported';
 
   @override
@@ -16623,16 +15497,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get socialContentIdNotFound => 'Content ID not found';
 
   @override
-  String get socialContentNotAvailable => 'Content not available';
-
-  @override
   String get socialContentRemoved => 'Content Removed';
 
   @override
   String get socialContentType => 'Content Type';
-
-  @override
-  String get socialContentUnavailable => 'Content unavailable';
 
   @override
   String get socialCreatePostAction => 'Create Post';
@@ -16917,9 +15785,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get socialFeedLocationFallback => 'Location';
 
   @override
-  String get socialFilterAll => 'All';
-
-  @override
   String get socialFilterLevelLess => 'Less';
 
   @override
@@ -16932,15 +15797,6 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get socialFilterLevelStandardDesc =>
       'Content that may be upsetting or offensive is filtered. You may still see some borderline content.';
-
-  @override
-  String get socialFilterLocation => 'Location';
-
-  @override
-  String get socialFilterNodes => 'Nodes';
-
-  @override
-  String get socialFilterPhotos => 'Photos';
 
   @override
   String get socialFollow => 'Follow';
@@ -16987,11 +15843,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get socialFollowRequestsTitle => 'Follow Requests';
 
   @override
-  String socialFollowersAndPosts(String followers, String posts) {
-    return '$followers followers • $posts posts';
-  }
-
-  @override
   String socialFollowersError(String error) {
     return 'Failed to load: $error';
   }
@@ -17008,9 +15859,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get socialGuidelineNoSpam => 'No spam, scams, or misleading content';
-
-  @override
-  String get socialGuidelineRespectful => 'Be respectful and constructive';
 
   @override
   String get socialGuidelinesWarning => 'Community Guidelines Warning';
@@ -17030,9 +15878,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get socialImageBlockedByModeration => 'Image blocked by moderation';
-
-  @override
-  String get socialImageUnavailable => 'Image unavailable';
 
   @override
   String get socialInvalidNodeId => 'Invalid node ID';
@@ -17059,11 +15904,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get socialLocationFallback => 'Location';
-
-  @override
-  String socialMediaLabel(String type) {
-    return 'Media ($type)';
-  }
 
   @override
   String get socialModerationAdditionalNotes => 'Additional notes (optional)';
@@ -17175,9 +16015,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get socialNoPostsYet => 'No posts yet';
-
-  @override
-  String get socialNoReasonProvided => 'No reason provided';
 
   @override
   String get socialNoRecentActivity => 'No recent activity';
@@ -17312,9 +16149,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get socialReportComment => 'Report Comment';
 
   @override
-  String get socialReportCommentTitle => 'Report Comment';
-
-  @override
   String get socialReportCommentWhy => 'Why are you reporting this comment?';
 
   @override
@@ -17379,9 +16213,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get socialReportSubmitted => 'Report submitted. Thank you.';
-
-  @override
-  String get socialReportedContentApproved => 'Content approved';
 
   @override
   String get socialReportedContentRejected =>
@@ -17483,20 +16314,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get socialSignInSubscriptions => 'Sign in to manage subscriptions';
 
   @override
-  String get socialSignalCommentLabel => 'SIGNAL COMMENT';
-
-  @override
-  String get socialSignalContentNotAvailable => 'Signal content not available';
-
-  @override
-  String socialSignalIdLabel(String id) {
-    return 'Signal: $id';
-  }
-
-  @override
-  String get socialSignalLabel => 'SIGNAL';
-
-  @override
   String get socialStatFollower => 'Follower';
 
   @override
@@ -17548,9 +16365,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get socialStoryDeleted => 'Story deleted';
-
-  @override
-  String get socialStoryLabel => 'STORY';
 
   @override
   String get socialStoryMayBeRemoved => 'This story may have been removed';
@@ -17801,9 +16615,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get socialUserUnsuspended => 'User unsuspended successfully';
-
-  @override
-  String get socialVideoContent => 'Video content';
 
   @override
   String get socialView => 'View';
@@ -18248,47 +17059,6 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String takNavigationEtaHoursMinutes(int hours, int minutes) {
-    return '${hours}h ${minutes}m';
-  }
-
-  @override
-  String get takNavigationEtaLessThanOneMin => '< 1 min';
-
-  @override
-  String takNavigationEtaMinutes(int count) {
-    return '$count min';
-  }
-
-  @override
-  String takNavigationTargetMoving(int speed) {
-    return 'Target moving at $speed km/h';
-  }
-
-  @override
-  String takNavigationTargetMovingWithDirection(String direction, int speed) {
-    return 'Target moving $direction at $speed km/h';
-  }
-
-  @override
-  String get takNavigationTargetStationary => 'Target stationary';
-
-  @override
-  String takProximityAlertMovingBody(
-    String affiliation,
-    int distance,
-    String heading,
-    int speed,
-  ) {
-    return '$affiliation entity at $distance -- heading $heading at $speed km/h';
-  }
-
-  @override
-  String takProximityAlertStationaryBody(String affiliation, int distance) {
-    return '$affiliation entity at $distance -- stationary';
-  }
-
-  @override
   String get takScreenButtonConnect => 'Connect';
 
   @override
@@ -18410,16 +17180,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get takSettingsGatewayUrlTitle => 'Gateway URL';
-
-  @override
-  String takSettingsIntervalMinutes(int minutes) {
-    return '${minutes}m';
-  }
-
-  @override
-  String takSettingsIntervalSeconds(int seconds) {
-    return '${seconds}s';
-  }
 
   @override
   String get takSettingsIntervalSubtitle => 'How often to send your position';
@@ -18599,30 +17359,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get taskStateReassigned => 'reassigned';
 
   @override
-  String taskTransitionNoteAssignedTo(String assigneeId) {
-    return 'Assigned to $assigneeId';
-  }
-
-  @override
-  String get taskTransitionNoteCreated => 'Task created';
-
-  @override
-  String taskTransitionNoteCreatedViaReassignment(String originalTaskId) {
-    return 'Task created via reassignment from $originalTaskId';
-  }
-
-  @override
-  String taskTransitionNoteReassignedToNewTask(String newTaskId) {
-    return 'Reassigned to new task $newTaskId';
-  }
-
-  @override
-  String get telemetryAirQualityEmpty => 'No air quality data recorded yet';
-
-  @override
-  String get telemetryAirQualityLogTitle => 'Air Quality Log';
-
-  @override
   String get telemetryAirQualityNoData => 'No air quality data recorded yet';
 
   @override
@@ -18645,14 +17381,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get telemetryAirQualityParticleCounts => 'Particle Counts (per 0.1L)';
-
-  @override
-  String get telemetryAirQualityParticulateEnvironmental =>
-      'Particulate Matter (Environmental)';
-
-  @override
-  String get telemetryAirQualityParticulateStandard =>
-      'Particulate Matter (Standard)';
 
   @override
   String get telemetryAirQualityPm100Label => 'PM10';
@@ -18695,13 +17423,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get telemetryAqiUnhealthySensitive => 'Unhealthy (S)';
 
   @override
-  String get telemetryBatteryCharging => 'Charging';
-
-  @override
   String get telemetryClearAllFilters => 'Clear all filters';
-
-  @override
-  String get telemetryClearConfirmLabel => 'Clear';
 
   @override
   String get telemetryClearData => 'Clear Data';
@@ -18724,17 +17446,7 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String telemetryCo2LabelPrefix(String quality) {
-    return 'CO₂ - $quality';
-  }
-
-  @override
   String get telemetryCo2Poor => 'Poor';
-
-  @override
-  String telemetryCo2Ppm(String ppm) {
-    return '$ppm ppm';
-  }
 
   @override
   String get telemetryConfigAirQualityDesc =>
@@ -18809,9 +17521,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get telemetryDateRangeTooltip => 'Date range';
 
   @override
-  String get telemetryDetectionClear => 'Clear';
-
-  @override
   String get telemetryDetectionClearBadge => 'Clear';
 
   @override
@@ -18826,19 +17535,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get telemetryDetectionSensor => 'Detection Sensor';
-
-  @override
-  String get telemetryDetectionSensorDefault => 'Detection Sensor';
-
-  @override
-  String get telemetryDetectionSensorEmpty => 'No sensor events recorded yet';
-
-  @override
-  String get telemetryDetectionSensorLogTitle => 'Detection Sensor Log';
-
-  @override
-  String get telemetryDetectionSensorSubtitle =>
-      'Detection sensors report motion and presence';
 
   @override
   String get telemetryDetectionTitle => 'Detection Sensor Log';
@@ -18960,9 +17656,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get telemetryEnvironmentLegendTemperature => 'Temperature';
 
   @override
-  String get telemetryEnvironmentMetricsTitle => 'Environment Metrics';
-
-  @override
   String get telemetryEnvironmentNoMetrics => 'No environment metrics yet';
 
   @override
@@ -18970,11 +17663,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String telemetryError(String error) {
-    return 'Error: $error';
-  }
-
-  @override
-  String telemetryErrorPrefix(String error) {
     return 'Error: $error';
   }
 
@@ -18995,98 +17683,20 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String telemetryFailedToClearData(String error) {
-    return 'Failed to clear data: $error';
-  }
-
-  @override
-  String get telemetryFilterAirUtil => 'Air Util';
-
-  @override
   String get telemetryFilterAll => 'All';
 
   @override
-  String get telemetryFilterBattery => 'Battery';
-
-  @override
-  String get telemetryFilterChannel => 'Channel';
-
-  @override
-  String get telemetryFilterGas => 'Gas';
-
-  @override
-  String get telemetryFilterHumidity => 'Humidity';
-
-  @override
-  String get telemetryFilterIaq => 'IAQ';
-
-  @override
-  String get telemetryFilterLight => 'Light';
-
-  @override
-  String get telemetryFilterPressure => 'Pressure';
-
-  @override
-  String get telemetryFilterTemp => 'Temp';
-
-  @override
-  String get telemetryFilterUptime => 'Uptime';
-
-  @override
-  String get telemetryFilterVoltage => 'Voltage';
-
-  @override
-  String get telemetryFilterWind => 'Wind';
-
-  @override
   String get telemetryHelp => 'Help';
-
-  @override
-  String get telemetryLegendAirUtil => 'Air Util';
-
-  @override
-  String get telemetryLegendBattery => 'Battery';
-
-  @override
-  String get telemetryLegendChUtil => 'Ch Util';
-
-  @override
-  String get telemetryLegendHumidity => 'Humidity';
-
-  @override
-  String get telemetryLegendTemperature => 'Temperature';
-
-  @override
-  String get telemetryLegendVoltage => 'Voltage';
-
-  @override
-  String get telemetryMapStyle => 'Map Style';
 
   @override
   String get telemetryMetricsWillAppear =>
       'Metrics will appear when your device reports telemetry';
 
   @override
-  String get telemetryNoDeviceMetricsYet => 'No device metrics yet';
-
-  @override
-  String get telemetryNoEnvironmentMetricsYet => 'No environment metrics yet';
-
-  @override
   String get telemetryNoMetricsMatchFilters => 'No metrics match filters';
 
   @override
   String get telemetryPaxBluetooth => 'Bluetooth';
-
-  @override
-  String get telemetryPaxCounterEmpty => 'No PAX data recorded yet';
-
-  @override
-  String get telemetryPaxCounterLogTitle => 'PAX Counter Log';
-
-  @override
-  String get telemetryPaxCounterSubtitle =>
-      'PAX counter detects nearby devices';
 
   @override
   String get telemetryPaxDescription => 'PAX counter detects nearby devices';
@@ -19103,26 +17713,6 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String telemetryPaxUptimeDaysHours(int days, int hours) {
-    return '${days}d ${hours}h';
-  }
-
-  @override
-  String telemetryPaxUptimeHoursMinutes(int hours, int minutes) {
-    return '${hours}h ${minutes}m';
-  }
-
-  @override
-  String telemetryPaxUptimeMinutes(int minutes) {
-    return '${minutes}m';
-  }
-
-  @override
-  String telemetryPaxUptimeSeconds(int seconds) {
-    return '${seconds}s';
-  }
-
-  @override
   String get telemetryPaxWifi => 'WiFi';
 
   @override
@@ -19131,11 +17721,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get telemetryPositionAllNodesOption => 'All Nodes';
-
-  @override
-  String telemetryPositionAltitude(double meters) {
-    return '${meters}m';
-  }
 
   @override
   String get telemetryPositionClearLabel => 'Clear';
@@ -19160,9 +17745,6 @@ class AppLocalizationsRu extends AppLocalizations {
     );
     return '$count position$_temp0';
   }
-
-  @override
-  String get telemetryPositionDataCleared => 'Position data cleared';
 
   @override
   String get telemetryPositionDateRange => 'Date range';
@@ -19194,19 +17776,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get telemetryPositionListView => 'List view';
 
   @override
-  String get telemetryPositionListViewTooltip => 'List view';
-
-  @override
   String get telemetryPositionMapStyle => 'Map Style';
 
   @override
   String get telemetryPositionMapView => 'Map view';
-
-  @override
-  String get telemetryPositionMapViewTooltip => 'Map view';
-
-  @override
-  String get telemetryPositionNoDataExport => 'No position data to export';
 
   @override
   String get telemetryPositionNoDisplay => 'No positions to display';
@@ -19221,39 +17794,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get telemetryPositionNoMatch => 'No positions match filters';
 
   @override
-  String get telemetryPositionNoMatchFilters => 'No positions match filters';
-
-  @override
-  String get telemetryPositionNoPositionsToDisplay => 'No positions to display';
-
-  @override
-  String telemetryPositionNodeCount(int count) {
-    return '$count nodes';
-  }
-
-  @override
-  String get telemetryPositionNodeDrawerTitle => 'Nodes';
-
-  @override
   String telemetryPositionNodesCount(int count) {
     return '$count nodes';
-  }
-
-  @override
-  String telemetryPositionSats(int count) {
-    return '$count sats';
-  }
-
-  @override
-  String get telemetryPositionShowAllNodes => 'All Nodes';
-
-  @override
-  String get telemetryPositionShowAllSubtitle =>
-      'Show positions from all nodes';
-
-  @override
-  String telemetryPositionSpeed(int speed) {
-    return '$speed km/h';
   }
 
   @override
@@ -19300,24 +17842,11 @@ class AppLocalizationsRu extends AppLocalizations {
   String get telemetryTracerouteCleared => 'Traceroute data cleared';
 
   @override
-  String get telemetryTracerouteDataCleared => 'Traceroute data cleared';
-
-  @override
-  String get telemetryTracerouteDestinationLabel => 'To';
-
-  @override
   String get telemetryTracerouteDirectConnection =>
       'Direct connection — no intermediate hops';
 
   @override
-  String get telemetryTracerouteEmpty => 'No traceroutes recorded yet';
-
-  @override
   String get telemetryTracerouteEmptyHint =>
-      'Send a traceroute from a node to see network paths';
-
-  @override
-  String get telemetryTracerouteEmptySubtitle =>
       'Send a traceroute from a node to see network paths';
 
   @override
@@ -19340,14 +17869,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get telemetryTracerouteForwardPath => 'Forward Path';
 
   @override
-  String get telemetryTracerouteHistoryTitle => 'Traceroute History';
-
-  @override
-  String telemetryTracerouteHopSnr(int value) {
-    return '$value dB';
-  }
-
-  @override
   String get telemetryTracerouteHopsBack => 'Hops ←';
 
   @override
@@ -19358,9 +17879,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get telemetryTracerouteNoData => 'No traceroutes recorded yet';
-
-  @override
-  String get telemetryTracerouteNoDataExport => 'No traceroute data to export';
 
   @override
   String get telemetryTracerouteNoExportData => 'No traceroute data to export';
@@ -19378,11 +17896,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get telemetryTracerouteReturnPath => 'Return Path';
 
   @override
-  String telemetryTracerouteSnr(int value) {
-    return 'SNR: $value dB';
-  }
-
-  @override
   String get telemetryTracerouteTitle => 'Traceroute History';
 
   @override
@@ -19393,33 +17906,8 @@ class AppLocalizationsRu extends AppLocalizations {
       'Try adjusting your search or filters';
 
   @override
-  String telemetryUptimeDaysHours(int days, int hours) {
-    return '${days}d ${hours}h';
-  }
-
-  @override
-  String telemetryUptimeHoursMinutes(int hours, int minutes) {
-    return '${hours}h ${minutes}m';
-  }
-
-  @override
-  String telemetryUptimeMinutes(int minutes) {
-    return '${minutes}m';
-  }
-
-  @override
   String get timelineActivityWillAppear =>
       'Activity will appear here as it happens';
-
-  @override
-  String timelineDaysAgo(int count) {
-    return '${count}d ago';
-  }
-
-  @override
-  String timelineDirectMessage(String from, String to) {
-    return '$from → $to';
-  }
 
   @override
   String get timelineFilterAll => 'All';
@@ -19440,21 +17928,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get timelineFriday => 'Friday';
 
   @override
-  String timelineHoursAgo(int count) {
-    return '${count}h ago';
-  }
-
-  @override
-  String get timelineJustNow => 'just now';
-
-  @override
   String timelineLastHeard(String timeAgo) {
     return 'Last heard $timeAgo';
-  }
-
-  @override
-  String timelineMinutesAgo(int count) {
-    return '${count}m ago';
   }
 
   @override
@@ -19491,17 +17966,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get timelineSearchHint => 'Search events';
 
   @override
-  String timelineSentMessage(String name) {
-    return '$name sent a message';
-  }
-
-  @override
   String get timelineShowAllEvents => 'Show all events';
-
-  @override
-  String timelineSnrSignalInfo(double value) {
-    return 'SNR: $value dB';
-  }
 
   @override
   String timelineSnrValue(double value) {
@@ -19527,11 +17992,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get timelineTuesday => 'Tuesday';
 
   @override
-  String timelineUpdatedPosition(String name) {
-    return '$name updated position';
-  }
-
-  @override
   String timelineWeakSignal(String name) {
     return 'Weak signal from $name';
   }
@@ -19541,12 +18001,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get timelineYesterday => 'Yesterday';
-
-  @override
-  String get timelineYouSentMessage => 'You sent a message';
-
-  @override
-  String get widgetBuilderAccent => 'Accent';
 
   @override
   String get widgetBuilderActionCopyToClipboard => 'Copy to Clipboard';
@@ -19661,24 +18115,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String widgetBuilderAddedToDashboard(String name) {
     return '$name added to Dashboard';
   }
-
-  @override
-  String get widgetBuilderAlignBottom => 'Bottom';
-
-  @override
-  String get widgetBuilderAlignCenter => 'Center';
-
-  @override
-  String get widgetBuilderAlignLeft => 'Left';
-
-  @override
-  String get widgetBuilderAlignRight => 'Right';
-
-  @override
-  String get widgetBuilderAlignSpread => 'Spread';
-
-  @override
-  String get widgetBuilderAlignTop => 'Top';
 
   @override
   String get widgetBuilderAll => 'All';
@@ -20160,39 +18596,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get widgetBuilderCancel => 'Cancel';
 
   @override
-  String get widgetBuilderCancelButton => 'Cancel';
-
-  @override
   String widgetBuilderCannotSaveMessage(String message) {
     return '$message\n\nGo back to Step 1 to change your template, or Step 3 to update your selections.';
   }
 
   @override
   String get widgetBuilderCannotSaveTitle => 'Cannot Save Widget';
-
-  @override
-  String get widgetBuilderCatAirQuality => 'Air Quality';
-
-  @override
-  String get widgetBuilderCatDeviceMetrics => 'Device Metrics';
-
-  @override
-  String get widgetBuilderCatEnvironment => 'Environment';
-
-  @override
-  String get widgetBuilderCatGpsPosition => 'GPS & Position';
-
-  @override
-  String get widgetBuilderCatMessaging => 'Messaging';
-
-  @override
-  String get widgetBuilderCatNetwork => 'Network';
-
-  @override
-  String get widgetBuilderCatNodeInfo => 'Node Info';
-
-  @override
-  String get widgetBuilderCatPowerBattery => 'Power & Battery';
 
   @override
   String get widgetBuilderCategoryCharts => 'Charts';
@@ -20276,55 +18685,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get widgetBuilderEdit => 'Edit';
 
   @override
-  String get widgetBuilderEditAction => 'Edit';
-
-  @override
-  String get widgetBuilderElementButton => 'Button';
-
-  @override
-  String get widgetBuilderElementChart => 'Chart';
-
-  @override
-  String get widgetBuilderElementGauge => 'Gauge';
-
-  @override
-  String get widgetBuilderElementGroup => 'Group';
-
-  @override
-  String get widgetBuilderElementHorizontalStack => 'Horizontal Stack';
-
-  @override
-  String get widgetBuilderElementIcon => 'Icon';
-
-  @override
-  String get widgetBuilderElementImage => 'Image';
-
-  @override
-  String get widgetBuilderElementLayerStack => 'Layer Stack';
-
-  @override
-  String get widgetBuilderElementMap => 'Map';
-
-  @override
   String get widgetBuilderElementNotFound => 'Element not found';
-
-  @override
-  String get widgetBuilderElementShape => 'Shape';
-
-  @override
-  String get widgetBuilderElementShowHide => 'Show/Hide';
-
-  @override
-  String get widgetBuilderElementSpace => 'Space';
-
-  @override
-  String get widgetBuilderElementText => 'Text';
-
-  @override
-  String get widgetBuilderElementVerticalStack => 'Vertical Stack';
-
-  @override
-  String get widgetBuilderElements => 'Elements';
 
   @override
   String get widgetBuilderEnablePhoneLocation =>
@@ -20611,25 +18972,16 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get widgetBuilderJustNow => 'Just now';
-
-  @override
   String get widgetBuilderKeepCurrent => 'Keep Current';
 
   @override
   String get widgetBuilderLabelAccent => 'Accent';
 
   @override
-  String get widgetBuilderLabelAddAction => 'Add Action';
-
-  @override
   String get widgetBuilderLabelBindTo => 'Bind to';
 
   @override
   String get widgetBuilderLabelGap => 'Gap between items';
-
-  @override
-  String get widgetBuilderLabelHorizontal => 'Horizontal';
 
   @override
   String get widgetBuilderLabelHintExample => 'e.g., \"Warning\", \"Critical\"';
@@ -20660,9 +19012,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get widgetBuilderLabelUrl => 'URL';
-
-  @override
-  String get widgetBuilderLabelVertical => 'Vertical';
 
   @override
   String get widgetBuilderLargeMaxTwoRows => 'Large widgets allow max 2 rows';
@@ -20813,9 +19162,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get widgetBuilderMarketplaceProcessing => 'Processing...';
 
   @override
-  String get widgetBuilderMarketplaceReject => 'Reject';
-
-  @override
   String get widgetBuilderMarketplaceRejectButton => 'Reject';
 
   @override
@@ -20827,9 +19173,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get widgetBuilderMarketplaceRetry => 'Retry';
-
-  @override
-  String get widgetBuilderMarketplaceRetryButton => 'Retry';
 
   @override
   String get widgetBuilderMarketplaceSearchHint => 'Search widgets...';
@@ -20889,9 +19232,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get widgetBuilderNewWidget => 'New Widget';
 
   @override
-  String get widgetBuilderNoActionsSelected => 'No actions selected';
-
-  @override
   String get widgetBuilderNoAdditionalOptions => 'No additional options';
 
   @override
@@ -20911,9 +19251,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get widgetBuilderNoSensorDataSelected => 'No sensor data selected';
-
-  @override
-  String get widgetBuilderNoVariablesFound => 'No variables found';
 
   @override
   String get widgetBuilderNone => 'None';
@@ -20974,16 +19311,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get widgetBuilderSearchVariables => 'Search variables...';
 
   @override
-  String get widgetBuilderSectionAction => 'Action';
-
-  @override
   String get widgetBuilderSectionActionBlocks => 'Action Blocks';
-
-  @override
-  String get widgetBuilderSectionContent => 'Content';
-
-  @override
-  String get widgetBuilderSectionDataBinding => 'Data Binding';
 
   @override
   String get widgetBuilderSectionDisplayBlocks => 'Display Blocks';
@@ -20999,9 +19327,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get widgetBuilderSectionNetwork => 'NETWORK';
-
-  @override
-  String get widgetBuilderSectionStyle => 'Style';
 
   @override
   String get widgetBuilderSelectAnAction => 'Select an action';
@@ -21155,57 +19480,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get widgetBuilderToggleToolbox => 'Toggle Toolbox';
 
   @override
-  String get widgetBuilderToolboxChart => 'Chart';
-
-  @override
-  String get widgetBuilderToolboxColumn => 'Column';
-
-  @override
-  String get widgetBuilderToolboxConditional => 'Conditional';
-
-  @override
-  String get widgetBuilderToolboxContainer => 'Container';
-
-  @override
-  String get widgetBuilderToolboxContent => 'Content';
-
-  @override
-  String get widgetBuilderToolboxDataDisplay => 'Data Display';
-
-  @override
-  String get widgetBuilderToolboxGauge => 'Gauge';
-
-  @override
-  String get widgetBuilderToolboxIcon => 'Icon';
-
-  @override
-  String get widgetBuilderToolboxImage => 'Image';
-
-  @override
-  String get widgetBuilderToolboxLayout => 'Layout';
-
-  @override
-  String get widgetBuilderToolboxLogic => 'Logic';
-
-  @override
-  String get widgetBuilderToolboxMap => 'Map';
-
-  @override
-  String get widgetBuilderToolboxRow => 'Row';
-
-  @override
-  String get widgetBuilderToolboxShape => 'Shape';
-
-  @override
-  String get widgetBuilderToolboxSpacer => 'Spacer';
-
-  @override
-  String get widgetBuilderToolboxStack => 'Stack';
-
-  @override
-  String get widgetBuilderToolboxText => 'Text';
-
-  @override
   String get widgetBuilderTraceRouteToNode => 'Trace route to node';
 
   @override
@@ -21273,132 +19547,8 @@ class AppLocalizationsRu extends AppLocalizations {
       'Quick Actions requires at least one action selected. You have data bindings but no actions.';
 
   @override
-  String get widgetBuilderValidationChartNoBinding =>
-      'Chart has no data binding';
-
-  @override
-  String get widgetBuilderValidationChartNoBindingFix =>
-      'Bind to data like SNR history';
-
-  @override
   String get widgetBuilderValidationDataRequired =>
       'This template requires data bindings. You have actions selected but no data.';
-
-  @override
-  String get widgetBuilderValidationDescTooLongFix => 'Shorten the description';
-
-  @override
-  String get widgetBuilderValidationEmpty => 'Widget is empty';
-
-  @override
-  String get widgetBuilderValidationEmptyContainerFix => 'Add elements inside';
-
-  @override
-  String get widgetBuilderValidationEmptyFix =>
-      'Add some elements to your widget';
-
-  @override
-  String get widgetBuilderValidationGaugeMinMax =>
-      'Gauge min must be less than max';
-
-  @override
-  String get widgetBuilderValidationGaugeMinMaxFix => 'Set min < max';
-
-  @override
-  String get widgetBuilderValidationGaugeNoBinding =>
-      'Gauge has no data binding';
-
-  @override
-  String get widgetBuilderValidationGaugeNoBindingFix =>
-      'Bind to a numeric value like battery or signal';
-
-  @override
-  String get widgetBuilderValidationGaugeNonNumeric =>
-      'Gauge is bound to non-numeric data';
-
-  @override
-  String get widgetBuilderValidationGaugeNonNumericFix =>
-      'Gauges work best with numeric values';
-
-  @override
-  String get widgetBuilderValidationInvalidBindingFix =>
-      'Select a valid data source';
-
-  @override
-  String get widgetBuilderValidationInvalidUrl => 'URL may be invalid';
-
-  @override
-  String get widgetBuilderValidationLooksGood => 'Widget looks good!';
-
-  @override
-  String get widgetBuilderValidationNameTooLongFix => 'Use a shorter name';
-
-  @override
-  String get widgetBuilderValidationNeedName =>
-      'Give your widget a descriptive name';
-
-  @override
-  String get widgetBuilderValidationNeedNameFix => 'Tap the title to rename';
-
-  @override
-  String get widgetBuilderValidationNestingFix =>
-      'Flatten your widget structure';
-
-  @override
-  String get widgetBuilderValidationNoAction =>
-      'Action button has no action configured';
-
-  @override
-  String get widgetBuilderValidationNoActionFix =>
-      'Configure what happens when tapped';
-
-  @override
-  String get widgetBuilderValidationNoDestination =>
-      'Navigate action has no destination';
-
-  @override
-  String get widgetBuilderValidationNoDestinationFix =>
-      'Select where to navigate';
-
-  @override
-  String get widgetBuilderValidationNoIcon =>
-      'Icon element has no icon selected';
-
-  @override
-  String get widgetBuilderValidationNoIconFix => 'Select an icon';
-
-  @override
-  String get widgetBuilderValidationNoLabel => 'Button has no label or icon';
-
-  @override
-  String get widgetBuilderValidationNoLabelFix => 'Add text or an icon';
-
-  @override
-  String get widgetBuilderValidationNoText => 'Text element has no content';
-
-  @override
-  String get widgetBuilderValidationNoTextFix => 'Add text or bind to data';
-
-  @override
-  String get widgetBuilderValidationNoUrl => 'Open URL action has no URL';
-
-  @override
-  String get widgetBuilderValidationNoUrlFix => 'Enter the URL to open';
-
-  @override
-  String get widgetBuilderValidationTextTooLongFix =>
-      'Shorten the text content';
-
-  @override
-  String get widgetBuilderValidationTooManyChildrenFix =>
-      'Split into multiple containers';
-
-  @override
-  String get widgetBuilderValidationTooManyElementsFix =>
-      'Simplify your widget by removing unnecessary elements';
-
-  @override
-  String get widgetBuilderValidationTooManyTagsFix => 'Remove some tags';
 
   @override
   String get widgetBuilderView => 'View';
@@ -21937,9 +20087,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get deepLinkWidgetNotFound => 'Widget not found';
 
   @override
-  String get deepLinkCouldNotDecryptChannel => 'Could not decrypt channel key';
-
-  @override
   String get deepLinkAlreadyHaveChannel => 'You already have this channel';
 
   @override
@@ -22023,17 +20170,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get channelKeyNoKeySet => '(no key set)';
-
-  @override
-  String get channelKeyInvalidBase64 => 'Invalid base64 encoding';
-
-  @override
-  String channelKeyInvalidSize(int size) {
-    return 'Invalid key size ($size bytes). Use 1, 16, or 32 bytes.';
-  }
-
-  @override
-  String get channelKeyEmpty => 'Key cannot be empty';
 
   @override
   String get channelKeyHide => 'Hide';
@@ -22219,15 +20355,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get devicePrivacyLinkDevice => 'Link Device';
-
-  @override
-  String get dateTimePickerSelectDate => 'Select Date';
-
-  @override
-  String get dateTimePickerSelectTime => 'Select Time';
-
-  @override
-  String get dateTimePickerSelectDateTime => 'Select Date & Time';
 
   @override
   String get dateTimePickerMonthJanuary => 'January';
@@ -23671,9 +21798,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get appearanceLanguageRussian => 'Russian';
 
   @override
-  String get appearanceLanguagePickerTitle => 'Select Language';
-
-  @override
   String get appearanceFont => 'Font';
 
   @override
@@ -23756,9 +21880,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get settingsGlyphMatrixTest => 'Glyph Matrix Test';
-
-  @override
-  String get settingsGlyphMatrixSubtitle => 'Nothing Phone 3 LED patterns';
 
   @override
   String get cloudSyncUnableToLoad => 'Unable to load subscription options';
@@ -25706,16 +23827,6 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get accountSubLinkingRequiresInternet =>
       'Linking an account requires an internet connection.';
-
-  @override
-  String get accountSubIftttDataSharing => 'IFTTT Data Sharing';
-
-  @override
-  String get accountSubIftttDisclosureMsg =>
-      'When IFTTT Webhooks are enabled, mesh event data (messages, node status, positions, battery levels) will be sent to IFTTT servers via your personal webhook key.\n\nIFTTT is a third-party service with its own privacy policy. Only the event types you select will be transmitted.';
-
-  @override
-  String get accountSubIUnderstand => 'I Understand';
 
   @override
   String get accountSubConfirm => 'Confirm';
@@ -28633,9 +26744,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get dashboardAddWidgets => 'Add Widgets';
 
   @override
-  String get dashboardChLabel => 'Ch';
-
-  @override
   String get dashboardChUtilLabel => 'Ch. Util';
 
   @override
@@ -28643,10 +26751,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get dashboardEditTitle => 'Edit Dashboard';
-
-  @override
-  String get dashboardEmptyDashboardMessage =>
-      'Customize your dashboard with widgets that matter to you';
 
   @override
   String get dashboardHealthConnection => 'Connection';
@@ -28680,9 +26784,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get dashboardNoNearbyNodes => 'No nearby nodes detected';
-
-  @override
-  String get dashboardNoWidgetsAdded => 'No Widgets Added';
 
   @override
   String get dashboardNoSignalData => 'No signal data available';
@@ -28895,11 +26996,6 @@ class AppLocalizationsRu extends AppLocalizations {
       'Pre-configured (public credentials)';
 
   @override
-  String globalLayerSaveConfigFailed(String error) {
-    return 'Failed to save configuration: $error';
-  }
-
-  @override
   String get globalLayerServer => 'Server';
 
   @override
@@ -28945,32 +27041,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get mapNodeDrawerClosePanel => 'Close panel';
-
-  @override
-  String messageDetailFrom(String senderName) {
-    return 'From: $senderName';
-  }
-
-  @override
-  String messageDetailHops(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count hops',
-      one: '1 hop',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String messageDetailRssi(double value) {
-    return 'RSSI $value dBm';
-  }
-
-  @override
-  String messageDetailSnr(double value) {
-    return 'SNR $value dB';
-  }
 
   @override
   String get nodeSelectorSearchHint => 'Search nodes...';
@@ -29041,11 +27111,6 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String timelineWeakSignalFrom(String nodeName) {
-    return 'Weak signal from $nodeName';
-  }
-
-  @override
   String get widgetWizardAdd => 'Add';
 
   @override
@@ -29054,11 +27119,6 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String adminPostsDeleteAllCount(int count) {
     return 'Delete all ($count)';
-  }
-
-  @override
-  String adminPostsCreatedDate(String date) {
-    return 'Created $date';
   }
 
   @override
@@ -30462,30 +28522,6 @@ class AppLocalizationsRu extends AppLocalizations {
       'TAK Settings let you configure the gateway URL, toggle auto-connect ';
 
   @override
-  String get helpCategoryChannels => 'Channels';
-
-  @override
-  String get helpCategoryMessaging => 'Messaging';
-
-  @override
-  String get helpCategoryNodes => 'Nodes';
-
-  @override
-  String get helpCategoryDevice => 'Device';
-
-  @override
-  String get helpCategoryNetwork => 'Network';
-
-  @override
-  String get helpCategoryAutomations => 'Automations';
-
-  @override
-  String get helpCategorySettings => 'Settings';
-
-  @override
-  String get helpCategoryLegal => 'Legal & Safety';
-
-  @override
   String get accessRestrictedTitle => 'Access Restricted';
 
   @override
@@ -30508,27 +28544,6 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String failedGeneric(String error) {
     return 'Failed: $error';
-  }
-
-  @override
-  String get lastHeardNever => 'Never';
-
-  @override
-  String get lastHeardJustNow => 'Just now';
-
-  @override
-  String lastHeardMinutesAgo(int count) {
-    return '${count}m ago';
-  }
-
-  @override
-  String lastHeardHoursAgo(int count) {
-    return '${count}h ago';
-  }
-
-  @override
-  String lastHeardDaysAgo(int count) {
-    return '${count}d ago';
   }
 
   @override
@@ -30780,11 +28795,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get flowNodeDelay => 'Delay';
 
   @override
-  String flowNodeInputN(int index) {
-    return 'Input $index';
-  }
-
-  @override
   String get flowNodeAllMet => 'All Met';
 
   @override
@@ -30800,15 +28810,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get automationTemplateLowBatteryTitle => 'Low Battery Alert';
 
   @override
-  String get automationTemplateLowBatteryDescription =>
-      'Get notified when your device battery drops below 20%';
-
-  @override
   String get automationTemplateNodeOfflineTitle => 'Node Offline Alert';
-
-  @override
-  String get automationTemplateNodeOfflineDescription =>
-      'Alert when a specific node hasn\'t been seen for 30 minutes';
 
   @override
   String get automationTemplateWeatherReportTitle => 'Weather Report';
@@ -30832,30 +28834,13 @@ class AppLocalizationsRu extends AppLocalizations {
       'Broadcast emergency position every 5 minutes when triggered';
 
   @override
-  String get widgetTemplateBatteryGaugeDescription =>
-      'Display battery level with gauge';
+  String get automationTemplateGeofenceExitTitle => 'Geofence Exit Alert';
 
   @override
-  String get widgetTemplateSignalMeterDescription => 'Display SNR and RSSI';
+  String get automationTemplateSosTitle => 'SOS Response';
 
   @override
-  String get widgetTemplateEnvironmentDescription =>
-      'Temperature, humidity, and pressure display';
-
-  @override
-  String get widgetTemplateNodeInfoDescription => 'Basic node information card';
-
-  @override
-  String get widgetTemplateGpsDescription =>
-      'Show GPS coordinates and satellites';
-
-  @override
-  String get widgetTemplateMeshStatusDescription =>
-      'Mesh network status at a glance';
-
-  @override
-  String get widgetTemplateQuickActionsDescription =>
-      'Common mesh actions at a glance';
+  String get automationTemplateDeadManTitle => 'Dead Man\'s Switch';
 
   @override
   String get whatsNewCtaOpenWorldMap => 'Open World Map';
@@ -30880,4 +28865,256 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get whatsNewHeadline => 'What\'s New in Socialmesh';
+
+  @override
+  String get connectingStatusInitializing => 'Initializing';
+
+  @override
+  String get connectingStatusScanning => 'Scanning for device';
+
+  @override
+  String get connectingStatusConnecting => 'Connecting';
+
+  @override
+  String get connectingStatusAutoReconnecting => 'Auto-reconnecting';
+
+  @override
+  String get connectingStatusConfiguring => 'Configuring device';
+
+  @override
+  String get connectingStatusConnected => 'Connected';
+
+  @override
+  String get connectingStatusFailed => 'Connection failed';
+
+  @override
+  String get profileAvatarUpdated => 'Avatar updated';
+
+  @override
+  String get profileAvatarRemoved => 'Avatar removed';
+
+  @override
+  String get profileBannerUpdated => 'Banner updated';
+
+  @override
+  String get profileBannerRemoved => 'Banner removed';
+
+  @override
+  String get commonOpenSettings => 'Open Settings';
+
+  @override
+  String get socialGuidelineNoViolentImagery => 'No violent or graphic imagery';
+
+  @override
+  String get globalLayerConnectionTestLabel => 'CONNECTION TEST';
+
+  @override
+  String get commonSignIn => 'Sign In';
+
+  @override
+  String get onboardingSignalContentMike =>
+      'Base camp is set. Ready when you are.';
+
+  @override
+  String get onboardingSignalContentAlex => 'On my way, ETA 15 min';
+
+  @override
+  String get automationErrorSendMsgNotConfigured =>
+      'Send message callback not configured';
+
+  @override
+  String get automationErrorNoTargetNode => 'No target node specified';
+
+  @override
+  String get automationErrorSendChannelNotConfigured =>
+      'Send to channel callback not configured';
+
+  @override
+  String get automationErrorNoTargetChannel => 'No target channel specified';
+
+  @override
+  String get automationErrorNoSoundConfigured => 'No sound configured';
+
+  @override
+  String automationErrorPlaySoundFailed(String error) {
+    return 'Failed to play sound: $error';
+  }
+
+  @override
+  String get automationErrorNotificationsNotInit =>
+      'Notifications not initialized';
+
+  @override
+  String get automationErrorNoWebhookEvent => 'No webhook event name specified';
+
+  @override
+  String get automationErrorIftttNotConfigured =>
+      'IFTTT not configured — enable IFTTT and set webhook key in settings';
+
+  @override
+  String get automationErrorWebhookFailed =>
+      'Webhook request failed — check network connection';
+
+  @override
+  String get automationErrorSendMsgFailed => 'Failed to send message';
+
+  @override
+  String get automationErrorSendChannelFailed => 'Failed to send to channel';
+
+  @override
+  String get automationErrorShortcutsIosOnly =>
+      'Shortcuts only available on iOS';
+
+  @override
+  String get automationErrorNoShortcutName => 'No shortcut name specified';
+
+  @override
+  String automationErrorShortcutLaunchFailed(String name) {
+    return 'Could not launch shortcut \"$name\"';
+  }
+
+  @override
+  String automationErrorShortcutRunFailed(String error) {
+    return 'Failed to run shortcut: $error';
+  }
+
+  @override
+  String get automationErrorGlyphNotAvailable =>
+      'Glyph interface not available';
+
+  @override
+  String automationErrorGlyphPatternFailed(String error) {
+    return 'Failed to show glyph pattern: $error';
+  }
+
+  @override
+  String get automationTemplateLowBatteryDesc =>
+      'Notify when a node battery drops below 20%';
+
+  @override
+  String get automationTemplateNodeOfflineDesc =>
+      'Notify when a node goes offline';
+
+  @override
+  String get automationTemplateGeofenceExitDesc =>
+      'Alert when a node leaves a designated area';
+
+  @override
+  String get automationTemplateSosDesc =>
+      'Auto-reply when receiving SOS message';
+
+  @override
+  String get automationTemplateDeadManDesc =>
+      'Alert if no activity from node for 30 minutes';
+
+  @override
+  String get automationScheduledTitle => 'Scheduled Automation';
+
+  @override
+  String get automationScheduledBody => 'Tap to run scheduled automation';
+
+  @override
+  String get authErrorGoogleSignInCancelled => 'Google sign in was cancelled';
+
+  @override
+  String get authErrorGoogleNoIdToken =>
+      'Google sign in did not return an ID token';
+
+  @override
+  String get authErrorNoCurrentUser => 'No user is currently signed in';
+
+  @override
+  String get authErrorGoogleReauthCancelled =>
+      'Google re-authentication was cancelled';
+
+  @override
+  String get authErrorNoSupportedProvider =>
+      'No supported provider found for re-authentication';
+
+  @override
+  String get authErrorNoUserSignedIn => 'No user signed in';
+
+  @override
+  String get authErrorSessionLost =>
+      'User session lost during re-authentication';
+
+  @override
+  String get authErrorVerificationCodeFailed =>
+      'Failed to send verification code';
+
+  @override
+  String get connectionErrorBluetoothDisabled => 'Bluetooth is disabled';
+
+  @override
+  String get connectionErrorDeviceNotFound => 'Device not found';
+
+  @override
+  String get connectionErrorDeviceReset =>
+      'Device was reset or replaced. Set it up again.';
+
+  @override
+  String countdownTracerouteTo(String displayName) {
+    return 'Traceroute to $displayName';
+  }
+
+  @override
+  String get countdownRequestingPositions => 'Requesting mesh positions';
+
+  @override
+  String get countdownBroadcastingPosition => 'Broadcasting position to mesh';
+
+  @override
+  String get lifecycleAppNotActive => 'App is not active';
+
+  @override
+  String get lifecycleCommandExpired => 'Command expired';
+
+  @override
+  String get nodedexMilestoneFirstDiscovered => 'First discovered';
+
+  @override
+  String nodedexMilestoneEncounterN(int count) {
+    return 'Encounter #$count';
+  }
+
+  @override
+  String meshHealthRssiDegraded(String rssi) {
+    return 'Average RSSI degraded to $rssi dBm';
+  }
+
+  @override
+  String offlineQueueMaxRetries(String error) {
+    return 'Max retries reached: $error';
+  }
+
+  @override
+  String get connectionAlreadyInProgress => 'Connection already in progress';
+
+  @override
+  String get connectionCancelled => 'Connection was cancelled';
+
+  @override
+  String get adminConformanceBundleTitle => 'Socialmesh Conformance Bundle';
+
+  @override
+  String get adminDiagnosticBundleText =>
+      'Admin diagnostic bundle from Socialmesh';
+
+  @override
+  String adminDiagnosticBundleSubject(String runId) {
+    return 'Socialmesh Diagnostic $runId';
+  }
+
+  @override
+  String get onboardingSignalAuthorSarah => 'Sarah';
+
+  @override
+  String get onboardingSignalContentSarah =>
+      'Just reached the summit! Signal is crystal clear up here.';
+
+  @override
+  String get onboardingSignalAuthorMike => 'Mike';
+
+  @override
+  String get onboardingSignalAuthorAlex => 'Alex';
 }
