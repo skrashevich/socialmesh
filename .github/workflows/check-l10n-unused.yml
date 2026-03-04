@@ -1,0 +1,23 @@
+name: L10n unused keys
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'lib/l10n/app_en.arb'
+      - 'lib/**/*.dart'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'lib/l10n/app_en.arb'
+      - 'lib/**/*.dart'
+
+jobs:
+  check-unused-keys:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Check for unused l10n keys
+        run: python3 tool/l10n_check_unused.py
