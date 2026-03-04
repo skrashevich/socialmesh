@@ -243,15 +243,15 @@ class _PrivacySettingsScreenState extends ConsumerState<PrivacySettingsScreen>
               ),
               const SizedBox(height: AppTheme.spacing8),
               _ThirdPartyInfoTile(
-                title: 'Firebase (Google)',
+                title: context.l10n.privacySettingsFirebaseTitle,
                 categories: context.l10n.privacySettingsFirebaseCategories,
               ),
               _ThirdPartyInfoTile(
-                title: 'RevenueCat',
+                title: context.l10n.privacySettingsRevenueCatTitle,
                 categories: context.l10n.privacySettingsRevenueCatCategories,
               ),
               _ThirdPartyInfoTile(
-                title: 'Sigil API (Socialmesh)',
+                title: context.l10n.privacySettingsSigilTitle,
                 categories: context.l10n.privacySettingsSigilCategories,
               ),
 

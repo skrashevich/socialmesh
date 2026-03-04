@@ -1987,7 +1987,10 @@ class _ScheduleFlightScreenState extends ConsumerState<ScheduleFlightScreen>
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('• ', style: TextStyle(color: context.textSecondary)),
+          Text(
+            '• ',
+            style: TextStyle(color: context.textSecondary),
+          ), // lint-allow: hardcoded-string
           Expanded(
             child: Text(
               text,
@@ -2303,7 +2306,7 @@ class _LiveFlightStickyHeaderState extends State<_LiveFlightStickyHeader>
                         const SizedBox(width: AppTheme.spacing8),
                         Expanded(
                           child: Text(
-                            'Live Flight Data',
+                            context.l10n.aetherLiveFlightData,
                             style: TextStyle(
                               color: context.textPrimary,
                               fontWeight: FontWeight.w600,
@@ -2345,7 +2348,9 @@ class _LiveFlightStickyHeaderState extends State<_LiveFlightStickyHeader>
                             ),
                           ),
                           child: Text(
-                            pos.onGround ? 'On Ground' : 'In Flight',
+                            pos.onGround
+                                ? context.l10n.aetherOnGround
+                                : context.l10n.aetherInFlight,
                             style: const TextStyle(
                               color: AppTheme.successGreen,
                               fontSize: 10,

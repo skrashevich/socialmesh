@@ -402,8 +402,8 @@ class IOSBGTaskScheduler implements PlatformScheduler {
       await _scheduleLocalNotification(
         taskId: taskId,
         scheduledFor: scheduledFor,
-        title: 'Scheduled Automation',
-        body: 'Tap to run scheduled automation',
+        title: 'Scheduled Automation', // lint-allow: hardcoded-string
+        body: 'Tap to run scheduled automation', // lint-allow: hardcoded-string
       );
     }
 

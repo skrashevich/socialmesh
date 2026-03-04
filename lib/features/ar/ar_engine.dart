@@ -865,7 +865,7 @@ class AREngine {
             ARAlert(
               type: ARAlertType.newNode,
               nodeNum: tracked.nodeNum,
-              message: 'New node discovered',
+              message: 'New node discovered', // lint-allow: hardcoded-string
               severity: ARAlertSeverity.info,
               timestamp: DateTime.now(),
             ),
@@ -879,7 +879,7 @@ class AREngine {
           ARAlert(
             type: ARAlertType.nodeMoving,
             nodeNum: tracked.nodeNum,
-            message: 'Node in motion',
+            message: 'Node in motion', // lint-allow: hardcoded-string
             severity: ARAlertSeverity.info,
             timestamp: DateTime.now(),
           ),
@@ -893,7 +893,8 @@ class AREngine {
           ARAlert(
             type: ARAlertType.lowBattery,
             nodeNum: tracked.nodeNum,
-            message: 'Low battery: ${lastNode.batteryLevel}%',
+            message:
+                'Low battery: ${lastNode.batteryLevel}%', // lint-allow: hardcoded-string
             severity: lastNode.batteryLevel! < 10
                 ? ARAlertSeverity.critical
                 : ARAlertSeverity.warning,

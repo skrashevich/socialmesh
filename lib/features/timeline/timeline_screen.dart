@@ -159,7 +159,8 @@ final timelineEventsProvider = Provider<List<TimelineEvent>>((ref) {
             timestamp: lastHeard,
             nodeNum: node.nodeNum,
             nodeName: node.shortName,
-            title: '${node.shortName ?? _formatNodeId(node.nodeNum)} is active',
+            title:
+                '${node.shortName ?? _formatNodeId(node.nodeNum)} is active', // lint-allow: hardcoded-string
             subtitle: _formatSignalInfo(node),
             metadata: {'rssi': node.rssi, 'snr': node.snr},
           ),
@@ -176,8 +177,9 @@ final timelineEventsProvider = Provider<List<TimelineEvent>>((ref) {
             nodeNum: node.nodeNum,
             nodeName: node.shortName,
             title:
-                'Weak signal from ${node.shortName ?? _formatNodeId(node.nodeNum)}',
-            subtitle: 'SNR: ${node.snr?.toStringAsFixed(1)} dB',
+                'Weak signal from ${node.shortName ?? _formatNodeId(node.nodeNum)}', // lint-allow: hardcoded-string
+            subtitle:
+                'SNR: ${node.snr?.toStringAsFixed(1)} dB', // lint-allow: hardcoded-string
             metadata: {'rssi': node.rssi, 'snr': node.snr},
           ),
         );
@@ -195,8 +197,9 @@ final timelineEventsProvider = Provider<List<TimelineEvent>>((ref) {
           nodeNum: node.nodeNum,
           nodeName: node.shortName,
           title:
-              '${node.shortName ?? _formatNodeId(node.nodeNum)} became inactive',
-          subtitle: 'Last heard ${_formatTimeAgo(lastHeardTime)}',
+              '${node.shortName ?? _formatNodeId(node.nodeNum)} became inactive', // lint-allow: hardcoded-string
+          subtitle:
+              'Last heard ${_formatTimeAgo(lastHeardTime)}', // lint-allow: hardcoded-string
         ),
       );
     }

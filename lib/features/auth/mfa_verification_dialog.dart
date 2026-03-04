@@ -216,7 +216,7 @@ class _MFAVerificationDialogState extends ConsumerState<MFAVerificationDialog>
             textAlign: TextAlign.center,
             decoration: InputDecoration(
               counterText: '',
-              hintText: '000000',
+              hintText: '000000', // lint-allow: hardcoded-string
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AppTheme.radius12),
                 borderSide: BorderSide(color: context.border),

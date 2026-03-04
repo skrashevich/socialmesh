@@ -1549,7 +1549,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get arSettingsShowOfflineNodes => 'Show Offline Nodes';
 
   @override
-  String get arSettingsTactical => 'Tactical';
+  String get arSettingsTactical => 'Advanced';
 
   @override
   String get arSettingsViewMode => 'VIEW MODE';
@@ -1588,10 +1588,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get arViewModeSelectorMin => 'MIN';
 
   @override
-  String get arViewModeSelectorTac => 'TAC';
+  String get arViewModeSelectorTac => 'ADV';
 
   @override
-  String get arViewModeTactical => 'Tactical';
+  String get arViewModeTactical => 'Advanced';
 
   @override
   String get arViewModeTacticalDesc =>
@@ -6272,7 +6272,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get incidentEmptyStateDescription =>
-      'Incidents track operational events from creation through resolution. Create one to get started.';
+      'Incidents track events from creation through resolution. Create one to get started.';
 
   @override
   String get incidentEmptyStateTitle => 'No incidents';
@@ -6874,7 +6874,7 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get mapSaDashboard => 'SA Dashboard';
+  String get mapSaDashboard => 'TAK Dashboard';
 
   @override
   String get mapScreenTitle => 'Mesh Map';
@@ -9606,7 +9606,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get nodeIntelligenceTapHint => 'Tap for deep analytics';
 
   @override
-  String get nodeIntelligenceTitle => 'Mesh Intelligence';
+  String get nodeIntelligenceTitle => 'Mesh Insights';
 
   @override
   String get nodeIntelligenceUnknown => 'Unknown';
@@ -17880,7 +17880,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get takDashboardDisconnected => 'Disconnected';
 
   @override
-  String get takDashboardForceDisposition => 'Force Disposition';
+  String get takDashboardForceDisposition => 'Entity Summary';
 
   @override
   String get takDashboardFriendly => 'Friendly';
@@ -17951,10 +17951,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get takDashboardStatusHeader => 'Status';
 
   @override
-  String get takDashboardThreatProximity => 'Threat Proximity';
+  String get takDashboardThreatProximity => 'Entity Proximity';
 
   @override
-  String get takDashboardTitle => 'SA Dashboard';
+  String get takDashboardTitle => 'TAK Dashboard';
 
   @override
   String get takDashboardTotalEntities => 'Total entities';
@@ -18268,7 +18268,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get takScreenHelpTitleStatus => 'Connection Status';
 
   @override
-  String get takScreenOverflowDashboard => 'SA Dashboard';
+  String get takScreenOverflowDashboard => 'TAK Dashboard';
 
   @override
   String get takScreenOverflowSettings => 'TAK Settings';
@@ -18324,7 +18324,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Leave empty to use your node name';
 
   @override
-  String get takSettingsCallsignEditorPlaceholder => 'e.g., ALPHA-1';
+  String get takSettingsCallsignEditorPlaceholder => 'e.g., HIKER-7';
 
   @override
   String get takSettingsCallsignEditorTitle => 'Callsign Override';
@@ -18379,7 +18379,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get takSettingsProximitySubtitle =>
-      'Notify when hostile/unknown entities enter radius';
+      'Notify when unrecognized entities enter radius';
 
   @override
   String get takSettingsProximityTitle => 'Enable proximity alerts';
@@ -28911,4 +28911,52 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get widgetWizardAdd => 'Add';
+
+  @override
+  String get dashboardRequestPositions => 'Request\nPositions';
+
+  @override
+  String adminPostsDeleteAllCount(int count) {
+    return 'Delete all ($count)';
+  }
+
+  @override
+  String adminPostsCreatedDate(String date) {
+    return 'Created $date';
+  }
+
+  @override
+  String get globalLayerAllowInboundChat => 'Allow inbound global chat';
+
+  @override
+  String get globalLayerDiagBrokerEmpty => 'Broker address is empty.';
+
+  @override
+  String globalLayerDiagUnexpectedError(String error) {
+    return 'Unexpected error: $error';
+  }
+
+  @override
+  String get globalLayerDiagUsernameNoPassword =>
+      'Username provided but password is empty.';
+
+  @override
+  String get globalLayerShareMessages => 'Share messages to Global Layer';
+
+  @override
+  String get globalLayerShareTelemetry => 'Share telemetry';
+
+  @override
+  String get aetherInFlight => 'In Flight';
+
+  @override
+  String get aetherLiveFlightData => 'Live Flight Data';
+
+  @override
+  String get aetherOnGround => 'On Ground';
+
+  @override
+  String globalLayerNodesSeenVia(int count) {
+    return '$count nodes seen via Global Layer';
+  }
 }

@@ -17,6 +17,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/mqtt/mqtt_connection_state.dart';
 import '../../../core/mqtt/mqtt_metrics.dart';
 import '../../../core/theme.dart';
@@ -122,7 +123,7 @@ class _PortalViewState extends ConsumerState<PortalView>
                   Expanded(
                     child: _PortalNode(
                       icon: Icons.cell_tower,
-                      label: 'Local Mesh',
+                      label: context.l10n.portalViewLocalMesh,
                       sublabel: _localSublabel(connectionState),
                       color: _localColor(connectionState),
                       isActive: connectionState.isActive,
@@ -142,7 +143,7 @@ class _PortalViewState extends ConsumerState<PortalView>
                   Expanded(
                     child: _PortalNode(
                       icon: Icons.cloud_outlined,
-                      label: 'Broker',
+                      label: context.l10n.portalViewBroker,
                       sublabel: _brokerSublabel(connectionState),
                       color: connectionState.statusColor,
                       isActive: connectionState.isActive,
@@ -164,7 +165,7 @@ class _PortalViewState extends ConsumerState<PortalView>
                   Expanded(
                     child: _PortalNode(
                       icon: Icons.language,
-                      label: 'Remote',
+                      label: context.l10n.portalViewRemote,
                       sublabel: _remoteSublabel(connectionState, metrics),
                       color: _remoteColor(connectionState),
                       isActive: connectionState.isActive,

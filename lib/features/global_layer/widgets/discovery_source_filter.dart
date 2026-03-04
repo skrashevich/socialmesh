@@ -23,6 +23,7 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/mqtt/mqtt_remote_sighting.dart';
 import '../../../core/theme.dart';
 import '../../../providers/mqtt_nodedex_providers.dart';
@@ -53,7 +54,7 @@ class DiscoverySourceFilterRow extends ConsumerWidget {
           children: [
             _DiscoverySourceChip(
               source: null,
-              label: 'All Sources',
+              label: context.l10n.discoveryFilterAllSources,
               icon: Icons.layers_outlined,
               isSelected: currentFilter == null,
               onTap: () {
@@ -230,7 +231,7 @@ class DiscoverySourceStatBadge extends ConsumerWidget {
     if (!isEnabled || !stats.hasData) return const SizedBox.shrink();
 
     return Tooltip(
-      message: '${stats.uniqueNodes} nodes seen via Global Layer',
+      message: context.l10n.globalLayerNodesSeenVia(stats.uniqueNodes),
       child: InkWell(
         onTap: () {
           ref

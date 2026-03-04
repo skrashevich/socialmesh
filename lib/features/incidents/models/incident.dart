@@ -80,7 +80,7 @@ enum IncidentClassification {
   }
 }
 
-/// An operational incident tracked by the incident lifecycle engine.
+/// An incident tracked by the incident lifecycle engine.
 ///
 /// The [state] field is a projection derived from replaying
 /// [IncidentTransition] records. It is stored for query convenience

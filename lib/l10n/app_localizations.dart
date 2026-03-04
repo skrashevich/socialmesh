@@ -2879,7 +2879,7 @@ abstract class AppLocalizations {
   /// View mode button label
   ///
   /// In en, this message translates to:
-  /// **'Tactical'**
+  /// **'Advanced'**
   String get arSettingsTactical;
 
   /// Settings section header
@@ -2948,16 +2948,16 @@ abstract class AppLocalizations {
   /// **'MIN'**
   String get arViewModeSelectorMin;
 
-  /// Tactical mode abbreviation
+  /// Advanced mode abbreviation
   ///
   /// In en, this message translates to:
-  /// **'TAC'**
+  /// **'ADV'**
   String get arViewModeSelectorTac;
 
   /// View mode display name
   ///
   /// In en, this message translates to:
-  /// **'Tactical'**
+  /// **'Advanced'**
   String get arViewModeTactical;
 
   /// View mode description
@@ -7682,25 +7682,25 @@ abstract class AppLocalizations {
   /// **'Designed for remote sensing. Reports telemetry data at defined intervals.'**
   String get deviceConfigRoleSensorDesc;
 
-  /// TAK = Team Awareness Kit, a military situational awareness system. Do not translate 'TAK'.
+  /// TAK = Team Awareness Kit, a shared situational awareness platform. Do not translate 'TAK'.
   ///
   /// In en, this message translates to:
   /// **'TAK'**
   String get deviceConfigRoleTak;
 
-  /// TAK = Team Awareness Kit. Bridges Meshtastic mesh radio with TAK military mapping systems.
+  /// TAK = Team Awareness Kit. Bridges Meshtastic mesh radio with TAK mapping systems.
   ///
   /// In en, this message translates to:
   /// **'Team Awareness Kit integration. Bridges Meshtastic and TAK systems.'**
   String get deviceConfigRoleTakDesc;
 
-  /// TAK Tracker = combination of TAK (military situational awareness) and GPS tracker device roles.
+  /// TAK Tracker = combination of TAK (team situational awareness) and GPS tracker device roles.
   ///
   /// In en, this message translates to:
   /// **'TAK Tracker'**
   String get deviceConfigRoleTakTracker;
 
-  /// TAK = Team Awareness Kit (military SA). Tracker = GPS position broadcasting mode.
+  /// TAK = Team Awareness Kit (team SA). Tracker = GPS position broadcasting mode.
   ///
   /// In en, this message translates to:
   /// **'Combination of TAK and Tracker modes.'**
@@ -11265,7 +11265,7 @@ abstract class AppLocalizations {
   /// Description text in the empty state when no incidents exist
   ///
   /// In en, this message translates to:
-  /// **'Incidents track operational events from creation through resolution. Create one to get started.'**
+  /// **'Incidents track events from creation through resolution. Create one to get started.'**
   String get incidentEmptyStateDescription;
 
   /// Headline of the empty state when no incidents exist
@@ -12114,7 +12114,7 @@ abstract class AppLocalizations {
   /// **'Hide range circles'**
   String get mapHideRangeCircles;
 
-  /// TAK = Team Awareness Kit (military SA platform). Entities = friendly/hostile/unknown units on the map.
+  /// TAK = Team Awareness Kit (shared SA platform). Entities = tracked markers on the map.
   ///
   /// In en, this message translates to:
   /// **'Hide TAK entities'**
@@ -12320,7 +12320,7 @@ abstract class AppLocalizations {
   /// No description provided for @mapSaDashboard.
   ///
   /// In en, this message translates to:
-  /// **'SA Dashboard'**
+  /// **'TAK Dashboard'**
   String get mapSaDashboard;
 
   /// No description provided for @mapScreenTitle.
@@ -12407,7 +12407,7 @@ abstract class AppLocalizations {
   /// **'Show range circles'**
   String get mapShowRangeCircles;
 
-  /// TAK = Team Awareness Kit (military SA platform). Entities = tracked units/markers on the tactical map.
+  /// TAK = Team Awareness Kit (shared SA platform). Entities = tracked markers on the map.
   ///
   /// In en, this message translates to:
   /// **'Show TAK entities'**
@@ -17240,7 +17240,7 @@ abstract class AppLocalizations {
   /// No description provided for @nodeIntelligenceTitle.
   ///
   /// In en, this message translates to:
-  /// **'Mesh Intelligence'**
+  /// **'Mesh Insights'**
   String get nodeIntelligenceTitle;
 
   /// No description provided for @nodeIntelligenceUnknown.
@@ -22605,7 +22605,7 @@ abstract class AppLocalizations {
   /// **'Bio'**
   String get profileBioLabel;
 
-  /// Callsign = amateur radio license identifier or tactical radio handle.
+  /// Callsign = amateur radio license identifier or radio handle.
   ///
   /// In en, this message translates to:
   /// **'Amateur radio callsign or identifier'**
@@ -22617,7 +22617,7 @@ abstract class AppLocalizations {
   /// **'Callsign cannot contain inappropriate content'**
   String get profileCallsignInappropriate;
 
-  /// Callsign = radio operator identifier (amateur radio license ID or tactical name).
+  /// Callsign = radio operator identifier (amateur radio license ID or chosen name).
   ///
   /// In en, this message translates to:
   /// **'Callsign'**
@@ -31527,43 +31527,43 @@ abstract class AppLocalizations {
   /// **'Your story'**
   String get socialYourStory;
 
-  /// MIL-STD-2525 affiliation label for assumed-friendly forces (lighter blue)
+  /// Standard affiliation label for assumed-friendly entities (lighter blue)
   ///
   /// In en, this message translates to:
   /// **'Assumed Friend'**
   String get takAffiliationAssumedFriend;
 
-  /// MIL-STD-2525 affiliation label for friendly forces (blue team)
+  /// Standard affiliation label for friendly entities (blue)
   ///
   /// In en, this message translates to:
   /// **'Friendly'**
   String get takAffiliationFriendly;
 
-  /// MIL-STD-2525 affiliation label for hostile/enemy forces (red team)
+  /// Standard affiliation label for hostile entities (red)
   ///
   /// In en, this message translates to:
   /// **'Hostile'**
   String get takAffiliationHostile;
 
-  /// MIL-STD-2525 affiliation label for neutral forces (green)
+  /// Standard affiliation label for neutral entities (green)
   ///
   /// In en, this message translates to:
   /// **'Neutral'**
   String get takAffiliationNeutral;
 
-  /// MIL-STD-2525 affiliation label for pending/unrecognized entities
+  /// Standard affiliation label for pending/unrecognized entities
   ///
   /// In en, this message translates to:
   /// **'Pending'**
   String get takAffiliationPending;
 
-  /// MIL-STD-2525 affiliation label for suspect entities (lighter red)
+  /// Standard affiliation label for suspect entities (lighter red)
   ///
   /// In en, this message translates to:
   /// **'Suspect'**
   String get takAffiliationSuspect;
 
-  /// MIL-STD-2525 affiliation label for unknown/unidentified entities (yellow)
+  /// Standard affiliation label for unknown/unidentified entities (yellow)
   ///
   /// In en, this message translates to:
   /// **'Unknown'**
@@ -31647,7 +31647,7 @@ abstract class AppLocalizations {
   /// **'Neutral'**
   String get takCotTypeNeutral;
 
-  /// Human-readable CoT type description for tasking type (t- prefix). CoT 'tasking' represents mission tasks.
+  /// Human-readable CoT type description for tasking type (t- prefix). CoT 'tasking' represents assigned tasks.
   ///
   /// In en, this message translates to:
   /// **'Tasking'**
@@ -31677,19 +31677,19 @@ abstract class AppLocalizations {
   /// **'Disconnected'**
   String get takDashboardDisconnected;
 
-  /// Section header for the force count grid. Military term for the arrangement/strength of forces.
+  /// Section header for the entity count grid showing breakdown by affiliation.
   ///
   /// In en, this message translates to:
-  /// **'Force Disposition'**
+  /// **'Entity Summary'**
   String get takDashboardForceDisposition;
 
-  /// Force count cell label for friendly entities
+  /// Entity count cell label for friendly entities
   ///
   /// In en, this message translates to:
   /// **'Friendly'**
   String get takDashboardFriendly;
 
-  /// Force count cell label for hostile entities
+  /// Entity count cell label for hostile entities
   ///
   /// In en, this message translates to:
   /// **'Hostile'**
@@ -31707,31 +31707,31 @@ abstract class AppLocalizations {
   /// **'None'**
   String get takDashboardLastEventNone;
 
-  /// Threat proximity label showing closest hostile entity. {callsign} is the entity's callsign or UID.
+  /// Proximity label showing closest hostile entity. {callsign} is the entity's callsign or UID.
   ///
   /// In en, this message translates to:
   /// **'Nearest hostile: {callsign}'**
   String takDashboardNearestHostile(String callsign);
 
-  /// Threat proximity label showing closest unknown entity. {callsign} is the entity's callsign or UID.
+  /// Proximity label showing closest unknown entity. {callsign} is the entity's callsign or UID.
   ///
   /// In en, this message translates to:
   /// **'Nearest unknown: {callsign}'**
   String takDashboardNearestUnknown(String callsign);
 
-  /// Force count cell label for neutral entities
+  /// Entity count cell label for neutral entities
   ///
   /// In en, this message translates to:
   /// **'Neutral'**
   String get takDashboardNeutral;
 
-  /// Threat proximity label when no hostile entities are present
+  /// Proximity label when no hostile entities are present
   ///
   /// In en, this message translates to:
   /// **'No hostile contacts'**
   String get takDashboardNoHostileContacts;
 
-  /// Threat proximity label when no unknown entities are present
+  /// Proximity label when no unknown entities are present
   ///
   /// In en, this message translates to:
   /// **'No unknown contacts'**
@@ -31791,16 +31791,16 @@ abstract class AppLocalizations {
   /// **'Status'**
   String get takDashboardStatusHeader;
 
-  /// Section header for nearest hostile/unknown entity distances
+  /// Section header for nearest non-friendly entity distances
   ///
   /// In en, this message translates to:
-  /// **'Threat Proximity'**
+  /// **'Entity Proximity'**
   String get takDashboardThreatProximity;
 
-  /// Title for the Situational Awareness Dashboard screen. SA = Situational Awareness.
+  /// Title for the TAK Dashboard screen showing entity overview and proximity info.
   ///
   /// In en, this message translates to:
-  /// **'SA Dashboard'**
+  /// **'TAK Dashboard'**
   String get takDashboardTitle;
 
   /// Status row label for the total count of all entities across affiliations
@@ -31815,7 +31815,7 @@ abstract class AppLocalizations {
   /// **'Tracked'**
   String get takDashboardTracked;
 
-  /// Force count cell label for unknown entities
+  /// Entity count cell label for unknown entities
   ///
   /// In en, this message translates to:
   /// **'Unknown'**
@@ -31851,7 +31851,7 @@ abstract class AppLocalizations {
   /// **'Affiliation'**
   String get takEventDetailHelpAffiliation;
 
-  /// Help dialog title for the CoT type string section. CoT = Cursor on Target military protocol.
+  /// Help dialog title for the CoT type string section. CoT = Cursor on Target protocol.
   ///
   /// In en, this message translates to:
   /// **'CoT Type String'**
@@ -32324,10 +32324,10 @@ abstract class AppLocalizations {
   /// **'Connection Status'**
   String get takScreenHelpTitleStatus;
 
-  /// Overflow menu item to open the Situational Awareness Dashboard
+  /// Overflow menu item to open the TAK Dashboard
   ///
   /// In en, this message translates to:
-  /// **'SA Dashboard'**
+  /// **'TAK Dashboard'**
   String get takScreenOverflowDashboard;
 
   /// Overflow menu item to open TAK settings
@@ -32360,7 +32360,7 @@ abstract class AppLocalizations {
   /// **'Stale Only'**
   String get takScreenStaleModeStaleOnly;
 
-  /// Main TAK screen title. TAK = Team Awareness Kit, a military SA platform.
+  /// Main TAK screen title. TAK = Team Awareness Kit, a shared SA platform.
   ///
   /// In en, this message translates to:
   /// **'TAK Gateway'**
@@ -32432,10 +32432,10 @@ abstract class AppLocalizations {
   /// **'Leave empty to use your node name'**
   String get takSettingsCallsignEditorHint;
 
-  /// Placeholder text in the callsign input field showing example military callsign format
+  /// Placeholder text in the callsign input field showing example callsign format
   ///
   /// In en, this message translates to:
-  /// **'e.g., ALPHA-1'**
+  /// **'e.g., HIKER-7'**
   String get takSettingsCallsignEditorPlaceholder;
 
   /// Title for the callsign override editor bottom sheet
@@ -32522,10 +32522,10 @@ abstract class AppLocalizations {
   /// **'Show TAK layer on map'**
   String get takSettingsMapLayerTitle;
 
-  /// Settings tile subtitle. Hostile/unknown are MIL-STD-2525 affiliation categories.
+  /// Settings tile subtitle for proximity alerts when non-friendly entities are nearby.
   ///
   /// In en, this message translates to:
-  /// **'Notify when hostile/unknown entities enter radius'**
+  /// **'Notify when unrecognized entities enter radius'**
   String get takSettingsProximitySubtitle;
 
   /// Settings tile title for the proximity alert toggle
@@ -51380,6 +51380,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add'**
   String get widgetWizardAdd;
+
+  /// No description provided for @dashboardRequestPositions.
+  ///
+  /// In en, this message translates to:
+  /// **'Request\nPositions'**
+  String get dashboardRequestPositions;
+
+  /// No description provided for @adminPostsDeleteAllCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete all ({count})'**
+  String adminPostsDeleteAllCount(int count);
+
+  /// No description provided for @adminPostsCreatedDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Created {date}'**
+  String adminPostsCreatedDate(String date);
+
+  /// No description provided for @globalLayerAllowInboundChat.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow inbound global chat'**
+  String get globalLayerAllowInboundChat;
+
+  /// No description provided for @globalLayerDiagBrokerEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Broker address is empty.'**
+  String get globalLayerDiagBrokerEmpty;
+
+  /// No description provided for @globalLayerDiagUnexpectedError.
+  ///
+  /// In en, this message translates to:
+  /// **'Unexpected error: {error}'**
+  String globalLayerDiagUnexpectedError(String error);
+
+  /// No description provided for @globalLayerDiagUsernameNoPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Username provided but password is empty.'**
+  String get globalLayerDiagUsernameNoPassword;
+
+  /// No description provided for @globalLayerShareMessages.
+  ///
+  /// In en, this message translates to:
+  /// **'Share messages to Global Layer'**
+  String get globalLayerShareMessages;
+
+  /// No description provided for @globalLayerShareTelemetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Share telemetry'**
+  String get globalLayerShareTelemetry;
+
+  /// No description provided for @aetherInFlight.
+  ///
+  /// In en, this message translates to:
+  /// **'In Flight'**
+  String get aetherInFlight;
+
+  /// No description provided for @aetherLiveFlightData.
+  ///
+  /// In en, this message translates to:
+  /// **'Live Flight Data'**
+  String get aetherLiveFlightData;
+
+  /// No description provided for @aetherOnGround.
+  ///
+  /// In en, this message translates to:
+  /// **'On Ground'**
+  String get aetherOnGround;
+
+  /// Tooltip showing how many nodes were discovered via the Global Layer
+  ///
+  /// In en, this message translates to:
+  /// **'{count} nodes seen via Global Layer'**
+  String globalLayerNodesSeenVia(int count);
 }
 
 class _AppLocalizationsDelegate

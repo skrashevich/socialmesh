@@ -1039,7 +1039,7 @@ class _CloudBackupSectionState extends ConsumerState<_CloudBackupSection>
       context: context,
       title: context.l10n.profileDeleteAccount,
       message: context.l10n.profileDeleteConfirmMsg,
-      confirmLabel: 'Delete',
+      confirmLabel: context.l10n.profileDeleteConfirmLabel,
       isDestructive: true,
     );
 

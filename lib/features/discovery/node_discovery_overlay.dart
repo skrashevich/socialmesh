@@ -877,7 +877,7 @@ class _PremiumCardState extends State<_PremiumCard>
                   // Node ID chip
                   _InfoChip(
                     icon: Icons.tag,
-                    label: '!$nodeId',
+                    label: '!$nodeId', // lint-allow: hardcoded-string
                     color: context.textSecondary,
                     isMonospace: true,
                   ),

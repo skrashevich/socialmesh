@@ -1805,10 +1805,10 @@ class _ScannerScreenState extends ConsumerState<ScannerScreen>
                       );
                       return StatusBanner.custom(
                         color: AccentColors.purple,
-                        title: 'Show all BLE devices',
+                        title: context.l10n.scannerShowAllBleDevices,
                         subtitle: showAllDevices
-                            ? 'Scanning all devices (dev mode)'
-                            : 'Filtering by Meshtastic UUID',
+                            ? context.l10n.scannerScanningAllDevices
+                            : context.l10n.scannerFilteringByUuid,
                         icon: Icons.developer_mode,
                         margin: const EdgeInsets.only(bottom: 16),
                         trailing: ThemedSwitch(

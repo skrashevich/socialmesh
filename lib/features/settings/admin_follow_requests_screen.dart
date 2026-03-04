@@ -237,7 +237,7 @@ class _FollowRequestCard extends StatelessWidget {
                   _ProfileBadge(
                     profile: requesterProfile,
                     userId: request.requesterId,
-                    label: 'FROM',
+                    label: context.l10n.adminFollowRequestFrom,
                   ),
                   const SizedBox(width: AppTheme.spacing8),
                   Icon(
@@ -250,7 +250,7 @@ class _FollowRequestCard extends StatelessWidget {
                   _ProfileBadge(
                     profile: targetProfile,
                     userId: request.targetId,
-                    label: 'TO',
+                    label: context.l10n.adminFollowRequestTo,
                   ),
                 ],
               ),
@@ -555,7 +555,7 @@ class _SeedDataTabState extends State<_SeedDataTab>
     {
       'authorId': 'dummy_user_frank',
       'content':
-          'Used the mesh network on today\'s SAR mission. Invaluable for team coordination in areas with no cell coverage. 🚁',
+          'Used the mesh network on today\'s group hike. Invaluable for team coordination in areas with no cell coverage. 🥾',
       'imageUrl': 'https://picsum.photos/seed/post9/800/600',
     },
     {

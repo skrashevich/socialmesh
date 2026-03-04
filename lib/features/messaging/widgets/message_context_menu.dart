@@ -356,19 +356,20 @@ class _MessageContextMenuState extends ConsumerState<MessageContextMenu>
                     _DetailChip(
                       icon: Icons.route,
                       label:
-                          '${widget.message.hopCount} '
+                          '${widget.message.hopCount} ' // lint-allow: hardcoded-string
                           '${widget.message.hopCount == 1 ? 'hop' : 'hops'}',
                     ),
                   if (widget.message.rxSnr != null)
                     _DetailChip(
                       icon: Icons.signal_cellular_alt,
                       label:
-                          'SNR ${widget.message.rxSnr!.toStringAsFixed(1)} dB',
+                          'SNR ${widget.message.rxSnr!.toStringAsFixed(1)} dB', // lint-allow: hardcoded-string
                     ),
                   if (widget.message.rxRssi != null)
                     _DetailChip(
                       icon: Icons.cell_tower,
-                      label: 'RSSI ${widget.message.rxRssi} dBm',
+                      label:
+                          'RSSI ${widget.message.rxRssi} dBm', // lint-allow: hardcoded-string
                     ),
                   if (widget.message.viaMqtt != null)
                     _DetailChip(

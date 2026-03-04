@@ -476,7 +476,7 @@ class _WidgetDashboardScreenState extends ConsumerState<WidgetDashboardScreen>
             ElevatedButton.icon(
               onPressed: () => _showAddWidgetSheet(context),
               icon: Icon(Icons.add, size: 20),
-              label: Text('Add Widgets'),
+              label: Text(context.l10n.dashboardAddWidgets),
               style: ElevatedButton.styleFrom(
                 backgroundColor: context.accentColor,
                 foregroundColor: Colors.white,
@@ -567,7 +567,9 @@ class _WidgetDashboardScreenState extends ConsumerState<WidgetDashboardScreen>
                 SizedBox(width: AppTheme.spacing12),
                 Expanded(
                   child: Text(
-                    isCustomWidget ? 'Custom Widget' : widgetInfo.name,
+                    isCustomWidget
+                        ? 'Custom Widget'
+                        : widgetInfo.name, // lint-allow: hardcoded-string
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
@@ -584,7 +586,7 @@ class _WidgetDashboardScreenState extends ConsumerState<WidgetDashboardScreen>
             ListTile(
               leading: Icon(Icons.edit, color: context.accentColor),
               title: Text(
-                'Edit Widget',
+                'Edit Widget', // lint-allow: hardcoded-string
                 style: TextStyle(color: context.textPrimary),
               ),
               onTap: () async {
@@ -602,7 +604,9 @@ class _WidgetDashboardScreenState extends ConsumerState<WidgetDashboardScreen>
                   : context.textPrimary,
             ),
             title: Text(
-              config.isFavorite ? 'Remove from Favorites' : 'Add to Favorites',
+              config.isFavorite
+                  ? context.l10n.dashboardRemoveFromFavorites
+                  : context.l10n.dashboardAddToFavorites,
               style: TextStyle(color: context.textPrimary),
             ),
             onTap: () {
@@ -633,18 +637,19 @@ class _WidgetDashboardScreenState extends ConsumerState<WidgetDashboardScreen>
               Icons.remove_circle_outline,
               color: AppTheme.errorRed,
             ),
-            title: const Text(
-              'Remove Widget',
+            title: Text(
+              context.l10n.dashboardRemoveWidget,
               style: TextStyle(color: AppTheme.errorRed),
             ),
             onTap: () async {
               Navigator.pop(context);
               final shouldRemove = await AppBottomSheet.showConfirm(
                 context: context,
-                title: 'Remove Widget?',
-                message:
-                    'Are you sure you want to remove this widget from your dashboard?',
-                confirmLabel: 'Remove',
+                title: context.l10n.dashboardRemoveWidgetTitle,
+                message: context.l10n.dashboardRemoveWidgetMessage(
+                  widgetInfo.name,
+                ),
+                confirmLabel: context.l10n.dashboardRemoveConfirm,
                 isDestructive: true,
               );
               if (shouldRemove == true) {

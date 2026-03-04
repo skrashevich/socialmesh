@@ -173,7 +173,10 @@ class _SubscriptionScreenState extends ConsumerState<SubscriptionScreen>
                       ),
                     ),
                   ),
-                  Text('•', style: TextStyle(color: context.textTertiary)),
+                  Text(
+                    '•',
+                    style: TextStyle(color: context.textTertiary),
+                  ), // lint-allow: hardcoded-string
                   TextButton(
                     onPressed: () => LegalDocumentSheet.showPrivacy(context),
                     child: Text(

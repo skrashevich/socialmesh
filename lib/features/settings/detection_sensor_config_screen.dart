@@ -406,7 +406,7 @@ class _DetectionSensorConfigScreenState
                     textAlign: TextAlign.center,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                      hintText: '0',
+                      hintText: '0', // lint-allow: hardcoded-string
                       hintStyle: TextStyle(
                         color: context.textTertiary.withValues(alpha: 0.5),
                       ),

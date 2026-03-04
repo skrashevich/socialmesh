@@ -27,14 +27,14 @@ final arEngineProvider = Provider<AREngine>((ref) {
 
 /// View modes with truly distinct visual styles and features
 enum ARViewMode {
-  /// Full tactical HUD with all features:
+  /// Full advanced HUD with all features:
   /// - Complete compass with heading tape
   /// - Horizon line with pitch ladder
   /// - Altimeter scale
   /// - Full node information with trails
   /// - Alert system active
   /// - Distance rings on radar
-  tactical,
+  advanced,
 
   /// Explorer mode for outdoor navigation:
   /// - Simplified compass (card only)
@@ -57,19 +57,19 @@ enum ARViewMode {
 
 extension ARViewModeExtension on ARViewMode {
   String get displayName => switch (this) {
-    ARViewMode.tactical => 'Tactical',
+    ARViewMode.advanced => 'Advanced',
     ARViewMode.explorer => 'Explorer',
     ARViewMode.minimal => 'Minimal',
   };
 
   String get description => switch (this) {
-    ARViewMode.tactical => 'Full HUD with compass, horizon, and detailed info',
+    ARViewMode.advanced => 'Full HUD with compass, horizon, and detailed info',
     ARViewMode.explorer => 'Navigation-focused with large markers and trails',
     ARViewMode.minimal => 'Clean view with simple markers only',
   };
 
   String get iconName => switch (this) {
-    ARViewMode.tactical => 'grid_view',
+    ARViewMode.advanced => 'grid_view',
     ARViewMode.explorer => 'explore',
     ARViewMode.minimal => 'radio_button_unchecked',
   };
@@ -117,8 +117,8 @@ class ARState {
     this.clusters = const [],
     this.alerts = const [],
     this.selectedNode,
-    this.viewMode = ARViewMode.tactical,
-    this.hudConfig = ARHudConfig.tactical,
+    this.viewMode = ARViewMode.advanced,
+    this.hudConfig = ARHudConfig.advanced,
     this.engineConfig = const AREngineConfig(),
     this.animationValue = 0,
     this.calibration = const ARCalibrationState(),
@@ -422,7 +422,7 @@ class ARNotifier extends Notifier<ARState> {
   /// Set view mode
   void setViewMode(ARViewMode mode) {
     final hudConfig = switch (mode) {
-      ARViewMode.tactical => ARHudConfig.tactical,
+      ARViewMode.advanced => ARHudConfig.advanced,
       ARViewMode.explorer => ARHudConfig.explorer,
       ARViewMode.minimal => ARHudConfig.minimal,
     };

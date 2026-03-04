@@ -372,7 +372,8 @@ class _BluetoothConfigScreenState extends ConsumerState<BluetoothConfigScreen>
                             textAlign: TextAlign.center,
                             decoration: InputDecoration(
                               counterText: '',
-                              hintText: '123456',
+                              hintText:
+                                  '123456', // lint-allow: hardcoded-string
                               hintStyle: TextStyle(
                                 color: context.textTertiary.withValues(
                                   alpha: 0.5,

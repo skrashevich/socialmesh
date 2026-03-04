@@ -77,7 +77,7 @@ class ARSettingsPanel extends StatelessWidget {
         _buildModeChip(
           label: context.l10n.arSettingsTactical,
           icon: Icons.grid_view,
-          mode: ARViewMode.tactical,
+          mode: ARViewMode.advanced,
         ),
         const SizedBox(width: AppTheme.spacing8),
         _buildModeChip(

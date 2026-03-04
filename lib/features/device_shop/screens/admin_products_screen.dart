@@ -758,7 +758,7 @@ class _AdminProductEditScreenState extends ConsumerState<AdminProductEditScreen>
                     controller: _purchaseUrlController,
                     decoration: InputDecoration(
                       labelText: context.l10n.adminProductsPurchaseUrlLabel,
-                      hintText: 'https://...',
+                      hintText: 'https://...', // lint-allow: hardcoded-string
                       prefixIcon: Icon(Icons.link),
                     ),
                     keyboardType: TextInputType.url,

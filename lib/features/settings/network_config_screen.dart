@@ -443,7 +443,8 @@ class _NetworkConfigScreenState extends ConsumerState<NetworkConfigScreen>
                           onSubmitted: (_) => FocusScope.of(context).unfocus(),
                           style: TextStyle(color: context.textPrimary),
                           decoration: InputDecoration(
-                            hintText: 'pool.ntp.org',
+                            hintText:
+                                'pool.ntp.org', // lint-allow: hardcoded-string
                             hintStyle: TextStyle(color: context.textTertiary),
                             filled: true,
                             fillColor: context.background,
@@ -702,7 +703,8 @@ class _NetworkConfigScreenState extends ConsumerState<NetworkConfigScreen>
             onSubmitted: (_) => FocusScope.of(context).unfocus(),
             style: TextStyle(color: context.textPrimary),
             decoration: InputDecoration(
-              hintText: 'e.g., 192.168.1.100:514',
+              hintText:
+                  'e.g., 192.168.1.100:514', // lint-allow: hardcoded-string
               hintStyle: TextStyle(color: context.textTertiary),
               filled: true,
               fillColor: context.background,

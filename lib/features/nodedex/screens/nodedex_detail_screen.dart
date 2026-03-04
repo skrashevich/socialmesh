@@ -2212,21 +2212,30 @@ class _SingleDaySummary extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               if (strong > 0) ...[
-                _LegendDot(color: AppTheme.successGreen, label: '$strong'),
+                _LegendDot(
+                  color: AppTheme.successGreen,
+                  label: '$strong',
+                ), // lint-allow: hardcoded-string
                 const SizedBox(width: AppTheme.spacing10),
               ],
               if (fair > 0) ...[
-                _LegendDot(color: AppTheme.warningYellow, label: '$fair'),
+                _LegendDot(
+                  color: AppTheme.warningYellow,
+                  label: '$fair',
+                ), // lint-allow: hardcoded-string
                 const SizedBox(width: AppTheme.spacing10),
               ],
               if (weak > 0) ...[
-                _LegendDot(color: const Color(0xFFF87171), label: '$weak'),
+                _LegendDot(
+                  color: const Color(0xFFF87171),
+                  label: '$weak',
+                ), // lint-allow: hardcoded-string
                 const SizedBox(width: AppTheme.spacing10),
               ],
               if (noData > 0)
                 _LegendDot(
                   color: context.accentColor.withValues(alpha: 0.3),
-                  label: '$noData',
+                  label: '$noData', // lint-allow: hardcoded-string
                 ),
             ],
           ),

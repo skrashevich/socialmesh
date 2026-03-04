@@ -2027,7 +2027,8 @@ class _AnimatedSocialIconsRow extends StatelessWidget {
           color: const Color(0xFF000000),
           onTap: () =>
               onLaunchUrl('https://x.com/${profile.socialLinks!.twitter}'),
-          tooltip: '@${profile.socialLinks!.twitter}',
+          tooltip:
+              '@${profile.socialLinks!.twitter}', // lint-allow: hardcoded-string
         ),
       );
     }
@@ -2068,7 +2069,8 @@ class _AnimatedSocialIconsRow extends StatelessWidget {
           color: const Color(0xFF0088CC),
           onTap: () =>
               onLaunchUrl('https://t.me/${profile.socialLinks!.telegram}'),
-          tooltip: '@${profile.socialLinks!.telegram}',
+          tooltip:
+              '@${profile.socialLinks!.telegram}', // lint-allow: hardcoded-string
         ),
       );
     }

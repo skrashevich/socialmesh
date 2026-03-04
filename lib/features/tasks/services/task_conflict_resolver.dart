@@ -4,7 +4,7 @@
 //
 // Implements the 4 reconciliation rules from TASK_SYSTEM.md:
 //   1. Dual acknowledgement: first timestamp wins, second is no-op.
-//   2. COMPLETED vs CANCELLED: COMPLETED wins (operational outcome precedence).
+//   2. COMPLETED vs CANCELLED: COMPLETED wins (completion outcome precedence).
 //   3. Reassignment during completion: COMPLETED stands, reassigned task
 //      exists independently.
 //   4. Duplicate creation: both survive (different UUIDs, manual dedup).
@@ -191,7 +191,7 @@ class TaskConflictResolver {
     // Rule 2: COMPLETED vs CANCELLED — COMPLETED wins.
     //
     // If one device completed and the other cancelled, COMPLETED always wins.
-    // Operational outcome takes precedence over admin action.
+    // Completion outcome takes precedence over admin action.
     // -----------------------------------------------------------------------
     if (_isCompletedVsCancelledConflict(localTask.state, remoteTransition)) {
       final localState = localTask.state;
@@ -209,7 +209,7 @@ class TaskConflictResolver {
         );
         _log(
           'resolution: COMPLETED wins over CANCELLED '
-          '(operational outcome precedence)',
+          '(completion outcome precedence)',
         );
         return TaskConflictResult(
           outcome: TaskConflictOutcome.completedWins,
@@ -230,7 +230,7 @@ class TaskConflictResolver {
         );
         _log(
           'resolution: COMPLETED wins over CANCELLED '
-          '(operational outcome precedence)',
+          '(completion outcome precedence)',
         );
         return TaskConflictResult(
           outcome: TaskConflictOutcome.completedWins,

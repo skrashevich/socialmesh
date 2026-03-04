@@ -3010,8 +3010,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                               }
                               return _SettingsTile(
                                 icon: Icons.lightbulb,
-                                title: 'Glyph Matrix Test',
-                                subtitle: 'Nothing Phone 3 LED patterns',
+                                title: context.l10n.settingsGlyphMatrixTest,
+                                subtitle: context
+                                    .l10n
+                                    .settingsGlyphMatrixTestSubtitle,
                                 onTap: () => Navigator.push(
                                   context,
                                   MaterialPageRoute(

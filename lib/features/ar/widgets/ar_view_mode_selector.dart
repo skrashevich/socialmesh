@@ -33,7 +33,7 @@ class ARViewModeSelector extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           _buildModeButton(
-            mode: ARViewMode.tactical,
+            mode: ARViewMode.advanced,
             icon: Icons.grid_view,
             label: context.l10n.arViewModeSelectorTac,
           ),

@@ -522,7 +522,7 @@ class _AdminSellerEditScreenState extends ConsumerState<AdminSellerEditScreen>
                       controller: _websiteUrlController,
                       decoration: InputDecoration(
                         labelText: context.l10n.adminSellersWebsiteLabel,
-                        hintText: 'https://...',
+                        hintText: 'https://...', // lint-allow: hardcoded-string
                         prefixIcon: const Icon(Icons.link),
                         counterText: '',
                       ),

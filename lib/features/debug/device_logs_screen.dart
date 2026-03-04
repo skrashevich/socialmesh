@@ -366,7 +366,9 @@ class _DeviceLogsScreenState extends ConsumerState<DeviceLogsScreen>
           icon: Badge(
             isLabelVisible: filters.length < 6,
             backgroundColor: context.accentColor,
-            label: Text('${6 - filters.length}'),
+            label: Text(
+              '${6 - filters.length}',
+            ), // lint-allow: hardcoded-string
             child: const Icon(Icons.filter_list),
           ),
           tooltip: context.l10n.debugScreenFilterLevelsTooltip,

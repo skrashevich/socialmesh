@@ -262,10 +262,10 @@ class WhatsNewRegistry {
             id: 'tak_gateway_intro',
             title: 'TAK Gateway',
             description:
-                'Bridge your mesh into the Tactical Awareness Kit ecosystem. '
+                'Bridge your mesh into the Team Awareness Kit (TAK) ecosystem. '
                 'Socialmesh now connects to a TAK Gateway via WebSocket and '
                 'streams live Cursor-on-Target entities onto your map.\n\n'
-                'Every entity is colored by MIL-STD-2525 affiliation and '
+                'Every entity is colored by standard affiliation and '
                 'given a dimension-specific icon. Filter by affiliation, '
                 'search callsigns, track entities with a long-press, and '
                 'tap any marker for full CoT details. Find it in the drawer '

@@ -1569,7 +1569,7 @@
   "@arSettingsShowOfflineNodes": {
     "description": "Node filter toggle label"
   },
-  "arSettingsTactical": "Tactical",
+  "arSettingsTactical": "Advanced",
   "@arSettingsTactical": {
     "description": "View mode button label"
   },
@@ -1622,11 +1622,11 @@
   "@arViewModeSelectorMin": {
     "description": "Minimal mode abbreviation"
   },
-  "arViewModeSelectorTac": "TAC",
+  "arViewModeSelectorTac": "ADV",
   "@arViewModeSelectorTac": {
-    "description": "Tactical mode abbreviation"
+    "description": "Advanced mode abbreviation"
   },
-  "arViewModeTactical": "Tactical",
+  "arViewModeTactical": "Advanced",
   "@arViewModeTactical": {
     "description": "View mode display name"
   },
@@ -4369,19 +4369,19 @@
   },
   "deviceConfigRoleTak": "TAK",
   "@deviceConfigRoleTak": {
-    "description": "TAK = Team Awareness Kit, a military situational awareness system. Do not translate 'TAK'."
+    "description": "TAK = Team Awareness Kit, a shared situational awareness platform. Do not translate 'TAK'."
   },
   "deviceConfigRoleTakDesc": "Team Awareness Kit integration. Bridges Meshtastic and TAK systems.",
   "@deviceConfigRoleTakDesc": {
-    "description": "TAK = Team Awareness Kit. Bridges Meshtastic mesh radio with TAK military mapping systems."
+    "description": "TAK = Team Awareness Kit. Bridges Meshtastic mesh radio with TAK mapping systems."
   },
   "deviceConfigRoleTakTracker": "TAK Tracker",
   "@deviceConfigRoleTakTracker": {
-    "description": "TAK Tracker = combination of TAK (military situational awareness) and GPS tracker device roles."
+    "description": "TAK Tracker = combination of TAK (team situational awareness) and GPS tracker device roles."
   },
   "deviceConfigRoleTakTrackerDesc": "Combination of TAK and Tracker modes.",
   "@deviceConfigRoleTakTrackerDesc": {
-    "description": "TAK = Team Awareness Kit (military SA). Tracker = GPS position broadcasting mode."
+    "description": "TAK = Team Awareness Kit (team SA). Tracker = GPS position broadcasting mode."
   },
   "deviceConfigRoleTracker": "Tracker",
   "deviceConfigRoleTrackerDesc": "Optimized for GPS tracking. Sends position updates at defined intervals.",
@@ -6456,7 +6456,7 @@
   "@incidentDetailTitleLoading": {
     "description": "Title shown on the detail screen while loading or on error/not found"
   },
-  "incidentEmptyStateDescription": "Incidents track operational events from creation through resolution. Create one to get started.",
+  "incidentEmptyStateDescription": "Incidents track events from creation through resolution. Create one to get started.",
   "@incidentEmptyStateDescription": {
     "description": "Description text in the empty state when no incidents exist"
   },
@@ -7031,7 +7031,7 @@
   "mapHideRangeCircles": "Hide range circles",
   "mapHideTakEntities": "Hide TAK entities",
   "@mapHideTakEntities": {
-    "description": "TAK = Team Awareness Kit (military SA platform). Entities = friendly/hostile/unknown units on the map."
+    "description": "TAK = Team Awareness Kit (shared SA platform). Entities = tracked markers on the map."
   },
   "mapLastKnown": "• Last known",
   "mapLinkBudgetCopied": "Link budget copied to clipboard",
@@ -7105,7 +7105,7 @@
       }
     }
   },
-  "mapSaDashboard": "SA Dashboard",
+  "mapSaDashboard": "TAK Dashboard",
   "mapScreenTitle": "Mesh Map",
   "mapSearchEntitiesHint": "Search entities...",
   "mapSearchHint": "Try a different search term",
@@ -7129,7 +7129,7 @@
   "mapShowRangeCircles": "Show range circles",
   "mapShowTakEntities": "Show TAK entities",
   "@mapShowTakEntities": {
-    "description": "TAK = Team Awareness Kit (military SA platform). Entities = tracked units/markers on the tactical map."
+    "description": "TAK = Team Awareness Kit (shared SA platform). Entities = tracked markers on the map."
   },
   "mapStyleTooltip": "Map style",
   "mapSwapAB": "Swap A ↔ B",
@@ -10521,7 +10521,7 @@
     }
   },
   "nodeIntelligenceTapHint": "Tap for deep analytics",
-  "nodeIntelligenceTitle": "Mesh Intelligence",
+  "nodeIntelligenceTitle": "Mesh Insights",
   "nodeIntelligenceUnknown": "Unknown",
   "nodedexActiveDaysOf14": "{count}/14 days",
   "@nodedexActiveDaysOf14": {
@@ -13286,7 +13286,7 @@
   "profileBioLabel": "Bio",
   "profileCallsignHint": "Amateur radio callsign or identifier",
   "@profileCallsignHint": {
-    "description": "Callsign = amateur radio license identifier or tactical radio handle."
+    "description": "Callsign = amateur radio license identifier or radio handle."
   },
   "profileCallsignInappropriate": "Callsign cannot contain inappropriate content",
   "@profileCallsignInappropriate": {
@@ -13294,7 +13294,7 @@
   },
   "profileCallsignLabel": "Callsign",
   "@profileCallsignLabel": {
-    "description": "Callsign = radio operator identifier (amateur radio license ID or tactical name)."
+    "description": "Callsign = radio operator identifier (amateur radio license ID or chosen name)."
   },
   "profileCallsignMax": "Max 10 characters",
   "@profileCallsignMax": {
@@ -17208,31 +17208,31 @@
   "socialYourStory": "Your story",
   "takAffiliationAssumedFriend": "Assumed Friend",
   "@takAffiliationAssumedFriend": {
-    "description": "MIL-STD-2525 affiliation label for assumed-friendly forces (lighter blue)"
+    "description": "Standard affiliation label for assumed-friendly entities (lighter blue)"
   },
   "takAffiliationFriendly": "Friendly",
   "@takAffiliationFriendly": {
-    "description": "MIL-STD-2525 affiliation label for friendly forces (blue team)"
+    "description": "Standard affiliation label for friendly entities (blue)"
   },
   "takAffiliationHostile": "Hostile",
   "@takAffiliationHostile": {
-    "description": "MIL-STD-2525 affiliation label for hostile/enemy forces (red team)"
+    "description": "Standard affiliation label for hostile entities (red)"
   },
   "takAffiliationNeutral": "Neutral",
   "@takAffiliationNeutral": {
-    "description": "MIL-STD-2525 affiliation label for neutral forces (green)"
+    "description": "Standard affiliation label for neutral entities (green)"
   },
   "takAffiliationPending": "Pending",
   "@takAffiliationPending": {
-    "description": "MIL-STD-2525 affiliation label for pending/unrecognized entities"
+    "description": "Standard affiliation label for pending/unrecognized entities"
   },
   "takAffiliationSuspect": "Suspect",
   "@takAffiliationSuspect": {
-    "description": "MIL-STD-2525 affiliation label for suspect entities (lighter red)"
+    "description": "Standard affiliation label for suspect entities (lighter red)"
   },
   "takAffiliationUnknown": "Unknown",
   "@takAffiliationUnknown": {
-    "description": "MIL-STD-2525 affiliation label for unknown/unidentified entities (yellow)"
+    "description": "Standard affiliation label for unknown/unidentified entities (yellow)"
   },
   "takCompassE": "E",
   "@takCompassE": {
@@ -17288,7 +17288,7 @@
   },
   "takCotTypeTasking": "Tasking",
   "@takCotTypeTasking": {
-    "description": "Human-readable CoT type description for tasking type (t- prefix). CoT 'tasking' represents mission tasks."
+    "description": "Human-readable CoT type description for tasking type (t- prefix). CoT 'tasking' represents assigned tasks."
   },
   "takCotTypeUnknown": "Unknown",
   "@takCotTypeUnknown": {
@@ -17306,17 +17306,17 @@
   "@takDashboardDisconnected": {
     "description": "Status row value when the TAK gateway connection is inactive"
   },
-  "takDashboardForceDisposition": "Force Disposition",
+  "takDashboardForceDisposition": "Entity Summary",
   "@takDashboardForceDisposition": {
-    "description": "Section header for the force count grid. Military term for the arrangement/strength of forces."
+    "description": "Section header for the entity count grid showing breakdown by affiliation."
   },
   "takDashboardFriendly": "Friendly",
   "@takDashboardFriendly": {
-    "description": "Force count cell label for friendly entities"
+    "description": "Entity count cell label for friendly entities"
   },
   "takDashboardHostile": "Hostile",
   "@takDashboardHostile": {
-    "description": "Force count cell label for hostile entities"
+    "description": "Entity count cell label for hostile entities"
   },
   "takDashboardLastEvent": "Last event",
   "@takDashboardLastEvent": {
@@ -17328,7 +17328,7 @@
   },
   "takDashboardNearestHostile": "Nearest hostile: {callsign}",
   "@takDashboardNearestHostile": {
-    "description": "Threat proximity label showing closest hostile entity. {callsign} is the entity's callsign or UID.",
+    "description": "Proximity label showing closest hostile entity. {callsign} is the entity's callsign or UID.",
     "placeholders": {
       "callsign": {
         "type": "String"
@@ -17337,7 +17337,7 @@
   },
   "takDashboardNearestUnknown": "Nearest unknown: {callsign}",
   "@takDashboardNearestUnknown": {
-    "description": "Threat proximity label showing closest unknown entity. {callsign} is the entity's callsign or UID.",
+    "description": "Proximity label showing closest unknown entity. {callsign} is the entity's callsign or UID.",
     "placeholders": {
       "callsign": {
         "type": "String"
@@ -17346,15 +17346,15 @@
   },
   "takDashboardNeutral": "Neutral",
   "@takDashboardNeutral": {
-    "description": "Force count cell label for neutral entities"
+    "description": "Entity count cell label for neutral entities"
   },
   "takDashboardNoHostileContacts": "No hostile contacts",
   "@takDashboardNoHostileContacts": {
-    "description": "Threat proximity label when no hostile entities are present"
+    "description": "Proximity label when no hostile entities are present"
   },
   "takDashboardNoUnknownContacts": "No unknown contacts",
   "@takDashboardNoUnknownContacts": {
-    "description": "Threat proximity label when no unknown entities are present"
+    "description": "Proximity label when no unknown entities are present"
   },
   "takDashboardPositionPublishing": "Position publishing",
   "@takDashboardPositionPublishing": {
@@ -17417,13 +17417,13 @@
   "@takDashboardStatusHeader": {
     "description": "Section header for the status summary card on the dashboard"
   },
-  "takDashboardThreatProximity": "Threat Proximity",
+  "takDashboardThreatProximity": "Entity Proximity",
   "@takDashboardThreatProximity": {
-    "description": "Section header for nearest hostile/unknown entity distances"
+    "description": "Section header for nearest non-friendly entity distances"
   },
-  "takDashboardTitle": "SA Dashboard",
+  "takDashboardTitle": "TAK Dashboard",
   "@takDashboardTitle": {
-    "description": "Title for the Situational Awareness Dashboard screen. SA = Situational Awareness."
+    "description": "Title for the TAK Dashboard screen showing entity overview and proximity info."
   },
   "takDashboardTotalEntities": "Total entities",
   "@takDashboardTotalEntities": {
@@ -17435,7 +17435,7 @@
   },
   "takDashboardUnknown": "Unknown",
   "@takDashboardUnknown": {
-    "description": "Force count cell label for unknown entities"
+    "description": "Entity count cell label for unknown entities"
   },
   "takDistanceKilometers": "{km} km",
   "@takDistanceKilometers": {
@@ -17485,7 +17485,7 @@
   },
   "takEventDetailHelpCotType": "CoT Type String",
   "@takEventDetailHelpCotType": {
-    "description": "Help dialog title for the CoT type string section. CoT = Cursor on Target military protocol."
+    "description": "Help dialog title for the CoT type string section. CoT = Cursor on Target protocol."
   },
   "takEventDetailHelpIdentity": "Identity",
   "@takEventDetailHelpIdentity": {
@@ -17906,9 +17906,9 @@
   "@takScreenHelpTitleStatus": {
     "description": "Help bottom sheet title for the connection status section"
   },
-  "takScreenOverflowDashboard": "SA Dashboard",
+  "takScreenOverflowDashboard": "TAK Dashboard",
   "@takScreenOverflowDashboard": {
-    "description": "Overflow menu item to open the Situational Awareness Dashboard"
+    "description": "Overflow menu item to open the TAK Dashboard"
   },
   "takScreenOverflowSettings": "TAK Settings",
   "@takScreenOverflowSettings": {
@@ -17932,7 +17932,7 @@
   },
   "takScreenTitle": "TAK Gateway",
   "@takScreenTitle": {
-    "description": "Main TAK screen title. TAK = Team Awareness Kit, a military SA platform."
+    "description": "Main TAK screen title. TAK = Team Awareness Kit, a shared SA platform."
   },
   "takScreenTooltipConnect": "Connect",
   "@takScreenTooltipConnect": {
@@ -17978,9 +17978,9 @@
   "@takSettingsCallsignEditorHint": {
     "description": "Hint text in the callsign editor explaining default behavior"
   },
-  "takSettingsCallsignEditorPlaceholder": "e.g., ALPHA-1",
+  "takSettingsCallsignEditorPlaceholder": "e.g., HIKER-7",
   "@takSettingsCallsignEditorPlaceholder": {
-    "description": "Placeholder text in the callsign input field showing example military callsign format"
+    "description": "Placeholder text in the callsign input field showing example callsign format"
   },
   "takSettingsCallsignEditorTitle": "Callsign Override",
   "@takSettingsCallsignEditorTitle": {
@@ -18053,9 +18053,9 @@
   "@takSettingsMapLayerTitle": {
     "description": "Settings tile title for the TAK entity map layer visibility toggle"
   },
-  "takSettingsProximitySubtitle": "Notify when hostile/unknown entities enter radius",
+  "takSettingsProximitySubtitle": "Notify when unrecognized entities enter radius",
   "@takSettingsProximitySubtitle": {
-    "description": "Settings tile subtitle. Hostile/unknown are MIL-STD-2525 affiliation categories."
+    "description": "Settings tile subtitle for proximity alerts when non-friendly entities are nearby."
   },
   "takSettingsProximityTitle": "Enable proximity alerts",
   "@takSettingsProximityTitle": {
@@ -25850,5 +25850,29 @@
   "@themeSettingsError": {"placeholders": {"error": {"type": "String"}}},
   "timelineWeakSignalFrom": "Weak signal from {nodeName}",
   "@timelineWeakSignalFrom": {"placeholders": {"nodeName": {"type": "String"}}},
-  "widgetWizardAdd": "Add"
+  "widgetWizardAdd": "Add",
+  "dashboardRequestPositions": "Request\nPositions",
+  "adminPostsDeleteAllCount": "Delete all ({count})",
+  "@adminPostsDeleteAllCount": {"placeholders": {"count": {"type": "int"}}},
+  "adminPostsCreatedDate": "Created {date}",
+  "@adminPostsCreatedDate": {"placeholders": {"date": {"type": "String"}}},
+  "globalLayerAllowInboundChat": "Allow inbound global chat",
+  "globalLayerDiagBrokerEmpty": "Broker address is empty.",
+  "globalLayerDiagUnexpectedError": "Unexpected error: {error}",
+  "@globalLayerDiagUnexpectedError": {"placeholders": {"error": {"type": "String"}}},
+  "globalLayerDiagUsernameNoPassword": "Username provided but password is empty.",
+  "globalLayerShareMessages": "Share messages to Global Layer",
+  "globalLayerShareTelemetry": "Share telemetry",
+  "aetherInFlight": "In Flight",
+  "aetherLiveFlightData": "Live Flight Data",
+  "aetherOnGround": "On Ground",
+  "globalLayerNodesSeenVia": "{count} nodes seen via Global Layer",
+  "@globalLayerNodesSeenVia": {
+    "description": "Tooltip showing how many nodes were discovered via the Global Layer",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

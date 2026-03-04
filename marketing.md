@@ -114,7 +114,7 @@ For those who value digital privacy—no accounts, no tracking, no data collecti
 
 ## App Store Keywords
 
-meshtastic, mesh network, off-grid, offline messaging, lora, radio, emergency, prepper, ham radio, walkie talkie, encrypted chat, private messenger, no internet, outdoor, hiking, camping, festival, decentralized, peer to peer, bluetooth radio
+meshtastic, mesh network, off-grid, offline messaging, lora, radio, emergency, preparedness, ham radio, walkie talkie, encrypted chat, private messenger, no internet, outdoor, hiking, camping, festival, decentralized, peer to peer, bluetooth radio
 
 ---
 
@@ -149,7 +149,7 @@ Socialmesh connects to your Meshtastic radio for encrypted, off-grid communicati
 
 Download now.
 
-#meshtastic #offgrid #meshnetwork #privacyfirst #decentralized #prepper #hiking #camping #emergency #nointernet
+#meshtastic #offgrid #meshnetwork #privacyfirst #decentralized #preparedness #hiking #camping #emergency #nointernet
 
 ---
 
@@ -173,7 +173,7 @@ Download now.
 
 1. **Outdoor Enthusiasts** – Hikers, campers, skiers, climbers
 2. **Privacy Advocates** – People seeking alternatives to Big Tech
-3. **Emergency Preparedness** – Preppers, survivalists, first responders
+3. **Emergency Preparedness** – Emergency planners, community resilience groups, first responders
 4. **Event Coordinators** – Festivals, conferences, group activities
 5. **Ham Radio Hobbyists** – Technical users expanding their toolkit
 6. **Rural Communities** – Areas with poor cell coverage

@@ -53,7 +53,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Full message field serialization (status, packetId, routingError, errorMessage)
 - Automatic one-time migration from legacy SharedPreferences storage on first launch
 - Indexed queries by conversation key, node number, and packet ID
-- Aether full-screen airport picker with 900+ airports including military airfields
+- Aether full-screen airport picker with 900+ airports including international airfields
 - Aether airport search by name, IATA/ICAO code, and country with GPS distance sorting
 - Aether live flight data sticky header on the schedule screen (frosted-glass overlay with slide/fade/blur animations)
 - Aether flight search "En route" indicator when arrival airport is unavailable

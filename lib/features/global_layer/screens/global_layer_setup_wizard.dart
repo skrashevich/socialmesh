@@ -21,6 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/mqtt/mqtt_config.dart';
 import '../../../core/mqtt/mqtt_connection_state.dart';
 import '../../../core/mqtt/mqtt_constants.dart';
@@ -288,6 +289,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
   // ---------------------------------------------------------------------------
 
   Future<void> _runConnectionTest() async {
+    final l10n = context.l10n;
     safeSetState(() {
       _testRunning = true;
       _testReport = DiagnosticReport.initial(
@@ -315,7 +317,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
       if (config.host.trim().isEmpty) {
         return DiagnosticCheckResult.failed(
           DiagnosticCheckType.dnsResolution,
-          message: 'Broker address is empty.',
+          message: l10n.globalLayerDiagBrokerEmpty,
           suggestion: 'Enter a valid broker hostname.',
           relatedFields: ['host'],
         );
@@ -363,7 +365,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
       if (config.username.isNotEmpty && config.password.isEmpty) {
         return DiagnosticCheckResult.warning(
           DiagnosticCheckType.authentication,
-          message: 'Username provided but password is empty.',
+          message: l10n.globalLayerDiagUsernameNoPassword,
           suggestion: 'Some brokers require both username and password.',
           relatedFields: ['password'],
         );
@@ -416,6 +418,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
     DiagnosticCheckType type,
     FutureOr<DiagnosticCheckResult> Function() check,
   ) async {
+    final l10n = context.l10n;
     // Mark as running
     safeSetState(() {
       _testReport = _testReport?.updateResult(
@@ -433,7 +436,10 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
     } catch (e) {
       safeSetState(() {
         _testReport = _testReport?.updateResult(
-          DiagnosticCheckResult.failed(type, message: 'Unexpected error: $e'),
+          DiagnosticCheckResult.failed(
+            type,
+            message: l10n.globalLayerDiagUnexpectedError(e.toString()),
+          ),
         );
       });
     }
@@ -470,13 +476,13 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: GlassScaffold(
-        title: 'Global Layer Setup',
+        title: context.l10n.globalLayerSetupTitle,
         actions: [
           if (_currentStep > 0)
             TextButton(
               onPressed: _back,
               child: Text(
-                'Back',
+                context.l10n.globalLayerBack,
                 style: TextStyle(color: context.textSecondary),
               ),
             ),
@@ -553,7 +559,10 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
           ),
           const SizedBox(height: AppTheme.spacing8),
           Text(
-            'Step ${_currentStep + 1} of $_totalSteps',
+            context.l10n.globalLayerStepOf(
+              (_currentStep + 1).toString(),
+              _totalSteps,
+            ),
             style: TextStyle(
               fontSize: 11,
               color: context.textTertiary,
@@ -603,7 +612,9 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
           color: enabled ? null : context.border,
         ),
         child: Text(
-          _currentStep == 4 ? 'Continue' : 'Next',
+          _currentStep == 4
+              ? context.l10n.globalLayerContinue
+              : context.l10n.globalLayerNext,
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
@@ -624,7 +635,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
           gradient: AppTheme.brandGradient,
         ),
         child: Text(
-          'Enable Global Layer',
+          context.l10n.globalLayerEnable,
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
@@ -686,7 +697,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
             context,
             icon: Icons.check_circle_outline,
             iconColor: AppTheme.successGreen,
-            title: 'What it does',
+            title: context.l10n.globalLayerWhatItDoes,
             body: GlobalLayerCopy.explainWhatItDoes,
           ),
           const SizedBox(height: AppTheme.spacing12),
@@ -695,7 +706,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
             context,
             icon: Icons.info_outline,
             iconColor: context.accentColor,
-            title: 'What it does NOT do',
+            title: context.l10n.globalLayerWhatItDoesNot,
             body: GlobalLayerCopy.explainWhatItDoesNot,
           ),
           const SizedBox(height: AppTheme.spacing24),
@@ -718,9 +729,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
                 const SizedBox(width: AppTheme.spacing10),
                 Expanded(
                   child: Text(
-                    'Under the hood, this uses an MQTT broker — a standard '
-                    'internet messaging server. You do not need to know how '
-                    'MQTT works to use the Global Layer.',
+                    context.l10n.globalLayerMqttNote,
                     style: TextStyle(
                       fontSize: 12,
                       color: context.textTertiary,
@@ -956,7 +965,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
           // ------------------------------------------------------------------
           if (isCustom || _showAdvancedBrokerFields) ...[
             const SizedBox(height: AppTheme.spacing20),
-            _SectionLabel(text: 'CONNECTION'),
+            _SectionLabel(text: context.l10n.globalLayerConnection),
             const SizedBox(height: AppTheme.spacing12),
 
             // Host
@@ -964,7 +973,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
               maxLength: 256,
               context,
               controller: _hostController,
-              label: 'Broker Address',
+              label: context.l10n.globalLayerBrokerAddress,
               hint: 'broker.example.com',
               icon: Icons.dns_outlined,
               keyboardType: TextInputType.url,
@@ -984,7 +993,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
                       maxLength: 10,
                       context,
                       controller: _portController,
-                      label: 'Port',
+                      label: context.l10n.globalLayerPort,
                       hint: _useTls ? '8883' : '1883',
                       icon: Icons.numbers,
                       keyboardType: TextInputType.number,
@@ -1056,14 +1065,14 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
             const SizedBox(height: AppTheme.spacing16),
 
             // Authentication section
-            _SectionLabel(text: 'AUTHENTICATION'),
+            _SectionLabel(text: context.l10n.globalLayerAuthentication),
             const SizedBox(height: AppTheme.spacing12),
             _buildTextField(
               maxLength: 100,
               context,
               controller: _usernameController,
-              label: 'Username',
-              hint: 'Optional',
+              label: context.l10n.globalLayerUsername,
+              hint: context.l10n.globalLayerOptional,
               icon: Icons.person_outlined,
               textInputAction: TextInputAction.next,
             ),
@@ -1072,8 +1081,8 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
               maxLength: 64,
               context,
               controller: _passwordController,
-              label: 'Password',
-              hint: 'Optional',
+              label: context.l10n.globalLayerPassword,
+              hint: context.l10n.globalLayerOptional,
               icon: Icons.lock_outlined,
               obscureText: _obscurePassword,
               textInputAction: TextInputAction.next,
@@ -1090,14 +1099,14 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
             const SizedBox(height: AppTheme.spacing16),
 
             // Advanced section
-            _SectionLabel(text: 'ADVANCED'),
+            _SectionLabel(text: context.l10n.globalLayerAdvanced),
             const SizedBox(height: AppTheme.spacing12),
             _buildTextField(
               maxLength: 100,
               context,
               controller: _clientIdController,
-              label: 'Client ID',
-              hint: 'Auto-generated if empty',
+              label: context.l10n.globalLayerClientId,
+              hint: context.l10n.globalLayerClientIdHint,
               icon: Icons.fingerprint_outlined,
               textInputAction: TextInputAction.done,
             ),
@@ -1127,14 +1136,14 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
           _buildSummaryDetail(
             context,
             icon: Icons.dns_outlined,
-            label: 'Server',
+            label: context.l10n.globalLayerServer,
             value: preset.host,
           ),
           const SizedBox(height: AppTheme.spacing10),
           _buildSummaryDetail(
             context,
             icon: Icons.numbers,
-            label: 'Port',
+            label: context.l10n.globalLayerPort,
             value: '${preset.port}',
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
@@ -1165,8 +1174,8 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
             _buildSummaryDetail(
               context,
               icon: Icons.person_outlined,
-              label: 'Auth',
-              value: 'Pre-configured (public credentials)',
+              label: context.l10n.globalLayerAuth,
+              value: context.l10n.globalLayerPreConfiguredAuth,
             ),
           ],
           const SizedBox(height: AppTheme.spacing14),
@@ -1177,7 +1186,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
                 safeSetState(() => _showAdvancedBrokerFields = true);
               },
               child: Text(
-                'Customise connection details',
+                context.l10n.globalLayerCustomiseConnection,
                 style: TextStyle(
                   fontSize: 13,
                   color: context.accentColor,
@@ -1264,13 +1273,13 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
           const SizedBox(height: AppTheme.spacing20),
 
           // Topic root
-          _SectionLabel(text: 'TOPIC ROOT'),
+          _SectionLabel(text: context.l10n.globalLayerTopicRoot),
           const SizedBox(height: AppTheme.spacing8),
           _buildTextField(
             maxLength: 256,
             context,
             controller: _topicRootController,
-            label: 'Topic Root',
+            label: context.l10n.globalLayerTopicRootLabel,
             hint: GlobalLayerConstants.defaultTopicRoot,
             icon: Icons.tag,
             textInputAction: TextInputAction.done,
@@ -1280,8 +1289,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
           Padding(
             padding: const EdgeInsets.only(left: 4),
             child: Text(
-              'The root prefix for all topics. Change this to keep your '
-              'mesh traffic separate from others on the same broker.',
+              context.l10n.globalLayerTopicRootDescription,
               style: TextStyle(
                 fontSize: 11,
                 color: context.textTertiary,
@@ -1292,7 +1300,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
           const SizedBox(height: AppTheme.spacing20),
 
           // Topic templates
-          _SectionLabel(text: 'DATA TYPES'),
+          _SectionLabel(text: context.l10n.globalLayerDataTypes),
           const SizedBox(height: AppTheme.spacing12),
           ...List.generate(_topicSelections.length, (index) {
             final sel = _topicSelections[index];
@@ -1447,7 +1455,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
           _buildPrivacyToggle(
             context,
             icon: Icons.chat_outlined,
-            title: 'Share messages to Global Layer',
+            title: context.l10n.globalLayerShareMessages,
             subtitle:
                 'Your local mesh chat messages will be forwarded to the '
                 'broker for other connected meshes to receive.',
@@ -1461,7 +1469,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
           _buildPrivacyToggle(
             context,
             icon: Icons.analytics_outlined,
-            title: 'Share telemetry',
+            title: context.l10n.globalLayerShareTelemetry,
             subtitle:
                 'Battery level, voltage, and device uptime will be published '
                 'to the broker.',
@@ -1475,7 +1483,7 @@ class _GlobalLayerSetupWizardState extends ConsumerState<GlobalLayerSetupWizard>
           _buildPrivacyToggle(
             context,
             icon: Icons.move_to_inbox_outlined,
-            title: 'Allow inbound global chat',
+            title: context.l10n.globalLayerAllowInboundChat,
             subtitle:
                 'Messages from other meshes connected to the same broker '
                 'will be delivered to your local channels.',

@@ -227,7 +227,8 @@ class _StoryViewerScreenState extends ConsumerState<StoryViewerScreen>
           onTap: () async {
             final confirm = await AppBottomSheet.showConfirm(
               context: context,
-              title: '${context.l10n.socialDeleteStory}?',
+              title:
+                  '${context.l10n.socialDeleteStory}?', // lint-allow: hardcoded-string
               message: context.l10n.socialDeleteStoryConfirm,
               confirmLabel: context.l10n.socialDelete,
               isDestructive: true,

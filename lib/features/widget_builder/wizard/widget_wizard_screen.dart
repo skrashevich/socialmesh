@@ -3862,7 +3862,7 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
                                 _ThresholdLine(
                                   value: 50,
                                   color: ChartColors.thresholdRed,
-                                  label: '',
+                                  label: '', // lint-allow: hardcoded-string
                                 ),
                               );
                               _seriesThresholds[bindingPath] = current;
@@ -3894,7 +3894,7 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
                                 Icon(Icons.add, color: color, size: 14),
                                 const SizedBox(width: AppTheme.spacing2),
                                 Text(
-                                  'Add',
+                                  context.l10n.widgetWizardAdd,
                                   style: TextStyle(color: color, fontSize: 11),
                                 ),
                               ],

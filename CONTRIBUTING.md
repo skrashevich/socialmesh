@@ -99,7 +99,7 @@ Do not use `Color(0xFF...)` hex literals or named `Colors.red`, `Colors.blue`, e
 
 ### Protocol Isolation
 
-Meshtastic and MeshCore are separate products. No cross-protocol logic, state, providers, or conditional branching in screens. Protocol selection happens at the root shell only. Shared code lives in `lib/core/` only.
+Each supported protocol is a separate product. No cross-protocol logic, state, providers, or conditional branching in screens. Protocol selection happens at the root shell only. Shared code lives in `lib/core/` only.
 
 ### Riverpod 3.x Only
 

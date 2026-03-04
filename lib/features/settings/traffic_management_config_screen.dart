@@ -356,7 +356,8 @@ class _TrafficManagementConfigScreenState
                 min: 10,
                 max: 600,
                 divisions: 59,
-                label: '${_positionMinIntervalSecs}s',
+                label:
+                    '${_positionMinIntervalSecs}s', // lint-allow: hardcoded-string
                 onChanged: (value) {
                   setState(() => _positionMinIntervalSecs = value.toInt());
                 },
@@ -420,7 +421,8 @@ class _TrafficManagementConfigScreenState
                 min: 0,
                 max: 7,
                 divisions: 7,
-                label: '$_nodeinfoDirectResponseMaxHops',
+                label:
+                    '$_nodeinfoDirectResponseMaxHops', // lint-allow: hardcoded-string
                 onChanged: (value) {
                   setState(
                     () => _nodeinfoDirectResponseMaxHops = value.toInt(),
@@ -486,7 +488,8 @@ class _TrafficManagementConfigScreenState
                 min: 10,
                 max: 300,
                 divisions: 29,
-                label: '${_rateLimitWindowSecs}s',
+                label:
+                    '${_rateLimitWindowSecs}s', // lint-allow: hardcoded-string
                 onChanged: (value) {
                   setState(() => _rateLimitWindowSecs = value.toInt());
                 },
@@ -517,7 +520,7 @@ class _TrafficManagementConfigScreenState
                 min: 1,
                 max: 50,
                 divisions: 49,
-                label: '$_rateLimitMaxPackets',
+                label: '$_rateLimitMaxPackets', // lint-allow: hardcoded-string
                 onChanged: (value) {
                   setState(() => _rateLimitMaxPackets = value.toInt());
                 },
@@ -581,7 +584,8 @@ class _TrafficManagementConfigScreenState
                 min: 1,
                 max: 20,
                 divisions: 19,
-                label: '$_unknownPacketThreshold',
+                label:
+                    '$_unknownPacketThreshold', // lint-allow: hardcoded-string
                 onChanged: (value) {
                   setState(() => _unknownPacketThreshold = value.toInt());
                 },

@@ -356,20 +356,22 @@ class _ARRadarScreenState extends ConsumerState<ARRadarScreen>
                 // Status indicators
                 _buildStatusChip(
                   icon: Icons.blur_on,
-                  label: '${stats.totalNodes}',
+                  label: '${stats.totalNodes}', // lint-allow: hardcoded-string
                   color: const Color(0xFF00E5FF),
                 ),
                 const SizedBox(width: AppTheme.spacing8),
                 _buildStatusChip(
                   icon: Icons.visibility,
-                  label: '${stats.visibleNodes}',
+                  label:
+                      '${stats.visibleNodes}', // lint-allow: hardcoded-string
                   color: const Color(0xFF00FF88),
                 ),
                 if (stats.warningNodes > 0) ...[
                   const SizedBox(width: AppTheme.spacing8),
                   _buildStatusChip(
                     icon: Icons.warning_amber,
-                    label: '${stats.warningNodes}',
+                    label:
+                        '${stats.warningNodes}', // lint-allow: hardcoded-string
                     color: const Color(0xFFFFAB00),
                   ),
                 ],

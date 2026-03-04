@@ -751,7 +751,7 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
                     ),
                     fillColor: context.background,
                     filled: true,
-                    hintText: '0.0',
+                    hintText: '0.0', // lint-allow: hardcoded-string
                     hintStyle: TextStyle(color: context.textTertiary),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(AppTheme.radius8),
@@ -940,7 +940,9 @@ class _RadioConfigScreenState extends ConsumerState<RadioConfigScreen>
               items: regions.map((r) {
                 return DropdownMenuItem(
                   value: r.$1,
-                  child: Text('${r.$2} (${r.$3})'),
+                  child: Text(
+                    '${r.$2} (${r.$3})',
+                  ), // lint-allow: hardcoded-string
                 );
               }).toList(),
               value:

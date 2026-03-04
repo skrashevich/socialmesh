@@ -256,7 +256,7 @@ class SignalStrengthContentState extends ConsumerState<SignalStrengthContent> {
                     ),
                     const SizedBox(width: AppTheme.spacing6),
                     _CompactStatChip(
-                      label: 'Ch',
+                      label: 'Ch', // lint-allow: hardcoded-string
                       value: channelUtil,
                       unit: '%',
                       color: AppTheme.accentOrange,

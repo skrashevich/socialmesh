@@ -114,8 +114,9 @@ class DashboardWidgetRegistry {
     const DashboardWidgetConfig(
       type: DashboardWidgetType.signalStrength,
       id: 'signal_strength',
-      title: 'Signal Strength',
-      description: 'Live RSSI, SNR, and channel utilization chart',
+      title: 'Signal Strength', // lint-allow: hardcoded-string
+      description:
+          'Live RSSI, SNR, and channel utilization chart', // lint-allow: hardcoded-string
       icon: Icons.signal_cellular_alt,
       size: DashboardWidgetSize.large,
       tags: {'signal', 'live', 'chart'},
@@ -123,8 +124,9 @@ class DashboardWidgetRegistry {
     const DashboardWidgetConfig(
       type: DashboardWidgetType.meshHealth,
       id: 'mesh_health',
-      title: 'Mesh Health',
-      description: 'Overall mesh network health score',
+      title: 'Mesh Health', // lint-allow: hardcoded-string
+      description:
+          'Overall mesh network health score', // lint-allow: hardcoded-string
       icon: Icons.health_and_safety,
       size: DashboardWidgetSize.small,
       tags: {'network', 'health'},
@@ -134,8 +136,9 @@ class DashboardWidgetRegistry {
     const DashboardWidgetConfig(
       type: DashboardWidgetType.nodeStats,
       id: 'node_stats',
-      title: 'Nodes',
-      description: 'Total discovered nodes on the mesh',
+      title: 'Nodes', // lint-allow: hardcoded-string
+      description:
+          'Total discovered nodes on the mesh', // lint-allow: hardcoded-string
       icon: Icons.group_outlined,
       size: DashboardWidgetSize.small,
       tags: {'nodes', 'stats'},
@@ -143,8 +146,9 @@ class DashboardWidgetRegistry {
     const DashboardWidgetConfig(
       type: DashboardWidgetType.messageStats,
       id: 'message_stats',
-      title: 'Messages',
-      description: 'Total messages sent and received',
+      title: 'Messages', // lint-allow: hardcoded-string
+      description:
+          'Total messages sent and received', // lint-allow: hardcoded-string
       icon: Icons.chat_bubble_outline,
       size: DashboardWidgetSize.small,
       tags: {'messages', 'stats'},
@@ -152,8 +156,9 @@ class DashboardWidgetRegistry {
     const DashboardWidgetConfig(
       type: DashboardWidgetType.packetStats,
       id: 'packet_stats',
-      title: 'Packet Statistics',
-      description: 'Sent, received, and dropped packet counts',
+      title: 'Packet Statistics', // lint-allow: hardcoded-string
+      description:
+          'Sent, received, and dropped packet counts', // lint-allow: hardcoded-string
       icon: Icons.analytics_outlined,
       size: DashboardWidgetSize.medium,
       tags: {'packets', 'stats', 'network'},
@@ -161,8 +166,9 @@ class DashboardWidgetRegistry {
     const DashboardWidgetConfig(
       type: DashboardWidgetType.airtime,
       id: 'airtime',
-      title: 'Airtime Usage',
-      description: 'Radio transmission time and limits',
+      title: 'Airtime Usage', // lint-allow: hardcoded-string
+      description:
+          'Radio transmission time and limits', // lint-allow: hardcoded-string
       icon: Icons.timer_outlined,
       size: DashboardWidgetSize.small,
       tags: {'airtime', 'radio'},
@@ -172,8 +178,9 @@ class DashboardWidgetRegistry {
     const DashboardWidgetConfig(
       type: DashboardWidgetType.quickActions,
       id: 'quick_actions',
-      title: 'Quick Actions',
-      description: 'Fast access to common features',
+      title: 'Quick Actions', // lint-allow: hardcoded-string
+      description:
+          'Fast access to common features', // lint-allow: hardcoded-string
       icon: Icons.flash_on_outlined,
       size: DashboardWidgetSize.medium,
       tags: {'navigation', 'actions'},
@@ -181,8 +188,9 @@ class DashboardWidgetRegistry {
     const DashboardWidgetConfig(
       type: DashboardWidgetType.recentMessages,
       id: 'recent_messages',
-      title: 'Recent Messages',
-      description: 'Latest messages from the mesh',
+      title: 'Recent Messages', // lint-allow: hardcoded-string
+      description:
+          'Latest messages from the mesh', // lint-allow: hardcoded-string
       icon: Icons.message_outlined,
       size: DashboardWidgetSize.medium,
       tags: {'messages', 'recent'},
@@ -190,8 +198,9 @@ class DashboardWidgetRegistry {
     const DashboardWidgetConfig(
       type: DashboardWidgetType.activeNodes,
       id: 'active_nodes',
-      title: 'Active Nodes',
-      description: 'Nodes heard in the last hour',
+      title: 'Active Nodes', // lint-allow: hardcoded-string
+      description:
+          'Nodes heard in the last hour', // lint-allow: hardcoded-string
       icon: Icons.people_outline,
       size: DashboardWidgetSize.medium,
       tags: {'nodes', 'active', 'recent'},
@@ -201,8 +210,8 @@ class DashboardWidgetRegistry {
     const DashboardWidgetConfig(
       type: DashboardWidgetType.gpsPosition,
       id: 'gps_position',
-      title: 'GPS Position',
-      description: 'Current device location',
+      title: 'GPS Position', // lint-allow: hardcoded-string
+      description: 'Current device location', // lint-allow: hardcoded-string
       icon: Icons.location_on_outlined,
       size: DashboardWidgetSize.small,
       tags: {'gps', 'location'},
@@ -212,8 +221,9 @@ class DashboardWidgetRegistry {
     const DashboardWidgetConfig(
       type: DashboardWidgetType.channelActivity,
       id: 'channel_activity',
-      title: 'Channel Activity',
-      description: 'Message activity per channel',
+      title: 'Channel Activity', // lint-allow: hardcoded-string
+      description:
+          'Message activity per channel', // lint-allow: hardcoded-string
       icon: Icons.wifi_tethering,
       size: DashboardWidgetSize.medium,
       tags: {'channels', 'activity'},
@@ -221,8 +231,8 @@ class DashboardWidgetRegistry {
     const DashboardWidgetConfig(
       type: DashboardWidgetType.networkTopology,
       id: 'network_topology',
-      title: 'Network Topology',
-      description: 'Visual mesh network graph',
+      title: 'Network Topology', // lint-allow: hardcoded-string
+      description: 'Visual mesh network graph', // lint-allow: hardcoded-string
       icon: Icons.hub_outlined,
       size: DashboardWidgetSize.large,
       tags: {'network', 'topology', 'graph'},
@@ -232,8 +242,9 @@ class DashboardWidgetRegistry {
     const DashboardWidgetConfig(
       type: DashboardWidgetType.weatherStation,
       id: 'weather_station',
-      title: 'Weather Data',
-      description: 'Environmental sensor readings',
+      title: 'Weather Data', // lint-allow: hardcoded-string
+      description:
+          'Environmental sensor readings', // lint-allow: hardcoded-string
       icon: Icons.thermostat_outlined,
       size: DashboardWidgetSize.medium,
       tags: {'weather', 'sensors', 'telemetry'},
@@ -241,8 +252,9 @@ class DashboardWidgetRegistry {
     const DashboardWidgetConfig(
       type: DashboardWidgetType.rangeTest,
       id: 'range_test',
-      title: 'Range Test',
-      description: 'Test signal range with other nodes',
+      title: 'Range Test', // lint-allow: hardcoded-string
+      description:
+          'Test signal range with other nodes', // lint-allow: hardcoded-string
       icon: Icons.radar_outlined,
       size: DashboardWidgetSize.medium,
       tags: {'range', 'test', 'signal'},

@@ -869,7 +869,8 @@ class _BottomInfoOverlay extends ConsumerWidget {
                   if (signal.commentCount > 0)
                     _InfoBadge(
                       icon: Icons.chat_bubble_outline,
-                      label: '${signal.commentCount}',
+                      label:
+                          '${signal.commentCount}', // lint-allow: hardcoded-string
                       color: Colors.white70,
                     ),
                 ],

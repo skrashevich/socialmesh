@@ -50,7 +50,9 @@ class _ThemeSettingsScreenState extends ConsumerState<ThemeSettingsScreen>
         slivers: [
           SliverFillRemaining(
             hasScrollBody: false,
-            child: Center(child: Text('Error: $e')),
+            child: Center(
+              child: Text(context.l10n.themeSettingsError(e.toString())),
+            ),
           ),
         ],
       ),

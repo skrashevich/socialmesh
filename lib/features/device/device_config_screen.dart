@@ -1575,7 +1575,7 @@ class _DeviceConfigScreenState extends ConsumerState<DeviceConfigScreen>
               horizontal: 12,
               vertical: 10,
             ),
-            hintText: '0',
+            hintText: '0', // lint-allow: hardcoded-string
             hintStyle: TextStyle(color: context.textTertiary),
             filled: true,
             fillColor: context.background,

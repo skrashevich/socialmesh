@@ -618,7 +618,10 @@ class _ProgressHeaderDelegate extends SliverPersistentHeaderDelegate {
                           _ProgressBar(
                             progress: progress,
                             barColor: barColor,
-                            label: '$completedCount / $totalCount',
+                            label: context.l10n.helpCenterProgressLabel(
+                              completedCount,
+                              totalCount,
+                            ),
                           ),
                         ],
                       ),
@@ -644,7 +647,10 @@ class _ProgressHeaderDelegate extends SliverPersistentHeaderDelegate {
                   child: _ProgressBar(
                     progress: progress,
                     barColor: barColor,
-                    label: '$completedCount / $totalCount',
+                    label: context.l10n.helpCenterProgressLabel(
+                      completedCount,
+                      totalCount,
+                    ),
                   ),
                 ),
               ),

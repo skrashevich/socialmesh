@@ -2052,7 +2052,7 @@ class HelpContent {
       HelpStep(
         id: 'tak_intro',
         bubbleText:
-            "**TAK Gateway** bridges your mesh into the Tactical Awareness "
+            "**TAK Gateway** bridges your mesh into the Team Awareness "
             "Kit (TAK) ecosystem. It streams live **Cursor-on-Target** "
             "entities from a TAK server straight onto your map.",
         icoMood: MeshBrainMood.speaking,
@@ -2069,7 +2069,7 @@ class HelpContent {
       HelpStep(
         id: 'tak_affiliations',
         bubbleText:
-            "Every entity is colored by **MIL-STD-2525 affiliation** — "
+            "Every entity is colored by **standard affiliation** — "
             "blue for friendly, red for hostile, green for neutral, "
             "yellow for unknown. The icon changes by dimension too: "
             "ground, air, sea, or space.",
@@ -2120,15 +2120,15 @@ class HelpContent {
         'Gateway is active, the gateway URL, how long the connection has been '
         'up, and how many CoT events have been received since connecting.',
     'affiliation':
-        'MIL-STD-2525 affiliation describes the relationship of an entity to '
-        'the force: Friendly (blue), Hostile (red), Neutral (green), or '
+        'Affiliation describes the relationship of an entity to '
+        'the observer: Friendly (blue), Hostile (red), Neutral (green), or '
         'Unknown (yellow). Affiliation is parsed from the second character '
         'of the CoT type string (e.g. a-f-G = friendly ground).',
     'cot_type':
         'The CoT type string encodes an entity\'s affiliation, dimension, '
-        'and function using MIL-STD-2525 atoms separated by hyphens. For '
+        'and function using standard atoms separated by hyphens. For '
         'example, "a-f-G-U-C-I" is an atom (a), friendly (f), ground (G), '
-        'combat unit (U-C), infantry (I). The icon and color are derived '
+        'unit (U-C), sub-type (I). The icon and color are derived '
         'from this string.',
     'identity':
         'The UID uniquely identifies this entity across all CoT messages. '

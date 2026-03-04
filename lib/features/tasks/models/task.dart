@@ -69,7 +69,7 @@ enum TaskPriority {
   }
 }
 
-/// An operational task tracked by the task system.
+/// A task tracked by the task system.
 ///
 /// The [state] field is a projection derived from replaying
 /// [TaskTransition] records. It is stored for query convenience

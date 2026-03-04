@@ -373,7 +373,9 @@ class _AdminPostsScreenState extends State<AdminPostsScreen>
                           ),
                         ),
                       ),
-                      child: Text('Filtered ($filteredCount)'),
+                      child: Text(
+                        context.l10n.adminPostsFilteredCount(filteredCount),
+                      ),
                     ),
                   ),
                 ],
@@ -393,7 +395,7 @@ class _AdminPostsScreenState extends State<AdminPostsScreen>
                     borderRadius: BorderRadius.circular(AppTheme.radius12),
                   ),
                 ),
-                child: Text('Delete all ($totalCount)'),
+                child: Text(context.l10n.adminPostsDeleteAllCount(totalCount)),
               ),
             ),
           ],
@@ -538,7 +540,8 @@ class _AdminPostCard extends StatelessWidget {
                       color: context.textSecondary,
                     ),
                     _MetaPill(
-                      label: 'Created ${dateFormat.format(post.createdAt)}',
+                      label:
+                          'Created ${dateFormat.format(post.createdAt)}', // lint-allow: hardcoded-string
                       color: context.accentColor,
                     ),
                     if (expiresAt != null)

@@ -38,24 +38,24 @@ class ARHudPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    // Draw horizon line (tactical mode)
+    // Draw horizon line (advanced mode)
     if (config.showHorizon) {
       _drawHorizonLine(canvas, size);
     }
 
-    // Draw compass (tactical/explorer) or compact heading (minimal)
+    // Draw compass (advanced/explorer) or compact heading (minimal)
     if (config.showCompass) {
       _drawCompass(canvas, size);
     } else if (config.compactHeading) {
       _drawCompactHeading(canvas, size);
     }
 
-    // Draw altimeter (tactical mode)
+    // Draw altimeter (advanced mode)
     if (config.showAltimeter) {
       _drawAltimeter(canvas, size);
     }
 
-    // Draw distance rings (tactical mode)
+    // Draw distance rings (advanced mode)
     if (config.showDistanceRings) {
       _drawDistanceRings(canvas, size);
     }
@@ -81,7 +81,7 @@ class ARHudPainter extends CustomPainter {
       }
     }
 
-    // Draw alerts (tactical/explorer mode)
+    // Draw alerts (advanced/explorer mode)
     if (config.showAlerts && alerts.isNotEmpty) {
       _drawAlerts(canvas, size);
     }
@@ -175,7 +175,7 @@ class ARHudPainter extends CustomPainter {
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // DISTANCE RINGS (TACTICAL MODE)
+  // DISTANCE RINGS (ADVANCED MODE)
   // ═══════════════════════════════════════════════════════════════════════════
 
   void _drawDistanceRings(Canvas canvas, Size size) {
@@ -1389,14 +1389,14 @@ class ARHudConfig {
     this.safeAreaBottom = 0,
   });
 
-  /// Tactical mode - Full HUD with all tactical features
+  /// Advanced mode - Full HUD with all advanced features
   /// - Complete compass tape with heading
   /// - Horizon line with pitch ladder
   /// - Altimeter scale
   /// - All node info with signal strength
   /// - Alert system
   /// - Distance rings on radar
-  static const tactical = ARHudConfig(
+  static const advanced = ARHudConfig(
     showHorizon: true,
     showCompass: true,
     showAltimeter: true,

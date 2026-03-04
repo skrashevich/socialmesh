@@ -52,9 +52,9 @@ Socialmesh works fully offline over BLE and USB. Firebase is optional for cloud 
 
 ## NodeDex
 
-> _Mesh asset registry and node intelligence system._
+> _Mesh node registry and discovery journal._
 
-Every node discovered on the mesh is automatically catalogued in the **NodeDex** — a persistent, queryable registry of all mesh assets and their operational history. In field operations, NodeDex serves as the authoritative record of what devices are deployed, how they behave, and where they have been observed. Each node receives a unique **procedural Sigil** (a geometric glyph derived deterministically from its identity) and a **behavioral classification** inferred from real operational data. Accessible from the drawer menu.
+Every node discovered on the mesh is automatically catalogued in the **NodeDex** — a persistent, queryable registry of all mesh nodes and their observed history. NodeDex serves as the authoritative record of what devices have been seen, how they behave, and where they have been observed. Each node receives a unique **procedural Sigil** (a geometric glyph derived deterministically from its identity) and a **behavioral classification** inferred from real observed data. Accessible from the drawer menu.
 
 ### Procedural Sigils
 
@@ -117,15 +117,15 @@ Records which nodes have been observed together on the mesh, building a social g
 
 ## Signals
 
-> _Structured operational persistence with location and time context._
+> _Structured mesh persistence with location and time context._
 
-Signals is the mesh-native operational persistence layer. Publish situation reports, status updates, and hazard markers that are received by all team members in range. Signals carry configurable TTL, GPS location stamps, and image attachments. Sorted by proximity and expiry. Designed for field teams that need structured, time-bounded operational awareness without internet.
+Signals is the mesh-native persistence layer. Publish status updates, check-ins, and hazard markers that are received by all mesh members in range. Signals carry configurable TTL, GPS location stamps, and image attachments. Sorted by proximity and expiry. Designed for groups that need structured, time-bounded awareness without internet.
 
 ---
 
 ## Features
 
-### Operational & Coordination
+### Communication & Coordination
 
 #### Messaging
 
@@ -143,7 +143,7 @@ Signals is the mesh-native operational persistence layer. Publish situation repo
 | Feature              | Description                                                               |
 | -------------------- | ------------------------------------------------------------------------- |
 | **Node Discovery**   | See all nodes with signal strength, battery, and location                 |
-| **NodeDex**          | Mesh asset registry with procedural sigils and behavioral classification  |
+| **NodeDex**          | Mesh node registry with procedural sigils and behavioral classification   |
 | **Network Topology** | Visual graph showing mesh interconnections                                |
 | **Traceroute**       | Trace the exact path packets take through the mesh                        |
 | **Signal History**   | SNR and RSSI charts over time                                             |
@@ -166,8 +166,8 @@ Signals is the mesh-native operational persistence layer. Publish situation repo
 | Feature               | Description                                                             |
 | --------------------- | ----------------------------------------------------------------------- |
 | **Activity Timeline** | Chronological feed of mesh activity and events with identity resolution |
-| **Team Profiles**     | View team member profiles with role, assignment, and contact details    |
-| **Signals Feed**      | Structured operational reports sorted by proximity and expiry           |
+| **Group Profiles**    | View group member profiles with role, assignment, and contact details   |
+| **Signals Feed**      | Structured status updates sorted by proximity and expiry                |
 
 #### Safety
 
@@ -319,10 +319,10 @@ lib/
 │   ├── mesh3d/     # 3D mesh topology view
 │   ├── mesh_health/# Network health analytics
 │   ├── messaging/  # Direct and channel messaging
-│   ├── nodedex/    # Mesh asset registry (sigils, classifications, patina)
+│   ├── nodedex/    # Mesh node registry (sigils, classifications, patina)
 │   ├── presence/   # Node presence tracking
 │   ├── reachability/# Node reachability analysis
-│   ├── signals/    # Structured operational persistence
+│   ├── signals/    # Structured mesh persistence
 │   ├── social/     # Activity timeline, team profiles
 │   ├── widget_builder/ # Custom dashboard widget editor
 │   ├── world_mesh/ # Global MQTT node map
@@ -472,5 +472,5 @@ For repository maintainers:
 ---
 
 <p align="center">
-  <strong>Built for the mesh. Built for the field.</strong>
+  <strong>Built for the mesh. Built for the outdoors.</strong>
 </p>

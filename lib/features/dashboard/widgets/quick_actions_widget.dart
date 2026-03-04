@@ -409,7 +409,7 @@ class _PositionRequestButton extends ConsumerWidget {
 
     return _ActionButton(
       icon: Icons.refresh,
-      label: 'Request\nPositions',
+      label: context.l10n.dashboardRequestPositions,
       enabled: enabled,
       onTap: onTap,
     );

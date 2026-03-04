@@ -69,7 +69,7 @@ class IncidentConflictResolver {
   // Rank mappings
   // -----------------------------------------------------------------------
 
-  /// Ranks transition types by operational priority.
+  /// Ranks transition types by resolution priority.
   ///
   /// Higher rank wins in conflict resolution.
   ///

@@ -588,7 +588,8 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                                 labelStyle: TextStyle(
                                   color: context.textSecondary,
                                 ),
-                                hintText: 'e.g., 37.7749',
+                                hintText:
+                                    context.l10n.positionConfigLatitudeHint,
                                 hintStyle: TextStyle(
                                   color: SemanticColors.muted,
                                 ),
@@ -636,7 +637,8 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                                 labelStyle: TextStyle(
                                   color: context.textSecondary,
                                 ),
-                                hintText: 'e.g., -122.4194',
+                                hintText:
+                                    context.l10n.positionConfigLongitudeHint,
                                 hintStyle: TextStyle(
                                   color: SemanticColors.muted,
                                 ),
@@ -683,7 +685,8 @@ class _PositionConfigScreenState extends ConsumerState<PositionConfigScreen>
                                 labelStyle: TextStyle(
                                   color: context.textSecondary,
                                 ),
-                                hintText: 'e.g., 100',
+                                hintText:
+                                    context.l10n.positionConfigAltitudeHint,
                                 hintStyle: TextStyle(
                                   color: SemanticColors.muted,
                                 ),
