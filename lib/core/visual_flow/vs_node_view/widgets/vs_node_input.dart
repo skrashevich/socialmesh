@@ -9,6 +9,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../flow_node_l10n.dart';
+import 'package:socialmesh/core/l10n/l10n_extension.dart';
 import '../common.dart';
 import '../data/vs_interface.dart';
 import '../data/vs_node_data_provider.dart';
@@ -118,7 +120,7 @@ class _VSNodeInputState extends State<VSNodeInput> {
           child: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: Text(
-              widget.data.title,
+              localizedFlowTitle(widget.data.title, context.l10n),
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
             ),

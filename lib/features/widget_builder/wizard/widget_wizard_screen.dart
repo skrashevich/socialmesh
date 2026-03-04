@@ -1592,7 +1592,10 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
                           SizedBox(width: AppTheme.spacing6),
                         ],
                         Text(
-                          binding.label,
+                          BindingRegistry.localizedLabel(
+                            binding.path,
+                            context.l10n,
+                          ),
                           style: TextStyle(
                             color: isSelected
                                 ? context.accentColor
@@ -1640,10 +1643,14 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
         // Skip device.* aliases that duplicate node.* bindings (same label)
         // These are internal aliases for marketplace widget compatibility
         if (binding.path.startsWith('device.') &&
-            seenLabels.contains(binding.label)) {
+            seenLabels.contains(
+              BindingRegistry.localizedLabel(binding.path, context.l10n),
+            )) {
           continue;
         }
-        seenLabels.add(binding.label);
+        seenLabels.add(
+          BindingRegistry.localizedLabel(binding.path, context.l10n),
+        );
         categories.putIfAbsent(binding.category, () => []).add(binding);
       }
     }
@@ -2295,7 +2302,10 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
                   const SizedBox(width: AppTheme.spacing8),
                   Expanded(
                     child: Text(
-                      binding.label,
+                      BindingRegistry.localizedLabel(
+                        binding.path,
+                        context.l10n,
+                      ),
                       style: TextStyle(
                         color: context.textPrimary,
                         fontSize: 13,
@@ -2633,7 +2643,10 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
                   valueType: double,
                 ),
               );
-              bindingLabel = binding.label;
+              bindingLabel = BindingRegistry.localizedLabel(
+                binding.path,
+                context.l10n,
+              );
             }
 
             // Get current color or use default
@@ -2765,7 +2778,10 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
                   valueType: double,
                 ),
               );
-              bindingLabel = binding.label;
+              bindingLabel = BindingRegistry.localizedLabel(
+                binding.path,
+                context.l10n,
+              );
             }
 
             final currentColor =
@@ -3093,7 +3109,7 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
           valueType: double,
         ),
       );
-      return binding.label;
+      return BindingRegistry.localizedLabel(binding.path, context.l10n);
     }
 
     // Get series color for visual indicator
@@ -3779,7 +3795,7 @@ class _WidgetWizardScreenState extends ConsumerState<WidgetWizardScreen>
           valueType: double,
         ),
       );
-      return binding.label;
+      return BindingRegistry.localizedLabel(binding.path, context.l10n);
     }
 
     // Get series color for visual indicator

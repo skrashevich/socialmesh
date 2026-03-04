@@ -82,17 +82,18 @@ class NodeInfoCard extends ConsumerWidget {
     return AppTheme.errorRed;
   }
 
-  String _formatLastHeard(DateTime? lastHeard) {
-    if (lastHeard == null) return 'Never';
+  String _formatLastHeard(BuildContext context, DateTime? lastHeard) {
+    final l10n = context.l10n;
+    if (lastHeard == null) return l10n.commonNever;
     final diff = DateTime.now().difference(lastHeard);
-    if (diff.inMinutes < 1) return 'Just now';
+    if (diff.inMinutes < 1) return l10n.commonJustNow;
     if (diff.inMinutes < 60) {
-      return '${diff.inMinutes}m ago';
+      return l10n.commonMinutesAgo(diff.inMinutes);
     }
     if (diff.inHours < 24) {
-      return '${diff.inHours}h ago';
+      return l10n.commonHoursAgo(diff.inHours);
     }
-    return '${diff.inDays}d ago';
+    return l10n.commonDaysAgo(diff.inDays);
   }
 
   Color _presenceColor(BuildContext context, PresenceConfidence confidence) {
@@ -188,7 +189,10 @@ class NodeInfoCard extends ConsumerWidget {
           if (node.hasPosition) ...[
             const SizedBox(height: AppTheme.spacing8),
             Text(
-              'Lat: ${node.latitude?.toStringAsFixed(4) ?? 'N/A'}°',
+              context.l10n.nodeInfoLatitude(
+                node.latitude?.toStringAsFixed(4) ??
+                    context.l10n.nodeInfoNotAvailable,
+              ),
               style: TextStyle(
                 color: context.textSecondary,
                 fontSize: 12,
@@ -196,7 +200,10 @@ class NodeInfoCard extends ConsumerWidget {
               ),
             ),
             Text(
-              'Lon: ${node.longitude?.toStringAsFixed(4) ?? 'N/A'}°',
+              context.l10n.nodeInfoLongitude(
+                node.longitude?.toStringAsFixed(4) ??
+                    context.l10n.nodeInfoNotAvailable,
+              ),
               style: TextStyle(
                 color: context.textSecondary,
                 fontSize: 12,
@@ -313,7 +320,7 @@ class NodeInfoCard extends ConsumerWidget {
                               ),
                             ),
                             child: Text(
-                              'YOU',
+                              context.l10n.nodeInfoYou,
                               style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.bold,
@@ -417,8 +424,9 @@ class NodeInfoCard extends ConsumerWidget {
               if (node.hopCount != null && node.hopCount! > 0)
                 NodeStatChip(
                   icon: Icons.route,
-                  value:
-                      '${node.hopCount} ${node.hopCount == 1 ? 'hop' : 'hops'}',
+                  value: node.hopCount == 1
+                      ? context.l10n.commonHopsSingular(node.hopCount!)
+                      : context.l10n.commonHopsPlural(node.hopCount!),
                   color: context.textSecondary,
                 ),
               if (node.hardwareModel != null)
@@ -430,7 +438,7 @@ class NodeInfoCard extends ConsumerWidget {
               // Last heard
               NodeStatChip(
                 icon: Icons.access_time,
-                value: _formatLastHeard(node.lastHeard),
+                value: _formatLastHeard(context, node.lastHeard),
                 color: _presenceColor(context, presence),
               ),
             ],
@@ -451,8 +459,8 @@ class NodeInfoCard extends ConsumerWidget {
                     child: OutlinedButton.icon(
                       onPressed: () => _exchangePositions(context, ref),
                       icon: const Icon(Icons.swap_horiz, size: 18),
-                      label: const Text(
-                        'Position',
+                      label: Text(
+                        context.l10n.nodeInfoPosition,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                       ),
@@ -476,8 +484,8 @@ class NodeInfoCard extends ConsumerWidget {
                     child: ElevatedButton.icon(
                       onPressed: onMessage,
                       icon: const Icon(Icons.message, size: 18),
-                      label: const Text(
-                        'Message',
+                      label: Text(
+                        context.l10n.nodeInfoMessage,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                       ),

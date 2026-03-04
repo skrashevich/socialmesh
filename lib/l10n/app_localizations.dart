@@ -6782,6 +6782,96 @@ abstract class AppLocalizations {
   /// **'Go Back'**
   String get commonGoBack;
 
+  /// Label for a Next button.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get commonNext;
+
+  /// Label indicating an event has never occurred.
+  ///
+  /// In en, this message translates to:
+  /// **'Never'**
+  String get commonNever;
+
+  /// Relative time label for less than a minute ago.
+  ///
+  /// In en, this message translates to:
+  /// **'Just now'**
+  String get commonJustNow;
+
+  /// Relative time label for minutes ago.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}m ago'**
+  String commonMinutesAgo(int count);
+
+  /// Relative time label for hours ago.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}h ago'**
+  String commonHoursAgo(int count);
+
+  /// Relative time label for days ago.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}d ago'**
+  String commonDaysAgo(int count);
+
+  /// Singular label for hop count.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} hop'**
+  String commonHopsSingular(int count);
+
+  /// Plural label for hop count.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} hops'**
+  String commonHopsPlural(int count);
+
+  /// Latitude display label.
+  ///
+  /// In en, this message translates to:
+  /// **'Lat: {value}°'**
+  String nodeInfoLatitude(String value);
+
+  /// Longitude display label.
+  ///
+  /// In en, this message translates to:
+  /// **'Lon: {value}°'**
+  String nodeInfoLongitude(String value);
+
+  /// Displayed when a value is not available.
+  ///
+  /// In en, this message translates to:
+  /// **'N/A'**
+  String get nodeInfoNotAvailable;
+
+  /// Badge text indicating the current user's own node.
+  ///
+  /// In en, this message translates to:
+  /// **'YOU'**
+  String get nodeInfoYou;
+
+  /// Label for position exchange button.
+  ///
+  /// In en, this message translates to:
+  /// **'Position'**
+  String get nodeInfoPosition;
+
+  /// Label for send message button.
+  ///
+  /// In en, this message translates to:
+  /// **'Message'**
+  String get nodeInfoMessage;
+
+  /// Empty state text when no binding variables match the search.
+  ///
+  /// In en, this message translates to:
+  /// **'No variables found'**
+  String get bindingSelectorNoResults;
+
   /// Label for an OK button.
   ///
   /// In en, this message translates to:

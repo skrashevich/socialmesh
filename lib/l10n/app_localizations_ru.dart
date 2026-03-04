@@ -3786,6 +3786,65 @@ class AppLocalizationsRu extends AppLocalizations {
   String get commonGoBack => 'Назад';
 
   @override
+  String get commonNext => 'Next';
+
+  @override
+  String get commonNever => 'Never';
+
+  @override
+  String get commonJustNow => 'Just now';
+
+  @override
+  String commonMinutesAgo(int count) {
+    return '${count}m ago';
+  }
+
+  @override
+  String commonHoursAgo(int count) {
+    return '${count}h ago';
+  }
+
+  @override
+  String commonDaysAgo(int count) {
+    return '${count}d ago';
+  }
+
+  @override
+  String commonHopsSingular(int count) {
+    return '$count hop';
+  }
+
+  @override
+  String commonHopsPlural(int count) {
+    return '$count hops';
+  }
+
+  @override
+  String nodeInfoLatitude(String value) {
+    return 'Lat: $value°';
+  }
+
+  @override
+  String nodeInfoLongitude(String value) {
+    return 'Lon: $value°';
+  }
+
+  @override
+  String get nodeInfoNotAvailable => 'N/A';
+
+  @override
+  String get nodeInfoYou => 'YOU';
+
+  @override
+  String get nodeInfoPosition => 'Position';
+
+  @override
+  String get nodeInfoMessage => 'Message';
+
+  @override
+  String get bindingSelectorNoResults => 'No variables found';
+
+  @override
   String get commonOk => 'OК';
 
   @override

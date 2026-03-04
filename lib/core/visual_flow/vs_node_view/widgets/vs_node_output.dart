@@ -11,6 +11,8 @@
 
 import 'package:flutter/material.dart';
 
+import '../../flow_node_l10n.dart';
+import 'package:socialmesh/core/l10n/l10n_extension.dart';
 import '../common.dart';
 import '../data/vs_interface.dart';
 import '../data/vs_node_data_provider.dart';
@@ -102,7 +104,7 @@ class _VSNodeOutputState extends State<VSNodeOutput> {
   Widget build(BuildContext context) {
     final firstItem = widget.data.nodeData is VSWidgetNode
         ? (widget.data.nodeData as VSWidgetNode).child
-        : Text(widget.data.title);
+        : Text(localizedFlowTitle(widget.data.title, context.l10n));
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -3000,8 +3000,13 @@ class _SectionInfoButton extends StatelessWidget {
   }
 
   void _showHelp(BuildContext context) {
-    final helpText = HelpContent.nodeDexSectionHelp[helpKey];
-    if (helpText == null) return;
+    final rawText = HelpContent.nodeDexSectionHelp[helpKey];
+    if (rawText == null) return;
+
+    final helpText = HelpContent.localizedNodeDexSectionHelp(
+      helpKey,
+      context.l10n,
+    );
 
     HapticFeedback.selectionClick();
     AppBottomSheet.show<void>(

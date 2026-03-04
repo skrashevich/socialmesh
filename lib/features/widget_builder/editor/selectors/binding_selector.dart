@@ -332,7 +332,7 @@ class _BindingSelectorContentState extends State<_BindingSelectorContent> {
           Icon(Icons.search_off, size: 48, color: context.textSecondary),
           SizedBox(height: AppTheme.spacing8),
           Text(
-            'No variables found',
+            context.l10n.bindingSelectorNoResults,
             style: TextStyle(color: context.textSecondary),
           ),
         ],

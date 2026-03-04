@@ -722,8 +722,10 @@ class _TakSectionInfoButton extends StatelessWidget {
   }
 
   void _showHelp(BuildContext context) {
-    final helpText = HelpContent.takSectionHelp[helpKey];
-    if (helpText == null) return;
+    final rawText = HelpContent.takSectionHelp[helpKey];
+    if (rawText == null) return;
+
+    final helpText = HelpContent.localizedTakSectionHelp(helpKey, context.l10n);
 
     HapticFeedback.selectionClick();
     AppBottomSheet.show<void>(

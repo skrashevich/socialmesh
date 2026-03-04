@@ -386,7 +386,7 @@ class _HelpCenterScreenState extends ConsumerState<HelpCenterScreen>
       initialChildSize: 0.75,
       minChildSize: 0.4,
       maxChildSize: 0.92,
-      title: topic.title,
+      title: HelpContent.localizedTitle(topic.id, context.l10n),
       footer: isCompleted
           ? Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -1070,7 +1070,7 @@ class _TourTopicRow extends StatelessWidget {
             const SizedBox(width: AppTheme.spacing10),
             Expanded(
               child: Text(
-                topic.title,
+                HelpContent.localizedTitle(topic.id, context.l10n),
                 style: TextStyle(
                   color: context.textPrimary,
                   fontSize: 14,
@@ -1114,7 +1114,7 @@ class _TopicDetailContent extends StatelessWidget {
       children: [
         // Description
         Text(
-          topic.description,
+          HelpContent.localizedDescription(topic.id, context.l10n),
           style: TextStyle(
             color: context.textSecondary,
             fontSize: 14,
@@ -1213,7 +1213,7 @@ class _StepCard extends StatelessWidget {
               child: Text.rich(
                 TextSpan(
                   children: _parseMarkdownBold(
-                    step.bubbleText,
+                    HelpContent.localizedBubbleText(step.id, context.l10n),
                     baseColor: context.textPrimary,
                   ),
                 ),

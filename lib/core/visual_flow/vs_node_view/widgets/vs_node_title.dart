@@ -8,6 +8,8 @@
 
 import 'package:flutter/material.dart';
 
+import '../../flow_node_l10n.dart';
+import 'package:socialmesh/core/l10n/l10n_extension.dart';
 import '../common.dart';
 import '../data/vs_node_data.dart';
 import '../data/vs_node_data_provider.dart';
@@ -117,7 +119,7 @@ class _VSNodeTitleState extends State<VSNodeTitle> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: Text(
-                            widget.data.title,
+                            localizedFlowTitle(widget.data.title, context.l10n),
                             textAlign: TextAlign.center,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,

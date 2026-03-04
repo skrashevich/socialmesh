@@ -3983,6 +3983,101 @@
   "@commonGoBack": {
     "description": "Label for a Go Back button."
   },
+  "commonNext": "Next",
+  "@commonNext": {
+    "description": "Label for a Next button."
+  },
+  "commonNever": "Never",
+  "@commonNever": {
+    "description": "Label indicating an event has never occurred."
+  },
+  "commonJustNow": "Just now",
+  "@commonJustNow": {
+    "description": "Relative time label for less than a minute ago."
+  },
+  "commonMinutesAgo": "{count}m ago",
+  "@commonMinutesAgo": {
+    "description": "Relative time label for minutes ago.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "commonHoursAgo": "{count}h ago",
+  "@commonHoursAgo": {
+    "description": "Relative time label for hours ago.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "commonDaysAgo": "{count}d ago",
+  "@commonDaysAgo": {
+    "description": "Relative time label for days ago.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "commonHopsSingular": "{count} hop",
+  "@commonHopsSingular": {
+    "description": "Singular label for hop count.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "commonHopsPlural": "{count} hops",
+  "@commonHopsPlural": {
+    "description": "Plural label for hop count.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nodeInfoLatitude": "Lat: {value}°",
+  "@nodeInfoLatitude": {
+    "description": "Latitude display label.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "nodeInfoLongitude": "Lon: {value}°",
+  "@nodeInfoLongitude": {
+    "description": "Longitude display label.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "nodeInfoNotAvailable": "N/A",
+  "@nodeInfoNotAvailable": {
+    "description": "Displayed when a value is not available."
+  },
+  "nodeInfoYou": "YOU",
+  "@nodeInfoYou": {
+    "description": "Badge text indicating the current user's own node."
+  },
+  "nodeInfoPosition": "Position",
+  "@nodeInfoPosition": {
+    "description": "Label for position exchange button."
+  },
+  "nodeInfoMessage": "Message",
+  "@nodeInfoMessage": {
+    "description": "Label for send message button."
+  },
+  "bindingSelectorNoResults": "No variables found",
+  "@bindingSelectorNoResults": {
+    "description": "Empty state text when no binding variables match the search."
+  },
   "commonOk": "OK",
   "@commonOk": {
     "description": "Label for an OK button."

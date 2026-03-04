@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../help/help_content.dart';
+import '../l10n/l10n_extension.dart';
 import '../theme.dart';
 import '../../features/onboarding/widgets/mesh_node_brain.dart';
 import '../../features/settings/screens/help_center_screen.dart';
@@ -1306,7 +1307,8 @@ class _IcoSpeechBubbleWithArrowState
                                           ),
                                         ),
                                         child: Text(
-                                          widget.nextLabel ?? 'Next',
+                                          widget.nextLabel ??
+                                              context.l10n.commonNext,
                                           style: const TextStyle(
                                             color: Colors.white,
                                             fontSize: 13,
@@ -1553,7 +1555,7 @@ class _IcoCoachMarkState extends State<IcoCoachMark> {
           ? availableHeight - adjustedTargetTop + 20
           : null,
       child: IcoSpeechBubbleWithArrow(
-        text: widget.step.bubbleText,
+        text: HelpContent.localizedBubbleText(widget.step.id, context.l10n),
         icoMood: widget.step.icoMood,
         arrowDirection: widget.step.arrowDirection,
         onNext: widget.onNext,
@@ -1563,7 +1565,9 @@ class _IcoCoachMarkState extends State<IcoCoachMark> {
         showSkip: widget.step.canSkip,
         currentStep: widget.currentStep,
         totalSteps: widget.totalSteps,
-        nextLabel: widget.currentStep == widget.totalSteps ? 'Done' : 'Next',
+        nextLabel: widget.currentStep == widget.totalSteps
+            ? context.l10n.commonDone
+            : context.l10n.commonNext,
       ),
     );
   }
@@ -1647,7 +1651,10 @@ class _HelpTourControllerState extends ConsumerState<HelpTourController> {
                 color: Colors.black.withValues(alpha: 0.7),
                 child: Center(
                   child: IcoSpeechBubbleWithArrow(
-                    text: currentStep.bubbleText,
+                    text: HelpContent.localizedBubbleText(
+                      currentStep.id,
+                      context.l10n,
+                    ),
                     icoMood: currentStep.icoMood,
                     currentStep: helpState.currentStepIndex + 1,
                     totalSteps: topic.steps.length,
@@ -1663,8 +1670,8 @@ class _HelpTourControllerState extends ConsumerState<HelpTourController> {
                     showSkip: currentStep.canSkip,
                     nextLabel:
                         helpState.currentStepIndex == topic.steps.length - 1
-                        ? 'Done'
-                        : 'Next',
+                        ? context.l10n.commonDone
+                        : context.l10n.commonNext,
                   ),
                 ),
               ),

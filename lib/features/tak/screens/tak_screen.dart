@@ -113,8 +113,10 @@ class _TakScreenState extends ConsumerState<TakScreen> with LifecycleSafeMixin {
   }
 
   void _showSectionHelp(BuildContext context, String key) {
-    final helpText = HelpContent.takSectionHelp[key];
-    if (helpText == null) return;
+    final rawText = HelpContent.takSectionHelp[key];
+    if (rawText == null) return;
+
+    final helpText = HelpContent.localizedTakSectionHelp(key, context.l10n);
 
     HapticFeedback.selectionClick();
     AppBottomSheet.show<void>(

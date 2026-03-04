@@ -398,7 +398,10 @@ class AutomationsScreen extends ConsumerWidget {
                         ),
                         const Spacer(),
                         Text(
-                          template.name,
+                          AutomationRepository.localizedTemplateTitle(
+                            template.id,
+                            context.l10n,
+                          ),
                           style: const TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 13,
@@ -1280,7 +1283,10 @@ class _AddAutomationSheet extends ConsumerWidget {
                         ),
                         const Spacer(),
                         Text(
-                          template.name,
+                          AutomationRepository.localizedTemplateTitle(
+                            template.id,
+                            context.l10n,
+                          ),
                           style: const TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 13,
