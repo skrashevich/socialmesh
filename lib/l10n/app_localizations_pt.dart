@@ -5195,6 +5195,63 @@ class AppLocalizationsPt extends AppLocalizations {
   String get fileTransferPinchToZoom => 'Aperte para ampliar';
 
   @override
+  String fileTransferGalleryToNode(String name) {
+    return 'to $name';
+  }
+
+  @override
+  String fileTransferGalleryFromNode(String name) {
+    return 'from $name';
+  }
+
+  @override
+  String get fileTransferGallerySentBadge => 'Sent';
+
+  @override
+  String get fileTransferGalleryReceivedBadge => 'Received';
+
+  @override
+  String fileTransferGallerySizeBadge(String size) {
+    return '$size';
+  }
+
+  @override
+  String fileTransferGalleryChunksBadge(String completed, String total) {
+    return '$completed/$total chunks';
+  }
+
+  @override
+  String fileTransferGalleryDurationBadge(String duration) {
+    return '$duration';
+  }
+
+  @override
+  String fileTransferGalleryHashBadge(String hash) {
+    return 'SHA-256 $hash';
+  }
+
+  @override
+  String get fileTransferGalleryViewDetails => 'Details';
+
+  @override
+  String get fileTransferGalleryMeshTransfer => 'Mesh Transfer';
+
+  @override
+  String fileTransferGalleryDurationSeconds(int count) {
+    return '${count}s';
+  }
+
+  @override
+  String fileTransferGalleryDurationMinutes(int count) {
+    return '${count}m';
+  }
+
+  @override
+  String fileTransferGalleryDurationHours(int hours, int minutes) {
+    return '${hours}h ${minutes}m';
+  }
+
+  @override
   String get fileTransferPurgeExpired => 'Excluir expiradas';
 
   @override

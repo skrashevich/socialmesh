@@ -6838,6 +6838,87 @@
     "@fileTransferPinchToZoom": {
         "description": "Hint text below image viewer"
     },
+    "fileTransferGalleryToNode": "to {name}",
+    "@fileTransferGalleryToNode": {
+        "description": "Subtitle in gallery overlay showing outbound target node",
+        "placeholders": {
+            "name": { "type": "String" }
+        }
+    },
+    "fileTransferGalleryFromNode": "from {name}",
+    "@fileTransferGalleryFromNode": {
+        "description": "Subtitle in gallery overlay showing inbound source node",
+        "placeholders": {
+            "name": { "type": "String" }
+        }
+    },
+    "fileTransferGallerySentBadge": "Sent",
+    "@fileTransferGallerySentBadge": {
+        "description": "Direction badge in gallery overlay for outbound transfer"
+    },
+    "fileTransferGalleryReceivedBadge": "Received",
+    "@fileTransferGalleryReceivedBadge": {
+        "description": "Direction badge in gallery overlay for inbound transfer"
+    },
+    "fileTransferGallerySizeBadge": "{size}",
+    "@fileTransferGallerySizeBadge": {
+        "description": "File size badge in gallery overlay",
+        "placeholders": {
+            "size": { "type": "String" }
+        }
+    },
+    "fileTransferGalleryChunksBadge": "{completed}/{total} chunks",
+    "@fileTransferGalleryChunksBadge": {
+        "description": "Chunk progress badge in gallery overlay",
+        "placeholders": {
+            "completed": { "type": "String" },
+            "total": { "type": "String" }
+        }
+    },
+    "fileTransferGalleryDurationBadge": "{duration}",
+    "@fileTransferGalleryDurationBadge": {
+        "description": "Transfer duration badge in gallery overlay",
+        "placeholders": {
+            "duration": { "type": "String" }
+        }
+    },
+    "fileTransferGalleryHashBadge": "SHA-256 {hash}",
+    "@fileTransferGalleryHashBadge": {
+        "description": "Truncated SHA-256 hash badge in gallery overlay",
+        "placeholders": {
+            "hash": { "type": "String" }
+        }
+    },
+    "fileTransferGalleryViewDetails": "Details",
+    "@fileTransferGalleryViewDetails": {
+        "description": "Button in gallery overlay to open the info sheet"
+    },
+    "fileTransferGalleryMeshTransfer": "Mesh Transfer",
+    "@fileTransferGalleryMeshTransfer": {
+        "description": "Label in gallery overlay indicating LoRa mesh origin"
+    },
+    "fileTransferGalleryDurationSeconds": "{count}s",
+    "@fileTransferGalleryDurationSeconds": {
+        "description": "Transfer duration formatted in seconds",
+        "placeholders": {
+            "count": { "type": "int" }
+        }
+    },
+    "fileTransferGalleryDurationMinutes": "{count}m",
+    "@fileTransferGalleryDurationMinutes": {
+        "description": "Transfer duration formatted in minutes",
+        "placeholders": {
+            "count": { "type": "int" }
+        }
+    },
+    "fileTransferGalleryDurationHours": "{hours}h {minutes}m",
+    "@fileTransferGalleryDurationHours": {
+        "description": "Transfer duration formatted in hours and minutes",
+        "placeholders": {
+            "hours": { "type": "int" },
+            "minutes": { "type": "int" }
+        }
+    },
     "fileTransferPurgeExpired": "Purge Expired",
     "@fileTransferPurgeExpired": {
         "description": "Overflow menu item"

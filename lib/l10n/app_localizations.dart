@@ -9218,6 +9218,84 @@ abstract class AppLocalizations {
   /// **'Pinch to zoom'**
   String get fileTransferPinchToZoom;
 
+  /// Subtitle in gallery overlay showing outbound target node
+  ///
+  /// In en, this message translates to:
+  /// **'to {name}'**
+  String fileTransferGalleryToNode(String name);
+
+  /// Subtitle in gallery overlay showing inbound source node
+  ///
+  /// In en, this message translates to:
+  /// **'from {name}'**
+  String fileTransferGalleryFromNode(String name);
+
+  /// Direction badge in gallery overlay for outbound transfer
+  ///
+  /// In en, this message translates to:
+  /// **'Sent'**
+  String get fileTransferGallerySentBadge;
+
+  /// Direction badge in gallery overlay for inbound transfer
+  ///
+  /// In en, this message translates to:
+  /// **'Received'**
+  String get fileTransferGalleryReceivedBadge;
+
+  /// File size badge in gallery overlay
+  ///
+  /// In en, this message translates to:
+  /// **'{size}'**
+  String fileTransferGallerySizeBadge(String size);
+
+  /// Chunk progress badge in gallery overlay
+  ///
+  /// In en, this message translates to:
+  /// **'{completed}/{total} chunks'**
+  String fileTransferGalleryChunksBadge(String completed, String total);
+
+  /// Transfer duration badge in gallery overlay
+  ///
+  /// In en, this message translates to:
+  /// **'{duration}'**
+  String fileTransferGalleryDurationBadge(String duration);
+
+  /// Truncated SHA-256 hash badge in gallery overlay
+  ///
+  /// In en, this message translates to:
+  /// **'SHA-256 {hash}'**
+  String fileTransferGalleryHashBadge(String hash);
+
+  /// Button in gallery overlay to open the info sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get fileTransferGalleryViewDetails;
+
+  /// Label in gallery overlay indicating LoRa mesh origin
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh Transfer'**
+  String get fileTransferGalleryMeshTransfer;
+
+  /// Transfer duration formatted in seconds
+  ///
+  /// In en, this message translates to:
+  /// **'{count}s'**
+  String fileTransferGalleryDurationSeconds(int count);
+
+  /// Transfer duration formatted in minutes
+  ///
+  /// In en, this message translates to:
+  /// **'{count}m'**
+  String fileTransferGalleryDurationMinutes(int count);
+
+  /// Transfer duration formatted in hours and minutes
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h {minutes}m'**
+  String fileTransferGalleryDurationHours(int hours, int minutes);
+
   /// Overflow menu item
   ///
   /// In en, this message translates to:
