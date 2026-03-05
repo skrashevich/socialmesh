@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../l10n/l10n_extension.dart';
 import '../theme.dart';
 
 /// Categories for knowledge-base articles.
@@ -126,6 +127,23 @@ class HelpArticle {
       'timer' => Icons.timer_outlined,
       'security' => Icons.security_outlined,
       _ => Icons.article_outlined,
+    };
+  }
+}
+
+/// Localized display names for help article categories.
+extension HelpArticleCategoryL10n on HelpArticleCategory {
+  String localizedName(BuildContext context) {
+    final l10n = context.l10n;
+    return switch (this) {
+      HelpArticleCategory.gettingStarted => l10n.helpCategoryGettingStarted,
+      HelpArticleCategory.meshBasics => l10n.helpCategoryMeshBasics,
+      HelpArticleCategory.channels => l10n.helpCategoryChannels,
+      HelpArticleCategory.messaging => l10n.helpCategoryMessaging,
+      HelpArticleCategory.nodes => l10n.helpCategoryNodes,
+      HelpArticleCategory.device => l10n.helpCategoryDevice,
+      HelpArticleCategory.network => l10n.helpCategoryNetwork,
+      HelpArticleCategory.safety => l10n.helpCategorySafety,
     };
   }
 }

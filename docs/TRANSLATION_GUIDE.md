@@ -43,14 +43,17 @@ The generated Dart code lives in `lib/l10n/` and is created automatically by `fl
 
 ```
 lib/l10n/
-  app_en.arb              # English template (source of truth, ~39,600 lines)
+  app_en.arb              # English template (source of truth)
   app_ru.arb              # Russian translations
   app_it.arb              # Italian translations
+  app_pt.arb              # Portuguese translations
   app_localizations.dart  # Generated (do not edit)
   app_localizations_en.dart
   app_localizations_ru.dart
   app_localizations_it.dart
+  app_localizations_pt.dart
 l10n.yaml                 # Configuration for gen_l10n
+TRANSLATION_STATUS.md     # Auto-generated coverage report
 ```
 
 **You only edit `app_<locale>.arb` files.** Everything else is generated.
@@ -59,42 +62,67 @@ l10n.yaml                 # Configuration for gen_l10n
 
 ## Current Translation Status
 
-| Locale       | Translated | Total | Coverage |
-| ------------ | ---------- | ----- | -------- |
-| English (en) | 8,675      | 8,675 | 100%     |
-| Russian (ru) | 86         | 8,675 | 1.0%     |
-| Italian (it) | 76         | 8,675 | 0.9%     |
+See [`TRANSLATION_STATUS.md`](../TRANSLATION_STATUS.md) for a live breakdown of
+missing and untranslated keys per locale, grouped by feature area.
 
-Untranslated keys currently contain the English value as a placeholder. When you replace an English value with the translated text, it becomes a real translation.
+To regenerate it locally:
+
+```
+python3 scripts/check_translation_coverage.py
+```
+
+### How locale files work
+
+Locale files only need to contain **keys you have actually translated**.
+Any key missing from a locale file automatically falls back to the English
+value at runtime — Flutter handles this natively. You do not need to copy
+English placeholders into your locale file.
+
+For example, a valid `app_ru.arb` with three translations:
+
+```json
+{
+    "@@locale": "ru",
+    "commonCancel": "Отмена",
+    "commonSave": "Сохранить",
+    "commonDelete": "Удалить"
+}
+```
+
+All other keys display in English until translated.
 
 ---
 
 ## Getting Started
 
-### For an existing language (ru, it)
+### For an existing language (ru, it, pt)
 
-1. Open `lib/l10n/app_<locale>.arb` in any text editor or IDE.
-2. Search for English text you want to translate (the values, not the keys).
-3. Replace the English value with the translation.
+1. Run `python3 scripts/check_translation_coverage.py` to see which keys need translating.
+2. Open `lib/l10n/app_en.arb` — this is the source of truth with all keys and English values.
+3. Find a key you want to translate, then add it to your locale file (`lib/l10n/app_<locale>.arb`) with the translated value.
 4. Save the file.
 5. Run `flutter gen-l10n` to regenerate Dart code.
 6. Test on a device or simulator set to that language.
 
+Your locale file only needs keys you have actually translated. Do not copy
+English values as placeholders — Flutter falls back to English automatically
+for any missing key.
+
 ### Quick example
 
-Before (untranslated placeholder):
+In `app_en.arb` (the template — do not edit):
 
 ```json
 "commonSearch": "Search",
 ```
 
-After (translated):
+Add to `app_ru.arb` (your locale file):
 
 ```json
 "commonSearch": "Поиск",
 ```
 
-That is it. Replace the value, keep the key.
+That is it. Copy the key from the English template, write the translated value.
 
 ---
 
@@ -401,20 +429,23 @@ flutter gen-l10n
 
 This will fail if:
 
-- A key is missing from your file that exists in `app_en.arb` (currently not an issue since we pre-populate all keys)
 - A parameter placeholder is missing (e.g., English has `{name}` but your translation does not)
 - ICU plural syntax is malformed
 - JSON is invalid
 
-### Check for untranslated strings
+It will **not** fail if your locale file is missing keys — Flutter falls back
+to English for any key not present in your file.
 
-To see how many keys still have English text:
+### Check translation coverage
+
+To see which keys still need translating:
 
 ```bash
-python3 /tmp/populate_arb.py  # Re-run to see stats
+python3 scripts/check_translation_coverage.py
 ```
 
-Or manually: count keys where the value matches the English value.
+This generates `TRANSLATION_STATUS.md` with a per-locale breakdown grouped by
+feature area. CI runs this automatically on every push to `lib/l10n/`.
 
 ---
 
@@ -422,26 +453,43 @@ Or manually: count keys where the value matches the English value.
 
 To add a completely new language (e.g., German):
 
-1. **Create the ARB file**: Copy `app_en.arb` and save as `app_de.arb`.
+1. **Create a minimal ARB file**:
 
-2. **Strip metadata**: Remove all `@description` entries (lines starting with `"@keyName"`). Keep only `@@locale` and the translation keys.
-
-   Or use the populate script which does this automatically:
-
-   ```bash
-   # Create a minimal starter file
-   echo '{"@@locale": "de"}' > lib/l10n/app_de.arb
-   # Then edit /tmp/populate_arb.py to include 'de' in the locale list
-   python3 /tmp/populate_arb.py
+   ```json
+   {
+       "@@locale": "de"
+   }
    ```
 
-3. **Set the locale**: Change `"@@locale": "en"` to `"@@locale": "de"`.
+   Save as `lib/l10n/app_de.arb`. That is a valid starting point — every key
+   falls back to English until you add a translation for it.
 
-4. **Register the locale** in the app: Open `lib/main.dart` (or wherever `MaterialApp` is configured) and verify that `supportedLocales` includes the new locale. With `gen_l10n`, this is usually automatic -- any ARB file in `lib/l10n/` with a `@@locale` is auto-discovered.
+2. **Start translating**: Look at `app_en.arb` for the full key list. Add keys
+   to your file one at a time or in batches, with translated values:
+
+   ```json
+   {
+       "@@locale": "de",
+       "commonCancel": "Abbrechen",
+       "commonSave": "Speichern"
+   }
+   ```
+
+3. **Do NOT copy** `app_en.arb` as a starting point. Your locale file should
+   only contain keys you have actually translated. This keeps diffs clean and
+   makes it obvious what still needs work.
+
+   ```bash
+   # See what needs translating
+   python3 scripts/check_translation_coverage.py
+   ```
+
+4. **Register the locale**: With `gen_l10n`, any ARB file in `lib/l10n/` with
+   a `@@locale` is auto-discovered. No code changes needed.
 
 5. **Regenerate**: Run `flutter gen-l10n`. This creates `app_localizations_de.dart`.
 
-6. **Translate keys** starting from Priority 1.
+6. **Translate keys** starting from Priority 1. Run the coverage script to track progress.
 
 7. **Test** by switching the device language to German.
 

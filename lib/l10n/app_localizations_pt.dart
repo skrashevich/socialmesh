@@ -22046,6 +22046,284 @@ class AppLocalizationsPt extends AppLocalizations {
   String get appearanceLanguageRussian => 'Русский';
 
   @override
+  String get appearanceLanguagePortuguese => 'Português';
+
+  @override
+  String get helpCategoryGettingStarted => 'Primeiros passos';
+
+  @override
+  String get helpCategoryMeshBasics => 'Fundamentos do mesh';
+
+  @override
+  String get helpCategoryChannels => 'Canais e criptografia';
+
+  @override
+  String get helpCategoryMessaging => 'Mensagens';
+
+  @override
+  String get helpCategoryNodes => 'Nós e funções';
+
+  @override
+  String get helpCategoryDevice => 'Dispositivo e rádio';
+
+  @override
+  String get helpCategoryNetwork => 'Rede e mapas';
+
+  @override
+  String get helpCategorySafety => 'Segurança e regras';
+
+  @override
+  String get flowNodeNodeOnline => 'Nó online';
+
+  @override
+  String get flowNodeNodeOffline => 'Nó offline';
+
+  @override
+  String get flowNodeBatteryLow => 'Bateria fraca';
+
+  @override
+  String get flowNodeBatteryFull => 'Bateria cheia';
+
+  @override
+  String get flowNodeMessageReceived => 'Mensagem recebida';
+
+  @override
+  String get flowNodePositionChanged => 'Posição alterada';
+
+  @override
+  String get flowNodeGeofenceEnter => 'Entrada no geofence';
+
+  @override
+  String get flowNodeGeofenceExit => 'Saída do geofence';
+
+  @override
+  String get flowNodeSendMessage => 'Enviar mensagem';
+
+  @override
+  String get flowNodePlaySound => 'Reproduzir som';
+
+  @override
+  String get flowNodeVibrate => 'Vibrar';
+
+  @override
+  String get flowNodePushNotification => 'Notificação push';
+
+  @override
+  String get flowNodeTriggerWebhook => 'Acionar webhook';
+
+  @override
+  String get flowNodeLogEvent => 'Registrar evento';
+
+  @override
+  String get flowNodeUpdateWidget => 'Atualizar widget';
+
+  @override
+  String get flowNodeSendToChannel => 'Enviar para canal';
+
+  @override
+  String get flowNodeTriggerShortcut => 'Acionar atalho';
+
+  @override
+  String get flowNodeGlyphPattern => 'Padrão de glifo';
+
+  @override
+  String get flowNodeTimeRange => 'Intervalo de tempo';
+
+  @override
+  String get flowNodeDayOfWeek => 'Dia da semana';
+
+  @override
+  String get flowNodeBatteryAbove => 'Bateria acima de';
+
+  @override
+  String get flowNodeBatteryBelow => 'Bateria abaixo de';
+
+  @override
+  String get flowNodeNodeIsOnline => 'Nó está online';
+
+  @override
+  String get flowNodeNodeIsOffline => 'Nó está offline';
+
+  @override
+  String get flowNodeWithinGeofence => 'Dentro do geofence';
+
+  @override
+  String get flowNodeOutsideGeofence => 'Fora do geofence';
+
+  @override
+  String get flowNodeGateAllMustPass => 'Todas as entradas devem passar';
+
+  @override
+  String get flowNodeGateAnyCanPass => 'Qualquer entrada pode passar';
+
+  @override
+  String get flowNodeGateInverts => 'Inverte o sinal';
+
+  @override
+  String get flowNodeGateDelays => 'Atrasa o sinal';
+
+  @override
+  String get flowSubgroupTriggers => 'Gatilhos';
+
+  @override
+  String get flowSubgroupConditions => 'Condições';
+
+  @override
+  String get flowSubgroupLogic => 'Lógica';
+
+  @override
+  String get flowSubgroupActions => 'Ações';
+
+  @override
+  String get flowSubgroupNodeDex => 'NodeDex';
+
+  @override
+  String get flowCompilerVisualFlow => 'Fluxo visual';
+
+  @override
+  String flowCompilerWhen(String trigger) {
+    return 'Quando: $trigger';
+  }
+
+  @override
+  String flowCompilerIf(String conditions) {
+    return 'Se: $conditions';
+  }
+
+  @override
+  String flowCompilerAfterDelay(String delay) {
+    return 'Após: atraso de $delay';
+  }
+
+  @override
+  String flowCompilerThen(String actions) {
+    return 'Então: $actions';
+  }
+
+  @override
+  String get glyphZoneA => 'Zona A';
+
+  @override
+  String get glyphZoneB => 'Zona B';
+
+  @override
+  String get glyphZoneC => 'Zona C';
+
+  @override
+  String get glyphZoneD => 'Zona D';
+
+  @override
+  String get glyphZoneE => 'Zona E';
+
+  @override
+  String get glyphZoneDescCamera => 'Câmera';
+
+  @override
+  String get glyphZoneDescDiagonal => 'Faixa diagonal';
+
+  @override
+  String get glyphZoneDescUsbc => 'Porta USB-C';
+
+  @override
+  String get glyphZoneDescLower => 'Faixa inferior';
+
+  @override
+  String get glyphZoneDescBattery => 'Bateria';
+
+  @override
+  String get appearanceFontBranded => 'Personalizada';
+
+  @override
+  String get appearanceFontBrandedDesc =>
+      'JetBrainsMono - Nossa fonte monoespaçada exclusiva';
+
+  @override
+  String get appearanceFontSystem => 'Sistema';
+
+  @override
+  String get appearanceFontSystemDesc => 'A fonte padrão do seu dispositivo';
+
+  @override
+  String get appearanceFontAccessibility => 'Acessibilidade';
+
+  @override
+  String get appearanceFontAccessibilityDesc =>
+      'Inter - Otimizada para legibilidade';
+
+  @override
+  String get appearanceTextScaleSystem => 'Padrão do sistema';
+
+  @override
+  String get appearanceTextScaleSystemDesc =>
+      'Segue as configurações de acessibilidade do dispositivo';
+
+  @override
+  String get appearanceTextScaleDefault => 'Padrão';
+
+  @override
+  String get appearanceTextScaleDefaultDesc =>
+      'Tamanho fixo, ignora as configurações do dispositivo';
+
+  @override
+  String get appearanceTextScaleLarge => 'Grande';
+
+  @override
+  String get appearanceTextScaleLargeDesc => '15% maior que o padrão';
+
+  @override
+  String get appearanceTextScaleExtraLarge => 'Extra grande';
+
+  @override
+  String get appearanceTextScaleExtraLargeDesc => '30% maior que o padrão';
+
+  @override
+  String get appearanceDensityCompact => 'Compacto';
+
+  @override
+  String get appearanceDensityCompactDesc =>
+      'Interface mais densa, mais conteúdo visível';
+
+  @override
+  String get appearanceDensityComfortable => 'Confortável';
+
+  @override
+  String get appearanceDensityComfortableDesc =>
+      'Espaçamento equilibrado (padrão)';
+
+  @override
+  String get appearanceDensityLargeTouch => 'Toque grande';
+
+  @override
+  String get appearanceDensityLargeTouchDesc =>
+      'Áreas de toque maiores, mais fácil de usar';
+
+  @override
+  String get appearanceContrastNormal => 'Normal';
+
+  @override
+  String get appearanceContrastNormalDesc => 'Contraste de cores padrão';
+
+  @override
+  String get appearanceContrastHigh => 'Alto contraste';
+
+  @override
+  String get appearanceContrastHighDesc =>
+      'Visibilidade aprimorada para texto e interface';
+
+  @override
+  String get appearanceMotionNormal => 'Normal';
+
+  @override
+  String get appearanceMotionNormalDesc => 'Todas as animações habilitadas';
+
+  @override
+  String get appearanceMotionReduced => 'Reduzido';
+
+  @override
+  String get appearanceMotionReducedDesc =>
+      'Animações mínimas para acessibilidade';
+
+  @override
   String get appearanceFont => 'Fonte';
 
   @override

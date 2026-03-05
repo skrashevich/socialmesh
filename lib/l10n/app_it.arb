@@ -29806,6 +29806,470 @@
   "@appearanceLanguageRussian": {
     "description": "Text displayed in appearance settings"
   },
+  "appearanceLanguagePortuguese": "Português",
+  "@appearanceLanguagePortuguese": {
+    "description": "Text displayed in appearance settings"
+  },
+  "helpCategoryGettingStarted": "Per iniziare",
+  "@helpCategoryGettingStarted": {
+    "description": "Visual flow / help l10n"
+  },
+  "helpCategoryMeshBasics": "Basi del mesh",
+  "@helpCategoryMeshBasics": {
+    "description": "Visual flow / help l10n"
+  },
+  "helpCategoryChannels": "Canali e crittografia",
+  "@helpCategoryChannels": {
+    "description": "Visual flow / help l10n"
+  },
+  "helpCategoryMessaging": "Messaggistica",
+  "@helpCategoryMessaging": {
+    "description": "Visual flow / help l10n"
+  },
+  "helpCategoryNodes": "Nodi e ruoli",
+  "@helpCategoryNodes": {
+    "description": "Visual flow / help l10n"
+  },
+  "helpCategoryDevice": "Dispositivo e radio",
+  "@helpCategoryDevice": {
+    "description": "Visual flow / help l10n"
+  },
+  "helpCategoryNetwork": "Rete e mappe",
+  "@helpCategoryNetwork": {
+    "description": "Visual flow / help l10n"
+  },
+  "helpCategorySafety": "Sicurezza e regole",
+  "@helpCategorySafety": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeNodeOnline": "Nodo online",
+  "@flowNodeNodeOnline": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeNodeOffline": "Nodo offline",
+  "@flowNodeNodeOffline": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeBatteryLow": "Batteria scarica",
+  "@flowNodeBatteryLow": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeBatteryFull": "Batteria carica",
+  "@flowNodeBatteryFull": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeMessageReceived": "Messaggio ricevuto",
+  "@flowNodeMessageReceived": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodePositionChanged": "Posizione cambiata",
+  "@flowNodePositionChanged": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeGeofenceEnter": "Ingresso geofence",
+  "@flowNodeGeofenceEnter": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeGeofenceExit": "Uscita geofence",
+  "@flowNodeGeofenceExit": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeSendMessage": "Invia messaggio",
+  "@flowNodeSendMessage": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodePlaySound": "Riproduci suono",
+  "@flowNodePlaySound": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeVibrate": "Vibrazione",
+  "@flowNodeVibrate": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodePushNotification": "Notifica push",
+  "@flowNodePushNotification": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeTriggerWebhook": "Attiva webhook",
+  "@flowNodeTriggerWebhook": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeLogEvent": "Registra evento",
+  "@flowNodeLogEvent": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeUpdateWidget": "Aggiorna widget",
+  "@flowNodeUpdateWidget": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeSendToChannel": "Invia al canale",
+  "@flowNodeSendToChannel": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeTriggerShortcut": "Attiva scorciatoia",
+  "@flowNodeTriggerShortcut": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeGlyphPattern": "Schema glifo",
+  "@flowNodeGlyphPattern": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeTimeRange": "Intervallo orario",
+  "@flowNodeTimeRange": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeDayOfWeek": "Giorno della settimana",
+  "@flowNodeDayOfWeek": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeBatteryAbove": "Batteria sopra",
+  "@flowNodeBatteryAbove": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeBatteryBelow": "Batteria sotto",
+  "@flowNodeBatteryBelow": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeNodeIsOnline": "Nodo è online",
+  "@flowNodeNodeIsOnline": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeNodeIsOffline": "Nodo è offline",
+  "@flowNodeNodeIsOffline": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeWithinGeofence": "Dentro il geofence",
+  "@flowNodeWithinGeofence": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeOutsideGeofence": "Fuori dal geofence",
+  "@flowNodeOutsideGeofence": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeGateAllMustPass": "Tutti gli input devono passare",
+  "@flowNodeGateAllMustPass": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeGateAnyCanPass": "Qualsiasi input può passare",
+  "@flowNodeGateAnyCanPass": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeGateInverts": "Inverte il segnale",
+  "@flowNodeGateInverts": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeGateDelays": "Ritarda il segnale",
+  "@flowNodeGateDelays": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowSubgroupTriggers": "Trigger",
+  "@flowSubgroupTriggers": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowSubgroupConditions": "Condizioni",
+  "@flowSubgroupConditions": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowSubgroupLogic": "Logica",
+  "@flowSubgroupLogic": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowSubgroupActions": "Azioni",
+  "@flowSubgroupActions": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowSubgroupNodeDex": "NodeDex",
+  "@flowSubgroupNodeDex": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowCompilerVisualFlow": "Flusso visuale",
+  "@flowCompilerVisualFlow": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowCompilerWhen": "Quando: {trigger}",
+  "@flowCompilerWhen": {
+    "description": "Visual flow / help l10n",
+    "placeholders": {"trigger": {"type": "String"}}
+  },
+  "flowCompilerIf": "Se: {conditions}",
+  "@flowCompilerIf": {
+    "description": "Visual flow / help l10n",
+    "placeholders": {"conditions": {"type": "String"}}
+  },
+  "flowCompilerAfterDelay": "Dopo: ritardo di {delay}",
+  "@flowCompilerAfterDelay": {
+    "description": "Visual flow / help l10n",
+    "placeholders": {"delay": {"type": "String"}}
+  },
+  "flowCompilerThen": "Poi: {actions}",
+  "@flowCompilerThen": {
+    "description": "Visual flow / help l10n",
+    "placeholders": {"actions": {"type": "String"}}
+  },
+  "glyphZoneA": "Zona A",
+  "@glyphZoneA": {
+    "description": "Visual flow / help l10n"
+  },
+  "glyphZoneB": "Zona B",
+  "@glyphZoneB": {
+    "description": "Visual flow / help l10n"
+  },
+  "glyphZoneC": "Zona C",
+  "@glyphZoneC": {
+    "description": "Visual flow / help l10n"
+  },
+  "glyphZoneD": "Zona D",
+  "@glyphZoneD": {
+    "description": "Visual flow / help l10n"
+  },
+  "glyphZoneE": "Zona E",
+  "@glyphZoneE": {
+    "description": "Visual flow / help l10n"
+  },
+  "glyphZoneDescCamera": "Fotocamera",
+  "@glyphZoneDescCamera": {
+    "description": "Visual flow / help l10n"
+  },
+  "glyphZoneDescDiagonal": "Striscia diagonale",
+  "@glyphZoneDescDiagonal": {
+    "description": "Visual flow / help l10n"
+  },
+  "glyphZoneDescUsbc": "Porta USB-C",
+  "@glyphZoneDescUsbc": {
+    "description": "Visual flow / help l10n"
+  },
+  "glyphZoneDescLower": "Striscia inferiore",
+  "@glyphZoneDescLower": {
+    "description": "Visual flow / help l10n"
+  },
+  "glyphZoneDescBattery": "Batteria",
+  "@glyphZoneDescBattery": {
+    "description": "Visual flow / help l10n"
+  },
+  "appearanceFontBranded": "Personalizzato",
+  "@appearanceFontBranded": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceFontBrandedDesc": "JetBrainsMono - Il nostro font monospazio distintivo",
+  "@appearanceFontBrandedDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceFontSystem": "Sistema",
+  "@appearanceFontSystem": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceFontSystemDesc": "Il font predefinito del tuo dispositivo",
+  "@appearanceFontSystemDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceFontAccessibility": "Accessibilit\u00e0",
+  "@appearanceFontAccessibility": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceFontAccessibilityDesc": "Inter - Ottimizzato per la leggibilit\u00e0",
+  "@appearanceFontAccessibilityDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceTextScaleSystem": "Predefinito di sistema",
+  "@appearanceTextScaleSystem": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceTextScaleSystemDesc": "Segue le impostazioni di accessibilit\u00e0 del dispositivo",
+  "@appearanceTextScaleSystemDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceTextScaleDefault": "Predefinito",
+  "@appearanceTextScaleDefault": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceTextScaleDefaultDesc": "Dimensione fissa, ignora le impostazioni del dispositivo",
+  "@appearanceTextScaleDefaultDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceTextScaleLarge": "Grande",
+  "@appearanceTextScaleLarge": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceTextScaleLargeDesc": "15% pi\u00f9 grande del predefinito",
+  "@appearanceTextScaleLargeDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceTextScaleExtraLarge": "Extra grande",
+  "@appearanceTextScaleExtraLarge": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceTextScaleExtraLargeDesc": "30% pi\u00f9 grande del predefinito",
+  "@appearanceTextScaleExtraLargeDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceDensityCompact": "Compatto",
+  "@appearanceDensityCompact": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceDensityCompactDesc": "Interfaccia pi\u00f9 densa, pi\u00f9 contenuti visibili",
+  "@appearanceDensityCompactDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceDensityComfortable": "Confortevole",
+  "@appearanceDensityComfortable": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceDensityComfortableDesc": "Spaziatura equilibrata (predefinito)",
+  "@appearanceDensityComfortableDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceDensityLargeTouch": "Tocco grande",
+  "@appearanceDensityLargeTouch": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceDensityLargeTouchDesc": "Aree di tocco pi\u00f9 grandi, pi\u00f9 facile da usare",
+  "@appearanceDensityLargeTouchDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceContrastNormal": "Normale",
+  "@appearanceContrastNormal": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceContrastNormalDesc": "Contrasto cromatico standard",
+  "@appearanceContrastNormalDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceContrastHigh": "Alto contrasto",
+  "@appearanceContrastHigh": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceContrastHighDesc": "Visibilit\u00e0 migliorata per testo e interfaccia",
+  "@appearanceContrastHighDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceMotionNormal": "Normale",
+  "@appearanceMotionNormal": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceMotionNormalDesc": "Tutte le animazioni abilitate",
+  "@appearanceMotionNormalDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceMotionReduced": "Ridotto",
+  "@appearanceMotionReduced": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceMotionReducedDesc": "Animazioni minime per l\u2019accessibilit\u00e0",
+  "@appearanceMotionReducedDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceFontBranded": "Personalizzato",
+  "@appearanceFontBranded": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceFontBrandedDesc": "JetBrainsMono - Il nostro font monospazio distintivo",
+  "@appearanceFontBrandedDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceFontSystem": "Sistema",
+  "@appearanceFontSystem": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceFontSystemDesc": "Il font predefinito del tuo dispositivo",
+  "@appearanceFontSystemDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceFontAccessibility": "Accessibilit\u00e0",
+  "@appearanceFontAccessibility": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceFontAccessibilityDesc": "Inter - Ottimizzato per la leggibilit\u00e0",
+  "@appearanceFontAccessibilityDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceTextScaleSystem": "Predefinito di sistema",
+  "@appearanceTextScaleSystem": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceTextScaleSystemDesc": "Segue le impostazioni di accessibilit\u00e0 del dispositivo",
+  "@appearanceTextScaleSystemDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceTextScaleDefault": "Predefinito",
+  "@appearanceTextScaleDefault": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceTextScaleDefaultDesc": "Dimensione fissa, ignora le impostazioni del dispositivo",
+  "@appearanceTextScaleDefaultDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceTextScaleLarge": "Grande",
+  "@appearanceTextScaleLarge": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceTextScaleLargeDesc": "15% pi\u00f9 grande del predefinito",
+  "@appearanceTextScaleLargeDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceTextScaleExtraLarge": "Extra grande",
+  "@appearanceTextScaleExtraLarge": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceTextScaleExtraLargeDesc": "30% pi\u00f9 grande del predefinito",
+  "@appearanceTextScaleExtraLargeDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceDensityCompact": "Compatto",
+  "@appearanceDensityCompact": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceDensityCompactDesc": "Interfaccia pi\u00f9 densa, pi\u00f9 contenuti visibili",
+  "@appearanceDensityCompactDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceDensityComfortable": "Confortevole",
+  "@appearanceDensityComfortable": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceDensityComfortableDesc": "Spaziatura equilibrata (predefinito)",
+  "@appearanceDensityComfortableDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceDensityLargeTouch": "Tocco grande",
+  "@appearanceDensityLargeTouch": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceDensityLargeTouchDesc": "Aree di tocco pi\u00f9 grandi, pi\u00f9 facile da usare",
+  "@appearanceDensityLargeTouchDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceContrastNormal": "Normale",
+  "@appearanceContrastNormal": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceContrastNormalDesc": "Contrasto cromatico standard",
+  "@appearanceContrastNormalDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceContrastHigh": "Alto contrasto",
+  "@appearanceContrastHigh": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceContrastHighDesc": "Visibilit\u00e0 migliorata per testo e interfaccia",
+  "@appearanceContrastHighDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceMotionNormal": "Normale",
+  "@appearanceMotionNormal": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceMotionNormalDesc": "Tutte le animazioni abilitate",
+  "@appearanceMotionNormalDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceMotionReduced": "Ridotto",
+  "@appearanceMotionReduced": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceMotionReducedDesc": "Animazioni minime per l\u2019accessibilit\u00e0",
+  "@appearanceMotionReducedDesc": {
+    "description": "Text displayed in appearance settings"
+  },
   "appearanceFont": "Font",
   "@appearanceFont": {
     "description": "Text displayed in appearance settings"

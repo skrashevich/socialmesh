@@ -23,6 +23,7 @@ import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/app_bottom_sheet.dart';
 import '../../core/visual_flow/compiler/flow_compiler.dart';
+import '../../l10n/app_localizations.dart';
 import '../../core/visual_flow/interfaces/event_signal_interface.dart';
 import '../../core/visual_flow/providers/visual_flow_provider.dart';
 import '../../core/visual_flow/vs_node_view/data/vs_node_data.dart';
@@ -220,8 +221,8 @@ class _VisualFlowEditorScreenState extends ConsumerState<VisualFlowEditorScreen>
     final flowNotifier = ref.read(visualFlowProvider.notifier);
     flowNotifier.setFlowName(name);
 
-    // Compile the graph.
-    final result = flowNotifier.compile();
+    // Compile the graph with localized labels.
+    final result = flowNotifier.compile(l10n: AppLocalizations.of(context));
 
     if (!result.isSuccess) {
       safeSetState(() => _isSaving = false);
@@ -580,7 +581,7 @@ class _VisualFlowEditorScreenState extends ConsumerState<VisualFlowEditorScreen>
                       // Run compile to get errors.
                       final compileResult = ref
                           .read(visualFlowProvider.notifier)
-                          .compile();
+                          .compile(l10n: AppLocalizations.of(context));
                       _showCompilationErrors(compileResult);
                     }
                   },

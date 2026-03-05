@@ -38668,6 +38668,528 @@ abstract class AppLocalizations {
   /// Text displayed in appearance settings
   ///
   /// In en, this message translates to:
+  /// **'Portuguese'**
+  String get appearanceLanguagePortuguese;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Getting Started'**
+  String get helpCategoryGettingStarted;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh Basics'**
+  String get helpCategoryMeshBasics;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Channels & Encryption'**
+  String get helpCategoryChannels;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Messaging'**
+  String get helpCategoryMessaging;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes & Roles'**
+  String get helpCategoryNodes;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Device & Radio'**
+  String get helpCategoryDevice;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Network & Maps'**
+  String get helpCategoryNetwork;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Safety & Rules'**
+  String get helpCategorySafety;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Node Online'**
+  String get flowNodeNodeOnline;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Node Offline'**
+  String get flowNodeNodeOffline;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Battery Low'**
+  String get flowNodeBatteryLow;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Battery Full'**
+  String get flowNodeBatteryFull;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Message Received'**
+  String get flowNodeMessageReceived;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Position Changed'**
+  String get flowNodePositionChanged;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Geofence Enter'**
+  String get flowNodeGeofenceEnter;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Geofence Exit'**
+  String get flowNodeGeofenceExit;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Send Message'**
+  String get flowNodeSendMessage;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Play Sound'**
+  String get flowNodePlaySound;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Vibrate'**
+  String get flowNodeVibrate;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Push Notification'**
+  String get flowNodePushNotification;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Trigger Webhook'**
+  String get flowNodeTriggerWebhook;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Log Event'**
+  String get flowNodeLogEvent;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Update Widget'**
+  String get flowNodeUpdateWidget;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Send to Channel'**
+  String get flowNodeSendToChannel;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Trigger Shortcut'**
+  String get flowNodeTriggerShortcut;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Glyph Pattern'**
+  String get flowNodeGlyphPattern;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Time Range'**
+  String get flowNodeTimeRange;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Day of Week'**
+  String get flowNodeDayOfWeek;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Battery Above'**
+  String get flowNodeBatteryAbove;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Battery Below'**
+  String get flowNodeBatteryBelow;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Node Is Online'**
+  String get flowNodeNodeIsOnline;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Node Is Offline'**
+  String get flowNodeNodeIsOffline;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Within Geofence'**
+  String get flowNodeWithinGeofence;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Outside Geofence'**
+  String get flowNodeOutsideGeofence;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'All inputs must pass'**
+  String get flowNodeGateAllMustPass;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Any input can pass'**
+  String get flowNodeGateAnyCanPass;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Inverts the signal'**
+  String get flowNodeGateInverts;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Delays the signal'**
+  String get flowNodeGateDelays;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Triggers'**
+  String get flowSubgroupTriggers;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Conditions'**
+  String get flowSubgroupConditions;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Logic'**
+  String get flowSubgroupLogic;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Actions'**
+  String get flowSubgroupActions;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'NodeDex'**
+  String get flowSubgroupNodeDex;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Visual Flow'**
+  String get flowCompilerVisualFlow;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'When: {trigger}'**
+  String flowCompilerWhen(String trigger);
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'If: {conditions}'**
+  String flowCompilerIf(String conditions);
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'After: {delay} delay'**
+  String flowCompilerAfterDelay(String delay);
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Then: {actions}'**
+  String flowCompilerThen(String actions);
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Zone A'**
+  String get glyphZoneA;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Zone B'**
+  String get glyphZoneB;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Zone C'**
+  String get glyphZoneC;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Zone D'**
+  String get glyphZoneD;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Zone E'**
+  String get glyphZoneE;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Camera'**
+  String get glyphZoneDescCamera;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Diagonal Strip'**
+  String get glyphZoneDescDiagonal;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'USB-C Port'**
+  String get glyphZoneDescUsbc;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Lower Strip'**
+  String get glyphZoneDescLower;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Battery'**
+  String get glyphZoneDescBattery;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Branded'**
+  String get appearanceFontBranded;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'JetBrainsMono - Our signature monospace font'**
+  String get appearanceFontBrandedDesc;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get appearanceFontSystem;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Your device’s default font'**
+  String get appearanceFontSystemDesc;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Accessibility'**
+  String get appearanceFontAccessibility;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Inter - Optimized for readability'**
+  String get appearanceFontAccessibilityDesc;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'System Default'**
+  String get appearanceTextScaleSystem;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Follows your device accessibility settings'**
+  String get appearanceTextScaleSystemDesc;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Default'**
+  String get appearanceTextScaleDefault;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed size, ignores device settings'**
+  String get appearanceTextScaleDefaultDesc;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Large'**
+  String get appearanceTextScaleLarge;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'15% larger than default'**
+  String get appearanceTextScaleLargeDesc;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Extra Large'**
+  String get appearanceTextScaleExtraLarge;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'30% larger than default'**
+  String get appearanceTextScaleExtraLargeDesc;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Compact'**
+  String get appearanceDensityCompact;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Denser UI, more content visible'**
+  String get appearanceDensityCompactDesc;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Comfortable'**
+  String get appearanceDensityComfortable;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Balanced spacing (default)'**
+  String get appearanceDensityComfortableDesc;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Large Touch'**
+  String get appearanceDensityLargeTouch;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Bigger tap targets, easier to use'**
+  String get appearanceDensityLargeTouchDesc;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Normal'**
+  String get appearanceContrastNormal;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Standard color contrast'**
+  String get appearanceContrastNormalDesc;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'High Contrast'**
+  String get appearanceContrastHigh;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Enhanced visibility for text and UI'**
+  String get appearanceContrastHighDesc;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Normal'**
+  String get appearanceMotionNormal;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'All animations enabled'**
+  String get appearanceMotionNormalDesc;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Reduced'**
+  String get appearanceMotionReduced;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Minimal animations for accessibility'**
+  String get appearanceMotionReducedDesc;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
   /// **'Font'**
   String get appearanceFont;
 

@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import 'dart:io';
 
+import 'package:flutter/widgets.dart';
+
 import '../core/logging.dart';
+import '../l10n/app_localizations.dart';
 import 'glyph_matrix_service.dart';
 
 /// Service for controlling Nothing Phone glyph interface
@@ -229,15 +232,43 @@ class GlyphService {
 
 /// Enum for glyph zones (kept for API compatibility but not used on Phone 3)
 enum GlyphZone {
-  a('Zone A', 'Camera'),
-  b('Zone B', 'Diagonal Strip'),
-  c('Zone C', 'USB-C Port'),
-  d('Zone D', 'Lower Strip'),
-  e('Zone E', 'Battery');
+  a('Zone A', 'Camera'), // lint-allow: hardcoded-string
+  b('Zone B', 'Diagonal Strip'), // lint-allow: hardcoded-string
+  c('Zone C', 'USB-C Port'), // lint-allow: hardcoded-string
+  d('Zone D', 'Lower Strip'), // lint-allow: hardcoded-string
+  e('Zone E', 'Battery'); // lint-allow: hardcoded-string
 
   const GlyphZone(this.displayName, this.description);
   final String displayName;
   final String description;
+}
+
+/// L10n extension for [GlyphZone] — use these instead of [displayName]
+/// and [description] in UI code with access to [BuildContext].
+extension GlyphZoneL10n on GlyphZone {
+  /// Returns the localized zone label (e.g. "Zone A").
+  String localizedName(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return switch (this) {
+      GlyphZone.a => l10n.glyphZoneA,
+      GlyphZone.b => l10n.glyphZoneB,
+      GlyphZone.c => l10n.glyphZoneC,
+      GlyphZone.d => l10n.glyphZoneD,
+      GlyphZone.e => l10n.glyphZoneE,
+    };
+  }
+
+  /// Returns the localized zone description (e.g. "Camera").
+  String localizedDescription(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return switch (this) {
+      GlyphZone.a => l10n.glyphZoneDescCamera,
+      GlyphZone.b => l10n.glyphZoneDescDiagonal,
+      GlyphZone.c => l10n.glyphZoneDescUsbc,
+      GlyphZone.d => l10n.glyphZoneDescLower,
+      GlyphZone.e => l10n.glyphZoneDescBattery,
+    };
+  }
 }
 
 /// Configuration for a single glyph channel (kept for API compatibility)
