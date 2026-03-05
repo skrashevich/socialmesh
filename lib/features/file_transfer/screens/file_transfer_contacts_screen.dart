@@ -658,14 +658,17 @@ class _ContactTile extends StatelessWidget {
         decoration: !contact.isFavorite
             ? BoxDecoration(
                 color: context.card,
-                borderRadius: BorderRadius.circular(AppTheme.radius12),
-                border: Border.all(color: context.border),
+                borderRadius: BorderRadius.circular(AppTheme.radius16),
+                border: Border.all(
+                  color: context.border.withValues(alpha: 0.15),
+                  width: 0.5,
+                ),
               )
             : null,
         child: contact.isFavorite
             ? GradientBorderContainer(
-                borderRadius: 12,
-                borderWidth: 2,
+                borderRadius: 16,
+                borderWidth: 1,
                 accentOpacity: 1.0,
                 accentColor: AccentColors.yellow,
                 backgroundColor: context.card,

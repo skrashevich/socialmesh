@@ -131,19 +131,23 @@ class _FileTransferImageGalleryState
   Widget _buildImage() {
     final bytes = widget.transfer.fileBytes;
     if (bytes != null && bytes.isNotEmpty) {
-      return Image.memory(
-        bytes,
-        fit: BoxFit.contain,
-        errorBuilder: (context, error, stackTrace) => _buildErrorWidget(),
+      return SizedBox.expand(
+        child: Image.memory(
+          bytes,
+          fit: BoxFit.contain,
+          errorBuilder: (context, error, stackTrace) => _buildErrorWidget(),
+        ),
       );
     }
 
     final path = widget.transfer.savedFilePath;
     if (path != null) {
-      return Image.file(
-        File(path),
-        fit: BoxFit.contain,
-        errorBuilder: (context, error, stackTrace) => _buildErrorWidget(),
+      return SizedBox.expand(
+        child: Image.file(
+          File(path),
+          fit: BoxFit.contain,
+          errorBuilder: (context, error, stackTrace) => _buildErrorWidget(),
+        ),
       );
     }
 
@@ -265,8 +269,7 @@ class _TopBar extends StatelessWidget {
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                 ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
               ),
             ),
           ),
@@ -401,8 +404,6 @@ class _BottomInfoOverlay extends ConsumerWidget {
                             fontSize: 15,
                             fontWeight: FontWeight.w600,
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
                         ),
                         const SizedBox(height: AppTheme.spacing2),
                         // Subtitle row: direction + short name
@@ -479,8 +480,6 @@ class _BottomInfoOverlay extends ConsumerWidget {
                   fontSize: 14,
                   height: 1.4,
                 ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
               ),
 
               // MIME type subtitle

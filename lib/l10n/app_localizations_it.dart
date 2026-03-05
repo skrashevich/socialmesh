@@ -1839,6 +1839,20 @@ class AppLocalizationsIt extends AppLocalizations {
   String get automationActionIftttHint => 'es. meshtastic_alert';
 
   @override
+  String get automationActionWebhookEventName => 'Event Name';
+
+  @override
+  String get automationActionWebhookUrlLabel => 'Webhook URL (optional)';
+
+  @override
+  String get automationActionWebhookUrlHint =>
+      'e.g., http://192.168.1.100:8123/api/webhook/...';
+
+  @override
+  String get automationActionWebhookHelp =>
+      'Enter a custom URL to POST directly, or leave blank to use your global IFTTT/webhook settings. Private/LAN addresses (192.168.x, 10.x) are supported.';
+
+  @override
   String get automationActionLogEvent => 'Registra nella cronologia';
 
   @override
@@ -4846,6 +4860,21 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String fileTransferAttachmentMeta(int size, String chunkCount) {
     return '$size · $chunkCount blocchi via mesh';
+  }
+
+  @override
+  String fileTransferCardChunksProgress(String completed, String total) {
+    return '$completed/$total chunks';
+  }
+
+  @override
+  String fileTransferCardChunksTotal(String count) {
+    return '$count chunks';
+  }
+
+  @override
+  String fileTransferCardChunkSize(String size) {
+    return '$size ea.';
   }
 
   @override
@@ -25503,6 +25532,30 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get iftttConfigSaveFailed => 'Salvataggio impostazioni IFTTT fallito';
+
+  @override
+  String get webhookModeIfttt => 'IFTTT Key';
+
+  @override
+  String get webhookModeCustomUrl => 'Custom URL';
+
+  @override
+  String get webhookConfigCustomUrlLabel => 'Webhook URL';
+
+  @override
+  String get webhookConfigCustomUrlHint =>
+      'http://192.168.1.100:8123/api/webhook/...';
+
+  @override
+  String get webhookConfigCustomUrlHelper =>
+      'POST JSON to any HTTP/HTTPS endpoint. LAN addresses supported.';
+
+  @override
+  String get webhookConfigEnterUrlToEnable =>
+      'Please enter a webhook URL to enable';
+
+  @override
+  String get webhookConfigEnterUrlFirst => 'Please enter a webhook URL first';
 
   @override
   String get mqttConfigTitle => 'MQTT';

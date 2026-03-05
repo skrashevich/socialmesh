@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/l10n/l10n_extension.dart';
@@ -13,8 +14,8 @@ import '../../nodes/node_display_name_resolver.dart';
 
 /// A card widget for displaying a file transfer (sending or receiving).
 ///
-/// Used in both the Signals feed and NodeDex detail screen.
-/// Follows the same card pattern as [SignalCard].
+/// Follows the NodeDex visual language: rounded containers with subtle borders,
+/// icon-bearing metric chips, and clean information hierarchy.
 class FileTransferCard extends ConsumerWidget {
   const FileTransferCard({
     super.key,
@@ -49,46 +50,28 @@ class FileTransferCard extends ConsumerWidget {
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
           color: context.card,
-          borderRadius: BorderRadius.circular(AppTheme.radius12),
-          border: Border.all(color: context.border.withValues(alpha: 0.5)),
+          borderRadius: BorderRadius.circular(AppTheme.radius16),
+          border: Border.all(
+            color: context.border.withValues(alpha: 0.15),
+            width: 0.5,
+          ),
         ),
         child: compact
             ? Padding(
                 padding: const EdgeInsets.all(AppTheme.spacing10),
                 child: _buildCompact(context),
               )
-            : _buildFullCard(context, ref),
+            : Padding(
+                padding: const EdgeInsets.all(AppTheme.spacing16),
+                child: _buildFull(context, ref),
+              ),
       ),
     );
   }
 
-  Widget _buildFullCard(BuildContext context, WidgetRef ref) {
-    return IntrinsicHeight(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          // Colored accent stripe
-          Container(
-            width: 3,
-            decoration: BoxDecoration(
-              color: _statusColor(context),
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(AppTheme.radius12),
-                bottomLeft: Radius.circular(AppTheme.radius12),
-              ),
-            ),
-          ),
-          // Card content
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(AppTheme.spacing12),
-              child: _buildFull(context, ref),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // ---------------------------------------------------------------------------
+  // Compact layout (used in signal feed embeds)
+  // ---------------------------------------------------------------------------
 
   Widget _buildCompact(BuildContext context) {
     return Row(
@@ -127,6 +110,10 @@ class FileTransferCard extends ConsumerWidget {
     );
   }
 
+  // ---------------------------------------------------------------------------
+  // Full layout (NodeDex-style)
+  // ---------------------------------------------------------------------------
+
   Widget _buildFull(BuildContext context, WidgetRef ref) {
     // Resolve node display name
     final nodes = ref.watch(nodesProvider);
@@ -150,15 +137,18 @@ class FileTransferCard extends ConsumerWidget {
     }
 
     final metaText = _buildMetadataText(nodeName);
+    final statusColor = _statusColor(context);
+    final chunkSize = _formatBytes(transfer.chunkSize);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Header row: icon + filename + direction badge
+        // ── Header row: icon + filename + subtitle + direction badge ──
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _FileTypeIcon(mimeType: transfer.mimeType, size: 36),
-            const SizedBox(width: AppTheme.spacing10),
+            _FileTypeIcon(mimeType: transfer.mimeType, size: 40),
+            const SizedBox(width: AppTheme.spacing12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -167,7 +157,7 @@ class FileTransferCard extends ConsumerWidget {
                     transfer.filename,
                     style: TextStyle(
                       color: context.textPrimary,
-                      fontSize: 14,
+                      fontSize: 15,
                       fontWeight: FontWeight.w600,
                     ),
                     maxLines: 2,
@@ -176,67 +166,79 @@ class FileTransferCard extends ConsumerWidget {
                   const SizedBox(height: AppTheme.spacing2),
                   Text(
                     metaText,
-                    style: TextStyle(color: context.textTertiary, fontSize: 12),
-                  ),
-                  const SizedBox(height: AppTheme.spacing4),
-                  Wrap(
-                    spacing: AppTheme.spacing4,
-                    runSpacing: AppTheme.spacing4,
-                    children: [
-                      _InfoChip(label: transfer.mimeType),
-                      _InfoChip(label: _technicalInfoText),
-                    ],
+                    style: TextStyle(
+                      color: context.textSecondary,
+                      fontSize: 12,
+                    ),
                   ),
                 ],
               ),
             ),
+            const SizedBox(width: AppTheme.spacing8),
             _DirectionBadge(direction: transfer.direction),
           ],
         ),
 
         const SizedBox(height: AppTheme.spacing10),
 
-        // Progress bar
-        if (transfer.isActive) ...[
-          _TransferProgressBar(
-            progress: transfer.progress,
-            color: _statusColor(context),
-          ),
-          const SizedBox(height: AppTheme.spacing6),
-        ],
-
-        // Status row
-        Row(
+        // ── Metric chips: status, mime, chunks, chunk size ──
+        Wrap(
+          spacing: AppTheme.spacing6,
+          runSpacing: AppTheme.spacing6,
           children: [
-            Icon(_statusIcon, size: 14, color: _statusColor(context)),
-            const SizedBox(width: AppTheme.spacing4),
-            Expanded(
-              child: Text(
-                _statusText,
-                style: TextStyle(
-                  color: _statusColor(context),
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
+            _StatusChip(
+              icon: _statusIcon,
+              label: _statusText,
+              color: statusColor,
             ),
-            // Chunk progress text for active, timestamp for terminal
+            _MetricChip(
+              icon: Icons.description_outlined,
+              value: transfer.mimeType,
+            ),
             if (transfer.isActive)
-              Text(
-                '${transfer.completedChunks.length}/${transfer.chunkCount} chunks',
-                style: TextStyle(color: context.textTertiary, fontSize: 11),
+              _MetricChip(
+                icon: Icons.grid_view,
+                value: context.l10n.fileTransferCardChunksProgress(
+                  transfer.completedChunks.length.toString(),
+                  transfer.chunkCount.toString(),
+                ),
               )
             else
-              Text(
-                _relativeTime(transfer.completedAt ?? transfer.createdAt),
-                style: TextStyle(color: context.textTertiary, fontSize: 11),
+              _MetricChip(
+                icon: Icons.grid_view,
+                value: context.l10n.fileTransferCardChunksTotal(
+                  transfer.chunkCount.toString(),
+                ),
               ),
+            _MetricChip(
+              icon: Icons.straighten,
+              value: context.l10n.fileTransferCardChunkSize(chunkSize),
+            ),
           ],
         ),
 
-        // Action buttons
-        if (_showActions) ...[
+        // ── Progress bar (active transfers only) ──
+        if (transfer.isActive) ...[
           const SizedBox(height: AppTheme.spacing10),
+          _TransferProgressBar(progress: transfer.progress, color: statusColor),
+        ],
+
+        // ── Timestamp row (NodeDex discovery-age style) ──
+        const SizedBox(height: AppTheme.spacing8),
+        _TimestampRow(
+          label: _relativeTime(transfer.completedAt ?? transfer.createdAt),
+        ),
+
+        // ── Action buttons ──
+        if (_showActions) ...[
+          Padding(
+            padding: const EdgeInsets.only(top: AppTheme.spacing8),
+            child: Divider(
+              height: 1,
+              color: context.border.withValues(alpha: 0.15),
+            ),
+          ),
+          const SizedBox(height: AppTheme.spacing8),
           _ActionRow(
             transfer: transfer,
             onCancel: onCancel,
@@ -251,6 +253,10 @@ class FileTransferCard extends ConsumerWidget {
       ],
     );
   }
+
+  // ---------------------------------------------------------------------------
+  // Helpers
+  // ---------------------------------------------------------------------------
 
   bool get _showActions =>
       onCancel != null ||
@@ -385,50 +391,6 @@ class FileTransferCard extends ConsumerWidget {
     return parts.join(' · ');
   }
 
-  String get _technicalInfoText {
-    final ext = transfer.filename.contains('.')
-        ? transfer.filename.split('.').last.toUpperCase()
-        : null;
-    final typeLabel = _fileTypeLabel;
-    final chunkInfo = '${transfer.chunkCount} chunks';
-    final chunkSize = _formatBytes(transfer.chunkSize);
-    final parts = <String>[
-      if (ext != null) ext,
-      typeLabel,
-      '$chunkInfo · $chunkSize ea.',
-    ];
-    return parts.join(' · ');
-  }
-
-  String get _fileTypeLabel {
-    final mime = transfer.mimeType.toLowerCase();
-    if (mime.startsWith('image/')) return 'Image';
-    if (mime == 'text/csv') return 'Spreadsheet';
-    if (mime == 'text/html') return 'HTML';
-    if (mime == 'text/markdown') return 'Markdown';
-    if (mime.startsWith('text/')) return 'Text';
-    if (mime.contains('gpx')) return 'GPS Track';
-    if (mime.contains('kml') || mime.contains('kmz')) return 'Map';
-    if (mime.contains('json')) return 'JSON';
-    if (mime.contains('xml')) return 'XML';
-    if (mime.contains('yaml') || mime.contains('yml')) return 'YAML';
-    if (mime.contains('protobuf')) return 'Protobuf';
-    if (mime.contains('pdf')) return 'PDF';
-    if (mime.contains('zip') ||
-        mime.contains('gzip') ||
-        mime.contains('tar') ||
-        mime.contains('7z') ||
-        mime.contains('rar')) {
-      return 'Archive';
-    }
-    if (mime.startsWith('audio/')) return 'Audio';
-    if (mime.startsWith('video/')) return 'Video';
-    if (mime.contains('firmware') || mime.contains('octet-stream')) {
-      return 'Binary';
-    }
-    return 'File';
-  }
-
   static String _formatBytes(int bytes) {
     if (bytes < 1024) return '$bytes B';
     final kb = bytes / 1024.0;
@@ -436,9 +398,13 @@ class FileTransferCard extends ConsumerWidget {
   }
 }
 
-// ---------------------------------------------------------------------------
-// Sub-widgets
-// ---------------------------------------------------------------------------
+// =============================================================================
+// Sub-widgets — NodeDex-style components
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// File type icon
+// -----------------------------------------------------------------------------
 
 class _FileTypeIcon extends StatelessWidget {
   const _FileTypeIcon({required this.mimeType, this.size = 36});
@@ -550,6 +516,10 @@ class FileTypeIcon extends StatelessWidget {
   }
 }
 
+// -----------------------------------------------------------------------------
+// Direction badge — matches NodeDex trust / social-tag badge style
+// -----------------------------------------------------------------------------
+
 class _DirectionBadge extends StatelessWidget {
   const _DirectionBadge({required this.direction});
 
@@ -558,28 +528,29 @@ class _DirectionBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isOutbound = direction == TransferDirection.outbound;
+    final color = isOutbound ? AppTheme.primaryBlue : AppTheme.primaryPurple;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
-        color: (isOutbound ? AppTheme.primaryBlue : AppTheme.primaryPurple)
-            .withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(AppTheme.radius6),
+        color: color.withValues(alpha: 0.10),
+        borderRadius: BorderRadius.circular(AppTheme.radius10),
+        border: Border.all(color: color.withValues(alpha: 0.25), width: 0.5),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
             isOutbound ? Icons.arrow_upward : Icons.arrow_downward,
-            size: 10,
-            color: isOutbound ? AppTheme.primaryBlue : AppTheme.primaryPurple,
+            size: 11,
+            color: color,
           ),
-          const SizedBox(width: AppTheme.spacing4),
+          const SizedBox(width: AppTheme.spacing3),
           Text(
             isOutbound
                 ? context.l10n.fileTransferDirectionSent
                 : context.l10n.fileTransferDirectionReceived,
             style: TextStyle(
-              color: isOutbound ? AppTheme.primaryBlue : AppTheme.primaryPurple,
+              color: color,
               fontSize: 10,
               fontWeight: FontWeight.w600,
             ),
@@ -589,6 +560,126 @@ class _DirectionBadge extends StatelessWidget {
     );
   }
 }
+
+// -----------------------------------------------------------------------------
+// Status chip — colored chip with icon, matching NodeDex trait badge style
+// -----------------------------------------------------------------------------
+
+class _StatusChip extends StatelessWidget {
+  const _StatusChip({
+    required this.icon,
+    required this.label,
+    required this.color,
+  });
+
+  final IconData icon;
+  final String label;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.10),
+        borderRadius: BorderRadius.circular(AppTheme.radius10),
+        border: Border.all(color: color.withValues(alpha: 0.30), width: 0.5),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 11, color: color),
+          const SizedBox(width: AppTheme.spacing4),
+          Text(
+            label,
+            style: TextStyle(
+              color: color,
+              fontSize: 10,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Metric chip — NodeDex _MetricChip: icon + monospace value, subtle border
+// -----------------------------------------------------------------------------
+
+class _MetricChip extends StatelessWidget {
+  const _MetricChip({required this.icon, required this.value});
+
+  final IconData icon;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = context.textTertiary;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.10),
+        borderRadius: BorderRadius.circular(AppTheme.radius10),
+        border: Border.all(color: color.withValues(alpha: 0.25), width: 0.5),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 11, color: color),
+          const SizedBox(width: AppTheme.spacing3),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.w600,
+              color: color,
+              fontFamily: AppTheme.fontFamily,
+              letterSpacing: 0.2,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Timestamp row — NodeDex _DiscoveryAgeBadge style
+// -----------------------------------------------------------------------------
+
+class _TimestampRow extends StatelessWidget {
+  const _TimestampRow({required this.label});
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(
+          Icons.schedule,
+          size: 10,
+          color: context.textTertiary.withValues(alpha: 0.5),
+        ),
+        const SizedBox(width: AppTheme.spacing3),
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 10,
+            color: context.textTertiary.withValues(alpha: 0.6),
+            fontStyle: FontStyle.italic,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Progress bar
+// -----------------------------------------------------------------------------
 
 class _TransferProgressBar extends StatelessWidget {
   const _TransferProgressBar({required this.progress, required this.color});
@@ -609,6 +700,10 @@ class _TransferProgressBar extends StatelessWidget {
     );
   }
 }
+
+// -----------------------------------------------------------------------------
+// Progress ring (compact mode)
+// -----------------------------------------------------------------------------
 
 class _ProgressRing extends StatelessWidget {
   const _ProgressRing({required this.progress});
@@ -638,6 +733,10 @@ class _ProgressRing extends StatelessWidget {
     );
   }
 }
+
+// -----------------------------------------------------------------------------
+// Action row — uses ink-well buttons with haptic feedback
+// -----------------------------------------------------------------------------
 
 class _ActionRow extends StatelessWidget {
   const _ActionRow({
@@ -739,31 +838,9 @@ class _ActionRow extends StatelessWidget {
   }
 }
 
-class _InfoChip extends StatelessWidget {
-  const _InfoChip({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-      decoration: BoxDecoration(
-        color: context.border.withValues(alpha: 0.25),
-        borderRadius: BorderRadius.circular(AppTheme.radius6),
-      ),
-      child: Text(
-        label,
-        style: TextStyle(
-          color: context.textTertiary,
-          fontSize: 10,
-          fontWeight: FontWeight.w500,
-          fontFamily: 'monospace',
-        ),
-      ),
-    );
-  }
-}
+// -----------------------------------------------------------------------------
+// Action button — subtle ink-well tap target
+// -----------------------------------------------------------------------------
 
 class _ActionButton extends StatelessWidget {
   const _ActionButton({
@@ -783,7 +860,10 @@ class _ActionButton extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: onTap,
+        onTap: () {
+          HapticFeedback.selectionClick();
+          onTap();
+        },
         borderRadius: BorderRadius.circular(AppTheme.radius8),
         child: Padding(
           padding: const EdgeInsets.symmetric(
@@ -810,6 +890,10 @@ class _ActionButton extends StatelessWidget {
     );
   }
 }
+
+// =============================================================================
+// Attachment preview card (composer)
+// =============================================================================
 
 /// Attachment preview card shown in the composer before sending.
 class FileAttachmentPreview extends StatelessWidget {

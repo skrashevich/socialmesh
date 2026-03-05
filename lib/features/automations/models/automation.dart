@@ -548,7 +548,7 @@ extension ActionTypeExtension on ActionType {
       case ActionType.pushNotification:
         return 'Push notification'; // lint-allow: hardcoded-string
       case ActionType.triggerWebhook:
-        return 'Trigger webhook (IFTTT)'; // lint-allow: hardcoded-string
+        return 'Trigger webhook'; // lint-allow: hardcoded-string
       case ActionType.logEvent:
         return 'Log to history'; // lint-allow: hardcoded-string
       case ActionType.updateWidget:

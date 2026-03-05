@@ -17,10 +17,21 @@ enum IftttTriggerType {
   sosEmergency,
 }
 
-/// IFTTT configuration model
+/// Webhook mode: IFTTT key-based or custom URL
+enum WebhookMode {
+  /// Classic IFTTT Webhooks: event name + key -> maker.ifttt.com
+  ifttt,
+
+  /// Custom URL: POST JSON to any HTTP/HTTPS endpoint (e.g. Home Assistant)
+  customUrl,
+}
+
+/// IFTTT / Webhook configuration model
 class IftttConfig {
   final bool enabled;
   final String webhookKey;
+  final WebhookMode webhookMode;
+  final String customWebhookUrl;
   final bool messageReceived;
   final bool nodeOnline;
   final bool nodeOffline;
@@ -40,6 +51,8 @@ class IftttConfig {
   const IftttConfig({
     this.enabled = false,
     this.webhookKey = '',
+    this.webhookMode = WebhookMode.ifttt,
+    this.customWebhookUrl = '',
     this.messageReceived = true,
     this.nodeOnline = true,
     this.nodeOffline = true,
@@ -57,9 +70,21 @@ class IftttConfig {
     this.geofenceThrottleMinutes = 30,
   });
 
+  /// Whether the webhook key is configured (IFTTT mode)
+  bool get hasIftttKey => webhookKey.isNotEmpty;
+
+  /// Whether a custom webhook URL is configured
+  bool get hasCustomUrl => customWebhookUrl.isNotEmpty;
+
+  /// Whether the active mode has its required credentials configured
+  bool get hasActiveCredentials =>
+      webhookMode == WebhookMode.ifttt ? hasIftttKey : hasCustomUrl;
+
   IftttConfig copyWith({
     bool? enabled,
     String? webhookKey,
+    WebhookMode? webhookMode,
+    String? customWebhookUrl,
     bool? messageReceived,
     bool? nodeOnline,
     bool? nodeOffline,
@@ -79,6 +104,8 @@ class IftttConfig {
     return IftttConfig(
       enabled: enabled ?? this.enabled,
       webhookKey: webhookKey ?? this.webhookKey,
+      webhookMode: webhookMode ?? this.webhookMode,
+      customWebhookUrl: customWebhookUrl ?? this.customWebhookUrl,
       messageReceived: messageReceived ?? this.messageReceived,
       nodeOnline: nodeOnline ?? this.nodeOnline,
       nodeOffline: nodeOffline ?? this.nodeOffline,
@@ -101,6 +128,8 @@ class IftttConfig {
   Map<String, dynamic> toJson() => {
     'enabled': enabled,
     'webhookKey': webhookKey,
+    'webhookMode': webhookMode.name,
+    'customWebhookUrl': customWebhookUrl,
     'messageReceived': messageReceived,
     'nodeOnline': nodeOnline,
     'nodeOffline': nodeOffline,
@@ -122,6 +151,8 @@ class IftttConfig {
     return IftttConfig(
       enabled: json['enabled'] as bool? ?? false,
       webhookKey: json['webhookKey'] as String? ?? '',
+      webhookMode: _parseWebhookMode(json['webhookMode'] as String?),
+      customWebhookUrl: json['customWebhookUrl'] as String? ?? '',
       messageReceived: json['messageReceived'] as bool? ?? true,
       nodeOnline: json['nodeOnline'] as bool? ?? true,
       nodeOffline: json['nodeOffline'] as bool? ?? true,
@@ -140,9 +171,14 @@ class IftttConfig {
       geofenceThrottleMinutes: json['geofenceThrottleMinutes'] as int? ?? 30,
     );
   }
+
+  static WebhookMode _parseWebhookMode(String? value) {
+    if (value == WebhookMode.customUrl.name) return WebhookMode.customUrl;
+    return WebhookMode.ifttt;
+  }
 }
 
-/// IFTTT Webhooks integration service
+/// Webhook integration service (IFTTT and custom URL)
 class IftttService {
   static const String _configKey = 'ifttt_config';
   static const String _webhookBaseUrl = 'https://maker.ifttt.com/trigger';
@@ -206,10 +242,13 @@ class IftttService {
     }
   }
 
-  /// Check if IFTTT is properly configured and enabled
-  bool get isActive => _config.enabled && _config.webhookKey.isNotEmpty;
+  /// Check if the service is properly configured and enabled.
+  ///
+  /// In IFTTT mode, requires a webhook key.
+  /// In custom URL mode, requires a non-empty URL.
+  bool get isActive => _config.enabled && _config.hasActiveCredentials;
 
-  /// Trigger a webhook event
+  /// Trigger a webhook event via the configured mode (IFTTT or custom URL).
   Future<bool> _triggerWebhook({
     required String eventName,
     String? value1,
@@ -218,6 +257,31 @@ class IftttService {
   }) async {
     if (!isActive) return false;
 
+    if (_config.webhookMode == WebhookMode.customUrl) {
+      return _postToCustomUrl(
+        url: _config.customWebhookUrl,
+        eventName: eventName,
+        value1: value1,
+        value2: value2,
+        value3: value3,
+      );
+    }
+
+    return _postToIfttt(
+      eventName: eventName,
+      value1: value1,
+      value2: value2,
+      value3: value3,
+    );
+  }
+
+  /// POST to the IFTTT Webhooks maker endpoint.
+  Future<bool> _postToIfttt({
+    required String eventName,
+    String? value1,
+    String? value2,
+    String? value3,
+  }) async {
     try {
       final url = '$_webhookBaseUrl/$eventName/with/key/${_config.webhookKey}';
 
@@ -249,6 +313,72 @@ class IftttService {
       AppLogging.ifttt('IFTTT: Error triggering webhook: $e');
       return false;
     }
+  }
+
+  /// POST JSON to a custom webhook URL (e.g. Home Assistant, n8n, Node-RED).
+  ///
+  /// Sends a structured JSON body with event name, values, and timestamp.
+  /// Private network addresses (10.x, 192.168.x, 172.16-31.x) are allowed.
+  Future<bool> _postToCustomUrl({
+    required String url,
+    required String eventName,
+    String? value1,
+    String? value2,
+    String? value3,
+  }) async {
+    try {
+      final body = <String, dynamic>{
+        'event': eventName,
+        if (value1 != null) 'value1': value1,
+        if (value2 != null) 'value2': value2,
+        if (value3 != null) 'value3': value3,
+        'timestamp': DateTime.now().toIso8601String(),
+      };
+
+      AppLogging.ifttt('Webhook: POST $eventName -> $url');
+
+      final response = await http
+          .post(
+            Uri.parse(url),
+            headers: {'Content-Type': 'application/json'},
+            body: jsonEncode(body),
+          )
+          .timeout(const Duration(seconds: 10));
+
+      final success = response.statusCode >= 200 && response.statusCode < 300;
+      if (success) {
+        AppLogging.ifttt('Webhook: Custom URL triggered successfully');
+      } else {
+        AppLogging.ifttt(
+          'Webhook: Custom URL failed with status ${response.statusCode}',
+        );
+      }
+      return success;
+    } catch (e) {
+      AppLogging.ifttt('Webhook: Error posting to custom URL: $e');
+      return false;
+    }
+  }
+
+  /// POST JSON to an arbitrary URL (for automation webhook actions).
+  ///
+  /// Unlike [_triggerWebhook], this does not require the global webhook config
+  /// to be active — it fires directly to the provided [url].
+  /// Private/LAN addresses (e.g. 192.168.x.x) are supported.
+  Future<bool> triggerCustomUrl({
+    required String url,
+    required String eventName,
+    String? value1,
+    String? value2,
+    String? value3,
+  }) async {
+    return _postToCustomUrl(
+      url: url,
+      eventName: eventName,
+      value1: value1,
+      value2: value2,
+      value3: value3,
+    );
   }
 
   /// Trigger message received event
@@ -485,10 +615,12 @@ class IftttService {
     );
   }
 
-  /// Test webhook configuration
-  /// Sends a sample geofence alert so you can test your notification format
+  /// Test webhook configuration.
+  ///
+  /// Sends a sample event so the user can verify their configuration.
+  /// Works for both IFTTT and custom URL modes.
   Future<bool> testWebhook() async {
-    if (_config.webhookKey.isEmpty) return false;
+    if (!_config.hasActiveCredentials) return false;
 
     // Use configured geofence center or default Sydney coordinates
     final testLat = _config.geofenceLat ?? -33.8688;
@@ -496,12 +628,20 @@ class IftttService {
     final testNodeName =
         _config.geofenceNodeName ?? 'Test Node'; // lint-allow: hardcoded-string
 
-    return _triggerWebhook(
-      eventName: 'meshtastic_position',
-      value1: testNodeName,
-      value2: '$testLat,$testLon',
-      value3: '1250m from center',
-    );
+    // Temporarily activate the config so _triggerWebhook passes the isActive
+    // check even if the user hasn't saved yet.
+    final previousConfig = _config;
+    _config = _config.copyWith(enabled: true);
+    try {
+      return await _triggerWebhook(
+        eventName: 'meshtastic_position',
+        value1: testNodeName,
+        value2: '$testLat,$testLon',
+        value3: '1250m from center',
+      );
+    } finally {
+      _config = previousConfig;
+    }
   }
 
   /// Process a node update for IFTTT triggers

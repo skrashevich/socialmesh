@@ -3298,6 +3298,30 @@ abstract class AppLocalizations {
   /// **'e.g., meshtastic_alert'**
   String get automationActionIftttHint;
 
+  /// Label for the webhook event name input in the automation action editor
+  ///
+  /// In en, this message translates to:
+  /// **'Event Name'**
+  String get automationActionWebhookEventName;
+
+  /// Label for the custom webhook URL input in the automation action editor
+  ///
+  /// In en, this message translates to:
+  /// **'Webhook URL (optional)'**
+  String get automationActionWebhookUrlLabel;
+
+  /// Hint text for the custom webhook URL input
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., http://192.168.1.100:8123/api/webhook/...'**
+  String get automationActionWebhookUrlHint;
+
+  /// Help text below the webhook URL field in the automation action editor
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a custom URL to POST directly, or leave blank to use your global IFTTT/webhook settings. Private/LAN addresses (192.168.x, 10.x) are supported.'**
+  String get automationActionWebhookHelp;
+
   /// Display name for the logEvent action type
   ///
   /// In en, this message translates to:
@@ -3583,7 +3607,7 @@ abstract class AppLocalizations {
   /// Display name for the triggerWebhook action type
   ///
   /// In en, this message translates to:
-  /// **'Trigger webhook (IFTTT)'**
+  /// **'Trigger webhook'**
   String get automationActionTriggerWebhook;
 
   /// Display name for the updateWidget action type
@@ -8607,6 +8631,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{size} · {chunkCount} chunks over mesh'**
   String fileTransferAttachmentMeta(int size, String chunkCount);
+
+  /// Chip label showing chunk transfer progress
+  ///
+  /// In en, this message translates to:
+  /// **'{completed}/{total} chunks'**
+  String fileTransferCardChunksProgress(String completed, String total);
+
+  /// Chip label showing total chunk count
+  ///
+  /// In en, this message translates to:
+  /// **'{count} chunks'**
+  String fileTransferCardChunksTotal(String count);
+
+  /// Chip label showing individual chunk size
+  ///
+  /// In en, this message translates to:
+  /// **'{size} ea.'**
+  String fileTransferCardChunkSize(String size);
 
   /// Description shown for binary/hex file preview
   ///
@@ -44355,7 +44397,7 @@ abstract class AppLocalizations {
   /// Screen or section title
   ///
   /// In en, this message translates to:
-  /// **'IFTTT Integration'**
+  /// **'Webhooks'**
   String get iftttConfigTitle;
 
   /// UI text: ifttt config save
@@ -44421,13 +44463,13 @@ abstract class AppLocalizations {
   /// UI text: ifttt config enable
   ///
   /// In en, this message translates to:
-  /// **'Enable IFTTT'**
+  /// **'Enable Webhooks'**
   String get iftttConfigEnable;
 
   /// Subtitle or secondary text
   ///
   /// In en, this message translates to:
-  /// **'Send events to IFTTT Webhooks service'**
+  /// **'Send events to IFTTT or a custom webhook URL'**
   String get iftttConfigEnableSubtitle;
 
   /// Screen or section title
@@ -44439,7 +44481,7 @@ abstract class AppLocalizations {
   /// UI text: ifttt config data sharing msg
   ///
   /// In en, this message translates to:
-  /// **'When IFTTT Webhooks are enabled, mesh event data (messages, node status, positions, battery levels) will be sent to IFTTT servers via your personal webhook key.\n\nIFTTT is a third-party service with its own privacy policy. Only the event types you select will be transmitted.'**
+  /// **'When webhooks are enabled, mesh event data (messages, node status, positions, battery levels) will be sent to the configured endpoint (IFTTT or your custom URL).\n\nIf using IFTTT, it is a third-party service with its own privacy policy. Only the event types you select will be transmitted.'**
   String get iftttConfigDataSharingMsg;
 
   /// UI text: ifttt config i understand
@@ -44493,13 +44535,13 @@ abstract class AppLocalizations {
   /// Success notification
   ///
   /// In en, this message translates to:
-  /// **'Test webhook sent! Check your IFTTT applet.'**
+  /// **'Test webhook sent! Check your endpoint.'**
   String get iftttConfigTestSuccess;
 
   /// Error message shown to the user
   ///
   /// In en, this message translates to:
-  /// **'Failed to send test webhook. Check your key.'**
+  /// **'Failed to send test webhook. Check your configuration.'**
   String get iftttConfigTestFailed;
 
   /// UI text: ifttt config message received
@@ -44769,8 +44811,50 @@ abstract class AppLocalizations {
   /// Error message shown to the user
   ///
   /// In en, this message translates to:
-  /// **'Failed to save IFTTT settings'**
+  /// **'Failed to save webhook settings'**
   String get iftttConfigSaveFailed;
+
+  /// Label for the IFTTT webhook mode selector chip
+  ///
+  /// In en, this message translates to:
+  /// **'IFTTT Key'**
+  String get webhookModeIfttt;
+
+  /// Label for the custom webhook URL mode selector chip
+  ///
+  /// In en, this message translates to:
+  /// **'Custom URL'**
+  String get webhookModeCustomUrl;
+
+  /// Label for the custom webhook URL text field
+  ///
+  /// In en, this message translates to:
+  /// **'Webhook URL'**
+  String get webhookConfigCustomUrlLabel;
+
+  /// Hint text for the custom webhook URL text field
+  ///
+  /// In en, this message translates to:
+  /// **'http://192.168.1.100:8123/api/webhook/...'**
+  String get webhookConfigCustomUrlHint;
+
+  /// Helper text below the custom webhook URL text field
+  ///
+  /// In en, this message translates to:
+  /// **'POST JSON to any HTTP/HTTPS endpoint. LAN addresses supported.'**
+  String get webhookConfigCustomUrlHelper;
+
+  /// Error message when enabling custom URL mode without a URL
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a webhook URL to enable'**
+  String get webhookConfigEnterUrlToEnable;
+
+  /// Error message when testing without a URL in custom URL mode
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a webhook URL first'**
+  String get webhookConfigEnterUrlFirst;
 
   /// MQTT = Message Queuing Telemetry Transport, a protocol for bridging the mesh network to the internet.
   ///
@@ -51847,7 +51931,7 @@ abstract class AppLocalizations {
   /// Error message in automations
   ///
   /// In en, this message translates to:
-  /// **'IFTTT not configured — enable IFTTT and set webhook key in settings'**
+  /// **'Webhooks not configured — enable webhooks and set an IFTTT key or custom URL in settings'**
   String get automationErrorIftttNotConfigured;
 
   /// Error message in automations

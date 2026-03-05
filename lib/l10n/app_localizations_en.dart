@@ -1815,6 +1815,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get automationActionIftttHint => 'e.g., meshtastic_alert';
 
   @override
+  String get automationActionWebhookEventName => 'Event Name';
+
+  @override
+  String get automationActionWebhookUrlLabel => 'Webhook URL (optional)';
+
+  @override
+  String get automationActionWebhookUrlHint =>
+      'e.g., http://192.168.1.100:8123/api/webhook/...';
+
+  @override
+  String get automationActionWebhookHelp =>
+      'Enter a custom URL to POST directly, or leave blank to use your global IFTTT/webhook settings. Private/LAN addresses (192.168.x, 10.x) are supported.';
+
+  @override
   String get automationActionLogEvent => 'Log to history';
 
   @override
@@ -1974,7 +1988,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get automationActionTriggerShortcut => 'Run iOS Shortcut';
 
   @override
-  String get automationActionTriggerWebhook => 'Trigger webhook (IFTTT)';
+  String get automationActionTriggerWebhook => 'Trigger webhook';
 
   @override
   String get automationActionUpdateWidget => 'Update home widget';
@@ -4788,6 +4802,21 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String fileTransferAttachmentMeta(int size, String chunkCount) {
     return '$size · $chunkCount chunks over mesh';
+  }
+
+  @override
+  String fileTransferCardChunksProgress(String completed, String total) {
+    return '$completed/$total chunks';
+  }
+
+  @override
+  String fileTransferCardChunksTotal(String count) {
+    return '$count chunks';
+  }
+
+  @override
+  String fileTransferCardChunkSize(String size) {
+    return '$size ea.';
   }
 
   @override
@@ -24975,7 +25004,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get extNotifLoadFailed => 'Failed to load config';
 
   @override
-  String get iftttConfigTitle => 'IFTTT Integration';
+  String get iftttConfigTitle => 'Webhooks';
 
   @override
   String get iftttConfigSave => 'Save';
@@ -25010,18 +25039,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get iftttConfigSectionGeofencing => 'GEOFENCING';
 
   @override
-  String get iftttConfigEnable => 'Enable IFTTT';
+  String get iftttConfigEnable => 'Enable Webhooks';
 
   @override
   String get iftttConfigEnableSubtitle =>
-      'Send events to IFTTT Webhooks service';
+      'Send events to IFTTT or a custom webhook URL';
 
   @override
   String get iftttConfigDataSharingTitle => 'IFTTT Data Sharing';
 
   @override
   String get iftttConfigDataSharingMsg =>
-      'When IFTTT Webhooks are enabled, mesh event data (messages, node status, positions, battery levels) will be sent to IFTTT servers via your personal webhook key.\n\nIFTTT is a third-party service with its own privacy policy. Only the event types you select will be transmitted.';
+      'When webhooks are enabled, mesh event data (messages, node status, positions, battery levels) will be sent to the configured endpoint (IFTTT or your custom URL).\n\nIf using IFTTT, it is a third-party service with its own privacy policy. Only the event types you select will be transmitted.';
 
   @override
   String get iftttConfigIUnderstand => 'I Understand';
@@ -25051,11 +25080,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get iftttConfigTestSuccess =>
-      'Test webhook sent! Check your IFTTT applet.';
+      'Test webhook sent! Check your endpoint.';
 
   @override
   String get iftttConfigTestFailed =>
-      'Failed to send test webhook. Check your key.';
+      'Failed to send test webhook. Check your configuration.';
 
   @override
   String get iftttConfigMessageReceived => 'Message Received';
@@ -25201,7 +25230,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get iftttConfigSaved => 'IFTTT settings saved';
 
   @override
-  String get iftttConfigSaveFailed => 'Failed to save IFTTT settings';
+  String get iftttConfigSaveFailed => 'Failed to save webhook settings';
+
+  @override
+  String get webhookModeIfttt => 'IFTTT Key';
+
+  @override
+  String get webhookModeCustomUrl => 'Custom URL';
+
+  @override
+  String get webhookConfigCustomUrlLabel => 'Webhook URL';
+
+  @override
+  String get webhookConfigCustomUrlHint =>
+      'http://192.168.1.100:8123/api/webhook/...';
+
+  @override
+  String get webhookConfigCustomUrlHelper =>
+      'POST JSON to any HTTP/HTTPS endpoint. LAN addresses supported.';
+
+  @override
+  String get webhookConfigEnterUrlToEnable =>
+      'Please enter a webhook URL to enable';
+
+  @override
+  String get webhookConfigEnterUrlFirst => 'Please enter a webhook URL first';
 
   @override
   String get mqttConfigTitle => 'MQTT';
@@ -29339,7 +29392,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get automationErrorIftttNotConfigured =>
-      'IFTTT not configured — enable IFTTT and set webhook key in settings';
+      'Webhooks not configured — enable webhooks and set an IFTTT key or custom URL in settings';
 
   @override
   String get automationErrorWebhookFailed =>
