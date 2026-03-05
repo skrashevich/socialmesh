@@ -8800,6 +8800,12 @@ abstract class AppLocalizations {
   /// **'Send File'**
   String get fileTransferContactsSendFile;
 
+  /// Action button for sending an image in detail sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Send Image'**
+  String get fileTransferContactsSendImage;
+
   /// Success snackbar (interpolated)
   ///
   /// In en, this message translates to:
@@ -8830,6 +8836,12 @@ abstract class AppLocalizations {
   /// **'Cleared {count} transfers'**
   String fileTransferContainerCleared(int count);
 
+  /// Overflow menu item for help tour
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get fileTransferContainerMenuHelp;
+
   /// Overflow menu item
   ///
   /// In en, this message translates to:
@@ -8847,6 +8859,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Send File'**
   String get fileTransferContainerSendFile;
+
+  /// Overflow menu item for sending an image
+  ///
+  /// In en, this message translates to:
+  /// **'Send Image'**
+  String get fileTransferContainerSendImage;
 
   /// Node picker dialog title
   ///
@@ -9031,6 +9049,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Could not decode image'**
   String get fileTransferImageDecodeError;
+
+  /// Title for image picker bottom sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Send Image'**
+  String get fileTransferImagePickerTitle;
+
+  /// Camera option in image picker sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Take Photo'**
+  String get fileTransferImagePickerCamera;
+
+  /// Camera option subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Use camera to take a photo'**
+  String get fileTransferImagePickerCameraSubtitle;
+
+  /// Gallery option in image picker sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from Gallery'**
+  String get fileTransferImagePickerGallery;
+
+  /// Gallery option subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Select a photo from your library'**
+  String get fileTransferImagePickerGallerySubtitle;
+
+  /// Cancel button in image picker sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get fileTransferImagePickerCancel;
+
+  /// Snackbar shown while compressing image
+  ///
+  /// In en, this message translates to:
+  /// **'Compressing image for mesh transfer...'**
+  String get fileTransferImageCompressing;
+
+  /// Error when image cannot be compressed enough
+  ///
+  /// In en, this message translates to:
+  /// **'Image could not be compressed to fit within {limit} KB mesh limit.'**
+  String fileTransferImageTooLargeAfterCompression(String limit);
+
+  /// Info snackbar after successful compression
+  ///
+  /// In en, this message translates to:
+  /// **'Image compressed to {size} bytes ({width}x{height})'**
+  String fileTransferImageCompressed(String size, String width, String height);
 
   /// Info sheet row label
   ///

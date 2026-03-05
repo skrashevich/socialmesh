@@ -1,26 +1,19 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-import 'dart:io';
-import 'dart:typed_data';
-
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/l10n/l10n_extension.dart';
-
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/app_bar_overflow_menu.dart';
 import '../../../core/widgets/app_bottom_sheet.dart';
 import '../../../core/widgets/glass_scaffold.dart';
 import '../../../core/widgets/ico_help_system.dart';
-import '../../../core/widgets/node_selector_sheet.dart';
 import '../../../providers/app_providers.dart';
 import '../../../providers/file_transfer_providers.dart';
+import '../../../providers/help_providers.dart';
 import '../../../services/haptic_service.dart';
-import '../../../services/protocol/socialmesh/sm_constants.dart';
-import '../../../services/protocol/socialmesh/sm_file_transfer.dart';
 import '../../../utils/snackbar.dart';
 import '../../navigation/main_shell.dart';
 import 'file_transfer_contacts_screen.dart';
@@ -79,23 +72,10 @@ class _FileTransfersContainerScreenState
         centerTitle: true,
         title: context.l10n.fileTransferContainerTitle,
         actions: [
-          IcoHelpAppBarButton(topicId: 'file_transfer_overview'),
           const DeviceStatusButton(),
           AppBarOverflowMenu<String>(
             onSelected: _handleOverflowAction,
             itemBuilder: (context) => [
-              PopupMenuItem<String>(
-                value: 'pick_file',
-                child: ListTile(
-                  leading: Icon(
-                    Icons.attach_file,
-                    color: context.accentColor,
-                    size: 20,
-                  ),
-                  title: Text(context.l10n.fileTransferContainerSendFile),
-                  contentPadding: EdgeInsets.zero,
-                ),
-              ),
               PopupMenuItem<String>(
                 value: 'clear_done',
                 child: ListTile(
@@ -117,6 +97,19 @@ class _FileTransfersContainerScreenState
                     size: 20,
                   ),
                   title: Text(context.l10n.fileTransferContainerPurgeExpired),
+                  contentPadding: EdgeInsets.zero,
+                ),
+              ),
+              const PopupMenuDivider(),
+              PopupMenuItem<String>(
+                value: 'help',
+                child: ListTile(
+                  leading: Icon(
+                    Icons.help_outline,
+                    color: context.textSecondary,
+                    size: 20,
+                  ),
+                  title: Text(context.l10n.fileTransferContainerMenuHelp),
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
@@ -200,105 +193,13 @@ class _FileTransfersContainerScreenState
 
   void _handleOverflowAction(String value) {
     switch (value) {
-      case 'pick_file':
-        _pickAndSendFile();
       case 'clear_done':
         _clearTerminal();
       case 'purge':
         _purgeExpired();
+      case 'help':
+        ref.read(helpProvider.notifier).startTour('file_transfer_overview');
     }
-  }
-
-  Future<void> _pickAndSendFile() async {
-    final haptics = ref.read(hapticServiceProvider);
-    final notifier = ref.read(fileTransferStateProvider.notifier);
-
-    await haptics.trigger(HapticType.medium);
-    if (!mounted) return;
-
-    // Step 1: pick the file first so we can validate before asking for a node.
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.any,
-      withData: true,
-    );
-    if (result == null || result.files.isEmpty) return;
-    if (!mounted) return;
-
-    final file = result.files.first;
-    final Uint8List bytes;
-    if (file.bytes != null) {
-      bytes = Uint8List.fromList(file.bytes!);
-    } else if (file.path != null) {
-      bytes = await File(file.path!).readAsBytes();
-    } else {
-      showErrorSnackBar(context, context.l10n.fileTransferCouldNotRead);
-      return;
-    }
-    if (!mounted) return;
-
-    // Step 2: validate size against the mesh limit.
-    if (bytes.isEmpty) {
-      showWarningSnackBar(context, context.l10n.fileTransferFileEmpty);
-      return;
-    }
-    if (bytes.length > SmFileTransferLimits.maxFileSize) {
-      final fileSizeKb = (bytes.length / 1024.0).toStringAsFixed(1);
-      final limitKb = (SmFileTransferLimits.maxFileSize / 1024).truncate();
-      showErrorSnackBar(
-        context,
-        context.l10n.fileTransferFileTooLarge(
-          file.name,
-          fileSizeKb,
-          '$limitKb',
-        ),
-      );
-      return;
-    }
-
-    // Step 3: pick destination node.
-    final selection = await NodeSelectorSheet.show(
-      context,
-      title: context.l10n.fileTransferContainerSendToNode,
-      allowBroadcast: false,
-    );
-    final nodeNum = selection?.nodeNum;
-    if (nodeNum == null) return;
-    if (!mounted) return;
-
-    // Step 4: initiate transfer.
-    final mimeType = _guessMimeType(file.name);
-    final transfer = await notifier.sendFile(
-      filename: file.name,
-      mimeType: mimeType,
-      fileBytes: bytes,
-      targetNodeNum: nodeNum,
-      transportMode: FileTransportMode.auto,
-    );
-
-    if (!mounted) return;
-    if (transfer != null) {
-      showSuccessSnackBar(
-        context,
-        context.l10n.fileTransferContainerStarted(transfer.filename),
-      );
-    } else {
-      showErrorSnackBar(context, context.l10n.fileTransferCouldNotStart);
-    }
-  }
-
-  String _guessMimeType(String filename) {
-    final ext = filename.split('.').last.toLowerCase();
-    return switch (ext) {
-      'txt' || 'md' || 'csv' || 'log' => 'text/plain',
-      'json' => 'application/json',
-      'xml' => 'application/xml',
-      'jpg' || 'jpeg' => 'image/jpeg',
-      'png' => 'image/png',
-      'gif' => 'image/gif',
-      'pdf' => 'application/pdf',
-      'zip' => 'application/zip',
-      _ => 'application/octet-stream',
-    };
   }
 
   Future<void> _clearTerminal() async {

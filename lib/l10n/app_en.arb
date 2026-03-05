@@ -6495,6 +6495,10 @@
     "@fileTransferContactsSendFile": {
         "description": "Action button in detail sheet"
     },
+    "fileTransferContactsSendImage": "Send Image",
+    "@fileTransferContactsSendImage": {
+        "description": "Action button for sending an image in detail sheet"
+    },
     "fileTransferContactsStarted": "Transfer started: {filename}",
     "@fileTransferContactsStarted": {
         "description": "Success snackbar (interpolated)",
@@ -6525,6 +6529,10 @@
             }
         }
     },
+    "fileTransferContainerMenuHelp": "Help",
+    "@fileTransferContainerMenuHelp": {
+        "description": "Overflow menu item for help tour"
+    },
     "fileTransferContainerPurgeExpired": "Purge Expired",
     "@fileTransferContainerPurgeExpired": {
         "description": "Overflow menu item"
@@ -6536,6 +6544,10 @@
     "fileTransferContainerSendFile": "Send File",
     "@fileTransferContainerSendFile": {
         "description": "Overflow menu item"
+    },
+    "fileTransferContainerSendImage": "Send Image",
+    "@fileTransferContainerSendImage": {
+        "description": "Overflow menu item for sending an image"
     },
     "fileTransferContainerSendToNode": "Send to Node",
     "@fileTransferContainerSendToNode": {
@@ -6692,6 +6704,58 @@
     "fileTransferImageDecodeError": "Could not decode image",
     "@fileTransferImageDecodeError": {
         "description": "Error placeholder when image cannot be decoded"
+    },
+    "fileTransferImagePickerTitle": "Send Image",
+    "@fileTransferImagePickerTitle": {
+        "description": "Title for image picker bottom sheet"
+    },
+    "fileTransferImagePickerCamera": "Take Photo",
+    "@fileTransferImagePickerCamera": {
+        "description": "Camera option in image picker sheet"
+    },
+    "fileTransferImagePickerCameraSubtitle": "Use camera to take a photo",
+    "@fileTransferImagePickerCameraSubtitle": {
+        "description": "Camera option subtitle"
+    },
+    "fileTransferImagePickerGallery": "Choose from Gallery",
+    "@fileTransferImagePickerGallery": {
+        "description": "Gallery option in image picker sheet"
+    },
+    "fileTransferImagePickerGallerySubtitle": "Select a photo from your library",
+    "@fileTransferImagePickerGallerySubtitle": {
+        "description": "Gallery option subtitle"
+    },
+    "fileTransferImagePickerCancel": "Cancel",
+    "@fileTransferImagePickerCancel": {
+        "description": "Cancel button in image picker sheet"
+    },
+    "fileTransferImageCompressing": "Compressing image for mesh transfer...",
+    "@fileTransferImageCompressing": {
+        "description": "Snackbar shown while compressing image"
+    },
+    "fileTransferImageTooLargeAfterCompression": "Image could not be compressed to fit within {limit} KB mesh limit.",
+    "@fileTransferImageTooLargeAfterCompression": {
+        "description": "Error when image cannot be compressed enough",
+        "placeholders": {
+            "limit": {
+                "type": "String"
+            }
+        }
+    },
+    "fileTransferImageCompressed": "Image compressed to {size} bytes ({width}x{height})",
+    "@fileTransferImageCompressed": {
+        "description": "Info snackbar after successful compression",
+        "placeholders": {
+            "size": {
+                "type": "String"
+            },
+            "width": {
+                "type": "String"
+            },
+            "height": {
+                "type": "String"
+            }
+        }
     },
     "fileTransferInfoChunkSize": "Chunk Size",
     "@fileTransferInfoChunkSize": {

@@ -4904,6 +4904,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get fileTransferContactsSendFile => 'Send File';
 
   @override
+  String get fileTransferContactsSendImage => 'Send Image';
+
+  @override
   String fileTransferContactsStarted(String filename) {
     return 'Transfer started: $filename';
   }
@@ -4924,6 +4927,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get fileTransferContainerMenuHelp => 'Help';
+
+  @override
   String get fileTransferContainerPurgeExpired => 'Purge Expired';
 
   @override
@@ -4931,6 +4937,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get fileTransferContainerSendFile => 'Send File';
+
+  @override
+  String get fileTransferContainerSendImage => 'Send Image';
 
   @override
   String get fileTransferContainerSendToNode => 'Send to Node';
@@ -5041,6 +5050,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get fileTransferImageDecodeError => 'Could not decode image';
+
+  @override
+  String get fileTransferImagePickerTitle => 'Send Image';
+
+  @override
+  String get fileTransferImagePickerCamera => 'Take Photo';
+
+  @override
+  String get fileTransferImagePickerCameraSubtitle =>
+      'Use camera to take a photo';
+
+  @override
+  String get fileTransferImagePickerGallery => 'Choose from Gallery';
+
+  @override
+  String get fileTransferImagePickerGallerySubtitle =>
+      'Select a photo from your library';
+
+  @override
+  String get fileTransferImagePickerCancel => 'Cancel';
+
+  @override
+  String get fileTransferImageCompressing =>
+      'Compressing image for mesh transfer...';
+
+  @override
+  String fileTransferImageTooLargeAfterCompression(String limit) {
+    return 'Image could not be compressed to fit within $limit KB mesh limit.';
+  }
+
+  @override
+  String fileTransferImageCompressed(String size, String width, String height) {
+    return 'Image compressed to $size bytes (${width}x$height)';
+  }
 
   @override
   String get fileTransferInfoChunkSize => 'Chunk Size';

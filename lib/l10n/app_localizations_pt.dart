@@ -4949,6 +4949,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get fileTransferContactsSendFile => 'Enviar arquivo';
 
   @override
+  String get fileTransferContactsSendImage => 'Send Image';
+
+  @override
   String fileTransferContactsStarted(String filename) {
     return 'Transferência iniciada: $filename';
   }
@@ -4970,6 +4973,9 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
+  String get fileTransferContainerMenuHelp => 'Help';
+
+  @override
   String get fileTransferContainerPurgeExpired => 'Excluir expiradas';
 
   @override
@@ -4978,6 +4984,9 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get fileTransferContainerSendFile => 'Enviar arquivo';
+
+  @override
+  String get fileTransferContainerSendImage => 'Send Image';
 
   @override
   String get fileTransferContainerSendToNode => 'Enviar para nó';
@@ -5090,6 +5099,40 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get fileTransferImageDecodeError =>
       'Não foi possível decodificar a imagem';
+
+  @override
+  String get fileTransferImagePickerTitle => 'Send Image';
+
+  @override
+  String get fileTransferImagePickerCamera => 'Take Photo';
+
+  @override
+  String get fileTransferImagePickerCameraSubtitle =>
+      'Use camera to take a photo';
+
+  @override
+  String get fileTransferImagePickerGallery => 'Choose from Gallery';
+
+  @override
+  String get fileTransferImagePickerGallerySubtitle =>
+      'Select a photo from your library';
+
+  @override
+  String get fileTransferImagePickerCancel => 'Cancel';
+
+  @override
+  String get fileTransferImageCompressing =>
+      'Compressing image for mesh transfer...';
+
+  @override
+  String fileTransferImageTooLargeAfterCompression(String limit) {
+    return 'Image could not be compressed to fit within $limit KB mesh limit.';
+  }
+
+  @override
+  String fileTransferImageCompressed(String size, String width, String height) {
+    return 'Image compressed to $size bytes (${width}x$height)';
+  }
 
   @override
   String get fileTransferInfoChunkSize => 'Tamanho do bloco';

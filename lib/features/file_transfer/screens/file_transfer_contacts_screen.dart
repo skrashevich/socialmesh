@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/l10n/l10n_extension.dart';
+import '../../../core/logging.dart';
 
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
@@ -448,6 +449,7 @@ class _FileTransferContactsScreenState
       contact: contact,
       transfers: transfers,
       onSendFile: () => _sendFileToContact(contact.nodeNum),
+      onSendImage: () => _sendImageToContact(contact.nodeNum),
     );
     ref.read(hapticServiceProvider).trigger(HapticType.light);
   }
@@ -465,6 +467,36 @@ class _FileTransferContactsScreenState
       showSuccessSnackBar(
         context,
         context.l10n.fileTransferContactsStarted(transfer.filename),
+      );
+    }
+  }
+
+  Future<void> _sendImageToContact(int nodeNum) async {
+    AppLogging.fileTransfer(
+      '_sendImageToContact: target=!${nodeNum.toRadixString(16)}',
+    );
+    final haptics = ref.read(hapticServiceProvider);
+    final notifier = ref.read(fileTransferStateProvider.notifier);
+
+    await haptics.trigger(HapticType.medium);
+    if (!mounted) return;
+
+    final transfer = await notifier.pickAndSendImage(targetNodeNum: nodeNum);
+    if (!mounted) return;
+    if (transfer != null) {
+      AppLogging.fileTransfer(
+        '_sendImageToContact: transfer started — '
+        'id=${transfer.fileIdHex}, file=${transfer.filename}, '
+        '${transfer.totalBytes} bytes, ${transfer.chunkCount} chunks',
+      );
+      showSuccessSnackBar(
+        context,
+        context.l10n.fileTransferContactsStarted(transfer.filename),
+      );
+    } else {
+      AppLogging.fileTransfer(
+        '_sendImageToContact: pickAndSendImage returned null for '
+        'node !${nodeNum.toRadixString(16)}',
       );
     }
   }
@@ -652,12 +684,14 @@ class _ContactDetailSheet extends StatelessWidget {
     required this.contact,
     required this.transfers,
     required this.onSendFile,
+    required this.onSendImage,
     required this.scrollController,
   });
 
   final _Contact contact;
   final List<FileTransferState> transfers;
   final VoidCallback onSendFile;
+  final VoidCallback onSendImage;
   final ScrollController scrollController;
 
   static void show({
@@ -665,6 +699,7 @@ class _ContactDetailSheet extends StatelessWidget {
     required _Contact contact,
     required List<FileTransferState> transfers,
     required VoidCallback onSendFile,
+    required VoidCallback onSendImage,
   }) {
     showModalBottomSheet<void>(
       context: context,
@@ -688,6 +723,7 @@ class _ContactDetailSheet extends StatelessWidget {
               contact: contact,
               transfers: transfers,
               onSendFile: onSendFile,
+              onSendImage: onSendImage,
               scrollController: scrollController,
             ),
           );
@@ -829,16 +865,30 @@ class _ContactDetailSheet extends StatelessWidget {
 
                 const SizedBox(height: AppTheme.spacing16),
 
-                SizedBox(
-                  width: double.infinity,
-                  child: FilledButton.icon(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      onSendFile();
-                    },
-                    icon: const Icon(Icons.attach_file, size: 18),
-                    label: Text(context.l10n.fileTransferContactsSendFile),
-                  ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: FilledButton.icon(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          onSendFile();
+                        },
+                        icon: const Icon(Icons.attach_file, size: 18),
+                        label: Text(context.l10n.fileTransferContactsSendFile),
+                      ),
+                    ),
+                    const SizedBox(width: AppTheme.spacing8),
+                    Expanded(
+                      child: FilledButton.icon(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          onSendImage();
+                        },
+                        icon: const Icon(Icons.image_outlined, size: 18),
+                        label: Text(context.l10n.fileTransferContactsSendImage),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
