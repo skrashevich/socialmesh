@@ -186,13 +186,13 @@ class _FileTransferContactsScreenState
       );
     }
 
-    // Sort: favorites → active → has transfers → alphabetical
+    // Sort: has transfers → favorites → active → alphabetical
     contacts.sort((a, b) {
+      if (a.hasTransfers != b.hasTransfers) return a.hasTransfers ? -1 : 1;
       if (a.isFavorite != b.isFavorite) return a.isFavorite ? -1 : 1;
       if (a.presence.isActive != b.presence.isActive) {
         return a.presence.isActive ? -1 : 1;
       }
-      if (a.hasTransfers != b.hasTransfers) return a.hasTransfers ? -1 : 1;
       return a.displayName.toLowerCase().compareTo(b.displayName.toLowerCase());
     });
 
@@ -386,16 +386,17 @@ class _FileTransferContactsScreenState
       ];
     }
 
-    // Grouped sections matching Messages screen pattern
-    final favorites = contacts.where((c) => c.isFavorite).toList();
-    final active = contacts
-        .where((c) => !c.isFavorite && c.presence.isActive)
+    // Grouped sections: Has Files first, then Favorites (without files),
+    // then Active (without files, not favorite), then Inactive remainder.
+    final withFiles = contacts.where((c) => c.hasTransfers).toList();
+    final favorites = contacts
+        .where((c) => c.isFavorite && !c.hasTransfers)
         .toList();
-    final withFiles = contacts
-        .where((c) => !c.isFavorite && !c.presence.isActive && c.hasTransfers)
+    final active = contacts
+        .where((c) => !c.hasTransfers && !c.isFavorite && c.presence.isActive)
         .toList();
     final inactive = contacts
-        .where((c) => !c.isFavorite && !c.presence.isActive && !c.hasTransfers)
+        .where((c) => !c.hasTransfers && !c.isFavorite && !c.presence.isActive)
         .toList();
 
     Widget buildSection(String title, List<_Contact> group) {
@@ -423,6 +424,11 @@ class _FileTransferContactsScreenState
     }
 
     return [
+      if (withFiles.isNotEmpty)
+        buildSection(
+          context.l10n.fileTransferContactsSectionWithFiles,
+          withFiles,
+        ),
       if (favorites.isNotEmpty)
         buildSection(
           context.l10n.fileTransferContactsSectionFavorites,
@@ -430,11 +436,6 @@ class _FileTransferContactsScreenState
         ),
       if (active.isNotEmpty)
         buildSection(context.l10n.fileTransferContactsSectionActive, active),
-      if (withFiles.isNotEmpty)
-        buildSection(
-          context.l10n.fileTransferContactsSectionWithFiles,
-          withFiles,
-        ),
       if (inactive.isNotEmpty)
         buildSection(
           context.l10n.fileTransferContactsSectionInactive,
@@ -710,6 +711,7 @@ class _ContactDetailSheet extends StatelessWidget {
         initialChildSize: 0.5,
         minChildSize: 0.3,
         maxChildSize: 0.85,
+        expand: false,
         builder: (ctx, scrollController) {
           return Container(
             decoration: BoxDecoration(
@@ -1107,15 +1109,6 @@ class _CompactTransferRow extends StatelessWidget {
               ],
             ),
           ),
-          if (onTap != null)
-            Padding(
-              padding: const EdgeInsets.only(right: AppTheme.spacing6),
-              child: Icon(
-                Icons.visibility_outlined,
-                size: 13,
-                color: context.accentColor.withValues(alpha: 0.7),
-              ),
-            ),
           Icon(_stateIcon, size: 14, color: _stateColor(context)),
           const SizedBox(width: AppTheme.spacing6),
           Text(
