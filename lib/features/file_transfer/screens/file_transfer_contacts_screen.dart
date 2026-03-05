@@ -27,6 +27,7 @@ import '../../nodes/node_display_name_resolver.dart';
 import '../../nodedex/widgets/sigil_painter.dart';
 import '../widgets/file_content_preview.dart';
 import '../widgets/file_transfer_card.dart';
+import '../widgets/file_transfer_image_gallery.dart';
 
 // ---------------------------------------------------------------------------
 // Filter enum
@@ -933,7 +934,13 @@ class _ContactDetailSheet extends StatelessWidget {
                 transfer: t,
                 relativeTime: _relativeTime(ctx, t.completedAt ?? t.createdAt),
                 onTap: canPreview
-                    ? () => FileContentPreview.show(context: ctx, transfer: t)
+                    ? () {
+                        if (FileTransferImageGallery.canShow(t)) {
+                          FileTransferImageGallery.show(ctx, transfer: t);
+                        } else {
+                          FileContentPreview.show(context: ctx, transfer: t);
+                        }
+                      }
                     : null,
               );
             }, childCount: transfers.length),
