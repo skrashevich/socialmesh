@@ -170,10 +170,12 @@ void main() {
       replayCacheB = SipReplayCache();
       hsManagerA = SipHandshakeManager(
         replayCache: replayCacheA,
+        localNodeId: 0xAABBCCDD,
         clock: dtClock(nowMs),
       );
       hsManagerB = SipHandshakeManager(
         replayCache: replayCacheB,
+        localNodeId: 0x11223344,
         clock: dtClock(nowMs),
       );
     });
@@ -294,10 +296,12 @@ void main() {
       replayCacheB = SipReplayCache();
       hsManagerA = SipHandshakeManager(
         replayCache: replayCacheA,
+        localNodeId: 0xAABBCCDD,
         clock: dtClock(nowMs),
       );
       hsManagerB = SipHandshakeManager(
         replayCache: replayCacheB,
+        localNodeId: 0x11223344,
         clock: dtClock(nowMs),
       );
       dmManagerA = SipDmManager(
@@ -1059,10 +1063,12 @@ void main() {
         final replayCacheB = SipReplayCache();
         final hsA = SipHandshakeManager(
           replayCache: replayCacheA,
+          localNodeId: 0xAABBCCDD,
           clock: dtClock(nowMs),
         );
         final hsB = SipHandshakeManager(
           replayCache: replayCacheB,
+          localNodeId: 0x11223344,
           clock: dtClock(nowMs),
         );
 
