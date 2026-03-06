@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 import '../../models/mesh_device.dart';
 
 /// Abstract adapter interface for mesh device protocol operations.

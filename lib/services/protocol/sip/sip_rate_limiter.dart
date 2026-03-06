@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 
 /// Token-bucket rate limiter enforcing byte-level SIP airtime budgets.
 ///
@@ -43,6 +44,9 @@ class SipRateLimiter {
 
   /// Timestamp (ms) of the last observed non-SIP chat traffic.
   int _lastChatTrafficMs;
+
+  /// Timestamp (ms) of the last app resume event.
+  int _lastResumeMs = 0;
 
   /// Current retry backoff counter (0 = no backoff active).
   int _backoffCount = 0;
@@ -125,8 +129,34 @@ class SipRateLimiter {
 
   /// Whether non-essential SIP sends should be suppressed.
   ///
-  /// Returns true if congested OR budget > 80% used.
-  bool get shouldSuppressNonEssential => isCongested || isBudgetHigh;
+  /// Returns true if congested, budget > 80% used, or within the
+  /// resume suppression window.
+  bool get shouldSuppressNonEssential =>
+      isCongested || isBudgetHigh || isInResumeSuppression;
+
+  // ---------------------------------------------------------------------------
+  // Resume suppression
+  // ---------------------------------------------------------------------------
+
+  /// Notify the rate limiter that the app has resumed from background.
+  ///
+  /// Activates the resume suppression window during which non-essential
+  /// SIP sends are blocked to prevent burst traffic.
+  void notifyResume() {
+    _lastResumeMs = _clock().millisecondsSinceEpoch;
+    AppLogging.sip(
+      'SIP_LIFECYCLE: resume suppression active for '
+      '${SipConstants.resumeSuppressionWindowS}s',
+    );
+  }
+
+  /// Whether the app is within the post-resume suppression window.
+  bool get isInResumeSuppression {
+    if (_lastResumeMs == 0) return false;
+    final nowMs = _clock().millisecondsSinceEpoch;
+    return (nowMs - _lastResumeMs) <
+        SipConstants.resumeSuppressionWindow.inMilliseconds;
+  }
 
   // ---------------------------------------------------------------------------
   // Backoff
@@ -184,6 +214,7 @@ class SipRateLimiter {
     _remainingBytes = capacity;
     _lastRefillMs = _clock().millisecondsSinceEpoch;
     _lastChatTrafficMs = 0;
+    _lastResumeMs = 0;
     _backoffCount = 0;
   }
 

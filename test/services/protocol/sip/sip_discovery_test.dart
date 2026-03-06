@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:socialmesh/services/protocol/sip/sip_codec.dart';
@@ -107,7 +108,8 @@ void main() {
         final first = discovery.buildRollcallReq();
         expect(first, isNotNull);
 
-        nowMs += 61 * 1000;
+        // Advance past cooldown (60s) + max jitter (5s).
+        nowMs += 66 * 1000;
 
         final second = discovery.buildRollcallReq();
         expect(second, isNotNull);

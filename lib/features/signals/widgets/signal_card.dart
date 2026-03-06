@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 // lint-allow: haptic-feedback — onTap delegates to parent callback
 import 'dart:io';
 import 'dart:math' as math;
@@ -25,7 +26,6 @@ import '../../../utils/mesh_identity.dart';
 import '../../../providers/auth_providers.dart';
 import '../../../providers/connectivity_providers.dart';
 import '../../../providers/presence_providers.dart';
-import '../../navigation/main_shell.dart';
 import '../../../providers/signal_bookmark_provider.dart';
 import '../screens/signal_feed_screen.dart';
 import '../utils/signal_utils.dart';
@@ -882,34 +882,14 @@ class _SignalLocation extends StatelessWidget {
       }
     }
 
-    // If not in-place, navigate back to the app root (MainShell), switch to the
-    // Signals tab, then focus the signal on the existing SignalFeedScreen.
-    // This avoids pushing duplicate SignalFeedScreen instances and keeps the
-    // hamburger menu/drawer behavior intact.
+    // Navigate back to the app root (MainShell) and push a new
+    // SignalFeedScreen focused on this signal. Signals is a drawer
+    // destination (not a bottom-nav tab), so we push instead of
+    // switching tab indices.
     Navigator.of(context).popUntil((route) => route.isFirst);
 
-    // Switch main shell to Signals tab
-    try {
-      // Use provider container to switch tab
-      final container = ProviderScope.containerOf(context);
-      container.read(mainShellIndexProvider.notifier).setIndex(2);
-    } catch (e) {
-      AppLogging.social('Failed to set main shell index: $e');
-    }
-
-    // After the frame, focus the signal on the in-place SignalFeedScreen
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final presenceState = signalFeedScreenKey.currentState;
-      if (presenceState != null) {
-        try {
-          (presenceState as dynamic).showSignalOnMap(signal);
-          return;
-        } catch (e) {
-          AppLogging.social('Failed to focus presence feed on signal: $e');
-        }
-      }
-
-      // As a last resort, push a new SignalFeedScreen focused on this signal
+      if (!context.mounted) return;
       Navigator.push(
         context,
         MaterialPageRoute(

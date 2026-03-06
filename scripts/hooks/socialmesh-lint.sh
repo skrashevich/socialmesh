@@ -17,6 +17,7 @@
 #   no-railway-domains         Railway *.up.railway.app domains
 #   spdx-wrong-path            SPDX header in prohibited dirs
 #   spdx-missing               Missing SPDX header in lib/test
+#   spdx-copyright-missing     Missing SPDX copyright in lib/test
 #   magic-numbers              Hardcoded spacing/sizing numbers
 #   no-hardcoded-color         Hardcoded colors (use SemanticColors)
 #   async-safety               context/ref/setState after await
@@ -1237,11 +1238,16 @@ check_spdx_required() {
   case "$file" in
     lib/*.dart|test/*.dart)
       if [ -f "$file" ]; then
-        local first_line
+        local first_line second_line
         first_line=$(head -1 "$file" 2>/dev/null) || return 0
+        second_line=$(sed -n '2p' "$file" 2>/dev/null) || second_line=""
         if [[ ! "$first_line" =~ SPDX-License-Identifier ]]; then
           record_hit "$file" "1" "spdx-missing" \
             "Missing SPDX header — add: // SPDX-License-Identifier: GPL-3.0-or-later" "error"
+        fi
+        if [[ ! "$second_line" =~ SPDX-FileCopyrightText ]]; then
+          record_hit "$file" "2" "spdx-copyright-missing" \
+            "Missing SPDX copyright — add: // SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)" "error"
         fi
       fi
       ;;

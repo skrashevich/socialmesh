@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 import '../../../core/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -528,7 +529,7 @@ class _ProgressHeaderDelegate extends SliverPersistentHeaderDelegate {
     required this.label,
   });
 
-  static const double _maxHeight = 104.0;
+  static const double _maxHeight = 116.0;
   static const double _minHeight = 40.0;
 
   @override
@@ -569,64 +570,66 @@ class _ProgressHeaderDelegate extends SliverPersistentHeaderDelegate {
           if (expandedOpacity > 0)
             Opacity(
               opacity: expandedOpacity,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  AppTheme.spacing16,
-                  AppTheme.spacing12,
-                  AppTheme.spacing16,
-                  AppTheme.spacing8,
-                ),
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: 72,
-                      height: 72,
-                      child: MeshNodeBrain(
-                        mood: allDone
-                            ? MeshBrainMood.happy
-                            : MeshBrainMood.inviting,
-                        size: 60,
+              child: ClipRect(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(
+                    AppTheme.spacing16,
+                    AppTheme.spacing12,
+                    AppTheme.spacing16,
+                    AppTheme.spacing8,
+                  ),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 72,
+                        height: 72,
+                        child: MeshNodeBrain(
+                          mood: allDone
+                              ? MeshBrainMood.happy
+                              : MeshBrainMood.inviting,
+                          size: 60,
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: AppTheme.spacing16),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            allDone
-                                ? context.l10n.helpCenterReadEverything
-                                : context.l10n.helpCenterLearnHowItWorks,
-                            style: TextStyle(
-                              color: context.textPrimary,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
+                      const SizedBox(width: AppTheme.spacing16),
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              allDone
+                                  ? context.l10n.helpCenterReadEverything
+                                  : context.l10n.helpCenterLearnHowItWorks,
+                              style: TextStyle(
+                                color: context.textPrimary,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: AppTheme.spacing4),
-                          Text(
-                            allDone
-                                ? context.l10n.helpCenterComeBackToRefresh
-                                : context.l10n.helpCenterTapToLearn,
-                            style: TextStyle(
-                              color: context.textSecondary,
-                              fontSize: 13,
+                            const SizedBox(height: AppTheme.spacing4),
+                            Text(
+                              allDone
+                                  ? context.l10n.helpCenterComeBackToRefresh
+                                  : context.l10n.helpCenterTapToLearn,
+                              style: TextStyle(
+                                color: context.textSecondary,
+                                fontSize: 13,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: AppTheme.spacing10),
-                          _ProgressBar(
-                            progress: progress,
-                            barColor: barColor,
-                            label: context.l10n.helpCenterProgressLabel(
-                              completedCount,
-                              totalCount,
+                            const SizedBox(height: AppTheme.spacing10),
+                            _ProgressBar(
+                              progress: progress,
+                              barColor: barColor,
+                              label: context.l10n.helpCenterProgressLabel(
+                                completedCount,
+                                totalCount,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

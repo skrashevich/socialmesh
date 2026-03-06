@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 // lint-allow: scaffold — InAppWebView browser, glass blur would obscure web content
 import '../feedback/bug_report_repository.dart';
 import 'package:flutter/material.dart';

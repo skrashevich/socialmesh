@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 // lint-allow: scaffold — full-bleed map Stack with overlaid panels, no app bar
 import 'dart:io';
 

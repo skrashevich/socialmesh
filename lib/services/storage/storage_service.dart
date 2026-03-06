@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 import 'dart:async';
 import 'dart:convert';
 
@@ -163,6 +164,14 @@ class SettingsService {
   }
 
   bool get autoReconnect => _preferences.getBool('auto_reconnect') ?? true;
+
+  // SIP auto-scan
+  Future<void> setSipAutoScanEnabled(bool enabled) async {
+    await _preferences.setBool('sip_auto_scan_enabled', enabled);
+  }
+
+  bool get sipAutoScanEnabled =>
+      _preferences.getBool('sip_auto_scan_enabled') ?? false;
 
   // Theme
   Future<void> setDarkMode(bool enabled) async {

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +10,7 @@ import '../../features/nodedex/screens/nodedex_screen.dart';
 import '../../features/onboarding/widgets/mesh_node_brain.dart';
 import '../../features/presence/presence_screen.dart';
 import '../../features/reachability/mesh_reachability_screen.dart';
+import '../../features/signals/screens/signal_feed_screen.dart';
 import '../../features/aether/screens/aether_screen.dart';
 import '../../features/tak/screens/tak_screen.dart';
 import '../../features/world_mesh/world_mesh_screen.dart';
@@ -728,8 +730,6 @@ class _WhatsNewItemCard extends ConsumerWidget {
   /// main shell, or null for routes that should be pushed.
   static int? _tabIndexForRoute(String route) {
     switch (route) {
-      case '/signals':
-        return 2; // Signals tab
       default:
         return null;
     }
@@ -739,6 +739,8 @@ class _WhatsNewItemCard extends ConsumerWidget {
   /// for routes that are pushed (not tab-based).
   static Widget? _screenForRoute(String route) {
     switch (route) {
+      case '/signals':
+        return const SignalFeedScreen();
       case '/nodedex':
         return const NodeDexScreen();
       case '/world-map':

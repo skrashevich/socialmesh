@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 
 /// SIP instrumentation counters for debug and field test validation.
 ///
@@ -393,6 +394,12 @@ class SipCounters {
         return 'TX_CANCEL';
       case SipMessageType.dmMsg:
         return 'DM_MSG';
+      case SipMessageType.dmTyping:
+        return 'DM_TYPING';
+      case SipMessageType.dmReaction:
+        return 'DM_REACTION';
+      case SipMessageType.dmDelete:
+        return 'DM_DELETE';
       case SipMessageType.error:
         return 'ERROR';
     }

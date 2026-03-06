@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 // lint-allow: haptic-feedback — onTap delegates to parent callback
 
 // Vendored from vs_node_view v2.1.1 — BSD-3-Clause

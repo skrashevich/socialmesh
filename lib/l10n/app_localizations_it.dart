@@ -8310,6 +8310,15 @@ class AppLocalizationsIt extends AppLocalizations {
   String get navigationSectionAccount => 'ACCOUNT';
 
   @override
+  String get navigationSectionAdvanced => 'ADVANCED';
+
+  @override
+  String get navigationSectionDiscover => 'DISCOVER';
+
+  @override
+  String get navigationSectionIdentity => 'IDENTITY';
+
+  @override
   String get navigationSectionMesh => 'MESH';
 
   @override
@@ -8317,6 +8326,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get navigationSectionSocial => 'SOCIAL';
+
+  @override
+  String get navigationSectionTools => 'TOOLS';
 
   @override
   String get navigationSignals => 'Segnali';
@@ -30510,4 +30522,122 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get sipCountersTitle => 'SIP Debug Counters';
+
+  @override
+  String get sipHubTitle => 'Socialmesh';
+
+  @override
+  String get sipHubSectionPeers => 'Nearby Peers';
+
+  @override
+  String get sipHubSectionConversations => 'Conversations';
+
+  @override
+  String get sipHubEmptyTitle => 'No peers nearby';
+
+  @override
+  String get sipHubEmptyDescription =>
+      'Tap Scan to look for other Socialmesh users on the mesh.';
+
+  @override
+  String sipHubLastSeen(String time) {
+    return 'Seen $time';
+  }
+
+  @override
+  String get sipHubHandshaking => 'Handshaking…';
+
+  @override
+  String get sipHubReady => 'Ready to chat';
+
+  @override
+  String get sipHubConnected => 'Connected';
+
+  @override
+  String sipHubMessagePreview(String name, String message) {
+    return '$name: $message';
+  }
+
+  @override
+  String sipHubSessionExpiry(String time) {
+    return 'Expires in $time';
+  }
+
+  @override
+  String get sipHubSessionPinned => 'Pinned';
+
+  @override
+  String get sipHubNoMessages => 'No messages yet';
+
+  @override
+  String sipDmPeerName(String hexId) {
+    return 'Peer $hexId';
+  }
+
+  @override
+  String get sipAutoScanEnabled => 'Auto-scan enabled';
+
+  @override
+  String get sipAutoScanDisabled => 'Auto-scan disabled';
+
+  @override
+  String get sipAutoScanToggle => 'Auto-scan';
+
+  @override
+  String get sipScanningIndicator => 'Scanning…';
+
+  @override
+  String get sipConnecting => 'Connecting…';
+
+  @override
+  String get sipDmReplyingTo => 'Replying to';
+
+  @override
+  String get sipDmSwipeToReply => 'Swipe to reply';
+
+  @override
+  String get sipDmActionReply => 'Reply';
+
+  @override
+  String get sipDmActionCopy => 'Copy';
+
+  @override
+  String get sipDmActionDelete => 'Delete';
+
+  @override
+  String get sipDmMessageCopied => 'Message copied';
+
+  @override
+  String get sipDmDeleteConfirmTitle => 'Delete message?';
+
+  @override
+  String get sipDmDeleteConfirmMessage =>
+      'This will delete the message for both you and the recipient.';
+
+  @override
+  String notificationSipDmTitle(String peerName) {
+    return 'SIP: $peerName';
+  }
+
+  @override
+  String get notificationSipHandshakeTitle => 'SIP Handshake Complete';
+
+  @override
+  String notificationSipHandshakeBody(String peerName) {
+    return 'Ephemeral DM session established with $peerName.';
+  }
+
+  @override
+  String get notificationChannelSipMessages => 'SIP Ephemeral Messages';
+
+  @override
+  String get notificationChannelSipHandshake => 'SIP Handshakes';
+
+  @override
+  String get notificationSipHandshakeRequestTitle => 'Handshake Request';
+
+  @override
+  String notificationSipHandshakeRequestBody(String peerName) {
+    return '$peerName wants to start an ephemeral DM session.';
+  }
 }

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
@@ -42,6 +43,7 @@ import 'sip/sip_identity.dart';
 import 'sip/sip_types.dart';
 import '../mesh_packet_dedupe_store.dart';
 import '../mesh_health/mesh_health_models.dart';
+import '../notifications/notification_service.dart';
 import '../../utils/text_sanitizer.dart';
 import '../../models/presence_confidence.dart';
 import '../../features/nodes/node_display_name_resolver.dart';
@@ -4105,7 +4107,10 @@ class ProtocolService {
       case SipMessageType.rollcallResp:
         discovery.handleRollcallResp(frame, senderNodeId);
       case SipMessageType.rollcallReq:
-        final response = discovery.handleRollcallReq(senderNodeId);
+        final response = discovery.handleRollcallReq(
+          senderNodeId,
+          frame: frame,
+        );
         if (response != null) {
           // Jittered delay before sending response (0-3s).
           Future.delayed(
@@ -4135,6 +4140,12 @@ class ProtocolService {
       // ----- Ephemeral DM -----
       case SipMessageType.dmMsg:
         _handleSipDmMsg(frame);
+      case SipMessageType.dmTyping:
+        _handleSipDmTyping(frame);
+      case SipMessageType.dmReaction:
+        _handleSipDmReaction(frame);
+      case SipMessageType.dmDelete:
+        _handleSipDmDelete(frame);
 
       // ----- SIP-0: CAP_REQ / CAP_RESP (informational) -----
       case SipMessageType.capReq:
@@ -4186,6 +4197,13 @@ class ProtocolService {
     }
 
     _sipCounters?.recordHandshakeInitiated();
+
+    // Notify the user that a peer is requesting a handshake.
+    final peerName = NodeDisplayNameResolver.defaultShortName(senderNodeId);
+    NotificationService().showSipHandshakeRequestNotification(
+      peerName: peerName,
+      peerNodeId: senderNodeId,
+    );
 
     final challengeFrame = hs.handleHello(senderNodeId, frame);
     if (challengeFrame != null) {
@@ -4250,6 +4268,20 @@ class ProtocolService {
 
     _sipCounters?.recordHandshakeCompleted();
 
+    // Prevent duplicate DM sessions with the same peer.
+    final existing = dm?.activeSessions.where(
+      (s) => s.peerNodeId == peerNodeId,
+    );
+    if (existing != null && existing.isNotEmpty) {
+      AppLogging.sip(
+        'SIP: DM session already exists for '
+        'node=0x${peerNodeId.toRadixString(16)}, '
+        'existing_tag=0x${existing.first.sessionTag.toRadixString(16)}, '
+        'skipping duplicate creation',
+      );
+      return;
+    }
+
     // Create ephemeral DM session from handshake result.
     dm?.createSession(
       sessionTag: result.sessionTag,
@@ -4261,6 +4293,13 @@ class ProtocolService {
       'SIP: handshake->DM pipeline complete for '
       'node=0x${peerNodeId.toRadixString(16)}, '
       'session_tag=0x${result.sessionTag.toRadixString(16)}',
+    );
+
+    // Fire local notification for handshake completion.
+    final peerName = NodeDisplayNameResolver.defaultShortName(peerNodeId);
+    NotificationService().showSipHandshakeCompleteNotification(
+      peerName: peerName,
+      peerNodeId: peerNodeId,
     );
   }
 
@@ -4339,7 +4378,51 @@ class ProtocolService {
       return;
     }
 
-    dm.handleInboundDm(frame);
+    final message = dm.handleInboundDm(frame);
+    if (message != null) {
+      // Fire local notification for inbound SIP DM.
+      final session = dm.getSession(frame.sessionId);
+      if (session != null) {
+        final peerName = NodeDisplayNameResolver.defaultShortName(
+          session.peerNodeId,
+        );
+        NotificationService().showSipDmNotification(
+          peerName: peerName,
+          message: message.text,
+          sessionTag: frame.sessionId,
+        );
+      }
+    }
+  }
+
+  void _handleSipDmTyping(SipFrame frame) {
+    final dm = _sipDm;
+    if (dm == null) {
+      AppLogging.sip('SIP_RX: no SipDmManager — dropping DM_TYPING');
+      return;
+    }
+
+    dm.handleInboundTyping(frame);
+  }
+
+  void _handleSipDmReaction(SipFrame frame) {
+    final dm = _sipDm;
+    if (dm == null) {
+      AppLogging.sip('SIP_RX: no SipDmManager — dropping DM_REACTION');
+      return;
+    }
+
+    dm.handleInboundReaction(frame);
+  }
+
+  void _handleSipDmDelete(SipFrame frame) {
+    final dm = _sipDm;
+    if (dm == null) {
+      AppLogging.sip('SIP_RX: no SipDmManager — dropping DM_DELETE');
+      return;
+    }
+
+    dm.handleInboundDelete(frame);
   }
 
   /// Send a file transfer packet as broadcast on PRIVATE_APP (portnum 256).

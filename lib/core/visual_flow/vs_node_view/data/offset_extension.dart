@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 
 // Vendored from vs_node_view v2.1.1 — BSD-3-Clause
 // Import paths rewritten for Socialmesh vendoring.
