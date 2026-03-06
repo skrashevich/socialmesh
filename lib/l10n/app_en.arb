@@ -11101,6 +11101,18 @@
     "@navigationSectionAccount": {
         "description": "Drawer section header for account section."
     },
+    "navigationSectionAdvanced": "ADVANCED",
+    "@navigationSectionAdvanced": {
+        "description": "Drawer section header for advanced mesh analysis tools."
+    },
+    "navigationSectionDiscover": "DISCOVER",
+    "@navigationSectionDiscover": {
+        "description": "Drawer section header for discovery features like Signals, NodeDex, and Presence."
+    },
+    "navigationSectionIdentity": "IDENTITY",
+    "@navigationSectionIdentity": {
+        "description": "Drawer section header for social identity features."
+    },
     "navigationSectionMesh": "MESH",
     "@navigationSectionMesh": {
         "description": "Drawer section header for mesh features."
@@ -11112,6 +11124,10 @@
     "navigationSectionSocial": "SOCIAL",
     "@navigationSectionSocial": {
         "description": "Drawer section header for social features."
+    },
+    "navigationSectionTools": "TOOLS",
+    "@navigationSectionTools": {
+        "description": "Drawer section header for operational tools like File Transfers, Aether, and TAK."
     },
     "navigationSignals": "Signals",
     "@navigationSignals": {

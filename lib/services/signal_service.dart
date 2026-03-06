@@ -2391,7 +2391,7 @@ class SignalService {
     final rows = await db.query(
       _tableName,
       where:
-          'mediaUrls IS NOT NULL AND (imageLocalPath IS NULL OR imageLocalPath = "")', // lint-allow: hardcoded-string
+          "mediaUrls IS NOT NULL AND (imageLocalPath IS NULL OR imageLocalPath = '')", // lint-allow: hardcoded-string
     );
 
     for (final row in rows) {

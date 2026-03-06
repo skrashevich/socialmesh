@@ -23,7 +23,6 @@ import '../../providers/auth_providers.dart';
 import '../../providers/connection_providers.dart';
 import '../../providers/connectivity_providers.dart';
 import '../../providers/profile_providers.dart';
-import '../../providers/signal_providers.dart';
 import '../../providers/social_providers.dart';
 import '../../providers/subscription_providers.dart';
 import '../../services/haptic_service.dart';
@@ -119,7 +118,7 @@ final mainShellScaffoldKeyProvider =
 /// Provider for controlling the currently selected bottom tab in MainShell
 class MainShellIndexNotifier extends Notifier<int> {
   @override
-  int build() => 3; // start on Nodes tab
+  int build() => 2; // start on Nodes tab
 
   void setIndex(int idx) {
     state = idx;
@@ -371,24 +370,17 @@ class _MainShellState extends ConsumerState<MainShell> {
   }
 
   /// Drawer menu items for quick access screens not in bottom nav
-  /// Organized into logical sections with headers
+  /// Organized into intent-based sections with headers:
+  /// DISCOVER → IDENTITY → TOOLS → ADVANCED → PREMIUM
   List<DrawerMenuItem> _buildDrawerMenuItems(AppLocalizations l10n) => [
-    // Social section — Signals switches to bottom-nav tab 2
+    // Discover section — features that help you see what's around you
     DrawerMenuItem(
       icon: Icons.sensors,
       label: l10n.navigationSignals,
-      tabIndex: 2,
-      sectionHeader: l10n.navigationSectionSocial,
+      screen: SignalFeedScreen(key: signalFeedScreenKey),
+      sectionHeader: l10n.navigationSectionDiscover,
       iconColor: AccentColors.lavender,
     ),
-    if (AppFeatureFlags.isSocialEnabled)
-      DrawerMenuItem(
-        icon: Icons.forum_outlined,
-        label: l10n.navigationSocial,
-        screen: const SocialHubScreen(),
-        iconColor: AccentColors.pink,
-        requiresConnection: false,
-      ),
     DrawerMenuItem(
       icon: Icons.auto_stories_outlined,
       label: l10n.navigationNodeDex,
@@ -397,11 +389,51 @@ class _MainShellState extends ConsumerState<MainShell> {
       requiresConnection: false,
       whatsNewBadgeKey: 'nodedex',
     ),
+    DrawerMenuItem(
+      icon: Icons.people_alt_outlined,
+      label: l10n.navigationPresence,
+      screen: const PresenceScreen(),
+      iconColor: AccentColors.green,
+      requiresConnection: true,
+    ),
+    DrawerMenuItem(
+      icon: Icons.public,
+      label: l10n.navigationWorldMap,
+      screen: const WorldMeshScreen(),
+      iconColor: AccentColors.blue,
+      requiresConnection: false, // Shows global mesh data from server
+    ),
+
+    // Identity section — your social presence and interactions
+    if (AppFeatureFlags.isSocialEnabled)
+      DrawerMenuItem(
+        icon: Icons.forum_outlined,
+        label: l10n.navigationSocial,
+        screen: const SocialHubScreen(),
+        sectionHeader: l10n.navigationSectionIdentity,
+        iconColor: AccentColors.pink,
+        requiresConnection: false,
+      ),
+    DrawerMenuItem(
+      icon: Icons.favorite_border,
+      label: l10n.navigationActivity,
+      screen: const ActivityTimelineScreen(),
+      // Only set section header when Social Hub is hidden (feature flag off)
+      sectionHeader: AppFeatureFlags.isSocialEnabled
+          ? null
+          : l10n.navigationSectionIdentity,
+      iconColor: AccentColors.red,
+      requiresConnection: false,
+      badgeProviderKey: 'activity',
+    ),
+
+    // Tools section — operational capabilities
     if (AppFeatureFlags.isFileTransferEnabled)
       DrawerMenuItem(
         icon: Icons.swap_vert,
         label: l10n.navigationFileTransfers,
         screen: const FileTransfersContainerScreen(),
+        sectionHeader: l10n.navigationSectionTools,
         iconColor: AccentColors.cyan,
         requiresConnection: true,
         whatsNewBadgeKey: 'file_transfers',
@@ -411,6 +443,10 @@ class _MainShellState extends ConsumerState<MainShell> {
         icon: Icons.flight_takeoff_outlined,
         label: l10n.navigationAether,
         screen: const AetherScreen(),
+        // Only set section header when File Transfers is hidden
+        sectionHeader: AppFeatureFlags.isFileTransferEnabled
+            ? null
+            : l10n.navigationSectionTools,
         iconColor: AccentColors.sky,
         requiresConnection: false,
         whatsNewBadgeKey: 'aether',
@@ -420,6 +456,12 @@ class _MainShellState extends ConsumerState<MainShell> {
         icon: Icons.gps_fixed,
         label: l10n.navigationTakGateway,
         screen: const TakScreen(),
+        // Only set section header when both above are hidden
+        sectionHeader:
+            !AppFeatureFlags.isFileTransferEnabled &&
+                !AppFeatureFlags.isAetherEnabled
+            ? l10n.navigationSectionTools
+            : null,
         iconColor: AccentColors.orange,
         requiresConnection: false,
         whatsNewBadgeKey: 'tak',
@@ -438,38 +480,25 @@ class _MainShellState extends ConsumerState<MainShell> {
         icon: Icons.wifi_tethering,
         label: l10n.sipBadgeLabel,
         screen: const SipHubScreen(),
+        // Only set section header when all above tools are hidden
+        sectionHeader:
+            !AppFeatureFlags.isFileTransferEnabled &&
+                !AppFeatureFlags.isAetherEnabled &&
+                !AppFeatureFlags.isTakGatewayEnabled
+            ? l10n.navigationSectionTools
+            : null,
         iconColor: AccentColors.teal,
         requiresConnection: true,
         whatsNewBadgeKey: 'sip',
       ),
-    DrawerMenuItem(
-      icon: Icons.favorite_border,
-      label: l10n.navigationActivity,
-      screen: const ActivityTimelineScreen(),
-      iconColor: AccentColors.red,
-      requiresConnection: false,
-      badgeProviderKey: 'activity',
-    ),
-    DrawerMenuItem(
-      icon: Icons.people_alt_outlined,
-      label: l10n.navigationPresence,
-      screen: const PresenceScreen(),
-      iconColor: AccentColors.green,
-      requiresConnection: true,
-    ),
+
+    // Advanced section — deep mesh analysis and diagnostics
     DrawerMenuItem(
       icon: Icons.timeline,
       label: l10n.navigationTimeline,
       screen: const TimelineScreen(),
-      sectionHeader: l10n.navigationSectionMesh,
+      sectionHeader: l10n.navigationSectionAdvanced,
       iconColor: AccentColors.indigo,
-    ),
-    DrawerMenuItem(
-      icon: Icons.public,
-      label: l10n.navigationWorldMap,
-      screen: const WorldMeshScreen(),
-      iconColor: AccentColors.blue,
-      requiresConnection: false, // Shows global mesh data from server
     ),
     DrawerMenuItem(
       icon: Icons.view_in_ar,
@@ -504,27 +533,6 @@ class _MainShellState extends ConsumerState<MainShell> {
       iconColor: AccentColors.slate,
       requiresConnection: true,
     ),
-
-    // Global Layer — between MESH and PREMIUM
-    // DrawerMenuItem(
-    //   icon: Icons.cloud_sync_outlined,
-    //   label: 'Global Layer',
-    //   screen: const GlobalLayerHubScreen(),
-    //   sectionHeader: 'GLOBAL',
-    //   iconColor: AccentColors.teal,
-    //   requiresConnection: false,
-    //   whatsNewBadgeKey: 'global_layer',
-    // ),
-
-    // Shop - below MESH section
-    // DrawerMenuItem(
-    //   icon: Icons.store_outlined,
-    //   label: 'Device Shop',
-    //   screen: const DeviceShopScreen(),
-    //   sectionHeader: 'SHOP',
-    //   iconColor: AccentColors.yellow,
-    //   requiresConnection: false,
-    // ),
 
     // Premium Features - mixed requirements
     DrawerMenuItem(
@@ -577,11 +585,6 @@ class _MainShellState extends ConsumerState<MainShell> {
       label: l10n.navigationMap,
     ),
     NavItem(
-      icon: Icons.sensors_outlined,
-      activeIcon: Icons.sensors,
-      label: l10n.navigationSignals,
-    ),
-    NavItem(
       icon: Icons.people_outline,
       activeIcon: Icons.people,
       label: l10n.navigationNodes,
@@ -603,10 +606,8 @@ class _MainShellState extends ConsumerState<MainShell> {
       case 1:
         return const MapScreen();
       case 2:
-        return SignalFeedScreen(key: signalFeedScreenKey);
-      case 3:
         return const NodesScreen();
-      case 4:
+      case 3:
         return const WidgetDashboardScreen();
       default:
         return const MessagesContainerScreen();
@@ -1399,12 +1400,9 @@ class _MainShellState extends ConsumerState<MainShell> {
           // Messages tab - show unread count
           badgeCount = ref.watch(unreadMessagesCountProvider);
         } else if (index == 2) {
-          // Signals tab - show active signal count
-          badgeCount = ref.watch(activeSignalCountProvider);
-        } else if (index == 3) {
           // Nodes tab - show new nodes count
           badgeCount = ref.watch(newNodesCountProvider);
-        } else if (index == 4) {
+        } else if (index == 3) {
           // Dashboard tab - no badge needed
           badgeCount = 0;
         }
@@ -1420,7 +1418,7 @@ class _MainShellState extends ConsumerState<MainShell> {
             onTap: () {
               ref.haptics.tabChange();
               // Clear new nodes badge when navigating to Nodes tab
-              if (index == 3) {
+              if (index == 2) {
                 ref.read(newNodesCountProvider.notifier).reset();
               }
               ref.read(mainShellIndexProvider.notifier).setIndex(index);

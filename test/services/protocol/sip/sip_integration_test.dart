@@ -134,8 +134,8 @@ void main() {
       final req2 = discoveryA.buildRollcallReq();
       expect(req2, isNull); // rate-limited
 
-      // After cooldown.
-      nowMs[0] += 60; // total 70ms > 50ms cooldown
+      // After cooldown (50ms) + max rollcall jitter (5000ms).
+      nowMs[0] += 5100; // total 5110ms > 50ms + 5000ms
       final req3 = discoveryA.buildRollcallReq();
       expect(req3, isNotNull);
     });

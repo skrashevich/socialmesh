@@ -62,16 +62,24 @@ class _PowerConfigScreenState extends ConsumerState<PowerConfigScreen>
   void _applyConfig(config_pb.Config_PowerConfig config) {
     safeSetState(() {
       _isPowerSaving = config.isPowerSaving;
-      _waitBluetoothSecs = config.waitBluetoothSecs > 0
-          ? config.waitBluetoothSecs
-          : 60;
-      _sdsSecs = config.sdsSecs > 0 ? config.sdsSecs : 3600;
-      _lsSecs = config.lsSecs > 0 ? config.lsSecs : 300;
-      _minWakeSecs = config.minWakeSecs > 0
-          ? config.minWakeSecs.toDouble()
-          : 10;
-      // New settings
-      _shutdownAfterSecs = config.onBatteryShutdownAfterSecs;
+      _waitBluetoothSecs =
+          (config.waitBluetoothSecs > 0 ? config.waitBluetoothSecs : 60).clamp(
+            0,
+            300,
+          );
+      _sdsSecs = (config.sdsSecs > 0 ? config.sdsSecs : 3600).clamp(0, 86400);
+      _lsSecs = (config.lsSecs > 0 ? config.lsSecs : 300).clamp(0, 3600);
+      _minWakeSecs =
+          (config.minWakeSecs > 0 ? config.minWakeSecs.toDouble() : 10.0).clamp(
+            1.0,
+            120.0,
+          );
+      // New settings — clamp to slider max (3600) and treat sentinel
+      // 0xFFFFFFFF as disabled
+      final rawShutdown = config.onBatteryShutdownAfterSecs;
+      _shutdownAfterSecs = rawShutdown >= 0xFFFFFFFF
+          ? 0
+          : rawShutdown.clamp(0, 3600);
       _shutdownOnPowerLoss = _shutdownAfterSecs > 0;
       _adcMultiplier = config.adcMultiplierOverride;
       _adcOverride = _adcMultiplier > 0;

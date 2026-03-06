@@ -108,7 +108,8 @@ void main() {
         final first = discovery.buildRollcallReq();
         expect(first, isNotNull);
 
-        nowMs += 61 * 1000;
+        // Advance past cooldown (60s) + max jitter (5s).
+        nowMs += 66 * 1000;
 
         final second = discovery.buildRollcallReq();
         expect(second, isNotNull);

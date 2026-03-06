@@ -72,6 +72,14 @@ class _HandshakeSession {
   }
 }
 
+/// Wrapper for completed handshake results with TTL tracking.
+class _CompletedEntry {
+  final SipHandshakeResult result;
+  final int completedAtMs;
+
+  const _CompletedEntry({required this.result, required this.completedAtMs});
+}
+
 /// Manages handshake sessions with multiple peers.
 ///
 /// Tracks both initiator and responder state, validates nonces against
@@ -102,7 +110,12 @@ class SipHandshakeManager {
   final Map<int, _HandshakeSession> _sessions = {};
 
   /// Completed handshake results waiting to be consumed.
-  final Map<int, SipHandshakeResult> _completed = {};
+  final Map<int, _CompletedEntry> _completed = {};
+
+  /// Per-peer cooldown timestamps (ms) for handshake failure/timeout.
+  ///
+  /// Prevents tight retry loops against unreachable or unresponsive peers.
+  final Map<int, int> _failCooldownMs = {};
 
   /// Called whenever any session state changes (progress, accept, fail).
   void Function()? onStateChanged;
@@ -116,8 +129,9 @@ class SipHandshakeManager {
   /// Returns the HS_HELLO [SipFrame] to send, or null if a session
   /// already exists for this peer.
   SipFrame? initiateHandshake(int peerNodeId) {
-    // Clean up timed-out sessions.
+    // Clean up timed-out sessions and stale completed results.
     _cleanExpired();
+    _cleanCompletedResults();
 
     if (_sessions.containsKey(peerNodeId)) {
       AppLogging.sip(
@@ -127,11 +141,28 @@ class SipHandshakeManager {
       return null;
     }
 
+    // Enforce per-peer cooldown after failure/timeout.
+    final cooldownUntilMs = _failCooldownMs[peerNodeId];
+    if (cooldownUntilMs != null) {
+      final nowMs = _clock().millisecondsSinceEpoch;
+      if (nowMs < cooldownUntilMs) {
+        final remainingS = (cooldownUntilMs - nowMs) ~/ 1000;
+        AppLogging.sip(
+          'SIP_HS: handshake initiation to '
+          'node=0x${peerNodeId.toRadixString(16)} blocked by '
+          'cooldown, ${remainingS}s remaining',
+        );
+        return null;
+      }
+      _failCooldownMs.remove(peerNodeId);
+    }
+
     final session = _HandshakeSession(peerNodeId: peerNodeId);
     session.clientNonce = _generateNonce16();
     session.localEphemeralPub = _generateEphemeralPub();
     session.state = SipHandshakeState.helloSent;
     _sessions[peerNodeId] = session;
+    _counters?.recordHandshakeInitiated();
     onStateChanged?.call();
 
     final hello = SipHsHello(
@@ -279,8 +310,10 @@ class SipHandshakeManager {
       peerEphemeralPub: session.peerEphemeralPub ?? Uint8List(0),
     );
 
-    _completed[peerNodeId] = result;
+    _putCompleted(peerNodeId, result);
     _sessions.remove(peerNodeId);
+    _failCooldownMs.remove(peerNodeId);
+    _counters?.recordHandshakeCompleted();
 
     AppLogging.sip(
       'SIP_HS: <- HS_ACCEPT, session_tag=0x${accept.sessionTag.toRadixString(16)}, '
@@ -307,6 +340,7 @@ class SipHandshakeManager {
   /// initiator session, and becomes the responder.
   SipFrame? handleHello(int peerNodeId, SipFrame frame) {
     _cleanExpired();
+    _cleanCompletedResults();
 
     final hello = SipHsMessages.decodeHello(frame.payload);
     if (hello == null) return null;
@@ -334,6 +368,30 @@ class SipHandshakeManager {
         );
         _sessions.remove(peerNodeId);
       }
+    }
+
+    // Duplicate HELLO absorption: if we have already sent a CHALLENGE
+    // (or are further along), absorb the duplicate without restarting
+    // the session. This prevents multi-hop rebroadcast from forking
+    // the state machine.
+    if (existing != null &&
+        existing.state != SipHandshakeState.helloSent &&
+        existing.state != SipHandshakeState.idle) {
+      AppLogging.sip(
+        'SIP_HS: duplicate HELLO ignored for '
+        'peer=0x${peerNodeId.toRadixString(16)} '
+        'state=${existing.state.name}',
+      );
+      return null;
+    }
+
+    // Already completed — ignore stale HELLO retransmit.
+    if (_completed.containsKey(peerNodeId)) {
+      AppLogging.sip(
+        'SIP_HS: duplicate HELLO ignored for '
+        'peer=0x${peerNodeId.toRadixString(16)} (already completed)',
+      );
+      return null;
     }
 
     // Check replay.
@@ -469,8 +527,10 @@ class SipHandshakeManager {
       peerEphemeralPub: session.peerEphemeralPub ?? Uint8List(0),
     );
 
-    _completed[peerNodeId] = result;
+    _putCompleted(peerNodeId, result);
     _sessions.remove(peerNodeId);
+    _failCooldownMs.remove(peerNodeId);
+    _counters?.recordHandshakeCompleted();
 
     AppLogging.sip(
       'SIP_HS: <- HS_RESPONSE, session_tag=0x${expectedTag.toRadixString(16)}\n'
@@ -503,7 +563,8 @@ class SipHandshakeManager {
   /// Also returns [SipHandshakeState.accepted] when a completed result
   /// is waiting to be consumed.
   SipHandshakeState getState(int peerNodeId) {
-    if (_completed.containsKey(peerNodeId)) {
+    final completedEntry = _completed[peerNodeId];
+    if (completedEntry != null) {
       return SipHandshakeState.accepted;
     }
     final session = _sessions[peerNodeId];
@@ -516,7 +577,7 @@ class SipHandshakeManager {
 
   /// Consume a completed handshake result for a peer.
   SipHandshakeResult? consumeResult(int peerNodeId) {
-    return _completed.remove(peerNodeId);
+    return _completed.remove(peerNodeId)?.result;
   }
 
   /// Whether a handshake is in progress for [peerNodeId].
@@ -527,10 +588,18 @@ class SipHandshakeManager {
     _failSession(peerNodeId, 'cancelled');
   }
 
+  /// Whether a peer is in cooldown after a failed handshake.
+  bool isInCooldown(int peerNodeId) {
+    final cooldownUntilMs = _failCooldownMs[peerNodeId];
+    if (cooldownUntilMs == null) return false;
+    return _clock().millisecondsSinceEpoch < cooldownUntilMs;
+  }
+
   /// Reset all handshake state.
   void reset() {
     _sessions.clear();
     _completed.clear();
+    _failCooldownMs.clear();
   }
 
   // ---------------------------------------------------------------------------
@@ -539,10 +608,18 @@ class SipHandshakeManager {
 
   void _failSession(int peerNodeId, String reason) {
     _sessions.remove(peerNodeId);
+    _counters?.recordHandshakeFailed();
+
+    // Set per-peer cooldown to prevent immediate retry.
+    final cooldownMs = SipConstants.handshakeCooldownPerPeer.inMilliseconds;
+    _failCooldownMs[peerNodeId] = _clock().millisecondsSinceEpoch + cooldownMs;
+    _boundFailCooldownMap();
+
     onStateChanged?.call();
     AppLogging.sip(
       'SIP_HS: handshake FAILED with '
-      'node=0x${peerNodeId.toRadixString(16)}: $reason',
+      'node=0x${peerNodeId.toRadixString(16)}: $reason, '
+      'cooldown=${cooldownMs ~/ 1000}s',
     );
   }
 
@@ -574,6 +651,52 @@ class SipHandshakeManager {
       bytes[i] = _random.nextInt(256);
     }
     return bytes;
+  }
+
+  /// Store a completed result with TTL tracking and enforce bounds.
+  void _putCompleted(int peerNodeId, SipHandshakeResult result) {
+    _completed[peerNodeId] = _CompletedEntry(
+      result: result,
+      completedAtMs: _clock().millisecondsSinceEpoch,
+    );
+    // Enforce max completed results.
+    while (_completed.length > SipConstants.maxCompletedResults) {
+      int? oldestKey;
+      int oldestMs = 0x7FFFFFFFFFFFFFFF;
+      for (final entry in _completed.entries) {
+        if (entry.value.completedAtMs < oldestMs) {
+          oldestMs = entry.value.completedAtMs;
+          oldestKey = entry.key;
+        }
+      }
+      if (oldestKey != null) {
+        _completed.remove(oldestKey);
+      }
+    }
+  }
+
+  /// Evict completed results that have exceeded their TTL.
+  void _cleanCompletedResults() {
+    final nowMs = _clock().millisecondsSinceEpoch;
+    final ttlMs = SipConstants.completedResultTtl.inMilliseconds;
+    _completed.removeWhere((_, entry) => nowMs - entry.completedAtMs > ttlMs);
+  }
+
+  /// Bound the per-peer failure cooldown map.
+  void _boundFailCooldownMap() {
+    while (_failCooldownMs.length > SipConstants.maxTrackedPeers) {
+      int? oldestKey;
+      int oldestMs = 0x7FFFFFFFFFFFFFFF;
+      for (final entry in _failCooldownMs.entries) {
+        if (entry.value < oldestMs) {
+          oldestMs = entry.value;
+          oldestKey = entry.key;
+        }
+      }
+      if (oldestKey != null) {
+        _failCooldownMs.remove(oldestKey);
+      }
+    }
   }
 
   int _nowS() => _clock().millisecondsSinceEpoch ~/ 1000;

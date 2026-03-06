@@ -8299,6 +8299,15 @@ class AppLocalizationsPt extends AppLocalizations {
   String get navigationSectionAccount => 'CONTA';
 
   @override
+  String get navigationSectionAdvanced => 'ADVANCED';
+
+  @override
+  String get navigationSectionDiscover => 'DISCOVER';
+
+  @override
+  String get navigationSectionIdentity => 'IDENTITY';
+
+  @override
   String get navigationSectionMesh => 'MESH';
 
   @override
@@ -8306,6 +8315,9 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get navigationSectionSocial => 'SOCIAL';
+
+  @override
+  String get navigationSectionTools => 'TOOLS';
 
   @override
   String get navigationSignals => 'Sinais';

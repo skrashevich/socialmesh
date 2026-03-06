@@ -447,6 +447,7 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
     final stepHelp = _WizardStepHelp.steps[_currentStep];
 
     return GlassScaffold.body(
+      hasScrollBody: true,
       title: context.l10n.channelWizardScreenTitle,
       leading: IconButton(
         icon: const Icon(Icons.close),

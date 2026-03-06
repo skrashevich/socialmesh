@@ -4107,7 +4107,10 @@ class ProtocolService {
       case SipMessageType.rollcallResp:
         discovery.handleRollcallResp(frame, senderNodeId);
       case SipMessageType.rollcallReq:
-        final response = discovery.handleRollcallReq(senderNodeId);
+        final response = discovery.handleRollcallReq(
+          senderNodeId,
+          frame: frame,
+        );
         if (response != null) {
           // Jittered delay before sending response (0-3s).
           Future.delayed(

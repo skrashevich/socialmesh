@@ -14737,6 +14737,24 @@ abstract class AppLocalizations {
   /// **'ACCOUNT'**
   String get navigationSectionAccount;
 
+  /// Drawer section header for advanced mesh analysis tools.
+  ///
+  /// In en, this message translates to:
+  /// **'ADVANCED'**
+  String get navigationSectionAdvanced;
+
+  /// Drawer section header for discovery features like Signals, NodeDex, and Presence.
+  ///
+  /// In en, this message translates to:
+  /// **'DISCOVER'**
+  String get navigationSectionDiscover;
+
+  /// Drawer section header for social identity features.
+  ///
+  /// In en, this message translates to:
+  /// **'IDENTITY'**
+  String get navigationSectionIdentity;
+
   /// Drawer section header for mesh features.
   ///
   /// In en, this message translates to:
@@ -14754,6 +14772,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'SOCIAL'**
   String get navigationSectionSocial;
+
+  /// Drawer section header for operational tools like File Transfers, Aether, and TAK.
+  ///
+  /// In en, this message translates to:
+  /// **'TOOLS'**
+  String get navigationSectionTools;
 
   /// Label for the Signals feature in drawer and bottom nav.
   ///

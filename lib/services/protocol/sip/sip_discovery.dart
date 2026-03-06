@@ -18,6 +18,7 @@ import 'sip_counters.dart';
 import 'sip_frame.dart';
 import 'sip_messages_cap.dart';
 import 'sip_rate_limiter.dart';
+import 'sip_replay_cache.dart';
 import 'sip_types.dart';
 
 /// A discovered SIP peer's capabilities.
@@ -90,6 +91,7 @@ class SipDiscovery {
     required SipRateLimiter rateLimiter,
     required int localNodeId,
     SipCounters? counters,
+    SipReplayCache? replayCache,
     int? Function()? clock,
     this.maxPeers = 16,
     this.cacheTtlMs = 24 * 60 * 60 * 1000, // 24 hours
@@ -100,6 +102,7 @@ class SipDiscovery {
   }) : _rateLimiter = rateLimiter,
        _localNodeId = localNodeId,
        _counters = counters,
+       _replayCache = replayCache,
        _clock = clock;
 
   /// Optional callback invoked whenever the peer cache changes.
@@ -117,6 +120,7 @@ class SipDiscovery {
   final SipRateLimiter _rateLimiter;
   final int _localNodeId;
   final SipCounters? _counters;
+  final SipReplayCache? _replayCache;
   final int? Function()? _clock;
 
   /// Maximum peers in the capability cache.
@@ -140,11 +144,15 @@ class SipDiscovery {
   /// Peer capability cache: node_id -> capability.
   final Map<int, SipPeerCapability> _cache = {};
 
-  /// Timestamp of last beacon emission (ms).
-  int _lastBeaconMs = 0;
+  /// Timestamp (ms) of last beacon emission.
+  ///
+  /// Publicly settable for resume restoration (prevents burst after app resume).
+  int lastBeaconMs = 0;
 
-  /// Timestamp of last rollcall request sent (ms).
-  int _lastRollcallReqMs = 0;
+  /// Timestamp (ms) of last rollcall request sent.
+  ///
+  /// Publicly settable for resume restoration (prevents burst after app resume).
+  int lastRollcallReqMs = 0;
 
   /// Rate limiter for per-peer rollcall responses: node_id -> last response ms.
   final Map<int, int> _lastRollcallRespMs = {};
@@ -189,19 +197,35 @@ class SipDiscovery {
 
   /// Build a CAP_BEACON frame if enough time has elapsed and budget allows.
   ///
-  /// Returns null if beacon was recently sent, budget insufficient, or
-  /// congestion detected. If [force] is true, skips the interval check
-  /// (but still respects budget).
+  /// Returns null if beacon was recently sent, budget insufficient,
+  /// congestion detected, or non-essential sends suppressed. If [force]
+  /// is true, skips the interval check (but still respects budget and
+  /// congestion).
   SipOutbound? buildBeacon({bool force = false}) {
     final nowMs = _nowMs();
 
+    // Suppress non-essential discovery during congestion or budget pressure.
+    if (_rateLimiter.shouldSuppressNonEssential) {
+      AppLogging.sip(
+        'SIP_DISCOVERY: CAP_BEACON suppressed (non-essential suppression '
+        'active, congested=${_rateLimiter.isCongested}, '
+        'budget_high=${_rateLimiter.isBudgetHigh})',
+      );
+      _counters?.recordCongestionPause();
+      return null;
+    }
+
     if (!force) {
-      final elapsed = nowMs - _lastBeaconMs;
-      final nextBeaconMs =
-          beaconIntervalMs + _jitterRng.nextInt(beaconJitterMs + 1);
+      final elapsed = nowMs - lastBeaconMs;
+      final jitterMs = _jitterRng.nextInt(beaconJitterMs + 1);
+      final nextBeaconMs = beaconIntervalMs + jitterMs;
       if (elapsed < nextBeaconMs) {
         return null;
       }
+      AppLogging.sip(
+        'SIP_DISCOVERY: beacon scheduled '
+        '(base=${beaconIntervalMs ~/ 1000}s jitter=${jitterMs ~/ 1000}s)',
+      );
     }
 
     // Build the beacon payload.
@@ -242,7 +266,7 @@ class SipDiscovery {
     }
 
     _rateLimiter.recordSend(encoded.length);
-    _lastBeaconMs = nowMs;
+    lastBeaconMs = nowMs;
 
     AppLogging.sip(
       'SIP_DISCOVERY: CAP_BEACON emitted, ${encoded.length}B total, '
@@ -256,17 +280,35 @@ class SipDiscovery {
   // Outbound: ROLLCALL_REQ
   // ---------------------------------------------------------------------------
 
-  /// Build a ROLLCALL_REQ frame. Rate-limited to 1 per 60s.
+  /// Build a ROLLCALL_REQ frame. Rate-limited to 1 per cooldown plus jitter.
   ///
-  /// Returns null if rate-limited or budget insufficient.
+  /// Returns null if rate-limited, budget insufficient, or non-essential
+  /// sends are suppressed.
   SipOutbound? buildRollcallReq() {
     final nowMs = _nowMs();
 
-    if (nowMs - _lastRollcallReqMs < rollcallCooldownMs) {
+    // Suppress non-essential discovery during congestion or budget pressure.
+    if (_rateLimiter.shouldSuppressNonEssential) {
+      AppLogging.sip(
+        'SIP_DISCOVERY: ROLLCALL_REQ suppressed (non-essential suppression '
+        'active, congested=${_rateLimiter.isCongested}, '
+        'budget_high=${_rateLimiter.isBudgetHigh})',
+      );
+      _counters?.recordCongestionPause();
+      return null;
+    }
+
+    final jitterMs = _jitterRng.nextInt(
+      SipConstants.rollcallReqJitter.inMilliseconds + 1,
+    );
+    final effectiveCooldownMs = rollcallCooldownMs + jitterMs;
+
+    if (nowMs - lastRollcallReqMs < effectiveCooldownMs) {
       AppLogging.sip(
         'SIP_DISCOVERY: ROLLCALL_REQ rate-limited '
-        '(${(nowMs - _lastRollcallReqMs) ~/ 1000}s < '
-        '${rollcallCooldownMs ~/ 1000}s)',
+        '(${(nowMs - lastRollcallReqMs) ~/ 1000}s < '
+        '${effectiveCooldownMs ~/ 1000}s, '
+        'base=${rollcallCooldownMs ~/ 1000}s jitter=${jitterMs ~/ 1000}s)',
       );
       return null;
     }
@@ -296,7 +338,7 @@ class SipDiscovery {
     }
 
     _rateLimiter.recordSend(encoded.length);
-    _lastRollcallReqMs = nowMs;
+    lastRollcallReqMs = nowMs;
 
     AppLogging.sip(
       'SIP_DISCOVERY: ROLLCALL_REQ broadcast, ${encoded.length}B total',
@@ -362,6 +404,7 @@ class SipDiscovery {
 
     _rateLimiter.recordSend(encoded.length);
     _lastRollcallRespMs[peerNodeId] = nowMs;
+    _boundRollcallRespMap();
 
     AppLogging.sip(
       'SIP_DISCOVERY: ROLLCALL_RESP to 0x${peerNodeId.toRadixString(16)} '
@@ -377,7 +420,11 @@ class SipDiscovery {
 
   /// Handle an inbound CAP_BEACON.
   /// Stores the peer in the capability cache.
+  /// Ignores duplicate packets (same sender + nonce) seen via multi-hop.
   void handleBeacon(SipFrame frame, int senderNodeId) {
+    // Duplicate suppression: ignore if we already processed this exact frame.
+    if (_isDuplicateDiscovery(senderNodeId, frame)) return;
+
     final beacon = SipCapMessages.decodeCapBeacon(frame.payload);
     if (beacon == null) {
       AppLogging.sip(
@@ -399,7 +446,11 @@ class SipDiscovery {
   }
 
   /// Handle an inbound ROLLCALL_RESP.
+  /// Ignores duplicate packets seen via multi-hop.
   void handleRollcallResp(SipFrame frame, int senderNodeId) {
+    // Duplicate suppression: ignore if we already processed this exact frame.
+    if (_isDuplicateDiscovery(senderNodeId, frame)) return;
+
     final resp = SipCapMessages.decodeRollcallResp(frame.payload);
     if (resp == null) {
       AppLogging.sip(
@@ -429,9 +480,16 @@ class SipDiscovery {
 
   /// Handle an inbound ROLLCALL_REQ. Returns a response to send, or null.
   ///
+  /// Ignores duplicate packets seen via multi-hop.
   /// The caller should delay sending by 0-3s (random jitter).
-  SipOutbound? handleRollcallReq(int senderNodeId) {
+  SipOutbound? handleRollcallReq(int senderNodeId, {SipFrame? frame}) {
     if (senderNodeId == _localNodeId) return null;
+
+    // Duplicate suppression for the request itself.
+    if (frame != null && _isDuplicateDiscovery(senderNodeId, frame)) {
+      return null;
+    }
+
     return buildRollcallResp(senderNodeId);
   }
 
@@ -514,6 +572,56 @@ class SipDiscovery {
       AppLogging.sip(
         'SIP_DISCOVERY: evicted oldest peer 0x${oldestNodeId.toRadixString(16)}',
       );
+    }
+  }
+
+  /// Check if this discovery frame is a duplicate (same sender + nonce
+  /// seen via multi-hop mesh rebroadcast). Uses the shared replay cache.
+  ///
+  /// Returns true if duplicate (caller should ignore the packet).
+  bool _isDuplicateDiscovery(int senderNodeId, SipFrame frame) {
+    if (_replayCache == null) return false;
+
+    if (_replayCache.isReplay(
+      nodeId: senderNodeId,
+      nonce: frame.nonce,
+      msgType: frame.msgType.code,
+    )) {
+      AppLogging.sip(
+        'SIP_DISCOVERY: duplicate packet ignored '
+        'type=${frame.msgType.name} '
+        'peer=0x${senderNodeId.toRadixString(16)} '
+        'nonce=0x${frame.nonce.toRadixString(16)}',
+      );
+      return true;
+    }
+
+    // Record this nonce so future copies are deduplicated.
+    _replayCache.recordNonce(
+      nodeId: senderNodeId,
+      nonce: frame.nonce,
+      msgType: frame.msgType.code,
+      timestampS: frame.timestampS,
+    );
+    return false;
+  }
+
+  /// Bound the per-peer rollcall response timestamp map to prevent
+  /// unbounded growth from a flood of distinct peer node IDs.
+  void _boundRollcallRespMap() {
+    while (_lastRollcallRespMs.length > SipConstants.maxRollcallRespTracked) {
+      // Evict oldest entry.
+      int? oldestKey;
+      int oldestMs = 0x7FFFFFFFFFFFFFFF;
+      for (final entry in _lastRollcallRespMs.entries) {
+        if (entry.value < oldestMs) {
+          oldestMs = entry.value;
+          oldestKey = entry.key;
+        }
+      }
+      if (oldestKey != null) {
+        _lastRollcallRespMs.remove(oldestKey);
+      }
     }
   }
 }

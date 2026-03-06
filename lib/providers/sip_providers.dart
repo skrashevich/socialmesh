@@ -12,6 +12,8 @@ import 'dart:typed_data';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/constants.dart';
+import '../core/logging.dart';
+import '../services/protocol/sip/sip_constants.dart';
 import '../services/protocol/sip/sip_counters.dart';
 import '../services/protocol/sip/sip_discovery.dart';
 import '../services/protocol/sip/sip_dm.dart';
@@ -23,6 +25,7 @@ import '../services/protocol/sip/sip_rate_limiter.dart';
 import '../services/protocol/sip/sip_replay_cache.dart';
 import '../services/protocol/sip/sip_types.dart';
 import 'app_providers.dart';
+import 'app_lifecycle_provider.dart';
 import 'sip_nodedex_bridge.dart';
 
 /// Whether SIP is enabled (sourced from SmFeatureFlag).
@@ -135,11 +138,13 @@ final sipDiscoveryProvider = Provider<SipDiscovery?>((ref) {
 
   final nodeNum = ref.watch(myNodeNumProvider) ?? 0;
   final limiter = ref.watch(sipRateLimiterProvider);
+  final replayCache = ref.watch(sipReplayCacheProvider);
 
   final discovery = SipDiscovery(
     rateLimiter: limiter,
     localNodeId: nodeNum,
     counters: ref.read(sipCountersProvider),
+    replayCache: replayCache,
   );
 
   // Invalidate peer/count providers when the cache changes so the UI rebuilds.
@@ -151,6 +156,24 @@ final sipDiscoveryProvider = Provider<SipDiscovery?>((ref) {
   discovery.onPeerDiscovered = (nodeId) {
     sipBridgeMarkCapableFromRef(ref, nodeId);
   };
+
+  // Resume-safe: set initial timestamps to "now" so we don't burst
+  // beacons/rollcalls immediately on provider creation (cold start).
+  final nowMs = DateTime.now().millisecondsSinceEpoch;
+  discovery.lastBeaconMs = nowMs;
+  discovery.lastRollcallReqMs = nowMs;
+
+  // Listen for app lifecycle transitions. Use the rate limiter's resume
+  // suppression window to prevent post-resume SIP burst transmissions.
+  ref.listen<bool>(appLifecycleProvider, (previous, isForeground) {
+    if (isForeground && previous == false) {
+      limiter.notifyResume();
+      AppLogging.sip(
+        'SIP_LIFECYCLE: app resumed, suppression window '
+        '${SipConstants.resumeSuppressionWindowS}s started',
+      );
+    }
+  });
 
   // Attach to the protocol service so inbound SIP frames are dispatched.
   final protocol = ref.read(protocolServiceProvider);

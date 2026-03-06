@@ -393,6 +393,7 @@ class _ChannelFormScreenState extends ConsumerState<ChannelFormScreen>
     return GestureDetector(
       onTap: _dismissKeyboard,
       child: GlassScaffold.body(
+        hasScrollBody: true,
         leading: IconButton(
           icon: Icon(Icons.close, color: context.textPrimary),
           onPressed: () => Navigator.pop(context),
