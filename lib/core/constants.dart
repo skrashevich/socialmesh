@@ -331,6 +331,18 @@ class AppFeatureFlags {
     }
   }
 
+  /// Whether the SIP (Socialmesh Identity Protocol) feature is enabled.
+  /// Set `SIP_ENABLED=true` in `.env` to enable.
+  /// Default: false — SIP UI is hidden unless explicitly enabled.
+  static bool get isSipEnabled {
+    try {
+      final raw = dotenv.env['SIP_ENABLED']?.toLowerCase().trim();
+      return raw == 'true' || raw == '1';
+    } catch (_) {
+      return false;
+    }
+  }
+
   /// Whether TAK position publishing is enabled.
   /// Set `TAK_PUBLISH_ENABLED=true` in `.env` to enable.
   /// Requires [isTakGatewayEnabled] to be true. Default: false.

@@ -101,7 +101,7 @@ class TaskConflictResolver {
     // Dedup is manual per spec.
     // -----------------------------------------------------------------------
     if (localTask == null) {
-      _log(
+      AppLogging.taskSync(
         'new task ${remoteTransition.taskId}: '
         '${remoteTransition.fromState.name} -> '
         '${remoteTransition.toState.name} '
@@ -122,7 +122,7 @@ class TaskConflictResolver {
       (t) => t.id == remoteTransition.id,
     );
     if (isDuplicate) {
-      _log(
+      AppLogging.taskSync(
         'duplicate transition ${remoteTransition.id} on '
         '${remoteTransition.taskId}: already stored, skipping',
       );
@@ -149,12 +149,12 @@ class TaskConflictResolver {
 
         if (remoteTs < localTs) {
           // Remote is earlier — remote wins.
-          _log(
+          AppLogging.taskSync(
             'conflict detected on ${remoteTransition.taskId}: '
             'local=acknowledged@$localTs, '
             'remote=acknowledged@$remoteTs',
           );
-          _log(
+          AppLogging.taskSync(
             'resolution: remote wins '
             '(earlier timestamp: $remoteTs < $localTs)',
           );
@@ -168,12 +168,12 @@ class TaskConflictResolver {
           );
         } else {
           // Local is earlier or equal — local wins, remote is no-op.
-          _log(
+          AppLogging.taskSync(
             'conflict detected on ${remoteTransition.taskId}: '
             'local=acknowledged@$localTs, '
             'remote=acknowledged@$remoteTs',
           );
-          _log(
+          AppLogging.taskSync(
             'resolution: local wins '
             '(earlier timestamp: $localTs <= $remoteTs)',
           );
@@ -200,14 +200,14 @@ class TaskConflictResolver {
       if (localState == TaskState.completed &&
           remoteState == TaskState.cancelled) {
         // Local COMPLETED wins over remote CANCELLED.
-        _log(
+        AppLogging.taskSync(
           'conflict detected on ${remoteTransition.taskId}: '
           'local=${localState.name}'
           '@${localTask.updatedAt.millisecondsSinceEpoch}, '
           'remote=${remoteState.name}'
           '@${remoteTransition.timestamp.millisecondsSinceEpoch}',
         );
-        _log(
+        AppLogging.taskSync(
           'resolution: COMPLETED wins over CANCELLED '
           '(completion outcome precedence)',
         );
@@ -221,14 +221,14 @@ class TaskConflictResolver {
       if (localState == TaskState.cancelled &&
           remoteState == TaskState.completed) {
         // Remote COMPLETED wins over local CANCELLED.
-        _log(
+        AppLogging.taskSync(
           'conflict detected on ${remoteTransition.taskId}: '
           'local=${localState.name}'
           '@${localTask.updatedAt.millisecondsSinceEpoch}, '
           'remote=${remoteState.name}'
           '@${remoteTransition.timestamp.millisecondsSinceEpoch}',
         );
-        _log(
+        AppLogging.taskSync(
           'resolution: COMPLETED wins over CANCELLED '
           '(completion outcome precedence)',
         );
@@ -251,11 +251,11 @@ class TaskConflictResolver {
     if (_isReassignmentDuringCompletion(localTask.state, remoteTransition)) {
       if (localTask.state == TaskState.completed &&
           remoteTransition.toState == TaskState.reassigned) {
-        _log(
+        AppLogging.taskSync(
           'conflict detected on ${remoteTransition.taskId}: '
           'local=completed, remote=reassigned',
         );
-        _log(
+        AppLogging.taskSync(
           'resolution: COMPLETED stands, '
           'reassigned task exists independently',
         );
@@ -270,11 +270,11 @@ class TaskConflictResolver {
 
       if (localTask.state == TaskState.reassigned &&
           remoteTransition.toState == TaskState.completed) {
-        _log(
+        AppLogging.taskSync(
           'conflict detected on ${remoteTransition.taskId}: '
           'local=reassigned, remote=completed',
         );
-        _log(
+        AppLogging.taskSync(
           'resolution: COMPLETED stands, '
           'reassigned task exists independently',
         );
@@ -298,7 +298,7 @@ class TaskConflictResolver {
     // the expected state) — store it but don't change projection.
     // -----------------------------------------------------------------------
     if (remoteTransition.fromState == localTask.state) {
-      _log(
+      AppLogging.taskSync(
         'applying remote transition on ${remoteTransition.taskId}: '
         '${remoteTransition.fromState.name} -> '
         '${remoteTransition.toState.name}',
@@ -313,7 +313,7 @@ class TaskConflictResolver {
 
     // Remote transition references a past state — stale but still stored
     // for audit trail completeness.
-    _log(
+    AppLogging.taskSync(
       'stale remote transition on ${remoteTransition.taskId}: '
       'expected fromState=${remoteTransition.fromState.name} '
       'but local state=${localTask.state.name}. '
@@ -403,10 +403,5 @@ class TaskConflictResolver {
             remoteTransition.toState == TaskState.reassigned) ||
         (localState == TaskState.reassigned &&
             remoteTransition.toState == TaskState.completed);
-  }
-
-  /// Logs a message via the task sync logging channel.
-  void _log(String message) {
-    AppLogging.taskSync('TaskSync: $message');
   }
 }

@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-import 'package:flutter/foundation.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../core/logging.dart';
 
 /// Keys for SharedPreferences storage
 class _ReviewKeys {
@@ -24,12 +25,6 @@ class AppReviewService {
   final SharedPreferences _prefs;
   final InAppReview _inAppReview;
 
-  /// Log a structured review event for analytics/debugging
-  void _log(String event, [Map<String, dynamic>? data]) {
-    final message = data != null ? '$event: $data' : event;
-    debugPrint('[AppReview] $message');
-  }
-
   /// Initialize the service - call once at app startup.
   /// Records install time if not already set and increments session count.
   Future<void> recordSession() async {
@@ -45,7 +40,7 @@ class AppReviewService {
     final sessions = (_prefs.getInt(_ReviewKeys.sessionCount) ?? 0) + 1;
     await _prefs.setInt(_ReviewKeys.sessionCount, sessions);
 
-    _log('SESSION_RECORDED', {'sessionCount': sessions});
+    AppLogging.app('AppReview: SESSION_RECORDED {sessionCount: $sessions}');
   }
 
   /// Increment the count of messages sent by the user.
@@ -155,15 +150,18 @@ class AppReviewService {
     );
 
     if (!eligibility.eligible) {
-      _log('REVIEW_PROMPT_SKIPPED_${eligibility.reason}', {'surface': surface});
+      AppLogging.app(
+        'AppReview: REVIEW_PROMPT_SKIPPED_${eligibility.reason} '
+        '{surface: $surface}',
+      );
       return false;
     }
 
-    _log('REVIEW_PROMPT_ELIGIBLE', {
-      'surface': surface,
-      'sessions': sessionCount,
-      'promptCount': promptCount,
-    });
+    AppLogging.app(
+      'AppReview: REVIEW_PROMPT_ELIGIBLE '
+      '{surface: $surface, sessions: $sessionCount, '
+      'promptCount: $promptCount}',
+    );
 
     return true;
   }
@@ -174,7 +172,7 @@ class AppReviewService {
     final now = DateTime.now();
     await _prefs.setInt(_ReviewKeys.lastPromptAt, now.millisecondsSinceEpoch);
     await _prefs.setInt(_ReviewKeys.promptCount, promptCount + 1);
-    _log('REVIEW_PROMPT_SHOWN_CUSTOM', {'surface': surface});
+    AppLogging.app('AppReview: REVIEW_PROMPT_SHOWN_CUSTOM {surface: $surface}');
   }
 
   /// Request the native review dialog.
@@ -184,18 +182,24 @@ class AppReviewService {
       final isAvailable = await _inAppReview.isAvailable();
 
       if (isAvailable) {
-        _log('REVIEW_REQUEST_CALLED');
+        AppLogging.app('AppReview: REVIEW_REQUEST_CALLED');
         await _inAppReview.requestReview();
         return true;
       } else {
-        _log('REVIEW_FALLBACK_STORE_LISTING', {'reason': 'not_available'});
+        AppLogging.app(
+          'AppReview: REVIEW_FALLBACK_STORE_LISTING '
+          '{reason: not_available}',
+        );
         await _inAppReview.openStoreListing(
           appStoreId: '6475642447', // iOS App Store ID
         );
         return false;
       }
     } catch (e) {
-      _log('REVIEW_FALLBACK_STORE_LISTING', {'reason': 'error', 'error': '$e'});
+      AppLogging.app(
+        'AppReview: REVIEW_FALLBACK_STORE_LISTING '
+        '{reason: error, error: $e}',
+      );
       try {
         await _inAppReview.openStoreListing(appStoreId: '6475642447');
       } catch (_) {
@@ -207,7 +211,7 @@ class AppReviewService {
 
   /// Open the store listing directly (for manual "Rate Us" buttons).
   Future<void> openStoreListing() async {
-    _log('REVIEW_STORE_LISTING_OPENED');
+    AppLogging.app('AppReview: REVIEW_STORE_LISTING_OPENED');
     await _inAppReview.openStoreListing(appStoreId: '6475642447');
   }
 }

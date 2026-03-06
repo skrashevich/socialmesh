@@ -7,6 +7,8 @@
 #   no-material-dialogs        showDialog/AlertDialog/SimpleDialog
 #   no-raw-snackbar            Raw SnackBar() construction
 #   no-fab                     FloatingActionButton
+#   no-bare-logging            Bare debugPrint/print (use AppLogging.<feature>)
+#   no-private-log             Private _log() methods (use AppLogging.<feature> directly)
 #   no-hardcoded-ui-strings    Hardcoded user-facing strings (Text('...'), title: '...')
 #   no-unimplemented           throw UnimplementedError
 #   no-bare-scaffold           Bare Scaffold (use GlassScaffold)
@@ -119,11 +121,29 @@ fi
 # When --diff-only is active, only lines that appear in the staged diff
 # are checked. This eliminates noise from pre-existing violations when
 # you're editing a file with legacy patterns.
+#
+# Uses a temp directory with one file per source file (filename is an md5
+# hash of the path) to avoid bash 4+ associative arrays, which are
+# unavailable on macOS system bash 3.2.
 # ---------------------------------------------------------------------------
 
-declare -A DIFF_LINES  # key="file" -> comma-separated line numbers
+_DIFF_DIR=""
+
+_cleanup_temp_dirs() {
+  [ -n "$_DIFF_DIR" ] && rm -rf "$_DIFF_DIR"
+  [ -n "$_HIT_DIR" ]  && rm -rf "$_HIT_DIR"
+}
+trap _cleanup_temp_dirs EXIT
+
+_diff_key() {
+  # Produce a safe filename from an arbitrary path.
+  printf '%s' "$1" | md5sum 2>/dev/null | cut -d' ' -f1 \
+    || printf '%s' "$1" | md5 2>/dev/null | cut -d' ' -f1 \
+    || printf '%s' "$1" | shasum -a 256 | cut -c1-32
+}
 
 if [ "$DIFF_ONLY" = true ]; then
+  _DIFF_DIR=$(mktemp -d)
   # Parse unified diff to extract added line numbers
   current_file=""
   while IFS= read -r diffline; do
@@ -134,13 +154,14 @@ if [ "$DIFF_ONLY" = true ]; then
     elif [[ "$diffline" =~ ^@@\ .+\ \+([0-9]+)(,([0-9]+))?\ @@  ]]; then
       local_start="${BASH_REMATCH[1]}"
       local_count="${BASH_REMATCH[3]:-1}"
+      key=$(_diff_key "$current_file")
       # Generate line numbers for this hunk
       for (( i=0; i<local_count; i++ )); do
         ln=$((local_start + i))
-        if [ -n "${DIFF_LINES[$current_file]+x}" ]; then
-          DIFF_LINES[$current_file]="${DIFF_LINES[$current_file]},$ln"
+        if [ -f "$_DIFF_DIR/$key" ]; then
+          printf ',%s' "$ln" >> "$_DIFF_DIR/$key"
         else
-          DIFF_LINES[$current_file]="$ln"
+          printf '%s' "$ln" > "$_DIFF_DIR/$key"
         fi
       done
     fi
@@ -156,13 +177,17 @@ line_in_scope() {
     return 0
   fi
 
-  if [ -z "${DIFF_LINES[$file]+x}" ]; then
+  local key
+  key=$(_diff_key "$file")
+
+  if [ ! -f "$_DIFF_DIR/$key" ]; then
     # File has no diff lines -- skip all line checks for this file
     return 1
   fi
 
   # Check membership (comma-separated list)
-  local lines_csv=",${DIFF_LINES[$file]},"
+  local lines_csv
+  lines_csv=",$(cat "$_DIFF_DIR/$key"),"
   if [[ "$lines_csv" == *",$lineno,"* ]]; then
     return 0
   fi
@@ -174,30 +199,41 @@ line_in_scope() {
 # Hit accumulator
 #
 # Collects hits per (file, rule) and emits one grouped line per pair after
-# each file is fully scanned.  Uses bash 4+ associative arrays.
+# each file is fully scanned.  Uses temp files to stay compatible with
+# macOS system bash 3.2 (which lacks associative arrays).
 # ---------------------------------------------------------------------------
 
-declare -A HIT_FIRST_LINE   # key="file|rule" -> first line number
-declare -A HIT_COUNT        # key="file|rule" -> occurrence count
-declare -A HIT_SEVERITY     # key="file|rule" -> "error"
-declare -A HIT_MESSAGE      # key="file|rule" -> message text
-HIT_KEYS=()                 # ordered list of unique keys
+_HIT_DIR=$(mktemp -d)
+
+_hit_key() {
+  printf '%s' "$1" | md5sum 2>/dev/null | cut -d' ' -f1 \
+    || printf '%s' "$1" | md5 2>/dev/null | cut -d' ' -f1 \
+    || printf '%s' "$1" | shasum -a 256 | cut -c1-32
+}
+
+HIT_KEYS=()                 # ordered list of unique composite keys
 
 TOTAL_VIOLATIONS=0
 FILES_WITH_HITS=0
 
 record_hit() {
   local file="$1" line="$2" rule="$3" msg="$4" severity="$5"
-  local key="${file}|${rule}"
+  local composite="${file}|${rule}"
+  local hk
+  hk=$(_hit_key "$composite")
 
-  if [ -z "${HIT_COUNT[$key]+x}" ]; then
-    HIT_FIRST_LINE[$key]="$line"
-    HIT_COUNT[$key]=1
-    HIT_SEVERITY[$key]="$severity"
-    HIT_MESSAGE[$key]="$msg"
-    HIT_KEYS+=("$key")
+  if [ ! -f "$_HIT_DIR/${hk}.count" ]; then
+    printf '%s' "$line"     > "$_HIT_DIR/${hk}.line"
+    printf '%s' "1"         > "$_HIT_DIR/${hk}.count"
+    printf '%s' "$severity" > "$_HIT_DIR/${hk}.sev"
+    printf '%s' "$msg"      > "$_HIT_DIR/${hk}.msg"
+    # Store the composite key so we can recover file and rule later
+    printf '%s' "$composite" > "$_HIT_DIR/${hk}.key"
+    HIT_KEYS+=("$composite")
   else
-    HIT_COUNT[$key]=$(( ${HIT_COUNT[$key]} + 1 ))
+    local old_count
+    old_count=$(cat "$_HIT_DIR/${hk}.count")
+    printf '%s' "$(( old_count + 1 ))" > "$_HIT_DIR/${hk}.count"
   fi
 }
 
@@ -205,16 +241,20 @@ flush_file_hits() {
   local target_file="$1"
   local file_had_hits=false
 
-  for key in "${HIT_KEYS[@]}"; do
-    local kfile="${key%%|*}"
+  for composite in ${HIT_KEYS[@]+"${HIT_KEYS[@]}"}; do
+    local kfile="${composite%%|*}"
     [ "$kfile" = "$target_file" ] || continue
 
     file_had_hits=true
-    local rule="${key#*|}"
-    local first_line="${HIT_FIRST_LINE[$key]}"
-    local count="${HIT_COUNT[$key]}"
-    local severity="${HIT_SEVERITY[$key]}"
-    local msg="${HIT_MESSAGE[$key]}"
+    local rule="${composite#*|}"
+    local hk
+    hk=$(_hit_key "$composite")
+
+    local first_line count severity msg
+    first_line=$(cat "$_HIT_DIR/${hk}.line")
+    count=$(cat "$_HIT_DIR/${hk}.count")
+    severity=$(cat "$_HIT_DIR/${hk}.sev")
+    msg=$(cat "$_HIT_DIR/${hk}.msg")
 
     local suffix=""
     if [ "$count" -gt 1 ]; then
@@ -224,10 +264,7 @@ flush_file_hits() {
     TOTAL_VIOLATIONS=$((TOTAL_VIOLATIONS + 1))
     echo -e "${RED}${BOLD}ERROR${NC} ${kfile}:${first_line} [${rule}] ${msg}${suffix}" >&2
 
-    unset "HIT_FIRST_LINE[$key]"
-    unset "HIT_COUNT[$key]"
-    unset "HIT_SEVERITY[$key]"
-    unset "HIT_MESSAGE[$key]"
+    rm -f "$_HIT_DIR/${hk}".{line,count,sev,msg,key}
   done
 
   if [ "$file_had_hits" = true ]; then
@@ -236,9 +273,9 @@ flush_file_hits() {
 
   # Rebuild HIT_KEYS without the flushed file's entries
   local remaining=()
-  for key in "${HIT_KEYS[@]}"; do
-    local kfile="${key%%|*}"
-    [ "$kfile" != "$target_file" ] && remaining+=("$key")
+  for composite in ${HIT_KEYS[@]+"${HIT_KEYS[@]}"}; do
+    local kfile="${composite%%|*}"
+    [ "$kfile" != "$target_file" ] && remaining+=("$composite")
   done
   HIT_KEYS=("${remaining[@]+"${remaining[@]}"}")
 }
@@ -442,6 +479,62 @@ check_file() {
         "no-fab" \
         "FloatingActionButton — primary actions belong in the app bar" \
         "error" true true
+    fi
+
+    # ------------------------------------------------------------------
+    # BLOCK: Bare debugPrint / print calls (must use AppLogging)
+    #
+    # All logging in lib/ must go through AppLogging.<feature>() so it
+    # is gated by .env flags and produces grep-friendly prefixed output.
+    # Bare debugPrint( and print( bypass this and pollute the console.
+    #
+    # Exempt: lib/core/logging.dart (defines AppLogging, calls debugPrint
+    #         internally — that's the ONLY file allowed to do so).
+    # ------------------------------------------------------------------
+    if [ "$in_lib" = true ] && [ "$in_lib_generated" = false ] \
+       && [[ "$file" != *"core/logging.dart" ]]; then
+      grep_check "$file" \
+        '\bdebugPrint\(' \
+        "no-bare-logging" \
+        "Bare debugPrint() — use AppLogging.<feature>() instead (gated by .env flags)" \
+        "error" true true
+
+      # print( — but not debugPrint(, printTo(, printBuffer(, reprint(,
+      # sprint(, toString, etc.
+      while IFS=: read -r lineno matched_line; do
+        line_in_scope "$file" "$lineno" || continue
+        local trimmed="${matched_line#"${matched_line%%[![:space:]]*}"}"
+        # Skip comments
+        [[ "$trimmed" == //* ]] && continue
+        # Skip imports
+        [[ "$matched_line" == import* ]] && continue
+        # Skip string literals that mention print
+        [[ "$matched_line" =~ \'.*print.*\' ]] && continue
+        [[ "$matched_line" =~ \".*print.*\" ]] && continue
+        record_hit "$file" "$lineno" "no-bare-logging" \
+          "Bare print() — use AppLogging.<feature>() instead (gated by .env flags)" "error"
+      done < <(grep -nE '(^|[^a-zA-Z_])print\([^)]*\)' "$file" 2>/dev/null \
+        | grep -vE '(debugPrint|printTo|printBuffer|reprint|sprint|fingerprint|footprint|imprint|blueprint|toString)' \
+        || true)
+    fi
+
+    # ------------------------------------------------------------------
+    # BLOCK: Private _log() method definitions
+    #
+    # Private _log() wrappers around AppLogging add needless indirection.
+    # They obscure which AppLogging channel is being used, make grep
+    # harder, and tempt copy-pasters to wire _log() to debugPrint
+    # directly. Call AppLogging.<feature>() at each call site instead.
+    #
+    # Detects: void _log(, static void _log(, _log(String
+    # Does NOT flag _log usage in test/ files (test helpers are fine).
+    # ------------------------------------------------------------------
+    if [ "$in_lib" = true ] && [ "$in_lib_generated" = false ]; then
+      grep_check "$file" \
+        '(void _log\(|static void _log\(|^\s+_log\(String)' \
+        "no-private-log" \
+        "Private _log() method — call AppLogging.<feature>() directly at each call site" \
+        "error" true
     fi
 
     # ------------------------------------------------------------------

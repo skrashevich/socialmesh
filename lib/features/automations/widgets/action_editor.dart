@@ -54,6 +54,7 @@ class ActionEditor extends ConsumerStatefulWidget {
 class _ActionEditorState extends ConsumerState<ActionEditor>
     with LifecycleSafeMixin<ActionEditor> {
   late TextEditingController _webhookEventController;
+  late TextEditingController _webhookUrlController;
   late TextEditingController _shortcutNameController;
 
   // Global keys to access VariableTextField state
@@ -70,6 +71,9 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
     super.initState();
     _webhookEventController = TextEditingController(
       text: widget.action.webhookEventName ?? '',
+    );
+    _webhookUrlController = TextEditingController(
+      text: widget.action.webhookUrl ?? '',
     );
     _shortcutNameController = TextEditingController(
       text: widget.action.shortcutName ?? '',
@@ -115,6 +119,7 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
     super.didUpdateWidget(oldWidget);
     if (oldWidget.action.type != widget.action.type) {
       _webhookEventController.text = widget.action.webhookEventName ?? '';
+      _webhookUrlController.text = widget.action.webhookUrl ?? '';
       _shortcutNameController.text = widget.action.shortcutName ?? '';
       _activeField = null;
     }
@@ -123,6 +128,7 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
   @override
   void dispose() {
     _webhookEventController.dispose();
+    _webhookUrlController.dispose();
     _shortcutNameController.dispose();
     super.dispose();
   }
@@ -946,8 +952,32 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
               );
             },
             decoration: InputDecoration(
-              labelText: context.l10n.automationActionIftttEventName,
+              labelText: context.l10n.automationActionWebhookEventName,
               hintText: context.l10n.automationActionIftttHint,
+              isDense: true,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(AppTheme.radius8),
+              ),
+              counterText: '',
+            ),
+          ),
+          SizedBox(height: AppTheme.spacing12),
+          TextField(
+            maxLength: 500,
+            controller: _webhookUrlController,
+            autocorrect: false,
+            enableSuggestions: false,
+            keyboardType: TextInputType.url,
+            onChanged: (value) {
+              widget.onChanged(
+                widget.action.copyWith(
+                  config: {...widget.action.config, 'webhookUrl': value},
+                ),
+              );
+            },
+            decoration: InputDecoration(
+              labelText: context.l10n.automationActionWebhookUrlLabel,
+              hintText: context.l10n.automationActionWebhookUrlHint,
               isDense: true,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AppTheme.radius8),
@@ -963,6 +993,7 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
               borderRadius: BorderRadius.circular(AppTheme.radius8),
             ),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Icon(
                   Icons.info_outline,
@@ -972,7 +1003,7 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
                 const SizedBox(width: AppTheme.spacing8),
                 Expanded(
                   child: Text(
-                    context.l10n.automationActionIftttHelp,
+                    context.l10n.automationActionWebhookHelp,
                     style: TextStyle(color: SemanticColors.muted, fontSize: 12),
                   ),
                 ),
@@ -1228,6 +1259,7 @@ class _ActionEditorState extends ConsumerState<ActionEditor>
                         Navigator.pop(context);
                         if (type != widget.action.type) {
                           _webhookEventController.text = '';
+                          _webhookUrlController.text = '';
                           _shortcutNameController.text = '';
                           // Pre-populate message text for sendMessage/sendToChannel
                           final config = <String, dynamic>{};

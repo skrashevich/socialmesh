@@ -65,6 +65,7 @@ class AppLogging {
   static bool? _tasksLoggingEnabled;
   static bool? _taskSyncLoggingEnabled;
   static bool? _fileTransferLoggingEnabled;
+  static bool? _sipLoggingEnabled;
   static bool? _forceEmptyStates;
   static Logger? _bleLogger;
   static Logger? _mapLogger;
@@ -548,6 +549,16 @@ class AppLogging {
     if (fileTransferLoggingEnabled) debugPrint('FileTransfer: $message');
   }
 
+  static bool get sipLoggingEnabled {
+    _sipLoggingEnabled ??=
+        _safeGetEnv('SIP_LOGGING_ENABLED')?.toLowerCase() == 'true';
+    return _sipLoggingEnabled!;
+  }
+
+  static void sip(String message) {
+    if (sipLoggingEnabled) debugPrint('SIP: $message');
+  }
+
   static void reset() {
     _bleLoggingEnabled = null;
     _protocolLoggingEnabled = null;
@@ -590,6 +601,7 @@ class AppLogging {
     _tasksLoggingEnabled = null;
     _taskSyncLoggingEnabled = null;
     _fileTransferLoggingEnabled = null;
+    _sipLoggingEnabled = null;
     _bleLogger = null;
     _noOpLogger = null;
   }

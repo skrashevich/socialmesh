@@ -205,11 +205,31 @@ class AppInitNotifier extends Notifier<AppInitState> {
         AppLogging.fileTransfer('Eager engine init failed: $e');
       }
 
-      // These can complete after UI is shown
-      await ref.read(messageStorageProvider.future);
-      await ref.read(nodeStorageProvider.future);
-      await ref.read(iftttServiceProvider).init();
-      await ref.read(automationEngineInitProvider.future);
+      // These can complete after UI is shown.
+      // Each is in its own try/catch so a single failure does NOT prevent
+      // the device-connection code below from running. Without this,
+      // a corrupt DB, failed migration, or hanging platform channel
+      // silently kills auto-reconnect for the entire session.
+      try {
+        await ref.read(messageStorageProvider.future);
+      } catch (e) {
+        AppLogging.debug('Message storage init failed: $e');
+      }
+      try {
+        await ref.read(nodeStorageProvider.future);
+      } catch (e) {
+        AppLogging.debug('Node storage init failed: $e');
+      }
+      try {
+        await ref.read(iftttServiceProvider).init();
+      } catch (e) {
+        AppLogging.debug('IFTTT service init failed: $e');
+      }
+      try {
+        await ref.read(automationEngineInitProvider.future);
+      } catch (e) {
+        AppLogging.debug('Automation engine init failed: $e');
+      }
 
       // Eagerly activate the org claims provider so cached claims are
       // available immediately for enterprise query layers.
@@ -287,9 +307,18 @@ class AppInitNotifier extends Notifier<AppInitState> {
       }
 
       AppLogging.debug('Background services initialized');
+    } catch (e) {
+      // Non-critical, log but don't fail — device connection below still runs.
+      AppLogging.debug('Background service init error: $e');
+    }
 
-      // Start background device connection (if auto-reconnect enabled)
-      // This happens AFTER storage is ready so we can load cached data
+    // -----------------------------------------------------------------------
+    // Device connection: runs OUTSIDE the storage/sync try-catch so that a
+    // failed DB open or hanging platform channel can never silently prevent
+    // auto-reconnect. This is the #1 user-visible consequence of the old
+    // structure — the user stays on "Disconnected" with no reconnect attempt.
+    // -----------------------------------------------------------------------
+    try {
       final settings = await ref.read(settingsServiceProvider.future);
       if (settings.autoReconnect && settings.lastDeviceId != null) {
         // Skip if the device is already connected (e.g. the scanner
@@ -317,8 +346,7 @@ class AppInitNotifier extends Notifier<AppInitState> {
         }
       }
     } catch (e) {
-      // Non-critical, log but don't fail
-      AppLogging.debug('Background service init error: $e');
+      AppLogging.debug('Background device connection init error: $e');
     }
   }
 }

@@ -32,6 +32,14 @@ import 'socialmesh/sm_metrics.dart';
 import 'socialmesh/sm_packet_router.dart';
 import 'socialmesh/sm_presence.dart';
 import 'socialmesh/sm_signal.dart';
+import 'sip/sip_codec.dart';
+import 'sip/sip_counters.dart';
+import 'sip/sip_discovery.dart';
+import 'sip/sip_dm.dart';
+import 'sip/sip_frame.dart';
+import 'sip/sip_handshake.dart';
+import 'sip/sip_identity.dart';
+import 'sip/sip_types.dart';
 import '../mesh_packet_dedupe_store.dart';
 import '../mesh_health/mesh_health_models.dart';
 import '../../utils/text_sanitizer.dart';
@@ -433,6 +441,67 @@ class ProtocolService {
   final SmMetrics _smMetrics;
   final SmRateLimiter _smRateLimiter;
   final SmIdentityRateLimiter _smIdentityRateLimiter;
+
+  // --- SIP protocol components ---
+  SipDiscovery? _sipDiscovery;
+  SipHandshakeManager? _sipHandshake;
+  SipIdentityHandler? _sipIdentity;
+  SipDmManager? _sipDm;
+  SipCounters? _sipCounters;
+
+  /// Attach a SipDiscovery instance so inbound SIP packets can be routed.
+  ///
+  /// Called from the provider layer once the discovery engine is created.
+  void attachSipDiscovery(SipDiscovery? discovery) {
+    _sipDiscovery = discovery;
+    if (discovery != null) {
+      AppLogging.sip('ProtocolService: SipDiscovery attached');
+    }
+  }
+
+  /// Attach a SipHandshakeManager for inbound handshake frames.
+  void attachSipHandshake(SipHandshakeManager? handshake) {
+    _sipHandshake = handshake;
+    if (handshake != null) {
+      AppLogging.sip('ProtocolService: SipHandshakeManager attached');
+    }
+  }
+
+  /// Attach a SipIdentityHandler for inbound identity frames.
+  void attachSipIdentity(SipIdentityHandler? identity) {
+    _sipIdentity = identity;
+    if (identity != null) {
+      AppLogging.sip('ProtocolService: SipIdentityHandler attached');
+    }
+  }
+
+  /// Attach a SipDmManager for inbound DM frames.
+  void attachSipDm(SipDmManager? dm) {
+    _sipDm = dm;
+    if (dm != null) {
+      AppLogging.sip('ProtocolService: SipDmManager attached');
+    }
+  }
+
+  /// Attach SipCounters for instrumentation.
+  void attachSipCounters(SipCounters? counters) {
+    _sipCounters = counters;
+    if (counters != null) {
+      AppLogging.sip('ProtocolService: SipCounters attached');
+    }
+  }
+
+  /// Callback invoked when an identity claim is verified, for NodeDex bridging.
+  ///
+  /// Set by the provider layer to bridge verified identities into NodeDex.
+  void Function({
+    required int nodeId,
+    required Uint8List pubkey,
+    required Uint8List personaId,
+    required SipIdentityState identityState,
+    String? displayName,
+  })?
+  onSipIdentityVerified;
 
   /// Per-node session passkeys for PKC remote admin authentication.
   ///
@@ -1338,12 +1407,13 @@ class ProtocolService {
               '${data.payload.length} bytes, '
               'firstByte=${data.payload.isNotEmpty ? '0x${data.payload[0].toRadixString(16).padLeft(2, '0')}' : 'empty'}',
             );
-            // Binary file-transfer packets are sent on PRIVATE_APP (256)
-            // because custom portnums 260-263 are not reliably delivered
-            // by all firmware when SM_BINARY_ENABLED is off.
-            // Detect by inspecting the payload's kind nibble.
+            // Multiplex PRIVATE_APP (256) by inspecting payload magic bytes.
+            // Order: SIP (2-byte magic), file-transfer (kind nibble),
+            // fallback to signals (legacy JSON).
             final privatePayload = Uint8List.fromList(data.payload);
-            if (SmCodec.isFileTransferPayload(privatePayload)) {
+            if (SipCodec.isSipPayload(privatePayload)) {
+              _handleSipPacket(packet, privatePayload);
+            } else if (SmCodec.isFileTransferPayload(privatePayload)) {
               _handleFileTransferOnPrivateApp(packet, privatePayload);
             } else {
               _handleSignalMessage(packet, data);
@@ -3950,6 +4020,326 @@ class ProtocolService {
 
     AppLogging.protocol('SM_PRESENCE broadcast: $presence, packetId=$packetId');
     return packetId;
+  }
+
+  // ---------------------------------------------------------------------------
+  // SIP protocol: send and receive
+  // ---------------------------------------------------------------------------
+
+  /// Send a SIP packet as broadcast on PRIVATE_APP (portnum 256).
+  ///
+  /// The [payload] must be an already-encoded SIP frame (magic bytes included).
+  /// Returns true if the packet was queued for send.
+  Future<bool> sendSipPacket(Uint8List payload) async {
+    if (_myNodeNum == null || !_transport.isConnected) {
+      AppLogging.sip(
+        'SIP_TX: not connected (myNodeNum=$_myNodeNum, '
+        'connected=${_transport.isConnected})',
+      );
+      return false;
+    }
+
+    final packetId = _generatePacketId();
+
+    final data = pb.Data()
+      ..portnum = pn.PortNum.PRIVATE_APP
+      ..payload = payload;
+
+    // Broadcast so all mesh peers receive the SIP frame.
+    final packet = MeshPacketBuilder.userPayload(
+      myNodeNum: _myNodeNum!,
+      to: 0xFFFFFFFF,
+      data: data,
+      packetId: packetId,
+    );
+    packet.hopLimit = 3;
+
+    final toRadio = pb.ToRadio()..packet = packet;
+    await _transport.send(_prepareForSend(toRadio.writeToBuffer()));
+
+    AppLogging.sip(
+      'SIP_TX: sent ${payload.length}B, packetId=$packetId (broadcast)',
+    );
+    return true;
+  }
+
+  /// Handle an inbound PRIVATE_APP packet identified as SIP.
+  void _handleSipPacket(pb.MeshPacket packet, Uint8List payload) {
+    final senderNodeId = packet.from;
+
+    AppLogging.sip(
+      'SIP_RX: from=0x${senderNodeId.toRadixString(16)} '
+      '${payload.length}B',
+    );
+
+    final discovery = _sipDiscovery;
+    if (discovery == null) {
+      AppLogging.sip('SIP_RX: no SipDiscovery attached — dropping');
+      return;
+    }
+
+    // Ignore our own broadcasts looped back.
+    if (discovery.isLocalNode(senderNodeId)) {
+      AppLogging.sip('SIP_RX: ignoring loopback from self');
+      return;
+    }
+
+    final frame = SipCodec.decode(payload);
+    if (frame == null) {
+      AppLogging.sip('SIP_RX: decode failed — dropping');
+      return;
+    }
+
+    AppLogging.sip(
+      'SIP_RX: msgType=${frame.msgType.name} from '
+      '0x${senderNodeId.toRadixString(16)}',
+    );
+
+    // Record RX counter.
+    _sipCounters?.recordRx(frame.msgType, payload.length);
+
+    switch (frame.msgType) {
+      // ----- SIP-0: Discovery -----
+      case SipMessageType.capBeacon:
+        discovery.handleBeacon(frame, senderNodeId);
+      case SipMessageType.rollcallResp:
+        discovery.handleRollcallResp(frame, senderNodeId);
+      case SipMessageType.rollcallReq:
+        final response = discovery.handleRollcallReq(senderNodeId);
+        if (response != null) {
+          // Jittered delay before sending response (0-3s).
+          Future.delayed(
+            Duration(milliseconds: Random().nextInt(3000)),
+            () =>
+                _sendSipAndCount(response.encoded, SipMessageType.rollcallResp),
+          );
+        }
+
+      // ----- SIP-1: Handshake -----
+      case SipMessageType.hsHello:
+        _handleSipHandshakeHello(senderNodeId, frame, payload);
+      case SipMessageType.hsChallenge:
+        _handleSipHandshakeChallenge(senderNodeId, frame);
+      case SipMessageType.hsResponse:
+        _handleSipHandshakeResponse(senderNodeId, frame);
+      case SipMessageType.hsAccept:
+        _handleSipHandshakeAccept(senderNodeId, frame);
+
+      // ----- SIP-1: Identity -----
+      case SipMessageType.idReq:
+        _handleSipIdentityReq(senderNodeId, frame);
+      case SipMessageType.idClaim:
+      case SipMessageType.idResp:
+        _handleSipIdentityClaim(senderNodeId, frame, payload);
+
+      // ----- Ephemeral DM -----
+      case SipMessageType.dmMsg:
+        _handleSipDmMsg(frame);
+
+      // ----- SIP-0: CAP_REQ / CAP_RESP (informational) -----
+      case SipMessageType.capReq:
+      case SipMessageType.capResp:
+        discovery.handleBeacon(frame, senderNodeId);
+
+      // ----- SIP-3: Transfer (deferred in v0.1) -----
+      case SipMessageType.txStart:
+      case SipMessageType.txChunk:
+      case SipMessageType.txAck:
+      case SipMessageType.txNack:
+      case SipMessageType.txDone:
+      case SipMessageType.txCancel:
+        AppLogging.sip(
+          'SIP_RX: SIP-3 transfer msgType=${frame.msgType.name} '
+          '— deferred in v0.1, ignoring',
+        );
+
+      case SipMessageType.error:
+        AppLogging.sip(
+          'SIP_RX: ERROR frame from '
+          '0x${senderNodeId.toRadixString(16)}',
+        );
+    }
+  }
+
+  /// Send a SIP packet and record the TX counter.
+  Future<bool> _sendSipAndCount(Uint8List payload, SipMessageType type) async {
+    final ok = await sendSipPacket(payload);
+    if (ok) {
+      _sipCounters?.recordTx(type, payload.length);
+    }
+    return ok;
+  }
+
+  // ---------------------------------------------------------------------------
+  // SIP-1 Handshake dispatch
+  // ---------------------------------------------------------------------------
+
+  void _handleSipHandshakeHello(
+    int senderNodeId,
+    SipFrame frame,
+    Uint8List rawPayload,
+  ) {
+    final hs = _sipHandshake;
+    if (hs == null) {
+      AppLogging.sip('SIP_RX: no SipHandshakeManager — dropping HS_HELLO');
+      return;
+    }
+
+    _sipCounters?.recordHandshakeInitiated();
+
+    final challengeFrame = hs.handleHello(senderNodeId, frame);
+    if (challengeFrame != null) {
+      final encoded = SipCodec.encode(challengeFrame);
+      if (encoded != null) {
+        _sendSipAndCount(encoded, SipMessageType.hsChallenge);
+      }
+    }
+  }
+
+  void _handleSipHandshakeChallenge(int senderNodeId, SipFrame frame) {
+    final hs = _sipHandshake;
+    if (hs == null) return;
+
+    hs.handleChallenge(senderNodeId, frame).then((responseFrame) {
+      if (responseFrame != null) {
+        final encoded = SipCodec.encode(responseFrame);
+        if (encoded != null) {
+          _sendSipAndCount(encoded, SipMessageType.hsResponse);
+        }
+      }
+    });
+  }
+
+  void _handleSipHandshakeResponse(int senderNodeId, SipFrame frame) {
+    final hs = _sipHandshake;
+    if (hs == null) return;
+
+    hs.handleResponse(senderNodeId, frame).then((acceptFrame) {
+      if (acceptFrame != null) {
+        final encoded = SipCodec.encode(acceptFrame);
+        if (encoded != null) {
+          _sendSipAndCount(encoded, SipMessageType.hsAccept);
+          // Responder-side: handshake complete. Auto-create DM session.
+          _completeSipHandshake(senderNodeId);
+        }
+      }
+    });
+  }
+
+  void _handleSipHandshakeAccept(int senderNodeId, SipFrame frame) {
+    final hs = _sipHandshake;
+    if (hs == null) return;
+
+    final result = hs.handleAccept(senderNodeId, frame);
+    if (result != null) {
+      // Initiator-side: handshake complete. Auto-create DM session.
+      _completeSipHandshake(senderNodeId);
+    } else {
+      _sipCounters?.recordHandshakeFailed();
+    }
+  }
+
+  /// Complete a handshake: consume result, create DM session, update counters.
+  void _completeSipHandshake(int peerNodeId) {
+    final hs = _sipHandshake;
+    final dm = _sipDm;
+    if (hs == null) return;
+
+    final result = hs.consumeResult(peerNodeId);
+    if (result == null) return;
+
+    _sipCounters?.recordHandshakeCompleted();
+
+    // Create ephemeral DM session from handshake result.
+    dm?.createSession(
+      sessionTag: result.sessionTag,
+      peerNodeId: result.peerNodeId,
+      ttlS: result.dmTtlS,
+    );
+
+    AppLogging.sip(
+      'SIP: handshake->DM pipeline complete for '
+      'node=0x${peerNodeId.toRadixString(16)}, '
+      'session_tag=0x${result.sessionTag.toRadixString(16)}',
+    );
+  }
+
+  // ---------------------------------------------------------------------------
+  // SIP-1 Identity dispatch
+  // ---------------------------------------------------------------------------
+
+  void _handleSipIdentityReq(int senderNodeId, SipFrame frame) {
+    final identity = _sipIdentity;
+    if (identity == null) {
+      AppLogging.sip('SIP_RX: no SipIdentityHandler — dropping ID_REQ');
+      return;
+    }
+
+    identity.handleInboundReq(frame: frame, senderNodeId: senderNodeId).then((
+      resp,
+    ) {
+      if (resp != null) {
+        _sendSipAndCount(resp.encoded, SipMessageType.idResp);
+      }
+    });
+  }
+
+  void _handleSipIdentityClaim(
+    int senderNodeId,
+    SipFrame frame,
+    Uint8List rawPayload,
+  ) {
+    final identity = _sipIdentity;
+    if (identity == null) {
+      AppLogging.sip('SIP_RX: no SipIdentityHandler — dropping ID_CLAIM');
+      return;
+    }
+
+    identity
+        .handleInboundClaim(
+          frame: frame,
+          rawFrameBytes: rawPayload,
+          senderNodeId: senderNodeId,
+        )
+        .then((result) {
+          if (result == null) return;
+
+          if (result.signatureValid) {
+            _sipCounters?.recordSignatureSuccess();
+            _sipCounters?.recordIdentityVerified();
+
+            // Bridge verified identity into NodeDex.
+            onSipIdentityVerified?.call(
+              nodeId: senderNodeId,
+              pubkey: result.claim.pubkey,
+              personaId: result.claim.personaId,
+              identityState: result.state,
+              displayName: result.claim.displayName.isNotEmpty
+                  ? result.claim.displayName
+                  : null,
+            );
+          } else {
+            _sipCounters?.recordSignatureFailure();
+          }
+
+          if (result.state == SipIdentityState.changedKey) {
+            _sipCounters?.recordIdentityChangedKey();
+          }
+        });
+  }
+
+  // ---------------------------------------------------------------------------
+  // SIP DM dispatch
+  // ---------------------------------------------------------------------------
+
+  void _handleSipDmMsg(SipFrame frame) {
+    final dm = _sipDm;
+    if (dm == null) {
+      AppLogging.sip('SIP_RX: no SipDmManager — dropping DM_MSG');
+      return;
+    }
+
+    dm.handleInboundDm(frame);
   }
 
   /// Send a file transfer packet as broadcast on PRIVATE_APP (portnum 256).

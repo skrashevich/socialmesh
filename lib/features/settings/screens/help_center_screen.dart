@@ -172,7 +172,7 @@ class _HelpCenterScreenState extends ConsumerState<HelpCenterScreen>
               ),
               ...HelpArticleCategory.values.map(
                 (category) => StatusFilterChip(
-                  label: category.displayName,
+                  label: category.localizedName(context),
                   count: _categoryCount(articles, category),
                   isSelected: _selectedCategory == category,
                   color: category.color,
@@ -319,7 +319,7 @@ class _HelpCenterScreenState extends ConsumerState<HelpCenterScreen>
         SliverPersistentHeader(
           pinned: false,
           delegate: SectionHeaderDelegate(
-            title: category.displayName,
+            title: category.localizedName(context),
             count: categoryArticles.length,
           ),
         ),

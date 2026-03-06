@@ -662,6 +662,25 @@ class NodeDexNotifier extends Notifier<Map<int, NodeDexEntry>> {
     _triggerImmediateSync();
   }
 
+  /// Apply a SIP identity/capability update to a NodeDex entry.
+  ///
+  /// Called by the SIP NodeDex bridge when a peer is discovered or
+  /// an identity claim is verified. The [updatedEntry] comes from
+  /// [SipNodeDexBridge] with SIP fields already applied.
+  void applySipUpdate(NodeDexEntry updatedEntry) {
+    final nodeNum = updatedEntry.nodeNum;
+    if (state[nodeNum] == null) {
+      AppLogging.nodeDex(
+        'applySipUpdate — node $nodeNum not in state, inserting',
+      );
+    }
+
+    final newState = {...state, nodeNum: updatedEntry};
+    state = newState;
+    _lastKnownState = newState;
+    _store?.saveEntry(updatedEntry);
+  }
+
   // ---------------------------------------------------------------------------
   // Cloud sync helpers
   // ---------------------------------------------------------------------------

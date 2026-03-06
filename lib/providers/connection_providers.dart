@@ -851,8 +851,10 @@ class DeviceConnectionNotifier extends Notifier<DeviceConnectionState2> {
       if (Platform.isAndroid) {
         try {
           final bondedDevices = await FlutterBluePlus.bondedDevices;
+          var foundInBonded = false;
           for (final device in bondedDevices) {
             if (device.remoteId.toString() == lastDeviceId) {
+              foundInBonded = true;
               AppLogging.connection(
                 '🔌 startBackgroundConnection: Found target in bonded devices, cleaning up...',
               );
@@ -866,8 +868,30 @@ class DeviceConnectionNotifier extends Notifier<DeviceConnectionState2> {
               }
             }
           }
+
+          // If the saved device is NOT in the bonded list, the user likely
+          // "forgot" it in Android Bluetooth settings. Attempting to connect
+          // will fail with GATT 133 or auth errors, leaving the user stuck
+          // on the Nodes Screen with a misleading "Device not found" banner.
+          // Trigger pairing invalidation immediately so MainShell shows the
+          // inline Scanner with clear guidance to re-pair.
+          if (!foundInBonded) {
+            AppLogging.connection(
+              '🔌 startBackgroundConnection: Device NOT in bonded devices — '
+              'bond was likely removed in Android Bluetooth settings. '
+              'Triggering pairing invalidation.',
+            );
+            _backgroundScanInProgress = false;
+            await handlePairingInvalidation(
+              PairingInvalidationReason.peerReset,
+            );
+            return;
+          }
         } catch (e) {
-          // Ignore
+          // Ignore — proceed with connection attempt if bond check fails
+          AppLogging.connection(
+            '🔌 startBackgroundConnection: Bond check failed: $e',
+          );
         }
       }
 
@@ -1415,6 +1439,12 @@ class DeviceConnectionNotifier extends Notifier<DeviceConnectionState2> {
         AppLogging.connection(
           'Protocol started but no myNodeNum - auth failed',
         );
+        // Set flag BEFORE transport.disconnect() so _handleDisconnect
+        // sees authFailed and calls setNeedsScanner() instead of treating
+        // it as an unexpected disconnect (which just shows a "Device not
+        // found" banner with a useless Retry button). This mirrors the
+        // same pattern in _initializeProtocolAfterAutoReconnect().
+        _authFailurePending = true;
         await transport.disconnect();
         throw Exception('Authentication failed');
       }
@@ -1458,6 +1488,43 @@ class DeviceConnectionNotifier extends Notifier<DeviceConnectionState2> {
           appleCode: pairingInvalidationAppleCode(e),
         );
         rethrow;
+      }
+
+      // On Android, GATT error 133 during auto-reconnect with a missing
+      // bond means the user "forgot" the device in Bluetooth settings.
+      // Verify the bond is actually gone before treating it as pairing
+      // invalidation (133 can also mean cache corruption or range issues
+      // when the bond is intact).
+      if (Platform.isAndroid) {
+        final errorStr = e.toString().toLowerCase();
+        final isGatt133 =
+            errorStr.contains('android-code: 133') ||
+            (errorStr.contains('gatt_error') &&
+                !errorStr.contains('android-code:'));
+        if (isGatt133) {
+          try {
+            final bondedDevices = await FlutterBluePlus.bondedDevices;
+            final isStillBonded = bondedDevices.any(
+              (d) => d.remoteId.toString() == device.id,
+            );
+            if (!isStillBonded) {
+              AppLogging.connection(
+                '🔌 _connectToDevice: GATT 133 + bond missing — '
+                'device was forgotten in Android Bluetooth settings. '
+                'Triggering pairing invalidation.',
+              );
+              await handlePairingInvalidation(
+                PairingInvalidationReason.peerReset,
+              );
+              rethrow;
+            }
+          } catch (bondCheckError) {
+            // Bond check itself failed — fall through to normal error handling
+            AppLogging.connection(
+              '🔌 _connectToDevice: Bond check after GATT 133 failed: $bondCheckError',
+            );
+          }
+        }
       }
 
       AppLogging.connection('Connection failed: $e');

@@ -24,6 +24,7 @@ import '../../../services/haptic_service.dart';
 import '../../../utils/snackbar.dart';
 import '../widgets/file_content_preview.dart';
 import '../widgets/file_transfer_card.dart';
+import '../widgets/file_transfer_image_gallery.dart';
 
 /// Dedicated screen for viewing and managing all file transfers.
 ///
@@ -555,7 +556,14 @@ class _FileTransfersScreenState extends ConsumerState<FileTransfersScreen>
   }
 
   void _showTransferDetail(FileTransferState transfer) {
-    // For completed transfers with content, go straight to the viewer.
+    // For completed image transfers, open the fullscreen gallery for a
+    // proper viewing experience (pinch-to-zoom, immersive black background).
+    if (FileTransferImageGallery.canShow(transfer)) {
+      FileTransferImageGallery.show(context, transfer: transfer);
+      return;
+    }
+
+    // For completed non-image transfers with content, open the bottom sheet.
     // FileContentPreview handles both in-memory bytes and a saved path on disk.
     if (transfer.state == TransferState.complete) {
       final canPreview =

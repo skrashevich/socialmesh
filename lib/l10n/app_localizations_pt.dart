@@ -1835,6 +1835,20 @@ class AppLocalizationsPt extends AppLocalizations {
   String get automationActionIftttHint => 'ex. meshtastic_alert';
 
   @override
+  String get automationActionWebhookEventName => 'Event Name';
+
+  @override
+  String get automationActionWebhookUrlLabel => 'Webhook URL (optional)';
+
+  @override
+  String get automationActionWebhookUrlHint =>
+      'e.g., http://192.168.1.100:8123/api/webhook/...';
+
+  @override
+  String get automationActionWebhookHelp =>
+      'Enter a custom URL to POST directly, or leave blank to use your global IFTTT/webhook settings. Private/LAN addresses (192.168.x, 10.x) are supported.';
+
+  @override
   String get automationActionLogEvent => 'Registrar no histórico';
 
   @override
@@ -4836,6 +4850,21 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
+  String fileTransferCardChunksProgress(String completed, String total) {
+    return '$completed/$total chunks';
+  }
+
+  @override
+  String fileTransferCardChunksTotal(String count) {
+    return '$count chunks';
+  }
+
+  @override
+  String fileTransferCardChunkSize(String size) {
+    return '$size ea.';
+  }
+
+  @override
   String get fileTransferBinaryFileHint =>
       'Arquivo binário — salve para abrir com um app externo';
 
@@ -4949,6 +4978,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get fileTransferContactsSendFile => 'Enviar arquivo';
 
   @override
+  String get fileTransferContactsSendImage => 'Send Image';
+
+  @override
   String fileTransferContactsStarted(String filename) {
     return 'Transferência iniciada: $filename';
   }
@@ -4970,6 +5002,9 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
+  String get fileTransferContainerMenuHelp => 'Help';
+
+  @override
   String get fileTransferContainerPurgeExpired => 'Excluir expiradas';
 
   @override
@@ -4978,6 +5013,9 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get fileTransferContainerSendFile => 'Enviar arquivo';
+
+  @override
+  String get fileTransferContainerSendImage => 'Send Image';
 
   @override
   String get fileTransferContainerSendToNode => 'Enviar para nó';
@@ -5092,6 +5130,40 @@ class AppLocalizationsPt extends AppLocalizations {
       'Não foi possível decodificar a imagem';
 
   @override
+  String get fileTransferImagePickerTitle => 'Send Image';
+
+  @override
+  String get fileTransferImagePickerCamera => 'Take Photo';
+
+  @override
+  String get fileTransferImagePickerCameraSubtitle =>
+      'Use camera to take a photo';
+
+  @override
+  String get fileTransferImagePickerGallery => 'Choose from Gallery';
+
+  @override
+  String get fileTransferImagePickerGallerySubtitle =>
+      'Select a photo from your library';
+
+  @override
+  String get fileTransferImagePickerCancel => 'Cancel';
+
+  @override
+  String get fileTransferImageCompressing =>
+      'Compressing image for mesh transfer...';
+
+  @override
+  String fileTransferImageTooLargeAfterCompression(String limit) {
+    return 'Image could not be compressed to fit within $limit KB mesh limit.';
+  }
+
+  @override
+  String fileTransferImageCompressed(String size, String width, String height) {
+    return 'Image compressed to $size bytes (${width}x$height)';
+  }
+
+  @override
   String get fileTransferInfoChunkSize => 'Tamanho do bloco';
 
   @override
@@ -5150,6 +5222,63 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get fileTransferPinchToZoom => 'Aperte para ampliar';
+
+  @override
+  String fileTransferGalleryToNode(String name) {
+    return 'to $name';
+  }
+
+  @override
+  String fileTransferGalleryFromNode(String name) {
+    return 'from $name';
+  }
+
+  @override
+  String get fileTransferGallerySentBadge => 'Sent';
+
+  @override
+  String get fileTransferGalleryReceivedBadge => 'Received';
+
+  @override
+  String fileTransferGallerySizeBadge(String size) {
+    return '$size';
+  }
+
+  @override
+  String fileTransferGalleryChunksBadge(String completed, String total) {
+    return '$completed/$total chunks';
+  }
+
+  @override
+  String fileTransferGalleryDurationBadge(String duration) {
+    return '$duration';
+  }
+
+  @override
+  String fileTransferGalleryHashBadge(String hash) {
+    return 'SHA-256 $hash';
+  }
+
+  @override
+  String get fileTransferGalleryViewDetails => 'Details';
+
+  @override
+  String get fileTransferGalleryMeshTransfer => 'Mesh Transfer';
+
+  @override
+  String fileTransferGalleryDurationSeconds(int count) {
+    return '${count}s';
+  }
+
+  @override
+  String fileTransferGalleryDurationMinutes(int count) {
+    return '${count}m';
+  }
+
+  @override
+  String fileTransferGalleryDurationHours(int hours, int minutes) {
+    return '${hours}h ${minutes}m';
+  }
 
   @override
   String get fileTransferPurgeExpired => 'Excluir expiradas';
@@ -22046,6 +22175,284 @@ class AppLocalizationsPt extends AppLocalizations {
   String get appearanceLanguageRussian => 'Русский';
 
   @override
+  String get appearanceLanguagePortuguese => 'Português';
+
+  @override
+  String get helpCategoryGettingStarted => 'Primeiros passos';
+
+  @override
+  String get helpCategoryMeshBasics => 'Fundamentos do mesh';
+
+  @override
+  String get helpCategoryChannels => 'Canais e criptografia';
+
+  @override
+  String get helpCategoryMessaging => 'Mensagens';
+
+  @override
+  String get helpCategoryNodes => 'Nós e funções';
+
+  @override
+  String get helpCategoryDevice => 'Dispositivo e rádio';
+
+  @override
+  String get helpCategoryNetwork => 'Rede e mapas';
+
+  @override
+  String get helpCategorySafety => 'Segurança e regras';
+
+  @override
+  String get flowNodeNodeOnline => 'Nó online';
+
+  @override
+  String get flowNodeNodeOffline => 'Nó offline';
+
+  @override
+  String get flowNodeBatteryLow => 'Bateria fraca';
+
+  @override
+  String get flowNodeBatteryFull => 'Bateria cheia';
+
+  @override
+  String get flowNodeMessageReceived => 'Mensagem recebida';
+
+  @override
+  String get flowNodePositionChanged => 'Posição alterada';
+
+  @override
+  String get flowNodeGeofenceEnter => 'Entrada no geofence';
+
+  @override
+  String get flowNodeGeofenceExit => 'Saída do geofence';
+
+  @override
+  String get flowNodeSendMessage => 'Enviar mensagem';
+
+  @override
+  String get flowNodePlaySound => 'Reproduzir som';
+
+  @override
+  String get flowNodeVibrate => 'Vibrar';
+
+  @override
+  String get flowNodePushNotification => 'Notificação push';
+
+  @override
+  String get flowNodeTriggerWebhook => 'Acionar webhook';
+
+  @override
+  String get flowNodeLogEvent => 'Registrar evento';
+
+  @override
+  String get flowNodeUpdateWidget => 'Atualizar widget';
+
+  @override
+  String get flowNodeSendToChannel => 'Enviar para canal';
+
+  @override
+  String get flowNodeTriggerShortcut => 'Acionar atalho';
+
+  @override
+  String get flowNodeGlyphPattern => 'Padrão de glifo';
+
+  @override
+  String get flowNodeTimeRange => 'Intervalo de tempo';
+
+  @override
+  String get flowNodeDayOfWeek => 'Dia da semana';
+
+  @override
+  String get flowNodeBatteryAbove => 'Bateria acima de';
+
+  @override
+  String get flowNodeBatteryBelow => 'Bateria abaixo de';
+
+  @override
+  String get flowNodeNodeIsOnline => 'Nó está online';
+
+  @override
+  String get flowNodeNodeIsOffline => 'Nó está offline';
+
+  @override
+  String get flowNodeWithinGeofence => 'Dentro do geofence';
+
+  @override
+  String get flowNodeOutsideGeofence => 'Fora do geofence';
+
+  @override
+  String get flowNodeGateAllMustPass => 'Todas as entradas devem passar';
+
+  @override
+  String get flowNodeGateAnyCanPass => 'Qualquer entrada pode passar';
+
+  @override
+  String get flowNodeGateInverts => 'Inverte o sinal';
+
+  @override
+  String get flowNodeGateDelays => 'Atrasa o sinal';
+
+  @override
+  String get flowSubgroupTriggers => 'Gatilhos';
+
+  @override
+  String get flowSubgroupConditions => 'Condições';
+
+  @override
+  String get flowSubgroupLogic => 'Lógica';
+
+  @override
+  String get flowSubgroupActions => 'Ações';
+
+  @override
+  String get flowSubgroupNodeDex => 'NodeDex';
+
+  @override
+  String get flowCompilerVisualFlow => 'Fluxo visual';
+
+  @override
+  String flowCompilerWhen(String trigger) {
+    return 'Quando: $trigger';
+  }
+
+  @override
+  String flowCompilerIf(String conditions) {
+    return 'Se: $conditions';
+  }
+
+  @override
+  String flowCompilerAfterDelay(String delay) {
+    return 'Após: atraso de $delay';
+  }
+
+  @override
+  String flowCompilerThen(String actions) {
+    return 'Então: $actions';
+  }
+
+  @override
+  String get glyphZoneA => 'Zona A';
+
+  @override
+  String get glyphZoneB => 'Zona B';
+
+  @override
+  String get glyphZoneC => 'Zona C';
+
+  @override
+  String get glyphZoneD => 'Zona D';
+
+  @override
+  String get glyphZoneE => 'Zona E';
+
+  @override
+  String get glyphZoneDescCamera => 'Câmera';
+
+  @override
+  String get glyphZoneDescDiagonal => 'Faixa diagonal';
+
+  @override
+  String get glyphZoneDescUsbc => 'Porta USB-C';
+
+  @override
+  String get glyphZoneDescLower => 'Faixa inferior';
+
+  @override
+  String get glyphZoneDescBattery => 'Bateria';
+
+  @override
+  String get appearanceFontBranded => 'Personalizada';
+
+  @override
+  String get appearanceFontBrandedDesc =>
+      'JetBrainsMono - Nossa fonte monoespaçada exclusiva';
+
+  @override
+  String get appearanceFontSystem => 'Sistema';
+
+  @override
+  String get appearanceFontSystemDesc => 'A fonte padrão do seu dispositivo';
+
+  @override
+  String get appearanceFontAccessibility => 'Acessibilidade';
+
+  @override
+  String get appearanceFontAccessibilityDesc =>
+      'Inter - Otimizada para legibilidade';
+
+  @override
+  String get appearanceTextScaleSystem => 'Padrão do sistema';
+
+  @override
+  String get appearanceTextScaleSystemDesc =>
+      'Segue as configurações de acessibilidade do dispositivo';
+
+  @override
+  String get appearanceTextScaleDefault => 'Padrão';
+
+  @override
+  String get appearanceTextScaleDefaultDesc =>
+      'Tamanho fixo, ignora as configurações do dispositivo';
+
+  @override
+  String get appearanceTextScaleLarge => 'Grande';
+
+  @override
+  String get appearanceTextScaleLargeDesc => '15% maior que o padrão';
+
+  @override
+  String get appearanceTextScaleExtraLarge => 'Extra grande';
+
+  @override
+  String get appearanceTextScaleExtraLargeDesc => '30% maior que o padrão';
+
+  @override
+  String get appearanceDensityCompact => 'Compacto';
+
+  @override
+  String get appearanceDensityCompactDesc =>
+      'Interface mais densa, mais conteúdo visível';
+
+  @override
+  String get appearanceDensityComfortable => 'Confortável';
+
+  @override
+  String get appearanceDensityComfortableDesc =>
+      'Espaçamento equilibrado (padrão)';
+
+  @override
+  String get appearanceDensityLargeTouch => 'Toque grande';
+
+  @override
+  String get appearanceDensityLargeTouchDesc =>
+      'Áreas de toque maiores, mais fácil de usar';
+
+  @override
+  String get appearanceContrastNormal => 'Normal';
+
+  @override
+  String get appearanceContrastNormalDesc => 'Contraste de cores padrão';
+
+  @override
+  String get appearanceContrastHigh => 'Alto contraste';
+
+  @override
+  String get appearanceContrastHighDesc =>
+      'Visibilidade aprimorada para texto e interface';
+
+  @override
+  String get appearanceMotionNormal => 'Normal';
+
+  @override
+  String get appearanceMotionNormalDesc => 'Todas as animações habilitadas';
+
+  @override
+  String get appearanceMotionReduced => 'Reduzido';
+
+  @override
+  String get appearanceMotionReducedDesc =>
+      'Animações mínimas para acessibilidade';
+
+  @override
   String get appearanceFont => 'Fonte';
 
   @override
@@ -25098,6 +25505,30 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get iftttConfigSaveFailed => 'Falha ao salvar configurações IFTTT';
+
+  @override
+  String get webhookModeIfttt => 'IFTTT Key';
+
+  @override
+  String get webhookModeCustomUrl => 'Custom URL';
+
+  @override
+  String get webhookConfigCustomUrlLabel => 'Webhook URL';
+
+  @override
+  String get webhookConfigCustomUrlHint =>
+      'http://192.168.1.100:8123/api/webhook/...';
+
+  @override
+  String get webhookConfigCustomUrlHelper =>
+      'POST JSON to any HTTP/HTTPS endpoint. LAN addresses supported.';
+
+  @override
+  String get webhookConfigEnterUrlToEnable =>
+      'Please enter a webhook URL to enable';
+
+  @override
+  String get webhookConfigEnterUrlFirst => 'Please enter a webhook URL first';
 
   @override
   String get mqttConfigTitle => 'MQTT';
@@ -29875,4 +30306,185 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get commandErrorConnectDevice =>
       'Conecte seu dispositivo para usar este recurso';
+
+  @override
+  String get sipBadgeLabel => 'Socialmesh';
+
+  @override
+  String get sipIdentityStateUnverified => 'Unverified';
+
+  @override
+  String get sipIdentityStateVerifiedTofu => 'Verified (TOFU)';
+
+  @override
+  String get sipIdentityStatePinned => 'Pinned';
+
+  @override
+  String get sipIdentityStateChangedKey => 'Key Changed';
+
+  @override
+  String get sipIdentityStateStale => 'Expired';
+
+  @override
+  String get sipChangedKeyWarning =>
+      'This peer\'s identity key has changed. Verify before trusting.';
+
+  @override
+  String get sipDisplayNameLabel => 'SIP Name';
+
+  @override
+  String get sipPersonaIdLabel => 'Persona ID';
+
+  @override
+  String get sipDiscoveryTitle => 'Socialmesh Discovery';
+
+  @override
+  String sipDiscoveryPeersNearby(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'peers',
+      one: 'peer',
+    );
+    return '$count Socialmesh $_temp0 nearby';
+  }
+
+  @override
+  String get sipDiscoveryNoPeers => 'No Socialmesh peers detected';
+
+  @override
+  String get sipDiscoveryNoPeersDescription =>
+      'Socialmesh peers will appear here when detected via beacon or rollcall.';
+
+  @override
+  String get sipDiscoveryScanButton => 'Scan for Socialmesh';
+
+  @override
+  String sipDiscoveryScanCooldown(int seconds) {
+    return 'Scan available in ${seconds}s';
+  }
+
+  @override
+  String get sipDiscoveryPeerAnonymous => 'SIP Peer';
+
+  @override
+  String sipDiscoveryDeviceClass(String deviceClass) {
+    return 'Device class: $deviceClass';
+  }
+
+  @override
+  String get sipHandshakeAction => 'Handshake';
+
+  @override
+  String get sipHandshakeInProgress => 'Handshake in progress…';
+
+  @override
+  String get sipHandshakeComplete => 'Handshake complete';
+
+  @override
+  String get sipHandshakeFailed => 'Handshake failed';
+
+  @override
+  String get sipRequestIdentity => 'Request Identity';
+
+  @override
+  String get sipShareIdentity => 'Share Identity';
+
+  @override
+  String get sipDmTitle => 'Ephemeral DM';
+
+  @override
+  String sipDmExpiry(String time) {
+    return 'Expires in $time';
+  }
+
+  @override
+  String get sipDmPinned => 'Session pinned';
+
+  @override
+  String get sipDmInputHint => 'Message…';
+
+  @override
+  String get sipDmSendButton => 'Send';
+
+  @override
+  String get sipDmEmptyState => 'No messages yet';
+
+  @override
+  String get sipDmEmptyDescription =>
+      'Send a message to start the conversation.';
+
+  @override
+  String get sipDmBudgetExhausted =>
+      'Airtime budget exhausted. Try again later.';
+
+  @override
+  String get sipDmSessionClosed => 'This session has been closed.';
+
+  @override
+  String get sipDmPinAction => 'Pin Session';
+
+  @override
+  String get sipDmUnpinAction => 'Unpin Session';
+
+  @override
+  String get sipDmCloseAction => 'Close Session';
+
+  @override
+  String get sipDmOpenAction => 'Open DM';
+
+  @override
+  String get sipPeerDetailTitle => 'Peer Details';
+
+  @override
+  String get sipPeerDetailNodeId => 'Node ID';
+
+  @override
+  String get sipPeerDetailDeviceClass => 'Device Class';
+
+  @override
+  String get sipPeerDetailFeatures => 'Features';
+
+  @override
+  String get sipPeerDetailMtu => 'MTU Hint';
+
+  @override
+  String get sipPeerDetailLastSeen => 'Last Seen';
+
+  @override
+  String get sipPeerDetailJustNow => 'Just now';
+
+  @override
+  String sipPeerDetailMinutesAgo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'minutes',
+      one: 'minute',
+    );
+    return '$count $_temp0 ago';
+  }
+
+  @override
+  String sipPeerDetailHoursAgo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'hours',
+      one: 'hour',
+    );
+    return '$count $_temp0 ago';
+  }
+
+  @override
+  String get sipPeerDetailSupportsSip1 => 'Identity & Handshake';
+
+  @override
+  String get sipPeerDetailSupportsSip3 => 'Micro-Exchange';
+
+  @override
+  String get sipPeerDetailCapabilities => 'Capabilities';
+
+  @override
+  String get sipCountersTitle => 'SIP Debug Counters';
 }

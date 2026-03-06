@@ -11,15 +11,63 @@ import '../../l10n/app_localizations.dart';
 /// Falls back to the original English [title] when no localization exists.
 String localizedFlowTitle(String title, AppLocalizations l10n) {
   return switch (title) {
-    // Trigger nodes
+    // Trigger nodes — displayNames
     'Event' => l10n.flowNodeEvent,
+    'Node Online' => l10n.flowNodeNodeOnline,
+    'Node Offline' => l10n.flowNodeNodeOffline,
+    'Battery Low' => l10n.flowNodeBatteryLow,
+    'Battery Full' => l10n.flowNodeBatteryFull,
+    'Message Received' => l10n.flowNodeMessageReceived,
     'Message Contains' => l10n.flowNodeMessageContains,
+    'Position Changed' => l10n.flowNodePositionChanged,
+    'Geofence Enter' => l10n.flowNodeGeofenceEnter,
+    'Geofence Exit' => l10n.flowNodeGeofenceExit,
     'Node Silent' => l10n.flowNodeNodeSilent,
     'Scheduled' => l10n.flowNodeScheduled,
     'Signal Weak' => l10n.flowNodeSignalWeak,
     'Channel Activity' => l10n.flowNodeChannelActivity,
     'Detection Sensor' => l10n.flowNodeDetectionSensor,
     'Manual' => l10n.flowNodeManual,
+    // Action nodes — displayNames
+    'Send Message' => l10n.flowNodeSendMessage,
+    'Play Sound' => l10n.flowNodePlaySound,
+    'Vibrate' => l10n.flowNodeVibrate,
+    'Push Notification' => l10n.flowNodePushNotification,
+    'Trigger Webhook' => l10n.flowNodeTriggerWebhook,
+    'Log Event' => l10n.flowNodeLogEvent,
+    'Update Widget' => l10n.flowNodeUpdateWidget,
+    'Send to Channel' => l10n.flowNodeSendToChannel,
+    'Trigger Shortcut' => l10n.flowNodeTriggerShortcut,
+    'Glyph Pattern' => l10n.flowNodeGlyphPattern,
+    'Execute' => l10n.flowNodeExecute,
+    // Condition nodes — displayNames
+    'Time Range' => l10n.flowNodeTimeRange,
+    'Day of Week' => l10n.flowNodeDayOfWeek,
+    'Battery Above' => l10n.flowNodeBatteryAbove,
+    'Battery Below' => l10n.flowNodeBatteryBelow,
+    'Node Is Online' => l10n.flowNodeNodeIsOnline,
+    'Node Is Offline' => l10n.flowNodeNodeIsOffline,
+    'Within Geofence' => l10n.flowNodeWithinGeofence,
+    'Outside Geofence' => l10n.flowNodeOutsideGeofence,
+    // Logic gate nodes — displayNames + descriptions
+    'AND' => l10n.flowNodeAnd,
+    'OR' => l10n.flowNodeOr,
+    'NOT' => l10n.flowNodeNot,
+    'Delay' => l10n.flowNodeDelay,
+    'All Met' => l10n.flowNodeAllMet,
+    'Any Met' => l10n.flowNodeAnyMet,
+    'Inverted' => l10n.flowNodeInverted,
+    'Delayed' => l10n.flowNodeDelayed,
+    'All inputs must pass' => l10n.flowNodeGateAllMustPass,
+    'Any input can pass' => l10n.flowNodeGateAnyCanPass,
+    'Inverts the signal' => l10n.flowNodeGateInverts,
+    'Delays the signal' => l10n.flowNodeGateDelays,
+    // Subgroup names
+    'Triggers' => l10n.flowSubgroupTriggers,
+    'Conditions' => l10n.flowSubgroupConditions,
+    'Logic' => l10n.flowSubgroupLogic,
+    'Actions' => l10n.flowSubgroupActions,
+    'NodeDex' => l10n.flowSubgroupNodeDex,
     // NodeDex query nodes
     'All Nodes' => l10n.flowNodeAllNodes,
     'Nodes' => l10n.flowNodeNodes,
@@ -35,17 +83,6 @@ String localizedFlowTitle(String title, AppLocalizations l10n) {
     'Filtered' => l10n.flowNodeFiltered,
     'Sorted' => l10n.flowNodeSorted,
     'Limited' => l10n.flowNodeLimited,
-    // Action nodes
-    'Execute' => l10n.flowNodeExecute,
-    // Logic gate nodes
-    'AND' => l10n.flowNodeAnd,
-    'OR' => l10n.flowNodeOr,
-    'NOT' => l10n.flowNodeNot,
-    'Delay' => l10n.flowNodeDelay,
-    'All Met' => l10n.flowNodeAllMet,
-    'Any Met' => l10n.flowNodeAnyMet,
-    'Inverted' => l10n.flowNodeInverted,
-    'Delayed' => l10n.flowNodeDelayed,
     _ => title,
   };
 }

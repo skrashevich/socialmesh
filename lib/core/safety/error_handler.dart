@@ -65,18 +65,18 @@ class AppErrorHandler {
       // In debug, log full details so layout overflows are diagnosable.
       // FlutterErrorDetails.context contains the widget path (e.g.
       // "The relevant error-causing widget was: Row file:///…:123").
-      debugPrint('Recovered from error: ${details.exception}');
+      AppLogging.debug('Recovered from error: ${details.exception}');
       if (details.context != null) {
-        debugPrint('  Context: ${details.context}');
+        AppLogging.debug('  Context: ${details.context}');
       }
       if (details.informationCollector != null) {
         final info = details.informationCollector!()
             .map((d) => d.toString())
             .join('\n  ');
-        debugPrint('  Info:\n  $info');
+        AppLogging.debug('  Info:\n  $info');
       }
       if (details.stack != null) {
-        debugPrint('  Stack: ${details.stack}');
+        AppLogging.debug('  Stack: ${details.stack}');
       }
     }
   }
@@ -214,7 +214,7 @@ class AppErrorHandler {
       );
     } catch (e) {
       // Crashlytics itself failed - just log locally
-      debugPrint('Failed to report to Crashlytics: $e');
+      AppLogging.debug('Failed to report to Crashlytics: $e');
     }
   }
 

@@ -45,18 +45,23 @@ bool? _parseBoolEnv(String key) {
 class SmFeatureFlag {
   bool _smBinaryEnabled;
   bool _legacyCompatibilityMode;
+  bool _sipEnabled;
 
   /// Creates feature flags.
   ///
   /// Resolution order for each flag:
   /// 1. Explicit constructor argument (if provided).
-  /// 2. `.env` value (`SM_BINARY_ENABLED`, `SM_LEGACY_COMPAT`).
+  /// 2. `.env` value (`SM_BINARY_ENABLED`, `SM_LEGACY_COMPAT`, `SIP_ENABLED`).
   /// 3. Hardcoded safe default.
-  SmFeatureFlag({bool? smBinaryEnabled, bool? legacyCompatibilityMode})
-    : _smBinaryEnabled =
-          smBinaryEnabled ?? _parseBoolEnv('SM_BINARY_ENABLED') ?? false,
-      _legacyCompatibilityMode =
-          legacyCompatibilityMode ?? _parseBoolEnv('SM_LEGACY_COMPAT') ?? true;
+  SmFeatureFlag({
+    bool? smBinaryEnabled,
+    bool? legacyCompatibilityMode,
+    bool? sipEnabled,
+  }) : _smBinaryEnabled =
+           smBinaryEnabled ?? _parseBoolEnv('SM_BINARY_ENABLED') ?? false,
+       _legacyCompatibilityMode =
+           legacyCompatibilityMode ?? _parseBoolEnv('SM_LEGACY_COMPAT') ?? true,
+       _sipEnabled = sipEnabled ?? _parseBoolEnv('SIP_ENABLED') ?? false;
 
   /// Whether to send binary-encoded SM packets.
   /// Default: false (safe-by-default).
@@ -94,7 +99,17 @@ class SmFeatureFlag {
   void setLegacyCompatibilityMode(bool value) =>
       _legacyCompatibilityMode = value;
 
+  /// Whether the Socialmesh Interop Profile (SIP) is enabled.
+  ///
+  /// When true, the app participates in SIP discovery, handshake,
+  /// identity exchange, ephemeral DM, and micro-exchange.
+  /// Default: false (disabled until explicitly opted in).
+  bool get sipEnabled => _sipEnabled;
+
+  /// Set SIP enabled state.
+  void setSipEnabled(bool value) => _sipEnabled = value;
+
   @override
   String toString() =>
-      'SmFeatureFlag(binary=$_smBinaryEnabled, legacyCompat=$_legacyCompatibilityMode)';
+      'SmFeatureFlag(binary=$_smBinaryEnabled, legacyCompat=$_legacyCompatibilityMode, sip=$_sipEnabled)';
 }

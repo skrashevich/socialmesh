@@ -20,9 +20,10 @@
 // - serialize() → JSON string of the current graph state
 // - save() → compile + persist via automationsProvider
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../logging.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../features/automations/models/automation.dart';
 import '../compiler/flow_compiler.dart';
 import '../nodes/action_nodes.dart';
@@ -212,7 +213,7 @@ class VisualFlowNotifier extends Notifier<VisualFlowState> {
       additionalNodes: _additionalNodeBuilders,
       onNodesUpdate: _onNodesUpdated,
       onBuilderMissing: (nodeJson) {
-        debugPrint(
+        AppLogging.automations(
           'Visual flow: missing builder for node type "${nodeJson["type"]}"',
         );
       },
@@ -257,7 +258,7 @@ class VisualFlowNotifier extends Notifier<VisualFlowState> {
       final spec = graph.nodes[i];
       final builder = _findBuilder(spec.type);
       if (builder == null) {
-        debugPrint(
+        AppLogging.automations(
           'Visual flow: no builder for decompiled node type "${spec.type}"',
         );
         continue;
@@ -374,9 +375,13 @@ class VisualFlowNotifier extends Notifier<VisualFlowState> {
 
   /// Compiles the current graph into Automation objects.
   ///
+  /// When [l10n] is provided, the generated automation names and descriptions
+  /// are localized. Callers with a [BuildContext] should pass
+  /// `AppLocalizations.of(context)!`.
+  ///
   /// Returns the compilation result containing automations, errors, and
   /// warnings. Also updates the provider state with the result.
-  FlowCompilationResult compile() {
+  FlowCompilationResult compile({AppLocalizations? l10n}) {
     final manager = _nodeManager;
     if (manager == null) {
       final result = const FlowCompilationResult(
@@ -408,6 +413,7 @@ class VisualFlowNotifier extends Notifier<VisualFlowState> {
       nodes: manager.nodes,
       flowName: state.flowName,
       graphJson: manager.serializeNodes(),
+      l10n: l10n,
     );
 
     state = state.copyWith(

@@ -13,6 +13,8 @@ import 'package:flutter/services.dart';
 
 import '../data/vs_node_data_provider.dart';
 import 'package:socialmesh/core/theme.dart';
+import 'package:socialmesh/core/visual_flow/flow_node_l10n.dart';
+import 'package:socialmesh/l10n/app_localizations.dart';
 
 class VSContextMenu extends StatefulWidget {
   /// Base context menu for creating new nodes.
@@ -93,6 +95,7 @@ class _VSContextMenuState extends State<VSContextMenu> {
     // Back button when inside a subgroup.
     if (_navigationStack.isNotEmpty) {
       final parentLabel = _navigationStack.last.key;
+      final l10n = AppLocalizations.of(context);
       children.add(
         _ContextMenuItem(
           onTap: _navigateBack,
@@ -106,7 +109,7 @@ class _VSContextMenuState extends State<VSContextMenu> {
               const SizedBox(width: AppTheme.spacing6),
               Expanded(
                 child: Text(
-                  parentLabel,
+                  localizedFlowTitle(parentLabel, l10n),
                   style: TextStyle(
                     fontSize: 12,
                     color: colorScheme.onSurface.withValues(alpha: 0.6),
@@ -126,6 +129,7 @@ class _VSContextMenuState extends State<VSContextMenu> {
 
     for (int i = 0; i < entries.length; i++) {
       final entry = entries[i];
+      final l10n = AppLocalizations.of(context);
 
       if (entry.value is Map) {
         // Subgroup — show with category icon and chevron.
@@ -143,7 +147,7 @@ class _VSContextMenuState extends State<VSContextMenu> {
                 const SizedBox(width: AppTheme.spacing8),
                 Expanded(
                   child: Text(
-                    entry.key,
+                    localizedFlowTitle(entry.key, l10n),
                     style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
@@ -174,7 +178,7 @@ class _VSContextMenuState extends State<VSContextMenu> {
               dataProvider.closeContextMenu();
             },
             child: Text(
-              entry.key,
+              localizedFlowTitle(entry.key, l10n),
               style: TextStyle(
                 fontSize: 13,
                 color: colorScheme.onSurface,

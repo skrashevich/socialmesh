@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socialmesh/services/ifttt/ifttt_service.dart';
@@ -20,6 +21,8 @@ void main() {
 
       expect(config.enabled, false);
       expect(config.webhookKey, '');
+      expect(config.webhookMode, WebhookMode.ifttt);
+      expect(config.customWebhookUrl, '');
       expect(config.messageReceived, true);
       expect(config.nodeOnline, true);
       expect(config.nodeOffline, true);
@@ -47,10 +50,28 @@ void main() {
       expect(modified.batteryThreshold, 25);
     });
 
+    test('copyWith updates webhookMode and customWebhookUrl', () {
+      const original = IftttConfig(enabled: true, webhookKey: 'key');
+
+      final modified = original.copyWith(
+        webhookMode: WebhookMode.customUrl,
+        customWebhookUrl: 'http://192.168.1.100:8123/api/webhook/test',
+      );
+
+      expect(modified.webhookMode, WebhookMode.customUrl);
+      expect(
+        modified.customWebhookUrl,
+        'http://192.168.1.100:8123/api/webhook/test',
+      );
+      expect(modified.webhookKey, 'key'); // preserved
+    });
+
     test('toJson and fromJson round-trip', () {
       const original = IftttConfig(
         enabled: true,
         webhookKey: 'my-key',
+        webhookMode: WebhookMode.customUrl,
+        customWebhookUrl: 'http://10.0.0.5:8123/api/webhook/mesh',
         messageReceived: false,
         nodeOnline: true,
         nodeOffline: false,
@@ -73,6 +94,8 @@ void main() {
 
       expect(restored.enabled, original.enabled);
       expect(restored.webhookKey, original.webhookKey);
+      expect(restored.webhookMode, original.webhookMode);
+      expect(restored.customWebhookUrl, original.customWebhookUrl);
       expect(restored.messageReceived, original.messageReceived);
       expect(restored.nodeOnline, original.nodeOnline);
       expect(restored.nodeOffline, original.nodeOffline);
@@ -100,10 +123,76 @@ void main() {
 
       expect(config.enabled, true);
       expect(config.webhookKey, 'key');
+      expect(config.webhookMode, WebhookMode.ifttt); // default
+      expect(config.customWebhookUrl, ''); // default
       expect(config.geofenceLat, isNull);
       expect(config.geofenceLon, isNull);
       expect(config.geofenceNodeNum, isNull);
       expect(config.batteryThreshold, 20); // default
+    });
+
+    test('fromJson parses webhookMode correctly', () {
+      final json = <String, dynamic>{
+        'enabled': true,
+        'webhookKey': '',
+        'webhookMode': 'customUrl',
+        'customWebhookUrl': 'http://192.168.1.50/hook',
+      };
+
+      final config = IftttConfig.fromJson(json);
+
+      expect(config.webhookMode, WebhookMode.customUrl);
+      expect(config.customWebhookUrl, 'http://192.168.1.50/hook');
+    });
+
+    test('fromJson defaults unknown webhookMode to ifttt', () {
+      final json = <String, dynamic>{
+        'enabled': true,
+        'webhookMode': 'unknownMode',
+      };
+
+      final config = IftttConfig.fromJson(json);
+      expect(config.webhookMode, WebhookMode.ifttt);
+    });
+
+    test('hasActiveCredentials reflects IFTTT mode', () {
+      const config = IftttConfig(
+        webhookMode: WebhookMode.ifttt,
+        webhookKey: 'my-key',
+        customWebhookUrl: '',
+      );
+      expect(config.hasActiveCredentials, true);
+      expect(config.hasIftttKey, true);
+      expect(config.hasCustomUrl, false);
+    });
+
+    test('hasActiveCredentials reflects customUrl mode', () {
+      const config = IftttConfig(
+        webhookMode: WebhookMode.customUrl,
+        webhookKey: '',
+        customWebhookUrl: 'http://192.168.1.100:8123/api/webhook/test',
+      );
+      expect(config.hasActiveCredentials, true);
+      expect(config.hasIftttKey, false);
+      expect(config.hasCustomUrl, true);
+    });
+
+    test('hasActiveCredentials false when customUrl mode but no URL', () {
+      const config = IftttConfig(
+        webhookMode: WebhookMode.customUrl,
+        webhookKey: 'my-key',
+        customWebhookUrl: '',
+      );
+      expect(config.hasActiveCredentials, false);
+    });
+
+    test('hasActiveCredentials false when ifttt mode but no key', () {
+      const config = IftttConfig(
+        webhookMode: WebhookMode.ifttt,
+        webhookKey: '',
+        customWebhookUrl: 'http://192.168.1.100/hook',
+      );
+      expect(config.hasActiveCredentials, false);
     });
   });
 
@@ -111,6 +200,8 @@ void main() {
     test('initial config is default', () {
       expect(service.config.enabled, false);
       expect(service.config.webhookKey, '');
+      expect(service.config.webhookMode, WebhookMode.ifttt);
+      expect(service.config.customWebhookUrl, '');
     });
 
     test('isActive is false when disabled', () {
@@ -129,6 +220,29 @@ void main() {
         const IftttConfig(enabled: true, webhookKey: 'test-key'),
       );
       expect(service.isActive, true);
+    });
+
+    test('isActive is true when enabled with custom URL', () async {
+      await service.saveConfig(
+        const IftttConfig(
+          enabled: true,
+          webhookMode: WebhookMode.customUrl,
+          customWebhookUrl: 'http://192.168.1.100:8123/api/webhook/mesh',
+        ),
+      );
+      expect(service.isActive, true);
+    });
+
+    test('isActive is false when customUrl mode but no URL', () async {
+      await service.saveConfig(
+        const IftttConfig(
+          enabled: true,
+          webhookMode: WebhookMode.customUrl,
+          customWebhookUrl: '',
+          webhookKey: 'key-exists-but-wrong-mode',
+        ),
+      );
+      expect(service.isActive, false);
     });
 
     test('saveConfig persists configuration', () async {
@@ -539,9 +653,56 @@ void main() {
     });
   });
 
+  group('IftttService - Custom URL', () {
+    test('triggerCustomUrl posts to provided URL', () async {
+      // triggerCustomUrl should not throw even without global config active.
+      // We can't verify the actual HTTP call without mocking, but we verify
+      // the method exists and does not require isActive.
+      final result = await service.triggerCustomUrl(
+        url: 'http://192.168.1.100:8123/api/webhook/mesh',
+        eventName: 'test_event',
+        value1: 'node_name',
+        value2: '37.0,-122.0',
+        value3: 'Battery: 85%',
+      );
+
+      // Will fail because host is unreachable in test, but should not throw
+      expect(result, isFalse);
+    });
+
+    test('triggerCustomUrl handles invalid URL gracefully', () async {
+      final result = await service.triggerCustomUrl(
+        url: 'not-a-valid-url',
+        eventName: 'test_event',
+      );
+      expect(result, isFalse);
+    });
+
+    test('triggerCustomUrl handles empty URL gracefully', () async {
+      final result = await service.triggerCustomUrl(
+        url: '',
+        eventName: 'test_event',
+      );
+      expect(result, isFalse);
+    });
+  });
+
   group('IftttService - Test Webhook', () {
     test('testWebhook returns false when no key configured', () async {
       await service.saveConfig(const IftttConfig(webhookKey: ''));
+
+      final result = await service.testWebhook();
+
+      expect(result, false);
+    });
+
+    test('testWebhook returns false when customUrl mode but no URL', () async {
+      await service.saveConfig(
+        const IftttConfig(
+          webhookMode: WebhookMode.customUrl,
+          customWebhookUrl: '',
+        ),
+      );
 
       final result = await service.testWebhook();
 
@@ -570,6 +731,8 @@ void main() {
         const IftttConfig(
           enabled: true,
           webhookKey: 'cloud-test-key',
+          webhookMode: WebhookMode.customUrl,
+          customWebhookUrl: 'http://10.0.0.5:8123/hook',
           messageReceived: false,
           batteryLow: true,
           batteryThreshold: 15,
@@ -585,6 +748,8 @@ void main() {
       expect(jsonString, contains('15'));
       expect(jsonString, contains('Tracked Device'));
       expect(jsonString, contains('"enabled":true'));
+      expect(jsonString, contains('"webhookMode":"customUrl"'));
+      expect(jsonString, contains('http://10.0.0.5:8123/hook'));
     });
 
     test('toJsonString exports default config when nothing saved', () async {
@@ -592,6 +757,8 @@ void main() {
 
       expect(jsonString, contains('"enabled":false'));
       expect(jsonString, contains('"webhookKey":""'));
+      expect(jsonString, contains('"webhookMode":"ifttt"'));
+      expect(jsonString, contains('"customWebhookUrl":""'));
     });
 
     test('loadFromJson restores config', () async {
@@ -660,6 +827,8 @@ void main() {
           geofenceNodeNum: 99999,
           geofenceNodeName: 'NYC Node',
           geofenceThrottleMinutes: 120,
+          webhookMode: WebhookMode.customUrl,
+          customWebhookUrl: 'http://172.16.0.1:8080/webhook',
         );
         await service.saveConfig(original);
 
@@ -672,6 +841,8 @@ void main() {
         final restored = service.config;
         expect(restored.enabled, original.enabled);
         expect(restored.webhookKey, original.webhookKey);
+        expect(restored.webhookMode, original.webhookMode);
+        expect(restored.customWebhookUrl, original.customWebhookUrl);
         expect(restored.messageReceived, original.messageReceived);
         expect(restored.nodeOnline, original.nodeOnline);
         expect(restored.nodeOffline, original.nodeOffline);
@@ -692,5 +863,123 @@ void main() {
         );
       },
     );
+  });
+
+  group('IftttService - WebhookMode serialization', () {
+    test('toJson serializes webhookMode as string', () {
+      const config = IftttConfig(
+        webhookMode: WebhookMode.customUrl,
+        customWebhookUrl: 'http://192.168.1.1/hook',
+      );
+
+      final json = config.toJson();
+      expect(json['webhookMode'], 'customUrl');
+      expect(json['customWebhookUrl'], 'http://192.168.1.1/hook');
+    });
+
+    test('toJson serializes ifttt mode as string', () {
+      const config = IftttConfig(webhookMode: WebhookMode.ifttt);
+      final json = config.toJson();
+      expect(json['webhookMode'], 'ifttt');
+    });
+
+    test('persistence round-trip preserves custom URL mode', () async {
+      await service.saveConfig(
+        const IftttConfig(
+          enabled: true,
+          webhookMode: WebhookMode.customUrl,
+          customWebhookUrl: 'http://192.168.0.50:8123/api/webhook/mesh_event',
+        ),
+      );
+
+      // Create a new service instance to read from SharedPreferences
+      final service2 = IftttService();
+      await service2.init();
+
+      expect(service2.config.enabled, true);
+      expect(service2.config.webhookMode, WebhookMode.customUrl);
+      expect(
+        service2.config.customWebhookUrl,
+        'http://192.168.0.50:8123/api/webhook/mesh_event',
+      );
+    });
+
+    test('legacy config without webhookMode defaults to ifttt', () async {
+      // Simulate a legacy config stored before the webhookMode field existed
+      final prefs = await SharedPreferences.getInstance();
+      final legacyJson = jsonEncode({
+        'enabled': true,
+        'webhookKey': 'legacy-key',
+        'messageReceived': true,
+        'nodeOnline': true,
+        'nodeOffline': true,
+        'positionUpdate': false,
+        'batteryLow': true,
+        'temperatureAlert': false,
+        'sosEmergency': true,
+        'batteryThreshold': 20,
+        'temperatureThreshold': 40.0,
+        'geofenceRadius': 1000.0,
+        'geofenceThrottleMinutes': 30,
+        // No webhookMode or customWebhookUrl fields
+      });
+      await prefs.setString('ifttt_config', legacyJson);
+
+      final service2 = IftttService();
+      await service2.init();
+
+      expect(service2.config.webhookMode, WebhookMode.ifttt);
+      expect(service2.config.customWebhookUrl, '');
+      expect(service2.config.webhookKey, 'legacy-key');
+      expect(service2.isActive, true);
+    });
+  });
+
+  group('IftttService - Private network URL patterns', () {
+    test('config accepts 10.x.x.x private URL', () {
+      const config = IftttConfig(
+        enabled: true,
+        webhookMode: WebhookMode.customUrl,
+        customWebhookUrl: 'http://10.0.0.1:8080/webhook',
+      );
+      expect(config.hasActiveCredentials, true);
+      expect(config.hasCustomUrl, true);
+    });
+
+    test('config accepts 192.168.x.x private URL', () {
+      const config = IftttConfig(
+        enabled: true,
+        webhookMode: WebhookMode.customUrl,
+        customWebhookUrl: 'http://192.168.1.100:8123/api/webhook/test',
+      );
+      expect(config.hasActiveCredentials, true);
+    });
+
+    test('config accepts 172.16.x.x private URL', () {
+      const config = IftttConfig(
+        enabled: true,
+        webhookMode: WebhookMode.customUrl,
+        customWebhookUrl: 'http://172.16.0.1/hook',
+      );
+      expect(config.hasActiveCredentials, true);
+    });
+
+    test('config accepts HTTPS private URL', () {
+      const config = IftttConfig(
+        enabled: true,
+        webhookMode: WebhookMode.customUrl,
+        customWebhookUrl: 'https://192.168.1.100/api/webhook/test',
+      );
+      expect(config.hasActiveCredentials, true);
+    });
+
+    test('config accepts hostname-based URL', () {
+      const config = IftttConfig(
+        enabled: true,
+        webhookMode: WebhookMode.customUrl,
+        customWebhookUrl: 'http://homeassistant.local:8123/api/webhook/mesh',
+      );
+      expect(config.hasActiveCredentials, true);
+    });
   });
 }

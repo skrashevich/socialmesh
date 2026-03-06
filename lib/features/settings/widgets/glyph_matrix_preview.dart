@@ -20,6 +20,11 @@ class GlyphMatrixPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Resolve localized zone labels here since the painter lacks context.
+    final zoneLabels = {
+      for (final zone in GlyphZone.values) zone: zone.localizedName(context),
+    };
+
     return AspectRatio(
       aspectRatio: 1,
       child: Container(
@@ -38,6 +43,7 @@ class GlyphMatrixPreview extends StatelessWidget {
               activeZones: activeZones,
               showLabels: showLabels,
               accentColor: accentColor,
+              zoneLabels: zoneLabels,
             ),
           ),
         ),
@@ -50,11 +56,13 @@ class _ZonePainter extends CustomPainter {
   final List<GlyphZone> activeZones;
   final bool showLabels;
   final Color accentColor;
+  final Map<GlyphZone, String> zoneLabels;
 
   _ZonePainter({
     required this.activeZones,
     required this.showLabels,
     required this.accentColor,
+    required this.zoneLabels,
   });
 
   @override
@@ -105,7 +113,7 @@ class _ZonePainter extends CustomPainter {
       if (showLabels) {
         final textPainter = TextPainter(
           text: TextSpan(
-            text: zone.displayName,
+            text: zoneLabels[zone] ?? zone.displayName,
             style: TextStyle(
               color: isActive ? Colors.white : Colors.white54,
               fontSize: 10,

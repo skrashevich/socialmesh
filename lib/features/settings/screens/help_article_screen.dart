@@ -264,7 +264,7 @@ class _CategoryBadge extends StatelessWidget {
           Icon(category.icon, size: 13, color: category.color),
           const SizedBox(width: AppTheme.spacing4),
           Text(
-            category.displayName,
+            category.localizedName(context),
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,

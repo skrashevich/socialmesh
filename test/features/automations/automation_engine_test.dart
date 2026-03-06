@@ -2709,7 +2709,7 @@ void main() {
       expect(log.first.actionResults?.first.success, isFalse);
       expect(
         log.first.actionResults?.first.errorMessage,
-        contains('IFTTT not configured'),
+        contains('Webhooks not configured'),
       );
     });
   });

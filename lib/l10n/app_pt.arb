@@ -29806,6 +29806,470 @@
   "@appearanceLanguageRussian": {
     "description": "Text displayed in appearance settings"
   },
+  "appearanceLanguagePortuguese": "Português",
+  "@appearanceLanguagePortuguese": {
+    "description": "Text displayed in appearance settings"
+  },
+  "helpCategoryGettingStarted": "Primeiros passos",
+  "@helpCategoryGettingStarted": {
+    "description": "Visual flow / help l10n"
+  },
+  "helpCategoryMeshBasics": "Fundamentos do mesh",
+  "@helpCategoryMeshBasics": {
+    "description": "Visual flow / help l10n"
+  },
+  "helpCategoryChannels": "Canais e criptografia",
+  "@helpCategoryChannels": {
+    "description": "Visual flow / help l10n"
+  },
+  "helpCategoryMessaging": "Mensagens",
+  "@helpCategoryMessaging": {
+    "description": "Visual flow / help l10n"
+  },
+  "helpCategoryNodes": "Nós e funções",
+  "@helpCategoryNodes": {
+    "description": "Visual flow / help l10n"
+  },
+  "helpCategoryDevice": "Dispositivo e rádio",
+  "@helpCategoryDevice": {
+    "description": "Visual flow / help l10n"
+  },
+  "helpCategoryNetwork": "Rede e mapas",
+  "@helpCategoryNetwork": {
+    "description": "Visual flow / help l10n"
+  },
+  "helpCategorySafety": "Segurança e regras",
+  "@helpCategorySafety": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeNodeOnline": "Nó online",
+  "@flowNodeNodeOnline": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeNodeOffline": "Nó offline",
+  "@flowNodeNodeOffline": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeBatteryLow": "Bateria fraca",
+  "@flowNodeBatteryLow": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeBatteryFull": "Bateria cheia",
+  "@flowNodeBatteryFull": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeMessageReceived": "Mensagem recebida",
+  "@flowNodeMessageReceived": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodePositionChanged": "Posição alterada",
+  "@flowNodePositionChanged": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeGeofenceEnter": "Entrada no geofence",
+  "@flowNodeGeofenceEnter": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeGeofenceExit": "Saída do geofence",
+  "@flowNodeGeofenceExit": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeSendMessage": "Enviar mensagem",
+  "@flowNodeSendMessage": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodePlaySound": "Reproduzir som",
+  "@flowNodePlaySound": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeVibrate": "Vibrar",
+  "@flowNodeVibrate": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodePushNotification": "Notificação push",
+  "@flowNodePushNotification": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeTriggerWebhook": "Acionar webhook",
+  "@flowNodeTriggerWebhook": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeLogEvent": "Registrar evento",
+  "@flowNodeLogEvent": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeUpdateWidget": "Atualizar widget",
+  "@flowNodeUpdateWidget": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeSendToChannel": "Enviar para canal",
+  "@flowNodeSendToChannel": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeTriggerShortcut": "Acionar atalho",
+  "@flowNodeTriggerShortcut": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeGlyphPattern": "Padrão de glifo",
+  "@flowNodeGlyphPattern": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeTimeRange": "Intervalo de tempo",
+  "@flowNodeTimeRange": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeDayOfWeek": "Dia da semana",
+  "@flowNodeDayOfWeek": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeBatteryAbove": "Bateria acima de",
+  "@flowNodeBatteryAbove": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeBatteryBelow": "Bateria abaixo de",
+  "@flowNodeBatteryBelow": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeNodeIsOnline": "Nó está online",
+  "@flowNodeNodeIsOnline": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeNodeIsOffline": "Nó está offline",
+  "@flowNodeNodeIsOffline": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeWithinGeofence": "Dentro do geofence",
+  "@flowNodeWithinGeofence": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeOutsideGeofence": "Fora do geofence",
+  "@flowNodeOutsideGeofence": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeGateAllMustPass": "Todas as entradas devem passar",
+  "@flowNodeGateAllMustPass": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeGateAnyCanPass": "Qualquer entrada pode passar",
+  "@flowNodeGateAnyCanPass": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeGateInverts": "Inverte o sinal",
+  "@flowNodeGateInverts": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowNodeGateDelays": "Atrasa o sinal",
+  "@flowNodeGateDelays": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowSubgroupTriggers": "Gatilhos",
+  "@flowSubgroupTriggers": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowSubgroupConditions": "Condições",
+  "@flowSubgroupConditions": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowSubgroupLogic": "Lógica",
+  "@flowSubgroupLogic": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowSubgroupActions": "Ações",
+  "@flowSubgroupActions": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowSubgroupNodeDex": "NodeDex",
+  "@flowSubgroupNodeDex": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowCompilerVisualFlow": "Fluxo visual",
+  "@flowCompilerVisualFlow": {
+    "description": "Visual flow / help l10n"
+  },
+  "flowCompilerWhen": "Quando: {trigger}",
+  "@flowCompilerWhen": {
+    "description": "Visual flow / help l10n",
+    "placeholders": {"trigger": {"type": "String"}}
+  },
+  "flowCompilerIf": "Se: {conditions}",
+  "@flowCompilerIf": {
+    "description": "Visual flow / help l10n",
+    "placeholders": {"conditions": {"type": "String"}}
+  },
+  "flowCompilerAfterDelay": "Após: atraso de {delay}",
+  "@flowCompilerAfterDelay": {
+    "description": "Visual flow / help l10n",
+    "placeholders": {"delay": {"type": "String"}}
+  },
+  "flowCompilerThen": "Então: {actions}",
+  "@flowCompilerThen": {
+    "description": "Visual flow / help l10n",
+    "placeholders": {"actions": {"type": "String"}}
+  },
+  "glyphZoneA": "Zona A",
+  "@glyphZoneA": {
+    "description": "Visual flow / help l10n"
+  },
+  "glyphZoneB": "Zona B",
+  "@glyphZoneB": {
+    "description": "Visual flow / help l10n"
+  },
+  "glyphZoneC": "Zona C",
+  "@glyphZoneC": {
+    "description": "Visual flow / help l10n"
+  },
+  "glyphZoneD": "Zona D",
+  "@glyphZoneD": {
+    "description": "Visual flow / help l10n"
+  },
+  "glyphZoneE": "Zona E",
+  "@glyphZoneE": {
+    "description": "Visual flow / help l10n"
+  },
+  "glyphZoneDescCamera": "Câmera",
+  "@glyphZoneDescCamera": {
+    "description": "Visual flow / help l10n"
+  },
+  "glyphZoneDescDiagonal": "Faixa diagonal",
+  "@glyphZoneDescDiagonal": {
+    "description": "Visual flow / help l10n"
+  },
+  "glyphZoneDescUsbc": "Porta USB-C",
+  "@glyphZoneDescUsbc": {
+    "description": "Visual flow / help l10n"
+  },
+  "glyphZoneDescLower": "Faixa inferior",
+  "@glyphZoneDescLower": {
+    "description": "Visual flow / help l10n"
+  },
+  "glyphZoneDescBattery": "Bateria",
+  "@glyphZoneDescBattery": {
+    "description": "Visual flow / help l10n"
+  },
+  "appearanceFontBranded": "Personalizada",
+  "@appearanceFontBranded": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceFontBrandedDesc": "JetBrainsMono - Nossa fonte monoespa\u00e7ada exclusiva",
+  "@appearanceFontBrandedDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceFontSystem": "Sistema",
+  "@appearanceFontSystem": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceFontSystemDesc": "A fonte padr\u00e3o do seu dispositivo",
+  "@appearanceFontSystemDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceFontAccessibility": "Acessibilidade",
+  "@appearanceFontAccessibility": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceFontAccessibilityDesc": "Inter - Otimizada para legibilidade",
+  "@appearanceFontAccessibilityDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceTextScaleSystem": "Padr\u00e3o do sistema",
+  "@appearanceTextScaleSystem": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceTextScaleSystemDesc": "Segue as configura\u00e7\u00f5es de acessibilidade do dispositivo",
+  "@appearanceTextScaleSystemDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceTextScaleDefault": "Padr\u00e3o",
+  "@appearanceTextScaleDefault": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceTextScaleDefaultDesc": "Tamanho fixo, ignora as configura\u00e7\u00f5es do dispositivo",
+  "@appearanceTextScaleDefaultDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceTextScaleLarge": "Grande",
+  "@appearanceTextScaleLarge": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceTextScaleLargeDesc": "15% maior que o padr\u00e3o",
+  "@appearanceTextScaleLargeDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceTextScaleExtraLarge": "Extra grande",
+  "@appearanceTextScaleExtraLarge": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceTextScaleExtraLargeDesc": "30% maior que o padr\u00e3o",
+  "@appearanceTextScaleExtraLargeDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceDensityCompact": "Compacto",
+  "@appearanceDensityCompact": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceDensityCompactDesc": "Interface mais densa, mais conte\u00fado vis\u00edvel",
+  "@appearanceDensityCompactDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceDensityComfortable": "Confort\u00e1vel",
+  "@appearanceDensityComfortable": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceDensityComfortableDesc": "Espa\u00e7amento equilibrado (padr\u00e3o)",
+  "@appearanceDensityComfortableDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceDensityLargeTouch": "Toque grande",
+  "@appearanceDensityLargeTouch": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceDensityLargeTouchDesc": "\u00c1reas de toque maiores, mais f\u00e1cil de usar",
+  "@appearanceDensityLargeTouchDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceContrastNormal": "Normal",
+  "@appearanceContrastNormal": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceContrastNormalDesc": "Contraste de cores padr\u00e3o",
+  "@appearanceContrastNormalDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceContrastHigh": "Alto contraste",
+  "@appearanceContrastHigh": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceContrastHighDesc": "Visibilidade aprimorada para texto e interface",
+  "@appearanceContrastHighDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceMotionNormal": "Normal",
+  "@appearanceMotionNormal": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceMotionNormalDesc": "Todas as anima\u00e7\u00f5es habilitadas",
+  "@appearanceMotionNormalDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceMotionReduced": "Reduzido",
+  "@appearanceMotionReduced": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceMotionReducedDesc": "Anima\u00e7\u00f5es m\u00ednimas para acessibilidade",
+  "@appearanceMotionReducedDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceFontBranded": "Personalizada",
+  "@appearanceFontBranded": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceFontBrandedDesc": "JetBrainsMono - Nossa fonte monoespa\u00e7ada exclusiva",
+  "@appearanceFontBrandedDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceFontSystem": "Sistema",
+  "@appearanceFontSystem": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceFontSystemDesc": "A fonte padr\u00e3o do seu dispositivo",
+  "@appearanceFontSystemDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceFontAccessibility": "Acessibilidade",
+  "@appearanceFontAccessibility": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceFontAccessibilityDesc": "Inter - Otimizada para legibilidade",
+  "@appearanceFontAccessibilityDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceTextScaleSystem": "Padr\u00e3o do sistema",
+  "@appearanceTextScaleSystem": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceTextScaleSystemDesc": "Segue as configura\u00e7\u00f5es de acessibilidade do dispositivo",
+  "@appearanceTextScaleSystemDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceTextScaleDefault": "Padr\u00e3o",
+  "@appearanceTextScaleDefault": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceTextScaleDefaultDesc": "Tamanho fixo, ignora as configura\u00e7\u00f5es do dispositivo",
+  "@appearanceTextScaleDefaultDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceTextScaleLarge": "Grande",
+  "@appearanceTextScaleLarge": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceTextScaleLargeDesc": "15% maior que o padr\u00e3o",
+  "@appearanceTextScaleLargeDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceTextScaleExtraLarge": "Extra grande",
+  "@appearanceTextScaleExtraLarge": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceTextScaleExtraLargeDesc": "30% maior que o padr\u00e3o",
+  "@appearanceTextScaleExtraLargeDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceDensityCompact": "Compacto",
+  "@appearanceDensityCompact": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceDensityCompactDesc": "Interface mais densa, mais conte\u00fado vis\u00edvel",
+  "@appearanceDensityCompactDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceDensityComfortable": "Confort\u00e1vel",
+  "@appearanceDensityComfortable": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceDensityComfortableDesc": "Espa\u00e7amento equilibrado (padr\u00e3o)",
+  "@appearanceDensityComfortableDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceDensityLargeTouch": "Toque grande",
+  "@appearanceDensityLargeTouch": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceDensityLargeTouchDesc": "\u00c1reas de toque maiores, mais f\u00e1cil de usar",
+  "@appearanceDensityLargeTouchDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceContrastNormal": "Normal",
+  "@appearanceContrastNormal": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceContrastNormalDesc": "Contraste de cores padr\u00e3o",
+  "@appearanceContrastNormalDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceContrastHigh": "Alto contraste",
+  "@appearanceContrastHigh": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceContrastHighDesc": "Visibilidade aprimorada para texto e interface",
+  "@appearanceContrastHighDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceMotionNormal": "Normal",
+  "@appearanceMotionNormal": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceMotionNormalDesc": "Todas as anima\u00e7\u00f5es habilitadas",
+  "@appearanceMotionNormalDesc": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceMotionReduced": "Reduzido",
+  "@appearanceMotionReduced": {
+    "description": "Text displayed in appearance settings"
+  },
+  "appearanceMotionReducedDesc": "Anima\u00e7\u00f5es m\u00ednimas para acessibilidade",
+  "@appearanceMotionReducedDesc": {
+    "description": "Text displayed in appearance settings"
+  },
   "appearanceFont": "Fonte",
   "@appearanceFont": {
     "description": "Text displayed in appearance settings"
