@@ -4135,6 +4135,8 @@ class ProtocolService {
       // ----- Ephemeral DM -----
       case SipMessageType.dmMsg:
         _handleSipDmMsg(frame);
+      case SipMessageType.dmTyping:
+        _handleSipDmTyping(frame);
 
       // ----- SIP-0: CAP_REQ / CAP_RESP (informational) -----
       case SipMessageType.capReq:
@@ -4340,6 +4342,16 @@ class ProtocolService {
     }
 
     dm.handleInboundDm(frame);
+  }
+
+  void _handleSipDmTyping(SipFrame frame) {
+    final dm = _sipDm;
+    if (dm == null) {
+      AppLogging.sip('SIP_RX: no SipDmManager — dropping DM_TYPING');
+      return;
+    }
+
+    dm.handleInboundTyping(frame);
   }
 
   /// Send a file transfer packet as broadcast on PRIVATE_APP (portnum 256).

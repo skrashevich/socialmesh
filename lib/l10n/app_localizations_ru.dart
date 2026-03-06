@@ -30214,4 +30214,25 @@ class AppLocalizationsRu extends AppLocalizations {
   String sipDmPeerName(String hexId) {
     return 'Peer $hexId';
   }
+
+  @override
+  String get sipAutoScanEnabled => 'Auto-scan enabled';
+
+  @override
+  String get sipAutoScanDisabled => 'Auto-scan disabled';
+
+  @override
+  String get sipAutoScanToggle => 'Auto-scan';
+
+  @override
+  String get sipScanningIndicator => 'Scanning…';
+
+  @override
+  String get sipConnecting => 'Connecting…';
+
+  @override
+  String get sipDmReplyingTo => 'Replying to';
+
+  @override
+  String get sipDmSwipeToReply => 'Swipe to reply';
 }

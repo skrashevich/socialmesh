@@ -40483,5 +40483,33 @@
                 "type": "String"
             }
         }
+    },
+    "sipAutoScanEnabled": "Auto-scan enabled",
+    "@sipAutoScanEnabled": {
+        "description": "Snackbar confirmation when auto-scan is turned on."
+    },
+    "sipAutoScanDisabled": "Auto-scan disabled",
+    "@sipAutoScanDisabled": {
+        "description": "Snackbar confirmation when auto-scan is turned off."
+    },
+    "sipAutoScanToggle": "Auto-scan",
+    "@sipAutoScanToggle": {
+        "description": "Label for the auto-scan toggle in the overflow menu."
+    },
+    "sipScanningIndicator": "Scanning…",
+    "@sipScanningIndicator": {
+        "description": "Label shown while a SIP scan is in progress."
+    },
+    "sipConnecting": "Connecting…",
+    "@sipConnecting": {
+        "description": "Snackbar shown when tapping a peer to start handshake."
+    },
+    "sipDmReplyingTo": "Replying to",
+    "@sipDmReplyingTo": {
+        "description": "Label shown above the input field when replying to a message."
+    },
+    "sipDmSwipeToReply": "Swipe to reply",
+    "@sipDmSwipeToReply": {
+        "description": "Accessibility hint for swiping a message to reply."
     }
 }

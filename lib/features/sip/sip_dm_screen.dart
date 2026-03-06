@@ -10,6 +10,9 @@
 // - BouncyTap on interactive elements
 // - Consistent badge styling (container + color + radius6)
 
+import 'dart:async';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -52,11 +55,39 @@ class _SipDmScreenState extends ConsumerState<SipDmScreen>
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
 
+  /// The message being replied to, or null if not replying.
+  SipDmHistoryEntry? _replyingToEntry;
+
+  /// Timer to dismiss the typing indicator after the display duration.
+  Timer? _typingDismissTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    _messageController.addListener(_onTextChanged);
+  }
+
   @override
   void dispose() {
+    _messageController.removeListener(_onTextChanged);
     _messageController.dispose();
     _scrollController.dispose();
+    _typingDismissTimer?.cancel();
     super.dispose();
+  }
+
+  /// Send a typing indicator when the user starts composing.
+  void _onTextChanged() {
+    if (_messageController.text.isEmpty) return;
+
+    final dm = ref.read(sipDmManagerProvider);
+    if (dm == null) return;
+
+    final encoded = dm.buildTypingIndicator(sessionTag: widget.sessionTag);
+    if (encoded != null) {
+      final protocol = ref.read(protocolServiceProvider);
+      protocol.sendSipPacket(encoded);
+    }
   }
 
   void _dismissKeyboard() {
@@ -72,7 +103,18 @@ class _SipDmScreenState extends ConsumerState<SipDmScreen>
 
     final haptics = ref.read(hapticServiceProvider);
 
-    final result = dm.buildDmMessage(sessionTag: widget.sessionTag, text: text);
+    // If replying, format the message with the quote prefix.
+    final messageText = _replyingToEntry != null
+        ? SipDmManager.formatReplyMessage(
+            quotedText: SipDmManager.extractReplyBody(_replyingToEntry!.text),
+            replyText: text,
+          )
+        : text;
+
+    final result = dm.buildDmMessage(
+      sessionTag: widget.sessionTag,
+      text: messageText,
+    );
 
     if (result.isOk) {
       final encoded = SipCodec.encode(result.frame!);
@@ -88,6 +130,7 @@ class _SipDmScreenState extends ConsumerState<SipDmScreen>
           .recordTx(result.frame!.msgType, encoded.length);
       haptics.trigger(HapticType.light);
       _messageController.clear();
+      _cancelReply();
       setState(() {}); // Refresh message list.
       _scrollToBottom();
     } else {
@@ -148,6 +191,24 @@ class _SipDmScreenState extends ConsumerState<SipDmScreen>
     if (mounted) Navigator.of(context).pop();
   }
 
+  void _onReply(SipDmHistoryEntry entry) {
+    ref.read(hapticServiceProvider).trigger(HapticType.light);
+    setState(() => _replyingToEntry = entry);
+  }
+
+  void _cancelReply() {
+    if (_replyingToEntry != null) {
+      setState(() => _replyingToEntry = null);
+    }
+  }
+
+  void _scheduleTypingDismiss() {
+    _typingDismissTimer?.cancel();
+    _typingDismissTimer = Timer(const Duration(seconds: 12), () {
+      if (mounted) setState(() {});
+    });
+  }
+
   // Resolve the peer's display name.
   String _resolvePeerName(SipDmSession session) {
     final entry = ref.read(nodeDexEntryProvider(session.peerNodeId));
@@ -167,14 +228,26 @@ class _SipDmScreenState extends ConsumerState<SipDmScreen>
     final dm = ref.watch(sipDmManagerProvider);
     final session = dm?.getSession(widget.sessionTag);
     ref.watch(sipDmEpochProvider); // Rebuild on new messages
+    ref.watch(sipDmTypingEpochProvider); // Rebuild on typing indicators
+
+    // Check if the peer is currently typing.
+    final peerIsTyping = dm?.isPeerTyping(widget.sessionTag) ?? false;
+    if (peerIsTyping) _scheduleTypingDismiss();
 
     final title = session != null ? _resolvePeerName(session) : l10n.sipDmTitle;
 
+    final history = (session != null && dm != null)
+        ? (dm.getHistory(widget.sessionTag) ?? <SipDmHistoryEntry>[])
+        : <SipDmHistoryEntry>[];
+
     return GestureDetector(
       onTap: _dismissKeyboard,
-      child: GlassScaffold.body(
+      child: GlassScaffold(
         title: title,
-        hasScrollBody: true,
+        controller: _scrollController,
+        resizeToAvoidBottomInset:
+            false, // We handle keyboard insets manually in _buildInputBar
+        bottomNavigationBar: _buildInputBar(context, session),
         actions: [
           if (session != null)
             AppBarOverflowMenu<String>(
@@ -216,45 +289,40 @@ class _SipDmScreenState extends ConsumerState<SipDmScreen>
               },
             ),
         ],
-        body: Column(
-          children: [
-            // Session info bar (card-styled)
-            if (session != null) _SessionInfoBar(session: session),
+        slivers: [
+          // Pinned session info bar with frosted-glass effect
+          if (session != null)
+            SliverPersistentHeader(
+              pinned: true,
+              delegate: _SessionInfoBarDelegate(session: session),
+            ),
 
-            // Messages
-            Expanded(child: _buildMessageList(context, dm, session)),
-
-            // Input
-            _buildInputBar(context, session),
-          ],
-        ),
+          // Messages
+          if (history.isNotEmpty || peerIsTyping)
+            SliverPadding(
+              padding: const EdgeInsets.all(AppTheme.spacing16),
+              sliver: SliverList.builder(
+                itemCount: history.length + (peerIsTyping ? 1 : 0),
+                itemBuilder: (context, index) {
+                  // Typing indicator at the end
+                  if (index == history.length) {
+                    return const _TypingIndicatorBubble();
+                  }
+                  final entry = history[index];
+                  return _SwipeToReply(
+                    onReply: () => _onReply(entry),
+                    child: _MessageBubble(entry: entry),
+                  );
+                },
+              ),
+            )
+          else
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: _buildEmptyState(context),
+            ),
+        ],
       ),
-    );
-  }
-
-  Widget _buildMessageList(
-    BuildContext context,
-    SipDmManager? dm,
-    SipDmSession? session,
-  ) {
-    if (session == null || dm == null) {
-      return _buildEmptyState(context);
-    }
-
-    final history = dm.getHistory(widget.sessionTag) ?? [];
-
-    if (history.isEmpty) {
-      return _buildEmptyState(context);
-    }
-
-    return ListView.builder(
-      controller: _scrollController,
-      padding: const EdgeInsets.all(AppTheme.spacing16),
-      itemCount: history.length,
-      itemBuilder: (context, index) {
-        final entry = history[index];
-        return _MessageBubble(entry: entry);
-      },
     );
   }
 
@@ -298,54 +366,182 @@ class _SipDmScreenState extends ConsumerState<SipDmScreen>
     final enabled =
         session != null && session.status == SipDmSessionStatus.active;
 
-    return Container(
+    return AnimatedPadding(
+      duration: const Duration(milliseconds: 100),
       padding: EdgeInsets.only(
-        left: AppTheme.spacing16,
-        right: AppTheme.spacing8,
-        top: AppTheme.spacing8,
-        bottom: MediaQuery.of(context).padding.bottom + AppTheme.spacing8,
+        bottom: MediaQuery.of(context).viewInsets.bottom,
       ),
-      decoration: BoxDecoration(
-        color: context.card.withValues(alpha: 0.5),
-        border: Border(
-          top: BorderSide(color: context.textTertiary.withValues(alpha: 0.1)),
+      child: Container(
+        decoration: BoxDecoration(
+          color: context.card.withValues(alpha: 0.5),
+          border: Border(
+            top: BorderSide(color: context.textTertiary.withValues(alpha: 0.1)),
+          ),
         ),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: TextField(
-              controller: _messageController,
-              enabled: enabled,
-              maxLength: 180,
-              maxLines: null,
-              textInputAction: TextInputAction.send,
-              onSubmitted: (_) => _sendMessage(),
-              decoration: InputDecoration(
-                hintText: l10n.sipDmInputHint,
-                counterText:
-                    '', // Hide character counter // lint-allow: hardcoded-string
-                border: InputBorder.none,
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: AppTheme.spacing12,
-                  vertical: AppTheme.spacing8,
+        child: SafeArea(
+          top: false,
+          bottom: MediaQuery.of(context).viewInsets.bottom == 0,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Reply indicator
+              if (_replyingToEntry != null)
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppTheme.spacing16,
+                    vertical: AppTheme.spacing8,
+                  ),
+                  color: context.accentColor.withValues(alpha: 0.1),
+                  child: Row(
+                    children: [
+                      Icon(Icons.reply, size: 16, color: context.accentColor),
+                      const SizedBox(width: AppTheme.spacing8),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              l10n.sipDmReplyingTo,
+                              style: TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w600,
+                                color: context.accentColor,
+                              ),
+                            ),
+                            Text(
+                              SipDmManager.extractReplyBody(
+                                _replyingToEntry!.text,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: context.textSecondary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: _cancelReply,
+                        child: Icon(
+                          Icons.close,
+                          size: 18,
+                          color: context.textTertiary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+              // Input field
+              Padding(
+                padding: EdgeInsets.only(
+                  left: AppTheme.spacing16,
+                  right: AppTheme.spacing8,
+                  top: AppTheme.spacing8,
+                  bottom: AppTheme.spacing8,
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: _messageController,
+                        enabled: enabled,
+                        maxLength: 180,
+                        maxLines: null,
+                        textInputAction: TextInputAction.send,
+                        onSubmitted: (_) => _sendMessage(),
+                        decoration: InputDecoration(
+                          hintText: l10n.sipDmInputHint,
+                          counterText:
+                              '', // Hide character counter // lint-allow: hardcoded-string
+                          border: InputBorder.none,
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: AppTheme.spacing12,
+                            vertical: AppTheme.spacing8,
+                          ),
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: enabled ? _sendMessage : null,
+                      icon: const Icon(Icons.send),
+                      tooltip: l10n.sipDmSendButton,
+                    ),
+                  ],
                 ),
               ),
-            ),
+            ],
           ),
-          IconButton(
-            onPressed: enabled ? _sendMessage : null,
-            icon: const Icon(Icons.send),
-            tooltip: l10n.sipDmSendButton,
-          ),
-        ],
+        ),
       ),
     );
   }
 }
 
 // =============================================================================
-// Session info bar — card-styled with sigil + evolution + badges
+// Session info bar delegate — frosted-glass pinned header (Signals pattern)
+// =============================================================================
+
+/// Blur sigma for the frosted-glass effect on the pinned session bar.
+const double _kInfoBarBlurSigma = 20.0;
+
+/// Background opacity for the frosted-glass container.
+const double _kInfoBarBackgroundAlpha = 0.8;
+
+/// Fixed extent: vertical padding (12+12) + avatar height (32) + divider (1).
+const double _kInfoBarExtent = 57.0;
+
+class _SessionInfoBarDelegate extends SliverPersistentHeaderDelegate {
+  final SipDmSession session;
+
+  _SessionInfoBarDelegate({required this.session});
+
+  @override
+  double get minExtent => _kInfoBarExtent;
+
+  @override
+  double get maxExtent => _kInfoBarExtent;
+
+  @override
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
+    return ClipRect(
+      clipBehavior: Clip.hardEdge,
+      child: BackdropFilter(
+        filter: ImageFilter.blur(
+          sigmaX: _kInfoBarBlurSigma,
+          sigmaY: _kInfoBarBlurSigma,
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            color: context.background.withValues(
+              alpha: _kInfoBarBackgroundAlpha,
+            ),
+            border: Border(
+              bottom: BorderSide(color: context.border.withValues(alpha: 0.3)),
+            ),
+          ),
+          child: _SessionInfoBar(session: session),
+        ),
+      ),
+    );
+  }
+
+  @override
+  bool shouldRebuild(covariant _SessionInfoBarDelegate oldDelegate) =>
+      session.sessionTag != oldDelegate.session.sessionTag ||
+      session.isPinned != oldDelegate.session.isPinned ||
+      session.status != oldDelegate.session.status;
+}
+
+// =============================================================================
+// Session info bar content — sigil + hex ID + status badge
 // =============================================================================
 
 class _SessionInfoBar extends ConsumerWidget {
@@ -362,13 +558,10 @@ class _SessionInfoBar extends ConsumerWidget {
     final hexId =
         '!${session.peerNodeId.toRadixString(16).toUpperCase().padLeft(4, '0')}';
 
-    return Container(
-      margin: const EdgeInsets.all(AppTheme.spacing12),
-      padding: const EdgeInsets.all(AppTheme.spacing12),
-      decoration: BoxDecoration(
-        color: context.card,
-        borderRadius: BorderRadius.circular(AppTheme.radius12),
-        border: Border.all(color: context.border),
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppTheme.spacing16,
+        vertical: AppTheme.spacing12,
       ),
       child: Row(
         children: [
@@ -509,6 +702,8 @@ class _MessageBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isOutbound = entry.direction == SipDmDirection.outbound;
+    final replyTo = entry.replyToText;
+    final bodyText = SipDmManager.extractReplyBody(entry.text);
 
     return Align(
       alignment: isOutbound ? Alignment.centerRight : Alignment.centerLeft,
@@ -544,8 +739,34 @@ class _MessageBubble extends StatelessWidget {
               ? CrossAxisAlignment.end
               : CrossAxisAlignment.start,
           children: [
+            // Quoted reply block
+            if (replyTo != null) ...[
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppTheme.spacing8,
+                  vertical: AppTheme.spacing4,
+                ),
+                decoration: BoxDecoration(
+                  border: Border(
+                    left: BorderSide(color: context.accentColor, width: 2),
+                  ),
+                  color: context.accentColor.withValues(alpha: 0.06),
+                ),
+                child: Text(
+                  replyTo,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: context.textTertiary,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ),
+              const SizedBox(height: AppTheme.spacing4),
+            ],
             Text(
-              entry.text,
+              bodyText,
               style: TextStyle(fontSize: 14, color: context.textPrimary),
             ),
             const SizedBox(height: AppTheme.spacing2),
@@ -563,5 +784,208 @@ class _MessageBubble extends StatelessWidget {
     final dt = DateTime.fromMillisecondsSinceEpoch(ms);
     return '${dt.hour.toString().padLeft(2, '0')}:'
         '${dt.minute.toString().padLeft(2, '0')}';
+  }
+}
+
+// =============================================================================
+// Swipe-to-reply — horizontal drag to trigger reply mode
+// =============================================================================
+
+class _SwipeToReply extends StatefulWidget {
+  final VoidCallback onReply;
+  final Widget child;
+
+  const _SwipeToReply({required this.onReply, required this.child});
+
+  @override
+  State<_SwipeToReply> createState() => _SwipeToReplyState();
+}
+
+class _SwipeToReplyState extends State<_SwipeToReply>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<Offset> _animation;
+  double _dragExtent = 0;
+
+  /// Threshold in logical pixels for triggering the reply.
+  static const double _threshold = 60;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 200),
+    );
+    _animation = Tween<Offset>(
+      begin: Offset.zero,
+      end: Offset.zero,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _onHorizontalDragUpdate(DragUpdateDetails details) {
+    // Only allow dragging to the right.
+    _dragExtent = (_dragExtent + details.delta.dx).clamp(0.0, _threshold * 1.5);
+    setState(() {});
+  }
+
+  void _onHorizontalDragEnd(DragEndDetails details) {
+    if (_dragExtent >= _threshold) {
+      widget.onReply();
+    }
+    // Animate back to start.
+    _animation = Tween<Offset>(
+      begin: Offset(_dragExtent / MediaQuery.of(context).size.width, 0),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
+    _controller.forward(from: 0).then((_) {
+      if (mounted) setState(() => _dragExtent = 0);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final offset = _controller.isAnimating
+        ? _animation.value
+        : Offset(_dragExtent / MediaQuery.of(context).size.width, 0);
+    final progress = (_dragExtent / _threshold).clamp(0.0, 1.0);
+
+    return Stack(
+      children: [
+        // Reply icon revealed behind the message
+        if (_dragExtent > 0)
+          Positioned(
+            left: AppTheme.spacing8,
+            top: 0,
+            bottom: 0,
+            child: Center(
+              child: Opacity(
+                opacity: progress,
+                child: Transform.scale(
+                  scale: 0.6 + (0.4 * progress),
+                  child: Icon(
+                    Icons.reply,
+                    size: 24,
+                    color: context.accentColor.withValues(alpha: progress),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        SlideTransition(
+          position: _controller.isAnimating
+              ? _animation
+              : AlwaysStoppedAnimation(offset),
+          child: GestureDetector(
+            onHorizontalDragUpdate: _onHorizontalDragUpdate,
+            onHorizontalDragEnd: _onHorizontalDragEnd,
+            child: widget.child,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// =============================================================================
+// Typing indicator — animated bouncing dots (iMessage-style)
+// =============================================================================
+
+class _TypingIndicatorBubble extends StatefulWidget {
+  const _TypingIndicatorBubble();
+
+  @override
+  State<_TypingIndicatorBubble> createState() => _TypingIndicatorBubbleState();
+}
+
+class _TypingIndicatorBubbleState extends State<_TypingIndicatorBubble>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1200),
+    )..repeat();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: AppTheme.spacing8),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppTheme.spacing16,
+          vertical: AppTheme.spacing12,
+        ),
+        decoration: BoxDecoration(
+          color: context.card,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(AppTheme.radius12),
+            topRight: Radius.circular(AppTheme.radius12),
+            bottomLeft: Radius.circular(AppTheme.radius4),
+            bottomRight: Radius.circular(AppTheme.radius12),
+          ),
+          border: Border.all(color: context.border.withValues(alpha: 0.5)),
+        ),
+        child: AnimatedBuilder(
+          animation: _controller,
+          builder: (context, _) {
+            return Row(
+              mainAxisSize: MainAxisSize.min,
+              children: List.generate(3, (index) {
+                // Stagger each dot by 0.2 of the animation cycle.
+                final delay = index * 0.2;
+                final value = ((_controller.value - delay) % 1.0).clamp(
+                  0.0,
+                  1.0,
+                );
+                // Bounce: 0→1→0 as a sin curve over a portion of the cycle.
+                final bounce = value < 0.5
+                    ? (value * 2.0) // ramp up
+                    : value < 0.7
+                    ? 1.0 -
+                          ((value - 0.5) * 5.0) // ramp down
+                    : 0.0;
+
+                return Padding(
+                  padding: EdgeInsets.only(
+                    right: index < 2 ? AppTheme.spacing4 : 0,
+                  ),
+                  child: Transform.translate(
+                    offset: Offset(0, -4 * bounce.clamp(0.0, 1.0)),
+                    child: Container(
+                      width: 8,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        color: context.textTertiary.withValues(
+                          alpha: 0.4 + (0.4 * bounce.clamp(0.0, 1.0)),
+                        ),
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ),
+                );
+              }),
+            );
+          },
+        ),
+      ),
+    );
   }
 }

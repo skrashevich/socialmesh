@@ -11,6 +11,8 @@
 // - AppBarOverflowMenu for secondary actions
 // - Debug counters behind overflow menu, not inline
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -32,11 +34,12 @@ import '../../models/mesh_models.dart';
 import '../../providers/app_providers.dart';
 import '../../providers/sip_providers.dart';
 import '../../services/haptic_service.dart';
+import '../../services/protocol/sip/sip_codec.dart';
 import '../../services/protocol/sip/sip_discovery.dart';
 import '../../services/protocol/sip/sip_dm.dart';
 import '../../services/protocol/sip/sip_handshake.dart';
+import '../../utils/snackbar.dart';
 import 'sip_dm_screen.dart';
-import 'sip_peer_detail_sheet.dart';
 
 /// SIP Hub — discover nearby Socialmesh peers, handshake, and chat.
 ///
@@ -49,15 +52,52 @@ class SipHubScreen extends ConsumerStatefulWidget {
   ConsumerState<SipHubScreen> createState() => _SipHubScreenState();
 }
 
+/// Auto-scan interval for background peer discovery.
+const Duration _kAutoScanInterval = Duration(seconds: 60);
+
 class _SipHubScreenState extends ConsumerState<SipHubScreen> {
   bool _scanning = false;
+  bool _autoScanEnabled = false;
+  Timer? _autoScanTimer;
+
+  @override
+  void dispose() {
+    _autoScanTimer?.cancel();
+    super.dispose();
+  }
+
+  void _toggleAutoScan() {
+    final l10n = context.l10n;
+    ref.read(hapticServiceProvider).trigger(HapticType.light);
+    setState(() {
+      _autoScanEnabled = !_autoScanEnabled;
+      if (_autoScanEnabled) {
+        _startAutoScanTimer();
+        showSuccessSnackBar(context, l10n.sipAutoScanEnabled);
+      } else {
+        _autoScanTimer?.cancel();
+        _autoScanTimer = null;
+        showInfoSnackBar(context, l10n.sipAutoScanDisabled);
+      }
+    });
+  }
+
+  void _startAutoScanTimer() {
+    _autoScanTimer?.cancel();
+    _autoScanTimer = Timer.periodic(_kAutoScanInterval, (_) {
+      if (mounted) _performScan();
+    });
+  }
 
   void _onScan() {
+    ref.read(hapticServiceProvider).trigger(HapticType.light);
+    _performScan();
+  }
+
+  void _performScan() {
     final discovery = ref.read(sipDiscoveryProvider);
     AppLogging.sip('SIP_HUB: scan tapped, discovery=${discovery != null}');
     if (discovery == null) return;
-
-    ref.read(hapticServiceProvider).trigger(HapticType.light);
 
     final outbound = discovery.buildRollcallReq();
     if (outbound != null) {
@@ -71,6 +111,61 @@ class _SipHubScreenState extends ConsumerState<SipHubScreen> {
         if (mounted) setState(() => _scanning = false);
       });
     }
+  }
+
+  /// Initiate handshake directly with a peer (no detail sheet).
+  void _initiateHandshake(SipPeerCapability peer) {
+    final localContext = context;
+    final localL10n = localContext.l10n;
+    final haptics = ref.read(hapticServiceProvider);
+    haptics.trigger(HapticType.medium);
+
+    final handshake = ref.read(sipHandshakeProvider);
+    if (handshake == null) {
+      showErrorSnackBar(localContext, localL10n.sipHandshakeFailed);
+      return;
+    }
+
+    // Already handshaking or accepted — skip.
+    final currentState = handshake.getState(peer.nodeId);
+    if (currentState == SipHandshakeState.accepted) {
+      // Already have a session — open the DM screen if one exists.
+      final dm = ref.read(sipDmManagerProvider);
+      final sessions = dm?.activeSessions ?? [];
+      final existing = sessions.where((s) => s.peerNodeId == peer.nodeId);
+      if (existing.isNotEmpty) {
+        Navigator.of(localContext).push(
+          MaterialPageRoute<void>(
+            builder: (_) => SipDmScreen(sessionTag: existing.first.sessionTag),
+          ),
+        );
+        return;
+      }
+    }
+    if (currentState != SipHandshakeState.idle &&
+        currentState != SipHandshakeState.failed &&
+        currentState != SipHandshakeState.timedOut) {
+      showInfoSnackBar(localContext, localL10n.sipHandshakeInProgress);
+      return;
+    }
+
+    final frame = handshake.initiateHandshake(peer.nodeId);
+    if (frame == null) {
+      showInfoSnackBar(localContext, localL10n.sipHandshakeInProgress);
+      return;
+    }
+
+    final encoded = SipCodec.encode(frame);
+    if (encoded == null) {
+      showErrorSnackBar(localContext, localL10n.sipHandshakeFailed);
+      return;
+    }
+
+    final protocol = ref.read(protocolServiceProvider);
+    protocol.sendSipPacket(encoded);
+    ref.read(sipCountersProvider).recordHandshakeInitiated();
+
+    showInfoSnackBar(localContext, localL10n.sipConnecting);
   }
 
   void _showCounters() {
@@ -127,11 +222,28 @@ class _SipHubScreenState extends ConsumerState<SipHubScreen> {
           // Overflow menu
           AppBarOverflowMenu<String>(
             onSelected: (value) {
+              if (value == 'autoscan') {
+                _toggleAutoScan(); // lint-allow: hardcoded-string
+              }
               if (value == 'counters') {
                 _showCounters(); // lint-allow: hardcoded-string
               }
             },
             itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 'autoscan', // lint-allow: hardcoded-string
+                child: ListTile(
+                  leading: Icon(
+                    _autoScanEnabled ? Icons.sync_disabled : Icons.sync,
+                  ),
+                  title: Text(l10n.sipAutoScanToggle),
+                  trailing: _autoScanEnabled
+                      ? Icon(Icons.check, size: 18, color: AccentColors.green)
+                      : null,
+                  contentPadding: EdgeInsets.zero,
+                  visualDensity: VisualDensity.compact,
+                ),
+              ),
               PopupMenuItem(
                 value: 'counters', // lint-allow: hardcoded-string
                 child: ListTile(
@@ -188,11 +300,37 @@ class _SipHubScreenState extends ConsumerState<SipHubScreen> {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: AppTheme.spacing24),
-                FilledButton.icon(
-                  onPressed: _scanning ? null : _onScan,
-                  icon: const Icon(Icons.radar, size: 18),
-                  label: Text(l10n.sipDiscoveryScanButton),
-                ),
+                if (_scanning)
+                  Padding(
+                    padding: const EdgeInsets.only(top: AppTheme.spacing8),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: context.accentColor,
+                          ),
+                        ),
+                        const SizedBox(width: AppTheme.spacing8),
+                        Text(
+                          l10n.sipScanningIndicator,
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: context.textSecondary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                else
+                  FilledButton.icon(
+                    onPressed: _onScan,
+                    icon: const Icon(Icons.radar, size: 18),
+                    label: Text(l10n.sipDiscoveryScanButton),
+                  ),
               ],
             ),
           ),
@@ -242,11 +380,41 @@ class _SipHubScreenState extends ConsumerState<SipHubScreen> {
             count: peers.length,
           ),
         ),
+        // Scanning indicator below peers header
+        if (_scanning)
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppTheme.spacing16,
+                vertical: AppTheme.spacing4,
+              ),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 14,
+                    height: 14,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: context.textTertiary,
+                    ),
+                  ),
+                  const SizedBox(width: AppTheme.spacing8),
+                  Text(
+                    context.l10n.sipScanningIndicator,
+                    style: TextStyle(fontSize: 12, color: context.textTertiary),
+                  ),
+                ],
+              ),
+            ),
+          ),
         SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: AppTheme.spacing16),
           sliver: SliverList(
             delegate: SliverChildBuilderDelegate(
-              (context, index) => _PeerTile(peer: peers[index]),
+              (context, index) => _PeerTile(
+                peer: peers[index],
+                onHandshake: () => _initiateHandshake(peers[index]),
+              ),
               childCount: peers.length,
             ),
           ),
@@ -267,8 +435,9 @@ class _SipHubScreenState extends ConsumerState<SipHubScreen> {
 
 class _PeerTile extends ConsumerWidget {
   final SipPeerCapability peer;
+  final VoidCallback onHandshake;
 
-  const _PeerTile({required this.peer});
+  const _PeerTile({required this.peer, required this.onHandshake});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -284,14 +453,8 @@ class _PeerTile extends ConsumerWidget {
         '!${peer.nodeId.toRadixString(16).toUpperCase().padLeft(4, '0')}';
 
     return BouncyTap(
-      onTap: () {
-        ref.read(hapticServiceProvider).trigger(HapticType.selection);
-        SipPeerDetailSheet.show(context, peer);
-      },
-      onLongPress: () {
-        ref.read(hapticServiceProvider).trigger(HapticType.medium);
-        SipPeerDetailSheet.show(context, peer);
-      },
+      onTap: onHandshake,
+      onLongPress: onHandshake,
       scaleFactor: 0.98,
       child: Container(
         margin: const EdgeInsets.only(bottom: AppTheme.spacing8),

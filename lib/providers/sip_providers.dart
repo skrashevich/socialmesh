@@ -99,6 +99,18 @@ class _SipDmEpoch extends Notifier<int> {
   void bump() => state++;
 }
 
+/// Bumped whenever a typing indicator is received for any DM session.
+final sipDmTypingEpochProvider = NotifierProvider<_SipDmTypingEpoch, int>(
+  _SipDmTypingEpoch.new,
+);
+
+class _SipDmTypingEpoch extends Notifier<int> {
+  @override
+  int build() => 0;
+
+  void bump() => state++;
+}
+
 /// SIP discovery engine.
 ///
 /// Uses the connected device's node number so we can ignore our own
@@ -230,6 +242,11 @@ final sipDmManagerProvider = Provider<SipDmManager?>((ref) {
   // Bump epoch so UI rebuilds when sessions are created or messages arrive.
   manager.onStateChanged = () {
     ref.read(sipDmEpochProvider.notifier).bump();
+  };
+
+  // Bump typing epoch so UI shows/hides typing indicator.
+  manager.onTypingReceived = (_) {
+    ref.read(sipDmTypingEpochProvider.notifier).bump();
   };
 
   final protocol = ref.read(protocolServiceProvider);

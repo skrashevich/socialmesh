@@ -393,6 +393,8 @@ class SipCounters {
         return 'TX_CANCEL';
       case SipMessageType.dmMsg:
         return 'DM_MSG';
+      case SipMessageType.dmTyping:
+        return 'DM_TYPING';
       case SipMessageType.error:
         return 'ERROR';
     }

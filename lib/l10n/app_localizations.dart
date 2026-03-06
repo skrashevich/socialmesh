@@ -53331,6 +53331,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Peer {hexId}'**
   String sipDmPeerName(String hexId);
+
+  /// Snackbar confirmation when auto-scan is turned on.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-scan enabled'**
+  String get sipAutoScanEnabled;
+
+  /// Snackbar confirmation when auto-scan is turned off.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-scan disabled'**
+  String get sipAutoScanDisabled;
+
+  /// Label for the auto-scan toggle in the overflow menu.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-scan'**
+  String get sipAutoScanToggle;
+
+  /// Label shown while a SIP scan is in progress.
+  ///
+  /// In en, this message translates to:
+  /// **'Scanning…'**
+  String get sipScanningIndicator;
+
+  /// Snackbar shown when tapping a peer to start handshake.
+  ///
+  /// In en, this message translates to:
+  /// **'Connecting…'**
+  String get sipConnecting;
+
+  /// Label shown above the input field when replying to a message.
+  ///
+  /// In en, this message translates to:
+  /// **'Replying to'**
+  String get sipDmReplyingTo;
+
+  /// Accessibility hint for swiping a message to reply.
+  ///
+  /// In en, this message translates to:
+  /// **'Swipe to reply'**
+  String get sipDmSwipeToReply;
 }
 
 class _AppLocalizationsDelegate
