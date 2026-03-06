@@ -101,11 +101,19 @@ class SipDmHistoryEntry {
   /// The text being replied to, if this is a quote-reply.
   final String? replyToText;
 
-  const SipDmHistoryEntry({
+  /// Reaction emoji from the local user (index into SipDmReactionEmojis.all).
+  int? localReaction;
+
+  /// Reaction emoji from the peer (index into SipDmReactionEmojis.all).
+  int? peerReaction;
+
+  SipDmHistoryEntry({
     required this.text,
     required this.timestampMs,
     required this.direction,
     this.replyToText,
+    this.localReaction,
+    this.peerReaction,
   });
 }
 
@@ -394,6 +402,105 @@ class SipDmManager {
   /// Clear typing indicator for a session (e.g. when a real message arrives).
   void _clearPeerTyping(int sessionTag) {
     _peerTyping.remove(sessionTag);
+  }
+
+  // ---------------------------------------------------------------------------
+  // Reactions
+  // ---------------------------------------------------------------------------
+
+  /// Build a DM_REACTION frame for the given session and message.
+  ///
+  /// [emojiIndex] is the index into [SipDmReactionEmojis.all] (0–6).
+  /// [targetEntry] is the message being reacted to.
+  ///
+  /// Returns the encoded bytes ready to transmit, or null if budget
+  /// exhausted or session invalid.
+  Uint8List? buildDmReaction({
+    required int sessionTag,
+    required int emojiIndex,
+    required SipDmHistoryEntry targetEntry,
+  }) {
+    final session = _sessions[sessionTag];
+    if (session == null || session.isExpired(_clock())) return null;
+    if (session.status != SipDmSessionStatus.active) return null;
+
+    final payload = SipDmMessages.encodeReaction(
+      emojiIndex: emojiIndex,
+      targetTimestampS: targetEntry.timestampMs ~/ 1000,
+    );
+    if (payload == null) return null;
+
+    // Check budget (22-byte header + 5-byte payload = 27 bytes).
+    final frameSize = SipConstants.sipWrapperMin + payload.length;
+    if (!_rateLimiter.canSend(frameSize)) return null;
+
+    _rateLimiter.recordSend(frameSize);
+
+    // Store local reaction on the entry.
+    targetEntry.localReaction = emojiIndex;
+
+    final frame = SipFrame(
+      versionMajor: SipConstants.sipVersionMajor,
+      versionMinor: SipConstants.sipVersionMinor,
+      msgType: SipMessageType.dmReaction,
+      flags: 0,
+      headerLen: SipConstants.sipWrapperMin,
+      sessionId: sessionTag,
+      nonce: SipCodec.generateNonce(),
+      timestampS: _clock() ~/ 1000,
+      payloadLen: payload.length,
+      payload: payload,
+    );
+
+    final encoded = SipCodec.encode(frame);
+    if (encoded == null) return null;
+
+    AppLogging.sip(
+      'SIP_DM: -> REACTION ${SipDmReactionEmojis.all[emojiIndex]} to '
+      'session=0x${sessionTag.toRadixString(16)}',
+    );
+
+    onStateChanged?.call();
+    return encoded;
+  }
+
+  /// Handle an inbound DM_REACTION frame.
+  void handleInboundReaction(SipFrame frame) {
+    if (frame.msgType != SipMessageType.dmReaction) return;
+
+    final sessionTag = frame.sessionId;
+    final session = _sessions[sessionTag];
+    if (session == null) return;
+    if (session.isExpired(_clock())) {
+      _expireSession(sessionTag);
+      return;
+    }
+    if (session.status != SipDmSessionStatus.active) return;
+
+    final reaction = SipDmMessages.decodeReaction(frame.payload);
+    if (reaction == null) return;
+
+    // Find the target message by timestamp (seconds precision).
+    for (final entry in session.messages) {
+      if (entry.timestampMs ~/ 1000 == reaction.targetTimestampS) {
+        entry.peerReaction = reaction.emojiIndex;
+        break;
+      }
+    }
+
+    AppLogging.sip(
+      'SIP_DM: <- REACTION ${reaction.emoji} from '
+      'session=0x${sessionTag.toRadixString(16)}',
+    );
+
+    onStateChanged?.call();
+  }
+
+  /// Remove a message from a session's history (local delete only).
+  bool removeMessage(int sessionTag, SipDmHistoryEntry entry) {
+    final session = _sessions[sessionTag];
+    if (session == null) return false;
+    return session.messages.remove(entry);
   }
 
   // ---------------------------------------------------------------------------

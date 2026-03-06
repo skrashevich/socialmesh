@@ -40511,5 +40511,29 @@
     "sipDmSwipeToReply": "Swipe to reply",
     "@sipDmSwipeToReply": {
         "description": "Accessibility hint for swiping a message to reply."
+    },
+    "sipDmActionReply": "Reply",
+    "@sipDmActionReply": {
+        "description": "Label for the reply action in the message context menu."
+    },
+    "sipDmActionCopy": "Copy",
+    "@sipDmActionCopy": {
+        "description": "Label for the copy action in the message context menu."
+    },
+    "sipDmActionDelete": "Delete",
+    "@sipDmActionDelete": {
+        "description": "Label for the delete action in the message context menu."
+    },
+    "sipDmMessageCopied": "Message copied",
+    "@sipDmMessageCopied": {
+        "description": "Snackbar shown after copying a message to clipboard."
+    },
+    "sipDmDeleteConfirmTitle": "Delete message?",
+    "@sipDmDeleteConfirmTitle": {
+        "description": "Title for the message delete confirmation bottom sheet."
+    },
+    "sipDmDeleteConfirmMessage": "This will remove the message from your local history.",
+    "@sipDmDeleteConfirmMessage": {
+        "description": "Body text for the message delete confirmation bottom sheet."
     }
 }

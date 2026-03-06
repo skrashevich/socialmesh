@@ -94,4 +94,82 @@ abstract final class SipDmMessages {
   /// Calculate the UTF-8 byte length of a string without allocating
   /// the full encoded buffer. Useful for pre-flight size checks.
   static int utf8ByteLength(String text) => utf8.encode(text).length;
+
+  // ---------------------------------------------------------------------------
+  // DM_REACTION encode/decode
+  // ---------------------------------------------------------------------------
+
+  /// Encode a DM reaction payload.
+  ///
+  /// Payload layout (5 bytes):
+  ///   byte 0:    emoji index (0–6, maps to [SipDmReactionEmojis.all])
+  ///   bytes 1–4: target message timestamp in seconds (big-endian uint32)
+  ///
+  /// Returns null if [emojiIndex] is out of range.
+  static Uint8List? encodeReaction({
+    required int emojiIndex,
+    required int targetTimestampS,
+  }) {
+    if (emojiIndex < 0 || emojiIndex > 6) {
+      AppLogging.sip('SIP_DM: encodeReaction rejected: bad index $emojiIndex');
+      return null;
+    }
+    final bytes = Uint8List(5);
+    bytes[0] = emojiIndex;
+    final bd = ByteData.sublistView(bytes);
+    bd.setUint32(1, targetTimestampS, Endian.big);
+    return bytes;
+  }
+
+  /// Decode a DM reaction payload.
+  ///
+  /// Returns null if the payload is malformed.
+  static SipDmReaction? decodeReaction(Uint8List payload) {
+    if (payload.length < 5) {
+      AppLogging.sip(
+        'SIP_DM: decodeReaction rejected: ${payload.length}B < 5B',
+      );
+      return null;
+    }
+    final emojiIndex = payload[0];
+    if (emojiIndex > 6) {
+      AppLogging.sip('SIP_DM: decodeReaction rejected: bad index $emojiIndex');
+      return null;
+    }
+    final bd = ByteData.sublistView(payload);
+    final targetTimestampS = bd.getUint32(1, Endian.big);
+    return SipDmReaction(
+      emojiIndex: emojiIndex,
+      targetTimestampS: targetTimestampS,
+    );
+  }
+}
+
+/// Predefined reaction emojis for DM messages.
+///
+/// Index maps 1:1 to the wire format emoji index byte.
+abstract final class SipDmReactionEmojis {
+  /// The seven reaction emojis: ❤️ 👍 😁 😂 👏 👎 🔥
+  static const List<String> all = ['❤️', '👍', '😁', '😂', '👏', '👎', '🔥'];
+}
+
+/// A parsed DM reaction.
+class SipDmReaction {
+  /// Index into [SipDmReactionEmojis.all].
+  final int emojiIndex;
+
+  /// Timestamp (seconds) of the message being reacted to.
+  final int targetTimestampS;
+
+  const SipDmReaction({
+    required this.emojiIndex,
+    required this.targetTimestampS,
+  });
+
+  /// The emoji character for this reaction.
+  String get emoji => SipDmReactionEmojis.all[emojiIndex];
+
+  @override
+  String toString() =>
+      'SipDmReaction(emoji=$emoji, target=${targetTimestampS}s)';
 }

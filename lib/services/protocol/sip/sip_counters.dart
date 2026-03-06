@@ -395,6 +395,8 @@ class SipCounters {
         return 'DM_MSG';
       case SipMessageType.dmTyping:
         return 'DM_TYPING';
+      case SipMessageType.dmReaction:
+        return 'DM_REACTION';
       case SipMessageType.error:
         return 'ERROR';
     }

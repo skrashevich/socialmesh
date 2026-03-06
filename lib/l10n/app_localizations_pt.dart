@@ -30556,4 +30556,23 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get sipDmSwipeToReply => 'Swipe to reply';
+
+  @override
+  String get sipDmActionReply => 'Reply';
+
+  @override
+  String get sipDmActionCopy => 'Copy';
+
+  @override
+  String get sipDmActionDelete => 'Delete';
+
+  @override
+  String get sipDmMessageCopied => 'Message copied';
+
+  @override
+  String get sipDmDeleteConfirmTitle => 'Delete message?';
+
+  @override
+  String get sipDmDeleteConfirmMessage =>
+      'This will remove the message from your local history.';
 }

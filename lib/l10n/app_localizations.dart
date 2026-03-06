@@ -53373,6 +53373,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Swipe to reply'**
   String get sipDmSwipeToReply;
+
+  /// Label for the reply action in the message context menu.
+  ///
+  /// In en, this message translates to:
+  /// **'Reply'**
+  String get sipDmActionReply;
+
+  /// Label for the copy action in the message context menu.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get sipDmActionCopy;
+
+  /// Label for the delete action in the message context menu.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get sipDmActionDelete;
+
+  /// Snackbar shown after copying a message to clipboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Message copied'**
+  String get sipDmMessageCopied;
+
+  /// Title for the message delete confirmation bottom sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete message?'**
+  String get sipDmDeleteConfirmTitle;
+
+  /// Body text for the message delete confirmation bottom sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'This will remove the message from your local history.'**
+  String get sipDmDeleteConfirmMessage;
 }
 
 class _AppLocalizationsDelegate

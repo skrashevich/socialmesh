@@ -14,12 +14,14 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/l10n/l10n_extension.dart';
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/app_bar_overflow_menu.dart';
+import '../../core/widgets/app_bottom_sheet.dart';
 import '../../core/widgets/glass_scaffold.dart';
 import '../../features/nodedex/models/nodedex_entry.dart';
 import '../../features/nodedex/models/sigil_evolution.dart';
@@ -33,6 +35,7 @@ import '../../providers/sip_providers.dart';
 import '../../services/haptic_service.dart';
 import '../../services/protocol/sip/sip_codec.dart';
 import '../../services/protocol/sip/sip_dm.dart';
+import '../../services/protocol/sip/sip_messages_dm.dart';
 import '../../utils/snackbar.dart';
 
 /// Ephemeral DM thread screen for a single SIP session.
@@ -202,6 +205,137 @@ class _SipDmScreenState extends ConsumerState<SipDmScreen>
     }
   }
 
+  void _onCopy(SipDmHistoryEntry entry) {
+    final body = SipDmManager.extractReplyBody(entry.text);
+    Clipboard.setData(ClipboardData(text: body));
+    ref.read(hapticServiceProvider).trigger(HapticType.light);
+    if (mounted) showInfoSnackBar(context, context.l10n.sipDmMessageCopied);
+  }
+
+  void _onDelete(SipDmHistoryEntry entry) {
+    final haptics = ref.read(hapticServiceProvider);
+    haptics.trigger(HapticType.medium);
+    AppBottomSheet.showConfirm(
+      context: context,
+      title: context.l10n.sipDmDeleteConfirmTitle,
+      message: context.l10n.sipDmDeleteConfirmMessage,
+      confirmLabel: context.l10n.sipDmActionDelete,
+      isDestructive: true,
+    ).then((confirmed) {
+      if (confirmed == true && mounted) {
+        final dm = ref.read(sipDmManagerProvider);
+        dm?.removeMessage(widget.sessionTag, entry);
+        haptics.trigger(HapticType.light);
+        setState(() {});
+      }
+    });
+  }
+
+  void _onReact(SipDmHistoryEntry entry, int emojiIndex) {
+    final dm = ref.read(sipDmManagerProvider);
+    if (dm == null) return;
+
+    final haptics = ref.read(hapticServiceProvider);
+    haptics.trigger(HapticType.light);
+
+    final encoded = dm.buildDmReaction(
+      sessionTag: widget.sessionTag,
+      emojiIndex: emojiIndex,
+      targetEntry: entry,
+    );
+    if (encoded != null) {
+      final protocol = ref.read(protocolServiceProvider);
+      protocol.sendSipPacket(encoded);
+    }
+    setState(() {});
+  }
+
+  void _showMessageMenu(SipDmHistoryEntry entry) {
+    ref.read(hapticServiceProvider).trigger(HapticType.medium);
+    final l10n = context.l10n;
+
+    AppBottomSheet.show<void>(
+      context: context,
+      padding: EdgeInsets.zero,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Emoji reaction row
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppTheme.spacing16,
+              vertical: AppTheme.spacing12,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: List.generate(SipDmReactionEmojis.all.length, (index) {
+                final isSelected = entry.localReaction == index;
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                    _onReact(entry, index);
+                  },
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 150),
+                    padding: const EdgeInsets.all(AppTheme.spacing8),
+                    decoration: BoxDecoration(
+                      color: isSelected
+                          ? context.accentColor.withValues(alpha: 0.2)
+                          : Colors.transparent,
+                      borderRadius: BorderRadius.circular(AppTheme.radius8),
+                    ),
+                    child: Text(
+                      SipDmReactionEmojis.all[index],
+                      style: const TextStyle(fontSize: 28),
+                    ),
+                  ),
+                );
+              }),
+            ),
+          ),
+          Divider(height: 1, color: context.border),
+          // Reply
+          ListTile(
+            leading: Icon(Icons.reply, color: context.textPrimary),
+            title: Text(
+              l10n.sipDmActionReply,
+              style: TextStyle(color: context.textPrimary),
+            ),
+            onTap: () {
+              Navigator.pop(context);
+              _onReply(entry);
+            },
+          ),
+          // Copy
+          ListTile(
+            leading: Icon(Icons.copy, color: context.textPrimary),
+            title: Text(
+              l10n.sipDmActionCopy,
+              style: TextStyle(color: context.textPrimary),
+            ),
+            onTap: () {
+              Navigator.pop(context);
+              _onCopy(entry);
+            },
+          ),
+          // Delete
+          ListTile(
+            leading: const Icon(Icons.delete_outline, color: AppTheme.errorRed),
+            title: Text(
+              l10n.sipDmActionDelete,
+              style: const TextStyle(color: AppTheme.errorRed),
+            ),
+            onTap: () {
+              Navigator.pop(context);
+              _onDelete(entry);
+            },
+          ),
+          const SizedBox(height: AppTheme.spacing8),
+        ],
+      ),
+    );
+  }
+
   void _scheduleTypingDismiss() {
     _typingDismissTimer?.cancel();
     _typingDismissTimer = Timer(const Duration(seconds: 12), () {
@@ -309,8 +443,8 @@ class _SipDmScreenState extends ConsumerState<SipDmScreen>
                     return const _TypingIndicatorBubble();
                   }
                   final entry = history[index];
-                  return _SwipeToReply(
-                    onReply: () => _onReply(entry),
+                  return GestureDetector(
+                    onLongPress: () => _showMessageMenu(entry),
                     child: _MessageBubble(entry: entry),
                   );
                 },
@@ -705,75 +839,136 @@ class _MessageBubble extends StatelessWidget {
     final replyTo = entry.replyToText;
     final bodyText = SipDmManager.extractReplyBody(entry.text);
 
+    // Collect visible reactions.
+    final reactions = <String>[];
+    if (entry.localReaction != null) {
+      reactions.add(SipDmReactionEmojis.all[entry.localReaction!]);
+    }
+    if (entry.peerReaction != null) {
+      final peerEmoji = SipDmReactionEmojis.all[entry.peerReaction!];
+      // If same emoji, show count; otherwise show both.
+      if (entry.localReaction == entry.peerReaction) {
+        reactions.clear();
+        reactions.add('$peerEmoji 2');
+      } else {
+        reactions.add(peerEmoji);
+      }
+    }
+
     return Align(
       alignment: isOutbound ? Alignment.centerRight : Alignment.centerLeft,
-      child: Container(
-        margin: const EdgeInsets.only(bottom: AppTheme.spacing8),
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppTheme.spacing12,
-          vertical: AppTheme.spacing8,
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: reactions.isEmpty ? AppTheme.spacing8 : AppTheme.spacing16,
         ),
-        constraints: BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width * 0.75,
-        ),
-        decoration: BoxDecoration(
-          color: isOutbound
-              ? context.accentColor.withValues(alpha: 0.15)
-              : context.card,
-          borderRadius: BorderRadius.only(
-            topLeft: const Radius.circular(AppTheme.radius12),
-            topRight: const Radius.circular(AppTheme.radius12),
-            bottomLeft: isOutbound
-                ? const Radius.circular(AppTheme.radius12)
-                : const Radius.circular(AppTheme.radius4),
-            bottomRight: isOutbound
-                ? const Radius.circular(AppTheme.radius4)
-                : const Radius.circular(AppTheme.radius12),
-          ),
-          border: isOutbound
-              ? null
-              : Border.all(color: context.border.withValues(alpha: 0.5)),
-        ),
-        child: Column(
-          crossAxisAlignment: isOutbound
-              ? CrossAxisAlignment.end
-              : CrossAxisAlignment.start,
+        child: Stack(
+          clipBehavior: Clip.none,
           children: [
-            // Quoted reply block
-            if (replyTo != null) ...[
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppTheme.spacing8,
-                  vertical: AppTheme.spacing4,
+            // Message bubble
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppTheme.spacing12,
+                vertical: AppTheme.spacing8,
+              ),
+              constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width * 0.75,
+              ),
+              decoration: BoxDecoration(
+                color: isOutbound
+                    ? context.accentColor.withValues(alpha: 0.15)
+                    : context.card,
+                borderRadius: BorderRadius.only(
+                  topLeft: const Radius.circular(AppTheme.radius12),
+                  topRight: const Radius.circular(AppTheme.radius12),
+                  bottomLeft: isOutbound
+                      ? const Radius.circular(AppTheme.radius12)
+                      : const Radius.circular(AppTheme.radius4),
+                  bottomRight: isOutbound
+                      ? const Radius.circular(AppTheme.radius4)
+                      : const Radius.circular(AppTheme.radius12),
                 ),
-                decoration: BoxDecoration(
-                  border: Border(
-                    left: BorderSide(color: context.accentColor, width: 2),
+                border: isOutbound
+                    ? null
+                    : Border.all(color: context.border.withValues(alpha: 0.5)),
+              ),
+              child: Column(
+                crossAxisAlignment: isOutbound
+                    ? CrossAxisAlignment.end
+                    : CrossAxisAlignment.start,
+                children: [
+                  // Quoted reply block
+                  if (replyTo != null) ...[
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AppTheme.spacing8,
+                        vertical: AppTheme.spacing4,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          left: BorderSide(
+                            color: context.accentColor,
+                            width: 2,
+                          ),
+                        ),
+                        color: context.accentColor.withValues(alpha: 0.06),
+                      ),
+                      child: Text(
+                        replyTo,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: context.textTertiary,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: AppTheme.spacing4),
+                  ],
+                  Text(
+                    bodyText,
+                    style: TextStyle(fontSize: 14, color: context.textPrimary),
                   ),
-                  color: context.accentColor.withValues(alpha: 0.06),
-                ),
-                child: Text(
-                  replyTo,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: context.textTertiary,
-                    fontStyle: FontStyle.italic,
+                  const SizedBox(height: AppTheme.spacing2),
+                  Text(
+                    _formatTime(entry.timestampMs),
+                    style: TextStyle(fontSize: 10, color: context.textTertiary),
+                  ),
+                ],
+              ),
+            ),
+
+            // Reaction badges overlapping the bottom of the bubble
+            if (reactions.isNotEmpty)
+              Positioned(
+                bottom: -10,
+                right: isOutbound ? AppTheme.spacing8 : null,
+                left: isOutbound ? null : AppTheme.spacing8,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppTheme.spacing6,
+                    vertical: AppTheme.spacing2,
+                  ),
+                  decoration: BoxDecoration(
+                    color: context.card,
+                    borderRadius: BorderRadius.circular(AppTheme.radius12),
+                    border: Border.all(
+                      color: context.border.withValues(alpha: 0.3),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.08),
+                        blurRadius: 4,
+                        offset: const Offset(0, 1),
+                      ),
+                    ],
+                  ),
+                  child: Text(
+                    reactions.join(' '),
+                    style: const TextStyle(fontSize: 14),
                   ),
                 ),
               ),
-              const SizedBox(height: AppTheme.spacing4),
-            ],
-            Text(
-              bodyText,
-              style: TextStyle(fontSize: 14, color: context.textPrimary),
-            ),
-            const SizedBox(height: AppTheme.spacing2),
-            Text(
-              _formatTime(entry.timestampMs),
-              style: TextStyle(fontSize: 10, color: context.textTertiary),
-            ),
           ],
         ),
       ),
@@ -784,112 +979,6 @@ class _MessageBubble extends StatelessWidget {
     final dt = DateTime.fromMillisecondsSinceEpoch(ms);
     return '${dt.hour.toString().padLeft(2, '0')}:'
         '${dt.minute.toString().padLeft(2, '0')}';
-  }
-}
-
-// =============================================================================
-// Swipe-to-reply — horizontal drag to trigger reply mode
-// =============================================================================
-
-class _SwipeToReply extends StatefulWidget {
-  final VoidCallback onReply;
-  final Widget child;
-
-  const _SwipeToReply({required this.onReply, required this.child});
-
-  @override
-  State<_SwipeToReply> createState() => _SwipeToReplyState();
-}
-
-class _SwipeToReplyState extends State<_SwipeToReply>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _controller;
-  late final Animation<Offset> _animation;
-  double _dragExtent = 0;
-
-  /// Threshold in logical pixels for triggering the reply.
-  static const double _threshold = 60;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 200),
-    );
-    _animation = Tween<Offset>(
-      begin: Offset.zero,
-      end: Offset.zero,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  void _onHorizontalDragUpdate(DragUpdateDetails details) {
-    // Only allow dragging to the right.
-    _dragExtent = (_dragExtent + details.delta.dx).clamp(0.0, _threshold * 1.5);
-    setState(() {});
-  }
-
-  void _onHorizontalDragEnd(DragEndDetails details) {
-    if (_dragExtent >= _threshold) {
-      widget.onReply();
-    }
-    // Animate back to start.
-    _animation = Tween<Offset>(
-      begin: Offset(_dragExtent / MediaQuery.of(context).size.width, 0),
-      end: Offset.zero,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
-    _controller.forward(from: 0).then((_) {
-      if (mounted) setState(() => _dragExtent = 0);
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final offset = _controller.isAnimating
-        ? _animation.value
-        : Offset(_dragExtent / MediaQuery.of(context).size.width, 0);
-    final progress = (_dragExtent / _threshold).clamp(0.0, 1.0);
-
-    return Stack(
-      children: [
-        // Reply icon revealed behind the message
-        if (_dragExtent > 0)
-          Positioned(
-            left: AppTheme.spacing8,
-            top: 0,
-            bottom: 0,
-            child: Center(
-              child: Opacity(
-                opacity: progress,
-                child: Transform.scale(
-                  scale: 0.6 + (0.4 * progress),
-                  child: Icon(
-                    Icons.reply,
-                    size: 24,
-                    color: context.accentColor.withValues(alpha: progress),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        SlideTransition(
-          position: _controller.isAnimating
-              ? _animation
-              : AlwaysStoppedAnimation(offset),
-          child: GestureDetector(
-            onHorizontalDragUpdate: _onHorizontalDragUpdate,
-            onHorizontalDragEnd: _onHorizontalDragEnd,
-            child: widget.child,
-          ),
-        ),
-      ],
-    );
   }
 }
 
