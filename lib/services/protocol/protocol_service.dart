@@ -4139,6 +4139,8 @@ class ProtocolService {
         _handleSipDmTyping(frame);
       case SipMessageType.dmReaction:
         _handleSipDmReaction(frame);
+      case SipMessageType.dmDelete:
+        _handleSipDmDelete(frame);
 
       // ----- SIP-0: CAP_REQ / CAP_RESP (informational) -----
       case SipMessageType.capReq:
@@ -4378,6 +4380,16 @@ class ProtocolService {
     }
 
     dm.handleInboundReaction(frame);
+  }
+
+  void _handleSipDmDelete(SipFrame frame) {
+    final dm = _sipDm;
+    if (dm == null) {
+      AppLogging.sip('SIP_RX: no SipDmManager — dropping DM_DELETE');
+      return;
+    }
+
+    dm.handleInboundDelete(frame);
   }
 
   /// Send a file transfer packet as broadcast on PRIVATE_APP (portnum 256).

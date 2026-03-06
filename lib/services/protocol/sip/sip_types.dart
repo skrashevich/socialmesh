@@ -36,6 +36,7 @@ enum SipMessageType {
   dmMsg(0x40),
   dmTyping(0x41),
   dmReaction(0x42),
+  dmDelete(0x43),
 
   // Error
   error(0x7E);

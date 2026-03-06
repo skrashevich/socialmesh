@@ -504,6 +504,91 @@ class SipDmManager {
   }
 
   // ---------------------------------------------------------------------------
+  // Delete (remote)
+  // ---------------------------------------------------------------------------
+
+  /// Build a DM_DELETE frame for the given session and message.
+  ///
+  /// Removes the message locally and returns the encoded bytes to
+  /// transmit so the peer also removes it. Returns null if the session
+  /// is invalid or budget exhausted.
+  Uint8List? buildDmDelete({
+    required int sessionTag,
+    required SipDmHistoryEntry targetEntry,
+  }) {
+    final session = _sessions[sessionTag];
+    if (session == null || session.isExpired(_clock())) return null;
+    if (session.status != SipDmSessionStatus.active) return null;
+
+    final payload = SipDmMessages.encodeDelete(
+      targetTimestampS: targetEntry.timestampMs ~/ 1000,
+    );
+
+    // Check budget (22-byte header + 4-byte payload = 26 bytes).
+    final frameSize = SipConstants.sipWrapperMin + payload.length;
+    if (!_rateLimiter.canSend(frameSize)) return null;
+
+    _rateLimiter.recordSend(frameSize);
+
+    // Remove locally.
+    session.messages.remove(targetEntry);
+
+    final frame = SipFrame(
+      versionMajor: SipConstants.sipVersionMajor,
+      versionMinor: SipConstants.sipVersionMinor,
+      msgType: SipMessageType.dmDelete,
+      flags: 0,
+      headerLen: SipConstants.sipWrapperMin,
+      sessionId: sessionTag,
+      nonce: SipCodec.generateNonce(),
+      timestampS: _clock() ~/ 1000,
+      payloadLen: payload.length,
+      payload: payload,
+    );
+
+    final encoded = SipCodec.encode(frame);
+    if (encoded == null) return null;
+
+    AppLogging.sip(
+      'SIP_DM: -> DELETE message at '
+      'ts=${targetEntry.timestampMs ~/ 1000}s in '
+      'session=0x${sessionTag.toRadixString(16)}',
+    );
+
+    onStateChanged?.call();
+    return encoded;
+  }
+
+  /// Handle an inbound DM_DELETE frame.
+  void handleInboundDelete(SipFrame frame) {
+    if (frame.msgType != SipMessageType.dmDelete) return;
+
+    final sessionTag = frame.sessionId;
+    final session = _sessions[sessionTag];
+    if (session == null) return;
+    if (session.isExpired(_clock())) {
+      _expireSession(sessionTag);
+      return;
+    }
+    if (session.status != SipDmSessionStatus.active) return;
+
+    final targetTimestampS = SipDmMessages.decodeDelete(frame.payload);
+    if (targetTimestampS == null) return;
+
+    // Find and remove the target message by timestamp (seconds precision).
+    session.messages.removeWhere(
+      (entry) => entry.timestampMs ~/ 1000 == targetTimestampS,
+    );
+
+    AppLogging.sip(
+      'SIP_DM: <- DELETE message at ts=${targetTimestampS}s from '
+      'session=0x${sessionTag.toRadixString(16)}',
+    );
+
+    onStateChanged?.call();
+  }
+
+  // ---------------------------------------------------------------------------
   // Message sending
   // ---------------------------------------------------------------------------
 
@@ -549,6 +634,10 @@ class SipDmManager {
     // Deduct budget.
     _rateLimiter.recordSend(frameSize);
 
+    // Use a single timestamp for both the frame and history entry
+    // so reactions/deletes can cross-reference by seconds precision.
+    final nowS = _clock() ~/ 1000;
+
     final frame = SipFrame(
       versionMajor: SipConstants.sipVersionMajor,
       versionMinor: SipConstants.sipVersionMinor,
@@ -557,16 +646,16 @@ class SipDmManager {
       headerLen: SipConstants.sipWrapperMin,
       sessionId: sessionTag,
       nonce: SipCodec.generateNonce(),
-      timestampS: _clock() ~/ 1000,
+      timestampS: nowS,
       payloadLen: payload.length,
       payload: payload,
     );
 
-    // Add to history.
+    // Add to history using frame timestamp (ms = seconds * 1000).
     session.messages.add(
       SipDmHistoryEntry(
         text: text,
-        timestampMs: _clock(),
+        timestampMs: nowS * 1000,
         direction: SipDmDirection.outbound,
         replyToText: _parseReplyToText(text),
       ),
@@ -625,11 +714,12 @@ class SipDmManager {
     final message = SipDmMessages.decodeDm(frame.payload);
     if (message == null) return null;
 
-    // Add to history.
+    // Add to history using the frame's timestamp so both sides agree
+    // on the message's identity (enables cross-device reactions/deletes).
     session.messages.add(
       SipDmHistoryEntry(
         text: message.text,
-        timestampMs: _clock(),
+        timestampMs: frame.timestampS * 1000,
         direction: SipDmDirection.inbound,
         replyToText: _parseReplyToText(message.text),
       ),

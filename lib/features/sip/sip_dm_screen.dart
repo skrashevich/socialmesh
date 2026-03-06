@@ -28,6 +28,7 @@ import '../../features/nodedex/models/sigil_evolution.dart';
 import '../../features/nodedex/providers/nodedex_providers.dart';
 import '../../features/nodedex/services/patina_score.dart';
 import '../../features/nodedex/services/trait_engine.dart';
+import '../../features/nodedex/screens/nodedex_detail_screen.dart';
 import '../../features/nodedex/widgets/sigil_painter.dart';
 import '../../features/nodes/node_display_name_resolver.dart';
 import '../../providers/app_providers.dart';
@@ -57,6 +58,7 @@ class _SipDmScreenState extends ConsumerState<SipDmScreen>
     with LifecycleSafeMixin {
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+  final FocusNode _inputFocusNode = FocusNode();
 
   /// The message being replied to, or null if not replying.
   SipDmHistoryEntry? _replyingToEntry;
@@ -75,6 +77,7 @@ class _SipDmScreenState extends ConsumerState<SipDmScreen>
     _messageController.removeListener(_onTextChanged);
     _messageController.dispose();
     _scrollController.dispose();
+    _inputFocusNode.dispose();
     _typingDismissTimer?.cancel();
     super.dispose();
   }
@@ -197,6 +200,8 @@ class _SipDmScreenState extends ConsumerState<SipDmScreen>
   void _onReply(SipDmHistoryEntry entry) {
     ref.read(hapticServiceProvider).trigger(HapticType.light);
     setState(() => _replyingToEntry = entry);
+    // Focus the input field so the user can start typing immediately.
+    _inputFocusNode.requestFocus();
   }
 
   void _cancelReply() {
@@ -224,7 +229,18 @@ class _SipDmScreenState extends ConsumerState<SipDmScreen>
     ).then((confirmed) {
       if (confirmed == true && mounted) {
         final dm = ref.read(sipDmManagerProvider);
-        dm?.removeMessage(widget.sessionTag, entry);
+        // Send delete to peer and remove locally.
+        final encoded = dm?.buildDmDelete(
+          sessionTag: widget.sessionTag,
+          targetEntry: entry,
+        );
+        if (encoded != null) {
+          final protocol = ref.read(protocolServiceProvider);
+          protocol.sendSipPacket(encoded);
+        } else {
+          // Fallback: local-only delete if send fails.
+          dm?.removeMessage(widget.sessionTag, entry);
+        }
         haptics.trigger(HapticType.light);
         setState(() {});
       }
@@ -237,6 +253,13 @@ class _SipDmScreenState extends ConsumerState<SipDmScreen>
 
     final haptics = ref.read(hapticServiceProvider);
     haptics.trigger(HapticType.light);
+
+    // Toggle: tapping the same emoji removes the reaction.
+    if (entry.localReaction == emojiIndex) {
+      entry.localReaction = null;
+      setState(() {});
+      return;
+    }
 
     final encoded = dm.buildDmReaction(
       sessionTag: widget.sessionTag,

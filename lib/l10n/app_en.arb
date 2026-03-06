@@ -40536,7 +40536,7 @@
     "@sipDmDeleteConfirmTitle": {
         "description": "Title for the message delete confirmation bottom sheet."
     },
-    "sipDmDeleteConfirmMessage": "This will remove the message from your local history.",
+    "sipDmDeleteConfirmMessage": "This will delete the message for both you and the recipient.",
     "@sipDmDeleteConfirmMessage": {
         "description": "Body text for the message delete confirmation bottom sheet."
     }

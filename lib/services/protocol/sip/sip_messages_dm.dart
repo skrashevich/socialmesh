@@ -143,6 +143,37 @@ abstract final class SipDmMessages {
       targetTimestampS: targetTimestampS,
     );
   }
+
+  // ---------------------------------------------------------------------------
+  // DM_DELETE encode/decode
+  // ---------------------------------------------------------------------------
+
+  /// Encode a DM delete payload.
+  ///
+  /// Payload layout (4 bytes):
+  ///   bytes 0–3: target message timestamp in seconds (big-endian uint32)
+  ///
+  /// The receiver removes the matching message from their local history.
+  static Uint8List encodeDelete({required int targetTimestampS}) {
+    final bytes = Uint8List(4);
+    final bd = ByteData.sublistView(bytes);
+    bd.setUint32(0, targetTimestampS, Endian.big);
+    return bytes;
+  }
+
+  /// Decode a DM delete payload.
+  ///
+  /// Returns the target timestamp in seconds, or null if malformed.
+  static int? decodeDelete(Uint8List payload) {
+    if (payload.length < 4) {
+      AppLogging.sip(
+        'SIP_DM: decodeDelete rejected: ${payload.length}B < 4B',
+      );
+      return null;
+    }
+    final bd = ByteData.sublistView(payload);
+    return bd.getUint32(0, Endian.big);
+  }
 }
 
 /// Predefined reaction emojis for DM messages.
