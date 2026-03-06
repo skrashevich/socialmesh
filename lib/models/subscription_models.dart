@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 // One-time purchase definitions and feature flags for monetization
 
 import '../config/revenuecat_config.dart';

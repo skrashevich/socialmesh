@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 import 'package:flutter_test/flutter_test.dart';
 import 'package:socialmesh/services/deep_link/deep_link_parser.dart';
 import 'package:socialmesh/services/deep_link/deep_link_router.dart';

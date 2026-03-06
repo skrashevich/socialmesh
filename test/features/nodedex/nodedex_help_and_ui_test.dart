@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 
 // Tests for NodeDex help content, section info buttons, sticky headers,
 // and detail screen widget integration.

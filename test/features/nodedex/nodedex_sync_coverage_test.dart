@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 
 // Sync Coverage Tests — verifies Cloud Sync contract completeness,
 // merge/conflict resolution, serialization round-trips, and queue

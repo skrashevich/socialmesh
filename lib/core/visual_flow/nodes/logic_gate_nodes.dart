@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 // Logic gate node builders for the Socialmesh visual automation flow builder.
 //
 // Logic gate nodes combine multiple event signals using boolean logic:

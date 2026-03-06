@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 
 /// Global Layer Setup Wizard — a 6-step guided flow that configures
 /// the MQTT bridge between the user's local mesh and the wider world.

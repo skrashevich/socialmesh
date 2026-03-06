@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 
 // Sync Pipeline Integration Tests — verifies end-to-end sync behavior,
 // specifically the bugs identified in the Cloud Sync debug audit:

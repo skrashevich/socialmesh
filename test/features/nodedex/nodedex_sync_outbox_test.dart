@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 
 // NodeDex Sync Outbox Pattern Tests — comprehensive coverage for the
 // outbox-based Cloud Sync pipeline.

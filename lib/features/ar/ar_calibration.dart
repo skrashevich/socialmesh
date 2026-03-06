@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 // AR Calibration Service
 //
 // Handles camera FOV detection, compass calibration, magnetic declination,

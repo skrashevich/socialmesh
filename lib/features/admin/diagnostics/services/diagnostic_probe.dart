@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 import '../../../../services/protocol/admin_target.dart';
 import '../../../../services/protocol/protocol_service.dart';
 import 'diagnostic_capture_service.dart';
