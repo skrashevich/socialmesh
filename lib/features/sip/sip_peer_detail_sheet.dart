@@ -1,23 +1,39 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+// SIP Peer Detail Sheet — bottom sheet showing peer info + handshake action.
+//
+// Redesigned to match NodeDex edge_detail_sheet pattern:
+// - Sigil avatar header with resolved name + hex ID
+// - Grouped info rows with semantic colors
+// - Capability chips with check/cancel icons
+// - Prominent handshake action button
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/l10n/l10n_extension.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/app_bottom_sheet.dart';
+import '../../features/nodedex/models/nodedex_entry.dart';
+import '../../features/nodedex/models/sigil_evolution.dart';
+import '../../features/nodedex/providers/nodedex_providers.dart';
+import '../../features/nodedex/services/patina_score.dart';
+import '../../features/nodedex/services/trait_engine.dart';
+import '../../features/nodedex/widgets/sigil_painter.dart';
+import '../../features/nodes/node_display_name_resolver.dart';
+import '../../models/mesh_models.dart';
+import '../../providers/app_providers.dart';
 import '../../providers/sip_providers.dart';
 import '../../services/haptic_service.dart';
 import '../../services/protocol/sip/sip_codec.dart';
 import '../../services/protocol/sip/sip_discovery.dart';
 import '../../services/protocol/sip/sip_handshake.dart';
-import '../../providers/app_providers.dart';
 import '../../utils/snackbar.dart';
 
 /// Bottom sheet showing detailed info for a single SIP peer.
 ///
-/// Displays node ID, device class, capabilities, feature flags, and
-/// last-seen time. Includes a handshake initiation button.
+/// Displays a sigil avatar, resolved display name, device class,
+/// capabilities, and last-seen time. Includes a handshake action button.
 class SipPeerDetailSheet extends ConsumerWidget {
   final SipPeerCapability peer;
 
@@ -34,40 +50,46 @@ class SipPeerDetailSheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final theme = Theme.of(context);
-    final nodeHex = '0x${peer.nodeId.toRadixString(16).toUpperCase()}';
+    final entry = ref.watch(nodeDexEntryProvider(peer.nodeId));
+    final nodes = ref.watch(nodesProvider);
+    final node = nodes[peer.nodeId];
+    final patinaResult = ref.watch(nodeDexPatinaProvider(peer.nodeId));
+    final traitResult = ref.watch(nodeDexTraitProvider(peer.nodeId));
+    final hexId =
+        '!${peer.nodeId.toRadixString(16).toUpperCase().padLeft(4, '0')}';
+    final displayName = _resolveDisplayName(entry, node, peer.nodeId);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Header with icon and title
+        // Header: sigil avatar + name + hex ID
         Row(
           children: [
-            CircleAvatar(
-              radius: 24,
-              backgroundColor: theme.colorScheme.primaryContainer,
-              child: Icon(
-                Icons.sensors,
-                color: theme.colorScheme.onPrimaryContainer,
-                size: 24,
-              ),
-            ),
-            const SizedBox(width: AppTheme.spacing12),
+            _buildAvatar(context, entry, patinaResult, traitResult),
+            const SizedBox(width: AppTheme.spacing14),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    l10n.sipPeerDetailTitle,
-                    style: theme.textTheme.titleLarge,
+                    displayName,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      color: context.textPrimary,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: AppTheme.spacing2),
                   Text(
-                    nodeHex,
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
-                      fontFamily: 'monospace', // lint-allow: hardcoded-string
+                    hexId,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      color: context.textTertiary,
+                      fontFamily: AppTheme.fontFamily,
                     ),
                   ),
                 ],
@@ -79,11 +101,6 @@ class SipPeerDetailSheet extends ConsumerWidget {
         const SizedBox(height: AppTheme.spacing20),
 
         // Info rows
-        _InfoRow(
-          label: l10n.sipPeerDetailNodeId,
-          value: nodeHex,
-          icon: Icons.tag,
-        ),
         _InfoRow(
           label: l10n.sipPeerDetailDeviceClass,
           value: _deviceClassName(peer.deviceClass),
@@ -108,7 +125,14 @@ class SipPeerDetailSheet extends ConsumerWidget {
         const SizedBox(height: AppTheme.spacing16),
 
         // Capabilities section
-        Text(l10n.sipPeerDetailCapabilities, style: theme.textTheme.titleSmall),
+        Text(
+          l10n.sipPeerDetailCapabilities,
+          style: TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.w600,
+            color: context.textSecondary,
+          ),
+        ),
         const SizedBox(height: AppTheme.spacing8),
         Wrap(
           spacing: AppTheme.spacing8,
@@ -127,10 +151,55 @@ class SipPeerDetailSheet extends ConsumerWidget {
 
         const SizedBox(height: AppTheme.spacing24),
 
-        // Action buttons
+        // Handshake action
         _HandshakeButton(peer: peer),
       ],
     );
+  }
+
+  Widget _buildAvatar(
+    BuildContext context,
+    NodeDexEntry? entry,
+    PatinaResult patinaResult,
+    TraitResult traitResult,
+  ) {
+    if (entry?.sigil != null) {
+      return SigilAvatar(
+        sigil: entry!.sigil,
+        nodeNum: peer.nodeId,
+        size: 56,
+        evolution: SigilEvolution.fromPatina(
+          patinaResult.score,
+          trait: traitResult.primary,
+        ),
+      );
+    }
+
+    return Container(
+      width: 56,
+      height: 56,
+      decoration: BoxDecoration(
+        color: context.accentColor.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(AppTheme.radius16),
+      ),
+      child: Icon(
+        Icons.sensors,
+        size: 28,
+        color: context.accentColor.withValues(alpha: 0.7),
+      ),
+    );
+  }
+
+  static String _resolveDisplayName(
+    NodeDexEntry? entry,
+    MeshNode? node,
+    int nodeId,
+  ) {
+    return entry?.localNickname ??
+        entry?.sipDisplayName ??
+        node?.displayName ??
+        entry?.lastKnownName ??
+        NodeDisplayNameResolver.defaultName(nodeId);
   }
 
   static String _deviceClassName(int code) {
@@ -161,6 +230,10 @@ class SipPeerDetailSheet extends ConsumerWidget {
   }
 }
 
+// =============================================================================
+// Info row — consistent with NodeDex detail screen pattern
+// =============================================================================
+
 class _InfoRow extends StatelessWidget {
   final String label;
   final String value;
@@ -174,30 +247,34 @@ class _InfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.only(bottom: AppTheme.spacing8),
       child: Row(
         children: [
-          Icon(
-            icon,
-            size: 16,
-            color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
-          ),
+          Icon(icon, size: 16, color: context.textTertiary),
           const SizedBox(width: AppTheme.spacing8),
           Text(
             label,
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
-            ),
+            style: TextStyle(fontSize: 13, color: context.textTertiary),
           ),
           const Spacer(),
-          Text(value, style: theme.textTheme.bodyMedium),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w500,
+              color: context.textSecondary,
+            ),
+          ),
         ],
       ),
     );
   }
 }
+
+// =============================================================================
+// Capability chip
+// =============================================================================
 
 class _CapChip extends StatelessWidget {
   final String label;
@@ -207,33 +284,44 @@ class _CapChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Chip(
-      avatar: Icon(
-        supported ? Icons.check_circle : Icons.cancel,
-        size: 16,
-        color: supported
-            ? theme.colorScheme.primary
-            : theme.colorScheme.onSurface.withValues(alpha: 0.4),
+    final color = supported ? AccentColors.green : context.textTertiary;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppTheme.spacing10,
+        vertical: AppTheme.spacing4,
       ),
-      label: Text(
-        label,
-        style: theme.textTheme.bodySmall?.copyWith(
-          color: supported
-              ? theme.colorScheme.onSurface
-              : theme.colorScheme.onSurface.withValues(alpha: 0.5),
-        ),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(AppTheme.radius8),
       ),
-      backgroundColor: supported
-          ? theme.colorScheme.primaryContainer.withValues(alpha: 0.3)
-          : theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
-      side: BorderSide.none,
-      padding: const EdgeInsets.symmetric(horizontal: AppTheme.spacing4),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            supported ? Icons.check_circle : Icons.cancel,
+            size: 14,
+            color: color,
+          ),
+          const SizedBox(width: AppTheme.spacing4),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: color,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
 
-/// Handshake button that reflects the current handshake state for this peer.
+// =============================================================================
+// Handshake button — reflects current handshake state
+// =============================================================================
+
 class _HandshakeButton extends ConsumerWidget {
   final SipPeerCapability peer;
 
@@ -285,7 +373,6 @@ class _HandshakeButton extends ConsumerWidget {
 
     final frame = handshake.initiateHandshake(peer.nodeId);
     if (frame == null) {
-      // Handshake already in progress for this peer.
       showInfoSnackBar(context, localL10n.sipHandshakeInProgress);
       return;
     }

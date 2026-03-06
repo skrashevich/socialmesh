@@ -166,6 +166,10 @@ class SipDmManager {
   final SipCounters? _counters;
   final int Function() _clock;
 
+  /// Called whenever DM state changes (session created, message received, etc.)
+  /// so the UI layer can rebuild.
+  void Function()? onStateChanged;
+
   /// Active sessions keyed by session_tag.
   final Map<int, SipDmSession> _sessions = {};
 
@@ -204,6 +208,8 @@ class SipDmManager {
       'SIP_DM: session created, tag=0x${sessionTag.toRadixString(16)}, '
       'ttl=${session.ttlS}s, peer=0x${peerNodeId.toRadixString(16)}',
     );
+
+    onStateChanged?.call();
 
     return session;
   }
@@ -412,6 +418,8 @@ class SipDmManager {
       'SIP_DM: <- DM ${frame.payload.length}B from '
       'session=0x${sessionTag.toRadixString(16)}',
     );
+
+    onStateChanged?.call();
 
     return message;
   }

@@ -40408,5 +40408,80 @@
     "sipCountersTitle": "SIP Debug Counters",
     "@sipCountersTitle": {
         "description": "Title for the SIP debug counters screen."
+    },
+    "sipHubTitle": "Socialmesh",
+    "@sipHubTitle": {
+        "description": "Title for the SIP Hub screen."
+    },
+    "sipHubSectionPeers": "Nearby Peers",
+    "@sipHubSectionPeers": {
+        "description": "Section header for discovered SIP peers."
+    },
+    "sipHubSectionConversations": "Conversations",
+    "@sipHubSectionConversations": {
+        "description": "Section header for active DM sessions."
+    },
+    "sipHubEmptyTitle": "No peers nearby",
+    "@sipHubEmptyTitle": {
+        "description": "Empty state title when no SIP peers are found."
+    },
+    "sipHubEmptyDescription": "Tap Scan to look for other Socialmesh users on the mesh.",
+    "@sipHubEmptyDescription": {
+        "description": "Empty state description when no SIP peers are found."
+    },
+    "sipHubLastSeen": "Seen {time}",
+    "@sipHubLastSeen": {
+        "description": "Last seen time label for a peer.",
+        "placeholders": {
+            "time": {
+                "type": "String"
+            }
+        }
+    },
+    "sipHubHandshaking": "Handshaking…",
+    "@sipHubHandshaking": {
+        "description": "Status badge shown during a handshake."
+    },
+    "sipHubReady": "Ready to chat",
+    "@sipHubReady": {
+        "description": "Status badge after handshake completes."
+    },
+    "sipHubMessagePreview": "{name}: {message}",
+    "@sipHubMessagePreview": {
+        "description": "Last message preview in conversation tile.",
+        "placeholders": {
+            "name": {
+                "type": "String"
+            },
+            "message": {
+                "type": "String"
+            }
+        }
+    },
+    "sipHubSessionExpiry": "Expires in {time}",
+    "@sipHubSessionExpiry": {
+        "description": "Expiry countdown for a DM session.",
+        "placeholders": {
+            "time": {
+                "type": "String"
+            }
+        }
+    },
+    "sipHubSessionPinned": "Pinned",
+    "@sipHubSessionPinned": {
+        "description": "Badge label for pinned sessions."
+    },
+    "sipHubNoMessages": "No messages yet",
+    "@sipHubNoMessages": {
+        "description": "Subtitle for conversations with no messages."
+    },
+    "sipDmPeerName": "Peer {hexId}",
+    "@sipDmPeerName": {
+        "description": "Fallback peer name showing hex node ID.",
+        "placeholders": {
+            "hexId": {
+                "type": "String"
+            }
+        }
     }
 }

@@ -30510,4 +30510,52 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get sipCountersTitle => 'SIP Debug Counters';
+
+  @override
+  String get sipHubTitle => 'Socialmesh';
+
+  @override
+  String get sipHubSectionPeers => 'Nearby Peers';
+
+  @override
+  String get sipHubSectionConversations => 'Conversations';
+
+  @override
+  String get sipHubEmptyTitle => 'No peers nearby';
+
+  @override
+  String get sipHubEmptyDescription =>
+      'Tap Scan to look for other Socialmesh users on the mesh.';
+
+  @override
+  String sipHubLastSeen(String time) {
+    return 'Seen $time';
+  }
+
+  @override
+  String get sipHubHandshaking => 'Handshaking…';
+
+  @override
+  String get sipHubReady => 'Ready to chat';
+
+  @override
+  String sipHubMessagePreview(String name, String message) {
+    return '$name: $message';
+  }
+
+  @override
+  String sipHubSessionExpiry(String time) {
+    return 'Expires in $time';
+  }
+
+  @override
+  String get sipHubSessionPinned => 'Pinned';
+
+  @override
+  String get sipHubNoMessages => 'No messages yet';
+
+  @override
+  String sipDmPeerName(String hexId) {
+    return 'Peer $hexId';
+  }
 }

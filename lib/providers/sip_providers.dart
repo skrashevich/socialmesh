@@ -227,6 +227,11 @@ final sipDmManagerProvider = Provider<SipDmManager?>((ref) {
   final counters = ref.watch(sipCountersProvider);
   final manager = SipDmManager(rateLimiter: limiter, counters: counters);
 
+  // Bump epoch so UI rebuilds when sessions are created or messages arrive.
+  manager.onStateChanged = () {
+    ref.read(sipDmEpochProvider.notifier).bump();
+  };
+
   final protocol = ref.read(protocolServiceProvider);
   protocol.attachSipDm(manager);
 

@@ -53253,6 +53253,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'SIP Debug Counters'**
   String get sipCountersTitle;
+
+  /// Title for the SIP Hub screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Socialmesh'**
+  String get sipHubTitle;
+
+  /// Section header for discovered SIP peers.
+  ///
+  /// In en, this message translates to:
+  /// **'Nearby Peers'**
+  String get sipHubSectionPeers;
+
+  /// Section header for active DM sessions.
+  ///
+  /// In en, this message translates to:
+  /// **'Conversations'**
+  String get sipHubSectionConversations;
+
+  /// Empty state title when no SIP peers are found.
+  ///
+  /// In en, this message translates to:
+  /// **'No peers nearby'**
+  String get sipHubEmptyTitle;
+
+  /// Empty state description when no SIP peers are found.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap Scan to look for other Socialmesh users on the mesh.'**
+  String get sipHubEmptyDescription;
+
+  /// Last seen time label for a peer.
+  ///
+  /// In en, this message translates to:
+  /// **'Seen {time}'**
+  String sipHubLastSeen(String time);
+
+  /// Status badge shown during a handshake.
+  ///
+  /// In en, this message translates to:
+  /// **'Handshaking…'**
+  String get sipHubHandshaking;
+
+  /// Status badge after handshake completes.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready to chat'**
+  String get sipHubReady;
+
+  /// Last message preview in conversation tile.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}: {message}'**
+  String sipHubMessagePreview(String name, String message);
+
+  /// Expiry countdown for a DM session.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires in {time}'**
+  String sipHubSessionExpiry(String time);
+
+  /// Badge label for pinned sessions.
+  ///
+  /// In en, this message translates to:
+  /// **'Pinned'**
+  String get sipHubSessionPinned;
+
+  /// Subtitle for conversations with no messages.
+  ///
+  /// In en, this message translates to:
+  /// **'No messages yet'**
+  String get sipHubNoMessages;
+
+  /// Fallback peer name showing hex node ID.
+  ///
+  /// In en, this message translates to:
+  /// **'Peer {hexId}'**
+  String sipDmPeerName(String hexId);
 }
 
 class _AppLocalizationsDelegate
