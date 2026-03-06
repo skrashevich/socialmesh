@@ -111,6 +111,18 @@ class _SipDmTypingEpoch extends Notifier<int> {
   void bump() => state++;
 }
 
+/// Bumped whenever handshake state changes so peer tile chips rebuild.
+final sipHandshakeEpochProvider = NotifierProvider<_SipHandshakeEpoch, int>(
+  _SipHandshakeEpoch.new,
+);
+
+class _SipHandshakeEpoch extends Notifier<int> {
+  @override
+  int build() => 0;
+
+  void bump() => state++;
+}
+
 /// SIP discovery engine.
 ///
 /// Uses the connected device's node number so we can ignore our own
@@ -172,10 +184,16 @@ final sipHandshakeProvider = Provider<SipHandshakeManager?>((ref) {
     counters: counters,
   );
 
+  // Bump epoch so UI rebuilds when handshake state changes.
+  manager.onStateChanged = () {
+    ref.read(sipHandshakeEpochProvider.notifier).bump();
+  };
+
   final protocol = ref.read(protocolServiceProvider);
   protocol.attachSipHandshake(manager);
 
   ref.onDispose(() {
+    manager.onStateChanged = null;
     protocol.attachSipHandshake(null);
   });
 
@@ -286,6 +304,7 @@ final sipHandshakeStateProvider = Provider.family<SipHandshakeState, int>((
   ref,
   nodeId,
 ) {
+  ref.watch(sipHandshakeEpochProvider); // rebuild on handshake state changes
   final hs = ref.watch(sipHandshakeProvider);
   return hs?.getState(nodeId) ?? SipHandshakeState.idle;
 });

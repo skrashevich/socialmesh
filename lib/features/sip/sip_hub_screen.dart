@@ -59,10 +59,13 @@ class _SipHubScreenState extends ConsumerState<SipHubScreen> {
   bool _scanning = false;
   bool _autoScanEnabled = false;
   Timer? _autoScanTimer;
+  Timer? _scanTimeoutTimer;
+  int _scanStartEpoch = -1;
 
   @override
   void dispose() {
     _autoScanTimer?.cancel();
+    _scanTimeoutTimer?.cancel();
     super.dispose();
   }
 
@@ -107,7 +110,22 @@ class _SipHubScreenState extends ConsumerState<SipHubScreen> {
         'SIP_HUB: ROLLCALL_REQ dispatched ${outbound.encoded.length}B',
       );
       setState(() => _scanning = true);
-      Future.delayed(const Duration(seconds: 3), () {
+      // Record epoch at scan start; stop scanning when it bumps (peers arrive).
+      _scanStartEpoch = ref.read(sipPeerCacheEpochProvider);
+      // Safety timeout: stop scanning after 10s regardless.
+      _scanTimeoutTimer?.cancel();
+      _scanTimeoutTimer = Timer(const Duration(seconds: 10), () {
+        if (mounted) setState(() => _scanning = false);
+      });
+    }
+  }
+
+  /// Called from build — checks if peers arrived since scan started.
+  void _checkScanComplete(int currentEpoch) {
+    if (_scanning && currentEpoch > _scanStartEpoch) {
+      // Peers have arrived — keep indicator briefly for perceived smoothness.
+      _scanTimeoutTimer?.cancel();
+      Future.delayed(const Duration(milliseconds: 500), () {
         if (mounted) setState(() => _scanning = false);
       });
     }
@@ -120,40 +138,36 @@ class _SipHubScreenState extends ConsumerState<SipHubScreen> {
     final haptics = ref.read(hapticServiceProvider);
     haptics.trigger(HapticType.medium);
 
+    // Check for existing DM session with this peer first.
+    final dm = ref.read(sipDmManagerProvider);
+    final sessions = dm?.activeSessions ?? [];
+    final existing = sessions.where((s) => s.peerNodeId == peer.nodeId);
+    if (existing.isNotEmpty) {
+      // Already have a conversation — open it directly.
+      Navigator.of(localContext).push(
+        MaterialPageRoute<void>(
+          builder: (_) => SipDmScreen(sessionTag: existing.first.sessionTag),
+        ),
+      );
+      return;
+    }
+
     final handshake = ref.read(sipHandshakeProvider);
     if (handshake == null) {
       showErrorSnackBar(localContext, localL10n.sipHandshakeFailed);
       return;
     }
 
-    // Already handshaking or accepted — skip.
+    // Already handshaking — let the chip show progress, don't interrupt.
     final currentState = handshake.getState(peer.nodeId);
-    if (currentState == SipHandshakeState.accepted) {
-      // Already have a session — open the DM screen if one exists.
-      final dm = ref.read(sipDmManagerProvider);
-      final sessions = dm?.activeSessions ?? [];
-      final existing = sessions.where((s) => s.peerNodeId == peer.nodeId);
-      if (existing.isNotEmpty) {
-        Navigator.of(localContext).push(
-          MaterialPageRoute<void>(
-            builder: (_) => SipDmScreen(sessionTag: existing.first.sessionTag),
-          ),
-        );
-        return;
-      }
-    }
     if (currentState != SipHandshakeState.idle &&
         currentState != SipHandshakeState.failed &&
         currentState != SipHandshakeState.timedOut) {
-      showInfoSnackBar(localContext, localL10n.sipHandshakeInProgress);
       return;
     }
 
     final frame = handshake.initiateHandshake(peer.nodeId);
-    if (frame == null) {
-      showInfoSnackBar(localContext, localL10n.sipHandshakeInProgress);
-      return;
-    }
+    if (frame == null) return;
 
     final encoded = SipCodec.encode(frame);
     if (encoded == null) {
@@ -164,8 +178,7 @@ class _SipHubScreenState extends ConsumerState<SipHubScreen> {
     final protocol = ref.read(protocolServiceProvider);
     protocol.sendSipPacket(encoded);
     ref.read(sipCountersProvider).recordHandshakeInitiated();
-
-    showInfoSnackBar(localContext, localL10n.sipConnecting);
+    // No snackbar — the handshake chip updates in real-time via epoch.
   }
 
   void _showCounters() {
@@ -188,6 +201,10 @@ class _SipHubScreenState extends ConsumerState<SipHubScreen> {
     final peers = ref.watch(sipDiscoveredPeersProvider);
     final sessions = ref.watch(sipActiveSessionsProvider);
     final peerCount = ref.watch(sipPeerCountProvider);
+    final peerEpoch = ref.watch(sipPeerCacheEpochProvider);
+
+    // Stop scanning indicator when peers arrive (epoch bumps).
+    if (_scanning) _checkScanComplete(peerEpoch);
 
     AppLogging.sip(
       'SIP_HUB: build — enabled=$sipEnabled, peers=$peerCount, '
@@ -448,6 +465,12 @@ class _PeerTile extends ConsumerWidget {
     final patinaResult = ref.watch(nodeDexPatinaProvider(peer.nodeId));
     final traitResult = ref.watch(nodeDexTraitProvider(peer.nodeId));
 
+    // Check if a DM session already exists for this peer.
+    ref.watch(sipDmEpochProvider); // rebuild when DM sessions change
+    final dm = ref.watch(sipDmManagerProvider);
+    final hasDmSession =
+        dm?.activeSessions.any((s) => s.peerNodeId == peer.nodeId) ?? false;
+
     final displayName = _resolveDisplayName(entry, node, peer.nodeId);
     final hexId =
         '!${peer.nodeId.toRadixString(16).toUpperCase().padLeft(4, '0')}';
@@ -508,7 +531,10 @@ class _PeerTile extends ConsumerWidget {
                     // Status row: handshake state + last seen
                     Row(
                       children: [
-                        _HandshakeChip(state: hsState),
+                        _HandshakeChip(
+                          state: hsState,
+                          hasDmSession: hasDmSession,
+                        ),
                         const SizedBox(width: AppTheme.spacing8),
                         _LastSeenChip(lastSeenMs: peer.lastSeenMs),
                       ],
@@ -517,12 +543,14 @@ class _PeerTile extends ConsumerWidget {
                 ),
               ),
 
-              // Chevron
+              // Chevron — chat icon when DM session exists
               const SizedBox(width: AppTheme.spacing4),
               Icon(
-                Icons.chevron_right,
+                hasDmSession ? Icons.chat_bubble_outline : Icons.chevron_right,
                 size: 20,
-                color: context.textTertiary.withValues(alpha: 0.5),
+                color: hasDmSession
+                    ? AccentColors.green.withValues(alpha: 0.7)
+                    : context.textTertiary.withValues(alpha: 0.5),
               ),
             ],
           ),
@@ -578,38 +606,101 @@ class _PeerTile extends ConsumerWidget {
 }
 
 // =============================================================================
-// Handshake chip — styled container badge (like channel encryption badge)
+// Handshake chip — styled container badge with pulse animation for in-progress
 // =============================================================================
 
-class _HandshakeChip extends StatelessWidget {
+class _HandshakeChip extends StatefulWidget {
   final SipHandshakeState state;
+  final bool hasDmSession;
 
-  const _HandshakeChip({required this.state});
+  const _HandshakeChip({required this.state, this.hasDmSession = false});
+
+  @override
+  State<_HandshakeChip> createState() => _HandshakeChipState();
+}
+
+class _HandshakeChipState extends State<_HandshakeChip>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _pulseController;
+  late final Animation<double> _pulseAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _pulseController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1200),
+    );
+    _pulseAnimation = Tween<double>(begin: 0.5, end: 1.0).animate(
+      CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
+    );
+    _syncAnimation();
+  }
+
+  @override
+  void didUpdateWidget(_HandshakeChip old) {
+    super.didUpdateWidget(old);
+    if (old.state != widget.state || old.hasDmSession != widget.hasDmSession) {
+      _syncAnimation();
+    }
+  }
+
+  void _syncAnimation() {
+    if (!widget.hasDmSession && _isInProgress(widget.state)) {
+      _pulseController.repeat(reverse: true);
+    } else {
+      _pulseController.stop();
+      _pulseController.value = 1.0;
+    }
+  }
+
+  @override
+  void dispose() {
+    _pulseController.dispose();
+    super.dispose();
+  }
+
+  static bool _isInProgress(SipHandshakeState state) => switch (state) {
+    SipHandshakeState.helloSent ||
+    SipHandshakeState.challengeReceived ||
+    SipHandshakeState.responseSent ||
+    SipHandshakeState.helloReceived ||
+    SipHandshakeState.challengeSent ||
+    SipHandshakeState.responseReceived => true,
+    _ => false,
+  };
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    final (label, color, icon) = switch (state) {
-      SipHandshakeState.idle => (
-        l10n.sipHandshakeAction,
-        context.textTertiary,
-        Icons.handshake_outlined,
-      ),
-      SipHandshakeState.accepted => (
-        l10n.sipHubReady,
-        AccentColors.green,
-        Icons.check_circle_outline,
-      ),
-      SipHandshakeState.failed || SipHandshakeState.timedOut => (
-        l10n.sipHandshakeFailed,
-        AccentColors.red,
-        Icons.error_outline,
-      ),
-      _ => (l10n.sipHubHandshaking, AccentColors.yellow, Icons.hourglass_top),
-    };
+    // If a DM session exists, show "Connected" regardless of handshake state.
+    final (label, color, icon) = widget.hasDmSession
+        ? (l10n.sipHubConnected, AccentColors.green, Icons.chat_bubble_outline)
+        : switch (widget.state) {
+            SipHandshakeState.idle => (
+              l10n.sipHandshakeAction,
+              context.textTertiary,
+              Icons.handshake_outlined,
+            ),
+            SipHandshakeState.accepted => (
+              l10n.sipHubReady,
+              AccentColors.green,
+              Icons.check_circle_outline,
+            ),
+            SipHandshakeState.failed || SipHandshakeState.timedOut => (
+              l10n.sipHandshakeFailed,
+              AccentColors.red,
+              Icons.error_outline,
+            ),
+            _ => (
+              l10n.sipHubHandshaking,
+              AccentColors.yellow,
+              Icons.hourglass_top,
+            ),
+          };
 
-    return Container(
+    Widget chip = Container(
       padding: const EdgeInsets.symmetric(
         horizontal: AppTheme.spacing6,
         vertical: AppTheme.spacing2,
@@ -634,6 +725,12 @@ class _HandshakeChip extends StatelessWidget {
         ],
       ),
     );
+
+    if (!widget.hasDmSession && _isInProgress(widget.state)) {
+      chip = FadeTransition(opacity: _pulseAnimation, child: chip);
+    }
+
+    return chip;
   }
 }
 

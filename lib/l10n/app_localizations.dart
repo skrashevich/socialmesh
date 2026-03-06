@@ -53302,6 +53302,12 @@ abstract class AppLocalizations {
   /// **'Ready to chat'**
   String get sipHubReady;
 
+  /// Status badge on peer tile when a DM session already exists.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected'**
+  String get sipHubConnected;
+
   /// Last message preview in conversation tile.
   ///
   /// In en, this message translates to:

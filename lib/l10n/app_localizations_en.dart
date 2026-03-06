@@ -30198,6 +30198,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sipHubReady => 'Ready to chat';
 
   @override
+  String get sipHubConnected => 'Connected';
+
+  @override
   String sipHubMessagePreview(String name, String message) {
     return '$name: $message';
   }

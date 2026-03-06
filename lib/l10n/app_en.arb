@@ -40446,6 +40446,10 @@
     "@sipHubReady": {
         "description": "Status badge after handshake completes."
     },
+    "sipHubConnected": "Connected",
+    "@sipHubConnected": {
+        "description": "Status badge on peer tile when a DM session already exists."
+    },
     "sipHubMessagePreview": "{name}: {message}",
     "@sipHubMessagePreview": {
         "description": "Last message preview in conversation tile.",

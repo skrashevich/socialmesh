@@ -4254,6 +4254,20 @@ class ProtocolService {
 
     _sipCounters?.recordHandshakeCompleted();
 
+    // Prevent duplicate DM sessions with the same peer.
+    final existing = dm?.activeSessions.where(
+      (s) => s.peerNodeId == peerNodeId,
+    );
+    if (existing != null && existing.isNotEmpty) {
+      AppLogging.sip(
+        'SIP: DM session already exists for '
+        'node=0x${peerNodeId.toRadixString(16)}, '
+        'existing_tag=0x${existing.first.sessionTag.toRadixString(16)}, '
+        'skipping duplicate creation',
+      );
+      return;
+    }
+
     // Create ephemeral DM session from handshake result.
     dm?.createSession(
       sessionTag: result.sessionTag,

@@ -103,6 +103,9 @@ class SipHandshakeManager {
   /// Completed handshake results waiting to be consumed.
   final Map<int, SipHandshakeResult> _completed = {};
 
+  /// Called whenever any session state changes (progress, accept, fail).
+  void Function()? onStateChanged;
+
   // ---------------------------------------------------------------------------
   // Initiator flow
   // ---------------------------------------------------------------------------
@@ -128,6 +131,7 @@ class SipHandshakeManager {
     session.localEphemeralPub = _generateEphemeralPub();
     session.state = SipHandshakeState.helloSent;
     _sessions[peerNodeId] = session;
+    onStateChanged?.call();
 
     final hello = SipHsHello(
       clientNonce: session.clientNonce!,
@@ -192,6 +196,7 @@ class SipHandshakeManager {
     session.peerEphemeralPub = challenge.serverEphemeralPub;
     session.expiresInS = challenge.expiresInS;
     session.state = SipHandshakeState.challengeReceived;
+    onStateChanged?.call();
 
     // Derive session tag.
     final tag = await SipHsMessages.deriveSessionTag(
@@ -200,6 +205,7 @@ class SipHandshakeManager {
     );
     session.sessionTag = tag;
     session.state = SipHandshakeState.responseSent;
+    onStateChanged?.call();
 
     final response = SipHsResponse(
       echoedServerNonce: session.serverNonce!,
@@ -263,6 +269,7 @@ class SipHandshakeManager {
     }
 
     session.state = SipHandshakeState.accepted;
+    onStateChanged?.call();
 
     final result = SipHandshakeResult(
       sessionTag: accept.sessionTag,
@@ -355,6 +362,7 @@ class SipHandshakeManager {
     session.localEphemeralPub = _generateEphemeralPub();
     session.state = SipHandshakeState.challengeSent;
     _sessions[peerNodeId] = session;
+    onStateChanged?.call();
 
     final challenge = SipHsChallenge(
       serverNonce: session.serverNonce!,
@@ -443,6 +451,7 @@ class SipHandshakeManager {
 
     session.sessionTag = expectedTag;
     session.state = SipHandshakeState.accepted;
+    onStateChanged?.call();
 
     final accept = SipHsAccept(
       sessionTag: expectedTag,
@@ -489,7 +498,13 @@ class SipHandshakeManager {
   // ---------------------------------------------------------------------------
 
   /// Get the current handshake state for a peer.
+  ///
+  /// Also returns [SipHandshakeState.accepted] when a completed result
+  /// is waiting to be consumed.
   SipHandshakeState getState(int peerNodeId) {
+    if (_completed.containsKey(peerNodeId)) {
+      return SipHandshakeState.accepted;
+    }
     return _sessions[peerNodeId]?.state ?? SipHandshakeState.idle;
   }
 
@@ -518,6 +533,7 @@ class SipHandshakeManager {
 
   void _failSession(int peerNodeId, String reason) {
     _sessions.remove(peerNodeId);
+    onStateChanged?.call();
     AppLogging.sip(
       'SIP_HS: handshake FAILED with '
       'node=0x${peerNodeId.toRadixString(16)}: $reason',
