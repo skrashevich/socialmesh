@@ -83,13 +83,16 @@ class SipHandshakeManager {
   /// [clock] can be injected for testing.
   SipHandshakeManager({
     required SipReplayCache replayCache,
+    required int localNodeId,
     SipCounters? counters,
     DateTime Function()? clock,
   }) : _replayCache = replayCache,
+       _localNodeId = localNodeId,
        _counters = counters,
        _clock = clock ?? DateTime.now;
 
   final SipReplayCache _replayCache;
+  final int _localNodeId;
   final SipCounters? _counters;
   final DateTime Function() _clock;
   final Random _random = Random.secure();
@@ -288,11 +291,42 @@ class SipHandshakeManager {
   /// Process a received HS_HELLO (responder receives this).
   ///
   /// Returns the HS_CHALLENGE [SipFrame] to send, or null on error.
+  ///
+  /// **Simultaneous-open tie-breaker:** When both peers initiate at the
+  /// same time, each receives the other's HS_HELLO while in `helloSent`
+  /// state. The node with the higher node ID keeps the initiator role
+  /// (ignores the incoming HELLO); the lower node ID yields, discards its
+  /// initiator session, and becomes the responder.
   SipFrame? handleHello(int peerNodeId, SipFrame frame) {
     _cleanExpired();
 
     final hello = SipHsMessages.decodeHello(frame.payload);
     if (hello == null) return null;
+
+    // Simultaneous-open detection: we already sent HS_HELLO to this peer.
+    final existing = _sessions[peerNodeId];
+    if (existing != null && existing.state == SipHandshakeState.helloSent) {
+      if (_localNodeId > peerNodeId) {
+        // We win the tie-break — keep our initiator session, ignore theirs.
+        AppLogging.sip(
+          'SIP_HS: simultaneous-open with '
+          'node=0x${peerNodeId.toRadixString(16)}: '
+          'we win tie-break (local=0x${_localNodeId.toRadixString(16)} > '
+          'peer=0x${peerNodeId.toRadixString(16)}), keeping initiator role',
+        );
+        return null;
+      } else {
+        // We lose the tie-break — discard our initiator session, become
+        // the responder for this peer's HELLO.
+        AppLogging.sip(
+          'SIP_HS: simultaneous-open with '
+          'node=0x${peerNodeId.toRadixString(16)}: '
+          'we yield (local=0x${_localNodeId.toRadixString(16)} < '
+          'peer=0x${peerNodeId.toRadixString(16)}), becoming responder',
+        );
+        _sessions.remove(peerNodeId);
+      }
+    }
 
     // Check replay.
     if (_replayCache.isReplay(

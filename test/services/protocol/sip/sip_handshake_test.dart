@@ -136,8 +136,14 @@ void main() {
     });
 
     test('happy path: initiator + responder complete handshake', () async {
-      final initiator = SipHandshakeManager(replayCache: replayCache);
-      final responder = SipHandshakeManager(replayCache: SipReplayCache());
+      final initiator = SipHandshakeManager(
+        replayCache: replayCache,
+        localNodeId: 0xAAAA,
+      );
+      final responder = SipHandshakeManager(
+        replayCache: SipReplayCache(),
+        localNodeId: 0xBBBB,
+      );
 
       const nodeA = 0xAAAA;
       const nodeB = 0xBBBB;
@@ -180,7 +186,10 @@ void main() {
     });
 
     test('duplicate initiation rejected', () {
-      final mgr = SipHandshakeManager(replayCache: replayCache);
+      final mgr = SipHandshakeManager(
+        replayCache: replayCache,
+        localNodeId: 0x1111,
+      );
       final first = mgr.initiateHandshake(0x1234);
       expect(first, isNotNull);
 
@@ -189,7 +198,10 @@ void main() {
     });
 
     test('nonce replay rejected on HS_HELLO', () {
-      final mgr = SipHandshakeManager(replayCache: replayCache);
+      final mgr = SipHandshakeManager(
+        replayCache: replayCache,
+        localNodeId: 0x1111,
+      );
 
       final helloFrame = SipFrame(
         versionMajor: 0,
@@ -218,7 +230,10 @@ void main() {
     });
 
     test('unexpected HS_CHALLENGE without HS_HELLO is rejected', () async {
-      final mgr = SipHandshakeManager(replayCache: replayCache);
+      final mgr = SipHandshakeManager(
+        replayCache: replayCache,
+        localNodeId: 0x1111,
+      );
 
       final challenge = SipFrame(
         versionMajor: 0,
@@ -238,7 +253,10 @@ void main() {
     });
 
     test('cancelHandshake removes session', () {
-      final mgr = SipHandshakeManager(replayCache: replayCache);
+      final mgr = SipHandshakeManager(
+        replayCache: replayCache,
+        localNodeId: 0x1111,
+      );
       mgr.initiateHandshake(0x1234);
       expect(mgr.hasActiveSession(0x1234), isTrue);
 
@@ -247,7 +265,10 @@ void main() {
     });
 
     test('concurrent handshakes with different peers', () {
-      final mgr = SipHandshakeManager(replayCache: replayCache);
+      final mgr = SipHandshakeManager(
+        replayCache: replayCache,
+        localNodeId: 0x1111,
+      );
 
       final helloA = mgr.initiateHandshake(0xAAAA);
       final helloB = mgr.initiateHandshake(0xBBBB);
@@ -259,7 +280,10 @@ void main() {
     });
 
     test('reset clears all state', () {
-      final mgr = SipHandshakeManager(replayCache: replayCache);
+      final mgr = SipHandshakeManager(
+        replayCache: replayCache,
+        localNodeId: 0x1111,
+      );
       mgr.initiateHandshake(0xAAAA);
       mgr.initiateHandshake(0xBBBB);
 
@@ -270,8 +294,14 @@ void main() {
     });
 
     test('session tag mismatch on HS_ACCEPT fails', () async {
-      final initiator = SipHandshakeManager(replayCache: replayCache);
-      final responder = SipHandshakeManager(replayCache: SipReplayCache());
+      final initiator = SipHandshakeManager(
+        replayCache: replayCache,
+        localNodeId: 0xAAAA,
+      );
+      final responder = SipHandshakeManager(
+        replayCache: SipReplayCache(),
+        localNodeId: 0xBBBB,
+      );
 
       final helloFrame = initiator.initiateHandshake(0xBBBB);
       final challengeFrame = responder.handleHello(0xAAAA, helloFrame!);
@@ -303,6 +333,112 @@ void main() {
 
       final result = initiator.handleAccept(0xBBBB, badFrame);
       expect(result, isNull);
+    });
+
+    test('simultaneous-open: higher nodeId wins initiator role', () async {
+      // Both nodes initiate at the same time. Node A (0xAAAA) has higher ID
+      // than node B (0x5555), so A keeps initiator and B becomes responder.
+      const nodeA = 0xAAAA;
+      const nodeB = 0x5555;
+
+      final mgrA = SipHandshakeManager(
+        replayCache: SipReplayCache(),
+        localNodeId: nodeA,
+      );
+      final mgrB = SipHandshakeManager(
+        replayCache: SipReplayCache(),
+        localNodeId: nodeB,
+      );
+
+      // Both send HS_HELLO to each other simultaneously.
+      final helloFromA = mgrA.initiateHandshake(nodeB);
+      final helloFromB = mgrB.initiateHandshake(nodeA);
+      expect(helloFromA, isNotNull);
+      expect(helloFromB, isNotNull);
+
+      // Both are in helloSent state.
+      expect(mgrA.getState(nodeB), SipHandshakeState.helloSent);
+      expect(mgrB.getState(nodeA), SipHandshakeState.helloSent);
+
+      // A receives B's HELLO — A has higher nodeId, so A ignores it (wins).
+      final challengeFromA = mgrA.handleHello(nodeB, helloFromB!);
+      expect(challengeFromA, isNull, reason: 'A wins tie-break, ignores HELLO');
+      expect(
+        mgrA.getState(nodeB),
+        SipHandshakeState.helloSent,
+        reason: 'A keeps its initiator session',
+      );
+
+      // B receives A's HELLO — B has lower nodeId, so B yields and becomes
+      // responder. B returns an HS_CHALLENGE.
+      final challengeFromB = mgrB.handleHello(nodeA, helloFromA!);
+      expect(challengeFromB, isNotNull, reason: 'B yields, becomes responder');
+      expect(challengeFromB!.msgType, SipMessageType.hsChallenge);
+
+      // From here the normal 4-step handshake proceeds:
+      // A (initiator) handles B's challenge -> sends response.
+      final responseFromA = await mgrA.handleChallenge(nodeB, challengeFromB);
+      expect(responseFromA, isNotNull);
+      expect(responseFromA!.msgType, SipMessageType.hsResponse);
+
+      // B (responder) handles A's response -> sends accept.
+      final acceptFromB = await mgrB.handleResponse(nodeA, responseFromA);
+      expect(acceptFromB, isNotNull);
+      expect(acceptFromB!.msgType, SipMessageType.hsAccept);
+
+      // A handles B's accept -> handshake complete.
+      final resultA = mgrA.handleAccept(nodeB, acceptFromB);
+      expect(resultA, isNotNull);
+      expect(resultA!.peerNodeId, nodeB);
+      expect(resultA.sessionTag, isNonZero);
+
+      // B's result should also be available.
+      final resultB = mgrB.consumeResult(nodeA);
+      expect(resultB, isNotNull);
+      expect(resultB!.sessionTag, resultA.sessionTag);
+    });
+
+    test('simultaneous-open: equal nodeIds both yield (edge case)', () {
+      // If both have the same nodeId (should never happen in practice),
+      // both yield and the second HELLO creates a responder session.
+      const nodeId = 0xAAAA;
+
+      final mgrA = SipHandshakeManager(
+        replayCache: SipReplayCache(),
+        localNodeId: nodeId,
+      );
+
+      final hello = mgrA.initiateHandshake(nodeId);
+      expect(hello, isNotNull);
+
+      // Receiving a HELLO from a peer with the same nodeId: localNodeId is NOT
+      // greater, so we yield.
+      final fakeHello = SipFrame(
+        versionMajor: 0,
+        versionMinor: 1,
+        msgType: SipMessageType.hsHello,
+        flags: 0,
+        headerLen: SipConstants.sipWrapperMin,
+        sessionId: 0,
+        nonce: SipCodec.generateNonce(),
+        timestampS: DateTime.now().millisecondsSinceEpoch ~/ 1000,
+        payloadLen: 50,
+        payload: SipHsMessages.encodeHello(
+          SipHsHello(
+            clientNonce: Uint8List.fromList(List.generate(16, (i) => i + 50)),
+            clientEphemeralPub: Uint8List.fromList(
+              List.generate(32, (i) => i + 70),
+            ),
+            requestedFeatures: SipFeatureBits.allV01,
+          ),
+        ),
+      );
+
+      // With equal IDs, the else branch fires (not strictly greater).
+      final challenge = mgrA.handleHello(nodeId, fakeHello);
+      // Should become a responder and return a challenge.
+      expect(challenge, isNotNull);
+      expect(challenge!.msgType, SipMessageType.hsChallenge);
     });
   });
 }

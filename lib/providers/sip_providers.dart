@@ -153,8 +153,10 @@ final sipHandshakeProvider = Provider<SipHandshakeManager?>((ref) {
 
   final replayCache = ref.watch(sipReplayCacheProvider);
   final counters = ref.watch(sipCountersProvider);
+  final nodeNum = ref.watch(myNodeNumProvider) ?? 0;
   final manager = SipHandshakeManager(
     replayCache: replayCache,
+    localNodeId: nodeNum,
     counters: counters,
   );
 
