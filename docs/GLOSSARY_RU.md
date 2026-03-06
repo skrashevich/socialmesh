@@ -67,6 +67,17 @@
 | LoRa | LoRa | Не переводить — технология |
 | MQTT | MQTT | Не переводить — протокол |
 | PKI | PKI | Не переводить — инфраструктура ключей |
+| Global Layer | MQTT | Общий термин для блока работы по MQTT через интернет |
+| MQTT server | MQTT-сервер | |
+| MQTT broker | MQTT-сервер | То же, что и MQTT-сервер |
+| broker | MQTT-сервер | То же, что и MQTT-сервер |
+| Topic Root | Корневая тема | Префикс |
+| Host | Адрес | |
+| Hostname | Адрес сервера | |
+| DNS Resolution | Разрешение DNS | |
+| TLS handshake | TLS handshake | Не переводить |
+| Username | Имя пользователя | |
+| Duty cycle | Рабочий цикл |
 
 ---
 
