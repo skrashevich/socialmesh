@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 /// TAK/CoT gateway feature — receives normalized CoT events from the
 /// Socialmesh TAK Gateway, persists them to SQLite, and renders them
 /// on the map with MIL-STD-2525 affiliation coloring.

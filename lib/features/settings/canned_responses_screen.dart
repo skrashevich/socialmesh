@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 // lint-allow: keyboard-dismissal — text inputs are in BottomSheetTextField inside a modal sheet
 import 'dart:convert';
 

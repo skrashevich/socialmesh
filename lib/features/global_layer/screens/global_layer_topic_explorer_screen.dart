@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 // lint-allow: haptic-feedback — haptic triggered via ref.read(hapticServiceProvider)
 
 /// Global Layer Topic Explorer Screen — manage and monitor MQTT topic

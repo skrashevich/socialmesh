@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 import 'dart:convert';
 import 'dart:math';
 
@@ -446,6 +447,7 @@ class _ChannelWizardScreenState extends ConsumerState<ChannelWizardScreen>
     final stepHelp = _WizardStepHelp.steps[_currentStep];
 
     return GlassScaffold.body(
+      hasScrollBody: true,
       title: context.l10n.channelWizardScreenTitle,
       leading: IconButton(
         icon: const Icon(Icons.close),

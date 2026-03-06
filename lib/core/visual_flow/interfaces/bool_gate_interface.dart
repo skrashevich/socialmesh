@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 // Custom interface type for the Socialmesh visual automation flow builder.
 //
 // BoolGate interfaces carry condition pass/fail signals through the automation

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 
 /// Static analysis guard: ensures no inline MeshPacket construction bypasses
 /// the [MeshPacketBuilder] abstraction in protocol_service.dart, and that

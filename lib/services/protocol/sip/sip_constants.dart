@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 
 /// SIP v0.1 protocol constants.
 ///
@@ -206,6 +207,15 @@ abstract final class SipConstants {
   /// Raw seconds for congestion pause.
   static const int congestionPauseS = 10;
 
+  /// Suppression window after app resume to prevent burst sends.
+  ///
+  /// All non-essential SIP transmissions (beacons, rollcalls, auto-scan)
+  /// are suppressed for this duration after the app returns to foreground.
+  static const Duration resumeSuppressionWindow = Duration(seconds: 10);
+
+  /// Raw seconds for resume suppression window.
+  static const int resumeSuppressionWindowS = 10;
+
   /// Base duration for exponential backoff on retries.
   static const Duration backoffBase = Duration(seconds: 2);
 
@@ -240,6 +250,19 @@ abstract final class SipConstants {
   static const int deviceClassPhoneApp = 1;
 
   // ---------------------------------------------------------------------------
+  // Rollcall jitter
+  // ---------------------------------------------------------------------------
+
+  /// Maximum random jitter added to rollcall request interval.
+  ///
+  /// Prevents all SIP nodes from broadcasting ROLLCALL_REQ at the same
+  /// instant after cooldown expires (thundering herd mitigation).
+  static const Duration rollcallReqJitter = Duration(seconds: 5);
+
+  /// Raw seconds for rollcall request jitter max.
+  static const int rollcallReqJitterS = 5;
+
+  // ---------------------------------------------------------------------------
   // Handshake timing
   // ---------------------------------------------------------------------------
 
@@ -248,4 +271,31 @@ abstract final class SipConstants {
 
   /// Raw seconds for handshake timeout.
   static const int handshakeTimeoutS = 60;
+
+  /// Per-peer cooldown after a handshake failure or timeout.
+  ///
+  /// Prevents tight retry loops on unreachable or unresponsive peers.
+  static const Duration handshakeCooldownPerPeer = Duration(seconds: 120);
+
+  /// Raw seconds for handshake cooldown per peer.
+  static const int handshakeCooldownPerPeerS = 120;
+
+  /// Maximum completed handshake results retained before eviction.
+  static const int maxCompletedResults = 16;
+
+  /// TTL for completed handshake results awaiting consumption.
+  static const Duration completedResultTtl = Duration(seconds: 600);
+
+  /// Raw seconds for completed result TTL.
+  static const int completedResultTtlS = 600;
+
+  // ---------------------------------------------------------------------------
+  // Bounded map limits
+  // ---------------------------------------------------------------------------
+
+  /// Maximum per-peer rollcall response timestamps tracked.
+  ///
+  /// Prevents unbounded growth of the rollcall response rate limiter.
+  /// Excess entries are evicted oldest-first.
+  static const int maxRollcallRespTracked = 32;
 }

@@ -14737,6 +14737,24 @@ abstract class AppLocalizations {
   /// **'ACCOUNT'**
   String get navigationSectionAccount;
 
+  /// Drawer section header for advanced mesh analysis tools.
+  ///
+  /// In en, this message translates to:
+  /// **'ADVANCED'**
+  String get navigationSectionAdvanced;
+
+  /// Drawer section header for discovery features like Signals, NodeDex, and Presence.
+  ///
+  /// In en, this message translates to:
+  /// **'DISCOVER'**
+  String get navigationSectionDiscover;
+
+  /// Drawer section header for social identity features.
+  ///
+  /// In en, this message translates to:
+  /// **'IDENTITY'**
+  String get navigationSectionIdentity;
+
   /// Drawer section header for mesh features.
   ///
   /// In en, this message translates to:
@@ -14754,6 +14772,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'SOCIAL'**
   String get navigationSectionSocial;
+
+  /// Drawer section header for operational tools like File Transfers, Aether, and TAK.
+  ///
+  /// In en, this message translates to:
+  /// **'TOOLS'**
+  String get navigationSectionTools;
 
   /// Label for the Signals feature in drawer and bottom nav.
   ///
@@ -53253,6 +53277,210 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'SIP Debug Counters'**
   String get sipCountersTitle;
+
+  /// Title for the SIP Hub screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Socialmesh'**
+  String get sipHubTitle;
+
+  /// Section header for discovered SIP peers.
+  ///
+  /// In en, this message translates to:
+  /// **'Nearby Peers'**
+  String get sipHubSectionPeers;
+
+  /// Section header for active DM sessions.
+  ///
+  /// In en, this message translates to:
+  /// **'Conversations'**
+  String get sipHubSectionConversations;
+
+  /// Empty state title when no SIP peers are found.
+  ///
+  /// In en, this message translates to:
+  /// **'No peers nearby'**
+  String get sipHubEmptyTitle;
+
+  /// Empty state description when no SIP peers are found.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap Scan to look for other Socialmesh users on the mesh.'**
+  String get sipHubEmptyDescription;
+
+  /// Last seen time label for a peer.
+  ///
+  /// In en, this message translates to:
+  /// **'Seen {time}'**
+  String sipHubLastSeen(String time);
+
+  /// Status badge shown during a handshake.
+  ///
+  /// In en, this message translates to:
+  /// **'Handshaking…'**
+  String get sipHubHandshaking;
+
+  /// Status badge after handshake completes.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready to chat'**
+  String get sipHubReady;
+
+  /// Status badge on peer tile when a DM session already exists.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected'**
+  String get sipHubConnected;
+
+  /// Last message preview in conversation tile.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}: {message}'**
+  String sipHubMessagePreview(String name, String message);
+
+  /// Expiry countdown for a DM session.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires in {time}'**
+  String sipHubSessionExpiry(String time);
+
+  /// Badge label for pinned sessions.
+  ///
+  /// In en, this message translates to:
+  /// **'Pinned'**
+  String get sipHubSessionPinned;
+
+  /// Subtitle for conversations with no messages.
+  ///
+  /// In en, this message translates to:
+  /// **'No messages yet'**
+  String get sipHubNoMessages;
+
+  /// Fallback peer name showing hex node ID.
+  ///
+  /// In en, this message translates to:
+  /// **'Peer {hexId}'**
+  String sipDmPeerName(String hexId);
+
+  /// Snackbar confirmation when auto-scan is turned on.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-scan enabled'**
+  String get sipAutoScanEnabled;
+
+  /// Snackbar confirmation when auto-scan is turned off.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-scan disabled'**
+  String get sipAutoScanDisabled;
+
+  /// Label for the auto-scan toggle in the overflow menu.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-scan'**
+  String get sipAutoScanToggle;
+
+  /// Label shown while a SIP scan is in progress.
+  ///
+  /// In en, this message translates to:
+  /// **'Scanning…'**
+  String get sipScanningIndicator;
+
+  /// Snackbar shown when tapping a peer to start handshake.
+  ///
+  /// In en, this message translates to:
+  /// **'Connecting…'**
+  String get sipConnecting;
+
+  /// Label shown above the input field when replying to a message.
+  ///
+  /// In en, this message translates to:
+  /// **'Replying to'**
+  String get sipDmReplyingTo;
+
+  /// Accessibility hint for swiping a message to reply.
+  ///
+  /// In en, this message translates to:
+  /// **'Swipe to reply'**
+  String get sipDmSwipeToReply;
+
+  /// Label for the reply action in the message context menu.
+  ///
+  /// In en, this message translates to:
+  /// **'Reply'**
+  String get sipDmActionReply;
+
+  /// Label for the copy action in the message context menu.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get sipDmActionCopy;
+
+  /// Label for the delete action in the message context menu.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get sipDmActionDelete;
+
+  /// Snackbar shown after copying a message to clipboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Message copied'**
+  String get sipDmMessageCopied;
+
+  /// Title for the message delete confirmation bottom sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete message?'**
+  String get sipDmDeleteConfirmTitle;
+
+  /// Body text for the message delete confirmation bottom sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'This will delete the message for both you and the recipient.'**
+  String get sipDmDeleteConfirmMessage;
+
+  /// Notification title for an incoming SIP ephemeral DM.
+  ///
+  /// In en, this message translates to:
+  /// **'SIP: {peerName}'**
+  String notificationSipDmTitle(String peerName);
+
+  /// Notification title when a SIP handshake completes and a DM session is created.
+  ///
+  /// In en, this message translates to:
+  /// **'SIP Handshake Complete'**
+  String get notificationSipHandshakeTitle;
+
+  /// Notification body when a SIP handshake completes.
+  ///
+  /// In en, this message translates to:
+  /// **'Ephemeral DM session established with {peerName}.'**
+  String notificationSipHandshakeBody(String peerName);
+
+  /// Android notification channel name for SIP DM messages.
+  ///
+  /// In en, this message translates to:
+  /// **'SIP Ephemeral Messages'**
+  String get notificationChannelSipMessages;
+
+  /// Android notification channel name for SIP handshake events.
+  ///
+  /// In en, this message translates to:
+  /// **'SIP Handshakes'**
+  String get notificationChannelSipHandshake;
+
+  /// Notification title when another peer sends a handshake request.
+  ///
+  /// In en, this message translates to:
+  /// **'Handshake Request'**
+  String get notificationSipHandshakeRequestTitle;
+
+  /// Notification body when an incoming SIP handshake request (HS_HELLO) is received.
+  ///
+  /// In en, this message translates to:
+  /// **'{peerName} wants to start an ephemeral DM session.'**
+  String notificationSipHandshakeRequestBody(String peerName);
 }
 
 class _AppLocalizationsDelegate

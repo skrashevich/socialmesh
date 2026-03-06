@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 import '../../../../generated/meshtastic/admin.pb.dart' as admin;
 import '../../../../generated/meshtastic/config.pb.dart' as config_pb;
 import '../../../../generated/meshtastic/module_config.pb.dart' as module_pb;

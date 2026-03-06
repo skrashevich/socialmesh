@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 // lint-allow: haptic-feedback — GestureDetector onTap forwards parent callback in filter chip
 // lint-allow: scaffold — CustomScrollView with SliverAppBar gradient header
 import 'dart:async';

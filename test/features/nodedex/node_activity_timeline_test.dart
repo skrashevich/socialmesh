@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 
 // Widget tests for NodeActivityTimeline — verifies rendering of mixed
 // event types, empty state, pagination trigger, and event ordering.

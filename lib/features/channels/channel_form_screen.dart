@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 // lint-allow: haptic-feedback — GestureDetector is for keyboard dismissal, not user interaction
 import 'dart:convert';
 import 'dart:math';
@@ -392,6 +393,7 @@ class _ChannelFormScreenState extends ConsumerState<ChannelFormScreen>
     return GestureDetector(
       onTap: _dismissKeyboard,
       child: GlassScaffold.body(
+        hasScrollBody: true,
         leading: IconButton(
           icon: Icon(Icons.close, color: context.textPrimary),
           onPressed: () => Navigator.pop(context),

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 export 'animations/aliens_tracker_animation.dart';
 export 'animations/aurora_borealis_animation.dart';
 export 'animations/bacteria_colony_animation.dart';

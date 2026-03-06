@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 // Providers for MeshCore integration and protocol-agnostic device info.
 //
 // These providers enable the UI to access protocol-agnostic device

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 import '../../../features/nodes/node_display_name_resolver.dart';
 
 // NodeDex Providers — Riverpod 3.x state management for the mesh field journal.

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 
 /// Riverpod providers for SIP UI state.
 ///
@@ -11,6 +12,8 @@ import 'dart:typed_data';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/constants.dart';
+import '../core/logging.dart';
+import '../services/protocol/sip/sip_constants.dart';
 import '../services/protocol/sip/sip_counters.dart';
 import '../services/protocol/sip/sip_discovery.dart';
 import '../services/protocol/sip/sip_dm.dart';
@@ -22,6 +25,7 @@ import '../services/protocol/sip/sip_rate_limiter.dart';
 import '../services/protocol/sip/sip_replay_cache.dart';
 import '../services/protocol/sip/sip_types.dart';
 import 'app_providers.dart';
+import 'app_lifecycle_provider.dart';
 import 'sip_nodedex_bridge.dart';
 
 /// Whether SIP is enabled (sourced from SmFeatureFlag).
@@ -99,6 +103,30 @@ class _SipDmEpoch extends Notifier<int> {
   void bump() => state++;
 }
 
+/// Bumped whenever a typing indicator is received for any DM session.
+final sipDmTypingEpochProvider = NotifierProvider<_SipDmTypingEpoch, int>(
+  _SipDmTypingEpoch.new,
+);
+
+class _SipDmTypingEpoch extends Notifier<int> {
+  @override
+  int build() => 0;
+
+  void bump() => state++;
+}
+
+/// Bumped whenever handshake state changes so peer tile chips rebuild.
+final sipHandshakeEpochProvider = NotifierProvider<_SipHandshakeEpoch, int>(
+  _SipHandshakeEpoch.new,
+);
+
+class _SipHandshakeEpoch extends Notifier<int> {
+  @override
+  int build() => 0;
+
+  void bump() => state++;
+}
+
 /// SIP discovery engine.
 ///
 /// Uses the connected device's node number so we can ignore our own
@@ -110,11 +138,13 @@ final sipDiscoveryProvider = Provider<SipDiscovery?>((ref) {
 
   final nodeNum = ref.watch(myNodeNumProvider) ?? 0;
   final limiter = ref.watch(sipRateLimiterProvider);
+  final replayCache = ref.watch(sipReplayCacheProvider);
 
   final discovery = SipDiscovery(
     rateLimiter: limiter,
     localNodeId: nodeNum,
     counters: ref.read(sipCountersProvider),
+    replayCache: replayCache,
   );
 
   // Invalidate peer/count providers when the cache changes so the UI rebuilds.
@@ -126,6 +156,24 @@ final sipDiscoveryProvider = Provider<SipDiscovery?>((ref) {
   discovery.onPeerDiscovered = (nodeId) {
     sipBridgeMarkCapableFromRef(ref, nodeId);
   };
+
+  // Resume-safe: set initial timestamps to "now" so we don't burst
+  // beacons/rollcalls immediately on provider creation (cold start).
+  final nowMs = DateTime.now().millisecondsSinceEpoch;
+  discovery.lastBeaconMs = nowMs;
+  discovery.lastRollcallReqMs = nowMs;
+
+  // Listen for app lifecycle transitions. Use the rate limiter's resume
+  // suppression window to prevent post-resume SIP burst transmissions.
+  ref.listen<bool>(appLifecycleProvider, (previous, isForeground) {
+    if (isForeground && previous == false) {
+      limiter.notifyResume();
+      AppLogging.sip(
+        'SIP_LIFECYCLE: app resumed, suppression window '
+        '${SipConstants.resumeSuppressionWindowS}s started',
+      );
+    }
+  });
 
   // Attach to the protocol service so inbound SIP frames are dispatched.
   final protocol = ref.read(protocolServiceProvider);
@@ -160,10 +208,16 @@ final sipHandshakeProvider = Provider<SipHandshakeManager?>((ref) {
     counters: counters,
   );
 
+  // Bump epoch so UI rebuilds when handshake state changes.
+  manager.onStateChanged = () {
+    ref.read(sipHandshakeEpochProvider.notifier).bump();
+  };
+
   final protocol = ref.read(protocolServiceProvider);
   protocol.attachSipHandshake(manager);
 
   ref.onDispose(() {
+    manager.onStateChanged = null;
     protocol.attachSipHandshake(null);
   });
 
@@ -227,6 +281,16 @@ final sipDmManagerProvider = Provider<SipDmManager?>((ref) {
   final counters = ref.watch(sipCountersProvider);
   final manager = SipDmManager(rateLimiter: limiter, counters: counters);
 
+  // Bump epoch so UI rebuilds when sessions are created or messages arrive.
+  manager.onStateChanged = () {
+    ref.read(sipDmEpochProvider.notifier).bump();
+  };
+
+  // Bump typing epoch so UI shows/hides typing indicator.
+  manager.onTypingReceived = (_) {
+    ref.read(sipDmTypingEpochProvider.notifier).bump();
+  };
+
   final protocol = ref.read(protocolServiceProvider);
   protocol.attachSipDm(manager);
 
@@ -236,6 +300,39 @@ final sipDmManagerProvider = Provider<SipDmManager?>((ref) {
 
   return manager;
 });
+
+/// Whether SIP auto-scan is persisted across restarts.
+final sipAutoScanProvider = NotifierProvider<SipAutoScanNotifier, bool>(
+  SipAutoScanNotifier.new,
+);
+
+/// Notifier for SIP auto-scan state (persisted to SharedPreferences).
+class SipAutoScanNotifier extends Notifier<bool> {
+  @override
+  bool build() {
+    // Read initial value from SettingsService (sync — already initialised).
+    final settingsAsync = ref.watch(settingsServiceProvider);
+    return settingsAsync.maybeWhen(
+      data: (s) => s.sipAutoScanEnabled,
+      orElse: () => false,
+    );
+  }
+
+  /// Toggle auto-scan and persist the new value.
+  Future<void> toggle() async {
+    final next = !state;
+    state = next;
+    final settings = await ref.read(settingsServiceProvider.future);
+    await settings.setSipAutoScanEnabled(next);
+  }
+
+  /// Explicitly set auto-scan state and persist.
+  Future<void> setEnabled(bool value) async {
+    state = value;
+    final settings = await ref.read(settingsServiceProvider.future);
+    await settings.setSipAutoScanEnabled(value);
+  }
+}
 
 /// Number of discovered SIP peers (for UI badge).
 final sipPeerCountProvider = Provider<int>((ref) {
@@ -264,6 +361,7 @@ final sipHandshakeStateProvider = Provider.family<SipHandshakeState, int>((
   ref,
   nodeId,
 ) {
+  ref.watch(sipHandshakeEpochProvider); // rebuild on handshake state changes
   final hs = ref.watch(sipHandshakeProvider);
   return hs?.getState(nodeId) ?? SipHandshakeState.idle;
 });

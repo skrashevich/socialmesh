@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 import 'presence_confidence.dart';
 
 /// Model for nodes from mesh-observer's nodes.json API

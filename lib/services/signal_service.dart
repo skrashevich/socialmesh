@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -2390,7 +2391,7 @@ class SignalService {
     final rows = await db.query(
       _tableName,
       where:
-          'mediaUrls IS NOT NULL AND (imageLocalPath IS NULL OR imageLocalPath = "")', // lint-allow: hardcoded-string
+          "mediaUrls IS NOT NULL AND (imageLocalPath IS NULL OR imageLocalPath = '')", // lint-allow: hardcoded-string
     );
 
     for (final row in rows) {

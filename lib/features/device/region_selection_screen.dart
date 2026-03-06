@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 import '../../core/safety/lifecycle_mixin.dart';
 import '../../core/safety/error_handler.dart';
 import 'dart:async';
