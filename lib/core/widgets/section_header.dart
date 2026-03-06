@@ -59,8 +59,9 @@ class SectionHeader extends StatelessWidget {
 class SectionHeaderDelegate extends SliverPersistentHeaderDelegate {
   final String title;
   final int? count;
+  final Widget? trailing;
 
-  SectionHeaderDelegate({required this.title, this.count});
+  SectionHeaderDelegate({required this.title, this.count, this.trailing});
 
   @override
   Widget build(
@@ -75,7 +76,11 @@ class SectionHeaderDelegate extends SliverPersistentHeaderDelegate {
         child: StickyHeaderShadow(
           blurRadius: showShadow ? 8 : 0,
           offsetY: showShadow ? 2 : 0,
-          child: _BlurredSectionHeader(title: title, count: count),
+          child: _BlurredSectionHeader(
+            title: title,
+            count: count,
+            trailing: trailing,
+          ),
         ),
       ),
     );
@@ -89,7 +94,9 @@ class SectionHeaderDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(covariant SectionHeaderDelegate oldDelegate) {
-    return title != oldDelegate.title || count != oldDelegate.count;
+    return title != oldDelegate.title ||
+        count != oldDelegate.count ||
+        trailing != oldDelegate.trailing;
   }
 }
 
@@ -97,8 +104,9 @@ class SectionHeaderDelegate extends SliverPersistentHeaderDelegate {
 class _BlurredSectionHeader extends StatelessWidget {
   final String title;
   final int? count;
+  final Widget? trailing;
 
-  const _BlurredSectionHeader({required this.title, this.count});
+  const _BlurredSectionHeader({required this.title, this.count, this.trailing});
 
   @override
   Widget build(BuildContext context) {
@@ -135,6 +143,7 @@ class _BlurredSectionHeader extends StatelessWidget {
               ),
             ),
           ],
+          if (trailing != null) ...[const Spacer(), trailing!],
         ],
       ),
     );

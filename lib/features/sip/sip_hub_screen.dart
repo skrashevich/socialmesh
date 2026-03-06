@@ -75,6 +75,7 @@ class _SipHubScreenState extends ConsumerState<SipHubScreen> {
     setState(() {
       _autoScanEnabled = !_autoScanEnabled;
       if (_autoScanEnabled) {
+        _performScan();
         _startAutoScanTimer();
         showSuccessSnackBar(context, l10n.sipAutoScanEnabled);
       } else {
@@ -402,35 +403,31 @@ class _SipHubScreenState extends ConsumerState<SipHubScreen> {
           delegate: SectionHeaderDelegate(
             title: context.l10n.sipHubSectionPeers,
             count: peers.length,
+            trailing: _scanning
+                ? Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(
+                        width: 12,
+                        height: 12,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 1.5,
+                          color: context.textTertiary,
+                        ),
+                      ),
+                      const SizedBox(width: AppTheme.spacing6),
+                      Text(
+                        context.l10n.sipScanningIndicator,
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: context.textTertiary,
+                        ),
+                      ),
+                    ],
+                  )
+                : null,
           ),
         ),
-        // Scanning indicator below peers header
-        if (_scanning)
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppTheme.spacing16,
-                vertical: AppTheme.spacing4,
-              ),
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 14,
-                    height: 14,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      color: context.textTertiary,
-                    ),
-                  ),
-                  const SizedBox(width: AppTheme.spacing8),
-                  Text(
-                    context.l10n.sipScanningIndicator,
-                    style: TextStyle(fontSize: 12, color: context.textTertiary),
-                  ),
-                ],
-              ),
-            ),
-          ),
         if (peers.isNotEmpty)
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: AppTheme.spacing16),
