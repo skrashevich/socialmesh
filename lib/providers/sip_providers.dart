@@ -277,6 +277,39 @@ final sipDmManagerProvider = Provider<SipDmManager?>((ref) {
   return manager;
 });
 
+/// Whether SIP auto-scan is persisted across restarts.
+final sipAutoScanProvider = NotifierProvider<SipAutoScanNotifier, bool>(
+  SipAutoScanNotifier.new,
+);
+
+/// Notifier for SIP auto-scan state (persisted to SharedPreferences).
+class SipAutoScanNotifier extends Notifier<bool> {
+  @override
+  bool build() {
+    // Read initial value from SettingsService (sync — already initialised).
+    final settingsAsync = ref.watch(settingsServiceProvider);
+    return settingsAsync.maybeWhen(
+      data: (s) => s.sipAutoScanEnabled,
+      orElse: () => false,
+    );
+  }
+
+  /// Toggle auto-scan and persist the new value.
+  Future<void> toggle() async {
+    final next = !state;
+    state = next;
+    final settings = await ref.read(settingsServiceProvider.future);
+    await settings.setSipAutoScanEnabled(next);
+  }
+
+  /// Explicitly set auto-scan state and persist.
+  Future<void> setEnabled(bool value) async {
+    state = value;
+    final settings = await ref.read(settingsServiceProvider.future);
+    await settings.setSipAutoScanEnabled(value);
+  }
+}
+
 /// Number of discovered SIP peers (for UI badge).
 final sipPeerCountProvider = Provider<int>((ref) {
   ref.watch(sipPeerCacheEpochProvider); // rebuild on cache changes

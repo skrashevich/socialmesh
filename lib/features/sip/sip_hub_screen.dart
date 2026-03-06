@@ -55,15 +55,40 @@ class SipHubScreen extends ConsumerStatefulWidget {
 /// Auto-scan interval for background peer discovery.
 const Duration _kAutoScanInterval = Duration(seconds: 60);
 
-class _SipHubScreenState extends ConsumerState<SipHubScreen> {
+class _SipHubScreenState extends ConsumerState<SipHubScreen>
+    with SingleTickerProviderStateMixin {
   bool _scanning = false;
-  bool _autoScanEnabled = false;
   Timer? _autoScanTimer;
   Timer? _scanTimeoutTimer;
   int _scanStartEpoch = -1;
 
+  /// Continuous rotation controller for the radar icon when auto-scan is on.
+  late final AnimationController _radarController;
+
+  @override
+  void initState() {
+    super.initState();
+    _radarController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 3),
+    );
+
+    // Restore persisted auto-scan state after the first frame so that
+    // providers are available.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final autoScan = ref.read(sipAutoScanProvider);
+      if (autoScan) {
+        _startAutoScanTimer();
+        _radarController.repeat();
+        _performScan();
+      }
+    });
+  }
+
   @override
   void dispose() {
+    _radarController.dispose();
     _autoScanTimer?.cancel();
     _scanTimeoutTimer?.cancel();
     super.dispose();
@@ -72,15 +97,20 @@ class _SipHubScreenState extends ConsumerState<SipHubScreen> {
   void _toggleAutoScan() {
     final l10n = context.l10n;
     ref.read(hapticServiceProvider).trigger(HapticType.light);
+    final wasEnabled = ref.read(sipAutoScanProvider);
+    final nowEnabled = !wasEnabled;
+    ref.read(sipAutoScanProvider.notifier).setEnabled(nowEnabled);
     setState(() {
-      _autoScanEnabled = !_autoScanEnabled;
-      if (_autoScanEnabled) {
+      if (nowEnabled) {
         _performScan();
         _startAutoScanTimer();
+        _radarController.repeat();
         showSuccessSnackBar(context, l10n.sipAutoScanEnabled);
       } else {
         _autoScanTimer?.cancel();
         _autoScanTimer = null;
+        _radarController.stop();
+        _radarController.reset();
         showInfoSnackBar(context, l10n.sipAutoScanDisabled);
       }
     });
@@ -203,6 +233,7 @@ class _SipHubScreenState extends ConsumerState<SipHubScreen> {
     final sessions = ref.watch(sipActiveSessionsProvider);
     final peerCount = ref.watch(sipPeerCountProvider);
     final peerEpoch = ref.watch(sipPeerCacheEpochProvider);
+    final autoScanEnabled = ref.watch(sipAutoScanProvider);
 
     // Stop scanning indicator when peers arrive (epoch bumps).
     if (_scanning) _checkScanComplete(peerEpoch);
@@ -229,7 +260,7 @@ class _SipHubScreenState extends ConsumerState<SipHubScreen> {
       child: GlassScaffold(
         title: l10n.sipHubTitle,
         actions: [
-          // Scan button
+          // Scan button — rotates continuously when auto-scan is enabled
           IconButton(
             icon: _scanning
                 ? SizedBox(
@@ -240,7 +271,18 @@ class _SipHubScreenState extends ConsumerState<SipHubScreen> {
                       color: context.textSecondary,
                     ),
                   )
-                : const Icon(Icons.radar, size: 22),
+                : AnimatedBuilder(
+                    animation: _radarController,
+                    builder: (context, child) => Transform.rotate(
+                      angle: _radarController.value * 2 * 3.14159265,
+                      child: child,
+                    ),
+                    child: Icon(
+                      Icons.radar,
+                      size: 22,
+                      color: autoScanEnabled ? AccentColors.green : null,
+                    ),
+                  ),
             tooltip: l10n.sipDiscoveryScanButton,
             onPressed: _scanning ? null : _onScan,
           ),
@@ -259,10 +301,10 @@ class _SipHubScreenState extends ConsumerState<SipHubScreen> {
                 value: 'autoscan', // lint-allow: hardcoded-string
                 child: ListTile(
                   leading: Icon(
-                    _autoScanEnabled ? Icons.sync_disabled : Icons.sync,
+                    autoScanEnabled ? Icons.sync_disabled : Icons.sync,
                   ),
                   title: Text(l10n.sipAutoScanToggle),
-                  trailing: _autoScanEnabled
+                  trailing: autoScanEnabled
                       ? Icon(Icons.check, size: 18, color: AccentColors.green)
                       : null,
                   contentPadding: EdgeInsets.zero,

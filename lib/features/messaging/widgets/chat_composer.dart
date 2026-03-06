@@ -153,13 +153,15 @@ class ChatComposer extends StatelessWidget {
               ),
             ),
 
-            // Send button — only visible when the field has non-empty text
-            // and the composer is enabled.
-            if (hasText && enabled) ...[
+            // Send button — always visible when enabled; disabled when empty.
+            if (enabled) ...[
               const SizedBox(width: AppTheme.spacing12),
               Padding(
                 padding: const EdgeInsets.only(bottom: AppTheme.spacing0),
-                child: _SendButton(onTap: onSend, tooltip: sendTooltip),
+                child: _SendButton(
+                  onTap: hasText ? onSend : null,
+                  tooltip: sendTooltip,
+                ),
               ),
             ],
           ],
@@ -172,23 +174,34 @@ class ChatComposer extends StatelessWidget {
 class _SendButton extends StatelessWidget {
   const _SendButton({required this.onTap, this.tooltip});
 
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final String? tooltip;
 
   @override
   Widget build(BuildContext context) {
     final accentColor = Theme.of(context).colorScheme.primary;
+    final isEnabled = onTap != null;
 
     final button = GestureDetector(
-      onTap: () {
-        HapticFeedback.lightImpact();
-        onTap();
-      },
-      child: Container(
+      onTap: isEnabled
+          ? () {
+              HapticFeedback.lightImpact();
+              onTap!();
+            }
+          : null,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
         width: 48,
         height: 48,
-        decoration: BoxDecoration(color: accentColor, shape: BoxShape.circle),
-        child: const Icon(Icons.send, color: Colors.white, size: 20),
+        decoration: BoxDecoration(
+          color: isEnabled ? accentColor : accentColor.withValues(alpha: 0.3),
+          shape: BoxShape.circle,
+        ),
+        child: Icon(
+          Icons.send,
+          color: isEnabled ? Colors.white : Colors.white.withValues(alpha: 0.4),
+          size: 20,
+        ),
       ),
     );
 

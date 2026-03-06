@@ -164,6 +164,14 @@ class SettingsService {
 
   bool get autoReconnect => _preferences.getBool('auto_reconnect') ?? true;
 
+  // SIP auto-scan
+  Future<void> setSipAutoScanEnabled(bool enabled) async {
+    await _preferences.setBool('sip_auto_scan_enabled', enabled);
+  }
+
+  bool get sipAutoScanEnabled =>
+      _preferences.getBool('sip_auto_scan_enabled') ?? false;
+
   // Theme
   Future<void> setDarkMode(bool enabled) async {
     await _preferences.setBool('dark_mode', enabled);

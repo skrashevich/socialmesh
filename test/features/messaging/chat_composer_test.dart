@@ -38,21 +38,23 @@ void main() {
   }
 
   group('ChatComposer', () {
-    testWidgets('renders TextField but no Send button when empty', (
+    testWidgets('renders TextField and disabled Send button when empty', (
       tester,
     ) async {
       await tester.pumpWidget(buildSubject());
 
       expect(find.byType(TextField), findsOneWidget);
-      // Send button is hidden when the field is empty (Meshtastic iOS pattern).
-      expect(find.byIcon(Icons.send), findsNothing);
+      // Send button is always visible but disabled when empty.
+      expect(find.byIcon(Icons.send), findsOneWidget);
     });
 
-    testWidgets('Send button appears when text is entered', (tester) async {
+    testWidgets('Send button is always visible, enabled when text entered', (
+      tester,
+    ) async {
       await tester.pumpWidget(buildSubject());
 
-      // Initially hidden.
-      expect(find.byIcon(Icons.send), findsNothing);
+      // Always visible — even with no text.
+      expect(find.byIcon(Icons.send), findsOneWidget);
 
       // Type text — the ListenableBuilder should rebuild.
       await tester.enterText(find.byType(TextField), 'hello');
@@ -61,7 +63,9 @@ void main() {
       expect(find.byIcon(Icons.send), findsOneWidget);
     });
 
-    testWidgets('Send button disappears when text is cleared', (tester) async {
+    testWidgets('Send button remains visible but disabled when text cleared', (
+      tester,
+    ) async {
       await tester.pumpWidget(buildSubject());
 
       await tester.enterText(find.byType(TextField), 'hello');
@@ -70,17 +74,20 @@ void main() {
 
       await tester.enterText(find.byType(TextField), '');
       await tester.pump();
-      expect(find.byIcon(Icons.send), findsNothing);
+      // Button stays visible but is disabled (faded).
+      expect(find.byIcon(Icons.send), findsOneWidget);
     });
 
-    testWidgets('Send button hidden for whitespace-only input', (tester) async {
+    testWidgets('Send button disabled for whitespace-only input', (
+      tester,
+    ) async {
       await tester.pumpWidget(buildSubject());
 
       await tester.enterText(find.byType(TextField), '   ');
       await tester.pump();
 
-      // Whitespace-only is treated as empty.
-      expect(find.byIcon(Icons.send), findsNothing);
+      // Whitespace-only is treated as empty — button visible but disabled.
+      expect(find.byIcon(Icons.send), findsOneWidget);
     });
 
     testWidgets('TextField is multiline with correct configuration', (
@@ -163,31 +170,32 @@ void main() {
       expect(sendCalled, isTrue);
     });
 
-    testWidgets('Send callback can clear controller and button disappears', (
-      tester,
-    ) async {
-      await tester.pumpWidget(
-        buildSubject(
-          onSend: () {
-            sendCalled = true;
-            controller.clear();
-          },
-        ),
-      );
+    testWidgets(
+      'Send callback can clear controller and button becomes disabled',
+      (tester) async {
+        await tester.pumpWidget(
+          buildSubject(
+            onSend: () {
+              sendCalled = true;
+              controller.clear();
+            },
+          ),
+        );
 
-      await tester.enterText(find.byType(TextField), 'clear me');
-      await tester.pump();
-      expect(controller.text, 'clear me');
-      expect(find.byIcon(Icons.send), findsOneWidget);
+        await tester.enterText(find.byType(TextField), 'clear me');
+        await tester.pump();
+        expect(controller.text, 'clear me');
+        expect(find.byIcon(Icons.send), findsOneWidget);
 
-      await tester.tap(find.byIcon(Icons.send));
-      await tester.pump();
+        await tester.tap(find.byIcon(Icons.send));
+        await tester.pump();
 
-      expect(sendCalled, isTrue);
-      expect(controller.text, isEmpty);
-      // Button disappears after clearing.
-      expect(find.byIcon(Icons.send), findsNothing);
-    });
+        expect(sendCalled, isTrue);
+        expect(controller.text, isEmpty);
+        // Button stays visible but is disabled after clearing.
+        expect(find.byIcon(Icons.send), findsOneWidget);
+      },
+    );
 
     testWidgets('hint text is displayed when field is empty', (tester) async {
       await tester.pumpWidget(buildSubject());
