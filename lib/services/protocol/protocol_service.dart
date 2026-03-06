@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
@@ -42,6 +43,7 @@ import 'sip/sip_identity.dart';
 import 'sip/sip_types.dart';
 import '../mesh_packet_dedupe_store.dart';
 import '../mesh_health/mesh_health_models.dart';
+import '../notifications/notification_service.dart';
 import '../../utils/text_sanitizer.dart';
 import '../../models/presence_confidence.dart';
 import '../../features/nodes/node_display_name_resolver.dart';
@@ -4193,6 +4195,13 @@ class ProtocolService {
 
     _sipCounters?.recordHandshakeInitiated();
 
+    // Notify the user that a peer is requesting a handshake.
+    final peerName = NodeDisplayNameResolver.defaultShortName(senderNodeId);
+    NotificationService().showSipHandshakeRequestNotification(
+      peerName: peerName,
+      peerNodeId: senderNodeId,
+    );
+
     final challengeFrame = hs.handleHello(senderNodeId, frame);
     if (challengeFrame != null) {
       final encoded = SipCodec.encode(challengeFrame);
@@ -4282,6 +4291,13 @@ class ProtocolService {
       'node=0x${peerNodeId.toRadixString(16)}, '
       'session_tag=0x${result.sessionTag.toRadixString(16)}',
     );
+
+    // Fire local notification for handshake completion.
+    final peerName = NodeDisplayNameResolver.defaultShortName(peerNodeId);
+    NotificationService().showSipHandshakeCompleteNotification(
+      peerName: peerName,
+      peerNodeId: peerNodeId,
+    );
   }
 
   // ---------------------------------------------------------------------------
@@ -4359,7 +4375,21 @@ class ProtocolService {
       return;
     }
 
-    dm.handleInboundDm(frame);
+    final message = dm.handleInboundDm(frame);
+    if (message != null) {
+      // Fire local notification for inbound SIP DM.
+      final session = dm.getSession(frame.sessionId);
+      if (session != null) {
+        final peerName = NodeDisplayNameResolver.defaultShortName(
+          session.peerNodeId,
+        );
+        NotificationService().showSipDmNotification(
+          peerName: peerName,
+          message: message.text,
+          sessionTag: frame.sessionId,
+        );
+      }
+    }
   }
 
   void _handleSipDmTyping(SipFrame frame) {

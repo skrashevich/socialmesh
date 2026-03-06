@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 import '../../core/logging.dart';
 import 'dart:async';
 import 'dart:io';
@@ -1095,6 +1096,168 @@ class NotificationService {
 
     AppLogging.notifications(
       '🔔 Showed bug report notification for report: $reportId',
+    );
+  }
+
+  // ============================================================
+  // SIP (Socialmesh Interchange Protocol) NOTIFICATIONS
+  // ============================================================
+
+  /// Show notification for an incoming SIP ephemeral DM message.
+  Future<void> showSipDmNotification({
+    required String peerName,
+    required String message,
+    required int sessionTag,
+    bool playSound = true,
+    bool vibrate = true,
+  }) async {
+    if (!_initialized) return;
+
+    final androidDetails = AndroidNotificationDetails(
+      'sip_messages',
+      'SIP Ephemeral Messages', // lint-allow: hardcoded-string
+      channelDescription: _l10n.notificationChannelSipMessages,
+      importance: Importance.high,
+      priority: Priority.high,
+      icon: '@mipmap/ic_launcher',
+      groupKey: 'sip_dm_messages',
+      playSound: playSound,
+      enableVibration: vibrate,
+      color: AccentColors.green,
+    );
+
+    final iosDetails = DarwinNotificationDetails(
+      presentAlert: true,
+      presentBadge: true,
+      presentSound: playSound,
+      threadIdentifier: 'sip_dm_messages',
+    );
+
+    final notificationDetails = NotificationDetails(
+      android: androidDetails,
+      iOS: iosDetails,
+      macOS: iosDetails,
+    );
+
+    // Truncate message if too long
+    final truncatedMessage = message.length > 100
+        ? '${message.substring(0, 100)}…'
+        : message;
+
+    // Use session tag modulo to keep ID within 32-bit signed int range.
+    // Offset by 4000000 to avoid collision with other notification IDs.
+    final notificationId = (sessionTag.abs() % 1000000) + 4000000;
+
+    await _notifications.show(
+      id: notificationId,
+      title: _l10n.notificationSipDmTitle(peerName),
+      body: truncatedMessage,
+      notificationDetails: notificationDetails,
+      payload: 'sip_dm:$sessionTag',
+    );
+
+    AppLogging.notifications('🔔 Showed SIP DM notification from: $peerName');
+  }
+
+  /// Show notification when a SIP handshake completes and a DM session
+  /// is established.
+  Future<void> showSipHandshakeCompleteNotification({
+    required String peerName,
+    required int peerNodeId,
+    bool playSound = true,
+    bool vibrate = true,
+  }) async {
+    if (!_initialized) return;
+
+    final androidDetails = AndroidNotificationDetails(
+      'sip_handshakes',
+      'SIP Handshakes', // lint-allow: hardcoded-string
+      channelDescription: _l10n.notificationChannelSipHandshake,
+      importance: Importance.defaultImportance,
+      priority: Priority.defaultPriority,
+      icon: '@mipmap/ic_launcher',
+      groupKey: 'sip_handshakes',
+      playSound: playSound,
+      enableVibration: vibrate,
+      color: AccentColors.green,
+    );
+
+    final iosDetails = DarwinNotificationDetails(
+      presentAlert: true,
+      presentBadge: true,
+      presentSound: playSound,
+      threadIdentifier: 'sip_handshakes',
+    );
+
+    final notificationDetails = NotificationDetails(
+      android: androidDetails,
+      iOS: iosDetails,
+      macOS: iosDetails,
+    );
+
+    final notificationId = (peerNodeId.abs() % 1000000) + 5000000;
+
+    await _notifications.show(
+      id: notificationId,
+      title: _l10n.notificationSipHandshakeTitle,
+      body: _l10n.notificationSipHandshakeBody(peerName),
+      notificationDetails: notificationDetails,
+      payload: 'sip_handshake:$peerNodeId',
+    );
+
+    AppLogging.notifications(
+      '🔔 Showed SIP handshake notification for: $peerName',
+    );
+  }
+
+  /// Show notification when an incoming SIP handshake request (HS_HELLO)
+  /// is received from a remote peer.
+  Future<void> showSipHandshakeRequestNotification({
+    required String peerName,
+    required int peerNodeId,
+    bool playSound = true,
+    bool vibrate = true,
+  }) async {
+    if (!_initialized) return;
+
+    final androidDetails = AndroidNotificationDetails(
+      'sip_handshakes',
+      'SIP Handshakes', // lint-allow: hardcoded-string
+      channelDescription: _l10n.notificationChannelSipHandshake,
+      importance: Importance.high,
+      priority: Priority.high,
+      icon: '@mipmap/ic_launcher',
+      groupKey: 'sip_handshakes',
+      playSound: playSound,
+      enableVibration: vibrate,
+      color: AccentColors.green,
+    );
+
+    final iosDetails = DarwinNotificationDetails(
+      presentAlert: true,
+      presentBadge: true,
+      presentSound: playSound,
+      threadIdentifier: 'sip_handshakes',
+    );
+
+    final notificationDetails = NotificationDetails(
+      android: androidDetails,
+      iOS: iosDetails,
+      macOS: iosDetails,
+    );
+
+    final notificationId = (peerNodeId.abs() % 1000000) + 6000000;
+
+    await _notifications.show(
+      id: notificationId,
+      title: _l10n.notificationSipHandshakeRequestTitle,
+      body: _l10n.notificationSipHandshakeRequestBody(peerName),
+      notificationDetails: notificationDetails,
+      payload: 'sip_handshake_request:$peerNodeId',
+    );
+
+    AppLogging.notifications(
+      '🔔 Showed SIP handshake request notification from: $peerName',
     );
   }
 }

@@ -79,6 +79,7 @@ docker-compose.yml
 firebase-service-account.json
 **/service-account*.json
 **/*-service-account.json
+/scripts/backfill-copyright-header.sh
 /scripts/*.json
 /scripts/run.sh
 /scripts/run-android.sh

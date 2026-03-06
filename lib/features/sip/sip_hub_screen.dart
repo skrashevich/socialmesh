@@ -284,7 +284,11 @@ class _SipHubScreenState extends ConsumerState<SipHubScreen>
                     ),
                   ),
             tooltip: l10n.sipDiscoveryScanButton,
-            onPressed: _scanning ? null : _onScan,
+            onPressed: _scanning
+                ? null
+                : autoScanEnabled
+                ? _toggleAutoScan
+                : _onScan,
           ),
           // Overflow menu
           AppBarOverflowMenu<String>(

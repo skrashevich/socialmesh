@@ -30578,4 +30578,31 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get sipDmDeleteConfirmMessage =>
       'This will delete the message for both you and the recipient.';
+
+  @override
+  String notificationSipDmTitle(String peerName) {
+    return 'SIP: $peerName';
+  }
+
+  @override
+  String get notificationSipHandshakeTitle => 'SIP Handshake Complete';
+
+  @override
+  String notificationSipHandshakeBody(String peerName) {
+    return 'Ephemeral DM session established with $peerName.';
+  }
+
+  @override
+  String get notificationChannelSipMessages => 'SIP Ephemeral Messages';
+
+  @override
+  String get notificationChannelSipHandshake => 'SIP Handshakes';
+
+  @override
+  String get notificationSipHandshakeRequestTitle => 'Handshake Request';
+
+  @override
+  String notificationSipHandshakeRequestBody(String peerName) {
+    return '$peerName wants to start an ephemeral DM session.';
+  }
 }

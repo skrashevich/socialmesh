@@ -53415,6 +53415,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This will delete the message for both you and the recipient.'**
   String get sipDmDeleteConfirmMessage;
+
+  /// Notification title for an incoming SIP ephemeral DM.
+  ///
+  /// In en, this message translates to:
+  /// **'SIP: {peerName}'**
+  String notificationSipDmTitle(String peerName);
+
+  /// Notification title when a SIP handshake completes and a DM session is created.
+  ///
+  /// In en, this message translates to:
+  /// **'SIP Handshake Complete'**
+  String get notificationSipHandshakeTitle;
+
+  /// Notification body when a SIP handshake completes.
+  ///
+  /// In en, this message translates to:
+  /// **'Ephemeral DM session established with {peerName}.'**
+  String notificationSipHandshakeBody(String peerName);
+
+  /// Android notification channel name for SIP DM messages.
+  ///
+  /// In en, this message translates to:
+  /// **'SIP Ephemeral Messages'**
+  String get notificationChannelSipMessages;
+
+  /// Android notification channel name for SIP handshake events.
+  ///
+  /// In en, this message translates to:
+  /// **'SIP Handshakes'**
+  String get notificationChannelSipHandshake;
+
+  /// Notification title when another peer sends a handshake request.
+  ///
+  /// In en, this message translates to:
+  /// **'Handshake Request'**
+  String get notificationSipHandshakeRequestTitle;
+
+  /// Notification body when an incoming SIP handshake request (HS_HELLO) is received.
+  ///
+  /// In en, this message translates to:
+  /// **'{peerName} wants to start an ephemeral DM session.'**
+  String notificationSipHandshakeRequestBody(String peerName);
 }
 
 class _AppLocalizationsDelegate

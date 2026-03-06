@@ -40539,5 +40539,51 @@
     "sipDmDeleteConfirmMessage": "This will delete the message for both you and the recipient.",
     "@sipDmDeleteConfirmMessage": {
         "description": "Body text for the message delete confirmation bottom sheet."
+    },
+    "notificationSipDmTitle": "SIP: {peerName}",
+    "@notificationSipDmTitle": {
+        "description": "Notification title for an incoming SIP ephemeral DM.",
+        "placeholders": {
+            "peerName": {
+                "type": "String",
+                "example": "Node 1A2B"
+            }
+        }
+    },
+    "notificationSipHandshakeTitle": "SIP Handshake Complete",
+    "@notificationSipHandshakeTitle": {
+        "description": "Notification title when a SIP handshake completes and a DM session is created."
+    },
+    "notificationSipHandshakeBody": "Ephemeral DM session established with {peerName}.",
+    "@notificationSipHandshakeBody": {
+        "description": "Notification body when a SIP handshake completes.",
+        "placeholders": {
+            "peerName": {
+                "type": "String",
+                "example": "Node 1A2B"
+            }
+        }
+    },
+    "notificationChannelSipMessages": "SIP Ephemeral Messages",
+    "@notificationChannelSipMessages": {
+        "description": "Android notification channel name for SIP DM messages."
+    },
+    "notificationChannelSipHandshake": "SIP Handshakes",
+    "@notificationChannelSipHandshake": {
+        "description": "Android notification channel name for SIP handshake events."
+    },
+    "notificationSipHandshakeRequestTitle": "Handshake Request",
+    "@notificationSipHandshakeRequestTitle": {
+        "description": "Notification title when another peer sends a handshake request."
+    },
+    "notificationSipHandshakeRequestBody": "{peerName} wants to start an ephemeral DM session.",
+    "@notificationSipHandshakeRequestBody": {
+        "description": "Notification body when an incoming SIP handshake request (HS_HELLO) is received.",
+        "placeholders": {
+            "peerName": {
+                "type": "String",
+                "example": "Node 1A2B"
+            }
+        }
     }
 }

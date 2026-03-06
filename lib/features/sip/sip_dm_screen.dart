@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025-2026 gotnull (developer@socialmesh.app)
 
 // SIP DM Screen — ephemeral chat thread for a single SIP session.
 //
@@ -71,6 +72,11 @@ class _SipDmScreenState extends ConsumerState<SipDmScreen>
   void initState() {
     super.initState();
     _messageController.addListener(_onTextChanged);
+
+    // Auto-focus the input field when entering the DM screen.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _inputFocusNode.requestFocus();
+    });
   }
 
   @override
@@ -342,18 +348,22 @@ class _SipDmScreenState extends ConsumerState<SipDmScreen>
               _onCopy(entry);
             },
           ),
-          // Delete
-          ListTile(
-            leading: const Icon(Icons.delete_outline, color: AppTheme.errorRed),
-            title: Text(
-              l10n.sipDmActionDelete,
-              style: const TextStyle(color: AppTheme.errorRed),
+          // Delete — only available for your own messages
+          if (entry.direction == SipDmDirection.outbound)
+            ListTile(
+              leading: const Icon(
+                Icons.delete_outline,
+                color: AppTheme.errorRed,
+              ),
+              title: Text(
+                l10n.sipDmActionDelete,
+                style: const TextStyle(color: AppTheme.errorRed),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                _onDelete(entry);
+              },
             ),
-            onTap: () {
-              Navigator.pop(context);
-              _onDelete(entry);
-            },
-          ),
           const SizedBox(height: AppTheme.spacing8),
         ],
       ),
