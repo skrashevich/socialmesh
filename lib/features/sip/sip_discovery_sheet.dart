@@ -12,6 +12,7 @@ import '../../providers/app_providers.dart';
 import '../../providers/sip_providers.dart';
 import '../../services/haptic_service.dart';
 import '../../services/protocol/sip/sip_discovery.dart';
+import 'sip_peer_detail_sheet.dart';
 
 /// Bottom sheet showing discovered SIP peers.
 ///
@@ -215,6 +216,7 @@ class _PeerTile extends ConsumerWidget {
         trailing: const Icon(Icons.chevron_right),
         onTap: () {
           ref.read(hapticServiceProvider).trigger(HapticType.selection);
+          SipPeerDetailSheet.show(context, peer);
         },
       ),
     );

@@ -30116,5 +30116,57 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sipDmOpenAction => 'Open DM';
 
   @override
+  String get sipPeerDetailTitle => 'Peer Details';
+
+  @override
+  String get sipPeerDetailNodeId => 'Node ID';
+
+  @override
+  String get sipPeerDetailDeviceClass => 'Device Class';
+
+  @override
+  String get sipPeerDetailFeatures => 'Features';
+
+  @override
+  String get sipPeerDetailMtu => 'MTU Hint';
+
+  @override
+  String get sipPeerDetailLastSeen => 'Last Seen';
+
+  @override
+  String get sipPeerDetailJustNow => 'Just now';
+
+  @override
+  String sipPeerDetailMinutesAgo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'minutes',
+      one: 'minute',
+    );
+    return '$count $_temp0 ago';
+  }
+
+  @override
+  String sipPeerDetailHoursAgo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'hours',
+      one: 'hour',
+    );
+    return '$count $_temp0 ago';
+  }
+
+  @override
+  String get sipPeerDetailSupportsSip1 => 'Identity & Handshake';
+
+  @override
+  String get sipPeerDetailSupportsSip3 => 'Micro-Exchange';
+
+  @override
+  String get sipPeerDetailCapabilities => 'Capabilities';
+
+  @override
   String get sipCountersTitle => 'SIP Debug Counters';
 }

@@ -53176,6 +53176,78 @@ abstract class AppLocalizations {
   /// **'Open DM'**
   String get sipDmOpenAction;
 
+  /// Title for the SIP peer detail bottom sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Peer Details'**
+  String get sipPeerDetailTitle;
+
+  /// Label for the peer's mesh node identifier.
+  ///
+  /// In en, this message translates to:
+  /// **'Node ID'**
+  String get sipPeerDetailNodeId;
+
+  /// Label for the peer's device class.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Class'**
+  String get sipPeerDetailDeviceClass;
+
+  /// Label for the peer's SIP feature bitmap.
+  ///
+  /// In en, this message translates to:
+  /// **'Features'**
+  String get sipPeerDetailFeatures;
+
+  /// Label for the peer's advertised MTU hint.
+  ///
+  /// In en, this message translates to:
+  /// **'MTU Hint'**
+  String get sipPeerDetailMtu;
+
+  /// Label for when the peer was last seen.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Seen'**
+  String get sipPeerDetailLastSeen;
+
+  /// Text shown when a peer was seen very recently.
+  ///
+  /// In en, this message translates to:
+  /// **'Just now'**
+  String get sipPeerDetailJustNow;
+
+  /// Text shown for how many minutes ago a peer was last seen.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} {count, plural, =1{minute} other{minutes}} ago'**
+  String sipPeerDetailMinutesAgo(int count);
+
+  /// Text shown for how many hours ago a peer was last seen.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} {count, plural, =1{hour} other{hours}} ago'**
+  String sipPeerDetailHoursAgo(int count);
+
+  /// Label indicating the peer supports SIP-1.
+  ///
+  /// In en, this message translates to:
+  /// **'Identity & Handshake'**
+  String get sipPeerDetailSupportsSip1;
+
+  /// Label indicating the peer supports SIP-3.
+  ///
+  /// In en, this message translates to:
+  /// **'Micro-Exchange'**
+  String get sipPeerDetailSupportsSip3;
+
+  /// Section header for peer capabilities.
+  ///
+  /// In en, this message translates to:
+  /// **'Capabilities'**
+  String get sipPeerDetailCapabilities;
+
   /// Title for the SIP debug counters screen.
   ///
   /// In en, this message translates to:

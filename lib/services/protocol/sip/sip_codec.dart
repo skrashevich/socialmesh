@@ -35,7 +35,7 @@ abstract final class SipCodec {
   static Uint8List? encode(SipFrame frame) {
     final totalSize = frame.headerLen + frame.payloadLen;
     if (totalSize > SipConstants.sipMtuApp) {
-      _log(
+      AppLogging.sip(
         'encode REJECTED: total=$totalSize exceeds MTU=${SipConstants.sipMtuApp}',
       );
       return null;
@@ -93,7 +93,7 @@ abstract final class SipCodec {
       result[frame.headerLen + i] = frame.payload[i];
     }
 
-    _log(
+    AppLogging.sip(
       'encode msg_type=0x${frame.msgType.code.toRadixString(16)} '
       'payload=${frame.payloadLen}B total=${totalSize}B',
     );
@@ -107,7 +107,7 @@ abstract final class SipCodec {
   static SipFrame? decode(Uint8List data) {
     // Minimum frame size is the wrapper with zero-length payload.
     if (data.length < SipConstants.sipWrapperMin) {
-      _log(
+      AppLogging.sip(
         'decode REJECTED: too short (${data.length} < ${SipConstants.sipWrapperMin})',
       );
       return null;
@@ -116,7 +116,7 @@ abstract final class SipCodec {
     // Validate magic bytes.
     if (data[0] != SipConstants.sipMagicByte0 ||
         data[1] != SipConstants.sipMagicByte1) {
-      _log(
+      AppLogging.sip(
         'decode REJECTED: invalid magic 0x${data[0].toRadixString(16)}${data[1].toRadixString(16)}',
       );
       return null;
@@ -129,14 +129,16 @@ abstract final class SipCodec {
 
     // Version negotiation: drop if major > 0.
     if (versionMajor > 0) {
-      _log('decode REJECTED: unsupported version_major=$versionMajor');
+      AppLogging.sip(
+        'decode REJECTED: unsupported version_major=$versionMajor',
+      );
       return null;
     }
 
     final msgTypeCode = bd.getUint8(4);
     final msgType = SipMessageType.fromCode(msgTypeCode);
     if (msgType == null) {
-      _log(
+      AppLogging.sip(
         'decode REJECTED: unknown msg_type=0x${msgTypeCode.toRadixString(16)}',
       );
       return null;
@@ -147,7 +149,7 @@ abstract final class SipCodec {
 
     // Header length must be at least the minimum wrapper.
     if (headerLen < SipConstants.sipWrapperMin) {
-      _log(
+      AppLogging.sip(
         'decode REJECTED: header_len=$headerLen < ${SipConstants.sipWrapperMin}',
       );
       return null;
@@ -155,7 +157,7 @@ abstract final class SipCodec {
 
     // Header length must not exceed total data.
     if (headerLen > data.length) {
-      _log(
+      AppLogging.sip(
         'decode REJECTED: header_len=$headerLen > data.length=${data.length}',
       );
       return null;
@@ -169,12 +171,16 @@ abstract final class SipCodec {
     // Validate total size.
     final totalSize = headerLen + payloadLen;
     if (totalSize > data.length) {
-      _log('decode REJECTED: total=$totalSize > data.length=${data.length}');
+      AppLogging.sip(
+        'decode REJECTED: total=$totalSize > data.length=${data.length}',
+      );
       return null;
     }
 
     if (totalSize > SipConstants.sipMtuApp) {
-      _log('decode REJECTED: total=$totalSize > MTU=${SipConstants.sipMtuApp}');
+      AppLogging.sip(
+        'decode REJECTED: total=$totalSize > MTU=${SipConstants.sipMtuApp}',
+      );
       return null;
     }
 
@@ -204,7 +210,7 @@ abstract final class SipCodec {
       data.sublist(headerLen, headerLen + payloadLen),
     );
 
-    _log(
+    AppLogging.sip(
       'decode ${data.length}B -> msg_type=0x${msgTypeCode.toRadixString(16)} '
       'session_id=${sessionId.toRadixString(16)} payload=${payloadLen}B',
     );
@@ -255,9 +261,5 @@ abstract final class SipCodec {
     final nowS = DateTime.now().millisecondsSinceEpoch ~/ 1000;
     final diff = (nowS - frameTimestampS).abs();
     return diff <= SipConstants.timestampWindowS;
-  }
-
-  static void _log(String message) {
-    AppLogging.sip('SIP_CODEC: $message');
   }
 }

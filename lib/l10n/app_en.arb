@@ -40347,6 +40347,64 @@
     "@sipDmOpenAction": {
         "description": "Button label to open an ephemeral DM with a peer."
     },
+    "sipPeerDetailTitle": "Peer Details",
+    "@sipPeerDetailTitle": {
+        "description": "Title for the SIP peer detail bottom sheet."
+    },
+    "sipPeerDetailNodeId": "Node ID",
+    "@sipPeerDetailNodeId": {
+        "description": "Label for the peer's mesh node identifier."
+    },
+    "sipPeerDetailDeviceClass": "Device Class",
+    "@sipPeerDetailDeviceClass": {
+        "description": "Label for the peer's device class."
+    },
+    "sipPeerDetailFeatures": "Features",
+    "@sipPeerDetailFeatures": {
+        "description": "Label for the peer's SIP feature bitmap."
+    },
+    "sipPeerDetailMtu": "MTU Hint",
+    "@sipPeerDetailMtu": {
+        "description": "Label for the peer's advertised MTU hint."
+    },
+    "sipPeerDetailLastSeen": "Last Seen",
+    "@sipPeerDetailLastSeen": {
+        "description": "Label for when the peer was last seen."
+    },
+    "sipPeerDetailJustNow": "Just now",
+    "@sipPeerDetailJustNow": {
+        "description": "Text shown when a peer was seen very recently."
+    },
+    "sipPeerDetailMinutesAgo": "{count} {count, plural, =1{minute} other{minutes}} ago",
+    "@sipPeerDetailMinutesAgo": {
+        "description": "Text shown for how many minutes ago a peer was last seen.",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "sipPeerDetailHoursAgo": "{count} {count, plural, =1{hour} other{hours}} ago",
+    "@sipPeerDetailHoursAgo": {
+        "description": "Text shown for how many hours ago a peer was last seen.",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "sipPeerDetailSupportsSip1": "Identity & Handshake",
+    "@sipPeerDetailSupportsSip1": {
+        "description": "Label indicating the peer supports SIP-1."
+    },
+    "sipPeerDetailSupportsSip3": "Micro-Exchange",
+    "@sipPeerDetailSupportsSip3": {
+        "description": "Label indicating the peer supports SIP-3."
+    },
+    "sipPeerDetailCapabilities": "Capabilities",
+    "@sipPeerDetailCapabilities": {
+        "description": "Section header for peer capabilities."
+    },
     "sipCountersTitle": "SIP Debug Counters",
     "@sipCountersTitle": {
         "description": "Title for the SIP debug counters screen."
