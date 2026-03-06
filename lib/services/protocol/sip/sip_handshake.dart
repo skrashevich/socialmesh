@@ -505,7 +505,12 @@ class SipHandshakeManager {
     if (_completed.containsKey(peerNodeId)) {
       return SipHandshakeState.accepted;
     }
-    return _sessions[peerNodeId]?.state ?? SipHandshakeState.idle;
+    final session = _sessions[peerNodeId];
+    if (session != null && session.isTimedOut) {
+      _failSession(peerNodeId, 'timeout');
+      return SipHandshakeState.timedOut;
+    }
+    return session?.state ?? SipHandshakeState.idle;
   }
 
   /// Consume a completed handshake result for a peer.

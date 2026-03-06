@@ -1006,11 +1006,39 @@ class _MessageBubble extends ConsumerWidget {
 
     if (entry.localReaction != null) {
       final emoji = SipDmReactionEmojis.all[entry.localReaction!];
+      final myNodeNum = ref.watch(myNodeNumProvider);
+      final myNdxEntry = myNodeNum != null
+          ? ref.watch(nodeDexEntryProvider(myNodeNum))
+          : null;
+      final myPatinaResult = myNodeNum != null
+          ? ref.watch(nodeDexPatinaProvider(myNodeNum))
+          : null;
+      final myTraitResult = myNodeNum != null
+          ? ref.watch(nodeDexTraitProvider(myNodeNum))
+          : null;
+
       pills.add(
         _reactionPill(
           context,
           tint: context.accentColor.withValues(alpha: 0.12),
-          child: Text(emoji, style: const TextStyle(fontSize: 14)),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (myNdxEntry?.sigil != null && myNodeNum != null) ...[
+                SigilAvatar(
+                  sigil: myNdxEntry!.sigil,
+                  nodeNum: myNodeNum,
+                  size: 18,
+                  evolution: SigilEvolution.fromPatina(
+                    myPatinaResult?.score ?? 0,
+                    trait: myTraitResult?.primary,
+                  ),
+                ),
+                const SizedBox(width: AppTheme.spacing2),
+              ],
+              Text(emoji, style: const TextStyle(fontSize: 14)),
+            ],
+          ),
         ),
       );
     }

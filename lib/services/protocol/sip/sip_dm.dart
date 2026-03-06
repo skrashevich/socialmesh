@@ -307,6 +307,7 @@ class SipDmManager {
     AppLogging.sip(
       'SIP_DM: session closed, tag=0x${sessionTag.toRadixString(16)}',
     );
+    onStateChanged?.call();
     return true;
   }
 
