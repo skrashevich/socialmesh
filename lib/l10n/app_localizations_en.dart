@@ -30259,5 +30259,5 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sipDmDeleteConfirmMessage =>
-      'This will remove the message from your local history.';
+      'This will delete the message for both you and the recipient.';
 }

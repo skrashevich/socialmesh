@@ -53413,7 +53413,7 @@ abstract class AppLocalizations {
   /// Body text for the message delete confirmation bottom sheet.
   ///
   /// In en, this message translates to:
-  /// **'This will remove the message from your local history.'**
+  /// **'This will delete the message for both you and the recipient.'**
   String get sipDmDeleteConfirmMessage;
 }
 

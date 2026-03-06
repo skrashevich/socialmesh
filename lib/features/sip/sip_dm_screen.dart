@@ -468,7 +468,10 @@ class _SipDmScreenState extends ConsumerState<SipDmScreen>
                   final entry = history[index];
                   return GestureDetector(
                     onLongPress: () => _showMessageMenu(entry),
-                    child: _MessageBubble(entry: entry),
+                    child: _MessageBubble(
+                      entry: entry,
+                      peerNodeId: session!.peerNodeId,
+                    ),
                   );
                 },
               ),
@@ -541,56 +544,66 @@ class _SipDmScreenState extends ConsumerState<SipDmScreen>
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Reply indicator
-              if (_replyingToEntry != null)
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppTheme.spacing16,
-                    vertical: AppTheme.spacing8,
-                  ),
-                  color: context.accentColor.withValues(alpha: 0.1),
-                  child: Row(
-                    children: [
-                      Icon(Icons.reply, size: 16, color: context.accentColor),
-                      const SizedBox(width: AppTheme.spacing8),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
+              // Reply indicator (animated slide-in)
+              AnimatedSize(
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.easeOut,
+                child: _replyingToEntry != null
+                    ? Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppTheme.spacing16,
+                          vertical: AppTheme.spacing8,
+                        ),
+                        color: context.accentColor.withValues(alpha: 0.1),
+                        child: Row(
                           children: [
-                            Text(
-                              l10n.sipDmReplyingTo,
-                              style: TextStyle(
-                                fontSize: 11,
-                                fontWeight: FontWeight.w600,
-                                color: context.accentColor,
+                            Icon(
+                              Icons.reply,
+                              size: 16,
+                              color: context.accentColor,
+                            ),
+                            const SizedBox(width: AppTheme.spacing8),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    l10n.sipDmReplyingTo,
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.w600,
+                                      color: context.accentColor,
+                                    ),
+                                  ),
+                                  Text(
+                                    SipDmManager.extractReplyBody(
+                                      _replyingToEntry!.text,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: context.textSecondary,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            Text(
-                              SipDmManager.extractReplyBody(
-                                _replyingToEntry!.text,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: context.textSecondary,
+                            GestureDetector(
+                              onTap: _cancelReply,
+                              child: Icon(
+                                Icons.close,
+                                size: 18,
+                                color: context.textTertiary,
                               ),
                             ),
                           ],
                         ),
-                      ),
-                      GestureDetector(
-                        onTap: _cancelReply,
-                        child: Icon(
-                          Icons.close,
-                          size: 18,
-                          color: context.textTertiary,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                      )
+                    : const SizedBox.shrink(),
+              ),
 
               // Input field
               Padding(
@@ -605,6 +618,7 @@ class _SipDmScreenState extends ConsumerState<SipDmScreen>
                     Expanded(
                       child: TextField(
                         controller: _messageController,
+                        focusNode: _inputFocusNode,
                         enabled: enabled,
                         maxLength: 180,
                         maxLines: null,
@@ -722,8 +736,19 @@ class _SessionInfoBar extends ConsumerWidget {
       ),
       child: Row(
         children: [
-          // Sigil avatar (small) with evolution
-          _buildSmallAvatar(context, entry, patinaResult, traitResult),
+          // Sigil avatar (small) with evolution — tap to view NodeDex
+          GestureDetector(
+            onTap: () {
+              ref.read(hapticServiceProvider).trigger(HapticType.light);
+              Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) =>
+                      NodeDexDetailScreen(nodeNum: session.peerNodeId),
+                ),
+              );
+            },
+            child: _buildSmallAvatar(context, entry, patinaResult, traitResult),
+          ),
           const SizedBox(width: AppTheme.spacing10),
 
           // Hex ID
@@ -851,150 +876,231 @@ class _SessionInfoBar extends ConsumerWidget {
 // Message bubble — semantic colors with proper card styling
 // =============================================================================
 
-class _MessageBubble extends StatelessWidget {
+class _MessageBubble extends ConsumerWidget {
   final SipDmHistoryEntry entry;
+  final int peerNodeId;
 
-  const _MessageBubble({required this.entry});
+  const _MessageBubble({required this.entry, required this.peerNodeId});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final isOutbound = entry.direction == SipDmDirection.outbound;
     final replyTo = entry.replyToText;
     final bodyText = SipDmManager.extractReplyBody(entry.text);
-
-    // Collect visible reactions.
-    final reactions = <String>[];
-    if (entry.localReaction != null) {
-      reactions.add(SipDmReactionEmojis.all[entry.localReaction!]);
-    }
-    if (entry.peerReaction != null) {
-      final peerEmoji = SipDmReactionEmojis.all[entry.peerReaction!];
-      // If same emoji, show count; otherwise show both.
-      if (entry.localReaction == entry.peerReaction) {
-        reactions.clear();
-        reactions.add('$peerEmoji 2');
-      } else {
-        reactions.add(peerEmoji);
-      }
-    }
+    final hasReactions =
+        entry.localReaction != null || entry.peerReaction != null;
 
     return Align(
       alignment: isOutbound ? Alignment.centerRight : Alignment.centerLeft,
       child: Padding(
-        padding: EdgeInsets.only(
-          bottom: reactions.isEmpty ? AppTheme.spacing8 : AppTheme.spacing16,
-        ),
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            // Message bubble
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppTheme.spacing12,
-                vertical: AppTheme.spacing8,
-              ),
-              constraints: BoxConstraints(
-                maxWidth: MediaQuery.of(context).size.width * 0.75,
-              ),
-              decoration: BoxDecoration(
-                color: isOutbound
-                    ? context.accentColor.withValues(alpha: 0.15)
-                    : context.card,
-                borderRadius: BorderRadius.only(
-                  topLeft: const Radius.circular(AppTheme.radius12),
-                  topRight: const Radius.circular(AppTheme.radius12),
-                  bottomLeft: isOutbound
-                      ? const Radius.circular(AppTheme.radius12)
-                      : const Radius.circular(AppTheme.radius4),
-                  bottomRight: isOutbound
-                      ? const Radius.circular(AppTheme.radius4)
-                      : const Radius.circular(AppTheme.radius12),
+        padding: const EdgeInsets.only(bottom: AppTheme.spacing8),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width * 0.75,
+          ),
+          child: Column(
+            crossAxisAlignment: isOutbound
+                ? CrossAxisAlignment.end
+                : CrossAxisAlignment.start,
+            children: [
+              // Message bubble
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppTheme.spacing12,
+                  vertical: AppTheme.spacing8,
                 ),
-                border: isOutbound
-                    ? null
-                    : Border.all(color: context.border.withValues(alpha: 0.5)),
-              ),
-              child: Column(
-                crossAxisAlignment: isOutbound
-                    ? CrossAxisAlignment.end
-                    : CrossAxisAlignment.start,
-                children: [
-                  // Quoted reply block
-                  if (replyTo != null) ...[
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: AppTheme.spacing8,
-                        vertical: AppTheme.spacing4,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border(
-                          left: BorderSide(
-                            color: context.accentColor,
-                            width: 2,
+                decoration: BoxDecoration(
+                  color: isOutbound
+                      ? context.accentColor.withValues(alpha: 0.15)
+                      : context.card,
+                  borderRadius: BorderRadius.only(
+                    topLeft: const Radius.circular(AppTheme.radius12),
+                    topRight: const Radius.circular(AppTheme.radius12),
+                    bottomLeft: isOutbound
+                        ? const Radius.circular(AppTheme.radius12)
+                        : const Radius.circular(AppTheme.radius4),
+                    bottomRight: isOutbound
+                        ? const Radius.circular(AppTheme.radius4)
+                        : const Radius.circular(AppTheme.radius12),
+                  ),
+                  border: isOutbound
+                      ? null
+                      : Border.all(
+                          color: context.border.withValues(alpha: 0.5),
+                        ),
+                ),
+                child: Column(
+                  crossAxisAlignment: isOutbound
+                      ? CrossAxisAlignment.end
+                      : CrossAxisAlignment.start,
+                  children: [
+                    // Quoted reply block
+                    if (replyTo != null) ...[
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppTheme.spacing8,
+                          vertical: AppTheme.spacing4,
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            left: BorderSide(
+                              color: context.accentColor,
+                              width: 2,
+                            ),
+                          ),
+                          color: context.accentColor.withValues(alpha: 0.06),
+                        ),
+                        child: Text(
+                          replyTo,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: context.textTertiary,
+                            fontStyle: FontStyle.italic,
                           ),
                         ),
-                        color: context.accentColor.withValues(alpha: 0.06),
                       ),
-                      child: Text(
-                        replyTo,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: context.textTertiary,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: AppTheme.spacing4),
-                  ],
-                  Text(
-                    bodyText,
-                    style: TextStyle(fontSize: 14, color: context.textPrimary),
-                  ),
-                  const SizedBox(height: AppTheme.spacing2),
-                  Text(
-                    _formatTime(entry.timestampMs),
-                    style: TextStyle(fontSize: 10, color: context.textTertiary),
-                  ),
-                ],
-              ),
-            ),
-
-            // Reaction badges overlapping the bottom of the bubble
-            if (reactions.isNotEmpty)
-              Positioned(
-                bottom: -10,
-                right: isOutbound ? AppTheme.spacing8 : null,
-                left: isOutbound ? null : AppTheme.spacing8,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppTheme.spacing6,
-                    vertical: AppTheme.spacing2,
-                  ),
-                  decoration: BoxDecoration(
-                    color: context.card,
-                    borderRadius: BorderRadius.circular(AppTheme.radius12),
-                    border: Border.all(
-                      color: context.border.withValues(alpha: 0.3),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.08),
-                        blurRadius: 4,
-                        offset: const Offset(0, 1),
-                      ),
+                      const SizedBox(height: AppTheme.spacing4),
                     ],
-                  ),
-                  child: Text(
-                    reactions.join(' '),
-                    style: const TextStyle(fontSize: 14),
-                  ),
+                    Text(
+                      bodyText,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: context.textPrimary,
+                      ),
+                    ),
+                    const SizedBox(height: AppTheme.spacing2),
+                    Text(
+                      _formatTime(entry.timestampMs),
+                      style: TextStyle(
+                        fontSize: 10,
+                        color: context.textTertiary,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-          ],
+
+              // Reaction row — Telegram-style pills below the bubble
+              AnimatedSize(
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.easeOut,
+                alignment: isOutbound
+                    ? Alignment.centerRight
+                    : Alignment.centerLeft,
+                child: hasReactions
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: AppTheme.spacing4),
+                        child: _buildReactionRow(context, ref, isOutbound),
+                      )
+                    : const SizedBox.shrink(),
+              ),
+            ],
+          ),
         ),
       ),
+    );
+  }
+
+  Widget _buildReactionRow(
+    BuildContext context,
+    WidgetRef ref,
+    bool isOutbound,
+  ) {
+    // Same emoji from both users — single pill with count.
+    if (entry.localReaction != null &&
+        entry.peerReaction != null &&
+        entry.localReaction == entry.peerReaction) {
+      final emoji = SipDmReactionEmojis.all[entry.localReaction!];
+      return _reactionPill(
+        context,
+        child: Text(
+          '$emoji 2', // lint-allow: hardcoded-string
+          style: const TextStyle(fontSize: 14),
+        ),
+      );
+    }
+
+    // Different emojis or single reaction.
+    final pills = <Widget>[];
+
+    if (entry.localReaction != null) {
+      final emoji = SipDmReactionEmojis.all[entry.localReaction!];
+      pills.add(
+        _reactionPill(
+          context,
+          tint: context.accentColor.withValues(alpha: 0.12),
+          child: Text(emoji, style: const TextStyle(fontSize: 14)),
+        ),
+      );
+    }
+
+    if (entry.peerReaction != null) {
+      final emoji = SipDmReactionEmojis.all[entry.peerReaction!];
+      final ndxEntry = ref.watch(nodeDexEntryProvider(peerNodeId));
+      final patinaResult = ref.watch(nodeDexPatinaProvider(peerNodeId));
+      final traitResult = ref.watch(nodeDexTraitProvider(peerNodeId));
+
+      pills.add(
+        _reactionPill(
+          context,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (ndxEntry?.sigil != null) ...[
+                SigilAvatar(
+                  sigil: ndxEntry!.sigil,
+                  nodeNum: peerNodeId,
+                  size: 18,
+                  evolution: SigilEvolution.fromPatina(
+                    patinaResult.score,
+                    trait: traitResult.primary,
+                  ),
+                ),
+                const SizedBox(width: AppTheme.spacing2),
+              ],
+              Text(emoji, style: const TextStyle(fontSize: 14)),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        for (int i = 0; i < pills.length; i++) ...[
+          if (i > 0) const SizedBox(width: AppTheme.spacing4),
+          pills[i],
+        ],
+      ],
+    );
+  }
+
+  Widget _reactionPill(
+    BuildContext context, {
+    required Widget child,
+    Color? tint,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppTheme.spacing6,
+        vertical: AppTheme.spacing2,
+      ),
+      decoration: BoxDecoration(
+        color: tint ?? context.card,
+        borderRadius: BorderRadius.circular(AppTheme.radius12),
+        border: Border.all(color: context.border.withValues(alpha: 0.3)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.06),
+            blurRadius: 3,
+            offset: const Offset(0, 1),
+          ),
+        ],
+      ),
+      child: child,
     );
   }
 

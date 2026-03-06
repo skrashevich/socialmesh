@@ -166,9 +166,7 @@ abstract final class SipDmMessages {
   /// Returns the target timestamp in seconds, or null if malformed.
   static int? decodeDelete(Uint8List payload) {
     if (payload.length < 4) {
-      AppLogging.sip(
-        'SIP_DM: decodeDelete rejected: ${payload.length}B < 4B',
-      );
+      AppLogging.sip('SIP_DM: decodeDelete rejected: ${payload.length}B < 4B');
       return null;
     }
     final bd = ByteData.sublistView(payload);
