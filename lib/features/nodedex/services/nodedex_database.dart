@@ -21,7 +21,7 @@ import '../../../core/logging.dart';
 ///
 /// Bump this when adding tables, columns, or indices.
 /// Migration logic runs in [_onUpgrade].
-const int nodedexSchemaVersion = 6;
+const int nodedexSchemaVersion = 7;
 
 /// Table and column name constants for NodeDex SQLite schema.
 abstract final class NodeDexTables {
@@ -49,6 +49,13 @@ abstract final class NodeDexTables {
   static const colSchemaVersion = 'schema_version';
   static const colUpdatedAtMs = 'updated_at_ms';
   static const colDeleted = 'deleted';
+
+  // -- SIP identity columns (v7) --
+  static const colSipCapable = 'sip_capable';
+  static const colSipPubkey = 'sip_pubkey';
+  static const colSipPersonaId = 'sip_persona_id';
+  static const colSipIdentityState = 'sip_identity_state';
+  static const colSipDisplayName = 'sip_display_name';
 
   // -- nodedex_encounters --
   static const encounters = 'nodedex_encounters';
@@ -212,7 +219,12 @@ class NodeDexDatabase {
         ${NodeDexTables.colLastKnownFirmware} TEXT,
         ${NodeDexTables.colSchemaVersion} INTEGER NOT NULL DEFAULT 1,
         ${NodeDexTables.colUpdatedAtMs} INTEGER NOT NULL,
-        ${NodeDexTables.colDeleted} INTEGER NOT NULL DEFAULT 0
+        ${NodeDexTables.colDeleted} INTEGER NOT NULL DEFAULT 0,
+        ${NodeDexTables.colSipCapable} INTEGER,
+        ${NodeDexTables.colSipPubkey} BLOB,
+        ${NodeDexTables.colSipPersonaId} BLOB,
+        ${NodeDexTables.colSipIdentityState} TEXT,
+        ${NodeDexTables.colSipDisplayName} TEXT
       )
     ''');
     batch.execute(
@@ -418,6 +430,33 @@ class NodeDexDatabase {
       );
       AppLogging.storage(
         'NodeDexDatabase: v6 migration — added local_nickname columns',
+      );
+    }
+    if (oldVersion < 7) {
+      // v7: Add SIP identity columns for Socialmesh Interop Profile peers.
+      // All nullable — existing entries are non-SIP by default.
+      await db.execute(
+        'ALTER TABLE ${NodeDexTables.entries} ' // lint-allow: hardcoded-string
+        'ADD COLUMN ${NodeDexTables.colSipCapable} INTEGER', // lint-allow: hardcoded-string
+      );
+      await db.execute(
+        'ALTER TABLE ${NodeDexTables.entries} ' // lint-allow: hardcoded-string
+        'ADD COLUMN ${NodeDexTables.colSipPubkey} BLOB', // lint-allow: hardcoded-string
+      );
+      await db.execute(
+        'ALTER TABLE ${NodeDexTables.entries} ' // lint-allow: hardcoded-string
+        'ADD COLUMN ${NodeDexTables.colSipPersonaId} BLOB', // lint-allow: hardcoded-string
+      );
+      await db.execute(
+        'ALTER TABLE ${NodeDexTables.entries} ' // lint-allow: hardcoded-string
+        'ADD COLUMN ${NodeDexTables.colSipIdentityState} TEXT', // lint-allow: hardcoded-string
+      );
+      await db.execute(
+        'ALTER TABLE ${NodeDexTables.entries} ' // lint-allow: hardcoded-string
+        'ADD COLUMN ${NodeDexTables.colSipDisplayName} TEXT', // lint-allow: hardcoded-string
+      );
+      AppLogging.storage(
+        'NodeDexDatabase: v7 migration — added SIP identity columns',
       );
     }
   }

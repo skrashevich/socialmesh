@@ -7,6 +7,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
+import '../../../logging.dart';
 import '../common.dart';
 import 'offset_extension.dart';
 import 'vs_interface.dart';
@@ -113,9 +114,9 @@ class VSNodeSerializationManager {
       final node = _nodeBuilders[value["type"]]?.call(Offset.zero, null);
 
       if (node == null) {
-        debugPrint(
-          "A node was serialized but the builder for its type is missing.\n"
-          "It will be removed from the current node tree.\n$value",
+        AppLogging.automations(
+          'A node was serialized but the builder for its type is missing.\n'
+          'It will be removed from the current node tree.\n$value',
         );
         onBuilderMissing?.call(value);
         return;

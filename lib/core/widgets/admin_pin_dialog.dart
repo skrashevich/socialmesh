@@ -5,6 +5,7 @@ import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../logging.dart';
 import '../theme.dart';
 import '../../services/config/mesh_firestore_config_service.dart';
 
@@ -37,7 +38,7 @@ class AdminPinDialog extends StatefulWidget {
       adminPinHash = config?.adminPin ?? '';
     } catch (e) {
       // If Firebase fails, deny access
-      debugPrint('Failed to fetch admin PIN from Firebase: $e');
+      AppLogging.app('Admin PIN fetch failed: $e');
     }
 
     // If no PIN is configured, deny access

@@ -30341,118 +30341,6 @@
     "@appearanceMotionReducedDesc": {
         "description": "Text displayed in appearance settings"
     },
-    "appearanceFontBranded": "Branded",
-    "@appearanceFontBranded": {
-        "description": "Text displayed in appearance settings"
-    },
-    "appearanceFontBrandedDesc": "JetBrainsMono - Our signature monospace font",
-    "@appearanceFontBrandedDesc": {
-        "description": "Text displayed in appearance settings"
-    },
-    "appearanceFontSystem": "System",
-    "@appearanceFontSystem": {
-        "description": "Text displayed in appearance settings"
-    },
-    "appearanceFontSystemDesc": "Your device\u2019s default font",
-    "@appearanceFontSystemDesc": {
-        "description": "Text displayed in appearance settings"
-    },
-    "appearanceFontAccessibility": "Accessibility",
-    "@appearanceFontAccessibility": {
-        "description": "Text displayed in appearance settings"
-    },
-    "appearanceFontAccessibilityDesc": "Inter - Optimized for readability",
-    "@appearanceFontAccessibilityDesc": {
-        "description": "Text displayed in appearance settings"
-    },
-    "appearanceTextScaleSystem": "System Default",
-    "@appearanceTextScaleSystem": {
-        "description": "Text displayed in appearance settings"
-    },
-    "appearanceTextScaleSystemDesc": "Follows your device accessibility settings",
-    "@appearanceTextScaleSystemDesc": {
-        "description": "Text displayed in appearance settings"
-    },
-    "appearanceTextScaleDefault": "Default",
-    "@appearanceTextScaleDefault": {
-        "description": "Text displayed in appearance settings"
-    },
-    "appearanceTextScaleDefaultDesc": "Fixed size, ignores device settings",
-    "@appearanceTextScaleDefaultDesc": {
-        "description": "Text displayed in appearance settings"
-    },
-    "appearanceTextScaleLarge": "Large",
-    "@appearanceTextScaleLarge": {
-        "description": "Text displayed in appearance settings"
-    },
-    "appearanceTextScaleLargeDesc": "15% larger than default",
-    "@appearanceTextScaleLargeDesc": {
-        "description": "Text displayed in appearance settings"
-    },
-    "appearanceTextScaleExtraLarge": "Extra Large",
-    "@appearanceTextScaleExtraLarge": {
-        "description": "Text displayed in appearance settings"
-    },
-    "appearanceTextScaleExtraLargeDesc": "30% larger than default",
-    "@appearanceTextScaleExtraLargeDesc": {
-        "description": "Text displayed in appearance settings"
-    },
-    "appearanceDensityCompact": "Compact",
-    "@appearanceDensityCompact": {
-        "description": "Text displayed in appearance settings"
-    },
-    "appearanceDensityCompactDesc": "Denser UI, more content visible",
-    "@appearanceDensityCompactDesc": {
-        "description": "Text displayed in appearance settings"
-    },
-    "appearanceDensityComfortable": "Comfortable",
-    "@appearanceDensityComfortable": {
-        "description": "Text displayed in appearance settings"
-    },
-    "appearanceDensityComfortableDesc": "Balanced spacing (default)",
-    "@appearanceDensityComfortableDesc": {
-        "description": "Text displayed in appearance settings"
-    },
-    "appearanceDensityLargeTouch": "Large Touch",
-    "@appearanceDensityLargeTouch": {
-        "description": "Text displayed in appearance settings"
-    },
-    "appearanceDensityLargeTouchDesc": "Bigger tap targets, easier to use",
-    "@appearanceDensityLargeTouchDesc": {
-        "description": "Text displayed in appearance settings"
-    },
-    "appearanceContrastNormal": "Normal",
-    "@appearanceContrastNormal": {
-        "description": "Text displayed in appearance settings"
-    },
-    "appearanceContrastNormalDesc": "Standard color contrast",
-    "@appearanceContrastNormalDesc": {
-        "description": "Text displayed in appearance settings"
-    },
-    "appearanceContrastHigh": "High Contrast",
-    "@appearanceContrastHigh": {
-        "description": "Text displayed in appearance settings"
-    },
-    "appearanceContrastHighDesc": "Enhanced visibility for text and UI",
-    "@appearanceContrastHighDesc": {
-        "description": "Text displayed in appearance settings"
-    },
-    "appearanceMotionNormal": "Normal",
-    "@appearanceMotionNormal": {
-        "description": "Text displayed in appearance settings"
-    },
-    "appearanceMotionNormalDesc": "All animations enabled",
-    "@appearanceMotionNormalDesc": {
-        "description": "Text displayed in appearance settings"
-    },
-    "appearanceMotionReduced": "Reduced",
-    "@appearanceMotionReduced": {
-        "description": "Text displayed in appearance settings"
-    },
-    "appearanceMotionReducedDesc": "Minimal animations for accessibility",
-    "@appearanceMotionReducedDesc": {
-        "description": "Text displayed in appearance settings"
-    },
     "appearanceFont": "Font",
     "@appearanceFont": {
         "description": "Text displayed in appearance settings"
@@ -40293,5 +40181,174 @@
     "@commandErrorConnectDevice": {
         "description": "Error message when a command requires a connected mesh device."
     },
-    "commandErrorConnectDevice": "Connect your device to use this feature"
+    "commandErrorConnectDevice": "Connect your device to use this feature",
+
+    "sipBadgeLabel": "Socialmesh",
+    "@sipBadgeLabel": {
+        "description": "Badge label shown on NodeDex entries for SIP-capable peers."
+    },
+    "sipIdentityStateUnverified": "Unverified",
+    "@sipIdentityStateUnverified": {
+        "description": "SIP identity state label when no verified claim has been received."
+    },
+    "sipIdentityStateVerifiedTofu": "Verified (TOFU)",
+    "@sipIdentityStateVerifiedTofu": {
+        "description": "SIP identity state label when the first identity claim was accepted on trust-on-first-use."
+    },
+    "sipIdentityStatePinned": "Pinned",
+    "@sipIdentityStatePinned": {
+        "description": "SIP identity state label when the user has explicitly pinned this identity."
+    },
+    "sipIdentityStateChangedKey": "Key Changed",
+    "@sipIdentityStateChangedKey": {
+        "description": "SIP identity state label when the peer presented a different public key. Requires user action."
+    },
+    "sipIdentityStateStale": "Expired",
+    "@sipIdentityStateStale": {
+        "description": "SIP identity state label when the identity claim TTL has expired."
+    },
+    "sipChangedKeyWarning": "This peer's identity key has changed. Verify before trusting.",
+    "@sipChangedKeyWarning": {
+        "description": "Warning message shown when a SIP peer's public key has changed unexpectedly."
+    },
+    "sipDisplayNameLabel": "SIP Name",
+    "@sipDisplayNameLabel": {
+        "description": "Label for the SIP-advertised display name in NodeDex detail."
+    },
+    "sipPersonaIdLabel": "Persona ID",
+    "@sipPersonaIdLabel": {
+        "description": "Label for the persona ID field in NodeDex detail for SIP peers."
+    },
+    "sipDiscoveryTitle": "Socialmesh Discovery",
+    "@sipDiscoveryTitle": {
+        "description": "Title for the SIP discovery bottom sheet."
+    },
+    "sipDiscoveryPeersNearby": "{count} Socialmesh {count, plural, =1{peer} other{peers}} nearby",
+    "@sipDiscoveryPeersNearby": {
+        "description": "Label showing how many SIP peers are nearby.",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "sipDiscoveryNoPeers": "No Socialmesh peers detected",
+    "@sipDiscoveryNoPeers": {
+        "description": "Empty state text when no Socialmesh peers are found."
+    },
+    "sipDiscoveryNoPeersDescription": "Socialmesh peers will appear here when detected via beacon or rollcall.",
+    "@sipDiscoveryNoPeersDescription": {
+        "description": "Description for the empty state in Socialmesh discovery."
+    },
+    "sipDiscoveryScanButton": "Scan for Socialmesh",
+    "@sipDiscoveryScanButton": {
+        "description": "Button to trigger a Socialmesh rollcall scan."
+    },
+    "sipDiscoveryScanCooldown": "Scan available in {seconds}s",
+    "@sipDiscoveryScanCooldown": {
+        "description": "Label shown when scan is on cooldown.",
+        "placeholders": {
+            "seconds": {
+                "type": "int"
+            }
+        }
+    },
+    "sipDiscoveryPeerAnonymous": "SIP Peer",
+    "@sipDiscoveryPeerAnonymous": {
+        "description": "Fallback label for a SIP peer before identity exchange."
+    },
+    "sipDiscoveryDeviceClass": "Device class: {deviceClass}",
+    "@sipDiscoveryDeviceClass": {
+        "description": "Device class label in peer detail.",
+        "placeholders": {
+            "deviceClass": {
+                "type": "String"
+            }
+        }
+    },
+    "sipHandshakeAction": "Handshake",
+    "@sipHandshakeAction": {
+        "description": "Button label to initiate a SIP handshake with a peer."
+    },
+    "sipHandshakeInProgress": "Handshake in progress…",
+    "@sipHandshakeInProgress": {
+        "description": "Status text while handshake is ongoing."
+    },
+    "sipHandshakeComplete": "Handshake complete",
+    "@sipHandshakeComplete": {
+        "description": "Status text when handshake completes successfully."
+    },
+    "sipHandshakeFailed": "Handshake failed",
+    "@sipHandshakeFailed": {
+        "description": "Status text when handshake fails."
+    },
+    "sipRequestIdentity": "Request Identity",
+    "@sipRequestIdentity": {
+        "description": "Button label to request identity from a SIP peer."
+    },
+    "sipShareIdentity": "Share Identity",
+    "@sipShareIdentity": {
+        "description": "Button label to share identity with a SIP peer."
+    },
+    "sipDmTitle": "Ephemeral DM",
+    "@sipDmTitle": {
+        "description": "Title for the SIP ephemeral DM screen."
+    },
+    "sipDmExpiry": "Expires in {time}",
+    "@sipDmExpiry": {
+        "description": "Label showing session time remaining.",
+        "placeholders": {
+            "time": {
+                "type": "String"
+            }
+        }
+    },
+    "sipDmPinned": "Session pinned",
+    "@sipDmPinned": {
+        "description": "Label when a DM session is pinned."
+    },
+    "sipDmInputHint": "Message…",
+    "@sipDmInputHint": {
+        "description": "Hint text for the DM message input field."
+    },
+    "sipDmSendButton": "Send",
+    "@sipDmSendButton": {
+        "description": "Tooltip for the DM send button."
+    },
+    "sipDmEmptyState": "No messages yet",
+    "@sipDmEmptyState": {
+        "description": "Empty state text when no messages in DM thread."
+    },
+    "sipDmEmptyDescription": "Send a message to start the conversation.",
+    "@sipDmEmptyDescription": {
+        "description": "Description for the DM empty state."
+    },
+    "sipDmBudgetExhausted": "Airtime budget exhausted. Try again later.",
+    "@sipDmBudgetExhausted": {
+        "description": "Error when DM send fails due to rate limiting."
+    },
+    "sipDmSessionClosed": "This session has been closed.",
+    "@sipDmSessionClosed": {
+        "description": "Message when trying to send on a closed session."
+    },
+    "sipDmPinAction": "Pin Session",
+    "@sipDmPinAction": {
+        "description": "Action to pin a DM session to prevent expiry."
+    },
+    "sipDmUnpinAction": "Unpin Session",
+    "@sipDmUnpinAction": {
+        "description": "Action to unpin a DM session."
+    },
+    "sipDmCloseAction": "Close Session",
+    "@sipDmCloseAction": {
+        "description": "Action to close a DM session."
+    },
+    "sipDmOpenAction": "Open DM",
+    "@sipDmOpenAction": {
+        "description": "Button label to open an ephemeral DM with a peer."
+    },
+    "sipCountersTitle": "SIP Debug Counters",
+    "@sipCountersTitle": {
+        "description": "Title for the SIP debug counters screen."
+    }
 }

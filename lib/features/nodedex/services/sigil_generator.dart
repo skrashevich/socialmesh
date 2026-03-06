@@ -18,6 +18,7 @@
 // uniformly, so even sequential node numbers produce visually distinct
 // sigils.
 
+import 'dart:typed_data';
 import 'dart:ui';
 
 import '../models/nodedex_entry.dart';
@@ -126,6 +127,38 @@ class SigilGenerator {
     int nodeNum,
   ) {
     final sigil = generate(nodeNum);
+    return (sigil.primaryColor, sigil.secondaryColor, sigil.tertiaryColor);
+  }
+
+  /// Generate a SigilData from a SIP persona_id (16 bytes).
+  ///
+  /// The persona_id is derived from the peer's Ed25519 public key, so
+  /// it is stable across different node IDs used by the same key.
+  /// This produces a deterministic sigil that represents the cryptographic
+  /// identity rather than the hardware-assigned node number.
+  ///
+  /// The first 4 bytes of the persona_id are interpreted as a 32-bit
+  /// integer and fed through the same [mix] + parameter extraction
+  /// pipeline as [generate], ensuring visual consistency.
+  static SigilData generateFromPersonaId(Uint8List personaId) {
+    assert(personaId.length >= 4, 'persona_id must be at least 4 bytes');
+    // Interpret first 4 bytes as big-endian uint32 for seed.
+    final seed =
+        (personaId[0] << 24) |
+        (personaId[1] << 16) |
+        (personaId[2] << 8) |
+        personaId[3];
+    return generate(seed);
+  }
+
+  /// Generate the 3-color palette from a SIP persona_id (16 bytes).
+  ///
+  /// Convenience method matching [colorsFor] but using persona_id
+  /// as input instead of node number.
+  static (Color primary, Color secondary, Color tertiary) colorsForPersonaId(
+    Uint8List personaId,
+  ) {
+    final sigil = generateFromPersonaId(personaId);
     return (sigil.primaryColor, sigil.secondaryColor, sigil.tertiaryColor);
   }
 

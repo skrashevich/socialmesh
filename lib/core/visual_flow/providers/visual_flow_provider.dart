@@ -20,9 +20,9 @@
 // - serialize() → JSON string of the current graph state
 // - save() → compile + persist via automationsProvider
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../logging.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../features/automations/models/automation.dart';
 import '../compiler/flow_compiler.dart';
@@ -213,7 +213,7 @@ class VisualFlowNotifier extends Notifier<VisualFlowState> {
       additionalNodes: _additionalNodeBuilders,
       onNodesUpdate: _onNodesUpdated,
       onBuilderMissing: (nodeJson) {
-        debugPrint(
+        AppLogging.automations(
           'Visual flow: missing builder for node type "${nodeJson["type"]}"',
         );
       },
@@ -258,7 +258,7 @@ class VisualFlowNotifier extends Notifier<VisualFlowState> {
       final spec = graph.nodes[i];
       final builder = _findBuilder(spec.type);
       if (builder == null) {
-        debugPrint(
+        AppLogging.automations(
           'Visual flow: no builder for decompiled node type "${spec.type}"',
         );
         continue;

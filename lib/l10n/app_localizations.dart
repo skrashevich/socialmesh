@@ -52959,6 +52959,228 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Connect your device to use this feature'**
   String get commandErrorConnectDevice;
+
+  /// Badge label shown on NodeDex entries for SIP-capable peers.
+  ///
+  /// In en, this message translates to:
+  /// **'Socialmesh'**
+  String get sipBadgeLabel;
+
+  /// SIP identity state label when no verified claim has been received.
+  ///
+  /// In en, this message translates to:
+  /// **'Unverified'**
+  String get sipIdentityStateUnverified;
+
+  /// SIP identity state label when the first identity claim was accepted on trust-on-first-use.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified (TOFU)'**
+  String get sipIdentityStateVerifiedTofu;
+
+  /// SIP identity state label when the user has explicitly pinned this identity.
+  ///
+  /// In en, this message translates to:
+  /// **'Pinned'**
+  String get sipIdentityStatePinned;
+
+  /// SIP identity state label when the peer presented a different public key. Requires user action.
+  ///
+  /// In en, this message translates to:
+  /// **'Key Changed'**
+  String get sipIdentityStateChangedKey;
+
+  /// SIP identity state label when the identity claim TTL has expired.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get sipIdentityStateStale;
+
+  /// Warning message shown when a SIP peer's public key has changed unexpectedly.
+  ///
+  /// In en, this message translates to:
+  /// **'This peer\'s identity key has changed. Verify before trusting.'**
+  String get sipChangedKeyWarning;
+
+  /// Label for the SIP-advertised display name in NodeDex detail.
+  ///
+  /// In en, this message translates to:
+  /// **'SIP Name'**
+  String get sipDisplayNameLabel;
+
+  /// Label for the persona ID field in NodeDex detail for SIP peers.
+  ///
+  /// In en, this message translates to:
+  /// **'Persona ID'**
+  String get sipPersonaIdLabel;
+
+  /// Title for the SIP discovery bottom sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Socialmesh Discovery'**
+  String get sipDiscoveryTitle;
+
+  /// Label showing how many SIP peers are nearby.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} Socialmesh {count, plural, =1{peer} other{peers}} nearby'**
+  String sipDiscoveryPeersNearby(int count);
+
+  /// Empty state text when no Socialmesh peers are found.
+  ///
+  /// In en, this message translates to:
+  /// **'No Socialmesh peers detected'**
+  String get sipDiscoveryNoPeers;
+
+  /// Description for the empty state in Socialmesh discovery.
+  ///
+  /// In en, this message translates to:
+  /// **'Socialmesh peers will appear here when detected via beacon or rollcall.'**
+  String get sipDiscoveryNoPeersDescription;
+
+  /// Button to trigger a Socialmesh rollcall scan.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan for Socialmesh'**
+  String get sipDiscoveryScanButton;
+
+  /// Label shown when scan is on cooldown.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan available in {seconds}s'**
+  String sipDiscoveryScanCooldown(int seconds);
+
+  /// Fallback label for a SIP peer before identity exchange.
+  ///
+  /// In en, this message translates to:
+  /// **'SIP Peer'**
+  String get sipDiscoveryPeerAnonymous;
+
+  /// Device class label in peer detail.
+  ///
+  /// In en, this message translates to:
+  /// **'Device class: {deviceClass}'**
+  String sipDiscoveryDeviceClass(String deviceClass);
+
+  /// Button label to initiate a SIP handshake with a peer.
+  ///
+  /// In en, this message translates to:
+  /// **'Handshake'**
+  String get sipHandshakeAction;
+
+  /// Status text while handshake is ongoing.
+  ///
+  /// In en, this message translates to:
+  /// **'Handshake in progress…'**
+  String get sipHandshakeInProgress;
+
+  /// Status text when handshake completes successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Handshake complete'**
+  String get sipHandshakeComplete;
+
+  /// Status text when handshake fails.
+  ///
+  /// In en, this message translates to:
+  /// **'Handshake failed'**
+  String get sipHandshakeFailed;
+
+  /// Button label to request identity from a SIP peer.
+  ///
+  /// In en, this message translates to:
+  /// **'Request Identity'**
+  String get sipRequestIdentity;
+
+  /// Button label to share identity with a SIP peer.
+  ///
+  /// In en, this message translates to:
+  /// **'Share Identity'**
+  String get sipShareIdentity;
+
+  /// Title for the SIP ephemeral DM screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Ephemeral DM'**
+  String get sipDmTitle;
+
+  /// Label showing session time remaining.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires in {time}'**
+  String sipDmExpiry(String time);
+
+  /// Label when a DM session is pinned.
+  ///
+  /// In en, this message translates to:
+  /// **'Session pinned'**
+  String get sipDmPinned;
+
+  /// Hint text for the DM message input field.
+  ///
+  /// In en, this message translates to:
+  /// **'Message…'**
+  String get sipDmInputHint;
+
+  /// Tooltip for the DM send button.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get sipDmSendButton;
+
+  /// Empty state text when no messages in DM thread.
+  ///
+  /// In en, this message translates to:
+  /// **'No messages yet'**
+  String get sipDmEmptyState;
+
+  /// Description for the DM empty state.
+  ///
+  /// In en, this message translates to:
+  /// **'Send a message to start the conversation.'**
+  String get sipDmEmptyDescription;
+
+  /// Error when DM send fails due to rate limiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Airtime budget exhausted. Try again later.'**
+  String get sipDmBudgetExhausted;
+
+  /// Message when trying to send on a closed session.
+  ///
+  /// In en, this message translates to:
+  /// **'This session has been closed.'**
+  String get sipDmSessionClosed;
+
+  /// Action to pin a DM session to prevent expiry.
+  ///
+  /// In en, this message translates to:
+  /// **'Pin Session'**
+  String get sipDmPinAction;
+
+  /// Action to unpin a DM session.
+  ///
+  /// In en, this message translates to:
+  /// **'Unpin Session'**
+  String get sipDmUnpinAction;
+
+  /// Action to close a DM session.
+  ///
+  /// In en, this message translates to:
+  /// **'Close Session'**
+  String get sipDmCloseAction;
+
+  /// Button label to open an ephemeral DM with a peer.
+  ///
+  /// In en, this message translates to:
+  /// **'Open DM'**
+  String get sipDmOpenAction;
+
+  /// Title for the SIP debug counters screen.
+  ///
+  /// In en, this message translates to:
+  /// **'SIP Debug Counters'**
+  String get sipCountersTitle;
 }
 
 class _AppLocalizationsDelegate

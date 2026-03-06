@@ -7,6 +7,8 @@
 #   no-material-dialogs        showDialog/AlertDialog/SimpleDialog
 #   no-raw-snackbar            Raw SnackBar() construction
 #   no-fab                     FloatingActionButton
+#   no-bare-logging            Bare debugPrint/print (use AppLogging.<feature>)
+#   no-private-log             Private _log() methods (use AppLogging.<feature> directly)
 #   no-hardcoded-ui-strings    Hardcoded user-facing strings (Text('...'), title: '...')
 #   no-unimplemented           throw UnimplementedError
 #   no-bare-scaffold           Bare Scaffold (use GlassScaffold)
@@ -477,6 +479,62 @@ check_file() {
         "no-fab" \
         "FloatingActionButton — primary actions belong in the app bar" \
         "error" true true
+    fi
+
+    # ------------------------------------------------------------------
+    # BLOCK: Bare debugPrint / print calls (must use AppLogging)
+    #
+    # All logging in lib/ must go through AppLogging.<feature>() so it
+    # is gated by .env flags and produces grep-friendly prefixed output.
+    # Bare debugPrint( and print( bypass this and pollute the console.
+    #
+    # Exempt: lib/core/logging.dart (defines AppLogging, calls debugPrint
+    #         internally — that's the ONLY file allowed to do so).
+    # ------------------------------------------------------------------
+    if [ "$in_lib" = true ] && [ "$in_lib_generated" = false ] \
+       && [[ "$file" != *"core/logging.dart" ]]; then
+      grep_check "$file" \
+        '\bdebugPrint\(' \
+        "no-bare-logging" \
+        "Bare debugPrint() — use AppLogging.<feature>() instead (gated by .env flags)" \
+        "error" true true
+
+      # print( — but not debugPrint(, printTo(, printBuffer(, reprint(,
+      # sprint(, toString, etc.
+      while IFS=: read -r lineno matched_line; do
+        line_in_scope "$file" "$lineno" || continue
+        local trimmed="${matched_line#"${matched_line%%[![:space:]]*}"}"
+        # Skip comments
+        [[ "$trimmed" == //* ]] && continue
+        # Skip imports
+        [[ "$matched_line" == import* ]] && continue
+        # Skip string literals that mention print
+        [[ "$matched_line" =~ \'.*print.*\' ]] && continue
+        [[ "$matched_line" =~ \".*print.*\" ]] && continue
+        record_hit "$file" "$lineno" "no-bare-logging" \
+          "Bare print() — use AppLogging.<feature>() instead (gated by .env flags)" "error"
+      done < <(grep -nE '(^|[^a-zA-Z_])print\([^)]*\)' "$file" 2>/dev/null \
+        | grep -vE '(debugPrint|printTo|printBuffer|reprint|sprint|fingerprint|footprint|imprint|blueprint|toString)' \
+        || true)
+    fi
+
+    # ------------------------------------------------------------------
+    # BLOCK: Private _log() method definitions
+    #
+    # Private _log() wrappers around AppLogging add needless indirection.
+    # They obscure which AppLogging channel is being used, make grep
+    # harder, and tempt copy-pasters to wire _log() to debugPrint
+    # directly. Call AppLogging.<feature>() at each call site instead.
+    #
+    # Detects: void _log(, static void _log(, _log(String
+    # Does NOT flag _log usage in test/ files (test helpers are fine).
+    # ------------------------------------------------------------------
+    if [ "$in_lib" = true ] && [ "$in_lib_generated" = false ]; then
+      grep_check "$file" \
+        '(void _log\(|static void _log\(|^\s+_log\(String)' \
+        "no-private-log" \
+        "Private _log() method — call AppLogging.<feature>() directly at each call site" \
+        "error" true
     fi
 
     # ------------------------------------------------------------------

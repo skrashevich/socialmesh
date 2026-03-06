@@ -29988,4 +29988,133 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get commandErrorConnectDevice =>
       'Connect your device to use this feature';
+
+  @override
+  String get sipBadgeLabel => 'Socialmesh';
+
+  @override
+  String get sipIdentityStateUnverified => 'Unverified';
+
+  @override
+  String get sipIdentityStateVerifiedTofu => 'Verified (TOFU)';
+
+  @override
+  String get sipIdentityStatePinned => 'Pinned';
+
+  @override
+  String get sipIdentityStateChangedKey => 'Key Changed';
+
+  @override
+  String get sipIdentityStateStale => 'Expired';
+
+  @override
+  String get sipChangedKeyWarning =>
+      'This peer\'s identity key has changed. Verify before trusting.';
+
+  @override
+  String get sipDisplayNameLabel => 'SIP Name';
+
+  @override
+  String get sipPersonaIdLabel => 'Persona ID';
+
+  @override
+  String get sipDiscoveryTitle => 'Socialmesh Discovery';
+
+  @override
+  String sipDiscoveryPeersNearby(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'peers',
+      one: 'peer',
+    );
+    return '$count Socialmesh $_temp0 nearby';
+  }
+
+  @override
+  String get sipDiscoveryNoPeers => 'No Socialmesh peers detected';
+
+  @override
+  String get sipDiscoveryNoPeersDescription =>
+      'Socialmesh peers will appear here when detected via beacon or rollcall.';
+
+  @override
+  String get sipDiscoveryScanButton => 'Scan for Socialmesh';
+
+  @override
+  String sipDiscoveryScanCooldown(int seconds) {
+    return 'Scan available in ${seconds}s';
+  }
+
+  @override
+  String get sipDiscoveryPeerAnonymous => 'SIP Peer';
+
+  @override
+  String sipDiscoveryDeviceClass(String deviceClass) {
+    return 'Device class: $deviceClass';
+  }
+
+  @override
+  String get sipHandshakeAction => 'Handshake';
+
+  @override
+  String get sipHandshakeInProgress => 'Handshake in progress…';
+
+  @override
+  String get sipHandshakeComplete => 'Handshake complete';
+
+  @override
+  String get sipHandshakeFailed => 'Handshake failed';
+
+  @override
+  String get sipRequestIdentity => 'Request Identity';
+
+  @override
+  String get sipShareIdentity => 'Share Identity';
+
+  @override
+  String get sipDmTitle => 'Ephemeral DM';
+
+  @override
+  String sipDmExpiry(String time) {
+    return 'Expires in $time';
+  }
+
+  @override
+  String get sipDmPinned => 'Session pinned';
+
+  @override
+  String get sipDmInputHint => 'Message…';
+
+  @override
+  String get sipDmSendButton => 'Send';
+
+  @override
+  String get sipDmEmptyState => 'No messages yet';
+
+  @override
+  String get sipDmEmptyDescription =>
+      'Send a message to start the conversation.';
+
+  @override
+  String get sipDmBudgetExhausted =>
+      'Airtime budget exhausted. Try again later.';
+
+  @override
+  String get sipDmSessionClosed => 'This session has been closed.';
+
+  @override
+  String get sipDmPinAction => 'Pin Session';
+
+  @override
+  String get sipDmUnpinAction => 'Unpin Session';
+
+  @override
+  String get sipDmCloseAction => 'Close Session';
+
+  @override
+  String get sipDmOpenAction => 'Open DM';
+
+  @override
+  String get sipCountersTitle => 'SIP Debug Counters';
 }

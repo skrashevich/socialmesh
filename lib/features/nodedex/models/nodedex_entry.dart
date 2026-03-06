@@ -10,9 +10,11 @@
 // but persists its own enrichment layer.
 
 import 'dart:convert';
+import 'dart:typed_data';
 import 'dart:ui';
 import 'package:socialmesh/core/theme.dart';
 import 'package:socialmesh/l10n/app_localizations.dart';
+import 'package:socialmesh/services/protocol/sip/sip_types.dart';
 
 /// Social classification a user can assign to a node.
 ///
@@ -661,6 +663,36 @@ class NodeDexEntry {
   /// Used for last-write-wins conflict resolution during Cloud Sync.
   final int? localNicknameUpdatedAtMs;
 
+  /// Whether this peer runs SIP (Socialmesh Interop Profile).
+  ///
+  /// Set to true when a verified SIP beacon or identity claim is received.
+  /// Null means SIP status is unknown (pre-SIP node).
+  final bool? sipCapable;
+
+  /// Ed25519 public key (32 bytes) from the peer's SIP identity claim.
+  ///
+  /// Used to derive the persona_id and for signature verification.
+  /// Null for non-SIP or unverified peers.
+  final Uint8List? sipPubkey;
+
+  /// Persona ID (16 bytes) derived from the peer's public key.
+  ///
+  /// Used to generate a deterministic sigil that is stable across
+  /// different node IDs if the same key is used. Null for non-SIP peers.
+  final Uint8List? sipPersonaId;
+
+  /// Current SIP identity verification state.
+  ///
+  /// Tracks TOFU trust progression: unverified -> verifiedTofu -> pinned,
+  /// with changedKey and stale as error/expiry states.
+  final SipIdentityState? sipIdentityState;
+
+  /// Display name advertised via the SIP identity claim.
+  ///
+  /// This is the peer's self-reported name from the SIP protocol,
+  /// independent of the Meshtastic long/short name. Null for non-SIP peers.
+  final String? sipDisplayName;
+
   /// Maximum number of encounter records to retain.
   static const int maxEncounterRecords = 50;
 
@@ -697,6 +729,11 @@ class NodeDexEntry {
     this.lastKnownFirmware,
     this.localNickname,
     this.localNicknameUpdatedAtMs,
+    this.sipCapable,
+    this.sipPubkey,
+    this.sipPersonaId,
+    this.sipIdentityState,
+    this.sipDisplayName,
   });
 
   /// Create a new entry for a freshly discovered node.
@@ -813,6 +850,16 @@ class NodeDexEntry {
     String? lastKnownHardware,
     String? lastKnownRole,
     String? lastKnownFirmware,
+    bool? sipCapable,
+    bool clearSipCapable = false,
+    Uint8List? sipPubkey,
+    bool clearSipPubkey = false,
+    Uint8List? sipPersonaId,
+    bool clearSipPersonaId = false,
+    SipIdentityState? sipIdentityState,
+    bool clearSipIdentityState = false,
+    String? sipDisplayName,
+    bool clearSipDisplayName = false,
   }) {
     // Auto-stamp when socialTag changes via copyWith.
     final effectiveStMs = clearSocialTag || socialTag != null
@@ -854,6 +901,17 @@ class NodeDexEntry {
           ? null
           : (localNickname ?? this.localNickname),
       localNicknameUpdatedAtMs: effectiveLnMs,
+      sipCapable: clearSipCapable ? null : (sipCapable ?? this.sipCapable),
+      sipPubkey: clearSipPubkey ? null : (sipPubkey ?? this.sipPubkey),
+      sipPersonaId: clearSipPersonaId
+          ? null
+          : (sipPersonaId ?? this.sipPersonaId),
+      sipIdentityState: clearSipIdentityState
+          ? null
+          : (sipIdentityState ?? this.sipIdentityState),
+      sipDisplayName: clearSipDisplayName
+          ? null
+          : (sipDisplayName ?? this.sipDisplayName),
     );
   }
 
@@ -1144,6 +1202,26 @@ class NodeDexEntry {
       }
     }
 
+    // --- SIP identity: prefer the more recently seen side, fall back ---
+    // SIP fields are protocol-derived, not user-editable. The most recently
+    // seen peer data wins, with fallback to whichever side has data.
+    final bool? mergedSipCapable = lastSeen.isAfter(other.lastSeen)
+        ? (sipCapable ?? other.sipCapable)
+        : (other.sipCapable ?? sipCapable);
+    final Uint8List? mergedSipPubkey = lastSeen.isAfter(other.lastSeen)
+        ? (sipPubkey ?? other.sipPubkey)
+        : (other.sipPubkey ?? sipPubkey);
+    final Uint8List? mergedSipPersonaId = lastSeen.isAfter(other.lastSeen)
+        ? (sipPersonaId ?? other.sipPersonaId)
+        : (other.sipPersonaId ?? sipPersonaId);
+    final SipIdentityState? mergedSipIdentityState =
+        lastSeen.isAfter(other.lastSeen)
+        ? (sipIdentityState ?? other.sipIdentityState)
+        : (other.sipIdentityState ?? sipIdentityState);
+    final String? mergedSipDisplayName = lastSeen.isAfter(other.lastSeen)
+        ? (sipDisplayName ?? other.sipDisplayName)
+        : (other.sipDisplayName ?? sipDisplayName);
+
     return NodeDexEntry(
       nodeNum: nodeNum,
       firstSeen: mergedFirstSeen,
@@ -1167,6 +1245,11 @@ class NodeDexEntry {
       lastKnownFirmware: mergedFirmware,
       localNickname: mergedNicknameResult.value,
       localNicknameUpdatedAtMs: mergedNicknameResult.timestamp,
+      sipCapable: mergedSipCapable,
+      sipPubkey: mergedSipPubkey,
+      sipPersonaId: mergedSipPersonaId,
+      sipIdentityState: mergedSipIdentityState,
+      sipDisplayName: mergedSipDisplayName,
     );
   }
 
@@ -1260,6 +1343,11 @@ class NodeDexEntry {
       if (lastKnownFirmware != null) 'lkf': lastKnownFirmware,
       if (localNickname != null) 'ln': localNickname,
       if (localNicknameUpdatedAtMs != null) 'ln_ms': localNicknameUpdatedAtMs,
+      if (sipCapable != null) 'sip_cap': sipCapable,
+      if (sipPubkey != null) 'sip_pk': base64Encode(sipPubkey!),
+      if (sipPersonaId != null) 'sip_pid': base64Encode(sipPersonaId!),
+      if (sipIdentityState != null) 'sip_st': sipIdentityState!.name,
+      if (sipDisplayName != null) 'sip_dn': sipDisplayName,
     };
   }
 
@@ -1321,6 +1409,19 @@ class NodeDexEntry {
       lastKnownFirmware: json['lkf'] as String?,
       localNickname: json['ln'] as String?,
       localNicknameUpdatedAtMs: json['ln_ms'] as int?,
+      sipCapable: json['sip_cap'] as bool?,
+      sipPubkey: json['sip_pk'] != null
+          ? base64Decode(json['sip_pk'] as String)
+          : null,
+      sipPersonaId: json['sip_pid'] != null
+          ? base64Decode(json['sip_pid'] as String)
+          : null,
+      sipIdentityState: json['sip_st'] != null
+          ? SipIdentityState.values
+                .where((s) => s.name == json['sip_st'] as String)
+                .firstOrNull
+          : null,
+      sipDisplayName: json['sip_dn'] as String?,
     );
   }
 
@@ -1354,7 +1455,10 @@ class NodeDexEntry {
           lastSeen == other.lastSeen &&
           encounters.length == other.encounters.length &&
           seenRegions.length == other.seenRegions.length &&
-          coSeenNodes.length == other.coSeenNodes.length;
+          coSeenNodes.length == other.coSeenNodes.length &&
+          sipCapable == other.sipCapable &&
+          sipIdentityState == other.sipIdentityState &&
+          sipDisplayName == other.sipDisplayName;
 
   @override
   int get hashCode => Object.hash(
@@ -1364,6 +1468,8 @@ class NodeDexEntry {
     localNickname,
     encounterCount,
     messageCount,
+    sipCapable,
+    sipIdentityState,
   );
 
   @override
