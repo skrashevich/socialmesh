@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
+import '../logging.dart';
 import '../theme.dart';
 
 /// A hardened image widget that never crashes on load/decode errors.
@@ -587,7 +588,7 @@ class _SafeImageLoaderState extends State<_SafeImageLoader> {
     StackTrace? stackTrace,
   ) {
     // Log but don't crash - this is the key safety feature
-    debugPrint('SafeImage error: $error');
+    AppLogging.widgets('SafeImage error: $error');
 
     // Update state safely
     if (mounted) {

@@ -65,6 +65,7 @@ import '../aether/providers/aether_flight_matcher_provider.dart';
 import '../aether/providers/aether_flight_lifecycle_provider.dart';
 import '../aether/widgets/aether_flight_detected_overlay.dart';
 // import '../global_layer/screens/global_layer_hub_screen.dart';
+import '../sip/sip_hub_screen.dart';
 import '../tak/screens/tak_screen.dart';
 import '../../providers/activity_providers.dart';
 import '../../providers/whats_new_providers.dart';
@@ -430,6 +431,15 @@ class _MainShellState extends ConsumerState<MainShell> {
         requestsTakMode: true,
         iconColor: AccentColors.orange,
         requiresConnection: false,
+      ),
+    if (AppFeatureFlags.isSipEnabled)
+      DrawerMenuItem(
+        icon: Icons.wifi_tethering,
+        label: l10n.sipBadgeLabel,
+        screen: const SipHubScreen(),
+        iconColor: AccentColors.teal,
+        requiresConnection: true,
+        whatsNewBadgeKey: 'sip',
       ),
     DrawerMenuItem(
       icon: Icons.favorite_border,

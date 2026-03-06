@@ -375,13 +375,13 @@ Widget _buildTriggerWebhookWidget(_WebhookConfig config) {
       mainAxisSize: MainAxisSize.min,
       children: [
         _TextInputField(
-          hint: 'Event name (IFTTT)...', // lint-allow: hardcoded-string
+          hint: 'Event name...', // lint-allow: hardcoded-string
           value: config.webhookEventName,
           onChanged: (v) => config.webhookEventName = v,
         ),
         const SizedBox(height: AppTheme.spacing8),
         _TextInputField(
-          hint: 'Webhook URL...', // lint-allow: hardcoded-string
+          hint: 'Webhook URL (optional)...', // lint-allow: hardcoded-string
           value: config.webhookUrl,
           onChanged: (v) => config.webhookUrl = v,
         ),

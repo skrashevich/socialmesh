@@ -25,7 +25,10 @@
 
 import 'dart:ui' show Offset;
 
+import '../../../l10n/app_localizations.dart';
+
 import '../../../features/automations/models/automation.dart';
+import '../flow_node_l10n.dart';
 import '../nodes/action_nodes.dart';
 import '../nodes/condition_nodes.dart';
 import '../nodes/logic_gate_nodes.dart';
@@ -289,6 +292,7 @@ const Map<String, String> _conditionInverseMap = {
 /// The [nodes] map is keyed by node ID (as returned by VSNodeManager.nodes).
 /// The optional [flowName] is used as a prefix for generated automation names.
 /// The optional [graphJson] is stored in the metadata for round-trip editing.
+/// The optional [l10n] enables localized name/description generation.
 ///
 /// Returns a [FlowCompilationResult] containing the compiled automations,
 /// any errors encountered, and metadata for graph↔automation mapping.
@@ -296,6 +300,7 @@ FlowCompilationResult compileFlowGraph({
   required Map<String, VSNodeData> nodes,
   String? flowName,
   String? graphJson,
+  AppLocalizations? l10n,
 }) {
   final errors = <FlowCompilationError>[];
   final warnings = <FlowCompilationWarning>[];
@@ -464,36 +469,61 @@ FlowCompilationResult compileFlowGraph({
     // Build conditions (may be empty).
     final conditions = path.conditions.isNotEmpty ? path.conditions : null;
 
+    // Helper to localize a node title when l10n is available.
+    String loc(String title) =>
+        l10n != null ? localizedFlowTitle(title, l10n) : title;
+
     // Generate name.
     final namePrefix =
-        flowName ?? 'Visual Flow'; // lint-allow: hardcoded-string
-    final actionNames = actionEntries.map((ae) => ae.title).join(', ');
-    final triggerName =
-        TriggerTypes.displayNames[path.triggerType] ?? path.triggerType;
+        flowName ??
+        (l10n?.flowCompilerVisualFlow ??
+            'Visual Flow'); // lint-allow: hardcoded-string
+    final actionNames = actionEntries.map((ae) => loc(ae.title)).join(', ');
+    final triggerName = loc(
+      TriggerTypes.displayNames[path.triggerType] ?? path.triggerType,
+    );
     final name = signatureToActions.length > 1
         ? '$namePrefix $automationIndex: $triggerName → $actionNames'
         : '$namePrefix: $triggerName → $actionNames';
 
     // Generate description.
     final descParts = <String>[];
-    descParts.add('When: $triggerName'); // lint-allow: hardcoded-string
+    if (l10n != null) {
+      descParts.add(l10n.flowCompilerWhen(triggerName));
+    } else {
+      descParts.add('When: $triggerName'); // lint-allow: hardcoded-string
+    }
     if (conditions != null && conditions.isNotEmpty) {
       final condNames = conditions
           .map(
-            (c) =>
-                ConditionTypes.displayNames[ConditionTypes.fromEnum[c.type] ??
-                    c.type.name] ??
-                c.type.displayName,
+            (c) => loc(
+              ConditionTypes.displayNames[ConditionTypes.fromEnum[c.type] ??
+                      c.type.name] ??
+                  c.type.displayName,
+            ),
           )
           .join(' AND ');
-      descParts.add('If: $condNames'); // lint-allow: hardcoded-string
+      if (l10n != null) {
+        descParts.add(l10n.flowCompilerIf(condNames));
+      } else {
+        descParts.add('If: $condNames'); // lint-allow: hardcoded-string
+      }
     }
     if (path.delaySeconds != null && path.delaySeconds! > 0) {
-      descParts.add(
-        'After: ${formatDelayDuration(path.delaySeconds!)} delay',
-      ); // lint-allow: hardcoded-string
+      final delayStr = formatDelayDuration(path.delaySeconds!);
+      if (l10n != null) {
+        descParts.add(l10n.flowCompilerAfterDelay(delayStr));
+      } else {
+        descParts.add(
+          'After: $delayStr delay', // lint-allow: hardcoded-string
+        );
+      }
     }
-    descParts.add('Then: $actionNames'); // lint-allow: hardcoded-string
+    if (l10n != null) {
+      descParts.add(l10n.flowCompilerThen(actionNames));
+    } else {
+      descParts.add('Then: $actionNames'); // lint-allow: hardcoded-string
+    }
     final description = descParts.join(' · ');
 
     // Build config with delay metadata if present.

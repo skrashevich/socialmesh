@@ -158,13 +158,22 @@ class SyncDiagnostics {
   /// Record that the entitlement state changed.
   void recordEntitlementState(bool active) {
     _entitlementActive = active;
-    _log('Entitlement: ${active ? "ACTIVE" : "INACTIVE"}');
+    if (_diagnosticsEnabled) {
+      AppLogging.debug(
+        'SyncDiag: Entitlement: ${active ? "ACTIVE" : "INACTIVE"}',
+      );
+    }
   }
 
   /// Record that items were enqueued to the outbox.
   void recordEnqueue(SyncType type, {int count = 1}) {
     _queuedItems[type] = (_queuedItems[type] ?? 0) + count;
-    _log('Enqueue ${type.name}: +$count (total: ${_queuedItems[type]})');
+    if (_diagnosticsEnabled) {
+      AppLogging.debug(
+        'SyncDiag: Enqueue ${type.name}: +$count '
+        '(total: ${_queuedItems[type]})',
+      );
+    }
   }
 
   /// Record that items were successfully uploaded (drained from outbox).
@@ -172,31 +181,42 @@ class SyncDiagnostics {
     _uploadSuccesses[type] = (_uploadSuccesses[type] ?? 0) + count;
     final queued = _queuedItems[type] ?? 0;
     _queuedItems[type] = (queued - count).clamp(0, queued);
-    _log(
-      'Upload success ${type.name}: $count items ' // lint-allow: hardcoded-string
-      '(queued: ${_queuedItems[type]})', // lint-allow: hardcoded-string
-    );
+    if (_diagnosticsEnabled) {
+      AppLogging.debug(
+        'SyncDiag: Upload success ${type.name}: $count items '
+        '(queued: ${_queuedItems[type]})',
+      );
+    }
   }
 
   /// Record that items were pulled and applied from the remote.
   void recordPullApplied(SyncType type, {int count = 1}) {
     _pullApplied[type] = (_pullApplied[type] ?? 0) + count;
-    _log('Pull applied ${type.name}: $count items');
+    if (_diagnosticsEnabled) {
+      AppLogging.debug('SyncDiag: Pull applied ${type.name}: $count items');
+    }
   }
 
   /// Record a sync conflict that was detected and preserved.
   void recordConflict(SyncType type, {String? details}) {
     _conflicts[type] = (_conflicts[type] ?? 0) + 1;
-    _log(
-      'Conflict ${type.name}: ${details ?? "detected"} ' // lint-allow: hardcoded-string
-      '(total: ${_conflicts[type]})', // lint-allow: hardcoded-string
-    );
+    if (_diagnosticsEnabled) {
+      AppLogging.debug(
+        'SyncDiag: Conflict ${type.name}: ${details ?? "detected"} '
+        '(total: ${_conflicts[type]})',
+      );
+    }
   }
 
   /// Record that a sync cycle completed successfully.
   void recordSyncCycleComplete() {
     _lastSyncTime = DateTime.now();
-    _log('Sync cycle complete at ${_lastSyncTime!.toIso8601String()}');
+    if (_diagnosticsEnabled) {
+      AppLogging.debug(
+        'SyncDiag: Sync cycle complete at '
+        '${_lastSyncTime!.toIso8601String()}',
+      );
+    }
   }
 
   /// Record an error during sync for a specific type.
@@ -206,7 +226,9 @@ class SyncDiagnostics {
       timestamp: DateTime.now(),
       stackTrace: stackTrace?.toString(),
     );
-    _log('Error ${type.name}: $message');
+    if (_diagnosticsEnabled) {
+      AppLogging.debug('SyncDiag: Error ${type.name}: $message');
+    }
     if (stackTrace != null && _diagnosticsEnabled) {
       AppLogging.debug('SyncDiag stack: $stackTrace');
     }
@@ -239,14 +261,8 @@ class SyncDiagnostics {
     _uploadSuccesses.clear();
     _pullApplied.clear();
     _conflicts.clear();
-    _log('Diagnostics reset');
-  }
-
-  // --- Internal ---
-
-  void _log(String message) {
     if (_diagnosticsEnabled) {
-      AppLogging.debug('SyncDiag: $message');
+      AppLogging.debug('SyncDiag: Diagnostics reset');
     }
   }
 }

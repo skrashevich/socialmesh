@@ -17,6 +17,126 @@ import '../../providers/locale_provider.dart';
 import '../../services/haptic_service.dart';
 import '../nodedex/atmosphere/atmosphere_provider.dart';
 
+// ---------------------------------------------------------------------------
+// Localized display names / descriptions for accessibility preference enums
+// ---------------------------------------------------------------------------
+
+extension FontModeL10n on FontMode {
+  String localizedName(BuildContext context) {
+    switch (this) {
+      case FontMode.branded:
+        return context.l10n.appearanceFontBranded;
+      case FontMode.system:
+        return context.l10n.appearanceFontSystem;
+      case FontMode.accessibility:
+        return context.l10n.appearanceFontAccessibility;
+    }
+  }
+
+  String localizedDescription(BuildContext context) {
+    switch (this) {
+      case FontMode.branded:
+        return context.l10n.appearanceFontBrandedDesc;
+      case FontMode.system:
+        return context.l10n.appearanceFontSystemDesc;
+      case FontMode.accessibility:
+        return context.l10n.appearanceFontAccessibilityDesc;
+    }
+  }
+}
+
+extension TextScaleModeL10n on TextScaleMode {
+  String localizedName(BuildContext context) {
+    switch (this) {
+      case TextScaleMode.systemDefault:
+        return context.l10n.appearanceTextScaleSystem;
+      case TextScaleMode.socialmeshDefault:
+        return context.l10n.appearanceTextScaleDefault;
+      case TextScaleMode.large:
+        return context.l10n.appearanceTextScaleLarge;
+      case TextScaleMode.extraLarge:
+        return context.l10n.appearanceTextScaleExtraLarge;
+    }
+  }
+
+  String localizedDescription(BuildContext context) {
+    switch (this) {
+      case TextScaleMode.systemDefault:
+        return context.l10n.appearanceTextScaleSystemDesc;
+      case TextScaleMode.socialmeshDefault:
+        return context.l10n.appearanceTextScaleDefaultDesc;
+      case TextScaleMode.large:
+        return context.l10n.appearanceTextScaleLargeDesc;
+      case TextScaleMode.extraLarge:
+        return context.l10n.appearanceTextScaleExtraLargeDesc;
+    }
+  }
+}
+
+extension DensityModeL10n on DensityMode {
+  String localizedName(BuildContext context) {
+    switch (this) {
+      case DensityMode.compact:
+        return context.l10n.appearanceDensityCompact;
+      case DensityMode.comfortable:
+        return context.l10n.appearanceDensityComfortable;
+      case DensityMode.largeTouch:
+        return context.l10n.appearanceDensityLargeTouch;
+    }
+  }
+
+  String localizedDescription(BuildContext context) {
+    switch (this) {
+      case DensityMode.compact:
+        return context.l10n.appearanceDensityCompactDesc;
+      case DensityMode.comfortable:
+        return context.l10n.appearanceDensityComfortableDesc;
+      case DensityMode.largeTouch:
+        return context.l10n.appearanceDensityLargeTouchDesc;
+    }
+  }
+}
+
+extension ContrastModeL10n on ContrastMode {
+  String localizedName(BuildContext context) {
+    switch (this) {
+      case ContrastMode.normal:
+        return context.l10n.appearanceContrastNormal;
+      case ContrastMode.high:
+        return context.l10n.appearanceContrastHigh;
+    }
+  }
+
+  String localizedDescription(BuildContext context) {
+    switch (this) {
+      case ContrastMode.normal:
+        return context.l10n.appearanceContrastNormalDesc;
+      case ContrastMode.high:
+        return context.l10n.appearanceContrastHighDesc;
+    }
+  }
+}
+
+extension ReduceMotionModeL10n on ReduceMotionMode {
+  String localizedName(BuildContext context) {
+    switch (this) {
+      case ReduceMotionMode.off:
+        return context.l10n.appearanceMotionNormal;
+      case ReduceMotionMode.on:
+        return context.l10n.appearanceMotionReduced;
+    }
+  }
+
+  String localizedDescription(BuildContext context) {
+    switch (this) {
+      case ReduceMotionMode.off:
+        return context.l10n.appearanceMotionNormalDesc;
+      case ReduceMotionMode.on:
+        return context.l10n.appearanceMotionReducedDesc;
+    }
+  }
+}
+
 /// Appearance & Accessibility settings screen
 ///
 /// Allows users to customize font, text size, density, contrast, and motion
@@ -339,11 +459,15 @@ class _PreviewCard extends StatelessWidget {
           ),
           Row(
             children: [
-              _PreviewChip(label: preferences.fontMode.displayName),
+              _PreviewChip(label: preferences.fontMode.localizedName(context)),
               const SizedBox(width: AppTheme.spacing8),
-              _PreviewChip(label: preferences.textScaleMode.displayName),
+              _PreviewChip(
+                label: preferences.textScaleMode.localizedName(context),
+              ),
               const SizedBox(width: AppTheme.spacing8),
-              _PreviewChip(label: preferences.densityMode.displayName),
+              _PreviewChip(
+                label: preferences.densityMode.localizedName(context),
+              ),
             ],
           ),
         ],
@@ -418,7 +542,7 @@ class _FontModeSelector extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              mode.displayName,
+                              mode.localizedName(context),
                               style: Theme.of(context).textTheme.titleSmall
                                   ?.copyWith(
                                     fontWeight: isSelected
@@ -428,7 +552,7 @@ class _FontModeSelector extends StatelessWidget {
                             ),
                             const SizedBox(height: AppTheme.spacing2),
                             Text(
-                              mode.description,
+                              mode.localizedDescription(context),
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
                           ],
@@ -499,7 +623,7 @@ class _TextScaleSelector extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              mode.displayName,
+                              mode.localizedName(context),
                               style: Theme.of(context).textTheme.titleSmall
                                   ?.copyWith(
                                     fontWeight: isSelected
@@ -509,7 +633,7 @@ class _TextScaleSelector extends StatelessWidget {
                             ),
                             const SizedBox(height: AppTheme.spacing2),
                             Text(
-                              mode.description,
+                              mode.localizedDescription(context),
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
                           ],
@@ -577,7 +701,7 @@ class _DensitySelector extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              mode.displayName,
+                              mode.localizedName(context),
                               style: Theme.of(context).textTheme.titleSmall
                                   ?.copyWith(
                                     fontWeight: isSelected
@@ -587,7 +711,7 @@ class _DensitySelector extends StatelessWidget {
                             ),
                             const SizedBox(height: AppTheme.spacing2),
                             Text(
-                              mode.description,
+                              mode.localizedDescription(context),
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
                           ],
@@ -879,6 +1003,8 @@ class _LanguageSelector extends StatelessWidget {
         return context.l10n.appearanceLanguageItalian;
       case 'ru':
         return context.l10n.appearanceLanguageRussian;
+      case 'pt':
+        return context.l10n.appearanceLanguagePortuguese;
       default:
         return locale.languageCode;
     }

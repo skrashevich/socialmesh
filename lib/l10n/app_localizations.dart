@@ -7,6 +7,7 @@ import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_en.dart';
 import 'app_localizations_it.dart';
+import 'app_localizations_pt.dart';
 import 'app_localizations_ru.dart';
 
 // ignore_for_file: type=lint
@@ -97,6 +98,7 @@ abstract class AppLocalizations {
   static const List<Locale> supportedLocales = <Locale>[
     Locale('en'),
     Locale('it'),
+    Locale('pt'),
     Locale('ru'),
   ];
 
@@ -3296,6 +3298,30 @@ abstract class AppLocalizations {
   /// **'e.g., meshtastic_alert'**
   String get automationActionIftttHint;
 
+  /// Label for the webhook event name input in the automation action editor
+  ///
+  /// In en, this message translates to:
+  /// **'Event Name'**
+  String get automationActionWebhookEventName;
+
+  /// Label for the custom webhook URL input in the automation action editor
+  ///
+  /// In en, this message translates to:
+  /// **'Webhook URL (optional)'**
+  String get automationActionWebhookUrlLabel;
+
+  /// Hint text for the custom webhook URL input
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., http://192.168.1.100:8123/api/webhook/...'**
+  String get automationActionWebhookUrlHint;
+
+  /// Help text below the webhook URL field in the automation action editor
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a custom URL to POST directly, or leave blank to use your global IFTTT/webhook settings. Private/LAN addresses (192.168.x, 10.x) are supported.'**
+  String get automationActionWebhookHelp;
+
   /// Display name for the logEvent action type
   ///
   /// In en, this message translates to:
@@ -3581,7 +3607,7 @@ abstract class AppLocalizations {
   /// Display name for the triggerWebhook action type
   ///
   /// In en, this message translates to:
-  /// **'Trigger webhook (IFTTT)'**
+  /// **'Trigger webhook'**
   String get automationActionTriggerWebhook;
 
   /// Display name for the updateWidget action type
@@ -8606,6 +8632,24 @@ abstract class AppLocalizations {
   /// **'{size} · {chunkCount} chunks over mesh'**
   String fileTransferAttachmentMeta(int size, String chunkCount);
 
+  /// Chip label showing chunk transfer progress
+  ///
+  /// In en, this message translates to:
+  /// **'{completed}/{total} chunks'**
+  String fileTransferCardChunksProgress(String completed, String total);
+
+  /// Chip label showing total chunk count
+  ///
+  /// In en, this message translates to:
+  /// **'{count} chunks'**
+  String fileTransferCardChunksTotal(String count);
+
+  /// Chip label showing individual chunk size
+  ///
+  /// In en, this message translates to:
+  /// **'{size} ea.'**
+  String fileTransferCardChunkSize(String size);
+
   /// Description shown for binary/hex file preview
   ///
   /// In en, this message translates to:
@@ -8798,6 +8842,12 @@ abstract class AppLocalizations {
   /// **'Send File'**
   String get fileTransferContactsSendFile;
 
+  /// Action button for sending an image in detail sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Send Image'**
+  String get fileTransferContactsSendImage;
+
   /// Success snackbar (interpolated)
   ///
   /// In en, this message translates to:
@@ -8828,6 +8878,12 @@ abstract class AppLocalizations {
   /// **'Cleared {count} transfers'**
   String fileTransferContainerCleared(int count);
 
+  /// Overflow menu item for help tour
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get fileTransferContainerMenuHelp;
+
   /// Overflow menu item
   ///
   /// In en, this message translates to:
@@ -8845,6 +8901,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Send File'**
   String get fileTransferContainerSendFile;
+
+  /// Overflow menu item for sending an image
+  ///
+  /// In en, this message translates to:
+  /// **'Send Image'**
+  String get fileTransferContainerSendImage;
 
   /// Node picker dialog title
   ///
@@ -9030,6 +9092,60 @@ abstract class AppLocalizations {
   /// **'Could not decode image'**
   String get fileTransferImageDecodeError;
 
+  /// Title for image picker bottom sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Send Image'**
+  String get fileTransferImagePickerTitle;
+
+  /// Camera option in image picker sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Take Photo'**
+  String get fileTransferImagePickerCamera;
+
+  /// Camera option subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Use camera to take a photo'**
+  String get fileTransferImagePickerCameraSubtitle;
+
+  /// Gallery option in image picker sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from Gallery'**
+  String get fileTransferImagePickerGallery;
+
+  /// Gallery option subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Select a photo from your library'**
+  String get fileTransferImagePickerGallerySubtitle;
+
+  /// Cancel button in image picker sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get fileTransferImagePickerCancel;
+
+  /// Snackbar shown while compressing image
+  ///
+  /// In en, this message translates to:
+  /// **'Compressing image for mesh transfer...'**
+  String get fileTransferImageCompressing;
+
+  /// Error when image cannot be compressed enough
+  ///
+  /// In en, this message translates to:
+  /// **'Image could not be compressed to fit within {limit} KB mesh limit.'**
+  String fileTransferImageTooLargeAfterCompression(String limit);
+
+  /// Info snackbar after successful compression
+  ///
+  /// In en, this message translates to:
+  /// **'Image compressed to {size} bytes ({width}x{height})'**
+  String fileTransferImageCompressed(String size, String width, String height);
+
   /// Info sheet row label
   ///
   /// In en, this message translates to:
@@ -9143,6 +9259,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pinch to zoom'**
   String get fileTransferPinchToZoom;
+
+  /// Subtitle in gallery overlay showing outbound target node
+  ///
+  /// In en, this message translates to:
+  /// **'to {name}'**
+  String fileTransferGalleryToNode(String name);
+
+  /// Subtitle in gallery overlay showing inbound source node
+  ///
+  /// In en, this message translates to:
+  /// **'from {name}'**
+  String fileTransferGalleryFromNode(String name);
+
+  /// Direction badge in gallery overlay for outbound transfer
+  ///
+  /// In en, this message translates to:
+  /// **'Sent'**
+  String get fileTransferGallerySentBadge;
+
+  /// Direction badge in gallery overlay for inbound transfer
+  ///
+  /// In en, this message translates to:
+  /// **'Received'**
+  String get fileTransferGalleryReceivedBadge;
+
+  /// File size badge in gallery overlay
+  ///
+  /// In en, this message translates to:
+  /// **'{size}'**
+  String fileTransferGallerySizeBadge(String size);
+
+  /// Chunk progress badge in gallery overlay
+  ///
+  /// In en, this message translates to:
+  /// **'{completed}/{total} chunks'**
+  String fileTransferGalleryChunksBadge(String completed, String total);
+
+  /// Transfer duration badge in gallery overlay
+  ///
+  /// In en, this message translates to:
+  /// **'{duration}'**
+  String fileTransferGalleryDurationBadge(String duration);
+
+  /// Truncated SHA-256 hash badge in gallery overlay
+  ///
+  /// In en, this message translates to:
+  /// **'SHA-256 {hash}'**
+  String fileTransferGalleryHashBadge(String hash);
+
+  /// Button in gallery overlay to open the info sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get fileTransferGalleryViewDetails;
+
+  /// Label in gallery overlay indicating LoRa mesh origin
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh Transfer'**
+  String get fileTransferGalleryMeshTransfer;
+
+  /// Transfer duration formatted in seconds
+  ///
+  /// In en, this message translates to:
+  /// **'{count}s'**
+  String fileTransferGalleryDurationSeconds(int count);
+
+  /// Transfer duration formatted in minutes
+  ///
+  /// In en, this message translates to:
+  /// **'{count}m'**
+  String fileTransferGalleryDurationMinutes(int count);
+
+  /// Transfer duration formatted in hours and minutes
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h {minutes}m'**
+  String fileTransferGalleryDurationHours(int hours, int minutes);
 
   /// Overflow menu item
   ///
@@ -38666,6 +38860,528 @@ abstract class AppLocalizations {
   /// Text displayed in appearance settings
   ///
   /// In en, this message translates to:
+  /// **'Portuguese'**
+  String get appearanceLanguagePortuguese;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Getting Started'**
+  String get helpCategoryGettingStarted;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Mesh Basics'**
+  String get helpCategoryMeshBasics;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Channels & Encryption'**
+  String get helpCategoryChannels;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Messaging'**
+  String get helpCategoryMessaging;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes & Roles'**
+  String get helpCategoryNodes;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Device & Radio'**
+  String get helpCategoryDevice;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Network & Maps'**
+  String get helpCategoryNetwork;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Safety & Rules'**
+  String get helpCategorySafety;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Node Online'**
+  String get flowNodeNodeOnline;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Node Offline'**
+  String get flowNodeNodeOffline;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Battery Low'**
+  String get flowNodeBatteryLow;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Battery Full'**
+  String get flowNodeBatteryFull;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Message Received'**
+  String get flowNodeMessageReceived;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Position Changed'**
+  String get flowNodePositionChanged;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Geofence Enter'**
+  String get flowNodeGeofenceEnter;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Geofence Exit'**
+  String get flowNodeGeofenceExit;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Send Message'**
+  String get flowNodeSendMessage;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Play Sound'**
+  String get flowNodePlaySound;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Vibrate'**
+  String get flowNodeVibrate;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Push Notification'**
+  String get flowNodePushNotification;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Trigger Webhook'**
+  String get flowNodeTriggerWebhook;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Log Event'**
+  String get flowNodeLogEvent;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Update Widget'**
+  String get flowNodeUpdateWidget;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Send to Channel'**
+  String get flowNodeSendToChannel;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Trigger Shortcut'**
+  String get flowNodeTriggerShortcut;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Glyph Pattern'**
+  String get flowNodeGlyphPattern;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Time Range'**
+  String get flowNodeTimeRange;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Day of Week'**
+  String get flowNodeDayOfWeek;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Battery Above'**
+  String get flowNodeBatteryAbove;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Battery Below'**
+  String get flowNodeBatteryBelow;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Node Is Online'**
+  String get flowNodeNodeIsOnline;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Node Is Offline'**
+  String get flowNodeNodeIsOffline;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Within Geofence'**
+  String get flowNodeWithinGeofence;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Outside Geofence'**
+  String get flowNodeOutsideGeofence;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'All inputs must pass'**
+  String get flowNodeGateAllMustPass;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Any input can pass'**
+  String get flowNodeGateAnyCanPass;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Inverts the signal'**
+  String get flowNodeGateInverts;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Delays the signal'**
+  String get flowNodeGateDelays;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Triggers'**
+  String get flowSubgroupTriggers;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Conditions'**
+  String get flowSubgroupConditions;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Logic'**
+  String get flowSubgroupLogic;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Actions'**
+  String get flowSubgroupActions;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'NodeDex'**
+  String get flowSubgroupNodeDex;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Visual Flow'**
+  String get flowCompilerVisualFlow;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'When: {trigger}'**
+  String flowCompilerWhen(String trigger);
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'If: {conditions}'**
+  String flowCompilerIf(String conditions);
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'After: {delay} delay'**
+  String flowCompilerAfterDelay(String delay);
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Then: {actions}'**
+  String flowCompilerThen(String actions);
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Zone A'**
+  String get glyphZoneA;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Zone B'**
+  String get glyphZoneB;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Zone C'**
+  String get glyphZoneC;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Zone D'**
+  String get glyphZoneD;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Zone E'**
+  String get glyphZoneE;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Camera'**
+  String get glyphZoneDescCamera;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Diagonal Strip'**
+  String get glyphZoneDescDiagonal;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'USB-C Port'**
+  String get glyphZoneDescUsbc;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Lower Strip'**
+  String get glyphZoneDescLower;
+
+  /// Visual flow / help l10n
+  ///
+  /// In en, this message translates to:
+  /// **'Battery'**
+  String get glyphZoneDescBattery;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Branded'**
+  String get appearanceFontBranded;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'JetBrainsMono - Our signature monospace font'**
+  String get appearanceFontBrandedDesc;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get appearanceFontSystem;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Your device’s default font'**
+  String get appearanceFontSystemDesc;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Accessibility'**
+  String get appearanceFontAccessibility;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Inter - Optimized for readability'**
+  String get appearanceFontAccessibilityDesc;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'System Default'**
+  String get appearanceTextScaleSystem;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Follows your device accessibility settings'**
+  String get appearanceTextScaleSystemDesc;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Default'**
+  String get appearanceTextScaleDefault;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed size, ignores device settings'**
+  String get appearanceTextScaleDefaultDesc;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Large'**
+  String get appearanceTextScaleLarge;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'15% larger than default'**
+  String get appearanceTextScaleLargeDesc;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Extra Large'**
+  String get appearanceTextScaleExtraLarge;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'30% larger than default'**
+  String get appearanceTextScaleExtraLargeDesc;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Compact'**
+  String get appearanceDensityCompact;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Denser UI, more content visible'**
+  String get appearanceDensityCompactDesc;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Comfortable'**
+  String get appearanceDensityComfortable;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Balanced spacing (default)'**
+  String get appearanceDensityComfortableDesc;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Large Touch'**
+  String get appearanceDensityLargeTouch;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Bigger tap targets, easier to use'**
+  String get appearanceDensityLargeTouchDesc;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Normal'**
+  String get appearanceContrastNormal;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Standard color contrast'**
+  String get appearanceContrastNormalDesc;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'High Contrast'**
+  String get appearanceContrastHigh;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Enhanced visibility for text and UI'**
+  String get appearanceContrastHighDesc;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Normal'**
+  String get appearanceMotionNormal;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'All animations enabled'**
+  String get appearanceMotionNormalDesc;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Reduced'**
+  String get appearanceMotionReduced;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Minimal animations for accessibility'**
+  String get appearanceMotionReducedDesc;
+
+  /// Text displayed in appearance settings
+  ///
+  /// In en, this message translates to:
   /// **'Font'**
   String get appearanceFont;
 
@@ -43681,7 +44397,7 @@ abstract class AppLocalizations {
   /// Screen or section title
   ///
   /// In en, this message translates to:
-  /// **'IFTTT Integration'**
+  /// **'Webhooks'**
   String get iftttConfigTitle;
 
   /// UI text: ifttt config save
@@ -43747,13 +44463,13 @@ abstract class AppLocalizations {
   /// UI text: ifttt config enable
   ///
   /// In en, this message translates to:
-  /// **'Enable IFTTT'**
+  /// **'Enable Webhooks'**
   String get iftttConfigEnable;
 
   /// Subtitle or secondary text
   ///
   /// In en, this message translates to:
-  /// **'Send events to IFTTT Webhooks service'**
+  /// **'Send events to IFTTT or a custom webhook URL'**
   String get iftttConfigEnableSubtitle;
 
   /// Screen or section title
@@ -43765,7 +44481,7 @@ abstract class AppLocalizations {
   /// UI text: ifttt config data sharing msg
   ///
   /// In en, this message translates to:
-  /// **'When IFTTT Webhooks are enabled, mesh event data (messages, node status, positions, battery levels) will be sent to IFTTT servers via your personal webhook key.\n\nIFTTT is a third-party service with its own privacy policy. Only the event types you select will be transmitted.'**
+  /// **'When webhooks are enabled, mesh event data (messages, node status, positions, battery levels) will be sent to the configured endpoint (IFTTT or your custom URL).\n\nIf using IFTTT, it is a third-party service with its own privacy policy. Only the event types you select will be transmitted.'**
   String get iftttConfigDataSharingMsg;
 
   /// UI text: ifttt config i understand
@@ -43819,13 +44535,13 @@ abstract class AppLocalizations {
   /// Success notification
   ///
   /// In en, this message translates to:
-  /// **'Test webhook sent! Check your IFTTT applet.'**
+  /// **'Test webhook sent! Check your endpoint.'**
   String get iftttConfigTestSuccess;
 
   /// Error message shown to the user
   ///
   /// In en, this message translates to:
-  /// **'Failed to send test webhook. Check your key.'**
+  /// **'Failed to send test webhook. Check your configuration.'**
   String get iftttConfigTestFailed;
 
   /// UI text: ifttt config message received
@@ -44095,8 +44811,50 @@ abstract class AppLocalizations {
   /// Error message shown to the user
   ///
   /// In en, this message translates to:
-  /// **'Failed to save IFTTT settings'**
+  /// **'Failed to save webhook settings'**
   String get iftttConfigSaveFailed;
+
+  /// Label for the IFTTT webhook mode selector chip
+  ///
+  /// In en, this message translates to:
+  /// **'IFTTT Key'**
+  String get webhookModeIfttt;
+
+  /// Label for the custom webhook URL mode selector chip
+  ///
+  /// In en, this message translates to:
+  /// **'Custom URL'**
+  String get webhookModeCustomUrl;
+
+  /// Label for the custom webhook URL text field
+  ///
+  /// In en, this message translates to:
+  /// **'Webhook URL'**
+  String get webhookConfigCustomUrlLabel;
+
+  /// Hint text for the custom webhook URL text field
+  ///
+  /// In en, this message translates to:
+  /// **'http://192.168.1.100:8123/api/webhook/...'**
+  String get webhookConfigCustomUrlHint;
+
+  /// Helper text below the custom webhook URL text field
+  ///
+  /// In en, this message translates to:
+  /// **'POST JSON to any HTTP/HTTPS endpoint. LAN addresses supported.'**
+  String get webhookConfigCustomUrlHelper;
+
+  /// Error message when enabling custom URL mode without a URL
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a webhook URL to enable'**
+  String get webhookConfigEnterUrlToEnable;
+
+  /// Error message when testing without a URL in custom URL mode
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a webhook URL first'**
+  String get webhookConfigEnterUrlFirst;
 
   /// MQTT = Message Queuing Telemetry Transport, a protocol for bridging the mesh network to the internet.
   ///
@@ -51173,7 +51931,7 @@ abstract class AppLocalizations {
   /// Error message in automations
   ///
   /// In en, this message translates to:
-  /// **'IFTTT not configured — enable IFTTT and set webhook key in settings'**
+  /// **'Webhooks not configured — enable webhooks and set an IFTTT key or custom URL in settings'**
   String get automationErrorIftttNotConfigured;
 
   /// Error message in automations
@@ -52201,6 +52959,300 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Connect your device to use this feature'**
   String get commandErrorConnectDevice;
+
+  /// Badge label shown on NodeDex entries for SIP-capable peers.
+  ///
+  /// In en, this message translates to:
+  /// **'Socialmesh'**
+  String get sipBadgeLabel;
+
+  /// SIP identity state label when no verified claim has been received.
+  ///
+  /// In en, this message translates to:
+  /// **'Unverified'**
+  String get sipIdentityStateUnverified;
+
+  /// SIP identity state label when the first identity claim was accepted on trust-on-first-use.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified (TOFU)'**
+  String get sipIdentityStateVerifiedTofu;
+
+  /// SIP identity state label when the user has explicitly pinned this identity.
+  ///
+  /// In en, this message translates to:
+  /// **'Pinned'**
+  String get sipIdentityStatePinned;
+
+  /// SIP identity state label when the peer presented a different public key. Requires user action.
+  ///
+  /// In en, this message translates to:
+  /// **'Key Changed'**
+  String get sipIdentityStateChangedKey;
+
+  /// SIP identity state label when the identity claim TTL has expired.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get sipIdentityStateStale;
+
+  /// Warning message shown when a SIP peer's public key has changed unexpectedly.
+  ///
+  /// In en, this message translates to:
+  /// **'This peer\'s identity key has changed. Verify before trusting.'**
+  String get sipChangedKeyWarning;
+
+  /// Label for the SIP-advertised display name in NodeDex detail.
+  ///
+  /// In en, this message translates to:
+  /// **'SIP Name'**
+  String get sipDisplayNameLabel;
+
+  /// Label for the persona ID field in NodeDex detail for SIP peers.
+  ///
+  /// In en, this message translates to:
+  /// **'Persona ID'**
+  String get sipPersonaIdLabel;
+
+  /// Title for the SIP discovery bottom sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Socialmesh Discovery'**
+  String get sipDiscoveryTitle;
+
+  /// Label showing how many SIP peers are nearby.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} Socialmesh {count, plural, =1{peer} other{peers}} nearby'**
+  String sipDiscoveryPeersNearby(int count);
+
+  /// Empty state text when no Socialmesh peers are found.
+  ///
+  /// In en, this message translates to:
+  /// **'No Socialmesh peers detected'**
+  String get sipDiscoveryNoPeers;
+
+  /// Description for the empty state in Socialmesh discovery.
+  ///
+  /// In en, this message translates to:
+  /// **'Socialmesh peers will appear here when detected via beacon or rollcall.'**
+  String get sipDiscoveryNoPeersDescription;
+
+  /// Button to trigger a Socialmesh rollcall scan.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan for Socialmesh'**
+  String get sipDiscoveryScanButton;
+
+  /// Label shown when scan is on cooldown.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan available in {seconds}s'**
+  String sipDiscoveryScanCooldown(int seconds);
+
+  /// Fallback label for a SIP peer before identity exchange.
+  ///
+  /// In en, this message translates to:
+  /// **'SIP Peer'**
+  String get sipDiscoveryPeerAnonymous;
+
+  /// Device class label in peer detail.
+  ///
+  /// In en, this message translates to:
+  /// **'Device class: {deviceClass}'**
+  String sipDiscoveryDeviceClass(String deviceClass);
+
+  /// Button label to initiate a SIP handshake with a peer.
+  ///
+  /// In en, this message translates to:
+  /// **'Handshake'**
+  String get sipHandshakeAction;
+
+  /// Status text while handshake is ongoing.
+  ///
+  /// In en, this message translates to:
+  /// **'Handshake in progress…'**
+  String get sipHandshakeInProgress;
+
+  /// Status text when handshake completes successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Handshake complete'**
+  String get sipHandshakeComplete;
+
+  /// Status text when handshake fails.
+  ///
+  /// In en, this message translates to:
+  /// **'Handshake failed'**
+  String get sipHandshakeFailed;
+
+  /// Button label to request identity from a SIP peer.
+  ///
+  /// In en, this message translates to:
+  /// **'Request Identity'**
+  String get sipRequestIdentity;
+
+  /// Button label to share identity with a SIP peer.
+  ///
+  /// In en, this message translates to:
+  /// **'Share Identity'**
+  String get sipShareIdentity;
+
+  /// Title for the SIP ephemeral DM screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Ephemeral DM'**
+  String get sipDmTitle;
+
+  /// Label showing session time remaining.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires in {time}'**
+  String sipDmExpiry(String time);
+
+  /// Label when a DM session is pinned.
+  ///
+  /// In en, this message translates to:
+  /// **'Session pinned'**
+  String get sipDmPinned;
+
+  /// Hint text for the DM message input field.
+  ///
+  /// In en, this message translates to:
+  /// **'Message…'**
+  String get sipDmInputHint;
+
+  /// Tooltip for the DM send button.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get sipDmSendButton;
+
+  /// Empty state text when no messages in DM thread.
+  ///
+  /// In en, this message translates to:
+  /// **'No messages yet'**
+  String get sipDmEmptyState;
+
+  /// Description for the DM empty state.
+  ///
+  /// In en, this message translates to:
+  /// **'Send a message to start the conversation.'**
+  String get sipDmEmptyDescription;
+
+  /// Error when DM send fails due to rate limiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Airtime budget exhausted. Try again later.'**
+  String get sipDmBudgetExhausted;
+
+  /// Message when trying to send on a closed session.
+  ///
+  /// In en, this message translates to:
+  /// **'This session has been closed.'**
+  String get sipDmSessionClosed;
+
+  /// Action to pin a DM session to prevent expiry.
+  ///
+  /// In en, this message translates to:
+  /// **'Pin Session'**
+  String get sipDmPinAction;
+
+  /// Action to unpin a DM session.
+  ///
+  /// In en, this message translates to:
+  /// **'Unpin Session'**
+  String get sipDmUnpinAction;
+
+  /// Action to close a DM session.
+  ///
+  /// In en, this message translates to:
+  /// **'Close Session'**
+  String get sipDmCloseAction;
+
+  /// Button label to open an ephemeral DM with a peer.
+  ///
+  /// In en, this message translates to:
+  /// **'Open DM'**
+  String get sipDmOpenAction;
+
+  /// Title for the SIP peer detail bottom sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Peer Details'**
+  String get sipPeerDetailTitle;
+
+  /// Label for the peer's mesh node identifier.
+  ///
+  /// In en, this message translates to:
+  /// **'Node ID'**
+  String get sipPeerDetailNodeId;
+
+  /// Label for the peer's device class.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Class'**
+  String get sipPeerDetailDeviceClass;
+
+  /// Label for the peer's SIP feature bitmap.
+  ///
+  /// In en, this message translates to:
+  /// **'Features'**
+  String get sipPeerDetailFeatures;
+
+  /// Label for the peer's advertised MTU hint.
+  ///
+  /// In en, this message translates to:
+  /// **'MTU Hint'**
+  String get sipPeerDetailMtu;
+
+  /// Label for when the peer was last seen.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Seen'**
+  String get sipPeerDetailLastSeen;
+
+  /// Text shown when a peer was seen very recently.
+  ///
+  /// In en, this message translates to:
+  /// **'Just now'**
+  String get sipPeerDetailJustNow;
+
+  /// Text shown for how many minutes ago a peer was last seen.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} {count, plural, =1{minute} other{minutes}} ago'**
+  String sipPeerDetailMinutesAgo(int count);
+
+  /// Text shown for how many hours ago a peer was last seen.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} {count, plural, =1{hour} other{hours}} ago'**
+  String sipPeerDetailHoursAgo(int count);
+
+  /// Label indicating the peer supports SIP-1.
+  ///
+  /// In en, this message translates to:
+  /// **'Identity & Handshake'**
+  String get sipPeerDetailSupportsSip1;
+
+  /// Label indicating the peer supports SIP-3.
+  ///
+  /// In en, this message translates to:
+  /// **'Micro-Exchange'**
+  String get sipPeerDetailSupportsSip3;
+
+  /// Section header for peer capabilities.
+  ///
+  /// In en, this message translates to:
+  /// **'Capabilities'**
+  String get sipPeerDetailCapabilities;
+
+  /// Title for the SIP debug counters screen.
+  ///
+  /// In en, this message translates to:
+  /// **'SIP Debug Counters'**
+  String get sipCountersTitle;
 }
 
 class _AppLocalizationsDelegate
@@ -52214,7 +53266,7 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) =>
-      <String>['en', 'it', 'ru'].contains(locale.languageCode);
+      <String>['en', 'it', 'pt', 'ru'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -52227,6 +53279,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsEn();
     case 'it':
       return AppLocalizationsIt();
+    case 'pt':
+      return AppLocalizationsPt();
     case 'ru':
       return AppLocalizationsRu();
   }

@@ -6,11 +6,13 @@ on:
     paths:
       - "lib/l10n/**"
       - "l10n.yaml"
+      - "scripts/check_translation_coverage.py"
   pull_request:
     branches: [main]
     paths:
       - "lib/l10n/**"
       - "l10n.yaml"
+      - "scripts/check_translation_coverage.py"
   workflow_dispatch:
 
 jobs:
@@ -39,33 +41,29 @@ jobs:
           flutter gen-l10n
           echo "All ARB files are valid."
 
-      - name: Check ARB key consistency
+      - name: Check ARB file integrity
         run: |
           python3 << 'SCRIPT'
           import json
-          import sys
           import os
+          import re
+          import sys
 
           l10n_dir = "lib/l10n"
           template = "app_en.arb"
 
-          # Load template keys
           with open(os.path.join(l10n_dir, template), "r") as f:
               template_data = json.load(f)
 
           template_keys = sorted(
               k for k in template_data if not k.startswith("@") and k != "@@locale"
           )
-          template_meta_keys = sorted(
-              k for k in template_data if k.startswith("@") and k != "@@locale"
-          )
 
-          print(f"Template ({template}): {len(template_keys)} keys, {len(template_meta_keys)} metadata entries")
+          print(f"Template ({template}): {len(template_keys)} keys")
 
           errors = []
           warnings = []
 
-          # Check each locale ARB file
           arb_files = sorted(
               f for f in os.listdir(l10n_dir)
               if f.endswith(".arb") and f != template
@@ -84,16 +82,7 @@ jobs:
                   k for k in locale_data if not k.startswith("@") and k != "@@locale"
               )
 
-              # Check for missing keys
-              missing = set(template_keys) - set(locale_keys)
-              if missing:
-                  errors.append(
-                      f"{arb_file}: {len(missing)} missing key(s): "
-                      + ", ".join(sorted(missing)[:10])
-                      + ("..." if len(missing) > 10 else "")
-                  )
-
-              # Check for extra keys not in template
+              # Extra keys not in template are always an error — stale or mistyped keys
               extra = set(locale_keys) - set(template_keys)
               if extra:
                   errors.append(
@@ -102,65 +91,81 @@ jobs:
                       + ("..." if len(extra) > 10 else "")
                   )
 
-              # Check @@locale is present
+              # @@locale must be present
               if "@@locale" not in locale_data:
                   errors.append(f"{arb_file}: Missing @@locale field")
-
-              # Check for empty string values (warn only)
-              empty_keys = [
-                  k for k in locale_keys
-                  if isinstance(locale_data[k], str) and locale_data[k].strip() == ""
-              ]
-              if empty_keys:
-                  warnings.append(
-                      f"{arb_file}: {len(empty_keys)} empty value(s): "
-                      + ", ".join(empty_keys[:5])
-                      + ("..." if len(empty_keys) > 5 else "")
-                  )
 
               # Check that parameterized keys preserve placeholders
               for key in locale_keys:
                   if key not in template_data:
                       continue
-                  template_val = template_data[key]
                   locale_val = locale_data[key]
-                  if not isinstance(template_val, str) or not isinstance(locale_val, str):
+                  if not isinstance(locale_val, str):
                       continue
 
-                  # Extract {param} placeholders from template
-                  import re
-                  template_params = set(re.findall(r"\{(\w+)\}", template_val))
-                  locale_params = set(re.findall(r"\{(\w+)\}", locale_val))
+                  # Skip if value is identical to English (untranslated placeholder)
+                  if locale_val == template_data[key]:
+                      continue
 
-                  # Missing placeholders in translation
-                  missing_params = template_params - locale_params
-                  if missing_params and locale_val != template_val:
+                  # Get declared placeholders from @key metadata
+                  meta_key = f"@{key}"
+                  if meta_key in template_data and isinstance(template_data[meta_key], dict):
+                      placeholders = template_data[meta_key].get("placeholders", {})
+                      declared_params = set(placeholders.keys())
+                  else:
+                      continue
+
+                  if not declared_params:
+                      continue
+
+                  # Each declared placeholder must appear in the translation
+                  locale_params = set(re.findall(r"\{(\w+)\}", locale_val))
+                  missing_params = declared_params - locale_params
+                  if missing_params:
                       errors.append(
                           f"{arb_file}: Key '{key}' is missing placeholder(s): "
                           + ", ".join(sorted(missing_params))
                       )
 
-              print(f"  {arb_file}: {len(locale_keys)} keys")
+              # Missing keys are fine — Flutter falls back to English.
+              missing = set(template_keys) - set(locale_keys)
+              if missing:
+                  total = len(template_keys)
+                  present = total - len(missing)
+                  pct = present / total * 100
+                  print(f"  {arb_file}: {present}/{total} keys ({pct:.1f}%) — {len(missing)} using English fallback")
+              else:
+                  print(f"  {arb_file}: {len(locale_keys)} keys (complete)")
 
-          # Report
           if warnings:
               print(f"\n{'='*60}")
               print(f"WARNINGS ({len(warnings)}):")
               for w in warnings:
-                  print(f"  {w}")
+                  print(f"  ⚠️  {w}")
 
           if errors:
               print(f"\n{'='*60}")
               print(f"ERRORS ({len(errors)}):")
               for e in errors:
-                  print(f"  {e}")
+                  print(f"  ❌ {e}")
               sys.exit(1)
 
-          print(f"\nAll translation files are consistent.")
+          print(f"\nAll translation files passed integrity checks.")
           SCRIPT
 
       - name: Translation coverage report
         if: always()
+        run: python3 scripts/check_translation_coverage.py
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: translation-status
+          path: TRANSLATION_STATUS.md
+
+      - name: Post coverage summary
+        if: github.event_name == 'pull_request'
         run: |
           python3 << 'SCRIPT'
           import json
@@ -182,9 +187,9 @@ jobs:
               if f.endswith(".arb") and f != template
           )
 
-          print(f"Translation Coverage Report")
-          print(f"{'='*50}")
-          print(f"Template: {total} keys\n")
+          lines = ["## 🌐 Translation Coverage", ""]
+          lines.append(f"| Locale | Translated | Coverage |")
+          lines.append(f"|--------|-----------|----------|")
 
           for arb_file in arb_files:
               path = os.path.join(l10n_dir, arb_file)
@@ -192,24 +197,28 @@ jobs:
                   with open(path, "r") as f:
                       locale_data = json.load(f)
               except json.JSONDecodeError:
-                  print(f"  {arb_file}: INVALID JSON")
+                  lines.append(f"| {arb_file} | ❌ INVALID JSON | — |")
                   continue
 
               translated = 0
-              untranslated = 0
               for key in template_keys:
-                  if key not in locale_data:
-                      untranslated += 1
-                      continue
-                  locale_val = locale_data[key]
-                  template_val = template_data[key]
-                  if locale_val == template_val:
-                      untranslated += 1
-                  else:
+                  if key in locale_data and locale_data[key] != template_data[key]:
                       translated += 1
 
               pct = (translated / total * 100) if total > 0 else 0
-              print(f"  {arb_file}: {translated}/{total} translated ({pct:.1f}%)")
+              locale = arb_file.replace("app_", "").replace(".arb", "")
+              lines.append(f"| {locale} | {translated}/{total} | {pct:.1f}% |")
 
-          print(f"\nNote: Keys with values identical to English are counted as untranslated.")
+          lines.append("")
+          lines.append(f"Keys with values identical to English are counted as untranslated.")
+          lines.append(f"Missing keys fall back to English automatically.")
+
+          summary = "\n".join(lines)
+
+          summary_path = os.environ.get("GITHUB_STEP_SUMMARY", "")
+          if summary_path:
+              with open(summary_path, "a") as f:
+                  f.write(summary + "\n")
+
+          print(summary)
           SCRIPT

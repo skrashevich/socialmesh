@@ -992,7 +992,15 @@ class AutomationEngine {
           return ActionResult(actionName: actionName, success: true);
 
         case ActionType.triggerWebhook:
-          if (action.webhookEventName == null) {
+          final hasCustomUrl =
+              action.webhookUrl != null && action.webhookUrl!.isNotEmpty;
+          final hasEventName =
+              action.webhookEventName != null &&
+              action.webhookEventName!.isNotEmpty;
+
+          // Require at least an event name (used as the event key in both
+          // IFTTT and custom URL payloads).
+          if (!hasEventName) {
             return ActionResult(
               actionName: actionName,
               success: false,
@@ -1000,8 +1008,9 @@ class AutomationEngine {
             );
           }
 
-          // Check if IFTTT is configured before attempting
-          if (!_iftttService.isActive) {
+          // When no custom URL is provided, fall back to the global IFTTT
+          // config which requires an active webhook key.
+          if (!hasCustomUrl && !_iftttService.isActive) {
             return ActionResult(
               actionName: actionName,
               success: false,
@@ -1043,12 +1052,24 @@ class AutomationEngine {
           ); // lint-allow: hardcoded-string
           value3 = contextParts.join(', ');
 
-          final webhookSuccess = await _iftttService.triggerCustomEvent(
-            eventName: action.webhookEventName!,
-            value1: value1,
-            value2: value2,
-            value3: value3,
-          );
+          // Use custom URL when provided, otherwise fall back to IFTTT
+          final bool webhookSuccess;
+          if (hasCustomUrl) {
+            webhookSuccess = await _iftttService.triggerCustomUrl(
+              url: action.webhookUrl!,
+              eventName: action.webhookEventName!,
+              value1: value1,
+              value2: value2,
+              value3: value3,
+            );
+          } else {
+            webhookSuccess = await _iftttService.triggerCustomEvent(
+              eventName: action.webhookEventName!,
+              value1: value1,
+              value2: value2,
+              value3: value3,
+            );
+          }
           return ActionResult(
             actionName: actionName,
             success: webhookSuccess,

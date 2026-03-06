@@ -57,6 +57,7 @@ SYNC_FILES=(
   android/app/upload-keystore.jks
   android/upload-keystore.jks
   CLAUDE.md
+  AGENTS.md
 )
 
 # Patterns to exclude from rsync (node_modules, build artifacts, CI workflows, etc.)

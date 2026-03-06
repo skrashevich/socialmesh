@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/l10n/l10n_extension.dart';
+import '../../../core/logging.dart';
 
 import '../../../core/safety/lifecycle_mixin.dart';
 import '../../../core/theme.dart';
@@ -26,6 +27,7 @@ import '../../nodes/node_display_name_resolver.dart';
 import '../../nodedex/widgets/sigil_painter.dart';
 import '../widgets/file_content_preview.dart';
 import '../widgets/file_transfer_card.dart';
+import '../widgets/file_transfer_image_gallery.dart';
 
 // ---------------------------------------------------------------------------
 // Filter enum
@@ -184,13 +186,13 @@ class _FileTransferContactsScreenState
       );
     }
 
-    // Sort: favorites → active → has transfers → alphabetical
+    // Sort: has transfers → favorites → active → alphabetical
     contacts.sort((a, b) {
+      if (a.hasTransfers != b.hasTransfers) return a.hasTransfers ? -1 : 1;
       if (a.isFavorite != b.isFavorite) return a.isFavorite ? -1 : 1;
       if (a.presence.isActive != b.presence.isActive) {
         return a.presence.isActive ? -1 : 1;
       }
-      if (a.hasTransfers != b.hasTransfers) return a.hasTransfers ? -1 : 1;
       return a.displayName.toLowerCase().compareTo(b.displayName.toLowerCase());
     });
 
@@ -384,16 +386,17 @@ class _FileTransferContactsScreenState
       ];
     }
 
-    // Grouped sections matching Messages screen pattern
-    final favorites = contacts.where((c) => c.isFavorite).toList();
-    final active = contacts
-        .where((c) => !c.isFavorite && c.presence.isActive)
+    // Grouped sections: Has Files first, then Favorites (without files),
+    // then Active (without files, not favorite), then Inactive remainder.
+    final withFiles = contacts.where((c) => c.hasTransfers).toList();
+    final favorites = contacts
+        .where((c) => c.isFavorite && !c.hasTransfers)
         .toList();
-    final withFiles = contacts
-        .where((c) => !c.isFavorite && !c.presence.isActive && c.hasTransfers)
+    final active = contacts
+        .where((c) => !c.hasTransfers && !c.isFavorite && c.presence.isActive)
         .toList();
     final inactive = contacts
-        .where((c) => !c.isFavorite && !c.presence.isActive && !c.hasTransfers)
+        .where((c) => !c.hasTransfers && !c.isFavorite && !c.presence.isActive)
         .toList();
 
     Widget buildSection(String title, List<_Contact> group) {
@@ -421,6 +424,11 @@ class _FileTransferContactsScreenState
     }
 
     return [
+      if (withFiles.isNotEmpty)
+        buildSection(
+          context.l10n.fileTransferContactsSectionWithFiles,
+          withFiles,
+        ),
       if (favorites.isNotEmpty)
         buildSection(
           context.l10n.fileTransferContactsSectionFavorites,
@@ -428,11 +436,6 @@ class _FileTransferContactsScreenState
         ),
       if (active.isNotEmpty)
         buildSection(context.l10n.fileTransferContactsSectionActive, active),
-      if (withFiles.isNotEmpty)
-        buildSection(
-          context.l10n.fileTransferContactsSectionWithFiles,
-          withFiles,
-        ),
       if (inactive.isNotEmpty)
         buildSection(
           context.l10n.fileTransferContactsSectionInactive,
@@ -448,6 +451,7 @@ class _FileTransferContactsScreenState
       contact: contact,
       transfers: transfers,
       onSendFile: () => _sendFileToContact(contact.nodeNum),
+      onSendImage: () => _sendImageToContact(contact.nodeNum),
     );
     ref.read(hapticServiceProvider).trigger(HapticType.light);
   }
@@ -465,6 +469,36 @@ class _FileTransferContactsScreenState
       showSuccessSnackBar(
         context,
         context.l10n.fileTransferContactsStarted(transfer.filename),
+      );
+    }
+  }
+
+  Future<void> _sendImageToContact(int nodeNum) async {
+    AppLogging.fileTransfer(
+      '_sendImageToContact: target=!${nodeNum.toRadixString(16)}',
+    );
+    final haptics = ref.read(hapticServiceProvider);
+    final notifier = ref.read(fileTransferStateProvider.notifier);
+
+    await haptics.trigger(HapticType.medium);
+    if (!mounted) return;
+
+    final transfer = await notifier.pickAndSendImage(targetNodeNum: nodeNum);
+    if (!mounted) return;
+    if (transfer != null) {
+      AppLogging.fileTransfer(
+        '_sendImageToContact: transfer started — '
+        'id=${transfer.fileIdHex}, file=${transfer.filename}, '
+        '${transfer.totalBytes} bytes, ${transfer.chunkCount} chunks',
+      );
+      showSuccessSnackBar(
+        context,
+        context.l10n.fileTransferContactsStarted(transfer.filename),
+      );
+    } else {
+      AppLogging.fileTransfer(
+        '_sendImageToContact: pickAndSendImage returned null for '
+        'node !${nodeNum.toRadixString(16)}',
       );
     }
   }
@@ -624,14 +658,17 @@ class _ContactTile extends StatelessWidget {
         decoration: !contact.isFavorite
             ? BoxDecoration(
                 color: context.card,
-                borderRadius: BorderRadius.circular(AppTheme.radius12),
-                border: Border.all(color: context.border),
+                borderRadius: BorderRadius.circular(AppTheme.radius16),
+                border: Border.all(
+                  color: context.border.withValues(alpha: 0.15),
+                  width: 0.5,
+                ),
               )
             : null,
         child: contact.isFavorite
             ? GradientBorderContainer(
-                borderRadius: 12,
-                borderWidth: 2,
+                borderRadius: 16,
+                borderWidth: 1,
                 accentOpacity: 1.0,
                 accentColor: AccentColors.yellow,
                 backgroundColor: context.card,
@@ -652,12 +689,14 @@ class _ContactDetailSheet extends StatelessWidget {
     required this.contact,
     required this.transfers,
     required this.onSendFile,
+    required this.onSendImage,
     required this.scrollController,
   });
 
   final _Contact contact;
   final List<FileTransferState> transfers;
   final VoidCallback onSendFile;
+  final VoidCallback onSendImage;
   final ScrollController scrollController;
 
   static void show({
@@ -665,6 +704,7 @@ class _ContactDetailSheet extends StatelessWidget {
     required _Contact contact,
     required List<FileTransferState> transfers,
     required VoidCallback onSendFile,
+    required VoidCallback onSendImage,
   }) {
     showModalBottomSheet<void>(
       context: context,
@@ -674,6 +714,7 @@ class _ContactDetailSheet extends StatelessWidget {
         initialChildSize: 0.5,
         minChildSize: 0.3,
         maxChildSize: 0.85,
+        expand: false,
         builder: (ctx, scrollController) {
           return Container(
             decoration: BoxDecoration(
@@ -688,6 +729,7 @@ class _ContactDetailSheet extends StatelessWidget {
               contact: contact,
               transfers: transfers,
               onSendFile: onSendFile,
+              onSendImage: onSendImage,
               scrollController: scrollController,
             ),
           );
@@ -829,16 +871,30 @@ class _ContactDetailSheet extends StatelessWidget {
 
                 const SizedBox(height: AppTheme.spacing16),
 
-                SizedBox(
-                  width: double.infinity,
-                  child: FilledButton.icon(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      onSendFile();
-                    },
-                    icon: const Icon(Icons.attach_file, size: 18),
-                    label: Text(context.l10n.fileTransferContactsSendFile),
-                  ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: FilledButton.icon(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          onSendFile();
+                        },
+                        icon: const Icon(Icons.attach_file, size: 18),
+                        label: Text(context.l10n.fileTransferContactsSendFile),
+                      ),
+                    ),
+                    const SizedBox(width: AppTheme.spacing8),
+                    Expanded(
+                      child: FilledButton.icon(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          onSendImage();
+                        },
+                        icon: const Icon(Icons.image_outlined, size: 18),
+                        label: Text(context.l10n.fileTransferContactsSendImage),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -883,7 +939,13 @@ class _ContactDetailSheet extends StatelessWidget {
                 transfer: t,
                 relativeTime: _relativeTime(ctx, t.completedAt ?? t.createdAt),
                 onTap: canPreview
-                    ? () => FileContentPreview.show(context: ctx, transfer: t)
+                    ? () {
+                        if (FileTransferImageGallery.canShow(t)) {
+                          FileTransferImageGallery.show(ctx, transfer: t);
+                        } else {
+                          FileContentPreview.show(context: ctx, transfer: t);
+                        }
+                      }
                     : null,
               );
             }, childCount: transfers.length),
@@ -1050,15 +1112,6 @@ class _CompactTransferRow extends StatelessWidget {
               ],
             ),
           ),
-          if (onTap != null)
-            Padding(
-              padding: const EdgeInsets.only(right: AppTheme.spacing6),
-              child: Icon(
-                Icons.visibility_outlined,
-                size: 13,
-                color: context.accentColor.withValues(alpha: 0.7),
-              ),
-            ),
           Icon(_stateIcon, size: 14, color: _stateColor(context)),
           const SizedBox(width: AppTheme.spacing6),
           Text(

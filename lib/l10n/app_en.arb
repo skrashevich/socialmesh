@@ -2356,6 +2356,22 @@
     "@automationActionIftttHint": {
         "description": "Hint text for the IFTTT event name input"
     },
+    "automationActionWebhookEventName": "Event Name",
+    "@automationActionWebhookEventName": {
+        "description": "Label for the webhook event name input in the automation action editor"
+    },
+    "automationActionWebhookUrlLabel": "Webhook URL (optional)",
+    "@automationActionWebhookUrlLabel": {
+        "description": "Label for the custom webhook URL input in the automation action editor"
+    },
+    "automationActionWebhookUrlHint": "e.g., http://192.168.1.100:8123/api/webhook/...",
+    "@automationActionWebhookUrlHint": {
+        "description": "Hint text for the custom webhook URL input"
+    },
+    "automationActionWebhookHelp": "Enter a custom URL to POST directly, or leave blank to use your global IFTTT/webhook settings. Private/LAN addresses (192.168.x, 10.x) are supported.",
+    "@automationActionWebhookHelp": {
+        "description": "Help text below the webhook URL field in the automation action editor"
+    },
     "automationActionLogEvent": "Log to history",
     "@automationActionLogEvent": {
         "description": "Display name for the logEvent action type"
@@ -2564,7 +2580,7 @@
     "@automationActionTriggerShortcut": {
         "description": "Display name for the triggerShortcut action type"
     },
-    "automationActionTriggerWebhook": "Trigger webhook (IFTTT)",
+    "automationActionTriggerWebhook": "Trigger webhook",
     "@automationActionTriggerWebhook": {
         "description": "Display name for the triggerWebhook action type"
     },
@@ -6332,6 +6348,28 @@
             }
         }
     },
+    "fileTransferCardChunksProgress": "{completed}/{total} chunks",
+    "@fileTransferCardChunksProgress": {
+        "description": "Chip label showing chunk transfer progress",
+        "placeholders": {
+            "completed": { "type": "String" },
+            "total": { "type": "String" }
+        }
+    },
+    "fileTransferCardChunksTotal": "{count} chunks",
+    "@fileTransferCardChunksTotal": {
+        "description": "Chip label showing total chunk count",
+        "placeholders": {
+            "count": { "type": "String" }
+        }
+    },
+    "fileTransferCardChunkSize": "{size} ea.",
+    "@fileTransferCardChunkSize": {
+        "description": "Chip label showing individual chunk size",
+        "placeholders": {
+            "size": { "type": "String" }
+        }
+    },
     "fileTransferBinaryFileHint": "Binary file — save to open with an external app",
     "@fileTransferBinaryFileHint": {
         "description": "Description shown for binary/hex file preview"
@@ -6495,6 +6533,10 @@
     "@fileTransferContactsSendFile": {
         "description": "Action button in detail sheet"
     },
+    "fileTransferContactsSendImage": "Send Image",
+    "@fileTransferContactsSendImage": {
+        "description": "Action button for sending an image in detail sheet"
+    },
     "fileTransferContactsStarted": "Transfer started: {filename}",
     "@fileTransferContactsStarted": {
         "description": "Success snackbar (interpolated)",
@@ -6525,6 +6567,10 @@
             }
         }
     },
+    "fileTransferContainerMenuHelp": "Help",
+    "@fileTransferContainerMenuHelp": {
+        "description": "Overflow menu item for help tour"
+    },
     "fileTransferContainerPurgeExpired": "Purge Expired",
     "@fileTransferContainerPurgeExpired": {
         "description": "Overflow menu item"
@@ -6536,6 +6582,10 @@
     "fileTransferContainerSendFile": "Send File",
     "@fileTransferContainerSendFile": {
         "description": "Overflow menu item"
+    },
+    "fileTransferContainerSendImage": "Send Image",
+    "@fileTransferContainerSendImage": {
+        "description": "Overflow menu item for sending an image"
     },
     "fileTransferContainerSendToNode": "Send to Node",
     "@fileTransferContainerSendToNode": {
@@ -6693,6 +6743,58 @@
     "@fileTransferImageDecodeError": {
         "description": "Error placeholder when image cannot be decoded"
     },
+    "fileTransferImagePickerTitle": "Send Image",
+    "@fileTransferImagePickerTitle": {
+        "description": "Title for image picker bottom sheet"
+    },
+    "fileTransferImagePickerCamera": "Take Photo",
+    "@fileTransferImagePickerCamera": {
+        "description": "Camera option in image picker sheet"
+    },
+    "fileTransferImagePickerCameraSubtitle": "Use camera to take a photo",
+    "@fileTransferImagePickerCameraSubtitle": {
+        "description": "Camera option subtitle"
+    },
+    "fileTransferImagePickerGallery": "Choose from Gallery",
+    "@fileTransferImagePickerGallery": {
+        "description": "Gallery option in image picker sheet"
+    },
+    "fileTransferImagePickerGallerySubtitle": "Select a photo from your library",
+    "@fileTransferImagePickerGallerySubtitle": {
+        "description": "Gallery option subtitle"
+    },
+    "fileTransferImagePickerCancel": "Cancel",
+    "@fileTransferImagePickerCancel": {
+        "description": "Cancel button in image picker sheet"
+    },
+    "fileTransferImageCompressing": "Compressing image for mesh transfer...",
+    "@fileTransferImageCompressing": {
+        "description": "Snackbar shown while compressing image"
+    },
+    "fileTransferImageTooLargeAfterCompression": "Image could not be compressed to fit within {limit} KB mesh limit.",
+    "@fileTransferImageTooLargeAfterCompression": {
+        "description": "Error when image cannot be compressed enough",
+        "placeholders": {
+            "limit": {
+                "type": "String"
+            }
+        }
+    },
+    "fileTransferImageCompressed": "Image compressed to {size} bytes ({width}x{height})",
+    "@fileTransferImageCompressed": {
+        "description": "Info snackbar after successful compression",
+        "placeholders": {
+            "size": {
+                "type": "String"
+            },
+            "width": {
+                "type": "String"
+            },
+            "height": {
+                "type": "String"
+            }
+        }
+    },
     "fileTransferInfoChunkSize": "Chunk Size",
     "@fileTransferInfoChunkSize": {
         "description": "Info sheet row label"
@@ -6773,6 +6875,87 @@
     "fileTransferPinchToZoom": "Pinch to zoom",
     "@fileTransferPinchToZoom": {
         "description": "Hint text below image viewer"
+    },
+    "fileTransferGalleryToNode": "to {name}",
+    "@fileTransferGalleryToNode": {
+        "description": "Subtitle in gallery overlay showing outbound target node",
+        "placeholders": {
+            "name": { "type": "String" }
+        }
+    },
+    "fileTransferGalleryFromNode": "from {name}",
+    "@fileTransferGalleryFromNode": {
+        "description": "Subtitle in gallery overlay showing inbound source node",
+        "placeholders": {
+            "name": { "type": "String" }
+        }
+    },
+    "fileTransferGallerySentBadge": "Sent",
+    "@fileTransferGallerySentBadge": {
+        "description": "Direction badge in gallery overlay for outbound transfer"
+    },
+    "fileTransferGalleryReceivedBadge": "Received",
+    "@fileTransferGalleryReceivedBadge": {
+        "description": "Direction badge in gallery overlay for inbound transfer"
+    },
+    "fileTransferGallerySizeBadge": "{size}",
+    "@fileTransferGallerySizeBadge": {
+        "description": "File size badge in gallery overlay",
+        "placeholders": {
+            "size": { "type": "String" }
+        }
+    },
+    "fileTransferGalleryChunksBadge": "{completed}/{total} chunks",
+    "@fileTransferGalleryChunksBadge": {
+        "description": "Chunk progress badge in gallery overlay",
+        "placeholders": {
+            "completed": { "type": "String" },
+            "total": { "type": "String" }
+        }
+    },
+    "fileTransferGalleryDurationBadge": "{duration}",
+    "@fileTransferGalleryDurationBadge": {
+        "description": "Transfer duration badge in gallery overlay",
+        "placeholders": {
+            "duration": { "type": "String" }
+        }
+    },
+    "fileTransferGalleryHashBadge": "SHA-256 {hash}",
+    "@fileTransferGalleryHashBadge": {
+        "description": "Truncated SHA-256 hash badge in gallery overlay",
+        "placeholders": {
+            "hash": { "type": "String" }
+        }
+    },
+    "fileTransferGalleryViewDetails": "Details",
+    "@fileTransferGalleryViewDetails": {
+        "description": "Button in gallery overlay to open the info sheet"
+    },
+    "fileTransferGalleryMeshTransfer": "Mesh Transfer",
+    "@fileTransferGalleryMeshTransfer": {
+        "description": "Label in gallery overlay indicating LoRa mesh origin"
+    },
+    "fileTransferGalleryDurationSeconds": "{count}s",
+    "@fileTransferGalleryDurationSeconds": {
+        "description": "Transfer duration formatted in seconds",
+        "placeholders": {
+            "count": { "type": "int" }
+        }
+    },
+    "fileTransferGalleryDurationMinutes": "{count}m",
+    "@fileTransferGalleryDurationMinutes": {
+        "description": "Transfer duration formatted in minutes",
+        "placeholders": {
+            "count": { "type": "int" }
+        }
+    },
+    "fileTransferGalleryDurationHours": "{hours}h {minutes}m",
+    "@fileTransferGalleryDurationHours": {
+        "description": "Transfer duration formatted in hours and minutes",
+        "placeholders": {
+            "hours": { "type": "int" },
+            "minutes": { "type": "int" }
+        }
     },
     "fileTransferPurgeExpired": "Purge Expired",
     "@fileTransferPurgeExpired": {
@@ -29806,6 +29989,358 @@
     "@appearanceLanguageRussian": {
         "description": "Text displayed in appearance settings"
     },
+    "appearanceLanguagePortuguese": "Portuguese",
+    "@appearanceLanguagePortuguese": {
+        "description": "Text displayed in appearance settings"
+    },
+    "helpCategoryGettingStarted": "Getting Started",
+    "@helpCategoryGettingStarted": {
+        "description": "Visual flow / help l10n"
+    },
+    "helpCategoryMeshBasics": "Mesh Basics",
+    "@helpCategoryMeshBasics": {
+        "description": "Visual flow / help l10n"
+    },
+    "helpCategoryChannels": "Channels & Encryption",
+    "@helpCategoryChannels": {
+        "description": "Visual flow / help l10n"
+    },
+    "helpCategoryMessaging": "Messaging",
+    "@helpCategoryMessaging": {
+        "description": "Visual flow / help l10n"
+    },
+    "helpCategoryNodes": "Nodes & Roles",
+    "@helpCategoryNodes": {
+        "description": "Visual flow / help l10n"
+    },
+    "helpCategoryDevice": "Device & Radio",
+    "@helpCategoryDevice": {
+        "description": "Visual flow / help l10n"
+    },
+    "helpCategoryNetwork": "Network & Maps",
+    "@helpCategoryNetwork": {
+        "description": "Visual flow / help l10n"
+    },
+    "helpCategorySafety": "Safety & Rules",
+    "@helpCategorySafety": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowNodeNodeOnline": "Node Online",
+    "@flowNodeNodeOnline": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowNodeNodeOffline": "Node Offline",
+    "@flowNodeNodeOffline": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowNodeBatteryLow": "Battery Low",
+    "@flowNodeBatteryLow": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowNodeBatteryFull": "Battery Full",
+    "@flowNodeBatteryFull": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowNodeMessageReceived": "Message Received",
+    "@flowNodeMessageReceived": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowNodePositionChanged": "Position Changed",
+    "@flowNodePositionChanged": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowNodeGeofenceEnter": "Geofence Enter",
+    "@flowNodeGeofenceEnter": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowNodeGeofenceExit": "Geofence Exit",
+    "@flowNodeGeofenceExit": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowNodeSendMessage": "Send Message",
+    "@flowNodeSendMessage": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowNodePlaySound": "Play Sound",
+    "@flowNodePlaySound": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowNodeVibrate": "Vibrate",
+    "@flowNodeVibrate": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowNodePushNotification": "Push Notification",
+    "@flowNodePushNotification": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowNodeTriggerWebhook": "Trigger Webhook",
+    "@flowNodeTriggerWebhook": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowNodeLogEvent": "Log Event",
+    "@flowNodeLogEvent": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowNodeUpdateWidget": "Update Widget",
+    "@flowNodeUpdateWidget": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowNodeSendToChannel": "Send to Channel",
+    "@flowNodeSendToChannel": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowNodeTriggerShortcut": "Trigger Shortcut",
+    "@flowNodeTriggerShortcut": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowNodeGlyphPattern": "Glyph Pattern",
+    "@flowNodeGlyphPattern": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowNodeTimeRange": "Time Range",
+    "@flowNodeTimeRange": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowNodeDayOfWeek": "Day of Week",
+    "@flowNodeDayOfWeek": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowNodeBatteryAbove": "Battery Above",
+    "@flowNodeBatteryAbove": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowNodeBatteryBelow": "Battery Below",
+    "@flowNodeBatteryBelow": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowNodeNodeIsOnline": "Node Is Online",
+    "@flowNodeNodeIsOnline": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowNodeNodeIsOffline": "Node Is Offline",
+    "@flowNodeNodeIsOffline": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowNodeWithinGeofence": "Within Geofence",
+    "@flowNodeWithinGeofence": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowNodeOutsideGeofence": "Outside Geofence",
+    "@flowNodeOutsideGeofence": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowNodeGateAllMustPass": "All inputs must pass",
+    "@flowNodeGateAllMustPass": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowNodeGateAnyCanPass": "Any input can pass",
+    "@flowNodeGateAnyCanPass": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowNodeGateInverts": "Inverts the signal",
+    "@flowNodeGateInverts": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowNodeGateDelays": "Delays the signal",
+    "@flowNodeGateDelays": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowSubgroupTriggers": "Triggers",
+    "@flowSubgroupTriggers": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowSubgroupConditions": "Conditions",
+    "@flowSubgroupConditions": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowSubgroupLogic": "Logic",
+    "@flowSubgroupLogic": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowSubgroupActions": "Actions",
+    "@flowSubgroupActions": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowSubgroupNodeDex": "NodeDex",
+    "@flowSubgroupNodeDex": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowCompilerVisualFlow": "Visual Flow",
+    "@flowCompilerVisualFlow": {
+        "description": "Visual flow / help l10n"
+    },
+    "flowCompilerWhen": "When: {trigger}",
+    "@flowCompilerWhen": {
+        "description": "Visual flow / help l10n",
+        "placeholders": {"trigger": {"type": "String"}}
+    },
+    "flowCompilerIf": "If: {conditions}",
+    "@flowCompilerIf": {
+        "description": "Visual flow / help l10n",
+        "placeholders": {"conditions": {"type": "String"}}
+    },
+    "flowCompilerAfterDelay": "After: {delay} delay",
+    "@flowCompilerAfterDelay": {
+        "description": "Visual flow / help l10n",
+        "placeholders": {"delay": {"type": "String"}}
+    },
+    "flowCompilerThen": "Then: {actions}",
+    "@flowCompilerThen": {
+        "description": "Visual flow / help l10n",
+        "placeholders": {"actions": {"type": "String"}}
+    },
+    "glyphZoneA": "Zone A",
+    "@glyphZoneA": {
+        "description": "Visual flow / help l10n"
+    },
+    "glyphZoneB": "Zone B",
+    "@glyphZoneB": {
+        "description": "Visual flow / help l10n"
+    },
+    "glyphZoneC": "Zone C",
+    "@glyphZoneC": {
+        "description": "Visual flow / help l10n"
+    },
+    "glyphZoneD": "Zone D",
+    "@glyphZoneD": {
+        "description": "Visual flow / help l10n"
+    },
+    "glyphZoneE": "Zone E",
+    "@glyphZoneE": {
+        "description": "Visual flow / help l10n"
+    },
+    "glyphZoneDescCamera": "Camera",
+    "@glyphZoneDescCamera": {
+        "description": "Visual flow / help l10n"
+    },
+    "glyphZoneDescDiagonal": "Diagonal Strip",
+    "@glyphZoneDescDiagonal": {
+        "description": "Visual flow / help l10n"
+    },
+    "glyphZoneDescUsbc": "USB-C Port",
+    "@glyphZoneDescUsbc": {
+        "description": "Visual flow / help l10n"
+    },
+    "glyphZoneDescLower": "Lower Strip",
+    "@glyphZoneDescLower": {
+        "description": "Visual flow / help l10n"
+    },
+    "glyphZoneDescBattery": "Battery",
+    "@glyphZoneDescBattery": {
+        "description": "Visual flow / help l10n"
+    },
+    "appearanceFontBranded": "Branded",
+    "@appearanceFontBranded": {
+        "description": "Text displayed in appearance settings"
+    },
+    "appearanceFontBrandedDesc": "JetBrainsMono - Our signature monospace font",
+    "@appearanceFontBrandedDesc": {
+        "description": "Text displayed in appearance settings"
+    },
+    "appearanceFontSystem": "System",
+    "@appearanceFontSystem": {
+        "description": "Text displayed in appearance settings"
+    },
+    "appearanceFontSystemDesc": "Your device\u2019s default font",
+    "@appearanceFontSystemDesc": {
+        "description": "Text displayed in appearance settings"
+    },
+    "appearanceFontAccessibility": "Accessibility",
+    "@appearanceFontAccessibility": {
+        "description": "Text displayed in appearance settings"
+    },
+    "appearanceFontAccessibilityDesc": "Inter - Optimized for readability",
+    "@appearanceFontAccessibilityDesc": {
+        "description": "Text displayed in appearance settings"
+    },
+    "appearanceTextScaleSystem": "System Default",
+    "@appearanceTextScaleSystem": {
+        "description": "Text displayed in appearance settings"
+    },
+    "appearanceTextScaleSystemDesc": "Follows your device accessibility settings",
+    "@appearanceTextScaleSystemDesc": {
+        "description": "Text displayed in appearance settings"
+    },
+    "appearanceTextScaleDefault": "Default",
+    "@appearanceTextScaleDefault": {
+        "description": "Text displayed in appearance settings"
+    },
+    "appearanceTextScaleDefaultDesc": "Fixed size, ignores device settings",
+    "@appearanceTextScaleDefaultDesc": {
+        "description": "Text displayed in appearance settings"
+    },
+    "appearanceTextScaleLarge": "Large",
+    "@appearanceTextScaleLarge": {
+        "description": "Text displayed in appearance settings"
+    },
+    "appearanceTextScaleLargeDesc": "15% larger than default",
+    "@appearanceTextScaleLargeDesc": {
+        "description": "Text displayed in appearance settings"
+    },
+    "appearanceTextScaleExtraLarge": "Extra Large",
+    "@appearanceTextScaleExtraLarge": {
+        "description": "Text displayed in appearance settings"
+    },
+    "appearanceTextScaleExtraLargeDesc": "30% larger than default",
+    "@appearanceTextScaleExtraLargeDesc": {
+        "description": "Text displayed in appearance settings"
+    },
+    "appearanceDensityCompact": "Compact",
+    "@appearanceDensityCompact": {
+        "description": "Text displayed in appearance settings"
+    },
+    "appearanceDensityCompactDesc": "Denser UI, more content visible",
+    "@appearanceDensityCompactDesc": {
+        "description": "Text displayed in appearance settings"
+    },
+    "appearanceDensityComfortable": "Comfortable",
+    "@appearanceDensityComfortable": {
+        "description": "Text displayed in appearance settings"
+    },
+    "appearanceDensityComfortableDesc": "Balanced spacing (default)",
+    "@appearanceDensityComfortableDesc": {
+        "description": "Text displayed in appearance settings"
+    },
+    "appearanceDensityLargeTouch": "Large Touch",
+    "@appearanceDensityLargeTouch": {
+        "description": "Text displayed in appearance settings"
+    },
+    "appearanceDensityLargeTouchDesc": "Bigger tap targets, easier to use",
+    "@appearanceDensityLargeTouchDesc": {
+        "description": "Text displayed in appearance settings"
+    },
+    "appearanceContrastNormal": "Normal",
+    "@appearanceContrastNormal": {
+        "description": "Text displayed in appearance settings"
+    },
+    "appearanceContrastNormalDesc": "Standard color contrast",
+    "@appearanceContrastNormalDesc": {
+        "description": "Text displayed in appearance settings"
+    },
+    "appearanceContrastHigh": "High Contrast",
+    "@appearanceContrastHigh": {
+        "description": "Text displayed in appearance settings"
+    },
+    "appearanceContrastHighDesc": "Enhanced visibility for text and UI",
+    "@appearanceContrastHighDesc": {
+        "description": "Text displayed in appearance settings"
+    },
+    "appearanceMotionNormal": "Normal",
+    "@appearanceMotionNormal": {
+        "description": "Text displayed in appearance settings"
+    },
+    "appearanceMotionNormalDesc": "All animations enabled",
+    "@appearanceMotionNormalDesc": {
+        "description": "Text displayed in appearance settings"
+    },
+    "appearanceMotionReduced": "Reduced",
+    "@appearanceMotionReduced": {
+        "description": "Text displayed in appearance settings"
+    },
+    "appearanceMotionReducedDesc": "Minimal animations for accessibility",
+    "@appearanceMotionReducedDesc": {
+        "description": "Text displayed in appearance settings"
+    },
     "appearanceFont": "Font",
     "@appearanceFont": {
         "description": "Text displayed in appearance settings"
@@ -33423,7 +33958,7 @@
     "@extNotifLoadFailed": {
         "description": "Error message shown to the user"
     },
-    "iftttConfigTitle": "IFTTT Integration",
+    "iftttConfigTitle": "Webhooks",
     "@iftttConfigTitle": {
         "description": "Screen or section title"
     },
@@ -33467,11 +34002,11 @@
     "@iftttConfigSectionGeofencing": {
         "description": "UI text: ifttt config section geofencing"
     },
-    "iftttConfigEnable": "Enable IFTTT",
+    "iftttConfigEnable": "Enable Webhooks",
     "@iftttConfigEnable": {
         "description": "UI text: ifttt config enable"
     },
-    "iftttConfigEnableSubtitle": "Send events to IFTTT Webhooks service",
+    "iftttConfigEnableSubtitle": "Send events to IFTTT or a custom webhook URL",
     "@iftttConfigEnableSubtitle": {
         "description": "Subtitle or secondary text"
     },
@@ -33479,7 +34014,7 @@
     "@iftttConfigDataSharingTitle": {
         "description": "Screen or section title"
     },
-    "iftttConfigDataSharingMsg": "When IFTTT Webhooks are enabled, mesh event data (messages, node status, positions, battery levels) will be sent to IFTTT servers via your personal webhook key.\n\nIFTTT is a third-party service with its own privacy policy. Only the event types you select will be transmitted.",
+    "iftttConfigDataSharingMsg": "When webhooks are enabled, mesh event data (messages, node status, positions, battery levels) will be sent to the configured endpoint (IFTTT or your custom URL).\n\nIf using IFTTT, it is a third-party service with its own privacy policy. Only the event types you select will be transmitted.",
     "@iftttConfigDataSharingMsg": {
         "description": "UI text: ifttt config data sharing msg"
     },
@@ -33515,11 +34050,11 @@
     "@iftttConfigEnterKeyFirst": {
         "description": "UI text: ifttt config enter key first"
     },
-    "iftttConfigTestSuccess": "Test webhook sent! Check your IFTTT applet.",
+    "iftttConfigTestSuccess": "Test webhook sent! Check your endpoint.",
     "@iftttConfigTestSuccess": {
         "description": "Success notification"
     },
-    "iftttConfigTestFailed": "Failed to send test webhook. Check your key.",
+    "iftttConfigTestFailed": "Failed to send test webhook. Check your configuration.",
     "@iftttConfigTestFailed": {
         "description": "Error message shown to the user"
     },
@@ -33699,9 +34234,37 @@
     "@iftttConfigSaved": {
         "description": "UI text: ifttt config saved"
     },
-    "iftttConfigSaveFailed": "Failed to save IFTTT settings",
+    "iftttConfigSaveFailed": "Failed to save webhook settings",
     "@iftttConfigSaveFailed": {
         "description": "Error message shown to the user"
+    },
+    "webhookModeIfttt": "IFTTT Key",
+    "@webhookModeIfttt": {
+        "description": "Label for the IFTTT webhook mode selector chip"
+    },
+    "webhookModeCustomUrl": "Custom URL",
+    "@webhookModeCustomUrl": {
+        "description": "Label for the custom webhook URL mode selector chip"
+    },
+    "webhookConfigCustomUrlLabel": "Webhook URL",
+    "@webhookConfigCustomUrlLabel": {
+        "description": "Label for the custom webhook URL text field"
+    },
+    "webhookConfigCustomUrlHint": "http://192.168.1.100:8123/api/webhook/...",
+    "@webhookConfigCustomUrlHint": {
+        "description": "Hint text for the custom webhook URL text field"
+    },
+    "webhookConfigCustomUrlHelper": "POST JSON to any HTTP/HTTPS endpoint. LAN addresses supported.",
+    "@webhookConfigCustomUrlHelper": {
+        "description": "Helper text below the custom webhook URL text field"
+    },
+    "webhookConfigEnterUrlToEnable": "Please enter a webhook URL to enable",
+    "@webhookConfigEnterUrlToEnable": {
+        "description": "Error message when enabling custom URL mode without a URL"
+    },
+    "webhookConfigEnterUrlFirst": "Please enter a webhook URL first",
+    "@webhookConfigEnterUrlFirst": {
+        "description": "Error message when testing without a URL in custom URL mode"
     },
     "mqttConfigTitle": "MQTT",
     "@mqttConfigTitle": {
@@ -38878,7 +39441,7 @@
     "@automationErrorNoWebhookEvent": {
         "description": "Error message in automations"
     },
-    "automationErrorIftttNotConfigured": "IFTTT not configured — enable IFTTT and set webhook key in settings",
+    "automationErrorIftttNotConfigured": "Webhooks not configured — enable webhooks and set an IFTTT key or custom URL in settings",
     "@automationErrorIftttNotConfigured": {
         "description": "Error message in automations"
     },
@@ -39618,5 +40181,232 @@
     "@commandErrorConnectDevice": {
         "description": "Error message when a command requires a connected mesh device."
     },
-    "commandErrorConnectDevice": "Connect your device to use this feature"
+    "commandErrorConnectDevice": "Connect your device to use this feature",
+
+    "sipBadgeLabel": "Socialmesh",
+    "@sipBadgeLabel": {
+        "description": "Badge label shown on NodeDex entries for SIP-capable peers."
+    },
+    "sipIdentityStateUnverified": "Unverified",
+    "@sipIdentityStateUnverified": {
+        "description": "SIP identity state label when no verified claim has been received."
+    },
+    "sipIdentityStateVerifiedTofu": "Verified (TOFU)",
+    "@sipIdentityStateVerifiedTofu": {
+        "description": "SIP identity state label when the first identity claim was accepted on trust-on-first-use."
+    },
+    "sipIdentityStatePinned": "Pinned",
+    "@sipIdentityStatePinned": {
+        "description": "SIP identity state label when the user has explicitly pinned this identity."
+    },
+    "sipIdentityStateChangedKey": "Key Changed",
+    "@sipIdentityStateChangedKey": {
+        "description": "SIP identity state label when the peer presented a different public key. Requires user action."
+    },
+    "sipIdentityStateStale": "Expired",
+    "@sipIdentityStateStale": {
+        "description": "SIP identity state label when the identity claim TTL has expired."
+    },
+    "sipChangedKeyWarning": "This peer's identity key has changed. Verify before trusting.",
+    "@sipChangedKeyWarning": {
+        "description": "Warning message shown when a SIP peer's public key has changed unexpectedly."
+    },
+    "sipDisplayNameLabel": "SIP Name",
+    "@sipDisplayNameLabel": {
+        "description": "Label for the SIP-advertised display name in NodeDex detail."
+    },
+    "sipPersonaIdLabel": "Persona ID",
+    "@sipPersonaIdLabel": {
+        "description": "Label for the persona ID field in NodeDex detail for SIP peers."
+    },
+    "sipDiscoveryTitle": "Socialmesh Discovery",
+    "@sipDiscoveryTitle": {
+        "description": "Title for the SIP discovery bottom sheet."
+    },
+    "sipDiscoveryPeersNearby": "{count} Socialmesh {count, plural, =1{peer} other{peers}} nearby",
+    "@sipDiscoveryPeersNearby": {
+        "description": "Label showing how many SIP peers are nearby.",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "sipDiscoveryNoPeers": "No Socialmesh peers detected",
+    "@sipDiscoveryNoPeers": {
+        "description": "Empty state text when no Socialmesh peers are found."
+    },
+    "sipDiscoveryNoPeersDescription": "Socialmesh peers will appear here when detected via beacon or rollcall.",
+    "@sipDiscoveryNoPeersDescription": {
+        "description": "Description for the empty state in Socialmesh discovery."
+    },
+    "sipDiscoveryScanButton": "Scan for Socialmesh",
+    "@sipDiscoveryScanButton": {
+        "description": "Button to trigger a Socialmesh rollcall scan."
+    },
+    "sipDiscoveryScanCooldown": "Scan available in {seconds}s",
+    "@sipDiscoveryScanCooldown": {
+        "description": "Label shown when scan is on cooldown.",
+        "placeholders": {
+            "seconds": {
+                "type": "int"
+            }
+        }
+    },
+    "sipDiscoveryPeerAnonymous": "SIP Peer",
+    "@sipDiscoveryPeerAnonymous": {
+        "description": "Fallback label for a SIP peer before identity exchange."
+    },
+    "sipDiscoveryDeviceClass": "Device class: {deviceClass}",
+    "@sipDiscoveryDeviceClass": {
+        "description": "Device class label in peer detail.",
+        "placeholders": {
+            "deviceClass": {
+                "type": "String"
+            }
+        }
+    },
+    "sipHandshakeAction": "Handshake",
+    "@sipHandshakeAction": {
+        "description": "Button label to initiate a SIP handshake with a peer."
+    },
+    "sipHandshakeInProgress": "Handshake in progress…",
+    "@sipHandshakeInProgress": {
+        "description": "Status text while handshake is ongoing."
+    },
+    "sipHandshakeComplete": "Handshake complete",
+    "@sipHandshakeComplete": {
+        "description": "Status text when handshake completes successfully."
+    },
+    "sipHandshakeFailed": "Handshake failed",
+    "@sipHandshakeFailed": {
+        "description": "Status text when handshake fails."
+    },
+    "sipRequestIdentity": "Request Identity",
+    "@sipRequestIdentity": {
+        "description": "Button label to request identity from a SIP peer."
+    },
+    "sipShareIdentity": "Share Identity",
+    "@sipShareIdentity": {
+        "description": "Button label to share identity with a SIP peer."
+    },
+    "sipDmTitle": "Ephemeral DM",
+    "@sipDmTitle": {
+        "description": "Title for the SIP ephemeral DM screen."
+    },
+    "sipDmExpiry": "Expires in {time}",
+    "@sipDmExpiry": {
+        "description": "Label showing session time remaining.",
+        "placeholders": {
+            "time": {
+                "type": "String"
+            }
+        }
+    },
+    "sipDmPinned": "Session pinned",
+    "@sipDmPinned": {
+        "description": "Label when a DM session is pinned."
+    },
+    "sipDmInputHint": "Message…",
+    "@sipDmInputHint": {
+        "description": "Hint text for the DM message input field."
+    },
+    "sipDmSendButton": "Send",
+    "@sipDmSendButton": {
+        "description": "Tooltip for the DM send button."
+    },
+    "sipDmEmptyState": "No messages yet",
+    "@sipDmEmptyState": {
+        "description": "Empty state text when no messages in DM thread."
+    },
+    "sipDmEmptyDescription": "Send a message to start the conversation.",
+    "@sipDmEmptyDescription": {
+        "description": "Description for the DM empty state."
+    },
+    "sipDmBudgetExhausted": "Airtime budget exhausted. Try again later.",
+    "@sipDmBudgetExhausted": {
+        "description": "Error when DM send fails due to rate limiting."
+    },
+    "sipDmSessionClosed": "This session has been closed.",
+    "@sipDmSessionClosed": {
+        "description": "Message when trying to send on a closed session."
+    },
+    "sipDmPinAction": "Pin Session",
+    "@sipDmPinAction": {
+        "description": "Action to pin a DM session to prevent expiry."
+    },
+    "sipDmUnpinAction": "Unpin Session",
+    "@sipDmUnpinAction": {
+        "description": "Action to unpin a DM session."
+    },
+    "sipDmCloseAction": "Close Session",
+    "@sipDmCloseAction": {
+        "description": "Action to close a DM session."
+    },
+    "sipDmOpenAction": "Open DM",
+    "@sipDmOpenAction": {
+        "description": "Button label to open an ephemeral DM with a peer."
+    },
+    "sipPeerDetailTitle": "Peer Details",
+    "@sipPeerDetailTitle": {
+        "description": "Title for the SIP peer detail bottom sheet."
+    },
+    "sipPeerDetailNodeId": "Node ID",
+    "@sipPeerDetailNodeId": {
+        "description": "Label for the peer's mesh node identifier."
+    },
+    "sipPeerDetailDeviceClass": "Device Class",
+    "@sipPeerDetailDeviceClass": {
+        "description": "Label for the peer's device class."
+    },
+    "sipPeerDetailFeatures": "Features",
+    "@sipPeerDetailFeatures": {
+        "description": "Label for the peer's SIP feature bitmap."
+    },
+    "sipPeerDetailMtu": "MTU Hint",
+    "@sipPeerDetailMtu": {
+        "description": "Label for the peer's advertised MTU hint."
+    },
+    "sipPeerDetailLastSeen": "Last Seen",
+    "@sipPeerDetailLastSeen": {
+        "description": "Label for when the peer was last seen."
+    },
+    "sipPeerDetailJustNow": "Just now",
+    "@sipPeerDetailJustNow": {
+        "description": "Text shown when a peer was seen very recently."
+    },
+    "sipPeerDetailMinutesAgo": "{count} {count, plural, =1{minute} other{minutes}} ago",
+    "@sipPeerDetailMinutesAgo": {
+        "description": "Text shown for how many minutes ago a peer was last seen.",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "sipPeerDetailHoursAgo": "{count} {count, plural, =1{hour} other{hours}} ago",
+    "@sipPeerDetailHoursAgo": {
+        "description": "Text shown for how many hours ago a peer was last seen.",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "sipPeerDetailSupportsSip1": "Identity & Handshake",
+    "@sipPeerDetailSupportsSip1": {
+        "description": "Label indicating the peer supports SIP-1."
+    },
+    "sipPeerDetailSupportsSip3": "Micro-Exchange",
+    "@sipPeerDetailSupportsSip3": {
+        "description": "Label indicating the peer supports SIP-3."
+    },
+    "sipPeerDetailCapabilities": "Capabilities",
+    "@sipPeerDetailCapabilities": {
+        "description": "Section header for peer capabilities."
+    },
+    "sipCountersTitle": "SIP Debug Counters",
+    "@sipCountersTitle": {
+        "description": "Title for the SIP debug counters screen."
+    }
 }

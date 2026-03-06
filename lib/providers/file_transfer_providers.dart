@@ -2,10 +2,12 @@
 
 import 'dart:async';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image/image.dart' as img;
+import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 
@@ -354,6 +356,155 @@ class FileTransferStateNotifier extends Notifier<FileTransferListState> {
     );
   }
 
+  /// Pick an image from gallery and compress it to fit within mesh limits.
+  ///
+  /// Uses [ImagePicker] for initial selection with aggressive initial
+  /// compression, then iteratively re-encodes with the `image` package
+  /// until the result fits within [SmFileTransferLimits.maxFileSize].
+  Future<FileTransferState?> pickAndSendImage({
+    int? targetNodeNum,
+    FileTransportMode transportMode = FileTransportMode.auto,
+  }) async {
+    AppLogging.fileTransfer(
+      'pickAndSendImage: initiated '
+      '(target=${targetNodeNum != null ? "!${targetNodeNum.toRadixString(16)}" : "none"})',
+    );
+    final imagePicker = ImagePicker();
+    final pickedFile = await imagePicker.pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 160,
+      maxHeight: 160,
+      imageQuality: 50,
+    );
+
+    if (pickedFile == null) {
+      AppLogging.fileTransfer('pickAndSendImage: user cancelled selection');
+      return null;
+    }
+
+    AppLogging.fileTransfer(
+      'pickAndSendImage: picked "${pickedFile.name}" '
+      'path=${pickedFile.path}',
+    );
+
+    Uint8List bytes = await File(pickedFile.path).readAsBytes();
+    final initialSize = bytes.length;
+    AppLogging.fileTransfer(
+      'pickAndSendImage: initial size $initialSize bytes '
+      '(limit=${SmFileTransferLimits.maxFileSize})',
+    );
+
+    // Iteratively compress if still too large.
+    if (bytes.length > SmFileTransferLimits.maxFileSize) {
+      AppLogging.fileTransfer(
+        'pickAndSendImage: $initialSize > max, starting iterative '
+        'compression',
+      );
+      final compressed = await _compressImageToFit(bytes);
+      if (compressed != null) {
+        bytes = compressed;
+        AppLogging.fileTransfer(
+          'pickAndSendImage: compressed $initialSize -> ${bytes.length} bytes',
+        );
+      } else {
+        AppLogging.fileTransfer(
+          'pickAndSendImage: compression returned null — all attempts failed',
+        );
+      }
+    }
+
+    if (bytes.isEmpty || bytes.length > SmFileTransferLimits.maxFileSize) {
+      AppLogging.fileTransfer(
+        'pickAndSendImage REJECTED: final size ${bytes.length} exceeds '
+        'max ${SmFileTransferLimits.maxFileSize}',
+      );
+      return null;
+    }
+
+    // Generate a short filename — ImagePicker temp names can exceed
+    // SmFileTransferLimits.maxFilenameBytes (64 bytes).
+    final filename = 'img_${DateTime.now().millisecondsSinceEpoch}.jpg';
+
+    AppLogging.fileTransfer(
+      'pickAndSendImage: sending "$filename" (${bytes.length} bytes) '
+      'to target=${targetNodeNum != null ? "!${targetNodeNum.toRadixString(16)}" : "none"}',
+    );
+
+    return sendFile(
+      filename: filename,
+      mimeType: 'image/jpeg',
+      fileBytes: bytes,
+      targetNodeNum: targetNodeNum,
+      transportMode: transportMode,
+    );
+  }
+
+  /// Iteratively resize and re-encode as JPEG to fit mesh transfer limits.
+  static Future<Uint8List?> _compressImageToFit(Uint8List sourceBytes) async {
+    AppLogging.fileTransfer(
+      '_compressImageToFit: input ${sourceBytes.length} bytes',
+    );
+    const attempts = [
+      (maxDim: 128, quality: 40),
+      (maxDim: 96, quality: 35),
+      (maxDim: 80, quality: 30),
+      (maxDim: 64, quality: 25),
+      (maxDim: 48, quality: 20),
+      (maxDim: 32, quality: 15),
+    ];
+
+    for (final attempt in attempts) {
+      AppLogging.fileTransfer(
+        '_compressImageToFit: trying maxDim=${attempt.maxDim}, '
+        'quality=${attempt.quality}',
+      );
+      final compressed = await compute(
+        _resizeAndEncodeJpeg,
+        _CompressArgs(
+          imageBytes: sourceBytes,
+          maxDim: attempt.maxDim,
+          quality: attempt.quality,
+        ),
+      );
+      if (compressed != null) {
+        AppLogging.fileTransfer(
+          '_compressImageToFit: result ${compressed.length} bytes '
+          '(limit=${SmFileTransferLimits.maxFileSize})',
+        );
+        if (compressed.length <= SmFileTransferLimits.maxFileSize) {
+          AppLogging.fileTransfer(
+            '_compressImageToFit: SUCCESS at maxDim=${attempt.maxDim}, '
+            'quality=${attempt.quality}',
+          );
+          return compressed;
+        }
+      } else {
+        AppLogging.fileTransfer(
+          '_compressImageToFit: encode returned null at '
+          'maxDim=${attempt.maxDim}',
+        );
+      }
+    }
+
+    AppLogging.fileTransfer('_compressImageToFit: EXHAUSTED all attempts');
+    return null;
+  }
+
+  /// Top-level function for isolate: resize and encode as JPEG.
+  static Uint8List? _resizeAndEncodeJpeg(_CompressArgs args) {
+    final decoded = img.decodeImage(args.imageBytes);
+    if (decoded == null) return null;
+
+    final resized = img.copyResize(
+      decoded,
+      width: decoded.width > decoded.height ? args.maxDim : null,
+      height: decoded.height >= decoded.width ? args.maxDim : null,
+      interpolation: img.Interpolation.average,
+    );
+
+    return Uint8List.fromList(img.encodeJpg(resized, quality: args.quality));
+  }
+
   /// Cancel an active transfer.
   void cancelTransfer(String fileIdHex) {
     AppLogging.fileTransfer('cancelTransfer: $fileIdHex');
@@ -562,3 +713,19 @@ final fileTransferEnabledProvider = Provider<bool>((ref) {
     orElse: () => true,
   );
 });
+
+// ---------------------------------------------------------------------------
+// Image compression arguments (must be top-level for isolate compute)
+// ---------------------------------------------------------------------------
+
+class _CompressArgs {
+  final Uint8List imageBytes;
+  final int maxDim;
+  final int quality;
+
+  const _CompressArgs({
+    required this.imageBytes,
+    required this.maxDim,
+    required this.quality,
+  });
+}

@@ -7,10 +7,12 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:sqflite/sqflite.dart';
 
 import '../../../core/logging.dart';
+import '../../../services/protocol/sip/sip_types.dart';
 import '../models/import_preview.dart';
 import '../models/nodedex_entry.dart';
 import '../services/sigil_generator.dart';
@@ -457,6 +459,11 @@ class NodeDexSqliteStore {
       NodeDexTables.colSchemaVersion: 1,
       NodeDexTables.colUpdatedAtMs: updatedAtMs,
       NodeDexTables.colDeleted: 0,
+      NodeDexTables.colSipCapable: entry.sipCapable == true ? 1 : null,
+      NodeDexTables.colSipPubkey: entry.sipPubkey,
+      NodeDexTables.colSipPersonaId: entry.sipPersonaId,
+      NodeDexTables.colSipIdentityState: entry.sipIdentityState?.name,
+      NodeDexTables.colSipDisplayName: entry.sipDisplayName,
     };
   }
 
@@ -528,6 +535,15 @@ class NodeDexSqliteStore {
       socialTag = NodeSocialTag.values[tagIndex];
     }
 
+    // Parse SIP identity state.
+    SipIdentityState? sipState;
+    final sipStateName = row[NodeDexTables.colSipIdentityState] as String?;
+    if (sipStateName != null) {
+      sipState = SipIdentityState.values
+          .where((s) => s.name == sipStateName)
+          .firstOrNull;
+    }
+
     return NodeDexEntry(
       nodeNum: nodeNum,
       firstSeen: DateTime.fromMillisecondsSinceEpoch(
@@ -556,6 +572,17 @@ class NodeDexSqliteStore {
       localNickname: row[NodeDexTables.colLocalNickname] as String?,
       localNicknameUpdatedAtMs:
           row[NodeDexTables.colLocalNicknameUpdatedAtMs] as int?,
+      sipCapable: row[NodeDexTables.colSipCapable] == 1 ? true : null,
+      sipPubkey: row[NodeDexTables.colSipPubkey] != null
+          ? Uint8List.fromList((row[NodeDexTables.colSipPubkey] as List<int>))
+          : null,
+      sipPersonaId: row[NodeDexTables.colSipPersonaId] != null
+          ? Uint8List.fromList(
+              (row[NodeDexTables.colSipPersonaId] as List<int>),
+            )
+          : null,
+      sipIdentityState: sipState,
+      sipDisplayName: row[NodeDexTables.colSipDisplayName] as String?,
     );
   }
 
