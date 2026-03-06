@@ -103,6 +103,7 @@ class _SipHubScreenState extends ConsumerState<SipHubScreen> {
     final hasSessions = sessions.isNotEmpty;
     final isEmpty = !hasPeers && !hasSessions;
 
+    // lint-allow: haptic-feedback — keyboard dismissal, not interactive action
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: GlassScaffold(
