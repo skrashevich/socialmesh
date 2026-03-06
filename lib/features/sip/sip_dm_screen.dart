@@ -23,6 +23,7 @@ import '../../core/theme.dart';
 import '../../core/widgets/app_bar_overflow_menu.dart';
 import '../../core/widgets/app_bottom_sheet.dart';
 import '../../core/widgets/glass_scaffold.dart';
+import '../../features/messaging/widgets/chat_composer.dart';
 import '../../features/nodedex/models/nodedex_entry.dart';
 import '../../features/nodedex/models/sigil_evolution.dart';
 import '../../features/nodedex/providers/nodedex_providers.dart';
@@ -605,43 +606,21 @@ class _SipDmScreenState extends ConsumerState<SipDmScreen>
                     : const SizedBox.shrink(),
               ),
 
-              // Input field
+              // Input field — reuses ChatComposer for consistent UX
               Padding(
-                padding: EdgeInsets.only(
-                  left: AppTheme.spacing16,
-                  right: AppTheme.spacing8,
-                  top: AppTheme.spacing8,
-                  bottom: AppTheme.spacing8,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppTheme.spacing8,
+                  vertical: AppTheme.spacing8,
                 ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: _messageController,
-                        focusNode: _inputFocusNode,
-                        enabled: enabled,
-                        maxLength: 180,
-                        maxLines: null,
-                        textInputAction: TextInputAction.send,
-                        onSubmitted: (_) => _sendMessage(),
-                        decoration: InputDecoration(
-                          hintText: l10n.sipDmInputHint,
-                          counterText:
-                              '', // Hide character counter // lint-allow: hardcoded-string
-                          border: InputBorder.none,
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: AppTheme.spacing12,
-                            vertical: AppTheme.spacing8,
-                          ),
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: enabled ? _sendMessage : null,
-                      icon: const Icon(Icons.send),
-                      tooltip: l10n.sipDmSendButton,
-                    ),
-                  ],
+                child: ChatComposer(
+                  controller: _messageController,
+                  focusNode: _inputFocusNode,
+                  onSend: _sendMessage,
+                  hintText: l10n.sipDmInputHint,
+                  maxLength: 180,
+                  maxLines: 4,
+                  enabled: enabled,
+                  sendTooltip: l10n.sipDmSendButton,
                 ),
               ),
             ],

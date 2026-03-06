@@ -25,6 +25,7 @@ class ChatComposer extends StatelessWidget {
     this.maxLines = 6,
     this.leading,
     this.sendTooltip,
+    this.enabled = true,
   });
 
   /// Controller for the text input.
@@ -55,6 +56,10 @@ class ChatComposer extends StatelessWidget {
 
   /// Tooltip for the send button. Shown on long-press / hover.
   final String? sendTooltip;
+
+  /// Whether the input is enabled. When false, the text field is read-only
+  /// and the send button is hidden.
+  final bool enabled;
 
   /// Handles the Ctrl/Cmd+Enter keyboard shortcut to send.
   KeyEventResult _handleKeyEvent(FocusNode node, KeyEvent event) {
@@ -118,6 +123,7 @@ class ChatComposer extends StatelessWidget {
                     maxLength: maxLength,
                     controller: controller,
                     focusNode: focusNode,
+                    enabled: enabled,
                     style: TextStyle(
                       color: isDark
                           ? AppTheme.textPrimary
@@ -147,9 +153,9 @@ class ChatComposer extends StatelessWidget {
               ),
             ),
 
-            // Send button — only visible when the field has non-empty text,
-            // matching the Meshtastic iOS pattern.
-            if (hasText) ...[
+            // Send button — only visible when the field has non-empty text
+            // and the composer is enabled.
+            if (hasText && enabled) ...[
               const SizedBox(width: AppTheme.spacing12),
               Padding(
                 padding: const EdgeInsets.only(bottom: AppTheme.spacing0),

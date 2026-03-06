@@ -211,9 +211,16 @@ class _SipHubScreenState extends ConsumerState<SipHubScreen> {
       'sessions=${sessions.length}',
     );
 
-    final hasPeers = peers.isNotEmpty;
+    // Filter out peers that already have an active DM session —
+    // those appear under Conversations only (issue 3).
+    final sessionNodeIds = sessions.map((s) => s.peerNodeId).toSet();
+    final unconnectedPeers = peers
+        .where((p) => !sessionNodeIds.contains(p.nodeId))
+        .toList();
+
+    final hasPeers = unconnectedPeers.isNotEmpty;
     final hasSessions = sessions.isNotEmpty;
-    final isEmpty = !hasPeers && !hasSessions;
+    final isEmpty = !hasPeers && !hasSessions && !_scanning;
 
     // lint-allow: haptic-feedback — keyboard dismissal, not interactive action
     return GestureDetector(
@@ -275,7 +282,7 @@ class _SipHubScreenState extends ConsumerState<SipHubScreen> {
         ],
         slivers: isEmpty
             ? _buildEmptySlivers(context)
-            : _buildContentSlivers(context, peers, sessions),
+            : _buildContentSlivers(context, unconnectedPeers, sessions),
       ),
     );
   }
@@ -388,8 +395,8 @@ class _SipHubScreenState extends ConsumerState<SipHubScreen> {
         ),
       ],
 
-      // Discovered peers
-      if (peers.isNotEmpty) ...[
+      // Discovered peers (excluding those already in Conversations)
+      if (peers.isNotEmpty || _scanning) ...[
         SliverPersistentHeader(
           pinned: true,
           delegate: SectionHeaderDelegate(
@@ -424,18 +431,31 @@ class _SipHubScreenState extends ConsumerState<SipHubScreen> {
               ),
             ),
           ),
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: AppTheme.spacing16),
-          sliver: SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) => _PeerTile(
-                peer: peers[index],
-                onHandshake: () => _initiateHandshake(peers[index]),
+        if (peers.isNotEmpty)
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: AppTheme.spacing16),
+            sliver: SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) => _PeerTile(
+                  peer: peers[index],
+                  onHandshake: () => _initiateHandshake(peers[index]),
+                ),
+                childCount: peers.length,
               ),
-              childCount: peers.length,
             ),
           ),
-        ),
+
+        // Scanning shimmer placeholders (shown while scanning, no peers yet)
+        if (_scanning && peers.isEmpty)
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: AppTheme.spacing16),
+            sliver: SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) => const _ShimmerPeerPlaceholder(),
+                childCount: 3,
+              ),
+            ),
+          ),
       ],
 
       // Bottom safe area
@@ -475,9 +495,13 @@ class _PeerTile extends ConsumerWidget {
     final hexId =
         '!${peer.nodeId.toRadixString(16).toUpperCase().padLeft(4, '0')}';
 
+    // Block taps while handshake is in-progress.
+    final isBusy = _isHandshaking(hsState);
+
     return BouncyTap(
-      onTap: onHandshake,
-      onLongPress: onHandshake,
+      onTap: isBusy ? null : onHandshake,
+      onLongPress: isBusy ? null : onHandshake,
+      enabled: !isBusy,
       scaleFactor: 0.98,
       child: Container(
         margin: const EdgeInsets.only(bottom: AppTheme.spacing8),
@@ -591,6 +615,16 @@ class _PeerTile extends ConsumerWidget {
       ),
     );
   }
+
+  static bool _isHandshaking(SipHandshakeState state) => switch (state) {
+    SipHandshakeState.helloSent ||
+    SipHandshakeState.challengeReceived ||
+    SipHandshakeState.responseSent ||
+    SipHandshakeState.helloReceived ||
+    SipHandshakeState.challengeSent ||
+    SipHandshakeState.responseReceived => true,
+    _ => false,
+  };
 
   static String _resolveDisplayName(
     NodeDexEntry? entry,
@@ -896,25 +930,25 @@ class _ConversationTile extends ConsumerWidget {
                     const SizedBox(height: AppTheme.spacing6),
 
                     // Session badges row
-                    Row(
+                    Wrap(
+                      spacing: AppTheme.spacing8,
+                      runSpacing: AppTheme.spacing4,
                       children: [
+                        _buildConnectedBadge(context, l10n),
                         _buildSessionBadge(context, l10n),
-                        if (session.isPinned) ...[
-                          const SizedBox(width: AppTheme.spacing8),
-                          _buildPinnedBadge(context, l10n),
-                        ],
+                        if (session.isPinned) _buildPinnedBadge(context, l10n),
                       ],
                     ),
                   ],
                 ),
               ),
 
-              // Chevron
+              // Green chat icon (connected indicator)
               const SizedBox(width: AppTheme.spacing4),
               Icon(
-                Icons.chevron_right,
+                Icons.chat_bubble_outline,
                 size: 20,
-                color: context.textTertiary.withValues(alpha: 0.5),
+                color: AccentColors.green.withValues(alpha: 0.7),
               ),
             ],
           ),
@@ -1010,6 +1044,34 @@ class _ConversationTile extends ConsumerWidget {
               fontSize: 10,
               fontWeight: FontWeight.w500,
               color: context.accentColor,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildConnectedBadge(BuildContext context, dynamic l10n) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppTheme.spacing6,
+        vertical: AppTheme.spacing2,
+      ),
+      decoration: BoxDecoration(
+        color: AccentColors.green.withValues(alpha: 0.12),
+        borderRadius: BorderRadius.circular(AppTheme.radius6),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.chat_bubble_outline, size: 11, color: AccentColors.green),
+          const SizedBox(width: AppTheme.spacing4),
+          Text(
+            l10n.sipHubConnected,
+            style: TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.w600,
+              color: AccentColors.green,
             ),
           ),
         ],
@@ -1141,6 +1203,121 @@ class _SipCountersSheet extends ConsumerWidget {
             ),
         ],
       ),
+    );
+  }
+}
+
+// =============================================================================
+// Shimmer placeholder — shown while scanning / waiting for peers
+// =============================================================================
+
+class _ShimmerPeerPlaceholder extends StatefulWidget {
+  const _ShimmerPeerPlaceholder();
+
+  @override
+  State<_ShimmerPeerPlaceholder> createState() =>
+      _ShimmerPeerPlaceholderState();
+}
+
+class _ShimmerPeerPlaceholderState extends State<_ShimmerPeerPlaceholder>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1500),
+    )..repeat();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        return Container(
+          margin: const EdgeInsets.only(bottom: AppTheme.spacing8),
+          decoration: BoxDecoration(
+            color: context.card,
+            borderRadius: BorderRadius.circular(AppTheme.radius12),
+            border: Border.all(color: context.border),
+          ),
+          child: ShaderMask(
+            shaderCallback: (bounds) {
+              final shimmerPos = _controller.value;
+              return LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Colors.white.withValues(alpha: 0.0),
+                  Colors.white.withValues(alpha: 0.08),
+                  Colors.white.withValues(alpha: 0.0),
+                ],
+                stops: [
+                  (shimmerPos - 0.3).clamp(0.0, 1.0),
+                  shimmerPos,
+                  (shimmerPos + 0.3).clamp(0.0, 1.0),
+                ],
+              ).createShader(bounds);
+            },
+            blendMode: BlendMode.srcATop,
+            child: Padding(
+              padding: const EdgeInsets.all(AppTheme.spacing14),
+              child: Row(
+                children: [
+                  // Avatar placeholder
+                  Container(
+                    width: 48,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      color: context.textTertiary.withValues(alpha: 0.08),
+                      borderRadius: BorderRadius.circular(AppTheme.radius12),
+                    ),
+                  ),
+                  const SizedBox(width: AppTheme.spacing14),
+                  // Text placeholder lines
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 140,
+                          height: 14,
+                          decoration: BoxDecoration(
+                            color: context.textTertiary.withValues(alpha: 0.1),
+                            borderRadius: BorderRadius.circular(
+                              AppTheme.radius4,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: AppTheme.spacing8),
+                        Container(
+                          width: 90,
+                          height: 10,
+                          decoration: BoxDecoration(
+                            color: context.textTertiary.withValues(alpha: 0.06),
+                            borderRadius: BorderRadius.circular(
+                              AppTheme.radius4,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
