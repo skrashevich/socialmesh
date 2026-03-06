@@ -6,14 +6,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/l10n/l10n_extension.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/app_bottom_sheet.dart';
+import '../../providers/sip_providers.dart';
 import '../../services/haptic_service.dart';
+import '../../services/protocol/sip/sip_codec.dart';
 import '../../services/protocol/sip/sip_discovery.dart';
+import '../../services/protocol/sip/sip_handshake.dart';
+import '../../providers/app_providers.dart';
+import '../../utils/snackbar.dart';
 
 /// Bottom sheet showing detailed info for a single SIP peer.
 ///
 /// Displays node ID, device class, capabilities, feature flags, and
-/// last-seen time. Action buttons will be wired once SIP-1 handshake
-/// transport is connected.
+/// last-seen time. Includes a handshake initiation button.
 class SipPeerDetailSheet extends ConsumerWidget {
   final SipPeerCapability peer;
 
@@ -124,17 +128,7 @@ class SipPeerDetailSheet extends ConsumerWidget {
         const SizedBox(height: AppTheme.spacing24),
 
         // Action buttons
-        SizedBox(
-          width: double.infinity,
-          child: FilledButton.icon(
-            onPressed: () {
-              ref.read(hapticServiceProvider).trigger(HapticType.medium);
-              Navigator.of(context).pop();
-            },
-            icon: const Icon(Icons.handshake_outlined, size: 18),
-            label: Text(l10n.sipHandshakeAction),
-          ),
-        ),
+        _HandshakeButton(peer: peer),
       ],
     );
   }
@@ -236,5 +230,77 @@ class _CapChip extends StatelessWidget {
       side: BorderSide.none,
       padding: const EdgeInsets.symmetric(horizontal: AppTheme.spacing4),
     );
+  }
+}
+
+/// Handshake button that reflects the current handshake state for this peer.
+class _HandshakeButton extends ConsumerWidget {
+  final SipPeerCapability peer;
+
+  const _HandshakeButton({required this.peer});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final hsState = ref.watch(sipHandshakeStateProvider(peer.nodeId));
+
+    final (label, icon, enabled) = switch (hsState) {
+      SipHandshakeState.idle => (
+        l10n.sipHandshakeAction,
+        Icons.handshake_outlined,
+        true,
+      ),
+      SipHandshakeState.accepted => (
+        l10n.sipHandshakeComplete,
+        Icons.check_circle_outline,
+        false,
+      ),
+      SipHandshakeState.failed || SipHandshakeState.timedOut => (
+        l10n.sipHandshakeFailed,
+        Icons.error_outline,
+        true,
+      ),
+      _ => (l10n.sipHandshakeInProgress, Icons.hourglass_top, false),
+    };
+
+    return SizedBox(
+      width: double.infinity,
+      child: FilledButton.icon(
+        onPressed: enabled ? () => _initiateHandshake(context, ref) : null,
+        icon: Icon(icon, size: 18),
+        label: Text(label),
+      ),
+    );
+  }
+
+  void _initiateHandshake(BuildContext context, WidgetRef ref) {
+    ref.read(hapticServiceProvider).trigger(HapticType.medium);
+    final localL10n = context.l10n;
+
+    final handshake = ref.read(sipHandshakeProvider);
+    if (handshake == null) {
+      showErrorSnackBar(context, localL10n.sipHandshakeFailed);
+      return;
+    }
+
+    final frame = handshake.initiateHandshake(peer.nodeId);
+    if (frame == null) {
+      // Handshake already in progress for this peer.
+      showInfoSnackBar(context, localL10n.sipHandshakeInProgress);
+      return;
+    }
+
+    final encoded = SipCodec.encode(frame);
+    if (encoded == null) {
+      showErrorSnackBar(context, localL10n.sipHandshakeFailed);
+      return;
+    }
+
+    final protocol = ref.read(protocolServiceProvider);
+    protocol.sendSipPacket(encoded);
+    ref.read(sipCountersProvider).recordHandshakeInitiated();
+
+    showInfoSnackBar(context, localL10n.sipHandshakeInProgress);
+    Navigator.of(context).pop();
   }
 }

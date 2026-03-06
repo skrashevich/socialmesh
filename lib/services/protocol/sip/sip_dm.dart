@@ -16,6 +16,7 @@ library;
 import '../../../core/logging.dart';
 import 'sip_codec.dart';
 import 'sip_constants.dart';
+import 'sip_counters.dart';
 import 'sip_frame.dart';
 import 'sip_messages_dm.dart';
 import 'sip_rate_limiter.dart';
@@ -153,11 +154,16 @@ class SipDmManager {
   ///
   /// [rateLimiter] is used to enforce the SIP airtime budget.
   /// [clock] can be injected for testing (returns ms since epoch).
-  SipDmManager({required SipRateLimiter rateLimiter, int Function()? clock})
-    : _rateLimiter = rateLimiter,
-      _clock = clock ?? _defaultClock;
+  SipDmManager({
+    required SipRateLimiter rateLimiter,
+    SipCounters? counters,
+    int Function()? clock,
+  }) : _rateLimiter = rateLimiter,
+       _counters = counters,
+       _clock = clock ?? _defaultClock;
 
   final SipRateLimiter _rateLimiter;
+  final SipCounters? _counters;
   final int Function() _clock;
 
   /// Active sessions keyed by session_tag.
@@ -311,6 +317,7 @@ class SipDmManager {
         'SIP_DM: send blocked by budget for '
         'tag=0x${sessionTag.toRadixString(16)}',
       );
+      _counters?.recordBudgetThrottle();
       return SipDmSendResult.fail(SipDmSendError.budgetExhausted);
     }
 

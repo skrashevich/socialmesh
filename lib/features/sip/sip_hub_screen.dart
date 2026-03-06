@@ -152,8 +152,68 @@ class _SipHubScreenState extends ConsumerState<SipHubScreen> {
                     );
                   }),
                 ],
+
+                // Debug counters (collapsed by default)
+                const SizedBox(height: AppTheme.spacing16),
+                _SipCountersSection(),
               ],
             ),
+    );
+  }
+}
+
+/// Collapsible SIP debug counters section.
+class _SipCountersSection extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final theme = Theme.of(context);
+    final counters = ref.watch(sipCountersProvider);
+    final entries = counters.toDisplayEntries();
+
+    return ExpansionTile(
+      leading: Icon(
+        Icons.analytics_outlined,
+        size: 20,
+        color: theme.colorScheme.onSurface.withAlpha(153),
+      ),
+      title: Text(
+        l10n.sipCountersTitle,
+        style: theme.textTheme.titleSmall?.copyWith(
+          color: theme.colorScheme.onSurface.withAlpha(153),
+        ),
+      ),
+      initiallyExpanded: false,
+      children: entries
+          .where((e) => e.value > 0)
+          .map(
+            (e) => Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppTheme.spacing16,
+                vertical: AppTheme.spacing2,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    child: Text(
+                      e.label,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: theme.colorScheme.onSurface.withAlpha(179),
+                      ),
+                    ),
+                  ),
+                  Text(
+                    '${e.value}', // lint-allow: hardcoded-string
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+          .toList(),
     );
   }
 }

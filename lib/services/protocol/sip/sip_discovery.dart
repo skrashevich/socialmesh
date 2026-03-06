@@ -13,6 +13,7 @@ import 'dart:typed_data';
 import '../../../core/logging.dart';
 import 'sip_codec.dart';
 import 'sip_constants.dart';
+import 'sip_counters.dart';
 import 'sip_frame.dart';
 import 'sip_messages_cap.dart';
 import 'sip_rate_limiter.dart';
@@ -87,6 +88,7 @@ class SipDiscovery {
   SipDiscovery({
     required SipRateLimiter rateLimiter,
     required int localNodeId,
+    SipCounters? counters,
     int? Function()? clock,
     this.maxPeers = 16,
     this.cacheTtlMs = 24 * 60 * 60 * 1000, // 24 hours
@@ -96,6 +98,7 @@ class SipDiscovery {
     this.rollcallRespDelayMaxMs = 3000, // 0-3s
   }) : _rateLimiter = rateLimiter,
        _localNodeId = localNodeId,
+       _counters = counters,
        _clock = clock;
 
   /// Optional callback invoked whenever the peer cache changes.
@@ -104,8 +107,15 @@ class SipDiscovery {
   /// UI rebuilds when peers are discovered or evicted.
   void Function()? onPeersChanged;
 
+  /// Optional callback invoked when a new peer is discovered or updated.
+  ///
+  /// Set by the provider layer to bridge SIP discovery into NodeDex.
+  /// The callback receives the node ID of the discovered peer.
+  void Function(int nodeId)? onPeerDiscovered;
+
   final SipRateLimiter _rateLimiter;
   final int _localNodeId;
+  final SipCounters? _counters;
   final int? Function()? _clock;
 
   /// Maximum peers in the capability cache.
@@ -226,6 +236,7 @@ class SipDiscovery {
         'SIP_DISCOVERY: CAP_BEACON suppressed (budget insufficient for '
         '${encoded.length}B)',
       );
+      _counters?.recordBudgetThrottle();
       return null;
     }
 
@@ -279,6 +290,7 @@ class SipDiscovery {
       AppLogging.sip(
         'SIP_DISCOVERY: ROLLCALL_REQ suppressed (budget insufficient)',
       );
+      _counters?.recordBudgetThrottle();
       return null;
     }
 
@@ -343,6 +355,7 @@ class SipDiscovery {
       AppLogging.sip(
         'SIP_DISCOVERY: ROLLCALL_RESP suppressed (budget insufficient)',
       );
+      _counters?.recordBudgetThrottle();
       return null;
     }
 
@@ -482,6 +495,7 @@ class SipDiscovery {
     );
     AppLogging.sip('SIP_DISCOVERY: peer_count=${_cache.length} cached');
     onPeersChanged?.call();
+    onPeerDiscovered?.call(nodeId);
   }
 
   void _evictOldest() {

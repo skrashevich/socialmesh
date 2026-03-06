@@ -17,6 +17,7 @@ import 'dart:typed_data';
 import '../../../core/logging.dart';
 import 'sip_codec.dart';
 import 'sip_constants.dart';
+import 'sip_counters.dart';
 import 'sip_frame.dart';
 import 'sip_messages_hs.dart';
 import 'sip_replay_cache.dart';
@@ -82,11 +83,14 @@ class SipHandshakeManager {
   /// [clock] can be injected for testing.
   SipHandshakeManager({
     required SipReplayCache replayCache,
+    SipCounters? counters,
     DateTime Function()? clock,
   }) : _replayCache = replayCache,
+       _counters = counters,
        _clock = clock ?? DateTime.now;
 
   final SipReplayCache _replayCache;
+  final SipCounters? _counters;
   final DateTime Function() _clock;
   final Random _random = Random.secure();
 
@@ -300,6 +304,7 @@ class SipHandshakeManager {
         'SIP_HS: HS_HELLO replay from '
         'node=0x${peerNodeId.toRadixString(16)}',
       );
+      _counters?.recordReplayReject();
       return null;
     }
     _replayCache.recordNonce(

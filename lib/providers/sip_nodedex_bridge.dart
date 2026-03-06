@@ -12,8 +12,11 @@
 
 import 'dart:typed_data';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../core/logging.dart';
 import '../features/nodedex/models/nodedex_entry.dart';
+import '../features/nodedex/providers/nodedex_providers.dart';
 import '../features/nodedex/services/sigil_generator.dart';
 import '../services/protocol/sip/sip_types.dart';
 
@@ -207,5 +210,85 @@ abstract final class SipNodeDexBridge {
       if (a[i] != b[i]) return false;
     }
     return true;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Provider-aware bridge helpers
+// ---------------------------------------------------------------------------
+
+/// Marks a node as SIP-capable in NodeDex (called on CAP_BEACON receipt).
+///
+/// If the entry exists, applies [SipNodeDexBridge.markSipCapable] and
+/// persists via [NodeDexNotifier.applySipUpdate].
+void sipBridgeMarkCapable(WidgetRef ref, int nodeId) {
+  final entries = ref.read(nodeDexProvider);
+  final existing = entries[nodeId];
+  if (existing == null) return;
+
+  final result = SipNodeDexBridge.markSipCapable(existing);
+  if (result.stateChanged) {
+    ref.read(nodeDexProvider.notifier).applySipUpdate(result.entry);
+  }
+}
+
+/// Overload for use inside providers (Ref rather than WidgetRef).
+void sipBridgeMarkCapableFromRef(Ref ref, int nodeId) {
+  final entries = ref.read(nodeDexProvider);
+  final existing = entries[nodeId];
+  if (existing == null) return;
+
+  final result = SipNodeDexBridge.markSipCapable(existing);
+  if (result.stateChanged) {
+    ref.read(nodeDexProvider.notifier).applySipUpdate(result.entry);
+  }
+}
+
+/// Applies a verified identity claim to a NodeDex entry.
+///
+/// If the entry exists, applies [SipNodeDexBridge.applyIdentityClaim] and
+/// persists via [NodeDexNotifier.applySipUpdate].
+void sipBridgeApplyIdentity({
+  required Ref ref,
+  required int nodeId,
+  required Uint8List pubkey,
+  required Uint8List personaId,
+  required SipIdentityState identityState,
+  String? displayName,
+}) {
+  final entries = ref.read(nodeDexProvider);
+  final existing = entries[nodeId];
+  if (existing == null) return; // not yet in NodeDex
+
+  final result = SipNodeDexBridge.applyIdentityClaim(
+    entry: existing,
+    pubkey: pubkey,
+    personaId: personaId,
+    identityState: identityState,
+    displayName: displayName,
+  );
+
+  if (result.stateChanged || result.sigilChanged) {
+    ref.read(nodeDexProvider.notifier).applySipUpdate(result.entry);
+  }
+}
+
+/// Updates the identity state of a NodeDex entry (e.g. pin, accept changed key).
+void sipBridgeUpdateState({
+  required Ref ref,
+  required int nodeId,
+  required SipIdentityState newState,
+}) {
+  final entries = ref.read(nodeDexProvider);
+  final existing = entries[nodeId];
+  if (existing == null) return;
+
+  final result = SipNodeDexBridge.updateIdentityState(
+    entry: existing,
+    newState: newState,
+  );
+
+  if (result.stateChanged) {
+    ref.read(nodeDexProvider.notifier).applySipUpdate(result.entry);
   }
 }
