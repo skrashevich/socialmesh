@@ -15,6 +15,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/l10n/l10n_extension.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/app_bottom_sheet.dart';
+import '../../core/widgets/expert_details_expander.dart';
 import '../../features/nodedex/models/nodedex_entry.dart';
 import '../../features/nodedex/models/sigil_evolution.dart';
 import '../../features/nodedex/providers/nodedex_providers.dart';
@@ -23,13 +24,17 @@ import '../../features/nodedex/services/trait_engine.dart';
 import '../../features/nodedex/widgets/sigil_painter.dart';
 import '../../features/nodes/node_display_name_resolver.dart';
 import '../../models/mesh_models.dart';
+import '../../providers/age_eligibility_provider.dart';
 import '../../providers/app_providers.dart';
 import '../../providers/sip_providers.dart';
 import '../../services/haptic_service.dart';
 import '../../services/protocol/sip/sip_codec.dart';
+import '../../services/protocol/sip/sip_types.dart';
 import '../../services/protocol/sip/sip_discovery.dart';
 import '../../services/protocol/sip/sip_handshake.dart';
 import '../../utils/snackbar.dart';
+import 'sip_dm_screen.dart';
+import 'widgets/peer_services_section.dart';
 
 /// Bottom sheet showing detailed info for a single SIP peer.
 ///
@@ -101,21 +106,11 @@ class SipPeerDetailSheet extends ConsumerWidget {
 
         const SizedBox(height: AppTheme.spacing20),
 
-        // Info rows
+        // Info rows — user-friendly fields visible by default
         _InfoRow(
           label: l10n.sipPeerDetailDeviceClass,
-          value: _deviceClassName(peer.deviceClass),
+          value: deviceClassName(context, peer.deviceClass),
           icon: Icons.devices,
-        ),
-        _InfoRow(
-          label: l10n.sipPeerDetailFeatures,
-          value: '0x${peer.features.toRadixString(16)}',
-          icon: Icons.extension,
-        ),
-        _InfoRow(
-          label: l10n.sipPeerDetailMtu,
-          value: '${peer.mtuHint}', // lint-allow: hardcoded-string
-          icon: Icons.straighten,
         ),
         _InfoRow(
           label: l10n.sipPeerDetailLastSeen,
@@ -147,7 +142,45 @@ class SipPeerDetailSheet extends ConsumerWidget {
               label: l10n.sipPeerDetailSupportsSip3,
               supported: peer.supportsSip3,
             ),
+            _CapChip(
+              label: l10n.sipHubPeerDetailOverlayLink,
+              supported: peer.supportsOverlayLinkV02,
+            ),
+            _CapChip(
+              label: l10n.sipHubPeerDetailOverlayResource,
+              supported: peer.supportsOverlayResourceV02,
+            ),
+            _CapChip(
+              label: l10n.sipHubPeerDetailOverlaySecure,
+              supported: peer.supportsOverlaySecureV03,
+            ),
           ],
+        ),
+
+        const SizedBox(height: AppTheme.spacing20),
+
+        // Advertised services (empty-collapses when none).
+        PeerServicesSection(peerNodeId: peer.nodeId),
+
+        const SizedBox(height: AppTheme.spacing8),
+
+        // Expert details — protocol-level info behind toggle
+        ExpertDetailsExpander(
+          label: l10n.sipPeerDetailExpertToggle,
+          expandedBuilder: (context) => Column(
+            children: [
+              _InfoRow(
+                label: l10n.sipPeerDetailFeatures,
+                value: '0x${peer.features.toRadixString(16)}',
+                icon: Icons.extension,
+              ),
+              _InfoRow(
+                label: l10n.sipPeerDetailMtu,
+                value: '${peer.mtuHint}', // lint-allow: hardcoded-string
+                icon: Icons.straighten,
+              ),
+            ],
+          ),
         ),
 
         const SizedBox(height: AppTheme.spacing24),
@@ -203,18 +236,23 @@ class SipPeerDetailSheet extends ConsumerWidget {
         NodeDisplayNameResolver.defaultName(nodeId);
   }
 
-  static String _deviceClassName(int code) {
+  /// Returns a localized device class name for the given SIP device class code.
+  ///
+  /// Public so other SIP screens (e.g., discovery sheet) can reuse l10n
+  /// mappings instead of duplicating hardcoded strings.
+  static String deviceClassName(BuildContext context, int code) {
+    final l10n = context.l10n;
     switch (code) {
       case 0:
-        return 'Unknown'; // lint-allow: hardcoded-string
+        return l10n.sipPeerDetailDeviceUnknown;
       case 1:
-        return 'Phone'; // lint-allow: hardcoded-string
+        return l10n.sipPeerDetailDevicePhone;
       case 2:
-        return 'Tablet'; // lint-allow: hardcoded-string
+        return l10n.sipPeerDetailDeviceTablet;
       case 3:
-        return 'Desktop'; // lint-allow: hardcoded-string
+        return l10n.sipPeerDetailDeviceDesktop;
       default:
-        return 'Type $code'; // lint-allow: hardcoded-string
+        return l10n.sipPeerDetailDeviceType(code);
     }
   }
 
@@ -332,6 +370,43 @@ class _HandshakeButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final hsState = ref.watch(sipHandshakeStateProvider(peer.nodeId));
+    final policy = ref.watch(ageSafetyPolicyProvider);
+    final dmAvailable = ref.watch(meshPrivacyDmAvailableProvider);
+
+    // Privacy gate: hide handshake button when DM is disabled.
+    if (!dmAvailable) {
+      return const SizedBox.shrink();
+    }
+
+    // Minor contact restriction: disable handshake initiation entirely.
+    if (policy.shouldRestrictUnsolicitedContact) {
+      return const SizedBox.shrink();
+    }
+
+    // pendingApproval is owned by the dedicated Incoming Requests tile
+    // above the peer list — do not stand in for the Accept/Decline
+    // buttons here (mandatory consent gate, SIP_HANDSHAKE_CONSENT.md).
+    if (hsState == SipHandshakeState.pendingApproval) {
+      return const SizedBox.shrink();
+    }
+
+    // Open-chat shortcut when an active DM session exists for this peer.
+    ref.watch(sipDmEpochProvider);
+    final dm = ref.read(sipDmManagerProvider);
+    final sessions = dm?.activeSessions
+        .where((s) => s.peerNodeId == peer.nodeId)
+        .toList();
+    if (sessions != null && sessions.isNotEmpty) {
+      final session = sessions.first;
+      return SizedBox(
+        width: double.infinity,
+        child: FilledButton.icon(
+          onPressed: () => _openChat(context, session.sessionTag),
+          icon: const Icon(Icons.chat_bubble_outline, size: 18),
+          label: Text(l10n.sipHubPeerDetailOpenChat),
+        ),
+      );
+    }
 
     final (label, icon, enabled) = switch (hsState) {
       SipHandshakeState.idle => (
@@ -362,6 +437,15 @@ class _HandshakeButton extends ConsumerWidget {
     );
   }
 
+  void _openChat(BuildContext context, int sessionTag) {
+    Navigator.of(context).pop();
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => SipDmScreen(sessionTag: sessionTag),
+      ),
+    );
+  }
+
   void _initiateHandshake(BuildContext context, WidgetRef ref) {
     ref.read(hapticServiceProvider).trigger(HapticType.medium);
     final localL10n = context.l10n;
@@ -385,7 +469,7 @@ class _HandshakeButton extends ConsumerWidget {
     }
 
     final protocol = ref.read(protocolServiceProvider);
-    protocol.sendSipPacket(encoded);
+    protocol.sendSipGated(encoded, SipMessageType.hsHello);
     ref.read(sipCountersProvider).recordHandshakeInitiated();
 
     showInfoSnackBar(context, localL10n.sipHandshakeInProgress);
